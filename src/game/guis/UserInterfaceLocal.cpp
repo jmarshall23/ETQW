@@ -1220,7 +1220,7 @@ void sdUserInterfaceLocal::EnumerateEvents( const char* name, const idList<unsig
 			const idToken& name = tokenCache[ flags[ i ] ];
 			idCVar* cvar = cvarSystem->Find( name.c_str() );
 			if( cvar == NULL ) {
-				gameLocal.Error( "Event 'onCVarChanged' could not find cvar '%s'", name.c_str() );
+				gameLocal.Warning( "Event 'onCVarChanged' could not find cvar '%s'", name.c_str() );
 				return;
 			}
 

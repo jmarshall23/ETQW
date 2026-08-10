@@ -66,6 +66,168 @@ idImage* LoadMaterialImage( const char* name ) {
 
 }
 
+sdDeclRenderProgram::sdDeclRenderProgram() {
+	program = NULL;
+	FreeData();
+}
+
+sdDeclRenderProgram::~sdDeclRenderProgram() {
+	FreeData();
+}
+
+const char* sdDeclRenderProgram::DefaultDefinition() const {
+	return "{\n"
+		"\tstate force {\n"
+		"\t\tdepthFunc less\n"
+		"\t}\n"
+		"\tprogram vertex arb {\n"
+		"\t\tOPTION ARB_position_invariant;\n"
+		"\t}\n"
+		"\tprogram fragment arb {\n"
+		"\t\tPARAM colorOrange = { 1.0, 0.5, 0, 1 };\n"
+		"\t\tMOV result.color, colorOrange;\n"
+		"\t}\n"
+		"}\n";
+}
+
+bool sdDeclRenderProgram::Parse( const char* text, const int textLength ) {
+	FreeData();
+	if ( text == NULL || textLength <= 0 ) {
+		return false;
+	}
+
+	// Shader compilation is restored separately from declaration discovery.
+	// Keep the declaration strict enough to reject truncated source while
+	// preserving the flags queried by the material/backend paths.
+	int depth = 0;
+	bool sawOpenBrace = false;
+	bool inString = false;
+	bool inLineComment = false;
+	bool inBlockComment = false;
+	for ( int i = 0; i < textLength; ++i ) {
+		const char c = text[ i ];
+		const char next = i + 1 < textLength ? text[ i + 1 ] : '\0';
+		if ( inLineComment ) {
+			if ( c == '\n' ) {
+				inLineComment = false;
+			}
+			continue;
+		}
+		if ( inBlockComment ) {
+			if ( c == '*' && next == '/' ) {
+				inBlockComment = false;
+				++i;
+			}
+			continue;
+		}
+		if ( !inString && c == '/' && next == '/' ) {
+			inLineComment = true;
+			++i;
+			continue;
+		}
+		if ( !inString && c == '/' && next == '*' ) {
+			inBlockComment = true;
+			++i;
+			continue;
+		}
+		if ( c == '"' && ( i == 0 || text[ i - 1 ] != '\\' ) ) {
+			inString = !inString;
+			continue;
+		}
+		if ( inString ) {
+			continue;
+		}
+		if ( c == '{' ) {
+			sawOpenBrace = true;
+			++depth;
+		} else if ( c == '}' ) {
+			if ( --depth < 0 ) {
+				return false;
+			}
+		}
+	}
+	if ( !sawOpenBrace || depth != 0 || inString || inBlockComment ) {
+		return false;
+	}
+
+	idParser src;
+	src.SetFlags( DECL_LEXER_FLAGS );
+	src.LoadMemory( text, textLength, GetFileName(), GetLineNum() );
+	idToken token;
+	if ( src.SkipUntilString( "{", &token ) ) {
+		int tokenDepth = 1;
+		while ( tokenDepth > 0 && src.ReadToken( &token ) ) {
+			if ( token == "{" ) {
+				++tokenDepth;
+				continue;
+			}
+			if ( token == "}" ) {
+				--tokenDepth;
+				continue;
+			}
+			if ( tokenDepth != 1 ) {
+				continue;
+			}
+			if ( token.Icmp( "interaction" ) == 0 ) {
+				flags |= RP_INTERACTION;
+			} else if ( token.Icmp( "lowrangeuv" ) == 0 ) {
+				flags |= RP_LOWRANGEUV;
+			} else if ( token.Icmp( "machineSpec" ) == 0 && src.ReadToken( &token ) ) {
+				machineSpec = token.GetIntValue();
+			} else if ( token.Icmp( "imposterBrightness" ) == 0 && src.ReadToken( &token ) ) {
+				imposterBrightness = token.GetFloatValue();
+			}
+		}
+	}
+
+	return true;
+}
+
+void sdDeclRenderProgram::FreeData() {
+	flags = 0;
+	program = NULL;
+	numTextureBindings = 0;
+	memset( textureBindings, 0, sizeof( textureBindings ) );
+	stateBits = 0;
+	stateMask = 0;
+	cullType = CT_FRONT_SIDED;
+	requiredVertexAttribs = 0;
+	machineSpec = 0;
+	imposterBrightness = 1.0f;
+	versionForAmbientLighting = NULL;
+	versionForHWSkinning = NULL;
+	versionForHardSkinning = NULL;
+	versionForInstancing = NULL;
+	versionForCoverage = NULL;
+	versionForLOD = NULL;
+	versionForFallback = NULL;
+	versionForAlphaToCoverage = NULL;
+	versionForDepth = NULL;
+	versionForEarlyCull = NULL;
+	versionForAmbientLit = NULL;
+	versionForNotLit = NULL;
+	altVersions = 0;
+}
+
+void sdDeclRenderProgram::List() const {
+	common->Printf( "%s | %d | %s\n", GetName(), machineSpec, IsInteraction() ? "I" : "*" );
+}
+
+void sdDeclRenderProgram::Dot() const {
+}
+
+void sdDeclRenderProgram::Bind() const {
+}
+
+void sdDeclRenderProgram::UpdateParameters() const {
+}
+
+void sdDeclRenderProgram::UpdateHWSkinningParameters( const idJointMat*, const int ) const {
+}
+
+void sdDeclRenderProgram::SetState( const int, const cullType_t ) const {
+}
+
 int idMaterial::currentAtmosphereFrame = 0;
 
 void idMaterial::CommonInit() {

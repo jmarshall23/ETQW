@@ -46,6 +46,19 @@ void idNetworkSystem::ServerSendReliableMessage( int clientNum, const idBitMsg &
 	}
 }
 
+#ifdef SD_SUPPORT_REPEATER
+/*
+==================
+idNetworkSystem::RepeaterSendReliableMessage
+==================
+*/
+void idNetworkSystem::RepeaterSendReliableMessage( int clientNum, const idBitMsg& msg, bool ignoreRelays ) {
+	if ( idAsyncNetwork::server.IsActive() ) {
+		idAsyncNetwork::server.SendReliableGameMessage( clientNum, msg );
+	}
+}
+#endif // SD_SUPPORT_REPEATER
+
 /*
 ==================
 idNetworkSystem::ServerGetClientPing
@@ -368,3 +381,16 @@ bool idNetworkSystem::HTTPEnable( bool enable ) {
 	return false;
 }
 #endif
+
+#ifdef SD_SUPPORT_REPEATER
+void idNetworkSystem::RepeaterSetInfo( const idDict& info ) {
+}
+
+const idDict& idNetworkSystem::RepeaterGetClientInfo( int clientNum ) {
+	static idDict emptyClientInfo;
+	return emptyClientInfo;
+}
+
+void idNetworkSystem::SetClientRepeaterUserOrigin( const repeaterUserOrigin_t& origin ) {
+}
+#endif // SD_SUPPORT_REPEATER

@@ -323,7 +323,7 @@ bool sdDeclAtmosphere::Parse( const char* text, const int textLength ) {
 		if ( token.Icmp( "sunMaterial" ) == 0 ) {
 			src.ReadToken( &token );
 			sunMaterial = declHolder.FindMaterial( token, true );
-		} else if ( token.Icmp( "sunDirection" ) == 0 ) {
+		} else if ( token.Icmp( "sunDir" ) == 0 || token.Icmp( "sunDirection" ) == 0 ) {
 			src.Parse1DMatrix( 3, sunDir.ToFloatPtr() );
 		} else if ( token.Icmp( "sunAzimuth" ) == 0 ) {
 			sunAzimuth = src.ParseFloat();
@@ -355,7 +355,7 @@ bool sdDeclAtmosphere::Parse( const char* text, const int textLength ) {
 			sunFlareAzi = src.ParseFloat();
 		} else if ( token.Icmp( "sunFlareZen" ) == 0 ) {
 			sunFlareZen = src.ParseFloat();
-		} else if ( token.Icmp( "postProcess" ) == 0 ) {
+		} else if ( token.Icmp( "postProcessParms" ) == 0 || token.Icmp( "postProcess" ) == 0 ) {
 			if ( !ParsePostProcessParms( src ) ) {
 				return false;
 			}
@@ -392,7 +392,7 @@ bool sdDeclAtmosphere::Parse( const char* text, const int textLength ) {
 			if ( !ParseCloudLayer( src ) ) {
 				return false;
 			}
-		} else if ( token.Icmp( "precipitation" ) == 0 ) {
+		} else if ( token.Icmp( "precipitationLayer" ) == 0 || token.Icmp( "precipitation" ) == 0 ) {
 			if ( !ParsePrecipitationLayer( src ) ) {
 				return false;
 			}
@@ -431,7 +431,7 @@ void sdDeclAtmosphere::UpdateSunDirFromAziZen() {
 
 void sdDeclAtmosphere::RebuildTextSource( idFile_Memory& file ) const {
 	file.WriteFloatString( "atmosphere %s {\n", GetName() );
-	file.WriteFloatString( "\tsunDirection ( %f %f %f )\n", sunDir.x, sunDir.y, sunDir.z );
+	file.WriteFloatString( "\tsunDir ( %f %f %f )\n", sunDir.x, sunDir.y, sunDir.z );
 	file.WriteFloatString( "\tsunColor ( %f %f %f )\n", sunColor.x, sunColor.y, sunColor.z );
 	file.WriteFloatString( "\tfogDistHalf %f\n\tfogHeightHalf %f\n\tfogHeightOffset %f\n",
 		fogDistHalf, fogHeightHalf, fogHeightOffset );

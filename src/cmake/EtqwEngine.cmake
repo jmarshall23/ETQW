@@ -191,8 +191,10 @@ set(ETQW_SYSTEM_CORE_SOURCES
 )
 set(ETQW_SOUND_CORE_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/sound/SoundSystemBootstrap.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/sound/SoundShader.cpp"
 )
 set(ETQW_ENGINE_SUPPORT_SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/bse/BSE_EffectTemplate.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/bse/BSE_Manager.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/framework/AdManager.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/framework/GraphManager.cpp"
@@ -355,6 +357,10 @@ target_compile_definitions(etqw_cm PRIVATE
     _MBCS
     ZLIB_WINAPI
     SD_DEMO_BUILD
+    # The SDK game DLL is built with the retail repeater interfaces enabled.
+    # SD_DEMO_BUILD suppresses this in BuildDefines.h, so restore it explicitly
+    # on every engine reconstruction unit to keep cross-module vtables aligned.
+    SD_SUPPORT_REPEATER
     SD_SDK_BUILD
     SD_USE_DRAWVERT_SIZE_32
     SD_USE_INDEX_SIZE_16
@@ -396,6 +402,7 @@ function(etqw_add_reconstruction_area target_name)
         _MBCS
         ZLIB_WINAPI
         SD_DEMO_BUILD
+        SD_SUPPORT_REPEATER
         SD_SDK_BUILD
         SD_USE_DRAWVERT_SIZE_32
         SD_USE_INDEX_SIZE_16
@@ -480,6 +487,7 @@ target_compile_definitions(etqw PRIVATE
     _MBCS
     ZLIB_WINAPI
     SD_DEMO_BUILD
+    SD_SUPPORT_REPEATER
     # The public game DLL has the full retail sdNetService vtable. Preserve
     # that ABI while retaining demo guards around unrelated engine systems.
     SD_RETAIL_SDNET_ABI

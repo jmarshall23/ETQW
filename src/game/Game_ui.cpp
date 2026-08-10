@@ -1055,7 +1055,8 @@ idGameLocal::LoadUserInterface
 ================
 */
 guiHandle_t idGameLocal::LoadUserInterface( const char* name, bool requireUnique, bool permanent, const char* theme, sdHudModule* module ) {
-	return uiManager->AllocUI( name, requireUnique, permanent, theme, module );
+	guiHandle_t handle = uiManager->AllocUI( name, requireUnique, permanent, theme, module );
+	return handle;
 }
 
 /*

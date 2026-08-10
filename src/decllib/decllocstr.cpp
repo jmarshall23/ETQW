@@ -2,7 +2,6 @@
 //
 
 #include "precompiled.h"
-#include "../framework/DeclParseHelper.h"
 #include "declLocStr.h"
 
 #pragma hdrstop
@@ -12,7 +11,7 @@ size_t sdDeclLocStr::Size( void ) const {
 }
 
 const char* sdDeclLocStr::DefaultDefinition( void ) const {
-	return "{ \"###str_00000###\" }";
+	return "{\n}";
 }
 
 void sdDeclLocStr::FreeData( void ) {
@@ -21,47 +20,91 @@ void sdDeclLocStr::FreeData( void ) {
 }
 
 void sdDeclLocStr::Print( void ) const {
-	common->Printf( "%ls\n", locText.c_str() );
+	common->Printf( "%ls with %i arguments", locText.c_str(), numArgs );
 }
 
 bool sdDeclLocStr::Parse( const char* text, const int textLength ) {
-	idParser src;
+	idLexer src;
 	idToken token;
+	bool foundText = false;
 
-	src.SetFlags( DECL_LEXER_FLAGS | LEXFL_NOFATALERRORS );
-	sdDeclParseHelper declHelper( this, text, textLength, src );
+	src.SetFlags( DECL_LEXER_FLAGS );
+	src.LoadMemory( text, textLength, GetFileName(), GetLineNum() );
 	src.SkipUntilString( "{", &token );
 
 	locText.Clear();
 	numArgs = 0;
-	if ( !src.ReadToken( &token ) || token == "}" ) {
+	while ( src.ReadToken( &token ) ) {
+		if ( token == "}" ) {
+			break;
+		}
+
+		if ( !token.Icmp( "text" ) ) {
+			if ( !src.ReadToken( &token ) ) {
+				MakeDefault();
+				src.Warning( "sdDeclLocStr::Parse: Unexpected end of file while parsing 'text' attribute" );
+				return false;
+			}
+			locText = common->GetLanguageDict()->GetString( token.c_str() );
+			foundText = true;
+		} else if ( !token.Icmp( "arguments" ) ) {
+			if ( !src.ReadToken( &token ) ) {
+				MakeDefault();
+				src.Warning( "sdDeclLocStr::Parse: Unexpected end of file while parsing 'arguments' attribute" );
+				return false;
+			}
+			if ( token.type != TT_NUMBER ) {
+				MakeDefault();
+				src.Warning( "sdDeclLocStr::Parse: Expected number when parsing 'arguments' attribute" );
+				return false;
+			}
+			numArgs = token.GetIntValue();
+		} else {
+			MakeDefault();
+			src.Warning( "sdDeclLocStr::Parse: Unexpected token '%s'", token.c_str() );
+			return false;
+		}
+	}
+
+	if ( token != "}" ) {
+		MakeDefault();
+		src.Warning( "sdDeclLocStr::Parse: Unexpected end of file" );
 		return false;
 	}
 
-	wchar_t* wideText = new wchar_t[ token.Length() + 1 ];
-	mbstowcs( wideText, token.c_str(), token.Length() + 1 );
-	wideText[ token.Length() ] = L'\0';
-	locText = wideText;
-	delete[] wideText;
-	for ( int i = 0; i < locText.Length(); i++ ) {
-		if ( locText[ i ] != L'%' ) {
-			continue;
-		}
-		if ( i + 1 < locText.Length() && locText[ i + 1 ] == L'%' ) {
-			i++;
-			continue;
-		}
-		numArgs++;
+	int openBracket = locText.Find( L'[' );
+	int closeBracket = locText.Find( L']' );
+	while ( openBracket != -1 && closeBracket != -1 ) {
+		locText.EraseRange( openBracket, closeBracket - openBracket + 1 );
+		openBracket = locText.Find( L'[' );
+		closeBracket = locText.Find( L']' );
+	}
+	locText.Replace( L"&lbr", L"[" );
+	locText.Replace( L"&rbr", L"]" );
+
+	int foundArgs = 0;
+	if ( locText.Find( L"%1" ) != -1 ) {
+		do {
+			foundArgs++;
+		} while ( locText.Find( va( L"%%%i", foundArgs + 1 ) ) != -1 );
+	}
+	if ( foundArgs != numArgs ) {
+		src.Warning( "sdDeclLocStr::Parse: Argument mismatch (expected %i but found %i)", numArgs, foundArgs );
+		MakeDefault();
+		return false;
 	}
 
-	if ( !src.ReadToken( &token ) || token != "}" ) {
-		src.Warning( "sdDeclLocStr::Parse: expected closing brace" );
-		return false;
+	if ( !foundText ) {
+		locText = va( L"###%hs###", GetName() );
 	}
 	return true;
 }
 
 bool sdDeclLocStr::Format( idWStr& result, const idWStrList& inputs ) const {
+	if ( GetState() == DS_DEFAULTED ) {
+		result = va( L"###%hs###", GetName() );
+		return false;
+	}
 	if ( inputs.Num() != numArgs ) {
 		result = va( L"###%hs###", GetName() );
 		common->Warning(

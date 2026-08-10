@@ -67,6 +67,12 @@ const char* declIdentifierList[] = {
 #include "declTemplate.h"
 #include "declmodelexport.h"
 #include "../renderer/Material.h"
+#include "../sound/SoundShader.h"
+#include "../bse/BSEInterface.h"
+#include "../bse/BSE_Envelope.h"
+#include "../bse/BSE_SpawnDomains.h"
+#include "../bse/BSE_Particle.h"
+#include "../bse/BSE.h"
 
 // Flags and cache callbacks are taken from the Microsoft executable's
 // sdDeclInfo objects.
@@ -81,10 +87,18 @@ sdDeclInfo declSkinInfo(
 	declSkinIdentifier,
 	DIF_ALLOW_TEMPLATES | DIF_WRITE_BINARY,
 	idDeclSkin::CacheFromDict );
+sdDeclInfo declSoundShaderInfo(
+	declSoundShaderIdentifier,
+	DIF_ALLOW_TEMPLATES | DIF_WRITE_BINARY,
+	idSoundShader::CacheFromDict );
 sdDeclInfo declEntityDefInfo(
 	declEntityDefIdentifier,
 	DIF_ALLOW_TEMPLATES | DIF_WRITE_BINARY,
 	idDeclEntityDef::CacheFromDict );
+sdDeclInfo declEffectsInfo(
+	declEffectsIdentifier,
+	DIF_ALLOW_TEMPLATES | DIF_WRITE_BINARY,
+	rvDeclEffect::CacheFromDict );
 sdDeclInfo declAFInfo(
 	declAFIdentifier,
 	DIF_ALLOW_TEMPLATES | DIF_WRITE_BINARY,
@@ -109,6 +123,9 @@ sdDeclInfo declSurfaceTypeInfo(
 	DIF_NOT_PRECACHED );
 sdDeclInfo declSurfaceTypeMapInfo(
 	declSurfaceTypeMapIdentifier,
+	DIF_ALLOW_TEMPLATES );
+sdDeclInfo declRenderProgramInfo(
+	declRenderProgramIdentifier,
 	DIF_ALLOW_TEMPLATES );
 sdDeclInfo declRenderBindingInfo(
 	declRenderBindingIdentifier,
@@ -135,7 +152,9 @@ namespace {
 idDeclTypeTemplate< idDeclTable, &declTableInfo > declTableType;
 idDeclTypeTemplate< idMaterial, &declMaterialInfo > declMaterialType;
 idDeclTypeTemplate< idDeclSkin, &declSkinInfo > declSkinType;
+idDeclTypeTemplate< idSoundShader, &declSoundShaderInfo > declSoundShaderType;
 idDeclTypeTemplate< idDeclEntityDef, &declEntityDefInfo > declEntityDefType;
+idDeclTypeTemplate< rvDeclEffect, &declEffectsInfo > declEffectsType;
 idDeclTypeTemplate< idDeclAF, &declAFInfo > declAFType;
 idDeclTypeTemplate< sdDeclAtmosphere, &declAtmosphereInfo > declAtmosphereType;
 idDeclTypeTemplate< sdDeclAmbientCubeMap, &declAmbientCubeMapInfo > declAmbientCubeMapType;
@@ -143,6 +162,7 @@ idDeclTypeTemplate< sdDeclStuffType, &declStuffTypeInfo > declStuffTypeType;
 idDeclTypeTemplate< sdDeclDecal, &declDecalInfo > declDecalType;
 idDeclTypeTemplate< sdDeclSurfaceType, &declSurfaceTypeInfo > declSurfaceTypeType;
 idDeclTypeTemplate< sdDeclSurfaceTypeMap, &declSurfaceTypeMapInfo > declSurfaceTypeMapType;
+idDeclTypeTemplate< sdDeclRenderProgram, &declRenderProgramInfo > declRenderProgramType;
 idDeclTypeTemplate< sdDeclRenderBinding, &declRenderBindingInfo > declRenderBindingType;
 idDeclTypeTemplate< sdDeclImposter, &declImposterInfo > declImposterType;
 idDeclTypeTemplate< sdDeclImposterGenerator, &declImposterGeneratorInfo > declImposterGeneratorType;
@@ -160,7 +180,9 @@ void Decl_RegisterBuiltinTypes( idDeclManager* manager ) {
 	manager->RegisterDeclType( &declTableType );
 	manager->RegisterDeclType( &declMaterialType );
 	manager->RegisterDeclType( &declSkinType );
+	manager->RegisterDeclType( &declSoundShaderType );
 	manager->RegisterDeclType( &declEntityDefType );
+	manager->RegisterDeclType( &declEffectsType );
 	manager->RegisterDeclType( &declAFType );
 	manager->RegisterDeclType( &declAtmosphereType );
 	manager->RegisterDeclType( &declAmbientCubeMapType );
@@ -168,23 +190,26 @@ void Decl_RegisterBuiltinTypes( idDeclManager* manager ) {
 	manager->RegisterDeclType( &declDecalType );
 	manager->RegisterDeclType( &declSurfaceTypeType );
 	manager->RegisterDeclType( &declSurfaceTypeMapType );
+	manager->RegisterDeclType( &declRenderProgramType );
 	manager->RegisterDeclType( &declRenderBindingType );
+	manager->RegisterDeclType( &declTemplateType );
 	manager->RegisterDeclType( &declImposterType );
 	manager->RegisterDeclType( &declImposterGeneratorType );
 	manager->RegisterDeclType( &declLocStrType );
-	manager->RegisterDeclType( &declTemplateType );
 	manager->RegisterDeclType( &declModelExportType );
 
-	manager->RegisterDeclFolder( "skins", ".skin" );
+	manager->RegisterDeclFolder( "templates", ".template" );
 	manager->RegisterDeclFolder( "materials", ".mtr" );
+	manager->RegisterDeclFolder( "skins", ".skin" );
+	manager->RegisterDeclFolder( "sounds", ".sndshd" );
 	manager->RegisterDeclFolder( "atmosphere", ".atm" );
 	manager->RegisterDeclFolder( "stuff", ".stuff" );
 	manager->RegisterDeclFolder( "decal", ".decal" );
 	manager->RegisterDeclFolder( "surfacetypes", ".stp" );
 	manager->RegisterDeclFolder( "surfacetypes", ".stmap" );
+	manager->RegisterDeclFolder( "renderprogs", ".rprog" );
 	manager->RegisterDeclFolder( "imposters", ".imp" );
 	manager->RegisterDeclFolder( "localization", ".locstr" );
-	manager->RegisterDeclFolder( "templates", ".template" );
 	manager->FinishedRegistering();
 }
 

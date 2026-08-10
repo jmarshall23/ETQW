@@ -54,6 +54,8 @@ static versionString_t versionString;
 idCVar com_version( "si_version", versionString.string, CVAR_SYSTEM | CVAR_ROM | CVAR_SERVERINFO, "engine version" );
 idCVar com_skipRenderer( "com_skipRenderer", "0", CVAR_BOOL | CVAR_SYSTEM, "skip renderer initialization" );
 idCVar com_machineSpec( "com_machineSpec", "-1", CVAR_INTEGER | CVAR_ARCHIVE | CVAR_SYSTEM, "hardware quality classification", -1, 3 );
+idCVar com_gpuSpec( "com_gpuSpec", "3", CVAR_INTEGER | CVAR_ARCHIVE | CVAR_SYSTEM,
+	"hardware classification, -1 = not detected, 0 = low quality, 1 = medium quality, 2 = high quality, 3 = ultra quality" );
 idCVar com_purgeAll( "com_purgeAll", "0", CVAR_BOOL | CVAR_ARCHIVE | CVAR_SYSTEM, "purge all media between level loads" );
 idCVar com_memoryMarker( "com_memoryMarker", "-1", CVAR_INTEGER | CVAR_SYSTEM | CVAR_INIT, "memory statistics marker" );
 idCVar com_preciseTic( "com_preciseTic", "1", CVAR_BOOL | CVAR_SYSTEM, "run exact user command ticks" );

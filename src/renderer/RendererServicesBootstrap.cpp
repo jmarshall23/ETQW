@@ -15,6 +15,67 @@ extern glconfig_t glConfig;
 
 namespace {
 
+const char* imageFilterValues[] = {
+	"GL_LINEAR_MIPMAP_NEAREST",
+	"GL_LINEAR_MIPMAP_LINEAR",
+	"GL_NEAREST",
+	"GL_LINEAR",
+	"GL_NEAREST_MIPMAP_NEAREST",
+	"GL_NEAREST_MIPMAP_LINEAR",
+	NULL
+};
+
+}
+
+idCVar idImageManager::image_filter( "image_filter", "GL_LINEAR_MIPMAP_LINEAR", CVAR_RENDERER | CVAR_ARCHIVE,
+	"changes texture filtering on mipmapped images", imageFilterValues );
+idCVar idImageManager::image_anisotropy( "image_anisotropy", "1", CVAR_RENDERER | CVAR_ARCHIVE,
+	"set the maximum texture anisotropy if available" );
+idCVar idImageManager::image_lodbias( "image_lodbias", "0", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_FLOAT,
+	"change lod bias on mipmapped images", -1.0f, 1.0f );
+idCVar idImageManager::image_roundDown( "image_roundDown", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL,
+	"round bad sizes down to nearest power of two" );
+idCVar idImageManager::image_colorMipLevels( "image_colorMipLevels", "0", CVAR_RENDERER | CVAR_BOOL,
+	"development aid to see texture mip usage" );
+idCVar idImageManager::image_useCompression( "image_useCompression", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL,
+	"0 = force everything to high quality" );
+idCVar idImageManager::image_useAllFormats( "image_useAllFormats", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL,
+	"allow alpha/intensity/luminance/luminance+alpha" );
+idCVar idImageManager::image_useNormalCompression( "image_useNormalCompression", "2", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_INTEGER,
+	"2 = use rxgb compression for normal maps, 1 = use 256 color compression for normal maps if available" );
+idCVar idImageManager::image_writeNormalTGA( "image_writeNormalTGA", "0", CVAR_RENDERER | CVAR_BOOL,
+	"write .tgas of the final normal maps for debugging" );
+idCVar idImageManager::image_writeNormalTGAPalletized( "image_writeNormalTGAPalletized", "0", CVAR_RENDERER | CVAR_BOOL,
+	"write .tgas of the final palletized normal maps for debugging" );
+idCVar idImageManager::image_writeTGA( "image_writeTGA", "0", CVAR_RENDERER | CVAR_BOOL,
+	"write .tgas of the non normal maps for debugging" );
+idCVar idImageManager::image_useOffLineCompression( "image_useOfflineCompression", "0", CVAR_RENDERER | CVAR_BOOL,
+	"write a batch file for offline compression of DDS files" );
+idCVar idImageManager::image_skipUpload( "image_skipUpload", "0", CVAR_RENDERER | CVAR_BOOL,
+	"used during the build process, will skip uploads" );
+idCVar idImageManager::image_useBackgroundLoads( "image_useBackgroundLoads", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL,
+	"1 = enable background loading of images" );
+idCVar idImageManager::image_showBackgroundLoads( "image_showBackgroundLoads", "0", CVAR_RENDERER | CVAR_BOOL,
+	"1 = print number of outstanding background loads" );
+idCVar idImageManager::image_ignoreHighQuality( "image_ignoreHighQuality", "0", CVAR_RENDERER | CVAR_ARCHIVE,
+	"ignore high quality setting on materials" );
+idCVar idImageManager::image_detailPower( "image_detailPower", "0.7", CVAR_RENDERER | CVAR_ARCHIVE,
+	"Controls how fast the detail textures fade out (0 = normal mipmaps, 1 is falloff after the first level)", 0.0f, 1.0f );
+idCVar idImageManager::image_picMipEnable( "image_picMipEnable", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_INTEGER,
+	"Enable picmip" );
+idCVar idImageManager::image_picMip( "image_picMip", "0", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_INTEGER,
+	"Uses a miplevel X steps down", -2.0f, 2.0f );
+idCVar idImageManager::image_editorPicMip( "image_editorPicMip", "1", CVAR_RENDERER | CVAR_INTEGER,
+	"", -4.0f, 1.0f );
+idCVar idImageManager::image_bumpPicMip( "image_bumpPicMip", "0", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_INTEGER,
+	"Uses a miplevel X steps down", -2.0f, 2.0f );
+idCVar idImageManager::image_diffusePicMip( "image_diffusePicMip", "0", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_INTEGER,
+	"Uses a miplevel X steps down", -2.0f, 2.0f );
+idCVar idImageManager::image_specularPicMip( "image_specularPicMip", "0", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_INTEGER,
+	"Uses a miplevel X steps down", -2.0f, 2.0f );
+
+namespace {
+
 class idRenderModelManagerBootstrap : public idRenderModelManager {
 public:
 	virtual void Init() {}
@@ -44,6 +105,31 @@ idStr NormalizeImageName( const char* name ) {
 	idStr normalized = name != NULL ? name : "";
 	normalized.BackSlashesToSlashes();
 	return normalized;
+}
+
+bool ParseImageProgramText( idParser& src, idStr& imageProgram ) {
+	idToken token;
+	if ( !src.ReadToken( &token ) ) {
+		return false;
+	}
+
+	imageProgram = token;
+	if ( !src.PeekTokenString( "(" ) ) {
+		return true;
+	}
+
+	int depth = 0;
+	while ( src.ReadToken( &token ) ) {
+		imageProgram += token;
+		if ( token == "(" ) {
+			++depth;
+		} else if ( token == ")" ) {
+			if ( --depth == 0 ) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 }
@@ -155,12 +241,85 @@ idImage* idImageManager::ImageFromParameters(
 }
 
 idMegaTexture* idImageManager::MegaTextureFromFile( const char* ) { return NULL; }
-idImage* idImageManager::ParseImage( idParser& src, const imageParams_t& parms ) {
+idImage* idImageManager::ParseImage( idParser& src, const imageParams_t& defaultParms ) {
+	imageParams_t parms = defaultParms;
 	idToken token;
-	if ( !src.ReadToken( &token ) ) {
+	while ( src.ReadTokenOnLine( &token ) ) {
+		if ( token.Icmp( "bumpMap" ) == 0 ) {
+			parms.td = TD_BUMP;
+		} else if ( token.Icmp( "diffuseMap" ) == 0 ) {
+			parms.td = TD_DIFFUSE;
+		} else if ( token.Icmp( "specularMap" ) == 0 ) {
+			parms.td = TD_SPECULAR;
+		} else if ( token.Icmp( "cubeMap" ) == 0 ) {
+			parms.cubeMap = CF_NATIVE;
+		} else if ( token.Icmp( "cameraCubeMap" ) == 0 ) {
+			parms.cubeMap = CF_CAMERA;
+		} else if ( token.Icmp( "halfSphereMap" ) == 0 ) {
+			parms.cubeMap = CF_HALFSPHERE;
+		} else if ( token.Icmp( "nearest" ) == 0 ) {
+			parms.tf = TF_NEAREST;
+		} else if ( token.Icmp( "linear" ) == 0 ) {
+			parms.tf = TF_LINEAR;
+		} else if ( token.Icmp( "linearNearest" ) == 0 ) {
+			parms.tf = TF_LINEARNEAREST;
+		} else if ( token.Icmp( "waternormal" ) == 0 ) {
+			parms.mipState.colorType = mipmapState_t::MT_WATER;
+		} else if ( token.Icmp( "colormipmaps" ) == 0 ) {
+			parms.mipState.colorType = mipmapState_t::MT_COLORLEVELS;
+			if ( !src.Parse2DMatrix( 2, 4, parms.mipState.color ) ) {
+				return NULL;
+			}
+		} else if ( token.Icmp( "mirror" ) == 0 ) {
+			parms.trp = TR_MIRROR;
+		} else if ( token.Icmp( "mirror_x" ) == 0 ) {
+			parms.trp = TR_MIRROR_X;
+		} else if ( token.Icmp( "mirror_y" ) == 0 ) {
+			parms.trp = TR_MIRROR_Y;
+		} else if ( token.Icmp( "clamp" ) == 0 ) {
+			parms.trp = TR_CLAMP;
+		} else if ( token.Icmp( "clamp_x" ) == 0 ) {
+			parms.trp = TR_CLAMP_X;
+		} else if ( token.Icmp( "clamp_y" ) == 0 ) {
+			parms.trp = TR_CLAMP_Y;
+		} else if ( token.Icmp( "noclamp" ) == 0 ) {
+			parms.trp = TR_REPEAT;
+		} else if ( token.Icmp( "zeroclamp" ) == 0 ) {
+			parms.trp = TR_CLAMP_TO_ZERO;
+		} else if ( token.Icmp( "alphazeroclamp" ) == 0 ) {
+			parms.trp = TR_CLAMP_TO_ZERO_ALPHA;
+		} else if ( token.Icmp( "forceHighQuality" ) == 0 ) {
+			parms.td = TD_HIGH_QUALITY;
+		} else if ( token.Icmp( "uncompressed" ) == 0 || token.Icmp( "highquality" ) == 0 ) {
+			if ( !image_ignoreHighQuality.GetBool() ) {
+				parms.td = TD_HIGH_QUALITY;
+			}
+		} else if ( token.Icmp( "nopicmip" ) == 0 ) {
+			parms.allowPicmip = false;
+		} else if ( token.Icmp( "picmip" ) == 0 ) {
+			parms.allowPicmip = true;
+			parms.picmipofs = src.ParseInt();
+		} else if ( token.Icmp( "picmipmin" ) == 0 ) {
+			parms.picMipMin = src.ParseInt();
+		} else if ( token.Icmp( "anisotropy" ) == 0 ) {
+			parms.anisotropy = src.ParseFloat();
+		} else if ( token.Icmp( "minLod" ) == 0 ) {
+			parms.minLod = src.ParseFloat();
+		} else if ( token.Icmp( "maxLod" ) == 0 ) {
+			parms.maxLod = src.ParseFloat();
+		} else if ( token.Icmp( "partialLoad" ) == 0 ) {
+			parms.partialLoad = true;
+		} else {
+			src.UnreadToken( token );
+			break;
+		}
+	}
+
+	idStr imageProgram;
+	if ( !ParseImageProgramText( src, imageProgram ) ) {
 		return NULL;
 	}
-	return globalImages != NULL ? globalImages->ImageFromFile( token, parms ) : NULL;
+	return globalImages != NULL ? globalImages->ImageFromFile( imageProgram, parms ) : NULL;
 }
 
 void idImageManager::BindNull() {

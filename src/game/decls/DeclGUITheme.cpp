@@ -135,7 +135,6 @@ bool sdDeclGUITheme::Parse( const char *text, const int textLength ) {
 			}
 		}
 	}
-
 	return true;
 }
 

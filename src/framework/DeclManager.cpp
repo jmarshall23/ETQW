@@ -210,6 +210,17 @@ int idDeclFile::LoadAndParse( void ) {
 
 		src.PushDependencies();
 
+		// Export sections are consumed by the model-export tool directly.  The
+		// retail decl loader skips their bodies and never installs their author
+		// labels (for example "hauser") as declarations.
+		if ( declType->SkipParsing() ) {
+			if ( !src.SkipBracedSection( true ) ) {
+				src.Warning( "Unexpected end of file" );
+			}
+			src.PopDependencies();
+			continue;
+		}
+
 		idToken brace;
 		if ( !src.ReadToken( &brace ) ) {
 			src.Warning( "Type without definition at end of file" );
