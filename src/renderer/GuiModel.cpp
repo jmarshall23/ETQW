@@ -14,12 +14,15 @@
 #include "Image.h"
 #include "tr_render.h"
 #include "renderbindings.h"
+#include "../decllib/declRenderProgram.h"
 #include "../decllib/DeclRenderProgram_opengl.h"
 #include "../decllib/declRenderBinding.h"
 #include "../libs/qglLib/qgl.h"
 #include "../sound/SoundEmitter.h"
 
 #include <GL/gl.h>
+
+extern idCVar r_32ByteVtx;
 
 namespace {
 
@@ -478,6 +481,17 @@ void sdGuiModel::SubmitFrame( int windowWidth, int windowHeight ) {
 			idVec4 matrixS;
 			idVec4 matrixT;
 			if ( !RB_SetupMaterialStage( stage, evaluated.Begin(), image, stageColor, matrixS, matrixT ) ) continue;
+			// ARB vertex programs are precompiled for ETQW's packed idDrawVert
+			// layout when r_32ByteVtx is enabled.  The retail GUI path builds those
+			// packed vertices before drawing; this immediate-mode compatibility path
+			// does not, so emulate the packed texcoord attribute at the boundary.
+			// Without this, the program divides ordinary 0..1 GUI UVs by 4096 (or
+			// 32768), collapsing font atlases and cursor images onto one texel.
+			float texCoordAttribScale = 1.0f;
+			if ( r_32ByteVtx.GetBool() && stage->renderProgram != NULL &&
+				dynamic_cast< sdRenderProgramARB* >( stage->renderProgram->GetProgram() ) != NULL ) {
+				texCoordAttribScale = stage->renderProgram->UsesLowRangeUVs() ? 32768.0f : 4096.0f;
+			}
 			glColor4f( stageColor.x * rgba[ 0 ] / 255.0f, stageColor.y * rgba[ 1 ] / 255.0f, stageColor.z * rgba[ 2 ] / 255.0f, stageColor.w * rgba[ 3 ] / 255.0f );
 			const float vertexColor[ 4 ] = {
 				rgba[ 0 ] / 255.0f,
@@ -491,11 +505,14 @@ void sdGuiModel::SubmitFrame( int windowWidth, int windowHeight ) {
 			glBegin( GL_TRIANGLE_FAN );
 			for ( int j = 0; j < primitive.numVerts; j++ ) {
 				const idVec2& st = primitive.verts[ j ].st;
-				const float texCoord[ 4 ] = { st.x, st.y, 0.0f, 1.0f };
+				const float texCoord[ 4 ] = { st.x * texCoordAttribScale, st.y * texCoordAttribScale, 0.0f, 1.0f };
+				// In the compatibility profile glTexCoord aliases generic attribute 8.
+				// Set the fixed-function coordinate first, then restore the packed ARB
+				// attribute so it is the value captured when glVertex emits the vertex.
+				glTexCoord2f( matrixS.x * st.x + matrixS.y * st.y + matrixS.w, matrixT.x * st.x + matrixT.y * st.y + matrixT.w );
 				if ( qglVertexAttrib4fvARB != NULL && rbinds != NULL ) {
 					qglVertexAttrib4fvARB( rbinds->texCoordAttrib->GetAttribIndex(), texCoord );
 				}
-				glTexCoord2f( matrixS.x * st.x + matrixS.y * st.y + matrixS.w, matrixT.x * st.x + matrixT.y * st.y + matrixT.w );
 				glVertex2f( primitive.verts[ j ].xy.x, primitive.verts[ j ].xy.y );
 			}
 			glEnd();

@@ -56,13 +56,6 @@ int PackedVertexPreamblePosition( const idStr& source ) {
 	return position;
 }
 
-bool HasVertexBinding( const sdRenderShader& shader, const sdDeclRenderBinding* binding ) {
-	for ( int index = 0; index < shader.GetNumVertexAttribBindings(); ++index ) {
-		if ( shader.GetVertexAttribBinding( index ) == binding ) return true;
-	}
-	return false;
-}
-
 void ReplacePositionInvariant( idStr& source ) {
 	const int marker = idStr::FindText( source.c_str(), "ARB_position_invariant", true, 0, source.Length() );
 	if ( marker < 0 ) return;
@@ -259,7 +252,7 @@ bool sdRenderShaderARB::PreCompile( idStr& source, sdDeclRenderProgram& renderPr
 				preamble.Append( "ADD _attribTemp.x, 1, -_attribTemp.x;\n" );
 				preamble.Append( "RSQ _attribTemp.x, _attribTemp.x;\n" );
 				preamble.Append( "RCP _normalAttrib.z, _attribTemp.x;\n" );
-				preamble.Append( "ADD _attribTemp.x, $signAttrib$.x, -1;\n" );
+				preamble.Append( "ADD _attribTemp.x, $signattrib$.x, -1;\n" );
 				preamble.Append( "MUL _normalAttrib.z, _normalAttrib.z, _attribTemp.x;\n" );
 				needsSignAttrib = true;
 			} else if ( idStr::Icmp( name, "tangentAttrib" ) == 0 ) {
@@ -275,18 +268,26 @@ bool sdRenderShaderARB::PreCompile( idStr& source, sdDeclRenderProgram& renderPr
 				preamble.Append( "ADD _attribTemp.x, 1, -_attribTemp.x;\n" );
 				preamble.Append( "RSQ _attribTemp.x, _attribTemp.x;\n" );
 				preamble.Append( "RCP _tangentAttrib.z, _attribTemp.x;\n" );
-				preamble.Append( "ADD _attribTemp.x, $signAttrib$.y, -1;\n" );
+				preamble.Append( "ADD _attribTemp.x, $signattrib$.y, -1;\n" );
 				preamble.Append( "MUL _tangentAttrib.z, _tangentAttrib.z, _attribTemp.x;\n" );
-				preamble.Append( "ADD _tangentAttrib.w, $signAttrib$.z, -1;\n" );
+				preamble.Append( "ADD _tangentAttrib.w, $signattrib$.z, -1;\n" );
 				needsSignAttrib = true;
 			}
 		}
 		if ( !preamble.IsEmpty() ) source.Insert( preamble.c_str(), PackedVertexPreamblePosition( source ) );
 		if ( needsSignAttrib ) {
 			const sdDeclRenderBinding* signAttrib = declHolder.FindRenderBinding( "signAttrib", false );
-			if ( signAttrib != NULL && !HasVertexBinding( *this, signAttrib ) && numVertexAttribBindings < 8 ) {
-				vertexAttribBindings[ numVertexAttribBindings++ ] = signAttrib;
+			// The packed-normal/tangent preamble introduces $signattrib$ after the
+			// render-program parser has collected the source bindings.  Retail ETQW
+			// therefore appends this implicit attribute unconditionally before the
+			// replacement pass below.  Treating it like an optional/deduplicated
+			// source binding leaves the literal marker in every packed vertex program,
+			// causing the driver upload to fail and the decl to become orange-defaulted.
+			if ( signAttrib == NULL || numVertexAttribBindings >= 8 ) {
+				common->Warning( "cannot add implicit signAttrib to renderProg '%s'", renderProgram.GetName() );
+				return false;
 			}
+			vertexAttribBindings[ numVertexAttribBindings++ ] = signAttrib;
 		}
 	}
 
@@ -321,7 +322,11 @@ bool sdRenderShaderARB::PreCompile( idStr& source, sdDeclRenderProgram& renderPr
 }
 
 bool sdRenderShaderARB::Upload( const idStr& source, sdDeclRenderProgram& renderProgram ) {
-	if ( qglGenProgramsARB == NULL || qglBindProgramARB == NULL || qglProgramStringARB == NULL ) return false;
+	if ( qglGenProgramsARB == NULL || qglBindProgramARB == NULL || qglProgramStringARB == NULL ) {
+		common->Warning( "renderProg '%s' cannot upload its ARB %s shader: ARB program entry points are unavailable",
+			renderProgram.GetName(), shaderType == ST_VERTEX_SHADER ? "vertex" : "fragment" );
+		return false;
+	}
 	if ( shader == 0 ) qglGenProgramsARB( 1, &shader );
 	const GLenum target = sdRenderProgramARB::shaderTypes[ shaderType ];
 	qglBindProgramARB( target, shader );
@@ -341,7 +346,20 @@ bool sdRenderShaderARB::Upload( const idStr& source, sdDeclRenderProgram& render
 }
 
 bool sdRenderShaderARB::Compile( const idStr& source, sdDeclRenderProgram& renderProgram ) {
-	return Upload( source, renderProgram );
+	const bool uploaded = Upload( source, renderProgram );
+	// Retail ETQW always writes the preprocessed ARB source when an upload
+	// fails, and writes every source when r_dumpShaders is enabled.  Keeping
+	// this behavior is important: a failed declaration is replaced by the
+	// intentionally orange default program, otherwise hiding the actual driver
+	// error and the source that produced it.
+	if ( !uploaded || r_dumpShaders.GetBool() ) {
+		idStr outPath = "renderprogs/shaderdump/";
+		outPath.Append( renderProgram.GetName() );
+		outPath.Append( shaderType == ST_VERTEX_SHADER ? "_arbvp" : "_arbfp" );
+		outPath.SetFileExtension( ".pre" );
+		fileSystem->WriteFile( outPath.c_str(), source.c_str(), source.Length() );
+	}
+	return uploaded;
 }
 
 void sdRenderShaderARB::AllocStateCache() {
