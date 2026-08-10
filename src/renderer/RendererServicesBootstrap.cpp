@@ -78,6 +78,31 @@ idCVar idImageManager::image_specularPicMip( "image_specularPicMip", "0", CVAR_R
 
 namespace {
 
+bool ReadDiscard( idFile* file, int byteCount ) {
+	if ( file == NULL || byteCount < 0 ) {
+		return false;
+	}
+	byte scratch[ 4096 ];
+	int remaining = byteCount;
+	while ( remaining > 0 ) {
+		const int amount = Min( remaining, static_cast< int >( sizeof( scratch ) ) );
+		if ( file->Read( scratch, amount ) != amount ) {
+			return false;
+		}
+		remaining -= amount;
+	}
+	return true;
+}
+
+bool CheckedByteCount( int count, int stride, int& byteCount ) {
+	const long long total = static_cast< long long >( count ) * stride;
+	if ( count < 0 || stride < 0 || total > 0x7fffffffLL ) {
+		return false;
+	}
+	byteCount = static_cast< int >( total );
+	return true;
+}
+
 class idRenderModelBootstrap : public idRenderModel {
 public:
 	idRenderModelBootstrap() :
@@ -113,6 +138,8 @@ public:
 		ClearSurfaces();
 		modelJoints.Clear();
 		defaultPose.Clear();
+		surfaceNames.Clear();
+		surfaceIds.Clear();
 		SetFallbackBounds();
 	}
 
@@ -166,7 +193,7 @@ public:
 			if ( LoadModelB( generated ) ) {
 				return;
 			}
-		} else if ( LoadMD5Skeleton() ) {
+		} else if ( LoadMD5BinaryReferencePose() ) {
 			return;
 		}
 
@@ -227,6 +254,8 @@ public:
 		}
 		Mem_Free( triangles->verts );
 		Mem_Free( triangles->indexes );
+		Mem_Free( triangles->facePlanes );
+		Mem_Free( triangles->indexTree );
 		Mem_Free( triangles );
 	}
 	virtual bool IsStaticWorldModel() const { return !modelName.Icmpn( "_area", 5 ); }
@@ -263,7 +292,17 @@ public:
 		return false;
 	}
 	virtual bool NeedsReinstantiating( idRenderEntityLocal*, const viewDef_s*, int = 0 ) const { return false; }
-	virtual int FindSurfaceId( const char* ) { return -1; }
+	virtual int FindSurfaceId( const char* surfaceName ) {
+		if ( surfaceName == NULL ) {
+			return -1;
+		}
+		for ( int i = 0; i < surfaceNames.Num(); ++i ) {
+			if ( !surfaceNames[ i ].Icmp( surfaceName ) ) {
+				return surfaceIds[ i ];
+			}
+		}
+		return -1;
+	}
 	virtual void SetBounds( const idBounds& bounds ) { modelBounds = bounds; }
 	virtual void PurgePartialLoadableImages() {}
 	virtual void LoadPartialLoadableImages( bool = false ) {}
@@ -280,6 +319,10 @@ private:
 			modelSurfaces[ i ].geometry = NULL;
 		}
 		modelSurfaces.Clear();
+		surfaceNames.Clear();
+		surfaceIds.Clear();
+		surfaceGroupMaterials.Clear();
+		surfaceGroupNoAnimate.Clear();
 	}
 
 	void SetFallbackBounds() {
@@ -379,7 +422,208 @@ private:
 		return valid;
 	}
 
-	bool LoadMD5Skeleton() {
+	int FindMD5SurfaceGroup( const idStr& materialName, bool noAnimate ) const {
+		for ( int i = 0; i < surfaceGroupMaterials.Num(); ++i ) {
+			if ( surfaceGroupNoAnimate[ i ] == static_cast< int >( noAnimate ) &&
+				 !surfaceGroupMaterials[ i ].Icmp( materialName ) ) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	bool AppendMD5Indexes( int surfaceId, const idList< unsigned short >& indexes ) {
+		if ( surfaceId < 0 || surfaceId >= modelSurfaces.Num() ||
+			 modelSurfaces[ surfaceId ].geometry == NULL ) {
+			return false;
+		}
+
+		srfTriangles_t* triangles = modelSurfaces[ surfaceId ].geometry;
+		for ( int i = 0; i < indexes.Num(); ++i ) {
+			if ( indexes[ i ] >= triangles->numVerts ) {
+				return false;
+			}
+		}
+
+		const long long newCount64 = static_cast< long long >( triangles->numIndexes ) + indexes.Num();
+		if ( newCount64 > 0x7fffffffLL ) {
+			return false;
+		}
+		const int oldCount = triangles->numIndexes;
+		const int newCount = static_cast< int >( newCount64 );
+		glIndex_t* newIndexes = newCount > 0 ?
+			static_cast< glIndex_t* >( Mem_Alloc( newCount * sizeof( glIndex_t ) ) ) : NULL;
+		for ( int i = 0; i < oldCount; ++i ) {
+			newIndexes[ i ] = triangles->indexes[ i ];
+		}
+		for ( int i = 0; i < indexes.Num(); ++i ) {
+			newIndexes[ oldCount + i ] = static_cast< glIndex_t >( indexes[ i ] );
+		}
+		Mem_Free( triangles->indexes );
+		triangles->indexes = newIndexes;
+		triangles->numIndexes = newCount;
+		triangles->numAllocedIndices = newCount;
+		return true;
+	}
+
+	bool ReadMD5MeshBinary( idFile* file, bool keepSurface ) {
+		idStr meshName;
+		idStr materialName;
+		int meshIndex = 0;
+		int lodZeroIndex = 0;
+		int surfaceNum = -1;
+		int numMD5Verts = 0;
+		bool noAnimate = false;
+		bool deferred = false;
+		bool singleWeight = false;
+		int numVerts = 0;
+		int numTris = 0;
+		int numIndexes = 0;
+
+		bool valid = file->ReadString( meshName ) > 0 && !meshName.IsEmpty();
+		valid = valid && file->ReadInt( meshIndex ) == sizeof( meshIndex );
+		valid = valid && file->ReadInt( lodZeroIndex ) == sizeof( lodZeroIndex );
+		valid = valid && file->ReadInt( surfaceNum ) == sizeof( surfaceNum );
+		valid = valid && file->ReadInt( numMD5Verts ) == sizeof( numMD5Verts );
+		valid = valid && file->ReadBool( noAnimate ) == sizeof( byte );
+		valid = valid && file->ReadBool( deferred ) == sizeof( byte );
+		valid = valid && file->ReadBool( singleWeight ) == sizeof( byte );
+		valid = valid && file->ReadString( materialName ) > 0 && !materialName.IsEmpty();
+		valid = valid && file->ReadInt( numVerts ) == sizeof( numVerts );
+		valid = valid && file->ReadInt( numTris ) == sizeof( numTris );
+		valid = valid && file->ReadInt( numIndexes ) == sizeof( numIndexes );
+		valid = valid && numMD5Verts >= 0 && numMD5Verts <= ( 1 << 24 );
+		valid = valid && numVerts >= 0 && numVerts <= ( 1 << 24 );
+		valid = valid && numTris >= 0 && numTris <= ( 1 << 24 );
+		valid = valid && numIndexes >= 0 && numIndexes <= ( 1 << 27 );
+		if ( !valid ) {
+			return false;
+		}
+
+		idList< unsigned short > indexes;
+		if ( keepSurface ) {
+			indexes.SetNum( numIndexes );
+			for ( int i = 0; valid && i < numIndexes; ++i ) {
+				valid = file->ReadUnsignedShort( indexes[ i ] ) == sizeof( indexes[ i ] );
+			}
+		} else {
+			int byteCount = 0;
+			valid = CheckedByteCount( numIndexes, sizeof( unsigned short ), byteCount ) && ReadDiscard( file, byteCount );
+		}
+
+		int numSilEdges = 0;
+		valid = valid && file->ReadInt( numSilEdges ) == sizeof( numSilEdges );
+		valid = valid && numSilEdges >= 0 && numSilEdges <= ( 1 << 25 );
+		int byteCount = 0;
+		valid = valid && CheckedByteCount( numSilEdges, 4 * sizeof( unsigned short ), byteCount ) && ReadDiscard( file, byteCount );
+		if ( valid && !deferred ) {
+			valid = CheckedByteCount( numVerts, sizeof( short ), byteCount ) && ReadDiscard( file, byteCount );
+		}
+
+		int numSourceVerts = 0;
+		int numOutputVerts = 0;
+		int numMirroredVerts = 0;
+		int deformNumIndexes = 0;
+		int deformNumSilEdges = 0;
+		int numReferencedJoints = 0;
+		valid = valid && file->ReadInt( numSourceVerts ) == sizeof( numSourceVerts );
+		valid = valid && file->ReadInt( numOutputVerts ) == sizeof( numOutputVerts );
+		valid = valid && file->ReadInt( numMirroredVerts ) == sizeof( numMirroredVerts );
+		valid = valid && numSourceVerts >= 0 && numSourceVerts <= ( 1 << 24 );
+		valid = valid && numOutputVerts >= 0 && numOutputVerts <= ( 1 << 24 );
+		valid = valid && numMirroredVerts >= 0 && numMirroredVerts <= numOutputVerts;
+		valid = valid && CheckedByteCount( numMirroredVerts, sizeof( int ), byteCount ) && ReadDiscard( file, byteCount );
+		valid = valid && file->ReadInt( deformNumIndexes ) == sizeof( deformNumIndexes );
+		valid = valid && file->ReadInt( deformNumSilEdges ) == sizeof( deformNumSilEdges );
+		valid = valid && file->ReadInt( numReferencedJoints ) == sizeof( numReferencedJoints );
+		valid = valid && deformNumIndexes >= 0 && deformNumIndexes <= ( 1 << 27 );
+		valid = valid && deformNumSilEdges >= 0 && deformNumSilEdges <= ( 1 << 25 );
+		valid = valid && numReferencedJoints >= 0 && numReferencedJoints <= 255;
+		valid = valid && ReadDiscard( file, numReferencedJoints );
+		if ( !valid ) {
+			return false;
+		}
+
+		// A deferred MD5 mesh owns only an index range.  Its vertices are stored
+		// once on the first mesh in the matching material/noAnimate group.
+		srfTriangles_t* triangles = keepSurface && !deferred ? AllocSurfaceTriangles( numOutputVerts, numIndexes ) : NULL;
+		if ( keepSurface && !deferred && triangles == NULL ) {
+			return false;
+		}
+		if ( triangles != NULL ) {
+			triangles->bounds.Clear();
+			triangles->tangentsCalculated = true;
+		}
+
+		const idMaterial* material = keepSurface ? declHolder.FindMaterial( materialName, true ) : NULL;
+		const bool lowRangeTexCoords = material != NULL && material->TestMaterialFlag( MF_LOWRANGEUVCOMPRESS );
+		if ( keepSurface && !deferred ) {
+			for ( int i = 0; valid && i < numOutputVerts; ++i ) {
+				idVec2 st;
+				idVec3 normal;
+				idVec4 tangent;
+				idDrawVert& vertex = triangles->verts[ i ];
+				valid = file->ReadVec3( vertex.xyz ) == sizeof( idVec3 );
+				valid = valid && file->ReadVec2( st ) == sizeof( idVec2 );
+				valid = valid && file->ReadVec3( normal ) == sizeof( idVec3 );
+				valid = valid && file->ReadVec4( tangent ) == sizeof( idVec4 );
+				valid = valid && file->Read( vertex.color, 4 ) == 4;
+				if ( valid ) {
+					vertex.SetST( lowRangeTexCoords, st );
+					vertex.SetNormal( normal );
+					vertex.SetTangent( tangent.ToVec3() );
+					vertex.SetBiTangentSign( tangent.w );
+					triangles->bounds += vertex.xyz;
+				}
+			}
+		} else {
+			valid = CheckedByteCount( numOutputVerts, 12 * sizeof( float ) + 4, byteCount ) && ReadDiscard( file, byteCount );
+		}
+
+		const int weightStride = singleWeight ? 1 : 8;
+		valid = valid && CheckedByteCount( numOutputVerts, weightStride, byteCount ) && ReadDiscard( file, byteCount );
+		bool perfectHull = false;
+		float surfaceArea = 0.0f;
+		valid = valid && file->ReadBool( perfectHull ) == sizeof( byte );
+		valid = valid && file->ReadFloat( surfaceArea ) == sizeof( surfaceArea );
+
+		if ( triangles != NULL ) {
+			for ( int i = 0; valid && i < numIndexes; ++i ) {
+				valid = indexes[ i ] < numOutputVerts;
+				if ( valid ) {
+					triangles->indexes[ i ] = static_cast< glIndex_t >( indexes[ i ] );
+				}
+			}
+			if ( valid ) {
+				const int groupId = modelSurfaces.Num();
+				modelSurface_t surface;
+				surface.id = groupId;
+				surface.material = material;
+				surface.geometry = triangles;
+				modelSurfaces.Append( surface );
+				surfaceGroupMaterials.Append( materialName );
+				surfaceGroupNoAnimate.Append( static_cast< int >( noAnimate ) );
+				surfaceNames.Append( meshName );
+				surfaceIds.Append( groupId );
+			} else {
+				FreeSurfaceTriangles( triangles );
+			}
+		} else if ( valid && keepSurface && deferred ) {
+			const int groupId = FindMD5SurfaceGroup( materialName, noAnimate );
+			if ( groupId < 0 || !AppendMD5Indexes( groupId, indexes ) ) {
+				common->Warning( "MD5 binary '%s': deferred mesh '%s' has no compatible surface group",
+					modelName.c_str(), meshName.c_str() );
+				valid = false;
+			} else {
+				surfaceNames.Append( meshName );
+				surfaceIds.Append( groupId );
+			}
+		}
+
+		return valid;
+	}
+
+	bool LoadMD5BinaryReferencePose() {
 		if ( fileSystem == NULL ) {
 			return false;
 		}
@@ -388,10 +632,11 @@ private:
 		generated += modelName;
 		generated.StripFileExtension();
 		generated.SetFileExtension( "md5b" );
-		idFile* file = fileSystem->OpenFileRead( generated, true, NULL, true );
-		if ( file == NULL ) {
+		idFile* sourceFile = fileSystem->OpenFileRead( generated, true, NULL, true );
+		if ( sourceFile == NULL ) {
 			return false;
 		}
+		idFile* file = fileSystem->OpenBufferedFile( sourceFile );
 
 		int version = 0;
 		int numLods = 0;
@@ -427,12 +672,26 @@ private:
 			}
 		}
 
+		for ( int lod = 0; valid && lod < numLods; ++lod ) {
+			int numMeshes = 0;
+			valid = file->ReadInt( numMeshes ) == sizeof( numMeshes );
+			valid = valid && numMeshes >= 0 && numMeshes <= 65536;
+			for ( int mesh = 0; valid && mesh < numMeshes; ++mesh ) {
+				valid = ReadMD5MeshBinary( file, lod == 0 );
+			}
+		}
+
+		idBounds fileBounds;
+		valid = valid && file->ReadVec3( fileBounds[ 0 ] ) == sizeof( idVec3 );
+		valid = valid && file->ReadVec3( fileBounds[ 1 ] ) == sizeof( idVec3 );
 		if ( valid ) {
 			for ( int i = 0; i < numJoints; i++ ) {
 				modelJoints[ i ].parent = parents[ i ] >= 0 && parents[ i ] < numJoints ? &modelJoints[ parents[ i ] ] : NULL;
 			}
+			modelBounds = fileBounds;
 			timeStamp = file->Timestamp();
 		} else {
+			ClearSurfaces();
 			modelJoints.Clear();
 			defaultPose.Clear();
 		}
@@ -443,6 +702,10 @@ private:
 	idStr modelName;
 	idBounds modelBounds;
 	idList< modelSurface_t > modelSurfaces;
+	idStrList surfaceNames;
+	idList< int > surfaceIds;
+	idStrList surfaceGroupMaterials;
+	idList< int > surfaceGroupNoAnimate;
 	idList< idMD5Joint > modelJoints;
 	idList< idJointQuat > defaultPose;
 	idList< int > fixedAreas;

@@ -15,6 +15,7 @@
 #include "RenderSystemBackend.h"
 #include "GuiModel.h"
 #include "DeviceContext.h"
+#include "../decllib/declTypeHolder.h"
 #include "../sys/sys_render.h"
 
 #include <GL/gl.h>
@@ -84,6 +85,326 @@ const T* DefinitionForHandle( const idList< T* >& definitions, qhandle_t handle 
 	return definitions[ handle ];
 }
 
+bool ReadProcInt( idFile* file, int& value ) {
+	return file != NULL && file->ReadInt( value ) == sizeof( value );
+}
+
+bool ReadProcFloat( idFile* file, float& value ) {
+	return file != NULL && file->ReadFloat( value ) == sizeof( value );
+}
+
+bool ReadProcString( idFile* file, idStr& value ) {
+	if ( file == NULL || file->Tell() + static_cast< int >( sizeof( int ) ) > file->Length() ) {
+		return false;
+	}
+	const int before = file->Tell();
+	file->ReadString( value );
+	return file->Tell() > before && file->Tell() <= file->Length();
+}
+
+bool ReadProcBounds( idFile* file, idBounds& bounds ) {
+	return file->ReadVec3( bounds[ 0 ] ) == sizeof( idVec3 ) &&
+		file->ReadVec3( bounds[ 1 ] ) == sizeof( idVec3 );
+}
+
+void DeriveProcFacePlanes( srfTriangles_t* triangles ) {
+	if ( triangles == NULL || triangles->numIndexes < 3 ) {
+		return;
+	}
+
+	const int numFaces = triangles->numIndexes / 3;
+	triangles->facePlanes = static_cast< idPlane* >( Mem_ClearedAlloc( numFaces * sizeof( idPlane ) ) );
+	triangles->numAllocatedFacePlanes = numFaces;
+	for ( int i = 0; i < numFaces; ++i ) {
+		const int i0 = triangles->indexes[ i * 3 + 0 ];
+		const int i1 = triangles->indexes[ i * 3 + 1 ];
+		const int i2 = triangles->indexes[ i * 3 + 2 ];
+		if ( i0 < 0 || i0 >= triangles->numVerts ||
+			i1 < 0 || i1 >= triangles->numVerts ||
+			i2 < 0 || i2 >= triangles->numVerts ) {
+			continue;
+		}
+		triangles->facePlanes[ i ].FromPoints(
+			triangles->verts[ i0 ].xyz,
+			triangles->verts[ i1 ].xyz,
+			triangles->verts[ i2 ].xyz
+		);
+	}
+	triangles->facePlanesCalculated = true;
+}
+
+idRenderModel* ParseProcModelBinary(
+	idFile* file,
+	const int chunkEnd,
+	const idStrList& materials,
+	const bool proc009
+) {
+	idStr modelName;
+	int numSurfaces = 0;
+	if ( !ReadProcString( file, modelName ) || modelName.IsEmpty() ||
+		!ReadProcInt( file, numSurfaces ) || numSurfaces < 0 || numSurfaces > 65536 ) {
+		return NULL;
+	}
+
+	idRenderModel* model = renderModelManager->AllocModel();
+	if ( model == NULL ) {
+		return NULL;
+	}
+	model->InitEmpty( modelName );
+
+	idList< int > fixedAreas;
+	if ( !proc009 ) {
+		int numFixedAreas = 0;
+		if ( !ReadProcInt( file, numFixedAreas ) || numFixedAreas < 0 || numFixedAreas > 65536 ) {
+			renderModelManager->FreeModel( model );
+			return NULL;
+		}
+		fixedAreas.SetNum( numFixedAreas );
+		for ( int i = 0; i < numFixedAreas; ++i ) {
+			if ( !ReadProcInt( file, fixedAreas[ i ] ) ) {
+				renderModelManager->FreeModel( model );
+				return NULL;
+			}
+		}
+		model->SetFixedAreas( fixedAreas );
+	}
+
+	idBounds modelBounds;
+	modelBounds.Clear();
+	bool valid = true;
+	for ( int surfaceIndex = 0; valid && surfaceIndex < numSurfaces; ++surfaceIndex ) {
+		int materialIndex = -1;
+		bool hasVertexColors = false;
+		idBounds surfaceBounds;
+		int numVerts = 0;
+		int numIndexes = 0;
+		int numIndexTree = 0;
+
+		valid = ReadProcInt( file, materialIndex ) &&
+			materialIndex >= 0 && materialIndex < materials.Num();
+		valid = valid && file->ReadBool( hasVertexColors ) == sizeof( byte );
+		valid = valid && ReadProcBounds( file, surfaceBounds );
+		valid = valid && ReadProcInt( file, numVerts ) && numVerts >= 0 && numVerts <= ( 1 << 24 );
+		valid = valid && ReadProcInt( file, numIndexes ) && numIndexes >= 0 && numIndexes <= ( 1 << 27 );
+		if ( valid && !proc009 ) {
+			valid = ReadProcInt( file, numIndexTree ) && numIndexTree >= 0 && numIndexTree <= ( 1 << 24 );
+		}
+		if ( !valid ) {
+			break;
+		}
+
+		srfTriangles_t* triangles = model->AllocSurfaceTriangles( numVerts, numIndexes );
+		if ( triangles == NULL ) {
+			valid = false;
+			break;
+		}
+		triangles->bounds = surfaceBounds;
+		triangles->tangentsCalculated = true;
+
+		for ( int vertexIndex = 0; valid && vertexIndex < numVerts; ++vertexIndex ) {
+			int floatCount = 0;
+			valid = ReadProcInt( file, floatCount ) && floatCount >= 8 && floatCount <= 32;
+			float values[ 32 ] = { 0.0f };
+			if ( valid ) {
+				valid = file->Read( values, floatCount * sizeof( float ) ) == floatCount * sizeof( float );
+				if ( valid ) {
+					LittleRevBytes( values, sizeof( float ), floatCount );
+				}
+			}
+
+			int colorCount = 0;
+			valid = valid && ReadProcInt( file, colorCount ) && colorCount >= 0 && colorCount <= 16;
+			byte colors[ 16 ] = { 255, 255, 255, 255 };
+			if ( valid && colorCount > 0 ) {
+				valid = file->Read( colors, colorCount ) == colorCount;
+			}
+			if ( !valid ) {
+				break;
+			}
+
+			idDrawVert& vertex = triangles->verts[ vertexIndex ];
+			vertex.xyz.Set( values[ 0 ], values[ 1 ], values[ 2 ] );
+			vertex.SetST( false, idVec2( values[ 3 ], values[ 4 ] ) );
+			vertex.SetNormal( idVec3( values[ 5 ], values[ 6 ], values[ 7 ] ) );
+			if ( floatCount >= 12 ) {
+				vertex.SetTangent( idVec3( values[ 8 ], values[ 9 ], values[ 10 ] ) );
+				vertex.SetBiTangentSign( values[ 11 ] );
+			}
+			for ( int i = 0; i < 4; ++i ) {
+				vertex.color[ i ] = hasVertexColors && colorCount >= 4 ? colors[ i ] : 255;
+			}
+		}
+
+		for ( int index = 0; valid && index < numIndexes; ++index ) {
+			int value = 0;
+			valid = ReadProcInt( file, value ) && value >= 0 && value < numVerts;
+			if ( valid ) {
+				triangles->indexes[ index ] = static_cast< glIndex_t >( value );
+			}
+		}
+
+		const int indexTreeBytes = numIndexTree * ( 6 * sizeof( float ) + 4 * sizeof( int ) );
+		if ( valid && ( indexTreeBytes < 0 || file->Tell() + indexTreeBytes > chunkEnd ) ) {
+			valid = false;
+		}
+		if ( valid && indexTreeBytes > 0 ) {
+			valid = file->Seek( indexTreeBytes, FS_SEEK_CUR ) >= 0;
+		}
+
+		if ( !valid ) {
+			model->FreeSurfaceTriangles( triangles );
+			break;
+		}
+
+		DeriveProcFacePlanes( triangles );
+		modelSurface_t surface;
+		surface.id = surfaceIndex;
+		surface.material = declHolder.FindMaterial( materials[ materialIndex ], true );
+		surface.geometry = triangles;
+		model->AddSurface( surface );
+		modelBounds += surfaceBounds;
+	}
+
+	valid = valid && file->Tell() <= chunkEnd;
+	if ( !valid ) {
+		renderModelManager->FreeModel( model );
+		return NULL;
+	}
+
+	file->Seek( chunkEnd, FS_SEEK_SET );
+	model->SetBounds( modelBounds );
+	model->FinishSurfaces();
+	return model;
+}
+
+bool LoadProcBinary( const char* fileName, idList< idRenderModel* >& localModels ) {
+	idFile* sourceFile = fileSystem->OpenFileRead( fileName, true, NULL, true );
+	if ( sourceFile == NULL ) {
+		return false;
+	}
+	idFile* file = fileSystem->OpenBufferedFile( sourceFile );
+
+	idStr header;
+	bool valid = ReadProcString( file, header );
+	const bool proc009 = valid && !header.Icmp( "mapProcFile009" );
+	valid = valid && ( proc009 || !header.Icmp( "mapProcFile010" ) );
+	idStrList materials;
+	int modelCount = 0;
+
+	while ( valid && file->Tell() < file->Length() ) {
+		idStr section;
+		valid = ReadProcString( file, section );
+		if ( !valid ) {
+			break;
+		}
+
+		if ( !section.Icmp( "materials" ) ) {
+			int numMaterials = 0;
+			valid = ReadProcInt( file, numMaterials ) && numMaterials >= 0 && numMaterials <= 65536;
+			materials.SetNum( valid ? numMaterials : 0 );
+			for ( int i = 0; valid && i < numMaterials; ++i ) {
+				valid = ReadProcString( file, materials[ i ] ) && !materials[ i ].IsEmpty();
+			}
+			continue;
+		}
+
+		int chunkLength = 0;
+		valid = ReadProcInt( file, chunkLength );
+		const int chunkStart = file->Tell();
+		const int chunkEnd = chunkStart + chunkLength;
+		valid = valid && chunkLength >= 0 && chunkEnd >= chunkStart && chunkEnd <= file->Length();
+		if ( !valid ) {
+			break;
+		}
+
+		if ( !section.Icmp( "model" ) ) {
+			idRenderModel* model = ParseProcModelBinary( file, chunkEnd, materials, proc009 );
+			if ( model == NULL ) {
+				valid = false;
+				break;
+			}
+			renderModelManager->AddModel( model );
+			localModels.Append( model );
+			++modelCount;
+		} else {
+			valid = file->Seek( chunkEnd, FS_SEEK_SET ) >= 0;
+		}
+	}
+
+	fileSystem->CloseFile( file );
+	if ( valid ) {
+		common->Printf( "Loaded %d inline render models from %s\n", modelCount, fileName );
+	}
+	return valid;
+}
+
+void DrawImmediateModel( const idRenderModel* model, const renderEntity_t* entity, const renderView_t* renderView ) {
+	if ( model == NULL || renderView == NULL ) {
+		return;
+	}
+
+	for ( int surfaceIndex = 0; surfaceIndex < model->NumSurfaces(); ++surfaceIndex ) {
+		const modelSurface_t* surface = model->Surface( surfaceIndex );
+		if ( surface == NULL || surface->geometry == NULL ||
+			 surface->geometry->verts == NULL || surface->geometry->indexes == NULL ) {
+			continue;
+		}
+		if ( entity != NULL && surface->id >= 0 && surface->id < MAX_SURFACE_BITS - 1 &&
+			 entity->hideSurfaceMask.Get( surface->id ) != 0 ) {
+			continue;
+		}
+
+		const idMaterial* material = renderView->globalMaterial != NULL ? renderView->globalMaterial :
+			( entity != NULL && entity->customShader != NULL ? entity->customShader : surface->material );
+		if ( material != NULL && !material->IsDrawn() ) {
+			continue;
+		}
+
+		idImage* image = material != NULL ? material->GetEditorImage() : NULL;
+		if ( image != NULL && image->texnum != idImage::TEXTURE_NOT_LOADED && !image->defaulted ) {
+			glEnable( GL_TEXTURE_2D );
+			glBindTexture( GL_TEXTURE_2D, image->texnum );
+			glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+		} else {
+			glDisable( GL_TEXTURE_2D );
+		}
+		if ( material != NULL && material->Coverage() == MC_TRANSLUCENT ) {
+			glEnable( GL_BLEND );
+			glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+			glDepthMask( GL_FALSE );
+		} else {
+			glDisable( GL_BLEND );
+			glDepthMask( GL_TRUE );
+		}
+
+		const float redScale = entity != NULL ? entity->shaderParms[ 0 ] : 1.0f;
+		const float greenScale = entity != NULL ? entity->shaderParms[ 1 ] : 1.0f;
+		const float blueScale = entity != NULL ? entity->shaderParms[ 2 ] : 1.0f;
+		const float alphaScale = entity != NULL ? entity->shaderParms[ 3 ] : 1.0f;
+		const srfTriangles_t* triangles = surface->geometry;
+		glBegin( triangles->mode == PM_POINTSPRITE ? GL_POINTS : GL_TRIANGLES );
+		for ( int index = 0; index < triangles->numIndexes; ++index ) {
+			const int vertexIndex = triangles->indexes[ index ];
+			if ( vertexIndex < 0 || vertexIndex >= triangles->numVerts ) {
+				continue;
+			}
+			const idDrawVert& vertex = triangles->verts[ vertexIndex ];
+			const idVec3 normal = vertex.GetNormal();
+			const idVec2 st = vertex.GetST();
+			glColor4ub(
+				static_cast< byte >( idMath::ClampInt( 0, 255, idMath::Ftoi( vertex.color[ 0 ] * redScale ) ) ),
+				static_cast< byte >( idMath::ClampInt( 0, 255, idMath::Ftoi( vertex.color[ 1 ] * greenScale ) ) ),
+				static_cast< byte >( idMath::ClampInt( 0, 255, idMath::Ftoi( vertex.color[ 2 ] * blueScale ) ) ),
+				static_cast< byte >( idMath::ClampInt( 0, 255, idMath::Ftoi( vertex.color[ 3 ] * alphaScale ) ) )
+			);
+			glNormal3fv( normal.ToFloatPtr() );
+			glTexCoord2fv( st.ToFloatPtr() );
+			glVertex3fv( vertex.xyz.ToFloatPtr() );
+		}
+		glEnd();
+	}
+}
+
 }
 
 idRenderWorldLocal::idRenderWorldLocal() :
@@ -100,6 +421,12 @@ idRenderWorldLocal::~idRenderWorldLocal() {
 }
 
 void idRenderWorldLocal::Clear() {
+	for ( int i = 0; i < localModels.Num(); ++i ) {
+		if ( localModels[ i ] != NULL && renderModelManager != NULL ) {
+			renderModelManager->FreeModel( localModels[ i ] );
+		}
+	}
+	localModels.Clear();
 	ClearDefinitions( entityDefs );
 	ClearDefinitions( lightDefs );
 	ClearDefinitions( effectDefs );
@@ -116,6 +443,20 @@ void idRenderWorldLocal::Clear() {
 bool idRenderWorldLocal::InitFromMap( const char *name ) {
 	Clear();
 	mapName = name != NULL ? name : "";
+	if ( mapName.IsEmpty() ) {
+		return true;
+	}
+
+	idStr procName = mapName;
+	procName.SetFileExtension( "procb" );
+	if ( !LoadProcBinary( procName, localModels ) ) {
+		common->Warning( "idRenderWorldLocal::InitFromMap: failed to load '%s'", procName.c_str() );
+		for ( int i = 0; i < localModels.Num(); ++i ) {
+			renderModelManager->FreeModel( localModels[ i ] );
+		}
+		localModels.Clear();
+		return false;
+	}
 	return true;
 }
 
@@ -323,6 +664,7 @@ void idRenderWorldLocal::PerformRenderScene( const renderView_t *renderView ) {
 	glDepthFunc( GL_LEQUAL );
 	glDisable( GL_CULL_FACE );
 	glDisable( GL_ALPHA_TEST );
+	glDisable( GL_LIGHTING );
 	glShadeModel( GL_SMOOTH );
 
 	const float zNear = renderView->nearPlane > 0.0f ? renderView->nearPlane : 1.0f;
@@ -355,6 +697,15 @@ void idRenderWorldLocal::PerformRenderScene( const renderView_t *renderView ) {
 	glPushMatrix();
 	glLoadMatrixf( viewMatrix );
 
+	// Proc inline models named _area* are the static world geometry.  They are
+	// already in world coordinates and are not represented by entityDefs.
+	for ( int modelIndex = 0; modelIndex < localModels.Num(); ++modelIndex ) {
+		idRenderModel* model = localModels[ modelIndex ];
+		if ( model != NULL && model->IsStaticWorldModel() ) {
+			DrawImmediateModel( model, NULL, renderView );
+		}
+	}
+
 	for ( int entityIndex = 0; entityIndex < entityDefs.Num(); entityIndex++ ) {
 		renderEntity_t* entity = entityDefs[ entityIndex ];
 		if ( entity == NULL ) {
@@ -384,59 +735,7 @@ void idRenderWorldLocal::PerformRenderScene( const renderView_t *renderView ) {
 		glPushMatrix();
 		glMultMatrixf( entityMatrix );
 
-		for ( int surfaceIndex = 0; surfaceIndex < model->NumSurfaces(); surfaceIndex++ ) {
-			if ( surfaceIndex < MAX_SURFACE_BITS - 1 && entity->hideSurfaceMask.Get( surfaceIndex ) != 0 ) {
-				continue;
-			}
-			const modelSurface_t* surface = model->Surface( surfaceIndex );
-			if ( surface == NULL || surface->geometry == NULL ||
-				 surface->geometry->verts == NULL || surface->geometry->indexes == NULL ) {
-				continue;
-			}
-
-			const idMaterial* material = renderView->globalMaterial != NULL ? renderView->globalMaterial :
-				( entity->customShader != NULL ? entity->customShader : surface->material );
-			if ( material != NULL && !material->IsDrawn() ) {
-				continue;
-			}
-			idImage* image = material != NULL ? material->GetEditorImage() : NULL;
-			if ( image != NULL && image->texnum != idImage::TEXTURE_NOT_LOADED && !image->defaulted ) {
-				glEnable( GL_TEXTURE_2D );
-				glBindTexture( GL_TEXTURE_2D, image->texnum );
-			} else {
-				glDisable( GL_TEXTURE_2D );
-			}
-			if ( material != NULL && material->Coverage() == MC_TRANSLUCENT ) {
-				glEnable( GL_BLEND );
-				glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-				glDepthMask( GL_FALSE );
-			} else {
-				glDisable( GL_BLEND );
-				glDepthMask( GL_TRUE );
-			}
-
-			const srfTriangles_t* triangles = surface->geometry;
-			glBegin( triangles->mode == PM_POINTSPRITE ? GL_POINTS : GL_TRIANGLES );
-			for ( int index = 0; index < triangles->numIndexes; index++ ) {
-				const int vertexIndex = triangles->indexes[ index ];
-				if ( vertexIndex < 0 || vertexIndex >= triangles->numVerts ) {
-					continue;
-				}
-				const idDrawVert& vertex = triangles->verts[ vertexIndex ];
-				const idVec3 normal = vertex.GetNormal();
-				const idVec2 st = vertex.GetST();
-				glColor4ub(
-					static_cast< byte >( idMath::ClampInt( 0, 255, idMath::Ftoi( vertex.color[ 0 ] * entity->shaderParms[ 0 ] ) ) ),
-					static_cast< byte >( idMath::ClampInt( 0, 255, idMath::Ftoi( vertex.color[ 1 ] * entity->shaderParms[ 1 ] ) ) ),
-					static_cast< byte >( idMath::ClampInt( 0, 255, idMath::Ftoi( vertex.color[ 2 ] * entity->shaderParms[ 2 ] ) ) ),
-					static_cast< byte >( idMath::ClampInt( 0, 255, idMath::Ftoi( vertex.color[ 3 ] * entity->shaderParms[ 3 ] ) ) )
-				);
-				glNormal3fv( normal.ToFloatPtr() );
-				glTexCoord2fv( st.ToFloatPtr() );
-				glVertex3fv( vertex.xyz.ToFloatPtr() );
-			}
-			glEnd();
-		}
+		DrawImmediateModel( model, entity, renderView );
 		glPopMatrix();
 	}
 

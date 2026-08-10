@@ -28,6 +28,68 @@ struct recoveredMaterialStage_t {
 	}
 };
 
+// Recovered verbatim from the ETQW 1.5 executable.  These flags are consumed
+// by both the collision-model loader and game code, so silently ignoring one
+// of these material keywords changes the meaning of the compiled .cmb data.
+struct infoParm_t {
+	const char*	name;
+	bool		clearSolid;
+	int			surfaceFlags;
+	int			contents;
+};
+
+static const infoParm_t infoParms[] = {
+	{ "solid",             false, 0,                     CONTENTS_SOLID },
+	{ "water",             true,  0,                     CONTENTS_WATER },
+	{ "playerclip",        false, 0,                     CONTENTS_PLAYERCLIP },
+	{ "vehicleclip",       false, 0,                     CONTENTS_VEHICLECLIP },
+	{ "moveableclip",      false, 0,                     CONTENTS_MOVEABLECLIP },
+	{ "rendermodelclip",   false, 0,                     CONTENTS_RENDERMODEL },
+	{ "ikclip",            false, 0,                     CONTENTS_IKCLIP },
+	{ "trigger",           false, 0,                     CONTENTS_TRIGGER },
+	{ "nonsolid",          true,  SURF_NONSOLID,         0 },
+	{ "nullNormal",        false, SURF_NULLNORMAL,       0 },
+	{ "projectileclip",    false, 0,                     CONTENTS_PROJECTILE },
+	{ "explosionclip",     false, 0,                     CONTENTS_EXPLOSIONSOLID },
+	{ "aassolidplayer",    false, 0,                     CONTENTS_AAS_SOLID_PLAYER },
+	{ "aassolidvehicle",   false, 0,                     CONTENTS_AAS_SOLID_VEHICLE },
+	{ "aasclusterportal",  false, 0,                     CONTENTS_AAS_CLUSTER_PORTAL },
+	{ "aasobstacle",       false, 0,                     CONTENTS_AAS_OBSTACLE },
+	{ "areaportal",        true,  0,                     CONTENTS_AREAPORTAL },
+	{ "qer_nocarve",       true,  0,                     CONTENTS_NOCSG },
+	{ "occluder",          true,  0,                     CONTENTS_OCCLUDER },
+	{ "discrete",          true,  SURF_DISCRETE,         0 },
+	{ "noFragment",        false, SURF_NOFRAGMENT,       0 },
+	{ "slick",             false, SURF_SLICK,            0 },
+	{ "collision",         false, SURF_COLLISION,        0 },
+	{ "shadowcollision",   false, SURF_SHADOWCOLLISION,  0 },
+	{ "allcontent",        false, 0,                     -1 },
+	{ "noimpact",          false, SURF_NOIMPACT,         0 },
+	{ "nodamage",          false, SURF_NODAMAGE,         0 },
+	{ "ladder",            false, SURF_LADDER,           0 },
+	{ "nosteps",           false, SURF_NOSTEPS,          0 },
+	{ "noplant",           false, SURF_NOPLANT,          0 },
+	{ "noareas",           false, SURF_NOAREAS,          0 },
+	{ "walkerclip",        false, 0,                     CONTENTS_WALKERCLIP },
+	{ "forcefieldclip",    false, 0,                     CONTENTS_FORCEFIELD },
+	{ "crosshairclip",     false, 0,                     CONTENTS_CROSSHAIRSOLID },
+	{ "flyerhiveclip",     false, 0,                     CONTENTS_FLYERHIVECLIP }
+};
+
+struct portalParm_t {
+	const char*	name;
+	int			flags;
+};
+
+static const portalParm_t portalParms[] = {
+	{ "vis",             BIT( PORTAL_VIS ) },
+	{ "outside",         BIT( PORTAL_OUTSIDE ) },
+	{ "blockAmbient",    BIT( PORTAL_BLOCKAMBIENT ) },
+	{ "audio",           BIT( PORTAL_AUDIO ) },
+	{ "playzone",        BIT( PORTAL_PLAYZONE ) },
+	{ "occlusionQuery",  BIT( PORTAL_OCCTEST ) }
+};
+
 float SortForName( idToken& token ) {
 	if ( !token.Icmp( "subview" ) ) {
 		return SS_SUBVIEW;
@@ -366,6 +428,32 @@ bool idMaterial::SetDefaultText() {
 	return true;
 }
 
+bool idMaterial::CheckSurfaceParm( idToken* token ) {
+	for ( int i = 0; i < static_cast< int >( sizeof( infoParms ) / sizeof( infoParms[ 0 ] ) ); ++i ) {
+		if ( token->Icmp( infoParms[ i ].name ) != 0 ) {
+			continue;
+		}
+
+		surfaceFlags |= infoParms[ i ].surfaceFlags;
+		contentFlags |= infoParms[ i ].contents;
+		if ( infoParms[ i ].clearSolid ) {
+			contentFlags &= ~CONTENTS_SOLID;
+		}
+		return true;
+	}
+	return false;
+}
+
+bool idMaterial::CheckPortalParm( idToken* token ) {
+	for ( int i = 0; i < static_cast< int >( sizeof( portalParms ) / sizeof( portalParms[ 0 ] ) ); ++i ) {
+		if ( token->Icmp( portalParms[ i ].name ) == 0 ) {
+			portalFlags |= portalParms[ i ].flags;
+			return true;
+		}
+	}
+	return false;
+}
+
 bool idMaterial::Parse( const char* text, const int textLength ) {
 	const float oldSurfaceArea = surfaceArea;
 	FreeData();
@@ -413,7 +501,18 @@ bool idMaterial::Parse( const char* text, const int textLength ) {
 		}
 
 		if ( depth == 1 ) {
-			if ( !token.Icmp( "surfaceType" ) ) {
+			if ( CheckSurfaceParm( &token ) ) {
+				continue;
+			} else if ( !token.Icmp( "portal" ) ) {
+				if ( src.ReadTokenOnLine( &token ) && !CheckPortalParm( &token ) ) {
+					common->Warning( "unknown portal parameter '%s' in '%s'", token.c_str(), GetName() );
+				}
+			} else if ( !token.Icmp( "massive" ) ) {
+				// Marks the model surface consumed by sdAdEntity.  The original
+				// parser also keeps advert surfaces from being merged by dmap.
+				materialFlags |= MF_ADVERT;
+				surfaceFlags |= SURF_DISCRETE;
+			} else if ( !token.Icmp( "surfaceType" ) ) {
 				if ( src.ReadTokenOnLine( &token ) ) {
 					surfaceTypeDecl = declHolder.FindSurfaceType( token.c_str(), false );
 					if ( surfaceTypeDecl == NULL ) {

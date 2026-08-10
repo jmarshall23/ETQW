@@ -1311,20 +1311,25 @@ idFile_Buffered
 
 idFile_Buffered::idFile_Buffered( const int bufferGranularity ) :
 	source( NULL ),
-	granularity( bufferGranularity ),
+	granularity( Max( 1, bufferGranularity ) ),
 	available( 0 ),
 	sourceOffset( 0 ),
-	filePtr( NULL ),
-	curPtr( NULL ) {
+	filePtr( static_cast< const byte* >( Mem_Alloc( Max( 1, bufferGranularity ) ) ) ),
+	curPtr( filePtr ) {
 }
 
 idFile_Buffered::idFile_Buffered( idFile* sourceFile, const int bufferGranularity ) :
 	source( sourceFile ),
-	granularity( bufferGranularity ),
+	granularity( sourceFile != NULL ? Min( Max( 1, bufferGranularity ), Max( 1, sourceFile->Length() ) ) : Max( 1, bufferGranularity ) ),
 	available( 0 ),
-	sourceOffset( sourceFile != NULL ? sourceFile->Tell() : 0 ),
+	sourceOffset( 0 ),
 	filePtr( NULL ),
 	curPtr( NULL ) {
+	filePtr = static_cast< const byte* >( Mem_Alloc( granularity ) );
+	curPtr = filePtr;
+	if ( source != NULL && source->Tell() != 0 ) {
+		source->Seek( 0, FS_SEEK_SET );
+	}
 }
 
 idFile_Buffered::~idFile_Buffered() {
@@ -1332,30 +1337,101 @@ idFile_Buffered::~idFile_Buffered() {
 }
 
 int idFile_Buffered::Read( void* buffer, int len ) {
-	return source != NULL ? source->Read( buffer, len ) : 0;
+	if ( source == NULL || buffer == NULL || len <= 0 ) {
+		return 0;
+	}
+
+	byte* output = static_cast< byte* >( buffer );
+	int remaining = len;
+	while ( remaining > 0 ) {
+		if ( available == 0 ) {
+			sourceOffset = source->Tell();
+			available = source->Read( const_cast< byte* >( filePtr ), granularity );
+			curPtr = filePtr;
+			if ( available <= 0 ) {
+				available = 0;
+				break;
+			}
+		}
+
+		const int copyLength = Min( remaining, available );
+		memcpy( output, curPtr, copyLength );
+		output += copyLength;
+		curPtr += copyLength;
+		available -= copyLength;
+		remaining -= copyLength;
+	}
+
+	return len - remaining;
 }
 
 int idFile_Buffered::Tell() {
-	return source != NULL ? source->Tell() : 0;
+	return source != NULL ? sourceOffset + static_cast< int >( curPtr - filePtr ) : 0;
 }
 
 int idFile_Buffered::Seek( long offset, fsOrigin_t origin ) {
-	available = 0;
-	filePtr = curPtr = NULL;
-	return source != NULL ? source->Seek( offset, origin ) : -1;
+	if ( source == NULL ) {
+		return -1;
+	}
+
+	long target = 0;
+	switch ( origin ) {
+		case FS_SEEK_SET:
+			target = offset;
+			break;
+		case FS_SEEK_CUR:
+			target = Tell() + offset;
+			break;
+		case FS_SEEK_END:
+			target = source->Length() - offset;
+			break;
+		default:
+			common->FatalError( "idFile_Buffered::Seek: bad origin for %s\n", GetName() );
+			return -1;
+	}
+
+	const long bufferEnd = sourceOffset + static_cast< long >( curPtr - filePtr ) + available;
+	if ( target >= sourceOffset && target <= bufferEnd ) {
+		curPtr = filePtr + ( target - sourceOffset );
+		available = static_cast< int >( bufferEnd - target );
+		return 0;
+	}
+
+	const int result = source->Seek( target, FS_SEEK_SET );
+	if ( result == 0 ) {
+		sourceOffset = target;
+		curPtr = filePtr;
+		available = 0;
+	}
+	return result;
 }
 
 void idFile_Buffered::SetSource( idFile* sourceFile ) {
 	ReleaseSource();
 	source = sourceFile;
-	sourceOffset = source != NULL ? source->Tell() : 0;
+	if ( source != NULL ) {
+		granularity = Min( granularity, Max( 1, source->Length() ) );
+		filePtr = static_cast< const byte* >( Mem_Alloc( granularity ) );
+		curPtr = filePtr;
+		if ( source->Tell() != 0 ) {
+			source->Seek( 0, FS_SEEK_SET );
+		}
+	}
 }
 
 void idFile_Buffered::ReleaseSource() {
-	delete source;
+	Mem_Free( const_cast< byte* >( filePtr ) );
+	filePtr = NULL;
+	curPtr = NULL;
+	if ( source != NULL ) {
+		if ( fileSystem != NULL ) {
+			fileSystem->CloseFile( source );
+		} else {
+			delete source;
+		}
+	}
 	source = NULL;
 	available = 0;
-	filePtr = curPtr = NULL;
 	sourceOffset = 0;
 }
 

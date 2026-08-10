@@ -386,6 +386,9 @@ void idSessionLocal::StartNewGame( const char* mapName ) {
 		return;
 	}
 
+	// Selecting a user map also constructs the active sdGameRules instance.
+	// The direct devmap path still needs this step even though it does not spawn
+	// an idAsyncServer; map initialization and bot state both consume rules.
 	idStr reason;
 	idStr resolvedMapName;
 	const userMapChangeResult_e result = game->OnUserStartMap( mapName, reason, resolvedMapName );
@@ -477,6 +480,18 @@ void idSessionLocal::ExecuteMapChange( const char* mapName, int startTime, bool 
 		startTime,
 		isUserChange
 	);
+
+	// A direct map/devmap is neither an async server nor an async client.  The
+	// retail session creates its local player here; without this block the map
+	// scripts run, but idGameLocal::Draw has no active viewer and never submits
+	// the render world.
+	if ( !idAsyncNetwork::server.IsActive() && !idAsyncNetwork::client.IsActive() ) {
+		game->SpawnPlayer( 0, false );
+
+		idStr uiName = mapSpawnData.userInfo[ 0 ].GetString( "ui_name", "Player" );
+		mapSpawnData.userInfo[ 0 ].Set( "ui_realname", uiName.c_str() );
+		game->UserInfoChanged( 0 );
+	}
 
 	if ( newMap ) {
 		surfaceTypeMapManager->EndLevelLoad();

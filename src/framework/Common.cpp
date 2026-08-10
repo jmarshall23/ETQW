@@ -61,6 +61,16 @@ idCVar com_memoryMarker( "com_memoryMarker", "-1", CVAR_INTEGER | CVAR_SYSTEM | 
 idCVar com_preciseTic( "com_preciseTic", "1", CVAR_BOOL | CVAR_SYSTEM, "run exact user command ticks" );
 idCVar com_asyncInput( "com_asyncInput", "0", CVAR_BOOL | CVAR_SYSTEM, "sample input from the async thread" );
 idCVar com_asyncSound( "com_asyncSound", "1", CVAR_INTEGER | CVAR_SYSTEM, "0: inline, 1: async sound update", 0, 1 );
+idCVar com_unlockFPS( "com_unlockFPS", "1", CVAR_BOOL | CVAR_SYSTEM | CVAR_ARCHIVE | CVAR_PROFILE,
+	"allow renderer to go faster than game ticks" );
+idCVar com_unlock_avgFrames( "com_unlock_avgFrames", "4", CVAR_INTEGER | CVAR_SYSTEM | CVAR_NOCHEAT,
+	"average out render times over n frames for extra renders management", 1, 10 );
+idCVar com_unlock_safetyMargin( "com_unlock_safetyMargin", "0.1", CVAR_FLOAT | CVAR_SYSTEM | CVAR_NOCHEAT,
+	"percentage safety margin under which not to trigger an extra render" );
+idCVar com_unlock_timingMethod( "com_unlock_timingMethod", "2", CVAR_INTEGER | CVAR_SYSTEM | CVAR_NOCHEAT,
+	"method of timing interpolated/extrapolated frames: 0 = whenever they fit;  1 = on boundaries of framerate multiples of 30;  2 = like 1, but using total previous everything time to estimate, not just render time" );
+idCVar com_unlock_maxFPS( "com_unlock_maxFPS", "60", CVAR_INTEGER | CVAR_SYSTEM | CVAR_NOCHEAT,
+	"maximum FPS unlock will try to reach (only works in timing methods 1 & 2) - zero = no limit" );
 idCVar com_forceGenericSIMD( "com_forceGenericSIMD", "0", CVAR_BOOL | CVAR_SYSTEM | CVAR_NOCHEAT, "force generic SIMD" );
 idCVar com_developer( "developer", "0", CVAR_BOOL | CVAR_SYSTEM | CVAR_NOCHEAT, "developer mode" );
 idCVar com_allowConsole( "com_allowConsole", "0", CVAR_BOOL | CVAR_SYSTEM | CVAR_NOCHEAT, "allow console toggling" );

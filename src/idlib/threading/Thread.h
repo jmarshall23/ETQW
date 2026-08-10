@@ -53,7 +53,7 @@ protected:
 	threadPriority_e	priority;
 	threadHandle_t		handle;
 	bool				isWorker;
-	bool				isRunning;
+	volatile bool		isRunning;
 	bool				isStopping;
 	idStr				name;
 

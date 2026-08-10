@@ -1733,7 +1733,7 @@ void idEntity::Present( void ) {
 		return;
 	}
 	BecomeInactive( TH_UPDATEVISUALS );
-
+#if 0 // jmarshall - unlock fps
 	if ( gameLocal.com_unlockFPS->GetBool() && g_unlock_interpolateMoving.GetBool() ) {
 		// it should be possible to keep entities back one frame and record their positions while we can't unlock frames
 		// have to watch out not to do that to an entity we're bound to however (like riding the icarus)
@@ -1756,7 +1756,7 @@ void idEntity::Present( void ) {
 			}
 		}
 	}
-
+#endif
 	// if set to invisible, skip
 	if ( renderEntity.hModel && !IsHidden() ) {
 

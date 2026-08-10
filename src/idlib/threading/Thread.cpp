@@ -61,12 +61,15 @@ bool sdThread::Start( const void *parm, size_t size ) {
 		parms.parm = NULL;
 	}
 	parms.process->Start();
-	
+
+	// Publish the running state before the suspended OS thread is resumed.
+	// Otherwise a short-lived worker can clear isRunning in ThreadProc and
+	// then have Start overwrite it with a stale true value after it has exited.
+	isRunning = true;
 	if ( !sdSysThread::Start( handle ) ) {
+		isRunning = false;
 		return false;
 	}
-
-	isRunning = true;
 	return true;
 }
 

@@ -883,7 +883,8 @@ bool idPlayerView::RenderPlayerView( idPlayer* viewPlayer ) {
 
 			// readjust the view one frame earlier for regular game draws (again: for base draws, not for extra draws)
 			// extra draws do this in their own loop
-			if ( gameLocal.com_unlockFPS->GetBool() && !gameLocal.unlock.unlockedDraw && gameLocal.unlock.canUnlockFrames ) {
+			if ( gameLocal.com_unlockFPS != NULL && gameLocal.com_unlockFPS->GetBool() &&
+				 !gameLocal.unlock.unlockedDraw && gameLocal.unlock.canUnlockFrames ) {
 				if ( g_unlock_updateViewpos.GetBool() && g_unlock_viewStyle.GetInteger() == 1 ) {
 					currentView.vieworg = gameLocal.unlock.originlog[ ( gameLocal.framenum + 1 ) & 1 ];
 					if ( viewPlayer->weapon != NULL ) {

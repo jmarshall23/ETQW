@@ -186,6 +186,9 @@ void sdAtmosphereRenderable::UpdateCelestialBody( parms_t& parms ) {
 		skyLight.numPrelightModels = 0;
 		while ( renderModelManager->CheckModel( idStr( va( "_prelightatmosphere_%d_%d", parms.mapId, skyLight.numPrelightModels ) ) ) ) {
 			skyLight.numPrelightModels++;
+
+			if (skyLight.numPrelightModels >= MAX_PRELIGHTS)
+				break;
 		}
 		if ( skyLight.numPrelightModels > MAX_PRELIGHTS ) {
 			common->Warning( "Max number of prelights reached for atmosphere against areas" );

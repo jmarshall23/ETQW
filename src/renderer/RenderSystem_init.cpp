@@ -388,6 +388,12 @@ void idRenderSystemLocal::Shutdown() {
 		logFile = NULL;
 	}
 
+	for ( int i = 0; i < worlds.Num(); i++ ) {
+		delete worlds[ i ];
+	}
+	worlds.Clear();
+	registeredPtrs.Clear();
+
 	if ( renderModelManager != NULL ) {
 		renderModelManager->Shutdown();
 	}
@@ -395,12 +401,6 @@ void idRenderSystemLocal::Shutdown() {
 		globalImages->Shutdown();
 	}
 	renderSystemBackend.Shutdown();
-
-	for ( int i = 0; i < worlds.Num(); i++ ) {
-		delete worlds[ i ];
-	}
-	worlds.Clear();
-	registeredPtrs.Clear();
 
 	ShutdownOpenGL();
 	initialized = false;

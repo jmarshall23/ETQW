@@ -2461,12 +2461,18 @@ idClip::ThreadDeleteClipModels
 ============
 */
 void idClip::ThreadDeleteClipModels( void ) {
-	Lock();
+	// This is deferred bookkeeping performed at the end of a bot frame.  The
+	// game thread is allowed to wait for that frame, so blocking here while the
+	// game thread owns the clip lock creates a lock inversion.  Missing one
+	// decrement only postpones deletion until the next bot frame.
+	if ( !lock.Acquire( false ) ) {
+		return;
+	}
 	idClipModel *clipModel;
 	for ( clipModel = deletedClipModels; clipModel != NULL; clipModel = clipModel->nextDeleted ) {
 		clipModel->deleteThreadCount--;
 	}
-	Unlock();
+	lock.Release();
 }
 
 /*

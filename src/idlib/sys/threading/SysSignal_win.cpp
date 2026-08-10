@@ -51,7 +51,7 @@ sdSysSignal::Wait
 */
 bool sdSysSignal::Wait( signalHandle_t& handle, int timeout ) {
 
-	return ( ::WaitForSingleObject( handle, timeout == sdSignal::WAIT_INFINITE ? INFINITE : timeout ) != WAIT_FAILED );
+	return ( ::WaitForSingleObject( handle, timeout == sdSignal::WAIT_INFINITE ? INFINITE : timeout ) == WAIT_OBJECT_0 );
 }
 
 /*
@@ -60,5 +60,5 @@ sdSysSignal::SignalAndWait
 =============
 */
 bool sdSysSignal::SignalAndWait( signalHandle_t& signal, signalHandle_t& handle, int timeout ) {
-	return ( ::SignalObjectAndWait( signal, handle, timeout == sdSignal::WAIT_INFINITE ? INFINITE : timeout, FALSE ) != WAIT_FAILED );
+	return ( ::SignalObjectAndWait( signal, handle, timeout == sdSignal::WAIT_INFINITE ? INFINITE : timeout, FALSE ) == WAIT_OBJECT_0 );
 }

@@ -958,7 +958,11 @@ void idBotThreadData::UpdateState() {
 		ResetBotAI( STROGG );
 	}
 
-	threadingEnabled = bot_threading.GetBool();
+	const bool threadingRequested = bot_threading.GetBool();
+	if ( threadingRequested && !botThread->IsRunning() ) {
+		botThread->StartThread();
+	}
+	threadingEnabled = threadingRequested && botThread->IsRunning();
 
 	if ( IsThreadingEnabled() ) {
 
@@ -978,7 +982,14 @@ void idBotThreadData::UpdateState() {
 		// wait if the bot thread is falling too far behind
 		while ( botThread->GetLastGameFrameNum() < gameLocal.GetFrameNum() - threadMaxFrameDelay && !botThread->IsWaiting() ) {
 			common->Warning( "Waiting on BotThread\n" );
-			botThread->WaitForBotThread();
+			if ( !botThread->WaitForBotThread( 1000 ) && !botThread->IsRunning() ) {
+				threadingEnabled = false;
+				break;
+			}
+		}
+
+		if ( !IsThreadingEnabled() ) {
+			RunFrame();
 		}
 
 	} else {

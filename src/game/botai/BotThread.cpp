@@ -40,7 +40,15 @@ idBotThread::StartThread
 */
 void idBotThread::StartThread() {
 	if ( thread != NULL ) {
-		return;
+		if ( thread->IsRunning() ) {
+			return;
+		}
+
+		// A finished worker still owns an OS handle until it is joined and
+		// destroyed.  Dispose it before attempting to restart bot processing.
+		thread->Join();
+		thread->Destroy();
+		thread = NULL;
 	}
 #ifdef _XENON
 	thread = new sdThread( this, THREAD_NORMAL, XENON_STACKSIZE_BOT );

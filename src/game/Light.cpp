@@ -255,6 +255,8 @@ void idLight::Spawn( void ) {
 		// this will return 0 if not found
 		while ( renderModelManager->CheckModel( idStr( va( "_prelight_%s_%d", name.c_str(), renderLight.numPrelightModels ) ) ) ) {
 			renderLight.numPrelightModels++;
+			if (renderLight.numPrelightModels >= MAX_PRELIGHTS)
+				break;
 		}
 		if ( renderLight.numPrelightModels > MAX_PRELIGHTS ) {
 			common->Warning( "Max number of prelights reached for '%s'", name.c_str() );

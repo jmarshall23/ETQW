@@ -121,6 +121,7 @@ private:
 	void ClearTrace( modelTrace_t &trace, const idVec3 &end ) const;
 
 	idStr mapName;
+	idList< idRenderModel* > localModels;
 	idList< renderEntity_t* > entityDefs;
 	idList< renderLight_t* > lightDefs;
 	idList< renderEffect_t* > effectDefs;

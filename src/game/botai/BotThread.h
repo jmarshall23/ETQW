@@ -40,7 +40,7 @@ public:
 	void					WaitForGameThread() { gameSignal.SignalAndWait( botSignal ); }
 	void					SignalGameThread() { botSignal.Set(); }
 
-	void					WaitForBotThread() { botSignal.Wait(); }
+	bool					WaitForBotThread( int timeout = sdSignal::WAIT_INFINITE ) { return botSignal.Wait( timeout ); }
 	void					SignalBotThread() { gameSignal.Set(); }
 
 	void					Lock() { lock.Acquire(); }
@@ -50,6 +50,7 @@ public:
 	int						GetFrameRate() const;
 	bool					IsActive() const { return isActive; }
 	bool					IsWaiting() const { return isWaiting; }
+	bool					IsRunning() const { return thread != NULL && thread->IsRunning(); }
 
 private:
 	sdThread *				thread;

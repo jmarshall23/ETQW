@@ -9,7 +9,7 @@
 #pragma hdrstop
 
 void sdImposterSubImage::Write( idFile_Memory& file ) {
-	file.WriteFloatString( "\timage {\n" );
+	file.WriteFloatString( "\tSubImage {\n" );
 	file.WriteFloatString( "\t\tmin %f %f\n", rectMins.x, rectMins.y );
 	file.WriteFloatString( "\t\tmax %f %f\n", rectMaxs.x, rectMaxs.y );
 	for ( int i = 0; i < 4; i++ ) {
@@ -93,25 +93,21 @@ bool sdDeclImposterGenerator::Parse( const char* text, const int textLength ) {
 		if ( token == "}" ) {
 			return true;
 		}
-		if ( token.Icmp( "sourceModel" ) == 0 || token.Icmp( "model" ) == 0 ) {
+		if ( token.Icmp( "sourceModel" ) == 0 ) {
 			src.ReadToken( &token );
 			sourceModel = token;
-		} else if ( token.Icmp( "outputTexture" ) == 0 || token.Icmp( "texture" ) == 0 ) {
+		} else if ( token.Icmp( "outputTexture" ) == 0 ) {
 			src.ReadToken( &token );
 			outputTexture = token;
-		} else if ( token.Icmp( "vertexColor" ) == 0 ) {
+		} else if ( token.Icmp( "vertexColored" ) == 0 ) {
 			vertexColor = true;
 		} else if ( token.Icmp( "numAngles" ) == 0 ) {
 			numAngles = src.ParseInt();
 		} else if ( token.Icmp( "tileSize" ) == 0 ) {
 			tileSize[ 0 ] = src.ParseInt();
-			if ( src.CheckTokenString( "," ) ) {
-				tileSize[ 1 ] = src.ParseInt();
-			} else {
-				tileSize[ 1 ] = tileSize[ 0 ];
-			}
+			tileSize[ 1 ] = src.ParseInt();
 		} else if ( token.Icmp( "noBump" ) == 0 ) {
-			noBump = true;
+			noBump = src.ParseBool();
 		} else if ( token.Icmp( "startAngle" ) == 0 ) {
 			startAngle = src.ParseFloat();
 		} else if ( token.Icmp( "screenScale" ) == 0 ) {
@@ -176,19 +172,18 @@ bool sdDeclImposter::Parse( const char* text, const int textLength ) {
 			src.ReadToken( &token );
 			info.material = declHolder.FindMaterial( token, true );
 		} else if ( token.Icmp( "origin" ) == 0 ) {
-			if ( !src.Parse1DMatrix( 3, info.origin.ToFloatPtr() ) ) {
-				return false;
-			}
-		} else if ( token.Icmp( "scale" ) == 0 ) {
+			info.origin.x = src.ParseFloat();
+			info.origin.y = src.ParseFloat();
+			info.origin.z = src.ParseFloat();
+		} else if ( token.Icmp( "scalex" ) == 0 ) {
 			info.scalex = src.ParseFloat();
+		} else if ( token.Icmp( "scaley" ) == 0 ) {
 			info.scaley = src.ParseFloat();
 		} else if ( token.Icmp( "screenScale" ) == 0 ) {
 			info.screenScale = src.ParseFloat();
-		} else if ( token.Icmp( "tileSize" ) == 0 ) {
-			info.tileSize = src.ParseInt();
 		} else if ( token.Icmp( "numAngles" ) == 0 ) {
 			info.numAngles = src.ParseInt();
-		} else if ( token.Icmp( "image" ) == 0 ) {
+		} else if ( token.Icmp( "SubImage" ) == 0 ) {
 			sdImposterSubImage image;
 			if ( !image.Read( src ) ) {
 				return false;
@@ -208,10 +203,10 @@ void sdDeclImposter::RebuildTextSource( void ) {
 	if ( info.material != NULL ) {
 		file.WriteFloatString( "\tmaterial \"%s\"\n", info.material->GetName() );
 	}
-	file.WriteFloatString( "\torigin ( %f %f %f )\n", info.origin.x, info.origin.y, info.origin.z );
-	file.WriteFloatString( "\tscale %f %f\n", info.scalex, info.scaley );
+	file.WriteFloatString( "\torigin %f %f %f\n", info.origin.x, info.origin.y, info.origin.z );
+	file.WriteFloatString( "\tscalex %f\n", info.scalex );
+	file.WriteFloatString( "\tscaley %f\n", info.scaley );
 	file.WriteFloatString( "\tscreenScale %f\n", info.screenScale );
-	file.WriteFloatString( "\ttileSize %i\n", info.tileSize );
 	file.WriteFloatString( "\tnumAngles %i\n", info.numAngles );
 	for ( int i = 0; i < info.images.Num(); i++ ) {
 		info.images[ i ].Write( file );
