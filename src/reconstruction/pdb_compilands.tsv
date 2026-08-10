@@ -1,0 +1,873 @@
+﻿object	source	original_compiland
+* Linker *		* Linker *
+_newmode.obj		build\intel\dll_obj\_newmode.obj
+AASFile.obj	libs/aaslib/aasfile.cpp	..\..\build\Win32\intermediate\Release\libAAS\AASFile.obj
+AASFile_sample.obj	libs/aaslib/aasfile_sample.cpp	..\..\build\Win32\intermediate\Release\libAAS\AASFile_sample.obj
+AASFileManager.obj	libs/aaslib/aasfilemanager.cpp	..\..\build\Win32\intermediate\Release\libAAS\AASFileManager.obj
+adjustfd.obj		build\intel\dll_obj\adjustfd.obj
+adler32.obj	libs/zlib/adler32.c	..\build\win32\intermediate\release\libzlib\adler32.obj
+AdManager.obj	framework/admanager.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\AdManager.obj
+AdObjectSubscriber.obj	framework/adobjectsubscriber.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\AdObjectSubscriber.obj
+ADVAPI32.dll		ADVAPI32.dll
+aes.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\aes.obj
+alloca16.obj		build\intel\dll_obj\alloca16.obj
+analysis.obj	libs/ogg/libvorbis/lib/analysis.c	..\..\build\win32\intermediate\release\libvorbis\analysis.obj
+Angles.obj	idlib/math/angles.cpp	.\build\Win32\intermediate\Release\idLib\Angles.obj
+AsyncClient.obj	framework/async/asyncclient.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\AsyncClient.obj
+AsyncNetwork.obj	framework/async/asyncnetwork.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\AsyncNetwork.obj
+AsyncRepeater.obj	framework/async/asyncrepeater.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\AsyncRepeater.obj
+AsyncServer.obj	framework/async/asyncserver.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\AsyncServer.obj
+AsyncServerBase.obj	framework/async/asyncserverbase.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\AsyncServerBase.obj
+atlssup.obj		build\intel\dll_obj\atlssup.obj
+atonexit.obj		build\intel\dll_obj\atonexit.obj
+AudioHardware_Software.obj	sound/audiohardware_software.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\AudioHardware_Software.obj
+AudioSample.obj	sound/audiosample.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\AudioSample.obj
+autofit.obj		..\..\..\objs\release\autofit.obj
+BareDCTBase.obj	libs/imagelib/baredct/baredctbase.cpp	..\..\build\Win32\intermediate\Release\imageLib\BareDCTBase.obj
+BareDCTBase_MMX.obj	libs/imagelib/baredct/baredctbase_mmx.cpp	..\..\build\Win32\intermediate\Release\imageLib\BareDCTBase_MMX.obj
+BareDCTBase_SSE2.obj	libs/imagelib/baredct/baredctbase_sse2.cpp	..\..\build\Win32\intermediate\Release\imageLib\BareDCTBase_SSE2.obj
+BareDCTBase_Xenon.obj	libs/imagelib/baredct/baredctbase_xenon.cpp	..\..\build\Win32\intermediate\Release\imageLib\BareDCTBase_Xenon.obj
+BareDCTDecoder.obj	libs/imagelib/baredct/baredctdecoder.cpp	..\..\build\Win32\intermediate\Release\imageLib\BareDCTDecoder.obj
+BareDCTDecoder_MMX.obj	libs/imagelib/baredct/baredctdecoder_mmx.cpp	..\..\build\Win32\intermediate\Release\imageLib\BareDCTDecoder_MMX.obj
+BareDCTDecoder_SSE2.obj	libs/imagelib/baredct/baredctdecoder_sse2.cpp	..\..\build\Win32\intermediate\Release\imageLib\BareDCTDecoder_SSE2.obj
+BareDCTDecoder_Xenon.obj	libs/imagelib/baredct/baredctdecoder_xenon.cpp	..\..\build\Win32\intermediate\Release\imageLib\BareDCTDecoder_Xenon.obj
+BareDCTHuffmanTable.obj	libs/imagelib/baredct/baredcthuffmantable.cpp	..\..\build\Win32\intermediate\Release\imageLib\BareDCTHuffmanTable.obj
+base64.obj	curl/lib/base64.c	.\build\win32\intermediate\release\libcurl\base64.obj
+bdAddr.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdAddr.obj
+bdAddressMap.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdAddressMap.obj
+bdAlignedOffsetMemory.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdAlignedOffsetMemory.obj
+bdArchiveKey.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdArchiveKey.obj
+bdArchiveValue.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdArchiveValue.obj
+bdAuthCommon.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdAuthCommon.obj
+bdAuthService.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdAuthService.obj
+bdAuthTicket.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdAuthTicket.obj
+bdBitBuffer.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdBitBuffer.obj
+bdBitOperations.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdBitOperations.obj
+bdByteBuffer.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdByteBuffer.obj
+bdBytePacker.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdBytePacker.obj
+bdChannelChat.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdChannelChat.obj
+bdChannelChatMessage.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdChannelChatMessage.obj
+bdChannelNotificationMessage.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdChannelNotificationMessage.obj
+bdChunk.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdChunk.obj
+bdCommonAddr.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdCommonAddr.obj
+bdCommonAddrInfo.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdCommonAddrInfo.obj
+bdConnection.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdConnection.obj
+bdConnectionStatistics.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdConnectionStatistics.obj
+bdConnectionStore.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdConnectionStore.obj
+bdCookie.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdCookie.obj
+bdCookieAckChunk.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdCookieAckChunk.obj
+bdCookieEchoChunk.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdCookieEchoChunk.obj
+bdCore.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdCore.obj
+bdCryptoUtils.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdCryptoUtils.obj
+bdCustomQueryParams.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdCustomQueryParams.obj
+bdCypher.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdCypher.obj
+bdCypher3Des.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdCypher3Des.obj
+bdDataChunk.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdDataChunk.obj
+bdDispatcher.obj		..\obj\win32-vs8\release-mt-dll\bdNet\bdDispatcher.obj
+bdDTLSAssociation.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdDTLSAssociation.obj
+bdDTLSCookieAck.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdDTLSCookieAck.obj
+bdDTLSCookieEcho.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdDTLSCookieEcho.obj
+bdDTLSData.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdDTLSData.obj
+bdDTLSError.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdDTLSError.obj
+bdDTLSHeader.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdDTLSHeader.obj
+bdDTLSInit.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdDTLSInit.obj
+bdDTLSInitAck.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdDTLSInitAck.obj
+bdECCKey.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdECCKey.obj
+bdf.obj		..\..\..\objs\release\bdf.obj
+bdFriendCustomMessage.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdFriendCustomMessage.obj
+bdFriends.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdFriends.obj
+bdFriendSessionInvitationMessage.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdFriendSessionInvitationMessage.obj
+bdFriendshipProposalMessage.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdFriendshipProposalMessage.obj
+bdGetFileResult.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdGetFileResult.obj
+bdGetHostByName.obj		..\obj\win32-vs8\release-mt-dll\bdNet\bdGetHostByName.obj
+bdGetHostByName-win32.obj		..\obj\win32-vs8\release-mt-dll\bdNet\bdGetHostByName-win32.obj
+bdGetMessagesResult.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdGetMessagesResult.obj
+bdHash.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdHash.obj
+bdHashTiger192.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdHashTiger192.obj
+bdHeartbeatAckChunk.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdHeartbeatAckChunk.obj
+bdHeartbeatChunk.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdHeartbeatChunk.obj
+bdHMac.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdHMac.obj
+bdHMacSHA1.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdHMacSHA1.obj
+bdInAddr.obj		..\obj\win32-vs8\release-mt-dll\bdPlatform\bdInAddr.obj
+bdInetAddr.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdInetAddr.obj
+bdInitAckChunk.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdInitAckChunk.obj
+bdInitChunk.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdInitChunk.obj
+bdIPDiscoveryClient.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdIPDiscoveryClient.obj
+bdIPDiscoveryPacket.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdIPDiscoveryPacket.obj
+bdIPDiscoveryPacketReply.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdIPDiscoveryPacketReply.obj
+bdKeyArchive.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdKeyArchive.obj
+bdKeyPairDict.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdKeyPairDict.obj
+bdListFilesResult.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdListFilesResult.obj
+bdLobbyConnection.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdLobbyConnection.obj
+bdLobbyConnectionListener.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdLobbyConnectionListener.obj
+bdLobbyFile.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdLobbyFile.obj
+bdLobbyFileHeader.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdLobbyFileHeader.obj
+bdLobbyMessage.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdLobbyMessage.obj
+bdLobbyMessageFactory.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdLobbyMessageFactory.obj
+bdLobbyService.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdLobbyService.obj
+bdLog.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdLog.obj
+bdLogChannel.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdLogChannel.obj
+bdLogSubscriber.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdLogSubscriber.obj
+bdLoopbackConnection.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdLoopbackConnection.obj
+bdMallocMemory.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdMallocMemory.obj
+bdMatchMaking.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdMatchMaking.obj
+bdMatchMakingInfo.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdMatchMakingInfo.obj
+bdMemory.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdMemory.obj
+bdMessage.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdMessage.obj
+bdMessageStore.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdMessageStore.obj
+bdMMPlayerDisconnectMessage.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdMMPlayerDisconnectMessage.obj
+bdMutex.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdMutex.obj
+bdNATTravClient.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdNATTravClient.obj
+bdNATTraversalPacket.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdNATTraversalPacket.obj
+bdNATTravListener.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdNATTravListener.obj
+bdNATTypeDiscoveryClient.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdNATTypeDiscoveryClient.obj
+bdNATTypeDiscoveryPacket.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdNATTypeDiscoveryPacket.obj
+bdNATTypeDiscoveryPacketReply.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdNATTypeDiscoveryPacketReply.obj
+bdNet.obj		..\obj\win32-vs8\release-mt-dll\bdNet\bdNet.obj
+bdPacket.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdPacket.obj
+bdPacketInterceptor.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdPacketInterceptor.obj
+bdPerformance.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdPerformance.obj
+bdPlatformMutex-win32.obj		..\obj\win32-vs8\release-mt-dll\bdPlatform\bdPlatformMutex-win32.obj
+bdPlatformSocket.obj		..\obj\win32-vs8\release-mt-dll\bdPlatform\bdPlatformSocket.obj
+bdPlatformSocket-win32.obj		..\obj\win32-vs8\release-mt-dll\bdPlatform\bdPlatformSocket-win32.obj
+bdPlatformStreamSocket.obj		..\obj\win32-vs8\release-mt-dll\bdPlatform\bdPlatformStreamSocket.obj
+bdPlatformStreamSocket-win32.obj		..\obj\win32-vs8\release-mt-dll\bdPlatform\bdPlatformStreamSocket-win32.obj
+bdPlatformThread-win32.obj		..\obj\win32-vs8\release-mt-dll\bdPlatform\bdPlatformThread-win32.obj
+bdPlatformTiming-win32.obj		..\obj\win32-vs8\release-mt-dll\bdPlatform\bdPlatformTiming-win32.obj
+bdPlatformTrulyRandom-win32.obj		..\obj\win32-vs8\release-mt-dll\bdPlatform\bdPlatformTrulyRandom-win32.obj
+bdProfileInfo.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdProfileInfo.obj
+bdProfileInfoUpdatedMessage.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdProfileInfoUpdatedMessage.obj
+bdProfiles.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdProfiles.obj
+bdQoSProbe.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdQoSProbe.obj
+bdQoSReplyPacket.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdQoSReplyPacket.obj
+bdQoSRequestPacket.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdQoSRequestPacket.obj
+bdQueryParams.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdQueryParams.obj
+bdQueryResult.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdQueryResult.obj
+bdReceivedMessage.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdReceivedMessage.obj
+bdReferencable.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdReferencable.obj
+bdReliableReceiveWindow.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdReliableReceiveWindow.obj
+bdReliableSendWindow.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdReliableSendWindow.obj
+bdRemoteTask.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdRemoteTask.obj
+bdRemoteTaskManager.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdRemoteTaskManager.obj
+bdRunnable.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdRunnable.obj
+bdSAckChunk.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdSAckChunk.obj
+bdSecurityID.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdSecurityID.obj
+bdSecurityInfo.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdSecurityInfo.obj
+bdSecurityKey.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdSecurityKey.obj
+bdSecurityKeyMap.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdSecurityKeyMap.obj
+bdSequenceNumber.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdSequenceNumber.obj
+bdSequenceNumberStore.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdSequenceNumberStore.obj
+bdServiceBandwidthArbitrator.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdServiceBandwidthArbitrator.obj
+bdSessionCreateResult.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdSessionCreateResult.obj
+bdShortTimer.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdShortTimer.obj
+bdShutdownAckChunk.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdShutdownAckChunk.obj
+bdShutdownChunk.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdShutdownChunk.obj
+bdShutdownCompleteChunk.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdShutdownCompleteChunk.obj
+bdSingleton.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdSingleton.obj
+bdSocket.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdSocket.obj
+bdSocketRouter.obj		..\obj\win32-vs8\release-mt-dll\bdSocket\bdSocketRouter.obj
+bdStats.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdStats.obj
+bdStatsInfo.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdStatsInfo.obj
+bdStatsSubmission.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdStatsSubmission.obj
+bdStopwatch.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdStopwatch.obj
+bdStorage.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdStorage.obj
+bdStreamSocket.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdStreamSocket.obj
+bdString.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdString.obj
+bdTeamCustomMessage.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdTeamCustomMessage.obj
+bdTeamInfoUpdatedMessage.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdTeamInfoUpdatedMessage.obj
+bdTeamInvitationMessage.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdTeamInvitationMessage.obj
+bdTeamNotificationMessage.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdTeamNotificationMessage.obj
+bdTeams.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdTeams.obj
+bdTeamSessionInvitationMessage.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdTeamSessionInvitationMessage.obj
+bdTeamWideNotificationMessage.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdTeamWideNotificationMessage.obj
+bdThread.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdThread.obj
+bdTitleUtilities.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdTitleUtilities.obj
+bdTrulyRandom.obj		..\obj\win32-vs8\release-mt-dll\bdCore\bdTrulyRandom.obj
+bdUnicastConnection.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdUnicastConnection.obj
+bdUnitTracker.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdUnitTracker.obj
+bdUnreliableReceiveWindow.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdUnreliableReceiveWindow.obj
+bdUnreliableSendWindow.obj		..\obj\win32-vs8\release-mt-dll\bdConnection\bdUnreliableSendWindow.obj
+bdUPnP.obj		..\obj\win32-vs8\release-mt-dll\bdNet\bdUPnP.obj
+bdUserNotificationMessage.obj		..\obj\win32-vs8\release-mt-dll\bdLobby\bdUserNotificationMessage.obj
+BinkFile.obj	sound/binkfile.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\BinkFile.obj
+binkw32.dll		binkw32.dll
+BitMsg.obj	idlib/bitmsg.cpp	.\build\Win32\intermediate\Release\idLib\BitMsg.obj
+bitrate.obj	libs/ogg/libvorbis/lib/bitrate.c	..\..\build\win32\intermediate\release\libvorbis\bitrate.obj
+bits.obj	libs/speex/speex/libspeex/bits.c	..\..\build\win32\intermediate\release\libspeex\bits.obj
+bitwise.obj	libs/ogg/libogg/src/bitwise.c	..\..\build\win32\intermediate\release\libogg\bitwise.obj
+block.obj	libs/ogg/libvorbis/lib/block.c	..\..\build\win32\intermediate\release\libvorbis\block.obj
+blockmap.obj	libs/ogg/libtheora/lib/blockmap.c	..\..\build\win32\intermediate\release\libtheora\blockmap.obj
+blowfish.obj	sys/win32/dongle/blowfish.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\blowfish.obj
+bn_fast_mp_invmod.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_fast_mp_invmod.obj
+bn_fast_mp_montgomery_reduce.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_fast_mp_montgomery_reduce.obj
+bn_fast_s_mp_mul_digs.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_fast_s_mp_mul_digs.obj
+bn_fast_s_mp_mul_high_digs.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_fast_s_mp_mul_high_digs.obj
+bn_fast_s_mp_sqr.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_fast_s_mp_sqr.obj
+bn_mp_2expt.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_2expt.obj
+bn_mp_abs.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_abs.obj
+bn_mp_add.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_add.obj
+bn_mp_add_d.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_add_d.obj
+bn_mp_clamp.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_clamp.obj
+bn_mp_clear.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_clear.obj
+bn_mp_clear_multi.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_clear_multi.obj
+bn_mp_cmp.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_cmp.obj
+bn_mp_cmp_d.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_cmp_d.obj
+bn_mp_cmp_mag.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_cmp_mag.obj
+bn_mp_cnt_lsb.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_cnt_lsb.obj
+bn_mp_copy.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_copy.obj
+bn_mp_count_bits.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_count_bits.obj
+bn_mp_div.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_div.obj
+bn_mp_div_2.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_div_2.obj
+bn_mp_div_2d.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_div_2d.obj
+bn_mp_div_3.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_div_3.obj
+bn_mp_div_d.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_div_d.obj
+bn_mp_dr_is_modulus.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_dr_is_modulus.obj
+bn_mp_dr_reduce.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_dr_reduce.obj
+bn_mp_dr_setup.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_dr_setup.obj
+bn_mp_exch.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_exch.obj
+bn_mp_exptmod.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_exptmod.obj
+bn_mp_exptmod_fast.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_exptmod_fast.obj
+bn_mp_gcd.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_gcd.obj
+bn_mp_get_int.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_get_int.obj
+bn_mp_grow.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_grow.obj
+bn_mp_init.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_init.obj
+bn_mp_init_copy.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_init_copy.obj
+bn_mp_init_multi.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_init_multi.obj
+bn_mp_init_size.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_init_size.obj
+bn_mp_invmod.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_invmod.obj
+bn_mp_invmod_slow.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_invmod_slow.obj
+bn_mp_karatsuba_mul.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_karatsuba_mul.obj
+bn_mp_karatsuba_sqr.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_karatsuba_sqr.obj
+bn_mp_lcm.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_lcm.obj
+bn_mp_lshd.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_lshd.obj
+bn_mp_mod.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_mod.obj
+bn_mp_mod_2d.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_mod_2d.obj
+bn_mp_mod_d.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_mod_d.obj
+bn_mp_montgomery_calc_normalization.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_montgomery_calc_normalization.obj
+bn_mp_montgomery_reduce.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_montgomery_reduce.obj
+bn_mp_montgomery_setup.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_montgomery_setup.obj
+bn_mp_mul.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_mul.obj
+bn_mp_mul_2.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_mul_2.obj
+bn_mp_mul_2d.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_mul_2d.obj
+bn_mp_mul_d.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_mul_d.obj
+bn_mp_mulmod.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_mulmod.obj
+bn_mp_neg.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_neg.obj
+bn_mp_prime_is_divisible.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_prime_is_divisible.obj
+bn_mp_prime_is_prime.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_prime_is_prime.obj
+bn_mp_prime_miller_rabin.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_prime_miller_rabin.obj
+bn_mp_radix_smap.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_radix_smap.obj
+bn_mp_read_radix.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_read_radix.obj
+bn_mp_read_unsigned_bin.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_read_unsigned_bin.obj
+bn_mp_reduce.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_reduce.obj
+bn_mp_reduce_2k.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_reduce_2k.obj
+bn_mp_reduce_2k_l.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_reduce_2k_l.obj
+bn_mp_reduce_2k_setup.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_reduce_2k_setup.obj
+bn_mp_reduce_2k_setup_l.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_reduce_2k_setup_l.obj
+bn_mp_reduce_is_2k.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_reduce_is_2k.obj
+bn_mp_reduce_is_2k_l.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_reduce_is_2k_l.obj
+bn_mp_reduce_setup.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_reduce_setup.obj
+bn_mp_rshd.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_rshd.obj
+bn_mp_set.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_set.obj
+bn_mp_set_int.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_set_int.obj
+bn_mp_sqr.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_sqr.obj
+bn_mp_sqrmod.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_sqrmod.obj
+bn_mp_sub.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_sub.obj
+bn_mp_sub_d.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_sub_d.obj
+bn_mp_to_unsigned_bin.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_to_unsigned_bin.obj
+bn_mp_toom_mul.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_toom_mul.obj
+bn_mp_toom_sqr.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_toom_sqr.obj
+bn_mp_toradix.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_toradix.obj
+bn_mp_unsigned_bin_size.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_unsigned_bin_size.obj
+bn_mp_zero.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_mp_zero.obj
+bn_prime_tab.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_prime_tab.obj
+bn_reverse.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_reverse.obj
+bn_s_mp_add.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_s_mp_add.obj
+bn_s_mp_exptmod.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_s_mp_exptmod.obj
+bn_s_mp_mul_digs.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_s_mp_mul_digs.obj
+bn_s_mp_mul_high_digs.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_s_mp_mul_high_digs.obj
+bn_s_mp_sqr.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_s_mp_sqr.obj
+bn_s_mp_sub.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bn_s_mp_sub.obj
+bncore.obj		..\..\obj\win32-vs8\release-mt-dll\libtommath\bncore.obj
+Bounds.obj	idlib/bv/bounds.cpp	.\build\Win32\intermediate\Release\idLib\Bounds.obj
+BoundsShort.obj	idlib/bv/boundsshort.cpp	.\build\Win32\intermediate\Release\idLib\BoundsShort.obj
+Box.obj	idlib/bv/box.cpp	.\build\Win32\intermediate\Release\idLib\Box.obj
+BSE_Bounds.obj	bse/bse_bounds.cpp	..\build\Win32\intermediate\Release\libDecl\BSE_Bounds.obj
+BSE_Effect.obj	bse/bse_effect.cpp	..\build\Win32\intermediate\Release\libDecl\BSE_Effect.obj
+BSE_EffectTemplate.obj	bse/bse_effecttemplate.cpp	..\build\Win32\intermediate\Release\libDecl\BSE_EffectTemplate.obj
+BSE_Electricity.obj	bse/bse_electricity.cpp	..\build\Win32\intermediate\Release\libDecl\BSE_Electricity.obj
+BSE_Envelopes.obj	bse/bse_envelopes.cpp	..\build\Win32\intermediate\Release\libDecl\BSE_Envelopes.obj
+BSE_Light.obj	bse/bse_light.cpp	..\build\Win32\intermediate\Release\libDecl\BSE_Light.obj
+BSE_Manager.obj	bse/bse_manager.cpp	..\build\Win32\intermediate\Release\libDecl\BSE_Manager.obj
+BSE_ParseParticle2.obj	bse/bse_parseparticle2.cpp	..\build\Win32\intermediate\Release\libDecl\BSE_ParseParticle2.obj
+BSE_Particle.obj	bse/bse_particle.cpp	..\build\Win32\intermediate\Release\libDecl\BSE_Particle.obj
+BSE_Render.obj	bse/bse_render.cpp	..\build\Win32\intermediate\Release\libDecl\BSE_Render.obj
+BSE_Segment.obj	bse/bse_segment.cpp	..\build\Win32\intermediate\Release\libDecl\BSE_Segment.obj
+BSE_SegmentTemplate.obj	bse/bse_segmenttemplate.cpp	..\build\Win32\intermediate\Release\libDecl\BSE_SegmentTemplate.obj
+BSE_SpawnDomains.obj	bse/bse_spawndomains.cpp	..\build\Win32\intermediate\Release\libDecl\BSE_SpawnDomains.obj
+BuildVersion.obj	framework/buildversion.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\BuildVersion.obj
+cb_search.obj	libs/speex/speex/libspeex/cb_search.c	..\..\build\win32\intermediate\release\libspeex\cb_search.obj
+cbc_decrypt.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\cbc_decrypt.obj
+cbc_encrypt.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\cbc_encrypt.obj
+cbc_start.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\cbc_start.obj
+cff.obj		..\..\..\objs\release\cff.obj
+cg.obj	libs/qgllib/cg.cpp	..\..\build\Win32\intermediate\Release\qglLib\cg.obj
+chandler4gs.obj		build\intel\dll_obj\chandler4gs.obj
+chkstk.obj		build\intel\dll_obj\chkstk.obj
+cinitexe.obj		build\intel\dll_obj\cinitexe.obj
+close.obi		build\intel\st_obj\oldnames\close.obi
+CmdArgs.obj	idlib/text/cmdargs.cpp	.\build\Win32\intermediate\Release\idLib\CmdArgs.obj
+CmdSystem.obj	framework/cmdsystem.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\CmdSystem.obj
+codebook.obj	libs/ogg/libvorbis/lib/codebook.c	..\..\build\win32\intermediate\release\libvorbis\codebook.obj
+CollisionModel.obj	cm/collisionmodel.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\CollisionModel.obj
+CollisionModel_contacts.obj	cm/collisionmodel_contacts.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\CollisionModel_contacts.obj
+CollisionModel_contents.obj	cm/collisionmodel_contents.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\CollisionModel_contents.obj
+CollisionModel_debug.obj	cm/collisionmodel_debug.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\CollisionModel_debug.obj
+CollisionModel_files.obj	cm/collisionmodel_files.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\CollisionModel_files.obj
+CollisionModel_load.obj	cm/collisionmodel_load.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\CollisionModel_load.obj
+CollisionModel_rotate.obj	cm/collisionmodel_rotate.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\CollisionModel_rotate.obj
+CollisionModel_trace.obj	cm/collisionmodel_trace.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\CollisionModel_trace.obj
+CollisionModel_translate.obj	cm/collisionmodel_translate.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\CollisionModel_translate.obj
+Color.obj	idlib/color.cpp	.\build\Win32\intermediate\Release\idLib\Color.obj
+ColorSpace.obj	libs/imagelib/color/colorspace.cpp	..\..\build\Win32\intermediate\Release\imageLib\ColorSpace.obj
+comment.obj	libs/ogg/libtheora/lib/comment.c	..\..\build\win32\intermediate\release\libtheora\comment.obj
+Common.obj	framework/common.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Common.obj
+Compressor.obj	framework/compressor.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Compressor.obj
+Compressor_FixedHuffman.obj	framework/compressor_fixedhuffman.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Compressor_FixedHuffman.obj
+connect.obj	curl/lib/connect.c	.\build\win32\intermediate\release\libcurl\connect.obj
+Console.obj	framework/console.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Console.obj
+cookie.obj	curl/lib/cookie.c	.\build\win32\intermediate\release\libcurl\cookie.obj
+cpu.obj	libs/ogg/libtheora/lib/cpu.c	..\..\build\win32\intermediate\release\libtheora\cpu.obj
+cpu_disp.obj		build\intel\dll_obj\cpu_disp.obj
+CRC32.obj	idlib/hashing/crc32.cpp	.\build\Win32\intermediate\Release\idLib\CRC32.obj
+crc32.obj	libs/zlib/crc32.c	..\build\win32\intermediate\release\libzlib\crc32.obj
+CreateResourceIDs.obj	sys/win32/rc/createresourceids.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\CreateResourceIDs.obj
+crtexew.obj		build\intel\dll_obj\crtexew.obj
+crtmanifest.obj		build\intel\dll_obj\crtmanifest.obj
+crypt_cipher_descriptor.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\crypt_cipher_descriptor.obj
+crypt_cipher_is_valid.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\crypt_cipher_is_valid.obj
+crypt_find_cipher.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\crypt_find_cipher.obj
+crypt_find_hash.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\crypt_find_hash.obj
+crypt_find_prng.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\crypt_find_prng.obj
+crypt_hash_descriptor.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\crypt_hash_descriptor.obj
+crypt_hash_is_valid.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\crypt_hash_is_valid.obj
+crypt_ltc_mp_descriptor.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\crypt_ltc_mp_descriptor.obj
+crypt_prng_descriptor.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\crypt_prng_descriptor.obj
+crypt_prng_is_valid.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\crypt_prng_is_valid.obj
+crypt_register_cipher.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\crypt_register_cipher.obj
+crypt_register_hash.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\crypt_register_hash.obj
+crypt_register_prng.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\crypt_register_prng.obj
+ctr_done.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\ctr_done.obj
+ctr_encrypt.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\ctr_encrypt.obj
+ctr_start.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\ctr_start.obj
+CubemapUtils.obj	libs/imagelib/cubemaputils.cpp	..\..\build\Win32\intermediate\Release\imageLib\CubemapUtils.obj
+CVarSystem.obj	framework/cvarsystem.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\CVarSystem.obj
+dbghelp.dll		dbghelp.dll
+dct.obj	libs/ogg/libtheora/lib/dct.c	..\..\build\win32\intermediate\release\libtheora\dct.obj
+dct_decode.obj	libs/ogg/libtheora/lib/dct_decode.c	..\..\build\win32\intermediate\release\libtheora\dct_decode.obj
+dct_encode.obj	libs/ogg/libtheora/lib/dct_encode.c	..\..\build\win32\intermediate\release\libtheora\dct_encode.obj
+declAF.obj	decllib/declaf.cpp	..\build\Win32\intermediate\Release\libDecl\declAF.obj
+declAmbientCubeMap.obj	decllib/declambientcubemap.cpp	..\build\Win32\intermediate\Release\libDecl\declAmbientCubeMap.obj
+declAtmosphere.obj	decllib/declatmosphere.cpp	..\build\Win32\intermediate\Release\libDecl\declAtmosphere.obj
+declDecal.obj	decllib/decldecal.cpp	..\build\Win32\intermediate\Release\libDecl\declDecal.obj
+declEntityDef.obj	decllib/declentitydef.cpp	..\build\Win32\intermediate\Release\libDecl\declEntityDef.obj
+declImposter.obj	decllib/declimposter.cpp	..\build\Win32\intermediate\Release\libDecl\declImposter.obj
+declLocStr.obj	decllib/decllocstr.cpp	..\build\Win32\intermediate\Release\libDecl\declLocStr.obj
+declManager.obj	framework/declmanager.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\declManager.obj
+DeclModelExport.obj	decllib/declmodelexport.cpp	..\build\Win32\intermediate\Release\libDecl\DeclModelExport.obj
+declRenderBinding.obj	decllib/declrenderbinding.cpp	..\build\Win32\intermediate\Release\libDecl\declRenderBinding.obj
+declRenderProgram.obj	decllib/declrenderprogram.cpp	..\build\Win32\intermediate\Release\libDecl\declRenderProgram.obj
+DeclRenderProgram_opengl.obj	decllib/declrenderprogram_opengl.cpp	..\build\Win32\intermediate\Release\libDecl\DeclRenderProgram_opengl.obj
+declSkin.obj	decllib/declskin.cpp	..\build\Win32\intermediate\Release\libDecl\declSkin.obj
+declStuffType.obj	decllib/declstufftype.cpp	..\build\Win32\intermediate\Release\libDecl\declStuffType.obj
+DeclSurfaceType.obj	decllib/declsurfacetype.cpp	..\build\Win32\intermediate\Release\libDecl\DeclSurfaceType.obj
+declSurfaceTypeMap.obj	decllib/declsurfacetypemap.cpp	..\build\Win32\intermediate\Release\libDecl\declSurfaceTypeMap.obj
+declTable.obj	decllib/decltable.cpp	..\build\Win32\intermediate\Release\libDecl\declTable.obj
+DeclTemplate.obj	decllib/decltemplate.cpp	..\build\Win32\intermediate\Release\libDecl\DeclTemplate.obj
+DeclType.obj	decllib/decltype.cpp	..\build\Win32\intermediate\Release\libDecl\DeclType.obj
+decode.obj	libs/ogg/libtheora/lib/decode.c	..\..\build\win32\intermediate\release\libtheora\decode.obj
+Demo.obj	framework/async/demo.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Demo.obj
+DemoFile.obj	framework/demofile.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\DemoFile.obj
+der_decode_bit_string.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_decode_bit_string.obj
+der_decode_choice.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_decode_choice.obj
+der_decode_ia5_string.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_decode_ia5_string.obj
+der_decode_integer.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_decode_integer.obj
+der_decode_object_identifier.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_decode_object_identifier.obj
+der_decode_octet_string.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_decode_octet_string.obj
+der_decode_printable_string.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_decode_printable_string.obj
+der_decode_sequence_ex.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_decode_sequence_ex.obj
+der_decode_sequence_multi.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_decode_sequence_multi.obj
+der_decode_short_integer.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_decode_short_integer.obj
+der_decode_utctime.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_decode_utctime.obj
+der_encode_bit_string.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_encode_bit_string.obj
+der_encode_ia5_string.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_encode_ia5_string.obj
+der_encode_integer.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_encode_integer.obj
+der_encode_object_identifier.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_encode_object_identifier.obj
+der_encode_octet_string.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_encode_octet_string.obj
+der_encode_printable_string.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_encode_printable_string.obj
+der_encode_sequence_ex.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_encode_sequence_ex.obj
+der_encode_sequence_multi.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_encode_sequence_multi.obj
+der_encode_set.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_encode_set.obj
+der_encode_setof.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_encode_setof.obj
+der_encode_short_integer.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_encode_short_integer.obj
+der_encode_utctime.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_encode_utctime.obj
+der_length_bit_string.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_length_bit_string.obj
+der_length_ia5_string.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_length_ia5_string.obj
+der_length_integer.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_length_integer.obj
+der_length_object_identifier.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_length_object_identifier.obj
+der_length_octet_string.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_length_octet_string.obj
+der_length_printable_string.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_length_printable_string.obj
+der_length_sequence.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_length_sequence.obj
+der_length_short_integer.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_length_short_integer.obj
+der_length_utctime.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\der_length_utctime.obj
+des.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\des.obj
+DeviceContext.obj	renderer/devicecontext.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\DeviceContext.obj
+dict.obj	curl/lib/dict.c	.\build\win32\intermediate\release\libcurl\dict.obj
+Dict.obj	idlib/dict.cpp	.\build\Win32\intermediate\Release\idLib\Dict.obj
+dilib4.obj		obj\i386\dilib4.obj
+dilib5.obj		obj\i386\dilib5.obj
+DINPUT8.dll		DINPUT8.dll
+dllargv.obj		build\intel\dll_obj\dllargv.obj
+dllsupp.obj		build\intel\dll_obj\dllsupp.obj
+dongle.obj	sys/win32/dongle/dongle.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\dongle.obj
+DownloadServer.obj	framework/async/downloadserver.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\DownloadServer.obj
+draw_arb2.obj	renderer/draw_arb2.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\draw_arb2.obj
+draw_atmosphere.obj	renderer/draw_atmosphere.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\draw_atmosphere.obj
+draw_common.obj	renderer/draw_common.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\draw_common.obj
+draw_foglights.obj	renderer/draw_foglights.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\draw_foglights.obj
+draw_new.obj	renderer/draw_new.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\draw_new.obj
+draw_ocq.obj	renderer/draw_ocq.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\draw_ocq.obj
+draw_shadow.obj	renderer/draw_shadow.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\draw_shadow.obj
+draw_shadowmap.obj	renderer/draw_shadowmap.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\draw_shadowmap.obj
+DSOUND.dll		DSOUND.dll
+dsp.obj	libs/ogg/libtheora/lib/dsp.c	..\..\build\win32\intermediate\release\libtheora\dsp.obj
+dsp_mmx.obj	libs/ogg/libtheora/lib/x86_32_vs/dsp_mmx.c	..\..\build\win32\intermediate\release\libtheora\dsp_mmx.obj
+dxguid.obj		obj\i386\dxguid.obj
+DXTDecoder.obj	libs/imagelib/dxt/dxtdecoder.cpp	..\..\build\Win32\intermediate\Release\imageLib\DXTDecoder.obj
+DXTEncoder.obj	libs/imagelib/dxt/dxtencoder.cpp	..\..\build\Win32\intermediate\Release\imageLib\DXTEncoder.obj
+DXTEncoder_MMX.obj	libs/imagelib/dxt/dxtencoder_mmx.cpp	..\..\build\Win32\intermediate\Release\imageLib\DXTEncoder_MMX.obj
+DXTEncoder_SSE2.obj	libs/imagelib/dxt/dxtencoder_sse2.cpp	..\..\build\Win32\intermediate\Release\imageLib\DXTEncoder_SSE2.obj
+DXTEncoder_Xenon.obj	libs/imagelib/dxt/dxtencoder_xenon.cpp	..\..\build\Win32\intermediate\Release\imageLib\DXTEncoder_Xenon.obj
+DynamicModelCache.obj	renderer/dynamicmodelcache.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\DynamicModelCache.obj
+easy.obj	curl/lib/easy.c	.\build\win32\intermediate\release\libcurl\easy.obj
+ecc.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\ecc.obj
+ecc_export.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\ecc_export.obj
+ecc_free.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\ecc_free.obj
+ecc_import.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\ecc_import.obj
+ecc_make_key.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\ecc_make_key.obj
+ecc_shared_secret.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\ecc_shared_secret.obj
+EditField.obj	framework/editfield.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\EditField.obj
+ehvecctr.obj		build\intel\dll_obj\ehvecctr.obj
+ehvecdtr.obj		build\intel\dll_obj\ehvecdtr.obj
+encode.obj	libs/ogg/libtheora/lib/encode.c	..\..\build\win32\intermediate\release\libtheora\encode.obj
+encoder_toplevel.obj	libs/ogg/libtheora/lib/encoder_toplevel.c	..\..\build\win32\intermediate\release\libtheora\encoder_toplevel.obj
+EncryptedFileIO.obj	sys/win32/dongle/encryptedfileio.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\EncryptedFileIO.obj
+engine.res		e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\engine.res
+envelope.obj	libs/ogg/libvorbis/lib/envelope.c	..\..\build\win32\intermediate\release\libvorbis\envelope.obj
+error_to_string.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\error_to_string.obj
+escape.obj	curl/lib/escape.c	.\build\win32\intermediate\release\libcurl\escape.obj
+EventLoop.obj	framework/eventloop.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\EventLoop.obj
+exc_10_16_table.obj	libs/speex/speex/libspeex/exc_10_16_table.c	..\..\build\win32\intermediate\release\libspeex\exc_10_16_table.obj
+exc_10_32_table.obj	libs/speex/speex/libspeex/exc_10_32_table.c	..\..\build\win32\intermediate\release\libspeex\exc_10_32_table.obj
+exc_20_32_table.obj	libs/speex/speex/libspeex/exc_20_32_table.c	..\..\build\win32\intermediate\release\libspeex\exc_20_32_table.obj
+exc_5_256_table.obj	libs/speex/speex/libspeex/exc_5_256_table.c	..\..\build\win32\intermediate\release\libspeex\exc_5_256_table.obj
+exc_5_64_table.obj	libs/speex/speex/libspeex/exc_5_64_table.c	..\..\build\win32\intermediate\release\libspeex\exc_5_64_table.obj
+exc_8_128_table.obj	libs/speex/speex/libspeex/exc_8_128_table.c	..\..\build\win32\intermediate\release\libspeex\exc_8_128_table.obj
+fdct_mmx.obj	libs/ogg/libtheora/lib/x86_32_vs/fdct_mmx.c	..\..\build\win32\intermediate\release\libtheora\fdct_mmx.obj
+file.obj	curl/lib/file.c	.\build\win32\intermediate\release\libcurl\file.obj
+File.obj	libs/filelib/file.cpp	..\..\build\Win32\intermediate\Release\fileLib\File.obj
+File_InZip.obj	framework/file_inzip.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\File_InZip.obj
+FileSystem.obj	framework/filesystem.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\FileSystem.obj
+Filter.obj	libs/imagelib/filter/filter.cpp	..\..\build\Win32\intermediate\Release\imageLib\Filter.obj
+Filter_bicubic_float_Xenon.obj	libs/imagelib/filter/filter_bicubic_float_xenon.cpp	..\..\build\Win32\intermediate\Release\imageLib\Filter_bicubic_float_Xenon.obj
+Filter_bicubic_int_MMX.obj	libs/imagelib/filter/filter_bicubic_int_mmx.cpp	..\..\build\Win32\intermediate\Release\imageLib\Filter_bicubic_int_MMX.obj
+Filter_bicubic_int_SIMD.obj	libs/imagelib/filter/filter_bicubic_int_simd.cpp	..\..\build\Win32\intermediate\Release\imageLib\Filter_bicubic_int_SIMD.obj
+Filter_bicubic_int_SSE2.obj	libs/imagelib/filter/filter_bicubic_int_sse2.cpp	..\..\build\Win32\intermediate\Release\imageLib\Filter_bicubic_int_SSE2.obj
+filters.obj	libs/speex/speex/libspeex/filters.c	..\..\build\win32\intermediate\release\libspeex\filters.obj
+floor0.obj	libs/ogg/libvorbis/lib/floor0.c	..\..\build\win32\intermediate\release\libvorbis\floor0.obj
+floor1.obj	libs/ogg/libvorbis/lib/floor1.c	..\..\build\win32\intermediate\release\libvorbis\floor1.obj
+FontManager.obj	renderer/fontmanager.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\FontManager.obj
+formdata.obj	curl/lib/formdata.c	.\build\win32\intermediate\release\libcurl\formdata.obj
+fp8.obj		build\intel\dll_obj\fp8.obj
+FrameBuffer.obj	renderer/framebuffer.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\FrameBuffer.obj
+framing.obj	libs/ogg/libogg/src/framing.c	..\..\build\win32\intermediate\release\libogg\framing.obj
+frarray.obj	libs/ogg/libtheora/lib/frarray.c	..\..\build\win32\intermediate\release\libtheora\frarray.obj
+frinit.obj	libs/ogg/libtheora/lib/frinit.c	..\..\build\win32\intermediate\release\libtheora\frinit.obj
+Frustum.obj	idlib/bv/frustum.cpp	.\build\Win32\intermediate\Release\idLib\Frustum.obj
+ftbase.obj		..\..\..\objs\release\ftbase.obj
+ftbitmap.obj		..\..\..\objs\release\ftbitmap.obj
+ftcache.obj		..\..\..\objs\release\ftcache.obj
+ftglyph.obj		..\..\..\objs\release\ftglyph.obj
+ftgzip.obj		..\..\..\objs\release\ftgzip.obj
+ftinit.obj		..\..\..\objs\release\ftinit.obj
+ftlzw.obj		..\..\..\objs\release\ftlzw.obj
+ftol2.obj		build\intel\dll_obj\ftol2.obj
+ftp.obj	curl/lib/ftp.c	.\build\win32\intermediate\release\libcurl\ftp.obj
+ftsystem.obj		..\..\..\objs\release\ftsystem.obj
+gain_table.obj	libs/speex/speex/libspeex/gain_table.c	..\..\build\win32\intermediate\release\libspeex\gain_table.obj
+gain_table_lbr.obj	libs/speex/speex/libspeex/gain_table_lbr.c	..\..\build\win32\intermediate\release\libspeex\gain_table_lbr.obj
+GameTool.obj	tools/gametool.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\GameTool.obj
+GDI32.dll		GDI32.dll
+getcwd.obi		build\intel\st_obj\oldnames\getcwd.obi
+getdate.obj		.\build\win32\intermediate\release\libcurl\getdate.obj
+getenv.obj	curl/lib/getenv.c	.\build\win32\intermediate\release\libcurl\getenv.obj
+getinfo.obj	curl/lib/getinfo.c	.\build\win32\intermediate\release\libcurl\getinfo.obj
+GraphManager.obj	framework/graphmanager.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\GraphManager.obj
+gs_cookie.obj		build\intel\dll_obj\gs_cookie.obj
+gs_report.obj		build\intel\dll_obj\gs_report.obj
+gs_support.obj		build\intel\dll_obj\gs_support.obj
+GSSCodes.obj	sys/gss/gsscodes.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\GSSCodes.obj
+GuiModel.obj	renderer/guimodel.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\GuiModel.obj
+hash.obj	curl/lib/hash.c	.\build\win32\intermediate\release\libcurl\hash.obj
+hash_memory.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\hash_memory.obj
+Heap.obj	idlib/heap.cpp	.\build\Win32\intermediate\Release\idLib\Heap.obj
+HeightMapData.obj	tools/compilers/heighttonormal/heightmapdata.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\HeightMapData.obj
+HeightToNormal.obj	tools/compilers/heighttonormal/heighttonormal.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\HeightToNormal.obj
+hexc_10_32_table.obj	libs/speex/speex/libspeex/hexc_10_32_table.c	..\..\build\win32\intermediate\release\libspeex\hexc_10_32_table.obj
+hexc_table.obj	libs/speex/speex/libspeex/hexc_table.c	..\..\build\win32\intermediate\release\libspeex\hexc_table.obj
+high_lsp_tables.obj	libs/speex/speex/libspeex/high_lsp_tables.c	..\..\build\win32\intermediate\release\libspeex\high_lsp_tables.obj
+hmac_done.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\hmac_done.obj
+hmac_init.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\hmac_init.obj
+hmac_process.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\hmac_process.obj
+hostip.obj	curl/lib/hostip.c	.\build\win32\intermediate\release\libcurl\hostip.obj
+http.obj	curl/lib/http.c	.\build\win32\intermediate\release\libcurl\http.obj
+http_chunks.obj	curl/lib/http_chunks.c	.\build\win32\intermediate\release\libcurl\http_chunks.obj
+http_digest.obj	curl/lib/http_digest.c	.\build\win32\intermediate\release\libcurl\http_digest.obj
+huffman.obj	libs/ogg/libtheora/lib/huffman.c	..\..\build\win32\intermediate\release\libtheora\huffman.obj
+idal.obj	openal/idal.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\idal.obj
+idct.obj	libs/ogg/libtheora/lib/idct.c	..\..\build\win32\intermediate\release\libtheora\idct.obj
+IDCT_AP922_float.obj	libs/imagelib/baredct/idct_ap922_float.cpp	..\..\build\Win32\intermediate\Release\imageLib\IDCT_AP922_float.obj
+IDCT_AP922_float_Xenon.obj	libs/imagelib/baredct/idct_ap922_float_xenon.cpp	..\..\build\Win32\intermediate\Release\imageLib\IDCT_AP922_float_Xenon.obj
+IDCT_AP922_int_w_MMX.obj	libs/imagelib/baredct/idct_ap922_int_w_mmx.cpp	..\..\build\Win32\intermediate\Release\imageLib\IDCT_AP922_int_w_MMX.obj
+IDCT_AP922_int_w_SSE2.obj	libs/imagelib/baredct/idct_ap922_int_w_sse2.cpp	..\..\build\Win32\intermediate\Release\imageLib\IDCT_AP922_int_w_SSE2.obj
+Image_files.obj	renderer/image_files.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Image_files.obj
+Image_init.obj	renderer/image_init.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Image_init.obj
+Image_load.obj	renderer/image_load.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Image_load.obj
+Image_process.obj	renderer/image_process.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Image_process.obj
+Image_Processor.obj	renderer/image_processor.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Image_Processor.obj
+Image_program.obj	renderer/image_program.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Image_program.obj
+Image_Resampler.obj	renderer/image_resampler.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Image_Resampler.obj
+Image_Sequence.obj	renderer/image_sequence.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Image_Sequence.obj
+IMM32.dll		IMM32.dll
+Imposter.obj	renderer/imposter.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Imposter.obj
+inffas32.obj		..\build\win32\intermediate\release\libzlib\inffas32.obj
+inflate.obj	libs/zlib/inflate.c	..\build\win32\intermediate\release\libzlib\inflate.obj
+info.obj	libs/ogg/libvorbis/lib/info.c	..\..\build\win32\intermediate\release\libvorbis\info.obj
+inftrees.obj	libs/zlib/inftrees.c	..\build\win32\intermediate\release\libzlib\inftrees.obj
+initsect.obj		..\build\intel\dll_obj\initsect.obj
+Interaction.obj	renderer/interaction.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Interaction.obj
+ioapi.obj	framework/minizip/ioapi.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\ioapi.obj
+iphlpapi.dll		iphlpapi.dll
+itoa.obi		build\intel\st_obj\oldnames\itoa.obi
+JointTransform.obj	idlib/geometry/jointtransform.cpp	.\build\Win32\intermediate\Release\idLib\JointTransform.obj
+KERNEL32.dll		KERNEL32.dll
+KeyInput.obj	framework/keyinput.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\KeyInput.obj
+LangDict.obj	idlib/langdict.cpp	.\build\Win32\intermediate\Release\idLib\LangDict.obj
+ldap.obj	curl/lib/ldap.c	.\build\win32\intermediate\release\libcurl\ldap.obj
+Lexer.obj	idlib/text/lexer.cpp	.\build\Win32\intermediate\Release\idLib\Lexer.obj
+LexerBinary.obj	idlib/text/lexerbinary.cpp	.\build\Win32\intermediate\Release\idLib\LexerBinary.obj
+lgLcd_LIB.obj		\PC\LCD\Src\Build\Obj\Release\lgLcd_LIB\lgLcd_LIB.obj
+Lib.obj	idlib/lib.cpp	.\build\Win32\intermediate\Release\idLib\Lib.obj
+lldiv.obj		build\intel\dll_obj\lldiv.obj
+llist.obj	curl/lib/llist.c	.\build\win32\intermediate\release\libcurl\llist.obj
+llmul.obj		build\intel\dll_obj\llmul.obj
+llrem.obj		build\intel\dll_obj\llrem.obj
+llshl.obj		build\intel\dll_obj\llshl.obj
+llshr.obj		build\intel\dll_obj\llshr.obj
+Lock.obj	idlib/threading/lock.cpp	.\build\Win32\intermediate\Release\idLib\Lock.obj
+LogSubscriber.obj	sdnet/demonware/logsubscriber.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\LogSubscriber.obj
+lpc.obj	libs/ogg/libvorbis/lib/lpc.c	..\..\build\win32\intermediate\release\libvorbis\lpc.obj
+lpc.obj	libs/speex/speex/libspeex/lpc.c	..\..\build\win32\intermediate\release\libspeex\lpc.obj
+lsp.obj	libs/ogg/libvorbis/lib/lsp.c	..\..\build\win32\intermediate\release\libvorbis\lsp.obj
+lsp.obj	libs/speex/speex/libspeex/lsp.c	..\..\build\win32\intermediate\release\libspeex\lsp.obj
+lsp_tables_nb.obj	libs/speex/speex/libspeex/lsp_tables_nb.c	..\..\build\win32\intermediate\release\libspeex\lsp_tables_nb.obj
+ltc_ecc_is_valid_idx.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\ltc_ecc_is_valid_idx.obj
+ltc_ecc_map.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\ltc_ecc_map.obj
+ltc_ecc_mulmod.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\ltc_ecc_mulmod.obj
+ltc_ecc_points.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\ltc_ecc_points.obj
+ltc_ecc_projective_add_point.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\ltc_ecc_projective_add_point.obj
+ltc_ecc_projective_dbl_point.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\ltc_ecc_projective_dbl_point.obj
+ltm_desc.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\ltm_desc.obj
+ltp.obj	libs/speex/speex/libspeex/ltp.c	..\..\build\win32\intermediate\release\libspeex\ltp.obj
+mac3r.dll		mac3r.dll
+MakeImposter.obj	tools/compilers/imposter/makeimposter.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\MakeImposter.obj
+mapping0.obj	libs/ogg/libvorbis/lib/mapping0.c	..\..\build\win32\intermediate\release\libvorbis\mapping0.obj
+MassiveThread.obj	framework/massivethread.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\MassiveThread.obj
+Material.obj	renderer/material.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Material.obj
+Math.obj	idlib/math/math.cpp	.\build\Win32\intermediate\Release\idLib\Math.obj
+Matrix.obj	idlib/math/matrix.cpp	.\build\Win32\intermediate\Release\idLib\Matrix.obj
+mcomp.obj	libs/ogg/libtheora/lib/mcomp.c	..\..\build\win32\intermediate\release\libtheora\mcomp.obj
+MD4.obj	idlib/hashing/md4.cpp	.\build\Win32\intermediate\Release\idLib\MD4.obj
+md5.obj	curl/lib/md5.c	.\build\win32\intermediate\release\libcurl\md5.obj
+MD5.obj	idlib/hashing/md5.cpp	.\build\Win32\intermediate\Release\idLib\MD5.obj
+mdct.obj	libs/ogg/libvorbis/lib/mdct.c	..\..\build\win32\intermediate\release\libvorbis\mdct.obj
+MegaTexture.obj	renderer/megatexture/megatexture.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\MegaTexture.obj
+MegaTextureCompressor.obj	renderer/megatexture/megatexturecompressor.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\MegaTextureCompressor.obj
+MegaTextureTileDecompressor.obj	renderer/megatexture/megatexturetiledecompressor.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\MegaTextureTileDecompressor.obj
+MegaTextureTileLoader.obj	renderer/megatexture/megatexturetileloader.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\MegaTextureTileLoader.obj
+merr.obj		build\intel\dll_obj\merr.obj
+MipMap.obj	libs/imagelib/filter/mipmap.cpp	..\..\build\Win32\intermediate\Release\imageLib\MipMap.obj
+MipMap_MMX.obj	libs/imagelib/filter/mipmap_mmx.cpp	..\..\build\Win32\intermediate\Release\imageLib\MipMap_MMX.obj
+MipMap_SSE2.obj	libs/imagelib/filter/mipmap_sse2.cpp	..\..\build\Win32\intermediate\Release\imageLib\MipMap_SSE2.obj
+MipMap_Xenon.obj	libs/imagelib/filter/mipmap_xenon.cpp	..\..\build\Win32\intermediate\Release\imageLib\MipMap_Xenon.obj
+misc.obj	libs/speex/speex/libspeex/misc.c	..\..\build\win32\intermediate\release\libspeex\misc.obj
+misc_common.obj	libs/ogg/libtheora/lib/misc_common.c	..\..\build\win32\intermediate\release\libtheora\misc_common.obj
+mkdir.obi		build\intel\st_obj\oldnames\mkdir.obi
+Model.obj	renderer/model.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Model.obj
+Model_ase.obj	renderer/model_ase.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Model_ase.obj
+Model_beam.obj	renderer/model_beam.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Model_beam.obj
+Model_liquid.obj	renderer/model_liquid.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Model_liquid.obj
+Model_lwo.obj	renderer/model_lwo.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Model_lwo.obj
+Model_md3.obj	renderer/model_md3.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Model_md3.obj
+Model_md5.obj	renderer/model_md5.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Model_md5.obj
+Model_obj.obj	renderer/model_obj.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Model_obj.obj
+Model_proc.obj	renderer/model_proc.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Model_proc.obj
+Model_sprite.obj	renderer/model_sprite.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Model_sprite.obj
+Model_Stuff.obj	renderer/model_stuff.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Model_Stuff.obj
+Model_Surface.obj	renderer/model_surface.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Model_Surface.obj
+ModelCheapDecal.obj	renderer/modelcheapdecal.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\ModelCheapDecal.obj
+ModelDecal.obj	renderer/modeldecal.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\ModelDecal.obj
+ModelManager.obj	renderer/modelmanager.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\ModelManager.obj
+ModelOverlay.obj	renderer/modeloverlay.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\ModelOverlay.obj
+modes.obj	libs/speex/speex/libspeex/modes.c	..\..\build\win32\intermediate\release\libspeex\modes.obj
+mprintf.obj	curl/lib/mprintf.c	.\build\win32\intermediate\release\libcurl\mprintf.obj
+msctf_g.obj		obj\i386\msctf_g.obj
+msctf_i.obj		obj\i386\msctf_i.obj
+MsgChannel.obj	framework/async/msgchannel.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\MsgChannel.obj
+MSVCR80.dll		MSVCR80.dll
+multi.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\multi.obj
+natstart.obj		build\intel\dll_obj\natstart.obj
+nb_celp.obj	libs/speex/speex/libspeex/nb_celp.c	..\..\build\win32\intermediate\release\libspeex\nb_celp.obj
+netrc.obj	curl/lib/netrc.c	.\build\win32\intermediate\release\libcurl\netrc.obj
+NetworkSystem.obj	framework/async/networksystem.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\NetworkSystem.obj
+NotificationSystem.obj	framework/notificationsystem.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\NotificationSystem.obj
+ole32.dll		ole32.dll
+OLEAUT32.dll		OLEAUT32.dll
+open.obi		build\intel\st_obj\oldnames\open.obi
+OPENGL32.dll		OPENGL32.dll
+Parser.obj	idlib/text/parser.cpp	.\build\Win32\intermediate\Release\idLib\Parser.obj
+pb.obj	libs/ogg/libtheora/lib/pb.c	..\..\build\win32\intermediate\release\libtheora\pb.obj
+pbcl.obj	libs/punkbuster/pbcl.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\pbcl.obj
+pbmd5.obj	libs/punkbuster/pbmd5.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\pbmd5.obj
+pbsdk.obj	libs/punkbuster/pbsdk.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\pbsdk.obj
+pbsv.obj	libs/punkbuster/pbsv.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\pbsv.obj
+pcf.obj		..\..\..\objs\release\pcf.obj
+pdh.dll		pdh.dll
+Perlin.obj	idlib/math/perlin.cpp	.\build\Win32\intermediate\Release\idLib\Perlin.obj
+pesect.obj		build\intel\dll_obj\pesect.obj
+pfr.obj		..\..\..\objs\release\pfr.obj
+PoolAllocator.obj	idlib/poolallocator.cpp	.\build\Win32\intermediate\Release\idLib\PoolAllocator.obj
+pp.obj	libs/ogg/libtheora/lib/pp.c	..\..\build\win32\intermediate\release\libtheora\pp.obj
+precompiled.obj	framework/precompiled.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\precompiled.obj
+ProfileInfo.obj	sdnet/demonware/profileinfo.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\ProfileInfo.obj
+progress.obj	curl/lib/progress.c	.\build\win32\intermediate\release\libcurl\progress.obj
+Properties.obj	idlib/properties.cpp	.\build\Win32\intermediate\Release\idLib\Properties.obj
+psaux.obj		..\..\..\objs\release\psaux.obj
+pshinter.obj		..\..\..\objs\release\pshinter.obj
+psmodule.obj		..\..\..\objs\release\psmodule.obj
+psy.obj	libs/ogg/libvorbis/lib/psy.c	..\..\build\win32\intermediate\release\libvorbis\psy.obj
+qgllib.obj	libs/qgllib/qgllib.cpp	..\..\build\Win32\intermediate\Release\qglLib\qgllib.obj
+quant.obj	libs/ogg/libtheora/lib/quant.c	..\..\build\win32\intermediate\release\libtheora\quant.obj
+quant_lsp.obj	libs/speex/speex/libspeex/quant_lsp.c	..\..\build\win32\intermediate\release\libspeex\quant_lsp.obj
+Quat.obj	idlib/math/quat.cpp	.\build\Win32\intermediate\Release\idLib\Quat.obj
+QueryTimers.obj	renderer/querytimers.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\QueryTimers.obj
+rand_prime.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\rand_prime.obj
+Random.obj	idlib/math/random.cpp	.\build\Win32\intermediate\Release\idLib\Random.obj
+raster.obj		..\..\..\objs\release\raster.obj
+read.obi		build\intel\st_obj\oldnames\read.obi
+recon_mmx.obj	libs/ogg/libtheora/lib/x86_32_vs/recon_mmx.c	..\..\build\win32\intermediate\release\libtheora\recon_mmx.obj
+reconstruct.obj	libs/ogg/libtheora/lib/reconstruct.c	..\..\build\win32\intermediate\release\libtheora\reconstruct.obj
+registry.obj	libs/ogg/libvorbis/lib/registry.c	..\..\build\win32\intermediate\release\libvorbis\registry.obj
+RenderBindingManager.obj	renderer/renderbindingmanager.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\RenderBindingManager.obj
+RenderBindings.obj	renderer/renderbindings.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\RenderBindings.obj
+renderbump.obj	tools/compilers/renderbump/renderbump.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\renderbump.obj
+RenderEntity.obj	renderer/renderentity.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\RenderEntity.obj
+RenderLight.obj	tools/compilers/renderlight/renderlight.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\RenderLight.obj
+RenderLightTemplate.obj	tools/compilers/renderlight/renderlighttemplate.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\RenderLightTemplate.obj
+RenderLightWorker.obj	tools/compilers/renderlight/renderlightworker.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\RenderLightWorker.obj
+RenderLog.obj	renderer/renderlog.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\RenderLog.obj
+RenderProgramParser.obj	decllib/renderprogramparser.cpp	..\build\Win32\intermediate\Release\libDecl\RenderProgramParser.obj
+RenderSystem.obj	renderer/rendersystem.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\RenderSystem.obj
+RenderSystem_init.obj	renderer/rendersystem_init.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\RenderSystem_init.obj
+RenderSystemBackend.obj	renderer/rendersystembackend.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\RenderSystemBackend.obj
+RenderUtilities.obj	renderer/renderutilities.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\RenderUtilities.obj
+RenderWorld.obj	renderer/renderworld.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\RenderWorld.obj
+RenderWorld_demo.obj	renderer/renderworld_demo.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\RenderWorld_demo.obj
+RenderWorld_load.obj	renderer/renderworld_load.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\RenderWorld_load.obj
+RenderWorld_portals.obj	renderer/renderworld_portals.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\RenderWorld_portals.obj
+res0.obj	libs/ogg/libvorbis/lib/res0.c	..\..\build\win32\intermediate\release\libvorbis\res0.obj
+Rotation.obj	idlib/math/rotation.cpp	.\build\Win32\intermediate\Release\idLib\Rotation.obj
+rsa_exptmod.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\rsa_exptmod.obj
+rsa_make_key.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\rsa_make_key.obj
+SampleDecoder.obj	sound/sampledecoder.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SampleDecoder.obj
+sb_celp.obj	libs/speex/speex/libspeex/sb_celp.c	..\..\build\win32\intermediate\release\libspeex\sb_celp.obj
+scan.obj	libs/ogg/libtheora/lib/scan.c	..\..\build\win32\intermediate\release\libtheora\scan.obj
+ScreenRect.obj	renderer/screenrect.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\ScreenRect.obj
+SDNet.obj	sdnet/sdnet.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNet.obj
+SDNet_DemonWare.obj	sdnet/demonware/sdnet_demonware.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNet_DemonWare.obj
+SDNetAccount_Anonymous.obj	sdnet/sdnetaccount_anonymous.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetAccount_Anonymous.obj
+SDNetAccount_Anonymous_DemonWare.obj	sdnet/demonware/sdnetaccount_anonymous_demonware.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetAccount_Anonymous_DemonWare.obj
+SDNetAccount_Auth.obj	sdnet/sdnetaccount_auth.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetAccount_Auth.obj
+SDNetAccount_Auth_DemonWare.obj	sdnet/demonware/sdnetaccount_auth_demonware.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetAccount_Auth_DemonWare.obj
+SDNetFriend_DemonWare.obj	sdnet/demonware/sdnetfriend_demonware.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetFriend_DemonWare.obj
+SDNetFriendsManager.obj	sdnet/sdnetfriendsmanager.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetFriendsManager.obj
+SDNetFriendsManager_DemonWare.obj	sdnet/demonware/sdnetfriendsmanager_demonware.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetFriendsManager_DemonWare.obj
+SDNetMessage.obj	sdnet/sdnetmessage.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetMessage.obj
+SDNetMessageHistory.obj	sdnet/sdnetmessagehistory.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetMessageHistory.obj
+SDNetProfile_DemonWare.obj	sdnet/demonware/sdnetprofile_demonware.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetProfile_DemonWare.obj
+SDNetSession.obj	sdnet/sdnetsession.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetSession.obj
+SDNetSession_DemonWare.obj	sdnet/demonware/sdnetsession_demonware.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetSession_DemonWare.obj
+SDNetSessionManager.obj	sdnet/sdnetsessionmanager.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetSessionManager.obj
+SDNetSessionManager_DemonWare.obj	sdnet/demonware/sdnetsessionmanager_demonware.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetSessionManager_DemonWare.obj
+SDNetStatsManager.obj	sdnet/sdnetstatsmanager.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetStatsManager.obj
+SDNetStatsManager_DemonWare.obj	sdnet/demonware/sdnetstatsmanager_demonware.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetStatsManager_DemonWare.obj
+SDNetTask_local.obj	sdnet/sdnettask_local.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetTask_local.obj
+SDNetTeamManager.obj	sdnet/sdnetteammanager.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetTeamManager.obj
+SDNetTeamManager_DemonWare.obj	sdnet/demonware/sdnetteammanager_demonware.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetTeamManager_DemonWare.obj
+SDNetTeamMember_DemonWare.obj	sdnet/demonware/sdnetteammember_demonware.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetTeamMember_DemonWare.obj
+SDNetUser.obj	sdnet/sdnetuser.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SDNetUser.obj
+secchk.obj		build\intel\dll_obj\secchk.obj
+sehprolg4.obj		build\intel\dll_obj\sehprolg4.obj
+sendf.obj	curl/lib/sendf.c	.\build\win32\intermediate\release\libcurl\sendf.obj
+Session.obj	framework/session.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Session.obj
+Session_menu.obj	framework/session_menu.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\Session_menu.obj
+SessionInfo.obj	sdnet/demonware/sessioninfo.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SessionInfo.obj
+SessionQueries.obj	sdnet/demonware/sessionqueries.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SessionQueries.obj
+sfnt.obj		..\..\..\objs\release\sfnt.obj
+sha1.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\sha1.obj
+sha256.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\sha256.obj
+share.obj	curl/lib/share.c	.\build\win32\intermediate\release\libcurl\share.obj
+sharedbook.obj	libs/ogg/libvorbis/lib/sharedbook.c	..\..\build\win32\intermediate\release\libvorbis\sharedbook.obj
+SHELL32.dll		SHELL32.dll
+Signal.obj	idlib/threading/signal.cpp	.\build\Win32\intermediate\Release\idLib\Signal.obj
+Simd.obj	idlib/math/simd.cpp	.\build\Win32\intermediate\Release\idLib\Simd.obj
+Simd_3DNow.obj	idlib/math/simd_3dnow.cpp	.\build\Win32\intermediate\Release\idLib\Simd_3DNow.obj
+Simd_Generic.obj	idlib/math/simd_generic.cpp	.\build\Win32\intermediate\Release\idLib\Simd_Generic.obj
+Simd_MMX.obj	idlib/math/simd_mmx.cpp	.\build\Win32\intermediate\Release\idLib\Simd_MMX.obj
+Simd_SSE.obj	idlib/math/simd_sse.cpp	.\build\Win32\intermediate\Release\idLib\Simd_SSE.obj
+Simd_SSE2.obj	idlib/math/simd_sse2.cpp	.\build\Win32\intermediate\Release\idLib\Simd_SSE2.obj
+Simd_SSE3.obj	idlib/math/simd_sse3.cpp	.\build\Win32\intermediate\Release\idLib\Simd_SSE3.obj
+smallft.obj	libs/ogg/libvorbis/lib/smallft.c	..\..\build\win32\intermediate\release\libvorbis\smallft.obj
+smooth.obj		..\..\..\objs\release\smooth.obj
+sound_openal.obj	openal/sound_openal.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\sound_openal.obj
+SoundCache.obj	sound/soundcache.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SoundCache.obj
+SoundEmitter.obj	sound/soundemitter.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SoundEmitter.obj
+SoundSample.obj	sound/soundsample.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SoundSample.obj
+SoundShader.obj	sound/soundshader.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SoundShader.obj
+SoundSystem.obj	sound/soundsystem.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SoundSystem.obj
+SoundWorld.obj	sound/soundworld.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SoundWorld.obj
+speedcheck.obj	curl/lib/speedcheck.c	.\build\win32\intermediate\release\libcurl\speedcheck.obj
+speex_callbacks.obj	libs/speex/speex/libspeex/speex_callbacks.c	..\..\build\win32\intermediate\release\libspeex\speex_callbacks.obj
+Sphere.obj	idlib/bv/sphere.cpp	.\build\Win32\intermediate\Release\idLib\Sphere.obj
+SplashScreen.obj	sys/win32/splashscreen.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SplashScreen.obj
+ssluse.obj	curl/lib/ssluse.c	.\build\win32\intermediate\release\libcurl\ssluse.obj
+StackTracer.obj	sys/win32/stacktracer.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\StackTracer.obj
+Str.obj	idlib/text/str.cpp	.\build\Win32\intermediate\Release\idLib\Str.obj
+strdup.obi		build\intel\st_obj\oldnames\strdup.obi
+strequal.obj	curl/lib/strequal.c	.\build\win32\intermediate\release\libcurl\strequal.obj
+stricmp.obi		build\intel\st_obj\oldnames\stricmp.obi
+strnicmp.obi		build\intel\st_obj\oldnames\strnicmp.obi
+strtok.obj	curl/lib/strtok.c	.\build\win32\intermediate\release\libcurl\strtok.obj
+Surface.obj	idlib/geometry/surface.cpp	.\build\Win32\intermediate\Release\idLib\Surface.obj
+SurfaceOctTree.obj	renderer/surfaceocttree.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SurfaceOctTree.obj
+SurfaceTypeMap.obj	renderer/surfacetypemap.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\SurfaceTypeMap.obj
+synthesis.obj	libs/ogg/libvorbis/lib/synthesis.c	..\..\build\win32\intermediate\release\libvorbis\synthesis.obj
+sys_input.obj	sys/sys_input.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\sys_input.obj
+sys_local.obj	sys/sys_local.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\sys_local.obj
+SysLock_win.obj	idlib/sys/threading/syslock_win.cpp	.\build\Win32\intermediate\Release\idLib\SysLock_win.obj
+SysSignal_win.obj	idlib/sys/threading/syssignal_win.cpp	.\build\Win32\intermediate\Release\idLib\SysSignal_win.obj
+SysThread_win.obj	idlib/sys/threading/systhread_win.cpp	.\build\Win32\intermediate\Release\idLib\SysThread_win.obj
+telnet.obj	curl/lib/telnet.c	.\build\win32\intermediate\release\libcurl\telnet.obj
+TextUtilities.obj	idlib/textutilities.cpp	.\build\Win32\intermediate\Release\idLib\TextUtilities.obj
+TheoraFile.obj	sound/theorafile.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\TheoraFile.obj
+Thread.obj	idlib/threading/thread.cpp	.\build\Win32\intermediate\Release\idLib\Thread.obj
+ti_inst.obj		build\intel\dll_obj\ti_inst.obj
+tiger.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\tiger.obj
+Timer.obj	idlib/timer.cpp	.\build\Win32\intermediate\Release\idLib\Timer.obj
+timeval.obj	curl/lib/timeval.c	.\build\win32\intermediate\release\libcurl\timeval.obj
+tlssup.obj		build\intel\dll_obj\tlssup.obj
+Token.obj	idlib/text/token.cpp	.\build\Win32\intermediate\Release\idLib\Token.obj
+ToolManager.obj	framework/toolmanager.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\ToolManager.obj
+toplevel.obj	libs/ogg/libtheora/lib/toplevel.c	..\..\build\win32\intermediate\release\libtheora\toplevel.obj
+tr_backend.obj	renderer/tr_backend.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_backend.obj
+tr_deform.obj	renderer/tr_deform.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_deform.obj
+tr_guisurf.obj	renderer/tr_guisurf.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_guisurf.obj
+tr_light.obj	renderer/tr_light.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_light.obj
+tr_lightrun.obj	renderer/tr_lightrun.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_lightrun.obj
+tr_lispsm.obj	renderer/tr_lispsm.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_lispsm.obj
+tr_main.obj	renderer/tr_main.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_main.obj
+tr_matrixmath.obj	renderer/tr_matrixmath.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_matrixmath.obj
+tr_orderIndexes.obj	renderer/tr_orderindexes.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_orderIndexes.obj
+tr_perfqueries.obj	renderer/tr_perfqueries.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_perfqueries.obj
+tr_polytope.obj	renderer/tr_polytope.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_polytope.obj
+tr_render.obj	renderer/tr_render.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_render.obj
+tr_rendertools.obj	renderer/tr_rendertools.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_rendertools.obj
+tr_shadowbounds.obj	renderer/tr_shadowbounds.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_shadowbounds.obj
+tr_shadowviews.obj	renderer/tr_shadowviews.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_shadowviews.obj
+tr_stencilshadow.obj	renderer/tr_stencilshadow.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_stencilshadow.obj
+tr_subview.obj	renderer/tr_subview.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_subview.obj
+tr_trace.obj	renderer/tr_trace.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_trace.obj
+tr_trisurf.obj	renderer/tr_trisurf.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_trisurf.obj
+tr_turboshadow.obj	renderer/tr_turboshadow.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\tr_turboshadow.obj
+TraceModel.obj	idlib/geometry/tracemodel.cpp	.\build\Win32\intermediate\Release\idLib\TraceModel.obj
+transfer.obj	curl/lib/transfer.c	.\build\win32\intermediate\release\libcurl\transfer.obj
+truetype.obj		..\..\..\objs\release\truetype.obj
+type1.obj		..\..\..\objs\release\type1.obj
+type1cid.obj		..\..\..\objs\release\type1cid.obj
+type42.obj		..\..\..\objs\release\type42.obj
+typeinfo_dtor_32.obj		build\intel\st_obj\almap\typeinfo_dtor_32.obj
+ulldiv.obj		build\intel\dll_obj\ulldiv.obj
+ulldvrm.obj		build\intel\dll_obj\ulldvrm.obj
+unhandld.obj		build\intel\dll_obj\unhandld.obj
+unknwn_i.obj		obj\i386\unknwn_i.obj
+unzip.obj	framework/minizip/unzip.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\unzip.obj
+url.obj	curl/lib/url.c	.\build\win32\intermediate\release\libcurl\url.obj
+USER32.dll		USER32.dll
+UsercmdGen.obj	framework/usercmdgen.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\UsercmdGen.obj
+UTF8.obj	idlib/text/utf8.cpp	.\build\Win32\intermediate\Release\idLib\UTF8.obj
+vbr.obj	libs/speex/speex/libspeex/vbr.c	..\..\build\win32\intermediate\release\libspeex\vbr.obj
+Vector.obj	idlib/math/vector.cpp	.\build\Win32\intermediate\Release\idLib\Vector.obj
+VERSION.dll		VERSION.dll
+VertexCache.obj	renderer/vertexcache.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\VertexCache.obj
+VOIPSpeex.obj	sound/voipspeex.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\VOIPSpeex.obj
+vorbisfile.obj	libs/ogg/libvorbis/lib/vorbisfile.c	..\..\build\win32\intermediate\release\libvorbis\vorbisfile.obj
+vq.obj	libs/speex/speex/libspeex/vq.c	..\..\build\win32\intermediate\release\libspeex\vq.obj
+vsnprintf_s.obj		build\intel\dll_obj\almap\vsnprintf_s.obj
+WaveFile.obj	sound/wavefile.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\WaveFile.obj
+wildcard.obj		build\intel\dll_obj\wildcard.obj
+win_asyncthread.obj	sys/win32/win_asyncthread.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_asyncthread.obj
+win_cpu.obj	sys/win32/win_cpu.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_cpu.obj
+win_dinput.obj	sys/win32/input/win_dinput.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_dinput.obj
+win_exception.obj	sys/win32/win_exception.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_exception.obj
+win_ime.obj	sys/win32/input/win_ime.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_ime.obj
+win_input.obj	sys/win32/input/win_input.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_input.obj
+win_input_keyboard.obj	sys/win32/input/win_input_keyboard.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_input_keyboard.obj
+win_input_mouse.obj	sys/win32/input/win_input_mouse.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_input_mouse.obj
+win_logitechlcd.obj	sys/win32/win_logitechlcd.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_logitechlcd.obj
+win_main.obj	sys/win32/win_main.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_main.obj
+win_net.obj	sys/win32/win_net.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_net.obj
+win_opengl.obj	sys/win32/render/win_opengl.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_opengl.obj
+win_perfquery.obj	sys/win32/win_perfquery.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_perfquery.obj
+win_qgl.obj	sys/win32/win_qgl.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_qgl.obj
+win_shared.obj	sys/win32/win_shared.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_shared.obj
+win_sound_dsound.obj	sys/win32/win_sound_dsound.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_sound_dsound.obj
+win_stack.obj	sys/win32/win_stack.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_stack.obj
+win_syscon.obj	sys/win32/win_syscon.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_syscon.obj
+win_taskkeyhook.obj	sys/win32/win_taskkeyhook.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_taskkeyhook.obj
+win_wndproc.obj	sys/win32/win_wndproc.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_wndproc.obj
+win_xinput.obj	sys/win32/input/win_xinput.cpp	e:\ETQW - Demo Build\source\public\build\Win32\intermediate\Release\ETQW\win_xinput.obj
+Winding.obj	idlib/geometry/winding.cpp	.\build\Win32\intermediate\Release\idLib\Winding.obj
+Winding2D.obj	idlib/geometry/winding2d.cpp	.\build\Win32\intermediate\Release\idLib\Winding2D.obj
+window.obj	libs/ogg/libvorbis/lib/window.c	..\..\build\win32\intermediate\release\libvorbis\window.obj
+winfnt.obj		..\..\..\objs\release\winfnt.obj
+WINMM.dll		WINMM.dll
+WLexer.obj	idlib/text/wlexer.cpp	.\build\Win32\intermediate\Release\idLib\WLexer.obj
+WS2_32.dll		WS2_32.dll
+WSOCK32.dll		WSOCK32.dll
+WStr.obj	idlib/text/wstr.cpp	.\build\Win32\intermediate\Release\idLib\WStr.obj
+WToken.obj	idlib/text/wtoken.cpp	.\build\Win32\intermediate\Release\idLib\WToken.obj
+xncommod.obj		build\intel\dll_obj\xncommod.obj
+xthdloc.obj		build\intel\dll_obj\xthdloc.obj
+xtxtmode.obj		build\intel\dll_obj\xtxtmode.obj
+yarrow.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\yarrow.obj
+zeromem.obj		..\..\obj\win32-vs8\release-mt-dll\libtomcrypt\zeromem.obj
+zutil.obj	libs/zlib/zutil.c	..\build\win32\intermediate\release\libzlib\zutil.obj

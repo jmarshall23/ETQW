@@ -1,0 +1,34 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "vs2022-win32",
+      "displayName": "ETQW Win32 (Visual Studio 2022)",
+      "description": "Generates the 32-bit ETQW solution in ../out.",
+      "generator": "Visual Studio 17 2022",
+      "architecture": "Win32",
+      "binaryDir": "${sourceDir}/../out"
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "release",
+      "displayName": "ETQW Release",
+      "configurePreset": "vs2022-win32",
+      "configuration": "Release",
+      "jobs": 8
+    },
+    {
+      "name": "debug",
+      "displayName": "ETQW Debug",
+      "configurePreset": "vs2022-win32",
+      "configuration": "Debug",
+      "jobs": 8
+    }
+  ]
+}
