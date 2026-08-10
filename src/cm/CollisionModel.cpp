@@ -137,7 +137,9 @@ void idCollisionModelManagerLocal::LoadMap( const char *fileName, bool forceRelo
 	}
 
 	SetupHash();
-	LoadCollisionModelFile( fileName, 0 );
+	if ( !LoadCollisionModelFileBinary( fileName ) ) {
+		LoadCollisionModelFile( fileName, 0 );
+	}
 	ShutdownHash();
 }
 

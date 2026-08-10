@@ -571,8 +571,10 @@ bool idCommonLocal::AddStartupCommands() {
 		if ( idStr::Icmpn( com_consoleLines[ i ].Argv( 0 ), "set", 3 ) != 0 ) {
 			added = true;
 		}
-		cmdSystem->BufferCommandText( CMD_EXEC_APPEND, com_consoleLines[ i ].Args() );
-		cmdSystem->BufferCommandText( CMD_EXEC_APPEND, "\n" );
+		// Preserve the command name and the already-tokenized arguments.  Using
+		// Args() here drops Argv( 0 ), turning "+spawnServer valley" into the
+		// unknown command "valley".
+		cmdSystem->BufferCommandArgs( CMD_EXEC_APPEND, com_consoleLines[ i ] );
 	}
 	return added;
 }
@@ -947,8 +949,6 @@ void idCommonLocal::InitGame( bool resetConfigs ) {
 	cmdSystem->ExecuteCommandBuffer();
 	StartupVariable( NULL );
 	cvarSystem->ClearModifiedFlags( CVAR_ARCHIVE );
-	AddStartupCommands();
-	cmdSystem->ExecuteCommandBuffer();
 
 	if ( networkService != NULL ) {
 		networkService->Init();
@@ -1052,6 +1052,8 @@ void idCommonLocal::Init( int argc, const char** argv, const char* cmdline ) {
 	InitCommands();
 	InitSIMD();
 	InitGame( false );
+	AddStartupCommands();
+	cmdSystem->ExecuteCommandBuffer();
 	com_fullyInitialized = true;
 	Printf( "------------- ETQW initialized -------------\n" );
 }

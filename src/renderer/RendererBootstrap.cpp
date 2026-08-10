@@ -9,6 +9,8 @@
 
 #include "RendererBootstrap.h"
 #include "Image.h"
+#include "Material.h"
+#include "Model.h"
 #include "ModelManager.h"
 #include "RenderSystemBackend.h"
 #include "GuiModel.h"
@@ -294,6 +296,156 @@ void idRenderWorldLocal::RenderScene( const renderView_t *renderView ) {
 
 void idRenderWorldLocal::PerformRenderScene( const renderView_t *renderView ) {
 	SetRenderView( renderView );
+	if ( renderView == NULL || !glConfig.isInitialized || wglGetCurrentContext() == NULL ) {
+		return;
+	}
+
+	// Retail emits any fullscreen GUI commands accumulated before a nested
+	// render world, then resumes GUI collection after the scene.  This is what
+	// keeps a renderWorld window's backdrop behind its models instead of being
+	// submitted over them at EndFrame.
+	guiModel.FlushFrame( renderSystem->GetScreenWidth(), renderSystem->GetScreenHeight() );
+
+	idScreenRect viewport;
+	renderSystemBackend.RenderViewToViewport( renderView, &viewport );
+	const int viewportWidth = Max( 1, viewport.x2 - viewport.x1 + 1 );
+	const int viewportHeight = Max( 1, viewport.y2 - viewport.y1 + 1 );
+
+	glPushAttrib( GL_COLOR_BUFFER_BIT | GL_CURRENT_BIT | GL_DEPTH_BUFFER_BIT |
+		GL_ENABLE_BIT | GL_POLYGON_BIT | GL_SCISSOR_BIT | GL_TEXTURE_BIT |
+		GL_VIEWPORT_BIT );
+	glViewport( viewport.x1, viewport.y1, viewportWidth, viewportHeight );
+	glEnable( GL_SCISSOR_TEST );
+	glScissor( viewport.x1, viewport.y1, viewportWidth, viewportHeight );
+	glClear( GL_DEPTH_BUFFER_BIT );
+	glEnable( GL_DEPTH_TEST );
+	glDepthMask( GL_TRUE );
+	glDepthFunc( GL_LEQUAL );
+	glDisable( GL_CULL_FACE );
+	glDisable( GL_ALPHA_TEST );
+	glShadeModel( GL_SMOOTH );
+
+	const float zNear = renderView->nearPlane > 0.0f ? renderView->nearPlane : 1.0f;
+	const float zFar = renderView->farPlane > zNear ? renderView->farPlane : 100000.0f;
+	glMatrixMode( GL_PROJECTION );
+	glPushMatrix();
+	glLoadIdentity();
+	if ( renderView->size_x > 0.0f && renderView->size_y > 0.0f ) {
+		glOrtho( -renderView->size_x, renderView->size_x,
+			-renderView->size_y, renderView->size_y, zNear, zFar );
+	} else {
+		const float fovX = renderView->fov_x > 0.0f ? renderView->fov_x : 90.0f;
+		const float fovY = renderView->fov_y > 0.0f ? renderView->fov_y : 90.0f;
+		const double xmax = zNear * tan( fovX * idMath::M_DEG2RAD * 0.5f );
+		const double ymax = zNear * tan( fovY * idMath::M_DEG2RAD * 0.5f );
+		glFrustum( -xmax, xmax, -ymax, ymax, zNear, zFar );
+	}
+
+	const idVec3& forward = renderView->viewaxis[ 0 ];
+	const idVec3& left = renderView->viewaxis[ 1 ];
+	const idVec3& up = renderView->viewaxis[ 2 ];
+	const idVec3& origin = renderView->vieworg;
+	const float viewMatrix[ 16 ] = {
+		-left.x, up.x, -forward.x, 0.0f,
+		-left.y, up.y, -forward.y, 0.0f,
+		-left.z, up.z, -forward.z, 0.0f,
+		left * origin, -( up * origin ), forward * origin, 1.0f
+	};
+	glMatrixMode( GL_MODELVIEW );
+	glPushMatrix();
+	glLoadMatrixf( viewMatrix );
+
+	for ( int entityIndex = 0; entityIndex < entityDefs.Num(); entityIndex++ ) {
+		renderEntity_t* entity = entityDefs[ entityIndex ];
+		if ( entity == NULL ) {
+			continue;
+		}
+		if ( entity->suppressSurfaceInViewID != 0 && entity->suppressSurfaceInViewID == renderView->viewID ) {
+			continue;
+		}
+		if ( entity->allowSurfaceInViewID != 0 && entity->allowSurfaceInViewID != renderView->viewID ) {
+			continue;
+		}
+		if ( entity->callback != NULL ) {
+			int lastModifiedGameTime = 0;
+			entity->callback( entity, renderView, lastModifiedGameTime );
+		}
+		idRenderModel* model = entity->hModel;
+		if ( model == NULL ) {
+			continue;
+		}
+
+		const float entityMatrix[ 16 ] = {
+			entity->axis[ 0 ].x, entity->axis[ 0 ].y, entity->axis[ 0 ].z, 0.0f,
+			entity->axis[ 1 ].x, entity->axis[ 1 ].y, entity->axis[ 1 ].z, 0.0f,
+			entity->axis[ 2 ].x, entity->axis[ 2 ].y, entity->axis[ 2 ].z, 0.0f,
+			entity->origin.x, entity->origin.y, entity->origin.z, 1.0f
+		};
+		glPushMatrix();
+		glMultMatrixf( entityMatrix );
+
+		for ( int surfaceIndex = 0; surfaceIndex < model->NumSurfaces(); surfaceIndex++ ) {
+			if ( surfaceIndex < MAX_SURFACE_BITS - 1 && entity->hideSurfaceMask.Get( surfaceIndex ) != 0 ) {
+				continue;
+			}
+			const modelSurface_t* surface = model->Surface( surfaceIndex );
+			if ( surface == NULL || surface->geometry == NULL ||
+				 surface->geometry->verts == NULL || surface->geometry->indexes == NULL ) {
+				continue;
+			}
+
+			const idMaterial* material = renderView->globalMaterial != NULL ? renderView->globalMaterial :
+				( entity->customShader != NULL ? entity->customShader : surface->material );
+			if ( material != NULL && !material->IsDrawn() ) {
+				continue;
+			}
+			idImage* image = material != NULL ? material->GetEditorImage() : NULL;
+			if ( image != NULL && image->texnum != idImage::TEXTURE_NOT_LOADED && !image->defaulted ) {
+				glEnable( GL_TEXTURE_2D );
+				glBindTexture( GL_TEXTURE_2D, image->texnum );
+			} else {
+				glDisable( GL_TEXTURE_2D );
+			}
+			if ( material != NULL && material->Coverage() == MC_TRANSLUCENT ) {
+				glEnable( GL_BLEND );
+				glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+				glDepthMask( GL_FALSE );
+			} else {
+				glDisable( GL_BLEND );
+				glDepthMask( GL_TRUE );
+			}
+
+			const srfTriangles_t* triangles = surface->geometry;
+			glBegin( triangles->mode == PM_POINTSPRITE ? GL_POINTS : GL_TRIANGLES );
+			for ( int index = 0; index < triangles->numIndexes; index++ ) {
+				const int vertexIndex = triangles->indexes[ index ];
+				if ( vertexIndex < 0 || vertexIndex >= triangles->numVerts ) {
+					continue;
+				}
+				const idDrawVert& vertex = triangles->verts[ vertexIndex ];
+				const idVec3 normal = vertex.GetNormal();
+				const idVec2 st = vertex.GetST();
+				glColor4ub(
+					static_cast< byte >( idMath::ClampInt( 0, 255, idMath::Ftoi( vertex.color[ 0 ] * entity->shaderParms[ 0 ] ) ) ),
+					static_cast< byte >( idMath::ClampInt( 0, 255, idMath::Ftoi( vertex.color[ 1 ] * entity->shaderParms[ 1 ] ) ) ),
+					static_cast< byte >( idMath::ClampInt( 0, 255, idMath::Ftoi( vertex.color[ 2 ] * entity->shaderParms[ 2 ] ) ) ),
+					static_cast< byte >( idMath::ClampInt( 0, 255, idMath::Ftoi( vertex.color[ 3 ] * entity->shaderParms[ 3 ] ) ) )
+				);
+				glNormal3fv( normal.ToFloatPtr() );
+				glTexCoord2fv( st.ToFloatPtr() );
+				glVertex3fv( vertex.xyz.ToFloatPtr() );
+			}
+			glEnd();
+		}
+		glPopMatrix();
+	}
+
+	glDepthMask( GL_TRUE );
+	glPopMatrix();
+	glMatrixMode( GL_PROJECTION );
+	glPopMatrix();
+	glMatrixMode( GL_MODELVIEW );
+	glPopAttrib();
 }
 
 int idRenderWorldLocal::NumPortals() const {

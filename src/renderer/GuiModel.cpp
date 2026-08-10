@@ -507,3 +507,9 @@ void sdGuiModel::SubmitFrame( int windowWidth, int windowHeight ) {
 	glMatrixMode( GL_MODELVIEW );
 	glPopAttrib();
 }
+
+void sdGuiModel::FlushFrame( int windowWidth, int windowHeight ) {
+	SubmitFrame( windowWidth, windowHeight );
+	primitives.SetNum( 0, false );
+	texts.SetNum( 0, false );
+}

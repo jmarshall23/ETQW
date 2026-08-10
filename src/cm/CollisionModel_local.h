@@ -657,6 +657,13 @@ private:			// CollisionMap_files.cpp
 	void			ParsePolygons( idLexer *src, cm_model_t *model );
 	void			ParseBrushes( idLexer *src, cm_model_t *model );
 	bool			ParseCollisionModel( idLexer *src );
+	cm_node_t *	ParseNodesBinary( idFile *file, cm_model_t *model, cm_node_t *parent, bool &valid );
+	bool			ParseVerticesBinary( idFile *file, cm_model_t *model );
+	bool			ParseEdgesBinary( idFile *file, cm_model_t *model );
+	bool			ParsePolygonsBinary( idFile *file, cm_model_t *model, const idList< const idMaterial * > &materialCache );
+	bool			ParseBrushesBinary( idFile *file, cm_model_t *model );
+	bool			ParseCollisionModelBinary( idFile *file, const char *sourceName );
+	bool			LoadCollisionModelFileBinary( const char *name );
 	bool			LoadCollisionModelFile( const char *name, unsigned int mapFileCRC );
 
 private:			// CollisionMap_debug

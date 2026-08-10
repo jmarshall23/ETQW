@@ -736,7 +736,13 @@ void idDeclLocal::ParseLocal( void ) {
 			idStr expandedText;
 			const char* parseText = textSource;
 			int parseLength = textLength;
-			if ( declType->AllowTemplateEvaluation() ) {
+			// Retail only runs the template evaluator when the declaration
+			// actually contains a useTemplate directive.  Besides avoiding
+			// unnecessary work, this is significant because template evaluation
+			// strips comments and idStr::StripComments treats URL-like values such
+			// as "decl://skin" as C++ comments.
+			if ( declType->AllowTemplateEvaluation() &&
+				idStr::FindText( textSource, "useTemplate", false ) >= 0 ) {
 				declExpandedTextSetter setter( &expandedText );
 				sdFunctions::sdCallable< void( const char*, const int ) > callback( setter );
 				parsed = declManagerLocal.EvaluateTemplates( self, textSource, callback, true );

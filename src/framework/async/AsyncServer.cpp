@@ -69,8 +69,15 @@ void idAsyncServer::ClosePort() {
 }
 
 void idAsyncServer::Spawn() {
+	if ( active ) {
+		return;
+	}
+
+	// Retail stops the frontend/map before it initializes the new server.  In
+	// particular, no game client callbacks are made until the requested map has
+	// created its rules object.
 	session->Stop();
-	if ( active || !InitPort() ) {
+	if ( !InitPort() ) {
 		return;
 	}
 
@@ -91,17 +98,15 @@ void idAsyncServer::Spawn() {
 	serverTime = realTime;
 	serverId = realTime & CONNECTIONLESS_MESSAGE_ID_MASK;
 	serverDataChecksum = declManager->GetChecksum();
-	localClientNum = idAsyncNetwork::serverDedicated.GetBool() ? -1 : 0;
+	localClientNum = -1;
 	gameInitId = 1;
 	gameFrame = 0;
 	gameTime = 0;
 	gameTimeResidual = 0;
 	serverReloadingEngine = false;
 
-	if ( localClientNum >= 0 ) {
-		InitLocalClient( localClientNum );
-	}
 	common->Printf( "Server spawned on %s\n", Sys_NetAdrToString( serverPort.GetAdr() ) );
+	ExecuteMapChange();
 }
 
 void idAsyncServer::Kill() {
@@ -125,10 +130,48 @@ void idAsyncServer::ExecuteMapChange() {
 	if ( !active ) {
 		return;
 	}
-	const char* mapName = cvarSystem->GetCVarString( "si_map" );
-	if ( mapName != NULL && mapName[ 0 ] != '\0' ) {
-		sessLocal.ExecuteMapChange( mapName, 0, true, true, true );
-		++gameInitId;
+
+	const char* requestedMap = cvarSystem->GetCVarString( "si_map" );
+	if ( requestedMap == NULL || requestedMap[ 0 ] == '\0' || game == NULL ) {
+		return;
+	}
+
+	// OnUserStartMap selects and constructs the sdGameRules instance.  This
+	// must precede ServerClientConnect: GUID authentication writes the local
+	// client's user group through gameLocal.rules.
+	idStr reason;
+	idStr mapName;
+	const userMapChangeResult_e result = game->OnUserStartMap( requestedMap, reason, mapName );
+	if ( result == UMCR_ERROR ) {
+		common->Printf( "User Map Start Denied '%s'\n", reason.c_str() );
+		return;
+	}
+	if ( result == UMCR_STOP ) {
+		return;
+	}
+
+	serverTime = Sys_Milliseconds();
+	gameFrame = 0;
+	gameTime = 0;
+	gameTimeResidual = 0;
+	memset( userCmds, 0, sizeof( userCmds ) );
+	++gameInitId;
+
+	localClientNum = idAsyncNetwork::serverDedicated.GetBool() ? -1 : 0;
+	if ( localClientNum >= 0 ) {
+		InitLocalClient( localClientNum );
+	}
+
+	sessLocal.mapSpawnData.serverInfo = *cvarSystem->MoveCVarsToDict( CVAR_SERVERINFO );
+	sessLocal.mapSpawnData.syncedCVars = *cvarSystem->MoveCVarsToDict( CVAR_NETWORKSYNC );
+	if ( localClientNum >= 0 ) {
+		sessLocal.mapSpawnData.userInfo[ localClientNum ] = *cvarSystem->MoveCVarsToDict( CVAR_USERINFO );
+		game->SetClientNum( localClientNum, true );
+	}
+
+	sessLocal.ExecuteMapChange( mapName.c_str(), 0, true, true, true );
+	if ( localClientNum >= 0 && sessLocal.MapSpawned() ) {
+		BeginLocalClient();
 	}
 }
 
@@ -397,16 +440,13 @@ void idAsyncServer::InitClient( int clientNum, int clientId, int clientRate ) {
 
 void idAsyncServer::InitLocalClient( int clientNum ) {
 	InitClient( clientNum, serverId, 0 );
-	clients[ clientNum ].clientState = SCS_INGAME;
 	clients[ clientNum ].channel.Init( serverPort.GetAdr(), serverId );
-	game->SetClientNum( clientNum, true );
-	game->ServerClientConnect( clientNum );
-	game->ServerClientBegin( clientNum, false );
 }
 
 void idAsyncServer::BeginLocalClient() {
 	if ( localClientNum >= 0 && clients[ localClientNum ].clientState == SCS_CONNECTED ) {
 		clients[ localClientNum ].clientState = SCS_INGAME;
+		game->ServerClientConnect( localClientNum );
 		game->ServerClientBegin( localClientNum, false );
 	}
 }

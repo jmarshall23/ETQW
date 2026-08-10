@@ -8,8 +8,24 @@
 #include "CollisionModel_local.h"
 
 #define CM_FILE_EXT			"cm"
+#define CM_BINARY_FILE_EXT	"cmb"
 #define CM_FILEID			"CM"
 #define CM_FILEVERSION		"2.70"
+
+static bool CM_ValidBinaryCount( int count, int maximum = 1 << 24 ) {
+	return count >= 0 && count <= maximum;
+}
+
+static bool CM_ReadBinaryBounds( idFile *file, idBoundsShort &bounds ) {
+	short values[ 6 ];
+	for ( int i = 0; i < 6; ++i ) {
+		if ( file->ReadShort( values[ i ] ) != sizeof( values[ i ] ) ) {
+			return false;
+		}
+	}
+	bounds.SetBounds( values );
+	return true;
+}
 
 
 static void CM_R_GetNodeBounds( cm_model_t *model, idBounds &bounds, cm_node_t *node ) {
@@ -515,6 +531,342 @@ bool idCollisionModelManagerLocal::ParseCollisionModel( idLexer *src ) {
 	return true;
 }
 
+cm_node_t *idCollisionModelManagerLocal::ParseNodesBinary( idFile *file, cm_model_t *model,
+		cm_node_t *parent, bool &valid ) {
+	if ( !valid || ++model->numNodes > ( 1 << 22 ) ) {
+		valid = false;
+		return NULL;
+	}
+
+	cm_node_t *node = AllocNode( model,
+		model->numNodes < NODE_BLOCK_SIZE_SMALL ? NODE_BLOCK_SIZE_SMALL : NODE_BLOCK_SIZE_LARGE );
+	node->parent = parent;
+	node->polygons = NULL;
+	node->brushes = NULL;
+	node->children[ 0 ] = NULL;
+	node->children[ 1 ] = NULL;
+	valid = file->ReadInt( node->planeType ) == sizeof( node->planeType ) &&
+		file->ReadFloat( node->planeDist ) == sizeof( node->planeDist );
+	if ( valid && node->planeType != -1 ) {
+		node->children[ 0 ] = ParseNodesBinary( file, model, node, valid );
+		node->children[ 1 ] = ParseNodesBinary( file, model, node, valid );
+	}
+	return valid ? node : NULL;
+}
+
+bool idCollisionModelManagerLocal::ParseVerticesBinary( idFile *file, cm_model_t *model ) {
+	if ( file->ReadInt( model->numVertices ) != sizeof( model->numVertices ) ||
+		!CM_ValidBinaryCount( model->numVertices ) ) {
+		return false;
+	}
+	model->maxVertices = model->numVertices;
+	model->vertices = model->numVertices > 0
+		? static_cast< cm_vertex_t * >( Mem_Alloc( sizeof( cm_vertex_t ) * model->numVertices ) )
+		: NULL;
+	baseTraceWork->modelCache.UpdateForModel( model );
+	for ( int i = 0; i < model->numVertices; ++i ) {
+		if ( file->ReadVec3( model->vertices[ i ].p ) != sizeof( idVec3 ) ) {
+			return false;
+		}
+	}
+	return true;
+}
+
+bool idCollisionModelManagerLocal::ParseEdgesBinary( idFile *file, cm_model_t *model ) {
+	if ( file->ReadInt( model->numEdges ) != sizeof( model->numEdges ) ||
+		!CM_ValidBinaryCount( model->numEdges ) ) {
+		return false;
+	}
+	model->maxEdges = model->numEdges;
+	model->edges = model->numEdges > 0
+		? static_cast< cm_edge_t * >( Mem_Alloc( sizeof( cm_edge_t ) * model->numEdges ) )
+		: NULL;
+	baseTraceWork->modelCache.UpdateForModel( model );
+	for ( int i = 0; i < model->numEdges; ++i ) {
+		cm_edge_t &edge = model->edges[ i ];
+		if ( file->ReadUnsignedShort( edge.vertexNum[ 0 ] ) != sizeof( edge.vertexNum[ 0 ] ) ||
+			file->ReadUnsignedShort( edge.vertexNum[ 1 ] ) != sizeof( edge.vertexNum[ 1 ] ) ||
+			file->ReadUnsignedShort( edge.internal ) != sizeof( edge.internal ) ||
+			file->ReadUnsignedShort( edge.numUsers ) != sizeof( edge.numUsers ) ) {
+			return false;
+		}
+		edge.normal.Zero();
+		model->numInternalEdges += edge.internal;
+	}
+	return true;
+}
+
+bool idCollisionModelManagerLocal::ParsePolygonsBinary( idFile *file, cm_model_t *model,
+		const idList< const idMaterial * > &materialCache ) {
+	if ( file->ReadInt( model->maxPolygons ) != sizeof( model->maxPolygons ) ||
+		!CM_ValidBinaryCount( model->maxPolygons ) ) {
+		return false;
+	}
+	model->numPolygons = 0;
+	model->polygons = model->maxPolygons > 0
+		? static_cast< cm_polygon_t * >( Mem_AllocAligned( sizeof( cm_polygon_t ) * model->maxPolygons, ALIGN_64 ) )
+		: NULL;
+	if ( file->ReadInt( model->maxPolygonEdges ) != sizeof( model->maxPolygonEdges ) ||
+		!CM_ValidBinaryCount( model->maxPolygonEdges ) ) {
+		return false;
+	}
+	model->numPolygonEdges = 0;
+	model->polygonEdges = model->maxPolygonEdges > 0
+		? static_cast< signed short * >( Mem_AllocAligned( sizeof( signed short ) * model->maxPolygonEdges, ALIGN_16 ) )
+		: NULL;
+	model->contentsOverrides.Clear();
+	baseTraceWork->modelCache.UpdateForModel( model );
+
+	short numEdges = -1;
+	if ( file->ReadShort( numEdges ) != sizeof( numEdges ) ) {
+		return false;
+	}
+	while ( numEdges >= 0 ) {
+		if ( numEdges > CM_MAX_POLYGON_EDGES || model->numPolygons >= model->maxPolygons ||
+			model->numPolygonEdges + numEdges > model->maxPolygonEdges ) {
+			return false;
+		}
+		cm_polygon_t *polygon = AllocPolygon( model, numEdges );
+		for ( int i = 0; i < numEdges; ++i ) {
+			if ( file->ReadShort( polygon->edges[ i ] ) != sizeof( polygon->edges[ i ] ) ) {
+				return false;
+			}
+		}
+
+		idVec4 plane;
+		if ( file->ReadVec4( plane ) != sizeof( plane ) ) {
+			return false;
+		}
+		for ( int i = 0; i < 4; ++i ) {
+			polygon->plane[ i ] = plane[ i ];
+		}
+		if ( !CM_ReadBinaryBounds( file, polygon->bounds ) ) {
+			return false;
+		}
+
+		int materialIndex = -1;
+		if ( file->ReadInt( materialIndex ) != sizeof( materialIndex ) ||
+			materialIndex < 0 || materialIndex >= materialCache.Num() ) {
+			return false;
+		}
+		polygon->material = materialCache[ materialIndex ];
+		if ( polygon->material == NULL ) {
+			common->Error( "idCollisionModelManagerLocal::ParsePolygonsBinary: polygon has no material" );
+			return false;
+		}
+
+		cm_contents_override_t contentsOverride;
+		if ( file->ReadInt( contentsOverride.contentsAdd ) != sizeof( contentsOverride.contentsAdd ) ||
+			file->ReadInt( contentsOverride.contentsRemove ) != sizeof( contentsOverride.contentsRemove ) ) {
+			return false;
+		}
+		polygon->contents = ( polygon->material->GetContentFlags() | contentsOverride.contentsAdd ) &
+			~contentsOverride.contentsRemove;
+		model->contentsOverrides.Append( contentsOverride );
+
+		if ( file->ReadFloat( polygon->texAxis.axis[ 0 ][ 0 ] ) != sizeof( float ) ||
+			file->ReadFloat( polygon->texAxis.axis[ 0 ][ 1 ] ) != sizeof( float ) ||
+			file->ReadFloat( polygon->texAxis.axis[ 1 ][ 0 ] ) != sizeof( float ) ||
+			file->ReadFloat( polygon->texAxis.axis[ 1 ][ 1 ] ) != sizeof( float ) ||
+			file->ReadUnsignedShort( polygon->texAxis.offset[ 0 ] ) != sizeof( unsigned short ) ||
+			file->ReadUnsignedShort( polygon->texAxis.offset[ 1 ] ) != sizeof( unsigned short ) ) {
+			return false;
+		}
+		polygon->primitiveNum = 0;
+		R_FilterPolygonIntoTree( model, model->node, NULL, polygon );
+		if ( file->ReadShort( numEdges ) != sizeof( numEdges ) ) {
+			return false;
+		}
+	}
+	return numEdges == -1;
+}
+
+bool idCollisionModelManagerLocal::ParseBrushesBinary( idFile *file, cm_model_t *model ) {
+	if ( file->ReadInt( model->maxBrushes ) != sizeof( model->maxBrushes ) ||
+		!CM_ValidBinaryCount( model->maxBrushes ) ) {
+		return false;
+	}
+	model->numBrushes = 0;
+	model->brushes = model->maxBrushes > 0
+		? static_cast< cm_brush_t * >( Mem_AllocAligned( sizeof( cm_brush_t ) * model->maxBrushes, ALIGN_64 ) )
+		: NULL;
+	if ( file->ReadInt( model->maxBrushPlanes ) != sizeof( model->maxBrushPlanes ) ||
+		!CM_ValidBinaryCount( model->maxBrushPlanes ) ) {
+		return false;
+	}
+	model->numBrushPlanes = 0;
+	model->brushPlanes = model->maxBrushPlanes > 0
+		? static_cast< idPlane * >( Mem_AllocAligned( sizeof( idPlane ) * model->maxBrushPlanes, ALIGN_16 ) )
+		: NULL;
+	baseTraceWork->modelCache.UpdateForModel( model );
+
+	int numPlanes = -1;
+	if ( file->ReadInt( numPlanes ) != sizeof( numPlanes ) ) {
+		return false;
+	}
+	while ( numPlanes >= 0 ) {
+		if ( !CM_ValidBinaryCount( numPlanes, 1 << 20 ) || model->numBrushes >= model->maxBrushes ||
+			model->numBrushPlanes + numPlanes > model->maxBrushPlanes ) {
+			return false;
+		}
+		cm_brush_t *brush = AllocBrush( model, numPlanes );
+		for ( int i = 0; i < numPlanes; ++i ) {
+			idVec4 plane;
+			if ( file->ReadVec4( plane ) != sizeof( plane ) ) {
+				return false;
+			}
+			for ( int j = 0; j < 4; ++j ) {
+				brush->planes[ i ][ j ] = plane[ j ];
+			}
+		}
+		if ( !CM_ReadBinaryBounds( file, brush->bounds ) ) {
+			return false;
+		}
+		idStr contentsName;
+		file->ReadString( contentsName );
+		brush->contents = ContentsFromString( contentsName, 1 );
+		brush->primitiveNum = 0;
+		brush->material = NULL;
+		R_FilterBrushIntoTree( model, model->node, NULL, brush );
+		if ( file->ReadInt( numPlanes ) != sizeof( numPlanes ) ) {
+			return false;
+		}
+	}
+	return numPlanes == -1;
+}
+
+bool idCollisionModelManagerLocal::ParseCollisionModelBinary( idFile *file, const char *sourceName ) {
+	idStr storedName;
+	file->ReadString( storedName );
+	if ( storedName.IsEmpty() ) {
+		return false;
+	}
+
+	idStr modelName = storedName;
+	if ( sourceName != NULL && sourceName[ 0 ] != '\0' &&
+		 idStr::IcmpnPath( sourceName, "models/", 7 ) != 0 ) {
+		idStr mapBase = sourceName;
+		mapBase.StripFileExtension();
+		if ( idStr::IcmpnPath( storedName, mapBase.c_str(), mapBase.Length() ) != 0 ) {
+			modelName = mapBase;
+			modelName.AppendPath( storedName );
+		}
+	}
+
+	cm_model_t *model = NULL;
+	bool created = false;
+	for ( int i = 0; i < numModels; ++i ) {
+		if ( models[ i ] != NULL && !models[ i ]->name.Icmp( modelName ) ) {
+			model = models[ i ];
+			FreeModelMemory( model );
+			break;
+		}
+	}
+	if ( model == NULL ) {
+		model = AllocModel();
+		created = true;
+		if ( numModels == maxModels ) {
+			const int newMax = maxModels == 0 ? 16 : maxModels + 16;
+			cm_model_t **newModels = static_cast< cm_model_t ** >( Mem_Alloc( sizeof( *newModels ) * newMax ) );
+			if ( models != NULL ) {
+				memcpy( newModels, models, sizeof( *newModels ) * numModels );
+				Mem_Free( models );
+			}
+			models = newModels;
+			maxModels = newMax;
+		}
+		models[ numModels++ ] = model;
+	}
+
+	model->name = modelName;
+	model->refCount = 0;
+	bool valid = file->ReadInt( model->numPrimitives ) == sizeof( model->numPrimitives );
+	valid = valid && ParseVerticesBinary( file, model );
+	valid = valid && ParseEdgesBinary( file, model );
+	model->node = valid ? ParseNodesBinary( file, model, NULL, valid ) : NULL;
+
+	idList< const idMaterial * > materialCache;
+	int numMaterials = 0;
+	valid = valid && file->ReadInt( numMaterials ) == sizeof( numMaterials ) &&
+		CM_ValidBinaryCount( numMaterials, 1 << 20 );
+	if ( valid ) {
+		materialCache.SetNum( numMaterials );
+		for ( int i = 0; valid && i < numMaterials; ++i ) {
+			idStr materialName;
+			file->ReadString( materialName );
+			valid = !materialName.IsEmpty();
+			if ( valid ) {
+				materialCache[ i ] = declHolder.FindMaterial( materialName, false );
+				if ( materialCache[ i ] == NULL ) {
+					common->Error( "idCollisionModelManagerLocal::ParseCollisionModelBinary: invalid material '%s' in '%s'",
+						materialName.c_str(), file->GetName() );
+					valid = false;
+				}
+			}
+		}
+	}
+	valid = valid && ParsePolygonsBinary( file, model, materialCache );
+	valid = valid && ParseBrushesBinary( file, model );
+
+	if ( !valid ) {
+		FreeModelMemory( model );
+		if ( created ) {
+			delete model;
+			models[ --numModels ] = NULL;
+		}
+		return false;
+	}
+
+	baseTraceWork->modelCache.IncCheckCount();
+	CalculateEdgeNormals( model, model->node );
+	CM_GetNodeBounds( model, model->bounds, model->node );
+	model->contents = CM_GetNodeContents( model, model->node );
+	model->usedMemory = CM_GetModelMemory( model );
+	return true;
+}
+
+bool idCollisionModelManagerLocal::LoadCollisionModelFileBinary( const char *name ) {
+	if ( name == NULL || name[ 0 ] == '\0' ) {
+		return false;
+	}
+
+	idStr fileName = va( "generated/cm/%s", name );
+	fileName.SetFileExtension( CM_BINARY_FILE_EXT );
+	idFile *file = fileSystem->OpenFileRead( fileName, true, NULL, true );
+	if ( file == NULL ) {
+		fileName = name;
+		fileName.SetFileExtension( CM_BINARY_FILE_EXT );
+		file = fileSystem->OpenFileRead( fileName, true, NULL, true );
+	}
+	if ( file == NULL && idStr::IcmpnPath( name, "maps/", 5 ) != 0 &&
+		 idStr::IcmpnPath( name, "models/", 7 ) != 0 ) {
+		fileName = "maps/";
+		fileName += name;
+		fileName.SetFileExtension( CM_BINARY_FILE_EXT );
+		file = fileSystem->OpenFileRead( fileName, true, NULL, true );
+	}
+	if ( file == NULL ) {
+		return false;
+	}
+
+	idStr fileId;
+	idStr version;
+	file->ReadString( fileId );
+	file->ReadString( version );
+	int modelCount = 0;
+	bool valid = !fileId.Icmp( CM_FILEID ) && !version.Icmp( CM_FILEVERSION ) &&
+		file->ReadInt( modelCount ) == sizeof( modelCount ) && CM_ValidBinaryCount( modelCount, 1 << 20 );
+	for ( int i = 0; valid && i < modelCount; ++i ) {
+		valid = ParseCollisionModelBinary( file, name );
+	}
+	fileSystem->CloseFile( file );
+
+	if ( !valid ) {
+		common->Warning( "idCollisionModelManagerLocal::LoadCollisionModelFileBinary: invalid '%s'", fileName.c_str() );
+	}
+	return valid;
+}
+
 bool idCollisionModelManagerLocal::LoadCollisionModelFile( const char *name, unsigned int mapFileCRC ) {
 	idStr fileName = va( "generated/cm/%s", name );
 	fileName.SetFileExtension( CM_FILE_EXT );
@@ -566,4 +918,3 @@ bool idCollisionModelManagerLocal::LoadCollisionModelFile( const char *name, uns
 	delete src;
 	return true;
 }
-

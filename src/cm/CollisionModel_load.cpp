@@ -710,7 +710,7 @@ cmHandle_t idCollisionModelManagerLocal::LoadModel( const char *modelName, const
 		return handle;
 	}
 
-	if ( LoadCollisionModelFile( modelName, 0 ) ) {
+	if ( LoadCollisionModelFileBinary( modelName ) || LoadCollisionModelFile( modelName, 0 ) ) {
 		handle = FindModel( modelName );
 		if ( handle >= 0 ) {
 			return handle;

@@ -51,6 +51,7 @@ public:
 	void			DrawTextA( const wchar_t* text, const sdBounds2D& rect, unsigned int flags );
 
 	void			SubmitFrame( int windowWidth, int windowHeight );
+	void			FlushFrame( int windowWidth, int windowHeight );
 
 private:
 	struct guiVertex_t {

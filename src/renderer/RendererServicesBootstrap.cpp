@@ -8,8 +8,10 @@
 #pragma hdrstop
 
 #include "Image.h"
+#include "Model.h"
 #include "RenderSystem.h"
 #include "ModelManager.h"
+#include "../decllib/declTypeHolder.h"
 
 extern glconfig_t glConfig;
 
@@ -76,26 +78,518 @@ idCVar idImageManager::image_specularPicMip( "image_specularPicMip", "0", CVAR_R
 
 namespace {
 
+class idRenderModelBootstrap : public idRenderModel {
+public:
+	idRenderModelBootstrap() :
+		loaded( false ),
+		defaulted( false ),
+		reloadable( false ),
+		referencedOutsideLevelLoad( false ),
+		levelLoadReferenced( false ),
+		timeStamp( 0 ),
+		currentLod( 0 ) {
+		SetFallbackBounds();
+	}
+
+	virtual ~idRenderModelBootstrap() {
+		ClearSurfaces();
+	}
+
+	virtual void InitFromFile( const char* fileName ) {
+		modelName = fileName != NULL ? fileName : "";
+		reloadable = true;
+		LoadModel();
+	}
+
+	virtual void PartialInitFromFile( const char* fileName ) {
+		InitFromFile( fileName );
+	}
+
+	virtual void InitEmpty( const char* name ) {
+		modelName = name != NULL ? name : "";
+		loaded = true;
+		defaulted = false;
+		reloadable = false;
+		ClearSurfaces();
+		modelJoints.Clear();
+		defaultPose.Clear();
+		SetFallbackBounds();
+	}
+
+	virtual void AddSurface( modelSurface_t surface ) {
+		modelSurfaces.Append( surface );
+		if ( surface.geometry != NULL ) {
+			modelBounds += surface.geometry->bounds;
+		}
+	}
+
+	virtual void FinishSurfaces( bool = true, bool = true, bool = false ) {}
+	virtual bool Validate() const { return loaded; }
+
+	virtual void PurgeModel() {
+		loaded = false;
+		ClearSurfaces();
+		modelJoints.Clear();
+		defaultPose.Clear();
+	}
+
+	virtual void Reset() {}
+
+	virtual void LoadModel() {
+		ClearSurfaces();
+		modelJoints.Clear();
+		defaultPose.Clear();
+		SetFallbackBounds();
+		loaded = true;
+		defaulted = false;
+		timeStamp = 0;
+
+		if ( modelName.IsEmpty() ) {
+			defaulted = true;
+			return;
+		}
+		if ( modelName[ 0 ] == '_' ) {
+			return;
+		}
+
+		idStr extension;
+		modelName.ExtractFileExtension( extension );
+		if ( !extension.Icmp( "modelb" ) ) {
+			if ( LoadModelB( modelName ) ) {
+				return;
+			}
+		} else if ( extension.Icmp( MD5_MESH_EXT ) ) {
+			idStr generated = "generated/modelb/";
+			generated += modelName;
+			generated.StripFileExtension();
+			generated.SetFileExtension( "modelb" );
+			if ( LoadModelB( generated ) ) {
+				return;
+			}
+		} else if ( LoadMD5Skeleton() ) {
+			return;
+		}
+
+		unsigned sourceTime = 0;
+		if ( fileSystem != NULL && fileSystem->ReadFile( modelName, NULL, &sourceTime ) >= 0 ) {
+			timeStamp = sourceTime;
+			return;
+		}
+
+		// FindModel returns a valid default model on failure in the retail
+		// renderer.  Callers such as deployment sizing intentionally rely on
+		// that contract and dereference the result without a null check.
+		defaulted = true;
+	}
+
+	virtual bool IsLoaded() const { return loaded; }
+	virtual void SetReferencedOutsideLevelLoad( bool referenced ) { referencedOutsideLevelLoad = referenced; }
+	virtual bool IsReferencedOutsideLevelLoad() const { return referencedOutsideLevelLoad; }
+	virtual void SetLevelLoadReferenced( bool referenced ) { levelLoadReferenced = referenced; }
+	virtual bool IsLevelLoadReferenced() const { return levelLoadReferenced; }
+	virtual void TouchData() {}
+	virtual void FreeVertexCache() {}
+	virtual void DirtyVertexAmbientCache() {}
+	virtual const char* Name() const { return modelName.c_str(); }
+	virtual void Print() const { common->Printf( "%s\n", modelName.c_str() ); }
+	virtual void List( bool ) const { common->Printf( "%s\n", modelName.c_str() ); }
+	virtual void TexUsage() const {}
+	virtual void Media( idFile*, sdHashMapGeneric< const idImage*, imageuseinfo >& ) const {}
+	virtual int Memory() const { return sizeof( *this ) + modelName.Allocated(); }
+	virtual unsigned Timestamp() const { return timeStamp; }
+	virtual int NumSurfaces() const { return modelSurfaces.Num(); }
+	virtual int NumBaseSurfaces() const { return modelSurfaces.Num(); }
+	virtual const modelSurface_t* Surface( int surfaceNum ) const {
+		return surfaceNum >= 0 && surfaceNum < modelSurfaces.Num() ? &modelSurfaces[ surfaceNum ] : NULL;
+	}
+	virtual srfTriangles_t* AllocSurfaceTriangles( int numVerts, int numIndexes ) const {
+		if ( numVerts < 0 || numIndexes < 0 ) {
+			return NULL;
+		}
+		srfTriangles_t* triangles = static_cast< srfTriangles_t* >( Mem_ClearedAlloc( sizeof( *triangles ) ) );
+		triangles->numVerts = numVerts;
+		triangles->numAllocedVerts = numVerts;
+		triangles->numIndexes = numIndexes;
+		triangles->numAllocedIndices = numIndexes;
+		triangles->mode = PM_TRIANGLE;
+		triangles->texCoordScale = 1.0f;
+		if ( numVerts > 0 ) {
+			triangles->verts = static_cast< idDrawVert* >( Mem_ClearedAlloc( numVerts * sizeof( *triangles->verts ) ) );
+		}
+		if ( numIndexes > 0 ) {
+			triangles->indexes = static_cast< glIndex_t* >( Mem_Alloc( numIndexes * sizeof( *triangles->indexes ) ) );
+		}
+		return triangles;
+	}
+	virtual void FreeSurfaceTriangles( srfTriangles_t* triangles ) const {
+		if ( triangles == NULL ) {
+			return;
+		}
+		Mem_Free( triangles->verts );
+		Mem_Free( triangles->indexes );
+		Mem_Free( triangles );
+	}
+	virtual bool IsStaticWorldModel() const { return !modelName.Icmpn( "_area", 5 ); }
+	virtual bool IsReloadable() const { return reloadable; }
+	virtual dynamicModel_t IsDynamicModel() const { return modelJoints.Num() > 0 ? DM_CACHED : DM_STATIC; }
+	virtual bool IsDefaultModel() const { return defaulted; }
+	virtual idBounds Bounds( const renderEntity_t* = NULL ) const { return modelBounds; }
+	virtual float DepthHack() const { return 0.0f; }
+	virtual void InstantiateDynamicModel( idRenderEntityLocal*, const viewDef_s*, int = 0 ) {}
+	virtual void UpdateDeferredSurface( idRenderEntityLocal*, modelSurface_t* ) {}
+	virtual int NumJoints() const { return modelJoints.Num(); }
+	virtual const idMD5Joint* GetJoints() const { return modelJoints.Num() > 0 ? &modelJoints[ 0 ] : NULL; }
+	virtual jointHandle_t GetJointHandle( const char* name ) const {
+		for ( int i = 0; name != NULL && i < modelJoints.Num(); i++ ) {
+			if ( !modelJoints[ i ].name.Icmp( name ) ) {
+				return static_cast< jointHandle_t >( i );
+			}
+		}
+		return INVALID_JOINT;
+	}
+	virtual const char* GetJointName( jointHandle_t handle ) const {
+		return handle >= 0 && handle < modelJoints.Num() ? modelJoints[ handle ].name.c_str() : "";
+	}
+	virtual const idJointQuat* GetDefaultPose() const { return defaultPose.Num() > 0 ? &defaultPose[ 0 ] : NULL; }
+	virtual int NearestJoint( int, int, int, int ) const { return INVALID_JOINT; }
+	virtual int NumGUISurfaces() const { return 0; }
+	virtual const guiSurface_t* GetGUISurface( int ) const { return NULL; }
+	virtual void ReadFromDemoFile( idDemoFile* ) {}
+	virtual void WriteToDemoFile( idDemoFile* ) {}
+	virtual int GetCurrentLod() const { return currentLod; }
+	virtual void SetCurrentLod( const int lod ) { currentLod = lod; }
+	virtual bool UpdateLod( const renderEntity_t*, const viewDef_s*, idRenderModel*, int& newLod ) const {
+		newLod = currentLod;
+		return false;
+	}
+	virtual bool NeedsReinstantiating( idRenderEntityLocal*, const viewDef_s*, int = 0 ) const { return false; }
+	virtual int FindSurfaceId( const char* ) { return -1; }
+	virtual void SetBounds( const idBounds& bounds ) { modelBounds = bounds; }
+	virtual void PurgePartialLoadableImages() {}
+	virtual void LoadPartialLoadableImages( bool = false ) {}
+	virtual bool IsFinishedPartialLoading() const { return true; }
+	virtual idList< int >* GetFixedAreas() { return &fixedAreas; }
+	virtual void SetFixedAreas( const idList< int >& areas ) { fixedAreas = areas; }
+	virtual int NumMeshes( const int = 0 ) const { return modelSurfaces.Num(); }
+	virtual idBounds CalcMeshBounds( int, const idJointMat*, const idVec3&, const idMat3&, bool ) { return modelBounds; }
+
+private:
+	void ClearSurfaces() {
+		for ( int i = 0; i < modelSurfaces.Num(); i++ ) {
+			FreeSurfaceTriangles( modelSurfaces[ i ].geometry );
+			modelSurfaces[ i ].geometry = NULL;
+		}
+		modelSurfaces.Clear();
+	}
+
+	void SetFallbackBounds() {
+		modelBounds[ 0 ].Set( -8.0f, -8.0f, -8.0f );
+		modelBounds[ 1 ].Set( 8.0f, 8.0f, 8.0f );
+	}
+
+	bool LoadModelB( const char* fileName ) {
+		if ( fileSystem == NULL || fileName == NULL ) {
+			return false;
+		}
+		idFile* file = fileSystem->OpenFileRead( fileName, true, NULL, true );
+		if ( file == NULL ) {
+			return false;
+		}
+
+		int version = 0;
+		int numSurfaces = 0;
+		idBounds fileBounds;
+		bool valid = file->ReadInt( version ) == sizeof( version ) && version == 1;
+		valid = valid && file->ReadVec3( fileBounds[ 0 ] ) == sizeof( idVec3 );
+		valid = valid && file->ReadVec3( fileBounds[ 1 ] ) == sizeof( idVec3 );
+		valid = valid && file->ReadInt( numSurfaces ) == sizeof( numSurfaces );
+		valid = valid && numSurfaces >= 0 && numSurfaces <= 65536;
+
+		for ( int surfaceIndex = 0; valid && surfaceIndex < numSurfaces; surfaceIndex++ ) {
+			idBounds surfaceBounds;
+			int numVerts = 0;
+			int numIndexes = 0;
+			idStr materialName;
+			valid = file->ReadVec3( surfaceBounds[ 0 ] ) == sizeof( idVec3 );
+			valid = valid && file->ReadVec3( surfaceBounds[ 1 ] ) == sizeof( idVec3 );
+			valid = valid && file->ReadInt( numVerts ) == sizeof( numVerts );
+			valid = valid && file->ReadInt( numIndexes ) == sizeof( numIndexes );
+			valid = valid && numVerts >= 0 && numVerts <= ( 1 << 24 );
+			valid = valid && numIndexes >= 0 && numIndexes <= ( 1 << 27 );
+			valid = valid && file->ReadString( materialName ) >= 0 && !materialName.IsEmpty();
+			if ( !valid ) {
+				break;
+			}
+
+			srfTriangles_t* triangles = AllocSurfaceTriangles( numVerts, numIndexes );
+			if ( triangles == NULL ) {
+				valid = false;
+				break;
+			}
+			triangles->bounds = surfaceBounds;
+			const idMaterial* material = declHolder.FindMaterial( materialName );
+			const bool lowRangeTexCoords = material->TestMaterialFlag( MF_LOWRANGEUVCOMPRESS );
+			for ( int vertexIndex = 0; valid && vertexIndex < numVerts; vertexIndex++ ) {
+				idVec2 st;
+				idVec3 normal;
+				idVec4 tangent;
+				idDrawVert& vertex = triangles->verts[ vertexIndex ];
+				valid = file->ReadVec3( vertex.xyz ) == sizeof( idVec3 );
+				valid = valid && file->ReadVec2( st ) == sizeof( idVec2 );
+				valid = valid && file->ReadVec3( normal ) == sizeof( idVec3 );
+				valid = valid && file->ReadVec4( tangent ) == sizeof( idVec4 );
+				for ( int colorIndex = 0; valid && colorIndex < 4; colorIndex++ ) {
+					valid = file->ReadUnsignedChar( vertex.color[ colorIndex ] ) == sizeof( byte );
+				}
+				if ( valid ) {
+					vertex.SetST( lowRangeTexCoords, st );
+					vertex.SetNormal( normal );
+					vertex.SetTangent( tangent.ToVec3() );
+					vertex.SetBiTangentSign( tangent.w );
+				}
+			}
+
+			for ( int index = 0; valid && index < numIndexes; index++ ) {
+				unsigned short value = 0;
+				valid = file->ReadUnsignedShort( value ) == sizeof( value ) && value < numVerts;
+				if ( valid ) {
+					triangles->indexes[ index ] = static_cast< glIndex_t >( value );
+				}
+			}
+
+			if ( !valid ) {
+				FreeSurfaceTriangles( triangles );
+				break;
+			}
+
+			modelSurface_t surface;
+			surface.id = 0;
+			surface.material = material;
+			surface.geometry = triangles;
+			modelSurfaces.Append( surface );
+		}
+
+		if ( valid ) {
+			modelBounds = fileBounds;
+			timeStamp = file->Timestamp();
+		} else {
+			ClearSurfaces();
+		}
+		fileSystem->CloseFile( file );
+		return valid;
+	}
+
+	bool LoadMD5Skeleton() {
+		if ( fileSystem == NULL ) {
+			return false;
+		}
+
+		idStr generated = "generated/md5binary/";
+		generated += modelName;
+		generated.StripFileExtension();
+		generated.SetFileExtension( "md5b" );
+		idFile* file = fileSystem->OpenFileRead( generated, true, NULL, true );
+		if ( file == NULL ) {
+			return false;
+		}
+
+		int version = 0;
+		int numLods = 0;
+		int numJoints = 0;
+		bool valid = file->ReadInt( version ) == sizeof( version ) && version == 1;
+		valid = valid && file->ReadInt( numLods ) == sizeof( numLods ) && numLods > 0;
+		valid = valid && file->ReadInt( numJoints ) == sizeof( numJoints ) && numJoints > 0 && numJoints < 4096;
+		if ( !valid ) {
+			fileSystem->CloseFile( file );
+			return false;
+		}
+
+		modelJoints.SetNum( numJoints );
+		defaultPose.SetNum( numJoints );
+		idList< int > parents;
+		parents.SetNum( numJoints );
+		for ( int i = 0; valid && i < numJoints; i++ ) {
+			valid = file->ReadString( modelJoints[ i ].name ) > 0;
+			valid = valid && file->ReadInt( parents[ i ] ) == sizeof( parents[ i ] );
+			valid = valid && file->ReadFloat( defaultPose[ i ].q.x ) == sizeof( float );
+			valid = valid && file->ReadFloat( defaultPose[ i ].q.y ) == sizeof( float );
+			valid = valid && file->ReadFloat( defaultPose[ i ].q.z ) == sizeof( float );
+			valid = valid && file->ReadFloat( defaultPose[ i ].q.w ) == sizeof( float );
+			valid = valid && file->ReadVec3( defaultPose[ i ].t ) == sizeof( idVec3 );
+			valid = valid && file->ReadFloat( defaultPose[ i ].w ) == sizeof( float );
+
+			// The inverse default-pose matrix follows every joint.  The bootstrap
+			// model does not skin geometry yet, but consuming it keeps the binary
+			// cursor and the reconstructed skeleton format exact.
+			for ( int j = 0; valid && j < 12; j++ ) {
+				float unused;
+				valid = file->ReadFloat( unused ) == sizeof( unused );
+			}
+		}
+
+		if ( valid ) {
+			for ( int i = 0; i < numJoints; i++ ) {
+				modelJoints[ i ].parent = parents[ i ] >= 0 && parents[ i ] < numJoints ? &modelJoints[ parents[ i ] ] : NULL;
+			}
+			timeStamp = file->Timestamp();
+		} else {
+			modelJoints.Clear();
+			defaultPose.Clear();
+		}
+		fileSystem->CloseFile( file );
+		return valid;
+	}
+
+	idStr modelName;
+	idBounds modelBounds;
+	idList< modelSurface_t > modelSurfaces;
+	idList< idMD5Joint > modelJoints;
+	idList< idJointQuat > defaultPose;
+	idList< int > fixedAreas;
+	bool loaded;
+	bool defaulted;
+	bool reloadable;
+	bool referencedOutsideLevelLoad;
+	bool levelLoadReferenced;
+	unsigned timeStamp;
+	int currentLod;
+};
+
 class idRenderModelManagerBootstrap : public idRenderModelManager {
 public:
-	virtual void Init() {}
-	virtual void Shutdown() {}
-	virtual void BeginLevelLoad() {}
-	virtual void EndLevelLoad() {}
-	virtual idRenderModel* AllocModel() { return NULL; }
-	virtual void FreeModel( idRenderModel* ) {}
-	virtual idRenderModel* FindModel( const char* ) { return NULL; }
-	virtual idRenderModel* CheckModel( const char* ) { return NULL; }
-	virtual idRenderModel* GetModel( const char* ) { return NULL; }
-	virtual idRenderModel* DefaultModel() { return NULL; }
-	virtual void AddModel( idRenderModel* ) {}
-	virtual void RemoveModel( idRenderModel* ) {}
-	virtual void ReloadModels( bool ) {}
-	virtual void WritePrecacheCommands( idFile* ) {}
-	virtual void FreeModelVertexCaches() {}
+	idRenderModelManagerBootstrap() : defaultModel( NULL ), insideLevelLoad( false ) {}
+
+	virtual void Init() {
+		if ( defaultModel != NULL ) {
+			return;
+		}
+		idRenderModelBootstrap* model = new idRenderModelBootstrap;
+		model->InitEmpty( "_DEFAULT" );
+		defaultModel = model;
+		models.Append( model );
+	}
+
+	virtual void Shutdown() {
+		models.DeleteContents( true );
+		defaultModel = NULL;
+		insideLevelLoad = false;
+	}
+
+	virtual void BeginLevelLoad() {
+		insideLevelLoad = true;
+		for ( int i = 0; i < models.Num(); i++ ) {
+			models[ i ]->SetLevelLoadReferenced( false );
+		}
+	}
+
+	virtual void EndLevelLoad() { insideLevelLoad = false; }
+
+	virtual idRenderModel* AllocModel() {
+		idRenderModelBootstrap* model = new idRenderModelBootstrap;
+		model->InitEmpty( "_allocated" );
+		return model;
+	}
+
+	virtual void FreeModel( idRenderModel* model ) {
+		if ( model == NULL || model == defaultModel ) {
+			return;
+		}
+		RemoveModel( model );
+		delete model;
+	}
+
+	virtual idRenderModel* FindModel( const char* name ) { return FindOrCreateModel( name, true ); }
+
+	virtual idRenderModel* CheckModel( const char* name ) {
+		idRenderModel* model = FindOrCreateModel( name, false );
+		return model != NULL && !model->IsDefaultModel() ? model : NULL;
+	}
+
+	virtual idRenderModel* GetModel( const char* name ) { return FindExistingModel( name ); }
+	virtual idRenderModel* DefaultModel() { return defaultModel; }
+
+	virtual void AddModel( idRenderModel* model ) {
+		if ( model != NULL && models.FindIndex( model ) < 0 ) {
+			models.Append( model );
+		}
+	}
+
+	virtual void RemoveModel( idRenderModel* model ) {
+		const int index = models.FindIndex( model );
+		if ( index >= 0 ) {
+			models.RemoveIndex( index );
+		}
+	}
+
+	virtual void ReloadModels( bool forceAll ) {
+		for ( int i = 0; i < models.Num(); i++ ) {
+			if ( forceAll || models[ i ]->IsReloadable() ) {
+				models[ i ]->LoadModel();
+			}
+		}
+	}
+
+	virtual void WritePrecacheCommands( idFile* file ) {
+		if ( file == NULL ) {
+			return;
+		}
+		for ( int i = 0; i < models.Num(); i++ ) {
+			if ( models[ i ]->IsReloadable() ) {
+				file->Printf( "touchModel %s\n", models[ i ]->Name() );
+			}
+		}
+	}
+
+	virtual void FreeModelVertexCaches() {
+		for ( int i = 0; i < models.Num(); i++ ) {
+			models[ i ]->FreeVertexCache();
+		}
+	}
 	virtual bool WriteSurfaceModel( const char*, idList< idSurface* >&, idStrList& ) { return false; }
 	virtual bool WriteTriangleModelB( const char*, idRenderModel* ) { return false; }
 	virtual bool WriteTriangleModel( const char*, idRenderModel* ) { return false; }
+
+private:
+	idRenderModel* FindExistingModel( const char* name ) const {
+		if ( name == NULL || name[ 0 ] == '\0' ) {
+			return NULL;
+		}
+		for ( int i = 0; i < models.Num(); i++ ) {
+			if ( !idStr::Icmp( models[ i ]->Name(), name ) ) {
+				return models[ i ];
+			}
+		}
+		return NULL;
+	}
+
+	idRenderModel* FindOrCreateModel( const char* name, bool keepDefault ) {
+		idRenderModel* existing = FindExistingModel( name );
+		if ( existing != NULL ) {
+			existing->SetLevelLoadReferenced( true );
+			if ( !insideLevelLoad ) {
+				existing->SetReferencedOutsideLevelLoad( true );
+			}
+			return existing;
+		}
+		if ( name == NULL || name[ 0 ] == '\0' ) {
+			return NULL;
+		}
+
+		idRenderModelBootstrap* model = new idRenderModelBootstrap;
+		model->InitFromFile( name );
+		model->SetLevelLoadReferenced( true );
+		model->SetReferencedOutsideLevelLoad( !insideLevelLoad );
+		if ( model->IsDefaultModel() && !keepDefault ) {
+			delete model;
+			return NULL;
+		}
+		models.Append( model );
+		return model;
+	}
+
+	idList< idRenderModel* > models;
+	idRenderModel* defaultModel;
+	bool insideLevelLoad;
 };
 
 idRenderModelManagerBootstrap modelManagerBootstrap;
