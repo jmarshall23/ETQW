@@ -441,9 +441,7 @@ void RB_STD_DrawView() {
 	}
 
 	GL_EnableVertexAttribs( 0 );
-	if ( qglActiveTextureARB != NULL ) {
-		qglActiveTextureARB( GL_TEXTURE0_ARB );
-	}
+	GL_SelectTexture( 0 );
 	RB_RenderDebugTools( view->drawSurfs, view->numDrawSurfs );
 	R_TimerFrame();
 	FinishDrawPhase();

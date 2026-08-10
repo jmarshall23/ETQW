@@ -633,7 +633,7 @@ bool RB_SetupMaterialStage( const materialStage_t* stage, const float* materialR
 			}
 			if ( image != NULL ) image->BindFragment( unit );
 		}
-		if ( qglActiveTextureARB != NULL ) qglActiveTextureARB( GL_TEXTURE0_ARB );
+		GL_SelectTexture( 0 );
 		program->UpdateParameters();
 	} else {
 		SD_UnbindRenderProgram();

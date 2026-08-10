@@ -434,6 +434,9 @@ namespace {
 
 idStr NormalizeImageName( const char* name ) {
 	idStr normalized = name != NULL ? name : "";
+	// ETQW keys images by their source name without the authoring extension.
+	// The generated DDS checksum is calculated from this exact canonical form.
+	normalized.Replace( ".tga", "" );
 	normalized.BackSlashesToSlashes();
 	return normalized;
 }

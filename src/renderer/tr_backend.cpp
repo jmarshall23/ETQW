@@ -166,12 +166,22 @@ namespace {
 
 void GL_SelectTexture( int unit ) {
 	if ( etqwGLState.currentTextureUnit == unit ) return;
-	if ( unit < 0 || unit >= glConfig.maxTextureCoords ) {
+	// ETQW render programs can use as many as sixteen fragment samplers (the
+	// megatexture GLSL programs reach texture[ 11 ]).  GL_MAX_TEXTURE_COORDS
+	// only limits the legacy client texture-coordinate arrays; on current
+	// compatibility drivers it is commonly 8 while
+	// GL_MAX_TEXTURE_IMAGE_UNITS is 16 or greater.  Retail used the coordinate
+	// limit for both calls, which rejects otherwise valid fragment samplers on
+	// those drivers.
+	const int maxFragmentUnits = Min( glConfig.maxTextureImageUnits, 16 );
+	if ( unit < 0 || unit >= maxFragmentUnits ) {
 		common->Warning( "GL_SelectTexture: unit = %i", unit );
 		return;
 	}
 	qglActiveTextureARB( GL_TEXTURE0_ARB + unit );
-	qglClientActiveTextureARB( GL_TEXTURE0_ARB + unit );
+	if ( unit < glConfig.maxTextureCoords ) {
+		qglClientActiveTextureARB( GL_TEXTURE0_ARB + unit );
+	}
 	etqwGLState.currentTextureUnit = unit;
 }
 

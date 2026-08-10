@@ -274,6 +274,7 @@ void R_CheckPortableExtensions() {
 #define LOAD_QGL( name ) name = reinterpret_cast< decltype( name ) >( sys3D->ExtensionPointer( #name + 1 ) )
 	LOAD_QGL( qglActiveTextureARB );
 	LOAD_QGL( qglClientActiveTextureARB );
+	LOAD_QGL( qglCompressedTexImage2DARB );
 	LOAD_QGL( qglVertexAttribPointerARB );
 	LOAD_QGL( qglEnableVertexAttribArrayARB );
 	LOAD_QGL( qglDisableVertexAttribArrayARB );
@@ -310,6 +311,13 @@ void R_CheckPortableExtensions() {
 	LOAD_QGL( qglProgramEnvParameters4fvEXT );
 	LOAD_QGL( qglProgramLocalParameters4fvEXT );
 #undef LOAD_QGL
+	if ( qglCompressedTexImage2DARB == NULL ) {
+		qglCompressedTexImage2DARB = reinterpret_cast< PFNGLCOMPRESSEDTEXIMAGE2DARBPROC >(
+			sys3D->ExtensionPointer( "glCompressedTexImage2D" ) );
+	}
+	if ( qglCompressedTexImage2DARB == NULL ) {
+		glConfig.textureCompressionAvailable = false;
+	}
 
 	if ( qglProgramStringARB == NULL || qglBindProgramARB == NULL || qglGenProgramsARB == NULL ) {
 		glConfig.ARBVertexProgramAvailable = false;
