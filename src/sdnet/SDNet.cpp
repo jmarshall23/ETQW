@@ -7,6 +7,11 @@
 #pragma hdrstop
 
 #include "SDNet.h"
+#include "SDNetUser.h"
+#include "SDNetProfile.h"
+// The game DLL uses the retail authentication account ABI even when the
+// executable itself is built with SD_DEMO_BUILD for the demo content set.
+#include "SDNetAccount_Auth.h"
 #include "SDNetSessionManager.h"
 #if !defined( SD_DEMO_BUILD ) || defined( SD_RETAIL_SDNET_ABI )
 #include "SDNetStatsManager.h"
@@ -15,6 +20,69 @@
 #endif
 
 namespace {
+
+class sdNetProfileOffline : public sdNetProfile {
+public:
+	virtual idDict& GetProperties() { return properties; }
+	virtual const idDict& GetProperties() const { return properties; }
+
+#if !defined( SD_DEMO_BUILD )
+	virtual sdNetTask* AssureExists() { return NULL; }
+	virtual sdNetTask* Store( bool, bool ) const { return NULL; }
+	virtual sdNetTask* Restore() { return NULL; }
+#endif
+
+private:
+	idDict properties;
+};
+
+class sdNetAccountOffline : public sdNetAccount {
+public:
+	virtual void SetUsername( const char* value ) { username = value != NULL ? value : ""; }
+	virtual const char* GetUsername() const { return username.c_str(); }
+	virtual void SetPassword( const char* value ) { password = value != NULL ? value : ""; }
+	virtual const char* GetPassword() const { return password.c_str(); }
+	virtual void GetNetClientId( sdNetClientId& id ) const { id.Invalidate(); }
+	virtual sdNetTask* CreateAccount( const char*, const char*, const char* ) { return NULL; }
+	virtual sdNetTask* ChangePassword( const char*, const char* ) { return NULL; }
+	virtual sdNetTask* ResetPassword( const char*, const char* ) { return NULL; }
+	virtual sdNetTask* DeleteAccount() { return NULL; }
+	virtual sdNetTask* SignIn() { return NULL; }
+	virtual sdNetTask* SignOut() { return NULL; }
+
+private:
+	idStr username;
+	idStr password;
+};
+
+class sdNetUserOffline : public sdNetUser {
+public:
+	sdNetUserOffline() : state( US_INACTIVE ) {
+		SetUsername( "Player" );
+	}
+
+	void SetUsername( const char* value ) {
+		username = value != NULL && value[ 0 ] != '\0' ? value : "Player";
+		MakeRawUsername( username.c_str(), rawUsername );
+	}
+
+	virtual userState_e GetState() const { return state; }
+	virtual const char* GetUsername() const { return username.c_str(); }
+	virtual const char* GetRawUsername() const { return rawUsername.c_str(); }
+	virtual sdNetProfile& GetProfile() { return profile; }
+	virtual const sdNetProfile& GetProfile() const { return profile; }
+	virtual void Activate() { state = US_ACTIVE; }
+	virtual void Deactivate() { state = US_INACTIVE; }
+	virtual bool Save( int ) const { return true; }
+	virtual sdNetAccount& GetAccount() { return account; }
+
+private:
+	userState_e		state;
+	idStr			username;
+	idStr			rawUsername;
+	sdNetProfileOffline profile;
+	sdNetAccountOffline account;
+};
 
 class sdNetSessionManagerOffline : public sdNetSessionManager {
 public:
@@ -250,10 +318,16 @@ public:
 		state = SS_INITIALIZED;
 		disconnectReason = DR_NONE;
 		lastError = SDNET_NO_ERROR;
+		localUser.Activate();
+		// idDict's global string pools are initialized by idLib, after this
+		// service's static constructor has run.  Populate the local profile here
+		// rather than from sdNetUserOffline's constructor.
+		localUser.GetProfile().GetProperties().SetBool( "default", true );
 		return true;
 	}
 
 	virtual void Shutdown() {
+		localUser.Deactivate();
 		state = SS_DISABLED;
 		dedicatedState = DS_OFFLINE;
 	}
@@ -267,18 +341,24 @@ public:
 	virtual const char* GetStoredLicenseCode() const { return ""; }
 	virtual bool IsSteamActive() const { return false; }
 
-	virtual sdNetErrorCode_e CreateUser( sdNetUser** user, const char* ) {
+	virtual sdNetErrorCode_e CreateUser( sdNetUser** user, const char* username ) {
+		localUser.SetUsername( username );
+		localUser.Activate();
 		if ( user != NULL ) {
-			*user = NULL;
+			*user = &localUser;
 		}
-		lastError = SDNET_SERVICE_UNAVAILABLE;
+		lastError = SDNET_NO_ERROR;
 		return lastError;
 	}
 
-	virtual void DeleteUser( sdNetUser* ) {}
-	virtual int NumUsers() const { return 0; }
-	virtual sdNetUser* GetUser( const int ) { return NULL; }
-	virtual sdNetUser* GetActiveUser() { return NULL; }
+	virtual void DeleteUser( sdNetUser* user ) {
+		if ( user == &localUser ) {
+			localUser.Deactivate();
+		}
+	}
+	virtual int NumUsers() const { return 1; }
+	virtual sdNetUser* GetUser( const int index ) { return index == 0 ? &localUser : NULL; }
+	virtual sdNetUser* GetActiveUser() { return localUser.GetState() != sdNetUser::US_INACTIVE ? &localUser : NULL; }
 	virtual sdNetSessionManager& GetSessionManager() { return sessionManager; }
 #if !defined( SD_DEMO_BUILD ) || defined( SD_RETAIL_SDNET_ABI )
 	virtual sdNetStatsManager& GetStatsManager() { return statsManager; }
@@ -317,6 +397,7 @@ private:
 	dedicatedState_e dedicatedState;
 	sdNetErrorCode_e lastError;
 	motdList_t motd;
+	sdNetUserOffline localUser;
 	sdNetSessionManagerOffline sessionManager;
 #if !defined( SD_DEMO_BUILD ) || defined( SD_RETAIL_SDNET_ABI )
 	sdNetStatsManagerOffline statsManager;

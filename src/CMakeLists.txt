@@ -233,6 +233,14 @@ option(
 )
 if(ETQW_ENABLE_ENGINE_RECONSTRUCTION)
     include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/EtqwEngine.cmake")
+    # The executable loads gamex86.dll from the runtime directory.  Make the
+    # Visual Studio startup project build that DLL as well so F5 cannot launch
+    # a new engine against stale game/UI code.
+    add_dependencies(etqw game)
+    # Demo/public build defines normally lock the retail console.  The Debug
+    # configuration is our reconstruction/development build, so preserve the
+    # source's ID_CONSOLE_LOCK guard and disable it only for Visual Studio F5.
+    target_compile_definitions(etqw PRIVATE "$<$<CONFIG:Debug>:ID_CONSOLE_LOCK=0>")
     set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT etqw)
 endif()
 

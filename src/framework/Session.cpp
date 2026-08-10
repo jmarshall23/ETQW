@@ -9,6 +9,7 @@
 
 #include "precompiled.h"
 #include "Session_local.h"
+#include "../renderer/DeviceContext.h"
 #include "../renderer/SurfaceTypeMap.h"
 
 extern idCVar com_asyncInput;
@@ -253,12 +254,20 @@ void idSessionLocal::PacifierUpdate() {
 }
 
 void idSessionLocal::Draw() {
+	bool fullScreenEmitStarted = false;
+
 	if ( game != NULL ) {
 		if ( insidePureWait ) {
+			deviceContext->BeginEmitFullScreen();
+			fullScreenEmitStarted = true;
 			game->DrawPureWaitScreen();
 		} else if ( insideExecuteMapChange || waitingForSnapshot ) {
+			deviceContext->BeginEmitFullScreen();
+			fullScreenEmitStarted = true;
 			game->DrawLoadScreen();
 		} else if ( game->IsMainMenuActive() ) {
+			deviceContext->BeginEmitFullScreen();
+			fullScreenEmitStarted = true;
 			game->DrawMainMenu();
 			game->DrawSystemUI();
 			if ( menuSoundWorld != NULL ) {
@@ -266,19 +275,34 @@ void idSessionLocal::Draw() {
 			}
 		} else if ( mapSpawned ) {
 			const bool drewGame = com_skipGameDraw.GetBool() ? false : game->Draw();
+			deviceContext->BeginEmitFullScreen();
+			fullScreenEmitStarted = true;
 			if ( drewGame ) {
 				game->Draw2D();
 				game->DrawSystemUI();
 			}
-		} else if ( ++emptyDrawCount > 5 ) {
-			emptyDrawCount = 0;
-			StartMenu();
+		} else {
+			deviceContext->BeginEmitFullScreen();
+			fullScreenEmitStarted = true;
+			if ( ++emptyDrawCount > 5 ) {
+				emptyDrawCount = 0;
+				StartMenu();
+			}
 		}
+	}
+
+	// Retail brackets all of the 2D session drawing, including the developer
+	// console, in a full-screen device-context emit.  Apart from selecting the
+	// destination, BeginEmitFullScreen resets color and clipping state so that
+	// state left by a GUI in the previous frame cannot make overlays invisible.
+	if ( !fullScreenEmitStarted ) {
+		deviceContext->BeginEmitFullScreen();
 	}
 
 	DrawWipeModel();
 	DrawCmdGraph();
 	console->Draw( false );
+	deviceContext->End();
 }
 
 void idSessionLocal::Frame() {

@@ -91,18 +91,38 @@ LRESULT CALLBACK ETQWWindowProc( HWND window, UINT message, WPARAM wParam, LPARA
 		case WM_ACTIVATE:
 			win32.activeApp = LOWORD( wParam ) != WA_INACTIVE;
 			if ( win32.activeApp ) {
+				// Sys_InitInput deliberately leaves the mouse released while the
+				// renderer and session finish starting.  Retail ETQW clears that
+				// release latch when the game window is activated; without this the
+				// mouse can never become active, so Windows keeps owning the cursor
+				// and the GUI receives no mouse events.
+				sys->Mouse().GrabCursor( true );
 				sys->Keyboard().Activate();
 			} else {
 				sys->Keyboard().Deactivate();
+				win32.movingWindow = false;
 			}
 			break;
 
 		case WM_SETFOCUS:
 			win32.activeApp = true;
+			sys->Mouse().GrabCursor( true );
+			sys->Keyboard().Activate();
 			break;
 
 		case WM_KILLFOCUS:
 			win32.activeApp = false;
+			break;
+
+		case WM_SETCURSOR:
+			if ( LOWORD( lParam ) == HTCLIENT ) {
+				// ETQW draws its own cursor while the mouse is captured.  When
+				// the console releases the mouse, expose a normal Windows arrow.
+				// Handling this explicitly also replaces an IDC_WAIT cursor that
+				// Visual Studio may leave selected while launching under F5.
+				SetCursor( sys->Mouse().IsActive() ? NULL : LoadCursorA( NULL, IDC_ARROW ) );
+				return TRUE;
+			}
 			break;
 
 		case WM_ENTERSIZEMOVE:

@@ -12,6 +12,7 @@
 #include "ModelManager.h"
 #include "RenderSystemBackend.h"
 #include "GuiModel.h"
+#include "DeviceContext.h"
 #include "../sys/sys_render.h"
 
 #include <GL/gl.h>
@@ -496,8 +497,49 @@ void idRenderSystemLocal::FreeRenderWorld( idRenderWorld *world ) {
 	}
 }
 
-void idRenderSystemLocal::DrawChar( int, int, int, int, int, const idMaterial* ) {}
-void idRenderSystemLocal::DrawStringExt( int, int, int, int, const char*, const idVec4&, bool, const idMaterial* ) {}
+void idRenderSystemLocal::DrawChar( int charWidth, int charHeight, int x, int y, int ch, const idMaterial* material ) {
+	ch &= 255;
+	if ( ch == ' ' || y < -charHeight ) {
+		return;
+	}
+
+	const int row = ch >> 4;
+	const int column = ch & 15;
+	const float atlasCell = 1.0f / 16.0f;
+	const float s = column * atlasCell;
+	const float t = row * atlasCell;
+	deviceContext->DrawRect(
+		static_cast< float >( x ), static_cast< float >( y ),
+		static_cast< float >( charWidth ), static_cast< float >( charHeight ),
+		s, t, s + atlasCell, t + atlasCell, material, 0.0f
+	);
+}
+
+void idRenderSystemLocal::DrawStringExt( int charWidth, int charHeight, int x, int y, const char* string, const idVec4& setColor, bool forceColor, const idMaterial* material ) {
+	if ( string == NULL ) {
+		return;
+	}
+
+	const unsigned char* cursor = reinterpret_cast< const unsigned char* >( string );
+	int drawX = x;
+	deviceContext->SetColor( setColor );
+	while ( *cursor != '\0' ) {
+		if ( idStr::IsColor( reinterpret_cast< const char* >( cursor ) ) ) {
+			if ( !forceColor ) {
+				idVec4 color = idStr::ColorForChar( cursor[ 1 ] );
+				color.w = setColor.w;
+				deviceContext->SetColor( color );
+			}
+			cursor += 2;
+			continue;
+		}
+
+		DrawChar( charWidth, charHeight, drawX, y, *cursor, material );
+		drawX += charWidth;
+		cursor++;
+	}
+	deviceContext->SetColor( colorWhite );
+}
 void idRenderSystemLocal::DrawSmallChar( int x, int y, int ch, const idMaterial *material ) { DrawChar( SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, x, y, ch, material ); }
 void idRenderSystemLocal::DrawSmallStringExt( int x, int y, const char *string, const idVec4 &color, bool forceColor, const idMaterial *material ) { DrawStringExt( SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, x, y, string, color, forceColor, material ); }
 void idRenderSystemLocal::DrawBigChar( int x, int y, int ch, const idMaterial *material ) { DrawChar( BIGCHAR_WIDTH, BIGCHAR_HEIGHT, x, y, ch, material ); }

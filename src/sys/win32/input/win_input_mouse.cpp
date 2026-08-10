@@ -22,6 +22,10 @@ idMouseRawInput mouseRawInput;
 idMouse* activeMouse;
 
 void HideMouseCursor() {
+	// SetCursor is independent of the ShowCursor display count.  Explicitly
+	// clear a wait/app-starting cursor inherited from the launcher (notably
+	// Visual Studio) before hiding it.
+	SetCursor( NULL );
 	for ( int i = 0; i < 10; i++ ) {
 		if ( ShowCursor( FALSE ) < 0 ) {
 			break;
@@ -35,6 +39,7 @@ void ShowMouseCursor() {
 			break;
 		}
 	}
+	SetCursor( LoadCursorA( NULL, IDC_ARROW ) );
 }
 
 void ClipMouseToWindow() {
@@ -351,4 +356,3 @@ idMouse& idSysLocal::Mouse() {
 	}
 	return mouseDInput;
 }
-

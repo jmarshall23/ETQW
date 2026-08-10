@@ -632,8 +632,8 @@ void Sys_DLL_Unload( void* dllHandle ) {
 }
 
 void Sys_GenerateEvents() {
-	IN_Frame();
 	sysLocal.ProcessOSEvents();
+	IN_Frame();
 }
 
 void Sys_PumpEvents() {
@@ -1010,6 +1010,24 @@ int Sys_GetLanguageIndex( const char* langName ) {
 int WINAPI WinMain( HINSTANCE, HINSTANCE, LPSTR commandLine, int ) {
 	const char* argv[] = { GAME_NAME };
 	common->Init( 1, argv, commandLine != NULL ? commandLine : "" );
+	// Retail ETQW performs this handoff after common initialization.  The
+	// renderer creates the window before input is initialized, and input
+	// deliberately starts with its mouse-release latch set.  Showing and
+	// focusing the finished game window here produces the activation event
+	// that clears that latch.  This is especially important when Visual Studio
+	// owns the foreground window while launching the process under F5.
+	if ( sys3D != NULL && sys3D->GetGameWindowHandle() != NULL ) {
+		sys3D->ShowGameWindow();
+		HWND gameWindow = reinterpret_cast< HWND >( sys3D->GetGameWindowHandle() );
+		SetForegroundWindow( gameWindow );
+		SetActiveWindow( gameWindow );
+		SetFocus( gameWindow );
+		// If the window already owned keyboard focus before Sys_InitInput ran,
+		// SetFocus does not emit WM_SETFOCUS again.  Input initialization leaves
+		// mouseReleased set deliberately, so clear it explicitly after the entire
+		// engine is initialized instead of depending on another focus message.
+		sys->Mouse().GrabCursor( true );
+	}
 	while ( InterlockedCompareExchange( &quitRequested, 0, 0 ) == 0 ) {
 		common->Frame();
 		Sys_Sleep( 1 );

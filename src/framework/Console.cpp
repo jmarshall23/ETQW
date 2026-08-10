@@ -765,11 +765,13 @@ ProcessEvent
 bool	idConsoleLocal::ProcessEvent( const sdSysEvent *event, bool forceAccept ) {
 	bool consoleKey = sys->Keyboard().IsConsoleKey( *event );
 
+#if ID_CONSOLE_LOCK
 	if ( !keyCatching && !com_allowConsole.GetBool() && !com_developer.GetBool() ) {
 		if ( !idKeyInput::IsDown( K_CTRL ) || !idKeyInput::IsDown( K_ALT ) ) {
 			consoleKey = false;
 		}
 	}
+#endif
 
 	// we always catch the console key event
 	if ( !forceAccept && event->IsKeyEvent() && consoleKey ) {
@@ -787,6 +789,9 @@ bool	idConsoleLocal::ProcessEvent( const sdSysEvent *event, bool forceAccept ) {
 		} else {
 			consoleField.Clear();
 			keyCatching = true;
+			// Console input uses the Windows pointer and must not leave raw mouse
+			// capture active.  Closing the console takes the grab back above.
+			sys->Mouse().GrabCursor( false );
 			if ( idKeyInput::IsDown( K_SHIFT ) ) {
 				// if the shift key is down, don't open the console as much
 				SetDisplayFraction( 0.2f );
