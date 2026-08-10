@@ -9,10 +9,160 @@
 #pragma hdrstop
 
 #include "GuiModel.h"
+#include "DeviceContext.h"
 #include "Material.h"
 #include "Image.h"
+#include "../sound/SoundEmitter.h"
 
 #include <GL/gl.h>
+
+namespace {
+
+struct bitmapFontCache_t {
+	int		pixelHeight;
+	GLuint	listBase;
+	HFONT	font;
+};
+
+idList< bitmapFontCache_t > bitmapFontCache;
+HGLRC bitmapFontContext = NULL;
+
+bitmapFontCache_t* GetBitmapFont( HDC deviceContext, int pixelHeight ) {
+	const HGLRC currentContext = wglGetCurrentContext();
+	if ( currentContext == NULL || deviceContext == NULL ) {
+		return NULL;
+	}
+	if ( currentContext != bitmapFontContext ) {
+		for ( int i = 0; i < bitmapFontCache.Num(); i++ ) {
+			if ( bitmapFontCache[ i ].font != NULL ) {
+				DeleteObject( bitmapFontCache[ i ].font );
+			}
+		}
+		bitmapFontCache.Clear();
+		bitmapFontContext = currentContext;
+	}
+
+	pixelHeight = idMath::ClampInt( 6, 192, pixelHeight );
+	for ( int i = 0; i < bitmapFontCache.Num(); i++ ) {
+		if ( bitmapFontCache[ i ].pixelHeight == pixelHeight ) {
+			return &bitmapFontCache[ i ];
+		}
+	}
+
+	bitmapFontCache_t cache;
+	cache.pixelHeight = pixelHeight;
+	cache.listBase = glGenLists( 256 );
+	cache.font = CreateFontW(
+		-pixelHeight,
+		0,
+		0,
+		0,
+		FW_MEDIUM,
+		FALSE,
+		FALSE,
+		FALSE,
+		DEFAULT_CHARSET,
+		OUT_TT_PRECIS,
+		CLIP_DEFAULT_PRECIS,
+		ANTIALIASED_QUALITY,
+		FF_DONTCARE | VARIABLE_PITCH,
+		L"Arial Narrow"
+	);
+	if ( cache.listBase == 0 || cache.font == NULL ) {
+		if ( cache.listBase != 0 ) {
+			glDeleteLists( cache.listBase, 256 );
+		}
+		if ( cache.font != NULL ) {
+			DeleteObject( cache.font );
+		}
+		return NULL;
+	}
+
+	HGDIOBJ oldFont = SelectObject( deviceContext, cache.font );
+	const BOOL generated = wglUseFontBitmapsW( deviceContext, 0, 256, cache.listBase );
+	SelectObject( deviceContext, oldFont );
+	if ( !generated ) {
+		glDeleteLists( cache.listBase, 256 );
+		DeleteObject( cache.font );
+		return NULL;
+	}
+
+	const int index = bitmapFontCache.Append( cache );
+	return &bitmapFontCache[ index ];
+}
+
+void BuildDisplayText( const wchar_t* source, idWStr& displayText ) {
+	displayText.Clear();
+	if ( source == NULL ) {
+		return;
+	}
+	for ( int i = 0; source[ i ] != L'\0'; i++ ) {
+		if ( source[ i ] == L'^' && source[ i + 1 ] != L'\0' ) {
+			i++;
+			continue;
+		}
+		wchar_t c = source[ i ];
+		if ( c > 255 ) {
+			c = L'?';
+		}
+		displayText.Append( c );
+	}
+}
+
+byte ClampCinematicChannel( int value ) {
+	return static_cast< byte >( idMath::ClampInt( 0, 255, value ) );
+}
+
+idImage* ResolveGuiImage( const idMaterial* material, idSoundEmitter* referenceSound ) {
+	if ( referenceSound == NULL ) {
+		return material != NULL ? material->GetEditorImage() : NULL;
+	}
+
+	// ETQW's RB_Evaluator_UpdateCinematicImageYUV obtains the video frame from
+	// the surface's reference sound.  A missing/stopped frame is black with
+	// neutral chroma; it is never the diagnostic default image.
+	if ( globalImages == NULL || !referenceSound->CurrentlyPlaying() ) {
+		return globalImages != NULL ? globalImages->blackImage : NULL;
+	}
+
+	const cinData_t frame = referenceSound->ImageForTime( 0 );
+	if ( frame.imageWidth <= 0 || frame.imageHeight <= 0 ||
+		 frame.imageWidth > 8192 || frame.imageHeight > 8192 ||
+		 frame.image[ 0 ] == NULL ) {
+		return globalImages->blackImage;
+	}
+
+	if ( frame.image[ 1 ] == NULL || frame.image[ 2 ] == NULL ) {
+		globalImages->cinematicImage->UploadScratch( frame.image[ 0 ], frame.imageWidth, frame.imageHeight );
+		return globalImages->cinematicImage;
+	}
+
+	// The compatibility GUI backend is single-texture fixed-function OpenGL.
+	// Convert the Theora 4:2:0 planes to the same RGBA result produced by the
+	// retail trivialCinematicYUV program, then use the shared cinematic image.
+	static idList< byte > rgba;
+	const int pixelCount = frame.imageWidth * frame.imageHeight;
+	rgba.SetNum( pixelCount * 4, false );
+	const int chromaWidth = Max( 1, frame.imageWidth >> 1 );
+	for ( int y = 0; y < frame.imageHeight; y++ ) {
+		for ( int x = 0; x < frame.imageWidth; x++ ) {
+			const int lumaIndex = y * frame.imageWidth + x;
+			const int chromaIndex = ( y >> 1 ) * chromaWidth + ( x >> 1 );
+			const int c = Max( 0, static_cast< int >( frame.image[ 0 ][ lumaIndex ] ) - 16 );
+			const int d = static_cast< int >( frame.image[ 1 ][ chromaIndex ] ) - 128;
+			const int e = static_cast< int >( frame.image[ 2 ][ chromaIndex ] ) - 128;
+			byte* pixel = &rgba[ lumaIndex * 4 ];
+			pixel[ 0 ] = ClampCinematicChannel( ( 298 * c + 409 * e + 128 ) >> 8 );
+			pixel[ 1 ] = ClampCinematicChannel( ( 298 * c - 100 * d - 208 * e + 128 ) >> 8 );
+			pixel[ 2 ] = ClampCinematicChannel( ( 298 * c + 516 * d + 128 ) >> 8 );
+			pixel[ 3 ] = 255;
+		}
+	}
+	globalImages->cinematicImage->UploadScratch( rgba.Begin(), frame.imageWidth, frame.imageHeight );
+	return globalImages->cinematicImage;
+}
+
+}
 
 sdGuiModel guiModel;
 
@@ -26,11 +176,13 @@ sdGuiModel::sdGuiModel() :
 	memset( materialParms, 0, sizeof( materialParms ) );
 	materialParms[ 0 ] = materialParms[ 1 ] = materialParms[ 2 ] = materialParms[ 3 ] = 1.0f;
 	primitives.SetGranularity( 256 );
+	texts.SetGranularity( 128 );
 	clipRects.SetGranularity( 8 );
 }
 
 void sdGuiModel::BeginFrame() {
 	primitives.SetNum( 0, false );
+	texts.SetNum( 0, false );
 	clipRects.SetNum( 0, false );
 	writePosition = 0;
 	fullScreen = true;
@@ -240,19 +392,29 @@ void sdGuiModel::SetFontSize( int pointSize ) {
 	writePosition += sizeof( int ) * 2;
 }
 
-void sdGuiModel::DrawTextA( const wchar_t*, const sdBounds2D&, unsigned int ) {
-	// Glyph emission is supplied by FontManager.cpp.  Keeping this as a command
-	// boundary prevents the device context from silently losing its state.
+void sdGuiModel::DrawTextA( const wchar_t* text, const sdBounds2D& rect, unsigned int flags ) {
+	if ( text == NULL || text[ 0 ] == L'\0' ) {
+		return;
+	}
+	guiText_t command;
+	command.text = text;
+	command.rect = rect;
+	command.flags = flags;
+	command.color = currentColor;
+	command.font = currentFont;
+	command.pointSize = currentFontSize;
+	texts.Append( command );
 	writePosition += sizeof( int ) * 8;
 }
 
-void sdGuiModel::SubmitFrame( int, int ) {
-	if ( primitives.Num() == 0 || !fullScreen ) {
+void sdGuiModel::SubmitFrame( int windowWidth, int windowHeight ) {
+	if ( ( primitives.Num() == 0 && texts.Num() == 0 ) || !fullScreen ) {
 		return;
 	}
 
 	glPushAttrib( GL_COLOR_BUFFER_BIT | GL_CURRENT_BIT | GL_DEPTH_BUFFER_BIT |
-		GL_ENABLE_BIT | GL_POLYGON_BIT | GL_SCISSOR_BIT | GL_TEXTURE_BIT );
+		GL_ENABLE_BIT | GL_LIST_BIT | GL_PIXEL_MODE_BIT | GL_POLYGON_BIT |
+		GL_SCISSOR_BIT | GL_TEXTURE_BIT );
 	glDisable( GL_DEPTH_TEST );
 	glDisable( GL_CULL_FACE );
 	glDisable( GL_ALPHA_TEST );
@@ -269,7 +431,12 @@ void sdGuiModel::SubmitFrame( int, int ) {
 
 	for ( int i = 0; i < primitives.Num(); i++ ) {
 		const guiPrimitive_t& primitive = primitives[ i ];
-		idImage* image = primitive.material != NULL ? primitive.material->GetEditorImage() : NULL;
+		idImage* image = ResolveGuiImage( primitive.material, primitive.referenceSound );
+		// A missing optional GUI overlay (for example the retail-only scanline
+		// image) must not turn into an opaque diagnostic quad over the frontend.
+		if ( image != NULL && image->defaulted ) {
+			continue;
+		}
 		if ( image != NULL && image->texnum != idImage::TEXTURE_NOT_LOADED ) {
 			glEnable( GL_TEXTURE_2D );
 			glBindTexture( GL_TEXTURE_2D, image->texnum );
@@ -285,6 +452,53 @@ void sdGuiModel::SubmitFrame( int, int ) {
 			glVertex2f( primitive.verts[ j ].xy.x, primitive.verts[ j ].xy.y );
 		}
 		glEnd();
+	}
+
+	if ( texts.Num() > 0 ) {
+		HDC windowDC = wglGetCurrentDC();
+		const float pixelScale = Max( 1.0f, static_cast< float >( windowHeight ) / 480.0f );
+		glDisable( GL_TEXTURE_2D );
+		for ( int i = 0; i < texts.Num(); i++ ) {
+			const guiText_t& command = texts[ i ];
+			idWStr displayText;
+			BuildDisplayText( command.text.c_str(), displayText );
+			if ( displayText.IsEmpty() ) {
+				continue;
+			}
+
+			const int pointSize = command.pointSize > 0 ? command.pointSize : 12;
+			bitmapFontCache_t* font = GetBitmapFont( windowDC, idMath::Ftoi( pointSize * pixelScale ) );
+			if ( font == NULL ) {
+				continue;
+			}
+
+			HGDIOBJ oldFont = SelectObject( windowDC, font->font );
+			SIZE extent;
+			extent.cx = extent.cy = 0;
+			GetTextExtentPoint32W( windowDC, displayText.c_str(), displayText.Length(), &extent );
+			SelectObject( windowDC, oldFont );
+
+			const float virtualWidth = extent.cx / pixelScale;
+			const float virtualHeight = extent.cy / pixelScale;
+			float x = command.rect.GetMins().x;
+			float y = command.rect.GetMins().y;
+			if ( command.flags & DTF_CENTER ) {
+				x += ( command.rect.GetWidth() - virtualWidth ) * 0.5f;
+			} else if ( command.flags & DTF_RIGHT ) {
+				x += command.rect.GetWidth() - virtualWidth;
+			}
+			if ( command.flags & DTF_VCENTER ) {
+				y += ( command.rect.GetHeight() - virtualHeight ) * 0.5f;
+			} else if ( command.flags & DTF_BOTTOM ) {
+				y += command.rect.GetHeight() - virtualHeight;
+			}
+
+			const byte* rgba = reinterpret_cast< const byte* >( &command.color );
+			glColor4ub( rgba[ 0 ], rgba[ 1 ], rgba[ 2 ], rgba[ 3 ] );
+			glRasterPos2f( x, y + virtualHeight );
+			glListBase( font->listBase );
+			glCallLists( displayText.Length(), GL_UNSIGNED_SHORT, displayText.c_str() );
+		}
 	}
 
 	glPopMatrix();

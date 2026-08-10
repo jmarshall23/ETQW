@@ -68,6 +68,15 @@ private:
 		bool				masked;
 	};
 
+	struct guiText_t {
+		idWStr				text;
+		sdBounds2D			rect;
+		unsigned int		flags;
+		unsigned int		color;
+		int					font;
+		int					pointSize;
+	};
+
 	void			QueueRect( float x, float y, float w, float h,
 						float s1, float t1, float s2, float t2,
 						float ms1, float mt1, float ms2, float mt2,
@@ -79,6 +88,7 @@ private:
 	bool			ClipWinding( idWinding2D& winding ) const;
 
 	idList< guiPrimitive_t >	primitives;
+	idList< guiText_t >		texts;
 	idList< sdBounds2D >		clipRects;
 	unsigned int				currentColor;
 	float						materialParms[ MAX_ENTITY_SHADER_PARMS ];

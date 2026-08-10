@@ -17,7 +17,15 @@
 namespace {
 
 struct recoveredMaterialStage_t {
-	idStr imageName;
+	idImage*					image;
+	const sdDeclRenderBinding*	renderBinding;
+	const sdDeclRenderProgram*	renderProgram;
+
+	recoveredMaterialStage_t() :
+		image( NULL ),
+		renderBinding( NULL ),
+		renderProgram( NULL ) {
+	}
 };
 
 float SortForName( idToken& token ) {
@@ -484,11 +492,23 @@ bool idMaterial::Parse( const char* text, const int textLength ) {
 				 !token.Icmp( "diffuseMap" ) ||
 				 !token.Icmp( "bumpMap" ) ||
 				 !token.Icmp( "specularMap" ) ) {
-				if ( src.ReadToken( &token ) ) {
-					if ( !token.Icmp( "clamp" ) ) {
-						src.ReadToken( &token );
-					}
-					recoveredStages[ currentStage ].imageName = token;
+				imageParams_t parms;
+				if ( !token.Icmp( "diffuseMap" ) ) {
+					parms.td = TD_DIFFUSE;
+				} else if ( !token.Icmp( "bumpMap" ) ) {
+					parms.td = TD_BUMP;
+				} else if ( !token.Icmp( "specularMap" ) ) {
+					parms.td = TD_SPECULAR;
+				}
+				recoveredStages[ currentStage ].image = idImageManager::ParseImage( src, parms );
+			} else if ( !token.Icmp( "cinematicY" ) ) {
+				imageParams_t parms;
+				parms.allowPicmip = false;
+				recoveredStages[ currentStage ].image = idImageManager::ParseImage( src, parms );
+				recoveredStages[ currentStage ].renderBinding = declHolder.FindRenderBinding( "cinematicY", false );
+			} else if ( !token.Icmp( "program" ) ) {
+				if ( src.ReadTokenOnLine( &token ) ) {
+					recoveredStages[ currentStage ].renderProgram = declHolder.FindRenderProgram( token.c_str(), false );
 				}
 			} else if ( !token.Icmp( "alphaTest" ) ) {
 				coverage = MC_PERFORATED;
@@ -511,10 +531,12 @@ bool idMaterial::Parse( const char* text, const int textLength ) {
 			stage.conditionRegister = 0;
 			stage.cullType = cullType;
 			stage.destinationBuffer = -1;
-			if ( !recoveredStages[ i ].imageName.IsEmpty() ) {
+			stage.renderProgram = recoveredStages[ i ].renderProgram;
+			if ( recoveredStages[ i ].image != NULL ) {
 				stage.numTextures = 1;
 				stage.textures = static_cast< stageTexture_t* >( Mem_ClearedAlloc( sizeof( stageTexture_t ) ) );
-				stage.textures[ 0 ].image = LoadMaterialImage( recoveredStages[ i ].imageName );
+				stage.textures[ 0 ].image = recoveredStages[ i ].image;
+				stage.textures[ 0 ].renderBinding = recoveredStages[ i ].renderBinding;
 			}
 		}
 	}
