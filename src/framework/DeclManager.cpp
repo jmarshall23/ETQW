@@ -8,9 +8,69 @@
 #include "DeclManagerLocal.h"
 #include "../decllib/declTemplate.h"
 
+extern idCVar com_makingBuild;
+extern idCVar com_makingRC;
+extern idCVar com_useBinaryDecls;
+extern idCVar com_writeBinaryDecls;
+
 static const unsigned int INVALID_BINARY_SOURCE_OFFSET = ~0u;
 
 namespace {
+
+static const int BINARY_DECL_FILE_ID = 0x424C4344;
+static const int BINARY_DECL_VERSION = 3;
+static const int BINARY_TOKEN_FILE_ID = 0x48434244;
+static const int BINARY_TOKEN_VERSION = 2;
+
+struct binaryDeclEntry_t {
+	binaryDeclEntry_t( void ) : offset( 0 ), isText( false ) {}
+
+	idStr			type;
+	idStr			name;
+	unsigned int	offset;
+	bool			isText;
+};
+
+int LoadBinaryDeclHeader( idFile* binaryFile, idList< binaryDeclEntry_t >& entries ) {
+	entries.Clear();
+	if ( binaryFile == NULL ) {
+		return -1;
+	}
+
+	int ident = 0;
+	int version = 0;
+	int checksum = -1;
+	int count = 0;
+	if ( binaryFile->ReadInt( ident ) != sizeof( ident ) || ident != BINARY_DECL_FILE_ID ) {
+		common->Warning( "binary decl: unknown file id" );
+		return -1;
+	}
+	if ( binaryFile->ReadInt( version ) != sizeof( version ) || version != BINARY_DECL_VERSION ) {
+		common->Warning( "binary decl: wrong version (%i should be %i)", version, BINARY_DECL_VERSION );
+		return -1;
+	}
+	if ( binaryFile->ReadInt( checksum ) != sizeof( checksum ) ||
+			binaryFile->ReadInt( count ) != sizeof( count ) || count < 0 || count > 0x100000 ) {
+		common->Warning( "binary decl: invalid declaration table" );
+		return -1;
+	}
+
+	entries.SetNum( count );
+	for ( int i = 0; i < count; i++ ) {
+		unsigned char isText = 0;
+		binaryFile->ReadString( entries[ i ].type );
+		binaryFile->ReadString( entries[ i ].name );
+		if ( binaryFile->ReadUnsignedChar( isText ) != sizeof( isText ) ||
+				binaryFile->ReadUnsignedInt( entries[ i ].offset ) != sizeof( entries[ i ].offset ) ) {
+			common->Warning( "binary decl: truncated declaration table" );
+			entries.Clear();
+			return -1;
+		}
+		entries[ i ].isText = isText != 0;
+	}
+
+	return checksum;
+}
 
 class declExpandedTextSetter {
 public:
@@ -133,6 +193,30 @@ int idDeclFile::LoadAndParse( void ) {
 		return 0;
 	}
 
+	dependencies.Clear();
+	includeDependencies.Clear();
+
+	const int useBinaryDecls = com_useBinaryDecls.GetInteger();
+	const bool tryBinary =
+		useBinaryDecls == 1 ||
+		( useBinaryDecls == 2 && com_makingRC.GetBool() ) ||
+		( useBinaryDecls == 2 && isBinary );
+	if ( tryBinary && !com_makingBuild.GetBool() && !com_writeBinaryDecls.GetBool() &&
+			declManagerLocal.GetGlobalTokenCache().Num() != 0 ) {
+		MakeBinaryFilename();
+		idFile* binaryFile = fileSystem->OpenFileRead( binaryFileName );
+		if ( binaryFile != NULL ) {
+			common->DPrintf( "...loading ^7binary^0 '%s'\n", binaryFileName.c_str() );
+			checksum = LoadAndParseBinary( binaryFile );
+			fileSystem->CloseFile( binaryFile );
+			return checksum;
+		}
+	}
+
+	if ( useBinaryDecls != 0 && com_makingRC.GetBool() ) {
+		return 0;
+	}
+
 	char* buffer = NULL;
 	const int length = fileSystem->ReadFile( fileName, reinterpret_cast< void** >( &buffer ), &timestamp );
 	if ( length < 0 || buffer == NULL ) {
@@ -149,9 +233,6 @@ int idDeclFile::LoadAndParse( void ) {
 		fileSystem->FreeFile( buffer );
 		return 0;
 	}
-
-	dependencies.Clear();
-	includeDependencies.Clear();
 
 	for ( idDeclLocal* decl = decls; decl != NULL; decl = decl->nextInFile ) {
 		decl->flags.redefinedInReload = false;
@@ -323,7 +404,7 @@ void idDeclFile::MakeBinaryFilename( void ) {
 	idStr extension;
 	fileName.ExtractFileExtension( extension );
 	if ( extension.Length() > 0 ) {
-		extension = "b" + extension;
+		extension += "b";
 	} else {
 		extension = "b";
 	}
@@ -334,10 +415,104 @@ void idDeclFile::MakeBinaryFilename( void ) {
 }
 
 int idDeclFile::LoadAndParseBinary( idFile* binaryFile ) {
-	// Binary table/header restoration belongs with the remaining decllib
-	// binary serializers. Text declarations remain the authoritative path.
-	(void)binaryFile;
-	return 0;
+	idList< binaryDeclEntry_t > entries;
+	entries.SetGranularity( 16 );
+	checksum = LoadBinaryDeclHeader( binaryFile, entries );
+	if ( checksum == -1 ) {
+		return checksum;
+	}
+
+	const int fileLength = binaryFile->Length();
+	for ( int i = 0; i < entries.Num(); i++ ) {
+		const binaryDeclEntry_t& entry = entries[ i ];
+		idDeclTypeInterface* declType = declManagerLocal.GetDeclType( entry.type.c_str() );
+		if ( declType == NULL ) {
+			common->Warning( "Unidentified declType '%s'", entry.type.c_str() );
+			continue;
+		}
+		if ( entry.offset > static_cast< unsigned int >( fileLength - 8 ) ||
+				binaryFile->Seek( entry.offset, FS_SEEK_SET ) != 0 ) {
+			common->Warning( "binary decl: invalid offset for %s '%s'", entry.type.c_str(), entry.name.c_str() );
+			continue;
+		}
+
+		unsigned int originalDataSize = 0;
+		unsigned int storedDataSize = 0;
+		if ( binaryFile->ReadUnsignedInt( originalDataSize ) != sizeof( originalDataSize ) ||
+				binaryFile->ReadUnsignedInt( storedDataSize ) != sizeof( storedDataSize ) ||
+				storedDataSize > static_cast< unsigned int >( fileLength - binaryFile->Tell() ) ) {
+			common->Warning( "binary decl: invalid data block for %s '%s'", entry.type.c_str(), entry.name.c_str() );
+			continue;
+		}
+
+		byte* storedData = static_cast< byte* >( Mem_Alloc( storedDataSize + 1 ) );
+		if ( storedDataSize > 0 && binaryFile->Read( storedData, storedDataSize ) != static_cast< int >( storedDataSize ) ) {
+			Mem_Free( storedData );
+			common->Warning( "binary decl: truncated data block for %s '%s'", entry.type.c_str(), entry.name.c_str() );
+			continue;
+		}
+		storedData[ storedDataSize ] = '\0';
+
+		idDeclLocal* decl = declManagerLocal.FindTypeWithoutParsing( declType, entry.name.c_str(), false );
+		if ( decl != NULL && decl->sourceFile != NULL &&
+				( decl->sourceFile != this || decl->flags.redefinedInReload ) ) {
+			common->Warning(
+				"%s '%s' previously defined at %s:%i",
+				declType->GetName(),
+				entry.name.c_str(),
+				decl->sourceFile->fileName.c_str(),
+				decl->sourceLine
+			);
+			Mem_Free( storedData );
+			continue;
+		}
+
+		const bool linkToFile = decl == NULL || decl->sourceFile == NULL;
+		if ( decl == NULL ) {
+			decl = declManagerLocal.FindTypeWithoutParsing( declType, entry.name.c_str(), true );
+		}
+		if ( decl == NULL ) {
+			Mem_Free( storedData );
+			continue;
+		}
+
+		const bool reparse = decl->declState != DS_UNPARSED;
+		if ( entry.isText ) {
+			decl->SetText( reinterpret_cast< const char* >( storedData ) );
+			if ( decl->binarySource != NULL && fileSystem != NULL ) {
+				fileSystem->CloseFile( decl->binarySource );
+				decl->binarySource = NULL;
+			}
+			decl->binarySourceLength = 0;
+			decl->binarySourceOffset = INVALID_BINARY_SOURCE_OFFSET;
+		} else {
+			if ( decl->binarySource != NULL && fileSystem != NULL ) {
+				fileSystem->CloseFile( decl->binarySource );
+				decl->binarySource = NULL;
+			}
+			decl->binarySourceLength = originalDataSize;
+			decl->binarySourceOffset = entry.offset;
+			decl->sourceTextLength = 0;
+		}
+		Mem_Free( storedData );
+
+		if ( linkToFile ) {
+			decl->nextInFile = decls;
+			decls = decl;
+		}
+		decl->flags.redefinedInReload = true;
+		decl->sourceFile = this;
+		decl->sourceTextOffset = 0;
+		decl->sourceLine = 0;
+		decl->declState = DS_UNPARSED;
+
+		if ( reparse ) {
+			decl->ParseLocal();
+			declType->OnReload( decl->self );
+		}
+	}
+
+	return checksum;
 }
 
 /*
@@ -465,10 +640,13 @@ void idDeclLocal::SetBinarySourceDirect( const byte* source, int length ) {
 		return;
 	}
 
+	binarySource->MakeWritable();
 	binarySource->Clear();
 	if ( length > 0 ) {
 		binarySource->SetGranularity( length );
-		binarySource->Write( source, length );
+		declManagerLocal.binaryDataCompressor->Init( binarySource, true, 16 );
+		declManagerLocal.binaryDataCompressor->Write( source, length );
+		declManagerLocal.binaryDataCompressor->FinishCompress();
 	}
 	binarySource->MakeReadOnly();
 	binarySourceLength = length;
@@ -485,13 +663,55 @@ void idDeclLocal::GetBinarySource( byte*& source, int& length ) const {
 
 	if ( binarySource != NULL && binarySourceLength > 0 ) {
 		source = static_cast< byte* >( Mem_Alloc( binarySourceLength ) );
-		memcpy( source, binarySource->GetDataPtr(), binarySourceLength );
+		binarySource->Seek( 0, FS_SEEK_SET );
+		declManagerLocal.binaryDataCompressor->Init( binarySource, false, 16 );
+		const int read = declManagerLocal.binaryDataCompressor->Read( source, binarySourceLength );
+		if ( read != binarySourceLength ) {
+			common->Warning( "%s: short read from binary declaration buffer", GetName() );
+			Mem_Free( source );
+			source = NULL;
+			return;
+		}
 		length = binarySourceLength;
 		return;
 	}
 
 	if ( binarySourceOffset != INVALID_BINARY_SOURCE_OFFSET ) {
-		common->Warning( "%s: external binary decl buffers are not restored yet", GetName() );
+		if ( sourceFile == NULL || fileSystem == NULL ) {
+			return;
+		}
+		idFile* file = fileSystem->OpenFileRead( sourceFile->binaryFileName );
+		if ( file == NULL ) {
+			common->Warning( "%s: Couldn't load binary source for '%s'", GetName(), sourceFile->binaryFileName.c_str() );
+			return;
+		}
+		if ( file->Seek( binarySourceOffset, FS_SEEK_SET ) != 0 ) {
+			fileSystem->CloseFile( file );
+			return;
+		}
+
+		unsigned int originalDataSize = 0;
+		unsigned int storedDataSize = 0;
+		file->ReadUnsignedInt( originalDataSize );
+		file->ReadUnsignedInt( storedDataSize );
+		if ( originalDataSize != static_cast< unsigned int >( binarySourceLength ) ||
+				storedDataSize > static_cast< unsigned int >( file->Length() - file->Tell() ) ) {
+			common->Warning( "%s: invalid external binary declaration buffer", GetName() );
+			fileSystem->CloseFile( file );
+			return;
+		}
+
+		source = static_cast< byte* >( Mem_Alloc( binarySourceLength ) );
+		declManagerLocal.binaryDataCompressor->Init( file, false, 16 );
+		const int read = declManagerLocal.binaryDataCompressor->Read( source, binarySourceLength );
+		fileSystem->CloseFile( file );
+		if ( read != binarySourceLength ) {
+			common->Warning( "%s: short read from external binary declaration buffer", GetName() );
+			Mem_Free( source );
+			source = NULL;
+			return;
+		}
+		length = binarySourceLength;
 	}
 }
 
@@ -823,6 +1043,38 @@ void idDeclManagerLocal::Init( void ) {
 		globalTokenCacheMemory = fileSystem->OpenMemoryFile( "globalTokenCache" );
 	}
 	globalTokenCacheLength = 0;
+	if ( fileSystem != NULL && globalTokenCacheMemory != NULL && com_useBinaryDecls.GetInteger() != 0 &&
+			!com_makingBuild.GetBool() && !com_writeBinaryDecls.GetBool() ) {
+		idFile* cacheFile = fileSystem->OpenFileRead( "generated/declb/globaltokens.cacheb" );
+		if ( cacheFile != NULL ) {
+			int ident = 0;
+			int version = 0;
+			unsigned int originalSize = 0;
+			unsigned int blockSize = 0;
+			cacheFile->ReadInt( ident );
+			cacheFile->ReadInt( version );
+			cacheFile->ReadUnsignedInt( originalSize );
+			cacheFile->ReadUnsignedInt( blockSize );
+			if ( ident != BINARY_TOKEN_FILE_ID ) {
+				common->Warning( "decl token cache: encountered unknown file id" );
+			} else if ( version != BINARY_TOKEN_VERSION ) {
+				common->Warning( "decl token cache: wrong version (%i should be %i)", version, BINARY_TOKEN_VERSION );
+			} else if ( blockSize > static_cast< unsigned int >( cacheFile->Length() - cacheFile->Tell() ) ) {
+				common->Warning( "decl token cache: invalid compressed block" );
+			} else {
+				byte* block = static_cast< byte* >( Mem_Alloc( blockSize ) );
+				if ( cacheFile->Read( block, blockSize ) == static_cast< int >( blockSize ) ) {
+					globalTokenCacheMemory->SetGranularity( Max( 1, static_cast< int >( blockSize ) ) );
+					globalTokenCacheMemory->Write( block, blockSize );
+					globalTokenCacheMemory->MakeReadOnly();
+					globalTokenCacheLength = originalSize;
+				}
+				Mem_Free( block );
+			}
+			fileSystem->CloseFile( cacheFile );
+			GetGlobalTokenCache();
+		}
+	}
 
 	// The PDB-owned engine decl types must exist before the game DLL registers
 	// callbacks and initializes its typed decl wrappers.
@@ -913,6 +1165,22 @@ void idDeclManagerLocal::FinishBuild( void ) {
 }
 
 idTokenCache& idDeclManagerLocal::GetGlobalTokenCache( void ) {
+	if ( globalTokenCacheLength != 0 && globalTokenCache.Num() == 0 &&
+			globalTokenCacheMemory != NULL && binaryTokenCompressor != NULL ) {
+		common->DPrintf( "Decompressing the global token cache..." );
+		globalTokenCacheMemory->Seek( 0, FS_SEEK_SET );
+		byte* buffer = static_cast< byte* >( Mem_Alloc( globalTokenCacheLength ) );
+		binaryTokenCompressor->Init( globalTokenCacheMemory, false, 8 );
+		const int length = binaryTokenCompressor->Read( buffer, globalTokenCacheLength );
+		if ( length == globalTokenCacheLength ) {
+			globalTokenCache.ReadBuffer( buffer, length );
+		} else {
+			common->Warning( "decl token cache: decompressed %i of %i bytes", length, globalTokenCacheLength );
+		}
+		Mem_Free( buffer );
+		globalTokenCacheLength = 0;
+		common->DPrintf( "%iKb\n", globalTokenCache.Allocated() >> 10 );
+	}
 	return globalTokenCache;
 }
 
@@ -1015,10 +1283,56 @@ void idDeclManagerLocal::UnregisterDeclFolder( const char* folderName, const cha
 	}
 }
 
-void idDeclManagerLocal::FinishedRegistering( void ) {
-	for ( int i = 0; i < declFolders.Num(); i++ ) {
-		declFolders[ i ]->scannedForBinaries = true;
+void idDeclManagerLocal::FinishRegistering_r( const char* folder, const char* extension ) {
+	if ( fileSystem == NULL || folder == NULL || extension == NULL ) {
+		return;
 	}
+
+	idStr generatedFolder = va( "generated/declb/%s", folder );
+	idStr binaryExtension = extension;
+	binaryExtension += "b";
+	idFileList* fileList = fileSystem->ListFilesTree( generatedFolder, binaryExtension, true );
+	if ( fileList == NULL ) {
+		return;
+	}
+
+	static const char generatedPrefix[] = "generated/declb/";
+	for ( int i = 0; i < fileList->GetNumFiles(); i++ ) {
+		idStr binaryName = fileList->GetFile( i );
+		binaryName.BackSlashesToSlashes();
+		if ( binaryName.IcmpnPath( generatedPrefix, sizeof( generatedPrefix ) - 1 ) != 0 ) {
+			continue;
+		}
+
+		idStr sourceName = binaryName.c_str() + sizeof( generatedPrefix ) - 1;
+		sourceName.SetFileExtension( extension );
+		if ( GetFile( sourceName ) != NULL ) {
+			continue;
+		}
+
+		idDeclFile* file = new idDeclFile( sourceName );
+		file->isBinary = true;
+		const int fileIndex = loadedFiles.Append( file );
+		loadedFileHash.Add( loadedFileHash.GenerateKey( sourceName, false ), fileIndex );
+		file->LoadAndParse();
+	}
+
+	fileSystem->FreeFileList( fileList );
+}
+
+void idDeclManagerLocal::FinishedRegistering( void ) {
+	if ( com_useBinaryDecls.GetInteger() == 0 ) {
+		return;
+	}
+	for ( int i = 0; i < declFolders.Num(); i++ ) {
+		idDeclFolder* folder = declFolders[ i ];
+		if ( folder->scannedForBinaries ) {
+			continue;
+		}
+		folder->scannedForBinaries = true;
+		FinishRegistering_r( folder->folder, folder->extension );
+	}
+	checksum = GetChecksum();
 }
 
 int idDeclManagerLocal::GetChecksum( void ) const {

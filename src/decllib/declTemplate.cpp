@@ -148,6 +148,8 @@ sdDeclTemplate::Command* sdDeclTemplate::ParseAppend( idLexer& src ) {
 		return NULL;
 	}
 	StripOuterBraces( appendText );
+	appendText.StripLeadingOnce( "<%" );
+	appendText.StripTrailingOnce( "%>" );
 	return new sdTemplateAppendCommand( appendText );
 }
 
@@ -318,4 +320,3 @@ void sdTemplateConditionalCommand::Evaluate( const idStrList& arguments, idStr& 
 		commands[ i ]->Evaluate( arguments, output );
 	}
 }
-

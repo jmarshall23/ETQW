@@ -12,6 +12,11 @@
 #include "DeviceContext.h"
 #include "Material.h"
 #include "Image.h"
+#include "tr_render.h"
+#include "renderbindings.h"
+#include "../decllib/DeclRenderProgram_opengl.h"
+#include "../decllib/declRenderBinding.h"
+#include "../libs/qglLib/qgl.h"
 #include "../sound/SoundEmitter.h"
 
 #include <GL/gl.h>
@@ -211,6 +216,14 @@ void sdGuiModel::RenderScene() {
 	writePosition += sizeof( int );
 }
 
+void sdGuiModel::EmitFullScreen( int end ) {
+	// The retail command stream uses 'end' as a byte offset into its read
+	// buffer.  This reconstruction stores decoded GUI primitives directly, so
+	// every queued primitive is already within the active command range.
+	(void)end;
+	FlushFrame( renderSystem->GetScreenWidth(), renderSystem->GetScreenHeight() );
+}
+
 void sdGuiModel::SetColor( unsigned int color ) {
 	currentColor = color;
 	writePosition += sizeof( int ) * 2;
@@ -286,6 +299,7 @@ void sdGuiModel::QueueRect(
 	primitive.material = material;
 	primitive.referenceSound = referenceSound;
 	primitive.color = currentColor;
+	memcpy( primitive.materialParms, materialParms, sizeof( primitive.materialParms ) );
 	primitive.masked = masked;
 	primitive.numVerts = Min( winding.GetNumPoints(), idWinding2D::MAX_POINTS );
 	for ( int i = 0; i < primitive.numVerts; i++ ) {
@@ -319,6 +333,7 @@ void sdGuiModel::QueueWinding(
 	primitive.material = material;
 	primitive.referenceSound = referenceSound;
 	primitive.color = currentColor;
+	memcpy( primitive.materialParms, materialParms, sizeof( primitive.materialParms ) );
 	primitive.masked = masked;
 	primitive.numVerts = Min( winding.GetNumPoints(), idWinding2D::MAX_POINTS );
 	for ( int i = 0; i < primitive.numVerts; i++ ) {
@@ -428,33 +443,71 @@ void sdGuiModel::SubmitFrame( int windowWidth, int windowHeight ) {
 	glMatrixMode( GL_MODELVIEW );
 	glPushMatrix();
 	glLoadIdentity();
+	// The retail GUI model turns its quads into idDrawVert surfaces, so render
+	// programs receive colorAttrib and texCoordAttrib from generic arrays.  This
+	// compatibility submission uses immediate vertices and must provide those
+	// generic attributes explicitly instead of inheriting the last world VBO.
+	GL_EnableVertexAttribs( 0 );
 
 	for ( int i = 0; i < primitives.Num(); i++ ) {
 		const guiPrimitive_t& primitive = primitives[ i ];
-		idImage* image = ResolveGuiImage( primitive.material, primitive.referenceSound );
-		// A missing optional GUI overlay (for example the retail-only scanline
-		// image) must not turn into an opaque diagnostic quad over the frontend.
-		if ( image != NULL && image->defaulted ) {
+		idImage* image = primitive.referenceSound != NULL ? ResolveGuiImage( primitive.material, primitive.referenceSound ) : NULL;
+		if ( primitive.material == NULL || ( image != NULL && image->defaulted ) ) {
 			continue;
 		}
-		if ( image != NULL && image->texnum != idImage::TEXTURE_NOT_LOADED ) {
-			glEnable( GL_TEXTURE_2D );
-			glBindTexture( GL_TEXTURE_2D, image->texnum );
-		} else {
-			glDisable( GL_TEXTURE_2D );
-		}
-
 		const byte* rgba = reinterpret_cast< const byte* >( &primitive.color );
-		glColor4ub( rgba[ 0 ], rgba[ 1 ], rgba[ 2 ], rgba[ 3 ] );
-		glBegin( GL_TRIANGLE_FAN );
-		for ( int j = 0; j < primitive.numVerts; j++ ) {
-			glTexCoord2f( primitive.verts[ j ].st.x, primitive.verts[ j ].st.y );
-			glVertex2f( primitive.verts[ j ].xy.x, primitive.verts[ j ].xy.y );
+		idList< float > evaluated;
+		evaluated.SetNum( primitive.material->GetNumRegisters(), false );
+		primitive.material->EvaluateRegisters( evaluated.Begin(), primitive.materialParms, NULL, primitive.referenceSound, 0 );
+		for ( int stageIndex = 0; stageIndex < primitive.material->GetNumStages(); ++stageIndex ) {
+			const materialStage_t* stage = primitive.material->GetStage( stageIndex );
+			if ( evaluated[ stage->conditionRegister ] == 0.0f ) continue;
+			// Missing optional GUI layers are skipped individually.  The material's
+			// editor image is only a preview and may be defaulted even though another
+			// program stage has all of its real images available.
+			bool stageHasDefaultedTexture = false;
+			for ( int textureIndex = 0; textureIndex < stage->numTextures; ++textureIndex ) {
+				const idImage* stageImage = stage->textures[ textureIndex ].image;
+				if ( stageImage != NULL && stageImage->defaulted ) {
+					stageHasDefaultedTexture = true;
+					break;
+				}
+			}
+			if ( primitive.referenceSound == NULL && stageHasDefaultedTexture ) continue;
+			idVec4 stageColor;
+			idVec4 matrixS;
+			idVec4 matrixT;
+			if ( !RB_SetupMaterialStage( stage, evaluated.Begin(), image, stageColor, matrixS, matrixT ) ) continue;
+			glColor4f( stageColor.x * rgba[ 0 ] / 255.0f, stageColor.y * rgba[ 1 ] / 255.0f, stageColor.z * rgba[ 2 ] / 255.0f, stageColor.w * rgba[ 3 ] / 255.0f );
+			const float vertexColor[ 4 ] = {
+				rgba[ 0 ] / 255.0f,
+				rgba[ 1 ] / 255.0f,
+				rgba[ 2 ] / 255.0f,
+				rgba[ 3 ] / 255.0f
+			};
+			if ( qglVertexAttrib4fvARB != NULL && rbinds != NULL ) {
+				qglVertexAttrib4fvARB( rbinds->colorAttrib->GetAttribIndex(), vertexColor );
+			}
+			glBegin( GL_TRIANGLE_FAN );
+			for ( int j = 0; j < primitive.numVerts; j++ ) {
+				const idVec2& st = primitive.verts[ j ].st;
+				const float texCoord[ 4 ] = { st.x, st.y, 0.0f, 1.0f };
+				if ( qglVertexAttrib4fvARB != NULL && rbinds != NULL ) {
+					qglVertexAttrib4fvARB( rbinds->texCoordAttrib->GetAttribIndex(), texCoord );
+				}
+				glTexCoord2f( matrixS.x * st.x + matrixS.y * st.y + matrixS.w, matrixT.x * st.x + matrixT.y * st.y + matrixT.w );
+				glVertex2f( primitive.verts[ j ].xy.x, primitive.verts[ j ].xy.y );
+			}
+			glEnd();
 		}
-		glEnd();
 	}
 
 	if ( texts.Num() > 0 ) {
+		// Bitmap display lists are a compatibility-profile fixed-function path.
+		// A GUI material stage may have left either an ARB or GLSL program bound;
+		// in that state glRasterPos/glCallLists do not produce the console glyphs.
+		SD_UnbindRenderProgram();
+		GL_SelectTexture( 0 );
 		HDC windowDC = wglGetCurrentDC();
 		const float pixelScale = Max( 1.0f, static_cast< float >( windowHeight ) / 480.0f );
 		glDisable( GL_TEXTURE_2D );

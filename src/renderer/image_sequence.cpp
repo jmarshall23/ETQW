@@ -3,11 +3,13 @@
 // Reconstructed from renderer/Image_Sequence.obj in the original ETQW PDB
 // and its address-matched Hex-Rays bodies.
 
-#include "../framework/precompiled.h"
+#include "../idlib/precompiled.h"
 #pragma hdrstop
 
-#include "tr_local.h"
+#include "Image.h"
 #include "renderbindings.h"
+#include "../decllib/declRenderBinding.h"
+#include "../sys/sys_public.h"
 
 sdImageSequence::sdImageSequence() :
 	rate( 30.0f ) {
@@ -33,7 +35,9 @@ void sdImageSequence::UpdateBindings() {
 		return;
 	}
 
-	const float frameTime = tr.frameShaderTime * rate;
+	// tr.frameShaderTime is restored with the backend globals; wall-clock time
+	// keeps image sequences functional while that original owner is brought in.
+	const float frameTime = Sys_Milliseconds() * 0.001f * rate;
 	int frame = static_cast< int >( frameTime ) % numImages;
 	if ( frame < 0 ) {
 		frame += numImages;

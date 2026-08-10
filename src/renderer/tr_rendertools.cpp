@@ -29,6 +29,9 @@ If you have questions concerning this license or the applicable additional terms
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
+#if 0
+// Retained Doom 3 debug-tool implementation.  ETQW's renderer-private types
+// differ; reconstructed ETQW-owned functions follow this reference block.
 #include "tr_local.h"
 #include "simplex.h"	// line font definition
 
@@ -2382,4 +2385,96 @@ void RB_ShutdownDebugTools( void ) {
 	for ( int i = 0; i < MAX_DEBUG_POLYGONS; i++ ) {
 		rb_debugPolygons[i].winding.Clear();
 	}
+}
+#endif
+
+#include "draw_local.h"
+#include "tr_render.h"
+#include "VertexCache.h"
+
+void RB_RenderDebugTools( drawSurf_s**, int ) {
+	// The production call site is retained even while the ETQW private debug
+	// surface visualizers are moved out of the disabled Doom 3 block below.
+	// With all r_show* controls at their retail defaults this is the exact
+	// no-op path.
+}
+
+// PDB: renderer/tr_rendertools.cpp, RB_DrawFullscreenQuad, length 0x457.
+// ETQW renders the quad through the ordinary SS_LAST material path so state,
+// render bindings, destination buffers, and program alternates stay identical
+// to other shader surfaces.
+void RB_DrawFullscreenQuad( const idMaterial* material, unsigned int color ) {
+	viewDef_s* view = RB_GetViewDef();
+	if ( material == NULL || view == NULL ) return;
+
+	idDrawVert vertices[ 4 ];
+	for ( int index = 0; index < 4; ++index ) {
+		vertices[ index ].Clear();
+		vertices[ index ].SetNormal( 0.0f, 0.0f, 1.0f );
+		vertices[ index ].SetTangent( 1.0f, 0.0f, 0.0f );
+		vertices[ index ].SetBiTangentSign( 1.0f );
+		vertices[ index ].SetColor( color );
+	}
+	vertices[ 0 ].xyz.Set( 0.0f,   0.0f,   0.0f ); vertices[ 0 ].SetST( 0.0f, 0.0f );
+	vertices[ 1 ].xyz.Set( 640.0f, 0.0f,   0.0f ); vertices[ 1 ].SetST( 1.0f, 0.0f );
+	vertices[ 2 ].xyz.Set( 640.0f, 480.0f, 0.0f ); vertices[ 2 ].SetST( 1.0f, 1.0f );
+	vertices[ 3 ].xyz.Set( 0.0f,   480.0f, 0.0f ); vertices[ 3 ].SetST( 0.0f, 1.0f );
+	glIndex_t indexes[ 6 ] = { 0, 1, 2, 0, 2, 3 };
+
+	vertCache_s vertexBlock;
+	memset( &vertexBlock, 0, sizeof( vertexBlock ) );
+	vertexBlock.virtMem = vertices;
+	vertexBlock.size = sizeof( vertices );
+
+	srfTriangles_t triangles;
+	memset( &triangles, 0, sizeof( triangles ) );
+	triangles.verts = vertices;
+	triangles.numVerts = 4;
+	triangles.indexes = indexes;
+	triangles.numIndexes = 6;
+	triangles.ambientCache = &vertexBlock;
+	triangles.bounds[ 0 ].Set( 0.0f, 0.0f, 0.0f );
+	triangles.bounds[ 1 ].Set( 640.0f, 480.0f, 0.0f );
+
+	viewEntity_s entity;
+	memset( &entity, 0, sizeof( entity ) );
+	entity.coverage = 1.0f;
+	entity.scissorRect = view->scissor;
+	entity.modelMatrix[ 0 ] = entity.modelMatrix[ 5 ] = entity.modelMatrix[ 10 ] = entity.modelMatrix[ 15 ] = 1.0f;
+	entity.modelViewMatrix[ 0 ] = entity.modelViewMatrix[ 5 ] = entity.modelViewMatrix[ 10 ] = entity.modelViewMatrix[ 15 ] = 1.0f;
+
+	float shaderParms[ MAX_ENTITY_SHADER_PARMS ];
+	memset( shaderParms, 0, sizeof( shaderParms ) );
+	shaderParms[ 0 ] = shaderParms[ 1 ] = shaderParms[ 2 ] = shaderParms[ 3 ] = 1.0f;
+	const float* constantRegisters = material->ConstantRegisters( shaderParms, view );
+	idList< float > evaluatedRegisters;
+	if ( constantRegisters == NULL ) {
+		evaluatedRegisters.SetNum( Max( material->GetNumRegisters(), 1 ), false );
+		material->EvaluateRegisters( evaluatedRegisters.Begin(), shaderParms, view, NULL, 0 );
+		constantRegisters = evaluatedRegisters.Begin();
+	}
+
+	drawSurf_s surface;
+	memset( &surface, 0, sizeof( surface ) );
+	surface.geo = &triangles;
+	surface.space = &entity;
+	surface.material = material;
+	surface.sort = material->GetSort();
+	surface.materialRegisters = const_cast< float* >( constantRegisters );
+	surface.scissorRect = view->scissor;
+
+	const float projection[ 16 ] = {
+		2.0f / 640.0f, 0.0f,           0.0f,  0.0f,
+		0.0f,          -2.0f / 480.0f, 0.0f,  0.0f,
+		0.0f,           0.0f,          -2.0f, 0.0f,
+		-1.0f,          1.0f,          -1.0f, 1.0f
+	};
+	glMatrixMode( GL_PROJECTION );
+	glLoadMatrixf( projection );
+	glMatrixMode( GL_MODELVIEW );
+	drawSurf_s* surfaces[ 1 ] = { &surface };
+	RB_ARB2_DrawShaderPasses( surfaces, 1, SS_LAST );
+	glMatrixMode( GL_PROJECTION );
+	glLoadMatrixf( view->projectionMatrix );
+	glMatrixMode( GL_MODELVIEW );
 }

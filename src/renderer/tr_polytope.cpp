@@ -29,6 +29,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
+#if 0
 #include "tr_local.h"
 
 #define MAX_POLYTOPE_PLANES		6
@@ -108,4 +109,76 @@ srfTriangles_t *R_PolytopeSurface( int numPlanes, const idPlane *planes, idWindi
 	R_BoundTriSurf( tri );
 
 	return tri;
+}
+#endif
+
+#include "Model.h"
+
+#define ETQW_MAX_POLYTOPE_PLANES 6
+
+/*
+=====================
+R_PolytopeSurface
+
+Active ETQW translation of the retail tr_polytope.cpp owner.  The temporary
+surface is owned by the front-end view and released with
+R_FreePolytopeSurface after the back-end has consumed it.
+=====================
+*/
+srfTriangles_t* R_PolytopeSurface( int numPlanes, const idPlane* planes, idWinding** windings ) {
+	if ( numPlanes < 0 || numPlanes > ETQW_MAX_POLYTOPE_PLANES || planes == NULL ) {
+		common->Error( "R_PolytopeSurface: more than %d planes", ETQW_MAX_POLYTOPE_PLANES );
+	}
+
+	idFixedWinding planeWindings[ ETQW_MAX_POLYTOPE_PLANES ];
+	int numVerts = 0;
+	int numIndexes = 0;
+	for ( int planeIndex = 0; planeIndex < numPlanes; ++planeIndex ) {
+		idFixedWinding& winding = planeWindings[ planeIndex ];
+		winding.BaseForPlane( planes[ planeIndex ], MAX_WORLD_COORD );
+		for ( int clipIndex = 0; clipIndex < numPlanes; ++clipIndex ) {
+			if ( clipIndex == planeIndex ) continue;
+			if ( !winding.ClipInPlace( -planes[ clipIndex ], ON_EPSILON ) ) break;
+		}
+		if ( winding.GetNumPoints() <= 2 ) continue;
+		numVerts += winding.GetNumPoints();
+		numIndexes += ( winding.GetNumPoints() - 2 ) * 3;
+	}
+
+	srfTriangles_t* triangles = new srfTriangles_t;
+	memset( triangles, 0, sizeof( *triangles ) );
+	triangles->numAllocedVerts = numVerts;
+	triangles->numAllocedIndices = numIndexes;
+	triangles->verts = numVerts > 0 ? new idDrawVert[ numVerts ] : NULL;
+	triangles->indexes = numIndexes > 0 ? new glIndex_t[ numIndexes ] : NULL;
+	triangles->bounds.Clear();
+
+	for ( int planeIndex = 0; planeIndex < numPlanes; ++planeIndex ) {
+		idFixedWinding& winding = planeWindings[ planeIndex ];
+		if ( winding.GetNumPoints() <= 2 ) continue;
+		const int firstVertex = triangles->numVerts;
+		for ( int pointIndex = 0; pointIndex < winding.GetNumPoints(); ++pointIndex ) {
+			idDrawVert& vertex = triangles->verts[ triangles->numVerts++ ];
+			vertex.Clear();
+			vertex.xyz = winding[ pointIndex ].ToVec3();
+			triangles->bounds.AddPoint( vertex.xyz );
+		}
+		for ( int pointIndex = 1; pointIndex < winding.GetNumPoints() - 1; ++pointIndex ) {
+			triangles->indexes[ triangles->numIndexes++ ] = static_cast< glIndex_t >( firstVertex );
+			triangles->indexes[ triangles->numIndexes++ ] = static_cast< glIndex_t >( firstVertex + pointIndex );
+			triangles->indexes[ triangles->numIndexes++ ] = static_cast< glIndex_t >( firstVertex + pointIndex + 1 );
+		}
+		if ( windings != NULL ) {
+			windings[ planeIndex ] = new idWinding( winding.GetNumPoints() );
+			*windings[ planeIndex ] = winding;
+		}
+	}
+	return triangles;
+}
+
+void R_FreePolytopeSurface( srfTriangles_t* triangles ) {
+	if ( triangles == NULL ) return;
+	delete[] triangles->verts;
+	delete[] triangles->indexes;
+	delete triangles;
 }

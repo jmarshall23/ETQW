@@ -3,10 +3,10 @@
 // Reconstructed from renderer/tr_matrixmath.obj in the original ETQW PDB and
 // the address-matched Hex-Rays bodies.
 
-#include "../framework/precompiled.h"
+#include "../idlib/precompiled.h"
 #pragma hdrstop
 
-#include "tr_local.h"
+#include "draw_local.h"
 
 void R_TransformEyeZToWin( float srcZ, const float* projectionMatrix, float& dstZ ) {
 	const float clipZ = projectionMatrix[ 10 ] * srcZ + projectionMatrix[ 14 ];
@@ -125,7 +125,7 @@ void R_TransformModelToClip( const idVec3& src, const float* modelMatrix, const 
 }
 
 void R_GlobalToNormalizedDeviceCoordinates( const idVec3& global, idVec3& ndc ) {
-	const viewDef_t* currentView = tr.viewDef != NULL ? tr.viewDef : tr.primaryView;
+	const viewDef_s* currentView = RB_GetViewDef();
 	if ( currentView == NULL ) {
 		ndc.Zero();
 		return;
@@ -151,7 +151,7 @@ void R_GlobalToNormalizedDeviceCoordinates( const idVec3& global, idVec3& ndc ) 
 	ndc[ 2 ] = ( clip[ 2 ] + clip[ 3 ] ) / ( clip[ 3 ] + clip[ 3 ] );
 }
 
-void R_TransformClipToDevice( const idPlane& clip, const viewDef_t*, idVec3& normalized ) {
+void R_TransformClipToDevice( const idPlane& clip, const viewDef_s*, idVec3& normalized ) {
 	normalized[ 0 ] = clip[ 0 ] / clip[ 3 ];
 	normalized[ 1 ] = clip[ 1 ] / clip[ 3 ];
 	normalized[ 2 ] = clip[ 2 ] / clip[ 3 ];

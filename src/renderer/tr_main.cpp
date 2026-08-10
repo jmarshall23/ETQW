@@ -29,6 +29,10 @@ If you have questions concerning this license or the applicable additional terms
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
+#if 0
+// The surviving Doom 3 front end uses incompatible private renderer records.
+// It remains here as reference while the active ETQW implementations are
+// restored below under their original tr_main.cpp ownership.
 #include "tr_local.h"
 #ifdef __ppc__
 #include <vecLib/vecLib.h>
@@ -1160,4 +1164,271 @@ void R_RenderView( viewDef_t *parms ) {
 
 	// restore view in case we are a subview
 	tr.viewDef = oldView;
+}
+#endif
+
+#include "tr_render.h"
+#include "draw_local.h"
+#include "RenderWorld_local.h"
+
+extern idCVar r_jitter;
+extern idCVar r_znear;
+extern idCVar r_useCulling;
+
+namespace {
+	void SetFrustumPlane( idPlane& plane, const idVec3& normal, const idVec3& point ) {
+		plane.Normal() = normal;
+		plane[ 3 ] = -( normal * point );
+	}
+
+	idVec3 TransformPoint( const float matrix[ 16 ], const idVec3& point ) {
+		return idVec3(
+			matrix[ 0 ] * point.x + matrix[ 4 ] * point.y + matrix[ 8 ] * point.z + matrix[ 12 ],
+			matrix[ 1 ] * point.x + matrix[ 5 ] * point.y + matrix[ 9 ] * point.z + matrix[ 13 ],
+			matrix[ 2 ] * point.x + matrix[ 6 ] * point.y + matrix[ 10 ] * point.z + matrix[ 14 ]
+		);
+	}
+
+	int CullTransformedBounds( const idBounds& bounds, const idMat3& axis, const idVec3& origin,
+			int numPlanes, const idPlane* planes ) {
+		if ( r_useCulling.GetInteger() == 0 || bounds.IsCleared() || planes == NULL ) {
+			return 0;
+		}
+
+		const idVec3 localCenter = bounds.GetCenter();
+		const idVec3 extents = bounds[ 1 ] - localCenter;
+		const idVec3 center = origin + axis[ 0 ] * localCenter.x + axis[ 1 ] * localCenter.y + axis[ 2 ] * localCenter.z;
+		bool fullyInside = true;
+		for ( int planeIndex = 0; planeIndex < numPlanes; ++planeIndex ) {
+			const idVec3& normal = planes[ planeIndex ].Normal();
+			const float radius =
+				idMath::Fabs( normal * axis[ 0 ] ) * extents.x +
+				idMath::Fabs( normal * axis[ 1 ] ) * extents.y +
+				idMath::Fabs( normal * axis[ 2 ] ) * extents.z;
+			const float distance = planes[ planeIndex ].Distance( center );
+			if ( distance > radius ) {
+				return 1;
+			}
+			if ( distance >= -radius ) {
+				fullyInside = false;
+			}
+		}
+		return fullyInside ? -1 : 0;
+	}
+}
+
+void R_SetupViewFrustum( viewDef_s* viewDef ) {
+	if ( viewDef == NULL ) {
+		return;
+	}
+	const idVec3& origin = viewDef->renderView.vieworg;
+	const idVec3& forward = viewDef->renderView.viewaxis[ 0 ];
+	const idVec3& left = viewDef->renderView.viewaxis[ 1 ];
+	const idVec3& up = viewDef->renderView.viewaxis[ 2 ];
+
+	if ( viewDef->renderView.size_x != 0.0f ) {
+		SetFrustumPlane( viewDef->frustum[ 0 ], left, origin + left * viewDef->renderView.size_x );
+		SetFrustumPlane( viewDef->frustum[ 1 ], -left, origin - left * viewDef->renderView.size_x );
+		SetFrustumPlane( viewDef->frustum[ 2 ], up, origin + up * viewDef->renderView.size_y );
+		SetFrustumPlane( viewDef->frustum[ 3 ], -up, origin - up * viewDef->renderView.size_y );
+		SetFrustumPlane( viewDef->frustum[ 4 ], -forward, origin );
+		SetFrustumPlane( viewDef->frustum[ 5 ], forward, origin + forward * 1000000.0f );
+		viewDef->numPlanes = 6;
+		return;
+	}
+
+	const float halfFovX = viewDef->renderView.fov_x * idMath::M_DEG2RAD * 0.5f;
+	const float halfFovY = viewDef->renderView.fov_y * idMath::M_DEG2RAD * 0.5f;
+	const float sinX = idMath::Sin( halfFovX );
+	const float cosX = idMath::Cos( halfFovX );
+	const float sinY = idMath::Sin( halfFovY );
+	const float cosY = idMath::Cos( halfFovY );
+	SetFrustumPlane( viewDef->frustum[ 0 ], -( forward * sinX + left * cosX ), origin );
+	SetFrustumPlane( viewDef->frustum[ 1 ], -( forward * sinX - left * cosX ), origin );
+	SetFrustumPlane( viewDef->frustum[ 2 ], -( forward * sinY + up * cosY ), origin );
+	SetFrustumPlane( viewDef->frustum[ 3 ], -( forward * sinY - up * cosY ), origin );
+	SetFrustumPlane( viewDef->frustum[ 4 ], -forward, origin );
+	viewDef->numPlanes = 5;
+	if ( viewDef->renderView.farPlane > 0.001f ) {
+		SetFrustumPlane( viewDef->frustum[ 5 ], forward, origin + forward * viewDef->renderView.farPlane );
+		viewDef->numPlanes = 6;
+	}
+}
+
+bool R_CullLocalBox( const idBounds& bounds, const idMat3& axis, const idVec3& origin,
+		int numPlanes, const idPlane* planes ) {
+	return CullTransformedBounds( bounds, axis, origin, numPlanes, planes ) == 1;
+}
+
+bool R_CullLocalBox( const idBounds& bounds, const float modelMatrix[ 16 ], int numPlanes, const idPlane* planes ) {
+	idMat3 axis;
+	axis[ 0 ].Set( modelMatrix[ 0 ], modelMatrix[ 1 ], modelMatrix[ 2 ] );
+	axis[ 1 ].Set( modelMatrix[ 4 ], modelMatrix[ 5 ], modelMatrix[ 6 ] );
+	axis[ 2 ].Set( modelMatrix[ 8 ], modelMatrix[ 9 ], modelMatrix[ 10 ] );
+	return R_CullLocalBox( bounds, axis, idVec3( modelMatrix[ 12 ], modelMatrix[ 13 ], modelMatrix[ 14 ] ), numPlanes, planes );
+}
+
+int R_CullLocalBoxWithin( const idBounds& bounds, const float modelMatrix[ 16 ], int numPlanes, const idPlane* planes ) {
+	idMat3 axis;
+	axis[ 0 ].Set( modelMatrix[ 0 ], modelMatrix[ 1 ], modelMatrix[ 2 ] );
+	axis[ 1 ].Set( modelMatrix[ 4 ], modelMatrix[ 5 ], modelMatrix[ 6 ] );
+	axis[ 2 ].Set( modelMatrix[ 8 ], modelMatrix[ 9 ], modelMatrix[ 10 ] );
+	return CullTransformedBounds( bounds, axis,
+		idVec3( modelMatrix[ 12 ], modelMatrix[ 13 ], modelMatrix[ 14 ] ), numPlanes, planes );
+}
+
+bool R_CullLocalBoxToViewdef( const idBounds& bounds, const float modelMatrix[ 16 ], const viewDef_s* viewDef ) {
+	return viewDef != NULL && R_CullLocalBox( bounds, modelMatrix, viewDef->numPlanes, viewDef->frustum );
+}
+
+bool R_CullLocalBoxToViewdef( const idBounds& bounds, const idMat3& axis, const idVec3& origin, const viewDef_s* viewDef ) {
+	return viewDef != NULL && R_CullLocalBox( bounds, axis, origin, viewDef->numPlanes, viewDef->frustum );
+}
+
+/*
+=================
+R_SetViewMatrix
+
+ETQW keeps worldSpace as the identity entity and generates the OpenGL view
+matrix from the engine's +X-forward coordinate system.
+=================
+*/
+void R_SetViewMatrix( viewDef_s* viewDef ) {
+	if ( viewDef == NULL ) {
+		return;
+	}
+
+	memset( &viewDef->worldSpace, 0, sizeof( viewDef->worldSpace ) );
+	viewDef->worldSpace.modelMatrix[ 0 ] = 1.0f;
+	viewDef->worldSpace.modelMatrix[ 5 ] = 1.0f;
+	viewDef->worldSpace.modelMatrix[ 10 ] = 1.0f;
+	viewDef->worldSpace.modelMatrix[ 15 ] = 1.0f;
+	viewDef->worldSpace.coverage = 1.0f;
+	viewDef->worldSpace.entityIndex = -1;
+	R_GenerateViewMatrix( viewDef->renderView.viewaxis, viewDef->renderView.vieworg,
+		viewDef->worldSpace.modelViewMatrix );
+}
+
+/*
+=================
+R_SetupProjection
+
+This is ETQW's infinite-far projection.  In particular, it must not be
+replaced by glFrustum with renderView.farPlane: depth reconstruction and the
+render-program bindings depend on the retail matrix coefficients.
+=================
+*/
+void R_SetupProjection( viewDef_s* viewDef, bool allowJitter ) {
+	if ( viewDef == NULL ) {
+		return;
+	}
+
+	static idRandom random;
+	float jitterX = 0.0f;
+	float jitterY = 0.0f;
+	if ( allowJitter && r_jitter.GetBool() ) {
+		jitterX = random.RandomFloat();
+		jitterY = random.RandomFloat();
+	}
+
+	float* projection = viewDef->projectionMatrix;
+	memset( projection, 0, sizeof( viewDef->projectionMatrix ) );
+
+	if ( viewDef->renderView.size_x != 0.0f ) {
+		projection[ 0 ] = 1.0f / viewDef->renderView.size_x;
+		projection[ 5 ] = 1.0f / viewDef->renderView.size_y;
+		projection[ 10 ] = -2.0f / 1000000.0f;
+		projection[ 12 ] = jitterX / viewDef->renderView.size_x * 80.0f;
+		projection[ 13 ] = jitterY / viewDef->renderView.size_y * 80.0f;
+		projection[ 14 ] = -1.0f;
+		projection[ 15 ] = 1.0f;
+		return;
+	}
+
+	float zNear = viewDef->renderView.nearPlane;
+	if ( zNear < 0.001f ) {
+		zNear = r_znear.GetFloat();
+	}
+	if ( viewDef->renderView.flags.cramZNear ) {
+		zNear *= 0.25f;
+	}
+
+	const float ymax = zNear * idMath::Tan( viewDef->renderView.fov_y * idMath::M_DEG2RAD * 0.5f );
+	const float ymin = -ymax;
+	const float xmax = zNear * idMath::Tan( viewDef->renderView.fov_x * idMath::M_DEG2RAD * 0.5f );
+	const float xmin = -xmax;
+	const float width = xmax - xmin;
+	const float height = ymax - ymin;
+	const float viewportWidth = Max( 1, viewDef->viewport.x2 - viewDef->viewport.x1 + 1 );
+	const float viewportHeight = Max( 1, viewDef->viewport.y2 - viewDef->viewport.y1 + 1 );
+	const float jitteredXMin = xmin + width * jitterX / viewportWidth;
+	const float jitteredXMax = xmax + width * jitterX / viewportWidth;
+	const float jitteredYMin = ymin + height * jitterY / viewportHeight;
+	const float jitteredYMax = ymax + height * jitterY / viewportHeight;
+
+	projection[ 0 ] = 2.0f * zNear / width;
+	projection[ 5 ] = 2.0f * zNear / height;
+	projection[ 8 ] = ( jitteredXMin + jitteredXMax ) / width;
+	projection[ 9 ] = ( jitteredYMin + jitteredYMax ) / height;
+	projection[ 10 ] = -0.99900001f;
+	projection[ 11 ] = -1.0f;
+	projection[ 14 ] = -2.0f * zNear;
+}
+
+void R_SetupMatrices( viewDef_s* viewDef, bool allowJitter ) {
+	R_SetViewMatrix( viewDef );
+	R_SetupProjection( viewDef, allowJitter );
+	R_SetupViewFrustum( viewDef );
+}
+
+namespace {
+	idRenderWorldLocal* currentDrawWorld = NULL;
+	const renderView_t* currentDrawView = NULL;
+	viewDef_s currentViewDefStorage;
+	viewDef_s* activeViewDef = NULL;
+}
+
+void RB_SetDrawViewContext( idRenderWorldLocal* renderWorld, const renderView_t* renderView ) {
+	currentDrawWorld = renderWorld;
+	currentDrawView = renderView;
+	activeViewDef = &currentViewDefStorage;
+	RB_BuildDrawView( renderWorld, renderView );
+}
+
+void RB_ClearDrawViewContext() {
+	RB_FreeDrawView();
+	activeViewDef = NULL;
+	currentDrawWorld = NULL;
+	currentDrawView = NULL;
+}
+
+idRenderWorldLocal* RB_GetDrawWorld() {
+	return currentDrawWorld;
+}
+
+const renderView_t* RB_GetDrawView() {
+	return currentDrawView;
+}
+
+viewDef_s* RB_GetViewDef() {
+	return activeViewDef;
+}
+
+viewDef_s* RB_SwapViewDefContext( viewDef_s* viewDef ) {
+	viewDef_s* previous = activeViewDef;
+	activeViewDef = viewDef;
+	currentDrawWorld = viewDef != NULL ? viewDef->renderWorld : NULL;
+	currentDrawView = viewDef != NULL ? &viewDef->renderView : NULL;
+	return previous;
+}
+
+void RB_FreeDrawView() {
+	R_FreeBuiltDrawView();
+	memset( &currentViewDefStorage, 0, sizeof( currentViewDefStorage ) );
+}
+
+void RB_BuildDrawView( idRenderWorldLocal* renderWorld, const renderView_t* renderView ) {
+	currentDrawWorld = renderWorld;
+	currentDrawView = renderView;
+	R_BuildDrawView( renderWorld, renderView );
 }

@@ -85,6 +85,10 @@ idCVar com_logFile( "logFile", "0", CVAR_INTEGER | CVAR_SYSTEM | CVAR_NOCHEAT, "
 idCVar com_logFileName( "logFileName", "console.log", CVAR_SYSTEM | CVAR_NOCHEAT, "console log file name" );
 idCVar com_logTimeStamps( "logTimeStamps", "0", CVAR_BOOL | CVAR_SYSTEM | CVAR_NOCHEAT, "timestamp console log lines" );
 idCVar com_makingBuild( "com_makingBuild", "0", CVAR_BOOL | CVAR_SYSTEM, "building generated data" );
+idCVar com_makingRC( "com_makingRC", "0", CVAR_BOOL | CVAR_SYSTEM, "1 when making a release candidate" );
+idCVar com_useBinaryDecls( "com_useBinaryDecls", "2", CVAR_INTEGER | CVAR_SYSTEM | CVAR_ARCHIVE,
+	"1 = Load binary versions of declarations, falling back to text if not found\n2 = Allow text to override binary versions" );
+idCVar com_writeBinaryDecls( "com_writeBinaryDecls", "0", CVAR_BOOL | CVAR_SYSTEM, "Write binary versions of declarations" );
 idCVar com_updateLoadSize( "com_updateLoadSize", "0", CVAR_BOOL | CVAR_SYSTEM | CVAR_NOCHEAT, "update map load sizes" );
 idCVar com_videoRam( "com_videoRam", "64", CVAR_INTEGER | CVAR_SYSTEM | CVAR_NOCHEAT | CVAR_ARCHIVE, "detected video memory" );
 idCVar com_product_lang_ext( "com_product_lang_ext", "1", CVAR_INTEGER | CVAR_SYSTEM | CVAR_ARCHIVE, "language file extension" );

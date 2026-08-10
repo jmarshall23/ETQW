@@ -1,99 +1,128 @@
-/*
-===========================================================================
-
-	ETQW atmospheric extinction draw pass, adapted to the Darklight GLSL
-	backend.  The original renderer performed the same depth-equal,
-	premultiplied-alpha pass over opaque scene geometry.
-
-===========================================================================
-*/
+// Copyright (C) 2007 Id Software, Inc.
+//
+// ETQW atmosphere back end reconstructed from renderer/draw_atmosphere.obj.
 
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
-#include "tr_local.h"
+#include "draw_local.h"
+#include "tr_render.h"
+#include "renderbindings.h"
+#include "VertexCache.h"
 #include "../decllib/declAtmosphere.h"
+#include "../decllib/declRenderBinding.h"
+#include "../decllib/declTypeHolder.h"
+#include "../framework/DeclSkin.h"
 
-static void RB_GLSL_DrawAtmosphereSurface( const drawSurf_t *surf ) {
-	const srfTriangles_t *tri = surf->geo;
-	const idMaterial *material = surf->material;
-	if ( !tri || tri->isBSE || !tri->numIndexes || !material ) {
-		return;
+extern idCVar r_megaDrawMethod;
+extern idCVar r_skipAtmosphere;
+
+idCVar r_noDoubleAtmosphere( "r_noDoubleAtmosphere", "1", CVAR_RENDERER | CVAR_ARCHIVE, "Uses the stencil buffer to avoid atmosphere-ing" );
+idCVar r_AtmospherePostprocess( "r_AtmospherePostprocess", "0", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_INTEGER, "Use post processing pass for atmosphere", 0.0f, 0.1f );
+
+namespace {
+	const idMaterial* RemapAtmosphereMaterial( viewDef_s* view, const idMaterial* material ) {
+		if ( view != NULL && view->renderView.globalSkin != NULL && material != NULL ) {
+			return view->renderView.globalSkin->RemapShaderBySkin( material );
+		}
+		return material;
 	}
 
-	// The atmosphere pass uses DEPTHFUNC_EQUAL, so perforated materials reuse
-	// the alpha-tested coverage written by the depth prepass.  Empty portions
-	// of foliage cards therefore remain untouched while the leaves receive fog.
-	if ( material->Coverage() == MC_TRANSLUCENT || material->IsPortalSky() ) {
-		return;
+	bool SurfaceReceivesAtmosphere( const drawSurf_s* surface ) {
+		if ( surface == NULL || surface->material == NULL ) return false;
+		const idMaterial* material = surface->material;
+		if ( material->TestMaterialFlag( MF_NOATMOSPHERE ) ) return false;
+		return material->TestMaterialFlag( MF_FORCEATMOSPHERE ) ||
+			( material->GetSort() != SS_SUBVIEW && material->Coverage() != MC_TRANSLUCENT && material->ReceivesLighting() );
 	}
 
-	GL_Cull( material->GetCullType() );
-	const idDrawVert *ambient = RB_BindDrawVertBuffer( tri );
-	qglVertexPointer( 3, GL_FLOAT, sizeof( idDrawVert ), ambient->xyz.ToFloatPtr() );
+	void DrawAtmosphereSurface( const drawSurf_s* surface, const idMaterial* atmosphereMaterial, const float* registers ) {
+		if ( !SurfaceReceivesAtmosphere( surface ) ) return;
+		RB_ARB2_DrawSurfacePass( surface, atmosphereMaterial, registers, RBP_SHADER, NULL );
+	}
 
-	const float *matrix = surf->space->modelMatrix;
-	idVec4 parm;
-	parm.Set( matrix[0], matrix[4], matrix[8], matrix[12] );
-	R_SetGLSLProgramEnvParameter( GL_VERTEX_SHADER, 0, parm.ToFloatPtr() );
-	parm.Set( matrix[1], matrix[5], matrix[9], matrix[13] );
-	R_SetGLSLProgramEnvParameter( GL_VERTEX_SHADER, 1, parm.ToFloatPtr() );
-	parm.Set( matrix[2], matrix[6], matrix[10], matrix[14] );
-	R_SetGLSLProgramEnvParameter( GL_VERTEX_SHADER, 2, parm.ToFloatPtr() );
-
-	RB_DrawElementsWithCounters( tri );
 }
 
-/*
-==================
-RB_GLSL_DrawAtmosphere
+void RB_ARB2_DrawAtmospherePostProcess() {
+	viewDef_s* view = RB_GetViewDef();
+	if ( view == NULL || view->atmosphere == NULL || rbinds == NULL ) return;
+	const idMaterial* material = declHolder.FindMaterial( "atmospheres/postprocess", true );
+	if ( material == NULL ) return;
+	const float fogStart = view->atmosphere->GetFogStart();
+	const float fogEnd = view->atmosphere->GetFogEnd();
+	const float range = fogEnd - fogStart;
+	rbinds->fogDepths->Set( fogStart, fogEnd, 1.0f / range, -fogStart / range );
+	RB_DrawFullscreenQuad( material, 0xFFFFFFFF );
+}
 
-Matches ETQW's draw_atmosphere.cpp surface pass.  Extinction is evaluated
-from each visible surface point and composited without changing depth.
-==================
-*/
-void RB_GLSL_DrawAtmosphere( drawSurf_t **drawSurfs, int numDrawSurfs ) {
-	if ( r_skipAtmosphere.GetBool() || !backEnd.viewDef->viewEntitys ) {
+void RB_ARB2_DrawAtmosphere( drawSurf_s** drawSurfs, int numDrawSurfs ) {
+	viewDef_s* view = RB_GetViewDef();
+	if ( r_skipAtmosphere.GetBool() || view == NULL || view->atmosphere == NULL ) return;
+	if ( r_megaDrawMethod.GetInteger() != 0 && !r_AtmospherePostprocess.GetBool() ) return;
+	if ( r_AtmospherePostprocess.GetBool() ) {
+		RB_ARB2_DrawAtmospherePostProcess();
 		return;
 	}
 
-	idRenderWorldLocal *renderWorld = backEnd.viewDef->renderWorld;
-	const sdDeclAtmosphere *atmosphere = renderWorld ? renderWorld->GetAtmosphere() : NULL;
-	if ( !atmosphere || !atmosphere->GetSkyGradientImage() ) {
-		return;
+	const idMaterial* material = RemapAtmosphereMaterial( view, view->atmosphere->GetAtmosphereMaterial() );
+	if ( material == NULL ) return;
+	glScissor( view->viewport.x1 + view->scissor.x1, view->viewport.y1 + view->scissor.y1,
+		view->scissor.x2 - view->scissor.x1 + 1, view->scissor.y2 - view->scissor.y1 + 1 );
+	idList< float > registers;
+	registers.SetNum( Max( material->GetNumRegisters(), 1 ), false );
+	material->EvaluateRegisters( registers.Begin(), view->renderView.shaderParms, view, NULL, 0 );
+	if ( material->TestMaterialFlag( MF_UPDATECURRENTRENDER ) && !RB_ARB2_HasCurrentRenderCopy() ) {
+		RB_ARB2_SetupPostProcessingFrameBuffer();
+		RB_ARB2_CopyFramebufferColor();
 	}
-	if ( !R_BindGLSLProgram( GLSLPROG_ATMOSPHERE ) ) {
-		return;
+
+	glDisable( GL_STENCIL_TEST );
+	if ( r_noDoubleAtmosphere.GetBool() ) {
+		glClear( GL_STENCIL_BUFFER_BIT );
+		glEnable( GL_STENCIL_TEST );
+		glStencilFunc( GL_EQUAL, 128, 255 );
+		glStencilOp( GL_KEEP, GL_KEEP, GL_REPLACE );
 	}
+	for ( int index = 0; index < numDrawSurfs; ++index ) DrawAtmosphereSurface( drawSurfs[ index ], material, registers.Begin() );
+	if ( r_noDoubleAtmosphere.GetBool() ) {
+		glStencilFunc( GL_ALWAYS, 128, 255 );
+		glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
+	}
+	RB_ARB2_ClearSpace();
+	glEnable( GL_STENCIL_TEST );
+}
 
-	RB_LogComment( "---------- RB_GLSL_DrawAtmosphere ----------\n" );
-	GL_State( GLS_SRCBLEND_ONE | GLS_DSTBLEND_ONE_MINUS_SRC_ALPHA |
-		GLS_DEPTHMASK | GLS_DEPTHFUNC_EQUAL );
+void RB_ARB2_DrawAtmosphere( const drawSurf_s* drawSurfs ) {
+	viewDef_s* view = RB_GetViewDef();
+	if ( r_skipAtmosphere.GetBool() || r_AtmospherePostprocess.GetBool() || view == NULL || view->atmosphere == NULL ) return;
+	const idMaterial* material = RemapAtmosphereMaterial( view, view->atmosphere->GetAtmosphereMaterial() );
+	if ( material == NULL ) return;
+	glScissor( view->viewport.x1 + view->scissor.x1, view->viewport.y1 + view->scissor.y1,
+		view->scissor.x2 - view->scissor.x1 + 1, view->scissor.y2 - view->scissor.y1 + 1 );
+	idList< float > registers;
+	registers.SetNum( Max( material->GetNumRegisters(), 1 ), false );
+	material->EvaluateRegisters( registers.Begin(), view->renderView.shaderParms, view, NULL, 0 );
+	if ( material->TestMaterialFlag( MF_UPDATECURRENTRENDER ) && !RB_ARB2_HasCurrentRenderCopy() ) {
+		RB_ARB2_SetupPostProcessingFrameBuffer();
+		RB_ARB2_CopyFramebufferColor();
+	}
+	glDisable( GL_STENCIL_TEST );
+	if ( r_noDoubleAtmosphere.GetBool() ) {
+		glClear( GL_STENCIL_BUFFER_BIT );
+		glEnable( GL_STENCIL_TEST );
+		glStencilFunc( GL_EQUAL, 128, 255 );
+		glStencilOp( GL_KEEP, GL_KEEP, GL_REPLACE );
+	}
+	for ( const drawSurf_s* surface = drawSurfs; surface != NULL; surface = surface->nextOnLight ) DrawAtmosphereSurface( surface, material, registers.Begin() );
+	if ( r_noDoubleAtmosphere.GetBool() ) {
+		glStencilFunc( GL_ALWAYS, 128, 255 );
+		glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
+	}
+	RB_ARB2_ClearSpace();
+	glEnable( GL_STENCIL_TEST );
+}
 
-	const float fogDistHalf = Max( atmosphere->GetFogDistHalf(), 1.0f );
-	const float fogHeightHalf = Max( atmosphere->GetFogHeightHalf(), 1.0f );
-	idVec4 parm( 1.0f / fogDistHalf, 1.0f / fogHeightHalf,
-		atmosphere->GetFogHeightOffset(), r_atmosScale.GetFloat() );
-	R_SetGLSLProgramEnvParameter( GL_FRAGMENT_SHADER, 0, parm.ToFloatPtr() );
-	parm.Set( atmosphere->GetFogColor().x, atmosphere->GetFogColor().y,
-		atmosphere->GetFogColor().z, 1.0f );
-	R_SetGLSLProgramEnvParameter( GL_FRAGMENT_SHADER, 1, parm.ToFloatPtr() );
-	parm.Set( atmosphere->GetSunDirection().x, atmosphere->GetSunDirection().y,
-		atmosphere->GetSunDirection().z, 0.0f );
-	R_SetGLSLProgramEnvParameter( GL_FRAGMENT_SHADER, 2, parm.ToFloatPtr() );
-	parm.Set( atmosphere->GetSunColor().x, atmosphere->GetSunColor().y,
-		atmosphere->GetSunColor().z, 1.0f );
-	R_SetGLSLProgramEnvParameter( GL_FRAGMENT_SHADER, 3, parm.ToFloatPtr() );
-	parm.Set( atmosphere->GetSunHaloScale(), atmosphere->GetSunHaloBias(), 0.0f, 0.0f );
-	R_SetGLSLProgramEnvParameter( GL_FRAGMENT_SHADER, 4, parm.ToFloatPtr() );
-	parm.Set( backEnd.viewDef->renderView.vieworg.x, backEnd.viewDef->renderView.vieworg.y,
-		backEnd.viewDef->renderView.vieworg.z, 1.0f );
-	R_SetGLSLProgramEnvParameter( GL_FRAGMENT_SHADER, 5, parm.ToFloatPtr() );
-
-	GL_SelectTexture( 0 );
-	atmosphere->GetSkyGradientImage()->Bind();
-	RB_RenderDrawSurfListWithFunction( drawSurfs, numDrawSurfs, RB_GLSL_DrawAtmosphereSurface );
-
-	globalImages->BindNull();
-	R_UnbindGLSLProgram();
+void RB_ARB2_DrawAtmosphere() {
+	viewDef_s* view = RB_GetViewDef();
+	if ( view != NULL ) RB_ARB2_DrawAtmosphere( view->drawSurfs, view->numDrawSurfs );
 }

@@ -8,10 +8,40 @@
 
 #include "Image.h"
 #include "RenderSystem.h"
+#include "tr_render.h"
 
 extern glconfig_t glConfig;
 
 namespace {
+
+static const byte mipBlendColors[ 16 ][ 4 ] = {
+	{ 0, 0, 0, 0 },
+	{ 255, 0, 0, 128 }, { 0, 255, 0, 128 }, { 0, 0, 255, 128 },
+	{ 255, 0, 0, 128 }, { 0, 255, 0, 128 }, { 0, 0, 255, 128 },
+	{ 255, 0, 0, 128 }, { 0, 255, 0, 128 }, { 0, 0, 255, 128 },
+	{ 255, 0, 0, 128 }, { 0, 255, 0, 128 }, { 0, 0, 255, 128 },
+	{ 255, 0, 0, 128 }, { 0, 255, 0, 128 }, { 0, 0, 255, 128 }
+};
+
+void ApplyMipmapState( byte* pixels, int width, int height, int level, mipmapState_t& state ) {
+	if ( pixels == NULL || width <= 0 || height <= 0 || state.colorType == mipmapState_t::MT_NONE ) return;
+	if ( state.colorType == mipmapState_t::MT_DEFAULT ) {
+		if ( level == 0 ) return;
+		byte color[ 4 ];
+		byte amount[ 4 ];
+		for ( int channel = 0; channel < 4; ++channel ) {
+			color[ channel ] = static_cast< byte >( idMath::ClampInt( 0, 255, idMath::Ftoi( state.color[ channel ] * 255.0f ) ) );
+			amount[ channel ] = static_cast< byte >( idMath::ClampInt( 0, 255, idMath::Ftoi( state.blend[ channel ] * 255.0f ) ) );
+		}
+		R_BlendOverTexture( pixels, width * height, color, amount );
+	} else if ( state.colorType == mipmapState_t::MT_WATER ) {
+		const float alphaScale = Max( 0.0f, ( 5.0f - static_cast< float >( level ) ) * 0.25f );
+		R_SetAlphaChannel( pixels, width * height, static_cast< byte >( level == 0 ? 50 : idMath::ClampInt( 0, 255, idMath::Ftoi( alphaScale * 255.0f ) ) ) );
+	} else if ( state.colorType == mipmapState_t::MT_COLORLEVELS ) {
+		const int colorLevel = idMath::ClampInt( 0, 15, level );
+		R_BlendOverTexture( pixels, width * height, mipBlendColors[ colorLevel ], mipBlendColors[ colorLevel ][ 3 ] );
+	}
+}
 
 GLenum TextureTargetForType( textureType_t type ) {
 	switch ( type ) {
@@ -315,17 +345,19 @@ void idImage::BindFragment() {
 }
 
 void idImage::BindFragment( const int imageUnit ) {
-	static activeTextureProc_t activeTexture = ResolveGLProc< activeTextureProc_t >( "glActiveTextureARB" );
-	if ( activeTexture != NULL ) {
-		activeTexture( GL_TEXTURE0_ARB + imageUnit );
-	}
+	// BindFragment and GL_SelectTexture share one active-unit cache in retail.
+	// Going directly through glActiveTextureARB here leaves the renderer cache
+	// stale and makes a later cached texture-unit selection bind to the wrong
+	// sampler.
+	GL_SelectTexture( imageUnit );
 	BindFragment();
 }
 
-void idImage::SetMipmapLevel( byte* pixels, int width, int height, int level, mipmapState_t& ) {
+void idImage::SetMipmapLevel( byte* pixels, int width, int height, int level, mipmapState_t& state ) {
 	if ( !IsLoaded() || type != TT_2D ) {
 		return;
 	}
+	ApplyMipmapState( pixels, width, height, level, state );
 	glTexImage2D(
 		GL_TEXTURE_2D,
 		level,
@@ -415,6 +447,7 @@ void idImage::GenerateImageEx(
 	int levelHeight = scaledHeight;
 	const int maximumMipLevels = requestedMipLevels < 0 ? MAX_TEXTURE_LEVELS : Max( requestedMipLevels, 1 );
 	for ( ;; ) {
+		ApplyMipmapState( levelPixels, levelWidth, levelHeight, level, mipmapState );
 		glTexImage2D(
 			GL_TEXTURE_2D,
 			level,
@@ -774,12 +807,57 @@ void idImage::UploadScratch( const byte* pic, int width, int height ) {
 	if ( pic == NULL || width <= 0 || height <= 0 ) {
 		return;
 	}
-	if ( !IsLoaded() || type != TT_2D || uploadWidth != width || uploadHeight != height ) {
-		GenerateImage( pic, width, height, TF_LINEAR, false, TR_CLAMP, TD_HIGH_QUALITY );
+
+	// Retail overloads this entry point for six vertically packed RGBA cube
+	// faces as well as ordinary 2D scratch images.
+	if ( height == width * 6 ) {
+		const int faceHeight = height / 6;
+		const bool allocate = !IsLoaded() || type != TT_CUBIC || uploadWidth != width || uploadHeight != faceHeight;
+		if ( !IsLoaded() || type != TT_CUBIC ) {
+			FromParameters( width, faceHeight, GL_RGB8, TT_CUBIC, TF_LINEAR, TR_CLAMP );
+		}
+		glBindTexture( GL_TEXTURE_CUBE_MAP_ARB, texnum );
+		for ( int face = 0; face < 6; ++face ) {
+			const byte* facePixels = pic + face * width * faceHeight * 4;
+			if ( allocate ) {
+				glTexImage2D( GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB + face, 0, GL_RGB8,
+					width, faceHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, facePixels );
+			} else {
+				glTexSubImage2D( GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB + face, 0, 0, 0,
+					width, faceHeight, GL_RGBA, GL_UNSIGNED_BYTE, facePixels );
+			}
+		}
+		type = TT_CUBIC;
+		sourceWidth = uploadWidth = width;
+		sourceHeight = uploadHeight = faceHeight;
+		repeat = TR_CLAMP;
+		glTexParameteri( GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+		glTexParameteri( GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+		glTexParameteri( GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+		glTexParameteri( GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 		return;
 	}
+
+	const bool luminance = internalFormat == GL_LUMINANCE8;
+	const GLenum sourceFormat = luminance ? GL_LUMINANCE : GL_RGBA;
+	const int scratchInternalFormat = luminance ? GL_LUMINANCE8 : GL_RGBA8;
+	const bool allocate = !IsLoaded() || type != TT_2D || uploadWidth != width || uploadHeight != height;
+	if ( !IsLoaded() || type != TT_2D ) {
+		FromParameters( width, height, scratchInternalFormat, TT_2D, TF_LINEAR, TR_REPEAT );
+	}
 	glBindTexture( GL_TEXTURE_2D, texnum );
-	glTexSubImage2D( GL_TEXTURE_2D, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pic );
+	if ( allocate ) {
+		glTexImage2D( GL_TEXTURE_2D, 0, scratchInternalFormat, width, height, 0, sourceFormat, GL_UNSIGNED_BYTE, pic );
+	} else {
+		glTexSubImage2D( GL_TEXTURE_2D, 0, 0, 0, width, height, sourceFormat, GL_UNSIGNED_BYTE, pic );
+	}
+	type = TT_2D;
+	sourceWidth = uploadWidth = width;
+	sourceHeight = uploadHeight = height;
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
 }
 
 void idImage::CopyFromImage( idImage* image ) {

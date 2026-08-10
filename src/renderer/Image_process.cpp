@@ -28,7 +28,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
-#include "tr_local.h"
+#include "Image.h"
 
 /*
 ================
@@ -60,7 +60,7 @@ byte *R_ResampleTexture( const byte *in, int inwidth, int inheight,
 		outheight = MAX_DIMENSION;
 	}
 
-	out = (byte *)R_StaticAlloc( outwidth * outheight * 4 );
+	out = (byte *)Mem_Alloc( outwidth * outheight * 4 );
 	out_p = out;
 
 	fracstep = inwidth*0x10000/outwidth;
@@ -110,7 +110,7 @@ byte *R_Dropsample( const byte *in, int inwidth, int inheight,
 	const byte	*pix1;
 	byte		*out, *out_p;
 
-	out = (byte *)R_StaticAlloc( outwidth * outheight * 4 );
+	out = (byte *)Mem_Alloc( outwidth * outheight * 4 );
 	out_p = out;
 
 	for (i=0 ; i<outheight ; i++, out_p += outwidth*4 ) {
@@ -338,7 +338,7 @@ byte *R_MipMapWithAlphaSpecularity( const byte *in, int width, int height ) {
 	if ( !newHeight ) {
 		newHeight = 1;
 	}
-	out = (byte *)R_StaticAlloc( newWidth * newHeight * 4 );
+	out = (byte *)Mem_Alloc( newWidth * newHeight * 4 );
 	out_p = out;
 
 	in_p = in;
@@ -420,7 +420,7 @@ byte *R_MipMap( const byte *in, int width, int height, bool preserveBorder ) {
 	if ( !newHeight ) {
 		newHeight = 1;
 	}
-	out = (byte *)R_StaticAlloc( newWidth * newHeight * 4 );
+	out = (byte *)Mem_Alloc( newWidth * newHeight * 4 );
 	out_p = out;
 
 	in_p = in;
@@ -507,7 +507,7 @@ byte *R_MipMap3D( const byte *in, int width, int height, int depth, bool preserv
 	newHeight = height >> 1;
 	newDepth = depth >> 1;
 
-	out = (byte *)R_StaticAlloc( newWidth * newHeight * newDepth * 4 );
+	out = (byte *)Mem_Alloc( newWidth * newHeight * newDepth * 4 );
 	out_p = out;
 
 	in_p = in;
@@ -551,20 +551,26 @@ R_BlendOverTexture
 Apply a color blend over a set of pixels
 ==================
 */
-void R_BlendOverTexture( byte *data, int pixelCount, const byte blend[4] ) {
-	int		i;
-	int		inverseAlpha;
-	int		premult[3];
+void R_BlendOverTexture( byte *data, int pixelCount, const byte blend[4], byte amount ) {
+	const int inverseAmount = 255 - amount;
+	for ( int i = 0; i < pixelCount; ++i, data += 4 ) {
+		for ( int channel = 0; channel < 4; ++channel ) {
+			data[ channel ] = static_cast< byte >( ( data[ channel ] * inverseAmount + blend[ channel ] * amount ) / 255 );
+		}
+	}
+}
 
-	inverseAlpha = 255 - blend[3];
-	premult[0] = blend[0] * blend[3];
-	premult[1] = blend[1] * blend[3];
-	premult[2] = blend[2] * blend[3];
+void R_BlendOverTexture( byte *data, int pixelCount, const byte blend[4], byte amount[4] ) {
+	for ( int i = 0; i < pixelCount; ++i, data += 4 ) {
+		for ( int channel = 0; channel < 4; ++channel ) {
+			data[ channel ] = static_cast< byte >( ( data[ channel ] * ( 255 - amount[ channel ] ) + blend[ channel ] * amount[ channel ] ) / 255 );
+		}
+	}
+}
 
-	for ( i = 0 ; i < pixelCount ; i++, data+=4 ) {
-		data[0] = ( data[0] * inverseAlpha + premult[0] ) >> 9;
-		data[1] = ( data[1] * inverseAlpha + premult[1] ) >> 9;
-		data[2] = ( data[2] * inverseAlpha + premult[2] ) >> 9;
+void R_SetAlphaChannel( byte *data, int pixelCount, byte alpha ) {
+	for ( int i = 0; i < pixelCount; ++i, data += 4 ) {
+		data[ 3 ] = alpha;
 	}
 }
 
@@ -606,7 +612,7 @@ void R_RotatePic( byte *data, int width ) {
 	int		i, j;
 	int		*temp;
 
-	temp = (int *)R_StaticAlloc( width * width * 4 );
+	temp = (int *)Mem_Alloc( width * width * 4 );
 
 	for ( i = 0 ; i < width ; i++ ) {
 		for ( j = 0 ; j < width ; j++ ) {
@@ -616,6 +622,5 @@ void R_RotatePic( byte *data, int width ) {
 
 	memcpy( data, temp, width * width * 4 );
 
-	R_StaticFree( temp );
+	Mem_Free( temp );
 }
-

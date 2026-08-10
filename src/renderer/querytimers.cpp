@@ -4,7 +4,7 @@
 #pragma hdrstop
 
 #include "querytimers.h"
-#include "RendererBootstrap.h"
+#include "RendererTypesImpl.h"
 #include "../libs/qglLib/qgl.h"
 
 QueryTimer timers[ 4096 ];

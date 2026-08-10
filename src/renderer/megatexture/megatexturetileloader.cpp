@@ -23,7 +23,7 @@ GNU General Public License for more details.
 #include "../../idlib/precompiled.h"
 #pragma hdrstop
 
-#include "../tr_local.h"
+#include "../Image.h"
 #include "MegaTexture.h"
 #include "MegaTextureTileLoader.h"
 #include "MegaTextureTileDecompressor.h"
@@ -31,7 +31,11 @@ GNU General Public License for more details.
 #include <chrono>
 #include <vector>
 
-idMegaTextureTileLoader *megaTextureTileLoader = NULL;
+// Retail owns one process-lifetime loader object and exposes this pointer to
+// the renderer.  Leaving it NULL prevents every moving MegaTexture atlas from
+// ever replacing the red image created by EmptyLevelImage().
+static idMegaTextureTileLoader megaTextureTileLoaderLocal;
+idMegaTextureTileLoader *megaTextureTileLoader = &megaTextureTileLoaderLocal;
 
 static const int MEGA_LOAD_HISTORY = 2048;
 static std::atomic<int> megaLoadHistoryIndex( 0 );

@@ -29,6 +29,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
+#if 0
 #include "tr_local.h"
 
 /*
@@ -2271,4 +2272,73 @@ int R_DeformInfoMemoryUsed( deformInfo_t *deformInfo ) {
 	total += sizeof( *deformInfo );
 	return total;
 }
+#endif
 
+#include "draw_local.h"
+#include "tr_render.h"
+
+/*
+=============================
+R_GenerateIndexTreeRenderList
+
+Retail ETQW owner: renderer/tr_trisurf.cpp.
+=============================
+*/
+int R_GenerateIndexTreeRenderList( int* list, int maxLength, const float modelMatrix[ 16 ],
+		const viewDef_s* viewDef, const srfTriangles_t* triangles ) {
+	if ( list == NULL || maxLength < 2 || triangles == NULL || triangles->indexTree == NULL ||
+			triangles->numIndexTree <= 0 || viewDef == NULL ) {
+		if ( list != NULL && maxLength >= 2 && triangles != NULL ) {
+			list[ 0 ] = 0;
+			list[ 1 ] = triangles->numIndexes;
+		}
+		return 2;
+	}
+
+	int treeStack[ 40 ];
+	int stackDepth = 1;
+	treeStack[ 0 ] = 0;
+	int listLength = 0;
+	while ( stackDepth > 0 ) {
+		const int nodeIndex = treeStack[ --stackDepth ];
+		if ( nodeIndex < 0 || nodeIndex >= triangles->numIndexTree ) {
+			list[ 0 ] = 0;
+			list[ 1 ] = triangles->numIndexes;
+			return 2;
+		}
+
+		const srfIndexTree_t& node = triangles->indexTree[ nodeIndex ];
+		bool addNode = false;
+		if ( node.kids[ 0 ] == -1 ) {
+			addNode = !R_CullLocalBoxToViewdef( node.bb, modelMatrix, viewDef );
+		} else {
+			const int cull = R_CullLocalBoxWithin( node.bb, modelMatrix, viewDef->numPlanes, viewDef->frustum );
+			if ( cull == -1 ) {
+				addNode = true;
+			} else if ( cull == 0 ) {
+				if ( stackDepth + 2 > 40 ) {
+					list[ 0 ] = 0;
+					list[ 1 ] = triangles->numIndexes;
+					return 2;
+				}
+				treeStack[ stackDepth++ ] = node.kids[ 1 ];
+				treeStack[ stackDepth++ ] = node.kids[ 0 ];
+			}
+		}
+
+		if ( addNode ) {
+			if ( listLength > 0 && list[ listLength - 1 ] == node.range[ 0 ] ) {
+				list[ listLength - 1 ] = node.range[ 1 ];
+			} else {
+				if ( listLength + 2 > maxLength ) {
+					list[ 0 ] = 0;
+					list[ 1 ] = triangles->numIndexes;
+					return 2;
+				}
+				list[ listLength++ ] = node.range[ 0 ];
+				list[ listLength++ ] = node.range[ 1 ];
+			}
+		}
+	}
+	return listLength;
+}

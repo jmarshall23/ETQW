@@ -1,700 +1,427 @@
-/*
-===========================================================================
-
-Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
-
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
-
-Doom 3 Source Code is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-Doom 3 Source Code is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
-
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
-
-If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
-
-===========================================================================
-*/
+// Copyright (C) 2007 Id Software, Inc.
+//
+// ETQW render-world implementation reconstructed under the retail PDB path.
 
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
-#include "tr_local.h"
+#include "RenderWorld_local.h"
+#include "Image.h"
+#include "Material.h"
+#include "Model.h"
+#include "ModelManager.h"
+#include "RenderSystemBackend.h"
+#include "GuiModel.h"
+#include "DeviceContext.h"
+#include "tr_render.h"
+#include "../decllib/declTypeHolder.h"
+#include "../sys/sys_render.h"
 
+#include <GL/gl.h>
 
-/*
-================
-idRenderWorldLocal::FreeWorld
-================
-*/
-void idRenderWorldLocal::FreeWorld() {
-	int i;
+namespace {
 
-	// this will free all the lightDefs and entityDefs
-	FreeDefs();
-
-	// free all the portals and check light/model references
-	for ( i = 0 ; i < numPortalAreas ; i++ ) {
-		portalArea_t	*area;
-		portal_t		*portal, *nextPortal;
-
-		area = &portalAreas[i];
-		for ( portal = area->portals ; portal ; portal = nextPortal ) {
-			nextPortal = portal->next;
-			delete portal->w;
-			R_StaticFree( portal );
-		}
-
-		// there shouldn't be any remaining lightRefs or entityRefs
-		if ( area->lightRefs.areaNext != &area->lightRefs ) {
-			common->Error( "FreeWorld: unexpected remaining lightRefs" );
-		}
-		if ( area->entityRefs.areaNext != &area->entityRefs ) {
-			common->Error( "FreeWorld: unexpected remaining entityRefs" );
-		}
-	}
-
-	if ( portalAreas ) {
-		R_StaticFree( portalAreas );
-		portalAreas = NULL;
-		numPortalAreas = 0;
-		R_StaticFree( areaScreenRect );
-		areaScreenRect = NULL;
-	}
-
-	if ( doublePortals ) {
-		R_StaticFree( doublePortals );
-		doublePortals = NULL;
-		numInterAreaPortals = 0;
-	}
-
-	if ( areaNodes ) {
-		R_StaticFree( areaNodes );
-		areaNodes = NULL;
-	}
-
-	// free all the inline idRenderModels 
-	for ( i = 0 ; i < localModels.Num() ; i++ ) {
-		renderModelManager->RemoveModel( localModels[i] );
-		delete localModels[i];
-	}
-	localModels.Clear();
-
-	areaReferenceAllocator.Shutdown();
-	interactionAllocator.Shutdown();
-	areaNumRefAllocator.Shutdown();
-
-	mapName = "<FREED>";
+bool ReadProcInt( idFile* file, int& value ) {
+	return file != NULL && file->ReadInt( value ) == sizeof( value );
 }
 
-/*
-================
-idRenderWorldLocal::TouchWorldModels
-================
-*/
-void idRenderWorldLocal::TouchWorldModels( void ) {
-	int i;
-
-	for ( i = 0 ; i < localModels.Num() ; i++ ) {
-		renderModelManager->CheckModel( localModels[i]->Name() );
-	}
+bool ReadProcFloat( idFile* file, float& value ) {
+	return file != NULL && file->ReadFloat( value ) == sizeof( value );
 }
 
-/*
-================
-idRenderWorldLocal::ParseModel
-================
-*/
-idRenderModel *idRenderWorldLocal::ParseModel( idLexer *src ) {
-	idRenderModel	*model;
-	idToken			token;
-	int				i, j;
-	srfTriangles_t	*tri;
-	modelSurface_t	surf;
-
-	src->ExpectTokenString( "{" );
-
-	// parse the name
-	src->ExpectAnyToken( &token );
-
-	model = renderModelManager->AllocModel();
-	model->InitEmpty( token );
-
-	int numSurfaces = src->ParseInt();
-	if ( numSurfaces < 0 ) {
-		src->Error( "R_ParseModel: bad numSurfaces" );
-	}
-
-	for ( i = 0 ; i < numSurfaces ; i++ ) {
-		src->ExpectTokenString( "{" );
-
-		src->ExpectAnyToken( &token );
-
-		surf.shader = declManager->FindMaterial( token );
-
-		((idMaterial*)surf.shader)->AddReference();
-
-		tri = R_AllocStaticTriSurf();
-		surf.geometry = tri;
-
-		tri->numVerts = src->ParseInt();
-		tri->numIndexes = src->ParseInt();
-
-		R_AllocStaticTriSurfVerts( tri, tri->numVerts );
-		for ( j = 0 ; j < tri->numVerts ; j++ ) {
-			float	vec[8];
-
-			src->Parse1DMatrix( 8, vec );
-
-			tri->verts[j].xyz[0] = vec[0];
-			tri->verts[j].xyz[1] = vec[1];
-			tri->verts[j].xyz[2] = vec[2];
-			tri->verts[j].st[0] = vec[3];
-			tri->verts[j].st[1] = vec[4];
-			tri->verts[j].normal[0] = vec[5];
-			tri->verts[j].normal[1] = vec[6];
-			tri->verts[j].normal[2] = vec[7];
-		}
-
-		R_AllocStaticTriSurfIndexes( tri, tri->numIndexes );
-		for ( j = 0 ; j < tri->numIndexes ; j++ ) {
-			tri->indexes[j] = src->ParseInt();
-		}
-		src->ExpectTokenString( "}" );
-
-		// add the completed surface to the model
-		model->AddSurface( surf );
-	}
-
-	src->ExpectTokenString( "}" );
-
-	model->FinishSurfaces();
-
-	return model;
-}
-
-/*
-================
-idRenderWorldLocal::ParseShadowModel
-================
-*/
-idRenderModel *idRenderWorldLocal::ParseShadowModel( idLexer *src ) {
-	idRenderModel	*model;
-	idToken			token;
-	int				j;
-	srfTriangles_t	*tri;
-	modelSurface_t	surf;
-
-	src->ExpectTokenString( "{" );
-
-	// parse the name
-	src->ExpectAnyToken( &token );
-
-	model = renderModelManager->AllocModel();
-	model->InitEmpty( token );
-
-	surf.shader = tr.defaultMaterial;
-
-	tri = R_AllocStaticTriSurf();
-	surf.geometry = tri;
-
-	tri->numVerts = src->ParseInt();
-	tri->numShadowIndexesNoCaps = src->ParseInt();
-	tri->numShadowIndexesNoFrontCaps = src->ParseInt();
-	tri->numIndexes = src->ParseInt();
-	tri->shadowCapPlaneBits = src->ParseInt();
-
-	R_AllocStaticTriSurfShadowVerts( tri, tri->numVerts );
-	tri->bounds.Clear();
-	for ( j = 0 ; j < tri->numVerts ; j++ ) {
-		float	vec[8];
-
-		src->Parse1DMatrix( 3, vec );
-		tri->shadowVertexes[j].xyz[0] = vec[0];
-		tri->shadowVertexes[j].xyz[1] = vec[1];
-		tri->shadowVertexes[j].xyz[2] = vec[2];
-		tri->shadowVertexes[j].xyz[3] = 1;		// no homogenous value
-
-		tri->bounds.AddPoint( tri->shadowVertexes[j].xyz.ToVec3() );
-	}
-
-	R_AllocStaticTriSurfIndexes( tri, tri->numIndexes );
-	for ( j = 0 ; j < tri->numIndexes ; j++ ) {
-		tri->indexes[j] = src->ParseInt();
-	}
-
-	// add the completed surface to the model
-	model->AddSurface( surf );
-
-	src->ExpectTokenString( "}" );
-
-	// we do NOT do a model->FinishSurfaceces, because we don't need sil edges, planes, tangents, etc.
-//	model->FinishSurfaces();
-
-	return model;
-}
-
-/*
-================
-idRenderWorldLocal::SetupAreaRefs
-================
-*/
-void idRenderWorldLocal::SetupAreaRefs() {
-	int		i;
-
-	connectedAreaNum = 0;
-	for ( i = 0 ; i < numPortalAreas ; i++ ) {
-		portalAreas[i].areaNum = i;
-		portalAreas[i].lightRefs.areaNext =
-		portalAreas[i].lightRefs.areaPrev =
-			&portalAreas[i].lightRefs;
-		portalAreas[i].entityRefs.areaNext =
-		portalAreas[i].entityRefs.areaPrev =
-			&portalAreas[i].entityRefs;
-	}
-}
-
-/*
-================
-idRenderWorldLocal::ParseInterAreaPortals
-================
-*/
-void idRenderWorldLocal::ParseInterAreaPortals( idLexer *src ) {
-	int i, j;
-
-	src->ExpectTokenString( "{" );
-
-	numPortalAreas = src->ParseInt();
-	if ( numPortalAreas < 0 ) {
-		src->Error( "R_ParseInterAreaPortals: bad numPortalAreas" );
-		return;
-	}
-	portalAreas = (portalArea_t *)R_ClearedStaticAlloc( numPortalAreas * sizeof( portalAreas[0] ) );
-	areaScreenRect = (idScreenRect *) R_ClearedStaticAlloc( numPortalAreas * sizeof( idScreenRect ) );
-
-	// set the doubly linked lists
-	SetupAreaRefs();
-
-	numInterAreaPortals = src->ParseInt();
-	if ( numInterAreaPortals < 0 ) {
-		src->Error(  "R_ParseInterAreaPortals: bad numInterAreaPortals" );
-		return;
-	}
-
-	doublePortals = (doublePortal_t *)R_ClearedStaticAlloc( numInterAreaPortals * 
-		sizeof( doublePortals [0] ) );
-
-	for ( i = 0 ; i < numInterAreaPortals ; i++ ) {
-		int		numPoints, a1, a2;
-		idWinding	*w;
-		portal_t	*p;
-
-		numPoints = src->ParseInt();
-		a1 = src->ParseInt();
-		a2 = src->ParseInt();
-
-		w = new idWinding( numPoints );
-		w->SetNumPoints( numPoints );
-		for ( j = 0 ; j < numPoints ; j++ ) {
-			src->Parse1DMatrix( 3, (*w)[j].ToFloatPtr() );
-			// no texture coordinates
-			(*w)[j][3] = 0;
-			(*w)[j][4] = 0;
-		}
-
-		// add the portal to a1
-		p = (portal_t *)R_ClearedStaticAlloc( sizeof( *p ) );
-		p->intoArea = a2;
-		p->doublePortal = &doublePortals[i];
-		p->w = w;
-		p->w->GetPlane( p->plane );
-
-		p->next = portalAreas[a1].portals;
-		portalAreas[a1].portals = p;
-
-		doublePortals[i].portals[0] = p;
-
-		// reverse it for a2
-		p = (portal_t *)R_ClearedStaticAlloc( sizeof( *p ) );
-		p->intoArea = a1;
-		p->doublePortal = &doublePortals[i];
-		p->w = w->Reverse();
-		p->w->GetPlane( p->plane );
-
-		p->next = portalAreas[a2].portals;
-		portalAreas[a2].portals = p;
-
-		doublePortals[i].portals[1] = p;
-	}
-
-	src->ExpectTokenString( "}" );
-}
-
-/*
-================
-idRenderWorldLocal::ParseNodes
-================
-*/
-void idRenderWorldLocal::ParseNodes( idLexer *src ) {
-	int			i;
-
-	src->ExpectTokenString( "{" );
-
-	numAreaNodes = src->ParseInt();
-	if ( numAreaNodes < 0 ) {
-		src->Error( "R_ParseNodes: bad numAreaNodes" );
-	}
-	areaNodes = (areaNode_t *)R_ClearedStaticAlloc( numAreaNodes * sizeof( areaNodes[0] ) );
-
-	for ( i = 0 ; i < numAreaNodes ; i++ ) {
-		areaNode_t	*node;
-
-		node = &areaNodes[i];
-
-		src->Parse1DMatrix( 4, node->plane.ToFloatPtr() );
-		node->children[0] = src->ParseInt();
-		node->children[1] = src->ParseInt();
-	}
-
-	src->ExpectTokenString( "}" );
-}
-
-/*
-================
-idRenderWorldLocal::CommonChildrenArea_r
-================
-*/
-int idRenderWorldLocal::CommonChildrenArea_r( areaNode_t *node ) {
-	int	nums[2];
-
-	for ( int i = 0 ; i < 2 ; i++ ) {
-		if ( node->children[i] <= 0 ) {
-			nums[i] = -1 - node->children[i];
-		} else {
-			nums[i] = CommonChildrenArea_r( &areaNodes[ node->children[i] ] );
-		}
-	}
-
-	// solid nodes will match any area
-	if ( nums[0] == AREANUM_SOLID ) {
-		nums[0] = nums[1];
-	}
-	if ( nums[1] == AREANUM_SOLID ) {
-		nums[1] = nums[0];
-	}
-
-	int	common;
-	if ( nums[0] == nums[1] ) {
-		common = nums[0];
-	} else {
-		common = CHILDREN_HAVE_MULTIPLE_AREAS;
-	}
-
-	node->commonChildrenArea = common;
-
-	return common;
-}
-
-/*
-=================
-idRenderWorldLocal::ClearWorld
-
-Sets up for a single area world
-=================
-*/
-void idRenderWorldLocal::ClearWorld() {
-	numPortalAreas = 1;
-	portalAreas = (portalArea_t *)R_ClearedStaticAlloc( sizeof( portalAreas[0] ) );
-	areaScreenRect = (idScreenRect *) R_ClearedStaticAlloc( sizeof( idScreenRect ) );
-
-	SetupAreaRefs();
-
-	// even though we only have a single area, create a node
-	// that has both children pointing at it so we don't need to
-	//
-	areaNodes = (areaNode_t *)R_ClearedStaticAlloc( sizeof( areaNodes[0] ) );
-	areaNodes[0].plane[3] = 1;
-	areaNodes[0].children[0] = -1;
-	areaNodes[0].children[1] = -1;
-}
-
-/*
-=================
-idRenderWorldLocal::FreeDefs
-
-dump all the interactions
-=================
-*/
-void idRenderWorldLocal::FreeDefs() {
-	int		i;
-
-	generateAllInteractionsCalled = false;
-
-	if ( interactionTable ) {
-		R_StaticFree( interactionTable );
-		interactionTable = NULL;
-	}
-
-	// free all lightDefs
-	for ( i = 0 ; i < lightDefs.Num() ; i++ ) {
-		idRenderLightLocal	*light;
-
-		light = lightDefs[i];
-		if ( light && light->world == this ) {
-			FreeLightDef( i );
-			lightDefs[i] = NULL;
-		}
-	}
-
-	// free all entityDefs
-	for ( i = 0 ; i < entityDefs.Num() ; i++ ) {
-		idRenderEntityLocal	*mod;
-
-		mod = entityDefs[i];
-		if ( mod && mod->world == this ) {
-			FreeEntityDef( i );
-			entityDefs[i] = NULL;
-		}
-	}
-}
-
-/*
-=================
-idRenderWorldLocal::InitFromMap
-
-A NULL or empty name will make a world without a map model, which
-is still useful for displaying a bare model
-=================
-*/
-bool idRenderWorldLocal::InitFromMap( const char *name ) {
-	idLexer *		src;
-	idToken			token;
-	idStr			filename;
-	idRenderModel *	lastModel;
-
-	// if this is an empty world, initialize manually
-	if ( !name || !name[0] ) {
-		FreeWorld();
-		mapName.Clear();
-		ClearWorld();
-		return true;
-	}
-
-
-	// load it
-	filename = name;
-	filename.SetFileExtension( PROC_FILE_EXT );
-
-	// if we are reloading the same map, check the timestamp
-	// and try to skip all the work
-	ID_TIME_T currentTimeStamp;
-	fileSystem->ReadFile( filename, NULL, &currentTimeStamp );
-
-	if ( name == mapName ) {
-		if ( currentTimeStamp != FILE_NOT_FOUND_TIMESTAMP && currentTimeStamp == mapTimeStamp ) {
-			common->Printf( "idRenderWorldLocal::InitFromMap: retaining existing map\n" );
-			FreeDefs();
-			TouchWorldModels();
-			AddWorldModelEntities();
-			ClearPortalStates();
-			return true;
-		}
-		common->Printf( "idRenderWorldLocal::InitFromMap: timestamp has changed, reloading.\n" );
-	}
-
-	FreeWorld();
-
-	src = new idLexer( filename, LEXFL_NOSTRINGCONCAT | LEXFL_NODOLLARPRECOMPILE );
-	if ( !src->IsLoaded() ) {
-		common->Printf( "idRenderWorldLocal::InitFromMap: %s not found\n", filename.c_str() );
-		ClearWorld();
+bool ReadProcString( idFile* file, idStr& value ) {
+	if ( file == NULL || file->Tell() + static_cast< int >( sizeof( int ) ) > file->Length() ) {
 		return false;
 	}
+	const int before = file->Tell();
+	file->ReadString( value );
+	return file->Tell() > before && file->Tell() <= file->Length();
+}
 
+bool ReadProcBounds( idFile* file, idBounds& bounds ) {
+	return file->ReadVec3( bounds[ 0 ] ) == sizeof( idVec3 ) &&
+		file->ReadVec3( bounds[ 1 ] ) == sizeof( idVec3 );
+}
 
-	mapName = name;
-	mapTimeStamp = currentTimeStamp;
-
-	// if we are writing a demo, archive the load command
-	if ( session->writeDemo ) {
-		WriteLoadMap();
+bool ReadProcFloatArray( idFile* file, float* values, int expectedCount ) {
+	int count = 0;
+	if ( !ReadProcInt( file, count ) || count != expectedCount || values == NULL ) return false;
+	for ( int index = 0; index < count; ++index ) {
+		if ( !ReadProcFloat( file, values[ index ] ) ) return false;
 	}
-
-	if ( !src->ReadToken( &token ) || token.Icmp( PROC_FILE_ID ) ) {
-		common->Printf( "idRenderWorldLocal::InitFromMap: bad id '%s' instead of '%s'\n", token.c_str(), PROC_FILE_ID );
-		delete src;
-		return false;
-	}
-
-	// parse the file
-	while ( 1 ) {
-		if ( !src->ReadToken( &token ) ) {
-			break;
-		}
-
-		if ( token == "model" ) {
-			lastModel = ParseModel( src );
-
-			// add it to the model manager list
-			renderModelManager->AddModel( lastModel );
-
-			// save it in the list to free when clearing this map
-			localModels.Append( lastModel );
-			continue;
-		}
-
-		if ( token == "shadowModel" ) {
-			lastModel = ParseShadowModel( src );
-
-			// add it to the model manager list
-			renderModelManager->AddModel( lastModel );
-
-			// save it in the list to free when clearing this map
-			localModels.Append( lastModel );
-			continue;
-		}
-
-		if ( token == "interAreaPortals" ) {
-			ParseInterAreaPortals( src );
-			continue;
-		}
-
-		if ( token == "nodes" ) {
-			ParseNodes( src );
-			continue;
-		}
-
-		src->Error( "idRenderWorldLocal::InitFromMap: bad token \"%s\"", token.c_str() );
-	}
-
-	delete src;
-
-	// if it was a trivial map without any areas, create a single area
-	if ( !numPortalAreas ) {
-		ClearWorld();
-	}
-
-	// find the points where we can early-our of reference pushing into the BSP tree
-	CommonChildrenArea_r( &areaNodes[0] );
-
-	AddWorldModelEntities();
-	ClearPortalStates();
-
-	// done!
 	return true;
 }
 
-/*
-=====================
-idRenderWorldLocal::ClearPortalStates
-=====================
-*/
-void idRenderWorldLocal::ClearPortalStates() {
-	int		i, j;
-
-	// all portals start off open
-	for ( i = 0 ; i < numInterAreaPortals ; i++ ) {
-		doublePortals[i].blockingBits = PS_BLOCK_NONE;
+void DeriveProcFacePlanes( srfTriangles_t* triangles ) {
+	if ( triangles == NULL || triangles->numIndexes < 3 ) {
+		return;
 	}
 
-	// flood fill all area connections
-	for ( i = 0 ; i < numPortalAreas ; i++ ) {
-		for ( j = 0 ; j < NUM_PORTAL_ATTRIBUTES ; j++ ) {
-			connectedAreaNum++;
-			FloodConnectedAreas( &portalAreas[i], j );
+	const int numFaces = triangles->numIndexes / 3;
+	triangles->facePlanes = static_cast< idPlane* >( Mem_ClearedAlloc( numFaces * sizeof( idPlane ) ) );
+	triangles->numAllocatedFacePlanes = numFaces;
+	for ( int i = 0; i < numFaces; ++i ) {
+		const int i0 = triangles->indexes[ i * 3 + 0 ];
+		const int i1 = triangles->indexes[ i * 3 + 1 ];
+		const int i2 = triangles->indexes[ i * 3 + 2 ];
+		if ( i0 < 0 || i0 >= triangles->numVerts ||
+			i1 < 0 || i1 >= triangles->numVerts ||
+			i2 < 0 || i2 >= triangles->numVerts ) {
+			continue;
 		}
+		triangles->facePlanes[ i ].FromPoints(
+			triangles->verts[ i0 ].xyz,
+			triangles->verts[ i1 ].xyz,
+			triangles->verts[ i2 ].xyz
+		);
 	}
+	triangles->facePlanesCalculated = true;
 }
 
-/*
-=====================
-idRenderWorldLocal::AddWorldModelEntities
-=====================
-*/
-void idRenderWorldLocal::AddWorldModelEntities() {
-	int		i;
+idRenderModel* ParseProcModelBinary(
+	idFile* file,
+	const int chunkEnd,
+	const idStrList& materials,
+	const bool proc009
+) {
+	idStr modelName;
+	int numSurfaces = 0;
+	if ( !ReadProcString( file, modelName ) || modelName.IsEmpty() ||
+		!ReadProcInt( file, numSurfaces ) || numSurfaces < 0 || numSurfaces > 65536 ) {
+		return NULL;
+	}
 
-	// add the world model for each portal area
-	// we can't just call AddEntityDef, because that would place the references
-	// based on the bounding box, rather than explicitly into the correct area
-	for ( i = 0 ; i < numPortalAreas ; i++ ) {
-		idRenderEntityLocal	*def;
-		int			index;
+	idRenderModel* model = renderModelManager->AllocModel();
+	if ( model == NULL ) {
+		return NULL;
+	}
+	model->InitEmpty( modelName );
 
-		def = new idRenderEntityLocal;
+	idList< int > fixedAreas;
+	if ( !proc009 ) {
+		int numFixedAreas = 0;
+		if ( !ReadProcInt( file, numFixedAreas ) || numFixedAreas < 0 || numFixedAreas > 65536 ) {
+			renderModelManager->FreeModel( model );
+			return NULL;
+		}
+		fixedAreas.SetNum( numFixedAreas );
+		for ( int i = 0; i < numFixedAreas; ++i ) {
+			if ( !ReadProcInt( file, fixedAreas[ i ] ) ) {
+				renderModelManager->FreeModel( model );
+				return NULL;
+			}
+		}
+		model->SetFixedAreas( fixedAreas );
+	}
 
-		// try and reuse a free spot
-		index = entityDefs.FindNull();
-		if ( index == -1 ) {
-			index = entityDefs.Append(def);
-		} else {
-			entityDefs[index] = def;
+	idBounds modelBounds;
+	modelBounds.Clear();
+	bool valid = true;
+	for ( int surfaceIndex = 0; valid && surfaceIndex < numSurfaces; ++surfaceIndex ) {
+		int materialIndex = -1;
+		bool hasVertexColors = false;
+		idBounds surfaceBounds;
+		int numVerts = 0;
+		int numIndexes = 0;
+		int numIndexTree = 0;
+
+		valid = ReadProcInt( file, materialIndex ) &&
+			materialIndex >= 0 && materialIndex < materials.Num();
+		valid = valid && file->ReadBool( hasVertexColors ) == sizeof( byte );
+		valid = valid && ReadProcBounds( file, surfaceBounds );
+		valid = valid && ReadProcInt( file, numVerts ) && numVerts >= 0 && numVerts <= ( 1 << 24 );
+		valid = valid && ReadProcInt( file, numIndexes ) && numIndexes >= 0 && numIndexes <= ( 1 << 27 );
+		if ( valid && !proc009 ) {
+			valid = ReadProcInt( file, numIndexTree ) && numIndexTree >= 0 && numIndexTree <= ( 1 << 24 );
+		}
+		if ( !valid ) {
+			break;
 		}
 
-		def->index = index;
-		def->world = this;
-
-		def->parms.hModel = renderModelManager->FindModel( va("_area%i", i ) );
-		if ( def->parms.hModel->IsDefaultModel() || !def->parms.hModel->IsStaticWorldModel() ) {
-			common->Error( "idRenderWorldLocal::InitFromMap: bad area model lookup" );
+		srfTriangles_t* triangles = model->AllocSurfaceTriangles( numVerts, numIndexes );
+		if ( triangles == NULL ) {
+			valid = false;
+			break;
 		}
+		triangles->bounds = surfaceBounds;
+		triangles->tangentsCalculated = true;
 
-		idRenderModel *hModel = def->parms.hModel;
+		for ( int vertexIndex = 0; valid && vertexIndex < numVerts; ++vertexIndex ) {
+			int floatCount = 0;
+			valid = ReadProcInt( file, floatCount ) && floatCount >= 8 && floatCount <= 32;
+			float values[ 32 ] = { 0.0f };
+			if ( valid ) {
+				valid = file->Read( values, floatCount * sizeof( float ) ) == floatCount * sizeof( float );
+				if ( valid ) {
+					LittleRevBytes( values, sizeof( float ), floatCount );
+				}
+			}
 
-		for ( int j = 0; j < hModel->NumSurfaces(); j++ ) {
-			const modelSurface_t *surf = hModel->Surface( j );
+			int colorCount = 0;
+			valid = valid && ReadProcInt( file, colorCount ) && colorCount >= 0 && colorCount <= 16;
+			byte colors[ 16 ] = { 255, 255, 255, 255 };
+			if ( valid && colorCount > 0 ) {
+				valid = file->Read( colors, colorCount ) == colorCount;
+			}
+			if ( !valid ) {
+				break;
+			}
 
-			if ( surf->shader->GetName() == idStr( "textures/smf/portal_sky" ) ) {
-				def->needsPortalSky = true;
+			idDrawVert& vertex = triangles->verts[ vertexIndex ];
+			vertex.xyz.Set( values[ 0 ], values[ 1 ], values[ 2 ] );
+			vertex.SetST( false, idVec2( values[ 3 ], values[ 4 ] ) );
+			vertex.SetNormal( idVec3( values[ 5 ], values[ 6 ], values[ 7 ] ) );
+			if ( floatCount >= 12 ) {
+				vertex.SetTangent( idVec3( values[ 8 ], values[ 9 ], values[ 10 ] ) );
+				vertex.SetBiTangentSign( values[ 11 ] );
+			}
+			for ( int i = 0; i < 4; ++i ) {
+				vertex.color[ i ] = hasVertexColors && colorCount >= 4 ? colors[ i ] : 255;
 			}
 		}
 
-		def->referenceBounds = def->parms.hModel->Bounds();
+		for ( int index = 0; valid && index < numIndexes; ++index ) {
+			int value = 0;
+			valid = ReadProcInt( file, value ) && value >= 0 && value < numVerts;
+			if ( valid ) {
+				triangles->indexes[ index ] = static_cast< glIndex_t >( value );
+			}
+		}
 
-		def->parms.axis[0][0] = 1;
-		def->parms.axis[1][1] = 1;
-		def->parms.axis[2][2] = 1;
+		const int indexTreeBytes = numIndexTree * static_cast< int >( sizeof( srfIndexTree_t ) );
+		if ( valid && ( indexTreeBytes < 0 || file->Tell() + indexTreeBytes > chunkEnd ) ) {
+			valid = false;
+		}
+		if ( valid && numIndexTree > 0 ) {
+			triangles->numIndexTree = numIndexTree;
+			triangles->indexTree = static_cast< srfIndexTree_t* >( Mem_Alloc( indexTreeBytes ) );
+			memset( triangles->indexTree, 0, indexTreeBytes );
+			for ( int treeIndex = 0; valid && treeIndex < numIndexTree; ++treeIndex ) {
+				srfIndexTree_t& node = triangles->indexTree[ treeIndex ];
+				valid = ReadProcBounds( file, node.bb );
+				int rangeStart = 0;
+				int rangeEnd = 0;
+				valid = valid && ReadProcInt( file, rangeStart ) && ReadProcInt( file, rangeEnd );
+				valid = valid && rangeStart >= 0 && rangeStart <= rangeEnd && rangeEnd <= numIndexes && rangeEnd <= 0xFFFF;
+				valid = valid && ReadProcInt( file, node.kids[ 0 ] ) && ReadProcInt( file, node.kids[ 1 ] );
+				if ( !valid ) {
+					break;
+				}
+				node.range[ 0 ] = static_cast< unsigned short >( rangeStart );
+				node.range[ 1 ] = static_cast< unsigned short >( rangeEnd );
+				unsigned short minimumIndex = 0;
+				unsigned short maximumIndex = 0;
+				if ( rangeStart < rangeEnd ) {
+					minimumIndex = maximumIndex = triangles->indexes[ rangeStart ];
+					for ( int index = rangeStart + 1; index < rangeEnd; ++index ) {
+						minimumIndex = Min( minimumIndex, triangles->indexes[ index ] );
+						maximumIndex = Max( maximumIndex, triangles->indexes[ index ] );
+					}
+				}
+				node.range[ 2 ] = minimumIndex;
+				node.range[ 3 ] = maximumIndex + 1;
+			}
+		}
 
-		R_AxisToModelMatrix( def->parms.axis, def->parms.origin, def->modelMatrix );
+		if ( !valid ) {
+			model->FreeSurfaceTriangles( triangles );
+			break;
+		}
 
-		// in case an explicit shader is used on the world, we don't
-		// want it to have a 0 alpha or color
-		def->parms.shaderParms[0] =
-		def->parms.shaderParms[1] =
-		def->parms.shaderParms[2] =
-		def->parms.shaderParms[3] = 1;
-
-		AddEntityRefToArea( def, &portalAreas[i] );
+		DeriveProcFacePlanes( triangles );
+		modelSurface_t surface;
+		surface.id = surfaceIndex;
+		surface.material = declHolder.FindMaterial( materials[ materialIndex ], true );
+		surface.geometry = triangles;
+		model->AddSurface( surface );
+		modelBounds += surfaceBounds;
 	}
+
+	valid = valid && file->Tell() <= chunkEnd;
+	if ( !valid ) {
+		renderModelManager->FreeModel( model );
+		return NULL;
+	}
+
+	file->Seek( chunkEnd, FS_SEEK_SET );
+	model->SetBounds( modelBounds );
+	model->FinishSurfaces();
+	return model;
 }
 
-/*
-=====================
-CheckAreaForPortalSky
-=====================
-*/
-bool idRenderWorldLocal::CheckAreaForPortalSky( int areaNum ) {
-	areaReference_t	*ref;
+bool LoadProcBinary( const char* fileName, idRenderWorldLocal* world, idList< idRenderModel* >& localModels ) {
+	idFile* sourceFile = fileSystem->OpenFileRead( fileName, true, NULL, true );
+	if ( sourceFile == NULL ) {
+		return false;
+	}
+	idFile* file = fileSystem->OpenBufferedFile( sourceFile );
 
-	assert( areaNum >= 0 && areaNum < numPortalAreas );
+	idStr header;
+	bool valid = ReadProcString( file, header );
+	const bool proc009 = valid && !header.Icmp( "mapProcFile009" );
+	valid = valid && ( proc009 || !header.Icmp( "mapProcFile010" ) );
+	idStrList materials;
+	int modelCount = 0;
 
-	for ( ref = portalAreas[areaNum].entityRefs.areaNext; ref->entity; ref = ref->areaNext ) {
-		assert( ref->area == &portalAreas[areaNum] );
+	while ( valid && file->Tell() < file->Length() ) {
+		idStr section;
+		valid = ReadProcString( file, section );
+		if ( !valid ) {
+			break;
+		}
 
-		if ( ref->entity && ref->entity->needsPortalSky ) {
-			return true;
+		if ( !section.Icmp( "materials" ) ) {
+			int numMaterials = 0;
+			valid = ReadProcInt( file, numMaterials ) && numMaterials >= 0 && numMaterials <= 65536;
+			materials.SetNum( valid ? numMaterials : 0 );
+			for ( int i = 0; valid && i < numMaterials; ++i ) {
+				valid = ReadProcString( file, materials[ i ] ) && !materials[ i ].IsEmpty();
+			}
+			continue;
+		}
+
+		if ( !section.Icmp( "model" ) ) {
+			int chunkLength = 0;
+			valid = ReadProcInt( file, chunkLength );
+			const int chunkStart = file->Tell();
+			const int chunkEnd = chunkStart + chunkLength;
+			valid = valid && chunkLength >= 0 && chunkEnd >= chunkStart && chunkEnd <= file->Length();
+			if ( !valid ) break;
+			idRenderModel* model = ParseProcModelBinary( file, chunkEnd, materials, proc009 );
+			if ( model == NULL ) {
+				valid = false;
+				break;
+			}
+			renderModelManager->AddModel( model );
+			localModels.Append( model );
+			++modelCount;
+		} else if ( !section.Icmp( "nodes" ) ) {
+			valid = world != NULL && world->ParseNodes_Binary( file );
+		} else if ( !section.Icmp( "interAreaPortals" ) ) {
+			valid = world != NULL && world->ParseInterAreaPortals_Binary( file );
+		} else if ( !section.Icmp( "megaTextureInfo" ) ) {
+			valid = world != NULL && world->ParseMegatextureInfo_Binary( file );
+		} else {
+			// Every remaining binary proc section starts with its byte length.
+			// Preserve stream alignment even while shadow models, environment
+			// bounds and atmosphere projections are reconstructed separately.
+			int chunkLength = 0;
+			valid = ReadProcInt( file, chunkLength );
+			const int chunkStart = file->Tell();
+			const int chunkEnd = chunkStart + chunkLength;
+			valid = valid && chunkLength >= 0 && chunkEnd >= chunkStart && chunkEnd <= file->Length() &&
+				file->Seek( chunkEnd, FS_SEEK_SET ) >= 0;
 		}
 	}
 
-	return false;
+	fileSystem->CloseFile( file );
+	if ( valid ) {
+		common->Printf( "Loaded %d inline render models from %s\n", modelCount, fileName );
+	}
+	return valid;
+}
+
+
+}
+
+bool idRenderWorldLocal::InitFromMap( const char *name ) {
+	Clear();
+	mapName = name != NULL ? name : "";
+	if ( mapName.IsEmpty() ) {
+		return true;
+	}
+
+	idStr procName = mapName;
+	procName.SetFileExtension( "procb" );
+	if ( !LoadProcBinary( procName, this, localModels ) ) {
+		common->Warning( "idRenderWorldLocal::InitFromMap: failed to load '%s'", procName.c_str() );
+		for ( int i = 0; i < localModels.Num(); ++i ) {
+			renderModelManager->FreeModel( localModels[ i ] );
+		}
+		localModels.Clear();
+		return false;
+	}
+	if ( portalAreas.Num() == 0 ) portalAreas.SetNum( 1 );
+	return true;
+}
+
+bool idRenderWorldLocal::ParseNodes_Binary( idFile* file ) {
+	int chunkLength = 0;
+	if ( !ReadProcInt( file, chunkLength ) || chunkLength < 0 ) return false;
+	const int chunkStart = file->Tell();
+	const int chunkEnd = chunkStart + chunkLength;
+	if ( chunkEnd < chunkStart || chunkEnd > file->Length() ) return false;
+
+	int count = 0;
+	if ( !ReadProcInt( file, count ) || count < 0 || count > ( 1 << 24 ) ) return false;
+	areaNodes.SetNum( count );
+	for ( int index = 0; index < count; ++index ) {
+		if ( !ReadProcFloatArray( file, areaNodes[ index ].plane.ToFloatPtr(), 4 ) ||
+			!ReadProcInt( file, areaNodes[ index ].children[ 0 ] ) ||
+			!ReadProcInt( file, areaNodes[ index ].children[ 1 ] ) ) {
+			areaNodes.Clear();
+			return false;
+		}
+	}
+	return file->Tell() <= chunkEnd && file->Seek( chunkEnd, FS_SEEK_SET ) >= 0;
+}
+
+bool idRenderWorldLocal::ParseInterAreaPortals_Binary( idFile* file ) {
+	int chunkLength = 0;
+	if ( !ReadProcInt( file, chunkLength ) || chunkLength < 0 ) return false;
+	const int chunkStart = file->Tell();
+	const int chunkEnd = chunkStart + chunkLength;
+	if ( chunkEnd < chunkStart || chunkEnd > file->Length() ) return false;
+
+	int numAreas = 0;
+	int numPortals = 0;
+	if ( !ReadProcInt( file, numAreas ) || numAreas < 0 || numAreas > ( 1 << 20 ) ||
+		!ReadProcInt( file, numPortals ) || numPortals < 0 || numPortals > ( 1 << 24 ) ) return false;
+	portalAreas.SetNum( numAreas );
+	return file->Seek( chunkEnd, FS_SEEK_SET ) >= 0;
+}
+
+bool idRenderWorldLocal::ParseMegatextureInfo_Binary( idFile* file ) {
+	int chunkLength = 0;
+	if ( !ReadProcInt( file, chunkLength ) || chunkLength < 0 ) return false;
+	const int chunkStart = file->Tell();
+	const int chunkEnd = chunkStart + chunkLength;
+	if ( chunkEnd < chunkStart || chunkEnd > file->Length() ) return false;
+
+	idBounds bounds;
+	if ( !ReadProcFloatArray( file, bounds[ 0 ].ToFloatPtr(), 3 ) ||
+		!ReadProcFloatArray( file, bounds[ 1 ].ToFloatPtr(), 3 ) ) return false;
+	int width = 0;
+	int height = 0;
+	if ( !ReadProcInt( file, width ) || !ReadProcInt( file, height ) ||
+		width < 0 || height < 0 || width > ( 1 << 16 ) || height > ( 1 << 16 ) ) return false;
+	const __int64 gridCount = static_cast< __int64 >( width ) * height;
+	if ( gridCount > ( 1 << 26 ) || gridCount > INT_MAX ) return false;
+	idList< idVec2 > grid;
+	grid.SetNum( static_cast< int >( gridCount ) );
+	for ( int index = 0; index < grid.Num(); ++index ) {
+		if ( !ReadProcFloatArray( file, grid[ index ].ToFloatPtr(), 2 ) ) return false;
+	}
+	SetMegaTextureSTGrid( bounds, grid.Begin(), width, height );
+	return file->Tell() <= chunkEnd && file->Seek( chunkEnd, FS_SEEK_SET ) >= 0;
+}
+
+void idRenderWorldLocal::LinkCullSectorsToArea( int area ) {
+}
+
+void idRenderWorldLocal::SetMegaTextureSTGrid( const idBounds& bounds, const idVec2* grid, int width, int height ) {
+	megaTextureBounds = bounds;
+	megaTextureSTGridWidth = Max( 0, width );
+	megaTextureSTGridHeight = Max( 0, height );
+	const int count = megaTextureSTGridWidth * megaTextureSTGridHeight;
+	megaTextureSTGrid.SetNum( count, false );
+	if ( count > 0 && grid != NULL ) {
+		memcpy( megaTextureSTGrid.Begin(), grid, count * sizeof( grid[ 0 ] ) );
+	} else if ( count > 0 ) {
+		memset( megaTextureSTGrid.Begin(), 0, count * sizeof( megaTextureSTGrid[ 0 ] ) );
+	}
+}
+
+atmosLightProjection_t *idRenderWorldLocal::FindAtmosLightProjection( int ) {
+	return NULL;
 }

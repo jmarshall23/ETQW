@@ -28,6 +28,11 @@ If you have questions concerning this license or the applicable additional terms
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
+#if 0
+// The Doom 3 implementation which originally occupied this file is retained
+// below as reference, but its backEnd/viewDef private types are not ABI
+// compatible with ETQW.  The retail ETQW state entry points are reconstructed
+// after this block under the original tr_backend.cpp ownership.
 #include "tr_local.h"
 
 
@@ -102,7 +107,238 @@ void RB_SetDefaultGLState( void ) {
 		}
 	}
 }
+#endif
 
+#include "tr_render.h"
+#include "RenderSystem.h"
+#include "draw_local.h"
+#include "../libs/qglLib/qgl.h"
+
+extern glconfig_t glConfig;
+extern idCVar r_useAlphaToCoverage;
+extern idCVar r_useStateCaching;
+extern idCVar r_useScissor;
+
+namespace {
+	struct etqwGLState_t {
+		int currentTextureUnit;
+		int faceCulling;
+		bool forceState;
+		int stateBits;
+		int textureEnv[ 16 ];
+	};
+
+	etqwGLState_t etqwGLState;
+
+	GLenum SourceBlendFactor( int stateBits ) {
+		switch ( stateBits & 0x0F ) {
+			case 0x00: return GL_ONE;
+			case 0x01: return GL_ZERO;
+			case 0x03: return GL_DST_COLOR;
+			case 0x04: return GL_ONE_MINUS_DST_COLOR;
+			case 0x05: return GL_SRC_ALPHA;
+			case 0x06: return GL_ONE_MINUS_SRC_ALPHA;
+			case 0x07: return GL_DST_ALPHA;
+			case 0x08: return GL_ONE_MINUS_DST_ALPHA;
+			case 0x09: return GL_SRC_ALPHA_SATURATE;
+			default:
+				common->Error( "GL_State: invalid src blend state bits" );
+				return GL_ONE;
+		}
+	}
+
+	GLenum DestinationBlendFactor( int stateBits ) {
+		switch ( stateBits & 0xF0 ) {
+			case 0x00: return GL_ZERO;
+			case 0x20: return GL_ONE;
+			case 0x30: return GL_SRC_COLOR;
+			case 0x40: return GL_ONE_MINUS_SRC_COLOR;
+			case 0x50: return GL_SRC_ALPHA;
+			case 0x60: return GL_ONE_MINUS_SRC_ALPHA;
+			case 0x70: return GL_DST_ALPHA;
+			case 0x80: return GL_ONE_MINUS_DST_ALPHA;
+			default:
+				common->Error( "GL_State: invalid dst blend state bits" );
+				return GL_ONE;
+		}
+	}
+}
+
+void GL_SelectTexture( int unit ) {
+	if ( etqwGLState.currentTextureUnit == unit ) return;
+	if ( unit < 0 || unit >= glConfig.maxTextureCoords ) {
+		common->Warning( "GL_SelectTexture: unit = %i", unit );
+		return;
+	}
+	qglActiveTextureARB( GL_TEXTURE0_ARB + unit );
+	qglClientActiveTextureARB( GL_TEXTURE0_ARB + unit );
+	etqwGLState.currentTextureUnit = unit;
+}
+
+void GL_Cull( int cullType ) {
+	if ( etqwGLState.faceCulling == cullType ) return;
+	if ( cullType == CT_TWO_SIDED ) {
+		glDisable( GL_CULL_FACE );
+		etqwGLState.faceCulling = CT_TWO_SIDED;
+		return;
+	}
+	if ( etqwGLState.faceCulling == CT_TWO_SIDED ) glEnable( GL_CULL_FACE );
+
+	const viewDef_s* view = RB_GetViewDef();
+	const bool mirror = view != NULL && view->isMirror;
+	if ( cullType == CT_BACK_SIDED ) {
+		glCullFace( mirror ? GL_FRONT : GL_BACK );
+	} else {
+		glCullFace( mirror ? GL_BACK : GL_FRONT );
+	}
+	etqwGLState.faceCulling = cullType;
+}
+
+void GL_TexEnv( int env ) {
+	const int unit = etqwGLState.currentTextureUnit;
+	if ( unit < 0 || unit >= 16 || etqwGLState.textureEnv[ unit ] == env ) return;
+	switch ( env ) {
+		case GL_COMBINE_EXT:
+		case GL_MODULATE:
+		case GL_REPLACE:
+		case GL_DECAL:
+		case GL_ADD:
+			glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, env );
+			etqwGLState.textureEnv[ unit ] = env;
+			break;
+		default:
+			common->Error( "GL_TexEnv: invalid env '%d' passed", env );
+			break;
+	}
+}
+
+void GL_State( int stateBits ) {
+	if ( !r_useAlphaToCoverage.GetBool() ) stateBits &= ~0x4000;
+	int diff;
+	if ( !r_useStateCaching.GetBool() || etqwGLState.forceState ) {
+		diff = -1;
+		if ( !glConfig.ARBShaderObjectsAvailable ) diff &= ~0x400000;
+		etqwGLState.forceState = false;
+	} else {
+		diff = stateBits ^ etqwGLState.stateBits;
+		if ( diff == 0 ) return;
+	}
+
+	if ( diff & 0xF0000 ) {
+		switch ( stateBits & 0xF0000 ) {
+			case 0x10000: glDepthFunc( GL_ALWAYS ); break;
+			case 0x20000: glDepthFunc( GL_EQUAL ); break;
+			case 0x80000: glDepthFunc( GL_LESS ); break;
+			case 0x40000:
+			default: glDepthFunc( GL_LEQUAL ); break;
+		}
+	}
+
+	if ( ( diff & 0x0F000000 ) != 0 && qglBlendEquationEXT != NULL ) {
+		GLenum equation = GL_FUNC_ADD_EXT;
+		switch ( stateBits & 0x0F000000 ) {
+			case 0x00000000: equation = GL_FUNC_ADD_EXT; break;
+			case 0x01000000: equation = GL_FUNC_SUBTRACT_EXT; break;
+			case 0x02000000: equation = GL_FUNC_REVERSE_SUBTRACT_EXT; break;
+			case 0x04000000: equation = GL_MIN_EXT; break;
+			case 0x08000000: equation = GL_MAX_EXT; break;
+			default: common->Error( "GL_State: invalid blend func" ); break;
+		}
+		qglBlendEquationEXT( equation );
+	}
+
+	if ( diff & 0xFF ) glBlendFunc( SourceBlendFactor( stateBits ), DestinationBlendFactor( stateBits ) );
+	if ( diff & 0x100 ) glDepthMask( ( stateBits & 0x100 ) == 0 ? GL_TRUE : GL_FALSE );
+	if ( diff & 0x4000 ) {
+		if ( stateBits & 0x4000 ) glEnable( GL_SAMPLE_ALPHA_TO_COVERAGE_ARB );
+		else glDisable( GL_SAMPLE_ALPHA_TO_COVERAGE_ARB );
+	}
+	if ( diff & 0x1E00 ) {
+		glColorMask(
+			( stateBits & 0x0200 ) == 0,
+			( stateBits & 0x0400 ) == 0,
+			( stateBits & 0x0800 ) == 0,
+			( stateBits & 0x1000 ) == 0
+		);
+	}
+	if ( diff & 0x2000 ) glPolygonMode( GL_FRONT_AND_BACK, ( stateBits & 0x2000 ) != 0 ? GL_LINE : GL_FILL );
+
+	if ( ( diff & 0x400000 ) != 0 && ( stateBits & 0x400000 ) == 0 && qglUseProgramObjectARB != NULL ) {
+		qglUseProgramObjectARB( 0 );
+	}
+	if ( diff & 0x300000 ) {
+		if ( stateBits & 0x100000 ) glEnable( GL_VERTEX_PROGRAM_ARB );
+		else glDisable( GL_VERTEX_PROGRAM_ARB );
+		if ( stateBits & 0x200000 ) glEnable( GL_FRAGMENT_PROGRAM_ARB );
+		else glDisable( GL_FRAGMENT_PROGRAM_ARB );
+	}
+	etqwGLState.stateBits = stateBits;
+}
+
+void RB_SetDefaultGLState() {
+	glClearDepth( 1.0 );
+	glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
+	if ( etqwGLState.currentTextureUnit != 0 ) {
+		qglActiveTextureARB( GL_TEXTURE0_ARB );
+		qglClientActiveTextureARB( GL_TEXTURE0_ARB );
+	}
+	glEnableClientState( GL_VERTEX_ARRAY );
+	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+	glDisableClientState( GL_COLOR_ARRAY );
+	GL_EnableVertexAttribs( 0 );
+
+	memset( &etqwGLState, 0, sizeof( etqwGLState ) );
+	etqwGLState.faceCulling = CT_INVALID;
+	etqwGLState.forceState = true;
+	etqwGLState.stateBits = 0x10000;
+
+	glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
+	glEnable( GL_DEPTH_TEST );
+	glEnable( GL_BLEND );
+	glEnable( GL_SCISSOR_TEST );
+	glEnable( GL_CULL_FACE );
+	glDisable( GL_LIGHTING );
+	glDisable( GL_LINE_STIPPLE );
+	glDisable( GL_STENCIL_TEST );
+	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	glDepthMask( GL_TRUE );
+	glDepthFunc( GL_ALWAYS );
+	glCullFace( GL_FRONT_AND_BACK );
+	glShadeModel( GL_SMOOTH );
+
+	for ( int unit = glConfig.maxTextureUnits - 1; unit >= 0; --unit ) {
+		GL_SelectTexture( unit );
+		glTexGenf( GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR );
+		glTexGenf( GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR );
+		glTexGenf( GL_R, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR );
+		glTexGenf( GL_Q, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR );
+		GL_TexEnv( GL_MODULATE );
+		glDisable( GL_TEXTURE_2D );
+		if ( glConfig.texture3DAvailable ) glDisable( GL_TEXTURE_3D );
+		if ( glConfig.cubeMapAvailable ) glDisable( GL_TEXTURE_CUBE_MAP_ARB );
+	}
+}
+
+void RB_SetGL2D() {
+	viewDef_s* view = RB_GetViewDef();
+	const int width = view != NULL ? view->viewport.x2 - view->viewport.x1 + 1 : renderSystem->GetScreenWidth();
+	const int height = view != NULL ? view->viewport.y2 - view->viewport.y1 + 1 : renderSystem->GetScreenHeight();
+	glViewport( 0, 0, width, height );
+	if ( r_useScissor.GetBool() ) glScissor( 0, 0, width, height );
+	glMatrixMode( GL_PROJECTION );
+	glLoadIdentity();
+	glOrtho( 0.0, 640.0, 480.0, 0.0, 0.0, 1.0 );
+	glMatrixMode( GL_MODELVIEW );
+	glLoadIdentity();
+	GL_State( 0x10065 );
+	GL_Cull( CT_TWO_SIDED );
+	glDisable( GL_DEPTH_TEST );
+	glDisable( GL_STENCIL_TEST );
+}
+
+#if 0
+// Remaining Doom 3 back-end command implementation retained for reference.
+// ETQW uses the reconstructed command/view path in RenderWorld.cpp.
 
 /*
 ====================
@@ -657,3 +893,4 @@ void RB_ExecuteBackEndCommands( const emptyCommand_t *cmds ) {
 		backEnd.c_copyFrameBuffer = 0;
 	}
 }
+#endif

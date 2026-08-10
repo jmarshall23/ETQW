@@ -238,6 +238,7 @@ private:
 	bool					DeclHandleIsValid( qhandle_t typeHandle ) const;
 	void					FreeType( qhandle_t typeHandle );
 	idDeclFile*				GetFile( const char* fileName ) const;
+	void					FinishRegistering_r( const char* folder, const char* extension );
 	idDeclLocal*			FindTypeWithoutParsing(
 								idDeclTypeInterface* type,
 								const char* name,

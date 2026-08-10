@@ -7,20 +7,44 @@
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
-#include "RendererBootstrap.h"
+#include "RendererTypesImpl.h"
 #include "RenderSystemBackend.h"
 #include "image_processor.h"
 #include "image_resampler.h"
 #include "renderbindings.h"
+#include "tr_render.h"
 #include "Image.h"
 #include "ModelManager.h"
+#include "megatexture/MegaTexture.h"
+#include "megatexture/MegaTextureTileLoader.h"
+#include "megatexture/MegaTextureTileDecompressor.h"
 #include "../idlib/Singleton.h"
 #include "../libs/qglLib/qgl.h"
+#include "../libs/qglLib/qcg.h"
 #include "../sys/sys_render.h"
 
 #include <GL/gl.h>
 
 glconfig_t glConfig;
+
+idCVar r_lightScale( "r_lightScale", "2", CVAR_RENDERER | CVAR_FLOAT, "all light intensities are multiplied by this" );
+idCVar r_elevateForceClear( "r_elevateForceClear", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_INTEGER, "" );
+idCVar r_showOverDraw(
+	"r_showOverDraw", "0", CVAR_RENDERER | CVAR_INTEGER,
+	"1 = geometry overdraw, 2 = light interaction overdraw, 3 = geometry and light interaction overdraw", 0, 3
+);
+idCVar r_ignore( "r_ignore", "0", CVAR_RENDERER, "used for random debugging without defining new vars" );
+idCVar r_forceGLFinish( "r_forceGLFinish", "0", CVAR_RENDERER | CVAR_INTEGER, "force finish within backend" );
+
+idCVar r_mode( "r_mode", "12", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_INTEGER, "video mode number" );
+idCVar r_customWidth( "r_customWidth", "1280", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_INTEGER, "custom video mode width" );
+idCVar r_customHeight( "r_customHeight", "720", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_INTEGER, "custom video mode height" );
+idCVar r_fullscreen( "r_fullscreen", "0", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL, "use a fullscreen window" );
+idCVar r_displayRefresh( "r_displayRefresh", "0", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_INTEGER, "optional display refresh rate" );
+idCVar r_multiSamples( "r_multiSamples", "0", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_INTEGER, "multisample anti-aliasing sample count" );
+idCVar r_znear( "r_znear", "3", CVAR_RENDERER | CVAR_FLOAT, "near Z clip plane distance", 0.001f, 200.0f );
+idCVar r_jitter( "r_jitter", "0", CVAR_RENDERER | CVAR_BOOL, "randomly subpixel jitter the projection matrix" );
+idCVar r_useCulling( "r_useCulling", "2", CVAR_RENDERER | CVAR_INTEGER, "0 = none, 1 = sphere, 2 = sphere + box", 0, 2 );
 
 idCVar r_glDriverVendor(
 	"r_glDriverVendor",
@@ -97,6 +121,60 @@ idCVar r_useAlphaToCoverage(
 	CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL,
 	"Use alpha to coverage."
 );
+
+idCVar r_useStateCaching(
+	"r_useStateCaching",
+	"1",
+	CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL,
+	"avoid redundant state changes in GL_*() calls"
+);
+
+idCVar r_ambientScale(
+	"r_ambientScale",
+	"1.0",
+	CVAR_RENDERER | CVAR_FLOAT,
+	"ambient cube mapping brightness"
+);
+
+// These renderer controls are owned by RenderSystem_init.obj in the retail
+// PDB.  The draw_* compilands consume them but do not instantiate them.
+idCVar r_shaderQuality( "r_shaderQuality", "0", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_INTEGER, "Sets the level of detail to use for shaders, 0 = highest" );
+idCVar r_megatexturePreferALU( "r_megatexturePreferALU", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL, "Prefer ALU instructions in megatexture shaders" );
+idCVar r_shaderPreferALU( "r_shaderPreferALU", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL, "Use ALU instructions instead of textures in shaders." );
+idCVar r_normalizeNormalMaps( "r_normalizeNormalMaps", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL, "Normalize normalmaps after lookup." );
+idCVar r_shaderSkipSpecCubeMaps( "r_shaderSkipSpecCubeMaps", "0", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL, "Use specular cube maps." );
+idCVar r_skipSpecular( "r_skipSpecular", "0", CVAR_RENDERER | CVAR_BOOL, "use black for specular" );
+idCVar r_skipBump( "r_skipBump", "0", CVAR_RENDERER | CVAR_BOOL, "uses a flat surface instead of the bump map" );
+idCVar r_skipDiffuse( "r_skipDiffuse", "0", CVAR_RENDERER | CVAR_INTEGER, "1 = use black for diffuse, 2 = use white for diffuse", 0.0f, 2.0f );
+idCVar r_skipAmbient( "r_skipAmbient", "0", CVAR_RENDERER | CVAR_BOOL, "skip non-light dependent drawing" );
+idCVar r_skipInteractions( "r_skipInteractions", "0", CVAR_RENDERER | CVAR_INTEGER, "skip light interactions" );
+idCVar r_skipTranslucent( "r_skipTranslucent", "0", CVAR_RENDERER | CVAR_BOOL, "skip translucent interactions" );
+idCVar r_skipFogLights( "r_skipFogLights", "0", CVAR_RENDERER | CVAR_BOOL, "skip fog and blend lights" );
+idCVar r_skipAtmosphere( "r_skipAtmosphere", "0", CVAR_RENDERER | CVAR_BOOL, "skips atmosphere pass" );
+idCVar r_skipAtmosInteractions( "r_skipAtmosInteractions", "0", CVAR_RENDERER | CVAR_INTEGER, "skip all atmosphere light/surface interaction drawing" );
+idCVar r_skipRefractCopy( "r_skipRefractCopy", "0", CVAR_RENDERER | CVAR_BOOL, "uses copy of frame buffer" );
+idCVar r_skipDynamicTextures( "r_skipDynamicTextures", "0", CVAR_RENDERER | CVAR_BOOL, "don't dynamically create textures" );
+idCVar r_useScissor( "r_useScissor", "1", CVAR_RENDERER | CVAR_BOOL, "scissor clip as portals and lights are processed" );
+idCVar r_useMinimalGuiDraw( "r_useMinimalGuiDraw", "1", CVAR_RENDERER | CVAR_BOOL, "use minimal draw for guis" );
+idCVar r_offsetFactor( "r_offsetfactor", "0", CVAR_RENDERER | CVAR_FLOAT, "polygon offset parameter" );
+idCVar r_offsetUnits( "r_offsetunits", "-600", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_FLOAT, "polygon offset parameter", -2000.0f, 2000.0f );
+
+idCVar r_singleTriangle( "r_singleTriangle", "0", CVAR_RENDERER | CVAR_INTEGER, "only draw a single triangle per primitive" );
+idCVar r_useIndexBuffers( "r_useIndexBuffers", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL, "use ARB_vertex_buffer_object for indexes" );
+idCVar r_useTwoSidedStencil( "r_useTwoSidedStencil", "1", CVAR_RENDERER | CVAR_BOOL, "do stencil shadows in one pass with different ops on each side" );
+idCVar r_useExternalShadows( "r_useExternalShadows", "1", CVAR_RENDERER | CVAR_INTEGER, "1 = skip drawing caps when outside the light volume, 2 = force to no caps for testing", 0.0f, 2.0f );
+idCVar r_useDepthBoundsTest( "r_useDepthBoundsTest", "1", CVAR_RENDERER | CVAR_BOOL, "use depth bounds test to reduce shadow fill" );
+idCVar r_useDitherMask( "r_useDitherMask", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL, "Dither out fading geometry" );
+idCVar r_useShadowDitherMask( "r_useShadowDitherMask", "0", CVAR_RENDERER | CVAR_BOOL, "Dither out fading shadows" );
+idCVar r_useSampleCoverage( "r_useSampleCoverage", "1", CVAR_RENDERER | CVAR_BOOL, "Use multisample coverage to fade entities." );
+idCVar r_shadowPass( "r_shadowPass", "1", CVAR_RENDERER | CVAR_BOOL, "enable shadow pass" );
+idCVar r_showShadows( "r_showShadows", "0", CVAR_RENDERER | CVAR_INTEGER, "1 = visualize the stencil shadow volumes, 2 = draw filled in", 0.0f, 4.0f );
+idCVar r_shadowPolygonOffset( "r_shadowPolygonOffset", "-1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_FLOAT, "bias value added to depth test for stencil shadow drawing" );
+idCVar r_shadowPolygonFactor( "r_shadowPolygonFactor", "0", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_FLOAT, "scale value for stencil shadow drawing" );
+idCVar r_shadowPolygonOffsetMT( "r_shadowPolygonOffsetMT", "-1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_FLOAT, "bias value added to depth test for stencil shadow drawing (megadraw method 3)" );
+idCVar r_shadowPolygonFactorMT( "r_shadowPolygonFactorMT", "0", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_FLOAT, "scale value for stencil shadow drawing (megadraw method 3)" );
+idCVar r_useShadowFastParallel( "r_useShadowFastParallel", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL, "use optimized shadow rendering for parallel light sources" );
+idCVar r_useShadowInfinite( "r_useShadowInfinite", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL, "use infinite shadows" );
 
 namespace {
 
@@ -189,8 +267,61 @@ void R_CheckPortableExtensions() {
 	glConfig.ARBPixelFormatFloatAvailable = false;
 	glConfig.csaaAvailable = false;
 
-	qglProgramEnvParameter4fvARB = reinterpret_cast< PFNGLPROGRAMENVPARAMETER4FVARBPROC >(
-		sys3D->ExtensionPointer( "glProgramEnvParameter4fvARB" ) );
+	// Windows only exports OpenGL 1.1 entry points from opengl32.dll.  The
+	// retail renderer resolves every ARB program/GLSL entry point after the
+	// context is current; leaving these null silently reduced all material
+	// programs to white fixed-function passes.
+#define LOAD_QGL( name ) name = reinterpret_cast< decltype( name ) >( sys3D->ExtensionPointer( #name + 1 ) )
+	LOAD_QGL( qglActiveTextureARB );
+	LOAD_QGL( qglClientActiveTextureARB );
+	LOAD_QGL( qglVertexAttribPointerARB );
+	LOAD_QGL( qglEnableVertexAttribArrayARB );
+	LOAD_QGL( qglDisableVertexAttribArrayARB );
+	LOAD_QGL( qglVertexAttrib3fvARB );
+	LOAD_QGL( qglVertexAttrib4fvARB );
+	LOAD_QGL( qglGetProgramivARB );
+	LOAD_QGL( qglProgramStringARB );
+	LOAD_QGL( qglBindProgramARB );
+	LOAD_QGL( qglDeleteProgramsARB );
+	LOAD_QGL( qglGenProgramsARB );
+	LOAD_QGL( qglProgramEnvParameter4fARB );
+	LOAD_QGL( qglProgramEnvParameter4fvARB );
+	LOAD_QGL( qglProgramLocalParameter4fARB );
+	LOAD_QGL( qglProgramLocalParameter4fvARB );
+	LOAD_QGL( qglGetVertexAttribPointervARB );
+
+	LOAD_QGL( qglDeleteObjectARB );
+	LOAD_QGL( qglGetHandleARB );
+	LOAD_QGL( qglDetachObjectARB );
+	LOAD_QGL( qglCreateShaderObjectARB );
+	LOAD_QGL( qglShaderSourceARB );
+	LOAD_QGL( qglCompileShaderARB );
+	LOAD_QGL( qglCreateProgramObjectARB );
+	LOAD_QGL( qglAttachObjectARB );
+	LOAD_QGL( qglLinkProgramARB );
+	LOAD_QGL( qglUseProgramObjectARB );
+	LOAD_QGL( qglValidateProgramARB );
+	LOAD_QGL( qglUniform1iARB );
+	LOAD_QGL( qglUniform4fvARB );
+	LOAD_QGL( qglGetObjectParameterivARB );
+	LOAD_QGL( qglGetInfoLogARB );
+	LOAD_QGL( qglGetUniformLocationARB );
+	LOAD_QGL( qglBindAttribLocationARB );
+	LOAD_QGL( qglProgramEnvParameters4fvEXT );
+	LOAD_QGL( qglProgramLocalParameters4fvEXT );
+#undef LOAD_QGL
+
+	if ( qglProgramStringARB == NULL || qglBindProgramARB == NULL || qglGenProgramsARB == NULL ) {
+		glConfig.ARBVertexProgramAvailable = false;
+		glConfig.ARBFragmentProgramAvailable = false;
+	}
+	if ( qglCreateShaderObjectARB == NULL || qglCreateProgramObjectARB == NULL ||
+		qglShaderSourceARB == NULL || qglCompileShaderARB == NULL || qglLinkProgramARB == NULL ) {
+		glConfig.ARBShaderObjectsAvailable = false;
+		glConfig.ARBVertexShaderAvailable = false;
+		glConfig.ARBFragmentShaderAvailable = false;
+	}
+
 	qglBeginQueryARB = reinterpret_cast< PFNGLBEGINQUERYARBPROC >(
 		sys3D->ExtensionPointer( "glBeginQueryARB" ) );
 	qglEndQueryARB = reinterpret_cast< PFNGLENDQUERYARBPROC >(
@@ -251,20 +382,10 @@ void R_CheckPortableExtensions() {
 	}
 }
 
-void R_ARB2_Init() {
-	common->Printf( "---------- R_ARB2_Init ----------\n" );
-	if ( !glConfig.ARBVertexProgramAvailable || !glConfig.ARBFragmentProgramAvailable ) {
-		common->Error( "ARB2 renderer path is unavailable" );
-	}
-	glConfig.allowCgPath = false;
-	common->Printf( "ARB2 renderer path available\n" );
-	common->Printf( "---------------------------------\n" );
 }
 
-void R_ARB2_Shutdown() {
-}
-
-}
+void R_ARB2_Init();
+void R_ARB2_Shutdown();
 
 void R_InitOpenGL() {
 	common->Printf( "----- R_InitOpenGL -----\n" );
@@ -313,8 +434,6 @@ void R_InitOpenGL() {
 	} else {
 		glConfig.samples = 0;
 	}
-	glConfig.backendInitialized = true;
-
 	common->Printf( "GL_VENDOR: %s\n", glConfig.vendor_string );
 	common->Printf( "GL_RENDERER: %s\n", glConfig.renderer_string );
 	common->Printf( "GL_VERSION: %s\n", glConfig.version_string );
@@ -337,6 +456,7 @@ void idRenderSystemLocal::Init() {
 	cvarSystem->Register( &r_brightness );
 	cvarSystem->Register( &r_shadows );
 	cvarSystem->Register( &r_useAlphaToCoverage );
+	cvarSystem->Register( &r_useStateCaching );
 
 	renderSystemBackend.Init();
 	openGLRunning = false;
@@ -362,6 +482,10 @@ void idRenderSystemLocal::Init() {
 		globalImages->Init();
 	}
 	rbinds->Init();
+	// Retail starts both MegaTexture workers after images/material bindings are
+	// available and before level resources can become active.
+	megaTextureTileLoader->Init();
+	megaTextureTileDecompressor->Init();
 	if ( renderModelManager != NULL ) {
 		renderModelManager->Init();
 	}
@@ -394,6 +518,10 @@ void idRenderSystemLocal::Shutdown() {
 	worlds.Clear();
 	registeredPtrs.Clear();
 
+	// Stop streaming before purging images/MegaTextures; both workers retain a
+	// pointer to the active resource while an I/O or decode job is in flight.
+	megaTextureTileLoader->Shutdown();
+	megaTextureTileDecompressor->Shutdown();
 	if ( renderModelManager != NULL ) {
 		renderModelManager->Shutdown();
 	}
@@ -412,6 +540,7 @@ void idRenderSystemLocal::ShutdownOpenGL() {
 		return;
 	}
 
+	R_FreeOcclussionQueries();
 	R_ARB2_Shutdown();
 	glConfig.backendInitialized = false;
 	glConfig.isInitialized = false;
@@ -444,4 +573,9 @@ void idRenderSystemLocal::LevelStart() {
 	if ( globalImages != NULL ) {
 		globalImages->LevelStart();
 	}
+}
+
+void R_ScreenshotFilename( int& lastNumber, const char* base, idStr& fileName ) {
+	const char* safeBase = base != NULL && base[ 0 ] != '\0' ? base : "screenshots/shot";
+	fileName = va( "%s%05d.tga", safeBase, lastNumber++ );
 }

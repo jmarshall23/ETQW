@@ -23,7 +23,7 @@ GNU General Public License for more details.
 #include "../../idlib/precompiled.h"
 #pragma hdrstop
 
-#include "../tr_local.h"
+#include "../Image.h"
 #include "MegaTexture.h"
 #include "MegaTextureCodec.h"
 #include "MegaTextureTileDecompressor.h"
@@ -32,7 +32,10 @@ GNU General Public License for more details.
 #include <chrono>
 #include <math.h>
 
-idMegaTextureTileDecompressor *megaTextureTileDecompressor = NULL;
+// Matches the retail megaTextureTileDecompressorLocal singleton.  The loader
+// hands compressed tiles to this worker before the render thread uploads them.
+static idMegaTextureTileDecompressor megaTextureTileDecompressorLocal;
+idMegaTextureTileDecompressor *megaTextureTileDecompressor = &megaTextureTileDecompressorLocal;
 
 idCVar idMegaTextureTileDecompressor::r_megaTilesPerSecond( "r_megaTilesPerSecond", "0", CVAR_RENDERER | CVAR_INTEGER, "maximum MegaTexture tile decodes per second; zero is unlimited" );
 idCVar idMegaTextureTileDecompressor::r_megaShowGrid( "r_megaShowGrid", "0", CVAR_RENDERER | CVAR_BOOL, "replace decoded MegaTexture tiles with a diagnostic grid" );
@@ -187,13 +190,13 @@ void idMegaTextureTileDecompressor::SnapshotCompressedTileData() {
 	parentCompressedTileSnapshot.Clear();
 	if ( compressedData.data && compressedData.size > 0 ) {
 		compressedTileSnapshot.SetNum( compressedData.size + 3, false );
-		memcpy( compressedTileSnapshot.Ptr(), compressedData.data, compressedData.size + 3 );
-		compressedData.data = compressedTileSnapshot.Ptr();
+		memcpy( compressedTileSnapshot.Begin(), compressedData.data, compressedData.size + 3 );
+		compressedData.data = compressedTileSnapshot.Begin();
 	}
 	if ( compressedData.parentData && compressedData.parentSize > 0 ) {
 		parentCompressedTileSnapshot.SetNum( compressedData.parentSize + 3, false );
-		memcpy( parentCompressedTileSnapshot.Ptr(), compressedData.parentData, compressedData.parentSize + 3 );
-		compressedData.parentData = parentCompressedTileSnapshot.Ptr();
+		memcpy( parentCompressedTileSnapshot.Begin(), compressedData.parentData, compressedData.parentSize + 3 );
+		compressedData.parentData = parentCompressedTileSnapshot.Begin();
 	}
 }
 

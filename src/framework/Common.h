@@ -71,6 +71,9 @@ extern idCVar		com_showMemoryUsage;
 extern idCVar		com_showAsyncStats;
 extern idCVar		com_showSoundDecoders;
 extern idCVar		com_makingBuild;
+extern idCVar		com_makingRC;
+extern idCVar		com_useBinaryDecls;
+extern idCVar		com_writeBinaryDecls;
 extern idCVar		com_updateLoadSize;
 extern idCVar		com_videoRam;
 

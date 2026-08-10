@@ -21,6 +21,7 @@ public:
 	void			BeginEmitFullScreen();
 	void			End();
 	void			RenderScene();
+	void			EmitFullScreen( int end = -1 );
 
 	void			SetColor( unsigned int color );
 	void			SetRegister( int index, float value );
@@ -64,6 +65,7 @@ private:
 		const idMaterial*	material;
 		idSoundEmitter*		referenceSound;
 		unsigned int		color;
+		float				materialParms[ MAX_ENTITY_SHADER_PARMS ];
 		int					numVerts;
 		guiVertex_t			verts[ idWinding2D::MAX_POINTS ];
 		bool				masked;

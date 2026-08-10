@@ -4,7 +4,7 @@
 #pragma hdrstop
 
 #include "renderbindingmanager.h"
-#include "RendererBootstrap.h"
+#include "RendererTypesImpl.h"
 #include "../decllib/declRenderBinding.h"
 #include "../libs/qglLib/qgl.h"
 

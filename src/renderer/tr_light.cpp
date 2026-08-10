@@ -29,6 +29,9 @@ If you have questions concerning this license or the applicable additional terms
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
+#if 0
+// Retained Doom 3 front-end implementation.  ETQW's reconstructed private
+// view types and original ETQW function ownership follow this reference block.
 #include "tr_local.h"
 
 static const float CHECK_BOUNDS_EPSILON = 1.0f;
@@ -1616,4 +1619,368 @@ void R_RemoveUnecessaryViewLights( void ) {
 			vLight->scissorRect.Intersect( surfRect );
 		}
 	}
+}
+#endif
+
+#include "draw_local.h"
+#include "tr_render.h"
+#include "RenderSystemBackend.h"
+#include "Image.h"
+#include "Material.h"
+#include "Model.h"
+#include "../decllib/declTypeHolder.h"
+#include "../libs/qglLib/qgl.h"
+
+extern idCVar r_megaDrawMethod;
+
+namespace {
+	idList< viewEntity_s* > frontEndViewEntities;
+	idList< viewLight_s* > frontEndViewLights;
+	idList< drawSurf_s* > frontEndDrawSurfaces;
+	idList< float* > frontEndRegisters;
+	idList< drawSurf_s* > sortedDrawSurfaces;
+	viewEntity_s* lastViewEntity = NULL;
+	viewLight_s* lastViewLight = NULL;
+
+	void SetFullScreenRect( idScreenRect& rect ) {
+		viewDef_s* view = RB_GetViewDef();
+		if ( view == NULL ) {
+			rect.Clear();
+			return;
+		}
+		rect.x1 = 0;
+		rect.y1 = 0;
+		rect.x2 = view->viewport.x2 - view->viewport.x1;
+		rect.y2 = view->viewport.y2 - view->viewport.y1;
+		rect.zmin = 0.0f;
+		rect.zmax = 1.0f;
+	}
+
+	void SetEntityMatrix( const renderEntity_t* entity, float matrix[ 16 ] ) {
+		memset( matrix, 0, sizeof( float ) * 16 );
+		if ( entity == NULL ) {
+			matrix[ 0 ] = matrix[ 5 ] = matrix[ 10 ] = matrix[ 15 ] = 1.0f;
+			return;
+		}
+		matrix[ 0 ] = entity->axis[ 0 ].x;
+		matrix[ 1 ] = entity->axis[ 0 ].y;
+		matrix[ 2 ] = entity->axis[ 0 ].z;
+		matrix[ 4 ] = entity->axis[ 1 ].x;
+		matrix[ 5 ] = entity->axis[ 1 ].y;
+		matrix[ 6 ] = entity->axis[ 1 ].z;
+		matrix[ 8 ] = entity->axis[ 2 ].x;
+		matrix[ 9 ] = entity->axis[ 2 ].y;
+		matrix[ 10 ] = entity->axis[ 2 ].z;
+		matrix[ 12 ] = entity->origin.x;
+		matrix[ 13 ] = entity->origin.y;
+		matrix[ 14 ] = entity->origin.z;
+		matrix[ 15 ] = 1.0f;
+	}
+
+	void MultiplyModelView( const float viewMatrix[ 16 ], const float modelMatrix[ 16 ], float modelViewMatrix[ 16 ] ) {
+		for ( int column = 0; column < 4; ++column ) {
+			for ( int row = 0; row < 4; ++row ) {
+				modelViewMatrix[ column * 4 + row ] =
+					viewMatrix[ row ] * modelMatrix[ column * 4 ] +
+					viewMatrix[ 4 + row ] * modelMatrix[ column * 4 + 1 ] +
+					viewMatrix[ 8 + row ] * modelMatrix[ column * 4 + 2 ] +
+					viewMatrix[ 12 + row ] * modelMatrix[ column * 4 + 3 ];
+			}
+		}
+	}
+
+	drawSurf_s* AllocInteractionSurface( const drawSurf_s* source ) {
+		drawSurf_s* interaction = new drawSurf_s( *source );
+		interaction->nextOnLight = NULL;
+		frontEndDrawSurfaces.Append( interaction );
+		return interaction;
+	}
+
+	int DrawSurfaceSortCompare( drawSurf_s* const* left, drawSurf_s* const* right ) {
+		if ( ( *left )->sort < ( *right )->sort ) return -1;
+		if ( ( *left )->sort > ( *right )->sort ) return 1;
+		if ( ( *left )->material < ( *right )->material ) return -1;
+		return ( *left )->material != ( *right )->material;
+	}
+
+	bool SurfaceIntersectsLight( const drawSurf_s* surface, const viewLight_s* light ) {
+		if ( surface == NULL || surface->geo == NULL || surface->space == NULL || light == NULL ) return false;
+		return !R_CullLocalBox( surface->geo->bounds, surface->space->modelMatrix, 6, light->frustum );
+	}
+}
+
+viewEntity_s* R_SetEntityDefViewEntity( renderEntity_t* entity, idRenderModel* model, int entityIndex ) {
+	viewDef_s* view = RB_GetViewDef();
+	if ( view == NULL ) return NULL;
+	viewEntity_s* space = new viewEntity_s;
+	memset( space, 0, sizeof( *space ) );
+	space->entityDef = entity;
+	space->entityIndex = entityIndex;
+	space->model = model;
+	space->occtest = entity != NULL && entity->flags.occlusionTest;
+	space->coverage = entity != NULL && entity->flags.overridenCoverage ? entity->coverage : 1.0f;
+	space->minGpuSpec = entity != NULL ? entity->minGpuSpec : 0;
+	space->numInsts = entity != NULL ? entity->numInsts : 0;
+	space->insts = entity != NULL ? entity->insts : NULL;
+	// Retail reserves at least 128 surface ids and an additional 33 ids beyond
+	// the model's surface count, then stores the bit set through ambSurf.
+	space->maxSurfID = Max( model != NULL ? model->NumSurfaces() + 33 : 128, 128 );
+	space->ambSurf = new unsigned int[ ( space->maxSurfID + 31 ) >> 5 ];
+	memset( space->ambSurf, 0, sizeof( unsigned int ) * ( ( space->maxSurfID + 31 ) >> 5 ) );
+	space->weaponDepthHack = entity != NULL && entity->flags.weaponDepthHack;
+	space->foliageDepthHack = entity != NULL && entity->flags.foliageDepthHack;
+	space->modelDepthHack = entity != NULL ? entity->modelDepthHack : 0.0f;
+	space->weaponDepthHackFOV_x = entity != NULL ? entity->weaponDepthHackFOV_x : 0.0f;
+	space->weaponDepthHackFOV_y = entity != NULL ? entity->weaponDepthHackFOV_y : 0.0f;
+	if ( entity != NULL && entity->ambientCubeMap != NULL ) {
+		space->ambientCubeMap = entity->ambientCubeMap;
+	} else if ( model != NULL && entity == NULL ) {
+		space->ambientCubeMap = view->renderWorld->BackendAmbientCubeMapForModel( model );
+	} else if ( entity != NULL ) {
+		space->ambientCubeMap = view->renderWorld->BackendAmbientCubeMapForArea( view->renderWorld->PointInArea( entity->origin ) );
+	} else {
+		space->ambientCubeMap = view->renderWorld->BackendAmbientCubeMap();
+	}
+	SetEntityMatrix( entity, space->modelMatrix );
+	MultiplyModelView( view->worldSpace.modelViewMatrix, space->modelMatrix, space->modelViewMatrix );
+	if ( model != NULL && space->numInsts <= 0 ) {
+		const idBounds modelBounds = model->Bounds( entity );
+		space->culled = R_CullLocalBoxToViewdef( modelBounds, space->modelMatrix, view );
+	}
+	SetFullScreenRect( space->scissorRect );
+	if ( lastViewEntity != NULL ) lastViewEntity->next = space;
+	else view->viewEntities = space;
+	lastViewEntity = space;
+	frontEndViewEntities.Append( space );
+	return space;
+}
+
+viewLight_s* R_SetLightDefViewLight( renderLight_t* light, int lightIndex ) {
+	viewDef_s* view = RB_GetViewDef();
+	if ( view == NULL || light == NULL ) return NULL;
+	viewLight_s* vLight = new viewLight_s;
+	memset( vLight, 0, sizeof( *vLight ) );
+	vLight->lightDef = light;
+	vLight->lightIndex = lightIndex;
+	R_DeriveLightData( *light, vLight->lightProject, vLight->globalLightOrigin, vLight->material, vLight->falloffImage );
+	R_RenderLightFrustum( *light, vLight->frustum );
+	vLight->frustumTris = R_PolytopeSurface( 6, vLight->frustum, NULL );
+	vLight->culled = vLight->frustumTris == NULL || vLight->frustumTris->bounds.IsCleared() ||
+		R_CullLocalBoxToViewdef( vLight->frustumTris->bounds, view->worldSpace.modelMatrix, view );
+	vLight->globalLightDirection = light->flags.parallel ? light->lightCenter : light->axis[ 0 ];
+	vLight->globalLightDirection.Normalize();
+	vLight->lightRadius = light->lightRadius;
+	vLight->lightRadiusLength = light->lightRadius.Length();
+	vLight->fogPlane = vLight->lightProject[ 3 ];
+	vLight->fadeFraction = 1.0f;
+	SetFullScreenRect( vLight->scissorRect );
+	if ( light->flags.pointLight ) {
+		const idVec3 delta = view->renderView.vieworg - light->origin;
+		vLight->viewInsideLight = true;
+		for ( int axis = 0; axis < 3; ++axis ) {
+			if ( idMath::Fabs( delta * light->axis[ axis ] ) > idMath::Fabs( light->lightRadius[ axis ] ) ) {
+				vLight->viewInsideLight = false;
+				break;
+			}
+		}
+	}
+	if ( vLight->material != NULL ) {
+		vLight->lightRegisters = new float[ Max( vLight->material->GetNumRegisters(), 1 ) ];
+		vLight->material->EvaluateRegisters( vLight->lightRegisters, light->shaderParms, view, light->referenceSound, 0 );
+		frontEndRegisters.Append( vLight->lightRegisters );
+	}
+	if ( lastViewLight != NULL ) lastViewLight->next = vLight;
+	else view->viewLights = vLight;
+	lastViewLight = vLight;
+	frontEndViewLights.Append( vLight );
+	if ( light->flags.atmosphereLight ) view->atmosphereLight = vLight;
+	return vLight;
+}
+
+void R_AddDrawSurf( const srfTriangles_t* triangles, const viewEntity_s* space, const renderEntity_t* renderEntity,
+		const idMaterial* material, const idScreenRect& scissor, int surfID ) {
+	viewDef_s* view = RB_GetViewDef();
+	if ( view == NULL || triangles == NULL || space == NULL || material == NULL || !material->IsDrawn() ) return;
+	drawSurf_s* surface = new drawSurf_s;
+	memset( surface, 0, sizeof( *surface ) );
+	surface->geo = triangles;
+	surface->space = space;
+	surface->material = material;
+	surface->sort = material->GetSort();
+	surface->surfID = surfID;
+	surface->dsFlags = triangles->dsFlags;
+	surface->scissorRect = scissor;
+	float* registers = new float[ Max( material->GetNumRegisters(), 1 ) ];
+	const float* shaderParms = renderEntity != NULL ? renderEntity->shaderParms : view->renderView.shaderParms;
+	idSoundEmitter* referenceSound = renderEntity != NULL ? renderEntity->referenceSound : NULL;
+	material->EvaluateRegisters( registers, shaderParms, view, referenceSound, 0 );
+	surface->materialRegisters = registers;
+	frontEndRegisters.Append( registers );
+	frontEndDrawSurfaces.Append( surface );
+	sortedDrawSurfaces.Append( surface );
+}
+
+void R_AddAmbientDrawsurfs( viewEntity_s* space ) {
+	viewDef_s* view = RB_GetViewDef();
+	if ( view == NULL || space == NULL || space->model == NULL ) return;
+	for ( int surfaceIndex = 0; surfaceIndex < space->model->NumSurfaces(); ++surfaceIndex ) {
+		const modelSurface_t* modelSurface = space->model->Surface( surfaceIndex );
+		if ( modelSurface == NULL || modelSurface->geometry == NULL ) continue;
+		if ( space->entityDef != NULL && modelSurface->id >= 0 && modelSurface->id < MAX_SURFACE_BITS - 1 &&
+				space->entityDef->hideSurfaceMask.Get( modelSurface->id ) != 0 ) continue;
+		const idMaterial* material = view->renderView.globalMaterial != NULL ? view->renderView.globalMaterial :
+			( space->entityDef != NULL && space->entityDef->customShader != NULL ? space->entityDef->customShader : modelSurface->material );
+		R_AddDrawSurf( modelSurface->geometry, space, space->entityDef, material, space->scissorRect, modelSurface->id );
+	}
+}
+
+void R_AddModelSurfaces() {
+	viewDef_s* view = RB_GetViewDef();
+	idRenderWorldLocal* world = RB_GetDrawWorld();
+	if ( view == NULL || world == NULL ) return;
+	for ( int modelIndex = 0; modelIndex < world->BackendNumLocalModels(); ++modelIndex ) {
+		idRenderModel* model = world->BackendLocalModel( modelIndex );
+		if ( model == NULL || !model->IsStaticWorldModel() ) continue;
+		viewEntity_s* modelSpace = R_SetEntityDefViewEntity( NULL, model, -1 );
+		if ( modelSpace != NULL ) R_AddAmbientDrawsurfs( modelSpace );
+	}
+	for ( viewEntity_s* entity = view->viewEntities; entity != NULL; entity = entity->next ) {
+		if ( entity->entityDef == NULL ) continue;
+		R_AddAmbientDrawsurfs( entity );
+	}
+	sortedDrawSurfaces.Sort( DrawSurfaceSortCompare );
+	view->drawSurfs = sortedDrawSurfaces.Begin();
+	view->numDrawSurfs = sortedDrawSurfaces.Num();
+}
+
+void R_AddLightSurfaces() {
+	viewDef_s* view = RB_GetViewDef();
+	if ( view == NULL ) return;
+	for ( viewLight_s* light = view->viewLights; light != NULL; light = light->next ) {
+		if ( light->material == NULL ) continue;
+		for ( int surfaceIndex = 0; surfaceIndex < sortedDrawSurfaces.Num(); ++surfaceIndex ) {
+			drawSurf_s* surface = sortedDrawSurfaces[ surfaceIndex ];
+			if ( !SurfaceIntersectsLight( surface, light ) ) continue;
+			const bool local = surface->space != NULL && surface->space->entityDef != NULL;
+			if ( !light->lightDef->flags.noShadows && light->material->LightCastsShadows() &&
+					surface->material->SurfaceCastsShadow() && surface->geo != NULL &&
+					( surface->geo->shadowCache != NULL || surface->geo->shadowVertexes != NULL ) ) {
+				drawSurf_s* shadow = AllocInteractionSurface( surface );
+				if ( local ) {
+					shadow->nextOnLight = light->localShadows;
+					light->localShadows = shadow;
+				} else {
+					shadow->nextOnLight = light->globalShadows;
+					light->globalShadows = shadow;
+				}
+			}
+
+			if ( light->material->IsFogLight() || light->material->IsBlendLight() ) {
+				if ( !surface->material->ReceivesFog() ) continue;
+			} else if ( !surface->material->ReceivesLighting() ) {
+				continue;
+			}
+			drawSurf_s* interaction = AllocInteractionSurface( surface );
+			if ( surface->material->Coverage() == MC_TRANSLUCENT ||
+					surface->material->TestMaterialFlag( MF_TRANSLUCENTINTERACTION ) ) {
+				interaction->nextOnLight = light->translucentInteractions;
+				light->translucentInteractions = interaction;
+			} else if ( light->lightDef->flags.atmosphereLight && r_megaDrawMethod.GetInteger() != 0 ) {
+				interaction->nextOnLight = light->mtInteractions;
+				light->mtInteractions = interaction;
+
+				viewEntity_s* mutableSpace = const_cast< viewEntity_s* >( surface->space );
+				if ( mutableSpace != NULL && mutableSpace->ambSurf != NULL &&
+						surface->surfID >= 0 && surface->surfID < mutableSpace->maxSurfID ) {
+					mutableSpace->ambSurf[ surface->surfID >> 5 ] |= 1u << ( surface->surfID & 31 );
+				}
+			} else if ( local ) {
+				interaction->nextOnLight = light->localInteractions;
+				light->localInteractions = interaction;
+			} else {
+				interaction->nextOnLight = light->globalInteractions;
+				light->globalInteractions = interaction;
+			}
+		}
+	}
+}
+
+void R_RemoveUnecessaryViewLights() {
+	viewDef_s* view = RB_GetViewDef();
+	if ( view == NULL ) return;
+	viewLight_s** link = &view->viewLights;
+	while ( *link != NULL ) {
+		viewLight_s* light = *link;
+		const bool empty = light->globalShadows == NULL && light->localShadows == NULL &&
+			light->globalInteractions == NULL && light->localInteractions == NULL &&
+			light->translucentInteractions == NULL && light->mtInteractions == NULL;
+		if ( empty && light != view->atmosphereLight ) {
+			*link = light->next;
+			continue;
+		}
+		link = &light->next;
+	}
+}
+
+void R_FreeBuiltDrawView() {
+	for ( int index = 0; index < frontEndRegisters.Num(); ++index ) delete[] frontEndRegisters[ index ];
+	for ( int index = 0; index < frontEndDrawSurfaces.Num(); ++index ) delete frontEndDrawSurfaces[ index ];
+	for ( int index = 0; index < frontEndViewLights.Num(); ++index ) {
+		R_FreePolytopeSurface( const_cast< srfTriangles_t* >( frontEndViewLights[ index ]->frustumTris ) );
+		frontEndViewLights[ index ]->frustumTris = NULL;
+		delete frontEndViewLights[ index ];
+	}
+	for ( int index = 0; index < frontEndViewEntities.Num(); ++index ) {
+		delete[] frontEndViewEntities[ index ]->ambSurf;
+		frontEndViewEntities[ index ]->ambSurf = NULL;
+		delete frontEndViewEntities[ index ];
+	}
+	frontEndRegisters.Clear();
+	frontEndDrawSurfaces.Clear();
+	frontEndViewLights.Clear();
+	frontEndViewEntities.Clear();
+	sortedDrawSurfaces.Clear();
+	lastViewEntity = NULL;
+	lastViewLight = NULL;
+}
+
+void R_BuildDrawView( idRenderWorldLocal* renderWorld, const renderView_t* renderView ) {
+	viewDef_s* view = RB_GetViewDef();
+	R_FreeBuiltDrawView();
+	if ( view == NULL ) return;
+	memset( view, 0, sizeof( *view ) );
+	if ( renderWorld == NULL || renderView == NULL ) return;
+	view->renderWorld = renderWorld;
+	view->renderView = *renderView;
+	view->floatTime = renderView->time * 0.001f;
+	view->atmosphere = renderWorld->GetAtmosphere();
+	renderSystemBackend.RenderViewToViewport( renderView, &view->viewport );
+	R_SetupMatrices( view, true );
+	view->worldSpace.ambientCubeMap = renderWorld->BackendAmbientCubeMap();
+	SetFullScreenRect( view->scissor );
+	view->worldSpace.scissorRect = view->scissor;
+
+	for ( int entityIndex = 0; entityIndex < renderWorld->BackendNumEntityDefs(); ++entityIndex ) {
+		renderEntity_t* entity = renderWorld->BackendEntityDef( entityIndex );
+		if ( entity == NULL || entity->hModel == NULL ) continue;
+		if ( entity->suppressSurfaceInViewID != 0 && entity->suppressSurfaceInViewID == renderView->viewID ) continue;
+		if ( entity->allowSurfaceInViewID != 0 && entity->allowSurfaceInViewID != renderView->viewID ) continue;
+		R_SetEntityDefViewEntity( entity, entity->hModel, entityIndex );
+	}
+	if ( renderWorld->BackendNumLocalModels() > 0 || view->viewEntities != NULL ) {
+		view->worldSpace.next = view->viewEntities;
+		view->viewEntities = &view->worldSpace;
+		lastViewEntity = frontEndViewEntities.Num() > 0 ? frontEndViewEntities[ frontEndViewEntities.Num() - 1 ] : &view->worldSpace;
+	}
+	R_AddModelSurfaces();
+
+	for ( int lightIndex = 0; lightIndex < renderWorld->BackendNumLightDefs(); ++lightIndex ) {
+		renderLight_t* light = renderWorld->BackendLightDef( lightIndex );
+		if ( light == NULL ) continue;
+		if ( light->suppressLightInViewID != 0 && light->suppressLightInViewID == renderView->viewID ) continue;
+		if ( light->allowLightInViewID != 0 && light->allowLightInViewID != renderView->viewID ) continue;
+		R_SetLightDefViewLight( light, lightIndex );
+	}
+	R_AddLightSurfaces();
+	R_RemoveUnecessaryViewLights();
 }
