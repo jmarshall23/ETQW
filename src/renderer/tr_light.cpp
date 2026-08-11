@@ -1632,6 +1632,7 @@ void R_RemoveUnecessaryViewLights( void ) {
 #include "../libs/qglLib/qgl.h"
 
 extern idCVar r_megaDrawMethod;
+extern idCVar r_skipWaterFogLights;
 
 namespace {
 	idList< viewEntity_s* > frontEndViewEntities;
@@ -1707,11 +1708,23 @@ namespace {
 		if ( surface == NULL || surface->geo == NULL || surface->space == NULL || light == NULL ) return false;
 		return !R_CullLocalBox( surface->geo->bounds, surface->space->modelMatrix, 6, light->frustum );
 	}
+
+	bool IsSkippedWaterFog( const idMaterial* material ) {
+		return r_skipWaterFogLights.GetBool() && material != NULL && material->IsFogLight() &&
+			idStr::Icmpn( material->GetName(), "fogs/waterFog", 13 ) == 0;
+	}
 }
 
 viewEntity_s* R_SetEntityDefViewEntity( renderEntity_t* entity, idRenderModel* model, int entityIndex ) {
 	viewDef_s* view = RB_GetViewDef();
 	if ( view == NULL ) return NULL;
+	float modelMatrix[ 16 ];
+	SetEntityMatrix( entity, modelMatrix );
+	const int numInsts = entity != NULL ? entity->numInsts : 0;
+	if ( model != NULL && numInsts <= 0 &&
+			R_CullLocalBoxToViewdef( model->Bounds( entity ), modelMatrix, view ) ) {
+		return NULL;
+	}
 	viewEntity_s* space = new viewEntity_s;
 	memset( space, 0, sizeof( *space ) );
 	space->entityDef = entity;
@@ -1720,7 +1733,7 @@ viewEntity_s* R_SetEntityDefViewEntity( renderEntity_t* entity, idRenderModel* m
 	space->occtest = entity != NULL && entity->flags.occlusionTest;
 	space->coverage = entity != NULL && entity->flags.overridenCoverage ? entity->coverage : 1.0f;
 	space->minGpuSpec = entity != NULL ? entity->minGpuSpec : 0;
-	space->numInsts = entity != NULL ? entity->numInsts : 0;
+	space->numInsts = numInsts;
 	space->insts = entity != NULL ? entity->insts : NULL;
 	// Retail reserves at least 128 surface ids and an additional 33 ids beyond
 	// the model's surface count, then stores the bit set through ambSurf.
@@ -1741,12 +1754,8 @@ viewEntity_s* R_SetEntityDefViewEntity( renderEntity_t* entity, idRenderModel* m
 	} else {
 		space->ambientCubeMap = view->renderWorld->BackendAmbientCubeMap();
 	}
-	SetEntityMatrix( entity, space->modelMatrix );
+	memcpy( space->modelMatrix, modelMatrix, sizeof( modelMatrix ) );
 	MultiplyModelView( view->worldSpace.modelViewMatrix, space->modelMatrix, space->modelViewMatrix );
-	if ( model != NULL && space->numInsts <= 0 ) {
-		const idBounds modelBounds = model->Bounds( entity );
-		space->culled = R_CullLocalBoxToViewdef( modelBounds, space->modelMatrix, view );
-	}
 	SetFullScreenRect( space->scissorRect );
 	if ( lastViewEntity != NULL ) lastViewEntity->next = space;
 	else view->viewEntities = space;
@@ -1828,10 +1837,11 @@ void R_AddDrawSurf( const srfTriangles_t* triangles, const viewEntity_s* space, 
 
 void R_AddAmbientDrawsurfs( viewEntity_s* space ) {
 	viewDef_s* view = RB_GetViewDef();
-	if ( view == NULL || space == NULL || space->model == NULL ) return;
+	if ( view == NULL || space == NULL || space->model == NULL || space->culled ) return;
 	for ( int surfaceIndex = 0; surfaceIndex < space->model->NumSurfaces(); ++surfaceIndex ) {
 		const modelSurface_t* modelSurface = space->model->Surface( surfaceIndex );
 		if ( modelSurface == NULL || modelSurface->geometry == NULL ) continue;
+		if ( R_CullLocalBoxToViewdef( modelSurface->geometry->bounds, space->modelMatrix, view ) ) continue;
 		if ( space->entityDef != NULL && modelSurface->id >= 0 && modelSurface->id < MAX_SURFACE_BITS - 1 &&
 				space->entityDef->hideSurfaceMask.Get( modelSurface->id ) != 0 ) continue;
 		const idMaterial* material = view->renderView.globalMaterial != NULL ? view->renderView.globalMaterial :
@@ -1863,7 +1873,7 @@ void R_AddLightSurfaces() {
 	viewDef_s* view = RB_GetViewDef();
 	if ( view == NULL ) return;
 	for ( viewLight_s* light = view->viewLights; light != NULL; light = light->next ) {
-		if ( light->material == NULL ) continue;
+		if ( light->culled || light->material == NULL || IsSkippedWaterFog( light->material ) ) continue;
 		for ( int surfaceIndex = 0; surfaceIndex < sortedDrawSurfaces.Num(); ++surfaceIndex ) {
 			drawSurf_s* surface = sortedDrawSurfaces[ surfaceIndex ];
 			if ( !SurfaceIntersectsLight( surface, light ) ) continue;
