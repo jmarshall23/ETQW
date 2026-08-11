@@ -1628,20 +1628,41 @@ void R_RemoveUnecessaryViewLights( void ) {
 #include "Image.h"
 #include "Material.h"
 #include "Model.h"
+#include "VertexCache.h"
 #include "../decllib/declTypeHolder.h"
 #include "../libs/qglLib/qgl.h"
 
 extern idCVar r_megaDrawMethod;
 extern idCVar r_skipWaterFogLights;
+extern idCVar r_useMaxVisDist;
+extern idCVar com_gpuSpec;
 
 namespace {
+	idBlockAlloc< viewEntity_s, 256 > frontEndViewEntityAllocator;
+	idBlockAlloc< viewLight_s, 128 > frontEndViewLightAllocator;
+	idBlockAlloc< drawSurf_s, 1024 > frontEndDrawSurfaceAllocator;
+	idBlockAlloc< srfTriangles_t, 256 > frontEndInteractionGeometryAllocator;
+	struct interactionGeometryRecord_t {
+		srfTriangles_t* geometry;
+		int firstIndex;
+	};
 	idList< viewEntity_s* > frontEndViewEntities;
 	idList< viewLight_s* > frontEndViewLights;
 	idList< drawSurf_s* > frontEndDrawSurfaces;
 	idList< float* > frontEndRegisters;
 	idList< drawSurf_s* > sortedDrawSurfaces;
+	idList< glIndex_t > frontEndInteractionIndexes;
+	idList< interactionGeometryRecord_t > frontEndInteractionGeometry;
 	viewEntity_s* lastViewEntity = NULL;
 	viewLight_s* lastViewLight = NULL;
+
+	idVec3 MatrixTransformPoint( const float matrix[ 16 ], const idVec3& point ) {
+		return idVec3(
+			matrix[ 0 ] * point.x + matrix[ 4 ] * point.y + matrix[ 8 ] * point.z + matrix[ 12 ],
+			matrix[ 1 ] * point.x + matrix[ 5 ] * point.y + matrix[ 9 ] * point.z + matrix[ 13 ],
+			matrix[ 2 ] * point.x + matrix[ 6 ] * point.y + matrix[ 10 ] * point.z + matrix[ 14 ]
+		);
+	}
 
 	void SetFullScreenRect( idScreenRect& rect ) {
 		viewDef_s* view = RB_GetViewDef();
@@ -1655,6 +1676,50 @@ namespace {
 		rect.y2 = view->viewport.y2 - view->viewport.y1;
 		rect.zmin = 0.0f;
 		rect.zmax = 1.0f;
+	}
+
+	idScreenRect ScreenRectForBounds( const idBounds& bounds, const float modelMatrix[ 16 ] ) {
+		idScreenRect fullScreen;
+		SetFullScreenRect( fullScreen );
+		viewDef_s* view = RB_GetViewDef();
+		if ( view == NULL || bounds.IsCleared() ) return fullScreen;
+
+		idBounds worldBounds;
+		worldBounds.FromTransformedBounds( bounds, modelMatrix );
+		if ( worldBounds.ContainsPoint( view->renderView.vieworg ) ) return fullScreen;
+
+		idScreenRect rect;
+		rect.Clear();
+		const float width = static_cast< float >( Max( 1, view->viewport.x2 - view->viewport.x1 ) );
+		const float height = static_cast< float >( Max( 1, view->viewport.y2 - view->viewport.y1 ) );
+		for ( int corner = 0; corner < 8; ++corner ) {
+			const idVec3 localPoint(
+				bounds[ ( corner >> 0 ) & 1 ].x,
+				bounds[ ( corner >> 1 ) & 1 ].y,
+				bounds[ ( corner >> 2 ) & 1 ].z
+			);
+			const idVec3 worldPoint = MatrixTransformPoint( modelMatrix, localPoint );
+			const idVec3 eyePoint = MatrixTransformPoint( view->worldSpace.modelViewMatrix, worldPoint );
+			const float clipX = eyePoint.x * view->projectionMatrix[ 0 ] + eyePoint.y * view->projectionMatrix[ 4 ] +
+				eyePoint.z * view->projectionMatrix[ 8 ] + view->projectionMatrix[ 12 ];
+			const float clipY = eyePoint.x * view->projectionMatrix[ 1 ] + eyePoint.y * view->projectionMatrix[ 5 ] +
+				eyePoint.z * view->projectionMatrix[ 9 ] + view->projectionMatrix[ 13 ];
+			const float clipZ = eyePoint.x * view->projectionMatrix[ 2 ] + eyePoint.y * view->projectionMatrix[ 6 ] +
+				eyePoint.z * view->projectionMatrix[ 10 ] + view->projectionMatrix[ 14 ];
+			const float clipW = eyePoint.x * view->projectionMatrix[ 3 ] + eyePoint.y * view->projectionMatrix[ 7 ] +
+				eyePoint.z * view->projectionMatrix[ 11 ] + view->projectionMatrix[ 15 ];
+			// A bound crossing the eye plane needs conservative full-screen clipping.
+			if ( clipW <= 0.001f ) return fullScreen;
+			const float inverseW = 1.0f / clipW;
+			rect.AddPoint( ( clipX * inverseW * 0.5f + 0.5f ) * width,
+				( clipY * inverseW * 0.5f + 0.5f ) * height );
+			const float depth = clipZ * inverseW * 0.5f + 0.5f;
+			rect.zmin = Min( rect.zmin, depth );
+			rect.zmax = Max( rect.zmax, depth );
+		}
+		rect.Expand();
+		rect.Intersect( view->scissor );
+		return rect;
 	}
 
 	void SetEntityMatrix( const renderEntity_t* entity, float matrix[ 16 ] ) {
@@ -1691,7 +1756,8 @@ namespace {
 	}
 
 	drawSurf_s* AllocInteractionSurface( const drawSurf_s* source ) {
-		drawSurf_s* interaction = new drawSurf_s( *source );
+		drawSurf_s* interaction = frontEndDrawSurfaceAllocator.Alloc();
+		*interaction = *source;
 		interaction->nextOnLight = NULL;
 		frontEndDrawSurfaces.Append( interaction );
 		return interaction;
@@ -1709,6 +1775,117 @@ namespace {
 		return !R_CullLocalBox( surface->geo->bounds, surface->space->modelMatrix, 6, light->frustum );
 	}
 
+	const srfTriangles_t* CreateLightInteractionGeometry( const drawSurf_s* surface, const viewLight_s* light ) {
+		if ( surface == NULL || surface->geo == NULL || surface->space == NULL || light == NULL ) return NULL;
+		const srfTriangles_t* source = surface->geo;
+		if ( source->verts == NULL || source->indexes == NULL || source->numIndexes < 3 ) return source;
+
+		// A fully enclosed surface can share the resident ambient IBO.  Only a
+		// surface crossing the light boundary needs a transient index subset.
+		if ( R_CullLocalBoxWithin( source->bounds, surface->space->modelMatrix, 6, light->frustum ) < 0 ) {
+			return source;
+		}
+
+		idPlane localPlanes[ 6 ];
+		const float* matrix = surface->space->modelMatrix;
+		for ( int planeIndex = 0; planeIndex < 6; ++planeIndex ) {
+			const idPlane& worldPlane = light->frustum[ planeIndex ];
+			const idVec3& normal = worldPlane.Normal();
+			localPlanes[ planeIndex ].Normal().Set(
+				normal.x * matrix[ 0 ] + normal.y * matrix[ 1 ] + normal.z * matrix[ 2 ],
+				normal.x * matrix[ 4 ] + normal.y * matrix[ 5 ] + normal.z * matrix[ 6 ],
+				normal.x * matrix[ 8 ] + normal.y * matrix[ 9 ] + normal.z * matrix[ 10 ]
+			);
+			localPlanes[ planeIndex ][ 3 ] = worldPlane[ 3 ] +
+				normal.x * matrix[ 12 ] + normal.y * matrix[ 13 ] + normal.z * matrix[ 14 ];
+		}
+
+		const int firstIndex = frontEndInteractionIndexes.Num();
+		const float clipEpsilon = 0.1f;
+		for ( int index = 0; index + 2 < source->numIndexes; index += 3 ) {
+			const glIndex_t i0 = source->indexes[ index + 0 ];
+			const glIndex_t i1 = source->indexes[ index + 1 ];
+			const glIndex_t i2 = source->indexes[ index + 2 ];
+			if ( i0 >= source->numVerts || i1 >= source->numVerts || i2 >= source->numVerts ) continue;
+			bool outside = false;
+			for ( int planeIndex = 0; planeIndex < 6; ++planeIndex ) {
+				const idPlane& plane = localPlanes[ planeIndex ];
+				if ( plane.Distance( source->verts[ i0 ].xyz ) > clipEpsilon &&
+					 plane.Distance( source->verts[ i1 ].xyz ) > clipEpsilon &&
+					 plane.Distance( source->verts[ i2 ].xyz ) > clipEpsilon ) {
+					outside = true;
+					break;
+				}
+			}
+			if ( outside ) continue;
+			frontEndInteractionIndexes.Append( i0 );
+			frontEndInteractionIndexes.Append( i1 );
+			frontEndInteractionIndexes.Append( i2 );
+		}
+
+		const int numIndexes = frontEndInteractionIndexes.Num() - firstIndex;
+		if ( numIndexes == 0 ) return NULL;
+		if ( numIndexes == source->numIndexes ) {
+			frontEndInteractionIndexes.SetNum( firstIndex, false );
+			return source;
+		}
+
+		srfTriangles_t* geometry = frontEndInteractionGeometryAllocator.Alloc();
+		*geometry = *source;
+		geometry->ambientSurface = const_cast< srfTriangles_t* >( source );
+		geometry->indexes = NULL;
+		geometry->indexCache = NULL;
+		geometry->numIndexes = numIndexes;
+		geometry->numAllocedIndices = 0;
+		interactionGeometryRecord_t record;
+		record.geometry = geometry;
+		record.firstIndex = firstIndex;
+		frontEndInteractionGeometry.Append( record );
+		return geometry;
+	}
+
+	void FinalizeLightInteractionGeometry() {
+		if ( frontEndInteractionGeometry.Num() == 0 ) return;
+		glIndex_t* indexes = frontEndInteractionIndexes.Begin();
+		for ( int i = 0; i < frontEndInteractionGeometry.Num(); ++i ) {
+			interactionGeometryRecord_t& record = frontEndInteractionGeometry[ i ];
+			record.geometry->indexes = indexes + record.firstIndex;
+			record.geometry->indexCache = vertexCache.AllocFrameTemp( record.geometry->indexes,
+				record.geometry->numIndexes * sizeof( record.geometry->indexes[ 0 ] ) );
+			if ( record.geometry->indexCache != NULL ) {
+				record.geometry->indexCache->indexBuffer = true;
+			}
+		}
+	}
+
+	bool SurfaceSharesLightArea( const drawSurf_s* surface, const viewLight_s* light ) {
+		if ( surface == NULL || surface->space == NULL || light == NULL || light->lightDef == NULL ||
+				light->lightDef->numAreas <= 0 || light->lightDef->flags.atmosphereLight ) {
+			return true;
+		}
+
+		const int* surfaceAreas = NULL;
+		int numSurfaceAreas = 0;
+		if ( surface->space->entityDef != NULL && surface->space->entityDef->numAreas > 0 ) {
+			surfaceAreas = surface->space->entityDef->areas;
+			numSurfaceAreas = surface->space->entityDef->numAreas;
+		} else if ( surface->space->model != NULL ) {
+			const idList< int >* fixedAreas = surface->space->model->GetFixedAreas();
+			if ( fixedAreas != NULL && fixedAreas->Num() > 0 ) {
+				surfaceAreas = fixedAreas->Begin();
+				numSurfaceAreas = fixedAreas->Num();
+			}
+		}
+		if ( surfaceAreas == NULL ) return true;
+
+		for ( int surfaceAreaIndex = 0; surfaceAreaIndex < numSurfaceAreas; ++surfaceAreaIndex ) {
+			for ( int lightAreaIndex = 0; lightAreaIndex < light->lightDef->numAreas; ++lightAreaIndex ) {
+				if ( surfaceAreas[ surfaceAreaIndex ] == light->lightDef->areas[ lightAreaIndex ] ) return true;
+			}
+		}
+		return false;
+	}
+
 	bool IsSkippedWaterFog( const idMaterial* material ) {
 		return r_skipWaterFogLights.GetBool() && material != NULL && material->IsFogLight() &&
 			idStr::Icmpn( material->GetName(), "fogs/waterFog", 13 ) == 0;
@@ -1721,11 +1898,25 @@ viewEntity_s* R_SetEntityDefViewEntity( renderEntity_t* entity, idRenderModel* m
 	float modelMatrix[ 16 ];
 	SetEntityMatrix( entity, modelMatrix );
 	const int numInsts = entity != NULL ? entity->numInsts : 0;
-	if ( model != NULL && numInsts <= 0 &&
-			R_CullLocalBoxToViewdef( model->Bounds( entity ), modelMatrix, view ) ) {
-		return NULL;
+	if ( entity != NULL ) {
+		if ( entity->drawSpec > com_gpuSpec.GetInteger() ) {
+			return NULL;
+		}
+		if ( entity->maxVisDist > 0 && r_useMaxVisDist.GetInteger() > 0 && numInsts <= 0 ) {
+			const int maxVisDist = r_useMaxVisDist.GetInteger() > 1 ? r_useMaxVisDist.GetInteger() : entity->maxVisDist;
+			const idBounds visibilityBounds = model != NULL ? model->Bounds( entity ) : entity->bounds;
+			if ( !R_DistanceVisibility( entity->origin + visibilityBounds.GetCenter(), maxVisDist, entity->minVisDist, view ) ) {
+				return NULL;
+			}
+		}
 	}
-	viewEntity_s* space = new viewEntity_s;
+	if ( model != NULL && numInsts <= 0 ) {
+		const idBounds modelBounds = model->Bounds( entity );
+		if ( R_CullLocalBoxToViewdef( modelBounds, modelMatrix, view ) ) {
+			return NULL;
+		}
+	}
+	viewEntity_s* space = frontEndViewEntityAllocator.Alloc();
 	memset( space, 0, sizeof( *space ) );
 	space->entityDef = entity;
 	space->entityIndex = entityIndex;
@@ -1756,7 +1947,8 @@ viewEntity_s* R_SetEntityDefViewEntity( renderEntity_t* entity, idRenderModel* m
 	}
 	memcpy( space->modelMatrix, modelMatrix, sizeof( modelMatrix ) );
 	MultiplyModelView( view->worldSpace.modelViewMatrix, space->modelMatrix, space->modelViewMatrix );
-	SetFullScreenRect( space->scissorRect );
+	space->scissorRect = model != NULL ? ScreenRectForBounds( model->Bounds( entity ), space->modelMatrix ) : view->scissor;
+	space->culled = space->scissorRect.IsEmpty();
 	if ( lastViewEntity != NULL ) lastViewEntity->next = space;
 	else view->viewEntities = space;
 	lastViewEntity = space;
@@ -1767,7 +1959,12 @@ viewEntity_s* R_SetEntityDefViewEntity( renderEntity_t* entity, idRenderModel* m
 viewLight_s* R_SetLightDefViewLight( renderLight_t* light, int lightIndex ) {
 	viewDef_s* view = RB_GetViewDef();
 	if ( view == NULL || light == NULL ) return NULL;
-	viewLight_s* vLight = new viewLight_s;
+	if ( light->drawSpec > com_gpuSpec.GetInteger() ) return NULL;
+	if ( light->maxVisDist > 0 && r_useMaxVisDist.GetInteger() > 0 ) {
+		const int maxVisDist = r_useMaxVisDist.GetInteger() > 1 ? r_useMaxVisDist.GetInteger() : light->maxVisDist;
+		if ( !R_DistanceVisibility( light->origin, maxVisDist, 0, view ) ) return NULL;
+	}
+	viewLight_s* vLight = frontEndViewLightAllocator.Alloc();
 	memset( vLight, 0, sizeof( *vLight ) );
 	vLight->lightDef = light;
 	vLight->lightIndex = lightIndex;
@@ -1788,7 +1985,14 @@ viewLight_s* R_SetLightDefViewLight( renderLight_t* light, int lightIndex ) {
 	// ( 0.21, 0.20, 0.12 ) colour.
 	vLight->fogPlane = vLight->frustum[ 5 ];
 	vLight->fadeFraction = 1.0f;
-	SetFullScreenRect( vLight->scissorRect );
+	const float identityMatrix[ 16 ] = {
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	};
+	vLight->scissorRect = vLight->frustumTris != NULL ? ScreenRectForBounds( vLight->frustumTris->bounds, identityMatrix ) : view->scissor;
+	vLight->culled = vLight->culled || vLight->scissorRect.IsEmpty();
 	if ( light->flags.pointLight ) {
 		const idVec3 delta = view->renderView.vieworg - light->origin;
 		vLight->viewInsideLight = true;
@@ -1800,9 +2004,14 @@ viewLight_s* R_SetLightDefViewLight( renderLight_t* light, int lightIndex ) {
 		}
 	}
 	if ( vLight->material != NULL ) {
-		vLight->lightRegisters = new float[ Max( vLight->material->GetNumRegisters(), 1 ) ];
-		vLight->material->EvaluateRegisters( vLight->lightRegisters, light->shaderParms, view, light->referenceSound, 0 );
-		frontEndRegisters.Append( vLight->lightRegisters );
+		const float* constantRegisters = vLight->material->ConstantRegisters( light->shaderParms, view );
+		if ( constantRegisters != NULL ) {
+			vLight->lightRegisters = const_cast< float* >( constantRegisters );
+		} else {
+			vLight->lightRegisters = new float[ Max( vLight->material->GetNumRegisters(), 1 ) ];
+			vLight->material->EvaluateRegisters( vLight->lightRegisters, light->shaderParms, view, light->referenceSound, 0 );
+			frontEndRegisters.Append( vLight->lightRegisters );
+		}
 	}
 	if ( lastViewLight != NULL ) lastViewLight->next = vLight;
 	else view->viewLights = vLight;
@@ -1816,7 +2025,7 @@ void R_AddDrawSurf( const srfTriangles_t* triangles, const viewEntity_s* space, 
 		const idMaterial* material, const idScreenRect& scissor, int surfID ) {
 	viewDef_s* view = RB_GetViewDef();
 	if ( view == NULL || triangles == NULL || space == NULL || material == NULL || !material->IsDrawn() ) return;
-	drawSurf_s* surface = new drawSurf_s;
+	drawSurf_s* surface = frontEndDrawSurfaceAllocator.Alloc();
 	memset( surface, 0, sizeof( *surface ) );
 	surface->geo = triangles;
 	surface->space = space;
@@ -1825,12 +2034,17 @@ void R_AddDrawSurf( const srfTriangles_t* triangles, const viewEntity_s* space, 
 	surface->surfID = surfID;
 	surface->dsFlags = triangles->dsFlags;
 	surface->scissorRect = scissor;
-	float* registers = new float[ Max( material->GetNumRegisters(), 1 ) ];
 	const float* shaderParms = renderEntity != NULL ? renderEntity->shaderParms : view->renderView.shaderParms;
 	idSoundEmitter* referenceSound = renderEntity != NULL ? renderEntity->referenceSound : NULL;
-	material->EvaluateRegisters( registers, shaderParms, view, referenceSound, 0 );
-	surface->materialRegisters = registers;
-	frontEndRegisters.Append( registers );
+	const float* constantRegisters = material->ConstantRegisters( shaderParms, view );
+	if ( constantRegisters != NULL ) {
+		surface->materialRegisters = const_cast< float* >( constantRegisters );
+	} else {
+		float* registers = new float[ Max( material->GetNumRegisters(), 1 ) ];
+		material->EvaluateRegisters( registers, shaderParms, view, referenceSound, 0 );
+		surface->materialRegisters = registers;
+		frontEndRegisters.Append( registers );
+	}
 	frontEndDrawSurfaces.Append( surface );
 	sortedDrawSurfaces.Append( surface );
 }
@@ -1841,6 +2055,7 @@ void R_AddAmbientDrawsurfs( viewEntity_s* space ) {
 	for ( int surfaceIndex = 0; surfaceIndex < space->model->NumSurfaces(); ++surfaceIndex ) {
 		const modelSurface_t* modelSurface = space->model->Surface( surfaceIndex );
 		if ( modelSurface == NULL || modelSurface->geometry == NULL ) continue;
+		srfTriangles_t* geometry = modelSurface->geometry;
 		if ( R_CullLocalBoxToViewdef( modelSurface->geometry->bounds, space->modelMatrix, view ) ) continue;
 		if ( space->entityDef != NULL && modelSurface->id >= 0 && modelSurface->id < MAX_SURFACE_BITS - 1 &&
 				space->entityDef->hideSurfaceMask.Get( modelSurface->id ) != 0 ) continue;
@@ -1849,7 +2064,18 @@ void R_AddAmbientDrawsurfs( viewEntity_s* space ) {
 			material = R_RemapShaderBySkin( material, space->entityDef->customSkin, space->entityDef->customShader );
 		}
 		R_GlobalShaderOverride( &material );
-		R_AddDrawSurf( modelSurface->geometry, space, space->entityDef, material, space->scissorRect, modelSurface->id );
+		// Static caches may have been purged since model finalization.  Recreate
+		// them on first visible use and mark them live before any ambient or
+		// light-interaction draw references the surface.
+		if ( geometry->ambientCache == NULL && geometry->verts != NULL && geometry->numVerts > 0 ) {
+			vertexCache.Alloc( geometry->verts, geometry->numVerts * sizeof( geometry->verts[ 0 ] ), &geometry->ambientCache );
+		}
+		if ( geometry->indexCache == NULL && geometry->indexes != NULL && geometry->numIndexes > 0 ) {
+			vertexCache.Alloc( geometry->indexes, geometry->numIndexes * sizeof( geometry->indexes[ 0 ] ), &geometry->indexCache, true );
+		}
+		if ( geometry->ambientCache != NULL ) vertexCache.Touch( geometry->ambientCache );
+		if ( geometry->indexCache != NULL ) vertexCache.Touch( geometry->indexCache );
+		R_AddDrawSurf( geometry, space, space->entityDef, material, space->scissorRect, modelSurface->id );
 	}
 }
 
@@ -1879,12 +2105,14 @@ void R_AddLightSurfaces() {
 		if ( light->culled || light->material == NULL || IsSkippedWaterFog( light->material ) ) continue;
 		for ( int surfaceIndex = 0; surfaceIndex < sortedDrawSurfaces.Num(); ++surfaceIndex ) {
 			drawSurf_s* surface = sortedDrawSurfaces[ surfaceIndex ];
+			if ( !SurfaceSharesLightArea( surface, light ) ) continue;
 			if ( !SurfaceIntersectsLight( surface, light ) ) continue;
 			const bool local = surface->space != NULL && surface->space->entityDef != NULL;
 			if ( !light->lightDef->flags.noShadows && light->material->LightCastsShadows() &&
 					surface->material->SurfaceCastsShadow() && surface->geo != NULL &&
 					( surface->geo->shadowCache != NULL || surface->geo->shadowVertexes != NULL ) ) {
 				drawSurf_s* shadow = AllocInteractionSurface( surface );
+				shadow->scissorRect = light->scissorRect;
 				if ( local ) {
 					shadow->nextOnLight = light->localShadows;
 					light->localShadows = shadow;
@@ -1899,7 +2127,14 @@ void R_AddLightSurfaces() {
 			} else if ( !surface->material->ReceivesLighting() ) {
 				continue;
 			}
+			idScreenRect interactionScissor = surface->scissorRect;
+			interactionScissor.Intersect( light->scissorRect );
+			if ( interactionScissor.IsEmpty() ) continue;
+			const srfTriangles_t* interactionGeometry = CreateLightInteractionGeometry( surface, light );
+			if ( interactionGeometry == NULL ) continue;
 			drawSurf_s* interaction = AllocInteractionSurface( surface );
+			interaction->geo = interactionGeometry;
+			interaction->scissorRect = interactionScissor;
 			if ( surface->material->Coverage() == MC_TRANSLUCENT ||
 					surface->material->TestMaterialFlag( MF_TRANSLUCENTINTERACTION ) ) {
 				interaction->nextOnLight = light->translucentInteractions;
@@ -1922,6 +2157,7 @@ void R_AddLightSurfaces() {
 			}
 		}
 	}
+	FinalizeLightInteractionGeometry();
 }
 
 void R_RemoveUnecessaryViewLights() {
@@ -1943,21 +2179,28 @@ void R_RemoveUnecessaryViewLights() {
 
 void R_FreeBuiltDrawView() {
 	for ( int index = 0; index < frontEndRegisters.Num(); ++index ) delete[] frontEndRegisters[ index ];
-	for ( int index = 0; index < frontEndDrawSurfaces.Num(); ++index ) delete frontEndDrawSurfaces[ index ];
+	for ( int index = 0; index < frontEndDrawSurfaces.Num(); ++index ) {
+		frontEndDrawSurfaceAllocator.Free( frontEndDrawSurfaces[ index ] );
+	}
 	for ( int index = 0; index < frontEndViewLights.Num(); ++index ) {
 		R_FreePolytopeSurface( const_cast< srfTriangles_t* >( frontEndViewLights[ index ]->frustumTris ) );
 		frontEndViewLights[ index ]->frustumTris = NULL;
-		delete frontEndViewLights[ index ];
+		frontEndViewLightAllocator.Free( frontEndViewLights[ index ] );
 	}
 	for ( int index = 0; index < frontEndViewEntities.Num(); ++index ) {
 		delete[] frontEndViewEntities[ index ]->ambSurf;
 		frontEndViewEntities[ index ]->ambSurf = NULL;
-		delete frontEndViewEntities[ index ];
+		frontEndViewEntityAllocator.Free( frontEndViewEntities[ index ] );
+	}
+	for ( int index = 0; index < frontEndInteractionGeometry.Num(); ++index ) {
+		frontEndInteractionGeometryAllocator.Free( frontEndInteractionGeometry[ index ].geometry );
 	}
 	frontEndRegisters.Clear();
 	frontEndDrawSurfaces.Clear();
 	frontEndViewLights.Clear();
 	frontEndViewEntities.Clear();
+	frontEndInteractionGeometry.Clear();
+	frontEndInteractionIndexes.Clear();
 	sortedDrawSurfaces.Clear();
 	lastViewEntity = NULL;
 	lastViewLight = NULL;
@@ -1982,9 +2225,26 @@ void R_BuildDrawView( idRenderWorldLocal* renderWorld, const renderView_t* rende
 
 	for ( int entityIndex = 0; entityIndex < renderWorld->BackendNumEntityDefs(); ++entityIndex ) {
 		renderEntity_t* entity = renderWorld->BackendEntityDef( entityIndex );
-		if ( entity == NULL || entity->hModel == NULL ) continue;
+		if ( entity == NULL ) continue;
 		if ( entity->suppressSurfaceInViewID != 0 && entity->suppressSurfaceInViewID == renderView->viewID ) continue;
 		if ( entity->allowSurfaceInViewID != 0 && entity->allowSurfaceInViewID != renderView->viewID ) continue;
+		if ( entity->callback != NULL ) {
+			float modelMatrix[ 16 ];
+			SetEntityMatrix( entity, modelMatrix );
+			idBounds callbackBounds;
+			callbackBounds.Clear();
+			if ( !entity->bounds.IsCleared() ) callbackBounds = entity->bounds;
+			else if ( entity->hModel != NULL ) callbackBounds = entity->hModel->Bounds( entity );
+			if ( !callbackBounds.IsCleared() && R_CullLocalBoxToViewdef( callbackBounds, modelMatrix, view ) ) continue;
+			if ( entity->maxVisDist > 0 && r_useMaxVisDist.GetInteger() > 0 ) {
+				const int maxVisDist = r_useMaxVisDist.GetInteger() > 1 ? r_useMaxVisDist.GetInteger() : entity->maxVisDist;
+				const idVec3 visibilityOrigin = entity->origin + ( callbackBounds.IsCleared() ? vec3_origin : callbackBounds.GetCenter() );
+				if ( !R_DistanceVisibility( visibilityOrigin, maxVisDist, entity->minVisDist, view ) ) continue;
+			}
+			int lastModifiedGameTime = 0;
+			entity->callback( entity, renderView, lastModifiedGameTime );
+		}
+		if ( entity->hModel == NULL ) continue;
 		R_SetEntityDefViewEntity( entity, entity->hModel, entityIndex );
 	}
 	if ( renderWorld->BackendNumLocalModels() > 0 || view->viewEntities != NULL ) {

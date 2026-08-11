@@ -7,6 +7,8 @@
 #pragma hdrstop
 
 #include "Model.h"
+#include "RenderSystem.h"
+#include "VertexCache.h"
 #include "../decllib/declTypeHolder.h"
 
 namespace {
@@ -83,7 +85,25 @@ public:
 		}
 	}
 
-	virtual void FinishSurfaces( bool = true, bool = true, bool = false ) {}
+	virtual void FinishSurfaces( bool = true, bool = true, bool = false ) {
+		if ( renderSystem == NULL || !renderSystem->IsOpenGLRunning() ) {
+			return;
+		}
+		for ( int i = 0; i < modelSurfaces.Num(); ++i ) {
+			srfTriangles_t* triangles = modelSurfaces[ i ].geometry;
+			if ( triangles == NULL ) {
+				continue;
+			}
+			if ( triangles->ambientCache == NULL && triangles->verts != NULL && triangles->numVerts > 0 ) {
+				vertexCache.Alloc( triangles->verts,
+					triangles->numVerts * sizeof( triangles->verts[ 0 ] ), &triangles->ambientCache );
+			}
+			if ( triangles->indexCache == NULL && triangles->indexes != NULL && triangles->numIndexes > 0 ) {
+				vertexCache.Alloc( triangles->indexes,
+					triangles->numIndexes * sizeof( triangles->indexes[ 0 ] ), &triangles->indexCache, true );
+			}
+		}
+	}
 	virtual bool Validate() const { return loaded; }
 
 	virtual void PurgeModel() {
@@ -116,6 +136,7 @@ public:
 		modelName.ExtractFileExtension( extension );
 		if ( !extension.Icmp( "modelb" ) ) {
 			if ( LoadModelB( modelName ) ) {
+				FinishSurfaces();
 				return;
 			}
 		} else if ( extension.Icmp( MD5_MESH_EXT ) ) {
@@ -124,9 +145,11 @@ public:
 			generated.StripFileExtension();
 			generated.SetFileExtension( "modelb" );
 			if ( LoadModelB( generated ) ) {
+				FinishSurfaces();
 				return;
 			}
 		} else if ( LoadMD5BinaryReferencePose() ) {
+			FinishSurfaces();
 			return;
 		}
 
@@ -148,7 +171,11 @@ public:
 	virtual void SetLevelLoadReferenced( bool referenced ) { levelLoadReferenced = referenced; }
 	virtual bool IsLevelLoadReferenced() const { return levelLoadReferenced; }
 	virtual void TouchData() {}
-	virtual void FreeVertexCache() {}
+	virtual void FreeVertexCache() {
+		for ( int i = 0; i < modelSurfaces.Num(); ++i ) {
+			FreeSurfaceVertexCache( modelSurfaces[ i ].geometry );
+		}
+	}
 	virtual void DirtyVertexAmbientCache() {}
 	virtual const char* Name() const { return modelName.c_str(); }
 	virtual void Print() const { common->Printf( "%s\n", modelName.c_str() ); }
@@ -185,6 +212,7 @@ public:
 		if ( triangles == NULL ) {
 			return;
 		}
+		FreeSurfaceVertexCache( triangles );
 		Mem_Free( triangles->verts );
 		Mem_Free( triangles->indexes );
 		Mem_Free( triangles->facePlanes );
@@ -246,6 +274,24 @@ public:
 	virtual idBounds CalcMeshBounds( int, const idJointMat*, const idVec3&, const idMat3&, bool ) { return modelBounds; }
 
 private:
+	static void FreeSurfaceVertexCache( srfTriangles_t* triangles ) {
+		if ( triangles == NULL ) {
+			return;
+		}
+		if ( triangles->ambientCache != NULL ) {
+			if ( renderSystem != NULL && renderSystem->IsOpenGLRunning() ) {
+				vertexCache.Free( triangles->ambientCache );
+			}
+			triangles->ambientCache = NULL;
+		}
+		if ( triangles->indexCache != NULL ) {
+			if ( renderSystem != NULL && renderSystem->IsOpenGLRunning() ) {
+				vertexCache.Free( triangles->indexCache );
+			}
+			triangles->indexCache = NULL;
+		}
+	}
+
 	void ClearSurfaces() {
 		for ( int i = 0; i < modelSurfaces.Num(); i++ ) {
 			FreeSurfaceTriangles( modelSurfaces[ i ].geometry );
@@ -656,4 +702,3 @@ private:
 idRenderModel* R_AllocStaticModel() {
 	return new idRenderModelStatic;
 }
-

@@ -1175,6 +1175,13 @@ extern idCVar r_jitter;
 extern idCVar r_znear;
 extern idCVar r_useCulling;
 
+idCVar r_useMaxVisDist( "r_useMaxVisDist", "1", CVAR_RENDERER | CVAR_INTEGER,
+	"use the maxVisDist entity parameter (on is faster)" );
+idCVar r_visDistMult( "r_visDistMult", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_FLOAT,
+	"scale maximum visibility distances", 0.8f, 1.2f );
+idCVar r_visDistOfs( "r_visDistOfs", "0", CVAR_FLOAT,
+	"offset applied to visibility distance tests" );
+
 namespace {
 	void SetFrustumPlane( idPlane& plane, const idVec3& normal, const idVec3& point ) {
 		plane.Normal() = normal;
@@ -1275,6 +1282,20 @@ int R_CullLocalBoxWithin( const idBounds& bounds, const float modelMatrix[ 16 ],
 	axis[ 2 ].Set( modelMatrix[ 8 ], modelMatrix[ 9 ], modelMatrix[ 10 ] );
 	return CullTransformedBounds( bounds, axis,
 		idVec3( modelMatrix[ 12 ], modelMatrix[ 13 ], modelMatrix[ 14 ] ), numPlanes, planes );
+}
+
+bool R_DistanceVisibility( const idVec3& origin, int maxVisDist, int minVisDist, const viewDef_s* viewDef ) {
+	if ( viewDef == NULL || maxVisDist == 0 ) {
+		return true;
+	}
+	if ( minVisDist != 0 && r_useMaxVisDist.GetInteger() == 0 ) {
+		return false;
+	}
+
+	const float distance = ( viewDef->renderView.vieworg - origin ).Length() + r_visDistOfs.GetFloat();
+	const float fovDistance = distance * ( viewDef->renderView.fov_x * ( 1.0f / 90.0f ) );
+	const float distanceScale = r_visDistMult.GetFloat();
+	return fovDistance >= minVisDist * distanceScale && fovDistance <= maxVisDist * distanceScale;
 }
 
 bool R_CullLocalBoxToViewdef( const idBounds& bounds, const float modelMatrix[ 16 ], const viewDef_s* viewDef ) {

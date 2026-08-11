@@ -15,6 +15,7 @@
 #include "tr_render.h"
 #include "Image.h"
 #include "ModelManager.h"
+#include "VertexCache.h"
 #include "megatexture/MegaTexture.h"
 #include "megatexture/MegaTextureTileLoader.h"
 #include "megatexture/MegaTextureTileDecompressor.h"
@@ -168,6 +169,7 @@ idCVar r_offsetFactor( "r_offsetfactor", "0", CVAR_RENDERER | CVAR_FLOAT, "polyg
 idCVar r_offsetUnits( "r_offsetunits", "-600", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_FLOAT, "polygon offset parameter", -2000.0f, 2000.0f );
 
 idCVar r_singleTriangle( "r_singleTriangle", "0", CVAR_RENDERER | CVAR_INTEGER, "only draw a single triangle per primitive" );
+idCVar r_useVertexBuffers( "r_useVertexBuffers", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL, "use ARB_vertex_buffer_object for vertexes" );
 idCVar r_useIndexBuffers( "r_useIndexBuffers", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL, "use ARB_vertex_buffer_object for indexes" );
 idCVar r_useTwoSidedStencil( "r_useTwoSidedStencil", "1", CVAR_RENDERER | CVAR_BOOL, "do stencil shadows in one pass with different ops on each side" );
 idCVar r_useExternalShadows( "r_useExternalShadows", "1", CVAR_RENDERER | CVAR_INTEGER, "1 = skip drawing caps when outside the light volume, 2 = force to no caps for testing", 0.0f, 2.0f );
@@ -282,6 +284,17 @@ void R_CheckPortableExtensions() {
 #define LOAD_QGL( name ) name = reinterpret_cast< decltype( name ) >( sys3D->ExtensionPointer( #name + 1 ) )
 	LOAD_QGL( qglActiveTextureARB );
 	LOAD_QGL( qglClientActiveTextureARB );
+	LOAD_QGL( qglBindBufferARB );
+	LOAD_QGL( qglDeleteBuffersARB );
+	LOAD_QGL( qglGenBuffersARB );
+	LOAD_QGL( qglIsBufferARB );
+	LOAD_QGL( qglBufferDataARB );
+	LOAD_QGL( qglBufferSubDataARB );
+	LOAD_QGL( qglGetBufferSubDataARB );
+	LOAD_QGL( qglMapBufferARB );
+	LOAD_QGL( qglUnmapBufferARB );
+	LOAD_QGL( qglGetBufferParameterivARB );
+	LOAD_QGL( qglGetBufferPointervARB );
 	LOAD_QGL( qglCompressedTexImage2DARB );
 	LOAD_QGL( qglCompressedTexSubImage2DARB );
 	LOAD_QGL( qglVertexAttribPointerARB );
@@ -320,6 +333,27 @@ void R_CheckPortableExtensions() {
 	LOAD_QGL( qglProgramEnvParameters4fvEXT );
 	LOAD_QGL( qglProgramLocalParameters4fvEXT );
 #undef LOAD_QGL
+	// Core OpenGL 1.5 drivers are allowed to omit the ARB-suffixed aliases.
+	// Windows still requires these addresses to be resolved from the current
+	// context rather than imported from opengl32.dll.
+#define LOAD_QGL_CORE_FALLBACK( name, coreName ) \
+	if ( name == NULL ) name = reinterpret_cast< decltype( name ) >( sys3D->ExtensionPointer( coreName ) )
+	LOAD_QGL_CORE_FALLBACK( qglBindBufferARB, "glBindBuffer" );
+	LOAD_QGL_CORE_FALLBACK( qglDeleteBuffersARB, "glDeleteBuffers" );
+	LOAD_QGL_CORE_FALLBACK( qglGenBuffersARB, "glGenBuffers" );
+	LOAD_QGL_CORE_FALLBACK( qglIsBufferARB, "glIsBuffer" );
+	LOAD_QGL_CORE_FALLBACK( qglBufferDataARB, "glBufferData" );
+	LOAD_QGL_CORE_FALLBACK( qglBufferSubDataARB, "glBufferSubData" );
+	LOAD_QGL_CORE_FALLBACK( qglGetBufferSubDataARB, "glGetBufferSubData" );
+	LOAD_QGL_CORE_FALLBACK( qglMapBufferARB, "glMapBuffer" );
+	LOAD_QGL_CORE_FALLBACK( qglUnmapBufferARB, "glUnmapBuffer" );
+	LOAD_QGL_CORE_FALLBACK( qglGetBufferParameterivARB, "glGetBufferParameteriv" );
+	LOAD_QGL_CORE_FALLBACK( qglGetBufferPointervARB, "glGetBufferPointerv" );
+#undef LOAD_QGL_CORE_FALLBACK
+	if ( qglBindBufferARB == NULL || qglGenBuffersARB == NULL ||
+		 qglBufferDataARB == NULL || qglBufferSubDataARB == NULL ) {
+		glConfig.ARBVertexBufferObjectAvailable = false;
+	}
 	if ( qglCompressedTexImage2DARB == NULL ) {
 		qglCompressedTexImage2DARB = reinterpret_cast< PFNGLCOMPRESSEDTEXIMAGE2DARBPROC >(
 			sys3D->ExtensionPointer( "glCompressedTexImage2D" ) );
@@ -461,6 +495,7 @@ void R_InitOpenGL() {
 	common->Printf( "GL_VERSION: %s\n", glConfig.version_string );
 	common->Printf( "GL_MAX_TEXTURE_SIZE: %d\n", glConfig.maxTextureSize );
 	R_ARB2_Init();
+	vertexCache.Init();
 	common->Printf( "------------------------\n" );
 }
 
@@ -572,6 +607,7 @@ void idRenderSystemLocal::ShutdownOpenGL() {
 	}
 
 	R_FreeOcclussionQueries();
+	vertexCache.Shutdown();
 	R_ARB2_Shutdown();
 	glConfig.backendInitialized = false;
 	glConfig.isInitialized = false;

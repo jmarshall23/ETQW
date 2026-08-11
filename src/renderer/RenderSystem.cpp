@@ -13,6 +13,7 @@
 #include "GuiModel.h"
 #include "DeviceContext.h"
 #include "tr_render.h"
+#include "VertexCache.h"
 #include "../sys/sys_render.h"
 
 #include <GL/gl.h>
@@ -137,6 +138,7 @@ void idRenderSystemLocal::EndFrame( bool swapBuffers ) {
 		if ( swapBuffers && sys3D != NULL ) {
 			sys3D->SwapBuffers();
 		}
+		vertexCache.EndFrame();
 	}
 	synced = true;
 	syncNum++;

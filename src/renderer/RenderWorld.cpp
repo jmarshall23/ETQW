@@ -354,17 +354,6 @@ void idRenderWorldLocal::PerformRenderScene( const renderView_t *renderView ) {
 	glLoadMatrixf( viewDef->worldSpace.modelViewMatrix );
 	RB_SetImmediateViewState( renderView, viewDef->projectionMatrix, viewportWidth, viewportHeight );
 
-	// Dynamic callbacks belong to front-end view generation and must execute
-	// once, not once per back-end pass.
-	for ( int entityIndex = 0; entityIndex < entityDefs.Num(); entityIndex++ ) {
-		renderEntity_t* entity = entityDefs[ entityIndex ];
-		if ( entity == NULL ) continue;
-		if ( entity->callback != NULL ) {
-			int lastModifiedGameTime = 0;
-			entity->callback( entity, renderView, lastModifiedGameTime );
-		}
-	}
-
 	RB_STD_DrawView();
 	RB_ClearDrawViewContext();
 

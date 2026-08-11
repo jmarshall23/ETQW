@@ -127,5 +127,6 @@ bool R_CullLocalBox( const idBounds& bounds, const idMat3& axis, const idVec3& o
 bool R_CullLocalBoxToViewdef( const idBounds& bounds, const float modelMatrix[ 16 ], const viewDef_s* viewDef );
 bool R_CullLocalBoxToViewdef( const idBounds& bounds, const idMat3& axis, const idVec3& origin, const viewDef_s* viewDef );
 int R_CullLocalBoxWithin( const idBounds& bounds, const float modelMatrix[ 16 ], int numPlanes, const idPlane* planes );
+bool R_DistanceVisibility( const idVec3& origin, int maxVisDist, int minVisDist, const viewDef_s* viewDef );
 
 #endif

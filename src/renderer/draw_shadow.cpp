@@ -87,9 +87,10 @@ void RB_ARB2_DrawShadowElementsWithCounters( const srfTriangles_t* triangles, in
 	numIndexes = Min( numIndexes, triangles->numIndexes );
 	if ( r_singleTriangle.GetBool() ) numIndexes = Min( numIndexes, 3 );
 	const void* indexes = triangles->indexes;
-	if ( triangles->indexCache != NULL && r_useIndexBuffers.GetBool() ) indexes = CachePosition( triangles->indexCache, true );
+	const bool usingIndexBuffer = triangles->indexCache != NULL && r_useIndexBuffers.GetBool();
+	if ( usingIndexBuffer ) indexes = CachePosition( triangles->indexCache, true );
 	else if ( r_useIndexBuffers.GetBool() && qglBindBufferARB != NULL ) qglBindBufferARB( GL_ELEMENT_ARRAY_BUFFER_ARB, 0 );
-	if ( indexes == NULL ) return;
+	if ( indexes == NULL && !usingIndexBuffer ) return;
 	glDrawElements( GL_TRIANGLES, numIndexes, GL_UNSIGNED_SHORT, indexes );
 }
 
@@ -99,7 +100,7 @@ void RB_ARB2_DrawShadowSurface( const drawSurf_s* surface, const sdDeclRenderPro
 	const void* shadowVertices = NULL;
 	if ( triangles->shadowCache != NULL ) shadowVertices = CachePosition( triangles->shadowCache, false );
 	else shadowVertices = triangles->shadowVertexes;
-	if ( shadowVertices == NULL ) return;
+	if ( shadowVertices == NULL && ( triangles->shadowCache == NULL || triangles->shadowCache->vbo == 0 ) ) return;
 
 	glVertexPointer( 4, GL_FLOAT, sizeof( shadowCache_t ), shadowVertices );
 	RB_ARB2_SetSpace( surface->space, false );

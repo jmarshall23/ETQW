@@ -468,7 +468,7 @@ void RB_DrawElementsWithCounters( const srfTriangles_t* triangles ) {
 		if ( singleTriangle > 1 ) indexes = singleTriangleIndexes;
 	}
 
-	if ( indexes != NULL ) {
+	if ( indexes != NULL || usingIndexBuffer ) {
 		const viewEntity_s* space = RB_GetActiveDrawSpace();
 		if ( space != NULL && space->numInsts > 0 && space->insts != NULL ) {
 			const viewDef_s* viewDef = RB_GetViewDef();

@@ -29,7 +29,12 @@ If you have questions concerning this license or the applicable additional terms
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
-#include "tr_local.h"
+#include "RenderSystem.h"
+#include "VertexCache.h"
+
+extern glconfig_t glConfig;
+extern idCVar r_useVertexBuffers;
+extern idCVar r_useIndexBuffers;
 
 
 static const int	FRAME_MEMORY_BYTES = 0x200000;
@@ -160,7 +165,9 @@ void idVertexCache::Init() {
 	virtualMemory = false;
 
 	// use ARB_vertex_buffer_object unless explicitly disabled
-	if( r_useVertexBuffers.GetInteger() && glConfig.ARBVertexBufferObjectAvailable ) {
+	if ( r_useVertexBuffers.GetInteger() && glConfig.ARBVertexBufferObjectAvailable &&
+		 qglBindBufferARB != NULL && qglGenBuffersARB != NULL &&
+		 qglBufferDataARB != NULL && qglBufferSubDataARB != NULL ) {
 		common->Printf( "using ARB_vertex_buffer_object memory\n" );
 	} else {
 		virtualMemory = true;
@@ -239,6 +246,7 @@ void idVertexCache::Alloc( void *data, int size, vertCache_t **buffer, bool inde
 
 		for ( int i = 0; i < EXPAND_HEADERS; i++ ) {
 			block = headerAllocator.Alloc();
+			memset( block, 0, sizeof( *block ) );
 			block->next = freeStaticHeaders.next;
 			block->prev = &freeStaticHeaders;
 			block->next->prev = block;
@@ -472,7 +480,7 @@ void idVertexCache::EndFrame() {
 	}
 
 
-	currentFrame = tr.frameCount;
+	++currentFrame;
 	listNum = currentFrame % NUM_VERTEX_FRAMES;
 	staticAllocThisFrame = 0;
 	staticCountThisFrame = 0;

@@ -117,6 +117,10 @@ namespace {
 		return cache->virtMem != NULL ? static_cast< const byte* >( cache->virtMem ) + cache->offset : NULL;
 	}
 
+	const byte* VertexPointerOffset( const byte* base, size_t offset ) {
+		return reinterpret_cast< const byte* >( reinterpret_cast< UINT_PTR >( base ) + offset );
+	}
+
 	void BindProgramTextures( const sdDeclRenderProgram* program ) {
 		if ( program == NULL ) return;
 		for ( int unit = 0; unit < program->GetNumTextureBindings(); ++unit ) {
@@ -410,14 +414,15 @@ void RB_ARB2_SetVertexPointers( const srfTriangles_t* triangles, bool& weightCac
 		vertexBase = reinterpret_cast< const byte* >( triangles->verts );
 		activeAmbientCache = NULL;
 	}
-	if ( vertexBase == NULL ) return;
+	const bool residentVertexOffset = triangles->ambientCache != NULL && triangles->ambientCache->vbo != 0;
+	if ( vertexBase == NULL && !residentVertexOffset ) return;
 	glEnableClientState( GL_VERTEX_ARRAY );
 	glVertexPointer( 3, GL_FLOAT, DRAWVERT_SIZE, vertexBase );
-	qglVertexAttribPointerARB( rbinds->texCoordAttrib->GetAttribIndex(), 2, GL_SHORT, GL_FALSE, DRAWVERT_SIZE, vertexBase + 28 );
-	qglVertexAttribPointerARB( rbinds->tangentAttrib->GetAttribIndex(), 2, GL_SHORT, GL_FALSE, DRAWVERT_SIZE, vertexBase + 20 );
-	qglVertexAttribPointerARB( rbinds->normalAttrib->GetAttribIndex(), 2, GL_SHORT, GL_FALSE, DRAWVERT_SIZE, vertexBase + 16 );
-	qglVertexAttribPointerARB( rbinds->colorAttrib->GetAttribIndex(), 4, GL_UNSIGNED_BYTE, GL_TRUE, DRAWVERT_SIZE, vertexBase + 12 );
-	qglVertexAttribPointerARB( rbinds->signAttrib->GetAttribIndex(), 4, GL_UNSIGNED_BYTE, GL_FALSE, DRAWVERT_SIZE, vertexBase + 24 );
+	qglVertexAttribPointerARB( rbinds->texCoordAttrib->GetAttribIndex(), 2, GL_SHORT, GL_FALSE, DRAWVERT_SIZE, VertexPointerOffset( vertexBase, 28 ) );
+	qglVertexAttribPointerARB( rbinds->tangentAttrib->GetAttribIndex(), 2, GL_SHORT, GL_FALSE, DRAWVERT_SIZE, VertexPointerOffset( vertexBase, 20 ) );
+	qglVertexAttribPointerARB( rbinds->normalAttrib->GetAttribIndex(), 2, GL_SHORT, GL_FALSE, DRAWVERT_SIZE, VertexPointerOffset( vertexBase, 16 ) );
+	qglVertexAttribPointerARB( rbinds->colorAttrib->GetAttribIndex(), 4, GL_UNSIGNED_BYTE, GL_TRUE, DRAWVERT_SIZE, VertexPointerOffset( vertexBase, 12 ) );
+	qglVertexAttribPointerARB( rbinds->signAttrib->GetAttribIndex(), 4, GL_UNSIGNED_BYTE, GL_FALSE, DRAWVERT_SIZE, VertexPointerOffset( vertexBase, 24 ) );
 
 	const bool hardSkinning = ( triangles->dsFlags & 4 ) != 0;
 	if ( triangles->weightCache == NULL && !hardSkinning ) {
@@ -453,9 +458,9 @@ void RB_ARB2_SetVertexPointers( const srfTriangles_t* triangles, bool& weightCac
 
 	if ( triangles->weightCache != NULL && !hardSkinning ) {
 		const byte* weights = static_cast< const byte* >( CachePosition( triangles->weightCache, false ) );
-		if ( weights != NULL ) {
+		if ( weights != NULL || triangles->weightCache->vbo != 0 ) {
 			qglVertexAttribPointerARB( rbinds->weightIndexAttrib->GetAttribIndex(), 4, GL_UNSIGNED_BYTE, GL_FALSE, 8, weights );
-			qglVertexAttribPointerARB( rbinds->weightValueAttrib->GetAttribIndex(), 4, GL_UNSIGNED_BYTE, GL_TRUE, 8, weights + 4 );
+			qglVertexAttribPointerARB( rbinds->weightValueAttrib->GetAttribIndex(), 4, GL_UNSIGNED_BYTE, GL_TRUE, 8, VertexPointerOffset( weights, 4 ) );
 			weightCacheModified = activeWeightCache != triangles->weightCache;
 			activeWeightCache = triangles->weightCache;
 		}
@@ -699,8 +704,7 @@ void RB_ARB2_DrawSurface( const drawSurf_s* surface, const idMaterial* material,
 	activeSurface = surface;
 	activeStage = NULL;
 	activeSurfaceUsesAlphaToCoverage = false;
-	idList< byte > enabledStages;
-	enabledStages.SetNum( material->GetNumStages(), false );
+	byte enabledStages[ MAX_SHADER_STAGES ];
 	for ( int stageIndex = 0; stageIndex < material->GetNumStages(); ++stageIndex ) {
 		const materialStage_t* stage = material->GetStage( stageIndex );
 		const bool enabled = RB_ARB2_UseStage( stage, materialRegisters );
