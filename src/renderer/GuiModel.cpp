@@ -299,6 +299,7 @@ void sdGuiModel::QueueRect(
 
 	guiPrimitive_t primitive;
 	memset( &primitive, 0, sizeof( primitive ) );
+	primitive.sequence = writePosition;
 	primitive.material = material;
 	primitive.referenceSound = referenceSound;
 	primitive.color = currentColor;
@@ -333,6 +334,7 @@ void sdGuiModel::QueueWinding(
 
 	guiPrimitive_t primitive;
 	memset( &primitive, 0, sizeof( primitive ) );
+	primitive.sequence = writePosition;
 	primitive.material = material;
 	primitive.referenceSound = referenceSound;
 	primitive.color = currentColor;
@@ -415,6 +417,7 @@ void sdGuiModel::DrawTextA( const wchar_t* text, const sdBounds2D& rect, unsigne
 		return;
 	}
 	guiText_t command;
+	command.sequence = writePosition;
 	command.text = text;
 	command.rect = rect;
 	command.flags = flags;
@@ -452,11 +455,10 @@ void sdGuiModel::SubmitFrame( int windowWidth, int windowHeight ) {
 	// generic attributes explicitly instead of inheriting the last world VBO.
 	GL_EnableVertexAttribs( 0 );
 
-	for ( int i = 0; i < primitives.Num(); i++ ) {
-		const guiPrimitive_t& primitive = primitives[ i ];
+	auto submitPrimitive = [&]( const guiPrimitive_t& primitive ) {
 		idImage* image = primitive.referenceSound != NULL ? ResolveGuiImage( primitive.material, primitive.referenceSound ) : NULL;
 		if ( primitive.material == NULL || ( image != NULL && image->defaulted ) ) {
-			continue;
+			return;
 		}
 		const byte* rgba = reinterpret_cast< const byte* >( &primitive.color );
 		idList< float > evaluated;
@@ -480,6 +482,14 @@ void sdGuiModel::SubmitFrame( int windowWidth, int windowHeight ) {
 			idVec4 stageColor;
 			idVec4 matrixS;
 			idVec4 matrixT;
+			// Ordinary ETQW draw surfaces initialize diffuseColor before applying
+			// the stage's explicit vectors.  The compatibility GUI path must do
+			// the same: trivial.rprog always multiplies by diffuseColor, and a GUI
+			// stage without an rgb/rgba keyword otherwise inherits the last world
+			// surface's value (the purple console tint seen after loading a map).
+			if ( rbinds != NULL && rbinds->diffuseColor != NULL ) {
+				rbinds->diffuseColor->Set( 1.0f, 1.0f, 1.0f, 1.0f );
+			}
 			if ( !RB_SetupMaterialStage( stage, evaluated.Begin(), image, stageColor, matrixS, matrixT ) ) continue;
 			// ARB vertex programs are precompiled for ETQW's packed idDrawVert
 			// layout when r_32ByteVtx is enabled.  The retail GUI path builds those
@@ -492,13 +502,34 @@ void sdGuiModel::SubmitFrame( int windowWidth, int windowHeight ) {
 				dynamic_cast< sdRenderProgramARB* >( stage->renderProgram->GetProgram() ) != NULL ) {
 				texCoordAttribScale = stage->renderProgram->UsesLowRangeUVs() ? 32768.0f : 4096.0f;
 			}
-			glColor4f( stageColor.x * rgba[ 0 ] / 255.0f, stageColor.y * rgba[ 1 ] / 255.0f, stageColor.z * rgba[ 2 ] / 255.0f, stageColor.w * rgba[ 3 ] / 255.0f );
 			const float vertexColor[ 4 ] = {
 				rgba[ 0 ] / 255.0f,
 				rgba[ 1 ] / 255.0f,
 				rgba[ 2 ] / 255.0f,
 				rgba[ 3 ] / 255.0f
 			};
+			idVec4 fixedFunctionColor = stageColor;
+			switch ( stage->vertexColor ) {
+				case SVC_MODULATE:
+					fixedFunctionColor.x *= vertexColor[ 0 ];
+					fixedFunctionColor.y *= vertexColor[ 1 ];
+					fixedFunctionColor.z *= vertexColor[ 2 ];
+					fixedFunctionColor.w *= vertexColor[ 3 ];
+					break;
+				case SVC_MODULATE_ALPHA:
+					fixedFunctionColor.w *= vertexColor[ 3 ];
+					break;
+				case SVC_INVERSE_MODULATE:
+					fixedFunctionColor.x *= 1.0f - vertexColor[ 0 ];
+					fixedFunctionColor.y *= 1.0f - vertexColor[ 1 ];
+					fixedFunctionColor.z *= 1.0f - vertexColor[ 2 ];
+					fixedFunctionColor.w *= 1.0f - vertexColor[ 3 ];
+					break;
+				case SVC_IGNORE:
+				default:
+					break;
+			}
+			glColor4f( fixedFunctionColor.x, fixedFunctionColor.y, fixedFunctionColor.z, fixedFunctionColor.w );
 			if ( qglVertexAttrib4fvARB != NULL && rbinds != NULL ) {
 				qglVertexAttrib4fvARB( rbinds->colorAttrib->GetAttribIndex(), vertexColor );
 			}
@@ -517,57 +548,70 @@ void sdGuiModel::SubmitFrame( int windowWidth, int windowHeight ) {
 			}
 			glEnd();
 		}
-	}
+	};
 
-	if ( texts.Num() > 0 ) {
+	HDC windowDC = wglGetCurrentDC();
+	const float pixelScale = Max( 1.0f, static_cast< float >( windowHeight ) / 480.0f );
+	auto submitText = [&]( const guiText_t& command ) {
 		// Bitmap display lists are a compatibility-profile fixed-function path.
 		// A GUI material stage may have left either an ARB or GLSL program bound;
 		// in that state glRasterPos/glCallLists do not produce the console glyphs.
 		SD_UnbindRenderProgram();
 		GL_SelectTexture( 0 );
-		HDC windowDC = wglGetCurrentDC();
-		const float pixelScale = Max( 1.0f, static_cast< float >( windowHeight ) / 480.0f );
 		glDisable( GL_TEXTURE_2D );
-		for ( int i = 0; i < texts.Num(); i++ ) {
-			const guiText_t& command = texts[ i ];
-			idWStr displayText;
-			BuildDisplayText( command.text.c_str(), displayText );
-			if ( displayText.IsEmpty() ) {
-				continue;
-			}
+		idWStr displayText;
+		BuildDisplayText( command.text.c_str(), displayText );
+		if ( displayText.IsEmpty() ) {
+			return;
+		}
 
-			const int pointSize = command.pointSize > 0 ? command.pointSize : 12;
-			bitmapFontCache_t* font = GetBitmapFont( windowDC, idMath::Ftoi( pointSize * pixelScale ) );
-			if ( font == NULL ) {
-				continue;
-			}
+		const int pointSize = command.pointSize > 0 ? command.pointSize : 12;
+		bitmapFontCache_t* font = GetBitmapFont( windowDC, idMath::Ftoi( pointSize * pixelScale ) );
+		if ( font == NULL ) {
+			return;
+		}
 
-			HGDIOBJ oldFont = SelectObject( windowDC, font->font );
-			SIZE extent;
-			extent.cx = extent.cy = 0;
-			GetTextExtentPoint32W( windowDC, displayText.c_str(), displayText.Length(), &extent );
-			SelectObject( windowDC, oldFont );
+		HGDIOBJ oldFont = SelectObject( windowDC, font->font );
+		SIZE extent;
+		extent.cx = extent.cy = 0;
+		GetTextExtentPoint32W( windowDC, displayText.c_str(), displayText.Length(), &extent );
+		SelectObject( windowDC, oldFont );
 
-			const float virtualWidth = extent.cx / pixelScale;
-			const float virtualHeight = extent.cy / pixelScale;
-			float x = command.rect.GetMins().x;
-			float y = command.rect.GetMins().y;
-			if ( command.flags & DTF_CENTER ) {
-				x += ( command.rect.GetWidth() - virtualWidth ) * 0.5f;
-			} else if ( command.flags & DTF_RIGHT ) {
-				x += command.rect.GetWidth() - virtualWidth;
-			}
-			if ( command.flags & DTF_VCENTER ) {
-				y += ( command.rect.GetHeight() - virtualHeight ) * 0.5f;
-			} else if ( command.flags & DTF_BOTTOM ) {
-				y += command.rect.GetHeight() - virtualHeight;
-			}
+		const float virtualWidth = extent.cx / pixelScale;
+		const float virtualHeight = extent.cy / pixelScale;
+		float x = command.rect.GetMins().x;
+		float y = command.rect.GetMins().y;
+		if ( command.flags & DTF_CENTER ) {
+			x += ( command.rect.GetWidth() - virtualWidth ) * 0.5f;
+		} else if ( command.flags & DTF_RIGHT ) {
+			x += command.rect.GetWidth() - virtualWidth;
+		}
+		if ( command.flags & DTF_VCENTER ) {
+			y += ( command.rect.GetHeight() - virtualHeight ) * 0.5f;
+		} else if ( command.flags & DTF_BOTTOM ) {
+			y += command.rect.GetHeight() - virtualHeight;
+		}
 
-			const byte* rgba = reinterpret_cast< const byte* >( &command.color );
-			glColor4ub( rgba[ 0 ], rgba[ 1 ], rgba[ 2 ], rgba[ 3 ] );
-			glRasterPos2f( x, y + virtualHeight );
-			glListBase( font->listBase );
-			glCallLists( displayText.Length(), GL_UNSIGNED_SHORT, displayText.c_str() );
+		const byte* rgba = reinterpret_cast< const byte* >( &command.color );
+		glColor4ub( rgba[ 0 ], rgba[ 1 ], rgba[ 2 ], rgba[ 3 ] );
+		glRasterPos2f( x, y + virtualHeight );
+		glListBase( font->listBase );
+		glCallLists( displayText.Length(), GL_UNSIGNED_SHORT, displayText.c_str() );
+	};
+
+	// The retail GUI model is one command stream.  Keeping primitives and text
+	// in separate decoded arrays is fine only if they are merged again here;
+	// otherwise all GUI text is drawn after the console even though the console
+	// is the final producer in Session::Draw.
+	int primitiveIndex = 0;
+	int textIndex = 0;
+	while ( primitiveIndex < primitives.Num() || textIndex < texts.Num() ) {
+		const bool usePrimitive = textIndex >= texts.Num() ||
+			( primitiveIndex < primitives.Num() && primitives[ primitiveIndex ].sequence < texts[ textIndex ].sequence );
+		if ( usePrimitive ) {
+			submitPrimitive( primitives[ primitiveIndex++ ] );
+		} else {
+			submitText( texts[ textIndex++ ] );
 		}
 	}
 

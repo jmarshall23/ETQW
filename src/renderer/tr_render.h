@@ -52,6 +52,7 @@ void R_GenerateViewMatrix( const idMat3& axis, const idVec3& origin, float* cons
 void R_SetViewMatrix( viewDef_s* viewDef );
 void R_SetupProjection( viewDef_s* viewDef, bool allowJitter );
 void R_SetupMatrices( viewDef_s* viewDef, bool allowJitter );
+void R_SetupExpressionMemory( const viewDef_s* viewDef );
 int R_GenerateIndexTreeRenderList( int* list, int maxLength, const float modelMatrix[ 16 ], const viewDef_s* viewDef, const srfTriangles_t* triangles );
 srfTriangles_t* R_PolytopeSurface( int numPlanes, const idPlane* planes, idWinding** windings );
 void R_FreePolytopeSurface( srfTriangles_t* triangles );

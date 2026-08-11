@@ -62,6 +62,7 @@ private:
 	};
 
 	struct guiPrimitive_t {
+		int					sequence;
 		const idMaterial*	material;
 		idSoundEmitter*		referenceSound;
 		unsigned int		color;
@@ -72,6 +73,7 @@ private:
 	};
 
 	struct guiText_t {
+		int					sequence;
 		idWStr				text;
 		sdBounds2D			rect;
 		unsigned int		flags;

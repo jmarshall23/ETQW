@@ -440,6 +440,9 @@ idConsoleLocal::Close
 */
 void	idConsoleLocal::Close() {
 	keyCatching = false;
+	// Closing through either the console key or Escape returns mouse ownership
+	// to the game. Keyboard focus is managed independently by the window.
+	sys->Mouse().GrabCursor( true );
 	SetDisplayFraction( 0 );
 	displayFrac = 0;	// don't scroll to that point, go immediately
 	ClearNotifyLines();
@@ -785,12 +788,11 @@ bool	idConsoleLocal::ProcessEvent( const sdSysEvent *event, bool forceAccept ) {
 		// a down event will toggle the destination lines
 		if ( keyCatching ) {
 			Close();
-			sys->Mouse().GrabCursor( true );
 		} else {
 			consoleField.Clear();
 			keyCatching = true;
-			// Console input uses the Windows pointer and must not leave raw mouse
-			// capture active.  Closing the console takes the grab back above.
+			// Release only the mouse acquisition/cursor clip. The game window
+			// remains focused, so keyboard events continue to reach the console.
 			sys->Mouse().GrabCursor( false );
 			if ( idKeyInput::IsDown( K_SHIFT ) ) {
 				// if the shift key is down, don't open the console as much
@@ -985,7 +987,7 @@ void idConsoleLocal::DrawInput() {
 		}
 	}
 
-	deviceContext->SetColor( idStr::ColorForIndex( C_COLOR_CYAN ) );
+	deviceContext->SetColor( idStr::ColorForChar( C_COLOR_CYAN ) );
 
 	renderSystem->DrawSmallChar( 1 * SMALLCHAR_WIDTH, y, ']', localConsole.charSetShader );
 
@@ -1034,8 +1036,9 @@ void idConsoleLocal::DrawNotify() {
 			if ( ( text_p[x] & 0xff ) == ' ' ) {
 				continue;
 			}
-			if ( idStr::ColorIndex(text_p[x]>>8) != currentColor ) {
-				currentColor = idStr::ColorIndex(text_p[x]>>8);
+			const int charColor = text_p[x] >> 8;
+			if ( charColor != currentColor ) {
+				currentColor = charColor;
 				deviceContext->SetColor( idStr::ColorForIndex( currentColor ) );
 			}
 			renderSystem->DrawSmallChar( (x+1)*SMALLCHAR_WIDTH, v, text_p[x] & 0xff, localConsole.charSetShader );
@@ -1089,7 +1092,7 @@ void idConsoleLocal::DrawSolidConsole( float frac ) {
 
 	// draw the version number
 
-	deviceContext->SetColor( idStr::ColorForIndex( C_COLOR_CYAN ) );
+	deviceContext->SetColor( idStr::ColorForChar( C_COLOR_CYAN ) );
 
 	idStr version = va( "ETQW %d.%d.%d.%d", ENGINE_VERSION_MAJOR, ENGINE_VERSION_MINOR, ENGINE_SRC_REVISION, ENGINE_MEDIA_REVISION );
 	i = version.Length();
@@ -1110,7 +1113,7 @@ void idConsoleLocal::DrawSolidConsole( float frac ) {
 	// draw from the bottom up
 	if ( display != current ) {
 		// draw arrows to show the buffer is backscrolled
-		deviceContext->SetColor( idStr::ColorForIndex( C_COLOR_CYAN ) );
+		deviceContext->SetColor( idStr::ColorForChar( C_COLOR_CYAN ) );
 		for ( x = 0; x < LINE_WIDTH; x += 4 ) {
 			renderSystem->DrawSmallChar( (x+1)*SMALLCHAR_WIDTH, idMath::FtoiFast( y ), '^', localConsole.charSetShader );
 		}
@@ -1143,8 +1146,9 @@ void idConsoleLocal::DrawSolidConsole( float frac ) {
 				continue;
 			}
 
-			if ( idStr::ColorIndex(text_p[x]>>8) != currentColor ) {
-				currentColor = idStr::ColorIndex(text_p[x]>>8);
+			const int charColor = text_p[x] >> 8;
+			if ( charColor != currentColor ) {
+				currentColor = charColor;
 				deviceContext->SetColor( idStr::ColorForIndex( currentColor ) );
 			}
 			renderSystem->DrawSmallChar( (x+1)*SMALLCHAR_WIDTH, idMath::FtoiFast( y ), text_p[x] & 0xff, localConsole.charSetShader );
@@ -1178,6 +1182,7 @@ void	idConsoleLocal::Draw( bool forceFullScreen ) {
 		Close();
 		// we are however catching keyboard input
 		keyCatching = true;
+		sys->Mouse().GrabCursor( false );
 	}
 
 	Scroll();

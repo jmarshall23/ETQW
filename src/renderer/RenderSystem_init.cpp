@@ -129,6 +129,13 @@ idCVar r_useStateCaching(
 	"avoid redundant state changes in GL_*() calls"
 );
 
+idCVar r_useConstantMaterials(
+	"r_useConstantMaterials",
+	"1",
+	CVAR_RENDERER | CVAR_BOOL,
+	"use pre-calculated material registers if possible"
+);
+
 idCVar r_ambientScale(
 	"r_ambientScale",
 	"1.0",

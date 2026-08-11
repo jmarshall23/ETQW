@@ -762,9 +762,12 @@ idImage* idImageManager::ParseImage( idParser& src, const imageParams_t& default
 		} else if ( token.Icmp( "clamp" ) == 0 ) {
 			parms.trp = TR_CLAMP;
 		} else if ( token.Icmp( "clamp_x" ) == 0 ) {
-			parms.trp = TR_CLAMP_X;
-		} else if ( token.Icmp( "clamp_y" ) == 0 ) {
+			// Retail ETQW names the one-axis modes for the direction that is
+			// allowed to repeat, not the GL coordinate that is clamped.  The
+			// skybox side panorama depends on clamp_x repeating S while clamping T.
 			parms.trp = TR_CLAMP_Y;
+		} else if ( token.Icmp( "clamp_y" ) == 0 ) {
+			parms.trp = TR_CLAMP_X;
 		} else if ( token.Icmp( "noclamp" ) == 0 ) {
 			parms.trp = TR_REPEAT;
 		} else if ( token.Icmp( "zeroclamp" ) == 0 ) {

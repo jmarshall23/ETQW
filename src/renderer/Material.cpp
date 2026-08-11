@@ -10,6 +10,7 @@
 #pragma hdrstop
 
 #include "Material.h"
+#include "draw_local.h"
 #include "Image.h"
 #include "renderbindings.h"
 #include "tr_render.h"
@@ -19,13 +20,94 @@
 #include "../decllib/declRenderBinding.h"
 #include "../decllib/declTable.h"
 #include "../decllib/declTypeHolder.h"
+#include "../decllib/declAtmosphere.h"
 #include "../framework/DeclParseHelper.h"
+#include "../sound/SoundEmitter.h"
+
+extern idCVar r_lightScale;
+extern idCVar r_shaderQuality;
+extern idCVar r_useConstantMaterials;
 
 namespace {
 
 const int MAX_EXPRESSION_REGISTERS = 512;
 const int MAX_EXPRESSION_OPS = 512;
 
+const int NUM_ATMOSPHERE_EXPRESSIONS = 18;
+
+// R_SetupExpressionMemory updates this once for each submitted view.  Material
+// OP_LOAD expressions then see one coherent atmosphere snapshot, as in ETQW,
+// instead of advancing randf or rebuilding wind/sun data for every surface.
+float atmosphereExpressionMemory[ NUM_ATMOSPHERE_EXPRESSIONS ] = {
+	0.0f, 1.0f,                         // halo bias, halo scale
+	0.0f, 0.0f, 1.0f,                  // sun direction
+	1.0f, 1.0f, 1.0f,                  // sun colour
+	1.0f, 1.0f, 1.0f,                  // desaturated sun colour
+	0.0f,                               // rotated sun azimuth
+	1.0f, 0.0f,                         // wind direction
+	1.0f, 0.0f, 0.0f, 0.5f            // light scale, shader quality, night, rand
+};
+
+bool atmosphereExpressionMemoryInitialized = false;
+
+void BuildAtmosphereExpressionMemory( const viewDef_s* viewDef, float result[ NUM_ATMOSPHERE_EXPRESSIONS ] ) {
+	memcpy( result, atmosphereExpressionMemory, sizeof( atmosphereExpressionMemory ) );
+
+	const sdDeclAtmosphere* atmosphere = viewDef != NULL ? viewDef->atmosphere : NULL;
+	if ( atmosphere != NULL ) {
+		result[ 0 ] = atmosphere->GetSunHaloBias();
+		result[ 1 ] = atmosphere->GetSunHaloScale();
+
+		const idVec3& sunDirection = atmosphere->GetSunDirection();
+		result[ 2 ] = sunDirection.x;
+		result[ 3 ] = sunDirection.y;
+		result[ 4 ] = sunDirection.z;
+
+		const idVec3& sunColor = atmosphere->GetSunColor();
+		result[ 5 ] = sunColor.x;
+		result[ 6 ] = sunColor.y;
+		result[ 7 ] = sunColor.z;
+		const float desaturatedSun = ( sunColor.x + sunColor.y + sunColor.z ) * 0.33f * 0.8f;
+		result[ 8 ] = sunColor.x * 0.2f + desaturatedSun;
+		result[ 9 ] = sunColor.y * 0.2f + desaturatedSun;
+		result[ 10 ] = sunColor.z * 0.2f + desaturatedSun;
+
+		float sunAzimuth = 360.0f - atmosphere->GetSunAzimuth() + 90.0f;
+		sunAzimuth -= idMath::Floor( sunAzimuth / 360.0f ) * 360.0f;
+		result[ 11 ] = sunAzimuth;
+
+		const float windRadians = atmosphere->GetWindAngle() * idMath::M_DEG2RAD;
+		result[ 12 ] = idMath::Cos( windRadians );
+		result[ 13 ] = idMath::Sin( windRadians );
+		result[ 16 ] = atmosphere->IsNight() ? 1.0f : 0.0f;
+	}
+
+	result[ 14 ] = r_lightScale.GetFloat();
+	result[ 15 ] = static_cast< float >( r_shaderQuality.GetInteger() );
+	result[ 17 ] = idRandom::StaticRandom().RandomFloat();
+}
+
+}
+
+void R_SetupExpressionMemory( const viewDef_s* viewDef ) {
+	float updated[ NUM_ATMOSPHERE_EXPRESSIONS ];
+	BuildAtmosphereExpressionMemory( viewDef, updated );
+
+	// randf and the wind vector are dynamic registers.  All other entries can
+	// participate in a precomputed material, so invalidate those registers when
+	// the atmosphere or either renderer scale changes.
+	bool constantsChanged = !atmosphereExpressionMemoryInitialized;
+	for ( int i = 0; !constantsChanged && i < NUM_ATMOSPHERE_EXPRESSIONS; ++i ) {
+		if ( i == 12 || i == 13 || i == 17 ) {
+			continue;
+		}
+		constantsChanged = updated[ i ] != atmosphereExpressionMemory[ i ];
+	}
+	if ( constantsChanged ) {
+		++idMaterial::currentAtmosphereFrame;
+	}
+	memcpy( atmosphereExpressionMemory, updated, sizeof( atmosphereExpressionMemory ) );
+	atmosphereExpressionMemoryInitialized = true;
 }
 
 // PDB type: mtrParsingData_s, sizeof 0x8604 in the original Win32 build.
@@ -1753,20 +1835,28 @@ void idMaterial::SetLodDistance( float distance ) const {
 void idMaterial::EvaluateRegisters(
 	float* registers,
 	const float shaderParms[ MAX_ENTITY_SHADER_PARMS ],
-	const viewDef_s*,
-	idSoundEmitter*,
+	const viewDef_s* view,
+	idSoundEmitter* soundEmitter,
 	int numManualLights
 ) const {
 	if ( registers == NULL ) {
 		return;
 	}
-	if ( expressionRegisters != NULL && numRegisters > 0 ) {
-		memcpy( registers, expressionRegisters, numRegisters * sizeof( float ) );
-	} else if ( numRegisters > 0 ) {
-		memset( registers, 0, numRegisters * sizeof( float ) );
+	if ( numRegisters <= 0 ) {
+		return;
 	}
+
+	memset( registers, 0, Min( numRegisters, static_cast< int >( EXP_REG_NUM_PREDEFINED ) ) * sizeof( float ) );
+	if ( expressionRegisters != NULL && numRegisters > EXP_REG_NUM_PREDEFINED ) {
+		memcpy( registers + EXP_REG_NUM_PREDEFINED, expressionRegisters + EXP_REG_NUM_PREDEFINED,
+			( numRegisters - EXP_REG_NUM_PREDEFINED ) * sizeof( float ) );
+	}
+	registers[ EXP_REG_TIME ] = view != NULL ? view->floatTime : Sys_Milliseconds() * 0.001f;
 	if ( shaderParms != NULL ) {
 		memcpy( registers + EXP_REG_PARM0, shaderParms, MAX_ENTITY_SHADER_PARMS * sizeof( float ) );
+	}
+	if ( view != NULL ) {
+		memcpy( registers + EXP_REG_GLOBAL0, view->renderView.shaderParms, MAX_GLOBAL_SHADER_PARMS * sizeof( float ) );
 	}
 	registers[ EXP_REG_NUMLIGHTS ] = static_cast< float >( numManualLights );
 
@@ -1776,10 +1866,13 @@ void idMaterial::EvaluateRegisters(
 			case OP_TYPE_ADD:		registers[ op.c ] = registers[ op.a ] + registers[ op.b ]; break;
 			case OP_TYPE_SUBTRACT:	registers[ op.c ] = registers[ op.a ] - registers[ op.b ]; break;
 			case OP_TYPE_MULTIPLY:	registers[ op.c ] = registers[ op.a ] * registers[ op.b ]; break;
-			case OP_TYPE_DIVIDE:		registers[ op.c ] = registers[ op.b ] != 0.0f ? registers[ op.a ] / registers[ op.b ] : 0.0f; break;
+			case OP_TYPE_DIVIDE:		registers[ op.c ] = registers[ op.a ] / registers[ op.b ]; break;
 			case OP_TYPE_MOD: {
-				const int divisor = static_cast< int >( registers[ op.b ] );
-				registers[ op.c ] = divisor != 0 ? static_cast< int >( registers[ op.a ] ) % divisor : 0.0f;
+				int divisor = static_cast< int >( registers[ op.b ] );
+				if ( divisor == 0 ) {
+					divisor = 1;
+				}
+				registers[ op.c ] = static_cast< float >( static_cast< int >( registers[ op.a ] ) % divisor );
 				break;
 			}
 			case OP_TYPE_GT:			registers[ op.c ] = registers[ op.a ] > registers[ op.b ]; break;
@@ -1795,24 +1888,27 @@ void idMaterial::EvaluateRegisters(
 				registers[ op.c ] = table != NULL ? table->TableLookup( registers[ op.b ] ) : 0.0f;
 				break;
 			}
-			case OP_TYPE_SOUND:		registers[ op.c ] = 0.0f; break;
-			case OP_TYPE_LOAD: {
-				static const float atmosphereDefaults[] = {
-					0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-					1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.5f
-				};
-				registers[ op.c ] = op.a >= 0 && op.a < static_cast< int >( sizeof( atmosphereDefaults ) / sizeof( atmosphereDefaults[ 0 ] ) ) ? atmosphereDefaults[ op.a ] : 0.0f;
-				break;
-			}
+			case OP_TYPE_SOUND:		registers[ op.c ] = soundEmitter != NULL ? soundEmitter->CurrentAmplitude() : 0.0f; break;
+			case OP_TYPE_LOAD:		registers[ op.c ] = op.a >= 0 && op.a < NUM_ATMOSPHERE_EXPRESSIONS ? atmosphereExpressionMemory[ op.a ] : 0.0f; break;
 			default:				registers[ op.c ] = 0.0f; break;
 		}
 	}
 }
 
 const float* idMaterial::ConstantRegisters(
-	const float[ MAX_ENTITY_SHADER_PARMS ],
-	const viewDef_s*
+	const float shaderParms[ MAX_ENTITY_SHADER_PARMS ],
+	const viewDef_s* view
 ) const {
+	if ( !r_useConstantMaterials.GetBool() ) {
+		return NULL;
+	}
+	if ( constantRegisters != NULL && view != NULL &&
+		( atmosphereFrame != currentAtmosphereFrame ||
+		( timeBasedRegisters && idMath::Fabs( lastFloatTime - view->floatTime ) > ( 1.0f / 60.0f ) ) ) ) {
+		EvaluateRegisters( constantRegisters, shaderParms, view, NULL, 0 );
+		lastFloatTime = view->floatTime;
+		atmosphereFrame = currentAtmosphereFrame;
+	}
 	return constantRegisters;
 }
 

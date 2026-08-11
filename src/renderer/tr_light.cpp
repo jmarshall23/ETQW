@@ -1970,6 +1970,7 @@ void R_BuildDrawView( idRenderWorldLocal* renderWorld, const renderView_t* rende
 	view->renderView = *renderView;
 	view->floatTime = renderView->time * 0.001f;
 	view->atmosphere = renderWorld->GetAtmosphere();
+	R_SetupExpressionMemory( view );
 	renderSystemBackend.RenderViewToViewport( renderView, &view->viewport );
 	R_SetupMatrices( view, true );
 	view->worldSpace.ambientCubeMap = renderWorld->BackendAmbientCubeMap();
