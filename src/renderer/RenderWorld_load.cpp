@@ -138,6 +138,15 @@ idRenderModel* ParseProcModelBinary(
 			break;
 		}
 
+		// ETQW materials can request the wider low-range UV packing used by the
+		// interaction programs (notably the MegaTexture materials).  Packing all
+		// proc vertices with the regular 4096 scale makes those programs divide
+		// the coordinates by 32768 and collapses the terrain onto a tiny part of
+		// the MegaTexture atlas.
+		const idMaterial* surfaceMaterial = declHolder.FindMaterial( materials[ materialIndex ], true );
+		const bool lowRangeTexCoords = surfaceMaterial != NULL &&
+			surfaceMaterial->TestMaterialFlag( MF_LOWRANGEUVCOMPRESS );
+
 		srfTriangles_t* triangles = model->AllocSurfaceTriangles( numVerts, numIndexes );
 		if ( triangles == NULL ) {
 			valid = false;
@@ -169,7 +178,7 @@ idRenderModel* ParseProcModelBinary(
 
 			idDrawVert& vertex = triangles->verts[ vertexIndex ];
 			vertex.xyz.Set( values[ 0 ], values[ 1 ], values[ 2 ] );
-			vertex.SetST( false, idVec2( values[ 3 ], values[ 4 ] ) );
+			vertex.SetST( lowRangeTexCoords, idVec2( values[ 3 ], values[ 4 ] ) );
 			vertex.SetNormal( idVec3( values[ 5 ], values[ 6 ], values[ 7 ] ) );
 			if ( floatCount >= 12 ) {
 				vertex.SetTangent( idVec3( values[ 8 ], values[ 9 ], values[ 10 ] ) );
@@ -231,7 +240,7 @@ idRenderModel* ParseProcModelBinary(
 		DeriveProcFacePlanes( triangles );
 		modelSurface_t surface;
 		surface.id = surfaceIndex;
-		surface.material = declHolder.FindMaterial( materials[ materialIndex ], true );
+		surface.material = surfaceMaterial;
 		surface.geometry = triangles;
 		model->AddSurface( surface );
 		modelBounds += surfaceBounds;

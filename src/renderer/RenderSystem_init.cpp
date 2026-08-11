@@ -150,6 +150,7 @@ idCVar r_skipAmbient( "r_skipAmbient", "0", CVAR_RENDERER | CVAR_BOOL, "skip non
 idCVar r_skipInteractions( "r_skipInteractions", "0", CVAR_RENDERER | CVAR_INTEGER, "skip light interactions" );
 idCVar r_skipTranslucent( "r_skipTranslucent", "0", CVAR_RENDERER | CVAR_BOOL, "skip translucent interactions" );
 idCVar r_skipFogLights( "r_skipFogLights", "0", CVAR_RENDERER | CVAR_BOOL, "skip fog and blend lights" );
+idCVar r_skipWaterFogLights( "r_skipWaterFogLights", "1", CVAR_RENDERER | CVAR_BOOL, "temporarily skip water fog lights" );
 idCVar r_skipAtmosphere( "r_skipAtmosphere", "0", CVAR_RENDERER | CVAR_BOOL, "skips atmosphere pass" );
 idCVar r_skipAtmosInteractions( "r_skipAtmosInteractions", "0", CVAR_RENDERER | CVAR_INTEGER, "skip all atmosphere light/surface interaction drawing" );
 idCVar r_skipRefractCopy( "r_skipRefractCopy", "0", CVAR_RENDERER | CVAR_BOOL, "uses copy of frame buffer" );
@@ -275,6 +276,7 @@ void R_CheckPortableExtensions() {
 	LOAD_QGL( qglActiveTextureARB );
 	LOAD_QGL( qglClientActiveTextureARB );
 	LOAD_QGL( qglCompressedTexImage2DARB );
+	LOAD_QGL( qglCompressedTexSubImage2DARB );
 	LOAD_QGL( qglVertexAttribPointerARB );
 	LOAD_QGL( qglEnableVertexAttribArrayARB );
 	LOAD_QGL( qglDisableVertexAttribArrayARB );
@@ -315,7 +317,11 @@ void R_CheckPortableExtensions() {
 		qglCompressedTexImage2DARB = reinterpret_cast< PFNGLCOMPRESSEDTEXIMAGE2DARBPROC >(
 			sys3D->ExtensionPointer( "glCompressedTexImage2D" ) );
 	}
-	if ( qglCompressedTexImage2DARB == NULL ) {
+	if ( qglCompressedTexSubImage2DARB == NULL ) {
+		qglCompressedTexSubImage2DARB = reinterpret_cast< PFNGLCOMPRESSEDTEXSUBIMAGE2DARBPROC >(
+			sys3D->ExtensionPointer( "glCompressedTexSubImage2D" ) );
+	}
+	if ( qglCompressedTexImage2DARB == NULL || qglCompressedTexSubImage2DARB == NULL ) {
 		glConfig.textureCompressionAvailable = false;
 	}
 
@@ -394,6 +400,7 @@ void R_CheckPortableExtensions() {
 
 void R_ARB2_Init();
 void R_ARB2_Shutdown();
+void R_ARB2_ReparseRenderPrograms();
 
 void R_InitOpenGL() {
 	common->Printf( "----- R_InitOpenGL -----\n" );
@@ -489,11 +496,20 @@ void idRenderSystemLocal::Init() {
 	if ( globalImages != NULL ) {
 		globalImages->Init();
 	}
+	if ( openGLRunning ) {
+		R_ARB2_ReparseRenderPrograms();
+	}
 	rbinds->Init();
 	// Retail starts both MegaTexture workers after images/material bindings are
 	// available and before level resources can become active.
-	megaTextureTileLoader->Init();
 	megaTextureTileDecompressor->Init();
+	megaTextureTileLoader->Init();
+	cmdSystem->AddCommand( "megaTextureInfo", idMegaTexture::MegaTextureInfo_f, CMD_FL_RENDERER,
+		"shows the active MegaTexture view, streaming, decode, and upload state" );
+	cmdSystem->AddCommand( "megaTestStreamingPerformance", idMegaTexture::MegaTestStreamingPerformance_f, CMD_FL_RENDERER,
+		"shows active MegaTexture streaming performance" );
+	cmdSystem->AddCommand( "megaShowMemoryUsage", idMegaTexture::MegaShowMemoryUsage_f, CMD_FL_RENDERER,
+		"shows active MegaTexture memory usage" );
 	if ( renderModelManager != NULL ) {
 		renderModelManager->Init();
 	}

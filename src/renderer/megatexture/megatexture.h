@@ -304,7 +304,7 @@ private:
 	byte *			gridTileData;
 	byte *			tileRecompressionScratch;
 	int				lastShaderQuality;
-	std::recursive_mutex lock;
+	mutable std::recursive_mutex lock;
 
 	const srfTriangles_t *currentTriMapping;
 	float			localViewToTextureCenter[2][4];

@@ -105,6 +105,128 @@ namespace {
 		image->GenerateImage( data, 2, 1, TF_NEAREST, false, TR_CLAMP, TD_HIGH_QUALITY );
 	}
 
+	const int FOG_SIZE = 128;
+	const int FOG_ENTER_SIZE = 64;
+
+	void GenerateFogImage( idImage* image ) {
+		byte data[ FOG_SIZE ][ FOG_SIZE ][ 4 ];
+		float step[ 256 ];
+		float remaining = 1.0f;
+
+		for ( int i = 0; i < 256; ++i ) {
+			step[ i ] = remaining;
+			remaining *= 0.982f;
+		}
+
+		for ( int x = 0; x < FOG_SIZE; ++x ) {
+			for ( int y = 0; y < FOG_SIZE; ++y ) {
+				float distance = idMath::Sqrt( static_cast< float >(
+					( x - FOG_SIZE / 2 ) * ( x - FOG_SIZE / 2 ) +
+					( y - FOG_SIZE / 2 ) * ( y - FOG_SIZE / 2 ) ) );
+				distance /= FOG_SIZE / 2 - 1;
+
+				int alpha = static_cast< byte >( distance * 255.0f );
+				if ( alpha <= 0 ) {
+					alpha = 0;
+				} else if ( alpha > 255 ) {
+					alpha = 255;
+				}
+				alpha = static_cast< byte >( 255.0f * ( 1.0f - step[ alpha ] ) );
+				if ( x == 0 || x == FOG_SIZE - 1 || y == 0 || y == FOG_SIZE - 1 ) {
+					alpha = 255;
+				}
+
+				data[ y ][ x ][ 0 ] = 255;
+				data[ y ][ x ][ 1 ] = 255;
+				data[ y ][ x ][ 2 ] = 255;
+				data[ y ][ x ][ 3 ] = static_cast< byte >( alpha );
+			}
+		}
+
+		image->GenerateImage( &data[ 0 ][ 0 ][ 0 ], FOG_SIZE, FOG_SIZE,
+			TF_LINEAR, false, TR_CLAMP, TD_HIGH_QUALITY );
+	}
+
+	float FogFraction( float viewHeight, float targetHeight ) {
+		const float rampRange = 8.0f;
+		const float deepRange = -30.0f;
+		const float total = idMath::Fabs( targetHeight - viewHeight );
+
+		if ( targetHeight > 0.0f && viewHeight > 0.0f ) {
+			return 0.0f;
+		}
+		if ( targetHeight < -rampRange && viewHeight < -rampRange ) {
+			return 1.0f;
+		}
+
+		float above;
+		if ( targetHeight > 0.0f ) {
+			above = targetHeight;
+		} else if ( viewHeight > 0.0f ) {
+			above = viewHeight;
+		} else {
+			above = 0.0f;
+		}
+
+		float rampTop;
+		float rampBottom;
+		if ( viewHeight > targetHeight ) {
+			rampTop = viewHeight;
+			rampBottom = targetHeight;
+		} else {
+			rampTop = targetHeight;
+			rampBottom = viewHeight;
+		}
+		if ( rampTop > 0.0f ) {
+			rampTop = 0.0f;
+		}
+		if ( rampBottom < -rampRange ) {
+			rampBottom = -rampRange;
+		}
+
+		const float rampSlope = 1.0f / rampRange;
+		if ( total == 0.0f ) {
+			return -viewHeight * rampSlope;
+		}
+
+		const float ramp = ( 1.0f - ( rampTop * rampSlope + rampBottom * rampSlope ) * -0.5f ) *
+			( rampTop - rampBottom );
+		float fraction = ( total - above - ramp ) / total;
+		const float deepest = viewHeight < targetHeight ? viewHeight : targetHeight;
+		const float deepFraction = deepest / deepRange;
+		if ( deepFraction >= 1.0f ) {
+			return 1.0f;
+		}
+
+		return fraction * ( 1.0f - deepFraction ) + deepFraction;
+	}
+
+	void GenerateFogEnterImage( idImage* image ) {
+		byte data[ FOG_ENTER_SIZE ][ FOG_ENTER_SIZE ][ 4 ];
+
+		for ( int x = 0; x < FOG_ENTER_SIZE; ++x ) {
+			for ( int y = 0; y < FOG_ENTER_SIZE; ++y ) {
+				const float fraction = FogFraction(
+					static_cast< float >( x - FOG_ENTER_SIZE / 2 ),
+					static_cast< float >( y - FOG_ENTER_SIZE / 2 ) );
+				int alpha = static_cast< byte >( fraction * 255.0f );
+				if ( alpha <= 0 ) {
+					alpha = 0;
+				} else if ( alpha > 255 ) {
+					alpha = 255;
+				}
+
+				data[ y ][ x ][ 0 ] = 255;
+				data[ y ][ x ][ 1 ] = 255;
+				data[ y ][ x ][ 2 ] = 255;
+				data[ y ][ x ][ 3 ] = static_cast< byte >( alpha );
+			}
+		}
+
+		image->GenerateImage( &data[ 0 ][ 0 ][ 0 ], FOG_ENTER_SIZE, FOG_ENTER_SIZE,
+			TF_LINEAR, false, TR_CLAMP, TD_HIGH_QUALITY );
+	}
+
 	void GenerateNormalCubeImage( idImage* image ) {
 		byte faces[ 6 ][ 4 * 4 * 4 ];
 		const byte colors[ 6 ][ 3 ] = {
@@ -149,6 +271,8 @@ namespace {
 	idImageGeneratorFunctorGlobal rampImageFunctor( GenerateRampImage );
 	idImageGeneratorFunctorGlobal alphaRampImageFunctor( GenerateAlphaRampImage );
 	idImageGeneratorFunctorGlobal alphaNotchImageFunctor( GenerateAlphaNotchImage );
+	idImageGeneratorFunctorGlobal fogImageFunctor( GenerateFogImage );
+	idImageGeneratorFunctorGlobal fogEnterImageFunctor( GenerateFogEnterImage );
 	idImageGeneratorFunctorGlobal normalCubeImageFunctor( GenerateNormalCubeImage );
 	idImageGeneratorFunctorGlobal blackCubeImageFunctor( GenerateBlackCubeImage );
 }
@@ -222,8 +346,8 @@ void idImageManager::Init() {
 	blackCubeMapImage = ImageFromFunction( "_blackCubeMap", blackCubeImageFunctor );
 
 	noFalloffImage = ImageFromFunction( "_noFalloff", whiteImageFunctor );
-	fogImage = ImageFromFunction( "_fog", whiteImageFunctor );
-	fogEnterImage = ImageFromFunction( "_fogEnter", whiteImageFunctor );
+	fogImage = ImageFromFunction( "_fog", fogImageFunctor );
+	fogEnterImage = ImageFromFunction( "_fogEnter", fogEnterImageFunctor );
 	specularTableImage = ImageFromFunction( "_specularTable", rampImageFunctor );
 	specular2DTableImage = ImageFromFunction( "_specular2DTable", rampImageFunctor );
 	defaultDetailMaskImage = ImageFromFunction( "_defaultDetailMask", whiteImageFunctor );

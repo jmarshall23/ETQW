@@ -472,6 +472,13 @@ void idImage::GenerateImageEx(
 	numMipLevels = level + 1;
 	Mem_Free( levelPixels );
 	SetImageFilterAndRepeat();
+	// GenerateImageEx is used by the MegaTexture moving atlases to allocate
+	// only the mip range updated by a 128x128 streamed tile.  Retail clamps the
+	// texture immediately after SetImageFilterAndRepeat so OpenGL does not
+	// consider the deliberately partial mip chain incomplete.
+	if ( requestedMipLevels >= 0 ) {
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, Max( requestedMipLevels - 1, 0 ) );
+	}
 }
 
 void idImage::Generate3DImage(

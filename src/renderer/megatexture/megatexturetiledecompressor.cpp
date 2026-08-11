@@ -179,7 +179,7 @@ void idMegaTextureTileDecompressor::GetCompressedTileData( idMegaTexture *mega, 
 		idMegaTextureLevel *parentLevel = mega->GetLevel( compressedData.parentLevelNum );
 		if ( parentLevel ) {
 			compressedData.parentData = parentLevel->GetCompressedTileData( compressedData.parentGlobalX, compressedData.parentGlobalY );
-			const int parentTile = parentLevel->tileBase + compressedData.parentGlobalY * parentLevel->tilesPerAxis + compressedData.parentGlobalX;
+			const int parentTile = parentLevel->tileBase + compressedData.parentGlobalX + compressedData.parentGlobalY * parentLevel->tilesPerAxis;
 			compressedData.parentSize = mega->GetTileDataSize( parentTile );
 		}
 	}

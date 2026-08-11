@@ -187,7 +187,7 @@ void idMegaTextureTileLoader::LoadInterleavedChildren( idMegaTexture *mega, idMe
 		const int childX = parentTile->globalX * 2 + ( child & 1 );
 		const int childY = parentTile->globalY * 2 + ( child >> 1 );
 		if ( childX < 0 || childY < 0 || childX >= childLevel->tilesPerAxis || childY >= childLevel->tilesPerAxis ) continue;
-		const int tileNum = childLevel->tileBase + childY * childLevel->tilesPerAxis + childX;
+		const int tileNum = childLevel->tileBase + childX + childY * childLevel->tilesPerAxis;
 		if ( !parentTile->childCompressedTileData[child] ) {
 			parentTile->childCompressedTileData[child] = new byte[childLevel->maxCompressedTileSize + 3];
 			parentLevel->AddUsedMemory( childLevel->maxCompressedTileSize + 3 );
@@ -242,7 +242,7 @@ unsigned int idMegaTextureTileLoader::Run( void *parameter ) {
 									tile->childCompressedTileData[child] = new byte[childLevel->maxCompressedTileSize + 3];
 									level->AddUsedMemory( childLevel->maxCompressedTileSize + 3 );
 								}
-								tileNums[loadCount] = childLevel->tileBase + childY[child] * childLevel->tilesPerAxis + childX[child];
+								tileNums[loadCount] = childLevel->tileBase + childX[child] + childY[child] * childLevel->tilesPerAxis;
 								tileBytes[loadCount] = mega->GetTileDataSize( tileNums[loadCount] ) + 3;
 								++loadCount;
 							}

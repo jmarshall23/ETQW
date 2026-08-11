@@ -1771,7 +1771,13 @@ viewLight_s* R_SetLightDefViewLight( renderLight_t* light, int lightIndex ) {
 	vLight->globalLightDirection.Normalize();
 	vLight->lightRadius = light->lightRadius;
 	vLight->lightRadiusLength = light->lightRadius.Length();
-	vLight->fogPlane = vLight->lightProject[ 3 ];
+	// ETQW copies the derived light's rear frustum plane into viewLight::fogPlane.
+	// This is not the raw falloff projection plane: frustum[ 5 ] includes the
+	// far-edge offset and normalization performed by R_SetLightFrustum.  Feeding
+	// lightProject[ 3 ] to the fog-enter calculation makes large water fog lights
+	// saturate across their volume, which paints Valley with the fog's exact
+	// ( 0.21, 0.20, 0.12 ) colour.
+	vLight->fogPlane = vLight->frustum[ 5 ];
 	vLight->fadeFraction = 1.0f;
 	SetFullScreenRect( vLight->scissorRect );
 	if ( light->flags.pointLight ) {

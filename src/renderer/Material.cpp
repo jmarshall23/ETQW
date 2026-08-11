@@ -866,6 +866,10 @@ void idMaterial::ParseStage( idParser& src ) {
 				stage->megaTexture = globalImages->MegaTextureFromFile( megaTextureName.c_str() );
 				if ( stage->megaTexture == NULL ) {
 					src.Warning( "Unable to load megaTexture '%s'", megaTextureName.c_str() );
+				} else {
+					// The backend uses this ETQW material flag to include MegaTexture
+					// surfaces in its ambient interaction pass.
+					materialFlags |= MF_HASMEGA;
 				}
 			}
 			if ( globalMatrix.renderBinding_s != NULL ) {

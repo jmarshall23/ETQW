@@ -22,6 +22,15 @@ extern idCVar r_skipDiffuse;
 extern idCVar r_shaderQuality;
 
 namespace {
+	void ReparseRenderPrograms() {
+		for ( int index = 0; index < declHolder.declRenderProgramType.Num(); ++index ) {
+			idDecl* decl = const_cast< idDecl* >( static_cast< const idDecl* >( declHolder.FindRenderProgramByIndex( index, false ) ) );
+			if ( decl != NULL && decl->IsValid() ) {
+				decl->ReParse();
+			}
+		}
+	}
+
 	void Evaluator_SkipBump( const sdDeclRenderBinding* target ) {
 		if ( target != NULL && globalImages != NULL ) {
 			target->Set( globalImages->flatNormalMap );
@@ -76,10 +85,7 @@ namespace {
 		renderSystem->LockThreads();
 		if ( globalImages != NULL ) globalImages->SetInsideLevelLoad( true );
 
-		for ( int index = 0; index < declHolder.declRenderProgramType.Num(); ++index ) {
-			idDecl* decl = const_cast< idDecl* >( static_cast< const idDecl* >( declHolder.FindRenderProgramByIndex( index, false ) ) );
-			if ( decl != NULL && decl->IsValid() ) decl->ReParse();
-		}
+		ReparseRenderPrograms();
 		for ( int index = 0; index < declHolder.declMaterialType.Num(); ++index ) {
 			idMaterial* material = const_cast< idMaterial* >( declHolder.FindMaterialByIndex( index, false ) );
 			idMegaTexture* savedMegaTexture = NULL;
@@ -110,6 +116,15 @@ namespace {
 	idCVarCallback_SkipDiffuse g_skipDiffuseCallback;
 	idCVarCallback_ShaderQuality g_shaderQualityCallback;
 	idCVarCallback_MegaDrawMethod g_megaDrawMethodCallback;
+}
+
+void R_ARB2_ReparseRenderPrograms() {
+	// Render-program declarations can be referenced by materials before the GL
+	// context is initialized. Their first parse deliberately retains an
+	// uncompiled shader placeholder. Reparse those declarations once the
+	// context is live so linkage and requiredVertexAttribs are built before
+	// sdRenderBindings caches program pointers.
+	ReparseRenderPrograms();
 }
 
 void R_ARB2_Init() {

@@ -444,7 +444,13 @@ bool idBareDctDecoder::DecompressLuminanceEnhancement_Generic( const byte *in, b
 			for ( int y = 0; y < 8 && by + y < height; ++y ) {
 				for ( int x = 0; x < 8 && bx + x < width; ++x ) {
 					byte *pixel = out + 4 * ( ( by + y ) * width + bx + x );
-					pixel[0] = (byte)ClampByte( pixel[0] + block[y * 8 + x] );
+					// Luminance enhancement blocks are encoded around the JPEG/DCT
+					// sample midpoint.  Retail's DecompressOneTileLuminance indexes
+					// the range-limit table with parentY + residual + 128.  Omitting
+					// that bias makes the LUM MegaTexture level roughly 128 values
+					// too dark and lets its moving window cover the valid coarse
+					// terrain with an almost uniform dark/gold patch.
+					pixel[0] = (byte)ClampByte( pixel[0] + block[y * 8 + x] + 128 );
 				}
 			}
 		}

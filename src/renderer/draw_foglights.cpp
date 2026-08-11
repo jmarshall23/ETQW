@@ -13,6 +13,7 @@
 #include "../libs/qglLib/qgl.h"
 
 extern idCVar r_skipFogLights;
+extern idCVar r_skipWaterFogLights;
 extern idCVar r_showOverDraw;
 extern idCVar r_ignore;
 extern idCVar r_useScissor;
@@ -94,6 +95,8 @@ void RB_ARB2_FogLights( int phase ) {
 	for ( viewLight_s* light = view->viewLights; light != NULL; light = light->next ) {
 		if ( light->culled || light->material == NULL || light->lightRegisters == NULL ) continue;
 		if ( !light->material->IsFogLight() && !light->material->IsBlendLight() ) continue;
+		if ( r_skipWaterFogLights.GetBool() &&
+			idStr::Icmpn( light->material->GetName(), "fogs/waterFog", 13 ) == 0 ) continue;
 		if ( light->material->GetSort() != static_cast< float >( phase ) ) continue;
 
 		rbinds->fadeFraction->Set( light->fadeFraction );
