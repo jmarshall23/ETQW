@@ -1628,6 +1628,7 @@ void R_RemoveUnecessaryViewLights( void ) {
 #include "Image.h"
 #include "Material.h"
 #include "Model.h"
+#include "Model_Stuff.h"
 #include "VertexCache.h"
 #include "../decllib/declTypeHolder.h"
 #include "../libs/qglLib/qgl.h"
@@ -2246,7 +2247,9 @@ void R_BuildDrawView( idRenderWorldLocal* renderWorld, const renderView_t* rende
 			entity->callback( entity, renderView, lastModifiedGameTime );
 		}
 		if ( entity->hModel == NULL ) continue;
-		R_SetEntityDefViewEntity( entity, entity->hModel, entityIndex );
+		idRenderModel* drawModel = entity->hModel;
+		if ( R_GetStuffModelSnapshot( entity->hModel, entity, view, drawModel ) && drawModel == NULL ) continue;
+		R_SetEntityDefViewEntity( entity, drawModel, entityIndex );
 	}
 	for ( int effectIndex = 0; effectIndex < renderWorld->BackendNumPreparedEffects(); ++effectIndex ) {
 		renderEntity_t* effectEntity = renderWorld->BackendPreparedEffect( effectIndex );

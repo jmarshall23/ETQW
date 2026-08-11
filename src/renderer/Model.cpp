@@ -7,6 +7,7 @@
 #pragma hdrstop
 
 #include "Model.h"
+#include "Model_Stuff.h"
 #include "RenderSystem.h"
 #include "VertexCache.h"
 #include "../decllib/declTypeHolder.h"
@@ -52,6 +53,7 @@ public:
 	}
 
 	virtual ~idRenderModelStatic() {
+		R_FreeStuffModel( this );
 		ClearSurfaces();
 	}
 
@@ -66,6 +68,7 @@ public:
 	}
 
 	virtual void InitEmpty( const char* name ) {
+		R_FreeStuffModel( this );
 		modelName = name != NULL ? name : "";
 		loaded = true;
 		defaulted = false;
@@ -107,6 +110,7 @@ public:
 	virtual bool Validate() const { return loaded; }
 
 	virtual void PurgeModel() {
+		R_FreeStuffModel( this );
 		loaded = false;
 		ClearSurfaces();
 		modelJoints.Clear();
@@ -116,6 +120,7 @@ public:
 	virtual void Reset() {}
 
 	virtual void LoadModel() {
+		R_FreeStuffModel( this );
 		ClearSurfaces();
 		modelJoints.Clear();
 		defaultPose.Clear();
@@ -134,7 +139,13 @@ public:
 
 		idStr extension;
 		modelName.ExtractFileExtension( extension );
-		if ( !extension.Icmp( "modelb" ) ) {
+		if ( !extension.Icmp( "clust" ) ) {
+			if ( R_LoadStuffModel( this, modelName ) ) {
+				return;
+			}
+			defaulted = true;
+			return;
+		} else if ( !extension.Icmp( "modelb" ) ) {
 			if ( LoadModelB( modelName ) ) {
 				FinishSurfaces();
 				return;

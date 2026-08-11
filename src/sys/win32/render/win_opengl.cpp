@@ -81,6 +81,26 @@ void QueueKeyboardEvent( UINT message, WPARAM wParam, LPARAM lParam ) {
 	sys->QueEvent( SE_KEY, SE_KEY_VALUE( key, scanCode ), SE_KEY_VALUE2( isDown, isRepeat ), 0, NULL );
 }
 
+bool IsCursorInClientArea( HWND window ) {
+	POINT cursor;
+	RECT client;
+	if ( !GetCursorPos( &cursor ) || !GetClientRect( window, &client ) ) {
+		return true;
+	}
+
+	POINT topLeft = { client.left, client.top };
+	POINT bottomRight = { client.right, client.bottom };
+	if ( !ClientToScreen( window, &topLeft ) || !ClientToScreen( window, &bottomRight ) ) {
+		return true;
+	}
+
+	client.left = topLeft.x;
+	client.top = topLeft.y;
+	client.right = bottomRight.x;
+	client.bottom = bottomRight.y;
+	return PtInRect( &client, cursor ) != FALSE;
+}
+
 LRESULT CALLBACK ETQWWindowProc( HWND window, UINT message, WPARAM wParam, LPARAM lParam ) {
 	switch ( message ) {
 		case WM_CREATE:
@@ -91,12 +111,15 @@ LRESULT CALLBACK ETQWWindowProc( HWND window, UINT message, WPARAM wParam, LPARA
 		case WM_ACTIVATE:
 			win32.activeApp = LOWORD( wParam ) != WA_INACTIVE;
 			if ( win32.activeApp ) {
-				// Sys_InitInput deliberately leaves the mouse released while the
-				// renderer and session finish starting.  Retail ETQW clears that
-				// release latch when the game window is activated; without this the
-				// mouse can never become active, so Windows keeps owning the cursor
-				// and the GUI receives no mouse events.
-				sys->Mouse().GrabCursor( true );
+				// A click on the title bar activates the window before DefWindowProc
+				// enters its move loop.  Recapturing here clips the cursor back to the
+				// client area and prevents that drag from starting.  Also preserve an
+				// explicit release made by the console or a long-running operation.
+				const bool nonClientClick = LOWORD( wParam ) == WA_CLICKACTIVE &&
+					!IsCursorInClientArea( window );
+				if ( !win32.mouseReleased && !nonClientClick ) {
+					sys->Mouse().GrabCursor( true );
+				}
 				sys->Keyboard().Activate();
 			} else {
 				sys->Keyboard().Deactivate();
@@ -106,7 +129,6 @@ LRESULT CALLBACK ETQWWindowProc( HWND window, UINT message, WPARAM wParam, LPARA
 
 		case WM_SETFOCUS:
 			win32.activeApp = true;
-			sys->Mouse().GrabCursor( true );
 			sys->Keyboard().Activate();
 			break;
 
@@ -127,6 +149,9 @@ LRESULT CALLBACK ETQWWindowProc( HWND window, UINT message, WPARAM wParam, LPARA
 
 		case WM_ENTERSIZEMOVE:
 			win32.movingWindow = true;
+			// The system move/resize loop is modal, so IN_Frame will not get an
+			// opportunity to apply movingWindow until the drag has ended.
+			sys->Mouse().Deactivate();
 			break;
 
 		case WM_EXITSIZEMOVE:
