@@ -15,6 +15,7 @@
 #include "GuiModel.h"
 #include "DeviceContext.h"
 #include "tr_render.h"
+#include "../decllib/declSkin.h"
 #include "../decllib/declTypeHolder.h"
 #include "../decllib/declAmbientCubeMap.h"
 #include "../sys/sys_render.h"
@@ -522,6 +523,54 @@ bool idRenderWorldLocal::FastWorldTrace( modelTrace_t &trace, const idVec3&, con
 }
 
 void idRenderWorldLocal::RegenerateWorld() {
+}
+
+/*
+================
+R_GlobalShaderOverride
+================
+*/
+bool R_GlobalShaderOverride( const idMaterial** shader ) {
+	if ( shader == NULL || *shader == NULL || !( *shader )->IsDrawn() ) {
+		return false;
+	}
+
+	const viewDef_s* view = RB_GetViewDef();
+	if ( view != NULL && view->renderView.globalMaterial != NULL ) {
+		*shader = view->renderView.globalMaterial;
+		return true;
+	}
+
+	return false;
+}
+
+/*
+================
+R_RemapShaderBySkin
+================
+*/
+const idMaterial* R_RemapShaderBySkin( const idMaterial* shader, const idDeclSkin* skin, const idMaterial* customShader ) {
+	if ( shader == NULL ) {
+		return NULL;
+	}
+
+	const viewDef_s* view = RB_GetViewDef();
+	if ( view != NULL && view->renderView.globalSkin != NULL ) {
+		skin = view->renderView.globalSkin;
+	}
+
+	// Collision hulls and other originally non-drawn surfaces must never be
+	// made visible by a skin or custom material.
+	if ( !shader->IsDrawn() ) {
+		return shader;
+	}
+
+	if ( customShader != NULL ) {
+		// Do not apply item-highlight materials to autosprites and other deforms.
+		return shader->Deform() == DFRM_NONE ? customShader : NULL;
+	}
+
+	return skin != NULL ? skin->RemapShaderBySkin( shader ) : shader;
 }
 
 void idRenderWorldLocal::DebugClearLines( int ) {}

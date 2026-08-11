@@ -113,6 +113,8 @@ void R_BuildDrawView( idRenderWorldLocal* renderWorld, const renderView_t* rende
 void R_FreeBuiltDrawView();
 viewEntity_s* R_SetEntityDefViewEntity( renderEntity_t* entity, idRenderModel* model, int entityIndex );
 viewLight_s* R_SetLightDefViewLight( renderLight_t* light, int lightIndex );
+bool R_GlobalShaderOverride( const idMaterial** shader );
+const idMaterial* R_RemapShaderBySkin( const idMaterial* shader, const idDeclSkin* customSkin, const idMaterial* customShader );
 void R_AddDrawSurf( const srfTriangles_t* triangles, const viewEntity_s* space, const renderEntity_t* renderEntity,
 	const idMaterial* material, const idScreenRect& scissor, int surfID );
 void R_AddAmbientDrawsurfs( viewEntity_s* space );

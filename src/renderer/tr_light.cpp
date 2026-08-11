@@ -1844,8 +1844,11 @@ void R_AddAmbientDrawsurfs( viewEntity_s* space ) {
 		if ( R_CullLocalBoxToViewdef( modelSurface->geometry->bounds, space->modelMatrix, view ) ) continue;
 		if ( space->entityDef != NULL && modelSurface->id >= 0 && modelSurface->id < MAX_SURFACE_BITS - 1 &&
 				space->entityDef->hideSurfaceMask.Get( modelSurface->id ) != 0 ) continue;
-		const idMaterial* material = view->renderView.globalMaterial != NULL ? view->renderView.globalMaterial :
-			( space->entityDef != NULL && space->entityDef->customShader != NULL ? space->entityDef->customShader : modelSurface->material );
+		const idMaterial* material = modelSurface->material;
+		if ( space->entityDef != NULL ) {
+			material = R_RemapShaderBySkin( material, space->entityDef->customSkin, space->entityDef->customShader );
+		}
+		R_GlobalShaderOverride( &material );
 		R_AddDrawSurf( modelSurface->geometry, space, space->entityDef, material, space->scissorRect, modelSurface->id );
 	}
 }
