@@ -9,7 +9,7 @@
     {
       "name": "vs2022-win32",
       "displayName": "ETQW Win32 (Visual Studio 2022)",
-      "description": "Generates the 32-bit ETQW solution in ../out.",
+      "description": "Configures the standalone 32-bit CMake build tree in ../out.",
       "generator": "Visual Studio 17 2022",
       "architecture": "Win32",
       "binaryDir": "${sourceDir}/../out"

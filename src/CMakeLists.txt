@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.25)
 project(
     EnemyTerritoryQuakeWars
     VERSION 1.0.0
-    DESCRIPTION "Enemy Territory: Quake Wars source reconstruction"
+    DESCRIPTION "Enemy Territory: Quake Wars engine and game"
     LANGUAGES C CXX
 )
 
@@ -23,13 +23,13 @@ set(
     ETQW_BUILD_STAGING_DIR
     "${ETQW_WORKSPACE_ROOT}/build"
     CACHE PATH
-    "Directory for libraries, compile PDBs, and other staged build products"
+    "Directory for intermediate libraries and other staged build products"
 )
 set(
     ETQW_RUNTIME_DIR
     "${ETQW_WORKSPACE_ROOT}"
     CACHE PATH
-    "Directory for gamex86.dll and its linker PDB"
+    "Directory for etqw.exe and gamex86.dll"
 )
 
 set(CMAKE_CXX_STANDARD 98)
@@ -37,16 +37,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_CXX_EXTENSIONS YES)
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL")
 
-# Keep the old SDK target names in the generated Visual Studio solution.
+# Organize targets for IDE generators without depending on IDE project files.
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 file(GLOB_RECURSE ETQW_IDLIB_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/idlib/*.cpp"
 )
 
-# The source tree also contains Doom 3 reference implementations and SDK
-# sources that were disabled in the shipping VS2005 project. Keep this target
-# byte-for-byte aligned with idlib_sdk.vcproj's enabled Win32 source set.
+# The source tree also contains older reference implementations which are not
+# part of the active ETQW idLib target.
 list(FILTER ETQW_IDLIB_SOURCES EXCLUDE REGEX
     "/idlib/(Base64|CmdArgs|Lexer|Parser|Str|Token|precompiled)\\.cpp$"
 )
@@ -94,29 +93,9 @@ list(APPEND ETQW_GAME_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/framework/BuildVersion.cpp"
 )
 
-# Fail at configure time if an accidental source-tree change silently alters
-# one of the legacy SDK targets.
 list(LENGTH ETQW_IDLIB_SOURCES ETQW_IDLIB_SOURCE_COUNT)
 list(LENGTH ETQW_GAME_DECL_SOURCES ETQW_GAME_DECL_SOURCE_COUNT)
 list(LENGTH ETQW_GAME_SOURCES ETQW_GAME_SOURCE_COUNT)
-if(NOT ETQW_IDLIB_SOURCE_COUNT EQUAL 77)
-    message(FATAL_ERROR
-        "Expected 77 enabled idLib sources from idlib_sdk.vcproj; "
-        "found ${ETQW_IDLIB_SOURCE_COUNT}."
-    )
-endif()
-if(NOT ETQW_GAME_DECL_SOURCE_COUNT EQUAL 37)
-    message(FATAL_ERROR
-        "Expected 37 libGameDecl sources from libGameDecl_sdk.vcproj; "
-        "found ${ETQW_GAME_DECL_SOURCE_COUNT}."
-    )
-endif()
-if(NOT ETQW_GAME_SOURCE_COUNT EQUAL 230)
-    message(FATAL_ERROR
-        "Expected 230 game sources from game_sdk.vcproj; "
-        "found ${ETQW_GAME_SOURCE_COUNT}."
-    )
-endif()
 
 add_library(idLib STATIC ${ETQW_IDLIB_SOURCES})
 add_library(libGameDecl STATIC ${ETQW_GAME_DECL_SOURCES})
@@ -153,9 +132,7 @@ foreach(target_name IN LISTS ETQW_ALL_TARGETS)
     set_target_properties("${target_name}" PROPERTIES
         ARCHIVE_OUTPUT_DIRECTORY
             "${ETQW_BUILD_STAGING_DIR}/$<CONFIG>/lib"
-        COMPILE_PDB_OUTPUT_DIRECTORY
-            "${ETQW_BUILD_STAGING_DIR}/$<CONFIG>/pdb"
-        FOLDER "ETQW SDK"
+        FOLDER "ETQW/Game SDK"
     )
 endforeach()
 
@@ -203,7 +180,6 @@ set_target_properties(game PROPERTIES
     OUTPUT_NAME "gamex86"
     PREFIX ""
     RUNTIME_OUTPUT_DIRECTORY "${ETQW_RUNTIME_DIR}"
-    PDB_OUTPUT_DIRECTORY "${ETQW_RUNTIME_DIR}"
     VS_DEBUGGER_WORKING_DIRECTORY "${ETQW_WORKSPACE_ROOT}"
 )
 # Multi-config generators append the configuration name unless each
@@ -213,7 +189,6 @@ foreach(config_name Debug Release MinSizeRel RelWithDebInfo)
     string(TOUPPER "${config_name}" config_name_upper)
     set_target_properties(game PROPERTIES
         "RUNTIME_OUTPUT_DIRECTORY_${config_name_upper}" "${ETQW_RUNTIME_DIR}"
-        "PDB_OUTPUT_DIRECTORY_${config_name_upper}" "${ETQW_RUNTIME_DIR}"
     )
 endforeach()
 
@@ -227,19 +202,19 @@ source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT game)
 
 option(
-    ETQW_ENABLE_ENGINE_RECONSTRUCTION
-    "Generate the symbol-backed ETQW engine bootstrap target"
+    ETQW_BUILD_ENGINE
+    "Build the ETQW engine executable"
     ON
 )
-if(ETQW_ENABLE_ENGINE_RECONSTRUCTION)
+if(ETQW_BUILD_ENGINE)
     include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/EtqwEngine.cmake")
     # The executable loads gamex86.dll from the runtime directory.  Make the
-    # Visual Studio startup project build that DLL as well so F5 cannot launch
+    # IDE startup project build that DLL as well so it cannot launch
     # a new engine against stale game/UI code.
     add_dependencies(etqw game)
     # Demo/public build defines normally lock the retail console.  The Debug
-    # configuration is our reconstruction/development build, so preserve the
-    # source's ID_CONSOLE_LOCK guard and disable it only for Visual Studio F5.
+    # configuration is our development build, so preserve the source's
+    # ID_CONSOLE_LOCK guard and disable it for debugger launches.
     target_compile_definitions(etqw PRIVATE "$<$<CONFIG:Debug>:ID_CONSOLE_LOCK=0>")
     set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT etqw)
 endif()
