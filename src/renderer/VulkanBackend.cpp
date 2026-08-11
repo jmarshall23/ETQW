@@ -1018,14 +1018,18 @@ bool CreateLogicalDevice( sdVulkanBackendState& state ) {
 
 VkSurfaceFormatKHR ChooseSurfaceFormat(
 	const idList< VkSurfaceFormatKHR >& formats ) {
+	// ETQW's shaders, textures, and legacy blend equations operate in the
+	// gamma-encoded framebuffer domain.  An sRGB swapchain silently linearizes
+	// blend operations, which makes low-valued additive GUI art (notably the
+	// main-menu scanlines) much brighter than the OpenGL result.
 	for ( int i = 0; i < formats.Num(); ++i ) {
-		if ( formats[ i ].format == VK_FORMAT_B8G8R8A8_SRGB &&
+		if ( formats[ i ].format == VK_FORMAT_B8G8R8A8_UNORM &&
 			formats[ i ].colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR ) {
 			return formats[ i ];
 		}
 	}
 	for ( int i = 0; i < formats.Num(); ++i ) {
-		if ( formats[ i ].format == VK_FORMAT_B8G8R8A8_UNORM ) {
+		if ( formats[ i ].format == VK_FORMAT_B8G8R8A8_SRGB ) {
 			return formats[ i ];
 		}
 	}
@@ -3978,6 +3982,12 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 				state->worldMaterialAddPipeline != VK_NULL_HANDLE ) {
 				materialPipeline = state->worldMaterialAddPipeline;
 				drawDescriptorSet = materialDescriptorSet;
+			} else if ( selectedStuffGrassStage ) {
+				// Grass is declared translucent to control sorting, but its stage is
+				// alpha-to-coverage + writeDepth.  With a single-sample swapchain the
+				// faithful fallback is an alpha-tested opaque/depth-writing pass, not
+				// source-alpha blending of the whole polygon card.
+				materialPipeline = state->worldPipeline;
 			} else if ( materialTexturesAvailable && ( blendBits == 0x00 ||
 				blendBits == 0x01 ) ) {
 				materialPipeline = state->worldMaterialPipeline;

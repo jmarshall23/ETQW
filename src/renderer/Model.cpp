@@ -386,7 +386,16 @@ public:
 						if ( byteWeight == 0 ) {
 							continue;
 						}
-						const int localJoint = vertexWeight.index[ weightIndex ];
+						// Generated MD5 weights contain the vertex-program register
+						// offset for each compact-palette joint.  A joint matrix occupies
+						// three vec4 registers, so values are 0, 3, 6, ... rather than
+						// direct palette indexes.  Treating the byte as an index skipped
+						// most weights and attached the rest to unrelated joints.
+						const int jointRegister = vertexWeight.index[ weightIndex ];
+						if ( jointRegister % 3 != 0 ) {
+							continue;
+						}
+						const int localJoint = jointRegister / 3;
 						if ( localJoint < 0 || localJoint >= skin.referencedJoints.Num() ) {
 							continue;
 						}
