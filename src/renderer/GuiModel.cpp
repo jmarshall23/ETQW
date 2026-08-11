@@ -785,10 +785,10 @@ void sdGuiModel::SubmitFrame( int windowWidth, int windowHeight ) {
 }
 
 void sdGuiModel::SubmitFrameVulkan() {
-	for ( int primitiveIndex = 0; primitiveIndex < primitives.Num(); ++primitiveIndex ) {
-		const guiPrimitive_t& primitive = primitives[ primitiveIndex ];
+	HDC windowDC = wglGetCurrentDC();
+	auto submitPrimitive = [&]( const guiPrimitive_t& primitive ) {
 		if ( primitive.material == NULL || primitive.numVerts < 3 ) {
-			continue;
+			return;
 		}
 		idImage* overrideImage = primitive.referenceSound != NULL ?
 			ResolveGuiImage( primitive.material, primitive.referenceSound ) : NULL;
@@ -866,24 +866,22 @@ void sdGuiModel::SubmitFrameVulkan() {
 			vulkanBackend.DrawGuiFan( image, vertices, primitive.numVerts,
 				stageColor.ToFloatPtr(), stage->drawStateBits );
 		}
-	}
+	};
 
-	HDC windowDC = wglGetCurrentDC();
-	for ( int textIndex = 0; textIndex < texts.Num(); ++textIndex ) {
-		const guiText_t& command = texts[ textIndex ];
+	auto submitText = [&]( const guiText_t& command ) {
 		idWStr displayText;
 		BuildDisplayText( command.text.c_str(), displayText );
 		if ( displayText.IsEmpty() ) {
-			continue;
+			return;
 		}
 		const int pointSize = command.pointSize > 0 ? command.pointSize : 12;
 		vulkanBitmapFont_t* font = GetVulkanBitmapFont( windowDC, pointSize );
 		if ( font == NULL ) {
-			continue;
+			return;
 		}
 		idImage* fontImage = globalImages->GetImage( font->imageName.c_str() );
 		if ( fontImage == NULL || !fontImage->IsLoaded() ) {
-			continue;
+			return;
 		}
 		float textWidth = 0.0f;
 		for ( int characterIndex = 0; characterIndex < displayText.Length();
@@ -948,6 +946,22 @@ void sdGuiModel::SubmitFrameVulkan() {
 				vulkanBackend.DrawGuiFan( fontImage, vertices, 4, color, 0x65 );
 			}
 			x += font->advance[ character ];
+		}
+	};
+
+	// Primitives and text are decoded into separate arrays, but they originate
+	// from one GUI command stream.  Preserve that stream here so the console,
+	// which Session::Draw produces last, stays in front of earlier HUD commands.
+	int primitiveIndex = 0;
+	int textIndex = 0;
+	while ( primitiveIndex < primitives.Num() || textIndex < texts.Num() ) {
+		const bool usePrimitive = textIndex >= texts.Num() ||
+			( primitiveIndex < primitives.Num() &&
+			primitives[ primitiveIndex ].sequence < texts[ textIndex ].sequence );
+		if ( usePrimitive ) {
+			submitPrimitive( primitives[ primitiveIndex++ ] );
+		} else {
+			submitText( texts[ textIndex++ ] );
 		}
 	}
 }

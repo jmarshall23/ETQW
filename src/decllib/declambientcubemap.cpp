@@ -30,6 +30,38 @@ byte* sdDeclAmbientCubeMap::cubeMapByte[ 6 ] = {
 	cubeMapDataByte + 5 * BAKEDLIGHT_SIZE * BAKEDLIGHT_SIZE * 4
 };
 
+namespace {
+
+idVec3 CubeMapTexelDirection( int face, int x, int y, int faceSize ) {
+	const float s = ( ( x + 0.5f ) * ( 2.0f / faceSize ) ) - 1.0f;
+	const float t = ( ( y + 0.5f ) * ( 2.0f / faceSize ) ) - 1.0f;
+	idVec3 direction;
+	switch ( face ) {
+		case 0: direction.Set(  1.0f, -t,   -s ); break; // +X
+		case 1: direction.Set( -1.0f, -t,    s ); break; // -X
+		case 2: direction.Set(     s,  1.0f, t ); break; // +Y
+		case 3: direction.Set(     s, -1.0f, -t ); break; // -Y
+		case 4: direction.Set(     s, -t,  1.0f ); break; // +Z
+		default: direction.Set(   -s, -t, -1.0f ); break; // -Z
+	}
+	direction.Normalize();
+	return direction;
+}
+
+void FillCubeMap( float* cubeMap[ 6 ], int faceSize, const idVec3& color ) {
+	for ( int face = 0; face < 6; ++face ) {
+		for ( int pixel = 0; pixel < faceSize * faceSize; ++pixel ) {
+			float* destination = cubeMap[ face ] + pixel * 4;
+			destination[ 0 ] = color.x;
+			destination[ 1 ] = color.y;
+			destination[ 2 ] = color.z;
+			destination[ 3 ] = 1.0f;
+		}
+	}
+}
+
+} // namespace
+
 sdDeclAmbientCubeMap::sdDeclAmbientCubeMap() :
 	indoors( false ),
 	brightness( 1.0f ),
@@ -260,8 +292,11 @@ void sdDeclAmbientCubeMap::ClearCubeMap( float* cubeMap[ 6 ], const int faceSize
 
 void sdDeclAmbientCubeMap::ScaleCubeMapColor( float* cubeMap[ 6 ], const int faceSize, const float scale ) {
 	for ( int face = 0; face < 6; face++ ) {
-		for ( int i = 0; i < faceSize * faceSize * 3; i++ ) {
-			cubeMap[ face ][ i ] *= scale;
+		for ( int pixel = 0; pixel < faceSize * faceSize; pixel++ ) {
+			float* color = cubeMap[ face ] + pixel * 4;
+			color[ 0 ] *= scale;
+			color[ 1 ] *= scale;
+			color[ 2 ] *= scale;
 		}
 	}
 }
@@ -282,14 +317,24 @@ void sdDeclAmbientCubeMap::BakeLight( float* cubeMap[ 6 ], const int faceSize,
 
 void sdDeclAmbientCubeMap::BakeLight( float* cubeMap[ 6 ], const int faceSize,
 		const idVec3& lightDir, const idVec3& lightColor, const float power ) {
-	const float contribution = Max( 0.0f, lightDir.z ) * power;
+	idVec3 normalizedLightDirection = lightDir;
+	if ( normalizedLightDirection.Normalize() == 0.0f ) {
+		return;
+	}
+	const float exponent = Max( power, 0.001f );
 	for ( int face = 0; face < 6; face++ ) {
-		for ( int pixel = 0; pixel < faceSize * faceSize; pixel++ ) {
-			float* color = cubeMap[ face ] + pixel * 4;
-			color[ 0 ] += lightColor.x * contribution;
-			color[ 1 ] += lightColor.y * contribution;
-			color[ 2 ] += lightColor.z * contribution;
-			color[ 3 ] = 1.0f;
+		for ( int y = 0; y < faceSize; ++y ) {
+			for ( int x = 0; x < faceSize; ++x ) {
+				const idVec3 direction = CubeMapTexelDirection(
+					face, x, y, faceSize );
+				const float contribution = idMath::Pow(
+					Max( 0.0f, direction * normalizedLightDirection ), exponent );
+				float* color = cubeMap[ face ] + ( y * faceSize + x ) * 4;
+				color[ 0 ] += lightColor.x * contribution;
+				color[ 1 ] += lightColor.y * contribution;
+				color[ 2 ] += lightColor.z * contribution;
+				color[ 3 ] = 1.0f;
+			}
 		}
 	}
 }
@@ -307,17 +352,71 @@ void sdDeclAmbientCubeMap::BakeGradientMap( byte* pic, const int size,
 	}
 }
 
-void sdDeclAmbientCubeMap::UploadCubeMap( idImage*, const byte* [ 6 ], const int ) {
+void sdDeclAmbientCubeMap::UploadCubeMap( idImage* image,
+		const byte* cubeMap[ 6 ], const int faceSize ) {
+	if ( image == NULL ) {
+		return;
+	}
+	image->GenerateCubeImage( cubeMap, faceSize, TF_LINEAR, false,
+		TD_HIGH_QUALITY );
 }
 
-void sdDeclAmbientCubeMap::AmbientCubeMapImage( idImage* ) {
+void sdDeclAmbientCubeMap::AmbientCubeMapImage( idImage* image ) {
+	FillCubeMap( cubeMapFloat, BAKEDLIGHT_SIZE, ambientColor );
+	for ( int lightIndex = 0; lightIndex < ambientLights.Num(); ++lightIndex ) {
+		const ambientLight_t& light = ambientLights[ lightIndex ];
+		if ( light.ambient ) {
+			BakeLight( cubeMapFloat, BAKEDLIGHT_SIZE, light.dir, light.color );
+		}
+	}
+	ScaleCubeMapColor( cubeMapFloat, BAKEDLIGHT_SIZE, brightness );
+	CubeMapFtob( cubeMapFloat, cubeMapByte, BAKEDLIGHT_SIZE );
+	const byte* faces[ 6 ] = { cubeMapByte[ 0 ], cubeMapByte[ 1 ],
+		cubeMapByte[ 2 ], cubeMapByte[ 3 ], cubeMapByte[ 4 ], cubeMapByte[ 5 ] };
+	UploadCubeMap( image, faces, BAKEDLIGHT_SIZE );
 }
 
-void sdDeclAmbientCubeMap::LightCubeMapImage( idImage* ) {
+void sdDeclAmbientCubeMap::LightCubeMapImage( idImage* image ) {
+	FillCubeMap( cubeMapFloat, BAKEDLIGHT_SIZE, ambientColor );
+	for ( int lightIndex = 0; lightIndex < ambientLights.Num(); ++lightIndex ) {
+		const ambientLight_t& light = ambientLights[ lightIndex ];
+		if ( light.ambient ) {
+			BakeLight( cubeMapFloat, BAKEDLIGHT_SIZE, light.dir, light.color );
+		}
+	}
+	if ( !indoors && sunColor.LengthSqr() > 0.0f ) {
+		BakeLight( cubeMapFloat, BAKEDLIGHT_SIZE, sunDirection, sunColor );
+	}
+	ScaleCubeMapColor( cubeMapFloat, BAKEDLIGHT_SIZE, brightness );
+	CubeMapFtob( cubeMapFloat, cubeMapByte, BAKEDLIGHT_SIZE );
+	const byte* faces[ 6 ] = { cubeMapByte[ 0 ], cubeMapByte[ 1 ],
+		cubeMapByte[ 2 ], cubeMapByte[ 3 ], cubeMapByte[ 4 ], cubeMapByte[ 5 ] };
+	UploadCubeMap( image, faces, BAKEDLIGHT_SIZE );
 }
 
-void sdDeclAmbientCubeMap::SpecularCubeMapImage( idImage* ) {
+void sdDeclAmbientCubeMap::SpecularCubeMapImage( idImage* image ) {
+	FillCubeMap( cubeMapFloat, BAKEDLIGHT_SIZE, minSpecAmbientColor );
+	for ( int lightIndex = 0; lightIndex < ambientLights.Num(); ++lightIndex ) {
+		const ambientLight_t& light = ambientLights[ lightIndex ];
+		if ( light.specular ) {
+			BakeLight( cubeMapFloat, BAKEDLIGHT_SIZE, light.dir, light.color, 16.0f );
+		}
+	}
+	if ( !indoors && sunColor.LengthSqr() > 0.0f ) {
+		BakeLight( cubeMapFloat, BAKEDLIGHT_SIZE, sunDirection, sunColor, 32.0f );
+	}
+	CubeMapFtob( cubeMapFloat, cubeMapByte, BAKEDLIGHT_SIZE );
+	const byte* faces[ 6 ] = { cubeMapByte[ 0 ], cubeMapByte[ 1 ],
+		cubeMapByte[ 2 ], cubeMapByte[ 3 ], cubeMapByte[ 4 ], cubeMapByte[ 5 ] };
+	UploadCubeMap( image, faces, BAKEDLIGHT_SIZE );
 }
 
-void sdDeclAmbientCubeMap::GradientMapImage( idImage* ) {
+void sdDeclAmbientCubeMap::GradientMapImage( idImage* image ) {
+	if ( image == NULL ) {
+		return;
+	}
+	BakeGradientMap( gradientMapData, GRADIENT_SIZE, ambientColor,
+		highLightColor );
+	image->GenerateImage( gradientMapData, GRADIENT_SIZE, 1, TF_LINEAR,
+		false, TR_CLAMP, TD_HIGH_QUALITY );
 }

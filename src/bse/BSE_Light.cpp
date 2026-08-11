@@ -28,10 +28,11 @@ GNU General Public License for more details.
 
 void BSE_ResolveModelSafeParticle( rvBSEParticle &particle ) {
 	if ( particle.type == PTYPE_LIGHT ) {
-		// The material/radius/tint are retained, but the renderer bridge emits a
-		// camera-facing emissive quad instead of allocating a render-world light.
-		particle.type = PTYPE_SPRITE;
-		if ( particle.materialName.IsEmpty() ) particle.materialName = "_default";
+		// A BSE light material describes a light projection, not drawable surface
+		// geometry.  Turning its radius into a sprite size creates a huge quad in
+		// weapon space (the assault-rifle flash is 50-70 units) and covers the
+		// screen.  Keep it as a light so the model bridge emits no fake geometry;
+		// the renderer's light path owns its eventual illumination.
 		return;
 	}
 	if ( particle.type == PTYPE_DECAL ) {
