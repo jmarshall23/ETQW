@@ -39,6 +39,14 @@ bool CheckedByteCount( int count, int stride, int& byteCount ) {
 	return true;
 }
 
+struct md5SkinSurface_t {
+	idList< byte >			referencedJoints;
+	idList< vertWeight_t >	weights;
+	bool					noAnimate;
+
+	md5SkinSurface_t() : noAnimate( false ) {}
+};
+
 class idRenderModelStatic : public idRenderModel {
 public:
 	idRenderModelStatic() :
@@ -48,7 +56,8 @@ public:
 		referencedOutsideLevelLoad( false ),
 		levelLoadReferenced( false ),
 		timeStamp( 0 ),
-		currentLod( 0 ) {
+		currentLod( 0 ),
+		ownsSurfaceGeometry( true ) {
 		SetFallbackBounds();
 	}
 
@@ -76,6 +85,7 @@ public:
 		ClearSurfaces();
 		modelJoints.Clear();
 		defaultPose.Clear();
+		inverseDefaultPose.Clear();
 		surfaceNames.Clear();
 		surfaceIds.Clear();
 		SetFallbackBounds();
@@ -105,6 +115,12 @@ public:
 				vertexCache.Alloc( triangles->indexes,
 					triangles->numIndexes * sizeof( triangles->indexes[ 0 ] ), &triangles->indexCache, true );
 			}
+			if ( i < md5SkinSurfaces.Num() && !md5SkinSurfaces[ i ].noAnimate &&
+				 triangles->weightCache == NULL &&
+				 md5SkinSurfaces[ i ].weights.Num() == triangles->numVerts && triangles->numVerts > 0 ) {
+				vertexCache.Alloc( md5SkinSurfaces[ i ].weights.Begin(),
+					triangles->numVerts * sizeof( vertWeight_t ), &triangles->weightCache );
+			}
 		}
 	}
 	virtual bool Validate() const { return loaded; }
@@ -115,6 +131,7 @@ public:
 		ClearSurfaces();
 		modelJoints.Clear();
 		defaultPose.Clear();
+		inverseDefaultPose.Clear();
 	}
 
 	virtual void Reset() {}
@@ -124,6 +141,7 @@ public:
 		ClearSurfaces();
 		modelJoints.Clear();
 		defaultPose.Clear();
+		inverseDefaultPose.Clear();
 		SetFallbackBounds();
 		loaded = true;
 		defaulted = false;
@@ -228,6 +246,7 @@ public:
 		Mem_Free( triangles->indexes );
 		Mem_Free( triangles->facePlanes );
 		Mem_Free( triangles->indexTree );
+		Mem_FreeAligned( triangles->joints );
 		Mem_Free( triangles );
 	}
 	virtual bool IsStaticWorldModel() const { return !modelName.Icmpn( "_area", 5 ); }
@@ -284,6 +303,64 @@ public:
 	virtual int NumMeshes( const int = 0 ) const { return modelSurfaces.Num(); }
 	virtual idBounds CalcMeshBounds( int, const idJointMat*, const idVec3&, const idMat3&, bool ) { return modelBounds; }
 
+	idRenderModel* CreateDynamicSnapshot( const renderEntity_t* entity ) const {
+		if ( entity == NULL || modelJoints.Num() == 0 ) {
+			return NULL;
+		}
+		if ( entity->joints == NULL || entity->numJoints != modelJoints.Num() ||
+			 inverseDefaultPose.Num() != modelJoints.Num() || md5SkinSurfaces.Num() != modelSurfaces.Num() ) {
+			common->DWarning( "Cannot instantiate animated model '%s': invalid joint data", modelName.c_str() );
+			return NULL;
+		}
+
+		idList< idJointMat > transformedJoints;
+		transformedJoints.SetNum( modelJoints.Num() );
+		SIMDProcessor->MultiplyJoints( transformedJoints.Begin(), entity->joints,
+			inverseDefaultPose.Begin(), modelJoints.Num() );
+
+		idRenderModelStatic* snapshot = new idRenderModelStatic;
+		snapshot->InitEmpty( "_MD5_Snapshot_" );
+		snapshot->ownsSurfaceGeometry = false;
+		snapshot->modelBounds = entity->bounds.IsCleared() ? modelBounds : entity->bounds;
+
+		for ( int surfaceIndex = 0; surfaceIndex < modelSurfaces.Num(); ++surfaceIndex ) {
+			const modelSurface_t& sourceSurface = modelSurfaces[ surfaceIndex ];
+			if ( sourceSurface.geometry == NULL ) {
+				continue;
+			}
+
+			srfTriangles_t* geometry = static_cast< srfTriangles_t* >( Mem_Alloc( sizeof( *geometry ) ) );
+			*geometry = *sourceSurface.geometry;
+			geometry->joints = NULL;
+			geometry->numJoints = 0;
+			if ( !entity->bounds.IsCleared() ) {
+				geometry->bounds = entity->bounds;
+			}
+
+			const md5SkinSurface_t& skin = md5SkinSurfaces[ surfaceIndex ];
+			if ( !skin.noAnimate && skin.referencedJoints.Num() > 0 && geometry->weightCache != NULL ) {
+				geometry->numJoints = skin.referencedJoints.Num();
+				geometry->joints = static_cast< idJointMat* >(
+					Mem_AllocAligned( geometry->numJoints * sizeof( idJointMat ), ALIGN_16 ) );
+				for ( int jointIndex = 0; jointIndex < geometry->numJoints; ++jointIndex ) {
+					const int sourceJoint = skin.referencedJoints[ jointIndex ];
+					if ( sourceJoint < 0 || sourceJoint >= transformedJoints.Num() ) {
+						delete snapshot;
+						return NULL;
+					}
+					geometry->joints[ jointIndex ] = transformedJoints[ sourceJoint ];
+				}
+				geometry->hardwareSkinnedSurface = true;
+				geometry->dsFlags |= 0x10;
+			}
+
+			modelSurface_t surface = sourceSurface;
+			surface.geometry = geometry;
+			snapshot->modelSurfaces.Append( surface );
+		}
+		return snapshot;
+	}
+
 private:
 	static void FreeSurfaceVertexCache( srfTriangles_t* triangles ) {
 		if ( triangles == NULL ) {
@@ -301,11 +378,22 @@ private:
 			}
 			triangles->indexCache = NULL;
 		}
+		if ( triangles->weightCache != NULL ) {
+			if ( renderSystem != NULL && renderSystem->IsOpenGLRunning() ) {
+				vertexCache.Free( triangles->weightCache );
+			}
+			triangles->weightCache = NULL;
+		}
 	}
 
 	void ClearSurfaces() {
 		for ( int i = 0; i < modelSurfaces.Num(); i++ ) {
-			FreeSurfaceTriangles( modelSurfaces[ i ].geometry );
+			if ( ownsSurfaceGeometry ) {
+				FreeSurfaceTriangles( modelSurfaces[ i ].geometry );
+			} else if ( modelSurfaces[ i ].geometry != NULL ) {
+				Mem_FreeAligned( modelSurfaces[ i ].geometry->joints );
+				Mem_Free( modelSurfaces[ i ].geometry );
+			}
 			modelSurfaces[ i ].geometry = NULL;
 		}
 		modelSurfaces.Clear();
@@ -313,6 +401,7 @@ private:
 		surfaceIds.Clear();
 		surfaceGroupMaterials.Clear();
 		surfaceGroupNoAnimate.Clear();
+		md5SkinSurfaces.Clear();
 	}
 
 	void SetFallbackBounds() {
@@ -529,7 +618,15 @@ private:
 		valid = valid && deformNumIndexes >= 0 && deformNumIndexes <= ( 1 << 27 );
 		valid = valid && deformNumSilEdges >= 0 && deformNumSilEdges <= ( 1 << 25 );
 		valid = valid && numReferencedJoints >= 0 && numReferencedJoints <= 255;
-		valid = valid && ReadDiscard( file, numReferencedJoints );
+		idList< byte > referencedJoints;
+		if ( valid && keepSurface && !deferred ) {
+			referencedJoints.SetNum( numReferencedJoints );
+			for ( int i = 0; valid && i < numReferencedJoints; ++i ) {
+				valid = file->ReadUnsignedChar( referencedJoints[ i ] ) == sizeof( byte );
+			}
+		} else {
+			valid = valid && ReadDiscard( file, numReferencedJoints );
+		}
 		if ( !valid ) {
 			return false;
 		}
@@ -570,8 +667,27 @@ private:
 			valid = CheckedByteCount( numOutputVerts, 12 * sizeof( float ) + 4, byteCount ) && ReadDiscard( file, byteCount );
 		}
 
-		const int weightStride = singleWeight ? 1 : 8;
-		valid = valid && CheckedByteCount( numOutputVerts, weightStride, byteCount ) && ReadDiscard( file, byteCount );
+		idList< vertWeight_t > weights;
+		if ( valid && keepSurface && !deferred ) {
+			weights.SetNum( numOutputVerts );
+			if ( weights.Num() > 0 ) {
+				memset( weights.Begin(), 0, weights.Num() * sizeof( vertWeight_t ) );
+			}
+			for ( int vertexIndex = 0; valid && vertexIndex < numOutputVerts; ++vertexIndex ) {
+				if ( singleWeight ) {
+					valid = file->ReadUnsignedChar( weights[ vertexIndex ].index[ 0 ] ) == sizeof( byte );
+					weights[ vertexIndex ].weight[ 0 ] = 255;
+				} else {
+					for ( int weightIndex = 0; valid && weightIndex < MAX_WEIGHTS_PER_VERT; ++weightIndex ) {
+						valid = file->ReadUnsignedChar( weights[ vertexIndex ].index[ weightIndex ] ) == sizeof( byte );
+						valid = valid && file->ReadUnsignedChar( weights[ vertexIndex ].weight[ weightIndex ] ) == sizeof( byte );
+					}
+				}
+			}
+		} else {
+			const int weightStride = singleWeight ? 1 : 8;
+			valid = valid && CheckedByteCount( numOutputVerts, weightStride, byteCount ) && ReadDiscard( file, byteCount );
+		}
 		bool perfectHull = false;
 		float surfaceArea = 0.0f;
 		valid = valid && file->ReadBool( perfectHull ) == sizeof( byte );
@@ -591,6 +707,10 @@ private:
 				surface.material = material;
 				surface.geometry = triangles;
 				modelSurfaces.Append( surface );
+				md5SkinSurface_t& skin = md5SkinSurfaces.Alloc();
+				skin.referencedJoints = referencedJoints;
+				skin.weights = weights;
+				skin.noAnimate = noAnimate;
 				surfaceGroupMaterials.Append( materialName );
 				surfaceGroupNoAnimate.Append( static_cast< int >( noAnimate ) );
 				surfaceNames.Append( meshName );
@@ -641,6 +761,7 @@ private:
 
 		modelJoints.SetNum( numJoints );
 		defaultPose.SetNum( numJoints );
+		inverseDefaultPose.SetNum( numJoints );
 		idList< int > parents;
 		parents.SetNum( numJoints );
 		for ( int i = 0; valid && i < numJoints; i++ ) {
@@ -653,12 +774,8 @@ private:
 			valid = valid && file->ReadVec3( defaultPose[ i ].t ) == sizeof( idVec3 );
 			valid = valid && file->ReadFloat( defaultPose[ i ].w ) == sizeof( float );
 
-			// The inverse default-pose matrix follows every joint.  The bootstrap
-			// model does not skin geometry yet, but consuming it keeps the binary
-			// cursor and the reconstructed skeleton format exact.
 			for ( int j = 0; valid && j < 12; j++ ) {
-				float unused;
-				valid = file->ReadFloat( unused ) == sizeof( unused );
+				valid = file->ReadFloat( inverseDefaultPose[ i ].ToFloatPtr()[ j ] ) == sizeof( float );
 			}
 		}
 
@@ -684,6 +801,7 @@ private:
 			ClearSurfaces();
 			modelJoints.Clear();
 			defaultPose.Clear();
+			inverseDefaultPose.Clear();
 		}
 		fileSystem->CloseFile( file );
 		return valid;
@@ -698,6 +816,8 @@ private:
 	idList< int > surfaceGroupNoAnimate;
 	idList< idMD5Joint > modelJoints;
 	idList< idJointQuat > defaultPose;
+	idList< idJointMat > inverseDefaultPose;
+	idList< md5SkinSurface_t > md5SkinSurfaces;
 	idList< int > fixedAreas;
 	bool loaded;
 	bool defaulted;
@@ -706,10 +826,19 @@ private:
 	bool levelLoadReferenced;
 	unsigned timeStamp;
 	int currentLod;
+	bool ownsSurfaceGeometry;
 };
 
 }
 
 idRenderModel* R_AllocStaticModel() {
 	return new idRenderModelStatic;
+}
+
+idRenderModel* R_InstantiateDynamicModel( idRenderModel* model, const renderEntity_t* entity ) {
+	if ( model == NULL || model->IsDynamicModel() == DM_STATIC ) {
+		return model;
+	}
+	idRenderModelStatic* staticModel = dynamic_cast< idRenderModelStatic* >( model );
+	return staticModel != NULL ? staticModel->CreateDynamicSnapshot( entity ) : model;
 }

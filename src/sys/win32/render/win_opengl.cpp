@@ -147,6 +147,16 @@ LRESULT CALLBACK ETQWWindowProc( HWND window, UINT message, WPARAM wParam, LPARA
 			}
 			break;
 
+		case WM_NCLBUTTONDOWN:
+			if ( wParam == HTCAPTION || ( wParam >= HTLEFT && wParam <= HTBOTTOMRIGHT ) ) {
+				// Raw-input capture and ClipCursor must be released before
+				// DefWindowProc starts the modal title-bar move/resize loop.
+				win32.movingWindow = true;
+				sys->Mouse().Deactivate();
+				ReleaseCapture();
+			}
+			break;
+
 		case WM_ENTERSIZEMOVE:
 			win32.movingWindow = true;
 			// The system move/resize loop is modal, so IN_Frame will not get an

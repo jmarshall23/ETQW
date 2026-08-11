@@ -8,6 +8,7 @@
 
 #include "RendererTypesImpl.h"
 #include "Image.h"
+#include "Model.h"
 #include "ModelManager.h"
 #include "RenderSystemBackend.h"
 #include "GuiModel.h"
@@ -222,7 +223,9 @@ void idRenderSystemLocal::LoadImage( const char* name, byte **pic, int *width, i
 
 void idRenderSystemLocal::FlushGLErrors( bool ) {}
 int idRenderSystemLocal::CheckGLForErrors( bool ) { return 0; }
-idRenderModel* idRenderSystemLocal::InstantiateDynamicModel( idRenderModel* model, renderEntity_t* ) { return model; }
+idRenderModel* idRenderSystemLocal::InstantiateDynamicModel( idRenderModel* model, renderEntity_t* entity ) {
+	return R_InstantiateDynamicModel( model, entity );
+}
 const glconfig_t& idRenderSystemLocal::GLConfig() const { return glConfig; }
 void idRenderSystemLocal::SyncRenderSystem() { synced = true; }
 

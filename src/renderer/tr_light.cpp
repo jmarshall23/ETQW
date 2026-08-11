@@ -1654,6 +1654,7 @@ namespace {
 	idList< drawSurf_s* > sortedDrawSurfaces;
 	idList< glIndex_t > frontEndInteractionIndexes;
 	idList< interactionGeometryRecord_t > frontEndInteractionGeometry;
+	idList< idRenderModel* > frontEndDynamicModels;
 	viewEntity_s* lastViewEntity = NULL;
 	viewLight_s* lastViewLight = NULL;
 
@@ -2196,11 +2197,15 @@ void R_FreeBuiltDrawView() {
 	for ( int index = 0; index < frontEndInteractionGeometry.Num(); ++index ) {
 		frontEndInteractionGeometryAllocator.Free( frontEndInteractionGeometry[ index ].geometry );
 	}
+	for ( int index = 0; index < frontEndDynamicModels.Num(); ++index ) {
+		delete frontEndDynamicModels[ index ];
+	}
 	frontEndRegisters.Clear();
 	frontEndDrawSurfaces.Clear();
 	frontEndViewLights.Clear();
 	frontEndViewEntities.Clear();
 	frontEndInteractionGeometry.Clear();
+	frontEndDynamicModels.Clear();
 	frontEndInteractionIndexes.Clear();
 	sortedDrawSurfaces.Clear();
 	lastViewEntity = NULL;
@@ -2249,6 +2254,12 @@ void R_BuildDrawView( idRenderWorldLocal* renderWorld, const renderView_t* rende
 		if ( entity->hModel == NULL ) continue;
 		idRenderModel* drawModel = entity->hModel;
 		if ( R_GetStuffModelSnapshot( entity->hModel, entity, view, drawModel ) && drawModel == NULL ) continue;
+		idRenderModel* dynamicModel = renderSystem->InstantiateDynamicModel( drawModel, entity );
+		if ( dynamicModel == NULL ) continue;
+		if ( dynamicModel != drawModel ) {
+			frontEndDynamicModels.Append( dynamicModel );
+			drawModel = dynamicModel;
+		}
 		R_SetEntityDefViewEntity( entity, drawModel, entityIndex );
 	}
 	for ( int effectIndex = 0; effectIndex < renderWorld->BackendNumPreparedEffects(); ++effectIndex ) {

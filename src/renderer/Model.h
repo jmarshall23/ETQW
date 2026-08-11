@@ -414,4 +414,8 @@ public:
 	virtual idBounds			CalcMeshBounds( int meshIndex, const idJointMat *joints, const idVec3 &offset, const idMat3 &axis, bool useDefaultAnim ) = 0;
 };
 
+// Builds the per-entity hardware-skinned snapshot used by the ETQW front end.
+// Static models are returned unchanged; the caller owns a distinct result.
+idRenderModel*	R_InstantiateDynamicModel( idRenderModel* model, const renderEntity_t* entity );
+
 #endif /* !__MODEL_H__ */
