@@ -2538,6 +2538,11 @@ bool GetVulkanMaterialDescriptor( sdVulkanBackendState& state,
 		if ( !images[ imageIndex ]->IsLoaded() ) {
 			images[ imageIndex ]->BindFragment();
 		}
+	}
+	// BindFragment can append to state.imageResources and reallocate its idList.
+	// Resolve every resource pointer only after all requested images have been
+	// loaded so no pointer retained here can be invalidated by a later binding.
+	for ( int imageIndex = 0; imageIndex < VULKAN_MATERIAL_TEXTURES; ++imageIndex ) {
 		resources[ imageIndex ] = FindVulkanImageResource( state,
 			images[ imageIndex ] );
 		if ( resources[ imageIndex ] == NULL ) {
@@ -2638,6 +2643,8 @@ bool GetVulkanWaterDescriptor( sdVulkanBackendState& state,
 		if ( !images[ imageIndex ]->IsLoaded() ) {
 			images[ imageIndex ]->BindFragment();
 		}
+	}
+	for ( int imageIndex = 0; imageIndex < VULKAN_MATERIAL_TEXTURES; ++imageIndex ) {
 		resources[ imageIndex ] = FindVulkanImageResource( state,
 			images[ imageIndex ] );
 		if ( resources[ imageIndex ] == NULL ) {
@@ -3905,6 +3912,33 @@ void sdVulkanBackend::DestroyImage( const void* owner ) {
 	for ( int i = 0; i < state->imageResources.Num(); ++i ) {
 		if ( state->imageResources[ i ].owner == owner ) {
 			sdVulkanImageResource removed = state->imageResources[ i ];
+			// Composite material descriptors do not own their sampled images.  Once
+			// any constituent image is replaced, never return the old descriptor
+			// again: its VkImageView remains the destroyed view even if Vulkan later
+			// reuses the same numeric handle for the replacement.  Do not free the
+			// set here because it may already be referenced by this frame's command
+			// buffer; invalid entries are reclaimed with the descriptor pool.
+			for ( int descriptorIndex = 0;
+				descriptorIndex < state->materialDescriptors.Num(); ++descriptorIndex ) {
+				sdVulkanMaterialDescriptor& descriptor =
+					state->materialDescriptors[ descriptorIndex ];
+				bool usesRemovedImage = false;
+				for ( int imageIndex = 0; imageIndex < VULKAN_MATERIAL_TEXTURES;
+					++imageIndex ) {
+					if ( descriptor.imageOwners[ imageIndex ] == owner ||
+						descriptor.imageViews[ imageIndex ] == removed.view ) {
+						usesRemovedImage = true;
+						break;
+					}
+				}
+				if ( usesRemovedImage ) {
+					descriptor.owner = NULL;
+					memset( descriptor.imageOwners, 0,
+						sizeof( descriptor.imageOwners ) );
+					memset( descriptor.imageViews, 0,
+						sizeof( descriptor.imageViews ) );
+				}
+			}
 			state->imageResources.RemoveIndexFast( i );
 			if ( state->frameActive ) {
 				state->retiredImageResources.Append( removed );
@@ -4207,6 +4241,11 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			state->worldMissingResource++;
 			continue;
 		}
+		// Combined material descriptor creation may load additional images and
+		// grow imageResources.  Keep the Vulkan handle by value rather than a
+		// pointer into that growable array.
+		const VkDescriptorSet selectedImageDescriptorSet =
+			imageResource->descriptorSet;
 		state->worldResourceReady++;
 		VkDescriptorSet materialDescriptorSet = VK_NULL_HANDLE;
 		const bool materialTexturesAvailable = selectedMegaTexture == NULL &&
@@ -4489,7 +4528,7 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			}
 		} else {
 			VkPipeline materialPipeline = state->worldPipeline;
-			VkDescriptorSet drawDescriptorSet = imageResource->descriptorSet;
+			VkDescriptorSet drawDescriptorSet = selectedImageDescriptorSet;
 			const int blendBits = selectedStage->drawStateBits & 0xFF;
 			if ( selectedHeatHazeStage ) {
 				if ( !heatHazeTexturesAvailable ||
