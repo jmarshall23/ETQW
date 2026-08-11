@@ -23,6 +23,8 @@ struct portalAreaState_t {
 	const sdDeclAmbientCubeMap* ambientCubeMap;
 };
 
+struct bseEffectState_t;
+
 class idRenderWorldLocal : public idRenderWorld {
 public:
 	idRenderWorldLocal();
@@ -145,6 +147,9 @@ public:
 	const sdDeclAmbientCubeMap* BackendAmbientCubeMap() const { return ambientCubeMap; }
 	const sdDeclAmbientCubeMap* BackendAmbientCubeMapForArea( int areaNum ) const;
 	const sdDeclAmbientCubeMap* BackendAmbientCubeMapForModel( idRenderModel* model ) const;
+	void BackendPrepareEffects( const renderView_t* renderView );
+	int BackendNumPreparedEffects() const;
+	renderEntity_t* BackendPreparedEffect( int index ) const;
 
 private:
 	friend class idMegaTexture;
@@ -157,6 +162,7 @@ private:
 	idList< renderEntity_t* > entityDefs;
 	idList< renderLight_t* > lightDefs;
 	idList< renderEffect_t* > effectDefs;
+	idList< bseEffectState_t* > effectStates;
 	idList< bool > stoppedEffects;
 	idList< occlusionTest_t* > occlusionTests;
 	renderView_t currentRenderView;

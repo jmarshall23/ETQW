@@ -18,11 +18,77 @@
 #include "../decllib/declSkin.h"
 #include "../decllib/declTypeHolder.h"
 #include "../decllib/declAmbientCubeMap.h"
+#include "../bse/BSE.h"
 #include "../sys/sys_render.h"
 
 #include <GL/gl.h>
 
+struct bseEffectState_t {
+	bseEffectState_t() : decl( NULL ), model( NULL ), startTime( 0 ), stopTime( 0.0f ), stopped( false ) {
+		memset( &entity, 0, sizeof( entity ) );
+		entity.axis.Identity();
+	}
+
+	rvBSE simulation;
+	const rvDeclEffect* decl;
+	idRenderModel* model;
+	renderEntity_t entity;
+	int startTime;
+	float stopTime;
+	bool stopped;
+};
+
 namespace {
+
+void FreeEffectState( bseEffectState_t*& state ) {
+	if ( state == NULL ) return;
+	if ( state->model != NULL && renderModelManager != NULL ) {
+		renderModelManager->FreeModel( state->model );
+	}
+	delete state;
+	state = NULL;
+}
+
+bool BSE_SampleModelSurface( const char* modelName, idRandom& random, idVec3& point, idVec3& normal ) {
+	idRenderModel* model = renderModelManager != NULL ? renderModelManager->CheckModel( modelName ) : NULL;
+	if ( model == NULL || model->IsDefaultModel() || model->IsDynamicModel() != DM_STATIC ) return false;
+
+	int triangleCount = 0;
+	for ( int i = 0; i < model->NumSurfaces(); i++ ) {
+		const modelSurface_t* surface = model->Surface( i );
+		if ( surface != NULL && surface->geometry != NULL && surface->geometry->verts != NULL ) {
+			triangleCount += surface->geometry->numIndexes / 3;
+		}
+	}
+	if ( triangleCount <= 0 ) return false;
+
+	int selected = random.RandomInt( triangleCount );
+	for ( int i = 0; i < model->NumSurfaces(); i++ ) {
+		const modelSurface_t* surface = model->Surface( i );
+		if ( surface == NULL || surface->geometry == NULL || surface->geometry->verts == NULL ) continue;
+		const srfTriangles_t* tri = surface->geometry;
+		const int surfaceTriangles = tri->numIndexes / 3;
+		if ( selected >= surfaceTriangles ) {
+			selected -= surfaceTriangles;
+			continue;
+		}
+		const idDrawVert& a = tri->verts[tri->indexes[selected * 3 + 0]];
+		const idDrawVert& b = tri->verts[tri->indexes[selected * 3 + 1]];
+		const idDrawVert& c = tri->verts[tri->indexes[selected * 3 + 2]];
+		const float root = idMath::Sqrt( random.RandomFloat() );
+		const float baryA = 1.0f - root;
+		const float baryB = root * ( 1.0f - random.RandomFloat() );
+		const float baryC = 1.0f - baryA - baryB;
+		point = a.xyz * baryA + b.xyz * baryB + c.xyz * baryC;
+		normal = a.GetNormal() * baryA + b.GetNormal() * baryB + c.GetNormal() * baryC;
+		if ( normal.Normalize() == 0.0f ) {
+			normal.Cross( b.xyz - a.xyz, c.xyz - a.xyz );
+			normal.Normalize();
+		}
+		return true;
+	}
+	return false;
+}
 
 template< class T >
 qhandle_t AddDefinition( idList< T* >& definitions, const T* value ) {
@@ -108,6 +174,8 @@ void idRenderWorldLocal::Clear() {
 	localModels.Clear();
 	ClearDefinitions( entityDefs );
 	ClearDefinitions( lightDefs );
+	for ( int i = 0; i < effectStates.Num(); i++ ) FreeEffectState( effectStates[i] );
+	effectStates.Clear();
 	ClearDefinitions( effectDefs );
 	ClearDefinitions( occlusionTests );
 	stoppedEffects.Clear();
@@ -165,6 +233,12 @@ const renderLight_t *idRenderWorldLocal::GetRenderLight( qhandle_t handle ) cons
 qhandle_t idRenderWorldLocal::AddEffectDef( const renderEffect_t *effect, int time ) {
 	const qhandle_t handle = AddDefinition( effectDefs, effect );
 	if ( handle >= 0 ) {
+		while ( effectStates.Num() <= handle ) effectStates.Append( NULL );
+		FreeEffectState( effectStates[handle] );
+		effectStates[handle] = new bseEffectState_t;
+		effectStates[handle]->startTime = time;
+		effectStates[handle]->decl = effect->declEffect;
+		effectStates[handle]->simulation.Init( effect->declEffect );
 		while ( stoppedEffects.Num() <= handle ) {
 			stoppedEffects.Append( false );
 		}
@@ -178,23 +252,48 @@ bool idRenderWorldLocal::UpdateEffectDef( qhandle_t handle, const renderEffect_t
 		return false;
 	}
 	UpdateDefinition( effectDefs, handle, effect );
-	return true;
+	if ( handle >= effectStates.Num() || effectStates[handle] == NULL ) return false;
+	bseEffectState_t* state = effectStates[handle];
+	if ( state->decl != effect->declEffect ) {
+		state->decl = effect->declEffect;
+		state->simulation.Init( effect->declEffect );
+	}
+	if ( effect->declEffect == NULL || effect->loop ) return false;
+	const float effectTime = time * 0.001f + effect->shaderParms[SHADERPARM_TIMEOFFSET];
+	const float duration = effect->declEffect->GetMaxDuration();
+	if ( duration <= 0.0f ) return false;
+	if ( state->stopped ) {
+		return state->stopTime > 0.0f && effectTime > state->stopTime + duration;
+	}
+	return effectTime > duration;
 }
 
 void idRenderWorldLocal::StopEffectDef( qhandle_t handle ) {
 	if ( handle >= 0 && handle < stoppedEffects.Num() ) {
 		stoppedEffects[ handle ] = true;
+		if ( handle < effectStates.Num() && effectStates[handle] != NULL ) {
+			bseEffectState_t* state = effectStates[handle];
+			state->stopped = true;
+			const renderEffect_t* effect = DefinitionForHandle( effectDefs, handle );
+			state->stopTime = effect != NULL && hasRenderView ?
+				Max( 0.0001f, currentRenderView.time * 0.001f + effect->shaderParms[SHADERPARM_TIMEOFFSET] ) : -1.0f;
+		}
 	}
 }
 
 void idRenderWorldLocal::RestartEffectDef( qhandle_t handle ) {
 	if ( handle >= 0 && handle < stoppedEffects.Num() ) {
 		stoppedEffects[ handle ] = false;
+		if ( handle < effectStates.Num() && effectStates[handle] != NULL ) {
+			effectStates[handle]->stopped = false;
+			effectStates[handle]->stopTime = 0.0f;
+		}
 	}
 }
 
 void idRenderWorldLocal::FreeEffectDef( qhandle_t handle ) {
 	FreeDefinition( effectDefs, handle );
+	if ( handle >= 0 && handle < effectStates.Num() ) FreeEffectState( effectStates[handle] );
 	if ( handle >= 0 && handle < stoppedEffects.Num() ) {
 		stoppedEffects[ handle ] = false;
 	}
@@ -206,6 +305,101 @@ void idRenderWorldLocal::FreeStoppedEffectDefs() {
 			FreeEffectDef( i );
 		}
 	}
+}
+
+void idRenderWorldLocal::BackendPrepareEffects( const renderView_t* renderView ) {
+	if ( renderView == NULL ) return;
+	for ( int i = 0; i < effectStates.Num(); i++ ) {
+		bseEffectState_t* state = effectStates[i];
+		renderEffect_t* effect = i < effectDefs.Num() ? effectDefs[i] : NULL;
+		if ( state == NULL ) continue;
+		state->entity.hModel = NULL;
+		if ( effect == NULL || effect->declEffect == NULL || renderView->time < state->startTime ) continue;
+		if ( effect->suppressSurfaceInViewID != 0 && effect->suppressSurfaceInViewID == renderView->viewID ) continue;
+		if ( effect->allowSurfaceInViewID != 0 && effect->allowSurfaceInViewID != renderView->viewID ) continue;
+
+		const float cutOffDistance = effect->maxVisDist > 0.0f ? effect->maxVisDist : effect->declEffect->GetCutOffDistance();
+		if ( cutOffDistance > 0.0f && ( renderView->vieworg - effect->origin ).LengthSqr() > cutOffDistance * cutOffDistance ) continue;
+
+		if ( state->decl != effect->declEffect ) {
+			state->decl = effect->declEffect;
+			state->simulation.Init( effect->declEffect );
+		}
+		if ( state->model == NULL ) {
+			if ( renderModelManager == NULL ) continue;
+			state->model = renderModelManager->AllocModel();
+			if ( state->model == NULL ) continue;
+		}
+
+		const idMat3 inverseAxis = effect->axis.Transpose();
+		rvBSEOwner owner;
+		memset( &owner, 0, sizeof( owner ) );
+		owner.time = renderView->time * 0.001f + effect->shaderParms[SHADERPARM_TIMEOFFSET];
+		if ( owner.time < 0.0f ) continue;
+		owner.stopTime = state->stopped ? state->stopTime : 0.0f;
+		if ( state->stopped && owner.stopTime < 0.0f ) {
+			state->stopTime = owner.stopTime = Max( 0.0001f, owner.time );
+		}
+		owner.diversity = effect->shaderParms[SHADERPARM_DIVERSITY];
+		owner.brightness = effect->shaderParms[SHADERPARM_BRIGHTNESS];
+		if ( owner.brightness == 0.0f ) owner.brightness = 1.0f;
+		owner.attenuation = effect->attenuation == 0.0f ? 1.0f : effect->attenuation;
+		owner.color.Set( effect->shaderParms[SHADERPARM_RED], effect->shaderParms[SHADERPARM_GREEN],
+			effect->shaderParms[SHADERPARM_BLUE], effect->shaderParms[SHADERPARM_ALPHA] );
+		if ( owner.color.x == 0.0f && owner.color.y == 0.0f && owner.color.z == 0.0f && owner.color.w == 0.0f ) owner.color.Set( 1.0f, 1.0f, 1.0f, 1.0f );
+		owner.materialColor.Set( effect->materialColor.x, effect->materialColor.y, effect->materialColor.z, owner.color.w );
+		if ( effect->materialColor.LengthSqr() == 0.0f ) owner.materialColor = owner.color;
+		const idVec3 worldGravity = effect->gravity.LengthSqr() > 0.0f ? effect->gravity : idVec3( 0.0f, 0.0f, -1066.0f );
+		owner.gravity = worldGravity * inverseAxis;
+		owner.wind = effect->windVector * inverseAxis;
+		owner.hasEndOrigin = effect->hasEndOrigin;
+		owner.endOrigin = effect->hasEndOrigin ? ( effect->endOrigin - effect->origin ) * inverseAxis : vec3_origin;
+		owner.viewOrigin = ( renderView->vieworg - effect->origin ) * inverseAxis;
+		owner.modelSampler = BSE_SampleModelSurface;
+
+		idVec3 viewRight = -( renderView->viewaxis[1] * inverseAxis );
+		idVec3 viewUp = renderView->viewaxis[2] * inverseAxis;
+		viewRight.Normalize();
+		viewUp.Normalize();
+		idList<rvBSEParticle> particles;
+		state->simulation.Service( owner, particles );
+		idList<rvBSEParticle> renderParticles;
+		if ( bse != NULL ) bse->PrepareRender( owner, particles, renderParticles );
+		else renderParticles = particles;
+		BSE_BuildRenderModel( state->model, va( "_BSEEffect_%d", i ), renderParticles, owner,
+			owner.viewOrigin, viewRight, viewUp );
+		if ( state->model->NumSurfaces() <= 0 ) continue;
+
+		renderEntity_t& entity = state->entity;
+		memset( &entity, 0, sizeof( entity ) );
+		entity.hModel = state->model;
+		entity.spawnID = -1;
+		entity.mapId = -1;
+		entity.bounds = state->model->Bounds( &entity );
+		entity.suppressSurfaceInViewID = effect->suppressSurfaceInViewID;
+		entity.allowSurfaceInViewID = effect->allowSurfaceInViewID;
+		entity.origin = effect->origin;
+		entity.axis = effect->axis;
+		entity.modelDepthHack = effect->modelDepthHack;
+		entity.foliageDepthHack = effect->foliageDepthHack;
+		entity.sortOffset = effect->distanceOffset;
+		entity.flags.noShadow = true;
+		entity.flags.noDynamicInteractions = true;
+		entity.flags.weaponDepthHack = effect->weaponDepthHackInViewID == renderView->viewID;
+		entity.weaponDepthHackFOV_x = effect->weaponDepthHackFOV_x;
+		entity.weaponDepthHackFOV_y = effect->weaponDepthHackFOV_y;
+		entity.maxVisDist = cutOffDistance > 0.0f ? idMath::Ftoi( cutOffDistance ) : 0;
+		memcpy( entity.shaderParms, effect->shaderParms, sizeof( entity.shaderParms ) );
+	}
+}
+
+int idRenderWorldLocal::BackendNumPreparedEffects() const {
+	return effectStates.Num();
+}
+
+renderEntity_t* idRenderWorldLocal::BackendPreparedEffect( int index ) const {
+	if ( index < 0 || index >= effectStates.Num() || effectStates[index] == NULL ) return NULL;
+	return effectStates[index]->entity.hModel != NULL ? &effectStates[index]->entity : NULL;
 }
 
 qhandle_t idRenderWorldLocal::AddOcclusionTestDef( const occlusionTest_t *test ) {

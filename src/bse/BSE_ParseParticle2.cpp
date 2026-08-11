@@ -24,8 +24,14 @@ GNU General Public License for more details.
 #pragma hdrstop
 
 #include "BSE.h"
+#include "../decllib/declTable.h"
 
 namespace {
+
+static const idDeclTable *FindTable( const char *name ) {
+	const qhandle_t tableType = declManager->GetDeclTypeHandle( declTableIdentifier );
+	return static_cast<const idDeclTable *>( declManager->FindType( tableType, name, false ) );
+}
 
 static bool IsDomainKeyword( const idToken &token ) {
 	return token == "}" || !token.Icmp( "surface" ) || !token.Icmp( "useEndOrigin" ) ||
@@ -80,8 +86,7 @@ static void ParseDomain( idLexer &src, rvBSEParm &parm, rvBSEDomain &domain, boo
 			token.StripQuotes();
 			parm.envelope.name = token.c_str();
 			if ( token.Icmp( "linear" ) ) {
-				parm.envelope.table = static_cast<const idDeclTable *>(
-					declManager->FindType( DECL_TABLE, token.c_str(), false ) );
+				parm.envelope.table = FindTable( token.c_str() );
 			}
 		}
 	} else {
@@ -272,8 +277,7 @@ bool rvDeclEffect::ParseParticle( idLexer &src, rvParticleTemplate &particle, in
 			particle.jitterRate = src.ParseFloat();
 		} else if ( !token.Icmp( "jitterTable" ) ) {
 			particle.jitterTableName = BSE_ParseString( src );
-			particle.jitterTable = static_cast<const idDeclTable *>(
-				declManager->FindType( DECL_TABLE, particle.jitterTableName, false ) );
+			particle.jitterTable = FindTable( particle.jitterTableName );
 		} else if ( !token.Icmp( "blend" ) ) {
 			particle.blend = ParseBlend( src );
 		} else if ( !token.Icmp( "numFrames" ) ) {

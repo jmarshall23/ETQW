@@ -44,8 +44,9 @@ void BSE_ResolveModelSafeParticle( rvBSEParticle &particle ) {
 	if ( particle.type != PTYPE_DEBRIS && particle.type != PTYPE_MODEL ) return;
 
 	if ( particle.modelName.IsEmpty() && !particle.entityDefName.IsEmpty() ) {
+		const qhandle_t entityDefType = declManager->GetDeclTypeHandle( declEntityDefIdentifier );
 		const idDeclEntityDef *entityDef = static_cast<const idDeclEntityDef *>(
-			declManager->FindType( DECL_ENTITYDEF, particle.entityDefName, false ) );
+			declManager->FindType( entityDefType, particle.entityDefName, false ) );
 		if ( entityDef != NULL ) {
 			particle.modelName = entityDef->dict.GetString( "model" );
 		}

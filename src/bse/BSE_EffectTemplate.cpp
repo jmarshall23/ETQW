@@ -1,20 +1,45 @@
-// Copyright (C) 2007 Id Software, Inc.
-//
-// ETQW effect declaration boundary.  The runtime BSE implementation is kept
-// separate from the decl parser so effects can be registered and scanned
-// before the renderer creates effect instances.
+/*
+===========================================================================
+
+DarklightNG Source Code
+Copyright (C) 2026 - Justin Marshall(aka IceColdDuke).
+
+This file is part of the DarklightNG GPL source code.
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+
+DarklightNG is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+DarklightNG is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+===========================================================================
+*/
 
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
-#include "BSEInterface.h"
-#include "BSE_Envelope.h"
-#include "BSE_SpawnDomains.h"
-#include "BSE_Particle.h"
 #include "BSE.h"
 
-const char* rvDeclEffect::DefaultDefinition() const {
-	return "{\n}\n";
+rvDeclEffect::rvDeclEffect() {
+	size = 8.0f;
+	cutOffDistance = 0.0f;
+	minDuration = 0.0f;
+	maxDuration = 0.0f;
+	bounds.Zero();
+	bounds.ExpandSelf( size );
+}
+
+rvDeclEffect::~rvDeclEffect() {
+	FreeData();
+}
+
+void rvDeclEffect::Init() {
+	FreeData();
 }
 
 bool rvDeclEffect::SetDefaultText() {
@@ -22,77 +47,93 @@ bool rvDeclEffect::SetDefaultText() {
 	return true;
 }
 
-void rvDeclEffect::Init() {
-	mFlags = 0;
-	mMinDuration = 0.0f;
-	mMaxDuration = 0.0f;
-	mCutOffDistance = 0.0f;
-	mSize = 0.0f;
-	mSegmentTemplates.Clear();
-	mPlayCount = 0;
-	mLoopCount = 0;
+size_t rvDeclEffect::Size() const {
+	int allocated = segments.Allocated();
+	for ( int i = 0; i < segments.Num(); i++ ) {
+		allocated += segments[i].Allocated();
+	}
+	return sizeof( *this ) + allocated;
+}
+
+const char *rvDeclEffect::DefaultDefinition() const {
+	return "{ size 8 }";
+}
+
+void rvDeclEffect::CacheFromDict( const idDict &dict ) {
+	const qhandle_t effectType = declManager->GetDeclTypeHandle( declEffectsIdentifier );
+	const idKeyValue *kv = NULL;
+	while ( ( kv = dict.MatchPrefix( "fx", kv ) ) != NULL ) {
+		const char *effectName = kv->GetValue().c_str();
+		if ( effectName[0] == '\0' ) {
+			common->Warning( "rvDeclEffect::CacheFromDict: '%s' has an empty value", kv->GetKey().c_str() );
+			continue;
+		}
+		declManager->FindType( effectType, effectName, true );
+	}
 }
 
 void rvDeclEffect::FreeData() {
-	mSegmentTemplates.Clear();
-	mFlags = 0;
-	mMinDuration = 0.0f;
-	mMaxDuration = 0.0f;
-	mCutOffDistance = 0.0f;
-	mSize = 0.0f;
-	mPlayCount = 0;
-	mLoopCount = 0;
+	segments.Clear();
+	size = 8.0f;
+	cutOffDistance = 0.0f;
+	minDuration = 0.0f;
+	maxDuration = 0.0f;
+	bounds.Zero();
+	bounds.ExpandSelf( size );
 }
 
-size_t rvDeclEffect::Size() const {
-	return sizeof( *this ) + mSegmentTemplates.Allocated();
-}
-
-bool rvDeclEffect::Parse( const char* text, const int textLength ) {
+bool rvDeclEffect::Parse( const char *text, const int textLength ) {
+	FreeData();
 	idLexer src;
-	idToken token;
-
 	src.LoadMemory( text, textLength, GetFileName(), GetLineNum() );
 	src.SetFlags( DECL_LEXER_FLAGS );
 	if ( !src.SkipUntilString( "{" ) ) {
 		return false;
 	}
 
+	idToken token;
 	while ( src.ReadToken( &token ) ) {
 		if ( token == "}" ) {
+			Finish();
 			return !src.HadError();
 		}
 		if ( !token.Icmp( "size" ) ) {
-			mSize = src.ParseFloat();
+			size = Max( 0.0f, src.ParseFloat() );
 			continue;
 		}
 		if ( !token.Icmp( "cutOffDistance" ) ) {
-			mCutOffDistance = src.ParseFloat();
+			cutOffDistance = Max( 0.0f, src.ParseFloat() );
 			continue;
 		}
 
-		// Segment bodies are consumed here even while the renderer-neutral BSE
-		// conversion is being joined to the retail SDK layout.  This preserves
-		// declaration boundaries and lets every .effect file be indexed safely.
-		if ( src.CheckTokenString( "{" ) ) {
-			if ( !src.SkipBracedSection( false ) ) {
+		const int segmentType = BSE_SegmentTypeForToken( token );
+		if ( segmentType != SEG_NONE ) {
+			if ( !ParseSegment( src, segmentType ) ) {
 				return false;
 			}
+		} else {
+			BSE_SkipUnknown( src, token );
 		}
 	}
-
 	return false;
 }
 
-void rvDeclEffect::CacheFromDict( const idDict& dict ) {
-	const qhandle_t effectType = declManager->GetDeclTypeHandle( declEffectsIdentifier );
-	const idKeyValue* kv = NULL;
-	while ( ( kv = dict.MatchPrefix( "fx", kv ) ) != NULL ) {
-		const char* effectName = kv->GetValue().c_str();
-		if ( effectName[ 0 ] == '\0' ) {
-			common->Warning( "rvDeclEffect::CacheFromDict: '%s' has an empty value", kv->GetKey().c_str() );
-			continue;
+void rvDeclEffect::Finish() {
+	minDuration = 0.0f;
+	maxDuration = 0.0f;
+	for ( int i = 0; i < segments.Num(); i++ ) {
+		const rvSegmentTemplate &segment = segments[i];
+		float segmentMin = segment.startTime.x + segment.duration.x;
+		float segmentMax = segment.startTime.y + segment.duration.y;
+		if ( segment.HasVisualParticle() ) {
+			segmentMin += segment.particle.duration.x;
+			segmentMax += segment.particle.duration.y;
 		}
-		declManager->FindType( effectType, effectName, true );
+		if ( segment.constant || segment.looping ) {
+			segmentMax = 300.0f;
+		}
+		minDuration = Max( minDuration, segmentMin );
+		maxDuration = Max( maxDuration, segmentMax );
 	}
+	CalculateBounds();
 }

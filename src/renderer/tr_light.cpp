@@ -2222,6 +2222,7 @@ void R_BuildDrawView( idRenderWorldLocal* renderWorld, const renderView_t* rende
 	view->worldSpace.ambientCubeMap = renderWorld->BackendAmbientCubeMap();
 	SetFullScreenRect( view->scissor );
 	view->worldSpace.scissorRect = view->scissor;
+	renderWorld->BackendPrepareEffects( renderView );
 
 	for ( int entityIndex = 0; entityIndex < renderWorld->BackendNumEntityDefs(); ++entityIndex ) {
 		renderEntity_t* entity = renderWorld->BackendEntityDef( entityIndex );
@@ -2246,6 +2247,11 @@ void R_BuildDrawView( idRenderWorldLocal* renderWorld, const renderView_t* rende
 		}
 		if ( entity->hModel == NULL ) continue;
 		R_SetEntityDefViewEntity( entity, entity->hModel, entityIndex );
+	}
+	for ( int effectIndex = 0; effectIndex < renderWorld->BackendNumPreparedEffects(); ++effectIndex ) {
+		renderEntity_t* effectEntity = renderWorld->BackendPreparedEffect( effectIndex );
+		if ( effectEntity == NULL || effectEntity->hModel == NULL ) continue;
+		R_SetEntityDefViewEntity( effectEntity, effectEntity->hModel, -1 - effectIndex );
 	}
 	if ( renderWorld->BackendNumLocalModels() > 0 || view->viewEntities != NULL ) {
 		view->worldSpace.next = view->viewEntities;

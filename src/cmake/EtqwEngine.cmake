@@ -203,6 +203,7 @@ set(ETQW_RENDERER_CORE_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/renderer/tr_render.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/renderer/tr_rendertools.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/renderer/tr_trisurf.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/renderer/VertexCache.cpp"
 )
 set(ETQW_SYSTEM_CORE_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/sys/sys_input.cpp"
@@ -223,9 +224,20 @@ set(ETQW_SOUND_CORE_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/sound/SoundSystemBootstrap.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sound/SoundShader.cpp"
 )
-set(ETQW_ENGINE_SUPPORT_SOURCES
+  set(ETQW_ENGINE_SUPPORT_SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/bse/BSE_Bounds.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/bse/BSE_Effect.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/bse/BSE_EffectTemplate.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/bse/BSE_Electricity.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/bse/BSE_Envelopes.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/bse/BSE_Light.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/bse/BSE_Manager.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/bse/BSE_ParseParticle2.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/bse/BSE_Particle.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/bse/BSE_Render.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/bse/BSE_Segment.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/bse/BSE_SegmentTemplate.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/bse/BSE_SpawnDomains.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/framework/AdManager.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/framework/GraphManager.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/framework/NotificationSystem.cpp"
@@ -248,10 +260,9 @@ list(APPEND ETQW_CURL_SOURCES
 # headers.  Keep it available as an explicit convergence target, but do not
 # mix its incompatible private types into the reconstructed executable.
 set(ETQW_EXECUTABLE_SOURCES ${ETQW_ENGINE_BOOTSTRAP_SOURCES})
-# The completed Darklight BSE conversion is retained under its PDB paths, but
-# its renderer-facing implementation is enabled as a unit after the ETQW
-# renderer private types replace the surviving Doom 3 headers.  Keep the
-# already-integrated manager boundary in ETQW_ENGINE_SUPPORT_SOURCES for now.
+# The completed ETQW BSE conversion is compiled explicitly through
+# ETQW_ENGINE_SUPPORT_SOURCES.  Exclude the globbed copies here so every PDB
+# translation unit has exactly one owner in the executable target.
 list(FILTER ETQW_EXECUTABLE_SOURCES EXCLUDE REGEX "/bse/")
 list(FILTER ETQW_EXECUTABLE_SOURCES EXCLUDE REGEX "/renderer/")
 list(FILTER ETQW_EXECUTABLE_SOURCES EXCLUDE REGEX "/sys/")

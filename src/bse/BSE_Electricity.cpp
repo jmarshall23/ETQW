@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #pragma hdrstop
 
 #include "BSE.h"
+#include "../decllib/declTable.h"
 
 namespace {
 

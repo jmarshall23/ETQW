@@ -74,8 +74,9 @@ void rvBSE::ServiceInternal( const rvBSEOwner &owner, idList<rvBSEParticle> &par
 		const idStr &spawnName = segmentTemplate.spawnEffects[random.RandomInt( segmentTemplate.spawnEffects.Num() )];
 		idStr declName = spawnName;
 		declName.StripFileExtension();
+		const qhandle_t effectType = declManager->GetDeclTypeHandle( declEffectsIdentifier );
 		const rvDeclEffect *nestedDecl = static_cast<const rvDeclEffect *>(
-			declManager->FindType( DECL_EFFECT, declName, false ) );
+			declManager->FindType( effectType, declName, false ) );
 		if ( nestedDecl == NULL || nestedDecl == effect ) continue;
 
 		rvBSEOwner nestedOwner = owner;

@@ -23,37 +23,30 @@ GNU General Public License for more details.
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
-#include "../renderer/tr_local.h"
-#include "../renderer/Model_local.h"
+#include "../renderer/Model.h"
+#include "../renderer/ModelManager.h"
+#include "../renderer/Material.h"
+#include "../decllib/declTypeHolder.h"
 #include "BSE.h"
 
 namespace {
 
 struct bseSurfaceBuilder_t {
 	idStr materialName;
-	bseSurfaceBlend_t blend;
+	bseBlendType_t blend;
 	idList<idDrawVert> verts;
 	idList<glIndex_t> indexes;
 };
 
-static bseSurfaceBlend_t SurfaceBlendForParticle( const rvBSEParticle &particle ) {
+static bseBlendType_t SurfaceBlendForParticle( const rvBSEParticle &particle ) {
 	if ( particle.particleTemplate == NULL ) {
-		return BSE_SURFACE_BLEND_DEFAULT;
+		return BSE_BLEND_DEFAULT;
 	}
-	switch ( particle.particleTemplate->blend ) {
-		case BSE_BLEND_ADD:
-			return BSE_SURFACE_BLEND_ADD;
-		case BSE_BLEND_ALPHA:
-			return BSE_SURFACE_BLEND_ALPHA;
-		case BSE_BLEND_PREMULTIPLIED:
-			return BSE_SURFACE_BLEND_PREMULTIPLIED;
-		default:
-			return BSE_SURFACE_BLEND_DEFAULT;
-	}
+	return particle.particleTemplate->blend;
 }
 
 static bseSurfaceBuilder_t &SurfaceForMaterial( idList<bseSurfaceBuilder_t> &surfaces,
-		const idStr &materialName, bseSurfaceBlend_t blend ) {
+		const idStr &materialName, bseBlendType_t blend ) {
 	for ( int i = 0; i < surfaces.Num(); i++ ) {
 		if ( surfaces[i].blend == blend && !surfaces[i].materialName.Icmp( materialName ) ) return surfaces[i];
 	}
@@ -71,10 +64,10 @@ static void SetVertex( idDrawVert &vert, const idVec3 &position, float s, float 
 		const idVec4 &color, const idVec3 &normal, const idVec3 &tangent0, const idVec3 &tangent1 ) {
 	vert.Clear();
 	vert.xyz = position;
-	vert.st.Set( s, t );
-	vert.normal = normal;
-	vert.tangents[0] = tangent0;
-	vert.tangents[1] = tangent1;
+	vert.SetST( s, t );
+	vert.SetNormal( normal );
+	vert.SetTangent( tangent0 );
+	vert.SetBiTangent( tangent1 );
 	vert.color[0] = ColorByte( color.x );
 	vert.color[1] = ColorByte( color.y );
 	vert.color[2] = ColorByte( color.z );
@@ -219,7 +212,7 @@ static void AppendModel( idList<bseSurfaceBuilder_t> &surfaces, const rvBSEParti
 	for ( int surfaceIndex = 0; surfaceIndex < model->NumSurfaces(); surfaceIndex++ ) {
 		const modelSurface_t *sourceSurface = model->Surface( surfaceIndex );
 		if ( sourceSurface == NULL || sourceSurface->geometry == NULL || sourceSurface->geometry->numVerts == 0 ) continue;
-		const char *materialName = sourceSurface->shader != NULL ? sourceSurface->shader->GetName() : "_default";
+		const char *materialName = sourceSurface->material != NULL ? sourceSurface->material->GetName() : "_default";
 		bseSurfaceBuilder_t &surface = SurfaceForMaterial( surfaces, materialName,
 			SurfaceBlendForParticle( particle ) );
 		const int firstVert = surface.verts.Num();
@@ -232,9 +225,9 @@ static void AppendModel( idList<bseSurfaceBuilder_t> &surfaces, const rvBSEParti
 				source->verts[vertIndex].xyz.y * Max( 0.001f, particle.size.y ),
 				source->verts[vertIndex].xyz.z * Max( 0.001f, particle.size.z ) );
 			dest.xyz = particle.position + scaled * axis;
-			dest.normal = source->verts[vertIndex].normal * axis;
-			dest.tangents[0] = source->verts[vertIndex].tangents[0] * axis;
-			dest.tangents[1] = source->verts[vertIndex].tangents[1] * axis;
+			dest.SetNormal( source->verts[vertIndex].GetNormal() * axis );
+			dest.SetTangent( source->verts[vertIndex].GetTangent() * axis );
+			dest.SetBiTangent( source->verts[vertIndex].GetBiTangent() * axis );
 			dest.color[0] = ColorByte( source->verts[vertIndex].color[0] * ( 1.0f / 255.0f ) * particle.color.x );
 			dest.color[1] = ColorByte( source->verts[vertIndex].color[1] * ( 1.0f / 255.0f ) * particle.color.y );
 			dest.color[2] = ColorByte( source->verts[vertIndex].color[2] * ( 1.0f / 255.0f ) * particle.color.z );
@@ -308,13 +301,13 @@ void BSE_SortParticles( const rvBSEOwner &owner, idList<rvBSEParticle> &particle
 	}
 }
 
-void BSE_BuildRenderModel( idRenderModelStatic *snapshot, const char *snapshotName,
+void BSE_BuildRenderModel( idRenderModel *snapshot, const char *snapshotName,
 		const idList<rvBSEParticle> &particles, const rvBSEOwner &owner,
 		const idVec3 &localViewOrigin, const idVec3 &viewRight, const idVec3 &viewUp ) {
 	idList<bseSurfaceBuilder_t> builders;
 	idList<byte> consumed;
 	consumed.SetNum( particles.Num() );
-	memset( consumed.Ptr(), 0, consumed.Num() * sizeof( consumed[0] ) );
+	if ( consumed.Num() > 0 ) memset( consumed.Begin(), 0, consumed.Num() * sizeof( consumed[0] ) );
 	for ( int i = 0; i < particles.Num(); i++ ) {
 		if ( consumed[i] ) continue;
 		const rvBSEParticle &particle = particles[i];
@@ -323,7 +316,7 @@ void BSE_BuildRenderModel( idRenderModelStatic *snapshot, const char *snapshotNa
 			AppendModel( builders, particle );
 			continue;
 		}
-		const bseSurfaceBlend_t blend = SurfaceBlendForParticle( particle );
+		const bseBlendType_t blend = SurfaceBlendForParticle( particle );
 		bseSurfaceBuilder_t &surface = SurfaceForMaterial( builders,
 			particle.materialName.IsEmpty() ? idStr( "_default" ) : particle.materialName, blend );
 		if ( particle.type == PTYPE_LINKED || particle.type == PTYPE_ORIENTEDLINKED ) {
@@ -356,21 +349,19 @@ void BSE_BuildRenderModel( idRenderModelStatic *snapshot, const char *snapshotNa
 	for ( int i = 0; i < builders.Num(); i++ ) {
 		const bseSurfaceBuilder_t &builder = builders[i];
 		if ( builder.verts.Num() == 0 || builder.indexes.Num() == 0 ) continue;
-		srfTriangles_t *tri = R_AllocStaticTriSurf();
-		R_AllocStaticTriSurfVerts( tri, builder.verts.Num() );
-		R_AllocStaticTriSurfIndexes( tri, builder.indexes.Num() );
-		memcpy( tri->verts, builder.verts.Ptr(), builder.verts.Num() * sizeof( idDrawVert ) );
-		memcpy( tri->indexes, builder.indexes.Ptr(), builder.indexes.Num() * sizeof( glIndex_t ) );
+		srfTriangles_t *tri = snapshot->AllocSurfaceTriangles( builder.verts.Num(), builder.indexes.Num() );
+		if ( tri == NULL ) continue;
+		memcpy( tri->verts, builder.verts.Begin(), builder.verts.Num() * sizeof( idDrawVert ) );
+		memcpy( tri->indexes, builder.indexes.Begin(), builder.indexes.Num() * sizeof( glIndex_t ) );
 		tri->numVerts = builder.verts.Num();
 		tri->numIndexes = builder.indexes.Num();
-		tri->isBSE = true;
-		tri->bseBlend = builder.blend;
 		tri->tangentsCalculated = true;
 		tri->facePlanesCalculated = false;
-		R_BoundTriSurf( tri );
+		tri->bounds.Clear();
+		for ( int vertIndex = 0; vertIndex < tri->numVerts; vertIndex++ ) tri->bounds.AddPoint( tri->verts[vertIndex].xyz );
 		modelSurface_t modelSurface;
 		modelSurface.id = i;
-		modelSurface.shader = builder.materialName.IsEmpty() ? tr.defaultMaterial : declManager->FindMaterial( builder.materialName );
+		modelSurface.material = declHolder.FindMaterial( builder.materialName.IsEmpty() ? "_default" : builder.materialName.c_str(), true );
 		modelSurface.geometry = tri;
 		snapshot->AddSurface( modelSurface );
 	}

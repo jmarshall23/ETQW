@@ -38,7 +38,7 @@ static bool SegmentCanSpawn( float requestedCount, int index, idRandom &random )
 }
 
 static float SegmentAttenuation( const rvSegmentTemplate &segment, const rvBSEOwner &owner ) {
-	if ( !segment.attenuateEmitter ) return 1.0f;
+	if ( !segment.attenuateEmitter ) return owner.attenuation;
 	float nearDistance = segment.attenuation.x;
 	float farDistance = segment.attenuation.y;
 	if ( nearDistance > farDistance ) {
@@ -54,7 +54,7 @@ static float SegmentAttenuation( const rvSegmentTemplate &segment, const rvBSEOw
 		attenuation = 1.0f - idMath::ClampFloat( 0.0f, 1.0f,
 			( distance - nearDistance ) / ( farDistance - nearDistance ) );
 	}
-	return segment.inverseAttenuateEmitter ? 1.0f - attenuation : attenuation;
+	return owner.attenuation * ( segment.inverseAttenuateEmitter ? 1.0f - attenuation : attenuation );
 }
 
 } // namespace

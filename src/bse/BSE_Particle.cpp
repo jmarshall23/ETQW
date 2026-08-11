@@ -277,10 +277,11 @@ bool rvParticle::Evaluate( const rvParticleSpawnInfo &spawn, rvBSEParticle &resu
 	result.size.Set( idMath::Fabs( values[BSE_PARM_SIZE].x ), idMath::Fabs( values[BSE_PARM_SIZE].y ),
 		idMath::Fabs( values[BSE_PARM_SIZE].z ) );
 	result.size *= segmentTemplate.scale;
-	result.color.Set( values[BSE_PARM_TINT].x * owner.color.x * owner.brightness,
-		values[BSE_PARM_TINT].y * owner.color.y * owner.brightness,
-		values[BSE_PARM_TINT].z * owner.color.z * owner.brightness,
-		values[BSE_PARM_FADE].x * owner.color.w );
+	const idVec4 &effectColor = segmentTemplate.useMaterialColor ? owner.materialColor : owner.color;
+	result.color.Set( values[BSE_PARM_TINT].x * effectColor.x * owner.brightness,
+		values[BSE_PARM_TINT].y * effectColor.y * owner.brightness,
+		values[BSE_PARM_TINT].z * effectColor.z * owner.brightness,
+		values[BSE_PARM_FADE].x * effectColor.w );
 	if ( particleTemplate.fadeIn > 0.0f ) {
 		result.color.w *= idMath::ClampFloat( 0.0f, 1.0f, clampedAge / particleTemplate.fadeIn );
 	}
