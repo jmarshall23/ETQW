@@ -55,7 +55,15 @@ Manager
 
 // tr_imageprogram.c
 
-#include "tr_local.h"
+#include "Image.h"
+
+static void* R_StaticAlloc( int bytes ) {
+	return Mem_Alloc( bytes );
+}
+
+static void R_StaticFree( void* data ) {
+	Mem_Free( data );
+}
 
 /*
 
@@ -641,4 +649,3 @@ const char *R_ParsePastImageProgram( idLexer &src ) {
 	R_ParseImageProgram_r( src, NULL, NULL, NULL, NULL, NULL );
 	return parseBuffer;
 }
-

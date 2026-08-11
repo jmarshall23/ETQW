@@ -10,6 +10,7 @@
 #include "Model_Stuff.h"
 #include "RenderSystem.h"
 #include "VertexCache.h"
+#include "VulkanBackend.h"
 #include "../decllib/declTypeHolder.h"
 
 namespace {
@@ -318,9 +319,13 @@ public:
 		SIMDProcessor->MultiplyJoints( transformedJoints.Begin(), entity->joints,
 			inverseDefaultPose.Begin(), modelJoints.Num() );
 
+		const bool cpuSkinForVulkan = R_UseVulkanBackend();
 		idRenderModelStatic* snapshot = new idRenderModelStatic;
 		snapshot->InitEmpty( "_MD5_Snapshot_" );
-		snapshot->ownsSurfaceGeometry = false;
+		// The OpenGL renderer consumes the shared reference-pose vertex/index
+		// caches plus joints and weights.  Vulkan does not have that pipeline yet,
+		// so its compatibility path creates a fully owned, CPU-skinned snapshot.
+		snapshot->ownsSurfaceGeometry = cpuSkinForVulkan;
 		snapshot->modelBounds = entity->bounds.IsCleared() ? modelBounds : entity->bounds;
 
 		for ( int surfaceIndex = 0; surfaceIndex < modelSurfaces.Num(); ++surfaceIndex ) {
@@ -329,8 +334,35 @@ public:
 				continue;
 			}
 
-			srfTriangles_t* geometry = static_cast< srfTriangles_t* >( Mem_Alloc( sizeof( *geometry ) ) );
-			*geometry = *sourceSurface.geometry;
+			srfTriangles_t* geometry = NULL;
+			if ( cpuSkinForVulkan ) {
+				geometry = snapshot->AllocSurfaceTriangles(
+					sourceSurface.geometry->numVerts,
+					sourceSurface.geometry->numIndexes );
+				if ( geometry == NULL ) {
+					delete snapshot;
+					return NULL;
+				}
+				const idDrawVert* sourceVerts = sourceSurface.geometry->verts;
+				if ( sourceVerts == NULL || sourceSurface.geometry->indexes == NULL ) {
+					delete snapshot;
+					return NULL;
+				}
+				memcpy( geometry->verts, sourceVerts,
+					geometry->numVerts * sizeof( geometry->verts[ 0 ] ) );
+				memcpy( geometry->indexes, sourceSurface.geometry->indexes,
+					geometry->numIndexes * sizeof( geometry->indexes[ 0 ] ) );
+				geometry->bounds = sourceSurface.geometry->bounds;
+				geometry->mode = sourceSurface.geometry->mode;
+				geometry->dsFlags = sourceSurface.geometry->dsFlags & ~0x10;
+				geometry->texCoordScale = sourceSurface.geometry->texCoordScale;
+				geometry->tangentsCalculated = sourceSurface.geometry->tangentsCalculated;
+				geometry->facePlanesCalculated = false;
+				geometry->hardwareSkinnedSurface = false;
+			} else {
+				geometry = static_cast< srfTriangles_t* >( Mem_Alloc( sizeof( *geometry ) ) );
+				*geometry = *sourceSurface.geometry;
+			}
 			geometry->joints = NULL;
 			geometry->numJoints = 0;
 			if ( !entity->bounds.IsCleared() ) {
@@ -338,7 +370,48 @@ public:
 			}
 
 			const md5SkinSurface_t& skin = md5SkinSurfaces[ surfaceIndex ];
-			if ( !skin.noAnimate && skin.referencedJoints.Num() > 0 && geometry->weightCache != NULL ) {
+			if ( cpuSkinForVulkan && !skin.noAnimate &&
+				 skin.referencedJoints.Num() > 0 &&
+				 skin.weights.Num() == geometry->numVerts ) {
+				geometry->bounds.Clear();
+				for ( int vertexIndex = 0; vertexIndex < geometry->numVerts; ++vertexIndex ) {
+					const idDrawVert& source = sourceSurface.geometry->verts[ vertexIndex ];
+					const vertWeight_t& vertexWeight = skin.weights[ vertexIndex ];
+					idVec3 position( 0.0f, 0.0f, 0.0f );
+					idVec3 normal( 0.0f, 0.0f, 0.0f );
+					idVec3 tangent( 0.0f, 0.0f, 0.0f );
+					float totalWeight = 0.0f;
+					for ( int weightIndex = 0; weightIndex < MAX_WEIGHTS_PER_VERT; ++weightIndex ) {
+						const int byteWeight = vertexWeight.weight[ weightIndex ];
+						if ( byteWeight == 0 ) {
+							continue;
+						}
+						const int localJoint = vertexWeight.index[ weightIndex ];
+						if ( localJoint < 0 || localJoint >= skin.referencedJoints.Num() ) {
+							continue;
+						}
+						const int sourceJoint = skin.referencedJoints[ localJoint ];
+						if ( sourceJoint < 0 || sourceJoint >= transformedJoints.Num() ) {
+							continue;
+						}
+						const float weight = byteWeight * ( 1.0f / 255.0f );
+						const idJointMat& joint = transformedJoints[ sourceJoint ];
+						position += ( joint * idVec4( source.xyz.x, source.xyz.y, source.xyz.z, 1.0f ) ) * weight;
+						normal += ( joint * source.GetNormal() ) * weight;
+						tangent += ( joint * source.GetTangent() ) * weight;
+						totalWeight += weight;
+					}
+					idDrawVert& destination = geometry->verts[ vertexIndex ];
+					if ( totalWeight > 0.0f ) {
+						destination.xyz = position / totalWeight;
+						normal.Normalize();
+						tangent.Normalize();
+						destination.SetNormal( normal );
+						destination.SetTangent( tangent );
+					}
+					geometry->bounds += destination.xyz;
+				}
+			} else if ( !cpuSkinForVulkan && !skin.noAnimate && skin.referencedJoints.Num() > 0 && geometry->weightCache != NULL ) {
 				geometry->numJoints = skin.referencedJoints.Num();
 				geometry->joints = static_cast< idJointMat* >(
 					Mem_AllocAligned( geometry->numJoints * sizeof( idJointMat ), ALIGN_16 ) );

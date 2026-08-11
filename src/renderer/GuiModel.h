@@ -91,6 +91,7 @@ private:
 						idSoundEmitter* referenceSound, bool masked,
 						float minx, float miny, float width, float height );
 	bool			ClipWinding( idWinding2D& winding ) const;
+	void			SubmitFrameVulkan();
 
 	idList< guiPrimitive_t >	primitives;
 	idList< guiText_t >		texts;

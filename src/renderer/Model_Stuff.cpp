@@ -390,13 +390,6 @@ idRenderModel* BuildSnapshot( stuffModelData_t* data, stuffSnapshot_t* snapshot,
 			}
 			idRenderModel* instanceModel = stuffSurface->models[ instance.modelIndex ];
 			const idMat3 instanceAxis = InstanceAxis( instance );
-			const idMat3 worldAxis = instanceAxis * entity->axis;
-			const idVec3 worldOrigin = instance.origin * entity->axis + entity->origin;
-			if ( r_useQuadTree.GetBool() &&
-				R_CullLocalBoxToViewdef( instanceModel->Bounds(), worldAxis, worldOrigin, view ) ) {
-				continue;
-			}
-
 			const int cellX = static_cast< int >( idMath::Floor( instance.origin.x / STUFF_BATCH_SIZE ) );
 			const int cellY = static_cast< int >( idMath::Floor( instance.origin.y / STUFF_BATCH_SIZE ) );
 			for ( int modelSurfaceIndex = 0; modelSurfaceIndex < instanceModel->NumSurfaces(); ++modelSurfaceIndex ) {
@@ -421,6 +414,15 @@ idRenderModel* BuildSnapshot( stuffModelData_t* data, stuffSnapshot_t* snapshot,
 	for ( int i = 0; i < groups.Num(); ++i ) {
 		stuffBuildGroup_t* group = groups[ i ];
 		if ( group->verts.Num() == 0 || group->indexes.Num() == 0 ) {
+			continue;
+		}
+		// Cull the 1024-unit material batches, not every rotated blade/model.
+		// The per-instance transformed-box test was rejecting every nearby Valley
+		// instance at several valid camera orientations.  Batching first also matches
+		// the purpose of the retail stuff quadtree and leaves a final surface-bounds
+		// cull in R_AddAmbientDrawsurfs.
+		if ( r_useQuadTree.GetBool() &&
+			R_CullLocalBoxToViewdef( group->bounds, entity->axis, entity->origin, view ) ) {
 			continue;
 		}
 

@@ -15,6 +15,7 @@
 #include "DeviceContext.h"
 #include "tr_render.h"
 #include "VertexCache.h"
+#include "VulkanBackend.h"
 #include "../sys/sys_render.h"
 
 #include <GL/gl.h>
@@ -115,6 +116,11 @@ void idRenderSystemLocal::WriteDemoPics() {}
 void idRenderSystemLocal::DrawDemoPics() {}
 
 void idRenderSystemLocal::BeginFrame( int width, int height ) {
+	if ( vulkanBackend.IsInitialized() && sys3D != NULL ) {
+		const glimpParms_t& parms = sys3D->GetGameWindowParms();
+		width = parms.width;
+		height = parms.height;
+	}
 	if ( width > 0 ) {
 		windowWidth = width;
 	}
@@ -123,11 +129,15 @@ void idRenderSystemLocal::BeginFrame( int width, int height ) {
 	}
 	renderSystemBackend.BeginFrame( windowWidth, windowHeight );
 	guiModel.BeginFrame();
-	if ( openGLRunning && sys3D != NULL && sys3D->MakeCurrent( sys3D->GetGameWindow() ) ) {
+	if ( openGLRunning && !vulkanBackend.IsInitialized() && sys3D != NULL &&
+		sys3D->MakeCurrent( sys3D->GetGameWindow() ) ) {
 		SetDefaultGLState();
 		glViewport( 0, 0, windowWidth, windowHeight );
 		glClearColor( 0.04f, 0.05f, 0.07f, 1.0f );
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );
+	}
+	if ( vulkanBackend.IsInitialized() ) {
+		vulkanBackend.BeginFrame( windowWidth, windowHeight );
 	}
 	synced = false;
 }
@@ -135,11 +145,16 @@ void idRenderSystemLocal::BeginFrame( int width, int height ) {
 void idRenderSystemLocal::EndFrame( bool swapBuffers ) {
 	if ( openGLRunning ) {
 		guiModel.SubmitFrame( windowWidth, windowHeight );
-		glFlush();
-		if ( swapBuffers && sys3D != NULL ) {
-			sys3D->SwapBuffers();
+		if ( !vulkanBackend.IsInitialized() ) {
+			glFlush();
+			if ( swapBuffers && sys3D != NULL ) {
+				sys3D->SwapBuffers();
+			}
 		}
 		vertexCache.EndFrame();
+	}
+	if ( vulkanBackend.IsInitialized() ) {
+		vulkanBackend.EndFrame( swapBuffers );
 	}
 	synced = true;
 	syncNum++;

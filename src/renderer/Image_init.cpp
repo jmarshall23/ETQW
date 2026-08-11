@@ -828,14 +828,12 @@ void idImageManager::LoadImage(
 	unsigned* timestamp,
 	bool
 ) {
-	LoadTGA( fileName, pic, width, height, timestamp, true );
-	if ( pic != NULL && *pic == NULL && fileName != NULL ) {
-		idStr tgaName = fileName;
-		tgaName.DefaultFileExtension( "tga" );
-		if ( idStr::Icmp( tgaName, fileName ) != 0 ) {
-			LoadTGA( tgaName, pic, width, height, timestamp, true );
-		}
-	}
+	// Material images are expressions, not only filenames.  Routing these
+	// through LoadTGA made makealpha(), heightmap(), addnormals(), and the other
+	// retail image programs look like literal filenames and silently default.
+	// The image-program parser handles both expressions and ordinary image paths
+	// and performs all source reads through the engine filesystem.
+	R_LoadImageProgram( fileName, pic, width, height, timestamp, NULL );
 }
 
 void idImageManager::FreeImageBuffer( byte*& buffer ) {

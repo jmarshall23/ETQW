@@ -39,6 +39,7 @@ set(ETQW_RENDERER_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/Image_files.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/Image_load.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/Image_process.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/renderer/Image_program.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/image_sequence.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/Material.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/megatexture/MegaTexture.cpp"
@@ -55,6 +56,7 @@ set(ETQW_RENDERER_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RenderSystem.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RenderSystem_init.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RenderSystemBackend.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RuntimeSpirvCompiler.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RenderWorld.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RenderWorld_demo.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RenderWorld_load.cpp"
@@ -71,6 +73,7 @@ set(ETQW_RENDERER_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/tr_rendertools.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/tr_trisurf.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/VertexCache.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/renderer/VulkanBackend.cpp"
 )
 
 set(ETQW_SYSTEM_SOURCES
@@ -261,6 +264,17 @@ set_source_files_properties(
 )
 
 add_executable(etqw WIN32 ${ETQW_EXECUTABLE_SOURCES})
+find_path(ETQW_VULKAN_INCLUDE_DIR
+    NAMES vulkan/vulkan.h
+    HINTS "$ENV{VULKAN_SDK}/Include"
+    DOC "Directory containing the Vulkan headers"
+)
+if(NOT ETQW_VULKAN_INCLUDE_DIR)
+    message(FATAL_ERROR
+        "Vulkan headers were not found. Install the Vulkan SDK or set "
+        "ETQW_VULKAN_INCLUDE_DIR."
+    )
+endif()
 target_include_directories(etqw PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}/idlib"
@@ -269,6 +283,7 @@ target_include_directories(etqw PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/libs/zlib"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32"
+    "${ETQW_VULKAN_INCLUDE_DIR}"
 )
 target_compile_definitions(etqw PRIVATE
     WIN32
@@ -333,6 +348,41 @@ set_target_properties(etqw PROPERTIES
     VS_DEBUGGER_WORKING_DIRECTORY "${ETQW_WORKSPACE_ROOT}"
     FOLDER "ETQW"
 )
+
+# The Win32 game can launch these 64-bit tools directly. Stage self-contained
+# SDK executables beside etqw.exe so runtime shader compilation does not depend
+# on a developer machine having VULKAN_SDK configured.
+find_program(ETQW_GLSLANG_VALIDATOR_EXECUTABLE
+    NAMES glslangValidator.exe glslangValidator
+    HINTS "$ENV{VULKAN_SDK}/Bin"
+)
+find_program(ETQW_SPIRV_VAL_EXECUTABLE
+    NAMES spirv-val.exe spirv-val
+    HINTS "$ENV{VULKAN_SDK}/Bin"
+)
+if(ETQW_GLSLANG_VALIDATOR_EXECUTABLE)
+    add_custom_command(TARGET etqw POST_BUILD
+        COMMAND "${CMAKE_COMMAND}" -E make_directory
+            "$<TARGET_FILE_DIR:etqw>/vkcompiler"
+        COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${ETQW_GLSLANG_VALIDATOR_EXECUTABLE}"
+            "$<TARGET_FILE_DIR:etqw>/vkcompiler/"
+        VERBATIM
+    )
+    if(ETQW_SPIRV_VAL_EXECUTABLE)
+        add_custom_command(TARGET etqw POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+                "${ETQW_SPIRV_VAL_EXECUTABLE}"
+                "$<TARGET_FILE_DIR:etqw>/vkcompiler/"
+            VERBATIM
+        )
+    endif()
+else()
+    message(WARNING
+        "glslangValidator was not found; etqw will still search vkcompiler, "
+        "VULKAN_SDK, and PATH at runtime."
+    )
+endif()
 foreach(config_name Debug Release MinSizeRel RelWithDebInfo)
     string(TOUPPER "${config_name}" config_name_upper)
     set_target_properties(etqw PROPERTIES

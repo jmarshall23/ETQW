@@ -85,3 +85,73 @@ void LoadTGA( const char* name, byte** pic, int* width, int* height, unsigned* t
 	fileSystem->FreeFile( fileBuffer );
 }
 
+void R_LoadImage( const char* name, byte** pic, int* width, int* height,
+	unsigned* timestamp, bool ) {
+	if ( pic != NULL ) {
+		*pic = NULL;
+	}
+	if ( name == NULL || name[ 0 ] == '\0' ) {
+		return;
+	}
+	idStr imageName = name;
+	imageName.DefaultFileExtension( "tga" );
+	LoadTGA( imageName.c_str(), pic, width, height, timestamp, true );
+}
+
+bool R_LoadCubeImages( const char* cubeName, cubeFiles_t cubeFiles,
+	byte* pictures[ 6 ], int* size, unsigned* timestamp ) {
+	if ( pictures == NULL || size == NULL || cubeName == NULL ) {
+		return false;
+	}
+	for ( int face = 0; face < 6; ++face ) {
+		pictures[ face ] = NULL;
+	}
+	*size = 0;
+	if ( timestamp != NULL ) {
+		*timestamp = 0;
+	}
+	static const char* nativeSuffixes[ 6 ] = {
+		"_px.tga", "_nx.tga", "_py.tga", "_ny.tga", "_pz.tga", "_nz.tga"
+	};
+	static const char* cameraSuffixes[ 6 ] = {
+		"_right.tga", "_left.tga", "_forward.tga", "_back.tga",
+		"_up.tga", "_down.tga"
+	};
+	if ( cubeFiles != CF_NATIVE && cubeFiles != CF_CAMERA ) {
+		return false;
+	}
+	const char** suffixes = cubeFiles == CF_NATIVE ? nativeSuffixes : cameraSuffixes;
+	unsigned newestTimestamp = 0;
+	for ( int face = 0; face < 6; ++face ) {
+		idStr faceName = cubeName;
+		faceName.StripFileExtension();
+		faceName += suffixes[ face ];
+		int width = 0;
+		int height = 0;
+		unsigned faceTimestamp = 0;
+		LoadTGA( faceName.c_str(), &pictures[ face ], &width, &height,
+			&faceTimestamp, true );
+		if ( pictures[ face ] == NULL || width <= 0 || width != height ||
+			( *size != 0 && width != *size ) ) {
+			for ( int loadedFace = 0; loadedFace < 6; ++loadedFace ) {
+				Mem_Free( pictures[ loadedFace ] );
+				pictures[ loadedFace ] = NULL;
+			}
+			*size = 0;
+			return false;
+		}
+		*size = width;
+		newestTimestamp = Max( newestTimestamp, faceTimestamp );
+	}
+	if ( timestamp != NULL ) {
+		*timestamp = newestTimestamp;
+	}
+	static int reportedCubeLoads = 0;
+	if ( cvarSystem != NULL && cvarSystem->GetCVarBool( "r_vkDebugMaterials" ) &&
+		reportedCubeLoads < 16 ) {
+		common->Printf( "Loaded cube image '%s' (%dx%d) through the engine filesystem\n",
+			cubeName, *size, *size );
+		reportedCubeLoads++;
+	}
+	return true;
+}

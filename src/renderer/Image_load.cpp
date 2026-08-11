@@ -9,6 +9,7 @@
 #include "Image.h"
 #include "RenderSystem.h"
 #include "tr_render.h"
+#include "VulkanBackend.h"
 
 extern glconfig_t glConfig;
 
@@ -109,6 +110,159 @@ byte* MipMapRGBA( const byte* source, int width, int height ) {
 		}
 	}
 	return result;
+}
+
+unsigned ReadLittle16( const byte* source ) {
+	return static_cast< unsigned >( source[ 0 ] ) |
+		( static_cast< unsigned >( source[ 1 ] ) << 8 );
+}
+
+unsigned ReadLittle32( const byte* source ) {
+	return ReadLittle16( source ) | ( ReadLittle16( source + 2 ) << 16 );
+}
+
+void Decode565( unsigned packed, byte color[ 4 ] ) {
+	const unsigned red = ( packed >> 11 ) & 31;
+	const unsigned green = ( packed >> 5 ) & 63;
+	const unsigned blue = packed & 31;
+	color[ 0 ] = static_cast< byte >( ( red << 3 ) | ( red >> 2 ) );
+	color[ 1 ] = static_cast< byte >( ( green << 2 ) | ( green >> 4 ) );
+	color[ 2 ] = static_cast< byte >( ( blue << 3 ) | ( blue >> 2 ) );
+	color[ 3 ] = 255;
+}
+
+void DecodeDxtColorBlock( const byte* block, bool allowTransparent,
+	byte colors[ 4 ][ 4 ], unsigned& indices ) {
+	const unsigned color0 = ReadLittle16( block );
+	const unsigned color1 = ReadLittle16( block + 2 );
+	Decode565( color0, colors[ 0 ] );
+	Decode565( color1, colors[ 1 ] );
+	if ( color0 > color1 || !allowTransparent ) {
+		for ( int component = 0; component < 3; ++component ) {
+			colors[ 2 ][ component ] = static_cast< byte >(
+				( 2 * colors[ 0 ][ component ] + colors[ 1 ][ component ] + 1 ) / 3 );
+			colors[ 3 ][ component ] = static_cast< byte >(
+				( colors[ 0 ][ component ] + 2 * colors[ 1 ][ component ] + 1 ) / 3 );
+		}
+		colors[ 2 ][ 3 ] = colors[ 3 ][ 3 ] = 255;
+	} else {
+		for ( int component = 0; component < 3; ++component ) {
+			colors[ 2 ][ component ] = static_cast< byte >(
+				( colors[ 0 ][ component ] + colors[ 1 ][ component ] ) / 2 );
+			colors[ 3 ][ component ] = 0;
+		}
+		colors[ 2 ][ 3 ] = 255;
+		colors[ 3 ][ 3 ] = 0;
+	}
+	indices = ReadLittle32( block + 4 );
+}
+
+void DecodeBcAlphaBlock( const byte* block, byte alpha[ 16 ] ) {
+	byte values[ 8 ];
+	values[ 0 ] = block[ 0 ];
+	values[ 1 ] = block[ 1 ];
+	if ( values[ 0 ] > values[ 1 ] ) {
+		for ( int i = 1; i <= 6; ++i ) {
+			values[ i + 1 ] = static_cast< byte >(
+				( ( 7 - i ) * values[ 0 ] + i * values[ 1 ] + 3 ) / 7 );
+		}
+	} else {
+		for ( int i = 1; i <= 4; ++i ) {
+			values[ i + 1 ] = static_cast< byte >(
+				( ( 5 - i ) * values[ 0 ] + i * values[ 1 ] + 2 ) / 5 );
+		}
+		values[ 6 ] = 0;
+		values[ 7 ] = 255;
+	}
+	for ( int pixel = 0; pixel < 16; ++pixel ) {
+		const int bit = pixel * 3;
+		const int byteIndex = 2 + ( bit >> 3 );
+		unsigned packed = block[ byteIndex ];
+		if ( byteIndex + 1 < 8 ) {
+			packed |= static_cast< unsigned >( block[ byteIndex + 1 ] ) << 8;
+		}
+		alpha[ pixel ] = values[ ( packed >> ( bit & 7 ) ) & 7 ];
+	}
+}
+
+bool DecodeDDSLevelRGBA( unsigned long fourCC, bool dxt1Alpha,
+	const byte* source, int sourceBytes, int width, int height, byte* output ) {
+	const unsigned long dxt1 = DDS_MAKEFOURCC( 'D', 'X', 'T', '1' );
+	const unsigned long dxt3 = DDS_MAKEFOURCC( 'D', 'X', 'T', '3' );
+	const unsigned long dxt5 = DDS_MAKEFOURCC( 'D', 'X', 'T', '5' );
+	const unsigned long rxgb = DDS_MAKEFOURCC( 'R', 'X', 'G', 'B' );
+	const unsigned long ati1 = DDS_MAKEFOURCC( 'A', 'T', 'I', '1' );
+	const unsigned long ati2 = DDS_MAKEFOURCC( 'A', 'T', 'I', '2' );
+	const int blockBytes = fourCC == dxt1 || fourCC == ati1 ? 8 : 16;
+	const int blocksWide = ( width + 3 ) / 4;
+	const int blocksHigh = ( height + 3 ) / 4;
+	if ( source == NULL || output == NULL || sourceBytes < blocksWide * blocksHigh * blockBytes ) {
+		return false;
+	}
+	for ( int blockY = 0; blockY < blocksHigh; ++blockY ) {
+		for ( int blockX = 0; blockX < blocksWide; ++blockX ) {
+			const byte* block = source + ( blockY * blocksWide + blockX ) * blockBytes;
+			byte colors[ 4 ][ 4 ];
+			byte alpha[ 16 ];
+			memset( alpha, 255, sizeof( alpha ) );
+			unsigned colorIndices = 0;
+			if ( fourCC == ati1 || fourCC == ati2 ) {
+				byte red[ 16 ];
+				byte green[ 16 ];
+				DecodeBcAlphaBlock( block, red );
+				if ( fourCC == ati2 ) {
+					DecodeBcAlphaBlock( block + 8, green );
+				} else {
+					memcpy( green, red, sizeof( green ) );
+				}
+				for ( int pixel = 0; pixel < 16; ++pixel ) {
+					const int x = blockX * 4 + ( pixel & 3 );
+					const int y = blockY * 4 + ( pixel >> 2 );
+					if ( x >= width || y >= height ) {
+						continue;
+					}
+					byte* destination = output + ( y * width + x ) * 4;
+					destination[ 0 ] = red[ pixel ];
+					destination[ 1 ] = green[ pixel ];
+					destination[ 2 ] = fourCC == ati1 ? red[ pixel ] : 0;
+					destination[ 3 ] = 255;
+				}
+				continue;
+			}
+			const byte* colorBlock = block;
+			if ( fourCC == dxt3 ) {
+				colorBlock += 8;
+				for ( int pixel = 0; pixel < 16; ++pixel ) {
+					const int shift = ( pixel & 3 ) * 4;
+					alpha[ pixel ] = static_cast< byte >(
+						( ( ReadLittle16( block + ( pixel >> 2 ) * 2 ) >> shift ) & 15 ) * 17 );
+				}
+			} else if ( fourCC == dxt5 || fourCC == rxgb ) {
+				DecodeBcAlphaBlock( block, alpha );
+				colorBlock += 8;
+			}
+			DecodeDxtColorBlock( colorBlock, fourCC == dxt1 && dxt1Alpha,
+				colors, colorIndices );
+			for ( int pixel = 0; pixel < 16; ++pixel ) {
+				const int x = blockX * 4 + ( pixel & 3 );
+				const int y = blockY * 4 + ( pixel >> 2 );
+				if ( x >= width || y >= height ) {
+					continue;
+				}
+				const byte* color = colors[ ( colorIndices >> ( pixel * 2 ) ) & 3 ];
+				byte* destination = output + ( y * width + x ) * 4;
+				memcpy( destination, color, 4 );
+				if ( fourCC != dxt1 ) {
+					destination[ 3 ] = alpha[ pixel ];
+				}
+				if ( fourCC == rxgb ) {
+					destination[ 0 ] = alpha[ pixel ];
+					destination[ 3 ] = 255;
+				}
+			}
+		}
+	}
+	return true;
 }
 
 void ApplyZeroClampBorder( byte* pixels, int width, int height, bool zeroAlpha ) {
@@ -303,6 +457,9 @@ void idImage::GetDownsize( int& scaledWidth, int& scaledHeight ) const {
 }
 
 void idImage::Purge() {
+	if ( vulkanBackend.IsInitialized() ) {
+		vulkanBackend.DestroyImage( this );
+	}
 	if ( IsLoaded() && glConfig.isInitialized ) {
 		glDeleteTextures( 1, &texnum );
 	}
@@ -358,6 +515,9 @@ void idImage::SetMipmapLevel( byte* pixels, int width, int height, int level, mi
 		return;
 	}
 	ApplyMipmapState( pixels, width, height, level, state );
+	if ( vulkanBackend.IsInitialized() ) {
+		vulkanBackend.UpdateImage2D( this, level, 0, 0, width, height, pixels );
+	}
 	glTexImage2D(
 		GL_TEXTURE_2D,
 		level,
@@ -446,8 +606,20 @@ void idImage::GenerateImageEx(
 	int levelWidth = scaledWidth;
 	int levelHeight = scaledHeight;
 	const int maximumMipLevels = requestedMipLevels < 0 ? MAX_TEXTURE_LEVELS : Max( requestedMipLevels, 1 );
+	int vulkanMipLevels = 1;
+	for ( int mipWidth = scaledWidth, mipHeight = scaledHeight;
+		( mipWidth > 1 || mipHeight > 1 ) && vulkanMipLevels < maximumMipLevels;
+		mipWidth = Max( 1, mipWidth >> 1 ), mipHeight = Max( 1, mipHeight >> 1 ) ) {
+		vulkanMipLevels++;
+	}
 	for ( ;; ) {
 		ApplyMipmapState( levelPixels, levelWidth, levelHeight, level, mipmapState );
+		if ( level == 0 && vulkanBackend.IsInitialized() &&
+			!vulkanBackend.UploadImage2D( this, levelPixels, scaledWidth,
+				scaledHeight, vulkanMipLevels, filterParm != TF_NEAREST,
+				repeatParm == TR_REPEAT ) ) {
+			common->Warning( "Vulkan image upload failed for '%s'", imgName.c_str() );
+		}
 		glTexImage2D(
 			GL_TEXTURE_2D,
 			level,
@@ -547,6 +719,12 @@ void idImage::GenerateCubeImage(
 	uploadDepth = 1;
 	internalFormat = GL_RGBA8;
 	numMipLevels = 1;
+	if ( vulkanBackend.IsInitialized() && pic != NULL && size > 0 &&
+		!vulkanBackend.UploadImageCube( this, pic, size,
+			filterParm != TF_NEAREST ) ) {
+		common->Warning( "Vulkan cube image upload failed for '%s'",
+			imgName.c_str() );
+	}
 
 	if ( !glConfig.isInitialized || !glConfig.cubeMapAvailable || pic == NULL || size <= 0 ) {
 		return;
@@ -688,7 +866,8 @@ bool idImage::CheckPrecompressedImage( bool ) {
 	if ( fileSystem->PerformingCopyFiles() ) {
 		return false;
 	}
-	if ( depth == TD_BUMP && idImageManager::image_useNormalCompression.GetInteger() != 2 ) {
+	if ( depth == TD_BUMP && idImageManager::image_useNormalCompression.GetInteger() != 2 &&
+		 !vulkanBackend.IsInitialized() ) {
 		return false;
 	}
 
@@ -828,6 +1007,7 @@ void idImage::UploadPrecompressedImage( byte* data, int len ) {
 	int mipHeight = originalHeight;
 	int skippedMips = 0;
 	int uploadedMips = 0;
+	bool vulkanUploaded = false;
 	const byte* imageData = data + sizeof( ddsFileHeader_t ) + 4;
 	const byte* const fileEnd = data + len;
 
@@ -861,6 +1041,48 @@ void idImage::UploadPrecompressedImage( byte* data, int len ) {
 			uploadedMips++;
 		}
 
+		if ( !vulkanUploaded && vulkanBackend.IsInitialized() &&
+			mipWidth <= uploadWidth && mipHeight <= uploadHeight ) {
+			byte* rgba = static_cast< byte* >( Mem_Alloc( mipWidth * mipHeight * 4 ) );
+			bool decoded = false;
+			if ( compressed ) {
+				decoded = DecodeDDSLevelRGBA( header->ddspf.dwFourCC,
+					( header->ddspf.dwFlags & DDSF_ALPHAPIXELS ) != 0,
+					imageData, mipSize, mipWidth, mipHeight, rgba );
+			} else {
+				const int sourceComponents = static_cast< int >(
+					header->ddspf.dwRGBBitCount / 8 );
+				for ( int pixel = 0; pixel < mipWidth * mipHeight; ++pixel ) {
+					const byte* source = imageData + pixel * sourceComponents;
+					byte* destination = rgba + pixel * 4;
+					if ( sourceComponents == 4 ) {
+						destination[ 0 ] = source[ 2 ];
+						destination[ 1 ] = source[ 1 ];
+						destination[ 2 ] = source[ 0 ];
+						destination[ 3 ] = source[ 3 ];
+					} else if ( sourceComponents == 3 ) {
+						destination[ 0 ] = source[ 2 ];
+						destination[ 1 ] = source[ 1 ];
+						destination[ 2 ] = source[ 0 ];
+						destination[ 3 ] = 255;
+					} else {
+						destination[ 0 ] = destination[ 1 ] = destination[ 2 ] = 255;
+						destination[ 3 ] = source[ 0 ];
+					}
+				}
+				decoded = true;
+			}
+			if ( decoded ) {
+				vulkanUploaded = vulkanBackend.UploadImage2D( this, rgba,
+					mipWidth, mipHeight, Max( 1, fileMipCount - skippedMips ),
+					filter != TF_NEAREST, repeat == TR_REPEAT );
+			}
+			Mem_Free( rgba );
+			if ( !vulkanUploaded ) {
+				common->Warning( "Vulkan DDS upload failed for '%s'", imgName.c_str() );
+			}
+		}
+
 		imageData += mipSize;
 		mipWidth = Max( 1, mipWidth >> 1 );
 		mipHeight = Max( 1, mipHeight >> 1 );
@@ -890,6 +1112,28 @@ void idImage::ActuallyLoadImage( bool checkForPrecompressed ) {
 	}
 	if ( fromParams ) {
 		FromParameters( uploadWidth, uploadHeight, internalFormat, type, filter, repeat );
+		return;
+	}
+	if ( cubeFiles != CF_2D ) {
+		byte* cubePictures[ 6 ];
+		int cubeSize = 0;
+		unsigned loadedTimestamp = 0;
+		if ( R_LoadCubeImages( imgName.c_str(), cubeFiles, cubePictures,
+			&cubeSize, &loadedTimestamp ) ) {
+			const byte* cubePicturePointers[ 6 ];
+			for ( int face = 0; face < 6; ++face ) {
+				cubePicturePointers[ face ] = cubePictures[ face ];
+			}
+			timestamp = loadedTimestamp;
+			GenerateCubeImage( cubePicturePointers, cubeSize, filter,
+				allowDownSize, depth );
+			for ( int face = 0; face < 6; ++face ) {
+				Mem_Free( cubePictures[ face ] );
+			}
+			defaulted = false;
+			return;
+		}
+		MakeDefault();
 		return;
 	}
 	if ( cubeFiles == CF_2D && depth != TD_HIGH_QUALITY && checkForPrecompressed &&
@@ -1083,6 +1327,9 @@ void idImage::UploadScratch( const byte* pic, int width, int height ) {
 		glTexImage2D( GL_TEXTURE_2D, 0, scratchInternalFormat, width, height, 0, sourceFormat, GL_UNSIGNED_BYTE, pic );
 	} else {
 		glTexSubImage2D( GL_TEXTURE_2D, 0, 0, 0, width, height, sourceFormat, GL_UNSIGNED_BYTE, pic );
+	}
+	if ( vulkanBackend.IsInitialized() && !luminance ) {
+		vulkanBackend.UploadImage2D( this, pic, width, height, 1, true, true );
 	}
 	type = TT_2D;
 	sourceWidth = uploadWidth = width;

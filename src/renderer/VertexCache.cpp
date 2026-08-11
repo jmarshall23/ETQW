@@ -31,6 +31,7 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "RenderSystem.h"
 #include "VertexCache.h"
+#include "VulkanBackend.h"
 
 extern glconfig_t glConfig;
 extern idCVar r_useVertexBuffers;
@@ -72,6 +73,9 @@ void idVertexCache::ActuallyFree( vertCache_t *block ) {
 
 	// temp blocks are in a shared space that won't be freed
 	if ( block->tag != TAG_TEMP ) {
+		if ( vulkanBackend.IsInitialized() ) {
+			vulkanBackend.DestroyBuffer( block );
+		}
 		staticAllocTotal -= block->size;
 		staticCountTotal--;
 
@@ -287,6 +291,7 @@ void idVertexCache::Alloc( void *data, int size, vertCache_t **buffer, bool inde
 	block->frameUsed = currentFrame - NUM_VERTEX_FRAMES;
 
 	block->indexBuffer = indexBuffer;
+	block->backendBuffer = block;
 
 	// copy the data
 	if ( block->vbo ) {
@@ -304,6 +309,10 @@ void idVertexCache::Alloc( void *data, int size, vertCache_t **buffer, bool inde
 	} else {
 		block->virtMem = Mem_Alloc( size );
 		SIMDProcessor->Memcpy( block->virtMem, data, size );
+	}
+	if ( vulkanBackend.IsInitialized() &&
+		!vulkanBackend.UploadBuffer( block, data, size, indexBuffer ) ) {
+		common->Warning( "Vulkan vertex-cache upload failed (%d bytes)", size );
 	}
 }
 
@@ -426,12 +435,18 @@ vertCache_t	*idVertexCache::AllocFrameTemp( void *data, int size ) {
 	// copy the data
 	block->virtMem = tempBuffers[listNum]->virtMem;
 	block->vbo = tempBuffers[listNum]->vbo;
+	block->backendBuffer = tempBuffers[ listNum ];
 
 	if ( block->vbo ) {
 		qglBindBufferARB( GL_ARRAY_BUFFER_ARB, block->vbo );
 		qglBufferSubDataARB( GL_ARRAY_BUFFER_ARB, block->offset, (GLsizeiptrARB)size, data );
 	} else {
 		SIMDProcessor->Memcpy( (byte *)block->virtMem + block->offset, data, size );
+	}
+	if ( vulkanBackend.IsInitialized() &&
+		!vulkanBackend.UpdateBuffer( tempBuffers[ listNum ], block->offset,
+			data, size ) ) {
+		common->Warning( "Vulkan temporary vertex-cache upload failed (%d bytes)", size );
 	}
 
 	return block;

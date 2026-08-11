@@ -11,6 +11,7 @@
 #include "Image.h"
 #include "RenderWorld_local.h"
 #include "querytimers.h"
+#include "VulkanBackend.h"
 #include "../decllib/declTypeHolder.h"
 #include "../libs/qglLib/qgl.h"
 
@@ -365,6 +366,10 @@ void RB_BakeTextureMatrixIntoTexgenAligned( idPlane outLightProject[ 2 ], const 
 void RB_STD_DrawView() {
 	viewDef_s* view = RB_GetViewDef();
 	if ( view == NULL || view->renderWorld == NULL ) {
+		return;
+	}
+	if ( R_UseVulkanBackend() ) {
+		vulkanBackend.DrawView( view );
 		return;
 	}
 

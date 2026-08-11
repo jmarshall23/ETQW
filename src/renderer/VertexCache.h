@@ -41,6 +41,7 @@ typedef struct vertCache_s {
 	GLuint			vbo;
 	void			*virtMem;			// only one of vbo / virtMem will be set
 	bool			indexBuffer;		// holds indexes instead of vertexes
+	struct vertCache_s *backendBuffer;	// owning API-neutral GPU allocation
 
 	int				offset;
 	int				size;				// may be larger than the amount asked for, due

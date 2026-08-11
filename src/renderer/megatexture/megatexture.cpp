@@ -26,6 +26,7 @@ GNU General Public License for more details.
 #include "../RendererTypesImpl.h"
 #include "../draw_local.h"
 #include "../Image.h"
+#include "../VulkanBackend.h"
 #include "../renderbindings.h"
 #include "../../decllib/declRenderBinding.h"
 #include "MegaTexture.h"
@@ -250,6 +251,10 @@ void idMegaTextureTile::Upload( idMegaTexture *mega ) {
 		} else {
 			glTexSubImage2D( GL_TEXTURE_2D, mip, localX * size, localY * size,
 				size, size, GL_RGBA, GL_UNSIGNED_BYTE, data + offset );
+			if ( vulkanBackend.IsInitialized() && level->GetImage() != NULL ) {
+				vulkanBackend.UpdateImage2D( level->GetImage(), mip,
+					localX * size, localY * size, size, size, data + offset );
+			}
 			offset += size * size * 4;
 		}
 	}
@@ -406,9 +411,12 @@ void idMegaTextureLevel::EmptyLevelImage( idImage *target ) {
 	const int pixels = MEGA_TEXTURE_LEVEL_SIZE * MEGA_TEXTURE_LEVEL_SIZE;
 	byte *data = new byte[pixels * 4];
 	for ( int i = 0; i < pixels; ++i ) {
-		data[i * 4 + 0] = 255;
-		data[i * 4 + 1] = 0;
-		data[i * 4 + 2] = 0;
+		// Unpopulated moving-atlas texels can leak through mip filtering along
+		// tile boundaries while streaming catches up.  A neutral fallback avoids
+		// the bright red seams that made otherwise valid terrain look corrupt.
+		data[i * 4 + 0] = 112;
+		data[i * 4 + 1] = 112;
+		data[i * 4 + 2] = 112;
 		data[i * 4 + 3] = 255;
 	}
 	const imageCompressionFormat_t internalFormat = megaTexture != NULL ?

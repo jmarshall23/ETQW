@@ -9,6 +9,8 @@
 
 #include "RendererTypesImpl.h"
 #include "RenderSystemBackend.h"
+#include "RuntimeSpirvCompiler.h"
+#include "VulkanBackend.h"
 #include "image_processor.h"
 #include "image_resampler.h"
 #include "renderbindings.h"
@@ -27,6 +29,18 @@
 #include <GL/gl.h>
 
 glconfig_t glConfig;
+
+namespace {
+const char* renderAPIValues[] = { "opengl", "vulkan", NULL };
+}
+
+idCVar r_renderAPI(
+	"r_renderAPI",
+	"opengl",
+	CVAR_RENDERER | CVAR_ARCHIVE | CVAR_NOCHEAT,
+	"renderer backend; changes take effect after a renderer restart",
+	renderAPIValues
+);
 
 idCVar r_lightScale( "r_lightScale", "2", CVAR_RENDERER | CVAR_FLOAT, "all light intensities are multiplied by this" );
 idCVar r_elevateForceClear( "r_elevateForceClear", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_INTEGER, "" );
@@ -516,6 +530,7 @@ void idRenderSystemLocal::Init() {
 	cvarSystem->Register( &r_useStateCaching );
 
 	renderSystemBackend.Init();
+	R_InitRuntimeSpirvCompiler();
 	openGLRunning = false;
 	if ( sys3D != NULL && sys3D->GetGameRenderContext() != NULL ) {
 		if ( !sys3D->MakeCurrent( sys3D->GetGameWindow() ) ) {
@@ -527,12 +542,18 @@ void idRenderSystemLocal::Init() {
 		glConfig.colorBits = 32;
 		glConfig.depthBits = 24;
 		glConfig.stencilBits = 8;
+		// Vulkan owns GPU resources from the first vertex-cache/image upload.
+		// Keep the legacy context alive during the staged port, but establish the
+		// selected Vulkan device before either resource manager is initialized.
+		if ( R_UseVulkanBackend() && !vulkanBackend.Init(
+			sys3D->GetGameWindowHandle(), parms.width, parms.height ) ) {
+			common->FatalError( "Failed to initialize the Vulkan renderer" );
+		}
 		R_InitOpenGL();
 		openGLRunning = true;
 	} else {
 		common->Printf( "renderSystem running without OpenGL (dedicated or skipped renderer)\n" );
 	}
-
 	sdSingleton< sdImageResampler >::GetInstance().Init();
 	sdSingleton< sdImageProcessor >::GetInstance().Init();
 	if ( globalImages != NULL ) {
@@ -595,6 +616,7 @@ void idRenderSystemLocal::Shutdown() {
 		globalImages->Shutdown();
 	}
 	renderSystemBackend.Shutdown();
+	vulkanBackend.Shutdown();
 
 	ShutdownOpenGL();
 	initialized = false;

@@ -13,6 +13,7 @@
 #include "Material.h"
 #include "Image.h"
 #include "tr_render.h"
+#include "VulkanBackend.h"
 #include "renderbindings.h"
 #include "../decllib/declRenderProgram.h"
 #include "../decllib/DeclRenderProgram_opengl.h"
@@ -34,6 +35,31 @@ struct bitmapFontCache_t {
 
 idList< bitmapFontCache_t > bitmapFontCache;
 HGLRC bitmapFontContext = NULL;
+
+struct vulkanBitmapFont_t {
+	int		pixelHeight;
+	int		cellWidth;
+	int		cellHeight;
+	int		atlasWidth;
+	int		atlasHeight;
+	int		advance[ 256 ];
+	idStr	imageName;
+
+	vulkanBitmapFont_t() : pixelHeight( 0 ), cellWidth( 0 ), cellHeight( 0 ),
+		atlasWidth( 0 ), atlasHeight( 0 ) {
+		memset( advance, 0, sizeof( advance ) );
+	}
+};
+
+idList< vulkanBitmapFont_t > vulkanBitmapFontCache;
+
+int GuiNextPowerOfTwo( int value ) {
+	int result = 1;
+	while ( result < value && result < 4096 ) {
+		result <<= 1;
+	}
+	return result;
+}
 
 bitmapFontCache_t* GetBitmapFont( HDC deviceContext, int pixelHeight ) {
 	const HGLRC currentContext = wglGetCurrentContext();
@@ -217,6 +243,138 @@ void sdGuiModel::End() {
 
 void sdGuiModel::RenderScene() {
 	writePosition += sizeof( int );
+}
+
+vulkanBitmapFont_t* GetVulkanBitmapFont( HDC windowDC, int pixelHeight ) {
+	if ( globalImages == NULL || windowDC == NULL ) {
+		return NULL;
+	}
+	pixelHeight = idMath::ClampInt( 6, 192, pixelHeight );
+	vulkanBitmapFont_t* font = NULL;
+	for ( int i = 0; i < vulkanBitmapFontCache.Num(); ++i ) {
+		if ( vulkanBitmapFontCache[ i ].pixelHeight == pixelHeight ) {
+			font = &vulkanBitmapFontCache[ i ];
+			break;
+		}
+	}
+	if ( font == NULL ) {
+		vulkanBitmapFont_t newFont;
+		newFont.pixelHeight = pixelHeight;
+		newFont.imageName = va( "_vkfont_%d", pixelHeight );
+		font = &vulkanBitmapFontCache[ vulkanBitmapFontCache.Append( newFont ) ];
+	}
+	idImage* image = globalImages->GetImage( font->imageName.c_str() );
+	if ( image != NULL && image->IsLoaded() ) {
+		return font;
+	}
+
+	HFONT windowsFont = CreateFontW(
+		-pixelHeight, 0, 0, 0, FW_MEDIUM, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS,
+		ANTIALIASED_QUALITY, FF_DONTCARE | VARIABLE_PITCH, L"Arial Narrow" );
+	if ( windowsFont == NULL ) {
+		return NULL;
+	}
+	HDC memoryDC = CreateCompatibleDC( windowDC );
+	if ( memoryDC == NULL ) {
+		DeleteObject( windowsFont );
+		return NULL;
+	}
+	HGDIOBJ previousFont = SelectObject( memoryDC, windowsFont );
+	TEXTMETRICW metrics;
+	memset( &metrics, 0, sizeof( metrics ) );
+	GetTextMetricsW( memoryDC, &metrics );
+	font->cellWidth = Max( static_cast< int >( metrics.tmMaxCharWidth ) + 4,
+		pixelHeight / 2 + 4 );
+	font->cellHeight = Max( static_cast< int >( metrics.tmHeight ) + 4,
+		pixelHeight + 4 );
+	font->atlasWidth = GuiNextPowerOfTwo( font->cellWidth * 16 );
+	font->atlasHeight = GuiNextPowerOfTwo( font->cellHeight * 16 );
+	if ( font->atlasWidth < font->cellWidth * 16 ||
+		font->atlasHeight < font->cellHeight * 16 ) {
+		SelectObject( memoryDC, previousFont );
+		DeleteDC( memoryDC );
+		DeleteObject( windowsFont );
+		common->Warning( "Vulkan font atlas is too large for %d pixel text", pixelHeight );
+		return NULL;
+	}
+
+	BITMAPINFO bitmapInfo;
+	memset( &bitmapInfo, 0, sizeof( bitmapInfo ) );
+	bitmapInfo.bmiHeader.biSize = sizeof( BITMAPINFOHEADER );
+	bitmapInfo.bmiHeader.biWidth = font->atlasWidth;
+	bitmapInfo.bmiHeader.biHeight = font->atlasHeight;
+	bitmapInfo.bmiHeader.biPlanes = 1;
+	bitmapInfo.bmiHeader.biBitCount = 32;
+	bitmapInfo.bmiHeader.biCompression = BI_RGB;
+	void* bitmapPixels = NULL;
+	HBITMAP bitmap = CreateDIBSection( memoryDC, &bitmapInfo, DIB_RGB_COLORS,
+		&bitmapPixels, NULL, 0 );
+	if ( bitmap == NULL || bitmapPixels == NULL ) {
+		SelectObject( memoryDC, previousFont );
+		DeleteDC( memoryDC );
+		DeleteObject( windowsFont );
+		return NULL;
+	}
+	HGDIOBJ previousBitmap = SelectObject( memoryDC, bitmap );
+	memset( bitmapPixels, 0, font->atlasWidth * font->atlasHeight * 4 );
+	SetBkMode( memoryDC, TRANSPARENT );
+	SetTextColor( memoryDC, RGB( 255, 255, 255 ) );
+	SetTextAlign( memoryDC, TA_LEFT | TA_TOP | TA_NOUPDATECP );
+	for ( int character = 0; character < 256; ++character ) {
+		wchar_t glyph = static_cast< wchar_t >( character );
+		SIZE extent;
+		extent.cx = extent.cy = 0;
+		GetTextExtentPoint32W( memoryDC, &glyph, 1, &extent );
+		font->advance[ character ] = Max( static_cast< int >( extent.cx ), character == ' ' ?
+			font->cellWidth / 3 : 1 );
+		if ( character >= 32 ) {
+			const int x = ( character & 15 ) * font->cellWidth + 2;
+			const int y = ( character >> 4 ) * font->cellHeight + 2;
+			TextOutW( memoryDC, x, y, &glyph, 1 );
+		}
+	}
+	byte* pixels = static_cast< byte* >( bitmapPixels );
+	const int pixelCount = font->atlasWidth * font->atlasHeight;
+	for ( int i = 0; i < pixelCount; ++i ) {
+		byte* pixel = pixels + i * 4;
+		const byte alpha = Max( pixel[ 0 ], Max( pixel[ 1 ], pixel[ 2 ] ) );
+		pixel[ 0 ] = pixel[ 1 ] = pixel[ 2 ] = 255;
+		pixel[ 3 ] = alpha;
+	}
+	if ( image == NULL ) {
+		image = globalImages->AllocImage( font->imageName.c_str() );
+	}
+	if ( image != NULL ) {
+		image->GenerateImageEx( pixels, font->atlasWidth, font->atlasHeight,
+			TF_LINEAR, false, TR_CLAMP, TD_HIGH_QUALITY, GL_RGBA8, 1 );
+	}
+	SelectObject( memoryDC, previousBitmap );
+	SelectObject( memoryDC, previousFont );
+	DeleteObject( bitmap );
+	DeleteDC( memoryDC );
+	DeleteObject( windowsFont );
+	return image != NULL && image->IsLoaded() ? font : NULL;
+}
+
+idImage* ResolveVulkanStageImage( const materialStage_t* stage,
+	idImage* overrideImage ) {
+	if ( overrideImage != NULL ) {
+		return overrideImage;
+	}
+	idImage* fallback = NULL;
+	for ( int i = 0; i < stage->numTextures; ++i ) {
+		const stageTexture_t& texture = stage->textures[ i ];
+		if ( rbinds != NULL && ( texture.renderBinding == rbinds->diffuseMap ||
+			texture.renderBinding == rbinds->map ||
+			texture.renderBinding == rbinds->cinematicY ) ) {
+			return texture.image;
+		}
+		if ( fallback == NULL ) {
+			fallback = texture.image;
+		}
+	}
+	return fallback;
 }
 
 void sdGuiModel::EmitFullScreen( int end ) {
@@ -432,6 +590,10 @@ void sdGuiModel::SubmitFrame( int windowWidth, int windowHeight ) {
 	if ( ( primitives.Num() == 0 && texts.Num() == 0 ) || !fullScreen ) {
 		return;
 	}
+	if ( vulkanBackend.IsFrameActive() ) {
+		SubmitFrameVulkan();
+		return;
+	}
 
 	glPushAttrib( GL_COLOR_BUFFER_BIT | GL_CURRENT_BIT | GL_DEPTH_BUFFER_BIT |
 		GL_ENABLE_BIT | GL_LIST_BIT | GL_PIXEL_MODE_BIT | GL_POLYGON_BIT |
@@ -620,6 +782,174 @@ void sdGuiModel::SubmitFrame( int windowWidth, int windowHeight ) {
 	glPopMatrix();
 	glMatrixMode( GL_MODELVIEW );
 	glPopAttrib();
+}
+
+void sdGuiModel::SubmitFrameVulkan() {
+	for ( int primitiveIndex = 0; primitiveIndex < primitives.Num(); ++primitiveIndex ) {
+		const guiPrimitive_t& primitive = primitives[ primitiveIndex ];
+		if ( primitive.material == NULL || primitive.numVerts < 3 ) {
+			continue;
+		}
+		idImage* overrideImage = primitive.referenceSound != NULL ?
+			ResolveGuiImage( primitive.material, primitive.referenceSound ) : NULL;
+		idList< float > evaluated;
+		evaluated.SetNum( primitive.material->GetNumRegisters(), false );
+		primitive.material->EvaluateRegisters( evaluated.Begin(),
+			primitive.materialParms, NULL, primitive.referenceSound, 0 );
+		for ( int stageIndex = 0; stageIndex < primitive.material->GetNumStages();
+			++stageIndex ) {
+			const materialStage_t* stage = primitive.material->GetStage( stageIndex );
+			if ( evaluated[ stage->conditionRegister ] == 0.0f ) {
+				continue;
+			}
+			idImage* image = ResolveVulkanStageImage( stage, overrideImage );
+			if ( image == NULL && globalImages != NULL ) {
+				image = globalImages->whiteImage;
+			}
+			if ( image != NULL && !image->IsLoaded() ) {
+				image->BindFragment();
+			}
+			if ( image == NULL || image->defaulted ) {
+				continue;
+			}
+
+			idVec4 stageColor( 1.0f, 1.0f, 1.0f, 1.0f );
+			if ( stage->colorVector != NULL ) {
+				stageColor.Set(
+					evaluated[ stage->colorVector->registers[ 0 ] ],
+					evaluated[ stage->colorVector->registers[ 1 ] ],
+					evaluated[ stage->colorVector->registers[ 2 ] ],
+					evaluated[ stage->colorVector->registers[ 3 ] ] );
+			}
+			const byte* rgba = reinterpret_cast< const byte* >( &primitive.color );
+			const idVec4 vertexColor( rgba[ 0 ] / 255.0f, rgba[ 1 ] / 255.0f,
+				rgba[ 2 ] / 255.0f, rgba[ 3 ] / 255.0f );
+			switch ( stage->vertexColor ) {
+				case SVC_MODULATE:
+					stageColor.x *= vertexColor.x;
+					stageColor.y *= vertexColor.y;
+					stageColor.z *= vertexColor.z;
+					stageColor.w *= vertexColor.w;
+					break;
+				case SVC_MODULATE_ALPHA:
+					stageColor.w *= vertexColor.w;
+					break;
+				case SVC_INVERSE_MODULATE:
+					stageColor.x *= 1.0f - vertexColor.x;
+					stageColor.y *= 1.0f - vertexColor.y;
+					stageColor.z *= 1.0f - vertexColor.z;
+					stageColor.w *= 1.0f - vertexColor.w;
+					break;
+				default:
+					break;
+			}
+
+			sdVulkanGuiVertex vertices[ idWinding2D::MAX_POINTS ];
+			for ( int vertexIndex = 0; vertexIndex < primitive.numVerts; ++vertexIndex ) {
+				const guiVertex_t& source = primitive.verts[ vertexIndex ];
+				vertices[ vertexIndex ].x = source.xy.x;
+				vertices[ vertexIndex ].y = source.xy.y;
+				vertices[ vertexIndex ].s = source.st.x;
+				vertices[ vertexIndex ].t = source.st.y;
+				if ( stage->diffuseTextureMatrix != NULL ) {
+					const int ( *matrix )[ 3 ] = stage->diffuseTextureMatrix->matrix;
+					vertices[ vertexIndex ].s =
+						evaluated[ matrix[ 0 ][ 0 ] ] * source.st.x +
+						evaluated[ matrix[ 0 ][ 1 ] ] * source.st.y +
+						evaluated[ matrix[ 0 ][ 2 ] ];
+					vertices[ vertexIndex ].t =
+						evaluated[ matrix[ 1 ][ 0 ] ] * source.st.x +
+						evaluated[ matrix[ 1 ][ 1 ] ] * source.st.y +
+						evaluated[ matrix[ 1 ][ 2 ] ];
+				}
+			}
+			vulkanBackend.DrawGuiFan( image, vertices, primitive.numVerts,
+				stageColor.ToFloatPtr(), stage->drawStateBits );
+		}
+	}
+
+	HDC windowDC = wglGetCurrentDC();
+	for ( int textIndex = 0; textIndex < texts.Num(); ++textIndex ) {
+		const guiText_t& command = texts[ textIndex ];
+		idWStr displayText;
+		BuildDisplayText( command.text.c_str(), displayText );
+		if ( displayText.IsEmpty() ) {
+			continue;
+		}
+		const int pointSize = command.pointSize > 0 ? command.pointSize : 12;
+		vulkanBitmapFont_t* font = GetVulkanBitmapFont( windowDC, pointSize );
+		if ( font == NULL ) {
+			continue;
+		}
+		idImage* fontImage = globalImages->GetImage( font->imageName.c_str() );
+		if ( fontImage == NULL || !fontImage->IsLoaded() ) {
+			continue;
+		}
+		float textWidth = 0.0f;
+		for ( int characterIndex = 0; characterIndex < displayText.Length();
+			++characterIndex ) {
+			const int character = displayText[ characterIndex ] & 255;
+			textWidth += font->advance[ character ];
+		}
+		const float textHeight = static_cast< float >( font->cellHeight );
+		float x = command.rect.GetMins().x;
+		float y = command.rect.GetMins().y;
+		if ( command.flags & DTF_CENTER ) {
+			x += ( command.rect.GetWidth() - textWidth ) * 0.5f;
+		} else if ( command.flags & DTF_RIGHT ) {
+			x += command.rect.GetWidth() - textWidth;
+		}
+		if ( command.flags & DTF_VCENTER ) {
+			y += ( command.rect.GetHeight() - textHeight ) * 0.5f;
+		} else if ( command.flags & DTF_BOTTOM ) {
+			y += command.rect.GetHeight() - textHeight;
+		}
+		const byte* rgba = reinterpret_cast< const byte* >( &command.color );
+		const float color[ 4 ] = { rgba[ 0 ] / 255.0f, rgba[ 1 ] / 255.0f,
+			rgba[ 2 ] / 255.0f, rgba[ 3 ] / 255.0f };
+		const float lineStart = x;
+		for ( int characterIndex = 0; characterIndex < displayText.Length();
+			++characterIndex ) {
+			const wchar_t wideCharacter = displayText[ characterIndex ];
+			if ( wideCharacter == L'\n' ) {
+				x = lineStart;
+				y += font->cellHeight;
+				continue;
+			}
+			const int character = wideCharacter & 255;
+			if ( character != ' ' ) {
+				const int column = character & 15;
+				const int row = character >> 4;
+				const float s0 = static_cast< float >( column * font->cellWidth ) /
+					font->atlasWidth;
+				const float s1 = static_cast< float >( ( column + 1 ) * font->cellWidth ) /
+					font->atlasWidth;
+				const float t0 = 1.0f - static_cast< float >( row * font->cellHeight ) /
+					font->atlasHeight;
+				const float t1 = 1.0f - static_cast< float >( ( row + 1 ) * font->cellHeight ) /
+					font->atlasHeight;
+				sdVulkanGuiVertex vertices[ 4 ];
+				vertices[ 0 ].x = x;
+				vertices[ 0 ].y = y;
+				vertices[ 0 ].s = s0;
+				vertices[ 0 ].t = t0;
+				vertices[ 1 ].x = x + font->cellWidth;
+				vertices[ 1 ].y = y;
+				vertices[ 1 ].s = s1;
+				vertices[ 1 ].t = t0;
+				vertices[ 2 ].x = x + font->cellWidth;
+				vertices[ 2 ].y = y + font->cellHeight;
+				vertices[ 2 ].s = s1;
+				vertices[ 2 ].t = t1;
+				vertices[ 3 ].x = x;
+				vertices[ 3 ].y = y + font->cellHeight;
+				vertices[ 3 ].s = s0;
+				vertices[ 3 ].t = t1;
+				vulkanBackend.DrawGuiFan( fontImage, vertices, 4, color, 0x65 );
+			}
+			x += font->advance[ character ];
+		}
+	}
 }
 
 void sdGuiModel::FlushFrame( int windowWidth, int windowHeight ) {
