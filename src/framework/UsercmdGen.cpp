@@ -483,19 +483,23 @@ void idUsercmdGenLocal::UsercmdInterrupt() {
 		return;
 	}
 
+#ifdef _WIN32
+	sdScopedLock< true > inputLock( IN_GetPollLock() );
+#endif
+
+	// Retained for the public interface. Platform polling is performed by the
+	// input worker; usercmd state must only be assembled on the main thread.
 	InitCurrent();
-	Mouse( true );
-	Keyboard( true );
-	Controllers( true );
 	MakeCurrent( true );
 	buffered[ ( com_ticNumber + 1 ) & ( MAX_BUFFERED_USERCMD - 1 ) ] = cmd;
 }
 
 usercmd_t idUsercmdGenLocal::GetDirectUsercmd( bool doGameCallback ) {
+#ifdef _WIN32
+	sdScopedLock< true > inputLock( IN_GetPollLock() );
+#endif
+
 	InitCurrent();
-	Mouse( true );
-	Keyboard( true );
-	Controllers( true );
 	MakeCurrent( doGameCallback );
 	cmd.duplicateCount = 0;
 	return cmd;

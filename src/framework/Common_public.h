@@ -71,8 +71,8 @@ public:
 								// Called repeatedly as the foreground thread for rendering and game logic.
 	virtual void				Frame( void ) = 0;
 
-								// Called 60 times a second from a background thread for sound mixing,
-								// and input generation. Not called until idCommon::Init() has completed.
+								// Retained for binary interface compatibility. Fixed game time is
+								// advanced by Frame() on the main thread.
 	virtual void				Async( void ) = 0;
 
 								// Checks for and removes command line "+set var arg" constructs.

@@ -6,6 +6,7 @@
 #define __SYS_LOCAL__
 
 #include "../framework/KeyInput.h"
+#include "../idlib/threading/Lock.h"
 #include "sys_input.h"
 #include "sys_render.h"
 
@@ -13,7 +14,12 @@
 #define SE_KEY_VALUE2( isDown, isRepeat ) ( \
 	( (isDown) ? 0x1 : 0x0 ) | \
 	( (isRepeat) ? 0x2 : 0x0 ) \
-	)
+)
+
+#ifdef _WIN32
+// Serializes controller publication with foreground usercmd assembly.
+sdLock& IN_GetPollLock();
+#endif
 
 class sdSysEvent {
 public:
@@ -314,6 +320,7 @@ public:
 	virtual int				GetGUID( unsigned char* guid, const int len ) const;
 
 private:
+	sdLock eventLock;
 	idLinkList< sdSysEvent > eventQue;
 	idBlockAlloc< sdSysEvent, 128 > eventAllocator;
 	

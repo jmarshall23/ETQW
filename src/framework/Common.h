@@ -83,9 +83,19 @@ extern int			time_frontend;			// renderer frontend time
 extern int			time_backend;			// renderer backend time
 
 extern int			com_frameTime;			// time for the current frame in milliseconds
-extern volatile int	com_ticNumber;			// 60 hz tics, incremented by async function
+extern volatile int	com_ticNumber;			// 30 Hz fixed tics, advanced on the main thread
 extern int			com_editors;			// current active editor(s)
 extern bool			com_editorActive;		// true if an editor has focus
+
+// Services the fixed-step clock from foreground-only blocking loops such as
+// transition wipes. This never runs game code and must not be called by a
+// worker thread.
+void				Com_UpdateGameTime();
+
+// Returns the amount of the current 30 Hz command interval that remains.  The
+// session uses this to drive ETQW's unlocked-view interpolation on render-only
+// frames.
+int					Com_GetGameTimeLeft();
 
 #ifdef _WIN32
 const char			DMAP_MSGID[] = "DMAPOutput";

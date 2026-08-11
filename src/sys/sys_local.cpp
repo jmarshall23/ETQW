@@ -125,12 +125,14 @@ void idSysLocal::DLL_GetFileName( const char *baseName, char *dllName, int maxLe
 }
 
 const sdSysEvent *idSysLocal::GenerateMouseButtonEvent( int button, bool down ) {
+	sdScopedLock< true > queueLock( eventLock );
 	sdSysEvent *event = eventAllocator.Alloc();
 	event->Init( SE_MOUSE_BUTTON, button, down, 0, NULL );
 	return event;
 }
 
 const sdSysEvent *idSysLocal::GenerateMouseMoveEvent( int deltax, int deltay ) {
+	sdScopedLock< true > queueLock( eventLock );
 	sdSysEvent *event = eventAllocator.Alloc();
 	event->Init( SE_MOUSE, deltax, deltay, 0, NULL );
 	return event;

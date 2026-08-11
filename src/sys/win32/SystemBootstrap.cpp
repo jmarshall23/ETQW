@@ -9,7 +9,8 @@
 
 #include "../sys_local.h"
 #include "../sys_render.h"
-#include "win_asyncthread.h"
+#include "win_inputthread.h"
+#include "win_soundthread.h"
 
 #include <winsock2.h>
 #include <direct.h>
@@ -141,16 +142,20 @@ void idSysLocal::Init() {
 	QueryPerformanceFrequency( &timerFrequency );
 	QueryPerformanceCounter( &timerBase );
 	PQ_Init();
-	sys_asyncThread->StartThread();
+	sys_inputThread->StartThread();
+	sys_soundThread->StartThread();
 }
 
 void idSysLocal::PostGameInit() {
 }
 
 void idSysLocal::Shutdown() {
+	// Stop service workers before releasing any input, sound, event, or timer
+	// state they can touch.
+	sys_inputThread->StopThread();
+	sys_soundThread->StopThread();
 	ClearEvents();
 	PQ_ShutDown();
-	sys_asyncThread->StopThread();
 }
 
 void idSysLocal::GetCPUInfo( cpuInfo_t& info ) {
@@ -227,24 +232,28 @@ int idSysLocal::File_Stat( const char* OSPath ) {
 }
 
 const sdSysEvent* idSysLocal::GenerateBlankEvent() {
+	sdScopedLock< true > queueLock( eventLock );
 	sdSysEvent* event = eventAllocator.Alloc();
 	event->Init( SE_NONE, 0, 0, 0, NULL );
 	return event;
 }
 
 const sdSysEvent* idSysLocal::GenerateCharEvent( int ch ) {
+	sdScopedLock< true > queueLock( eventLock );
 	sdSysEvent* event = eventAllocator.Alloc();
 	event->Init( SE_CHAR, 0, ch, 0, NULL );
 	return event;
 }
 
 const sdSysEvent* idSysLocal::GenerateKeyEvent( keyNum_t key, bool down ) {
+	sdScopedLock< true > queueLock( eventLock );
 	sdSysEvent* event = eventAllocator.Alloc();
 	event->Init( SE_KEY, SE_KEY_VALUE( key, key ), SE_KEY_VALUE2( down, false ), 0, NULL );
 	return event;
 }
 
 const sdSysEvent* idSysLocal::GenerateGuiEvent( int guiValue ) {
+	sdScopedLock< true > queueLock( eventLock );
 	sdSysEvent* event = eventAllocator.Alloc();
 	event->Init( SE_GUI, guiValue, 0, 0, NULL );
 	return event;
@@ -254,6 +263,7 @@ void idSysLocal::FreeEvent( const sdSysEvent* event ) {
 	if ( event == NULL ) {
 		return;
 	}
+	sdScopedLock< true > queueLock( eventLock );
 	sdSysEvent* mutableEvent = const_cast< sdSysEvent* >( event );
 	mutableEvent->GetNode().Remove();
 	mutableEvent->FreeData();
@@ -262,6 +272,7 @@ void idSysLocal::FreeEvent( const sdSysEvent* event ) {
 
 const sdSysEvent* idSysLocal::GetEvent() {
 	ProcessOSEvents();
+	sdScopedLock< true > queueLock( eventLock );
 	sdSysEvent* event = eventQue.Next();
 	if ( event == NULL ) {
 		// The retail ETQW implementation returns NULL when the queue is empty.
@@ -274,14 +285,19 @@ const sdSysEvent* idSysLocal::GetEvent() {
 }
 
 void idSysLocal::QueEvent( sysEventType_t type, int value, int value2, int ptrLength, void *ptr ) {
+	sdScopedLock< true > queueLock( eventLock );
 	sdSysEvent* event = eventAllocator.Alloc();
 	event->Init( type, value, value2, ptrLength, ptr );
 	event->GetNode().AddToEnd( eventQue );
 }
 
 void idSysLocal::ClearEvents() {
+	sdScopedLock< true > queueLock( eventLock );
 	while ( !eventQue.IsListEmpty() ) {
-		FreeEvent( eventQue.Next() );
+		sdSysEvent* event = eventQue.Next();
+		event->GetNode().Remove();
+		event->FreeData();
+		eventAllocator.Free( event );
 	}
 }
 

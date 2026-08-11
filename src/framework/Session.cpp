@@ -12,14 +12,15 @@
 #include "../renderer/DeviceContext.h"
 #include "../renderer/SurfaceTypeMap.h"
 
-extern idCVar com_asyncInput;
-extern idCVar com_asyncSound;
 extern int time_gameFrame;
 extern volatile int com_ticNumber;
+extern void Com_UpdateGameTime();
+extern int Com_GetGameTimeLeft();
 
 idCVar idSessionLocal::com_showAngles( "com_showAngles", "0", CVAR_SYSTEM | CVAR_BOOL, "show the user command angle graph" );
 idCVar idSessionLocal::com_showTics( "com_showTics", "0", CVAR_SYSTEM | CVAR_BOOL, "show the number of game tics run per frame" );
-idCVar idSessionLocal::com_minTics( "com_minTics", "1", CVAR_SYSTEM | CVAR_INTEGER, "minimum number of tics to run per frame", 1, 10 );
+idCVar idSessionLocal::com_minTics( "com_minTics", "1", CVAR_SYSTEM | CVAR_INTEGER,
+	"legacy timing diagnostic; the main-thread clock never fabricates tics", 1, 10 );
 idCVar idSessionLocal::com_showDemo( "com_showDemo", "0", CVAR_SYSTEM | CVAR_BOOL, "show render-demo information" );
 idCVar idSessionLocal::com_skipGameDraw( "com_skipGameDraw", "0", CVAR_SYSTEM | CVAR_BOOL, "skip the game draw callback" );
 idCVar idSessionLocal::com_aviDemoWidth( "com_aviDemoWidth", "256", CVAR_SYSTEM | CVAR_INTEGER, "AVI capture width" );
@@ -306,10 +307,6 @@ void idSessionLocal::Draw() {
 }
 
 void idSessionLocal::Frame() {
-	if ( !com_asyncSound.GetBool() ) {
-		soundSystem->AsyncUpdate( Sys_Milliseconds() );
-	}
-
 	GuiFrameEvents( false );
 	latchedTicNumber = com_ticNumber;
 
@@ -320,15 +317,31 @@ void idSessionLocal::Frame() {
 
 	if ( mapSpawned && !idAsyncNetwork::IsActive() ) {
 		int tics = latchedTicNumber - lastGameTic;
-		tics = idMath::ClampInt( com_minTics.GetInteger(), 10, tics );
+		if ( tics < 0 ) {
+			// A clock reset must not turn into an enormous unsigned catch-up.
+			lastGameTic = latchedTicNumber;
+			tics = 0;
+		} else if ( tics > 10 ) {
+			// Bound recovery after a debugger stop or a long OS stall.
+			lastGameTic = latchedTicNumber - 10;
+			tics = 10;
+		}
 		if ( com_showTics.GetBool() ) {
 			common->Printf( "%i ", tics );
 		}
+		const bool renderOnlyFrame = tics == 0;
 		while ( tics-- > 0 && mapSpawned ) {
 			RunGameTic();
 		}
-	} else if ( !mapSpawned && !com_asyncInput.GetBool() ) {
-		usercmdGen->GetDirectUsercmd();
+
+		// The old async server called ClientUpdateView between fixed game tics.
+		// Without that call, PlayerView treats every foreground render as another
+		// full-tic draw and repeatedly offsets the weapon by the same origin delta.
+		// That is visible as rapid weapon drift/flicker whenever the player moves.
+		if ( renderOnlyFrame && mapSpawned && game != NULL ) {
+			const usercmd_t cmd = usercmdGen->GetDirectUsercmd();
+			game->ClientUpdateView( cmd, Com_GetGameTimeLeft() );
+		}
 	}
 }
 
@@ -536,12 +549,9 @@ void idSessionLocal::UnloadMap() {
 }
 
 void idSessionLocal::RunGameTic() {
-	usercmd_t cmd;
-	if ( com_asyncInput.GetBool() ) {
-		cmd = usercmdGen->TicCmd( lastGameTic );
-	} else {
-		cmd = usercmdGen->GetDirectUsercmd();
-	}
+	// Input devices are polled by the input worker, but command construction and
+	// all game callbacks stay on the main thread.
+	usercmd_t cmd = usercmdGen->GetDirectUsercmd();
 	mapSpawnData.mapSpawnUsercmd[ 0 ] = cmd;
 	++lastGameTic;
 
@@ -619,6 +629,9 @@ void idSessionLocal::StartWipe( const char* materialName, bool hold ) {
 
 void idSessionLocal::CompleteWipe() {
 	while ( com_ticNumber != 0 && com_ticNumber < wipeStopTic ) {
+		// CompleteWipe is a foreground blocking loop. Keep the foreground-owned
+		// fixed clock moving while it presents transition frames.
+		Com_UpdateGameTime();
 		emptyDrawCount = 0;
 		UpdateScreen( true );
 	}

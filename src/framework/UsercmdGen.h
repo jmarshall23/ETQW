@@ -142,7 +142,7 @@ public:
 	// Returns a buffered command for the given game tic.
 	virtual usercmd_t	TicCmd( int ticNumber ) = 0;
 
-	// Called async at regular intervals.
+	// Legacy sampling entry point. Command construction is main-thread only.
 	virtual	void		UsercmdInterrupt( void ) = 0;
 
 	// Directly sample a usercmd.

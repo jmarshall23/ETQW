@@ -59,8 +59,8 @@ idCVar com_gpuSpec( "com_gpuSpec", "3", CVAR_INTEGER | CVAR_ARCHIVE | CVAR_SYSTE
 idCVar com_purgeAll( "com_purgeAll", "0", CVAR_BOOL | CVAR_ARCHIVE | CVAR_SYSTEM, "purge all media between level loads" );
 idCVar com_memoryMarker( "com_memoryMarker", "-1", CVAR_INTEGER | CVAR_SYSTEM | CVAR_INIT, "memory statistics marker" );
 idCVar com_preciseTic( "com_preciseTic", "1", CVAR_BOOL | CVAR_SYSTEM, "run exact user command ticks" );
-idCVar com_asyncInput( "com_asyncInput", "0", CVAR_BOOL | CVAR_SYSTEM, "sample input from the async thread" );
-idCVar com_asyncSound( "com_asyncSound", "1", CVAR_INTEGER | CVAR_SYSTEM, "0: inline, 1: async sound update", 0, 1 );
+idCVar com_asyncInput( "com_asyncInput", "1", CVAR_BOOL | CVAR_SYSTEM | CVAR_ROM, "input is sampled by the dedicated input thread" );
+idCVar com_asyncSound( "com_asyncSound", "1", CVAR_INTEGER | CVAR_SYSTEM | CVAR_ROM, "sound is serviced by the dedicated sound thread", 1, 1 );
 idCVar com_unlockFPS( "com_unlockFPS", "1", CVAR_BOOL | CVAR_SYSTEM | CVAR_ARCHIVE | CVAR_PROFILE,
 	"allow renderer to go faster than game ticks" );
 idCVar com_unlock_avgFrames( "com_unlock_avgFrames", "4", CVAR_INTEGER | CVAR_SYSTEM | CVAR_NOCHEAT,
@@ -103,6 +103,12 @@ int com_frameNumber;
 volatile int com_ticNumber;
 int com_editors;
 bool com_editorActive;
+
+// Fixed simulation time is owned exclusively by the foreground thread.  Keep
+// this state outside idCommonLocal so the public/private object layout remains
+// compatible with the SDK ABI.
+static int mainThreadLastTicMsec;
+static double mainThreadTicResidual;
 
 #ifdef _WIN32
 HWND com_hwndMsg = NULL;
@@ -199,7 +205,6 @@ private:
 	void					UnloadGameDLL();
 	void					InitLanguageDict( bool reload );
 	void					InitSIMD();
-	void					SingleAsyncTic();
 	void					WriteConfiguration();
 	void					CloseLogFile();
 	void					DumpWarnings();
@@ -743,40 +748,63 @@ void idCommonLocal::InitSIMD() {
 	com_forceGenericSIMD.ClearModified();
 }
 
-void idCommonLocal::SingleAsyncTic() {
-	const int milliseconds = Sys_Milliseconds();
-	if ( usercmdGen != NULL && com_asyncInput.GetBool() ) {
-		usercmdGen->UsercmdInterrupt();
-	}
-	if ( soundSystem != NULL && com_asyncSound.GetInteger() == 1 ) {
-		soundSystem->AsyncUpdate( milliseconds );
-	}
-	++com_ticNumber;
+void idCommonLocal::Async() {
+	// Retained as an ABI-compatible no-op.  The former common-services worker
+	// no longer exists; Frame owns simulation time and the platform owns the
+	// dedicated input and sound workers.
 }
 
-void idCommonLocal::Async() {
-	if ( com_shuttingDown || !com_fullyInitialized ) {
-		return;
-	}
-	static int lastTicMsec = 0;
+void Com_UpdateGameTime() {
 	const int now = Sys_Milliseconds();
-	if ( lastTicMsec == 0 ) {
-		lastTicMsec = now - USERCMD_MSEC;
+	if ( mainThreadLastTicMsec == 0 ) {
+		mainThreadLastTicMsec = now;
+		mainThreadTicResidual = USERCMD_MSEC;
 	}
-	int ticMsec = USERCMD_MSEC;
-	const float scale = com_timescale.GetFloat();
-	if ( scale != 1.0f ) {
-		ticMsec = Max( 1, static_cast< int >( ticMsec / scale ) );
-	}
-	if ( !com_preciseTic.GetBool() ) {
-		SingleAsyncTic();
-		lastTicMsec = now;
+
+	int elapsedMsec = now - mainThreadLastTicMsec;
+	mainThreadLastTicMsec = now;
+	if ( elapsedMsec < 0 ) {
+		mainThreadTicResidual = 0.0;
 		return;
 	}
-	while ( lastTicMsec + ticMsec <= now ) {
-		SingleAsyncTic();
-		lastTicMsec += ticMsec;
+
+	if ( !com_preciseTic.GetBool() ) {
+		++com_ticNumber;
+		mainThreadTicResidual = 0.0;
+		return;
 	}
+
+	// Bound catch-up after loading or debugger stalls.  The session consumes at
+	// most ten fixed steps, so retaining more debt would leave it permanently
+	// behind the authoritative clock.
+	double scaledMsec = elapsedMsec * static_cast< double >( com_timescale.GetFloat() );
+	const double maxCatchupMsec = 10.0 * USERCMD_MSEC;
+	if ( scaledMsec > maxCatchupMsec ) {
+		scaledMsec = maxCatchupMsec;
+		mainThreadTicResidual = 0.0;
+	}
+
+	mainThreadTicResidual += scaledMsec;
+	const int elapsedTics = static_cast< int >( mainThreadTicResidual / USERCMD_MSEC );
+	if ( elapsedTics > 0 ) {
+		com_ticNumber += elapsedTics;
+		mainThreadTicResidual -= elapsedTics * USERCMD_MSEC;
+	}
+}
+
+int Com_GetGameTimeLeft() {
+	// ClientUpdateView interprets this as the time remaining before the next
+	// usercmd.  It cannot accept a completely unadvanced interval, but the
+	// foreground loop can render twice within the same millisecond.  Treat that
+	// case as the first millisecond of the interval so the frame is still marked
+	// as an unlocked draw and cannot reapply the weapon-origin correction.
+	int elapsedInTic = static_cast< int >( mainThreadTicResidual );
+	if ( elapsedInTic < 1 ) {
+		elapsedInTic = 1;
+	} else if ( elapsedInTic >= USERCMD_MSEC ) {
+		elapsedInTic = USERCMD_MSEC - 1;
+	}
+	return USERCMD_MSEC - elapsedInTic;
 }
 
 void idCommonLocal::Frame() {
@@ -786,6 +814,7 @@ void idCommonLocal::Frame() {
 	try {
 		Sys_FPU_EnableExceptions( 0 );
 		Sys_GenerateEvents();
+		Com_UpdateGameTime();
 		const int now = Sys_Milliseconds();
 		if ( now >= nextConfigWriteTime ) {
 			WriteConfiguration();
@@ -1041,6 +1070,9 @@ void idCommonLocal::Init( int argc, const char** argv, const char* cmdline ) {
 	idLib::cvarSystem = cvarSystem;
 	idLib::fileSystem = fileSystem;
 	idLib::Init();
+	mainThreadLastTicMsec = 0;
+	mainThreadTicResidual = 0.0;
+	com_ticNumber = 0;
 	ClearWarnings( GAME_NAME " initialization" );
 
 	idCmdArgs commandLine;
@@ -1102,6 +1134,7 @@ void idCommonLocal::Shutdown() {
 	idAsyncNetwork::Shutdown();
 	Sys_ShutdownInput();
 	if ( soundSystem != NULL ) {
+		sdScopedLock< true > soundLock( soundSystem->GetLock() );
 		soundSystem->ShutdownHW();
 		soundSystem->Shutdown();
 	}
