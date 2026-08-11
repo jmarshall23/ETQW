@@ -1,6 +1,21 @@
 # The engine build is intentionally described from the checked-in source tree.
 # It must not depend on generated PDB manifests or checked-in IDE projects.
 
+# SDL2 owns the game window, OpenGL context, keyboard/mouse input and event
+# pump. Keep the dependency vendored and static so etqw.exe has no SDL2.dll
+# deployment dependency. ETQW uses the DLL MSVC runtime, so do not force SDL's
+# static-runtime override from the Darklight build.
+set(SDL_SHARED OFF CACHE BOOL "Do not build the SDL2 shared library" FORCE)
+set(SDL_STATIC ON CACHE BOOL "Build the SDL2 static library" FORCE)
+set(SDL2_DISABLE_SDL2MAIN ON CACHE BOOL "ETQW provides its own entry point" FORCE)
+set(SDL2_DISABLE_INSTALL ON CACHE BOOL "Do not install vendored SDL2" FORCE)
+set(SDL2_DISABLE_UNINSTALL ON CACHE BOOL "Do not create SDL2 uninstall targets" FORCE)
+set(SDL_TEST OFF CACHE BOOL "Do not build SDL2 tests" FORCE)
+set(SDL_TEST_LIBRARY OFF CACHE BOOL "Do not build the SDL2 test library" FORCE)
+set(SDL_FORCE_STATIC_VCRT OFF CACHE BOOL "Match ETQW's DLL MSVC runtime" FORCE)
+add_subdirectory(sys/sdl2 EXCLUDE_FROM_ALL)
+set_target_properties(SDL2-static PROPERTIES FOLDER "ETQW/Third Party/SDL2")
+
 file(GLOB ETQW_BSE_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/bse/*.cpp"
 )
@@ -77,17 +92,15 @@ set(ETQW_RENDERER_SOURCES
 )
 
 set(ETQW_SYSTEM_SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/sys/sdl_events.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/sys/sdl_input.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/sys_input.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/sys_local.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/SystemBootstrap.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/render/win_opengl.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/stacktracer.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/win_inputthread.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/win_soundthread.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/input/win_dinput.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/input/win_input.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/input/win_input_keyboard.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/input/win_input_mouse.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/input/win_xinput.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/win_perfquery.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/win_stack.cpp"
@@ -297,6 +310,7 @@ target_compile_definitions(etqw PRIVATE
     SD_USE_DRAWVERT_SIZE_32
     SD_USE_INDEX_SIZE_16
     ETQW_ENGINE_RECONSTRUCTION
+    SDL_MAIN_HANDLED
     _CRT_SECURE_NO_DEPRECATE
     _CRT_NONSTDC_NO_DEPRECATE
     _CRT_SECURE_NO_WARNINGS
@@ -317,6 +331,7 @@ target_link_libraries(etqw PRIVATE
     idLib
     etqw_curl
     etqw_zlib
+    SDL2::SDL2-static
     advapi32
     comctl32
     dbghelp

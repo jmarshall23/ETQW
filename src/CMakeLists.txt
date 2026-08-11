@@ -5,8 +5,8 @@ project(
     VERSION 1.0.0
     DESCRIPTION "Enemy Territory: Quake Wars engine and game"
     LANGUAGES C CXX
-)
-
+)  
+ 
 if(NOT WIN32)
     message(FATAL_ERROR "The public ETQW SDK target currently supports Windows only.")
 endif()

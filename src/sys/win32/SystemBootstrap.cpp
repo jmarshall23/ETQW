@@ -9,7 +9,7 @@
 
 #include "../sys_local.h"
 #include "../sys_render.h"
-#include "win_inputthread.h"
+#include "win_local.h"
 #include "win_soundthread.h"
 
 #include <winsock2.h>
@@ -141,8 +141,13 @@ idSysLocal::~idSysLocal() {
 void idSysLocal::Init() {
 	QueryPerformanceFrequency( &timerFrequency );
 	QueryPerformanceCounter( &timerBase );
+	SDL_SetMainReady();
+	SDL_SetHint( SDL_HINT_WINDOWS_DPI_AWARENESS, "permonitorv2" );
+	SDL_SetHint( SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH, "1" );
+	if ( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_TIMER ) != 0 ) {
+		Sys_Error( "SDL2 initialization failed: %s", SDL_GetError() );
+	}
 	PQ_Init();
-	sys_inputThread->StartThread();
 	sys_soundThread->StartThread();
 }
 
@@ -152,10 +157,10 @@ void idSysLocal::PostGameInit() {
 void idSysLocal::Shutdown() {
 	// Stop service workers before releasing any input, sound, event, or timer
 	// state they can touch.
-	sys_inputThread->StopThread();
 	sys_soundThread->StopThread();
 	ClearEvents();
 	PQ_ShutDown();
+	SDL_Quit();
 }
 
 void idSysLocal::GetCPUInfo( cpuInfo_t& info ) {
@@ -334,14 +339,7 @@ int idSysLocal::MessageBox( const char* title, const char* buffer, messageBoxTyp
 }
 
 void idSysLocal::ProcessOSEvents() {
-	MSG message;
-	while ( PeekMessage( &message, NULL, 0, 0, PM_REMOVE ) ) {
-		if ( message.message == WM_QUIT ) {
-			InterlockedExchange( &quitRequested, 1 );
-		}
-		TranslateMessage( &message );
-		DispatchMessage( &message );
-	}
+	Sys_ProcessSDLEvents();
 }
 
 sdPerformanceQuery* idSysLocal::GetPerformanceQuery( sdPerformanceQueryType pqType ) {

@@ -9,6 +9,7 @@
 #include "../win_local.h"
 
 #include <GL/gl.h>
+#include <SDL_syswm.h>
 
 // The retail renderer exports the legacy QGL entry points as writable
 // function pointers.  The reconstructed WGL backend links to opengl32
@@ -244,6 +245,7 @@ BOOL CALLBACK MonitorEnumProc( HMONITOR monitor, HDC, LPRECT, LPARAM data ) {
 }
 
 idRenderContextWGL::idRenderContextWGL() :
+	window( NULL ),
 	glContext( NULL ),
 	defaultDC( NULL ),
 	currentDC( NULL ),
@@ -257,37 +259,16 @@ idRenderContextWGL::~idRenderContextWGL() {
 bool idRenderContextWGL::Create( const idRenderContextParms& contextParms ) {
 	Destroy();
 	parms = contextParms;
+	window = win32.sdlWindow;
 	defaultDC = contextParms.windowDC;
-	if ( defaultDC == NULL || contextParms.offscreen ) {
+	if ( window == NULL || defaultDC == NULL || contextParms.offscreen ) {
 		return false;
 	}
 
-	PIXELFORMATDESCRIPTOR descriptor;
-	memset( &descriptor, 0, sizeof( descriptor ) );
-	descriptor.nSize = sizeof( descriptor );
-	descriptor.nVersion = 1;
-	descriptor.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL;
-	if ( contextParms.doubleBuffer ) {
-		descriptor.dwFlags |= PFD_DOUBLEBUFFER;
-	}
-	descriptor.iPixelType = PFD_TYPE_RGBA;
-	descriptor.cColorBits = static_cast< BYTE >( contextParms.redBits + contextParms.greenBits + contextParms.blueBits + contextParms.alphaBits );
-	descriptor.cRedBits = static_cast< BYTE >( contextParms.redBits );
-	descriptor.cGreenBits = static_cast< BYTE >( contextParms.greenBits );
-	descriptor.cBlueBits = static_cast< BYTE >( contextParms.blueBits );
-	descriptor.cAlphaBits = static_cast< BYTE >( contextParms.alphaBits );
-	descriptor.cDepthBits = static_cast< BYTE >( contextParms.depthBits );
-	descriptor.cStencilBits = static_cast< BYTE >( contextParms.stencilBits );
-	descriptor.iLayerType = PFD_MAIN_PLANE;
-
-	pixelFormat = ChoosePixelFormat( defaultDC, &descriptor );
-	if ( pixelFormat == 0 || !SetPixelFormat( defaultDC, pixelFormat, &descriptor ) ) {
-		Destroy();
-		return false;
-	}
-
-	glContext = wglCreateContext( defaultDC );
+	pixelFormat = GetPixelFormat( defaultDC );
+	glContext = SDL_GL_CreateContext( window );
 	if ( glContext == NULL || !MakeCurrent() ) {
+		common->Warning( "SDL_GL_CreateContext failed: %s", SDL_GetError() );
 		Destroy();
 		return false;
 	}
@@ -297,11 +278,12 @@ bool idRenderContextWGL::Create( const idRenderContextParms& contextParms ) {
 
 void idRenderContextWGL::Destroy() {
 	if ( glContext != NULL ) {
-		if ( wglGetCurrentContext() == glContext ) {
-			wglMakeCurrent( NULL, NULL );
+		if ( SDL_GL_GetCurrentContext() == glContext ) {
+			SDL_GL_MakeCurrent( window, NULL );
 		}
-		wglDeleteContext( glContext );
+		SDL_GL_DeleteContext( glContext );
 	}
+	window = NULL;
 	glContext = NULL;
 	defaultDC = NULL;
 	currentDC = NULL;
@@ -309,18 +291,18 @@ void idRenderContextWGL::Destroy() {
 }
 
 bool idRenderContextWGL::MakeCurrent( dcHandle_t handle ) {
-	if ( glContext == NULL ) {
+	if ( window == NULL || glContext == NULL ) {
 		return false;
 	}
 	currentDC = handle != NULL ? handle : defaultDC;
-	return currentDC != NULL && wglMakeCurrent( currentDC, glContext ) != FALSE;
+	return currentDC != NULL && SDL_GL_MakeCurrent( window, glContext ) == 0;
 }
 
 bool idRenderContextWGL::ReleaseCurrent( dcHandle_t ) {
-	if ( glContext == NULL || wglGetCurrentContext() != glContext ) {
+	if ( glContext == NULL || SDL_GL_GetCurrentContext() != glContext ) {
 		return true;
 	}
-	const bool released = wglMakeCurrent( NULL, NULL ) != FALSE;
+	const bool released = SDL_GL_MakeCurrent( window, NULL ) == 0;
 	if ( released ) {
 		currentDC = NULL;
 	}
@@ -328,7 +310,7 @@ bool idRenderContextWGL::ReleaseCurrent( dcHandle_t ) {
 }
 
 bool idRenderContextWGL::IsValid() const {
-	return glContext != NULL && defaultDC != NULL;
+	return window != NULL && glContext != NULL && defaultDC != NULL;
 }
 
 void idRenderContextWGL::SetAdditionalDefaultState() {
@@ -363,50 +345,59 @@ id3DContextWinGL::~id3DContextWinGL() {
 }
 
 bool id3DContextWinGL::CreateGameWindow() {
-	WNDCLASSA windowClass;
-	memset( &windowClass, 0, sizeof( windowClass ) );
-	windowClass.style = CS_OWNDC;
-	windowClass.lpfnWndProc = ETQWWindowProc;
-	windowClass.hInstance = instance;
-	windowClass.hIcon = LoadIconA( NULL, IDI_APPLICATION );
-	windowClass.hCursor = LoadCursorA( NULL, IDC_ARROW );
-	windowClass.lpszClassName = ETQW_WINDOW_CLASS;
-	if ( !RegisterClassA( &windowClass ) && GetLastError() != ERROR_CLASS_ALREADY_EXISTS ) {
+	if ( ( SDL_WasInit( SDL_INIT_VIDEO ) & SDL_INIT_VIDEO ) == 0 ) {
+		common->Warning( "Cannot create the game window before SDL2 video initialization" );
 		return false;
 	}
 
-	const DWORD style = gameWindowParms.fullScreen ? WS_POPUP : WS_OVERLAPPEDWINDOW;
-	RECT windowRect = { 0, 0, gameWindowParms.width, gameWindowParms.height };
-	AdjustWindowRect( &windowRect, style, FALSE );
+	SDL_GL_ResetAttributes();
+	SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 8 );
+	SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 8 );
+	SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 8 );
+	SDL_GL_SetAttribute( SDL_GL_ALPHA_SIZE, 8 );
+	SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 24 );
+	SDL_GL_SetAttribute( SDL_GL_STENCIL_SIZE, 8 );
+	SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
+	SDL_GL_SetAttribute( SDL_GL_STEREO, gameWindowParms.stereo ? 1 : 0 );
+	SDL_GL_SetAttribute( SDL_GL_MULTISAMPLEBUFFERS, gameWindowParms.multiSamples.multi > 1 ? 1 : 0 );
+	SDL_GL_SetAttribute( SDL_GL_MULTISAMPLESAMPLES, gameWindowParms.multiSamples.multi > 1 ? gameWindowParms.multiSamples.multi : 0 );
 
-	int x = CW_USEDEFAULT;
-	int y = CW_USEDEFAULT;
+	Uint32 windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE |
+		SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_HIDDEN;
 	if ( gameWindowParms.fullScreen ) {
-		const monitorInfo_t& monitor = GetPrimaryMonitor();
-		x = monitor.monitor.x;
-		y = monitor.monitor.y;
+		windowFlags |= SDL_WINDOW_FULLSCREEN;
 	}
 
-	gameWindow = CreateWindowExA(
-		WS_EX_APPWINDOW,
-		ETQW_WINDOW_CLASS,
-		GAME_NAME,
-		style,
-		x,
-		y,
-		windowRect.right - windowRect.left,
-		windowRect.bottom - windowRect.top,
-		NULL,
-		NULL,
-		instance,
-		NULL
-	);
-	if ( gameWindow == NULL ) {
+	win32.sdlWindow = SDL_CreateWindow( GAME_NAME,
+		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+		gameWindowParms.width, gameWindowParms.height, windowFlags );
+	if ( win32.sdlWindow == NULL ) {
+		common->Warning( "SDL_CreateWindow failed: %s", SDL_GetError() );
 		return false;
 	}
 
+	SDL_SysWMinfo windowInfo;
+	SDL_VERSION( &windowInfo.version );
+	if ( SDL_GetWindowWMInfo( win32.sdlWindow, &windowInfo ) != SDL_TRUE ||
+		windowInfo.subsystem != SDL_SYSWM_WINDOWS ) {
+		common->Warning( "SDL2 did not expose a Win32 window: %s", SDL_GetError() );
+		SDL_DestroyWindow( win32.sdlWindow );
+		win32.sdlWindow = NULL;
+		return false;
+	}
+
+	gameWindow = windowInfo.info.win.window;
+	win32.hWnd = gameWindow;
 	gameDC = GetDC( gameWindow );
-	return gameDC != NULL;
+	if ( gameDC == NULL ) {
+		SDL_DestroyWindow( win32.sdlWindow );
+		win32.sdlWindow = NULL;
+		gameWindow = NULL;
+		win32.hWnd = NULL;
+		return false;
+	}
+	win32.activeApp = true;
+	return true;
 }
 
 void id3DContextWinGL::DestroyGameWindow() {
@@ -416,10 +407,12 @@ void id3DContextWinGL::DestroyGameWindow() {
 		ReleaseDC( gameWindow, gameDC );
 	}
 	gameDC = NULL;
-	if ( gameWindow != NULL ) {
-		DestroyWindow( gameWindow );
+	if ( win32.sdlWindow != NULL ) {
+		SDL_DestroyWindow( win32.sdlWindow );
 	}
+	win32.sdlWindow = NULL;
 	gameWindow = NULL;
+	win32.hWnd = NULL;
 }
 
 void id3DContextWinGL::InitContext( const glimpParms_t& contextParms ) {
@@ -469,7 +462,6 @@ void id3DContextWinGL::Shutdown() {
 		FreeLibrary( openGLLibrary );
 		openGLLibrary = NULL;
 	}
-	UnregisterClassA( ETQW_WINDOW_CLASS, instance );
 }
 
 void id3DContextWinGL::RecreateContext( const glimpParms_t& parms ) {
@@ -522,7 +514,7 @@ GLExtension_t id3DContextWinGL::ExtensionPointer( const char* name ) {
 	if ( name == NULL ) {
 		return NULL;
 	}
-	PROC proc = wglGetProcAddress( name );
+	PROC proc = reinterpret_cast< PROC >( SDL_GL_GetProcAddress( name ) );
 	if ( proc == NULL && openGLLibrary != NULL ) {
 		proc = GetProcAddress( openGLLibrary, name );
 	}
@@ -530,16 +522,15 @@ GLExtension_t id3DContextWinGL::ExtensionPointer( const char* name ) {
 }
 
 void id3DContextWinGL::ShowGameWindow() {
-	if ( gameWindow != NULL ) {
-		ShowWindow( gameWindow, SW_SHOW );
-		UpdateWindow( gameWindow );
-		SetForegroundWindow( gameWindow );
+	if ( win32.sdlWindow != NULL ) {
+		SDL_ShowWindow( win32.sdlWindow );
+		SDL_RaiseWindow( win32.sdlWindow );
 	}
 }
 
 void id3DContextWinGL::HideGameWindow() {
-	if ( gameWindow != NULL ) {
-		ShowWindow( gameWindow, SW_HIDE );
+	if ( win32.sdlWindow != NULL ) {
+		SDL_HideWindow( win32.sdlWindow );
 	}
 }
 
@@ -548,7 +539,8 @@ bool id3DContextWinGL::IsFullscreen() {
 }
 
 bool id3DContextWinGL::IsMinimized() {
-	return gameWindow == NULL || IsIconic( gameWindow ) != FALSE;
+	return win32.sdlWindow == NULL ||
+		( SDL_GetWindowFlags( win32.sdlWindow ) & SDL_WINDOW_MINIMIZED ) != 0;
 }
 
 void id3DContextWinGL::WindowSizeDragged( int width, int height ) {
@@ -581,8 +573,8 @@ void id3DContextWinGL::ReleaseContext( dcHandle_t windowDC ) {
 }
 
 void id3DContextWinGL::SwapBuffers() {
-	if ( gameDC != NULL ) {
-		::SwapBuffers( gameDC );
+	if ( win32.sdlWindow != NULL && gameContext.IsValid() ) {
+		SDL_GL_SwapWindow( win32.sdlWindow );
 	}
 }
 
@@ -594,7 +586,7 @@ void id3DContextWinGL::SetGamma( unsigned short red[ 256 ], unsigned short green
 	memcpy( ramp[ 0 ], red, sizeof( ramp[ 0 ] ) );
 	memcpy( ramp[ 1 ], green, sizeof( ramp[ 1 ] ) );
 	memcpy( ramp[ 2 ], blue, sizeof( ramp[ 2 ] ) );
-	SetDeviceGammaRamp( gameDC, ramp );
+	SDL_SetWindowGammaRamp( win32.sdlWindow, ramp[ 0 ], ramp[ 1 ], ramp[ 2 ] );
 }
 
 bool id3DContextWinGL::IsDisplayModeAvailable( int width, int height ) {

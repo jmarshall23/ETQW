@@ -34,6 +34,7 @@ If you have questions concerning this license or the applicable additional terms
 #define DIRECTINPUT_VERSION 0x0800
 #endif
 #include <dinput.h>
+#include <SDL.h>
 #include "../../renderer/wglext.h"		// windows OpenGL extensions
 
 // WGL_ARB_extensions_string
@@ -95,6 +96,14 @@ int		IN_DIMapKey( int key );
 
 void	DisableTaskKeys( BOOL bDisable, BOOL bBeep, BOOL bTaskMgr );
 
+void	Sys_ProcessSDLEvents( void );
+void	Sys_QueueSDLKeyEvent( const SDL_KeyboardEvent& event );
+void	Sys_QueueSDLTextEvent( const SDL_TextInputEvent& event );
+void	Sys_QueueSDLMouseMotionEvent( const SDL_MouseMotionEvent& event );
+void	Sys_QueueSDLMouseButtonEvent( const SDL_MouseButtonEvent& event );
+void	Sys_QueueSDLMouseWheelEvent( const SDL_MouseWheelEvent& event );
+void	Sys_ClearSDLInputEvents( void );
+
 
 // window procedure
 LONG WINAPI MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -104,10 +113,12 @@ void Conbuf_AppendText( const char *msg );
 struct Win32Vars_t {
 	HWND			hWnd;
 	HINSTANCE		hInstance;
+	SDL_Window*		sdlWindow;
 
 	bool			activeApp;			// changed with WM_ACTIVATE messages
 	bool			mouseReleased;		// when the game has the console down or is doing a long operation
 	bool			movingWindow;		// inhibit mouse grab when dragging the window
+	bool			mouseGrabbed;
 
 	OSVERSIONINFOA	osversion;
 

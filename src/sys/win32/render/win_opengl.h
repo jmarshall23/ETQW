@@ -9,6 +9,7 @@
 #define __SYS_WIN32_RENDER_WIN_OPENGL_H__
 
 #include "../../sys_render.h"
+#include <SDL.h>
 
 class idRenderContextWGL : public idRenderContext {
 public:
@@ -25,7 +26,8 @@ public:
 	bool					ReleaseCurrent( dcHandle_t handle = NULL );
 
 private:
-	HGLRC					glContext;
+	SDL_Window*			window;
+	SDL_GLContext			glContext;
 	HDC						defaultDC;
 	HDC						currentDC;
 	int						pixelFormat;
