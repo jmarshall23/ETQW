@@ -1,0 +1,72 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/area22/area22_sheet06 {
+	width	256
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1920 ) ( 512 2048 )
+	}
+	rect {
+		surfaceType	paper
+		surfaceColor	( 1 1 1 )
+		coords ( -180 1500 ) ( 432 2012 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1472 ) ( 512 1984 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 128 1440 ) ( 256 1472 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1440 ) ( 128 1472 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 928 ) ( 512 1440 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 800 ) ( 256 928 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 128 672 ) ( 256 800 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 672 ) ( 128 800 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 640 ) ( 256 672 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 512 ) ( 512 640 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 512 512 )
+	}
+}

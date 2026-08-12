@@ -1,0 +1,123 @@
+/**************
+     factory roof
+**************/
+
+material models/structures/edf/factory/factory_roof
+{
+	surfaceType "metal"
+	noshadows
+	diffusemap	models/structures/edf/factory/roof_d.tga
+	specularmap	models/structures/edf/factory/roof_d.tga
+	bumpmap 	models/structures/edf/factory/roof_local.tga
+}
+
+
+/**************
+     factory
+**************/
+
+material models/structures/edf/factory/factory
+{
+	surfaceType "metal"
+	noshadows
+	diffusemap	models/structures/edf/factory/factory_d.tga
+	specularmap	models/structures/edf/factory/factory_s.tga
+	bumpmap 	addnormals ( models/structures/edf/factory/factory_local.tga, heightmap (models/structures/edf/factory/factory_h.tga,2))
+}
+
+
+//  Damage state01
+material models/structures/edf/factory/factory_damage01
+{
+	surfaceType "metal"
+	noshadows
+	diffusemap	models/structures/edf/factory/factory_d.tga
+	specularmap	models/structures/edf/factory/factory_s.tga
+	bumpmap 	addnormals ( models/structures/edf/factory/factory_local.tga, heightmap (models/structures/edf/factory/factory_h.tga,2))
+	{
+		blend		filter
+       		map		models/structures/edf/cc/cc_damage01.tga
+	}
+}
+
+//  Damage state02
+material models/structures/edf/factory/factory_damage02
+{
+	surfaceType "metal"
+	noshadows
+	diffusemap	models/structures/edf/factory/factory_d.tga
+	specularmap	models/structures/edf/factory/factory_s.tga
+	bumpmap 	addnormals ( models/structures/edf/factory/factory_local.tga, heightmap (models/structures/edf/factory/factory_h.tga,2))
+	{
+		blend		filter
+       		map		models/structures/edf/cc/cc_damage02.tga
+	}
+}
+
+//  Damage state03
+material models/structures/edf/factory/factory_damage03
+{
+	surfaceType "metal"
+	noshadows
+	diffusemap	models/structures/edf/factory/factory_d.tga
+	specularmap	models/structures/edf/factory/factory_s.tga
+	bumpmap 	addnormals ( models/structures/edf/factory/factory_local.tga, heightmap (models/structures/edf/factory/factory_h.tga,2))
+	{
+		blend		filter
+       		map		models/structures/edf/cc/cc_damage03.tga
+	}
+}
+/**************
+     factory 2
+**************/
+
+material models/structures/edf/factory/factory_2
+{
+	surfaceType "metal"
+	noshadows
+	diffusemap	models/structures/edf/factory/factory_2_d.tga
+	specularmap	models/structures/edf/factory/factory_2_s.tga
+	bumpmap 	addnormals (models/structures/edf/factory/factory_2_local.tga, heightmap (models/structures/edf/factory/factory_2_h.tga,2))
+}
+
+//  Damage state01
+material models/structures/edf/factory/factory_2_damage01
+{
+	surfaceType "metal"
+	noshadows
+	diffusemap	models/structures/edf/factory/factory_2_d.tga
+	specularmap	models/structures/edf/factory/factory_2_s.tga
+	bumpmap 	addnormals (models/structures/edf/factory/factory_2_local.tga, heightmap (models/structures/edf/factory/factory_2_h.tga,2))
+	{
+		blend		filter
+       		map		models/structures/edf/cc/cc_damage01.tga
+	}
+}
+
+//  Damage state02
+material models/structures/edf/factory/factory_2_damage02
+{
+	surfaceType "metal"
+	noshadows
+	diffusemap	models/structures/edf/factory/factory_2_d.tga
+	specularmap	models/structures/edf/factory/factory_2_s.tga
+	bumpmap 	addnormals (models/structures/edf/factory/factory_2_local.tga, heightmap (models/structures/edf/factory/factory_2_h.tga,2))
+	{
+		blend		filter
+       		map		models/structures/edf/cc/cc_damage02.tga
+	}
+}
+
+//  Damage state03
+material models/structures/edf/factory/factory_2_damage03
+{
+	surfaceType "metal"
+	noshadows
+	diffusemap	models/structures/edf/factory/factory_2_d.tga
+	specularmap	models/structures/edf/factory/factory_2_s.tga
+	bumpmap 	addnormals (models/structures/edf/factory/factory_2_local.tga, heightmap (models/structures/edf/factory/factory_2_h.tga,2))
+	{
+		blend		filter
+       		map		models/structures/edf/cc/cc_damage03.tga
+	}
+}

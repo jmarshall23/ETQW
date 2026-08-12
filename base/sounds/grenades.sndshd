@@ -1,0 +1,374 @@
+sound sounds/weapons/grenades/gdf_bringup {
+	minDistance	3
+	maxDistance	25
+	volume		-10
+
+	sounds/weapons/grenades/gdf_bringup_01.wav
+	sounds/weapons/grenades/gdf_bringup_02.wav
+
+}
+
+sound sounds/weapons/grenades/gservo1 {
+	volume		-40
+
+	private
+
+	sounds/weapons/grenades/gservo_01.wav
+}
+
+sound sounds/weapons/grenades/gservo2 {
+	volume		-40
+
+	private
+
+	sounds/weapons/grenades/gservo_02.wav
+}
+
+sound sounds/weapons/grenades/gservo2a {
+	volume		-40
+
+	private
+
+	sounds/weapons/grenades/gservo_02a.wav
+}
+
+sound sounds/weapons/grenades/gservo3 {
+	volume		-40
+
+	private
+
+	sounds/weapons/grenades/gservo_03.wav
+}
+
+sound sounds/weapons/grenades/gservo4 {
+	volume		-40
+
+	private
+
+	sounds/weapons/grenades/gservo_04.wav
+}
+
+sound sounds/weapons/grenades/gservo5 {
+	volume		-40
+
+	private
+
+	sounds/weapons/grenades/gservo_05.wav
+}
+
+sound sounds/weapons/grenades/gservo6 {
+	volume		-40
+
+	private
+
+	sounds/weapons/grenades/gservo_06b.wav
+}
+
+sound sounds/weapons/grenades/strogg_up {
+	volume		-9
+	minDistance	5
+	maxDistance	20
+
+	sounds/weapons/grenades/strogg_up_01.wav
+}
+
+sound sounds/weapons/grenades/strogg_raise {
+	volume		-10
+	minDistance	5
+	maxDistance	20
+
+	sounds/weapons/grenades/strogg_up_02.wav
+}
+
+sound sounds/weapons/grenades/strogg_electro_raise {
+	volume		-2
+	minDistance	5
+	maxDistance	20
+
+	sounds/weapons/grenades/gelectro_raise_01.wav
+}
+
+sound sounds/weapons/grenades/sgrenade_warning {
+	// 0.5 seconds before it blows
+	volume	-9
+	minDistance	1
+	maxDistance	25
+
+	sounds/weapons/grenades/sgrenade_warning_03.wav
+}
+
+sound sounds/weapons/grenades/strogg_prime {
+	volume		-5
+	minDistance	5
+	maxDistance	45
+
+	sounds/weapons/grenades/strogg_prime_06.wav
+}
+
+sound sounds/weapons/grenades/strogg_prime2 {
+	volume		-2
+	minDistance	5
+	maxDistance	45
+
+	sounds/weapons/grenades/strogg_prime_05.wav
+}
+
+sound sounds/weapons/grenades/strogg_snip1 {
+	volume		-30
+
+	private
+
+	sounds/weapons/grenades/gsnip_01.wav
+}
+
+sound sounds/weapons/grenades/strogg_snip2 {
+	volume		-30
+
+	private
+
+	sounds/weapons/grenades/gsnip_02.wav
+}
+
+
+sound sounds/weapons/grenades/strong_whine {
+	volume		-5
+	minDistance	5
+	maxDistance	45
+
+	sounds/weapons/grenades/prime_whine_01.wav
+}
+
+sound sounds/weapons/grenades/throw {
+	minDistance	5
+	maxDistance	25
+	volume		-11
+
+	no_dups
+
+	sounds/weapons/misc/whoosh_01.wav
+	sounds/weapons/misc/whoosh_02.wav
+	sounds/weapons/misc/whoosh_03.wav
+	sounds/weapons/misc/whoosh_04.wav
+	sounds/weapons/misc/whoosh_05.wav
+}
+
+sound sounds/weapons/grenades/pin {
+	minDistance	2
+	maxDistance	15
+	volume		-5
+
+	no_dups
+
+	sounds/weapons/grenades/pin_01.wav
+	sounds/weapons/grenades/pin_02.wav
+	sounds/weapons/grenades/pin_03.wav
+	sounds/weapons/grenades/pin_04.wav
+}
+
+sound sounds/weapons/grenades/timer {
+	private
+
+	sounds/weapons/grenades/timer_01.wav
+}
+
+sound sounds/weapons/grenades/stroggtimer {
+	volume		-15
+
+	private
+
+	sounds/weapons/grenades/timer_02.wav
+}
+
+
+sound sounds/weapons/grenades/reload {
+	sounds/weapons/grenades/reload.wav
+}
+
+sound sounds/weapons/grenades/bounce {
+	volume -10
+	maxDistance	30
+
+	no_dups
+
+//	sounds/weapons/grenades/bounce_01.wav
+//	sounds/weapons/grenades/bounce_02.wav
+	sounds/weapons/grenades/bounce_03.wav
+	sounds/weapons/grenades/bounce_04.wav
+	sounds/weapons/grenades/bounce_05.wav
+	sounds/weapons/grenades/bounce_06.wav
+	sounds/weapons/grenades/bounce_07.wav
+}
+
+sound sounds/weapons/grenades/bounce_metal {
+	volume -5
+	maxDistance	50
+
+	sounds/weapons/grenades/bounce_metal_01.wav
+	sounds/weapons/grenades/bounce_metal_02.wav
+}
+
+sound sounds/weapons/grenades/bounce_soft {
+	volume -10
+	maxDistance	50
+
+	sounds/weapons/grenades/bounce_soft_01.wav
+	sounds/weapons/grenades/bounce_soft_02.wav
+}
+
+sound sounds/weapons/grenades/bounce_wood {
+	volume -10
+	maxDistance	50
+
+	sounds/weapons/grenades/bounce_wood_01.wav
+	sounds/weapons/grenades/bounce_wood_02.wav
+}
+
+
+/////////////////////////////////////////////////////////////////////
+// GDF Frag Grenade /////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+sound sounds/weapons/grenades/frag/explode {
+
+	volume 5
+	maxDistance	100
+	no_dups
+
+	sounds/weapons/grenades/frag/explode_01.wav
+	sounds/weapons/grenades/frag/explode_02.wav
+	sounds/weapons/grenades/frag/explode_03.wav
+	sounds/weapons/grenades/frag/explode_04.wav
+	sounds/weapons/grenades/frag/explode_05.wav
+	sounds/weapons/grenades/frag/explode_06.wav
+	sounds/weapons/grenades/frag/explode_07.wav
+	sounds/weapons/grenades/frag/explode_08.wav
+}
+
+sound sounds/weapons/grenades/frag/explode/far {
+
+	volume -5
+	maxDistance	200
+
+	sounds/weapons/grenades/frag/explode_far.wav
+}
+
+/////////////////////////////////////////////////////////////////////
+// GDF Smoke Grenade ////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+sound sounds/weapons/grenades/smoke/raise {
+
+	volume -15
+
+	sounds/weapons/grenades/smoke/raise.wav
+}
+
+sound sounds/weapons/grenades/smoke/start {
+	compression wav
+
+	volume -25
+	maxDistance	30
+
+	looping
+	leadin
+	sounds/weapons/grenades/smoke/start.wav
+	sounds/weapons/grenades/smoke/loop.wav
+}
+
+sound sounds/weapons/grenades/smoke/stop {
+
+	volume -25
+	maxDistance	30
+
+	sounds/weapons/grenades/smoke/stop.wav
+}
+
+
+///////////////////////////////////////////////////////////////////
+// GDF EMP Grenade ////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+sound sounds/weapons/grenades/emp/raise {
+
+	volume -15
+
+	sounds/weapons/grenades/emp/raise.wav
+}
+
+sound sounds/weapons/grenades/emp/arm {
+
+	volume -5
+
+	sounds/weapons/grenades/emp/arm.wav
+}
+
+sound sounds/weapons/grenades/emp/explode {
+
+	maxDistance	125
+
+	sounds/weapons/grenades/emp/explode_01.wav
+	sounds/weapons/grenades/emp/explode_02.wav
+}
+
+///////////////////////////////////////////////////////////////////
+// Strogg Shrap Grenade ///////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+sound sounds/weapons/grenades/shrap/explode {
+
+	volume 5
+	maxDistance	100
+	no_dups
+
+	sounds/weapons/grenades/shrap/explode_01.wav
+	sounds/weapons/grenades/shrap/explode_02.wav
+	sounds/weapons/grenades/shrap/explode_03.wav
+	sounds/weapons/grenades/shrap/explode_04.wav
+	sounds/weapons/grenades/shrap/explode_05.wav
+}
+
+sound sounds/weapons/grenades/shrap/explode/far {
+
+	volume -5
+	maxDistance	150
+
+	sounds/weapons/grenades/shrap/explode_far.wav
+}
+
+sound sounds/weapons/grenades/acidspleen/idle {
+
+	volume -30
+	maxDistance	10
+
+	sounds/weapons/grenades/acidspleen/idle_01.wav
+	sounds/weapons/grenades/acidspleen/idle_02.wav
+	sounds/weapons/grenades/acidspleen/idle_03.wav
+	sounds/weapons/grenades/acidspleen/idle_04.wav
+	sounds/weapons/grenades/acidspleen/idle_05.wav
+}
+
+///////////////////////////////////////////////////////////////////
+// Strogg Scrambler Grenade ///////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+sound sounds/weapons/grenades/scrambler/raise {
+
+	volume -15
+
+	sounds/weapons/grenades/scrambler/raise.wav
+}
+
+sound sounds/weapons/grenades/scrambler/arm {
+
+	volume -5
+
+	sounds/weapons/grenades/scrambler/arm.wav
+}
+
+sound sounds/weapons/grenades/scrambler/explode {
+
+	maxDistance	125
+
+	sounds/weapons/grenades/scrambler/explode_01.wav
+	sounds/weapons/grenades/scrambler/explode_02.wav
+}

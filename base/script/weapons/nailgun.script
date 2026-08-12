@@ -1,0 +1,39 @@
+/***********************************************************************
+
+weapon_nailgun.script
+
+***********************************************************************/
+
+object weapon_nailgun : weapon_clip {
+	void		preinit();
+	void		PlayFireAnim();
+	void		ReloadSoundThread();
+	
+	void		Reload() { Overheat(); }
+
+	void		OnIronSightsEnabled() { hide(); }
+	void		OnIronSightsDisabled() { show(); }
+};
+
+void weapon_nailgun::preinit() {
+	hasScope		= false;
+	hasIronSights	= true;
+	usesStroyent	= true;
+	hasHeat			= true;
+}
+
+void weapon_nailgun::PlayFireAnim() {
+	if ( ironSightsEnabled || myPlayer.IsSniperScopeUp() ) {
+		thread ReloadSoundThread();
+		playAnim( ANIMCHANNEL_ALL, "fire_zoom" );
+	} else {
+		playAnim( ANIMCHANNEL_ALL, "fire" );
+	}
+}
+
+void weapon_nailgun::ReloadSoundThread() {
+	sys.wait( 0.4f );
+	startSound( "snd_breech", SND_WEAPON_RELOAD );
+	sys.wait( 0.13f );
+	startSound( "snd_cock", SND_WEAPON_COCK );
+}

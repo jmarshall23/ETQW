@@ -1,0 +1,16 @@
+material models/mapobjects/outskirts/outskirts_statue
+{
+	surfaceType	"concrete"
+
+	{
+	diffusemap	picmip -1	texturesheets/outskirts/interior1_d.tga
+	specularmap 	picmip -2   	texturesheets/outskirts/interior1_s.tga
+	bumpmap 	picmip -1	texturesheets/outskirts/interior1_local.tga
+	
+	diffuseDetailMap 		textures/detail/bump/concrete_detail01_d.tga
+	bumpDetailMap	 		textures/detail/bump/concrete_detail01_local.tga
+	specDetailMap	 		textures/detail/bump/concrete_detail01_d.tga
+	detailMult	8,16,0,0
+	vertexColor
+	}
+}

@@ -1,0 +1,120 @@
+material models/mapobjects/infrastructure/busstop01
+{
+	surfaceType	"metal"
+
+	diffusemap	models/mapobjects/infrastructure/busstop01_d.tga
+	specularmap	models/mapobjects/infrastructure/busstop01_s.tga
+	bumpmap		models/mapobjects/infrastructure/busstop01_local.tga
+}
+
+material models/mapobjects/infrastructure/busstop01_glass
+{
+	twosided
+	useTemplate templates/windowglass_mask < 
+		models/mapobjects/infrastructure/busstop01_d.tga, 
+		models/mapobjects/infrastructure/busstop01_local.tga,
+		models/mapobjects/infrastructure/busstop01_mask.tga,
+		2, 1.0, 1.0
+	>
+}
+
+material models/mapobjects/infrastructure/busstop01_groundglass
+{
+	nonsolid
+	useTemplate templates/windowglass_mask < 
+		"picmip -1	models/mapobjects/infrastructure/busstop01_groundglass_d.tga", 
+		"picmip -1	models/mapobjects/infrastructure/busstop01_groundglass_local.tga",
+		"picmip -2	models/mapobjects/infrastructure/busstop01_groundglass_mask.tga",
+		2, 1.0, 1.0
+	>
+}
+
+material models/mapobjects/infrastructure/lightpost01
+{
+	surfaceType	"metal"
+
+	diffusemap	picmip -1	models/mapobjects/infrastructure/lightpost01_d.tga
+	specularmap	picmip -2	models/mapobjects/infrastructure/lightpost01_s.tga
+	bumpmap		picmip -1	models/mapobjects/infrastructure/lightpost01_local.tga
+}
+
+material models/mapobjects/infrastructure/lightpost01_noshadows
+{
+	noshadows
+	surfaceType	"metal"
+
+	diffusemap	picmip -1	models/mapobjects/infrastructure/lightpost01_d.tga
+	specularmap	picmip -2	models/mapobjects/infrastructure/lightpost01_s.tga
+	bumpmap		picmip -1	models/mapobjects/infrastructure/lightpost01_local.tga
+}
+
+material models/mapobjects/infrastructure/trashcan01
+{
+	surfaceType	"metal"
+
+	twosided
+
+	{       
+		diffusemap 	models/mapobjects/infrastructure/trashcan01_d.tga
+		specularmap	models/mapobjects/infrastructure/trashcan01_s.tga
+		bumpmap		models/mapobjects/infrastructure/trashcan01_local.tga
+		alphaTest	0.1
+	}
+}
+
+material models/mapobjects/infrastructure/trashcan_rubbish
+{
+	twosided
+
+	{       
+		diffusemap 	models/mapobjects/infrastructure/trashcan_rubbish_d.tga
+		specularmap	models/mapobjects/infrastructure/trashcan_rubbish_s.tga
+		bumpmap		models/mapobjects/infrastructure/trashcan_rubbish_local.tga
+		alphaTest	0.1
+	}
+}
+
+material models/mapobjects/infrastructure/firehydrant01
+{
+	surfaceType	"metal"
+
+	diffusemap	models/mapobjects/infrastructure/firehydrant01_d.tga
+	specularmap	models/mapobjects/infrastructure/firehydrant01_s.tga
+	bumpmap		models/mapobjects/infrastructure/firehydrant01_local.tga
+}
+
+material models/mapobjects/infrastructure/powerline01
+{
+	surfaceType	"metal"
+	noshadows
+
+	{
+		diffusemap	picmip -1	models/mapobjects/infrastructure/powerline01_d.tga
+		specularmap	picmip -2	models/mapobjects/infrastructure/powerline01_s.tga
+		bumpmap		picmip -1	models/mapobjects/infrastructure/powerline01_local.tga
+		
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		detailMult 9,4,0,0
+	}
+}
+
+material models/mapobjects/infrastructure/powerline_cable
+{
+	twosided
+	nonsolid
+	noshadows
+	{
+		blend	blend
+		map	models/mapobjects/infrastructure/powerline_cable_d.tga
+	}
+	translucent
+}
+
+material models/mapobjects/infrastructure/bench
+{
+	diffusemap	picmip -1	models/mapobjects/infrastructure/bench_d.tga
+	specularmap	picmip -2	models/mapobjects/infrastructure/bench_s.tga
+	bumpmap		picmip -1	models/mapobjects/infrastructure/bench_local.tga
+}

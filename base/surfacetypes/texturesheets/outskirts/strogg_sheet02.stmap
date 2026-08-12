@@ -1,0 +1,47 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/outskirts/strogg_sheet02 {
+	width	512
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 256 992 ) ( 288 1024 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 256 992 ) ( 288 1024 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 256 992 ) ( 288 1024 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1536 ) ( 512 2048 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1024 ) ( 512 1536 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 512 ) ( 512 1024 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 512 512 )
+	}
+}

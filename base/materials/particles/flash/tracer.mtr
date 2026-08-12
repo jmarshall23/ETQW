@@ -1,0 +1,67 @@
+material particles/flash/tracer {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		map		textures/effects/weapons/tracer1a.tga
+		vertexcolor
+	}
+}
+
+material particles/flash/tracer_1b {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		map		textures/effects/weapons/tracer1b.tga
+		vertexcolor
+	}
+}
+
+material particles/flash/tracer_plasma_1a {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		map		textures/effects/weapons/tracer_plasma1a.tga
+		vertexcolor
+	}
+}
+
+
+material particles/flash/plasma_snow {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		map			textures/effects/weapons/plasma_snow.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/flash/plasma_snow2 {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		blend
+		map			textures/effects/weapons/plasma_snow2.tga
+		vertexcolor
+	}
+}
+
+material particles/flash/plasma_snow3 {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		blend
+		map			textures/effects/weapons/plasma_snow3.tga
+		vertexcolor
+	}
+}

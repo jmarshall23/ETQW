@@ -1,0 +1,100 @@
+
+object vehicle_gpmg_cockpit : vehicle_basic_cockpit {
+	void				preinit();
+	void				destroy();
+	void				OnEntered();
+	
+	void				AnimThread();
+	
+	float				surfaceId;
+	string				muzzleJoint;
+}
+
+void vehicle_gpmg_cockpit::preinit() {
+	surfaceId = -1;
+	
+	muzzleJoint = getKey( "joint_muzzle" );
+
+	thread AnimThread();
+}
+
+void vehicle_gpmg_cockpit::OnEntered() {
+	string surfaceName = getKey( "surface_name" );
+	if ( surfaceName == "" ) {
+		myVehicle.vOnCockpitCreated();
+	} else {
+		surfaceId = myVehicle.getSurfaceId( surfaceName );
+		myVehicle.hideSurface( surfaceId );
+	}
+}
+
+void vehicle_gpmg_cockpit::destroy() {
+	if ( myVehicle != $null_entity ) {
+		if ( surfaceId == -1 ) {
+			myVehicle.vOnCockpitDestroyed();
+		} else {
+			myVehicle.showSurface( surfaceId );
+		}
+	}
+	
+	sys.killThread( "vehicle_gpmg_cockpit::AnimThread" );
+}
+
+#define VEHICLE_GPMG_STATE_IDLE 0
+#define VEHICLE_GPMG_STATE_ATTACK 1
+#define VEHICLE_GPMG_STATE_ATTACK_END 2
+
+void vehicle_gpmg_cockpit::AnimThread() {
+	sys.threadName( "vehicle_gpmg_cockpit::AnimThread" );
+	
+	player myPlayer = myVehicle.getPositionPlayer( passengerId );
+	
+	if ( myPlayer != $null_entity ) {
+		if ( !myPlayer.proxyFiringWeaponStart ) {
+			sys.wait( playAnim( ANIMCHANNEL_ALL, "raise" ) );
+		}
+	}
+
+	float idleTime;
+	
+	float state = VEHICLE_GPMG_STATE_IDLE;
+	float newState;
+	playCycle( ANIMCHANNEL_ALL, "idle" );
+
+	while ( true ) {
+		boolean proxyFiringWeaponStart = false;
+		if ( myPlayer != $null_entity ) {
+			proxyFiringWeaponStart = myPlayer.proxyFiringWeaponStart;
+		}
+		
+		if ( proxyFiringWeaponStart ) {
+			newState = VEHICLE_GPMG_STATE_ATTACK;
+		} else {
+			if ( state == VEHICLE_GPMG_STATE_ATTACK ) {
+				newState = VEHICLE_GPMG_STATE_ATTACK_END;
+			} else {
+				if ( sys.getTime() > idleTime ) {
+					newState = VEHICLE_GPMG_STATE_IDLE;
+				}
+			}
+		}
+		
+		if ( state != newState ) {
+			if ( state == VEHICLE_GPMG_STATE_ATTACK ) {
+				stopEffect( "fx_muzzle" );
+			}
+		
+			state = newState;
+			if ( state == VEHICLE_GPMG_STATE_IDLE ) {
+				playCycle( ANIMCHANNEL_ALL, "idle" );
+			} else if ( state == VEHICLE_GPMG_STATE_ATTACK ) {
+				playCycle( ANIMCHANNEL_ALL, "fire" );
+				playEffect( "fx_muzzle", muzzleJoint, 1 );
+			} else if ( state == VEHICLE_GPMG_STATE_ATTACK_END ) {
+				idleTime = sys.getTime() + playAnim( ANIMCHANNEL_ALL, "fire_end" );
+			}
+		}
+
+		sys.waitFrame();
+	}
+}

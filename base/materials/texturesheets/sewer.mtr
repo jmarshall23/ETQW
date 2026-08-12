@@ -1,0 +1,184 @@
+material texturesheets/sewer/concrete_34_notrim
+{
+	surfacetype "concrete"
+	{
+		diffusemap	picmip -1	texturesheets/sewer/concrete_34_notrim_d.tga
+		specularmap	picmip -2	texturesheets/sewer/concrete_34_notrim_s.tga
+		bumpmap 	picmip -1	texturesheets/sewer/concrete_34_notrim_local.tga
+		vertexcolor
+	
+		diffuseDetailMap 		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/concrete_detail01_d.tga
+		detailMult	8,8,0,0
+	}
+}
+
+
+material texturesheets/sewer/concrete1
+{
+	surfacetype "concrete"
+	{
+		diffusemap	picmip -1	texturesheets/sewer/concrete1_d.tga
+		specularmap	picmip -2	texturesheets/sewer/concrete1_s.tga
+		bumpmap		picmip -1	texturesheets/sewer/concrete1_local.tga
+		vertexcolor
+	
+		diffuseDetailMap 		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/concrete_detail01_d.tga
+		detailMult	6,24,0,0
+	}
+}
+
+material texturesheets/sewer/concrete2
+{
+	surfacetype "concrete"
+	{
+		diffusemap	picmip -1	texturesheets/sewer/concrete2_d.tga
+		specularmap	picmip -2	texturesheets/sewer/concrete2_s.tga
+		bumpmap 	picmip -1	texturesheets/sewer/concrete2_local.tga
+		vertexcolor
+		
+		diffuseDetailMap 		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/concrete_detail01_d.tga
+		detailMult	5,20,0,0
+	}
+}
+
+material texturesheets/sewer/pipe_2
+{
+	surfacetype "metal"
+	{
+		diffusemap	picmip -1	texturesheets/sewer/roof_metal_2_1_d.tga
+		specularmap	picmip -2   texturesheets/sewer/roof_metal_2_1_s.tga
+		bumpmap		picmip -1	texturesheets/sewer/roof_metal_2_1_local.tga
+		vertexcolor
+
+		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	6,3,0,0
+	}
+}
+
+material texturesheets/sewer/sewer_decals
+{
+	polygonOffset
+	sort decal
+	nonsolid
+ 	translucent
+ 	noshadows
+ 	{
+ 		program		filterCoverage
+ 		blend		filter
+ 		map 		texturesheets/sewer/sewer_decals_d.tga
+ 		maskAlpha
+ 	}
+}
+
+material texturesheets/sewer/sewer_decals2
+{
+	polygonOffset
+	sort decal
+	nonsolid
+ 	translucent
+ 	noshadows
+ 	{
+ 		program		filterCoverage
+ 		blend		filter
+ 		map 		texturesheets/sewer/sewer_decals2_d.tga
+ 		maskAlpha
+ 	}
+}
+
+material texturesheets/sewer/corrugated_generic
+{
+	surfacetype "metal"
+	{
+		diffusemap	picmip -1	texturesheets/sewer/corrugated_generic_d.tga
+		specularmap	picmip -2 	texturesheets/sewer/corrugated_generic_s.tga
+		bumpmap 	picmip -1	texturesheets/sewer/corrugated_generic_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,4,0,0
+	}
+}
+
+//TEST
+material texturesheets/sewer/wall_concrete_9a_test
+{
+	{
+		diffusemap	picmip -1	texturesheets/sewer/wall_concrete_9_d.tga
+		specularmap	picmip -2   	texturesheets/sewer/wall_concrete_9_s.tga
+		bumpmap 	picmip -1	texturesheets/sewer/concrete_slabs01a_1024_local.tga
+		vertexcolor
+	}
+}
+
+
+material texturesheets/sewer/sewer_window
+{
+	surfacetype "glass"
+		diffusemap	picmip -1	textures/window/window10a_d.tga
+		bumpmap		picmip -1	textures/window/window10_local.tga
+		{
+			blend blend
+			program sfx/windowglass 
+			diffusemap picmip -1	textures/window/window10a_d.tga
+			bumpmap	picmip -1	textures/window/window10_local.tga
+			parameters 2, 1.0, 0.3
+		}
+}
+
+material texturesheets/sewer/triangle_light
+{
+	polygonOffset
+	sort decal
+	nonsolid
+ 	translucent
+	{
+		//program filterVertexColorCoverage
+ 		blend add
+		map texturesheets/sewer/triangle_light1.tga
+		maskAlpha
+		vertexcolor
+		maskDepth
+		depthFunc lequal
+	}
+}
+
+material textures/window/window04_glow
+{
+	surfacetype 	"glass"
+		diffusemap 	picmip -1	textures/window/window04_d.tga
+		bumpmap	 	picmip -1	textures/window/window04_local.tga
+	{
+		blend 		add
+		map	picmip -2	textures/window/window04_add.tga
+		colored
+	}
+}
+
+material texturesheets/sewer/area22_sheet01
+{
+	surfaceTypeMap "texturesheets/sewer/sewer_sheet01.stmap"
+	{
+		diffusemap 	picmip -1	texturesheets/sewer/sewer_sheet01_d.tga
+		specularmap	picmip -1	texturesheets/sewer/sewer_sheet01_s.tga
+		bumpmap 	picmip -1	texturesheets/sewer/sewer_sheet01_local.tga
+	}
+}
+
+material texturesheets/sewer/sewer_white
+{
+	{
+		diffusemap _white
+		specularmap _white
+		vertexcolor
+	}
+}

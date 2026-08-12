@@ -1,0 +1,1081 @@
+
+material shaderDemos/ambientTest
+{
+	{
+		cubeMap		env/penta_amb
+		texgen		normal
+	}
+}
+
+material shaderDemos/ambientTest2
+{
+	{
+		cubeMap		env/penta_spec
+		texgen		normal
+	}
+}
+
+material shaderDemos/ambientEnv
+{
+	{
+		cubeMap		env/penta
+		texgen		normal
+	}
+}
+
+
+material penta/atmosphereClouds
+{
+	{
+		map		heightmap (textures/penta/cloud05.tga, 6)
+	}
+	{
+		map		textures/penta/cloud05.tga
+	}
+}
+
+/*
+
+Weather "simulations" are gamecode side, this means calculating wich layers and how much clouds we want, the "humidity" (mie scatteriing) parameter of the atmosphere, time of day, sun intensisty are done by the game.
+The pysical side of things (calculating the actual colors based on the parameters ...) are done by the engine (and most of them by the graphics hardware)
+The params are from the atmosphere entity??  The cloud textures should just be made by the artists?  Simulating acual cloud shapes may be hard/slow
+*/
+
+
+//The sun sprite
+material penta/sun
+{
+
+	noShadows
+	noSelfShadow
+
+	deform sprite
+	{
+		blend	add
+		map		env/sun.tga
+		color	parm0, parm1, parm2, 1.0
+	}
+}
+
+//Shader parm 4 contains angle to the horizon in [0..1] range
+//fixme use same calculations as for sun color and 60% reflectance from the moon surface??
+material penta/moon
+{
+	noShadows
+	noSelfShadow
+
+	deform sprite
+	{
+		blend blend
+		map		env/moon_full.tga
+		color	moonRedTable[parm4], moonGreenTable[parm4], moonBlueTable[parm4], 1.0
+	}
+}
+
+material penta/liquidTest
+{
+	discrete
+	//translucent
+	noshadows
+	//sort subview
+	twosided
+
+	diffusemap	_black
+	//specularmap	models/mapobjects/test/roof_s.tga
+	//specularmap	_white
+	{
+		blend bumpmap
+		map heightmap (textures/detail/crackedearth.tga, 20)
+		scroll time*0.2, time*0.2
+	}
+
+	{
+		refractWaterRenderMap	512	256		// size of the texture to draw the mirror view in
+		//blend	blend
+		//vertexcolor
+
+
+		// fix up the projection
+		translate 0.5 , 0.5
+		scale 0.5 , 0.5
+	}
+
+	{
+		mirrorWaterRenderMap	512	256		// size of the texture to draw the mirror view in
+		blend blend
+		vertexcolor
+
+		// fix up the projection
+		translate 0.50 , 0.50
+		scale 0.5 , 0.5
+	}
+
+
+}
+
+material terrain/rock
+{
+	discrete
+	//translucent
+	noshadows
+	//sort subview
+	{
+		map		textures/base_wall/a_sopanel1_d01b.tga
+		//mirrorRenderMap		256	256		// size of the texture to draw the mirror view in
+		//blend	blend
+
+		// give it a greenish tint
+		//red	0.6
+		//green	1
+		//blue	0.6
+
+		// opacity
+		alpha	0.5
+
+		// fix up the projection
+		//translate	0.5 , 0.5
+		//scale	0.5 , 0.5
+	}
+}
+
+material terrain/rock2
+{
+	discrete
+	//translucent
+	noshadows
+	{
+		//mirrorRenderMap		256	256		// size of the texture to draw the mirror view in
+		map		textures/base_wall/a_sopanel1_d01b.tga
+		blend	blend
+
+		// give it a greenish tint
+		//red	0.6
+		//green	1
+		//blue	0.6
+
+		// opacity
+		//alpha	0.7
+
+		// fix up the projection
+		//translate	0.5 , 0.5
+		//scale	0.5 , 0.5
+	}
+}
+
+material penta/skydome_backdrop {
+
+	noShadows
+	noSelfShadow
+
+	sort decal
+
+	//Background color of the sky
+	{
+		vertexProgram skycolor2.cg
+		vertexParm 		0	haloscale, halobias
+		vertexParm		1	sun_x, sun_y, sun_z
+		vertexParm		2	cosTable[ sun_azimuth / 360 ], sinTable[ sun_azimuth / 360 ], 0
+		vertexParm		3	sinTable[ sun_azimuth / 360 ] * -1, cosTable[ sun_azimuth / 360 ], 0
+		fragmentProgram skycolor2.cg
+		fragmentMapBinding	0	skyGradient
+	}
+/*
+	//Add high altitude clouds
+	{
+		blend add
+		map _starCubeMap
+		color stardens * 0.5, stardens * 0.5, stardens * 0.5, 0
+		texGen equatorialSky
+	}
+*/
+
+
+
+}
+
+material penta/skydome_clouds {
+
+	noShadows
+	noSelfShadow
+	noAtmosphere
+
+
+	//Add high altitude clouds
+	{
+		if clouddens1
+		blend add
+		halfSphereMap atmosphere/high_heavy.tga
+		color clouddens1, clouddens1, clouddens1, 0
+		texGen skybox
+	}
+/*
+	//Add medium clouds
+	{
+		blend GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA
+		vertexProgram litclouds.cg
+		vertexParm 		0	cloudscale, cloudbias
+		vertexParm		1	sun_x, sun_y, sun_z
+		vertexParm		2	cloud_r, cloud_g, cloud_b, clouddens2
+		vertexParm		3	cloudhighlight_r, cloudhighlight_g, cloudhighlight_b
+		fragmentProgram litclouds.cg
+		fragmentMap		0	halfSphereMap atmosphere/cloudy.tga
+		fragmentMap		1	_skyGradient
+	}
+*/
+	/*{
+		//blend blend
+		vertexProgram	warclouds3.cg
+		vertexParm 		0		time*0.001
+
+
+		fragmentProgram warclouds3.cg
+		fragmentMap		0		env/clouds/mask.tga
+		fragmentMap		1		env/clouds/altostratus01.tga
+	}*/
+
+	/*{
+		blend add
+		vertexProgram spherical_texgen.cg
+		vertexParm 		0		time*0.005
+		fragmentProgram spherical_texgen.cg
+		fragmentMap		0	atmosphere/cloudhigh2.tga
+	}*/
+
+	/*{
+		blend add
+		halfSphereMap atmosphere/cloudhigh2.tga
+		highquality
+		texGen skybox
+		rotate time*0.005
+		vertexColor
+	}*/
+}
+
+/*
+material penta/skydome_clouds {
+
+	noShadows
+	noSelfShadow
+
+	{
+		vertexParm 		0		time*0.001
+		vertexParm		1		0, 0, 1
+		blend blend
+		vertexProgram	warclouds2.vfp
+//		pixelParm		0		1, 1, 1
+//		pixelParm		1		0.5, 0.5, 0.5
+		fragmentProgram	warclouds2.vfp
+		fragmentMap		0		add(scale(heightmap(env/clouds/altostratus01.tga, 20), 1.0, 1.0, 1.0, 0.0),
+									scale(env/clouds/altostratus01.tga, 0.0, 0.0, 0.0, 1.0))
+		fragmentMap		1		_normalCubeMap
+		fragmentMap		2		env/clouds/altostratus01.tga
+		fragmentMap		3		env/clouds/mask.tga
+	}
+}
+*/
+/*
+material penta/skydome_clouds {
+
+	noShadows
+	noSelfShadow
+
+	{
+		blend blend
+		vertexProgram	warclouds.vfp
+		vertexParm	0	time*0.01
+		fragmentProgram	warclouds.vfp
+		fragmentMap		0		env/clouds/altostratus01.tga
+		fragmentMap		1		env/clouds/altostratus01.tga
+		fragmentMap		2		env/clouds/mask.tga
+	}
+}
+*/
+
+/*
+material penta/skydome_clouds {
+
+	noShadows
+	noSelfShadow
+
+	//Cirrus
+	{
+		blend cloudhigh
+		map env/clouds/cirrus01.tga
+		color cirrus*10*(1-fog), cirrus*10*(1-fog), cirrus*10*(1-fog), cirrus*10*(1-fog)
+	}
+
+	//Cirrostratus
+	{
+		scroll time*wind_x*0.1, time*wind_y*0.1
+		blend cloudhigh
+		map env/clouds/cirrostratus01.tga
+		color cirrostratus*10*(1-fog), cirrostratus*10*(1-fog), cirrostratus*10*(1-fog), cirrostratus*10*(1-fog)
+	}
+
+	//Alto stratus clouds
+	{
+		if (altostratus > 0.5)
+		translate 0.5, 0.5
+		scroll time*wind_x*0.8, time*wind_y*0.8
+		blend cloudmedium
+		map env/clouds/altostratus01.tga
+		color 1.0, 1.0, 1.0, (1-fog)
+	}
+
+	//Alto stratus clouds
+	{
+		if (altostratus > 0.75)
+		scroll time*wind_x*0.5, time*wind_y*0.5
+		blend cloudmedium
+		map Scale( env/clouds/altostratus01.tga, 0.8, 0.8, 0.8, 1.0)
+		color 1.0, 1.0, 1.0, (1-fog)*0.75
+	}
+
+	//Stratocumulus
+	{
+		//if (status > 0.5)
+		translate 0.5, 0.5
+		scroll time*wind_x*0.25, time*wind_y*0.25
+		blend cloudmedium
+		map env/clouds/stratocumulus01.tga
+		color 1.0, 1.0, 1.0, stratocumulus*(1-fog)
+	}
+}
+
+*/
+
+//Single cloud puff of a particle cloud
+material penta/cloud {
+
+	noShadows
+	noSelfShadow
+
+	{
+		if 0
+		blend blend
+
+		//vertexProgram	cloud_blob.cg
+		//vertexParm	0 1
+		//fragmentProgram	cloud_blob.cg
+		//fragmentMap 0	env/clouds/cumulus02.tga
+		color cloudhighlight_r, cloudhighlight_g, cloudhighlight_b, clouddens3
+		map env/clouds/cumulus02.tga
+	}
+}
+
+/*
+material penta/skydome_scaletest {
+
+	//Basic sky color
+	{
+		blend skycolor
+		map _white
+	}
+
+	//Add stars
+	{
+		color stardens, stardens, stardens, 1.0
+		blend add
+		texGen skybox
+		//vertexcolor
+		map _starCubeMap
+	}
+
+	//Cirrus
+	{
+		//scroll 0, time*0.001
+		scale 0.00005, 0.00005
+		blend cloudhigh
+		map env/clouds/cirrus01.tga
+		color cirrus*10*(1-fog), cirrus*10*(1-fog), cirrus*10*(1-fog), cirrus*10*(1-fog)
+	}
+
+	//Cirrostratus
+	{
+		scroll 0, time*0.001
+		scale 0.00005, 0.00005
+		blend cloudhigh
+		map env/clouds/cirrostratus01.tga
+		color cirrostratus*10*(1-fog), cirrostratus*10*(1-fog), cirrostratus*10*(1-fog), cirrostratus*10*(1-fog)
+	}
+
+	//Alto stratus clouds
+	{
+		blend cloudmedium
+		//blend blend
+		scale 0.00005, 0.00005
+		map Scale( env/clouds/altostratus01.tga, 1.2, 1.2, 1.2, 1.0)
+		color 1.0, 1.0, 1.0, altostratus*(1-fog)
+	}
+
+}*/
+
+
+
+material penta/glare
+{
+	{
+		//blend add
+		program	glare.vfp
+		vertexParm		0		1/1024.0;
+		vertexParm		1		0.9, 0.6, 0.9			// target full intensity RGB
+		fragmentMap		0		_currentRender
+	}
+}
+
+/**
+	Post process material that shows the destination alpha channel.
+	(Fixed the engine so postprocess alpha works!)`
+*/
+material penta/showalpha
+{
+	sort postprocess
+	translucent
+	{
+		program	postprocess/showAlpha
+	}
+}
+
+material penta_showalpha
+{
+	sort postprocess
+	translucent
+	{
+		program	postprocess/showAlpha
+	}
+}
+
+material penta/showdepth
+{
+	{
+		//blend GL_SRC_ALPHA, GL_ZERO
+		vertexProgram	post_showdepth.cg
+		fragmentProgram	post_showdepth.cg
+		vertexParmBinding	0		currentRenderPow2Correction
+		fragmentParmBinding	1		proj2View
+		fragmentParmBinding	2		pos2View
+		fragmentMap		0		_currentDepth
+		fragmentMap		1		_currentRender
+		//map _currentDepth
+	}
+	sort postprocess
+}
+
+material penta/noglare
+{
+	{
+		//blend GL_ZERO, GL_SRC_ALPHA
+		maskColor
+		maskDepth
+		map _default
+		//alpha 0.1
+	}
+	
+	translucent
+}
+
+material system/noglare
+{
+	sort postprocess
+	{
+		blend GL_ZERO, GL_SRC_ALPHA
+		maskColor
+		alpha 0.1
+		map _default
+	}
+	
+	translucent
+}
+
+material penta/grasstest {
+	twoSided
+	{
+		blend diffusemap
+		map textures/foliage/greengrass001_d.tga
+		//scale 0.125, -0.25
+		alphaTest 0.5
+	}
+	{
+		blend bumpmap
+		map textures/foliage/greengrass001_local.tga
+		//scale 0.125, -0.25
+	}
+}
+
+material penta/imposter {
+	//noShadow
+	//twoSided
+
+	{
+		blend diffusemap
+		map models/mapobjects/tree/tree_surf_packed.tga
+		scale 1, 0.5
+		alphaTest 0.5
+	}
+	//{
+	//	blend bumpmap
+	//	map models/mapobjects/tree/tree_surf_packed.tga
+		//scale 1, 0.5
+		//translate 0, 1
+	//}
+}
+
+
+material penta/raintest {
+	{
+		blend add
+		rotate 180
+		map textures/particles/raintest.tga
+		maskalpha
+	}
+
+}
+
+material penta/test_1 {
+
+	//discrete
+	//noshadows
+	//twosided
+	//diffusemap	_black
+	nonsolid
+
+	{
+		//blend blend
+		vertexProgram	water.vfp
+		fragmentProgram	water.vfp
+		vertexParmBinding	0	mvptMatrix_0
+		vertexParmBinding	1	mvptMatrix_1
+		vertexParmBinding	2	mvptMatrix_2
+		vertexParmBinding	3	mvptMatrix_3
+		vertexParmBinding	4	viewOrigin
+		vertexParmBinding	5	currentRenderPow2Correction
+		vertexParm		6	time * 0.05
+		fragmentMap	0	mirrorRender
+		fragmentMap	1	textures/penta/watertest.tga
+		fragmentMap	2	_currentRender
+		maskalpha
+	}
+}
+
+material penta/test_2 {
+
+	//discrete
+	//noshadows
+	//twosided
+	//diffusemap	_black
+
+	{
+		//blend blend
+		vertexProgram	water_cube.vfp
+		fragmentProgram	water_cube.vfp
+		vertexParmBinding	0	mvptMatrix_0
+		vertexParmBinding	1	mvptMatrix_1
+		vertexParmBinding	2	mvptMatrix_2
+		vertexParmBinding	3	mvptMatrix_3
+		vertexParmBinding	4	viewOrigin
+		vertexParmBinding	5	currentRenderPow2Correction
+		vertexParm		6	time * 0.1
+		fragmentMap	0	cubeMap env/watertest
+		fragmentMap	1	textures/penta/watertest.tga
+		fragmentMap	2	_currentRender
+		maskalpha
+	}
+}
+
+material penta/watertest {
+	nonsolid
+	{
+		useTemplate material/water_reflect<
+					"textures/penta/watertest.tga",
+					"time * 0.05",
+					"0",
+					"0.6",
+					"0.7",
+					"0.7",
+					"0.04",
+					"6"
+		>
+
+	}
+}
+
+material penta/watertest_old {
+
+	//discrete
+	//noshadows
+	//twosided
+	//diffusemap	_black
+	nonsolid
+
+	{
+		//blend blend
+		vertexProgram	water/gerstner_reflect.vfp
+		fragmentProgram	water/gerstner_reflect.vfp
+		vertexParmBinding	0	mvptMatrix_0
+		vertexParmBinding	1	mvptMatrix_1
+		vertexParmBinding	2	mvptMatrix_2
+		vertexParmBinding	3	mvptMatrix_3
+		vertexParmBinding	4	viewOrigin
+		vertexParmBinding	5	currentRenderPow2Correction
+		vertexParm		6	time * 0.05, time * 0.1, time * 0.03, time * 0.07
+
+		vertexParmBinding	7	waveDirX
+		vertexParmBinding	8	waveDirY
+		vertexParmBinding	9	wavePhase
+		vertexParmBinding	10	waveFrequency
+		vertexParmBinding	11	waveAmplitude
+		vertexParmBinding	12	waveDirXQ
+		vertexParmBinding	13	waveDirYQ
+		vertexParmBinding	14	waveDirXXQW
+		vertexParmBinding	15	waveDirYYQW
+		vertexParmBinding	16	waveDirXYQW
+		vertexParmBinding	17	waveDirXW
+		vertexParmBinding	18	waveDirYW
+		vertexParmBinding	19	waveQW
+
+
+		fragmentParm	0	1
+		fragmentParm	1	0.5, 0.7, 0.3, 1
+		fragmentParm	2	0.05, 0.05, 0, 0
+
+		fragmentMap	0	mirrorRender
+		fragmentMap	1	textures/penta/watertest.tga
+		fragmentMap	2	_currentRender
+		//maskalpha
+	}
+	//sort earlyPostProcess
+	translucent
+}
+
+material penta/lightbeam {
+	{
+		map textures/penta/lightbeam.tga
+		blend add
+		//color parm0, parm1, parm2, 1
+		rgb 0.5
+		alpha 0.7
+		//maskcolor
+	}
+}
+
+material penta/litsmoke {
+
+
+	translucent
+	discrete
+	nonsolid
+	noimpact
+	{
+		blend blend
+		maskAlpha
+		map _white
+	}
+
+
+}
+
+material penta/flame_ember01
+{
+	//sort 2
+	//noAtmosphere
+	qer_editorimage textures/particles/flash/ember_mid.tga
+	{
+		blend add
+		color 0.5, 0.5, 0.5, 0.5
+		map clamp textures/particles/flash/ember_mid.tga
+		//alpha 0
+		maskalpha
+		vertexcolor
+	}
+}
+
+material penta/flame_ember01_burn
+{
+	//sort 2
+	//noAtmosphere
+	qer_editorimage textures/particles/flash/ember_mid.tga
+	{
+		blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR
+		map clamp textures/particles/flash/ember_mid.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+material penta/depthsprites
+{
+	qer_editorimage models/penta/sphere_depth.tga
+	{
+		blend blend
+		program depth_sprite.cg
+		vertexParm 0 120
+		fragmentMap 0 textures/particles/barrelpoof.tga
+		fragmentMap 2 makealpha(textures/particles/barrelpoof.tga)
+
+		translate time, 5
+	}
+
+	translucent
+}
+
+
+material penta/debris_ember
+{
+	{
+		blend blend
+		map clamp textures/particles/debris/debris1.tga
+		vertexcolor
+		rotate time * 3
+	}
+}
+
+material penta/debris_smoke
+{
+	twoSided
+	{
+		blend add
+		map textures/particles/flash/flameball01.tga
+		vertexcolor
+	}
+	{
+		blend blend
+		map makealpha(textures/particles/barrelpoof.tga)
+		vertexcolor
+	}
+
+
+
+}
+
+material penta/generic_smoke
+{
+	{
+		blend blend
+		vertexcolor
+		map textures/particles/barrelpoof.tga
+	}
+}
+
+material penta/smoke_trail
+{
+	twosided
+
+	{
+		blend blend
+		vertexcolor
+		map makealpha(textures/particles/smoke/smoke_trail02.tga)
+	}
+	{
+		blend add
+		vertexcolor
+		map textures/particles/smoke/flame_trail02.tga
+	}
+}
+
+material penta/black_hole
+{
+	twosided
+
+	{
+		vertexProgram	heatHaze.vfp
+		vertexParm		0		0 , 0
+		vertexParm		1		20	// magnitude of the distortion
+		fragmentProgram	heatHaze.vfp
+		fragmentMap		0		_currentRender
+		fragmentMap		1		textures/particles/blackhole_local.tga
+		maskAlpha
+	}
+	/*{
+		blend filter
+		map textures/particles/blackhole_filter.tga
+		rotate time * -2
+		clamp
+	}*/
+	{
+		blend add
+		map textures/particles/blackhole_luma.tga
+		rotate time * 3
+		zeroclamp
+	}
+}
+
+material penta/railgun_spark2
+{
+	twosided
+	{
+		blend add
+		map textures/particles/vpring1_alpha.tga
+		zeroclamp
+		vertexcolor
+	}
+}
+
+material penta/railgun_bolt3
+{
+	twosided
+	{
+		vertexProgram	heatHaze.vfp
+		vertexParm		0		0 , 0
+		vertexParm		1		20	// magnitude of the distortion
+		fragmentProgram	heatHaze.vfp
+		fragmentMap		0		_currentRender
+		fragmentMap		1		textures/particles/railslug_local.tga
+		maskAlpha
+	}
+	/*{
+		blend filter
+		map textures/particles/railslug_filter.tga
+		clamp
+	}*/
+	/*{
+		blend add
+		maskalpha
+		map textures/effects/weapons/muzzleflash_s2a.tga
+		vertexcolor
+		scale -1, 1
+		useTemplate templates/materials/animate< 8, 0.05 >
+	}*/
+}
+
+material penta/railgun_trail
+{
+	twosided
+	{
+		blend add
+		map textures/particles/railslug_trail.tga
+		clamp
+		vertexcolor
+	}
+}
+
+material penta/bolt
+{
+	//twosided
+	/*{
+		blend blend
+		//maskalpha
+		//vertexprogram plasma.cg
+		//fragmentprogram plasma.cg
+
+		//fragmentMap 0 textures/sfx/noise.tga
+		//fragmentMap 2 clamp textures/sfx/plasmalookup2.tga
+
+		//vertexParm 0 time
+		//fragmentParm 0 time
+
+		map textures/sfx/plasmabolt.tga
+	}*/
+}
+
+material particles/penta/landfallheathaze {
+	noshadows
+	translucent
+	nonsolid
+	sort postprocess
+	/*{
+		vertexProgram	heatHazeWithVertex.vfp
+		vertexParm		0		0 , 0
+		vertexParm		1		10	// magnitude of the distortion
+		fragmentProgram	heatHazeWithVertex.vfp
+		fragmentMap		0		_currentRender
+		fragmentMap		1		textures/particles/smoke/smokenormal.tga
+		maskAlpha
+	}*/
+	/*{
+		map _white
+		vertexcolor
+	}*/
+}
+
+material particles/penta/landfallflame2
+{
+	noAtmosphere
+	qer_editorimage textures/particles/flash/ember_mid.tga
+	{
+		blend add
+		color 0.5, 0.5, 0.5, 0.5
+		map clamp textures/particles/flash/ember_mid.tga
+
+		maskalpha
+		vertexcolor
+		//useTemplate templates/materials/animate_rows< 16, 2, 1>
+	}
+}
+
+material penta/flash {
+	{
+
+		blend add
+		vertexcolor
+		map textures/particles/vpring1_alpha.tga
+		//maskalpha
+		alpha 0.01
+	}
+}
+
+material penta/halo {
+	{
+		blend add
+		vertexcolor
+		map textures/particles/halo.tga
+		maskalpha
+	}
+}
+
+material penta/halo2 {
+	qer_editorimage textures/particles/halo.tga
+	{
+		blend add
+		vertexcolor
+		map textures/particles/halo.tga
+	}
+}
+
+material penta/landfall_cloud {
+	qer_editorimage textures/particles/smoke/smokepuff.tga
+	{
+		blend		blend
+		map			makealpha( textures/particles/smoke/smokepuff.tga )
+		vertexcolor
+	}
+}
+
+material penta/landtile {
+	//bumpmap _flat
+	{
+		map commandmaps/canyon.tga
+		red sun_r
+		green sun_g
+		blue sun_b
+	}
+}
+
+material penta/frametest {
+	{
+		map textures/penta/frametest.tga
+		vertexcolor
+		blend blend
+	}
+}
+
+material penta/raindrop {
+	{
+		blend blend
+		cullFace none
+		map alphazeroclamp textures/particles/raindrop.tga
+		
+	}
+}
+
+
+material penta/raindrop2 {
+	qer_editorimage textures/particles/raindrop2.tga
+	nonsolid
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide penta/raindrop2
+
+{
+	program	water/simple_cube_alpha
+	diffuseMap alphazeroclamp textures/particles/raindrop2.tga
+	bumpMap alphazeroclamp textures/particles/raindrop2_local.tga
+	map clamp highquality textures/penta/specular.tga
+	environmentCubeMap cubemap env/valley
+	water_tint	  1, 1, 1
+	water_distortion  1, 0.1, 1, 0	
+	water_fresnel	  20
+	water_glare	  1
+	water_offset 0, 0, 0, 0 
+	water_desat 0.7
+}
+}
+
+material penta/snowflake {
+	{
+		blend blend
+		map alphazeroclamp textures/particles/snowflake.tga
+	}
+}
+
+material penta/snowflake2 {
+	{
+		blend blend
+		map alphazeroclamp textures/particles/snowflake2.tga
+	}
+}
+
+material penta/snowflake3 {
+	{
+		blend blend
+		map alphazeroclamp textures/particles/snowflake3.tga
+	}
+}
+template simpleHeatMaterial {
+	parameters	<
+		temperature,
+		noisescale
+	>
+
+	text {
+		noatmosphere
+		{
+			//program heatsight/simple
+			//parameters temperature, noisescale
+			map _white
+			rgb temperature
+		}
+	}
+}
+
+material penta/heat_sight
+{
+	useTemplate simpleHeatMaterial< 1.5, 0.01 >
+}
+
+material penta/heat_sight_test
+{
+	{
+		//blend blend
+		map	textures/base_wall/darkconcrete_b.tga
+	}
+}
+
+
+
+
+material penta/heat_sight_atmosphere
+{
+	{
+		program heatsight/atmosphere
+	}
+}
+
+material penta/fade_edge_test {
+	{
+		blend add
+		program trivialEdgeFade
+		map textures/penta/oceangradient.tga
+	}
+}
+/*
+material penta/softtest {
+	{
+		blend blend
+		program soft_particles
+		map		makealpha (textures/particles/dustcloud_02.tga)
+		mask	_currentDepth
+		vertexcolor
+	}
+}
+*/
+
+material penta/inverse {
+	{
+		program sfx/maskedInvert
+		blend GL_ONE_MINUS_DST_COLOR, GL_SRC_ALPHA
+		map makealpha (textures/particles/dustcloud_02.tga)
+		maskalpha
+		vertexcolor
+	}
+}

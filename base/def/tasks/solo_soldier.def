@@ -1,0 +1,44 @@
+
+#include "task_includes.include"
+
+templates/tasks/solo_task( soldier_destroy_secondary, task_destroy_objective )
+	data {
+		"require_eligible1"				"ability_soldier"
+		"waypoint"						"1"
+		"priority"						"-1"
+		
+		"tt_task"						"soldier_destroy"
+		"tooltip_ability"				"soldier"
+		
+		templates/tasks/solo_task/xp_bonus_mission
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/mis_soldier"
+		"mtr_waypoint"					"hud/icons/missionsystem/mis_soldier"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/mis_sml"
+		"range"							"2048"
+	}
+}
+
+
+templates/tasks/solo_task_objective( soldier_destroy_objective, task_destroy_objective_gdf )
+	data {
+		"require_eligible1"				"ability_soldier"
+		"waypoint"						"1"
+		"team"							"gdf"
+		
+		"tt_task"						"tooltip_lookat_objective"
+		"tooltip_ability"				"soldier"
+		
+		templates/tasks/solo_objective/locstr/xp
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/obj_destroy"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_destroy"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+	}
+}

@@ -1,0 +1,65 @@
+
+#include "task_includes.include"
+
+templates/tasks/solo_task( aggressor_destroy_secondary, task_destroy_objective )
+	data {
+		"require_eligible1"				"ability_aggressor"
+		"waypoint"						"1"
+		"priority"						"-1"
+		
+		"tt_task"						"aggressor_destroy"
+		"tooltip_ability"				"aggressor"
+		
+		templates/tasks/solo_task/xp_bonus_mission
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/mis_soldier"
+		"mtr_waypoint"					"hud/icons/missionsystem/mis_soldier"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/mis_sml"
+		"range"							"2048"
+	}
+}
+
+
+templates/tasks/solo_task_objective( aggressor_destroy_objective, task_destroy_objective_strogg )
+	data {
+		"require_eligible1"				"ability_aggressor"
+		"waypoint"						"1"
+		"team"							"strogg"
+		
+		"tt_task"						"tooltip_lookat_objective"
+		
+		templates/tasks/solo_objective/locstr/xp
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/obj_destroy"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_destroy"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+	}
+}
+
+
+templates/tasks/solo_task( aggressor_destroy_tower, task_dummy )
+	data {
+		"require_eligible1"				"ability_aggressor"
+		"waypoint"						"1"
+		"priority"						"5"
+		
+		"tt_task"						"aggressor_destroy"
+		"tooltip_ability"				"aggressor"
+		
+		templates/tasks/solo_task/xp_bonus_mission
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/mis_soldier"
+		"mtr_waypoint"					"hud/icons/missionsystem/mis_soldier"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/mis_sml"
+		"range"							"2048"
+	}
+}

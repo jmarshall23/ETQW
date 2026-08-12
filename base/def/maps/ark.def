@@ -1,0 +1,42 @@
+// ----------------------------------------------------
+// Ark
+// ----------------------------------------------------
+
+entityDef gameplay_ark_bridge_stage1 {
+	"inherit"						"constructible_base"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"Strogg Bridge Stage 1"
+	"editor_var health"				"Health of the Construction, 0 is nonbreakable. Default is 500"
+	"editor_var construct_time"		"Time in seconds to construct. Default is 10"
+	"editor_var fizzle_time"		"Time in seconds for an unfinished construction to fade out. Default 30s"
+	"editor_var skin_construct"		"Skin used during construction. Default is deployEffect"
+
+	"team"							"strogg"
+	"health"						"500"
+
+	"model"							"models/mapobjects/bridge/ark_strogg_deployable_bridge_stage1.lwo"
+	"cm_model"						"models/mapobjects/bridge/ark_strogg_deployable_bridge_stage1.lwo"
+
+	"collection_he"					"he"
+}
+
+entityDef gameplay_ark_bridge_stage2 {
+	"inherit"						"constructible_base"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"Strogg Bridge Stage 2"
+	"editor_var health"				"Health of the Construction, 0 is nonbreakable."
+	"editor_var construct_time"		"Time in seconds to construct. Default is 10"
+	"editor_var fizzle_time"		"Time in seconds for an unfinished construction to fade out. Default 30s"
+	"editor_var skin_construct"		"Skin used during construction. Default is deployEffect"
+
+	"team"							"strogg"
+
+	"model"							"models/mapobjects/bridge/ark_strogg_deployable_bridge_stage1.lwo"
+	"cm_model"						"models/mapobjects/bridge/ark_strogg_deployable_bridge_stage1.lwo"
+}

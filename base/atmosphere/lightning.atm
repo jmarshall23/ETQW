@@ -1,0 +1,113 @@
+atmosphere lightning {
+	sunMaterial "atmospheres/lights/lightning"
+	sunDir ( -0.0955250561 -0.1446766853 0.9848572016 )
+	sunColor ( 0.0313725509 0.0470588244 0.0784313753 )
+	sunHaloScale 0
+	sunHaloBias -0.0400000215
+	sunSpriteMaterial "atmospheres/sprites/moon_full"
+	sunSpriteSize 14474
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 0.8199999928
+		contrast 1
+		glareParms ( 0.8199999928 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 359
+	fogHeightHalf 6830
+	fogHeightOffset 6627
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "lightning"
+	skyGradientImage "atmosphere/skies/ph_night"
+	farClip 0
+	isNight 1
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 54
+	windStrength 100
+	windStrengthDev 32
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/star" {
+		style old
+		parms 12 ( 1 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/bumpmapped" {
+		style old
+		parms 12 ( 0.375 0.8050000072 0.0500000007 0.6000000238 2.4000000954 0.0049999999 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/lightning" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 1
+		maxParticles 1000
+		heightMin 50
+		heightMax 250
+		weightMin 1.5
+		weightMax 2.5
+		timeMin 0
+		timeMax 500
+		windScale 1
+		gustWindScale 2
+		fallMin 700
+		fallMax 900
+		tumbleStrength 0
+		precipitationDistance 1000
+		material "precipitation/raindrop01"
+	}
+}
+
+
+
+
+
+ambientCubemap lightning {
+	ambientLight {
+		color 0.0509803928 0.0745098069 0.0862745121
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.0588235296 0.0627451017 0.0784313753
+		direction 0.7537921071 0.367648989 0.544639051
+		name "Light1"
+	}
+	ambientLight {
+		color 0.0941176489 0.0862745121 0.1058823541
+		direction -0.7198463082 -0.6040228009 0.342020154
+		name "Light2"
+	}
+	ambientLight {
+		color 0.0470588244 0.0666666701 0.0862745121
+		direction -0.336755693 0.877278626 0.342020154
+		name "Light3"
+	}
+	ambientLight {
+		color 0.0823529437 0.0745098069 0.0862745121
+		direction -0.1026079655 -0.9762497544 0.1908090115
+		name "Light4"
+	}
+	ambientLight {
+		color 0.0588235296 0.0549019612 0.0666666701
+		direction 0.0000000243 0 -1
+		name "Light5"
+	}
+	ambientLight {
+		color 0.0549019612 0.0666666701 0.0784313753
+		direction 0.3822074234 0.8584519029 0.342020154
+		name "Light6"
+	}
+}

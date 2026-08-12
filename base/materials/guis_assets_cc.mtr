@@ -1,0 +1,374 @@
+material guis/assets/cc/interior1alt
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior1alt"
+		
+	}
+}
+material guis/assets/cc/interior6alt
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior6alt"
+		
+	}
+}
+material guis/assets/cc/interior4alt
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior4alt"
+		
+	}
+}
+material guis/assets/cc/interior5_btn1
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior5_btn1"
+		
+	}
+}
+material guis/assets/cc/interior5_btn2
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior5_btn2"
+		
+	}
+}
+material guis/assets/cc/interior3red
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior3_red"
+		
+	}
+}
+material guis/assets/cc/interior3green
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior3_green"
+		
+	}
+}
+
+material guis/assets/cc/button_wide
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/button_wide"
+		
+	}
+}
+
+material guis/assets/cc/button_square
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/button_square"
+		
+	}
+}
+
+
+material guis/assets/cc/interior1
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior1"
+		
+	}
+}
+
+material guis/assets/cc/interior2
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior2"
+		
+	}
+}
+
+material guis/assets/cc/interior3
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior3"
+		
+	}
+}
+
+material guis/assets/cc/interior4
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior4"
+		
+	}
+}
+
+material guis/assets/cc/interior5
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior5"
+		
+	}
+}
+
+material guis/assets/cc/interior6
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior6"
+		
+	}
+}
+
+material guis/assets/cc/interior7
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior7"
+		
+	}
+}
+
+material guis/assets/cc/interior8
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior8"
+		
+	}
+}
+
+material guis/assets/cc/interior9
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior9"
+		
+	}
+}
+
+material guis/assets/cc/interior10
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior10"
+		
+	}
+}
+
+material guis/assets/cc/interior11
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior11"
+		
+	}
+}
+
+material guis/assets/cc/interior12
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior12"
+		
+	}
+}
+
+material guis/assets/cc/interior13
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior13"
+		
+	}
+}
+
+material guis/assets/cc/interior14
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior14"
+		
+	}
+}
+
+material guis/assets/cc/interior15
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior15"
+		
+	}
+}
+
+material guis/assets/cc/interior16
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior16"
+		
+	}
+}
+
+material guis/assets/cc/interior17
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior17"
+		
+	}
+}
+
+material guis/assets/cc/interior18
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior18"
+		
+	}
+}
+
+material guis/assets/cc/interior19
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior19"
+		
+	}
+}
+
+material guis/assets/cc/interior20
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/cc/interior20"
+		
+	}
+}
+
+
+material guis/assets/cc/dots_1
+{
+	sort postProcess
+	{
+		blend add
+		colored
+		map "guis/assets/cc/dots_1"
+	}
+}
+
+material guis/assets/cc/dots_2
+{
+	sort postProcess
+	{
+		blend add
+		colored
+		map "guis/assets/cc/dots_2"
+	}
+}
+
+material guis/assets/cc/dots_3
+{
+	sort postProcess
+	{
+		blend add
+		colored
+		map "guis/assets/cc/dots_3"
+	}
+}
+
+material guis/assets/cc/dots_4
+{
+	sort postProcess
+	{
+		blend add
+		colored
+		map "guis/assets/cc/dots_4"
+	}
+}
+
+material guis/assets/cc/dots_5
+{
+	sort postProcess
+	{
+		blend add
+		colored
+		map "guis/assets/cc/dots_5"
+	}
+}
+
+material guis/assets/cc/dots_6
+{
+	sort postProcess
+	{
+		blend add
+		colored
+		map "guis/assets/cc/dots_6"
+	}
+}

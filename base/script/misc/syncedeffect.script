@@ -1,0 +1,105 @@
+
+object synced_effect {
+	void		syncFields();
+	void		preinit();
+	void		init();
+	
+	void		vSetActive( boolean a );	
+	void		OnPlayingChanged();
+	
+	void		Play();
+	void		Stop();
+	
+	boolean		wasPlaying;
+	boolean		playing;
+	boolean		loop;
+	boolean		noDirection;
+	boolean		renderBounds;
+	vector		dir;
+	float		maxVisDist;
+	
+	handle		effectHandle;
+}
+
+void synced_effect::preinit() {
+	playing		= getIntKey( "start_on" );
+	loop		= getIntKey( "loop" );
+	noDirection	= getIntKey( "no_direction" );
+	dir			= getVectorKeyWithDefault( "direction", '0 0 1' );
+	maxVisDist  = getFloatKey( "maxVisDist" );
+	renderBounds = getIntKey( "renderBounds" );
+	
+	wasPlaying = playing;
+	effectHandle = 0;
+}
+
+void synced_effect::init() {
+	if ( playing ) {
+		Play();
+	} else {
+		Stop();
+	}
+}
+
+void synced_effect::syncFields() {
+	syncBroadcast( "playing" );
+	syncCallback( "playing", "OnPlayingChanged" );
+}
+
+void synced_effect::vSetActive( boolean a ) {
+	if ( sys.isClient() ) {
+		return;
+	}
+	
+	if ( loop ) {
+		// if its looping then it turns the effect on and off
+		playing = a;
+		OnPlayingChanged();
+	} else {
+		// if its NOT looping then it just fires the effect
+		playing = !playing;
+		OnPlayingChanged();
+	}
+}
+
+void synced_effect::OnPlayingChanged() {
+	if ( wasPlaying == playing ) {
+		return;
+	}
+
+	if ( loop ) {
+		if ( playing ) {
+			Play();
+		} else {
+			Stop();
+		}
+	} else {
+		Play();
+	}
+}
+
+void synced_effect::Play() {
+	if ( !effectHandle ) {
+		if ( !noDirection ) {
+			effectHandle = playOriginEffectMaxVisDist( "fx", "", getWorldOrigin(), dir, loop, maxVisDist, 1 );
+		} else {
+			effectHandle = playEffectMaxVisDist( "fx", "", loop, maxVisDist, 1 );
+		}
+		if ( effectHandle ) {
+			setEffectRenderBounds( effectHandle, renderBounds );
+		}
+		if ( !loop ) {
+			effectHandle = 0;
+		}
+		wasPlaying = playing;
+	}
+}
+
+void synced_effect::Stop() {
+	if ( effectHandle ) {
+		stopEffectHandle( effectHandle );
+		effectHandle = 0;
+	}
+
+	wasPlaying = playing;
+}

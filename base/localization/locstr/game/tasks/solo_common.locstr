@@ -1,0 +1,31 @@
+locString game/tasks/waypoint/title {
+	text "#str_01009005"
+}
+
+locString game/tasks/pickup_player/title {
+	text "#str_01009008"
+}
+
+locString game/tasks/need_passenger/title {
+	text "#str_01009009"
+}
+
+locString game/tasks/need_pilot/title {
+	text "#str_01009010"
+}
+
+locString game/tasks/need_gunner/title {
+	text "#str_01009011"
+}
+
+locString game/tasks/empty {
+	text "#str_01009013"
+}
+
+locString game/tasks/min {
+	text "#str_01005120"
+}
+
+locString game/tasks/sec {
+	text "#str_01005130"
+}

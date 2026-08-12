@@ -1,0 +1,1330 @@
+atmosphere temperate01 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.2074612379 -0.347402662 0.9144787788 )
+	sunColor ( 0.5960784554 0.5803921819 0.5372549295 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 12600
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 8170
+	fogHeightHalf 1569
+	fogHeightOffset 5647
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate01"
+	skyGradientImage "atmosphere/skies/ph_day4"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_01" {
+		style old
+		parms 12 ( 0.7699999809 1 1 1 0.0015 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_theme_sunset {
+	sunMaterial "atmospheres/lights/scrolling_clouds_temperate"
+	sunDir ( 0.5309290886 -0.5084219575 0.6779538989 )
+	sunColor ( 0.8237062693 0.7641194463 0.6391565204 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 25439
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 0.9215686917 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.6899999976 1.0399999619 0.1700000018 0.6299999952 )
+		glareBases ( 0.5899999738 0.2899999917 0 0 )
+	}
+	fogDistHalf 2320
+	fogHeightHalf 2026
+	fogHeightOffset 6549
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_theme_sunset"
+	skyGradientImage "atmosphere/skies/ph_sunset6"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 43
+	windAngleDev 90
+	windStrength 51
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6999999881 0.7686269879 0.7137259841 0.611765027 0.0005 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/tiledclouds" {
+		style old
+		parms 12 ( 0.400000006 0.4313730001 0.3921569884 0.3882350028 0.0002 6 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sundisc" {
+		style old
+		parms 12 ( 0.1607840061 0.1725489944 0.2784309983 0.3400000036 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_new {
+	sunMaterial "atmospheres/lights/scrolling_clouds01"
+	sunDir ( 0.2074612379 -0.347402662 0.9144787788 )
+	sunColor ( 0.6784313917 0.6588235497 0.611764729 )
+	sunHaloScale 0.0299999993
+	sunHaloBias -0.3400000036
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 12600
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.8588235974 0.8588235974 0.8588235974 )
+		saturation 0.9499999881
+		contrast 1
+		glareParms ( 1.2400000095 0.3100000024 0.2299999893 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 6797
+	fogHeightHalf 7451
+	fogHeightOffset 8627
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_new"
+	skyGradientImage "atmosphere/skies/day_cloudy"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 91
+	windAngleDev 46
+	windStrength 117
+	windStrengthDev 22
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.5950000286 0.3607839942 0.3490200043 0.3294120133 0.0015 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_theme {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.3190973699 -0.5231723785 0.7902325988 )
+	sunColor ( 0.8466387391 0.7937876582 0.6809750199 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 12600
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.7099999785 1.0599999428 0 1 )
+		glareBases ( 0.2800000012 0.2899999917 0 0 )
+	}
+	fogDistHalf 2320
+	fogHeightHalf 2549
+	fogHeightOffset 6549
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_theme"
+	skyGradientImage "atmosphere/bluesky02"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_theme2 {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( 0.3190973699 -0.5231723785 0.7902325988 )
+	sunColor ( 0.8466387391 0.7937876582 0.6809750199 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 12600
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 0.9215686917 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.6899999976 1.0399999619 0.1700000018 0.6299999952 )
+		glareBases ( 0.5899999738 0.2899999917 0 0 )
+	}
+	fogDistHalf 2320
+	fogHeightHalf 2026
+	fogHeightOffset 6549
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_theme2"
+	skyGradientImage "atmosphere/temperate_theme"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 24
+	windStrength 63
+	windStrengthDev 10
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6999999881 0.356862992 0.3254899979 0.2862749994 0.001 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_01" {
+		style old
+		parms 12 ( 0.6999999881 0.4901959896 0.4156860113 0.3058820069 0.0005 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sundisc" {
+		style old
+		parms 12 ( 0.517647028 0.5294119716 0.494118005 0.3849999905 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_theme_undertrees {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( 0.3190973699 -0.5231723785 0.7902325988 )
+	sunColor ( 0.8466387391 0.7937876582 0.6809750199 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 12600
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 0.9215686917 )
+		saturation 0.8199999928
+		contrast 1.0299999714
+		glareParms ( 0.6800000072 1.2899999619 0.4399999976 1 )
+		glareBases ( 1 1 0 0 )
+	}
+	fogDistHalf 65
+	fogHeightHalf 131
+	fogHeightOffset -1529
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_theme_undertrees"
+	skyGradientImage "atmosphere/temperate_theme"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6999999881 0.356862992 0.3254899979 0.2862749994 0.001 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_theme_intrenches {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( 0.3190973699 -0.5231723785 0.7902325988 )
+	sunColor ( 0.8466387391 0.7937876582 0.6809750199 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 12600
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 0.9215686917 )
+		saturation 0.8399999738
+		contrast 1.1200000048
+		glareParms ( 0.6800000072 0.6200000048 0.4399999976 1 )
+		glareBases ( 1 1 0 0 )
+	}
+	fogDistHalf 65
+	fogHeightHalf 3758
+	fogHeightOffset -1529
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_theme_intrenches"
+	skyGradientImage "atmosphere/temperate_theme"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6999999881 0.356862992 0.3254899979 0.2862749994 0.001 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_theme3 {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( 0.3190973699 -0.5231723785 0.7902325988 )
+	sunColor ( 0.8466387391 0.7937876582 0.6809750199 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 12600
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 0.9215686917 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.6899999976 1.0399999619 0.1700000018 0.6299999952 )
+		glareBases ( 0.5899999738 0.2899999917 0 0 )
+	}
+	fogDistHalf 2320
+	fogHeightHalf 2026
+	fogHeightOffset 6549
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_theme3"
+	skyGradientImage "atmosphere/temperate_theme"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6999999881 0.356862992 0.3254899979 0.2862749994 0.001 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_01" {
+		style old
+		parms 12 ( 0.6999999881 0.4901959896 0.4156860113 0.3058820069 0.0005 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sundisc" {
+		style old
+		parms 12 ( 0.517647028 0.5294119716 0.494118005 0.3849999905 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/bumpmapped" {
+		style old
+		parms 12 ( 0.7450000048 0.150000006 0.5500000119 0.7149999738 1.1499999762 0.0005 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere snow {
+	sunMaterial "atmospheres/lights/scrolling_clouds01"
+	sunDir ( -0.0870367214 -0.2847202718 0.9546512365 )
+	sunColor ( 0.7098039389 0.6470588446 0.5843137503 )
+	sunHaloScale 0.0299999993
+	sunHaloBias -0.3400000036
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 12600
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.8588235974 0.8588235974 0.8588235974 )
+		saturation 0.6999999881
+		contrast 1.0499999523
+		glareParms ( 0.5999999642 0.3999999762 0 0 )
+		glareBases ( 1 1 0 0 )
+	}
+	fogDistHalf 8856
+	fogHeightHalf 1634
+	fogHeightOffset 6706
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "snow"
+	skyGradientImage "atmosphere/g_overcast02"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 43
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/bumpmapped" {
+		style old
+		parms 12 ( 0.9900000095 0.6750000119 0.3449999988 1 1.2000000477 0.0049999999 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/bumpmapped" {
+		style old
+		parms 12 ( 0.7250000238 0.6999999881 0.25 0.6999999881 0.6000000238 0.001 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.5950000286 0.3607839942 0.3490200043 0.3294120133 0.0015 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 2
+		maxParticles 4000
+		heightMin 3
+		heightMax 5
+		weightMin 1.5
+		weightMax 2.5
+		timeMin 0
+		timeMax 500
+		windScale 36
+		gustWindScale 40
+		fallMin 55
+		fallMax 105
+		tumbleStrength 24
+		precipitationDistance 1000
+		material "penta/snowflake"
+	}
+}
+
+atmosphere temperate_theme_night {
+	sunMaterial "atmospheres/lights/scrolling_clouds_temperate"
+	sunDir ( 0.5309290886 -0.5084219575 0.6779538989 )
+	sunColor ( 0.2235294282 0.2588235438 0.2901960909 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/moon_full"
+	sunSpriteSize 20175
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 0.9215686917 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.6899999976 1.0399999619 0.1700000018 0.6299999952 )
+		glareBases ( 0.5899999738 0.2899999917 0 0 )
+	}
+	fogDistHalf 2320
+	fogHeightHalf 2026
+	fogHeightOffset 6549
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_theme_night"
+	skyGradientImage "atmosphere/skies/ph_night02"
+	farClip 0
+	isNight 1
+	drawAtmosphereLast 1
+	windAngle 43
+	windAngleDev 90
+	windStrength 51
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6999999881 0.2666670084 0.2862749994 0.3647060096 0.001 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/tiledclouds" {
+		style old
+		parms 12 ( 0.6999999881 0.1137249991 0.1019610018 0.1019610018 0.0002 6 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/star" {
+		style old
+		parms 12 ( 1 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_theme_gdfsetup2_camera2 {
+	sunMaterial "atmospheres/lights/scrolling_clouds_temperate"
+	sunDir ( 0.1240339503 -0.4505598247 0.8840879798 )
+	sunColor ( 0.8616925478 0.8134336472 0.7092456818 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 25439
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.9725490808 1 0.8117647767 )
+		saturation 0.7599999905
+		contrast 1.0599999428
+		glareParms ( 0.5799999833 1.2400000095 0.1299999952 0.6800000072 )
+		glareBases ( 0.5099999905 0 0 0 )
+	}
+	fogDistHalf 131
+	fogHeightHalf 8399
+	fogHeightOffset -2000
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_theme_gdfsetup2_camera2"
+	skyGradientImage "atmosphere/skies/ph_sunset6"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 43
+	windAngleDev 90
+	windStrength 51
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6999999881 0.7686269879 0.7137259841 0.611765027 0.0005 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/tiledclouds" {
+		style old
+		parms 12 ( 0.400000006 0.4313730001 0.3921569884 0.3882350028 0.0002 6 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sundisc" {
+		style old
+		parms 12 ( 0.1607840061 0.1725489944 0.2784309983 0.3400000036 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_theme_familyportrait {
+	sunMaterial "atmospheres/lights/scrolling_clouds_temperate"
+	sunDir ( -0.2209119499 -0.446721077 0.8669708371 )
+	sunColor ( 0.8591707945 0.8101332784 0.704464376 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 25439
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 0.9215686917 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.6899999976 1.0399999619 0.1700000018 0.6299999952 )
+		glareBases ( 0.5899999738 0.2899999917 0 0 )
+	}
+	fogDistHalf 2255
+	fogHeightHalf 10000
+	fogHeightOffset 8824
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_theme_familyportrait"
+	skyGradientImage "atmosphere/skies/ph_sunset6"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 43
+	windAngleDev 90
+	windStrength 51
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6999999881 0.7686269879 0.7137259841 0.611765027 0.0005 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/tiledclouds" {
+		style old
+		parms 12 ( 0.400000006 0.4313730001 0.3921569884 0.3882350028 0.0002 6 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sundisc" {
+		style old
+		parms 12 ( 0.1607840061 0.1725489944 0.2784309983 0.3400000036 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_theme_familyportrait2 {
+	sunMaterial "atmospheres/lights/scrolling_clouds_temperate"
+	sunDir ( -0.5525887012 0.0612054467 0.8312037587 )
+	sunColor ( 0.8535937071 0.8028476834 0.6939554214 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 25439
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 0.9215686917 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.6899999976 1.0399999619 0.1700000018 0.6299999952 )
+		glareBases ( 0.5899999738 0.2899999917 0 0 )
+	}
+	fogDistHalf 2255
+	fogHeightHalf 10000
+	fogHeightOffset 8824
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_theme_familyportrait2"
+	skyGradientImage "atmosphere/skies/ph_sunset6"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 43
+	windAngleDev 90
+	windStrength 51
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6999999881 0.7686269879 0.7137259841 0.611765027 0.0005 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/tiledclouds" {
+		style old
+		parms 12 ( 0.400000006 0.4313730001 0.3921569884 0.3882350028 0.0002 6 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sundisc" {
+		style old
+		parms 12 ( 0.1607840061 0.1725489944 0.2784309983 0.3400000036 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_theme_familyportrait3 {
+	sunMaterial "atmospheres/lights/scrolling_clouds_temperate"
+	sunDir ( -0.5525887012 0.0612054467 0.8312037587 )
+	sunColor ( 0.8535937071 0.8028476834 0.6939554214 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 25439
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 0.9215686917 )
+		saturation 0.8799999952
+		contrast 1
+		glareParms ( 0.6800000072 1.0399999619 0.1700000018 0.6299999952 )
+		glareBases ( 0.5799999833 0.2899999917 0 0 )
+	}
+	fogDistHalf 98
+	fogHeightHalf 10000
+	fogHeightOffset 10000
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_theme_familyportrait3"
+	skyGradientImage "atmosphere/skies/ph_sunset6"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 43
+	windAngleDev 90
+	windStrength 51
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6999999881 0.7686269879 0.7137259841 0.611765027 0.0005 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/tiledclouds" {
+		style old
+		parms 12 ( 0.400000006 0.4313730001 0.3921569884 0.3882350028 0.0002 6 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sundisc" {
+		style old
+		parms 12 ( 0.1607840061 0.1725489944 0.2784309983 0.3400000036 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_theme_airstrike {
+	sunMaterial "atmospheres/lights/scrolling_clouds_temperate"
+	sunDir ( 0.6745834947 -0.6111529469 0.4140400887 )
+	sunColor ( 0.7287698388 0.6447454095 0.4817991853 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 25439
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 0.9215686917 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.6899999976 1.0399999619 0.1700000018 0.6299999952 )
+		glareBases ( 0.5899999738 0.2899999917 0 0 )
+	}
+	fogDistHalf 1438
+	fogHeightHalf 2255
+	fogHeightOffset 6196
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_theme_airstrike"
+	skyGradientImage "atmosphere/skies/ph_sunset6"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 43
+	windAngleDev 90
+	windStrength 51
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6999999881 1 0.9215689898 0.7921569943 0.0005 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/tiledclouds" {
+		style old
+		parms 12 ( 0.400000006 0.4313730001 0.3921569884 0.3882350028 0.0002 6 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sundisc" {
+		style old
+		parms 12 ( 0.5647060275 0.6078429818 1 0.3400000036 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_screen2 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.5393115878 -0.4817175269 0.6907179356 )
+	sunColor ( 0.6666666865 0.6745098233 0.631372571 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.2600000203
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.7599999905 0.8399999738 0 1 )
+		glareBases ( 0.2899999917 0.2899999917 0 0 )
+	}
+	fogDistHalf 915
+	fogHeightHalf 1699
+	fogHeightOffset 5882
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_screen2"
+	skyGradientImage "atmosphere/skies/peppitest01"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 9
+	windAngleDev 0
+	windStrength 311
+	windStrengthDev 0
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/bumpmapped" {
+		style old
+		parms 12 ( 0.2300000042 1 1 1 0.4499999881 0.0240000002 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/highalt_cube" {
+		style old
+		parms 12 ( 0.2649999857 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/highalt_tiled" {
+		style old
+		parms 12 ( 1 0.4078429937 0.1254899949 0.0949999988 0 0.1920000017 0 0.1000000015 0.1000000015 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/mediumalt_tiled" {
+		style old
+		parms 12 ( 0 0 0 0.275000006 0 0.0140000004 0 0.1000000015 0.1000000015 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/mediumalt_cube" {
+		style old
+		parms 12 ( 0.0949999988 0 0 0 0.0035000001 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_theme_jettyjostle {
+	sunMaterial "atmospheres/lights/scrolling_clouds_temperate"
+	sunDir ( -0.5904278159 -0.1777012199 0.7872847915 )
+	sunColor ( 0.5921568871 0.631372571 0.5960784554 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 25439
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 0.9215686917 )
+		saturation 0.8799999952
+		contrast 1
+		glareParms ( 0.6800000072 1.0399999619 0.1700000018 0.6299999952 )
+		glareBases ( 0.5799999833 0.2899999917 0 0 )
+	}
+	fogDistHalf 621
+	fogHeightHalf 9673
+	fogHeightOffset 10000
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_theme_jettyjostle"
+	skyGradientImage "atmosphere/skies/ph_sunset6"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 43
+	windAngleDev 90
+	windStrength 51
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6999999881 1 0.9215689898 0.7921569943 0.0005 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/tiledclouds" {
+		style old
+		parms 12 ( 0.400000006 0.4313730001 0.3921569884 0.3882350028 0.0002 6 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sundisc" {
+		style old
+		parms 12 ( 0.1607840061 0.1725489944 0.2784309983 0.3400000036 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_jettyjostle2 {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( 0.9195392132 -0.0377539806 0.3911807239 )
+	sunColor ( 0.7155882716 0.6286252737 0.4619240761 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 12600
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 0.9215686917 )
+		saturation 0.6899999976
+		contrast 1
+		glareParms ( 0.6800000072 1.0399999619 0.1700000018 0.6299999952 )
+		glareBases ( 0.5799999833 0.2899999917 0 0 )
+	}
+	fogDistHalf 392
+	fogHeightHalf 5915
+	fogHeightOffset 6549
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_jettyjostle2"
+	skyGradientImage "atmosphere/temperate_theme"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 24
+	windStrength 63
+	windStrengthDev 10
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6999999881 0.356862992 0.3254899979 0.2862749994 0.001 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_01" {
+		style old
+		parms 12 ( 0.6999999881 0.4901959896 0.4156860113 0.3058820069 0.0005 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sundisc" {
+		style old
+		parms 12 ( 0.517647028 0.5294119716 0.494118005 0.3849999905 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_theme_convoy {
+	sunMaterial "atmospheres/lights/scrolling_clouds_temperate"
+	sunDir ( -0.8112102747 -0.3355554044 0.4788951576 )
+	sunColor ( 0.7603666782 0.683844924 0.531382978 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 25439
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.9725490808 1 0.8117647767 )
+		saturation 0.75
+		contrast 1.0499999523
+		glareParms ( 0.5699999928 1.2400000095 0.1299999952 0.6800000072 )
+		glareBases ( 0.5 0.1799999923 0 0 )
+	}
+	fogDistHalf 33
+	fogHeightHalf 4477
+	fogHeightOffset 10000
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_theme_convoy"
+	skyGradientImage "atmosphere/skies/ph_sunset6"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 43
+	windAngleDev 90
+	windStrength 51
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6999999881 0.7686269879 0.7137259841 0.611765027 0.0005 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/tiledclouds" {
+		style old
+		parms 12 ( 0.400000006 0.4313730001 0.3921569884 0.3882350028 0.0002 6 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sundisc" {
+		style old
+		parms 12 ( 0.1607840061 0.1725489944 0.2784309983 0.3400000036 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere stroggbase {
+	sunMaterial "atmospheres/lights/scrolling_clouds01"
+	sunDir ( 0.7730813622 -0.3803038001 0.5076556802 )
+	sunColor ( 0.5058823824 0.5176470876 0.5607843399 )
+	sunHaloScale 0.099999994
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 100000
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.894117713 0.8509804606 0.8509804606 )
+		saturation 0.6200000048
+		contrast 1.0599999428
+		glareParms ( 1.0399999619 0.6200000048 0.8799999952 0.2899999917 )
+		glareBases ( 0.25 0.8799999952 0 0 )
+	}
+	fogDistHalf 327
+	fogHeightHalf 1667
+	fogHeightOffset 10000
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "stroggbase"
+	skyGradientImage "atmosphere/skies/day_cloudy"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 11
+	windAngleDev 46
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/bumpmapped" {
+		style old
+		parms 12 ( 0.4799999893 0.8450000286 0.0250000004 0.625 1.6499999762 0.003 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_new_hogshot {
+	sunMaterial "atmospheres/lights/scrolling_clouds01"
+	sunDir ( 0.0860936567 -0.3724407852 0.924053967 )
+	sunColor ( 0.3058823645 0.3176470697 0.3411764801 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 12600
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.8313726187 0.9215686917 1 )
+		saturation 1.0099999905
+		contrast 1
+		glareParms ( 1.0099999905 1 0 1 )
+		glareBases ( 0.2999999821 0.2999999821 0 0 )
+	}
+	fogDistHalf 4673
+	fogHeightHalf 3660
+	fogHeightOffset 10000
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_new_hogshot"
+	skyGradientImage "atmosphere/skies/day_sky03"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 43
+	windStrength 100
+	windStrengthDev 6
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_01" {
+		style old
+		parms 12 ( 0.5400000215 0.6901959777 0.7725489736 0.8509799838 0.0015 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/bumpmapped" {
+		style old
+		parms 12 ( 0.4199999869 1 0.7699999809 0.224999994 0.8000000119 0.0049999999 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_new_dawn {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( -0.1280197799 -0.9289236069 0.3474361897 )
+	sunColor ( 0.4941176772 0.4627451301 0.4078431726 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 35965
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.2999999821 0.2999999821 0 0 )
+	}
+	fogDistHalf 8170
+	fogHeightHalf 1569
+	fogHeightOffset 2902
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_new_dawn"
+	skyGradientImage "atmosphere/skies/dawn_sky01"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 146
+	windStrengthDev 133
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.3000000119 1 1 1 0.0015 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_new_dawn_2 {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( 0.1005097926 -0.9323014617 0.3474361897 )
+	sunColor ( 0.4941176772 0.4627451301 0.4078431726 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 35965
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.2999999821 0.2999999821 0 0 )
+	}
+	fogDistHalf 5261
+	fogHeightHalf 1569
+	fogHeightOffset 2902
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_new_dawn_2"
+	skyGradientImage "atmosphere/skies/dawn_sky01"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 146
+	windStrengthDev 133
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.3000000119 1 1 1 0.0015 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_new_screens5 {
+	sunMaterial "atmospheres/lights/scrolling_clouds_temperate"
+	sunDir ( -0.6193295121 -0.1058075055 0.7779691219 )
+	sunColor ( 0.8444271088 0.7909126878 0.6768764853 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 25439
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 0.9215686917 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.6899999976 1.0399999619 0.1700000018 0.6299999952 )
+		glareBases ( 0.5899999738 0.2899999917 0 0 )
+	}
+	fogDistHalf 2778
+	fogHeightHalf 10000
+	fogHeightOffset 1765
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_new_screens5"
+	skyGradientImage "atmosphere/skies/ph_sunset6"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 43
+	windAngleDev 90
+	windStrength 51
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6999999881 0.7686269879 0.7137259841 0.611765027 0.0005 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/tiledclouds" {
+		style old
+		parms 12 ( 0.400000006 0.4313730001 0.3921569884 0.3882350028 0.0002 6 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sundisc" {
+		style old
+		parms 12 ( 0.1607840061 0.1725489944 0.2784309983 0.3400000036 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere temperate_goliath_night {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.1019260883 -0.508040607 0.8552812338 )
+	sunColor ( 0.2039215863 0.2823529541 0.4666666985 )
+	sunHaloScale 0
+	sunHaloBias -0.0400000215
+	sunSpriteMaterial "atmospheres/sprites/moon_full"
+	sunSpriteSize 14474
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.9529411793 0.9686274529 1 )
+		saturation 0.7999999523
+		contrast 1
+		glareParms ( 1.0699999332 1 0 1 )
+		glareBases ( 0.7899999619 0.3899999857 0 0 )
+	}
+	fogDistHalf 98
+	fogHeightHalf 6830
+	fogHeightOffset 6627
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "temperate_goliath_night"
+	skyGradientImage "atmosphere/skies/day_sky03"
+	farClip 0
+	isNight 1
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 54
+	windStrength 100
+	windStrengthDev 32
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/star" {
+		style old
+		parms 12 ( 1 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/bumpmapped" {
+		style old
+		parms 12 ( 0.375 0.8050000072 0.0500000007 0.6000000238 2.4000000954 0.0049999999 0 0 0 0 0 0 )
+	}
+}
+
+
+

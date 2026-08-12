@@ -1,0 +1,110 @@
+material textures2/refinery/shop_wall02
+{
+	diffusemap	textures2/refinery/shop_wall02_d.tga
+	specularmap	textures2/refinery/shop_wall02_s.tga
+	bumpmap		textures2/refinery/shop_wall02_local.tga
+}
+
+material textures2/refinery/shop_wall03
+{
+	diffusemap	textures2/refinery/shop_wall03_d.tga
+	specularmap	textures2/refinery/shop_wall03_s.tga
+	bumpmap		textures2/refinery/shop_wall03_local.tga
+}
+
+material textures2/metal/railing01
+{
+	nonsolid
+	playerclip
+	flyerhiveclip
+	noimpact
+	noShadows
+	twosided
+{
+	bumpmap		 textures2/refinery/railing01_local.tga
+	diffusemap	picmip -1 textures2/refinery/railing01_d.tga
+	specularmap	picmip -1 textures2/refinery/railing01_s.tga
+	alphaTest 0.5
+}
+}
+
+material textures2/ground/tar_roof01
+{
+	{
+	diffusemap	picmip -1	textures2/refinery/tar_roof01_d.tga
+	specularmap	picmip -2	textures2/refinery/tar_roof01_s.tga
+	bumpmap		picmip -1	textures2/refinery/tar_roof01_local.tga
+	
+	diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+	specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+	bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+	detailMult	8,8,0,0
+	}
+}
+
+material textures2/ground/tar_roof01_nonsolid_noshadows
+{
+	nonsolid
+	noshadows
+	{
+	diffusemap	textures2/refinery/tar_roof01_d.tga
+	specularmap     textures2/refinery/tar_roof01_s.tga
+	bumpmap 	textures2/refinery/tar_roof01_local.tga
+	}
+}
+ 	
+material textures2/refinery/window_covered01
+{
+	diffusemap	textures2/refinery/window_covered01_d.tga
+	specularmap     textures2/refinery/window_covered01_s.tga
+	bumpmap 	textures2/refinery/window_covered01_local.tga
+}
+
+material textures2/refinery/metal_door01
+{
+	diffusemap	textures2/refinery/metal_door01_d.tga
+	specularmap     textures2/refinery/metal_door01_s.tga
+	bumpmap 	textures2/refinery/metal_door01_local.tga
+}
+
+material textures2/refinery/shop_wall01
+{
+	diffusemap	textures2/refinery/shop_wall01_d.tga
+	specularmap     textures2/refinery/shop_wall01_s.tga
+	bumpmap 	textures2/refinery/shop_wall01_local.tga
+}
+
+material textures2/refinery/trim_concrete01
+{
+	diffusemap	textures2/refinery/trim_concrete01_d.tga
+	specularmap     textures2/refinery/trim_concrete01_s.tga
+	bumpmap 	textures2/refinery/trim_concrete01_local.tga
+}
+
+material textures2/refinery/brickwall01
+{
+	diffusemap	textures2/refinery/brickwall01_d.tga
+	specularmap     textures2/refinery/brickwall01_s.tga
+	bumpmap 	textures2/refinery/brickwall01_local.tga
+}
+
+material textures2/refinery/clean_wall01
+{
+	diffusemap	textures2/refinery/clean_wall01_d.tga
+	specularmap     textures2/refinery/clean_wall01_s.tga
+	bumpmap 	textures2/refinery/clean_wall01_local.tga
+}
+
+
+/*
+material textures2/decals/stains01
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures2/decals/stains01
+	}
+}
+*/

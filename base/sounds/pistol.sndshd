@@ -1,0 +1,141 @@
+
+sound sounds/weapons/pistol/fire {
+	compression wav
+
+	maxDistance 75
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/pistol/fire01_01.wav
+	sounds/weapons/pistol/fire01_02.wav
+	sounds/weapons/pistol/fire01_03.wav
+	sounds/weapons/pistol/fire01_04.wav
+	sounds/weapons/pistol/fire01_05.wav
+	sounds/weapons/pistol/fire01_06.wav
+	sounds/weapons/pistol/fire01_07.wav
+}
+
+sound sounds/weapons/pistol/fire/far {
+	compression wav
+
+	volume -9
+//	farDistance 25
+	maxDistance 150
+//	antiPrivate
+	occlude_once
+
+	sounds/weapons/pistol/fire_far.wav
+}
+
+sound sounds/weapons/pistol/fire/local {
+	compression wav
+
+	private
+	occlude_once
+
+//	sounds/weapons/pistol/new_local_01.wav
+//	sounds/weapons/pistol/new_local_02.wav
+//	sounds/weapons/pistol/new_local_03.wav
+//	sounds/weapons/pistol/new_local_04.wav
+//	sounds/weapons/pistol/new_local_05.wav
+//	sounds/weapons/pistol/new_local_06.wav
+	sounds/weapons/pistol/new_local_07.wav
+//	sounds/weapons/pistol/fire01_local_01.wav
+//	sounds/weapons/pistol/fire01_local_02.wav
+//	sounds/weapons/pistol/fire01_local_03.wav
+//	sounds/weapons/pistol/fire01_local_04.wav
+//	sounds/weapons/pistol/fire01_local_05.wav
+//	sounds/weapons/pistol/fire01_local_06.wav
+//	sounds/weapons/pistol/fire01_local_07.wav
+}
+
+sound sounds/weapons/pistol/fire/silenced {
+
+	maxDistance 25
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/pistol/fire_silenced_01.wav
+	sounds/weapons/pistol/fire_silenced_02.wav
+	sounds/weapons/pistol/fire_silenced_03.wav
+}
+
+sound sounds/weapons/pistol/fire/silenced/local {
+	compression wav
+
+	private
+	occlude_once
+
+	sounds/weapons/pistol/fire_silenced_local_01.wav
+	sounds/weapons/pistol/fire_silenced_local_02.wav
+	sounds/weapons/pistol/fire_silenced_local_03.wav
+}
+
+sound sounds/weapons/pistol/reload {
+
+	volume -15
+	maxDistance 20
+
+	sounds/weapons/pistol/reload.wav
+}
+
+sound sounds/weapons/pistol/cock {
+
+	volume -5
+	maxDistance 20
+
+	sounds/weapons/pistol/cock.wav
+}
+
+sound sounds/weapons/pistol/mech {
+
+	volume -15
+	maxDistance 20
+
+	sounds/weapons/pistol/mech.wav
+}
+
+sound sounds/weapons/pistol/mag_out {
+
+	volume -10
+	maxDistance 20
+
+	sounds/weapons/pistol/mag_out.wav
+}
+
+sound sounds/weapons/pistol/mag_in {
+
+	volume -5
+	maxDistance 20
+
+	sounds/weapons/pistol/mag_in.wav
+}
+
+sound sounds/weapons/pistol/release {
+
+	volume -10
+	maxDistance 20
+
+	sounds/weapons/pistol/release.wav
+}
+
+sound sounds/weapons/pistol/sights/up {
+
+	volume -20
+
+	sounds/weapons/pistol/sights_up.wav
+}
+
+sound sounds/weapons/pistol/sights/down {
+
+	volume -20
+
+	sounds/weapons/pistol/sights_down.wav
+}
+
+sound sounds/weapons/pistol/raise {
+
+	volume -20
+
+	sounds/weapons/pistol/raise.wav
+}

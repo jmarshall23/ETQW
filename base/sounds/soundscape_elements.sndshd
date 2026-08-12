@@ -1,0 +1,25 @@
+sound sounds/elements/events/grainrise {
+	no_dups
+	sounds/soundscape/events/02a.wav
+	sounds/soundscape/events/02b.wav
+	sounds/soundscape/events/02c.wav
+}
+
+sound sounds/elements/events/harmonicrise {
+	no_dups
+	sounds/soundscape/events/03.wav
+	sounds/soundscape/events/03a.wav
+	sounds/soundscape/events/03b.wav
+	sounds/soundscape/events/03c.wav
+}
+
+sound sounds/elements/events/subfaller {
+	no_dups
+	sounds/soundscape/events/sub_01a.wav
+	sounds/soundscape/events/sub_01b.wav
+	sounds/soundscape/events/sub_01c.wav
+	sounds/soundscape/events/sub_01d.wav
+	sounds/soundscape/events/sub_01e.wav
+	sounds/soundscape/events/sub_01f.wav
+
+}

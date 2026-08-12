@@ -1,0 +1,139 @@
+!!ARBvp1.0
+
+		
+
+	
+		PARAM  __mvp[4]={state.matrix.mvp};
+DP4 result.position.x, __mvp[0], vertex.position;
+DP4 result.position.y, __mvp[1], vertex.position;
+DP4 result.position.z, __mvp[2], vertex.position;
+DP4 result.position.w, __mvp[3], vertex.position;
+#replace normalAttrib with _normalAttrib
+TEMP _normalAttrib;
+TEMP _attribTemp;
+MUL _normalAttrib, vertex.attrib[2], 0.000030518;
+MUL _attribTemp.xy, _normalAttrib, _normalAttrib;
+ADD _attribTemp.x, _attribTemp.xxxx, _attribTemp.yyyy;
+ADD _attribTemp.x, 1, -_attribTemp.x;
+RSQ _attribTemp.x, _attribTemp.x;
+RCP _normalAttrib.z, _attribTemp.x;
+ADD _attribTemp.x, $signAttrib$.x, -1;
+MUL _normalAttrib.z, _normalAttrib.z, _attribTemp.x;
+#replace tangentAttrib with _tangentAttrib
+TEMP _tangentAttrib;
+MUL _tangentAttrib, vertex.attrib[9], 0.000030518;
+MUL _attribTemp.xy, _tangentAttrib, _tangentAttrib;
+ADD _attribTemp.x, _attribTemp.xxxx, _attribTemp.yyyy;
+ADD _attribTemp.x, 1, -_attribTemp.x;
+RSQ _attribTemp.x, _attribTemp.x;
+RCP _tangentAttrib.z, _attribTemp.x;
+ADD _attribTemp.x, $signAttrib$.y, -1;
+MUL _tangentAttrib.z, _tangentAttrib.z, _attribTemp.x;
+ADD _tangentAttrib.w, $signAttrib$.z, -1;
+#replace texCoordAttrib with _texCoordAttrib
+TEMP _texCoordAttrib;
+MUL _texCoordAttrib.xy, vertex.attrib[8], 0.000244141;
+MOV _texCoordAttrib.zw, 1;
+
+	
+
+
+TEMP	bitangent;
+TEMP	R0, R1, R2;
+
+
+
+	
+		ATTRIB _pos = vertex.position;
+	
+	
+	TEMP _nrm, _tan;
+	MOV _nrm, _normalAttrib;
+	MOV _tan, _tangentAttrib;
+	
+
+
+PARAM	defaultTexCoord = { 0, 0.5, 0, 1 };
+
+# derive bitangent
+XPD		bitangent, _nrm, _tan;
+MUL		bitangent, bitangent, _tangentAttrib.w;
+
+# calculate vector to light in R0
+SUB		R0, program.local[0], _pos;
+# reduce range for R0, this fixes a problem on nv 5700
+MUL		R0, R0, 0.1;
+
+# put into texture space for TEX0
+DP3		result.texcoord[0].x, _tan, R0;
+DP3		result.texcoord[0].y, bitangent, R0;
+DP3		result.texcoord[0].z, _nrm, R0;
+
+# textures 1 takes the base coordinates by the texture matrix
+MOV		result.texcoord[1], defaultTexCoord;
+DP4		result.texcoord[1].x, _texCoordAttrib, program.local[1];
+DP4		result.texcoord[1].y, _texCoordAttrib, program.local[2];
+
+# texture 2 has one texgen
+MOV		result.texcoord[2], defaultTexCoord;
+DP4		result.texcoord[2].x, _pos, program.local[3];
+
+# texture 3 has three texgens
+DP4		result.texcoord[3].x, _pos, program.local[4];
+DP4		result.texcoord[3].y, _pos, program.local[5];
+DP4		result.texcoord[3].w, _pos, program.local[6];
+
+# textures 4 takes the base coordinates by the texture matrix
+MOV		result.texcoord[4], defaultTexCoord;
+DP4		result.texcoord[4].x, _texCoordAttrib, program.local[7];
+DP4		result.texcoord[4].y, _texCoordAttrib, program.local[8];
+
+# textures 5 takes the base coordinates by the texture matrix
+MOV		result.texcoord[5], defaultTexCoord;
+DP4		result.texcoord[5].x, _texCoordAttrib, program.local[9];
+DP4		result.texcoord[5].y, _texCoordAttrib, program.local[10];
+
+
+	# texture 6's texcoords will be the halfangle in texture space
+
+	# calculate normalized vector to light in R0
+	SUB		R0, program.local[0], _pos;
+	DP3		R1, R0, R0;
+	RSQ		R1, R1.x;
+	MUL		R0, R0, R1.x;
+
+	# calculate normalized vector to viewer in R1
+	SUB		R1, program.local[11], _pos;
+	DP3		R2, R1, R1;
+	RSQ		R2, R2.x;
+	MUL		R1, R1, R2.x;
+
+	# add together to become the half angle vector in object space (non-normalized)
+	ADD		R0, R0, R1;
+
+	# put into texture space
+	DP3		result.texcoord[6].x, _tan, R0;
+	DP3		result.texcoord[6].y, bitangent, R0;
+	DP3		result.texcoord[6].z, _nrm, R0;
+
+
+
+# generate the vertex color, which can be 1.0, color, or 1.0 - color
+# for 1.0 : env[16] = 0, env[17] = 1
+# for color : env[16] = 1, env[17] = 0
+# for 1.0-color : env[16] = -1, env[17] = 1
+MAD		result.color, vertex.attrib[3], program.local[12], program.local[13];
+
+
+
+
+SUB		R2, _pos, program.local[11];
+DP3		R1.x, R2, R2;
+RSQ		R1.y, R1.x;
+MUL		R1.x, R1.y, R1.x;
+MAD		result.color.secondary, R1.x, program.local[14].z, program.local[14].w; 
+
+
+
+	
+END

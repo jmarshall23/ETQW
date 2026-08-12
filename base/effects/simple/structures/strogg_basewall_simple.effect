@@ -1,0 +1,122 @@
+effect effects/structures/strogg_basewall_simple
+{
+	size	174
+
+	emitter "unnamed0"
+	{
+		duration	3.5,3.5
+		count		1,1
+		attenuateEmitter
+		attenuation	1536,1536
+
+		electricity
+		{
+			duration	1,1
+			fork	1
+			jitterRate	0.025
+			jitterSize	15,15,5
+			jitterTable	halfsintable
+			material	"particles/plasmacore"
+			trailRepeat	1
+
+			start
+			{
+				position { point -8,0,0 }
+				size { point 10 attenuate }
+				fade { point 1 attenuate }
+				length { point 160,0,0 attenuate }
+			}
+		}
+	}
+}effect effects/structures/strogg_basewall_elecbeam_165_simple
+{
+	size	174
+
+	emitter "unnamed0"
+	{
+		duration	1,1
+		count		1,1
+
+		electricity
+		{
+			duration	0.8,0.8
+			fork	0
+			jitterRate	0
+			jitterSize	0,4,4
+			jitterTable	halfsintable
+			material	"particles/plasmacore"
+			trailRepeat	1
+
+			start
+			{
+				size { point 9 }
+				fade { point 0 }
+				length { point 165,0,0 }
+			}
+
+			motion
+			{
+				fade { envelope lightningofstable }
+			}
+
+			end
+			{
+				fade { point 1 }
+			}
+			lineHit
+		}
+	}
+	delay "unnamed1"
+	{
+		duration	3,10
+	}
+}
+
+effect effects/structures/strogg_basewall_elecbeam_96_simple
+{
+	size	105
+
+	emitter "unnamed0"
+	{
+		duration	1,1
+		count		1,1
+
+		electricity
+		{
+			duration	0.8,0.8
+			fork	0
+			jitterRate	0
+			jitterSize	0,2,4
+			jitterTable	halfsintable
+			material	"particles/plasmacore"
+			trailRepeat	1
+
+			start
+			{
+				size { point 9 }
+				fade { point 0 }
+				length { point 96,0,0 }
+			}
+
+			motion
+			{
+				fade { envelope lightningofstable }
+			}
+
+			end
+			{
+				fade { point 1 }
+			}
+			lineHit
+		}
+	}
+	delay "unnamed1"
+	{
+		duration	3,10
+	}
+}
+
+
+
+
+

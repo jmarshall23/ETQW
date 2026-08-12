@@ -1,0 +1,33 @@
+renderProgram occlusion {
+
+	program vertex cg { <%
+		struct VsInputs {
+			float3 pos	: $positionAttrib;
+		};
+
+		struct VsOutputs {
+			float4 color	: COLOR0;
+		};
+
+
+		VsOutputs vertex(VsInputs indata) {
+			VsOutputs outdata;
+			outdata.color = 1.f;
+			return outdata;
+		}
+
+	%> }
+	
+	program fragment cg { <%
+
+		struct VsOutputs {
+			float4 color	: COLOR0;
+		};
+
+		float4 fragment(VsOutputs  indata) : COLOR {
+		
+			return indata.color;
+		}	
+	%> }
+}
+

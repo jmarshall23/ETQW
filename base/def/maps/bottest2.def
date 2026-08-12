@@ -1,0 +1,61 @@
+// ----------------------------------------------------
+// Gameplay for BotTest
+// ----------------------------------------------------
+
+entityDef gameplay_bottest_generator {
+	"inherit"					"constructible_base"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"?"
+	"editor_maxs"					"?"
+	"editor_usage"					"Bottest Generator"
+	"editor_var health"				"Health of the Construction, 0 is nonbreakable. Default is 5000"
+	"editor_var construct_time"			"Time in seconds to construct. Default is 10"
+	"editor_var fizzle_time"			"Time in seconds for an unfinished construction to fade out. Default 30s"
+	"editor_var skin_construct"			"Skin used during construction. Default is deployEffect"
+
+	"team"						"gdf"
+}
+
+entityDef gameplay_bottest_generator_materials {
+	"inherit"					"constructible_materials_gdf"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"Bottest Generator Materials"
+	
+	"editor_var construction"			"The entity to construct"
+
+	"model"						"models/mapobjects/island/objective_generator_trigger.lwo"
+	"cm_model"					"models/mapobjects/island/objective_generator_trigger.lwo"
+
+	"start_constructed"				"0"
+	"objective_index"				"1"
+//	"task_name"					"maps/valley/task_bridge"
+//	"constructed"					"gameplay_valley_bridge_constructed_1"
+	"snd_constructing_strogg"			"sounds/vo/strogg/nexus/objectives/theyconstructingbridge"
+}
+
+entityDef gameplay_bottest_storage_room_door {
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"destructible_objective"
+
+	"editor_color"					"0 .5 .8"
+	"editor_mins"					"?"
+	"editor_maxs"					"?"
+	"editor_usage"					"A destructible objective"
+
+	"health"					"1"
+	"collection_he"					"he"
+
+	"object_name"					"maps/island/storage_room_door"
+	"objective_index"				"0"
+	
+	"show_status"					"1"
+	"option_crosshair_interface"			"1"
+	"option_interactive_interface"			"1"
+	"mtr_crosshair_icon"			"hud/objectives/destruction"
+
+	"team"						"strogg"
+}

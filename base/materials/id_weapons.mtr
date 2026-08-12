@@ -1,0 +1,640 @@
+material models/weapons/shotgun/shotgun_mflash
+{
+	qer_editorimage models/weapons/shotgun/shotgun_mflash.tga
+    sort nearest
+	deform sprite
+	{
+		if ( time + parm4 ) * 6.4 < 1.0
+		blend add
+		map clamp textures/particles/shotgun_mflash_strip.tga
+		scale 1 / 32 , 1
+		scroll table32[ (time + parm4) * 6.4] , 0
+		rotate	rotate90[ parm5 ]
+		
+	}
+}
+
+material models/weapons/shotgun/shotgun_mflashb
+{
+	qer_editorimage models/weapons/shotgun/shotgun_mflashb.tga
+    sort nearest
+	deform sprite
+	{
+		if ( time + parm4 ) * 7 < 1.0
+		blend add
+		map clamp textures/particles/rocketlauncher_mflash_strip.tga
+		scale 1 / 32 , 1
+		scroll table32[ (time + parm4) * 7] , 0
+		rotate	rotate90[ parm5 ]
+		
+	}
+}
+
+
+material models/weapons/shotgun/shotgun_mflash2
+{
+	qer_editorimage models/weapons/shotgun/shotgun_mflash2.tga
+   sort nearest
+	deform tube
+	{
+		if ( time + parm4 ) * 5 < 1.0
+		blend add
+		map clamp textures/particles/shotgun_mflash2_strip.tga
+		scale 1 / 8 , 1
+		scroll table8[ (time + parm4) * 5] , 0
+	}
+}
+
+
+
+
+material models/items/powerups/berserkerflame1
+
+{
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	deform tube
+	{
+		blend add
+		map textures/particles/flame3_strip.tga
+		red			1
+		green		0
+		blue		0
+		scale 1 / 32 , 1
+		scroll table32[ time * .7 ] , 0
+	}
+
+}
+
+
+
+material models/items/powerups/berserkerfx
+{
+	noselfShadow
+    noshadows
+	translucent
+
+	{
+		maskcolor
+		map makealpha(models/items/powerups/berserkermask.tga)
+
+	}
+	{
+	        blend gl_dst_alpha, gl_one
+			//maskalpha
+		    map models/items/powerups/berserkerfx.tga
+			translate	time * 0.1 , time * 2
+	}
+	{
+		blend add
+		map models/items/powerups/berserkerfx2.tga
+	}
+
+}
+
+material models/items/powerups/atom
+{
+	noSelfShadow
+	translucent
+	twosided
+	noShadows
+	{
+		blend add
+		map models/items/powerups/atom.tga
+		translate	time * 2 , time * 0
+		//rgb bliteTable[ time * 1.2 ]
+	}
+}
+
+material models/items/powerups/blite2
+{
+	noSelfShadow
+	translucent
+	noShadows
+	{
+		blend add
+		map models/items/powerups/blite2.tga
+		rgb bliteTable[ time * 1.2 ]
+	}
+}
+material models/items/powerups/blite3
+{
+	noSelfShadow
+	translucent
+	noShadows
+	{
+		blend add
+		map models/items/powerups/blite3.tga
+		rgb bliteTable[ time * 1.2 ]
+	}
+}
+
+material models/items/powerups/blite1
+{
+	noSelfShadow
+	translucent
+	noShadows
+	{
+		blend add
+		map models/items/powerups/blite1.tga
+		rgb bliteTable[ time * 1.2 ]
+	}
+}
+
+material models/items/powerups/berserker
+{
+	renderbump  -size 512 512  -colorMap -aa 2 -trace .07  models/items/powerups/berserker_local.tga models/items/powerups/berserker_hi.lwo
+
+	//noShadows
+	// noselfShadow
+
+	diffusemap models/items/powerups/berserker.tga
+	bumpmap highquality addnormals(models/items/powerups/berserker_local.tga, heightmap(models/items/powerups/berserker_h.tga, 5 ) )
+	specularmap models/items/powerups/berserker_s.tga
+
+}
+
+material models/weapons/machinegun/machinegun_mflash
+{
+	deform sprite
+	sort nearest
+	{
+		if ( time + parm4 ) * 8 < 1.0
+		blend add
+		map textures/particles/pistol_mflash_strip.tga
+		scale 1 / 12 , 1
+		scroll table12[ (time + parm4) * 8 ] , 0
+		rotate	rotate90[ parm5 ]
+	}
+}
+
+material models/weapons/machinegun/machinegun_mflash2
+{
+	deform tube
+	sort nearest
+	{
+		if ( time + parm4 ) * 7 < 1.0
+		blend add
+		map textures/particles/pistol_mflash2_strip.tga
+		scale 1 / 4 , 1
+		scroll table4[ (time + parm4) * 7] , 0
+	}
+}
+
+material models/weapons/machinegun/machinegun_mflashb
+{
+	deform sprite
+	sort nearest
+	{
+		if ( time + parm4 ) * 7 < 1.0
+		blend add
+		map textures/particles/pistol_mflash_strip.tga
+		scale 1 / 12 , 1
+		scroll table12[ (time + parm4) * 7 ] , 0
+		rotate	rotate90[ parm5 ]
+	}
+}
+
+material models/weapons/machinegun/machinegun_mflash2b
+{
+	deform tube
+	sort nearest
+	{
+		if ( time + parm4 ) * 6 < 1.0
+		blend add
+		map textures/particles/pistol_mflash2_strip.tga
+		scale 1 / 4 , 1
+		scroll table4[ (time + parm4) * 6] , 0
+	}
+}
+
+material models/weapons/pistol/pistol_mflash
+{
+	deform sprite
+	sort nearest
+	{
+		if ( time + parm4 ) * 8 < 1.0
+		blend add
+		map textures/particles/pistol_mflash_strip.tga
+		scale 1 / 12 , 1
+		scroll table12[ (time + parm4) * 8 ] , 0
+		rotate	rotate90[ parm5 ]
+	}
+}
+
+material models/weapons/pistol/pistol_mflash2
+{
+	deform tube
+	sort nearest
+	{
+		if ( time + parm4 ) * 7 < 1.0
+		blend add
+		map textures/particles/pistol_mflash2_strip.tga
+		scale 1 / 4 , 1
+		scroll table4[ (time + parm4) * 7] , 0
+	}
+}
+
+material models/weapons/rocketlauncher/w_rocketlauncher
+{
+		//noShadows
+        noselfShadow
+		unsmoothedTangents
+	renderbump  -size 512 512 -colorMap -aa 2 -trace .05  models/weapons/rocketlauncher/w_rocketlauncher_local.tga models/weapons/rocketlauncher/w_rocketlauncher_hi.lwo
+
+        	diffusemap	 models/weapons/rocketlauncher/w_rocketlauncher.tga
+		    bumpmap      models/weapons/rocketlauncher/w_rocketlauncher_local.tga
+		    specularmap	 models/weapons/rocketlauncher/w_rocketlauncher_s.tga
+
+}
+
+material models/weapons/rocketlauncher/w_rocketlauncher_invis
+{
+	//noShadows
+    noselfShadow
+	unsmoothedTangents
+	renderbump  -size 512 512 -colorMap -aa 2 -trace .05  models/weapons/rocketlauncher/w_rocketlauncher_local.tga models/weapons/rocketlauncher/w_rocketlauncher_hi.lwo
+	translucent
+		   
+		  
+	{
+		bumpmap     models/weapons/rocketlauncher/w_rocketlauncher_local.tga
+		specularmap models/invis_s.tga
+		translate	time * 0 , time * 0.6
+	}
+
+
+}
+
+
+material models/weapons/shotgun/w_shotgun2
+{
+		//noShadows
+        noselfShadow
+		unsmoothedTangents
+	renderbump  -size 512 512 -colorMap -aa 2 -trace .05  models/weapons/shotgun/w_shotgun2_local.tga models/weapons/shotgun/w_shotgun2_hi.lwo
+
+        	diffusemap	 models/weapons/shotgun/w_shotgun2.tga
+		    bumpmap      models/weapons/shotgun/w_shotgun2_local.tga
+		    specularmap	 models/weapons/shotgun/w_shotgun2_s.tga
+
+}
+
+material models/weapons/pistol/pistol
+{
+
+    noShadows
+	noselfShadow
+	unsmoothedTangents
+	renderbump  -size 1024 512 -trace 0.03 -colorMap -aa 2  models/weapons/pistol/pistol_local.tga models/weapons/pistol/pistol_hi.lwo
+
+          diffusemap	models/weapons/pistol/pistol.tga
+	bumpmap addnormals(models/weapons/pistol/pistol_local.tga, heightmap(models/weapons/pistol/pistol_h.tga, 5 ) )
+          specularmap	models/weapons/pistol/pistol_s.tga
+
+
+
+}
+
+material models/weapons/pistol/pistol_invis
+{
+
+    noShadows
+	noselfShadow
+	unsmoothedTangents
+	renderbump  -size 1024 512 -trace 0.03 -colorMap -aa 2  models/weapons/pistol/pistol_local.tga models/weapons/pistol/pistol_hi.lwo
+	translucent
+          //diffusemap	models/weapons/pistol/pistol.tga
+
+	{
+		bumpmap addnormals(models/weapons/pistol/pistol_local.tga, heightmap(models/weapons/pistol/pistol_h.tga, 5 ) )
+		specularmap models/invis_s.tga
+		translate	time * 0 , time * 0.6
+	}
+}
+
+
+material models/weapons/berserk/fist
+{
+        noselfShadow
+		noShadows
+	renderbump  -size 1024 2048 -trace 0.03 -colorMap   models/weapons/berserk/fist_local.tga models/weapons/berserk/fist_hi.lwo
+
+
+
+        	
+	{
+		diffusemap	models/weapons/berserk/fist.tga
+ 		bumpmap addnormals(models/weapons/berserk/fist_local.tga, heightmap(models/weapons/berserk/fist_h.tga, 3 ) )
+ 		specularmap	models/weapons/berserk/fist_s.tga
+ 	}
+                  
+}
+
+material models/weapons/rocketlauncher/rshell4
+{
+        noselfShadow
+        	
+		{
+ 		  bumpmap addnormals(models/weapons/rocketlauncher/rshell1_local.tga, heightmap(models/weapons/rocketlauncher/rshell1_h.tga, 7 ) )
+          diffusemap	models/weapons/rocketlauncher/rshell1.tga
+ 		  specularmap	 models/weapons/rocketlauncher/rshell1_s.tga
+     	}
+
+           
+}
+
+
+material models/weapons/rocketlauncher/rshell3
+{
+        noselfShadow
+        	
+		{
+		 diffusemap	models/weapons/rocketlauncher/rshell1.tga
+ 		 bumpmap addnormals(models/weapons/rocketlauncher/rshell1_local.tga, heightmap(models/weapons/rocketlauncher/rshell1_h.tga, 7 ) )
+ 		 specularmap	 models/weapons/rocketlauncher/rshell1_s.tga
+     	}
+
+           
+}
+
+
+
+material models/weapons/rocketlauncher/rshell2
+{
+        noselfShadow
+
+        	
+		{
+		  diffusemap	models/weapons/rocketlauncher/rshell1.tga
+ 		  bumpmap addnormals(models/weapons/rocketlauncher/rshell1_local.tga, heightmap(models/weapons/rocketlauncher/rshell1_h.tga, 7 ) )
+ 		  specularmap	 models/weapons/rocketlauncher/rshell1_s.tga
+     	}
+
+           
+}
+
+
+
+material models/weapons/rocketlauncher/rshell1
+{
+        noselfShadow
+		unsmoothedTangents
+	renderbump  -size 256 256 -trace 0.1 -colorMap -aa 2  models/weapons/rocketlauncher/rshell1_local.tga models/weapons/rocketlauncher/rshell1_hi.lwo
+	  diffusemap	models/weapons/rocketlauncher/rshell1.tga
+	  bumpmap addnormals(models/weapons/rocketlauncher/rshell1_local.tga, heightmap(models/weapons/rocketlauncher/rshell1_h.tga, 7 ) )
+	  specularmap	 models/weapons/rocketlauncher/rshell1_s.tga         
+}
+
+
+
+material models/weapons/rocketlauncher/rocketlauncher
+{
+        noselfShadow
+		unsmoothedTangents
+	renderbump  -size 1024 1024 -trace 0.01 -colorMap -aa 2  models/weapons/rocketlauncher/rocketlauncher_local.tga models/weapons/rocketlauncher/rocketlauncher_hi.lwo
+
+	diffusemap	models/weapons/rocketlauncher/rocketlauncher.tga
+	bumpmap addnormals(models/weapons/rocketlauncher/rocketlauncher_local.tga, heightmap(models/weapons/rocketlauncher/rocketlauncher_h.tga, 7 ) )
+	specularmap	 models/weapons/rocketlauncher/rocketlauncher_s.tga
+}
+
+material models/weapons/rocketlauncher/rocketlauncher_invis
+{
+        noselfShadow
+		unsmoothedTangents
+	renderbump  -size 1024 1024 -trace 0.01 -colorMap -aa 2  models/weapons/rocketlauncher/rocketlauncher_local.tga models/weapons/rocketlauncher/rocketlauncher_hi.lwo
+
+	translucent
+
+	{
+		specularmap models/invis_s.tga
+		bumpmap addnormals(models/weapons/rocketlauncher/rocketlauncher_local.tga, heightmap(models/weapons/rocketlauncher/rocketlauncher_h.tga, 7 ) )
+		
+		textureMatrix specularMatrix {
+			translate	time * 0 , time * 0.6
+		}
+	}
+
+}
+
+material models/weapons/grenades/grenades3
+{
+        noselfShadow
+		unsmoothedTangents
+	renderbump  -size 1024 1024 -trace 0.1 -colorMap -aa 2  models/weapons/grenades/grenades3_local.tga models/weapons/grenades/grenades3_hi.lwo
+
+	diffusemap	models/weapons/grenades/grenades3.tga
+	bumpmap addnormals(models/weapons/grenades/grenades3_local.tga, heightmap(models/weapons/grenades/grenades3_h.tga, 7 ) )
+    specularmap	 models/weapons/grenades/grenades3_s.tga
+}
+
+material models/items/pda/redlight
+
+{
+	translucent
+    noselfShadow
+	noshadows
+
+	{
+    	Blend add
+		Map zeroclamp models/items/pda/redlight.tga
+		rgb eyestable[ time * 2 ]
+
+	}
+
+
+}
+
+material models/items/pda/cd2fx
+
+{
+	translucent
+        noselfShadow
+	noshadows
+
+	{
+    	BumpMap zeroclamp models/items/pda/cd2_local.tga
+		specularMap zeroclamp models/items/pda/cd2fx.tga
+	    textureMatrix bumpMatrix {
+	    	  rotate	time * 2
+	    }
+		
+	    textureMatrix specularMatrix {
+	    	  rotate	time * -1.33
+	    }
+	}
+}
+
+
+material models/items/pda/cd2
+
+{
+	translucent
+        noselfShadow
+	noshadows
+
+	{
+      	diffuseMap models/items/pda/cd2.tga
+		alphaTest 0.5
+    	BumpMap zeroclamp models/items/pda/cd2b_local.tga
+    	specularMap zeroclamp models/items/pda/cd2_s.tga
+	}
+
+
+}
+
+
+material models/items/pda/cd1
+{
+	noselfShadow
+	noshadows
+	{
+      	diffuseMap models/items/pda/cd1.tga
+		bumpmap		models/items/pda/cd1_local.tga
+		specularmap	models/items/pda/cd1_s.tga      	
+		alphaTest 0.5
+	}
+
+
+}
+
+
+material models/items/pda/pda_world
+{
+        noselfShadow
+	renderbump  -size 512 512  -colorMap -aa 2  models/items/pda/pda_world_local.tga models/items/pda/pda_world_hi.lwo
+
+        	diffusemap	models/items/pda/pda_world.tga
+			 bumpmap     models/items/pda/pda_world_local.tga
+           specularmap	 models/items/pda/pda_world_s.tga
+}
+
+
+material models/items/pda/pda
+{
+        noselfShadow
+		unsmoothedTangents
+	renderbump  -size 1024 1024 -trace 0.1 -colorMap -aa 2  models/items/pda/pda_local.tga models/items/pda/pda_hi.lwo
+
+	diffusemap	models/items/pda/pda.tga
+	bumpmap highquality  addnormals(models/items/pda/pda_local.tga, heightmap(models/items/pda/pda_h.tga, 7 ) )
+	specularmap	 models/items/pda/pda_s.tga
+}
+
+material models/weapons/machinegun/w_machinegun
+{
+        noselfShadow
+	renderbump  -size 512 512 -aa 2  models/weapons/machinegun/w_machinegun_local.tga models/weapons/machinegun/w_machinegun_hi.lwo
+
+        	diffusemap	models/weapons/machinegun/w_machinegun.tga
+			bumpmap		models/weapons/machinegun/w_machinegun_local.tga
+
+           specularmap	 models/weapons/machinegun/w_machinegun_s.tga
+}
+
+
+
+
+material models/weapons/rocketlauncher/rocketfin
+{
+	noselfShadow
+   	 noshadows
+
+	{
+     diffuseMap	picmip -1 models/weapons/rocketlauncher/rocketfin.tga
+     bumpmap	picmip -1		models/weapons/rocketlauncher/rocketfin_local.tga
+	 alphaTest 0.5
+	}
+	
+
+
+}
+
+material models/weapons/rocketlauncher/rocket
+{
+        noselfShadow
+		noshadows
+	renderbump  -size 128 128 -aa 4  models/weapons/rocketlauncher/rocket_local.tga models/weapons/rocketlauncher/rocket_hi.lwo
+
+        	diffusemap	picmip -1	models/weapons/rocketlauncher/rocket.tga
+			bumpmap	picmip -1		models/weapons/rocketlauncher/rocket_local.tga
+			{
+			blend Add
+           map  models/weapons/rocketlauncher/rocket_add.tga
+			translate	time * 6 , time * 0
+			rgb		eyestable[ time * .7 ]
+			}
+}
+
+material models/weapons/pistol/w_pistol
+{
+        noselfShadow
+	renderbump  -size 128 128 -aa 4  models/weapons/pistol/w_pistol_local.tga models/weapons/pistol/w_pistol_hi.lwo
+
+        	diffusemap	models/weapons/pistol/w_pistol.tga
+			bumpmap		models/weapons/pistol/w_pistol_local.tga
+           specularmap	 models/weapons/pistol/w_pistol_s.tga
+}
+
+material models/weapons/pistol/w_pistol_invis
+{
+        noselfShadow
+	renderbump  -size 128 128 -aa 4  models/weapons/pistol/w_pistol_local.tga models/weapons/pistol/w_pistol_hi.lwo
+	translucent
+
+	{
+        //diffusemap	models/weapons/pistol/w_pistol.tga
+		bumpmap		models/weapons/pistol/w_pistol_local.tga	
+		specularmap 	models/invis_s.tga
+		textureMatrix specularMatrix {
+			translate	time * 0 , time * 0.6
+		}
+	}
+
+
+}
+
+material muzzleflash
+{
+	{
+		//map	_spotlight
+		map zeroClamp lights/round
+		colored
+
+		red 	muzzleflashrandom[ time * 3.33 ] * muzzleflashtable[ (time + parm4) * 4 * Parm3 ] * Parm0
+		green 	muzzleflashrandom[ time * 3.33 ] * muzzleflashtable[ (time + parm4) * 4 * Parm3 ] * Parm1
+		blue 	muzzleflashrandom[ time * 3.33 ] * muzzleflashtable[ (time + parm4) * 4 * Parm3 ] * Parm2
+	}
+}
+
+material models/weapons/chaingun/w_chaingun
+
+{
+	noselfShadow
+	unsmoothedTangents
+
+	renderbump  -size 512 512 -colorMap -aa 2  models/weapons/chaingun/w_chaingun_local.tga models/weapons/chaingun/w_chaingun_hi.lwo
+
+	diffusemap models/weapons/chaingun/w_chaingun.tga
+	bumpmap models/weapons/chaingun/w_chaingun_local.tga
+	specularmap models/weapons/chaingun/w_chaingun_s.tga
+}
+
+material models/weapons/grenades/grenades3fx
+{
+	translucent
+	noselfShadow
+
+	{
+		blend filter
+		program sfx/cubemap	
+	}
+	{
+		blend add
+		map models/weapons/grenades/grenades3fx.tga
+		rgb eyestable[ time * 1 ]
+	}
+}

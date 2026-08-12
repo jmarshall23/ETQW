@@ -1,0 +1,57 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/salvage/interior01 {
+	width	256
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 234 310 ) ( 250 326 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 184 288 ) ( 200 304 )
+	}
+	rect {
+		surfaceType	stone
+		surfaceColor	( 1 1 1 )
+		coords ( 0 512 ) ( 256 768 )
+	}
+	rect {
+		surfaceType	metal_thick
+		surfaceColor	( 1 1 1 )
+		coords ( 128 256 ) ( 256 512 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 256 ) ( 128 512 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 768 ) ( 256 1024 )
+	}
+	rect {
+		surfaceType	stone
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1024 ) ( 256 1536 )
+	}
+	rect {
+		surfaceType	stone
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1536 ) ( 256 2048 )
+	}
+	rect {
+		surfaceType	glass
+		surfaceColor	( 1 1 1 )
+		coords ( 138 302 ) ( 248 356 )
+	}
+}

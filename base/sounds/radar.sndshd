@@ -1,0 +1,25 @@
+
+sound sounds/deployables/radar/idle {
+
+	volume -10
+	maxDistance 50
+
+	looping
+	sounds/deployables/radar/idle_01.wav
+}
+
+sound sounds/deployables/radar/deploy/arm {
+
+	volume -10
+	maxDistance 50
+
+	sounds/deployables/radar/deploy_arm.wav
+}
+
+sound sounds/deployables/radar/deploy/feet {
+
+	volume -15
+	maxDistance 50
+
+	sounds/deployables/radar/deploy_feet.wav
+}

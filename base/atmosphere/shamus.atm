@@ -1,0 +1,285 @@
+atmosphere ark_local_atmospherics_01 {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( -0.201154694 -0.8804054856 0.4294450283 )
+	sunColor ( 0.4862745404 0.4431372881 0.4078431726 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 35965
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.7899999619 0.4899999797 0 1 )
+		glareBases ( 0.0899999961 0.0899999961 0 0 )
+	}
+	fogDistHalf 793
+	fogHeightHalf 439
+	fogHeightOffset 1484
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "ark"
+	skyGradientImage "atmosphere/skies/day_cloudy2"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 80
+	windAngleDev 25
+	windStrength 100
+	windStrengthDev 9
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 2
+		maxParticles 4000
+		heightMin 1
+		heightMax 5
+		weightMin 1.75
+		weightMax 2.25
+		timeMin 0
+		timeMax 500
+		windScale 3.5999999046
+		gustWindScale 1.2000000477
+		fallMin 60
+		fallMax 100
+		tumbleStrength 30
+		precipitationDistance 1000
+		material "penta/snowflake3"
+		effect "effects/ambient/ark2_local_atmospherics"
+	}
+}
+
+atmosphere ark_local_atmospherics_02 {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( -0.201154694 -0.8804054856 0.4294450283 )
+	sunColor ( 0.4862745404 0.4431372881 0.4078431726 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 35965
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.7899999619 0.4899999797 0 1 )
+		glareBases ( 0.0899999961 0.0899999961 0 0 )
+	}
+	fogDistHalf 843
+	fogHeightHalf 415
+	fogHeightOffset 1484
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "ark_local_atmospherics_ambient"
+	skyGradientImage "atmosphere/skies/day_cloudy2"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 80
+	windAngleDev 25
+	windStrength 100
+	windStrengthDev 9
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 2
+		maxParticles 4000
+		heightMin 1
+		heightMax 5
+		weightMin 1.75
+		weightMax 2.25
+		timeMin 0
+		timeMax 500
+		windScale 3.5999999046
+		gustWindScale 1.2000000477
+		fallMin 60
+		fallMax 100
+		tumbleStrength 30
+		precipitationDistance 1000
+		material "penta/snowflake3"
+		effect "effects/ambient/ark2_local_atmospherics"
+	}
+}
+
+atmosphere canyon01_fixed_fog2 {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright"
+	sunDir ( 0.1415455192 -0.6346502304 0.7597263455 )
+	sunColor ( 0.8410170674 0.786485672 0.6705846786 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 100000
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8899999857 1 0 1 )
+		glareBases ( 0.2999999821 0.2999999821 0 0 )
+	}
+	fogDistHalf 8170
+	fogHeightHalf 1569
+	fogHeightOffset 5647
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon01_fixed_fog_cubemap"
+	skyGradientImage "atmosphere/skies/day_sky07_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 146
+	windStrengthDev 133
+	cloudLayer "atmospheres/skydomes/day_sky07" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/foglayer" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere canyon01_fixed_fog {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright"
+	sunDir ( -0.1019260883 -0.508040607 0.8552812338 )
+	sunColor ( 0.8573952913 0.8078117967 0.7011090517 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 100000
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8899999857 1 0 1 )
+		glareBases ( 0.2999999821 0.2999999821 0 0 )
+	}
+	fogDistHalf 8170
+	fogHeightHalf 1569
+	fogHeightOffset 5647
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon01_fixed_fog"
+	skyGradientImage "atmosphere/skies/day_sky07_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 146
+	windStrengthDev 133
+	cloudLayer "atmospheres/skydomes/day_sky07" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/foglayer" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+      
+                         
+ambientCubemap ark_local_atmospherics_ambient {
+	ambientLight {
+		color 0.3019607961 0.4235294461 0.5254902244
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1529411823 0.1568627506 0.1686274558
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.1254902035 0.1882353127 0.3372549117
+		direction 0.1756406128 0.9035925865 0.3907311261
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3686274588 0.3843137622 0.4392157197
+		direction 0.0173223317 -0.9923949838 0.1218693554
+		name "Light3"
+	}
+	ambientLight {
+		color 0.2235294282 0.3019607961 0.392156899
+		direction -0.8843650818 0.4506065547 0.1218693554
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2823529541 0.3098039329 0.392156899
+		direction 1 0 0
+		name "Light5"
+	}
+	ambientLight {
+		color 0.3450980484 0.3568627536 0.392156899
+		direction -0.7036204934 -0.6794784069 0.2079117
+		name "Light6"
+	}
+}                               
+         
+ambientCubemap canyon01_fixed_fog_cubemap {
+  	ambientLight {
+  		color 0.4588235617 0.4274510145 0.3254902065
+  		direction -0.1953730732 -0.9191581011 0.342020154
+  		name "Light0"
+  	}
+  	ambientLight {
+  		color 0.4352941513 0.4627451301 0.501960814
+  		direction -0.0341368467 0.9775517583 0.2079117
+  		name "Light1"
+  	}
+  	ambientLight {
+  		color 0.4705882668 0.5490196347 0.5960784554
+  		direction 0.9561591148 0.2923271656 -0.0174523946
+  		name "Light2"
+  	}
+  	ambientLight {
+  		color 0.4705882668 0.4156863093 0.3529411852
+  		direction 0.0000000243 0 -1
+  		name "Light4"
+  	}
+  	ambientLight {
+  		color 0.5254902244 0.5725490451 0.6039215922
+  		direction -0.9063077569 0.0000000221 0.4226182699
+  		name "Light5"
+  	}
+}

@@ -1,0 +1,8 @@
+
+locString default {
+	text "#str_00000000"
+}
+
+locString blank {
+	text "#str_00001001"
+}

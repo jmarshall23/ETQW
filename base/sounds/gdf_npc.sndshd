@@ -1,0 +1,85 @@
+/////////////
+// GDF NPC //
+/////////////
+
+// Fire Support //
+
+sound sounds/vo/gdf/npc/firesupport/approved {
+
+	localization/english/sounds/npc/gdf/firesupport/18036.wav
+	localization/english/sounds/npc/gdf/firesupport/18039.wav
+}
+
+sound sounds/vo/gdf/npc/firesupport/invalid {
+
+	localization/english/sounds/npc/gdf/firesupport/18042.wav
+}
+
+sound sounds/vo/gdf/npc/firesupport/friendlyfire {
+
+	localization/english/sounds/npc/gdf/firesupport/18045.wav
+	localization/english/sounds/npc/gdf/firesupport/18046.wav
+	localization/english/sounds/npc/gdf/firesupport/18047.wav
+}
+
+sound sounds/vo/gdf/npc/firesupport/abort {
+
+	localization/english/sounds/npc/gdf/firesupport/18059.wav
+}
+
+
+// Jotun //
+
+sound sounds/vo/gdf/npc/jotun/approved {
+
+	localization/english/sounds/npc/gdf/logistics/18026.wav
+}
+
+sound sounds/vo/gdf/npc/jotun/invalid {
+
+	localization/english/sounds/npc/gdf/logistics/18031.wav
+}
+
+
+// Magog //
+
+sound sounds/vo/gdf/npc/magog/approved {
+
+	localization/english/sounds/npc/gdf/logistics/18020.wav
+}
+
+sound sounds/vo/gdf/npc/magog/invalid {
+
+	localization/english/sounds/npc/gdf/logistics/18023.wav
+}
+
+
+// Vampire //
+
+sound sounds/vo/gdf/npc/vampire/approved {
+
+	localization/english/sounds/npc/gdf/vampire/18014.wav
+}
+
+sound sounds/vo/gdf/npc/vampire/invalid {
+
+	localization/english/sounds/npc/gdf/vampire/18017.wav
+}
+
+sound sounds/vo/gdf/npc/vampire/friendlyfire {
+
+	localization/english/sounds/npc/gdf/vampire/18055.wav
+	localization/english/sounds/npc/gdf/vampire/18056.wav
+	localization/english/sounds/npc/gdf/vampire/18057.wav
+	localization/english/sounds/npc/gdf/vampire/18058.wav
+}
+
+sound sounds/vo/gdf/npc/vampire/abort {
+
+	localization/english/sounds/npc/gdf/vampire/18060.wav
+}
+
+sound sounds/vo/gdf/npc/enemyfiresupport {
+
+	localization/english/sounds/npc/gdf/firesupport/18047.wav
+}

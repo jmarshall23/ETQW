@@ -1,0 +1,1225 @@
+
+
+//512x256
+material textures/massive/billboard1 {
+	qer_editorimage	textures/massive/placeholder_poster1_d.tga
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga
+	specularmap		textures/common/darker_gray.tga
+}
+
+//512x256
+material textures/massive/billboard2 {
+	qer_editorimage	textures/massive/placeholder_poster2_d.tga
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga
+	specularmap		textures/common/darker_gray.tga
+}
+
+//512x512
+material textures/massive/billboard3 {
+	qer_editorimage	textures/massive/placeholder_poster3_d.tga
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster3_d.tga
+	specularmap		textures/common/darker_gray.tga
+}
+
+//512x512
+material textures/massive/billboard4 {
+	qer_editorimage	textures/massive/placeholder_poster4_d.tga
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster4_d.tga
+	specularmap		textures/common/darker_gray.tga
+}
+
+//256x512
+material textures/massive/billboard5 {
+	qer_editorimage	textures/massive/placeholder_poster5_d.tga
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster5_d.tga
+	specularmap		textures/common/darker_gray.tga
+}
+
+//256x256
+material textures/massive/billboard6 {
+	qer_editorimage	textures/massive/placeholder_poster6_d.tga
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster6_d.tga
+	specularmap		textures/common/darker_gray.tga
+}
+
+//128x128
+material textures/massive/billboard7 {
+	qer_editorimage	textures/massive/placeholder_poster7_d.tga
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga
+	specularmap		textures/common/darker_gray.tga
+}
+
+//256x256
+material textures/massive/billboard8 {
+	qer_editorimage	textures/massive/placeholder_poster8_d.tga
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster8_d.tga
+	specularmap		textures/common/darker_gray.tga
+}
+
+//128x128
+material textures/massive/billboard9 {
+	qer_editorimage	textures/massive/placeholder_poster9_d.tga
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster9_d.tga
+	specularmap		textures/common/darker_gray.tga
+}
+
+
+
+
+material textures/massive/billboard_small1 {
+	qer_editorimage	textures/massive/placeholder_poster8_d.tga
+	massive
+	
+	diffusemap		_black
+}
+
+material textures/massive/billboard_small2 {
+	qer_editorimage	textures/massive/placeholder_poster8_d.tga
+	massive
+	
+	diffusemap		_black
+}
+
+material textures/massive/billboard_small3 {
+	qer_editorimage	textures/massive/placeholder_poster8_d.tga
+	massive
+	
+	diffusemap		_black
+}
+
+material textures/massive/billboard_small4 {
+	qer_editorimage	textures/massive/placeholder_poster8_d.tga
+	massive
+	
+	diffusemap		_black
+}
+
+material textures/massive/billboard_small5 {
+	qer_editorimage	textures/massive/placeholder_poster8_d.tga
+	massive
+	
+	diffusemap		_black
+}
+
+
+
+
+
+
+material textures/massive/television1 {
+	qer_editorimage	textures/massive/placeholder_poster8_d.tga
+	massive
+	
+	diffusemap		_black
+}
+
+material textures/massive/television2 {
+	qer_editorimage	textures/massive/placeholder_poster8_d.tga
+	massive
+	
+	diffusemap		_black
+}
+
+material textures/massive/television3 {
+	qer_editorimage	textures/massive/placeholder_poster8_d.tga
+	massive
+	
+	diffusemap		_black
+}
+
+material textures/massive/television4 {
+	qer_editorimage	textures/massive/placeholder_poster8_d.tga
+	massive
+	
+	diffusemap		_black
+}
+
+material textures/massive/television5 {
+	qer_editorimage	textures/massive/placeholder_poster8_d.tga
+	massive
+	
+	diffusemap		_black
+}
+
+
+
+material textures/massive/cinematic1 {
+	qer_editorimage	textures/massive/placeholder_poster8_d.tga
+	massive
+	
+	diffusemap		_black
+}
+
+
+/*********************************************
+Map specific adverts
+*********************************************/
+
+
+/************
+Ark
+************/
+
+material textures/massive/ark_billboard_1 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/ark_billboard_2 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster6_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/ark_billboard_3 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/ark_billboard_4 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster6_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/ark_billboard_5 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster4_d.tga //512*512
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/ark_billboard_6 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/ark_billboard_7 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/ark_billboard_8 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+//TV Widescreen
+material textures/massive/ark_billboard_9 {
+	massive
+	{
+		diffusemap		nopicmip	textures/massive/placeholder_poster10_d.tga //256*128
+		specularmap		textures/common/darker_gray.tga
+	}
+	{
+		blend add
+		map guis/assets/common/gui_scanlines.tga
+		scroll 0, time * -.04
+	}
+}
+
+//TV Widescreen
+material textures/massive/ark_billboard_10 {
+	massive
+	{
+		diffusemap		nopicmip	textures/massive/placeholder_poster11_d.tga //256*128
+		specularmap		textures/common/darker_gray.tga
+	}
+	{
+		blend add
+		map guis/assets/common/gui_scanlines.tga
+		scroll 0, time * -.04
+	}
+}
+
+
+material textures/massive/ark_billboard_11 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/ark_billboard_12 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+//TV Widescreen
+material textures/massive/ark_billboard_13 {
+	massive
+	{
+		diffusemap		nopicmip	textures/massive/placeholder_poster11_d.tga //256*128
+		specularmap		textures/common/darker_gray.tga
+	}
+	{
+		blend add
+		map guis/assets/common/gui_scanlines.tga
+		scroll 0, time * -.04
+	}
+	
+}
+
+material textures/massive/ark_billboard_14 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster9_d.tga //128*128
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/ark_billboard_15 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/ark_billboard_16 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+/************
+Area22
+************/
+
+material textures/massive/area22_billboard_1 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/area22_billboard_2 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster6_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/area22_billboard_3 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/area22_billboard_4 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster6_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/area22_billboard_5 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster6_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/area22_billboard_6 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/area22_billboard_7 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster6_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+// TV
+material textures/massive/area22_billboard_8 {
+	massive
+	{
+		diffusemap		nopicmip	textures/massive/placeholder_poster9_d.tga //128*128
+		specularmap		textures/common/darker_gray.tga
+	}
+	{
+			blend add
+			map guis/assets/common/gui_scanlines.tga
+			scroll 0, time * -.04
+	}
+}
+
+// TV
+material textures/massive/area22_billboard_9 {
+	massive
+	{
+		diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //128*128
+		specularmap		textures/common/darker_gray.tga
+	}
+	{
+			blend add
+			map guis/assets/common/gui_scanlines.tga
+			scroll 0, time * -.04
+	}
+}
+
+material textures/massive/area22_billboard_10 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/area22_billboard_11 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster5_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/area22_billboard_12 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/area22_billboard_13 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/area22_billboard_14 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/area22_billboard_15 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/area22_billboard_16 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster6_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/area22_billboard_17 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/area22_billboard_18 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/area22_billboard_19 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+//TV
+material textures/massive/area22_billboard_20 {
+	massive
+	{
+		diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //128*128
+		specularmap		textures/common/darker_gray.tga
+	}
+	{
+		blend add
+		map guis/assets/common/gui_scanlines.tga
+		scroll 0, time * -.04
+	}
+}
+
+//Widescreen TV
+material textures/massive/area22_billboard_21 {
+	massive
+	{
+		diffusemap		nopicmip	textures/massive/placeholder_poster10_d.tga //256*128
+		specularmap		textures/common/darker_gray.tga
+	}
+	{
+		blend add
+		map guis/assets/common/gui_scanlines.tga
+		scroll 0, time * -.04
+	}
+}
+
+/************
+canyon
+************/
+
+material textures/massive/canyon_billboard_1 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/canyon_billboard_2 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+//Widescreen TV
+material textures/massive/canyon_billboard_3 {
+	massive
+	{
+		diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //256*128
+		specularmap		textures/common/darker_gray.tga
+	}
+	{
+		blend add
+		map guis/assets/common/gui_scanlines.tga
+		scroll 0, time * -.04
+	}
+}
+
+material textures/massive/canyon_billboard_4 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster6_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/canyon_billboard_5 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster6_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/canyon_billboard_6 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/canyon_billboard_7 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster6_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/canyon_billboard_8 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+//Widescreen TV
+material textures/massive/canyon_billboard_9 {
+	massive
+	{
+		diffusemap		nopicmip	textures/massive/placeholder_poster10_d.tga //256*128
+		specularmap		textures/common/darker_gray.tga
+	}
+	{
+		blend add
+		map guis/assets/common/gui_scanlines.tga
+		scroll 0, time * -.04
+	}	
+}
+
+material textures/massive/canyon_billboard_10 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/canyon_billboard_11 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/canyon_billboard_12 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+/************
+Island
+************/
+
+material textures/massive/island_billboard_1 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/island_billboard_2 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster5_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/island_billboard_3 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/island_billboard_4 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster5_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/island_billboard_5 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster5_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/island_billboard_6 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/island_billboard_7 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/island_billboard_8 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/island_billboard_9 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster9_d.tga //128*128
+	specularmap		textures/common/darker_gray.tga
+}
+
+
+/************
+Outskirts
+************/
+
+material textures/massive/outskirts_billboard_1 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_2 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_3 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_4 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_5 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_6 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_7 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_8 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_9 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_10 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_11 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_12 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_13 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_14 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_15 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_16 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster8_d.tga //512*512
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_17 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/outskirts_billboard_18 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster8_d.tga //512*512
+	specularmap		textures/common/darker_gray.tga
+}
+
+//Widescreen TV
+material textures/massive/outskirts_billboard_19 {
+	massive
+	{
+		diffusemap		nopicmip	textures/massive/placeholder_poster11_d.tga //256*128
+		specularmap		textures/common/darker_gray.tga
+	}
+	{
+		blend add
+		map guis/assets/common/gui_scanlines.tga
+		scroll 0, time * -.04
+	}	
+}
+
+//Widescreen TV
+material textures/massive/outskirts_billboard_20 {
+	massive
+	{
+		diffusemap		nopicmip	textures/massive/placeholder_poster10_d.tga //512*256
+		specularmap		textures/common/darker_gray.tga
+	}
+	{
+		blend add
+		map guis/assets/common/gui_scanlines.tga
+		scroll 0, time * -.04
+	}
+}
+
+
+material textures/massive/outskirts_billboard_21 {
+	qer_editorimage	textures/massive/placeholder_poster8_d.tga
+	massive
+	{
+		program trivialCinematic
+		videoMap loop test.roq
+	}
+}
+
+/************
+Quarry
+************/
+
+material textures/massive/quarry_billboard_1 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/quarry_billboard_2 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster3_d.tga //512*512
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/quarry_billboard_3 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster4_d.tga //512*512
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/quarry_billboard_4 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster8_d.tga //512*512
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/quarry_billboard_5 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/quarry_billboard_6 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/quarry_billboard_7 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/quarry_billboard_8 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/quarry_billboard_9 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster6_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+
+/************
+Refinery
+************/
+
+material textures/massive/refinery_billboard_1 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/refinery_billboard_2 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/refinery_billboard_3 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/refinery_billboard_4 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster6_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/refinery_billboard_5 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/refinery_billboard_6 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster8_d.tga //512*512
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/refinery_billboard_7 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster8_d.tga //512*512
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/refinery_billboard_8 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster8_d.tga //512*512
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/refinery_billboard_9 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster6_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/refinery_billboard_10 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster8_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/refinery_billboard_11 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/refinery_billboard_12 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster6_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/refinery_billboard_13 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster8_d.tga //512*512
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/refinery_billboard_14 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+//Widescreen TV
+material textures/massive/refinery_billboard_15 {
+	massive
+	{
+		diffusemap		nopicmip	textures/massive/placeholder_poster10_d.tga //256*128
+		specularmap		textures/common/darker_gray.tga
+	}
+	{
+		blend add
+		map guis/assets/common/gui_scanlines.tga
+		scroll 0, time * -.04
+	}	
+}
+
+/************
+Salvage
+************/
+
+material textures/massive/salvage_billboard_1 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/salvage_billboard_2 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/salvage_billboard_3 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/salvage_billboard_4 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/salvage_billboard_5 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/salvage_billboard_6 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/salvage_billboard_7 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+/************
+Slipgate
+************/
+
+material textures/massive/slipgate_billboard_1 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/slipgate_billboard_2 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster8_d.tga //512*512
+	specularmap		textures/common/darker_gray.tga
+}
+
+
+material textures/massive/slipgate_billboard_3 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+
+material textures/massive/slipgate_billboard_4 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster8_d.tga //512*512
+	specularmap		textures/common/darker_gray.tga
+}
+
+
+material textures/massive/slipgate_billboard_5 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+
+material textures/massive/slipgate_billboard_6 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster8_d.tga //512*512
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/slipgate_billboard_7 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*512
+	specularmap		textures/common/darker_gray.tga
+}
+
+/************
+Sewer
+************/
+
+material textures/massive/sewer_billboard_1 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster7_d.tga //256*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/sewer_billboard_2 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/sewer_billboard_3 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+
+/************
+Valley
+************/
+
+material textures/massive/valley_billboard_1 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/valley_billboard_2 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/valley_billboard_3 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/valley_billboard_4 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/valley_billboard_5 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/valley_billboard_6 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/valley_billboard_7 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/valley_billboard_8 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/valley_billboard_9 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster1_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}
+
+material textures/massive/valley_billboard_10 {
+	massive
+	
+	diffusemap		nopicmip	textures/massive/placeholder_poster2_d.tga //512*256
+	specularmap		textures/common/darker_gray.tga
+}

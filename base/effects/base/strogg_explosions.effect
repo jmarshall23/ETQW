@@ -1,0 +1,14 @@
+effect effects/base/strogg_explosion_large
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/plasmacharge/explosion_default"
+	}
+}
+
+
+
+
+

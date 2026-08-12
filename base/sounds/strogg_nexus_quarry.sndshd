@@ -1,0 +1,150 @@
+// Strogg Nexus
+
+// Map Quarry
+
+sound sounds/vo/strogg/nexus/maps/quarry/autodestructor {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20601.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/autodestructor/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20602.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/take {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20604.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/take/long  {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20605.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/secured {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20606.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/escortcarrier {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20607.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/taken/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20608.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/taken {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20609.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/dropped {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20610.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/pickup {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20611.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/returned {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20612.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/first/taken {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20613.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/first/dropped {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20614.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/first/returned {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20615.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/first/activated {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20616.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/second/taken {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20617.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/second/dropped {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20618.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/second/returned {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20619.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/second/activated {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20620.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/third/taken {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20621.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/third/dropped {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20622.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/third/returned {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20623.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/third/activated {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20624.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/autodestructor/third {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20625.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/autodestructor/twothirds {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20626.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/stroggwin {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20627.wav
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20628.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/strogglose {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20629.wav
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/20630.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/take/autodestructor {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/25504.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/quarry/energycells/take/ship {
+
+	localization/english/sounds/vo/strogg/nexus/maps/quarry/25505.wav
+}

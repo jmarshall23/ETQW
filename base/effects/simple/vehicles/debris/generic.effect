@@ -1,0 +1,195 @@
+effect effects/vehicles/generic_debris_simple
+{
+	size	66
+
+	emitter "afterburn"
+	{
+		duration	1,1
+		count		12,12
+		attenuateEmitter
+		attenuation	12000,12000
+
+		sprite
+		{
+			duration	0.2,0.4
+			blend	add
+			persist
+			material	"particles/explosion/explode07"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,0 cone }
+				size { line 15,15,25,25 }
+				tint { line 0.454902,0.360784,0.054902,0.266667,0.239216,0.0431373 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1 }
+				fade { envelope concavefade }
+				offset { envelope exp_1minusx/x2 count 2,2,2 }
+				rotate { envelope convexfade count 99 }
+			}
+
+			end
+			{
+				size { point 2,2 }
+				rotate { box 1,-1 }
+			}
+			lineHit
+		}
+	}
+	emitter "SmokeTrail"
+	{
+		start		0.2,0.2
+		duration	1,1
+		count		20,20
+		attenuateEmitter
+		attenuation	12000,12000
+
+		sprite
+		{
+			duration	1,2
+			persist
+			material	"particles/dustcloud_02_litsmoke"
+			gravity		0.02,0.02
+			trailRepeat	1
+
+			start
+			{
+				position { spiral 0,0,0,0,0,0,64 }
+				size { line 5,5,15,15 }
+				tint { line 0.027451,0.027451,0.027451,0.192157,0.192157,0.192157 }
+				fade { point 0 }
+				offset { line 2,2,2,-2,-2,-2 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope exp_x2 }
+				tint { envelope jrad_concavefade }
+				fade { envelope breathtable count 0.6 offset 0.4 }
+				offset { envelope linear }
+				rotate { envelope exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 20,20,40,40 }
+				tint { point 0.141176,0.141176,0.141176 }
+				fade { line 0.4,0.7 }
+				offset { box -5,-5,-5,5,5,5 }
+				rotate { box -0.166667,0.166667 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/vehicles/generic_debris_large_simple
+{
+	size	442
+
+	emitter "afterburn"
+	{
+		start		0.2,0.2
+		duration	4,4
+		count		5,5
+		attenuateEmitter
+		attenuation	12000,12000
+
+		sprite
+		{
+			duration	1,1.3
+			blend	add
+			persist
+			material	"particles/explosion/explode07"
+			gravity		-0.1,-0.1
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,0 cone }
+				size { line 100,100,120,120 }
+				tint { line 0.454902,0.356863,0.054902,0.266667,0.239216,0.0431373 }
+				offset { sphere 0,-50,-50,50,50,50 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1 }
+				fade { envelope concavefade }
+				rotate { envelope convexfade count 99 }
+			}
+
+			end
+			{
+				size { line 40,40,55,55 }
+				rotate { box 1,-1 }
+			}
+			lineHit
+		}
+	}
+	sound "sound2"
+	{
+		start		0.1,0.1
+		soundShader	"sounds/deployables/rockets/fly"
+	}
+	emitter "SmokeTrail2"
+	{
+		start		0.2,0.2
+		duration	4,4
+		count		8,8
+		attenuateEmitter
+		attenuation	12000,12000
+
+		sprite
+		{
+			duration	4,6
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		-0.06,-0.02
+			trailRepeat	1
+
+			start
+			{
+				position { spiral 0,0,0,0,0,0,64 }
+				size { line 35,35,50,50 }
+				tint { line 0,0,0,0.211765,0.211765,0.211765 }
+				fade { point 0 }
+				offset { sphere -75,-75,-75,75,75,75 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope linear count 2,2 }
+				tint { envelope jrad_concavefade }
+				fade { envelope breathtable count 0.6 offset 0.4 }
+				rotate { envelope exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 100,100,220,220 }
+				tint { point 0.137255,0.137255,0.137255 }
+				fade { point 1 }
+				rotate { box -0.166667,0.166667 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+

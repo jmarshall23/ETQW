@@ -1,0 +1,681 @@
+/**************************************************************
+	GDF Arming Device (NEW)
+**************************************************************/
+
+material models/tools/gdf_arming_device/arming_device_new
+{
+renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/tools/gdf_arming_device/arming_device_new_local.tga models/tools/gdf_arming_device/dev_sd/hi.ase
+noshadows
+	{
+	diffusemap	picmip -1 partialLoad models/tools/gdf_arming_device/arming_device_new_d.tga
+	specularmap	picmip -2 partialLoad models/tools/gdf_arming_device/arming_device_new_s.tga
+	bumpmap 	picmip -1 partialLoad addnormals(models/tools/gdf_arming_device/arming_device_new_local.tga, heightmap(models/tools/gdf_arming_device/arming_device_new_h.tga, 2 ) )
+	}
+}
+
+material models/tools/gdf_arming_device/arming_device_new_thirdperson
+{
+noshadows
+renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/tools/gdf_arming_device/arming_device_new_local.tga models/tools/gdf_arming_device/dev_sd/hi.ase
+	{
+	diffusemap	picmip -1	models/tools/gdf_arming_device/arming_device_new_thirdperson_d.tga
+	specularmap	picmip -2	models/tools/gdf_arming_device/arming_device_new_thirdperson_s.tga
+	bumpmap 	picmip -1	addnormals(models/tools/gdf_arming_device/arming_device_new_thirdperson_local.tga, heightmap(models/tools/gdf_arming_device/arming_device_new_thirdperson_h.tga, 2 ) )
+	}
+}
+
+material models/tools/gdf_arming_device/arming_device_new_led
+{
+	{
+	blend	add
+	map	models/tools/gdf_arming_device/led.tga
+	rgb	sintable [time * 0.9]*1.6
+	}
+}
+
+/**************************************************************
+	GDF Arming Device (OLD)
+	renderbump models/techkits/pliers/dev_sd/pliers_low.lwo
+**************************************************************/
+
+material models/tools/gdf_arming_device/arming_device
+{
+	noshadows
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/techkits/arming_device/arming_device_local.tga models/techkits/arming_device/arming_device_hi.ase
+	diffusemap	picmip -1 partialLoad models/tools/gdf_arming_device/arming_device_d.tga
+	specularmap	picmip -2 partialLoad models/tools/gdf_arming_device/arming_device_s.tga
+	bumpmap 	picmip -1 partialLoad models/tools/gdf_arming_device/arming_device_local.tga
+}
+
+material models/tools/gdf_arming_device/arming_device_thirdperson
+{
+	noshadows
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/techkits/arming_device/arming_device_local.tga models/techkits/arming_device/arming_device_hi.ase
+	diffusemap	models/tools/gdf_arming_device/arming_device_thirdperson_d.tga
+	specularmap	models/tools/gdf_arming_device/arming_device_thirdperson_s.tga
+	bumpmap 	models/tools/gdf_arming_device/arming_device_thirdperson_local.tga
+}
+
+material models/tools/gdf_arming_device/buttons {
+	{
+		blend blend
+		colored
+		map clamp partialLoad models/tools/gdf_arming_device/buttons.tga
+	}
+}
+
+/**************************************************************
+	Pliers New
+	renderbump models/techkits/pliers/dev_sd/pliers_low.lwo
+**************************************************************/
+
+material models/tools/pliers/pliers
+{
+	renderbump -size 1024 1024 -aa 2 -colormap -clampoutput 0 0 1 1 models/techkits/pliers/pliers_local.tga models/techkits/pliers/dev_sd/pliers_high.lwo
+	noshadows
+
+	diffusemap	picmip -1 partialLoad models/tools/pliers/pliers_d.tga
+	specularmap	picmip -2 partialLoad models/tools/pliers/pliers_s.tga
+	bumpmap		picmip -1 partialLoad models/tools/pliers/pliers_local.tga
+}
+
+material models/tools/pliers/pliers_world
+{
+	renderbump -size 1024 1024 -aa 2 -colormap -clampoutput 0 0 1 1 models/techkits/pliers/pliers_local.tga models/techkits/pliers/dev_sd/pliers_high.lwo
+	noshadows
+
+	diffusemap	picmip -1	models/tools/pliers/pliers_world_d.tga
+	specularmap	picmip -2	models/tools/pliers/pliers_world_s.tga
+	bumpmap	picmip -1		models/tools/pliers/pliers_world_local.tga
+}
+
+/**************************************************************
+	Strogg_Landmine_Rework_Thirdperson
+**************************************************************/
+
+material models/items/landmine_strogg/landmine_strogg_rework_thirdperson
+{
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 items/landmine_strogg/landmine_strogg_local.tga items/landmine_strogg/landmine_strogg_hi.lwo
+	noshadows
+	diffusemap	picmip -1	models/items/landmine_strogg/landmine_strogg_rework_thirdperson_d.tga
+	specularmap	picmip -2	models/items/landmine_strogg/landmine_strogg_rework_thirdperson_s.tga
+	bumpmap	picmip -1 	addnormals(models/items/landmine_strogg/landmine_strogg_rework_thirdperson_local.tga, heightmap(models/items/landmine_strogg/landmine_strogg_rework_thirdperson_h.tga, 5 ) )
+	{
+		blend		add
+		map	picmip -2			models/items/landmine_strogg/landmine_strogg_rework_thirdperson_glow.tga
+		red			1 * blinktable[time * 5] + 0.5
+		green		1 * blinktable[time * 5] + 0.5
+		blue		1 * blinktable[time * 5] + 0.5
+	}
+}
+
+/**************************************************************
+	Strogg_Landmine_Rework
+**************************************************************/
+
+material models/items/landmine_strogg/landmine_strogg_rework
+{
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 items/landmine_strogg/landmine_strogg_local.tga items/landmine_strogg/landmine_strogg_hi.lwo
+	noshadows
+ 	{
+		program	interaction/strogg
+		diffusemap		picmip -1 partialLoad models/items/landmine_strogg/landmine_strogg_rework_d.tga
+		specularmap		picmip -2 partialLoad models/items/landmine_strogg/landmine_strogg_rework_s.tga
+		bumpmap			picmip -1 partialLoad addnormals(models/items/landmine_strogg/landmine_strogg_rework_local.tga, heightmap(models/items/landmine_strogg/landmine_strogg_rework_h.tga, 5 ) )
+		selfIllumMap	picmip -2 partialLoad models/items/landmine_strogg/landmine_strogg_rework_glow.tga
+	}
+}
+
+/**************************************************************
+	Strogg_Landmine
+**************************************************************/
+
+material models/items/landmine_strogg/landmine_strogg
+{
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 items/landmine_strogg/landmine_strogg_local.tga items/landmine_strogg/landmine_strogg_hi.lwo
+	noshadows
+ 	{
+		program	interaction/strogg
+		diffusemap	models/items/landmine_strogg/landmine_strogg_d.tga
+		specularmap	models/items/landmine_strogg/landmine_strogg_s.tga
+		bumpmap 	addnormals(models/items/landmine_strogg/landmine_strogg_local.tga, heightmap(models/items/landmine_strogg/landmine_strogg_h.tga, 5 ) )
+		selfIllumMap models/items/landmine_strogg/landmine_strogg_glow.tga
+	}
+}
+
+/**************************************************************
+	GDF Binoculars
+**************************************************************/
+
+material models/tools/binoculars/binoculars
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/binoculars/binoculars_local.tga models/weapons/binoculars/binoculars_hi.lwo
+	{
+		program interaction/selfillum
+		diffusemap		picmip -1 partialLoad models/tools/binoculars/binoculars_d.tga
+		specularmap		picmip -2 partialLoad models/tools/binoculars/binoculars_s.tga
+		bumpmap			picmip -1 partialLoad addnormals(models/tools/binoculars/binoculars_local.tga, heightmap(models/tools/binoculars/binoculars_h.tga, 4 ) )
+		selfIllumMap	picmip -2 partialLoad models/tools/binoculars/binoculars_glow.tga
+  	}
+}
+
+material models/tools/binoculars/binoculars_thirdperson
+{
+	noshadows
+	renderbump -size 512 512 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/binoculars/binoculars_thirdperson_local.tga models/weapons/binoculars/binoculars_hi.lwo
+	diffusemap	picmip -1	models/tools/binoculars/binoculars_thirdperson_d.tga
+	specularmap	picmip -2	models/tools/binoculars/binoculars_thirdperson_s.tga
+	bumpmap	picmip -1 	models/tools/binoculars/binoculars_thirdperson_local.tga
+}
+
+/**************
+ EDF Binoculars Lens (generic)
+ **************/
+
+material models/tools/binoculars/binoculars_lens
+{
+       	renderbump -size 128 128 -clampOutput 0 0 1 1 models/weapons/binoculars/binoculars_lens_local.tga models/weapons/binoculars/binoculars_lens_hi.lwo
+	
+	// Tube-like inside backing
+	{
+		blend blend
+		map picmip -1 partialLoad models/tools/binoculars/binoculars_lens_d.tga
+		red	0.8
+		green	0.2
+		blue	0
+   		vertexcolor
+		alpha 0.8
+	}
+	// Cubemap refraction
+	{
+		blend blend
+		program sfx/visor
+		bumpMap	picmip -1 partialLoad models/tools/binoculars/binoculars_lens_local.tga	
+		parameters 1, 1.5, 0.2
+	}
+	//Lens colour tint
+	{
+		blend filter
+		red	0.9
+		green	0.3
+		blue	0
+		vertexcolor
+		map _white
+	}
+}
+
+/*******************************
+ GDF Binoculars Lens Engineer
+ *******************************/
+
+material models/tools/binoculars/binoculars_lens_engineer
+{
+       	renderbump -size 128 128 -clampOutput 0 0 1 1 models/weapons/binoculars/binoculars_lens_local.tga models/weapons/binoculars/binoculars_lens_hi.lwo
+
+	
+	// Tube-like inside backing
+	{
+		blend blend
+		map picmip -1 partialLoad models/tools/binoculars/binoculars_lens_d.tga
+		red	1
+		green	0.6
+		blue	0
+   		vertexcolor
+		alpha 0.8
+	}
+	// Cubemap refraction
+	{
+		blend blend
+		program sfx/visor
+		bumpMap	picmip -1 partialLoad models/tools/binoculars/binoculars_lens_local.tga	
+		parameters 1, 1.5, 0.2
+	}
+	//Lens colour tint
+	{
+		blend filter
+		red	0.9
+		green	0.5
+		blue	0.25
+		vertexcolor
+		map _white
+	}
+}
+
+/*******************************
+ GDF Binoculars Lens Field Ops
+ *******************************/
+
+material models/tools/binoculars/binoculars_lens_fieldops
+{
+       	renderbump -size 128 128 -clampOutput 0 0 1 1 models/weapons/binoculars/binoculars_lens_local.tga models/weapons/binoculars/binoculars_lens_hi.lwo
+
+	
+	// Tube-like inside backing
+	{
+		blend blend
+		map picmip -1 partialLoad models/tools/binoculars/binoculars_lens_d.tga
+		red	0.25
+		green	0.6
+		blue	0.5
+   		vertexcolor
+		alpha 0.8
+	}
+	// Cubemap refraction
+	{
+		blend blend
+		program sfx/visor
+		bumpMap	picmip -1 partialLoad models/tools/binoculars/binoculars_lens_local.tga	
+		parameters 1, 1.2, 0.1
+	}
+	//Lens colour tint
+	{
+		blend filter
+		red	0.5
+		green	0.75
+		blue	0.75
+		vertexcolor
+		map _white
+	}
+}
+
+/*******************************
+ GDF Binoculars Lens Covert Ops
+ *******************************/
+
+material models/tools/binoculars/binoculars_lens_covertops
+{
+       	renderbump -size 128 128 -clampOutput 0 0 1 1 models/weapons/binoculars/binoculars_lens_local.tga models/weapons/binoculars/binoculars_lens_hi.lwo
+	
+	// Tube-like inside backing
+	{
+		blend blend
+		map picmip -1 partialLoad models/tools/binoculars/binoculars_lens_d.tga
+		red	0.4
+		green	0.9
+		blue	0.6
+   		vertexcolor
+		alpha 0.8
+	}
+	// Cubemap refraction
+	{
+		blend blend
+		program sfx/visor
+		bumpMap	picmip -1 partialLoad models/tools/binoculars/binoculars_lens_local.tga	
+		parameters 1, 1.5, 0.2
+	}
+	//Lens colour tint
+	{
+		blend filter
+		red	0.4
+		green	0.9
+		blue	0.5
+		vertexcolor
+		map _white
+	}
+}
+
+/**************
+ GDF Soldier Lens (rocket launcher)
+ **************/
+
+material models/tools/binoculars/binoculars_lens_soldier
+{
+       	renderbump -size 128 128 -clampOutput 0 0 1 1 models/weapons/binoculars/binoculars_lens_local.tga models/weapons/binoculars/binoculars_lens_hi.lwo
+	
+	// Tube-like inside backing
+	{
+		blend blend
+		map picmip -1 partialLoad models/tools/binoculars/binoculars_lens_d.tga
+		red	0.4
+		green	0.8
+		blue	1
+		vertexcolor
+		alpha 0.5
+	}
+	// Cubemap refraction
+	{
+		blend blend
+		program sfx/visor
+		bumpMap	picmip -1 partialLoad models/tools/binoculars/binoculars_lens_local.tga	
+		parameters 0.5, 1.5, 0.2
+	}
+	//Lens colour tint
+	{
+		blend filter
+		red	0
+		green	0.4
+		blue	0.6
+		vertexcolor
+		map _white
+	}
+}
+
+
+
+// *** TEMP strogg_trinoculars ***
+
+material models/tools/trinoculars/trinoculars2
+{
+	renderbump -size 512 512 -clampOutput 0 0 1 1 -colormap models/items/strogg_tools/trinoculars/trinoculars_local.tga models/items/strogg_tools/trinoculars/dev_sd/hi.lwo
+	noshadows
+	{
+	program		interaction/selfillum
+	diffusemap		picmip -1 partialLoad models/tools/trinoculars/trinoculars_d.tga
+	specularmap		picmip -2 partialLoad models/tools/trinoculars/trinoculars_s.tga
+	bumpmap			picmip -1 partialLoad models/tools/trinoculars/trinoculars_local.tga
+	selfillummap	picmip -2 partialLoad models/tools/trinoculars/trinoculars_glow.tga
+	}
+}
+
+material models/tools/trinoculars/trinoculars_world4
+{
+	renderbump -size 512 512 -clampOutput 0 0 1 1 -colormap models/items/strogg_tools/trinoculars/trinoculars_local.tga models/items/strogg_tools/trinoculars/dev_sd/hi.lwo
+	noshadows
+	{
+//	program		interaction/selfillum
+	diffusemap	picmip -1 models/tools/trinoculars/trinoculars_world_d.tga
+	specularmap	picmip -2 models/tools/trinoculars/trinoculars_world_s.tga
+	bumpmap 	picmip -1 models/tools/trinoculars/trinoculars_world_local.tga
+//	selfillummap	models/tools/trinoculars/trinoculars_world_glow.tga
+	}
+}
+
+/********************************************
+		Strogg Force Shield Generator
+		renderbump models/characters/strogg/dev_sd/shield_generator_low.lwo
+********************************************/
+
+material models/tools/force_shield/force_shield
+{
+	renderbump -size 1024 1024 -aa 2 -colormap -clampoutput 0 0 1 1 models/characters/strogg/shield_generator_local.tga models/characters/strogg/dev_sd/shield_generator_high.lwo
+	diffusemap	picmip -1 partialLoad	models/tools/force_shield/force_shield_d.tga
+	specularmap	picmip -2 partialLoad	models/tools/force_shield/force_shield_s.tga
+	bumpmap	picmip -1 partialLoad 	addnormals(models/tools/force_shield/force_shield_local.tga, heightmap(models/tools/force_shield/force_shield_h.tga,  2) )
+		{
+			blend	add
+			map	picmip -2	models/tools/force_shield/force_shield_glow.tga
+			maskalpha
+		}
+}
+
+material models/tools/force_shield/force_shield_world
+{
+	renderbump -size 1024 1024 -aa 2 -colormap -clampoutput 0 0 1 1 models/characters/strogg/shield_generator_local.tga models/characters/strogg/dev_sd/shield_generator_high.lwo
+	noshadows	
+	diffusemap	picmip -1 models/tools/force_shield/force_shield_world_d.tga
+	specularmap	picmip -2 models/tools/force_shield/force_shield_world_s.tga
+	bumpmap 	picmip -1 addnormals(models/tools/force_shield/force_shield_world_local.tga, heightmap(models/tools/force_shield/force_shield_world_h.tga,  2) )
+		{
+			blend	add
+			map	picmip -2	models/tools/force_shield/force_shield_glow.tga
+			maskalpha
+		}
+}
+
+// *** strogg_stroyent_injector ***
+
+material models/tools/stroyent_tool/stroyent_tool
+{
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/items/strogg_tools/stroyent_injector/stroyent_injector_local.tga models/items/strogg_tools/stroyent_injector/stroyent_injector_hi.lwo
+
+{
+	program	interaction/strogg
+	diffusemap		picmip -1 partialLoad models/tools/stroyent_tool/stroyent_tool_d.tga
+	specularmap		picmip -2 partialLoad models/tools/stroyent_tool/stroyent_tool_s.tga
+	bumpmap			picmip -1 partialLoad addnormals(models/tools/stroyent_tool/stroyent_tool_local.tga, heightmap(models/tools/stroyent_tool/stroyent_tool_h.tga, 5 ) )
+	selfIllumMap	picmip -2 partialLoad models/tools/stroyent_tool/stroyent_tool_glow.tga
+	}
+}
+
+// *** strogg_flyer_hive ***
+
+material models/items/flyer_hive/flyer_hive
+{
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/items/strogg_tools/flyer_hive/flyer_hive_local.tga models/items/strogg_tools/flyer_hive/flyer_hive_hi.lwo
+	noshadows
+	{
+	program	interaction/strogg
+	bumpmap			picmip -1 partialLoad addnormals(models/items/flyer_hive/flyer_hive_local.tga, heightmap(models/items/flyer_hive/flyer_hive_h.tga, 5 ) )
+	diffusemap		picmip -1 partialLoad models/items/flyer_hive/flyer_hive_d.tga
+	specularmap		picmip -2 partialLoad models/items/flyer_hive/flyer_hive_s.tga
+	selfIllumMap		picmip -2 partialLoad models/items/flyer_hive/flyer_hive_glow.tga
+	}
+}
+
+material models/items/flyer_hive/flyer_hive_thirdperson
+{
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/items/strogg_tools/flyer_hive/flyer_hive_local.tga models/items/strogg_tools/flyer_hive/flyer_hive_hi.lwo
+	noshadows
+	{
+	program	interaction/strogg
+	bumpmap		models/items/flyer_hive/flyer_hive_thirdperson_local.tga
+	diffusemap	models/items/flyer_hive/flyer_hive_thirdperson_d.tga
+	specularmap	models/items/flyer_hive/flyer_hive_thirdperson_s.tga
+	selfIllumMap 	models/items/flyer_hive/flyer_hive_thirdperson_glow.tga
+	}
+}
+
+
+// *** strogg_repair_drone ***
+
+material models/tools/repair_drone/repair_drone
+{
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/items/strogg_tools/repair_drone/repair_drone.tga models/items/strogg_tools/repair_drone/dev_sd/hi.lwo
+	noshadows
+{
+	program	interaction/strogg
+	bumpmap			picmip -1 partialLoad addnormals(models/tools/repair_drone/repair_drone_local.tga, heightmap(models/tools/repair_drone/repair_drone_h.tga, 5 ) )
+	diffusemap		picmip -1 partialLoad models/tools/repair_drone/repair_drone_d.tga
+	specularmap		picmip -2 partialLoad models/tools/repair_drone/repair_drone_s.tga
+	selfIllumMap	_black //picmip -2 partialLoad models/tools/repair_drone/repair_drone_glow.tga
+	}
+}
+
+material models/tools/repair_drone/repair_drone_thirdperson
+{
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/items/strogg_tools/repair_drone/repair_drone.tga models/items/strogg_tools/repair_drone/dev_sd/hi.lwo
+	noshadows
+{
+	program	interaction/strogg
+	bumpmap			picmip -1  addnormals(models/tools/repair_drone/repair_drone_world_local.tga, heightmap(models/tools/repair_drone/repair_drone_world_h.tga, 5 ) )
+	diffusemap		picmip -1  models/tools/repair_drone/repair_drone_world_d.tga
+	specularmap		picmip -2  models/tools/repair_drone/repair_drone_world_s.tga
+	selfIllumMap	_black //picmip -2 partialLoad models/tools/repair_drone/repair_drone_glow.tga
+	}
+}
+
+// *** stroyent_cells ***
+
+material models/items/stroyentcells/stroyentcells
+{
+
+	renderbump -size 512 512 -colormap models/items/strogg_tools/stroyent_cells/stroyent_cells.tga models/items/strogg_tools/stroyent_cells/dev_sd/hi.lwo
+	noshadows
+{
+	program	interaction/strogg
+	bumpmap			picmip -1 partialLoad addnormals(models/items/stroyentcells/stroyentcells_local.tga, heightmap(models/items/stroyentcells/stroyentcells_h.tga, 1 ) )
+	diffusemap		picmip -1 partialLoad models/items/stroyentcells/stroyentcells_d.tga
+	specularmap		picmip -2 partialLoad models/items/stroyentcells/stroyentcells_s.tga
+	selfIllumMap		picmip -1 partialLoad models/items/stroyentcells/stroyentcells_glow.tga
+	}
+}
+
+
+material models/items/stroyentcells/stroyentcells_glass
+
+{
+	qer_editorimage textures/strogg/fluid_red_bubble1.tga
+	NoShadows
+	translucent
+	nonSolid
+	
+	sort decal
+
+   	{
+   		blend add
+   		map textures/strogg/fluid_grey_bubble1.tga
+   		scroll 0, time * .1
+   		red	1
+   		green	0.25
+   		blue	0
+   		vertexcolor
+  	}
+	{
+		blend add
+		map textures/strogg/fluid_grey_bubble1.tga
+		scroll time * .01, time * .2
+		red	1
+		green	0.15
+		blue	0
+		vertexcolor
+  	}
+	{
+		blend add
+		map textures/strogg/fluid_grey_bubble2.tga
+		scroll	0, time * .5
+		red	sinTable[ time / 3 ]-0.1
+		green	sinTable[ time / 3 ]-0.7
+		blue	sinTable[ time / 3 ]-0.9
+		vertexcolor
+	}
+
+	{
+		blend blend
+		program sfx/visor
+		bumpMap	picmip -1 models/items/stroyentcells/glass_local3.tga
+		parameters 1, 2.5, 0.2
+		//scroll 0, time * .25
+	}
+}
+
+material models/items/stroyentcells/stroyentcells_glow
+{
+
+	renderbump -size 512 512 -colormap models/items/stroyentcells/stroyentcells.tga models/items/strogg_tools/stroyent_cells/dev_sd/hi.lwo
+	noshadows
+
+	bumpmap	picmip -1		addnormals(models/items/stroyentcells/stroyentcells_world_local.tga, heightmap(models/items/stroyentcells/stroyentcells_world_h.tga, 5 ) )
+	diffusemap	picmip -1	models/items/stroyentcells/stroyentcells_world_d.tga
+	specularmap	picmip -2	models/items/stroyentcells/stroyentcells_world_s.tga
+
+	{
+		blend		add
+		map	picmip -2			models/items/stroyentcells/stroyentcells_glow2.tga
+		red			1 * blinktable[time * 1] + 0.5
+		green		1 * blinktable[time * 1] + 0.5
+		blue		1 * blinktable[time * 1] + 0.5
+	}
+
+}
+
+// *** DEFIBRILLATOR ***
+material models/tools/defibrillator/defibrillator
+{
+	//noselfshadow
+
+	unsmoothedtangents
+	renderbump -trace 0.1 -size 1024 1024 models/items/edf_tools/defibrillator_local.tga models/items/edf_tools/defib_hi.lwo
+	noshadows
+	
+	bumpmap		picmip -1 partialLoad models/tools/defibrillator/defibrillator_local.tga
+	diffusemap	picmip -1 partialLoad models/tools/defibrillator/defibrillator_d.tga
+	specularmap	picmip -2 partialLoad models/tools/defibrillator/defibrillator_s.tga
+	{
+		blend add
+		map	picmip -2 partialLoad models/tools/defibrillator/defibrillator_glow.tga
+		maskAlpha
+	}
+}
+
+// *** REPAIRTOOL ***
+material models/tools/spike_constructor/spike_constructor
+{
+	renderbump -size 1024 1024 -aa 2 -clampoutput 0 0 1 1 -colormap models/items/strogg_tools/repairtool_local.tga models/items/strogg_tools/dev_sd/repairtool_high.lwo
+	noshadows
+	{
+		program	interaction/strogg
+		diffusemap		picmip -1 partialLoad models/tools/spike_constructor/spike_constructor_d.tga
+		specularmap		picmip -2 partialLoad models/tools/spike_constructor/spike_constructor_s.tga
+		bumpmap 		picmip -1 partialLoad addnormals(models/tools/spike_constructor/spike_constructor_local.tga, heightmap(models/tools/spike_constructor/spike_constructor_h.tga, 5 ) )
+		selfIllumMap 	picmip -2 partialLoad models/tools/spike_constructor/spike_constructor_glow.tga
+  	}
+}
+
+// *** CAMERA ***
+material models/items/third_eye/third_eye
+{
+	//noselfshadow
+	renderbump -size 1024 1024 -aa 2 -clampoutput 0 0 1 1 -colormap models/items/edf_tools/camera_local.tga models/items/edf_tools/dev_sd/camera_high.lwo
+	noshadows
+	
+	bumpmap		picmip -1 partialLoad models/items/third_eye/third_eye_local.tga
+	diffusemap	picmip -1 partialLoad models/items/third_eye/third_eye_d.tga
+	specularmap	picmip -2 partialLoad models/items/third_eye/third_eye_s.tga
+}
+
+material models/items/third_eye/third_eye_world
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -clampoutput 0 0 1 1 -colormap models/items/edf_tools/camera_local.tga models/items/edf_tools/dev_sd/camera_high.lwo
+
+	bumpmap		picmip -1 models/items/third_eye/third_eye_world_local.tga
+	diffusemap	picmip -1 models/items/third_eye/third_eye_world_d.tga
+	specularmap	picmip -2 models/items/third_eye/third_eye_world_s.tga
+}
+
+
+// *** FORCESHIELD ***
+
+table strogg_tools/force_shield_blink { clamp { 1, 0.8, 0.8, 0.8, 0.8, 1, 1, 1, 0.6, 0.6, 0.6, 1, 1, 0.5, 0.5, 1, 0.5, 1, 0.5, 1, 0.5, 0.7 } }
+
+material models/items/strogg_tools/force_shield
+{
+	qer_editorimage "textures/editor/flare.tga" //This needs to be a square texture for the normalize coords feature to work properly
+	surfacetype "forcefield"
+	{
+		blend add
+		program	sfx/stroggForceField
+		map			textures/sfx/forcefield.tga
+		mask		clamp textures/sfx/shieldmask.tga
+		diffuseMap	clamp textures/sfx/forcegradient.tga
+
+
+		parameters	time * 0.05
+		parameters2	0.2, 0.2
+
+		textureMatrix diffuseMatrix {
+			scale 0.5, 0.5
+		}
+
+		textureMatrix maskMatrix {
+			translate 0, 0
+		}
+
+		//maskAlpha
+	}
+}
+/********************************************
+		GDF Targeting Tool
+********************************************/
+material models/tools/targeting_tool/targeting_tool
+{
+	renderbump -size 1024 1024 -colorMap -trace 0.05 -clampTextureSpace -overdrawMap models/tools/targeting_tool/targeting_tool_local.tga models/tools/targeting_tool/targeting_tool_h.lwo
+	noshadows
+	{
+	diffusemap 	picmip -1 partialLoad models/tools/targeting_tool/targeting_tool_d.tga
+	specularmap	picmip -2 partialLoad models/tools/targeting_tool/targeting_tool_s.tga
+	bumpmap		picmip -1 partialLoad addnormals (models/tools/targeting_tool/targeting_tool_local.tga, heightmap (models/tools/targeting_tool/targeting_tool_h.tga, 4 ) )
+	}
+}
+
+material models/tools/targeting_tool/targeting_tool_thirdperson
+{
+	renderbump -size 1024 1024 -colorMap -trace 0.05 -clampTextureSpace -overdrawMap models/tools/targeting_tool/targeting_tool_local.tga models/tools/targeting_tool/targeting_tool_h.lwo
+	noshadows
+	{
+	diffusemap 	models/tools/targeting_tool/targeting_tool_thirdperson_d.tga
+	specularmap	models/tools/targeting_tool/targeting_tool_thirdperson_s.tga
+	bumpmap		addnormals (models/tools/targeting_tool/targeting_tool_thirdperson_local.tga, heightmap (models/tools/targeting_tool/targeting_tool_thirdperson_h.tga, 4 ) )
+	}
+}

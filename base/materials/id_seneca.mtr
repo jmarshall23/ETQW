@@ -1,0 +1,264 @@
+table round_flicker_2 { snap { 1, .1, 1, 0, .7, .1, .1, .1, .1, .1, .1, .1, 0, 1, 0, 1, .1, .1, .1, .1, .1, .1, .1, .1, 1, .1, .1, .1, .1, .1, .1, .1, 1, 0, 1, 1, .1, .1, .1, .1, .1, .1, .1, .1, .1, 1, 0, .7, .1, .1, .1, .1, .1, .1, .1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } }
+
+
+material textures/enpro/encyl10
+{
+	qer_editorimage		textures/enpro/encyl10
+	bumpmap				textures/enpro/encyl10_local
+	diffusemap			textures/enpro/encyl10
+	specularmap			textures/enpro/encyl10_s
+}
+
+material textures/enpro/minpanel1cut2a
+{
+	surfaceType "metal"
+	qer_editorimage		textures/enpro/minpanel1cut2a
+	bumpmap				textures/base_wall/minpanel1cut_local
+	diffusemap			textures/enpro/minpanel1cut2a
+	specularmap			textures/enpro/minpanel1cut1a_s
+}
+
+material textures/enpro/encyl10_glow
+{
+	qer_editorimage		textures/enpro/encyl10
+	bumpmap				textures/enpro/encyl10_local
+	diffusemap			textures/enpro/encyl10
+	specularmap			textures/enpro/encyl10_s
+	{
+		blend			add
+		map			highquality	textures/enpro/encyl10_add
+		colored
+
+	}
+}
+
+material textures/enpro/encyl6
+{
+	qer_editorimage		textures/enpro/encyl6
+	bumpmap				textures/enpro/encyl6_local
+	diffusemap			textures/enpro/encyl6
+	specularmap			textures/enpro/encyl6_s
+}
+
+material textures/enpro/encyl1
+{
+	qer_editorimage		textures/enpro/encyl1
+	bumpmap				textures/enpro/encyl1_local
+	diffusemap			textures/enpro/encyl1
+	specularmap			textures/enpro/encyl1_s
+	{
+		blend			add
+		map				textures/enpro/encyl1_add
+		colored
+	}
+}
+
+material textures/enpro/enwall22e
+{
+	surfaceType "metal"
+	qer_editorimage		textures/enpro/enwall22e
+	bumpmap				textures/base_wall/snpanel18_local
+	diffusemap			textures/enpro/enwall22e
+	specularmap			textures/enpro/enwall22_s
+}
+
+material textures/enpro/enwall21a
+{
+	surfaceType "metal"
+	qer_editorimage		textures/enpro/enwall21a
+	bumpmap				textures/base_wall/snpanel17_local
+	diffusemap			textures/enpro/enwall21a
+	specularmap			textures/enpro/enwall21_s
+}
+
+material textures/enpro/enwall20f
+{
+	surfaceType "metal"
+	qer_editorimage		textures/enpro/enwall20f
+	bumpmap				textures/enpro/enwall20_local
+	diffusemap			textures/enpro/enwall20f
+	specularmap			textures/enpro/enwall20f_s
+}
+
+material textures/enpro/enwall19b
+{
+	surfaceType "metal"
+	qer_editorimage		textures/enpro/enwall19b
+	bumpmap				textures/base_wall/stepanel5_local
+	diffusemap			textures/enpro/enwall19b
+	specularmap			textures/enpro/enwall19_s
+}
+
+material textures/enpro/enwall12
+{
+	qer_editorimage		textures/enpro/enwall12
+	bumpmap				textures/enpro/enwall12_local
+	diffusemap			textures/enpro/enwall12
+	specularmap			textures/enpro/enwall12_s
+}
+
+material textures/enpro/enwall5
+{
+	surfaceType "metal"
+	qer_editorimage		textures/enpro/enwall5_local
+	bumpmap				textures/enpro/enwall5_local
+	diffusemap			textures/enpro/enwall5
+	specularmap			textures/enpro/enwall5_s
+}
+
+material textures/mcity/minwall1
+{
+	surfaceType "metal"
+	qer_editorimage		textures/mcity/minwall1
+	bumpmap				textures/base_wall/ghowall1_local
+	diffusemap			textures/mcity/minwall1
+	specularmap			textures/mcity/minwall1_s
+}
+
+material textures/mcity/mcityc8b
+{
+	surfaceType "metal"
+		qer_editorimage	textures/mcity/mcityc8b
+		bumpmap			textures/mcity/mcityc8_local
+		diffusemap		textures/mcity/mcityc8b
+		specularmap		textures/mcity/mcityc1_s
+}
+
+material textures/mcity/mcitypipe1s
+{
+	surfaceType "metal"
+	qer_editorimage			textures/mcity/mcitypipe1.tga
+	bumpmap				addnormals (textures/mcity/mcitypipe1_local.tga, heightmap (textures/mcity/mcitypipe1_bmp.tga, 4 ) )
+	diffusemap			textures/mcity/mcitypipe1.tga
+	specularmap			textures/mcity/mcitypipe1_s.tga
+}
+
+material textures/decals/hangingwires2sided
+{
+	surfaceType "metal"
+	twoSided
+			nonsolid
+	noimpact
+	noshadows
+	qer_editorimage		textures/decals/hangingwires.tga
+
+	{
+		diffusemap 	picmip -1	textures/decals/hangingwires_d.tga
+		bumpmap		picmip -1	textures/decals/hangingwires_local.tga
+		specularmap	picmip -2	textures/decals/hangingwires_s.tga
+		alphatest	.25
+	}
+
+}
+
+material textures/decals/sp1_alpha
+{
+	surfaceType "metal"
+	qer_editorimage		textures/decals/sp1_alpha.tga
+	twoSided
+	noshadows
+	{
+		diffusemap	textures/base_trim/sp1_d.tga
+		bumpmap 	textures/base_trim/sp1_local.tga
+		specularmap 	textures/base_trim/sp1_s.tga
+		alphaTest 	0.5
+	}
+
+}
+
+material textures/base_light/reactorlight1
+{
+	surfaceType "metal"
+	qer_editorimage		textures/base_light/reactorlight1.tga
+	bumpmap			textures/base_light/reactorlight1_local.tga
+	diffusemap		textures/base_light/reactorlight1_d.tga
+	specularmap		textures/base_light/reactorlight1_s.tga
+	{
+		blend 		add
+		map 		textures/base_light/reactorlight1_add.tga
+		red		parm0 * 2
+		green		parm1 * 2
+		blue		parm2 * 2
+	}
+}
+
+material textures/base_light/reactorlight1_flickering
+{
+	surfaceType "metal"
+	qer_editorimage		textures/base_light/reactorlight1.tga
+	bumpmap			textures/base_light/reactorlight1_local.tga
+	diffusemap		textures/base_light/reactorlight1_d.tga
+	specularmap		textures/base_light/reactorlight1_s.tga
+	{
+		blend 		add
+		map 		textures/base_light/reactorlight1_add.tga
+		red 	( round_flicker_2 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm0
+		green 	( round_flicker_2 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm1
+		blue	( round_flicker_2 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm2
+	}
+}
+
+material textures/object/cdplayer3b
+{
+	qer_editorimage		textures/object/cdplayer3b.tga
+	bumpmap			textures/object/cdplayer3b_local.tga
+	diffusemap		textures/object/cdplayer3a_d.tga
+	specularmap		textures/object/cdplayer3a_d.tga
+}
+
+material textures/sfx/xrayblend
+{
+	translucent
+	nonsolid
+	noshadows
+	qer_editorimage	textures/sfx/xrayblend
+	sort				nearest
+	{
+		blend		gl_one_minus_dst_color,gl_zero
+		map			textures/sfx/xrayblend
+	}
+}
+
+material textures/particles/dustcloud_opaque
+{
+	qer_editorimage		textures/particles/dustcloud
+	nonsolid
+	noshadows
+	{
+		blend			blend
+		map				textures/particles/dustcloud_opaque
+		vertexColor
+		maskAlpha
+		//color sun_r, sun_g, sun_b, 1
+		red desat_sun_r * lightscale * 0.4
+		green desat_sun_g * lightscale * 0.4
+		blue desat_sun_b * lightscale * 0.4
+	}
+}
+
+material textures/particles/dustcloud_opaque_nosun
+{
+	qer_editorimage		textures/particles/dustcloud
+	nonsolid
+	noshadows
+	{
+		blend			blend
+		map				textures/particles/dustcloud_opaque
+		vertexColor
+		maskAlpha
+	}
+}
+
+material textures/particles/dustcloud
+{
+	qer_editorimage		textures/particles/dustcloud
+	translucent
+	nonsolid
+	noshadows
+	{
+		blend			add
+		map				textures/particles/dustcloud
+		vertexColor
+		maskAlpha
+	}
+}

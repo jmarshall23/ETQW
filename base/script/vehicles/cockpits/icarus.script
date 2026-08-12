@@ -1,0 +1,101 @@
+
+object vehicle_icarus_cockpit {
+	void				preinit();
+	void				init();
+	void				destroy();
+
+	void				Idle();
+	
+	void				OnCockpitSetup( entity v );
+	
+	entity				myVehicle;
+	
+	vector				offset;
+};
+
+void vehicle_icarus_cockpit::preinit() {
+	offset			= getVectorKey( "offset" );
+	
+	hide();
+}
+
+void vehicle_icarus_cockpit::init() {
+	// create the lights
+	float i = 1;
+	while ( 1 ) {
+		string lightDefName = getKey( "light" + i );
+		if ( lightDefName == "" ) {
+			break;
+		}
+		
+		vehicle_cockpit_light light = sys.spawnClient( lightDefName );
+		if ( light != $null_entity ) {
+			light.myVehicle = myVehicle;
+			light.myCockpit = self;
+		}
+		i++;
+	}
+
+	setState( "Idle" );
+}
+
+void vehicle_icarus_cockpit::destroy() {
+}
+
+void vehicle_icarus_cockpit::Idle() {
+	vector temp;
+
+	boolean playingFireAnim;
+
+	playCycle( ANIMCHANNEL_LEGS, "base" );
+
+	while ( true ) {
+		sys.waitFrame();
+
+		entity driver = myVehicle.getDriver();
+		if ( driver != $null_entity ) {
+			temp = driver.getViewAngles();
+			temp_x = 0;
+			temp_z = 0;
+
+		
+			vector jointOrigin = myVehicle.getWorldOrigin();
+			vector worldOffset = sys.rotateVecByAngles( offset, temp );
+			setOrigin( jointOrigin + worldOffset );
+			setAngles( temp );
+			show();
+
+
+			if ( driver.getButton( PK_ATTACK ) ) {
+				if ( !playingFireAnim ) {
+					playingFireAnim = true;
+					playAnim( ANIMCHANNEL_LEGS, "fire" );
+				}
+			} else {
+				if ( playingFireAnim ) {
+					playingFireAnim	= false;
+					playCycle( ANIMCHANNEL_LEGS, "base" );
+				}
+			}
+		}
+	}	
+}
+
+void vehicle_icarus_cockpit::OnCockpitSetup( entity v ) {
+	myVehicle	= v;
+	
+	entity driver = myVehicle.getDriver();
+	if ( driver != $null_entity ) {
+		
+		vector temp = driver.getViewAngles();
+		temp_x = 0;
+		temp_z = 0;
+
+	
+		vector jointOrigin = myVehicle.getWorldOrigin();
+		vector worldOffset = sys.rotateVecByAngles( offset, temp );
+		setOrigin( jointOrigin + worldOffset );
+		setAngles( temp );
+		show();
+	}
+}

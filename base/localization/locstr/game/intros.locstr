@@ -1,0 +1,703 @@
+
+// ======================================
+// Generic
+// ======================================
+
+locString game/tt/intro/generic/fire_deploy_item {
+	text "#str_00005000"
+}
+
+locString game/tt/intro/generic/fire_throw_item {
+	text "#str_00005001"
+}
+
+locString game/tt/intro/generic/fire_use_item {
+	text "#str_00005002"
+}
+
+locString game/tt/intro/generic/need_charge {
+	text "#str_00005003"
+}
+
+locString game/tt/intro/generic/fire_shoot_item {
+	text "#str_00005004"
+}
+
+locString game/tt/intro/generic/reload_weapon {
+	text "#str_00005005"
+}
+
+locString game/tt/intro/generic/scope_weapon {
+	text "#str_00005006"
+}
+
+locString game/tt/intro/generic/descope_weapon {
+	text "#str_00005007"
+}
+
+locString game/tt/intro/generic/zoom_scope {
+	text "#str_00005008"
+}
+
+locString game/tt/intro/generic/ironsights_1 {
+	text "#str_00005009"
+}
+
+locString game/tt/intro/generic/ironsights_2 {
+	text "#str_00005010"
+}
+
+locString game/tt/intro/generic/deploy_intro_1 {
+	text "#str_00005011"
+}
+
+locString game/tt/intro/generic/deploy_intro_2 {
+	text "#str_00005012"
+}
+
+locString game/tt/intro/generic/deploy_start {
+	text "#str_00005013"
+}
+
+locString game/tt/intro/generic/deploy_rotate {
+	text "#str_00005014"
+}
+
+locString game/tt/intro/generic/fire_drop_item {
+	text "#str_00005015"
+}
+
+locString game/tt/intro/generic/no_firesupport {
+	text "#str_00005016"
+}
+
+locString game/tt/intro/generic/heat {
+	text "#str_00005017"
+}
+
+locString game/tt/intro/team/gdf/parachute {
+	text "#str_00010948"
+}
+
+locString game/tt/intro/team/strogg/parachute {
+	text "#str_00010947"
+}
+
+locString game/tt/intro/generic/fire_activate_use_item {
+	text "#str_00005020"
+}
+
+locString game/tt/intro/generic/assaultriflegrenade_grenade_1 {
+	text "#str_00005021"
+}
+
+locString game/tt/intro/generic/assaultriflegrenade_grenade_2 {
+	text "#str_00005022"
+}
+
+locString game/tt/intro/unknown_targeting_location {
+	text "#str_00005023"
+}
+
+// ======================================
+// General
+// ======================================
+
+locString game/tt/intro/knife_1 {
+	text "#str_00005058"
+}
+
+locString game/tt/intro/knife_1_backstab {
+	text "#str_00005122"
+}
+
+locString game/tt/intro/pistol_1 {
+	text "#str_00005064"
+}
+
+locString game/tt/intro/machinepistol_1 {
+	text "#str_00005110"
+}
+
+locString game/tt/intro/assaultrifle_1 {
+	text "#str_00005065"
+}
+
+locString game/tt/intro/assaultriflegrenade_1 {
+	text "#str_00005066"
+}
+
+locString game/tt/intro/assaultrifle_scoped_1 {
+	text "#str_00005109"
+}
+
+
+locString game/tt/intro/grenade_shrap_1 {
+	text "#str_00005067"
+}
+
+locString game/tt/intro/grenade_frag_1 {
+	text "#str_00005068"
+}
+
+locString game/tt/intro/shotgun_1 {
+	text "#str_00005074"
+}
+
+locString game/tt/intro/spikes_1 {
+	text "#str_00005084"
+}
+
+locString game/tt/intro/spikes_1_backstab {
+	text "#str_00005123"
+}
+
+locString game/tt/intro/blaster_1 {
+	text "#str_00005085"
+}
+
+locString game/tt/intro/lacerator_1 {
+	text "#str_00005086"
+}
+
+locString game/tt/intro/nailgun_1 {
+	text "#str_00005090"
+}
+
+locString game/tt/intro/laceratorgrenade_1 {
+	text "#str_00005116"
+}
+
+locString game/tt/intro/laceratorgrenade_2 {
+	text "#str_00005094"
+}
+
+locString game/tt/intro/akimbopistols_1 {
+	text "#str_00005113"
+}
+
+locString game/tt/intro/fire_altfire_deploy_mine {
+	text "#str_00005115"
+}
+
+// ======================================
+// Covert ops
+// ======================================
+
+// Third Eye
+
+locString game/tt/intro/third_eye_1 {
+	text "#str_00005050"
+}
+
+locString game/tt/intro/third_eye_deployed_1 {
+	text "#str_00005051"
+}
+
+locString game/tt/intro/third_eye_deployed_2 {
+	text "#str_00005052"
+}
+
+locString game/tt/intro/third_eye_outofrange {
+	text "#str_00005114"
+}
+
+// Smoke Grenade
+
+locString game/tt/intro/smoke_grenade_1 {
+	text "#str_00005053"
+}
+
+
+// Hacking Tool
+
+locString game/tt/intro/hacking_tool_1 {
+	text "#str_00005054"
+}
+
+locString game/tt/intro/hacking_tool_action_failed {
+	text "#str_00005057"
+}
+
+// EMP Grenade
+
+locString game/tt/intro/emp_grenade_1 {
+	text "#str_00005055"
+}
+
+// Sniper Rifle
+
+locString game/tt/intro/sniperrifle_1 {
+	text "#str_00005056"
+}
+
+// Silenced Pistol
+
+locString game/tt/intro/silencedpistol_1 {
+	text "#str_00005059"
+}
+
+// Radar
+
+locString game/tt/intro/radar/deploy_finished {
+	text "#str_00005060"
+}
+
+// Disguise
+
+locString game/tt/intro/dead_body/disguise {
+	text "#str_00005061"
+}
+
+// Spotter
+
+locString game/tt/intro/spotter_1 {
+	text "#str_00005062"
+}
+
+locString game/tt/intro/spotter/scope_up {
+	text "#str_00005063"
+}
+
+// ======================================
+// Engineer
+// ======================================
+
+// Pliers
+
+locString game/tt/intro/pliers_1 {
+	text "#str_00005069"
+}
+
+locString game/tt/intro/pliers_action_failed {
+	text "#str_00005070"
+}
+
+locString game/tt/intro/pliers_enemy_repair {
+	text "#str_00005112"
+}
+
+// HE Charge
+
+locString game/tt/intro/he_charge_action_failed {
+	text "#str_00005071"
+}
+
+locString game/tt/intro/he_charge_1 {
+	text "#str_00005072"
+}
+
+locString game/tt/intro/landmine_1 {
+	text "#str_00005073"
+}
+
+
+// ======================================
+// Soldier
+// ======================================
+
+// GPMG
+
+locString game/tt/intro/gpmg_1 {
+	text "#str_00005075"
+}
+
+// Rocket Launcher
+
+locString game/tt/intro/rocketlauncher_1 {
+	text "#str_00005076"
+}
+
+locString game/tt/intro/rocketlauncher_lockon {
+	text "#str_00005077"
+}
+
+// ======================================
+// Medic
+// ======================================
+
+// Defibs
+
+locString game/tt/intro/defibrillator_1 {
+	text "#str_00005078"
+}
+
+locString game/tt/intro/defibrillator_2 {
+	text "#str_00005124"
+}
+
+// Health Packs
+
+locString game/tt/intro/healthpack_1 {
+	text "#str_00005079"
+}
+
+locString game/tt/intro/supply_marker_medic_1 {
+	text "#str_00005111"
+}
+
+// ======================================
+// Fieldops
+// ======================================
+
+// Ammo packs
+
+locString game/tt/intro/ammopack_1 {
+	text "#str_00005080"
+}
+
+// Airstrike Marker
+
+locString game/tt/intro/airstrike_marker_gdf_1 {
+	text "#str_00005081"
+}
+
+// Targetting
+
+locString game/tt/intro/binoculars_fieldops_1 {
+	text "#str_00005082"
+}
+
+locString game/tt/intro/binoculars_fieldops_scope_up_1 {
+	text "#str_00005083"
+}
+
+// ======================================
+// Aggressor
+// ======================================
+
+// Obliterator
+
+locString game/tt/intro/obliterator_1 {
+	text "#str_00005087"
+}
+
+locString game/tt/intro/obliterator_ironsights_1 {
+	text "#str_00005088"
+}
+
+// Hyperblaster
+
+locString game/tt/intro/hyperblaster_1 {
+	text "#str_00005089"
+}
+
+// ======================================
+// Meditech
+// ======================================
+
+// Stroyent Tool
+
+locString game/tt/intro/stroyent_tool_1 {
+	text "#str_00005091"
+}
+
+locString game/tt/intro/stroyent_tool_2 {
+	text "#str_00005125"
+}
+
+
+locString game/tt/intro/stroyent_tool_action_failed {
+	text "#str_00005092"
+}
+
+// Stroyent Cells
+
+locString game/tt/intro/stroyentcells_1 {
+	text "#str_00005093"
+}
+
+// ======================================
+// Constructor
+// ======================================
+
+// Repair Drone
+
+locString game/tt/intro/repair_drone_1 {
+	text "#str_00005095"
+}
+
+locString game/tt/intro/repair_drone_advanced {
+	text "#str_00005121"
+}
+
+locString game/tt/intro/repair_drone_action_failed {
+	text "#str_00005070"
+}
+
+locString game/tt/intro/repair_drone_enemy_repair {
+	text "#str_00005112"
+}
+
+locString game/tt/intro/repair_drone_deployed_intro_1 {
+	text "#str_00005117"
+}
+
+locString game/tt/intro/repair_drone_deployed_intro_2 {
+	text "#str_00005118"
+}
+
+// Plasma Charge
+
+locString game/tt/intro/plasma_charge_1 {
+	text "#str_00005096"
+}
+
+locString game/tt/intro/plasma_charge_action_failed {
+	text "#str_00005097"
+}
+
+// Violator Beacon
+
+locString game/tt/intro/airstrike_marker_strogg_1 {
+	text "#str_00005098"
+}
+
+// ======================================
+// Oppressor
+// ======================================
+
+// Targetting
+
+locString game/tt/intro/trinoculars_oppressor_1 {
+	text "#str_00005082"
+}
+
+locString game/tt/intro/trinoculars_oppressor_scope_up_1 {
+	text "#str_00005083"
+}
+
+// Force Shield
+
+locString game/tt/intro/force_shield_1 {
+	text "#str_00005099"
+}
+
+// ======================================
+// Infiltrator
+// ======================================
+
+// Railgun
+
+locString game/tt/intro/railgun_1 {
+	text "#str_00005100"
+}
+
+locString game/tt/intro/railgun_charge {
+	text "#str_00005101"
+}
+
+// Scrambler
+
+locString game/tt/intro/scrambler_grenade_1 {
+	text "#str_00005102"
+}
+
+locString game/tt/intro/scrambler_grenade_2 {
+	text "#str_00005024"
+}
+
+// Hacking Tool
+
+locString "game/tt/intro/spike_infiltrator_1" {
+	text "#str_00005103"
+}
+
+locString "game/tt/intro/spike_infiltrator_action_failed" {
+	text "#str_00005057"
+}
+
+// Flyer Hive
+
+locString game/tt/intro/flyerhive_1 {
+	text "#str_00005104"
+}
+
+locString game/tt/intro/flyerhive_feedback {
+	text "#str_00005105"
+}
+
+locString game/tt/intro/flyerhive_deployed_1 {
+	text "#str_00005119"
+}
+
+locString game/tt/intro/flyerhive_deployed_2 {
+	text "#str_00005120"
+}
+
+// Teleporter
+
+locString game/tt/intro/teleporter_1 {
+	text "#str_00005106"
+}
+
+locString game/tt/intro/teleporter_deployed_1 {
+	text "#str_00005107"
+}
+
+locString game/tt/intro/teleporter_deployed_2 {
+	text "#str_00005108"
+}
+
+locString game/tt/intro/teleporter_destroy {
+	text "#str_00005217"
+}
+
+// ======================================
+// Objective hints
+// ======================================
+
+locString game/tt/intro/hack_me_1 {
+	text "#str_00005200"
+}
+
+locString game/tt/intro/hack_me_2 {
+	text "#str_00005201"
+}
+
+locString game/tt/intro/hack_me_3 {
+	text "#str_00005202"
+}
+
+locString game/tt/intro/build_me_1 {
+	text "#str_00005203"
+}
+
+locString game/tt/intro/build_me_2 {
+	text "#str_00005204"
+}
+
+locString game/tt/intro/arm_me_1 {
+	text "#str_00005203"
+}
+
+locString game/tt/intro/arm_me_2 {
+	text "#str_00005205"
+}
+
+locString game/tt/intro/arm_me_3 {
+	text "#str_00005206"
+}
+
+locString game/tt/intro/destroy_me_1 {
+	text "#str_00005207"
+}
+
+locString game/tt/intro/destroy_me_2 {
+	text "#str_00005208"
+}
+
+locString game/tt/intro/player_revive_gdf_1 {
+	text "#str_00005209"
+}
+
+locString game/tt/intro/player_revive_gdf_2 {
+	text "#str_00005210"
+}
+
+locString game/tt/intro/dead_body/spawnhost_1 {
+	text "#str_00005211"
+}
+
+locString game/tt/intro/dead_body/spawnhost_2 {
+	text "#str_00005212"
+}
+
+locString game/tt/intro/spawn_host/gdf_1 {
+	text "#str_00005214"
+}
+
+locString game/tt/intro/spawn_host/gdf_2 {
+	text "#str_00005215"
+}
+
+locString game/tt/intro/spawn_host/strogg_use {
+	text "#str_00005216"
+}
+
+locString game/tt/intro/build_me_3 {
+	text "#str_00005213"
+}
+
+locString game/tt/intro/arm_me_4 {
+	text "#str_00005213"
+}
+
+locString game/tt/intro/capturable_spawn_liberate_1 {
+	text "#str_00005218"
+}
+
+locString game/tt/intro/capturable_spawn_capture_1 {
+	text "#str_00005219"
+}
+
+locString game/tt/intro/build_me_4 {
+	text "#str_00005220"
+}
+
+locString game/tt/intro/build_tower {
+	text "#str_00005224"
+}
+
+locString game/tt/intro/arm_me_plasmacharge_2 {
+	text "#str_00005225"
+}
+
+locString game/tt/intro/destroy_me_strogg_1 {
+	text "#str_00005226"
+}
+
+locString game/tt/intro/destroy_me_strogg_2 {
+	text "#str_00005227"
+}
+
+locString game/tt/intro/arm_me_plasmacharge_1 {
+	text "#str_00005228"
+}
+
+locString game/tt/intro/arm_me_hecharge_1 {
+	text "#str_00005228"
+}
+
+locString game/tt/intro/build_gdf {
+	text "#str_00005229"
+}
+
+locString game/tt/intro/build_strogg {
+	text "#str_00005230"
+}
+
+locString game/tt/intro/destroy_gdf {
+	text "#str_00005231"
+}
+
+locString game/tt/intro/destroy_strogg {
+	text "#str_00005232"
+}
+
+locString game/tt/intro/hack_gdf {
+	text "#str_00005233"
+}
+
+locString game/tt/intro/hack_strogg {
+	text "#str_00005234"
+}
+
+// ======================================
+// Deployables
+// ======================================
+locString game/tt/intro/apt/enter {
+	text "#str_00005300"
+}
+
+locString game/tt/intro/avt/enter {
+	text "#str_00005301"
+}
+
+
+// ======================================
+// Vehicles
+// ======================================
+locString game/tt/intro/vehicle/enter {
+	text "#str_00005302"
+}

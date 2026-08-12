@@ -1,0 +1,1122 @@
+ambientCubemap _blank {
+	ambientLight {
+		color 0.3000000119 0.3000000119 0.400000006
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.3333333433 0.3098039329 0.2784313858
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.631372571 0.6392157078 0.8431373239
+		direction 0 1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.6784313917 0.6862745285 0.9019608498
+		direction 0.258779645 -0.9657787085 0.0174524188
+		name "Light3"
+	}
+	ambientLight {
+		color 0.9372549653 0.9137255549 1
+		direction -1 0 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.4264706075 0.4274510145 0.5666667223
+		direction 1 0 0
+		name "Light5"
+	}
+	indoors
+	envMap "env/_blank"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+
+
+
+ambientCubemap test1 {
+	AmbientLight {
+		Color 0.2823529541 0.3333333433 0.4000000358
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.2980392277 0.2274509966 0.1529411823
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.270588249 0.3254902065 0.3764706254
+		Direction 0.1756406128 0.9035925865 0.3907311261
+	}
+	AmbientLight {
+		Color 0.3803921938 0.4039216042 0.4392157197
+		Direction 0.0173223317 -0.9923949838 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3568627536 0.3960784674
+		Direction -0.8843650818 0.4506065547 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3764706254 0.4117647409
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3764706254 0.4039216042 0.4156863093
+		Direction -0.7036204934 -0.6794784069 0.2079117
+	}
+}
+
+ambientCubemap cloudy {
+	AmbientLight {
+		Color 0.5254902244 0.5607843399 0.5294117928
+		Direction -0.3594422638 -0.4283666313 0.8290375471
+	}
+	AmbientLight {
+		Color 0.3529411852 0.2470588386 0.2352941334
+		Direction -0.8571673036 -0.0000000209 -0.5150380731
+	}
+	AmbientLight {
+		Color 0.4941176772 0.4117647409 0.3294117749
+		Direction 0.4240240455 -0.7344312072 -0.5299192667
+	}
+	AmbientLight {
+		Color 0.4156863093 0.3529411852 0.3215686381
+		Direction 0.1839954853 0.6018220782 -0.7771459222
+	}
+	AmbientLight {
+		Color 0.3843137622 0.3803921938 0.3647058904
+		Direction 0.8720960021 0.2174379528 0.4383711517
+	}
+	AmbientLight {
+		Color 0.2549019754 0.231372565 0.2196078598
+		Direction -0.2389434278 0.9583497643 -0.1564344466
+	}
+}
+
+ambientCubemap sunset {
+	AmbientLight {
+		Color 0.3215686083 0.2823530138 0.3647058904
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.5764706135 0.4274510145 0.4666666985
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.5764706135 0.4274510145 0.4666666985
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.5764706135 0.4274510145 0.4666666985
+		Direction -1 0 0
+	}
+	AmbientLight {
+		Color 0.5764706135 0.4274510145 0.4666666985
+		Direction 1 0 0
+	}
+}
+
+ambientCubemap red_dusk {
+	AmbientLight {
+		Color 0.3176470697 0.3803921938 0.3529411852
+		Direction 0.5270163417 0.8434023857 -0.1045284495
+	}
+	AmbientLight {
+		Color 0.3647058904 0.4000000358 0.4313725829
+		Direction 0.9174326062 0.2287416458 0.3255681694
+	}
+	AmbientLight {
+		Color 0.4862745404 0.4352941513 0.3764706254
+		Direction -0.1825807542 -0.73229146 0.6560590267
+	}
+	AmbientLight {
+		Color 0.3058823645 0.3215686381 0.3647058904
+		Direction -0.4008498192 0.7867120504 0.4694715738
+	}
+	AmbientLight {
+		Color 0.360784322 0.3568627536 0.3294117749
+		Direction -1 -0.0000000243 0.0000000122
+	}
+	AmbientLight {
+		Color 0.4549019933 0.392156899 0.3490196168
+		Direction 0.0000000243 0 -1
+	}
+}
+
+ambientCubemap blue_sky {
+	AmbientLight {
+		Color 0.2823529541 0.3333333433 0.4000000358
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.5647059083 0.4784314036 0.4078431726
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.3372549117 0.3568627536 0.3764706254
+		Direction 0.1756406128 0.9035925865 0.3907311261
+	}
+	AmbientLight {
+		Color 0.3803921938 0.4039216042 0.4392157197
+		Direction 0.0173223317 -0.9923949838 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3568627536 0.3960784674
+		Direction -0.8843650818 0.4506065547 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3764706254 0.4117647409
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3764706254 0.4039216042 0.4156863093
+		Direction -0.7036204934 -0.6794784069 0.2079117
+	}
+}
+
+ambientCubemap night {
+	AmbientLight {
+		Color 0.2156862766 0.3098039329 0.3568627536
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.2823529541 0.3176470697 0.3764705956
+		Direction 0.7537921071 0.367648989 0.544639051
+	}
+	AmbientLight {
+		Color 0.3333333433 0.3019607961 0.360784322
+		Direction -0.7198463082 -0.6040228009 0.342020154
+	}
+	AmbientLight {
+		Color 0.2470588386 0.3372549117 0.4274510145
+		Direction -0.336755693 0.877278626 0.342020154
+	}
+	AmbientLight {
+		Color 0.3450980484 0.3176470697 0.3568627536
+		Direction -0.1026079655 -0.9762497544 0.1908090115
+	}
+	AmbientLight {
+		Color 0.3019607961 0.2784313858 0.3176470697
+		Direction 0.0000000243 0 -1
+	}
+	AmbientLight {
+		Color 0.4196078777 0.5176470876 0.5764706135
+		Direction 0.3822074234 0.8584519029 0.342020154
+	}
+}
+
+ambientCubemap polluted01 {
+	AmbientLight {
+		Color 0.5058823824 0.4666666985 0.4235294461
+		Direction -0.1047766432 -0.272952497 0.956304729
+	}
+	AmbientLight {
+		Color 0.3019607961 0.2470588386 0.2000000179
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.4470588565 0.4039216042 0.392156899
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.2980392277 0.3019607961 0.2941176593
+		Direction -0.0174284764 0.998477459 0.0523359664
+	}
+	AmbientLight {
+		Color 0.5921568871 0.5960784554 0.6588235497
+		Direction 0.9996954203 -0.0174497478 0.0174524188
+	}
+	AmbientLight {
+		Color 0.1372549087 0.0862745121 0.0784313753
+		Direction 0.0000000086 0.7071067691 -0.7071067691
+	}
+	AmbientLight {
+		Color 0.1215686351 0.1176470667 0.1019607931
+		Direction -0.2603982389 0.5110603571 0.8191520572
+	}
+	AmbientLight {
+		Color 0.360784322 0.2980392277 0.2588235438
+		Direction -0.693785429 -0.6246872544 -0.3583679497
+	}
+	AmbientLight {
+		Color 0.231372565 0.2745098174 0.2980392277
+		Direction -0.5813086629 0.7714226842 -0.2588190436
+	}
+}
+
+ambientCubemap polluted02 {
+	AmbientLight {
+		Color 0.2823529541 0.3333333433 0.4000000358
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.2980392277 0.2274509966 0.1529411823
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.270588249 0.3254902065 0.3764706254
+		Direction 0.1756406128 0.9035925865 0.3907311261
+	}
+	AmbientLight {
+		Color 0.3803921938 0.4039216042 0.4392157197
+		Direction 0.0173223317 -0.9923949838 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3568627536 0.3960784674
+		Direction -0.8843650818 0.4506065547 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3764706254 0.4117647409
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3764706254 0.4039216042 0.4156863093
+		Direction -0.7036204934 -0.6794784069 0.2079117
+	}
+}ambientCubemap polluted03 {
+	AmbientLight {
+		Color 0.3764706254 0.4313725829 0.4666666985
+		Direction 0.4980806112 0.6375140548 0.587785244
+	}
+	AmbientLight {
+		Color 0.3372549117 0.4196078777 0.4745098352
+		Direction -0.7243092656 -0.2493996918 0.6427876353
+	}
+	AmbientLight {
+		Color 0.4509804249 0.4862745404 0.6352941394
+		Direction 0.0000000109 -0.898794055 0.4383711517
+	}
+	AmbientLight {
+		Color 0.1372549087 0.1490196139 0.1568627506
+		Direction 0.8171566129 0.5721792579 0.0697564855
+	}
+	AmbientLight {
+		Color 0.1294117719 0.1372549087 0.1529411823
+		Direction -0.0347083025 0.9939160347 0.1045284718
+	}
+	AmbientLight {
+		Color 0.1058823615 0.0980392247 0.0862745121
+		Direction -0.0000000095 -0.0000000224 -1
+	}
+	AmbientLight {
+		Color 0.3098039329 0.3882353306 0.4588235617
+		Direction 0.3213938177 -0.8830221891 0.342020154
+	}
+}
+
+
+
+ambientCubemap polluted04 {
+	AmbientLight {
+		Color 0.5686274767 0.5058823824 0.4470588565
+		Direction -0.1113508642 -0.3059339821 0.9455185533
+	}
+	AmbientLight {
+		Color 0.2627451122 0.3333333433 0.3372549117
+		Direction 0.5502173901 0.6329526901 0.544639051
+	}
+	AmbientLight {
+		Color 0.3725490272 0.4313725829 0.4000000358
+		Direction 0.5037832856 -0.8384361267 0.2079117
+	}
+	AmbientLight {
+		Color 0.3568627536 0.2941176593 0.1764705926
+		Direction -0.9034202099 -0.2085710019 -0.3746065795
+	}
+	AmbientLight {
+		Color 0.3176470697 0.4117647409 0.3960784674
+		Direction -0.0659560263 0.9432153106 0.3255681694
+	}
+	AmbientLight {
+		Color 0.1725490242 0.1411764771 0.1137254983
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.1019607931 0.0901960805 0.0823529437
+		Direction 0.2991375625 0.8218736649 -0.4848096073
+	}
+}
+
+ambientCubemap polluted05 {
+	AmbientLight {
+		Color 0.2823529541 0.3333333433 0.4000000358
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.2980392277 0.2274509966 0.1529411823
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.2745098174 0.3098039329 0.3450980484
+		Direction 0.1756406128 0.9035925865 0.3907311261
+	}
+	AmbientLight {
+		Color 0.4274510145 0.4392157197 0.4156863093
+		Direction 0.0173223317 -0.9923949838 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3568627536 0.3960784674
+		Direction -0.8843650818 0.4506065547 0.1218693554
+	}
+	AmbientLight {
+		Color 0.4000000358 0.4000000358 0.4117647409
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3764706254 0.4039216042 0.4156863093
+		Direction -0.7036204934 -0.6794784069 0.2079117
+	}
+}ambientCubemap sunset2 {
+	ambientLight {
+		color 0.6156862974 0.6274510026 0.6980392337
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.7254902124 0.5411764979 0.392156899
+		direction 0.0518266447 0.9889109135 0.1391731054
+		name "Light1"
+	}
+	ambientLight {
+		color 0.7254902124 0.7137255073 0.8431373239
+		direction 0.1203689128 -0.9803262353 0.1564344764
+		name "Light2"
+	}
+	ambientLight {
+		color 0.6156862974 0.5921568871 0.6745098233
+		direction -1 0 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.5764706135 0.5764706135 0.5764706135
+		direction 1 0 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.3529411852 0.2862745225 0.2941176593
+		direction 0.0000000243 0 -1
+		name "Light5"
+	}
+	ambientColor 0.3647058904 0.3176470697 0.2823529541
+	highLightColor 1 0.7882353663 0.6627451181
+}
+
+
+
+
+
+ambientCubemap rain {
+	AmbientLight {
+		Color 0.5254902244 0.5607843399 0.5294117928
+		Direction -0.3594422638 -0.4283666313 0.8290375471
+	}
+	AmbientLight {
+		Color 0.3529411852 0.2470588386 0.2352941334
+		Direction -0.8571673036 -0.0000000209 -0.5150380731
+	}
+	AmbientLight {
+		Color 0.4941176772 0.4117647409 0.3294117749
+		Direction 0.4240240455 -0.7344312072 -0.5299192667
+	}
+	AmbientLight {
+		Color 0.4156863093 0.3529411852 0.3215686381
+		Direction 0.1839954853 0.6018220782 -0.7771459222
+	}
+	AmbientLight {
+		Color 0.3843137622 0.3803921938 0.3647058904
+		Direction 0.8720960021 0.2174379528 0.4383711517
+	}
+	AmbientLight {
+		Color 0.2549019754 0.231372565 0.2196078598
+		Direction -0.2389434278 0.9583497643 -0.1564344466
+	}
+}
+
+ambientCubemap temperate_theme_gdfsetup2_camera2 {
+	AmbientLight {
+		Color 0.3176470697 0.3764706254 0.5098039508
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.1882353127 0.1725490242 0.1529411823
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.2627451122 0.2901960909 0.3019607961
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.2666666806 0.2000000179 0.1294117719
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.8078432083 0.741176486 0.6745098233
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3215686381 0.3058823645 0.250980407
+		Direction -1 0 0
+	}
+}
+
+ambientCubemap temperate_theme_familyportrait {
+	AmbientLight {
+		Color 0.3176470697 0.3764706254 0.5098039508
+		Direction 0.4067366421 0 0.9135454297
+	}
+	AmbientLight {
+		Color 0.1882353127 0.1725490242 0.1529411823
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.2627451122 0.2901960909 0.3019607961
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.2666666806 0.2000000179 0.1294117719
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.1921568811 0.1764705926 0.160784319
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3215686381 0.3058823645 0.250980407
+		Direction -1 0 0
+	}
+}
+
+ambientCubemap temperate_theme_familyportrait2 {
+	AmbientLight {
+		Color 0.3176470697 0.3764706254 0.5098039508
+		Direction 0.4067366421 0 0.9135454297
+	}
+	AmbientLight {
+		Color 0.2156862915 0.1960784495 0.1725490242
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.2627451122 0.2901960909 0.3019607961
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.2666666806 0.2000000179 0.1294117719
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.5254902244 0.482352972 0.4392157197
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3215686381 0.3058823645 0.250980407
+		Direction -1 0 0
+	}
+}
+
+ambientCubemap temperate_theme_familyportrait3 {
+	AmbientLight {
+		Color 0.3176470697 0.3764706254 0.5098039508
+		Direction 0.4067366421 0 0.9135454297
+	}
+	AmbientLight {
+		Color 0.2156862915 0.1960784495 0.1725490242
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.2627451122 0.2901960909 0.3019607961
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.2666666806 0.2000000179 0.1294117719
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.5254902244 0.482352972 0.4392157197
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3215686381 0.3058823645 0.250980407
+		Direction -1 0 0
+	}
+}
+
+ambientCubemap temperate_theme_airstrike {
+	AmbientLight {
+		Color 0.3176470697 0.3764706254 0.5098039508
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.1882353127 0.1725490242 0.1529411823
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.2627451122 0.2901960909 0.3019607961
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.2666666806 0.2000000179 0.1294117719
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.1921568811 0.1764705926 0.160784319
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3215686381 0.3058823645 0.250980407
+		Direction -1 0 0
+	}
+	AmbientLight {
+		Color 0.1529411823 0.1333333403 0.1019607931
+		Direction -0.466028899 0.8407384157 0.2756373584
+	}
+}
+
+ambientCubemap temperate_screen2 {
+	AmbientLight {
+		Color 0.4078431726 0.4313725829 0.4274510145
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.2470588386 0.2470588386 0.2470588386
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.4470588565 0.4470588565 0.4470588565
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.3764706254 0.4274510145 0.4352941513
+		Direction -1 0 0
+	}
+	AmbientLight {
+		Color 0.2901960909 0.2666666806 0.2078431547
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.4117647409 0.4117647409 0.4117647409
+		Direction 1 0 0
+	}
+}
+
+ambientCubemap temperate_theme_jettyjostle {
+	AmbientLight {
+		Color 0.3176470697 0.3764706254 0.5098039508
+		Direction 0.4067366421 0 0.9135454297
+	}
+	AmbientLight {
+		Color 0.2156862915 0.1960784495 0.1725490242
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.2627451122 0.2901960909 0.3019607961
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.2666666806 0.2000000179 0.1294117719
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.5254902244 0.482352972 0.4392157197
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 1 0.9490196705 0.784313798
+		Direction -1 0 0
+	}
+}
+
+ambientCubemap temperate_jettyjostle2 {
+	AmbientLight {
+		Color 0.4705882072 0.4823529124 0.5803921819
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.1882353127 0.1725490242 0.1529411823
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.3019607961 0.2862745225 0.270588249
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.2666666806 0.2000000179 0.1294117719
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.1921568811 0.180392161 0.1568627506
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.2862745225 0.2666666806 0.2078431547
+		Direction -1 0 0
+	}
+}
+
+ambientCubemap temperate_theme_convoy {
+	AmbientLight {
+		Color 0.3176470697 0.3764706254 0.5098039508
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.1882353127 0.1725490242 0.1529411823
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.2627451122 0.2901960909 0.3019607961
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.2666666806 0.2000000179 0.1294117719
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.8078432083 0.741176486 0.6745098233
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3215686381 0.3058823645 0.250980407
+		Direction -1 0 0
+	}
+}
+
+ambientCubemap peppitest01 {
+	AmbientLight {
+		Color 0.611764729 0.4901961088 0.4509804249
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.2470588386 0.2470588386 0.2470588386
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.4470588565 0.4470588565 0.4470588565
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.3764706254 0.4274510145 0.4352941513
+		Direction -1 0 0
+	}
+	AmbientLight {
+		Color 0.2901960909 0.2666666806 0.2078431547
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.4117647409 0.4117647409 0.4117647409
+		Direction 1 0 0
+	}
+}
+
+ambientCubemap light_room {
+	AmbientLight {
+		Color 0.5882353187 0.5372549295 0.5058823824
+		Direction 0.014425748 0.275259614 0.9612616897
+	}
+	AmbientLight {
+		Color 0.3000000119 0.2000000179 0.1000000015
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.5058823824 0.5176470876 0.5647059083
+		Direction 0.0171317682 0.9814776778 0.1908090115
+	}
+	AmbientLight {
+		Color 0.4264706075 0.4274510145 0.5666667223
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.231372565 0.3529411852 0.5647059083
+		Direction -0.8931618929 -0.3791247606 -0.2419218868
+	}
+	AmbientLight {
+		Color 0.6705882549 0.6901960969 0.6549019814
+		Direction 0.8570367694 0.5149596334 0.0174524188
+	}
+	AmbientLight {
+		Color 0.2823529541 0.3372549117 0.4117647409
+		Direction 0.7595475316 -0.5723600984 0.3090170026
+	}
+}
+
+ambientCubemap night_tweak {
+	AmbientLight {
+		Color 0.2156862766 0.3098039329 0.3568627536
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.2823529541 0.3176470697 0.3764705956
+		Direction 0.7537921071 0.367648989 0.544639051
+	}
+	AmbientLight {
+		Color 0.3333333433 0.3019607961 0.360784322
+		Direction -0.7198463082 -0.6040228009 0.342020154
+	}
+	AmbientLight {
+		Color 0.2470588386 0.3372549117 0.4274510145
+		Direction -0.336755693 0.877278626 0.342020154
+	}
+	AmbientLight {
+		Color 0.3450980484 0.3176470697 0.3568627536
+		Direction -0.1026079655 -0.9762497544 0.1908090115
+	}
+	AmbientLight {
+		Color 0.3019607961 0.2784313858 0.3176470697
+		Direction 0.0000000243 0 -1
+	}
+	AmbientLight {
+		Color 0.4196078777 0.5176470876 0.5764706135
+		Direction 0.3822074234 0.8584519029 0.342020154
+	}
+	AmbientLight {
+		Color 0.2392157018 0.4000000358 0.5137255192
+		Direction 0.0156861302 0.8986571431 -0.4383711219
+	}
+}
+
+ambientCubemap roler_test {
+	AmbientLight {
+		Color 0.6588235497 0.6784313917 0.5764706135
+		Direction 0.0999970138 -0.3270754814 0.9396926165
+	}
+	AmbientLight {
+		Color 0.5058823824 0.4901961088 0.4196078777
+		Direction -0.0347083025 -0.9939160347 0.1045284718
+	}
+	AmbientLight {
+		Color 0.2666667104 0.2549020052 0.2352941036
+		Direction -0.6292245388 0.777027607 0.0174524188
+	}
+	AmbientLight {
+		Color 0.3647058904 0.2980392277 0.2666666806
+		Direction -1 0 0
+	}
+	AmbientLight {
+		Color 0.3882353306 0.2392157018 0.1333333403
+		Direction 0.7312422991 0.6818944812 0.0174524188
+	}
+	AmbientLight {
+		Color 0.3882353306 0.3019607961 0.1137254983
+		Direction 0 0 -1
+	}
+}
+
+ambientCubemap temperate01 {
+	AmbientLight {
+		Color 0.2823529541 0.3333333433 0.4000000358
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.2588235438 0.2627451122 0.2980392277
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.3372549117 0.3568627536 0.3764706254
+		Direction 0.1756406128 0.9035925865 0.3907311261
+	}
+	AmbientLight {
+		Color 0.3803921938 0.4039216042 0.4392157197
+		Direction 0.0173223317 -0.9923949838 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3568627536 0.3960784674
+		Direction -0.8843650818 0.4506065547 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3764706254 0.4117647409
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3764706254 0.4039216042 0.4156863093
+		Direction -0.7036204934 -0.6794784069 0.2079117
+	}
+}ambientCubemap temperate_theme_sunset {
+	ambientLight {
+		color 0.3176470697 0.3764706254 0.5098039508
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1882353127 0.1725490242 0.1529411823
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.2627451122 0.2901960909 0.3019607961
+		direction 0 1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.2666666806 0.2000000179 0.1294117719
+		direction 0 -1 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1921568811 0.1764705926 0.160784319
+		direction 1 0 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.3215686381 0.3058823645 0.250980407
+		direction -1 0 0
+		name "Light5"
+	}
+	envMap "env/temperate"
+}
+
+ambientCubemap temperate_new {
+	ambientLight {
+		color 0.2823529541 0.3333333433 0.4000000358
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.7058823705 0.6901960969 0.7098039389
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3372549117 0.3568627536 0.3764706254
+		direction 0.1756406128 0.9035925865 0.3907311261
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3803921938 0.4039216042 0.4392157197
+		direction 0.0173223317 -0.9923949838 0.1218693554
+		name "Light3"
+	}
+	ambientLight {
+		color 0.3019607961 0.3568627536 0.3960784674
+		direction -0.8843650818 0.4506065547 0.1218693554
+		name "Light4"
+	}
+	ambientLight {
+		color 0.3019607961 0.3764706254 0.4117647409
+		direction 1 0 0
+		name "Light5"
+	}
+	ambientLight {
+		color 0.3764706254 0.4039216042 0.4156863093
+		direction -0.7036204934 -0.6794784069 0.2079117
+		name "Light6"
+	}
+}
+
+ambientCubemap temperate_theme {
+	ambientLight {
+		color 0.4705882072 0.4823529124 0.5803921819
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1137254983 0.0823529437 0.0705882385
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3019607961 0.2862745225 0.270588249
+		direction 0 1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.2666666806 0.2000000179 0.1294117719
+		direction 0 -1 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.0901960805 0.1019608006 0.1176470965
+		direction 1 0 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2862745225 0.2666666806 0.2078431547
+		direction -1 0 0
+		name "Light5"
+	}
+	envMap "env/temperate"
+}
+
+ambientCubemap temperate_theme2 {
+	ambientLight {
+		color 0.4705882072 0.4823529124 0.5803921819
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1882353127 0.1725490242 0.1529411823
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3019607961 0.2862745225 0.270588249
+		direction 0 1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.2666666806 0.2000000179 0.1294117719
+		direction 0 -1 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1921568811 0.180392161 0.1568627506
+		direction 1 0 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2862745225 0.2666666806 0.2078431547
+		direction -1 0 0
+		name "Light5"
+	}
+	envMap "env/temperate"
+}
+
+ambientCubemap temperate_theme_undertrees {
+	ambientLight {
+		color 0.4705882072 0.4823529124 0.5803921819
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1137254983 0.0823529437 0.0705882385
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3019607961 0.2862745225 0.270588249
+		direction 0 1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.2666666806 0.2000000179 0.1294117719
+		direction 0 -1 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.0901960805 0.1019608006 0.1176470965
+		direction 1 0 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2862745225 0.2666666806 0.2078431547
+		direction -1 0 0
+		name "Light5"
+	}
+	envMap "env/temperate"
+}
+
+
+
+ambientCubemap temperate_theme_intrenches {
+	AmbientLight {
+		Color 0.4705882072 0.4823529124 0.5803921819
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.1137254983 0.0823529437 0.0705882385
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.3019607961 0.2862745225 0.270588249
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.2666666806 0.2000000179 0.1294117719
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.0901960805 0.1019608006 0.1176470965
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.2862745225 0.2666666806 0.2078431547
+		Direction -1 0 0
+	}
+}ambientCubemap temperate_theme3 {
+	ambientLight {
+		color 0.4705882072 0.4823529124 0.5803921819
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1137254983 0.0823529437 0.0705882385
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3019607961 0.2862745225 0.270588249
+		direction 0 1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.2666666806 0.2000000179 0.1294117719
+		direction 0 -1 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.0901960805 0.1019608006 0.1176470965
+		direction 1 0 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2862745225 0.2666666806 0.2078431547
+		direction -1 0 0
+		name "Light5"
+	}
+	envMap "env/temperate"
+}
+
+
+
+ambientCubemap snow {
+	AmbientLight {
+		Color 0.5254902244 0.5607843399 0.5294117928
+		Direction -0.3594422638 -0.4283666313 0.8290375471
+	}
+	AmbientLight {
+		Color 0.3529411852 0.2470588386 0.2352941334
+		Direction -0.8571673036 -0.0000000209 -0.5150380731
+	}
+	AmbientLight {
+		Color 0.4941176772 0.4117647409 0.3294117749
+		Direction 0.4240240455 -0.7344312072 -0.5299192667
+	}
+	AmbientLight {
+		Color 0.4156863093 0.3529411852 0.3215686381
+		Direction 0.1839954853 0.6018220782 -0.7771459222
+	}
+	AmbientLight {
+		Color 0.3843137622 0.3803921938 0.3647058904
+		Direction 0.8720960021 0.2174379528 0.4383711517
+	}
+	AmbientLight {
+		Color 0.2549019754 0.231372565 0.2196078598
+		Direction -0.2389434278 0.9583497643 -0.1564344466
+	}
+}
+
+ambientCubemap temperate_theme_night {
+	AmbientLight {
+		Color 0.3725490272 0.4431372881 0.6000000238
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.1882353127 0.1568627506 0.1294117719
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.3215686381 0.3568627536 0.3725490272
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.3254902065 0.4078431726 0.5568627715
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.2039215863 0.2117647231 0.2431372702
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.2549019754 0.270588249 0.3215686381
+		Direction -1 0 0
+	}
+}

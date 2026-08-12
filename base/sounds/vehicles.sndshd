@@ -1,0 +1,624 @@
+///////////////////////////
+// Vehicle Sound Shaders //
+///////////////////////////
+
+sound sounds/vehicles/strogg_turret_rotation {
+	volume	-45
+	minDistance	5
+	maxDistance	55
+	looping
+	
+	sounds/vehicles/misc/strogg_turret_01.wav
+}
+
+sound sounds/vehicles/misc/vswtich_01 {
+
+	minDistance	5
+	maxDistance	40
+
+	sounds/weapons/misc/switch_01.wav
+}
+
+sound sounds/vehicles/misc/strogg/impact {
+
+	volume -5
+	minDistance	5
+	maxDistance 100
+
+	no_dups
+	sounds/vehicles/impacts/imp_01.wav
+	sounds/vehicles/impacts/imp_02.wav
+	sounds/vehicles/impacts/imp_03.wav
+	sounds/vehicles/impacts/imp_04.wav
+
+}
+
+sound sounds/vehicles/misc/strogg/overdrive_start {
+
+	volume	5
+	minDistance	5
+	maxDistance	100
+	
+	looping
+	leadin
+	sounds/vehicles/misc/mono_strogg_overdrive_start.wav
+	sounds/vehicles/misc/mono_strogg_overdrive_loop.wav
+}
+
+sound sounds/vehicles/misc/strogg/overdrive_stop {
+
+	volume	5
+	minDistance	5
+	maxDistance	100
+	
+	sounds/vehicles/misc/mono_strogg_overdrive_stop.wav
+}
+
+sound sounds/vehicles/misc/strogg/icarus_jet_start {
+	volume	-5
+	minDistance	5
+	maxDistance	80
+	
+	sounds/vehicles/icarus/jet_start_02.wav
+}
+
+sound sounds/vehicles/misc/strogg/icarus_jet_loop {
+	volume	-5
+	minDistance	5
+	maxDistance	80
+	
+	looping
+	sounds/vehicles/misc/jet_loop_02.wav
+}
+
+sound sounds/vehicles/misc/strogg/icarus_jet_stop {
+
+	volume	-5
+	minDistance	5
+	maxDistance	80
+	
+	occlude_once
+	
+	sounds/vehicles/misc/jet_stop_02.wav
+}
+
+sound sounds/vehicles/misc/water/enter {
+
+	volume -5
+	maxDistance 50
+
+	sounds/vehicles/misc/water_enter_01.wav
+}
+
+sound sounds/vehicles/misc/water/exit {
+
+	volume -5
+	maxDistance 50
+
+	sounds/vehicles/misc/water_exit_01.wav
+}
+
+sound sounds/vehicles/misc/water/wake {
+
+	volume -5
+	maxDistance 50
+
+	looping
+	sounds/vehicles/misc/water_wake_01.wav
+}
+
+sound sounds/vehicles/misc/water/splash {
+
+	volume -5
+	maxDistance 50
+
+	no_dups
+	playOnce
+
+	sounds/vehicles/misc/water_splash_01.wav
+	sounds/vehicles/misc/water_splash_02.wav
+	sounds/vehicles/misc/water_splash_03.wav
+}
+
+sound sounds/vehicles/misc/body/crash {
+
+	volume -5
+	maxDistance 50
+	no_dups
+
+	sounds/vehicles/misc/body_crash_01.wav
+	sounds/vehicles/misc/body_crash_02.wav
+	sounds/vehicles/misc/body_crash_03.wav
+	sounds/vehicles/misc/body_crash_04.wav
+}
+
+sound sounds/vehicles/misc/body/squish {
+
+	volume -5
+	maxDistance 50
+	no_dups
+
+	sounds/vehicles/misc/body_squish_01.wav
+	sounds/vehicles/misc/body_squish_02.wav
+	sounds/vehicles/misc/body_squish_03.wav
+	sounds/vehicles/misc/body_squish_04.wav
+}
+
+sound sounds/vehicles/misc/scrape {
+
+	volume -5
+	maxDistance 75
+	no_dups
+	
+	occlude_once
+
+	sounds/vehicles/misc/scrape/scrape_01.wav
+	sounds/vehicles/misc/scrape/scrape_02.wav
+	sounds/vehicles/misc/scrape/scrape_03.wav
+	sounds/vehicles/misc/scrape/scrape_04.wav
+	sounds/vehicles/misc/scrape/scrape_05.wav
+}
+
+sound sounds/vehicles/misc/crash {
+
+	volume 0
+	maxDistance 75
+	no_dups
+	
+	occlude_once
+
+	sounds/vehicles/misc/crash/crash_01.wav
+	sounds/vehicles/misc/crash/crash_02.wav
+	sounds/vehicles/misc/crash/crash_03.wav
+	sounds/vehicles/misc/crash/crash_04.wav
+	sounds/vehicles/misc/crash/crash_05.wav
+	sounds/vehicles/misc/crash/crash_06.wav
+	sounds/vehicles/misc/crash/crash_07.wav
+	sounds/vehicles/misc/crash/crash_08.wav
+	sounds/vehicles/misc/crash/crash_09.wav
+	sounds/vehicles/misc/crash/crash_10.wav
+	sounds/vehicles/misc/crash/crash_11.wav
+	sounds/vehicles/misc/crash/crash_12.wav
+	sounds/vehicles/misc/crash/crash_13.wav
+	sounds/vehicles/misc/crash/crash_14.wav
+	sounds/vehicles/misc/crash/crash_15.wav
+	sounds/vehicles/misc/crash/crash_16.wav
+}
+
+sound sounds/vehicles/misc/crash/soft {
+
+	volume -5
+	maxDistance 75
+	no_dups
+
+	sounds/vehicles/misc/hard_04.wav
+	sounds/vehicles/misc/hard_05.wav
+	sounds/vehicles/misc/hard_06.wav
+	sounds/vehicles/misc/hard_07.wav
+}
+
+sound sounds/vehicles/misc/crash/medium {
+
+	volume -5
+	maxDistance 75
+	no_dups
+
+	sounds/vehicles/misc/hard_01.wav
+	sounds/vehicles/misc/hard_02.wav
+	sounds/vehicles/misc/hard_03.wav
+}
+
+sound sounds/vehicles/misc/crash/hard {
+
+	volume -5
+	maxDistance 75
+	no_dups
+
+	sounds/vehicles/misc/crash_01.wav
+	sounds/vehicles/misc/crash_02.wav
+}
+
+sound sounds/vehicles/misc/jump/soft {
+
+	volume -15
+	maxDistance 50
+	no_dups
+
+	sounds/vehicles/misc/spring_01.wav
+	sounds/vehicles/misc/spring_02.wav
+	sounds/vehicles/misc/spring_03.wav
+	sounds/vehicles/misc/spring_04.wav
+	sounds/vehicles/misc/spring_05.wav
+	sounds/vehicles/misc/spring_06.wav
+}
+
+sound sounds/vehicles/misc/jump/medium {
+
+	maxDistance 50
+	no_dups
+
+	sounds/vehicles/misc/soft_01.wav
+	sounds/vehicles/misc/soft_02.wav
+	sounds/vehicles/misc/soft_03.wav
+	sounds/vehicles/misc/soft_04.wav
+	sounds/vehicles/misc/soft_05.wav
+	sounds/vehicles/misc/soft_06.wav
+	sounds/vehicles/misc/soft_07.wav
+}
+
+sound sounds/vehicles/misc/jump/hard {
+
+	volume -10
+	maxDistance 50
+	no_dups
+
+	sounds/vehicles/misc/med_01.wav
+	sounds/vehicles/misc/med_02.wav
+	sounds/vehicles/misc/med_03.wav
+	sounds/vehicles/misc/med_04.wav
+	sounds/vehicles/misc/med_05.wav
+	sounds/vehicles/misc/med_06.wav
+	sounds/vehicles/misc/med_07.wav
+	sounds/vehicles/misc/med_08.wav
+	sounds/vehicles/misc/med_09.wav
+	sounds/vehicles/misc/med_10.wav
+	sounds/vehicles/misc/med_11.wav
+	sounds/vehicles/misc/med_12.wav
+}
+
+sound sounds/vehicles/misc/brake {
+
+	volume -15
+	maxDistance 50
+	no_dups
+
+	sounds/vehicles/misc/brake_01.wav
+	sounds/vehicles/misc/brake_02.wav
+	sounds/vehicles/misc/brake_03.wav
+}
+
+sound sounds/vehicles/misc/explode {
+
+	maxDistance 100
+
+	occlude_once
+
+	sounds/vehicles/misc/explode_01.wav
+	sounds/vehicles/misc/explode_02.wav
+}
+
+sound sounds/vehicles/misc/explode_far {
+
+	farDistance 50
+	maxDistance 150
+
+	sounds/vehicles/misc/explode_far.wav
+}
+
+sound sounds/vehicles/misc/decay {
+
+	maxDistance 100
+	
+	occlude_once
+
+	sounds/vehicles/misc/decay_01.wav
+}
+
+sound sounds/vehicles/misc/afterburner {
+
+	volume 5
+	maxDistance 100
+
+	sounds/vehicles/misc/afterburner.wav
+}
+
+sound sounds/vehicles/misc/overdrive {
+
+	volume -5
+	maxDistance 100
+
+	sounds/vehicles/misc/overdrive_gdf.wav
+}
+
+sound sounds/vehicles/misc/skid/default {
+
+	maxDistance 50
+	no_dups
+	playOnce
+
+	sounds/vehicles/misc/skid_01.wav
+	sounds/vehicles/misc/skid_02.wav
+	sounds/vehicles/misc/skid_03.wav
+}
+
+sound sounds/vehicles/misc/skid/offroad {
+
+	maxDistance 50
+	no_dups
+	playOnce
+
+	sounds/vehicles/misc/skid_offroad_01.wav
+	sounds/vehicles/misc/skid_offroad_02.wav
+	sounds/vehicles/misc/skid_offroad_03.wav
+	sounds/vehicles/misc/skid_offroad_04.wav
+	sounds/vehicles/misc/skid_offroad_05.wav
+	sounds/vehicles/misc/skid_offroad_06.wav
+}
+
+sound sounds/vehicles/misc/skid/metal {
+
+	maxDistance 50
+	no_dups
+	playOnce
+
+	sounds/vehicles/misc/skid_metal_01.wav
+	sounds/vehicles/misc/skid_metal_02.wav
+	sounds/vehicles/misc/skid_metal_03.wav
+}
+
+sound sounds/vehicles/misc/drive/default {
+
+	maxDistance 50
+	playOnce
+
+	looping
+	sounds/vehicles/misc/pavement_01.wav
+}
+
+sound sounds/vehicles/misc/drive/offroad {
+
+	maxDistance 50
+	playOnce
+
+	looping
+	sounds/vehicles/misc/drive_offroad_01.wav
+	sounds/vehicles/misc/drive_offroad_02.wav
+	sounds/vehicles/misc/drive_offroad_03.wav
+}
+
+sound sounds/vehicles/misc/drive/metal {
+
+	maxDistance 50
+
+	playOnce
+
+	looping
+	sounds/vehicles/misc/metal_01.wav
+}
+
+sound vehicles/misc/debris/smolder {
+
+	volume -10
+	maxDistance 50
+	playOnce
+
+	sounds/vehicles/misc/burn_loop_01.wav
+}
+
+sound vehicles/misc/debris/metal_small {
+
+	maxDistance 50
+	no_dups
+	playOnce
+
+	sounds/vehicles/misc/debris/metal_small_01.wav
+	sounds/vehicles/misc/debris/metal_small_02.wav
+	sounds/vehicles/misc/debris/metal_small_03.wav
+}
+
+sound vehicles/misc/debris/metal_med {
+
+	maxDistance 50
+	no_dups
+	playOnce
+
+	sounds/vehicles/misc/debris/metal_med_01.wav
+	sounds/vehicles/misc/debris/metal_med_02.wav
+	sounds/vehicles/misc/debris/metal_med_03.wav
+}
+
+sound vehicles/misc/debris/metal_large {
+
+	maxDistance 50
+	no_dups
+	playOnce
+
+	sounds/vehicles/misc/debris/metal_large_01.wav
+	sounds/vehicles/misc/debris/metal_large_02.wav
+	sounds/vehicles/misc/debris/metal_large_03.wav
+}
+
+sound vehicles/misc/debris/glass_small {
+
+	maxDistance 50
+	no_dups
+	playOnce
+
+	sounds/vehicles/misc/debris/glass_small_01.wav
+	sounds/vehicles/misc/debris/glass_small_02.wav
+	sounds/vehicles/misc/debris/glass_small_03.wav
+	sounds/vehicles/misc/debris/glass_small_04.wav
+}
+
+sound vehicles/misc/debris/glass_med {
+
+	maxDistance 50
+	no_dups
+	playOnce
+
+	sounds/vehicles/misc/debris/glass_med_01.wav
+	sounds/vehicles/misc/debris/glass_med_02.wav
+	sounds/vehicles/misc/debris/glass_med_03.wav
+}
+
+sound vehicles/misc/debris/wheel {
+
+	maxDistance 50
+	no_dups
+	playOnce
+
+	sounds/vehicles/misc/debris/wheel_01.wav
+	sounds/vehicles/misc/debris/wheel_02.wav
+	sounds/vehicles/misc/debris/wheel_03.wav
+	sounds/vehicles/misc/debris/wheel_04.wav
+}
+
+sound vehicles/misc/debris/hollow_small {
+
+	maxDistance 50
+	playOnce
+
+	sounds/vehicles/misc/debris/hollow_small_01.wav
+	sounds/vehicles/misc/debris/hollow_small_02.wav
+}
+
+sound vehicles/misc/debris/hollow_med {
+
+	maxDistance 50
+	playOnce
+
+	sounds/vehicles/misc/debris/hollow_med_01.wav
+	sounds/vehicles/misc/debris/hollow_med_02.wav
+}
+
+sound vehicles/misc/debris/hollow_large {
+
+	maxDistance 50
+	playOnce
+
+	sounds/vehicles/misc/debris/hollow_large_01.wav
+	sounds/vehicles/misc/debris/hollow_large_02.wav
+}
+
+sound sounds/vehicles/misc/horn {
+
+	maxDistance 50
+	playOnce
+
+	looping
+	sounds/vehicles/misc/horn_loop.wav
+}
+
+sound sounds/vehicles/misc/horn/stop {
+
+	maxDistance 50
+
+	sounds/vehicles/misc/horn_stop.wav
+}
+
+sound sounds/vehicles/misc/honk {
+
+	maxDistance 50
+	playOnce
+
+	looping
+	sounds/vehicles/misc/honk_loop.wav
+}
+
+sound sounds/vehicles/misc/honk/stop {
+
+	maxDistance 50
+
+	sounds/vehicles/misc/honk_stop.wav
+}
+
+sound sounds/vehicles/burning_stage_start {
+
+	volume -15
+	maxDistance 2
+
+	looping
+	sounds/xlib/valley_sounds/burning/gas/gashiss_03.wav
+}
+
+sound sounds/vehicles/burning_stage_small {
+
+	volume -10
+	maxDistance 15
+	looping
+	sounds/xlib/valley_sounds/burning/crackly/crackle_01.wav
+	sounds/xlib/valley_sounds/burning/crackly/crackle_02.wav
+	sounds/xlib/valley_sounds/burning/crackly/crackle_03.wav
+	sounds/xlib/valley_sounds/burning/crackly/crackle_04.wav
+	sounds/xlib/valley_sounds/burning/crackly/crackle_05.wav
+}
+
+sound sounds/vehicles/burning_stage_medium {
+
+	volume -10
+	maxDistance 20
+	looping
+	sounds/xlib/valley_sounds/burning/rumbly/rumbly_01.wav
+	sounds/xlib/valley_sounds/burning/rumbly/rumbly_02.wav
+	sounds/xlib/valley_sounds/burning/rumbly/rumbly_03.wav
+}
+
+sound sounds/vehicles/burning_stage_large {
+
+	volume -10
+	maxDistance 30
+	looping
+	sounds/xlib/valley_sounds/burning/rumbly/rumbly_04.wav
+	sounds/xlib/valley_sounds/burning/rumbly/rumbly_05.wav
+}
+
+sound sounds/vehicles/misc/low_health_loop {
+
+	volume -15
+
+	looping
+	sounds/weapons/misc/target_lock_alarm.wav
+}
+
+sound sounds/vehicles/misc/warning/air/gdf {
+
+	volume -15
+
+	looping
+	sounds/vehicles/misc/warn_air_gdf.wav
+}
+
+sound sounds/vehicles/misc/warning/ground/gdf {
+
+	volume -20
+
+	looping
+	sounds/vehicles/misc/warn_ground_gdf.wav
+}
+
+sound sounds/vehicles/misc/warning/air/strogg {
+
+	volume -15
+
+	looping
+	sounds/vehicles/misc/warn_air_strogg.wav
+}
+
+sound sounds/vehicles/misc/warning/ground/strogg {
+
+	volume -15
+
+	looping
+	sounds/vehicles/misc/warn_ground_strogg.wav
+}
+
+sound sounds/vehicles/misc/interior/cockpit/emped {
+
+	private
+	playOnce
+	no_occlusion
+
+	looping
+	leadin
+	sounds/vehicles/misc/emp_start.wav
+	sounds/vehicles/misc/emp_loop.wav
+}
+
+sound sounds/vehicles/misc/interior/cockpit/endemped {
+
+	private
+	playOnce
+	no_occlusion
+
+	sounds/vehicles/misc/emp_stop.wav
+}

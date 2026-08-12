@@ -1,0 +1,7 @@
+object navmodule_trigger : item_capturepoint {
+	entity				FindItem();
+}
+
+entity navmodule_trigger::FindItem() {
+	return getEntityKey( "navmodule" );
+}

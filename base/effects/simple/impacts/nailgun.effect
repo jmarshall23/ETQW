@@ -1,0 +1,76 @@
+effect effects/impacts/nailgun/impact_stroggify_simple
+{
+	size	64
+
+	cutOffDistance	2500
+
+	sound "Impact Sound"
+	{
+		soundShader	"sounds/weapons/lacerator/projectile_impact"
+		volume	0,6
+		freqshift	0.7,1.6
+	}
+	emitter "smokey"
+	{
+		duration	0.5,0.5
+		count		2,2
+		attenuateEmitter
+		attenuation	300,400
+
+		sprite
+		{
+			duration	1,1
+			blend	add
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 20,-20,-20,40,20,20 }
+				size { line 4,4,8,8 }
+				tint { point 0.858824,0.52549,0.156863 }
+				fade { line 0.1,0.4 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope rr2_concavefade_start_at_1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 20,20,30,30 }
+				rotate { box -0.25,0.25 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+effect effects/impacts/nailgun/impact_default_simple
+{
+	size	8
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_default_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/nailgun/impact_stroggify_simple"
+	}
+}

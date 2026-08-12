@@ -1,0 +1,1083 @@
+effect effects/weapons/railgun_idle
+{
+	size	0
+
+	cutOffDistance	100
+
+}effect effects/weapons/railgun_muzzleflash
+{
+	size	182
+
+	spawner "smoke"
+	{
+		count		1,1
+
+		sprite
+		{
+			duration	1,2
+			material	"particles/penta/simple_smoke"
+		parentvelocity
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -5,-0.5,-0.5,0.5,0.5,0.5 }
+				velocity { box -5,-5,-5,30,5,5 }
+				size { line 5,5,10,10 }
+				tint { point 0.937255,0.658824,0.556863 }
+				fade { line 0.15,0.2 }
+				rotate { box 0,0.125 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				fade { envelope rr2_convexfade_start_at_1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 50,50,70,70 }
+				tint { point 0.501961,0.501961,0.501961 }
+				rotate { box -0.25,0.25 }
+			}
+			lineHit
+		}
+	}
+	spawner "fire"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.2,0.2
+			material	"particles/explosion/explode07"
+			trailRepeat	1
+
+			start
+			{
+				position { point 40,-4,7 }
+				size { line 10,10,15,15 }
+				tint { line 0.772549,0.521569,0.447059,0.258824,0.121569,0.121569 }
+				offset { point 5,1,3 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 20,20,30,30 }
+				rotate { box 0.5,-0.5 }
+			}
+			lineHit
+		}
+	}
+	emitter "violent flash3"
+	{
+		duration	0.1,0.1
+		count		1,1
+		locked
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.14,0.14
+			material	"particles/flash/strogg_muzzleflash02"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point 40,-10,-2 }
+				size { line 6,6,8,8 }
+				fade { line 0.3,1 }
+				rotate { point 0.0555556 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { line 8,8,10,10 }
+			}
+			lineHit
+		}
+	}
+	emitter "violent flash"
+	{
+		duration	0.1,0.1
+		count		1,1
+		locked
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.14,0.14
+			material	"particles/flash/strogg_muzzleflash02"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point 40,1,-2 }
+				size { line 8,8,10,10 }
+				tint { point 1,0.501961,0 }
+				fade { line 0.3,1 }
+				rotate { point 0.0277778 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { line 10,10,12,12 }
+			}
+			lineHit
+		}
+	}
+	emitter "violent flash2"
+	{
+		duration	0.1,0.1
+		count		1,1
+		locked
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.14,0.14
+			material	"particles/flash/strogg_muzzleflash02"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point 40,3,11 }
+				size { line 8,8,10,10 }
+				rotate { point -0.0416667 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { line 12,12,14,14 }
+			}
+			lineHit
+		}
+	}
+	light "light2"
+	{
+		locked
+
+		light
+		{
+			duration	1.5,2
+			blend	add
+			material	"lights/round"
+			trailRepeat	1
+
+			start
+			{
+				position { point -5,10,-15 }
+				size { line 60,60,60,100,100,100 }
+				tint { line 0.72549,0.0901961,0,0.647059,0.329412,0.0156863 }
+			}
+
+			motion
+			{
+				tint { envelope concavefade count 1.5,1.5,1.5 offset -0.5,-0.5,-0.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "heat haze"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/muzzleflash_haze"
+			trailRepeat	1
+
+			start
+			{
+				position { point 15,0,0 }
+				size { point 10,10 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_cmzoom }
+				tint { envelope jrad_smokefade }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 20,20 }
+				rotate { point 0 relative }
+			}
+			lineHit
+		}
+	}
+	spawner "covering flash3"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.2,0.2
+			material	"textures/effects/weapons/muzzle_flash2"
+			trailRepeat	1
+
+			start
+			{
+				position { point -22,7,-3 }
+				size { point 3,3 }
+				tint { line 0.4,0.0431373,0,0.666667,0.2,0 }
+				rotate { point -0.125 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				fade { envelope bathroomtable }
+			}
+			lineHit
+		}
+	}
+	spawner "vent glow2"
+	{
+		start		0.5,0.5
+		count		2,2
+		locked
+
+		sprite
+		{
+			duration	2.5,2.5
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip07"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point -24,5.5,-3 }
+				size { point 3,2 }
+				tint { point 1,0.337255,0.0156863 }
+				fade { point 1.5 }
+				offset { point 4,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope bathroomtable }
+			}
+			lineHit
+		}
+	}
+	emitter "fire2"
+	{
+		duration	0.7,1.5
+		count		8,8
+		locked
+
+		sprite
+		{
+			duration	1,1.5
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,5,0 }
+				velocity { box 0,3,0,0,3,8 }
+				acceleration { box 0,0,4,0,3,4 }
+				size { line 3,3,6,6 }
+				tint { line 0.203922,0.133333,0.054902,0.313726,0.172549,0.113725 }
+				fade { point 0 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope jrad_cmzoom }
+				tint { envelope prone }
+				fade { envelope shamus_fastinholdslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 7,7,10,10 }
+				fade { line 0.4,1 }
+				rotate { box 0.5,-0.5 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "heat_haze3"
+	{
+		duration	1,1
+		count		4,4
+		locked
+
+		sprite
+		{
+			duration	1.5,2
+			material	"textures/particles/muzzleflash_haze"
+			trailRepeat	1
+
+			start
+			{
+				position { point -20,6,0 }
+				velocity { box 4,0,-1,7,3,-3 }
+				acceleration { box 0,0,4,0,3,4 }
+				friction { box 0,0,-2,0,0,-5 }
+				size { point 4,4 }
+				tint { line 0.647059,0.647059,0.647059,0.811765,0.811765,0.811765 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope jrad_cmzoom }
+				tint { envelope jrad_smokefade }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 8,8 }
+				rotate { box 0.5,-0.5 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+effect effects/weapons/railgun_muzzleflash_world
+{
+	size	347
+
+	cutOffDistance	15000
+
+	spawner "flame"
+	{
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	300,300
+
+		line
+		{
+			duration	0.0051,0.0051
+			generatedLine
+			material	"textures/effects/weapons/blaster_fly_yellow"
+			trailRepeat	1
+
+			start
+			{
+				position { point -6,0,0 }
+				velocity { box 2,-0.025,-0.025,4,0.075,0 }
+				size { point 10 }
+				tint { line 0.921569,0.0784314,0.0392157,0.976471,0,0 }
+				fade { line 0.75,1 }
+				length { box 30,0,0,40,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1_fast count 0.9,0.9,0.9 offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+
+			end
+			{
+				tint { point 1,0.247059,0.247059 }
+			}
+			lineHit
+		}
+	}
+	spawner "flame2"
+	{
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	300,300
+
+		line
+		{
+			duration	0.03,0.08
+			generatedLine
+			material	"textures/effects/weapons/muzzle_flash_side2"
+			trailRepeat	1
+
+			start
+			{
+				position { point -2,0.25,0 }
+				velocity { box 2,-0.025,-0.25,4,0.075,-0.0125 }
+				size { box 7,10 }
+				tint { line 0.921569,0.286275,0.0784314,0.909804,0.109804,0.0901961 }
+				fade { line 0.75,1 }
+				length { box 40,0,0,50,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1_fast count 0.9,0.9,0.9 offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+			lineHit
+		}
+	}
+	spawner "large flash2"
+	{
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	400,400
+
+		sprite
+		{
+			duration	0.08,0.08
+			material	"textures/effects/weapons/muzzle_flash2"
+			trailRepeat	1
+
+			start
+			{
+				position { point 6,0,0 }
+				size { line 12,12,16,16 }
+				tint { line 0.133333,0.00784314,0,0.517647,0.152941,0 }
+				fade { point 0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 30,30,40,40 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+	spawner "flame3"
+	{
+		count		1,1
+		locked
+
+		line
+		{
+			duration	0.002,0.06
+			generatedLine
+			material	"particles/flash/strogg_muzzleflash01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0.25,0,2,0.25,0 }
+				velocity { box 2,-0.025,-0.25,4,0.075,-0.0125 }
+				size { box 10,15 }
+				fade { line 0.75,1 }
+				length { box 15,0,0,20,0,0 }
+			}
+
+			motion
+			{
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+			lineHit
+		}
+	}
+	spawner "flash"
+	{
+		count		1,1
+		locked
+
+		oriented
+		{
+			duration	0.03,0.08
+			material	"textures/effects/weapons/muzzle_flash2"
+			trailRepeat	1
+
+			start
+			{
+				position { point 1.5,0,0 }
+				size { line 20,20,25,25 }
+				tint { line 0.933333,0.211765,0.176471,0.909804,0.427451,0.223529 }
+				fade { line 0.75,1 }
+				rotate { box 0,0,0.338889,0,0,0.394444 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+
+			end
+			{
+				size { line 30,30,40,40 }
+			}
+			lineHit
+		}
+	}
+	spawner "edge2"
+	{
+		count		1,1
+		locked
+		inverseAttenuateEmitter
+		attenuation	400,400
+
+		sprite
+		{
+			duration	0.1,0.1
+			material	"textures/effects/weapons/muzzle_flash2"
+			trailRepeat	1
+
+			start
+			{
+				position { point 3,0,0 }
+				size { line 10,10,12,12 }
+				tint { point 0.713726,0.0941177,0.0627451 }
+				fade { point 0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 80,80,100,100 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+	light "light"
+	{
+		locked
+
+		light
+		{
+			duration	0.5,0.5
+			blend	add
+			material	"lights/impflash"
+			trailRepeat	1
+
+			start
+			{
+				size { point 200,200,200 }
+				tint { point 0.933333,0.521569,0.501961 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+			lineHit
+		}
+	}
+}effect effects/weapons/railgun_trail
+{
+	size	50
+
+	spawner "Beam Core"
+	{
+		count		1,1
+
+		line
+		{
+			duration	1.8,1.8
+			material	"textures/effects/weapons/railgun_core"
+			trailRepeat	1
+
+			start
+			{
+				size { point 3 }
+				length { line 0,0,0,0,0,0 useEndOrigin }
+			}
+
+			motion
+			{
+				size { envelope exp_x2 }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+			lineHit
+		}
+	}
+	spawner "Spiral"
+	{
+		density		6,6
+		particleCap		128
+
+		linked
+		{
+			duration	2,2
+			blend	add
+			material	"textures/effects/weapons/railgun_spiral"
+			tiling	256
+			fadeIn
+			generatedNormal
+			trailRepeat	1
+
+			start
+			{
+				position { spiral 0,2,0,0,2,0,128 useEndOrigin linearSpacing }
+				velocity { point 2,0,0 }
+				fade { point 0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 3 }
+			}
+			lineHit
+		}
+	}
+	spawner "Rings"
+	{
+		density		4,4
+		particleCap		128
+		attenuateEmitter
+		attenuation	500,500
+
+		oriented
+		{
+			duration	2,2
+			blend	add
+			material	"particles/penta/bosonorb_muzzle_shockwave"
+			trailRepeat	1
+
+			start
+			{
+				position { line 64,0,0,64,0,0 useEndOrigin linearSpacing }
+				size { point 3,3 }
+				fade { point 0.6 }
+				rotate { box 0,0,0,0,0,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_convexfade }
+				fade { envelope jrad_concavefade }
+				offset { envelope jrad_convexfade }
+				rotate { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { line 4,4,6,6 }
+				offset { line 5,-5,0,8,5,0 }
+				rotate { box 0,0,-0.177778,0,0,0.177778 relative }
+			}
+			lineHit
+		}
+	}
+	spawner "vapour"
+	{
+		density		8,8
+		particleCap		128
+		attenuateEmitter
+		attenuation	600,600
+
+		oriented
+		{
+			duration	2,3
+			material	"textures/sfx/railguntrail"
+			trailRepeat	1
+
+			start
+			{
+				position { line 10,0,0,10,0,0 useEndOrigin linearSpacing }
+				size { line 8,8,10,10 }
+				fade { line 0.05,0.4 }
+				rotate { box 0,0,0,0,0,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_convexfade }
+				fade { envelope rr2_concavefade_start_at_1 }
+				offset { envelope jrad_convexfade }
+				rotate { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { line 10,10,12,12 }
+				offset { line 5,-5,-5,8,5,5 }
+				rotate { box 0,0,-0.177778,0,0,0.177778 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+effect effects/impacts/railgun/impact_stroggify
+{
+	size	140
+
+	cutOffDistance	1300
+
+	sound "Impact Sound"
+	{
+		soundShader	"sounds/weapons/lacerator/projectile_impact"
+		volume	15,18
+		freqshift	0.7,1.4
+	}
+	spawner "glow"
+	{
+		count		1,1
+		attenuation	800,900
+
+		oriented
+		{
+			duration	4,4
+			blend	add
+			material	"textures/particles/sparks/sparkflash03"
+			trailRepeat	1
+
+			start
+			{
+				size { box 25,25,40,40 }
+				tint { line 0.992157,0.211765,0.0156863,1,0.435294,0.12549 }
+				fade { line 0.3,1 }
+				rotate { box 0,0,0,0,0,2 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope exp_x2 }
+			}
+
+			end
+			{
+				size { point 20,20 }
+			}
+			lineHit
+		}
+	}
+	emitter "smokey"
+	{
+		duration	0.5,0.5
+		count		3,3
+		attenuateEmitter
+		attenuation	300,400
+
+		sprite
+		{
+			duration	1,1
+			blend	add
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 60,-20,-20,60,20,20 }
+				size { line 4,4,8,8 }
+				tint { point 0.858824,0.521569,0.156863 }
+				fade { line 0.1,0.4 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope rr2_concavefade_start_at_1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 35,35,50,50 }
+				rotate { box -0.25,0.25 relative }
+			}
+			lineHit
+		}
+	}
+	spawner "dirt_blur"
+	{
+		count		1,1
+		useMaterialColor
+
+		line
+		{
+			duration	0.4,0.4
+			blend	add
+			persist
+			material	"textures/effects/weapons/ground_flash"
+			gravity		0.001,0.001
+			trailRepeat	1
+
+			start
+			{
+				position { point 8,0,0 cone }
+				velocity { box 0,-10,-10,0,10,10 }
+				size { box 20,25 }
+				tint { line 0.792157,0.615686,0.207843,0.807843,0.317647,0.192157 }
+				offset { point -10,0,0 }
+				length { box 60,0,0,100,0,0 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+effect effects/impacts/railgun/impact_pavement
+{
+	size	8
+
+	effect "basegdf"
+	{
+		effect	"effects/sniperrifle/bullets/impacts/pavement"
+	}
+	effect "stroggify"
+	{
+		effect	"effects/impacts/railgun/impact_stroggify"
+	}
+}
+
+effect effects/impacts/railgun/impact_flesh
+{
+	size	8
+
+	effect "basegdf"
+	{
+		effect	"effects/sniperrifle/bullets/impacts/flesh"
+	}
+	effect "stroggify"
+	{
+		effect	"effects/impacts/railgun/impact_stroggify"
+	}
+}
+
+effect effects/impacts/railgun/impact_forcefield
+{
+	size	8
+
+	effect "basegdf"
+	{
+		effect	"effects/sniperrifle/bullets/impacts/forcefield"
+	}
+	effect "stroggify"
+	{
+		effect	"effects/impacts/railgun/impact_stroggify"
+	}
+}
+
+effect effects/impacts/railgun/impact_glass
+{
+	size	8
+
+	effect "basegdf"
+	{
+		effect	"effects/sniperrifle/bullets/impacts/glass"
+	}
+	effect "stroggify"
+	{
+		effect	"effects/impacts/railgun/impact_stroggify"
+	}
+}
+
+effect effects/impacts/railgun/impact_grass
+{
+	size	8
+
+	effect "basegdf"
+	{
+		effect	"effects/sniperrifle/bullets/impacts/grass"
+	}
+	effect "stroggify"
+	{
+		effect	"effects/impacts/railgun/impact_stroggify"
+	}
+}
+
+effect effects/impacts/railgun/impact_metal
+{
+	size	8
+
+	effect "basegdf"
+	{
+		effect	"effects/sniperrifle/bullets/impacts/metal"
+	}
+	effect "stroggify"
+	{
+		effect	"effects/impacts/railgun/impact_stroggify"
+	}
+}effect effects/impacts/railgun/impact_liquid
+{
+	size	8
+
+	effect "basegdf"
+	{
+		effect	"effects/sniperrifle/bullets/impacts/liquid"
+	}
+}
+
+
+
+effect effects/impacts/railgun/impact_plastic
+{
+	size	8
+
+	effect "basegdf"
+	{
+		effect	"effects/sniperrifle/bullets/impacts/plastic"
+	}
+	effect "stroggify"
+	{
+		effect	"effects/impacts/railgun/impact_stroggify"
+	}
+}
+
+effect effects/impacts/railgun/impact_sand
+{
+	size	8
+
+	effect "basegdf"
+	{
+		effect	"effects/sniperrifle/bullets/impacts/sand"
+	}
+	effect "stroggify"
+	{
+		effect	"effects/impacts/railgun/impact_stroggify"
+	}
+}
+
+effect effects/impacts/railgun/impact_snow
+{
+	size	8
+
+	effect "basegdf"
+	{
+		effect	"effects/sniperrifle/bullets/impacts/snow"
+	}
+	effect "stroggify"
+	{
+		effect	"effects/impacts/railgun/impact_stroggify"
+	}
+}
+
+effect effects/impacts/railgun/impact_stone
+{
+	size	8
+
+	effect "basegdf"
+	{
+		effect	"effects/sniperrifle/bullets/impacts/stone"
+	}
+	effect "stroggify"
+	{
+		effect	"effects/impacts/railgun/impact_stroggify"
+	}
+}
+
+effect effects/impacts/railgun/impact_wood
+{
+	size	8
+
+	effect "basegdf"
+	{
+		effect	"effects/sniperrifle/bullets/impacts/wood"
+	}
+	effect "stroggify"
+	{
+		effect	"effects/impacts/railgun/impact_stroggify"
+	}
+}
+
+effect effects/impacts/railgun/impact_default
+{
+	size	8
+
+	effect "basegdf"
+	{
+		effect	"effects/sniperrifle/bullets/default"
+	}
+	effect "stroggify"
+	{
+		effect	"effects/impacts/railgun/impact_stroggify"
+	}
+}
+
+effect effects/impacts/railgun/impact_dirt
+{
+	size	8
+
+	effect "basegdf"
+	{
+		effect	"effects/sniperrifle/bullets/default"
+	}
+	effect "stroggify"
+	{
+		effect	"effects/impacts/railgun/impact_stroggify"
+	}
+}

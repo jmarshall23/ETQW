@@ -1,0 +1,237 @@
+//
+// Version for fading out using coverage
+//
+
+renderProgram filterCoverage {
+	hwSkinningVersion filterCoverageSkinningMatrix filterCoverageHardSkinningMatrix
+
+	program vertex reference trivial
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0;
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		MUL R0, R0, fragment.color;
+		
+		SUB R0, R0, 1;
+		MAD result.color.rgb, R0, $coverage, 1;
+		MOV result.color.a, 1;
+	%> }
+}
+
+renderProgram filterCoverageSkinningMatrix {
+	program vertex reference trivialSkinningMatrix
+
+	program fragment reference filterCoverage
+}
+
+renderProgram filterCoverageHardSkinningMatrix {
+	program vertex reference trivialHardSkinningMatrix
+
+	program fragment reference filterCoverage
+}
+
+//
+// Version for fading out using vertexColor
+//
+
+renderProgram filterVertexColor {
+	hwSkinningVersion filterVertexColorSkinningMatrix filterVertexColorHardSkinningMatrix
+
+	program vertex reference trivial
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0;
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		
+		SUB R0, R0, 1;
+		MAD result.color.rgb, R0, fragment.color, 1;
+		MOV result.color.a, 1;
+	%> }
+}
+
+renderProgram filterVertexColorWithTextureMatrix {
+	program vertex reference trivialWithTextureMatrix
+
+	program fragment reference filterVertexColor
+}
+
+renderProgram filterVertexColorAlpha {
+	hwSkinningVersion filterVertexColorSkinningMatrix filterVertexColorHardSkinningMatrix
+
+	program vertex reference trivial
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0;
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		
+		SUB R0, R0, 1;
+		MAD result.color.rgb, R0, fragment.color.a, 1;
+		MOV result.color.a, 1;
+	%> }
+}
+
+renderProgram filterAlpha {
+	hwSkinningVersion filterVertexColorSkinningMatrix filterVertexColorHardSkinningMatrix
+
+	program vertex reference trivial
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0;
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		
+		TEMP R1;
+		MUL R1, fragment.color, R0;
+		
+		SUB R0, R0, 1;
+		MAD result.color.rgb, R0, R1.a, 1;
+		MOV result.color.a, 1;
+	%> }
+}
+
+renderProgram filterVertexColorSkinningMatrix {
+	program vertex reference trivialSkinningMatrix
+
+	program fragment reference filterVertexColor
+}
+
+renderProgram filterVertexColorHardSkinningMatrix {
+	program vertex reference trivialHardSkinningMatrix
+
+	program fragment reference filterVertexColor
+}
+
+//
+// Version for fading out using vertexColor and coverage, useful for outside where
+//
+
+renderProgram filterVertexColorCoverage {
+	hwSkinningVersion filterVertexColorCoverageSkinningMatrix filterVertexColorCoverageHardSkinningMatrix
+	instanceVersion filterVertexColorCoverage_instance
+
+	program vertex reference trivial
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0;
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		
+		SUB R0, R0, 1;
+		MUL R0, R0, fragment.color;
+		MAD result.color.rgb, R0, $coverage, 1;
+		MOV result.color.a, 1;
+	%> }
+}
+
+renderProgram filterVertexColorCoverageFogged {
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0;
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+
+		TEMP _F1, _F2;
+		SUB		_F2, $positionAttrib, $viewOrigin;
+		DP3		_F1.x, _F2, _F2;
+		RSQ		_F1.y, _F1.x;
+		MUL		_F1.x, _F1.y, _F1.x;
+		MAD		result.color.secondary, _F1.x, $fogDepths.z, $fogDepths.w; 
+	%> }
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1;
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		
+		SUB R1, 1, fragment.color.secondary.r;
+		MUL R1, fragment.color, R1;
+		
+		SUB R0, R0, 1;
+		MUL R0, R0, R1;
+		MAD result.color.rgb, R0, $coverage, 1;
+		MOV result.color.a, 1;
+	%> }
+}
+
+renderProgram filterVertexColorCoverage_instance {
+	program vertex reference trivial_instance
+
+	program fragment reference filterVertexColorCoverage
+}
+
+
+renderProgram filterVertexColorCoverageSkinningMatrix {
+	program vertex reference trivialSkinningMatrix
+
+	program fragment reference filterVertexColorCoverage
+}
+
+renderProgram filterVertexColorCoverageHardSkinningMatrix {
+	program vertex reference trivialHardSkinningMatrix
+
+	program fragment reference filterVertexColorCoverage
+}
+
+renderProgram addVertexColorCoverage {
+
+	program vertex reference trivial
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0;
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		
+		MUL R0, R0, fragment.color;
+		MUL result.color.rgb, R0, $coverage;
+		MOV result.color.a, 1;
+	%> }
+}
+
+renderProgram addVertexColorCoverageFogged {
+
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0;
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+
+		TEMP _F1, _F2;
+		SUB		_F2, $positionAttrib, $viewOrigin;
+		DP3		_F1.x, _F2, _F2;
+		RSQ		_F1.y, _F1.x;
+		MUL		_F1.x, _F1.y, _F1.x;
+		MUL		R0, $fogDepths.z, 0.75;
+		MAD		result.color.secondary, _F1.x, R0, $fogDepths.w; 
+	%> }
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1;
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		
+		MUL R0, R0, fragment.color;
+		SUB R1, 1, fragment.color.secondary.r;
+		MUL R0, R0, R1;
+		MUL result.color.rgb, R0, $coverage;
+		MOV result.color.a, 1;
+	%> }
+}

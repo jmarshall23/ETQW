@@ -1,0 +1,74 @@
+
+material guis/assets/qet/logo_nerve
+{
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		map clamp nopicmip guis/assets/mainmenu/logo_nerve.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/logo_sd
+{
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		map clamp nopicmip guis/assets/mainmenu/logo_sd.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/logo_sd_color
+{
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip guis/assets/mainmenu/logo_sd_color.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/logo_atvi
+{
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		map clamp nopicmip guis/assets/mainmenu/logo_act.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/logo_id
+{
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		map clamp nopicmip guis/assets/mainmenu/logo_id.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/logo_etqw
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/mainmenu/logo_etqw.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/logo_bink
+{
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip guis/assets/mainmenu/logo_bink.tga
+		vertexColor
+	}
+}

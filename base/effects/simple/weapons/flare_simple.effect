@@ -1,0 +1,386 @@
+effect effects/weapons/flare_simple
+{
+	size	50
+
+	emitter "flash_front_left6"
+	{
+		duration	5,5
+		density		1,1
+		locked
+
+		sprite
+		{
+			duration	5,5
+			blend	add
+			material	"textures/effects/decoyflare"
+			trailRepeat	1
+
+			start
+			{
+				size { point 20,20 }
+				tint { point 1,0.882353,0.603922 }
+				fade { point 0.5 }
+			}
+
+			motion
+			{
+				size { envelope concavefade count 0.5,0.5 }
+				tint { envelope pdcomm2table count 3,3,3 }
+				fade { envelope pdhextable count 16 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 10,10 }
+				tint { point 0.34902,0.27451,0 }
+				rotate { point 5.55556 }
+			}
+		}
+	}
+	emitter "flash_front_left7"
+	{
+		duration	5,5
+		density		1,1
+		locked
+
+		sprite
+		{
+			duration	5,5
+			blend	add
+			material	"textures/particles/flash"
+			trailRepeat	1
+
+			start
+			{
+				size { point 35,35 }
+				tint { point 0.584314,0.34902,0 }
+				fade { point 0.3 }
+			}
+
+			motion
+			{
+				size { envelope concavefade count 0.5,0.5 }
+				tint { envelope threestage count 2,2,2 }
+				fade { envelope pdcomm2table count 2 offset 2 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 15,15 }
+				tint { point 1,0.819608,0.458824 }
+				rotate { point 4 }
+			}
+		}
+	}
+}effect effects/weapons/flare_puff_simple
+{
+	size	445
+
+	cutOffDistance	20000
+
+	emitter "smoke trail2"
+	{
+		duration	0.1,0.1
+		count		10,10
+		attenuateEmitter
+		attenuation	400,400
+
+		sprite
+		{
+			duration	0.1,0.1
+			material	"textures/particles/smoke_test1"
+			windDeviationAngle 2.000000
+			gravity		-0.01,-0.01
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 0,-1,-2,0,1,2 }
+				angle { point 0.0555556,0.0555556,0.0555556 }
+				acceleration { box 0,-1.5,-3,0,1.5,3 }
+				size { line 3,3,5,5 }
+				fade { line 0.1,0.4 }
+				windStrength { line 0.3,0.4 }
+				rotate { box -0.25,0.25 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 count 0.125,0.125 }
+				fade { envelope rr2_concavefade_start_at_1 count 1.025 offset -0.025 }
+				angle { envelope convexfade }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 80,80,100,100 }
+				angle { point 0.277778,0.277778,0.277778 }
+				rotate { box 1,-1 relative }
+			}
+			lineHit
+		}
+	}
+	spawner "unnamed3"
+	{
+		count		1,1
+		locked
+		constant
+
+		line
+		{
+			duration	0.1,0.1
+			blend	add
+			material	"particles/flash/muzzleflash_side1a"
+			flipNormal
+			trailRepeat	1
+
+			start
+			{
+				size { box 16,8 }
+				tint { line 1,0.67451,0.0156863,1,0.054902,0.054902 }
+				offset { point 20,0,0 }
+				length { point 70,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope concavefade count 4,4,4 offset -3,-3,-3 }
+				fade { envelope flashtable }
+			}
+
+			end
+			{
+				fade { point 0.5 }
+			}
+			lineHit
+		}
+	}
+	emitter "flash_front_center2"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			blend	add
+			material	"textures/particles/flash"
+			trailRepeat	1
+
+			start
+			{
+				size { line 100,100,300,300 }
+				tint { point 0.611765,0.364706,0 }
+				fade { point 0.5 }
+				offset { point 20,0,0 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 8,8 }
+				tint { envelope threestage count 2,2,2 }
+				fade { envelope senetable3 count 4 offset 2 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 30,30,50,50 }
+				tint { line 1,0.819608,0.458824,1,1,1 }
+				rotate { point 4 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+effect effects/weapons/flare_master_extra_simple
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/weapons/flare_extra_simple"
+	}
+	delay "unnamed1"
+	{
+		start		0.3,0.3
+		duration	1,1
+	}
+	effect "unnamed2"
+	{
+		effect	"effects/weapons/flare_extra_simple"
+	}
+	delay "unnamed3"
+	{
+		start		0.3,0.3
+		duration	1,1
+	}
+	effect "unnamed4"
+	{
+		effect	"effects/weapons/flare_extra_simple"
+	}
+}
+
+effect effects/weapons/flare_master_extra_down_simple
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/weapons/flare_extra_down_simple"
+	}
+	delay "unnamed1"
+	{
+		start		0.3,0.3
+		duration	1,1
+	}
+	effect "unnamed2"
+	{
+		effect	"effects/weapons/flare_extra_down_simple"
+	}
+	delay "unnamed3"
+	{
+		start		0.3,0.3
+		duration	1,1
+	}
+	effect "unnamed4"
+	{
+		effect	"effects/weapons/flare_extra_down_simple"
+	}
+}
+
+effect effects/weapons/flare_titan_simple
+{
+	size	445
+
+	emitter "smoke trail2"
+	{
+		duration	3,3
+		count		10,10
+		attenuateEmitter
+		attenuation	400,400
+
+		sprite
+		{
+			duration	1,5
+			material	"textures/particles/smoke_test1"
+			windDeviationAngle 2.000000
+			gravity		-0.01,-0.01
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 0,-1,-2,0,1,2 }
+				angle { point 0.0555556,0.0555556,0.0555556 }
+				acceleration { box 0,-1.5,-3,0,1.5,3 }
+				size { line 3,3,5,5 }
+				fade { line 0.1,0.4 }
+				windStrength { line 0.3,0.4 }
+				rotate { box -0.25,0.25 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 count 0.125,0.125 }
+				fade { envelope rr2_concavefade_start_at_1 count 1.025 offset -0.025 }
+				angle { envelope convexfade }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 80,80,100,100 }
+				angle { point 0.277778,0.277778,0.277778 }
+				rotate { box 1,-1 relative }
+			}
+			lineHit
+		}
+	}
+	spawner "unnamed3"
+	{
+		count		1,1
+		locked
+		constant
+
+		line
+		{
+			duration	0.7,0.7
+			blend	add
+			material	"particles/flash/muzzleflash_side1a"
+			flipNormal
+			trailRepeat	1
+
+			start
+			{
+				size { box 16,8 }
+				tint { line 1,0.67451,0.0156863,1,0.054902,0.054902 }
+				offset { point 20,0,0 }
+				length { point 70,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope concavefade count 4,4,4 offset -3,-3,-3 }
+				fade { envelope flashtable }
+			}
+
+			end
+			{
+				fade { point 0.5 }
+			}
+			lineHit
+		}
+	}
+	emitter "flash_front_center2"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	2.6,2.6
+			blend	add
+			material	"textures/particles/flash"
+			trailRepeat	1
+
+			start
+			{
+				size { line 100,100,300,300 }
+				tint { point 0.611765,0.364706,0 }
+				fade { point 0.5 }
+				offset { point 20,0,0 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 8,8 }
+				tint { envelope threestage count 2,2,2 }
+				fade { envelope senetable3 count 4 offset 2 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 30,30,50,50 }
+				tint { line 1,0.819608,0.458824,1,1,1 }
+				rotate { point 4 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+

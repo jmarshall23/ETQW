@@ -1,0 +1,44 @@
+material textures/base_wall/a_rib_panel_04_fin
+{
+	surfaceType "metal"
+	qer_editorimage textures/base_wall/a_rib_panel_04_fin.tga
+
+	diffusemap	textures/base_wall/a_rib_panel_d04_fin.tga
+	specularmap	textures/base_wall/a_rib_panel_s04_fin.tga
+        bumpmap		addnormals( textures/base_wall/a_rib_panel_local_fin.tga  , heightmap( textures/base_wall/a_rib_panel_b04_fin.tga, 2 ) )
+        description     "gray with rust spots"
+ }
+ 
+ material textures/base_wall/a_snpanel15_d03
+ {
+ 	qer_editorimage		textures/base_wall/a_snpanel15_d03.tga
+ 	bumpmap			textures/base_wall/a_snpanel15_local02.tga
+ 	diffusemap		textures/base_wall/a_snpanel15_d03.tga
+ 	specularmap		textures/base_wall/a_snpanel15_s03.tga
+}
+material textures/base_wall/a_wire_fence2
+{
+	nonsolid
+	playerclip
+	flyerhiveclip
+	noimpact
+	noShadows
+	twosided
+	qer_editorimage textures/base_wall/a_wire_fence2.tga
+	{
+		bumpmap  maxLod 4 textures/base_wall/wire_fence2_local.tga
+		specularmap maxLod 4 textures/base_wall/a_wire_fence2_s.tga
+		diffusemap maxLod 4 textures/base_wall/a_wire_fence2_d.tga
+		alphaTest 0.4
+		
+		textureMatrix bumpMatrix {
+			scale	 2, 2
+		}
+		textureMatrix specularMatrix {
+			scale	 4, 4
+		}		
+		textureMatrix diffuseMatrix {
+			scale	 2, 2
+		}
+	}	
+}

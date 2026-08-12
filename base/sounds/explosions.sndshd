@@ -1,0 +1,31 @@
+sound sounds/weapons/explosions/underwater {
+
+	volume 5
+	maxDistance 75
+
+	sounds/weapons/explosions/underwater_01.wav
+}
+
+sound sounds/weapons/explosions/underwater_far {
+
+	volume 5
+	maxDistance 150
+
+	sounds/weapons/explosions/underwater_far.wav
+}
+
+sound sounds/weapons/explosions/underwater_splash {
+
+	volume -5
+	maxDistance 75
+
+	sounds/weapons/explosions/underwater_splash_01.wav
+}
+
+sound sounds/weapons/explosions/underwater/small {
+
+	maxDistance 75
+
+	sounds/weapons/explosions/underwater_small_01.wav
+	sounds/weapons/explosions/underwater_small_02.wav
+}

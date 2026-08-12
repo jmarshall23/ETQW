@@ -1,0 +1,666 @@
+/********************************************************************************
+
+	Proficiency Items
+
+********************************************************************************/
+
+// ==================================
+
+proficiencyItem pro_battlesense_test {
+	type	"battlesense"
+	count	300
+}
+
+proficiencyItem pro_battlesense_rank5 {
+	type	"battlesense"
+	count	2
+	
+	stat_name "battlesense_rank_5_xp"
+}
+
+proficiencyItem pro_battlesense_rank4 {
+	type	"battlesense"
+	count	1.25
+
+	stat_name "battlesense_rank_4_xp"
+}
+
+proficiencyItem pro_battlesense_rank3 {
+	type	"battlesense"
+	count	1
+
+	stat_name "battlesense_rank_3_xp"
+}
+
+proficiencyItem pro_battlesense_rank2 {
+	type	"battlesense"
+	count	0.5
+
+	stat_name "battlesense_rank_2_xp"
+}
+
+proficiencyItem pro_battlesense_rank1 {
+	type	"battlesense"
+	count	0.25
+
+	stat_name "battlesense_rank_1_xp"
+}
+
+proficiencyItem pro_battlesense_spawn_capture {
+	type	"battlesense"
+	count	5.01 // never quite gets to 5 otherwise
+}
+
+proficiencyItem pro_battlesense_spawn_liberate {
+	type	"battlesense"
+	count	5.01
+}
+
+proficiencyItem pro_battlesense_item_delivered {
+	type	"battlesense"
+	count	10
+}
+
+proficiencyItem pro_battlesense_revive_wait {
+	type	"battlesense"
+	count	0.25
+}
+
+// ==================================
+
+proficiencyItem pro_vehicle_test {
+	type		"vehicle"
+	count		300
+}
+
+proficiencyItem pro_vehicle_damage {
+	type		"vehicle"
+	count		0.0025
+}
+
+proficiencyItem pro_vehicle_damage_heavy {
+	type		"vehicle"
+	count		0.00125
+}
+
+proficiencyItem pro_vehicle_mcp_deploy {
+	type		"vehicle"
+	count		20
+}
+
+// ==================================
+
+proficiencyItem pro_light_weapons_test {
+	type		"weapon_handling"
+	count		300
+}
+
+proficiencyItem pro_light_weapons_damage {
+	type		"weapon_handling"
+	count		0.0025
+}
+
+// =====================================
+//		Engineer
+// =====================================
+
+proficiencyItem pro_engineer_test {
+	type		"engineer"
+	count		300
+}
+
+proficiencyItem pro_engineer_construct_objective {
+	type		"engineer"
+	count		40
+
+	stat_name	"gdf_pliers_xp"
+}
+
+proficiencyItem pro_engineer_construct_secondary {
+	type		"engineer"
+	count		5
+
+	stat_name	"gdf_pliers_xp"
+}
+
+proficiencyItem pro_engineer_repair {
+	type		"engineer"
+	count		0.00125
+	
+	stat_name	"gdf_pliers_xp"
+}
+
+proficiencyItem pro_engineer_damage {
+	type		"engineer"
+	count		0.0025
+}
+
+proficiencyItem pro_engineer_turret_damage {
+	type		"engineer"
+	count		0.0025
+}
+
+proficiencyItem pro_engineer_turret_damage_avt {
+	type		"engineer"
+	count		0.001
+}
+
+proficiencyItem pro_engineer_antimissile_plasmamortar {
+	type		"engineer"
+	count		0.5
+	stat_name	"antimissile_gdf_xp"
+}
+
+proficiencyItem pro_engineer_antimissile_railhowitzer {
+	type		"engineer"
+	count		0.3
+	stat_name	"antimissile_gdf_xp"
+}
+
+proficiencyItem pro_engineer_antimissile_ssg {
+	type		"engineer"
+	count		3
+	stat_name	"antimissile_gdf_xp"
+}
+
+proficiencyItem pro_engineer_disarm_mine {
+	type		"engineer"
+	count		0.125
+	
+	stat_name	"gdf_pliers_xp"
+}
+
+proficiencyItem pro_engineer_disarm_charge {
+	type		"engineer"
+	count		0.25
+	
+	stat_name	"gdf_pliers_xp"
+}
+
+proficiencyItem pro_engineer_disarm_charge_secondary {
+	type		"engineer"
+	count		1.25
+	
+	stat_name	"gdf_pliers_xp"
+}
+
+proficiencyItem pro_engineer_disarm_charge_objective {
+	type		"engineer"
+	count		2.5
+	
+	stat_name	"gdf_pliers_xp"
+}
+
+proficiencyItem pro_engineer_deploy_bonus {
+	type		"engineer"
+	count		1
+}
+
+// =====================================
+//		Covert Ops
+// =====================================
+
+proficiencyItem pro_covertops_test {
+	type		"covertops"
+	count		300
+}
+
+proficiencyItem pro_covertops_hack_deployable {
+	type		"covertops"
+	count		1
+	
+	stat_name	"gdf_hack_xp"
+}
+
+proficiencyItem pro_covertops_hack_deployable_big {
+	type		"covertops"
+	count		2
+	
+	stat_name	"gdf_hack_xp"
+}
+
+proficiencyItem pro_covertops_hack_objective {
+	type		"covertops"
+	count		40
+	
+	stat_name	"gdf_hack_xp"
+}
+
+proficiencyItem pro_covertops_hack_secondary {
+	type		"covertops"
+	count		5
+	
+	stat_name	"gdf_hack_xp"
+}
+
+proficiencyItem pro_covertops_damage {
+	type		"covertops"
+	count		0.0025
+}
+
+proficiencyItem pro_covertops_damage_half {
+	type		"covertops"
+	count		0.00125
+}
+
+proficiencyItem pro_covertops_emp_deployable {
+	type		"covertops"
+	count		0.3125
+	
+	stat_name	"grenade_emp_xp"
+}
+
+proficiencyItem pro_covertops_emp_vehicle {
+	type		"covertops"
+	count		0.25
+	
+	stat_name	"grenade_emp_xp"
+}
+
+proficiencyItem pro_covertops_spot {
+	type		"covertops"
+	count		0.0625
+	
+	stat_name	"gdf_spotting_xp"
+}
+
+proficiencyItem pro_covertops_radar_spot {
+	type		"covertops"
+	count		0.1
+	
+	stat_name	"radar_xp"
+}
+
+proficiencyItem pro_covertops_backstab_disguised {
+	type		"covertops"
+	count		1
+
+	stat_name	"gdf_backstab_xp"
+}
+
+proficiencyItem pro_covertops_emp_mine {
+	type		"covertops"
+	count		0.1
+
+	stat_name	"grenade_emp_xp"
+}
+
+proficiencyItem pro_covertops_deploy_bonus {
+	type		"covertops"
+	count		1
+}
+
+// =====================================
+//		Medic
+// =====================================
+
+proficiencyItem pro_medic_test {
+	type		"medic"
+	count		300
+}
+
+proficiencyItem pro_medic_damage {
+	type		"medic"
+	count		0.0025
+}
+
+proficiencyItem pro_medic_supplydrop_used {
+	type		"medic"
+	count		0.5
+
+	stat_name	"supplydrop_xp"
+}
+
+proficiencyItem pro_medic_revive {
+	type		"medic"
+	count		1.8
+
+	stat_name	"gdf_revive_xp"
+}
+
+proficiencyItem pro_medic_heal {
+	type		"medic"
+	count		0.5
+	
+	stat_name	"healthpack_xp"
+}
+
+proficiencyItem pro_medic_deploy_bonus {
+	type		"medic"
+	count		1
+}
+
+// =====================================
+//		Soldier
+// =====================================
+
+proficiencyItem pro_soldier_test {
+	type		"soldier"
+	count		300
+}
+
+proficiencyItem pro_soldier_destroy_primary {
+	type		"soldier"
+	count		20
+}
+
+proficiencyItem pro_soldier_destroy_secondary {
+	type		"soldier"
+	count		5
+}
+
+proficiencyItem pro_soldier_damage {
+	type		"soldier"
+	count		0.001875
+}
+
+// =====================================
+//		Fieldops
+// =====================================
+
+proficiencyItem pro_fieldops_test {
+	type	"fieldops"
+	count	300
+}
+
+proficiencyItem pro_fieldops_damage {
+	type	"fieldops"
+	count	0.00125
+}
+
+proficiencyItem pro_fieldops_supply {
+	type	"fieldops"
+	count	0.5
+	
+	stat_name	"gdf_supply_xp"
+}
+
+proficiencyItem pro_fieldops_deploy_bonus {
+	type		"fieldops"
+	count		1
+}
+
+// =====================================
+//		Aggressor
+// =====================================
+
+proficiencyItem pro_aggressor_test {
+	type	"soldier"
+	count	300
+}
+
+proficiencyItem pro_aggressor_damage {
+	type	"soldier"
+	count	0.001875
+}
+
+proficiencyItem pro_aggressor_destroy_primary {
+	type	"soldier"
+	count	20
+}
+
+proficiencyItem pro_aggressor_destroy_secondary {
+	type	"soldier"
+	count	5
+}
+
+// =====================================
+//		Constructor
+// =====================================
+
+proficiencyItem pro_constructor_test {
+	type		"engineer"
+	count		300
+}
+
+proficiencyItem pro_constructor_damage {
+	type		"engineer"
+	count		0.0025
+}
+
+proficiencyItem pro_constructor_turret_damage {
+	type		"engineer"
+	count		0.0025
+}
+
+proficiencyItem pro_constructor_turret_damage_avt {
+	type		"engineer"
+	count		0.001
+}
+
+
+
+proficiencyItem pro_constructor_antimissile_rockets {
+	type		"engineer"
+	count		0.5
+	stat_name	"antimissile_strogg_xp"
+}
+
+proficiencyItem pro_constructor_antimissile_artillery {
+	type		"engineer"
+	count		0.3
+	stat_name	"antimissile_strogg_xp"
+}
+
+proficiencyItem pro_constructor_antimissile_hammer {
+	type		"engineer"
+	count		3
+	stat_name	"antimissile_strogg_xp"
+}
+
+
+proficiencyItem pro_constructor_repair {
+	type		"engineer"
+	count		0.00125
+
+	stat_name	"strogg_pliers_xp"
+}
+
+proficiencyItem pro_constructor_construct_objective {
+	type		"engineer"
+	count		40
+
+	stat_name	"strogg_pliers_xp"
+}
+
+proficiencyItem pro_constructor_construct_secondary {
+	type		"engineer"
+	count		5
+
+	stat_name	"strogg_pliers_xp"
+}
+
+
+
+
+proficiencyItem pro_constructor_disarm_charge {
+	type		"engineer"
+	count		0.25
+	
+	stat_name	"strogg_pliers_xp"
+}
+
+proficiencyItem pro_constructor_disarm_charge_secondary {
+	type		"engineer"
+	count		1.25
+	
+	stat_name	"strogg_pliers_xp"
+}
+
+proficiencyItem pro_constructor_disarm_charge_objective {
+	type		"engineer"
+	count		2.5
+	
+	stat_name	"strogg_pliers_xp"
+}
+
+proficiencyItem pro_constructor_disarm_mine {
+	type		"engineer"
+	count		0.125
+	
+	stat_name	"strogg_pliers_xp"
+}
+
+proficiencyItem pro_constructor_deploy_bonus {
+	type		"engineer"
+	count		1
+}
+
+
+// =====================================
+//		Technician
+// =====================================
+
+proficiencyItem pro_technician_test {
+	type		"medic"
+	count		300
+}
+
+proficiencyItem pro_technician_damage {
+	type		"medic"
+	count		0.0025
+}
+
+proficiencyItem pro_technician_revive {
+	type		"medic"
+	count		1.8
+
+	stat_name	"strogg_revive_xp"
+}
+
+proficiencyItem pro_technician_heal {
+	type		"medic"
+	count		0.5
+	
+	stat_name	"stroyentcells_xp"
+}
+
+proficiencyItem pro_technician_spawn_host_used {
+	type		"medic"
+	count		1.8
+
+	stat_name	"strogg_spawn_host_xp"
+}
+
+// =====================================
+//		Infiltrator
+// =====================================
+
+proficiencyItem pro_infiltrator_test {
+	type		"covertops"
+	count		300
+}
+
+proficiencyItem pro_infiltrator_spot {
+	type		"covertops"
+	count		0.0625
+
+	stat_name	"strogg_spotting_xp"
+}
+
+proficiencyItem pro_infiltrator_radar_spot {
+	type		"covertops"
+	count		0.1
+
+	stat_name	"psi_xp"
+}
+
+proficiencyItem pro_infiltrator_damage {
+	type		"covertops"
+	count		0.0025
+}
+
+proficiencyItem pro_infiltrator_damage_half {
+	type		"covertops"
+	count		0.00125
+}
+
+proficiencyItem pro_infiltrator_hack_deployable {
+	type		"covertops"
+	count		1
+	
+	stat_name	"strogg_hack_xp"
+}
+
+proficiencyItem pro_infiltrator_hack_deployable_big {
+	type		"covertops"
+	count		2
+	
+	stat_name	"strogg_hack_xp"
+}
+
+proficiencyItem pro_infiltrator_hack_objective {
+	type		"covertops"
+	count		40
+	
+	stat_name	"strogg_hack_xp"
+}
+
+proficiencyItem pro_infiltrator_hack_secondary {
+	type		"covertops"
+	count		5
+	
+	stat_name	"strogg_hack_xp"
+}
+
+proficiencyItem pro_infiltrator_emp_deployable {
+	type		"covertops"
+	count		0.3125
+	
+	stat_name	"grenade_scrambler_xp"
+}
+
+proficiencyItem pro_infiltrator_emp_vehicle {
+	type		"covertops"
+	count		0.25
+	
+	stat_name	"grenade_scrambler_xp"
+}
+
+proficiencyItem pro_infiltrator_backstab_disguised {
+	type		"covertops"
+	count		1
+
+	stat_name	"strogg_backstab_xp"
+}
+
+proficiencyItem pro_infiltrator_drone_objective {
+	type		"covertops"
+	count		2
+}
+
+proficiencyItem pro_infiltrator_emp_mine {
+	type		"covertops"
+	count		0.1
+
+	stat_name	"grenade_scrambler_xp"
+}
+
+proficiencyItem pro_infiltrator_deploy_bonus {
+	type		"covertops"
+	count		1
+}
+
+// =====================================
+//		Oppressor
+// =====================================
+
+proficiencyItem pro_oppressor_test {
+	type		"fieldops"
+	count		300
+}
+
+proficiencyItem pro_oppressor_damage {
+	type		"fieldops"
+	count		0.00125
+}
+
+proficiencyItem pro_oppressor_force_shield {
+	type		"fieldops"
+	count		0.0025
+}
+
+proficiencyItem pro_oppressor_deploy_bonus {
+	type		"fieldops"
+	count		1
+}

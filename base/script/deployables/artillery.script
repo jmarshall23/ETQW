@@ -1,0 +1,738 @@
+
+object deployable_artillery : deployable_base {
+	void	preinit();
+	void	init();
+	void	destroy();
+	void	syncFields();
+
+	void	vDoneDeploy();
+
+	void	TurningThread();
+
+	void	ServerIdle();
+	void	ServerAiming();
+	void	ServerFiring();
+
+	void	ClientIdle();
+	void	ClientFiring();
+
+	void	StopRotationSounds();
+
+	void	vTargetSetTarget( vector targetPos, entity targetEnt );
+	boolean	vTargetGetValid( vector targetPos );
+	boolean	vTargetPlayerEligible( entity p );
+
+	float	vGetFireSupportMode();
+
+	//
+	boolean	InRange( vector targetPos );
+	boolean	InFiringRange( vector targetPos ) { return InRange( targetPos ); }
+	void	UpdateTurning();
+	boolean	UpdateYaw();
+	boolean UpdatePitch();
+	void	ResetAngles();
+	void	TurnToward( float yaw, float pitch );
+	boolean PitchValid( float pitch );
+	boolean	CalcTargetAngles( vector targetPos );
+	string	MuzzleForMissile( float missileIndex );
+
+	// utility funcs ( none of these should be blocking )
+	void	Launch( float missileIndex );
+	void	FireMissile( float missileIndex );
+	void	LaunchForEffect();
+
+	float	GetMissileBarrelLength( float index );
+	void	SetMissileBarrelLength( float index, float value );
+	float	GetMissileSideOffset( float index );
+	void	SetMissileSideOffset( float index, float value );
+
+	void	OnFireSupportStateChanged();
+
+	target_marker vCreateTargetMarker();
+	
+	void	ClearFiringDecal();	
+	void	CreateFiringDecal();
+
+	void	ReloadThread( float delay );
+
+	float	recycle;
+	float	fireCount;
+	float	reloadWait;
+	float	numMissiles;
+	float	fireSyncDelay;
+	float	nextFire;
+
+	float	jointYaw;
+	float	idealYaw;
+	float	currentYaw;
+	float	oldIdealYaw;
+	float	minYawRate;
+	float	maxYawRate;
+
+	float	jointPitch;
+	float	idealPitch;
+	float	currentPitch;
+	float	oldIdealPitch;
+	float	minPitchRate;
+	float	maxPitchRate;
+
+	float	jointBarrel;
+
+	float	minPitch;
+	float	maxPitch;
+
+	float	minRange;
+	float	maxRange;
+
+	float	missileSpeed;
+
+	float	spread;
+
+	float	clientState;
+
+	float	targetYaw;
+	float	targetPitch;
+	vector	targetDiff;
+
+	float	baseYaw;
+	float	barrelPitch;
+	vector	firingOffset;
+	vector	firingVelocity;
+	boolean	hasTarget;
+	entity	targetPlayerEnemy;
+	vector	targetLocation;
+	float	projectileIndex;
+	float	projectileForEffectIndex;	
+	
+	generic_target_marker		firingDecal;
+	entity						firingMarker;
+
+	boolean anglesLocked;
+}
+
+float deployable_artillery::GetMissileBarrelLength( float index ) {
+	return getFloatKey( "missile" + ( index + 1 ) + "_barrel_length" );
+}
+
+void deployable_artillery::SetMissileBarrelLength( float index, float value ) {
+	setKey( "missile" + ( index + 1 ) + "_barrel_length", value );
+}
+
+float deployable_artillery::GetMissileSideOffset( float index ) {
+	return getFloatKey( "missile" + ( index + 1 ) + "_side_offset" );
+}
+
+void deployable_artillery::SetMissileSideOffset( float index, float value ) {
+	setKey( "missile" + ( index + 1 ) + "_side_offset", value );
+}
+
+void deployable_artillery::OnFireSupportStateChanged() {
+	if ( fireSupportState == MPS_FIRING ) {
+		if ( clientState != ART_CS_FIRING ) {
+			setState( "ClientFiring" );
+		}
+	} else {
+		if ( clientState != ART_CS_IDLE ) {
+			setState( "ClientIdle" );
+		}
+	}
+}
+
+void deployable_artillery::syncFields() {
+	syncBroadcast( "nextFire" );
+	syncBroadcast( "targetLocation" );
+	syncBroadcast( "fireSupportState" );
+	syncBroadcast( "idealYaw" );
+	syncBroadcast( "idealPitch" );
+	syncBroadcast( "oldIdealYaw" );
+	syncBroadcast( "oldIdealPitch" );
+	
+	syncCallback( "fireSupportState", "OnFireSupportStateChanged" );
+
+	sync( "currentYaw" );
+	sync( "currentPitch" );
+}
+
+void deployable_artillery::destroy() {
+	ClearFiringDecal();
+	delete fsStatus;
+}
+
+float deployable_artillery::vGetFireSupportMode() {
+	return TARGET_ARTILLERY;
+}
+
+void deployable_artillery::preinit() {
+	recycle			= getFloatKey( "missile_recycle" );
+	fireCount		= getFloatKey( "missile_firecount" );
+	reloadWait		= getFloatKey( "missile_reload" );
+	numMissiles		= getFloatKey( "num_missiles" );
+	fireSyncDelay	= getFloatKey( "sync_delay" );
+	spread			= getFloatKey( "spread" );
+	
+	if ( fireCount <= 0 ) {
+		fireCount = 6;
+	}
+	if ( reloadWait <= 0 ) {
+		reloadWait = 30;
+	}
+	if ( fireSyncDelay <= 0 ) {
+		fireSyncDelay = 0.5;
+	}
+
+	jointYaw		= getJointHandle( getKey( "joint_yaw" ) );
+	jointPitch		= getJointHandle( getKey( "joint_pitch" ) );
+	jointBarrel		= getJointHandle( getKey( "joint_barrel" ) );
+
+	projectileIndex	= GetEntityDef( getKey( "def_projectile" ) );
+	projectileForEffectIndex = GetEntityDef( getKey( "def_projectile_foreffect" ) );
+	
+	currentYaw		= 0;
+	idealYaw		= 0;
+	oldIdealYaw		= 0;
+	maxYawRate		= getFloatKey( "max_yaw_turn" );
+	minYawRate		= getFloatKey( "min_yaw_turn" );
+
+	currentPitch	= 0;
+	idealPitch		= 0;
+	oldIdealPitch	= 0;
+	maxPitchRate	= getFloatKey( "max_pitch_turn" );
+	minPitchRate	= getFloatKey( "min_pitch_turn" );
+
+	minPitch		= getFloatKey( "min_pitch" );
+	maxPitch		= getFloatKey( "max_pitch" );
+
+	minRange		= getFloatKey( "range_min" );
+	maxRange		= getFloatKey( "range_max" );
+
+	missileSpeed	= getFloatKey( "missile_speed" );
+
+	hasTarget		= false;
+
+	nextFire		= 0;
+	
+	fsStatus = new fireSupportStatus;
+
+	thread TurningThread();
+}
+
+void deployable_artillery::vDoneDeploy() {
+	vector barrel;
+	float i;
+	float muzzleHandle;
+	vector pitchJointPos;
+	float sideOffset;
+	float barrelLength;
+
+	pitchJointPos	= getLocalJointPos( jointPitch );
+	barrel			= getLocalJointPos( jointBarrel ) - pitchJointPos;
+	barrelPitch		= sys.atan2( barrel_z, barrel_x );
+
+	for ( i = 0; i < numMissiles; i++ ) {
+		muzzleHandle = getJointHandle( MuzzleForMissile( i ) );
+		barrel = getLocalJointPos( muzzleHandle ) - pitchJointPos;
+		sideOffset = barrel_y;
+		barrel_y = 0;
+		barrelLength = sys.vecLength( barrel );
+
+		SetMissileSideOffset( i, sideOffset );
+		SetMissileBarrelLength( i, barrelLength );
+	}
+
+	vector angles = getAngles();
+	baseYaw = angles_y;
+	
+	SetDeployingFinished();
+}
+
+void deployable_artillery::init() {
+	fadeSound( SND_DEPLOYABLE_YAW, -60.f, 0.f );
+	fadeSound( SND_DEPLOYABLE_PITCH, -60.f, 0.f );
+	startSound( "snd_turret_yaw", SND_DEPLOYABLE_YAW );
+	startSound( "snd_turret_pitch", SND_DEPLOYABLE_PITCH );
+	
+	if ( sys.isClient() ) {
+		setState( "ClientIdle" );
+	} else {
+		setState( "ServerIdle" );
+	}
+}
+
+// ==========================================
+// States
+// ==========================================
+
+void deployable_artillery::TurningThread() {
+	while( true ) {
+		sys.waitFrame();
+
+		if ( disabledState ) {
+			StopRotationSounds();
+		} else {
+			UpdateTurning();
+		}
+	}
+}
+
+void deployable_artillery::ClientIdle() {
+	clientState = ART_CS_IDLE;
+
+	ClearFiringDecal();
+}
+
+void deployable_artillery::ServerIdle() {
+	hasTarget = false;
+	ResetAngles();
+
+	ClearFiringDecal();
+}
+
+void deployable_artillery::ReloadThread( float delay ) {
+	fireSupportState = MPS_RELOADING;
+	
+	sys.wait( delay );
+
+	fireSupportState = MPS_READY;
+}
+
+void deployable_artillery::StopRotationSounds() {
+	DEPLOYABLE_STOP_YAW_SOUND
+	DEPLOYABLE_STOP_PITCH_SOUND
+}
+
+void deployable_artillery::UpdateTurning() {
+	boolean yawDone;
+	boolean pitchDone;
+	vector angles;
+
+	yawDone = UpdateYaw();
+	pitchDone = UpdatePitch();
+
+	if ( !yawDone ) {
+		angles_x = 0;
+		angles_y = currentYaw;
+		angles_z = 0;
+		setJointAngle( jointYaw, JOINTMOD_LOCAL, angles );
+
+		DEPLOYABLE_PLAY_YAW_SOUND
+	} else {
+		DEPLOYABLE_STOP_YAW_SOUND
+	}
+
+	if ( !pitchDone ) {
+		angles_x = currentPitch;
+		angles_y = 0;
+		angles_z = 0;
+		setJointAngle( jointPitch, JOINTMOD_LOCAL, angles );
+
+		DEPLOYABLE_PLAY_PITCH_SOUND
+	} else {
+		DEPLOYABLE_STOP_PITCH_SOUND
+	}
+
+	if ( yawDone && pitchDone ) {
+		anglesLocked = true;
+	} else {
+		anglesLocked = false;
+	}
+}
+
+void deployable_artillery::ServerAiming() {
+	fireSupportState = MPS_FIRING_PREPARE;
+
+	while ( !anglesLocked ) {
+		sys.waitFrame();
+
+		if ( disabledState ) {
+			fireSupportState = MPS_READY;
+			
+			setState( "ServerIdle" );
+		}
+	}
+
+	setState( "ServerFiring" );
+}
+
+void deployable_artillery::ClientFiring() {
+	float nextMiniFire	= 0;
+	float nextMiniCount = 0;
+	float baseFireTime	= 0;
+	
+	CreateFiringDecal();
+
+	clientState = ART_CS_FIRING;
+
+	if ( projectileForEffectIndex >= 0 ) {
+		LaunchForEffect();		
+		sys.wait( getFloatKey( "foreffect_wait" ) );
+	}
+		
+	while( true ) {
+		if ( nextFire < sys.getTime() ) {
+			baseFireTime = sys.getTime();
+			nextFire = baseFireTime + recycle;
+
+			nextMiniCount = 0;
+			nextMiniFire = baseFireTime + getFloatKey( "missile" + ( nextMiniCount + 1 ) + "_delay" );
+		}
+
+		if ( nextMiniCount < numMissiles ) {
+			if( nextMiniFire < sys.getTime() ) {
+
+				Launch( nextMiniCount );
+
+				nextMiniCount++;
+				nextMiniFire = baseFireTime + getFloatKey( "missile" + ( nextMiniCount + 1 ) + "_delay" );
+			}
+		}
+
+		sys.waitFrame();
+	}
+}
+
+void deployable_artillery::ServerFiring() {
+	float count			= fireCount;
+	float nextMiniFire	= 0;
+	float nextMiniCount = 0;
+	float baseFireTime	= 0;
+
+	fireSupportState = MPS_FIRING;
+	
+	nextFire = sys.getTime() + 1.f;
+
+	if ( projectileForEffectIndex >= 0 ) {
+		LaunchForEffect();
+		sys.wait( getFloatKey( "foreffect_wait" ) );
+	}
+	
+	objManager.PlaySoundForPlayer( getKey( "snd_firing" ), owner );
+
+	while( true ) {
+		if ( disabledState ) {
+			break;
+		}
+
+		if ( nextFire < sys.getTime() ) {
+			baseFireTime = sys.getTime();
+			nextFire = baseFireTime + recycle;
+			count = count - 1;
+			if ( count < 0 ) {
+				break;
+			}
+
+			nextMiniCount = 0;
+			nextMiniFire = baseFireTime + getFloatKey( "missile" + ( nextMiniCount + 1 ) + "_delay" );
+		}
+
+		if ( nextMiniCount < numMissiles ) {
+			if ( nextMiniFire != 0 && nextMiniFire < sys.getTime() ) {
+
+				Launch( nextMiniCount );
+
+				nextMiniCount++;
+				nextMiniFire = baseFireTime + getFloatKey( "missile" + ( nextMiniCount + 1 ) + "_delay" );
+			}
+		}
+
+		sys.waitFrame();
+	}
+
+	nextFire = 0;
+
+	thread ReloadThread( reloadWait );
+
+	setState( "ServerIdle" );
+}
+
+// ==========================================
+// Utility Funcs
+// ==========================================
+
+string deployable_artillery::MuzzleForMissile( float missileIndex ) {
+	return getKey( "missile" + ( missileIndex + 1 ) + "_barrel" );
+}
+
+void deployable_artillery::FireMissile( float missileIndex ) {
+	vector org;
+
+	org = getJointPos( jointPitch ) + firingOffset + ( getWorldAxis( 1 ) * GetMissileSideOffset( missileIndex ) );
+
+	launchMissileSimple( owner, self, targetPlayerEnemy, projectileIndex, -1, spread, org, firingVelocity );
+
+	playEffect( "fx_fire", MuzzleForMissile( missileIndex ), 0 );
+}
+
+void deployable_artillery::Launch( float missileIndex ) {
+	string anim;
+	float channel;
+
+	FireMissile( missileIndex );
+
+	anim = getKey( "missile" + ( missileIndex + 1 ) + "_anim" );
+	if ( anim != "" ) {
+		channel = getIntKey( "missile" + ( missileIndex + 1 ) + "_channel" );
+
+		playAnim( channel, anim );
+	}
+}
+
+void deployable_artillery::LaunchForEffect() {
+	string anim;
+	float channel;
+	vector org;
+
+	org = getJointPos( jointPitch ) + firingOffset + ( getWorldAxis( 1 ) * GetMissileSideOffset( 0 ) );
+
+	launchMissileSimple( owner, self, $null_entity, projectileForEffectIndex, -1, 0.0, org, firingVelocity );
+
+//	objManager.PlaySoundForPlayer( getKey( "snd_effect" ), owner );
+
+	playEffect( "fx_fire", MuzzleForMissile( 0 ), 0 );
+
+	anim = getKey( "missile1_anim" );
+	if ( anim != "" ) {
+		channel = getIntKey( "missile1_channel" );
+		playAnim( channel, anim );
+	}
+}
+
+// ==========================================
+// ==========================================
+
+boolean deployable_artillery::UpdateYaw() {
+	float ang;
+	float maxTurn;
+	float frac;
+
+	if ( idealYaw == currentYaw ) {
+		return true;
+	}
+
+	ang = sys.angleNormalize180( idealYaw - currentYaw );
+	frac = sys.sin( sys.fabs( ang / sys.angleNormalize180( idealYaw - oldIdealYaw ) ) * 180.f );
+
+	maxTurn = ( minYawRate + ( maxYawRate - minYawRate ) * frac ) * sys.getFrameTime();
+
+	if ( ang < -maxTurn ) {
+		currentYaw = currentYaw - maxTurn;
+	} else if ( ang > maxTurn ) {
+		currentYaw = currentYaw + maxTurn;
+	} else {
+		currentYaw = idealYaw;
+	}
+
+	return false;
+}
+
+boolean deployable_artillery::UpdatePitch() {
+	float ang;
+	float maxTurn;
+	float frac;
+
+	if ( idealPitch == currentPitch ) {
+		return true;
+	}
+
+	ang = sys.angleNormalize180( idealPitch - currentPitch );
+	frac = sys.sin( sys.fabs( ang / sys.angleNormalize180( idealPitch - oldIdealPitch ) ) * 180.f );
+
+	maxTurn = ( minPitchRate + ( maxPitchRate - minPitchRate ) * frac ) * sys.getFrameTime();
+
+	if ( ang < -maxTurn ) {
+		currentPitch = currentPitch - maxTurn;
+	} else if ( ang > maxTurn ) {
+		currentPitch = currentPitch + maxTurn;
+	} else {
+		currentPitch = idealPitch;
+	}
+
+	return false;
+}
+
+void deployable_artillery::TurnToward( float yaw, float pitch ) {
+	oldIdealYaw		= currentYaw;
+	oldIdealPitch	= currentPitch;
+	idealYaw		= sys.angleNormalize180( yaw );
+	idealPitch		= sys.angleNormalize180( pitch );
+	anglesLocked	= false;
+}
+
+void deployable_artillery::ResetAngles() {
+	TurnToward( 0, 0 );
+}
+
+void deployable_artillery::vTargetSetTarget( vector targetPos, entity targetEnt ) {
+	float firingPitch;
+	float t;
+	vector gravity;
+	vector velocity;
+	vector temp;
+	float i;
+
+	if( !CalcTargetAngles( targetPos ) ) {
+		return;
+	}
+
+	gravity_x = 0;
+	gravity_y = 0;
+	gravity_z = -1066;
+
+	firingPitch = targetPitch - barrelPitch;
+
+	for ( i = 0; i < numMissiles; i++ ) {
+
+		firingVelocity = targetDiff * ( sys.cos( targetPitch ) * missileSpeed );
+		firingVelocity_z = sys.sin( targetPitch ) * missileSpeed;
+
+		t = GetMissileBarrelLength( i ) / missileSpeed;
+
+		gravity = gravity * t * t * 0.5f;
+
+		temp = firingVelocity * t;
+
+		firingOffset = temp + gravity;
+		firingVelocity = firingVelocity + ( gravity * t );
+	}
+
+	TurnToward( targetYaw - baseYaw, -firingPitch );
+
+	targetPlayerEnemy = owner.getEnemy();
+	owner.lastValidTarget = targetPos;
+	targetLocation = targetPos;
+	
+	Base_TargetSetTarget( targetPos, targetEnt );
+	
+	CreateFiringDecal();
+
+	setState( "ServerAiming" );
+}
+
+boolean deployable_artillery::vTargetGetValid( vector targetPos ) {
+	if ( !InRange( targetPos ) ) {
+		return 0;
+	}
+
+	return CalcTargetAngles( targetPos );
+}
+
+boolean deployable_artillery::CalcTargetAngles( vector targetPos ) {
+	vector barrelOrg;
+	vector temp;
+	float diffY;
+	float diffX;
+	float rootA;
+	float count;
+	float root1;
+	float root2;
+
+	barrelOrg = getJointPos( jointPitch );
+
+	targetDiff = targetPos - barrelOrg;
+
+	targetYaw = sys.angleNormalize180( sys.atan2( targetDiff_y, targetDiff_x ) );
+
+	temp = targetDiff;
+
+	diffY = temp_z;
+	temp_z = 0.f;
+	targetDiff = sys.vecNormalize( temp );
+	diffX = sys.vecLength( temp );
+
+	// FIXME: Expose default gravity
+	rootA = ( 1066 * diffX * diffX ) / ( 2 * missileSpeed * missileSpeed );
+
+	count = sys.solveRoots( rootA, -diffX, rootA + diffY );
+	if ( count == 0 ) {
+		return false;
+	}
+
+	if ( count == 1 ) {
+		targetPitch = sys.atan( sys.getRoot( 0 ) );
+		return PitchValid( targetPitch );
+	}
+
+	targetPitch = sys.atan( sys.getRoot( 0 ) );
+	if ( PitchValid( targetPitch ) ) {
+		return true;
+	}
+
+	targetPitch = sys.atan( sys.getRoot( 1 ) );
+	return PitchValid( targetPitch );
+}
+
+boolean deployable_artillery::PitchValid( float pitch ) {
+	return pitch < maxPitch && pitch > minPitch;
+}
+
+boolean	deployable_artillery::InRange( vector targetPos ) {	
+	return true;
+}
+
+boolean deployable_artillery::vTargetPlayerEligible( entity p ) {
+	if ( disabledState || !finishedDeploying ) {
+		return 0.f;
+	}
+
+	return 1.f;
+}
+
+target_marker deployable_artillery::vCreateTargetMarker() {
+	string entityDef = getKey( "def_marker" );
+	if ( entityDef == "" ) {
+		return $null;
+	}
+
+	generic_target_marker marker = new generic_target_marker;
+	marker.Init( self, entityDef, getKey( "mtr_marker_cm" ), getFloatKey( "cm_marker_sort" ) );
+	if ( vGetFireSupportMode() == TARGET_ROCKETS ) {
+		marker.SetLocalOnly( true );
+	}
+	return marker;
+}
+
+void deployable_artillery::ClearFiringDecal() {
+	if ( firingDecal != $null_entity ) {
+		delete firingDecal;
+	}
+	
+	if ( firingMarker != $null_entity ) {
+		thread G_DelayRemoveEntity( firingMarker, 5.f );
+		firingMarker = $null_entity;
+	}
+}
+
+void deployable_artillery::CreateFiringDecal() {
+	if ( !sys.isClient() ) {
+		firingMarker = G_CreateFiringMarker( self, firingMarker, targetLocation );
+	}
+
+	if ( vGetFireSupportMode() == TARGET_ROCKETS ) {
+		return;
+	}
+
+	entity p = sys.getLocalPlayer();
+	if ( p == $null_entity ) {
+		return;
+	}
+	
+	if ( getEntityAllegiance( p ) != TA_FRIEND ) {
+		return;
+	}
+
+	if ( firingDecal == $null_entity ) {
+		firingDecal = vCreateTargetMarker();
+	}
+
+	if ( firingDecal != $null_entity ) { 
+		firingDecal.SetTargetPosition( targetLocation );
+	}
+}
+
+
+object deployable_rockets : deployable_artillery {
+	float	vGetFireSupportMode();
+}
+
+float deployable_rockets::vGetFireSupportMode() {
+	return TARGET_ROCKETS;
+}

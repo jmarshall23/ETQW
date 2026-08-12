@@ -1,0 +1,57 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/refinery/building10 {
+	width	256
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1024 ) ( 256 1536 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 512 ) ( 256 1024 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 262 ) ( 256 512 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1984 ) ( 256 2048 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1536 ) ( 256 1984 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 152 ) ( 256 204 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 204 ) ( 256 262 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 256 128 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 120 ) ( 256 152 )
+	}
+}

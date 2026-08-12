@@ -1,0 +1,60 @@
+effect effects/vehicles/decay_simple
+{
+	size	182
+
+	cutOffDistance	5000
+
+	sound "Decay Sound"
+	{
+		soundShader	"sounds/vehicles/misc/decay"
+	}
+	emitter "SmokeTrail"
+	{
+		duration	1,1
+		count		15,15
+		attenuateEmitter
+		attenuation	2000,2000
+
+		sprite
+		{
+			duration	0.5,1
+			persist
+			material	"textures/particles/smoke_test1"
+			trailRepeat	1
+
+			start
+			{
+				position { spiral 25,0,0,25,0,0,64 }
+				velocity { point 100,0,0 }
+				size { point 32,32 }
+				tint { line 0.74902,0.74902,0.74902,0.576471,0.576471,0.576471 }
+				fade { line 0.1,0.3 }
+				offset { box 0,-2,0,0,2,0 }
+				rotate { box -0.166667,0.166667 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope jrad_concavefade }
+				fade { envelope jrad_concavefade }
+				offset { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { box 64,64,80,80 }
+				tint { point 1,1,1 }
+				offset { box -10,-5,-5,10,5,5 }
+				rotate { box 0.166667,-0.166667 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+

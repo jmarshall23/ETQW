@@ -1,0 +1,1137 @@
+#define	OBJECTIVE_SEWER_CONSTRUCT_JAMMER	0
+#define OBJECTIVE_SEWER_DESTROY_DOOR_A		1
+#define OBJECTIVE_SEWER_HACK_CONTROLS		2
+#define OBJECTIVE_SEWER_DESTROY_DOOR_B		3
+
+// MBJ Bot Action Groups
+
+// Objective 1 - Barricade
+#define GDF_DESTROY_BARRICADE			0
+#define GDF_SUPPORT_BARRICADE			1
+#define GDF_DEPLOY_BARRICADE			2
+#define STROGG_DEFEND_BARRICADE			3
+#define STROGG_DEPLOY_BARRICADE			4
+
+// Objective 2 - Jamming Tower
+#define GDF_CONSTRUCT_JAMMER			5
+#define GDF_SUPPORT_JAMMER				6
+#define	STROGG_DEFEND_JAMMER			7
+#define STROGG_DEPLOY_JAMMER			8
+
+// Objective 3 - Sewer Attack
+#define GDF_ATTACK_SEWER				9
+#define STROGG_DEFEND_SEWER				10
+
+// Objective 4 - South Door Attack
+#define GDF_DESTROY_SOUTH_DOOR			11
+#define	GDF_SUPPORT_SOUTH_DOOR			12
+#define GDF_SUPPORT_DOORS				13
+#define STROGG_DEFEND_SOUTH_DOOR		14
+#define STROGG_DEPLOY_SEWER				15
+
+// Hack Objective
+#define GDF_HACK_CONSOLE				16
+#define STROGG_DEFEND_CONSOLE			17
+
+#define GDF_DESTROY_NORTH_DOOR			18
+#define GDF_DESTROY_HATCH				19
+
+// Forward Spawns
+#define GDF_HUT_SPAWN					20
+#define STROGG_HUT_SPAWN				21
+#define GDF_SEWER_SPAWN					22
+#define STROGG_SEWER_SPAWN				23
+
+#define GDF_SEWER_DESTROY_OVERFLOW		25
+#define ALL_SEWER_CONSOLE_PREDOOR		26
+
+#define	GDF_CONSTRUCT_GUARDTOWER_BASE	27
+#define ALL_GUARDTOWER_BASE				28
+#define	GDF_CONSTRUCT_GUARDTOWER_HUT	29
+#define ALL_GUARDTOWER_HUT				30
+
+#define STROGG_OVERFLOW_DEFENCE			40
+#define STROGG_DEFEND_CONSOLE_INTERIOR	47 // interior actions from group 17
+
+#define GDF_SUPPORT_SEWER_JAMMER_NEW	90
+
+object mapObject_Sewer : mapObject_Default {
+	void			destroy();
+
+	void			InitObjectives();
+
+	void			CompleteObjective( float index, entity p );
+	handle			GetObjectiveMessage( float index );
+
+	void			EndMap();
+	void			OnTimeLimitHit();
+
+	void			OnJammerBuilt();
+	void			OnDoorsDestroyed();
+	void			OnDoorADestroyed();
+	void			OnDoorBDestroyed();
+	void			OnControlsHacked();
+
+	void			OnGuardTower1Built();
+	void			OnGuardTower1Destroyed();
+	void			OnGuardTower2Built();
+	void			OnGuardTower2Destroyed();
+	void			OnSubstationBarricadeDestroyed();
+	void			OnOverflowHatchDestroyed();
+	void			OnMaintenanceHatchDestroyed();
+
+	void			OnConstructionComplete( entity obj );
+	void			OnDestructionComplete( entity obj );
+
+	void			StartFirstObjective();
+	void			StartHackObjective();
+
+	vector			GetGDFBasePosition() { return '-7360 -8290 2040'; }
+
+	void			EMPThread();
+	void			BarricadeDestroyedThread();
+	void			DoorADestroyedThread();
+	void			DoorBDestroyedThread();
+
+	// Bot Functions
+	void 			OnSpawnCaptured( string actionName );
+	void 			OnSpawnLiberated( string actionName );
+	void			NeededClassFirstObjective();
+	void			BotCheckSecondaryObjectives();
+
+	entity			GetSpectateEntity();
+
+	float			mainObjectiveIndex;
+
+	entity			gdf_base_territory;
+	entity			substation_territory;
+	entity			spillway_territory;
+
+	entity			gdf_base_spawn;
+	entity			hut_capturable_spawn;
+	entity			substation_spawn;
+	entity			spillway_spawn;
+	entity			spillway_capturable_spawn;
+	entity			sewer_spawn;
+	
+	entity			objective1;
+	entity			objective1Arrow1;
+	entity			objective1Arrow2;
+	entity			objective2a;
+	entity			objective2b;
+	entity			objective2Arrow1;
+	entity			objective2Arrow2;
+	entity			objective3;
+
+	entity			strogg_triggerHurt_spillway_1;
+	entity			strogg_triggerHurt_spillway_2;
+	entity			strogg_triggerHurt_spillway_3;
+	entity			strogg_trigger_hurtSewerinterior_1;
+	entity			strogg_trigger_hurtSewerinterior_2;
+	entity			strogg_trigger_hurtSewerinterior_3;
+	entity			strogg_trigger_hurtSewerinterior_4;
+	entity			strogg_trigger_hurtSewerinterior_5;
+	entity			stroggshieldSpillway;
+	entity			stroggshield_sewerInterior;
+	entity			stroggshield_light_1;
+	entity			stroggshield_light_2;
+	entity			stroggshield_light_3;
+	entity			stroggshield_light_4;
+
+	// Bot Functions
+
+	void			SetupBotsObjectiveOne();
+	void 			BotsHackObjective();
+	void 			OpenDoorsFast();
+
+	// Bot Obstacles
+	entity			bot_barricade;
+	entity			bot_northdoor; // north and south grates
+	entity			bot_southdoor;
+	entity			bot_hatch; // maintenance hatch
+	entity			bot_shield_sewerInterior1;
+	entity 			bot_shield_sewerInterior2;
+	entity			bot_shield_sewerInterior3;
+	entity 			bot_shield_sewerInterior4;
+	entity			bot_spillway1;
+	entity			bot_spillway2;
+	entity			bot_spillway3;
+	entity			bot_overflow; // overflow hatch
+	entity			bot_lowerdoor; // lower entrance shield underneath stairs
+	entity			bot_sewerdoor_a; // automatic opening double doors for final obj
+	entity			bot_sewerdoor_b;
+	entity			bot_sewerdoor_c;
+
+	// grates
+	entity			doorA;
+	entity			doorB;
+	entity			doorA_destroyed;
+	entity			doorB_destroyed;
+
+	// bulkhead doors
+	entity			sewer_door_a;
+	entity			sewer_door_b;
+	entity			sewer_door_c;
+
+	entity			doorDualProxy;
+	entity			jammerMaterials;
+	entity			finalObjective;
+
+	boolean			doorOpened;
+
+	entity			emp_charge;
+	entity			emp_fire;
+
+	entity			shield_down_1;
+	entity			shield_down_2;
+	entity			shield_down_3;
+	entity			shield_down_4;
+
+	entity			sewer_door_1;
+	entity			sewer_door_1_water;
+	entity			sewer_door_2;
+	entity			sewer_door_smoke_1;
+	entity			sewer_door_smoke_2;
+	entity			sewer_door_maintenance;
+	entity			sewer_door_overflow_hatch;
+
+	entity			flood;
+
+	entity			noplant_barricade;
+	entity			noplant_maintenance_hatch;
+	entity			noplant_overflow_hatch;
+	entity			noplant_north_grate;
+	entity			noplant_south_grate;
+
+	// secondary objectives
+	entity			guardTower1Construction;
+	entity			guardTower2Construction;
+	entity			guardTower1;
+	entity			guardTower2;
+	boolean			guardTower1Built;
+	boolean			guardTower2Built;
+	
+	entity			substationBarricade;
+	entity			substationBarricadeDestroyed;
+	boolean			barricadeDestroyed;
+	
+	entity			overflowHatch;
+	entity			maintenanceHatch;
+
+	entity 			endCameraA;
+	entity			endCameraB;
+	
+	cvar 			debug_script;
+
+	boolean			maintenanceHatchAccessible;
+	boolean			hutSpawnCaptured;
+}
+
+mapObject_Base Sewer_MapScript() {
+	return new mapObject_Sewer;
+}
+
+void mapObject_Sewer::destroy() {
+}
+
+void mapObject_Sewer::InitObjectives() {
+	gameRules.setWinningTeam( stroggTeam );
+	gdfTeam.SetRespawnWait( 20 );
+	stroggTeam.SetRespawnWait( 20 );
+	gdfTeam.InitRespawnTimeChange();
+	stroggTeam.InitRespawnTimeChange();
+	CreateRespawnTimeThread( gdfTeam );
+
+	gdf_base_territory			=	worldspawn.getEntityKey( "script_gdf_base_territory" );
+	substation_territory		=	worldspawn.getEntityKey( "script_substation_territory" );
+	spillway_territory			=	worldspawn.getEntityKey( "script_spillway_territory" );
+
+	gdf_base_spawn				=	worldspawn.getEntityKey( "script_gdf_base_spawn" );
+	hut_capturable_spawn		=	worldspawn.getEntityKey( "script_hut_capturable_spawn" );
+	substation_spawn			=	worldspawn.getEntityKey( "script_substation_spawn" );
+	spillway_spawn				=	worldspawn.getEntityKey( "script_spillway_spawn" );
+	spillway_capturable_spawn	=	worldspawn.getEntityKey( "script_spillway_capturable_spawn" );
+	sewer_spawn					=	worldspawn.getEntityKey( "script_sewer_spawn" );
+
+	gdf_base_territory.setActive( true );
+	substation_territory.setActive( true );
+
+	gdf_base_spawn.setGameTeam( gdfTeam );
+	hut_capturable_spawn.setGameTeam( $null_entity );
+	hut_capturable_spawn.vSetActive( true );
+	substation_spawn.setGameTeam( $null_entity );
+	spillway_spawn.setGameTeam( stroggTeam );
+	spillway_capturable_spawn.setGameTeam( gdfTeam );
+	spillway_capturable_spawn.vSetActive( false );
+	sewer_spawn.setGameTeam( stroggTeam );
+
+	objective1							=	worldspawn.getEntityKey( "script_objective1" );
+	objective1Arrow1					=	worldspawn.getEntityKey( "script_objective1_arrow1" );
+	objective1Arrow2					=	worldspawn.getEntityKey( "script_objective1_arrow2" );
+
+	objective2a							=	worldspawn.getEntityKey( "script_objective2a" );
+	objective2b							=	worldspawn.getEntityKey( "script_objective2b" );
+	objective2Arrow1					=	worldspawn.getEntityKey( "script_objective2_arrow1" );
+	objective2Arrow2					=	worldspawn.getEntityKey( "script_objective2_arrow2" );
+
+	objective3							=	worldspawn.getEntityKey( "script_objective3" );
+
+	emp_charge							=	worldspawn.getEntityKey( "script_emp_charge" );
+	emp_fire							=	worldspawn.getEntityKey( "script_emp_fire" );
+
+	shield_down_1						=	worldspawn.getEntityKey( "script_shield_down_1" );
+	shield_down_2						=	worldspawn.getEntityKey( "script_shield_down_2" );
+	shield_down_3						=	worldspawn.getEntityKey( "script_shield_down_3" );
+	shield_down_4						=	worldspawn.getEntityKey( "script_shield_down_4" );
+
+	sewer_door_1						=	worldspawn.getEntityKey( "script_sewer_door_1" );
+	sewer_door_1_water					=	worldspawn.getEntityKey( "script_sewer_door_1_water" );
+	sewer_door_2						=	worldspawn.getEntityKey( "script_sewer_door_2" );
+	sewer_door_smoke_1					=	worldspawn.getEntityKey( "script_sewer_door_smoke_1" );
+	sewer_door_smoke_2					=	worldspawn.getEntityKey( "script_sewer_door_smoke_2" );
+	sewer_door_maintenance				=	worldspawn.getEntityKey( "script_sewer_door_maintenance" );
+	sewer_door_overflow_hatch			=	worldspawn.getEntityKey( "script_sewer_door_overflow_hatch" );
+	flood								=	worldspawn.getEntityKey( "script_flood" );
+
+	objective1Arrow1.setGameTeam( gdfTeam );
+	objective1Arrow2.setGameTeam( gdfTeam );
+	objective2Arrow1.setGameTeam( gdfTeam );
+	objective2Arrow2.setGameTeam( gdfTeam );
+
+	objective1Arrow1.vStartObjective();
+	objective1Arrow2.vStartObjective();
+	objective1.vStartObjective();
+
+	objective2a.vStartObjective();
+	objective2b.vStartObjective();
+
+	objective3.vStartObjective();
+
+	strogg_triggerHurt_spillway_1		=	worldspawn.getEntityKey( "script_strogg_trigger_hurt_spillway_1" );
+	strogg_triggerHurt_spillway_2		=	worldspawn.getEntityKey( "script_strogg_trigger_hurt_spillway_2" );
+	strogg_triggerHurt_spillway_3		=	worldspawn.getEntityKey( "script_strogg_trigger_hurt_spillway_3" );
+	strogg_trigger_hurtSewerinterior_1	=	worldspawn.getEntityKey( "script_strogg_trigger_hurt_sewerinterior_1" );
+	strogg_trigger_hurtSewerinterior_2	=	worldspawn.getEntityKey( "script_strogg_trigger_hurt_sewerinterior_2" );
+	strogg_trigger_hurtSewerinterior_3	=	worldspawn.getEntityKey( "script_strogg_trigger_hurt_sewerinterior_3" );
+	strogg_trigger_hurtSewerinterior_4	=	worldspawn.getEntityKey( "script_strogg_trigger_hurt_sewerinterior_4" );
+	strogg_trigger_hurtSewerinterior_5	=	worldspawn.getEntityKey( "script_strogg_trigger_hurt_sewerinterior_5" );
+	stroggshieldSpillway				=	worldspawn.getEntityKey( "script_stroggshield_spillway" );
+	stroggshield_sewerInterior			=	worldspawn.getEntityKey( "script_stroggshield_sewer_interior" );
+	stroggshield_light_1				=	worldspawn.getEntityKey( "script_stroggshield_light_interior_1" );
+	stroggshield_light_2				=	worldspawn.getEntityKey( "script_stroggshield_light_interior_2" );	
+	stroggshield_light_3				=	worldspawn.getEntityKey( "script_stroggshield_light_interior_3" );
+	stroggshield_light_4				=	worldspawn.getEntityKey( "script_stroggshield_light_interior_4" );	
+
+	doorA								=	worldspawn.getEntityKey( "script_door_a" );
+	doorA_destroyed						=	worldspawn.getEntityKey( "script_door_a_destroyed" );
+	doorA.setTakesDamage( 0.0f );
+	doorA_destroyed.hide();
+	doorA_destroyed.forceDisableClip();
+	
+	doorB								=	worldspawn.getEntityKey( "script_door_b" );
+	doorB_destroyed						=	worldspawn.getEntityKey( "script_door_b_destroyed" );
+	doorB.setTakesDamage( 0.0f );
+	doorB_destroyed.hide();
+	doorB_destroyed.forceDisableClip();
+	
+	doorOpened = false;
+
+	sewer_door_a						=	worldspawn.getEntityKey( "script_sewer_door_a" );
+	sewer_door_b						=	worldspawn.getEntityKey( "script_sewer_door_b" );
+	sewer_door_c						=	worldspawn.getEntityKey( "script_sewer_door_c" );
+
+	noplant_barricade					=	worldspawn.getEntityKey( "script_noplant_barricade" );
+	noplant_maintenance_hatch			=	worldspawn.getEntityKey( "script_noplant_maintenance_hatch" );
+	noplant_overflow_hatch				=	worldspawn.getEntityKey( "script_noplant_overflow_hatch" );
+	noplant_north_grate					=	worldspawn.getEntityKey( "script_noplant_north_grate" );
+	noplant_south_grate					=	worldspawn.getEntityKey( "script_noplant_south_grate" );
+
+	doorDualProxy						=	worldspawn.getEntityKey( "script_door_dual_proxy" );
+	jammerMaterials						=	worldspawn.getEntityKey( "script_jammer_materials" );
+	finalObjective						=	worldspawn.getEntityKey( "script_final_objective" );
+
+	endCameraA							=	worldspawn.getEntityKey( "script_placement_camera_a" );
+	endCameraB							=	worldspawn.getEntityKey( "script_placement_camera_b" );
+
+	guardTower1Construction				=	worldspawn.getEntityKey( "script_guard_tower_1" );
+	guardTower2Construction				=	worldspawn.getEntityKey( "script_guard_tower_2" );
+	guardTower1							=	worldspawn.getEntityKey( "script_guard_tower_1_object" );
+	guardTower2							=	worldspawn.getEntityKey( "script_guard_tower_2_object" );
+	substationBarricade					= 	worldspawn.getEntityKey( "script_substation_barricade" );
+	substationBarricadeDestroyed		=	worldspawn.getEntityKey( "script_substation_barricade_destroyed" );
+
+	substationBarricadeDestroyed.hide();
+	substationBarricadeDestroyed.forceDisableClip();
+
+	overflowHatch						=	worldspawn.getEntityKey( "script_overflow_hatch" );
+	maintenanceHatch					=	worldspawn.getEntityKey( "script_maintenance_hatch" );
+
+	// Bot Entities
+
+	bot_barricade 						= 	worldspawn.getEntityKey( "script_barricade_obstacle" );
+	bot_northdoor						= 	worldspawn.getEntityKey( "script_northdoor_obstacle" );
+	bot_southdoor						= 	worldspawn.getEntityKey( "script_southdoor_obstacle" );
+	bot_hatch							= 	worldspawn.getEntityKey( "script_hatch_obstacle" );
+	bot_shield_sewerInterior1			=	worldspawn.getEntityKey( "script_bot_shield_sewerinterior_1" );
+	bot_shield_sewerInterior2			=	worldspawn.getEntityKey( "script_bot_shield_sewerinterior_2" );
+	bot_shield_sewerInterior3			=	worldspawn.getEntityKey( "script_bot_shield_sewerinterior_3" );
+	bot_shield_sewerInterior4			=	worldspawn.getEntityKey( "script_bot_shield_sewerinterior_4" );
+	bot_spillway1						= 	worldspawn.getEntityKey( "script_spillway_obstacle_1" );
+	bot_spillway2						= 	worldspawn.getEntityKey( "script_spillway_obstacle_2" );
+	bot_spillway3						= 	worldspawn.getEntityKey( "script_spillway_obstacle_3" );
+	bot_overflow						= 	worldspawn.getEntityKey( "script_bjames_overflow_obstacle" );
+	bot_lowerdoor						= 	worldspawn.getEntityKey( "script_sewer_newlower_obstacle" );
+	bot_sewerdoor_a						=	worldspawn.getEntityKey( "script_bot_obstacle_sewer_door_a" );
+	bot_sewerdoor_b						=	worldspawn.getEntityKey( "script_bot_obstacle_sewer_door_b" );
+	bot_sewerdoor_c						=	worldspawn.getEntityKey( "script_bot_obstacle_sewer_door_c" );
+	
+	debug_script		 				=	sys.getCVar( "bot_debugMapScript", "1" );
+	
+	CreateDeployTasks();
+
+	guardTower1Built = false;
+	guardTower2Built = false;
+	maintenanceHatchAccessible = false;
+	hutSpawnCaptured = false;
+	barricadeDestroyed = false;
+
+	gameRules.setEndGameCamera( endCameraB );
+
+	thread StartFirstObjective();
+
+	substationBarricade.vCreateMission();
+	guardTower1Construction.vCreateMission();
+	guardTower2Construction.vCreateMission();
+
+	mainObjectiveIndex = OBJECTIVE_SEWER_CONSTRUCT_JAMMER;
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+	
+	// Strogg only vehicle access while shields are up
+	objManager.setNodeTeam( "shield_node_1", STROGG );
+	objManager.setNodeTeam( "shield_node_2", STROGG );
+	objManager.setNodeTeam( "shield_node_3", STROGG );
+	objManager.setNodeTeam( "shield_node_4", STROGG );
+
+	// Added by MBJ - Set up Bots for first objective
+	SetupBotsObjectiveOne();
+}
+
+// ----------------------------------------------------------------------
+// BOT OBJECTIVE: CONSTRUCT THE JAMMING TOWER
+// ----------------------------------------------------------------------
+void mapObject_Sewer::SetupBotsObjectiveOne() {
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BOTS SETUP FOR THE JAMMING TOWER OBJECTIVE **********\n" );
+	}	
+	objManager.setAttackingTeam( GDF );
+	objManager.setBotSightDist( 3000.0f );
+	
+	objManager.activateBotActionGroup( GDF_DESTROY_BARRICADE );
+	objManager.activateBotActionGroup( GDF_SUPPORT_BARRICADE );
+	objManager.activateBotActionGroup( GDF_CONSTRUCT_GUARDTOWER_BASE );
+	objManager.activateBotActionGroup( GDF_CONSTRUCT_GUARDTOWER_HUT );
+	objManager.activateBotActionGroup( GDF_DEPLOY_BARRICADE );
+	objManager.activateBotActionGroup( STROGG_DEFEND_BARRICADE );
+	objManager.activateBotActionGroup( STROGG_DEPLOY_BARRICADE );
+	objManager.activateBotActionGroup( GDF_CONSTRUCT_JAMMER );
+	objManager.activateBotActionGroup( GDF_SUPPORT_JAMMER );
+	objManager.activateBotActionGroup( STROGG_DEFEND_JAMMER );
+	objManager.activateBotActionGroup( STROGG_DEPLOY_JAMMER );
+	
+	objManager.setBotCriticalClass( GDF, ENGINEER );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+	thread NeededClassFirstObjective();	
+
+	objManager.setPrimaryTeamAction( STROGG, "gdf_jammer_1" );
+	objManager.setPrimaryTeamAction( GDF, "gdf_jammer_1" );
+	objManager.setSecondaryTeamAction( GDF, "gdf_guardtower_5" );
+	//objManager.setSecondaryTeamAction( STROGG, "xxx" );
+
+	gdfTeam.setTeamRearSpawn( gdf_base_spawn );
+	objManager.setTeamUseRearSpawnPercentage( GDF, 100 );
+	objManager.setTeamUseRearSpawn( GDF, true );
+	
+	stroggTeam.setTeamRearSpawn( sewer_spawn );
+	objManager.setTeamUseRearSpawnPercentage( STROGG, 50 );
+	objManager.setTeamUseRearSpawn( STROGG, true );
+	
+	objManager.disableNode("barricade_dead_end" );
+	
+}
+
+void mapObject_Sewer::NeededClassFirstObjective() {
+	sys.wait( 10 );
+
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** SET UP CLASSES NEEDED FOR FIRST OBJECTIVE **********\n" );
+	}
+	objManager.setTeamNeededClass( GDF, ENGINEER, NOCLASS, 3, true, true );
+	objManager.setTeamNeededClass( GDF, FIELDOPS, NOCLASS, 1, true, false ); 
+	objManager.setTeamNeededClass( GDF, SOLDIER, NOCLASS, 2, true, false );
+	objManager.setTeamNeededClass( GDF, MEDIC, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 2, true, true );
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 2, true, false );		
+	objManager.switchTeamWeapons( GDF, SOLDIER, -1, 6, 1 );
+}
+
+void mapObject_Sewer::CompleteObjective( float index, entity p ) {
+	if ( index == OBJECTIVE_SEWER_CONSTRUCT_JAMMER ) {
+		OnJammerBuilt();
+	} else if ( index == OBJECTIVE_SEWER_DESTROY_DOOR_A ) {
+		OnDoorADestroyed();
+	} else if ( index == OBJECTIVE_SEWER_DESTROY_DOOR_B ) {
+		OnDoorBDestroyed();
+	} else if ( index == OBJECTIVE_SEWER_HACK_CONTROLS ) {
+		OnControlsHacked();
+	}
+}
+
+void mapObject_Sewer::OnConstructionComplete( entity obj ) {
+	if ( obj == guardTower1Construction ) {
+		OnGuardTower1Built();
+	} else if ( obj == guardTower2Construction ) {
+		OnGuardTower2Built();
+	}
+}
+
+void mapObject_Sewer::OnDestructionComplete( entity obj ) {
+	if ( obj == guardTower1Construction ) {
+		OnGuardTower1Destroyed();
+	} else if ( obj == guardTower2Construction ) {
+		OnGuardTower2Destroyed();
+	} else if ( obj == substationBarricade ) {
+		OnSubstationBarricadeDestroyed();
+	} else if ( obj == overflowHatch ) {
+		OnOverflowHatchDestroyed();
+	} else if ( obj == maintenanceHatch ) {
+		OnMaintenanceHatchDestroyed();
+	}
+}
+
+handle mapObject_Sewer::GetObjectiveMessage( float index ) {
+	if ( index == OBJECTIVE_SEWER_CONSTRUCT_JAMMER ) {
+		return sys.localizeString( "maps/sewer/obj_constructed" );
+	}
+
+	if ( index == OBJECTIVE_SEWER_DESTROY_DOOR_A ) {
+		return sys.localizeString( "maps/sewer/obj_destroyed_a" );
+	}
+
+	if ( index == OBJECTIVE_SEWER_DESTROY_DOOR_B ) {
+		return sys.localizeString( "maps/sewer/obj_destroyed_b" );
+	}
+
+	if ( index == OBJECTIVE_SEWER_HACK_CONTROLS ) {
+		return sys.localizeString( "maps/sewer/obj_hacked" );
+	}
+
+	return g_locStr_BadObjective;
+}
+
+// ----------------------------------------------------------------------
+// SECONDARY OBJECTIVES: CONSTRUCTIONS AND DESTRUCTIONS
+// ----------------------------------------------------------------------
+void mapObject_Sewer::OnGuardTower1Built() {
+	guardTower1Built = true;
+	guardTower1Construction.vCompleteMission();
+	if ( mainObjectiveIndex < OBJECTIVE_SEWER_DESTROY_DOOR_A ) {
+		guardTower1.vCreateMission();
+		objManager.deactivateBotActionGroup( GDF_CONSTRUCT_GUARDTOWER_BASE );
+		objManager.activateBotActionGroup( ALL_GUARDTOWER_BASE );
+		BotCheckSecondaryObjectives();
+	}
+	
+}
+
+void mapObject_Sewer::OnGuardTower1Destroyed() {
+	guardTower1Built = false;
+	guardTower1.vCompleteMission();
+	if ( mainObjectiveIndex < OBJECTIVE_SEWER_DESTROY_DOOR_A ) {
+		guardTower1Construction.vCreateMission();
+		objManager.activateBotActionGroup( GDF_CONSTRUCT_GUARDTOWER_BASE );
+		objManager.deactivateBotActionGroup( ALL_GUARDTOWER_BASE );
+		BotCheckSecondaryObjectives();	
+	}
+	
+}
+
+void mapObject_Sewer::OnGuardTower2Built() {
+	guardTower2Built = true;
+	guardTower2Construction.vCompleteMission();
+	if ( mainObjectiveIndex < OBJECTIVE_SEWER_DESTROY_DOOR_A ) {
+		guardTower2.vCreateMission();
+		objManager.deactivateBotActionGroup( GDF_CONSTRUCT_GUARDTOWER_HUT );
+		objManager.activateBotActionGroup( ALL_GUARDTOWER_HUT );
+		BotCheckSecondaryObjectives();
+	}
+}
+
+void mapObject_Sewer::OnGuardTower2Destroyed() {
+	guardTower2Built = false;
+	guardTower2.vCompleteMission();
+	if ( mainObjectiveIndex < OBJECTIVE_SEWER_DESTROY_DOOR_A ) {
+		guardTower2Construction.vCreateMission();
+		objManager.activateBotActionGroup( GDF_CONSTRUCT_GUARDTOWER_HUT );
+		objManager.deactivateBotActionGroup( ALL_GUARDTOWER_HUT );
+		BotCheckSecondaryObjectives();
+	}
+}
+
+// ----------------------------------------------------------------------
+// BOT SECONDARY OBJECTIVE: PLANT HE CHARGE ON THE BARRICADE
+// ----------------------------------------------------------------------
+void mapObject_Sewer::BarricadeDestroyedThread() {	
+	barricadeDestroyed = true;
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BOTS DESTROYED THE BARRICADE **********\n" );
+	}	
+	objManager.killBotActionGroup( GDF_DESTROY_BARRICADE );
+	objManager.killBotActionGroup( GDF_SUPPORT_BARRICADE );
+	//objManager.killBotActionGroup( GDF_DEPLOY_BARRICADE );
+	objManager.killBotActionGroup( STROGG_DEFEND_BARRICADE );
+	objManager.killBotActionGroup( STROGG_DEPLOY_BARRICADE );
+	objManager.killBotAction( "strogg_mine_barricade" );
+
+	if ( mainObjectiveIndex < OBJECTIVE_SEWER_DESTROY_DOOR_A ) {
+		objManager.activateBotActionGroup( GDF_SUPPORT_SEWER_JAMMER_NEW );
+		objManager.switchTeamWeapons( GDF, SOLDIER, -1, 5, 1 );
+		BotCheckSecondaryObjectives();
+	}
+
+	objManager.enableNode("barricade_dead_end" );
+	bot_barricade.activate( bot_barricade );
+
+	substationBarricadeDestroyed.show();
+	sys.wait( 0.5f );
+	substationBarricadeDestroyed.forceEnableClip();
+}
+
+void mapObject_Sewer::OnSubstationBarricadeDestroyed() {
+	substationBarricade.vCompleteMission();
+	noplant_barricade.remove();
+	thread BarricadeDestroyedThread();
+}
+
+
+// ----------------------------------------------------------------------
+// BOT SECONDARY OBJECTIVES: PLANT HE CHARGE ON HATCHES
+// ----------------------------------------------------------------------
+void mapObject_Sewer::OnOverflowHatchDestroyed() {
+
+	if ( !maintenanceHatchAccessible ) {
+		maintenanceHatchAccessible = true;
+		maintenanceHatch.vCreateMission();
+	}
+	bot_overflow.activate( bot_overflow );
+	objManager.killBotActionGroup( GDF_SEWER_DESTROY_OVERFLOW );
+	objManager.killBotAction( "overflow_disarm" );
+
+	overflowHatch.vCompleteMission();
+	noplant_overflow_hatch.remove();
+
+	sewer_door_overflow_hatch.vTriggerParticleEffect( 1 );
+}
+
+void mapObject_Sewer::OnMaintenanceHatchDestroyed() {
+	// Bot Obstacle Removal
+	bot_hatch.activate( bot_hatch );
+	objManager.killBotActionGroup( GDF_DESTROY_HATCH );
+	objManager.killBotAction( "mainthatch_disarm" );	
+
+	maintenanceHatch.vCompleteMission();
+	noplant_maintenance_hatch.remove();
+
+	sewer_door_maintenance.vTriggerParticleEffect( 1 );
+}
+
+// ----------------------------------------------------------------------
+
+void mapObject_Sewer::EMPThread() {
+	emp_charge.vTriggerParticleEffect( 1 );
+
+	sys.wait( 10.f );
+	emp_fire.vTriggerParticleEffect( 1 );
+
+	sys.wait( 5.f );
+
+	shield_down_1.vTriggerParticleEffect( 1 );
+	shield_down_2.vTriggerParticleEffect( 1 );
+	shield_down_3.vTriggerParticleEffect( 1 );
+	shield_down_4.vTriggerParticleEffect( 1 );
+	
+	objManager.SetObjectiveEntity( doorDualProxy, mainObjectiveIndex );
+	
+	// GDF vehicle access after shields are down
+	objManager.setNodeTeam( "shield_node_1", NOTEAM );
+	objManager.setNodeTeam( "shield_node_2", NOTEAM );
+	objManager.setNodeTeam( "shield_node_3", NOTEAM );
+	objManager.setNodeTeam( "shield_node_4", NOTEAM );
+
+	strogg_triggerHurt_spillway_1.remove();
+	strogg_triggerHurt_spillway_2.remove();
+	strogg_triggerHurt_spillway_3.remove();
+	strogg_trigger_hurtSewerinterior_1.remove();
+	strogg_trigger_hurtSewerinterior_2.remove();
+	strogg_trigger_hurtSewerinterior_3.remove();
+	strogg_trigger_hurtSewerinterior_4.remove();
+	strogg_trigger_hurtSewerinterior_5.remove();
+	stroggshieldSpillway.remove();
+	stroggshield_sewerInterior.remove();
+	stroggshield_light_1.remove();
+	stroggshield_light_2.remove();
+	stroggshield_light_3.remove();
+	stroggshield_light_4.remove();
+	// Bot Entity
+	bot_shield_sewerInterior1.activate( bot_shield_sewerInterior1 );
+	bot_shield_sewerInterior2.activate( bot_shield_sewerInterior2 );
+	bot_shield_sewerInterior3.activate( bot_shield_sewerInterior3 );
+	bot_shield_sewerInterior4.activate( bot_shield_sewerInterior4 );
+	bot_spillway1.activate( bot_spillway1 );
+	bot_spillway2.activate( bot_spillway2 );
+	bot_spillway3.activate( bot_spillway3 );
+	bot_lowerdoor.activate( bot_lowerdoor );
+
+	doorA.setTakesDamage( 1.0f );
+	doorB.setTakesDamage( 1.0f );
+
+	CreateInitialTimedMission( doorDualProxy );
+
+	doorA.vCreateMission();
+	doorB.vCreateMission();
+
+	overflowHatch.vCreateMission();
+	
+	// ------------------------------------
+	// GDF BOT ACTIONS FOR SECOND OBJECTIVE
+	// ------------------------------------
+	
+	objManager.activateBotActionGroup( GDF_ATTACK_SEWER );
+	objManager.activateBotActionGroup( GDF_DESTROY_SOUTH_DOOR );
+	objManager.activateBotActionGroup( GDF_DESTROY_NORTH_DOOR );
+	objManager.activateBotActionGroup( GDF_SUPPORT_SOUTH_DOOR );
+	objManager.activateBotActionGroup( GDF_SUPPORT_DOORS );
+
+	objManager.setPrimaryTeamAction( GDF, "gdf_southdoor_1" );
+	objManager.setSecondaryTeamAction( GDF, "gdf_forwardspawn_2" );
+	
+	objManager.setBotCriticalClass( GDF, SOLDIER );
+
+	objManager.setTeamNeededClass( GDF, SOLDIER, NOCLASS, 3, true, true );
+	objManager.setTeamNeededClass( GDF, MEDIC, NOCLASS, 3, false, false );
+	
+	gdfTeam.setTeamRearSpawn( substation_spawn );
+	objManager.setTeamUseRearSpawnPercentage( GDF, 50 );
+	
+	objManager.clearTeamBotBoundEntities( GDF );	
+	
+}
+
+void mapObject_Sewer::OnJammerBuilt() {
+	mainObjectiveIndex = OBJECTIVE_SEWER_DESTROY_DOOR_A;
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	objective1.vFinishObjective();
+	objective1Arrow1.vFinishObjective();
+	objective1Arrow2.vFinishObjective();
+
+	objective2Arrow1.vStartObjective();
+	objective2Arrow2.vStartObjective();
+
+	substation_territory.setGameTeam( gdfTeam );
+	substation_spawn.setGameTeam( gdfTeam );
+
+	hut_capturable_spawn.vSetActive( false );
+	hut_capturable_spawn.setGameTeam( gdfTeam );
+
+	spillway_spawn.setGameTeam( $null_entity );
+	spillway_capturable_spawn.vSetActive( true );
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	jammerMaterials.vCompleteMission();
+	guardTower1.vFreeMission();
+	guardTower2.vFreeMission();
+	guardTower1Construction.vFreeMission();
+	guardTower2Construction.vFreeMission();
+	substationBarricade.vFreeMission();
+
+	StopTimedMission();
+
+	thread EMPThread();
+
+	gdf_base_territory.setActive( false );
+	spillway_territory.setActive( true );
+
+	gdfTeam.SetRespawnWait( 20 );
+	ResetRespawnTimeThread();
+
+// ----------------------------------------------------------------------
+// BOT OBJECTIVE: PLANT HE CHARGE ON ONE OF THE DOORS
+// ----------------------------------------------------------------------	
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BOTS SETUP FOR HE CHARGE OBJECTIVES **********\n" );
+	}	
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+	
+	objManager.killBotActionGroup( GDF_SUPPORT_SEWER_JAMMER_NEW );
+	objManager.killBotActionGroup( GDF_CONSTRUCT_JAMMER );
+	objManager.killBotActionGroup( GDF_SUPPORT_JAMMER );
+	objManager.killBotActionGroup( STROGG_DEFEND_JAMMER );
+	objManager.killBotActionGroup( STROGG_DEPLOY_JAMMER );
+	objManager.killBotActionGroup( GDF_HUT_SPAWN );
+	objManager.killBotActionGroup( STROGG_HUT_SPAWN );
+	objManager.killBotActionGroup( GDF_DESTROY_BARRICADE );
+	objManager.killBotActionGroup( GDF_SUPPORT_BARRICADE );
+	objManager.killBotActionGroup( GDF_DEPLOY_BARRICADE );
+	objManager.killBotActionGroup( STROGG_DEFEND_BARRICADE );
+	objManager.killBotActionGroup( STROGG_DEPLOY_BARRICADE );
+	objManager.killBotActionGroup( GDF_CONSTRUCT_GUARDTOWER_BASE );
+	objManager.killBotActionGroup( ALL_GUARDTOWER_BASE );
+	objManager.killBotActionGroup( GDF_CONSTRUCT_GUARDTOWER_HUT );	
+	objManager.killBotActionGroup( ALL_GUARDTOWER_HUT );
+
+
+	// ---------------------------------------
+	// STROGG BOT ACTIONS FOR SECOND OBJECTIVE
+	// GDF setup at end of EMPThread();
+	// ---------------------------------------
+	objManager.activateBotActionGroup( STROGG_DEFEND_SEWER );
+	objManager.activateBotActionGroup( STROGG_DEFEND_SOUTH_DOOR );
+	objManager.activateBotActionGroup( STROGG_DEPLOY_SEWER );
+
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 3, true, true );
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 2, false, false );
+
+	objManager.setPrimaryTeamAction( STROGG, "gdf_southdoor_1" );
+}
+
+void mapObject_Sewer::DoorADestroyedThread() {
+	doorA_destroyed.show();
+	sys.wait( 0.5f );
+	doorA_destroyed.forceEnableClip();
+}
+
+void mapObject_Sewer::DoorBDestroyedThread() {
+	doorB_destroyed.show();
+	sys.wait( 0.5f );
+	doorB_destroyed.forceEnableClip();
+}
+
+void mapObject_Sewer::OnDoorADestroyed() {
+	// SOUTH DOOR
+	bot_southdoor.activate( bot_southdoor );
+	objManager.deactivateBotActionGroup( GDF_DESTROY_SOUTH_DOOR );
+	objManager.killBotAction( "southdoor_disarm" );
+	doorA.vCompleteMission();
+	noplant_south_grate.remove();
+	OnDoorsDestroyed();
+	sewer_door_1.vTriggerParticleEffect( 1 );
+	sewer_door_smoke_1.vTriggerParticleEffect( 1 );
+	thread DoorADestroyedThread();
+	//sys.wait( 0.8f );
+	sewer_door_1_water.vTriggerParticleEffect( 1 );
+	
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 4, false, false );
+}
+
+void mapObject_Sewer::OnDoorBDestroyed() {
+	// NORTH DOOR
+	bot_northdoor.activate( bot_northdoor );
+	objManager.deactivateBotActionGroup( GDF_DESTROY_NORTH_DOOR );
+	objManager.killBotAction( "northdoor_disarm" );
+	doorB.vCompleteMission();
+	noplant_north_grate.remove();
+	OnDoorsDestroyed();
+	sewer_door_2.vTriggerParticleEffect( 1 );
+	thread DoorBDestroyedThread();
+	sewer_door_smoke_2.vTriggerParticleEffect( 1 );
+	
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 4, false, false );
+}
+
+void mapObject_Sewer::OnDoorsDestroyed() {
+	if ( !maintenanceHatchAccessible ) {
+		maintenanceHatchAccessible = true;
+		maintenanceHatch.vCreateMission();
+	}
+	if ( !doorOpened ) {
+		doorOpened = true;
+		objManager.activateBotActionGroup( GDF_DESTROY_HATCH );
+		objManager.activateBotActionGroup( GDF_SEWER_DESTROY_OVERFLOW ); //mal: was originally a part of the "JammerBuilt" event.
+		objManager.activateBotActionGroup( STROGG_OVERFLOW_DEFENCE ); // temp roams and camps so the strogg guard outside the doors
+		
+		objManager.setActionPriority( "gdf_southdoor_1", false ); //mal: now that the hack obj is open, it is the priority. Dont worry so much about the grates anymore.
+		objManager.setActionPriority( "brandon_james_bot_action_32", false );
+
+		objManager.setTeamAttacksDeployables( GDF, false );
+		objManager.setTeamAttacksDeployables( STROGG, false ); 
+
+		mainObjectiveIndex = OBJECTIVE_SEWER_HACK_CONTROLS;
+		objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+		objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+		objective2a.vFinishObjective();
+		objective2b.vFinishObjective();
+		objective2Arrow1.vFinishObjective();
+		objective2Arrow2.vFinishObjective();
+
+		thread OpenDoorsFast();
+
+	/*	
+		sewer_door_a.open();
+		sewer_door_b.open();
+		sewer_door_c.open();
+	*/
+
+		doorA.vFreeMission();
+		doorB.vFreeMission();
+		StopTimedMission();
+
+		objManager.SetObjectiveEntity( $null_entity, -1 );
+
+		thread StartHackObjective();
+		thread BotsHackObjective();
+
+		gdfTeam.SetRespawnWait( 20 );
+		ResetRespawnTimeThread();
+	}
+}
+
+// ----------------------------------------------------------------------
+// BOT OBJECTIVE: HACK THE SEWER CONTROLS
+// ----------------------------------------------------------------------	
+void mapObject_Sewer::BotsHackObjective() {
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BOTS SETUP FOR HACK OBJECTIVE **********\n" );
+	}	
+	objManager.activateBotActionGroup( ALL_SEWER_CONSOLE_PREDOOR );
+	sys.wait( 20.f );
+
+	objManager.deactivateBotActionGroup( STROGG_DEFEND_SEWER );
+	objManager.activateBotActionGroup( STROGG_DEFEND_CONSOLE );
+	
+	objManager.setBotCriticalClass( GDF, COVERTOPS );
+	objManager.setBotCriticalClass( STROGG, MEDIC );
+	
+	objManager.setTeamNeededClass( GDF, COVERTOPS, NOCLASS, 3, true, true );
+	objManager.setTeamNeededClass( GDF, MEDIC, NOCLASS, 2, false, false );	
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 2, false, true );
+	
+	objManager.switchTeamWeapons( GDF, COVERTOPS, 15, 2, 0 );	
+	objManager.switchTeamWeapons( STROGG, COVERTOPS, 15, 2, 1 );
+	objManager.switchTeamWeapons( STROGG, SOLDIER, -1, 5, 1 );
+
+	objManager.setPrimaryTeamAction( STROGG, "gdf_consolehack_1" );
+	objManager.setPrimaryTeamAction( GDF, "gdf_consolehack_1" );
+	objManager.setSecondaryTeamAction( GDF, "gdf_maintenancehatch_1" );		
+	
+	objManager.botUpdateForEvent( STROGG, NOCLASS, ACTION_STATE_NULL );
+	objManager.setBotTeamRetreatTime( STROGG, 10 );
+
+	sys.wait( 10.f );	//mal: give the strogg a head start to the defensive positions.
+	objManager.activateBotActionGroup( GDF_HACK_CONSOLE );
+	objManager.botUpdateForEvent( GDF, NOCLASS, ACTION_STATE_NULL );
+}
+
+// --------------------------------------------------------------------
+
+void mapObject_Sewer::OpenDoorsFast() { //mal: experiment with the doors on a 3 second timer.
+	sys.wait( 30.f );
+	sewer_door_a.open();
+	sewer_door_b.open();
+	sewer_door_c.open();
+	bot_sewerdoor_a.activate( bot_sewerdoor_a ); // turn off bot obstacles
+	bot_sewerdoor_b.activate( bot_sewerdoor_b );
+	bot_sewerdoor_c.activate( bot_sewerdoor_c );
+	
+	objManager.killBotActionGroup( STROGG_OVERFLOW_DEFENCE ); // nuke temp roams/camps now doors are open
+	objManager.activateBotActionGroup( STROGG_DEFEND_CONSOLE_INTERIOR );
+}
+
+void mapObject_Sewer::StartHackObjective() {
+	sys.wait( 8.f );
+
+	objManager.SetObjectiveEntity( finalObjective, mainObjectiveIndex );
+	CreateInitialTimedMission( finalObjective );
+	finalObjective.vCreateMission();
+}
+
+void mapObject_Sewer::OnControlsHacked() {
+	objective3.vFinishObjective();
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	finalObjective.vCompleteMission();
+	StopTimedMission();
+
+	gameRules.setEndGameCamera( endCameraA );
+
+	gameRules.setWinningTeam( gdfTeam );
+
+	flood.vTriggerParticleEffect( 1 );
+
+	thread EndMap();
+}
+
+void mapObject_Sewer::EndMap() {
+	sys.wait( 3.f );
+
+	objManager.PlaySound( worldspawn.getKey( "snd_gdfwin_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_gdfwin_gdf" ), gdfTeam );
+
+	gameRules.endGame();
+}
+
+void mapObject_Sewer::OnTimeLimitHit() {
+	FinishTimedMission();
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	objManager.PlaySound( worldspawn.getKey( "snd_gdflose_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_gdflose_gdf" ), gdfTeam );
+}
+
+void mapObject_Sewer::StartFirstObjective() {
+	sys.wait( 5.f );
+
+	objManager.SetObjectiveEntity( jammerMaterials, mainObjectiveIndex );
+	CreateInitialTimedMission( jammerMaterials );
+	jammerMaterials.vCreateMission();
+}
+
+// ----------------------------------------------------------------------
+// Bot Forward Spawn Actions
+// ----------------------------------------------------------------------
+void mapObject_Sewer::OnSpawnCaptured( string actionName ) {
+	// Hilltop Cabin
+	if ( actionName == "gdf_forwardspawn_1" ) {
+		hutSpawnCaptured = true;
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** GDF CAPTURED GDF SPAWN 1 **********\n" );
+		}
+		objManager.enableRoute( "bjames_gdf_hutspawn_route_start_1" );
+		objManager.enableRoute( "bjames_gdf_hutspawn_route_start_2" );
+		objManager.activateBotActionGroup( GDF_HUT_SPAWN );
+		objManager.deactivateBotActionGroup( STROGG_HUT_SPAWN );
+		BotCheckSecondaryObjectives();
+	}
+	// Spillway
+	if ( actionName == "gdf_forwardspawn_2" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** GDF CAPTURED GDF SPAWN 2 **********\n" );
+		}
+		objManager.enableRoute( "bjames_gdf_sewerspawn_route_1" );
+		objManager.enableRoute( "bjames_gdf_sewerspawn_route_2" );
+		objManager.activateBotActionGroup( GDF_SEWER_SPAWN );
+		objManager.deactivateBotActionGroup( STROGG_SEWER_SPAWN );
+		objManager.deactivateBotActionGroup( GDF_ATTACK_SEWER );
+	}
+}
+
+void mapObject_Sewer::OnSpawnLiberated( string actionName ) {
+	// Hilltop Cabin
+	if ( actionName == "gdf_forwardspawn_1" ) {
+		hutSpawnCaptured = false;
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** STROGG LIBERATED GDF SPAWN 1 **********\n" );
+		}
+		objManager.disableRoute( "bjames_gdf_hutspawn_route_start_1" );
+		objManager.disableRoute( "bjames_gdf_hutspawn_route_start_2" );
+		objManager.activateBotActionGroup( STROGG_HUT_SPAWN );
+		objManager.deactivateBotActionGroup( GDF_HUT_SPAWN );
+		BotCheckSecondaryObjectives();
+	}
+	// Spillway
+	if ( actionName == "gdf_forwardspawn_2" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** STROGG LIBERATED GDF SPAWN 2 **********\n" );
+		}
+		objManager.disableRoute( "bjames_gdf_sewerspawn_route_1" );
+		objManager.disableRoute( "bjames_gdf_sewerspawn_route_2" );
+		objManager.activateBotActionGroup( STROGG_SEWER_SPAWN );
+		objManager.deactivateBotActionGroup( GDF_SEWER_SPAWN );
+		objManager.activateBotActionGroup( GDF_ATTACK_SEWER );
+	}
+}
+
+// ----------------------------------------------------------------------
+// Bot Secondary Objectives For First Objective
+// ----------------------------------------------------------------------
+void mapObject_Sewer::BotCheckSecondaryObjectives() {
+	if ( mainObjectiveIndex > OBJECTIVE_SEWER_CONSTRUCT_JAMMER ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** NOT FIRST OBJECTIVE, RETURNING **********\n" );
+		}
+		return;
+	} else if ( !hutSpawnCaptured ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** SECONDARY OBJECTIVE SET TO HUT SPAWN **********\n" );
+		}
+		objManager.setSecondaryTeamAction( GDF, "gdf_forwardspawn_1" );
+		return;
+	} else if ( !guardTower1Built ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** SECONDARY OBJECTIVE SET TO BASE GUARD TOWER **********\n" );
+		}
+		objManager.setSecondaryTeamAction( GDF, "gdf_guardtower_5" );
+		return;		
+	} else if ( !guardTower2Built ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** SECONDARY OBJECTIVE SET TO HUT GUARD TOWER **********\n" );
+		}
+		objManager.setSecondaryTeamAction( GDF, "gdf_guardtower_6" );
+		return;			
+	} else if ( !barricadeDestroyed ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** SECONDARY OBJECTIVE SET TO BARRICADE **********\n" );
+		}		
+		objManager.setSecondaryTeamAction( GDF, "gdf_barricade_1" );
+		return;
+	} else {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** SECONDARY OBJECTIVE SET TO HUT AVT ACTION **********\n" );
+		}
+		objManager.setSecondaryTeamAction( GDF, "hut_avt_deploy" );
+		return;			
+	}
+}
+
+entity mapObject_Sewer::GetSpectateEntity() {
+	if ( !jammerMaterials.vIsObjectiveComplete() ) {
+		return jammerMaterials.vGetSpectateEntity();
+	}
+	
+	if ( doorA != $null_entity && doorB != $null_entity ) {
+		// second objective is the one
+		entity doorABomb = doorA.vGetSpectateEntity();
+		entity doorBBomb = doorB.vGetSpectateEntity();
+		
+		if ( doorABomb != $null_entity && doorBBomb != $null_entity ) {
+			float fuseA = doorABomb.vGetFuseRemaining();
+			float fuseB = doorBBomb.vGetFuseRemaining();
+			
+			if ( fuseA < fuseB ) {
+				return doorABomb;
+			} else {
+				return doorBBomb;
+			}
+		}
+		if ( doorABomb != $null_entity ) {
+			return doorABomb;
+		}
+		if ( doorBBomb != $null_entity ) {
+			return doorBBomb;
+		}
+		
+		return $null_entity;
+	}
+	
+	if ( !finalObjective.vIsObjectiveComplete() ) {
+		return finalObjective.vGetSpectateEntity();
+	}
+
+	return $null_entity;
+}

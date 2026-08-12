@@ -1,0 +1,54 @@
+/***********************************************************************
+
+MOUNTED GPMG
+
+***********************************************************************/
+
+// ========================================================================
+// Export
+//
+
+export hauser {
+	options -prefix GPMGMOUNT_ -sourcedir models/weapons/gdf_gpmg/dev_sd -destdir models/weapons/gdf_gpmg/ -keep muzzle -keepmesh shel01_mesh shell02_mesh shell03_mesh shell04_mesh shell05_mesh shell06_mesh shell07_mesh shell08_mesh shell09_mesh shell10_mesh shell11_mesh shell12_mesh shell13_mesh gpmg ammo_box ammo_cover ammo_cover_latch Mesh lens target
+
+
+
+	mesh	mounted_gpmg_rework_base_file.mb		-dest models/weapons/gdf_gpmg/mounted_view.md5mesh
+
+	/*
+	anim	mounted_gpmg_rework_base_file.mb				-dest models/weapons/gdf_gpmg/mounted_idle.md5anim
+	anim	mounted_gpmg_rework_raise.mb			-dest models/weapons/gdf_gpmg/mounted_raise.md5anim
+ 	anim	mounted_gpmg_rework_base_file.mb			-dest models/weapons/gdf_gpmg/mounted_lower.md5anim
+   	anim	mounted_gpmg_rework_fire.mb				-dest models/weapons/gdf_gpmg/mounted_fire.md5anim -range 1 4
+   	anim	mounted_gpmg_rework_fire.mb				-dest models/weapons/gdf_gpmg/mounted_fire_end.md5anim -range 5 20
+*/
+}
+
+
+// ========================================================================
+// VIEW Models
+//
+
+model viewmodel_mounted_gpmg_1stperson {
+	mesh 					models/weapons/gdf_gpmg/mounted_view.md5mesh
+
+	anim idle 				models/weapons/gdf_gpmg/mounted_idle.md5anim {
+	}
+	anim fire				models/weapons/gdf_gpmg/mounted_fire.md5anim {
+	}
+	anim fire_end			models/weapons/gdf_gpmg/mounted_fire_end.md5anim {
+	}
+	anim raise				models/weapons/gdf_gpmg/mounted_raise.md5anim {
+	}
+	anim putaway			models/weapons/gdf_gpmg/mounted_lower.md5anim {
+	}
+}
+
+// ========================================================================
+// Entity DEFS
+//
+
+/* TEMP OFFSET TO USE
+	"view_offset"					"-1 -2 1"
+ 		"view_foreshorten"				"0.7"
+ */

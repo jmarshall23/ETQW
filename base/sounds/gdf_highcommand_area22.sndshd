@@ -1,0 +1,43 @@
+// GDF High Command
+
+// Map Area 22
+
+sound sounds/vo/gdf/highcommand/maps/area22/slipgate/defend/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/area22/10101.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/area22/slipgate/defend {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/area22/10103.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/area22/slipgate/planted {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/area22/10104.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/area22/slipgate/disarm {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/area22/10105.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/area22/slipgate/planted/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/area22/10106.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/area22/slipgate/disarmed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/area22/10107.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/area22/gdfwin {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/area22/10108.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/area22/gdflose {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/area22/10109.wav
+}

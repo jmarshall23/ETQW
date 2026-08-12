@@ -1,0 +1,16 @@
+/***********************************************************************
+
+weapon_lacerator.script
+
+***********************************************************************/
+
+object weapon_lacerator_scope : weapon_assaultrifle_scope {
+	void		preinit();
+	
+	void		Reload() { Overheat(); }
+};
+
+void weapon_lacerator_scope::preinit() {
+	usesStroyent	= true;
+	hasHeat			= true;
+}

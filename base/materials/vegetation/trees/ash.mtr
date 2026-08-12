@@ -1,0 +1,76 @@
+material models/vegetation/trees/ash/ash01a
+{
+ 	nonsolid
+ 	noshadows
+        twoSided
+
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap	clamp models/vegetation/trees/ash/ash01a_d.tga
+		//bumpmap	models/andrew/tree02/tree02a_local.tga
+ 		alphaTest 	0.25
+ 		
+		useTemplate wind/animatematrix< 0.15, 0.005 > // Speed, strength
+ 	}
+}
+
+
+
+material models/vegetation/trees/ash/ash01b
+{
+	nonsolid
+ 	twoSided
+	noshadows
+	{
+ 		alphatocoverage
+		program		interaction/foliage
+		diffusemap	models/vegetation/trees/ash/ash01b_d.tga
+		alphaTest 	0.25
+	}
+
+}
+
+
+material models/vegetation/trees/ash/ash01c
+{
+	nonsolid
+ 	twoSided
+	noshadows
+	{
+		diffusemap 	models/vegetation/trees/ash/ash01c_d.tga
+		bumpmap		models/vegetation/trees/ash/ash01c_local.tga
+		alphaTest 	0.25
+	}
+}
+
+
+material models/vegetation/trees/ash/ash01d
+{
+ 	nonsolid
+ 	noshadows
+        twoSided
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap 	clamp models/vegetation/trees/ash/ash01d_d.tga
+ 		alphaTest 	0.25
+ 		
+		useTemplate wind/animatematrix< 0.15, 0.005 > // Speed, strength
+ 	}
+
+}
+
+
+
+material models/andrew/dirtentrance/dirtentrance01
+{
+	nonsolid
+ 	twoSided
+	noshadows
+	{
+		diffusemap	models/andrew/dirtentrance/dirtentrance01_d.tga
+		bumpmap		models/andrew/dirtentrance/dirtentrance01_local.tga
+		alphaTest 	0.15
+	}
+}

@@ -1,0 +1,63 @@
+material models/vegetation/trees/dead/dead_tree01_branches
+{
+	nonsolid
+	twoSided
+	noshadows
+	{
+ 		alphatocoverage
+		program interaction/foliage
+		diffusemap 				clamp models/vegetation/trees/dead/dead_tree01_branches_d.tga
+		bumpmap			picmip -1	clamp models/vegetation/trees/dead/dead_tree01_branches_local.tga
+		specularmap		picmip -1	clamp models/vegetation/trees/dead/dead_tree01_branches_s.tga
+
+		alphaTest 	0.17
+
+		useTemplate wind/animatematrix< 0.15, 0.0005 > // Speed, strength	
+	}
+}
+
+material models/vegetation/trees/dead/dead_tree01_bark
+{
+		nonsolid
+		noshadows
+		
+		{
+		diffusemap			models/vegetation/trees/dead/dead_tree01_bark_d.tga
+		specularmap	picmip -2	models/vegetation/trees/dead/dead_tree01_bark_s.tga
+		bumpmap		picmip -1	models/vegetation/trees/dead/dead_tree01_bark_local.tga
+		
+		bumpDetailMap          textures/detail/bump/bark_detail01_local.tga
+		specDetailMap          textures/detail/bump/bark_detail01_d.tga
+        	detailMult 2,6,0,0 
+        	}
+}
+
+
+
+
+//////////////////
+/////OLD TREE/////
+//////////////////
+
+material models/vegetation/trees/dead/dead01a
+{
+	nonsolid
+	twoSided
+	noshadows
+	{
+ 		alphatocoverage
+		program interaction/foliage
+		diffusemap 		clamp models/vegetation/trees/dead/dead01a_d.tga
+		//bumpmap		clamp models/vegetation/trees/dead/dead01a_local.tga
+		alphaTest 	0.25
+
+		//useTemplate wind/animatematrix< 0.15, 0.005 > // Speed, strength	
+	}
+}
+
+material models/vegetation/trees/dead/dead01b
+{
+		diffusemap		models/vegetation/trees/dead/dead01b_d.tga
+		//specularmap		models/vegetation/trees/dead/dead01b_s.tga
+		//bumpmap		models/vegetation/trees/dead/dead01b_local.tga
+}

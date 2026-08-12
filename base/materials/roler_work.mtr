@@ -1,0 +1,39 @@
+/**************************************************************
+		EDF Mobile Command Post - Temporary Material (Roler)
+		renderbump models/vehicles/edf_mcp/dev_sd/mcp_blockout_high.lwo
+**************************************************************/
+
+material models/vehicles/edf_mcp/mcp_roler 
+{
+	surfaceType "metal"
+	unsmoothedtangents
+	renderbump -size 2048 1024 -aa 1 models/vehicles/edf_mcp/mcp_blockout_local.tga models/vehicles/edf_mcp/dev_sd/mcp_blockout_high.lwo
+
+	diffusemap	models/vehicles/edf_mcp/mcp_blockout_d.tga
+	//specularmap	picmip -1	textures/common/dark_gray.tga
+	bumpmap		models/vehicles/edf_mcp/mcp_blockout_local.tga
+}
+
+material models/vehicles/edf_mcp/mcp_track_left
+{
+	surfaceType "metal"
+	diffusemap	models/vehicles/edf_mcp/mcp_blockout_tracks_d.tga
+	specularmap	picmip -1	textures/common/dark_gray.tga
+	bumpmap		models/vehicles/edf_mcp/mcp_blockout_tracks.tga
+}
+
+material models/vehicles/edf_mcp/mcp_track_right
+{
+	surfaceType "metal"
+	diffusemap	models/vehicles/edf_mcp/mcp_blockout_tracks_d.tga
+	specularmap	picmip -1	textures/common/dark_gray.tga
+	bumpmap		models/vehicles/edf_mcp/mcp_blockout_tracks.tga
+}
+
+material models/vehicles/edf_mcp/mcp_wheels
+{
+	surfaceType "metal"
+	diffusemap	models/vehicles/edf_mcp/mcp_blockout_tracks_d.tga
+	specularmap	picmip -1	textures/common/dark_gray.tga
+	bumpmap		models/vehicles/edf_mcp/mcp_blockout_tracks.tga
+}

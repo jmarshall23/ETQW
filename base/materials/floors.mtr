@@ -1,0 +1,30 @@
+material textures2/floors/ceramic_tile_01
+{
+	diffusemap	textures2/floors/ceramic_tile_01_d.tga
+	specularmap     textures2/floors/ceramic_tile_01_s.tga
+	bumpmap 	textures2/floors/ceramic_tile_01_local.tga
+}
+
+material textures2/floors/ceramic_tile_02
+{
+	diffusemap	textures2/floors/ceramic_tile_02_d.tga
+	specularmap     textures2/floors/ceramic_tile_02_s.tga
+	bumpmap 	textures2/floors/ceramic_tile_02_local.tga
+}
+
+material textures/base_floor/ceramic_tile_02_256
+{
+	surfacetype "concrete"
+	{
+		diffusemap				textures/base_floor/ceramic_tile_02_256_d.tga
+		specularmap	picmip -1	textures/base_floor/ceramic_tile_02_256_s.tga
+		bumpmap					textures/base_floor/ceramic_tile_02_256_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	3.5,3.5,0,0
+	}
+}
+

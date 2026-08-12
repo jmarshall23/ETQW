@@ -1,0 +1,44 @@
+material models/mapobjects/office/shelf01
+{
+	surfaceType "metal"
+	diffusemap 				models/mapobjects/office/officeprops_d.tga
+	specularmap picmip -2	models/mapobjects/office/officeprops_s.tga
+	bumpmap					models/mapobjects/office/officeprops_local.tga
+}
+
+material models/mapobjects/office/officeobjects01
+{
+	noshadows
+	nonsolid
+
+	diffusemap 				models/mapobjects/office/officeobjects01_d.tga
+	specularmap	picmip -2	models/mapobjects/office/officeobjects01_s.tga
+	bumpmap		picmip -2	models/mapobjects/office/officeobjects01_local.tga
+}
+
+material models/mapobjects/office/officeobjects02
+{
+	noshadows
+	nonsolid
+
+	diffusemap 				models/mapobjects/office/officeobjects02_d.tga
+	specularmap picmip -2	models/mapobjects/office/officeobjects02_s.tga
+	bumpmap		picmip -1	models/mapobjects/office/officeobjects02_local.tga
+}
+
+material models/mapobjects/office/officeobjects01_valve
+{
+	surfaceType "metal"
+	noshadows
+	nonsolid
+	twosided	
+	{
+		diffusemap 				models/mapobjects/office/officeobjects01_valve_d.tga
+		specularmap picmip -2	models/mapobjects/office/officeobjects01_valve_s.tga
+		bumpmap					models/mapobjects/office/officeobjects01_valve_local.tga
+		alphatest	0.2
+			
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+        detailMult 2,2,0,0 
+	}
+}

@@ -1,0 +1,241 @@
+
+/*
+=================
+ Localization for map
+=================
+*/
+
+locString maps/valley/east_strogg_gate {
+	text "#str_00100450"
+}
+
+locString maps/valley/west_strogg_gate {
+	text "#str_00100451"
+}
+
+locString maps/valley/gdf_east_base_gates  {
+	text "#str_00100452"
+}
+
+locString maps/valley/gdf_west_base_gates {
+	text "#str_00100453"
+}
+
+locString maps/valley/gdf_north_base_gates {
+	text "#str_00100454"
+}
+
+locString maps/valley/capturable_spawn_tunnelroom {
+	text "#str_00100460"
+}
+
+locString maps/valley/capturable_spawn_reservoir {
+	text "#str_00100481"
+}
+
+locString maps/valley/strogg_device {
+	text "#str_00100482"
+}
+
+locString maps/valley/strogg_shield {
+	text "#str_00100483"
+}
+
+locString maps/valley/scud_target {
+	text "#str_00100484"
+}
+
+/*
+=================
+ Secondary Objectives names
+=================
+*/
+
+locString maps/valley/reservoir_door {
+	text "#str_00100455"	
+}
+
+locString maps/valley/sewer_grate {
+	text "#str_00100480"	
+}
+
+/*
+=================
+ Objective completion messages
+=================
+*/
+
+locString maps/valley/obj_bridge {
+	text "#str_00100456"	
+	arguments 1
+}
+
+locString maps/valley/obj_outpost {
+	text "#str_00100457"
+	arguments 1
+}
+
+locString maps/valley/obj_depot {
+	text "#str_00100458"
+	arguments 1
+}
+
+locString maps/valley/obj_contaminator {
+	text "#str_00100459"	
+	arguments 1
+}
+
+/*
+=================
+ Objectives to do
+=================
+*/
+
+locString maps/valley/obj01_gdf {
+	text "#str_00100461"	
+}
+
+locString maps/valley/obj01_strogg {
+	text "#str_00100462"	
+}
+
+locString maps/valley/obj01_gdf_short {
+	text "#str_00100463"	
+}
+
+locString maps/valley/obj01_strogg_short {
+	text "#str_00100464"	
+}
+
+locString maps/valley/obj02_gdf {
+	text "#str_00100465"	
+}
+
+locString maps/valley/obj02_strogg {
+	text "#str_00100466"	
+}
+
+locString maps/valley/obj02_gdf_short {
+	text "#str_00100467"	
+}
+
+locString maps/valley/obj02_strogg_short {
+	text "#str_00100468"	
+}
+
+locString maps/valley/obj03_gdf {
+	text "#str_00100469"	
+}
+
+locString maps/valley/obj03_strogg {
+	text "#str_00100470"	
+}
+
+locString maps/valley/obj03_gdf_short {
+	text "#str_00100471"	
+}
+
+locString maps/valley/obj03_strogg_short {
+	text "#str_00100472"	
+}
+
+locString maps/valley/obj04_gdf {
+	text "#str_00100473"	
+}
+
+locString maps/valley/obj04_strogg {
+	text "#str_00100474"	
+}
+
+locString maps/valley/obj04_gdf_short {
+	text "#str_00100475"	
+}
+
+locString maps/valley/obj04_strogg_short {
+	text "#str_00100476"	
+}
+
+/*
+=================
+ map info
+=================
+*/
+
+locString maps/valley/briefing {
+	text "#str_00100477"
+}
+
+locString maps/valley/campaign {
+	text "#str_00100478"
+}
+
+locString maps/valley/location {
+	text "#str_00100479"
+}
+
+/*
+=================
+ task names
+=================
+*/
+
+locString maps/valley/task_bridge {
+	text "#str_00100485"
+}
+
+locString maps/valley/task_outpost {
+	text "#str_00100486"
+}
+
+locString maps/valley/task_strogg {
+	text "#str_00100487"
+}
+
+locString maps/valley/task_tunnel {
+	text "#str_00100488"
+}
+
+locString maps/valley/task_device {
+	text "#str_00100489"
+}
+
+/*
+=================
+ Sewer grate progression
+=================
+*/
+
+locString maps/valley/sewer_grate_progress {
+	text "#str_00100490"
+	arguments 1
+}
+
+locString maps/valley/sewer_grate_disarm {
+	text "#str_00100491"
+	arguments 1
+}
+
+locString maps/valley/sewer_grate_destroy {
+	text "#str_00100492"
+	arguments 1
+}
+
+locString maps/valley/obj_construct_tower_base {
+	text "#str_00100493"
+	arguments 1
+}
+
+locString maps/valley/obj_construct_tower_reservoir {
+	text "#str_00100494"
+	arguments 1
+}
+
+locString maps/valley/obj_construct_tower_base_complete {
+	text "#str_00100495"
+	arguments 1
+}
+
+locString maps/valley/obj_construct_tower_reservoir_complete {
+	text "#str_00100496"
+	arguments 1
+}

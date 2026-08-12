@@ -1,0 +1,214 @@
+
+material m1k3/deformtest
+{
+	qer_editorimage 
+	noshadows
+	noselfshadow
+	{
+		parameters 1*sintable[time*0.5]
+		program deform/expand
+		map		"_gray"
+		diffusemap	picmip -1	models/vehicles/gdf_platypus/gdf_platypus_d.tga
+		specularmap	picmip -2	models/vehicles/gdf_platypus/gdf_platypus_s.tga
+		bumpmap	picmip -1 	addnormals(models/vehicles/gdf_platypus/gdf_platypus_local.tga, heightmap(models/vehicles/gdf_platypus/gdf_platypus_h.tga, 4 ) )		
+	}
+}
+
+material m1k3/alphatest
+{
+ 	noSelfShadow
+ 	translucent
+	qer_editorimage textures/decals/sign_circ01_d.tga
+	{       
+//		blend	
+		diffusemap	textures/decals/sign_circ01_d.tga
+		specularmap 	textures/decals/sign_circ01_s.tga
+		alphaTest 0.5
+	}
+	
+}
+
+material m1k3/alphatestcrate
+{
+	unsmoothedtangents
+	renderbump  -size 512 512 models/structures/crate/crate_local.tga models/structures/crate/dev_sd/hi.lwo
+
+ 	noSelfShadow
+ 	translucent
+	{
+	maskdepth
+	blend gl_src_alpha, gl_one_minus_src_alpha
+	diffusemap		_white
+	//textures/glass/glass1.tga
+	//textures/common/dark_gray.tga
+//	specularmap		models/structures/crate/crate_local.tga
+		specularmap 	textures/decals/sign_circ01_s.tga
+ 	bumpmap			models/structures/crate/crate_local.tga
+ 	}
+}
+
+material m1k3/window01
+{
+	//sort decal
+	noSelfShadow
+	noshadows
+	translucent
+	//translucentInteraction
+	
+	{
+		program interaction/basic_alpha
+     	blend		filter
+		diffusemap		textures/glass/dirty_window_bak.tga
+		specularmap 	textures/decals/sign_circ01_s.tga
+ 		bumpmap			models/structures/crate/crate_local.tga
+ 		//alphatest 0.1
+	}
+}
+
+material m1k3/bumpwindow01
+{
+	//sort decal
+	noSelfShadow
+	noshadows
+	//translucent
+	//translucentInteraction
+	
+	{
+		program interaction/basic_bumpdetail
+     	blend		filter
+		diffusemap		textures/glass/dirty_window_bak.tga
+		specularmap 	textures/decals/sign_circ01_s.tga
+ 		bumpmap			models/structures/crate/crate_local.tga
+ 		bumpDetailMap	models/structures/crate/crate_local.tga
+ 		detailMult		40, 40
+ 		//alphatest 0.1
+	}
+}
+
+material m1k3/diffwindow01
+{
+	//sort decal
+	noSelfShadow
+	noshadows
+	//translucent
+	//translucentInteraction
+	
+	{
+		program interaction/basic_diffdetail
+     	blend		filter
+		diffusemap		textures/glass/dirty_window_bak.tga
+		specularmap 	textures/decals/sign_circ01_s.tga
+ 		bumpmap			models/structures/crate/crate_local.tga
+ 		diffuseDetailMap	textures/glass/dirty_window_bak.tga
+ 		detailMult		40, 40
+ 		//alphatest 0.1
+	}
+}
+
+material m1k3/sunsprite
+{
+	sort 50
+	translucent
+	{
+		program trivialWithTextureMatrixAlways
+		map  atmosphere/sundisk2.tga
+		//atmosphere/sundisk.tga
+		//blend gl_src_alpha, gl_one
+		blend screen
+		//color 1, 1, 0.8, 1
+		
+		//depthfunc always // ATI work around
+		
+		alpha 0.4
+	}
+}
+
+material m1k3/sunsprite_canyon
+{
+	sort 50
+	translucent
+	{
+		map  atmosphere/sundisk2.tga
+		//atmosphere/sundisk.tga
+		//blend gl_src_alpha, gl_one
+		blend screen
+		//color 1, 1, 0.8, 1
+		depthfunc always
+		alpha 0.0
+	}
+}
+
+material m1k3/beam
+{
+	translucent
+	{
+		maskdepth
+		maskcolor
+		//blend gl_src_alpha, gl_one
+		blend gl_src_alpha, gl_one
+		map clamp atmosphere/sundisk.tga //"_white"
+		program sfx/beam
+		parameters 400, 400, 0.2, 10
+	}
+}
+
+material m1k3/rain
+{
+	sort postprocess
+	twoSided
+	translucent
+	{
+		blend blend
+		map textures/rain.tga
+		scale 0.01, 5
+		translate -1.1 * time, time * -0.7
+		program rain
+	}
+}
+
+
+material m1k3/testdetail {
+	{
+		diffusemap 	models/mapobjects/crates/crate01_d.tga
+		specularmap	models/mapobjects/crates/crate01_s.tga
+		bumpmap		models/mapobjects/crates/crate01_local.tga
+//		heightmap 	models/mapobjects/crates/crate01_d.tga
+//		diffusedetailmap 	models/mapobjects/crates/crate01_d.tga
+//		specdetailmap		models/mapobjects/crates/crate01_s.tga
+//		bumpDetailMap		models/mapobjects/crates/crate01_local.tga
+		detailMult 2,2,0,0
+	}
+}
+
+material terrain/canyon_5_4 {
+	{
+		diffusemap models\from_mop\canyon_d_5_4.tga
+		bumpmap models\from_mop\canyon_local_5_4.tga
+		translate
+	}
+}
+
+material m1k3/flare {
+	{
+		//program sfx/beam
+		map textures\effects\flare.tga
+		maskalpha
+		blend gl_one, gl_one
+		map _black //atmosphere/sundisk.tga //"_white"
+		parameters 200, 100, 0.1, 10
+		colored
+	}
+}
+
+material test/test {
+	noshadows
+	noselfshadow
+	translucent
+	//sort postprocess
+	updatecurrentrender
+	{
+		program sfx/lens
+		map _white
+	}
+}
+

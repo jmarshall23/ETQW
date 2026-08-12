@@ -1,0 +1,276 @@
+/***********************************************************************
+
+binoculars.script
+
+***********************************************************************/
+
+object binoculars : weapon_base {
+
+	void		preinit();
+	void		init();
+	void		destroy();
+
+	void		Idle();
+
+	void		OnProxyEnter();
+	void		OnProxyExit();
+
+	void		LoadScopeGUI();
+	void		FreeScopeGUI();
+
+	void		ScopeUp();
+	void		ScopeDown();
+
+	void		ToggleZoom();
+
+	float		OnActivate( entity p, float distance );
+	float		OnActivateHeld( entity p, float distance );
+	float		OnUsed( entity p, float distance );
+	boolean		OnWeapNext();
+	boolean		OnWeapPrev();
+
+	void		OnBecomeViewWeapon();
+	void		OnFinishViewWeapon();
+
+	void		AddLocalScopeEffects();
+	void		RemoveLocalScopeEffects();
+
+	void		vSetScopeState( boolean up );
+
+	float		scopeGUIHandle;
+
+	zoomWidget	zoomer;
+
+	boolean		scopeUp;
+	boolean		localScopeEffectsEnabled;
+	boolean		localScopeEffectsActive;
+
+	float		modeSwitchDown;
+}
+
+void binoculars::destroy() {
+	ScopeDown();
+	RemoveLocalScopeEffects();
+
+	delete zoomer;
+}
+
+void binoculars::preinit() {
+	scopeGUIHandle = -1;
+
+	zoomer = new zoomWidget;
+	zoomer.Init( self );
+}
+
+void binoculars::init() {
+	weaponState( "Raise", 0 );
+}
+
+void binoculars::Idle() {
+	weaponReady();
+	playCycle( ANIMCHANNEL_ALL, "idle" );
+
+	while( 1 ) {
+		if ( !scopeUp ) {
+			StartIdleEffect();
+		} else {
+			if ( myPlayer.isInWater() > 0.5f ) {
+				ToggleZoom();
+			}
+		}
+		
+		if ( WEAPON_LOWERWEAPON ) {
+			StopIdleEffect();
+			weaponState( "Lower", 0 );
+		}
+
+		if ( !sys.isClient() ) {
+			if ( WEAPON_ATTACK ) {
+				if ( !mainFireDown ) {
+					mainFireDown = true;
+					ToggleZoom();
+				}
+			} else {
+				mainFireDown = false;
+			}
+		}
+
+		if ( myPlayer.getButton( PK_ACTIVATE ) ) {
+			if ( !modeSwitchDown ) {
+				modeSwitchDown = true;
+			
+				if ( scopeUp && zoomer.IsEnabled() ) {
+					startSound( "snd_zoomin", SND_WEAPON_SIG );
+					zoomer.Cycle();
+				}
+			}
+		} else {
+			modeSwitchDown = false;
+		}
+
+		sys.waitFrame();
+	}
+}
+
+void binoculars::vSetScopeState( boolean up ) {
+	if ( up ) {
+		ScopeUp();
+	} else {
+		ScopeDown();
+	}
+}
+
+void binoculars::ToggleZoom() {
+	if ( myPlayer.IsSniperScopeUp() ) {
+		ScopeDown();
+	} else {
+		ScopeUp();
+	}
+}
+
+void binoculars::OnBecomeViewWeapon() {
+	if ( localScopeEffectsActive ) {
+		AddLocalScopeEffects();
+	}
+}
+
+void binoculars::OnFinishViewWeapon() {
+	RemoveLocalScopeEffects();
+}
+
+void binoculars::AddLocalScopeEffects() {
+	if ( localScopeEffectsEnabled ) {
+		return;
+	}
+	
+	if ( myPlayer == $null_entity ) {
+		return;
+	}
+
+	if ( myPlayer == sys.getLocalViewPlayer() ) {
+		localScopeEffectsEnabled = true;
+
+		HideSights();
+		if ( getKey( "def_scopemodel" ) ) {
+			myPlayer.enableClientModelSights( getKey( "def_scopemodel" ) );
+		}
+		LoadScopeGUI();
+	}
+}
+
+void binoculars::RemoveLocalScopeEffects() {
+	if ( !localScopeEffectsEnabled ) {
+		return;
+	}
+	localScopeEffectsEnabled = false;
+
+	if ( myPlayer != $null_entity ) {
+		myPlayer.disableClientModelSights();
+	}
+	ShowSights();
+	FreeScopeGUI();
+}
+
+void binoculars::ScopeUp() {
+	if ( scopeUp ) {
+		return;
+	}
+
+	StopIdleEffect();
+	
+	scopeUp = true;
+	myPlayer.SetSniperScopeUp( true );
+	
+	hide();
+
+	localScopeEffectsActive = true;
+	AddLocalScopeEffects();
+
+	zoomer.Enable();
+	startSound( "snd_scopeup", SND_WEAPON_SIG );
+	myPlayer.setSniperAOR( 1.f );
+	myPlayer.AI_HOLD_WEAPON = true;
+}
+
+void binoculars::ScopeDown() {
+	if ( !scopeUp ) {
+		return;
+	}
+
+	scopeUp = false;
+	if ( myPlayer != $null_entity ) {
+		myPlayer.SetSniperScopeUp( false );
+		myPlayer.setSniperAOR( 0.f );
+		myPlayer.AI_HOLD_WEAPON = false;
+	}
+
+	show();
+
+	localScopeEffectsActive = false;
+	RemoveLocalScopeEffects();
+
+	zoomer.Disable();
+	startSound( "snd_scopedown", SND_WEAPON_SIG );
+}
+
+void binoculars::LoadScopeGUI() {
+	FreeScopeGUI();
+
+	scopeGUIHandle = sys.allocHudModule( getKey( "gui_overlay" ), getFloatKeyWithDefault( "hud_sort", 0 ), false );	
+}
+
+void binoculars::FreeScopeGUI() {
+	if ( scopeGUIHandle != -1 ) {
+		sys.freeHudModule( scopeGUIHandle );
+		scopeGUIHandle = -1;
+	}
+}
+
+void binoculars::OnProxyEnter() {
+	Base_OnProxyEnter();
+	if ( myPlayer.IsSniperScopeUp() ) {
+		ToggleZoom();
+	}
+}
+
+void binoculars::OnProxyExit() {
+	Base_OnProxyExit();
+}
+
+float binoculars::OnActivateHeld( entity p, float distance ) {
+	return scopeUp;
+}
+
+float binoculars::OnActivate( entity p, float distance ) {
+	return scopeUp;
+}
+
+float binoculars::OnUsed( entity p, float distance ) {
+	return scopeUp;
+}
+
+boolean binoculars::OnWeapNext() {
+	if ( scopeUp && zoomer.IsEnabled() ) {
+		if ( !zoomer.IsFullyZoomedOut() ) {
+			startSound( "snd_zoomout", SND_WEAPON_SIG );
+		}
+
+		zoomer.ZoomOut();
+		return true;
+	}
+
+	return false;
+}
+
+boolean binoculars::OnWeapPrev() {
+	if ( scopeUp && zoomer.IsEnabled() ) {
+		if ( !zoomer.IsFullyZoomedIn() ) {
+			startSound( "snd_zoomin", SND_WEAPON_SIG );
+		}
+		
+		zoomer.ZoomIn();
+		return true;
+	}
+
+	return false;
+}

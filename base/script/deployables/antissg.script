@@ -1,0 +1,319 @@
+
+object deployable_antissg : deployable_turret {
+	void		preinit();
+	void		init();
+	void		destroy();
+
+	void		OnBeginAttack();
+	void		OnEndAttack();
+
+	void		Idle();
+
+	entity	 	OnAcquireTarget();
+
+	boolean		InRange( vector targetPos );
+	boolean		InFiringRange( vector targetPos ) { return InRange( targetPos ); }
+
+	boolean		TargetIsValid( entity targetEnt );
+
+	void		DestroyTarget( entity targetEnt );
+	void		FireMissile();
+
+	void		vOnDeploy();
+
+	void		FreeRangeIdentifier();
+	void		SetupRangeIdentifier();
+
+	void		DestroyMissiles();
+
+	void		KillSpinThread();
+	void		KillGunThread();
+
+	void		SpinBarrels();
+	void		GunThread();
+
+	boolean		wantsFire;
+
+	vector		barrelAngles;
+	float		barrelSpeed;
+
+	float		commandmapRangeHandle;
+	
+	float		toolTipDestroyedMissile;
+}
+
+void deployable_antissg::preinit() {
+	checkMask = MASK_PROJECTILE;
+	
+	toolTipDestroyedMissile = GetToolTip( getKey( "tt_destroyed_missile" ) );
+	
+	commandmapRangeHandle = -1;
+}
+
+void deployable_antissg::init() {
+	setState( "Idle" );
+}
+
+void deployable_antissg::destroy() {
+	KillGunThread();
+	KillSpinThread();
+	FreeRangeIdentifier();
+}
+
+void deployable_antissg::Idle() {
+	while ( true ) {
+		sys.waitFrame();
+
+		if ( !disabledState ) {
+			DestroyMissiles();
+		}
+	}
+}
+
+boolean	deployable_antissg::InRange( vector targetPos ) {
+	float len = sys.vecLength( targetPos - getWorldOrigin() );
+	return ( ( len >= minRange ) && ( len <= ( maxRange * 2.f ) ) );
+}
+
+entity deployable_antissg::OnAcquireTarget() {
+	if ( !finishedDeploying ) {
+		return $null_entity;
+	}
+
+	entitiesOfCollection( "antiair" );
+	filterEntitiesByAllegiance( TA_FLAG_ENEMY, 1 );
+	filterEntitiesByRadius( getWorldOrigin(), maxRange * 2.f, 1 );
+	float count = getBoundsCacheCount();
+	
+	float bestDist;
+	entity bestTarget;
+
+	float i;
+	for ( i = 0; i < count; i++ ) {
+		entity ent = getBoundsCacheEntity( i );
+		
+		float dist = sys.vecLengthSquared( ent.getWorldOrigin() - getWorldOrigin() );
+		if ( bestTarget != $null_entity && dist > bestDist ) {
+			continue;
+		}
+				
+		if ( !TargetIsValid( ent ) ) {
+			continue;
+		}
+
+		if ( !InRange( ent.getWorldOrigin() ) ) {
+			continue;
+		}
+
+		bestTarget = ent;
+		bestDist = dist;
+	}
+	
+	return bestTarget;
+}
+
+boolean deployable_antissg::TargetIsValid( entity targetEnt ) {
+	if ( targetEnt.getHealth() <= 0 ) {
+		return false;
+	}
+
+	if ( !TraceCheck( targetEnt ) ) {
+		return false;
+	}
+		
+	return true;
+}
+
+void deployable_antissg::DestroyTarget( entity targetEnt ) {
+	if ( targetEnt.vGetDestroyed() ) {
+		return;
+	}
+
+	if ( owner != $null_entity ) {
+		float destroyProficiency = targetEnt.vGetDestroyProficiency();
+		if ( destroyProficiency != -1 ) {
+			owner.giveProficiency( destroyProficiency, 1.f, $null, "anti-missile bonus" );
+		}
+
+		sys.increaseStatInt( sys.allocStatInt( "antimissile_gdf_uses" ), owner.getEntityNumber(), 1 );
+	}
+
+	targetEnt.vSetDestroyed();
+	
+	player p = targetEnt.getOwner();
+	if ( p != $null_entity ) {
+		if ( p.isLocalPlayer() ) {
+			if ( !p.isToolTipPlaying() ) {
+				p.sendToolTip( toolTipDestroyedMissile );
+			}
+		}
+	}
+}
+
+void deployable_antissg::DestroyMissiles() {
+	entitiesOfCollection( "antiair" );
+	filterEntitiesByAllegiance( TA_FLAG_ENEMY, 1 ); // only damage enemies
+	filterEntitiesByRadius( getWorldOrigin(), maxRange, 1 ); // find entities within maxRange radius
+	float count = getBoundsCacheCount(); // number of remaining entities
+	
+	float savedCache = saveCachedEntities();
+
+	float i;
+	for ( i = 0; i < count; i++ ) {
+		DestroyTarget( getSavedCacheEntity( savedCache, i ) );
+	}
+	
+	freeSavedCache( savedCache );
+}
+
+void deployable_antissg::FireMissile() {
+	float muzzleJoint;
+	playJointEffect( "fx_fire", jointBarrel, 0 );
+
+	if( numTracerJoints > 1 ) {
+		muzzleJoint = int( sys.random( numTracerJoints ) ) + 1;
+	} else {
+		muzzleJoint = 0;
+	}
+	
+	if( playTracerFX ) {
+		playEffect( "fx_tracer", getKey( "joint_tracer" + muzzleJoint ), 0 );
+	}
+	playEffect( "fx_muzzle", getKey( "joint_tracer" + muzzleJoint ), 0 );
+}
+
+void deployable_antissg::GunThread() {
+	while ( true ) {
+		sys.waitFrame();
+
+		if ( reFire < sys.getTime() ) {
+			reFire = sys.getTime() + fireRate;
+			playEffect( "fx_tracer", "muzzle1", 0 );
+			playEffect( "fx_tracer", "muzzle2", 0 );
+			playEffect( "fx_muzzle", "muzzle1", 0 );
+			playEffect( "fx_muzzle", "muzzle2", 0 );
+		}
+	}
+}
+
+void deployable_antissg::KillSpinThread() {
+	sys.killThread( "SpinBarrels_" + getName() );
+}
+
+void deployable_antissg::KillGunThread() {
+	sys.killThread( "GunThread_" + getName() );
+}
+
+void deployable_antissg::OnEndAttack() {
+	wantsFire = false;
+	attacking = false;
+
+	KillGunThread();
+}
+
+void deployable_antissg::OnBeginAttack() {
+	wantsFire = true;
+	attacking = true;
+
+	KillSpinThread();
+
+	thread SpinBarrels();
+	thread GunThread();
+}
+
+void deployable_antissg::SpinBarrels() {
+	float spinFire = 720.f;
+	float spinStop = 30.f;
+	float muzzleHandle1 = getJointHandle( getKey( "joint_spin1" ) );
+	float muzzleHandle2 = getJointHandle( getKey( "joint_spin2" ) );
+
+	startSound( "snd_fire", SND_WEAPON_FIRE );
+	startSound( "snd_fire_far", SND_WEAPON_FIRE_FAR );
+	startSound( "snd_brass", SND_DEPLOYABLE_BRASS );
+
+	while ( wantsFire ) {
+		sys.waitFrame();
+
+		if ( barrelSpeed < spinFire ) {
+			if ( barrelSpeed < spinStop ) {
+				barrelSpeed = spinStop;
+			}
+			barrelSpeed = barrelSpeed + 90.f;
+		} else {
+			barrelSpeed = spinFire;
+		}
+
+		barrelAngles_z = barrelAngles_z + ( barrelSpeed * sys.getFrameTime() );
+		setJointAngle( muzzleHandle1, JOINTMOD_LOCAL, barrelAngles );
+		setJointAngle( muzzleHandle2, JOINTMOD_LOCAL, -barrelAngles );
+	}
+
+	startSound( "snd_fire_trail", SND_WEAPON_FIRE );
+	startSound( "snd_fire_far_trail", SND_WEAPON_FIRE_FAR );
+	startSound( "snd_brass_stop", SND_DEPLOYABLE_BRASS );
+
+	while ( barrelSpeed != 0.f ) {
+		sys.waitFrame();
+
+		if ( barrelSpeed > spinStop ) {
+			barrelSpeed = barrelSpeed - 30.f;
+		}
+
+		if ( barrelSpeed <= spinStop ) {
+			barrelSpeed = 0.f;
+		}
+
+		barrelAngles_z = barrelAngles_z + ( barrelSpeed * sys.getFrameTime() );
+		setJointAngle( muzzleHandle1, JOINTMOD_LOCAL, barrelAngles );
+		setJointAngle( muzzleHandle2, JOINTMOD_LOCAL, -barrelAngles );
+	}
+}
+
+void deployable_antissg::FreeRangeIdentifier() {
+	if ( commandmapRangeHandle != -1 ) {
+		sys.freeCMIcon( self, commandmapRangeHandle );
+		commandmapRangeHandle = -1;
+	}
+}
+
+void deployable_antissg::SetupRangeIdentifier() {
+	FreeRangeIdentifier();
+	
+	commandmapRangeHandle = sys.allocCMIcon( self, 100 );
+	sys.setCMIconSizeMode( commandmapRangeHandle, SM_WORLD );
+	sys.setCMIconColor( commandmapRangeHandle, g_colorRed, 0.25f );
+	sys.setCMIconSides( commandmapRangeHandle, 24 );
+	sys.setCMIconDrawMode( commandmapRangeHandle, DM_CIRCLE );
+	sys.setCMIconMaterial( commandmapRangeHandle, GetMaterial( "_white_depth" ) );
+	sys.setCMIconUnknownMaterial( commandmapRangeHandle, GetMaterial( "_white_depth" ) );
+	sys.setCMIconSize( commandmapRangeHandle, maxRange );
+	sys.setCMIconUnknownSize( commandmapRangeHandle, maxRange );
+	sys.setCMIconFlag( commandmapRangeHandle, CMF_ENEMYONLY | CMF_ONLYSHOWKNOWN );
+}
+
+void deployable_antissg::vOnDeploy() {
+	SetupRangeIdentifier();
+
+	thread DoDeploy();
+}
+
+object deployable_antissg_cc : deployable_antissg {
+	void				preinit();
+
+	float				GetActivateCode( entity p, float distance );
+	boolean				vCheckActionCode( entity p, float actionCode );
+
+	void				vApplyEmpDamage( entity attacker, float time, float weaponTime ) {}
+}
+
+void deployable_antissg_cc::preinit() {
+	disableImpact();
+}
+
+float deployable_antissg_cc::GetActivateCode( entity p, float distance ) {
+	return AK_NONE;
+}
+
+boolean	deployable_antissg_cc::vCheckActionCode( entity p, float actionCode ) {
+	return AC_NONE;
+}

@@ -1,0 +1,95 @@
+
+toolTip votes/shuffleXP/text {
+	length	30
+	text	"votes/shuffleXP/text"
+}
+
+toolTip votes/shuffleRandom/text {
+	length	30
+	text	"votes/shuffleRandom/text"
+}
+
+toolTip votes/swapTeams/text {
+	length	30
+	text	"votes/swapTeams/text"
+}
+
+toolTip votes/balancedTeams/text {
+	length	30
+	text	"votes/balancedTeams/text"
+}
+
+toolTip votes/teamDamage/text {
+	length	30
+	text	"votes/teamDamage/text"
+}
+
+toolTip votes/noXP/text {
+	length	30
+	text	"votes/noXP/text"
+}
+
+toolTip votes/timelimit/text {
+	length	30
+	text	"votes/timelimit/text"
+}
+
+toolTip votes/serverMode/text {
+	length	30
+	text	"votes/serverMode/text"
+}
+
+toolTip votes/kickplayer/text {
+	length	30
+	text	"votes/kickplayer/text"
+}
+
+toolTip votes/banplayer/text {
+	length	30
+	text	"votes/banplayer/text"
+}
+
+toolTip votes/mute/text {
+	length	30
+	text	"votes/mute/text"
+}
+
+toolTip votes/mutevoice/text {
+	length	30
+	text	"votes/mutevoice/text"
+}
+
+toolTip votes/campaignreset/text {
+	length	30
+	text	"votes/campaignreset/text"
+}
+
+toolTip votes/restartMap/text {
+	length	30
+	text	"votes/restartMap/text"
+}
+
+toolTip votes/campaignchange/text {
+	length	30
+	text	"votes/campaignchange/text"
+}
+
+toolTip votes/mapchange/text {
+	length	30
+	text	"votes/mapchange/text"
+}
+
+toolTip votes/setcampaign/text {
+	length	30
+	text	"votes/setcampaign/text"
+}
+
+toolTip votes/setstopwatchmap/text {
+	length	30
+	text	"votes/setstopwatchmap/text"
+}
+
+toolTip votes/setobjectivemap/text {
+	length	30
+	text	"votes/setobjectivemap/text"
+}

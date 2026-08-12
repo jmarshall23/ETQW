@@ -1,0 +1,19 @@
+
+stringMap crosshairs {
+	"pin_01"						"_st guis/assets/crosshair/elements, rect( 0, 0, 32, 32 )"	// (default dot)
+	"pin_02"						"_st guis/assets/crosshair/elements, rect( 32, 0, 32, 32 )"
+	"pin_03"						"_st guis/assets/crosshair/elements, rect( 64, 0, 32, 32 )"
+	"pin_04"						"_st guis/assets/crosshair/elements, rect( 96, 0, 32, 32 )"
+	"pin_05"						"_st guis/assets/crosshair/elements, rect( 128, 0, 32, 32 )"
+	"pin_06"						"_st guis/assets/crosshair/elements, rect( 160, 0, 32, 32 )"
+	"pin_07"						"_st guis/assets/crosshair/elements, rect( 192, 0, 32, 32 )"
+	"pin_08"						"_st guis/assets/crosshair/elements, rect( 224, 0, 32, 32 )"
+	"pin_09"						"_st guis/assets/crosshair/elements, rect( 0, 32, 32, 32 )"
+	"pin_10"						"_st guis/assets/crosshair/elements, rect( 32, 32, 32, 32 )"
+	"pin_11"						"_st guis/assets/crosshair/elements, rect( 64, 32, 32, 32 )"
+	"pin_12"						"_st guis/assets/crosshair/elements, rect( 96, 32, 32, 32 )"
+	"pin_13"						"_st guis/assets/crosshair/elements, rect( 128, 32, 32, 32 )"
+	"pin_14"						"_st guis/assets/crosshair/elements, rect( 160, 32, 32, 32 )"
+	"pin_15"						"_st guis/assets/crosshair/elements, rect( 192, 32, 32, 32 )"
+	"pin_16"						"_st guis/assets/crosshair/elements, rect( 224, 32 , 32, 32 )"
+}

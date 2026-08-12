@@ -1,0 +1,9 @@
+entityDef waypoint_base {
+	"editor_color"		".3 .3 1"
+	"editor_mins"		"-16 -16 0"
+	"editor_maxs"		"16 16 32"
+	"editor_usage"		"Waypoint test"
+	
+	"spawnclass"		"sdWaypoint"
+	"model"				"models/test/arrow.lwo"
+}

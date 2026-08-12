@@ -1,0 +1,8 @@
+sound sounds/jumppad_idle {
+
+	volume 0
+	maxDistance	25
+
+	looping
+	sounds/vehicles/icarus/idle.wav
+}

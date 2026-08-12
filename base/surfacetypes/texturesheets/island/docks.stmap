@@ -1,0 +1,42 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/island/docks {
+	width	256
+	height	1024
+	/* areaDefs */
+
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 220 164 ) ( 252 196 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 256 256 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 896 ) ( 256 960 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 512 ) ( 256 896 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 960 ) ( 256 1024 )
+	}
+	rect {
+		surfaceType	metal_thick
+		surfaceColor	( 1 1 1 )
+		coords ( 0 256 ) ( 256 512 )
+	}
+}

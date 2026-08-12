@@ -1,0 +1,331 @@
+material models/mapobjects/foliage/dry_bush01a
+{
+	qer_editorimage		rich/bush_d.tga
+	twoSided
+	nonsolid
+	noshadows
+
+	translucent
+	{
+		diffusemap	models/mapobjects/foliage/dry_bush001_d.tga
+		bumpmap 	models/mapobjects/foliage/dry_bush001_local.tga
+		alphaTest 	0.25
+	}
+	
+}
+
+
+
+material models/mapobjects/foliage/bush01b
+{
+	qer_editorimage		models/mapobjects/foliage/bush001_d.tga
+	twoSided
+	nonsolid
+	noshadows
+
+	translucent
+	{
+		diffusemap	models/mapobjects/foliage/bush001_d.tga
+		bumpmap 	models/mapobjects/foliage/bush001_local.tga
+		alphaTest 	0.25
+	}
+	
+}
+
+
+//LEAVES
+//------
+
+
+material models/mapobjects/foliage/fern
+  {
+ 	twoSided
+ 	nonsolid
+ 	noshadows
+ 	translucent
+ 	{
+ 		diffusemap	models/mapobjects/foliage/fern.tga
+ 		//bumpmap 		models/mapobjects/tree/linden_branch_noleaves_local.tga
+ 		alphaTest 	0.25
+ 	}
+}
+
+material models/mapobjects/foliage/palm_plant01
+  {
+ 	twoSided
+ 	nonsolid
+ 	noshadows
+ 	translucent
+ 	{
+ 		diffusemap models/mapobjects/foliage/palm_plant01.tga
+ 		//bumpmap 		models/mapobjects/tree/linden_branch_noleaves_local.tga
+ 		alphaTest 	0.25
+ 	}
+   
+
+}
+
+material models/mapobjects/foliage/palm_plant02
+  {
+ 	twoSided
+ 	nonsolid
+ 	noshadows
+ 	translucent
+ 	{
+ 		diffusemap models/mapobjects/foliage/palm_plant02.tga
+ 		//bumpmap 		models/mapobjects/tree/linden_branch_noleaves_local.tga
+ 		alphaTest 	0.25
+ 	}
+
+
+}
+
+material textures/foliage/branches01
+{
+	qer_editorimage		models/vegetation/branches/branches01_d.tga
+	//twoSided
+	nonsolid
+	noshadows
+	translucent
+	{
+		diffusemap	models/vegetation/branches/branches01_d.tga
+		bumpmap 	models/vegetation/branches/branches01_local.tga
+		alphaTest 	0.25
+	}
+	
+
+}
+
+material textures/foliage/branches02
+{
+	qer_editorimage		models/vegetation/branches/branches02_d.tga
+	//twoSided
+	nonsolid
+	noshadows
+	translucent
+	{
+		diffusemap	models/vegetation/branches/branches02_d.tga
+		bumpmap 	models/vegetation/branches/branches02_local.tga
+		alphaTest 	0.25
+	}
+	
+
+}
+
+material textures/foliage/branches03ash
+{
+	qer_editorimage		models/vegetation/branches/branches03ash_d.tga
+	//twoSided
+	nonsolid
+	noshadows
+	translucent
+	{
+		diffusemap	models/vegetation/branches/branches03ash_d.tga
+		bumpmap 	models/vegetation/branches/branches03ash_local.tga
+		alphaTest 	0.25
+	}
+	
+
+}
+
+//BARK
+//-----
+
+material textures/foliage/bark01
+{
+	qer_editorimage		models/vegetation/trunks/bark01_d.tga
+//	twoSided
+//	noshadows
+	{
+		diffusemap	models/vegetation/trunks/bark01_d.tga
+		bumpmap 	heightmap (models/vegetation/trunks/bark01_h.tga, 3)
+		specularmap 	models/vegetation/trunks/bark01_s.tga
+		alphaTest 	0.25
+	}
+}
+
+material textures/foliage/bark02ash
+{
+	qer_editorimage		models/vegetation/trunks/bark02ash_d.tga
+//	twoSided
+//	noshadows
+	{
+		diffusemap 	models/vegetation/trunks/bark02ash_d.tga
+		bumpmap 	heightmap (models/vegetation/trunks/bark02ash_h.tga, 3)
+		specularmap 	models/vegetation/trunks/bark02ash_s.tga		
+		alphaTest 	0.25
+	}
+}
+
+material textures/foliage/bark02ashbase
+{
+	qer_editorimage		models/vegetation/trunks/bark02ashbase_d.tga
+//	twoSided
+//	noshadows
+	{
+		diffusemap 	models/vegetation/trunks/bark02ashbase_d.tga
+		bumpmap 	heightmap (models/vegetation/trunks/bark02ashbase_h.tga, 3)
+		specularmap 	models/vegetation/trunks/bark02ashbase_s.tga
+		alphaTest 	0.25
+	}
+
+}
+
+//BUSHES
+//------
+
+
+
+
+//GRASS
+//-----
+
+material textures/foliage/drygrass001
+{
+	qer_editorimage		textures/foliage/drygrass001_d.tga
+	//twoSided
+	nonsolid
+	noshadows
+	translucent
+	{
+		diffusemap	textures/foliage/drygrass001_d.tga
+		bumpmap 	textures/foliage/drygrass001_local.tga
+		alphaTest 	0.25
+	}
+	
+
+}
+
+material textures/foliage/drygrass002
+{
+	qer_editorimage		textures/foliage/drygrass002_d.tga
+	//twoSided
+	nonsolid
+	noshadows
+	translucent
+	{
+		diffusemap	textures/foliage/drygrass002_d.tga
+		bumpmap 	textures/foliage/drygrass002_local.tga
+		alphaTest 	0.25
+	}
+	
+
+}
+
+material textures/foliage/greengrass001
+{
+	qer_editorimage		textures/foliage/greengrass001_d.tga
+	//twoSided
+	nonsolid
+	noshadows
+	translucent
+	{
+		diffusemap	textures/foliage/greengrass001_d.tga
+		bumpmap 	textures/foliage/greengrass001_local.tga
+		alphaTest 	0.25
+	}
+	
+
+}
+
+material textures/foliage/greengrass002
+{
+	qer_editorimage		textures/foliage/greengrass002_d.tga
+	//twoSided
+	nonsolid
+	noshadows
+	translucent
+	{
+		diffusemap 	textures/foliage/greengrass002_d.tga
+		bumpmap 	textures/foliage/greengrass002_local.tga
+		alphaTest 	0.25
+	}
+	
+
+}
+
+material textures/foliage/greengrass001r
+{
+	qer_editorimage		textures/foliage/greengrass001r_d.tga
+	//twoSided
+	nonsolid
+	noshadows
+	translucent
+	{
+		diffusemap 	textures/foliage/greengrass001r_d.tga
+		bumpmap 	textures/foliage/greengrass001r_local.tga
+		alphaTest 	0.25
+	}
+	
+
+}
+
+material textures/foliage/greengrass002r
+{
+	qer_editorimage		textures/foliage/greengrass002r_d.tga
+	//twoSided
+	nonsolid
+	noshadows
+	translucent
+	{
+		diffusemap 	textures/foliage/greengrass002r_d.tga
+		bumpmap 	textures/foliage/greengrass002r_local.tga
+		alphaTest 	0.25
+	}
+}
+
+material models/foliage/waterplants
+{
+	twoSided
+	nonsolid
+	noshadows
+	translucent
+	{
+		program interaction/foliage
+		diffusemap stuff/foliage/temperate/weeds01.tga
+		alphaTest 	0.25
+	}
+}
+
+// dave cattail test
+material models/mapobjects/foliage/cattail01
+{
+	twoSided
+	nonsolid
+	noshadows
+	translucent
+	{
+		diffusemap 	models/mapobjects/foliage/cattail01_d.tga
+		bumpmap 	models/mapobjects/foliage/cattail01_local.tga
+		alphaTest 	0.25
+	}
+	
+
+}
+
+// lloyd reads
+material models/mapobjects/foliage/reeds01
+{
+	twoSided
+	nonsolid
+	noshadows
+	translucent
+	{
+		diffusemap	models/mapobjects/foliage/reeds01_d.tga
+		bumpmap 	models/mapobjects/foliage/reeds01_local.tga
+		alphaTest 	0.25
+	}
+}
+
+material models/mapobjects/foliage/reeds02
+{
+	twoSided
+	nonsolid
+	noshadows
+	translucent
+	{
+		diffusemap 	models/mapobjects/foliage/reeds02_d.tga
+		bumpmap 	models/mapobjects/foliage/reeds02_local.tga
+		alphaTest 	0.25
+	}
+}

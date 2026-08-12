@@ -1,0 +1,26 @@
+
+template material/translucent {
+	parameters <
+		DiffuseMapImage, 
+		TranslucencyMapImage, 
+		LocalMapImage,
+		SpecularMapImage,
+		TranslucencyMultiplier = "1.0",
+		ScatteringColorR = "1.0",
+		ScatteringColorG = "1.0",
+		ScatteringColorB = "1.0",
+		picmipdiffuse = "",
+		picmiplocal = "",
+		picmipspec = ""  >
+	text {
+	
+		{
+			program		interaction/translucent
+			parameters	ScatteringColorR, ScatteringColorG, ScatteringColorB, TranslucencyMultiplier	// light scattering rgb, translucency multiplier
+
+			diffusemap	picmipdiffuse mulAlpha( DiffuseMapImage, makeAlpha( TranslucencyMapImage ) )
+			bumpmap		picmiplocal LocalMapImage
+			specularmap	picmipspec SpecularMapImage
+		}
+	}
+}

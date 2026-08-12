@@ -1,0 +1,290 @@
+
+#include <materials/commandmaps.include>
+
+
+material textures/zombie/stone_wall_1
+{
+		qer_editorimage   textures/base_floor/concrete01.tga	
+		diffusemap	textures/zombie/stone_wall_1.tga
+		specularmap     textures/zombie/stone_wall_1_s.tga
+		bumpmap 	textures/zombie/stone_wall_1_normal.tga		
+}
+
+material textures/stone/wall_stone_9a
+{
+		diffusemap 	textures/stone/wall_stone_9a_d.tga
+		specularmap	textures/stone/wall_stone_9a_s.tga
+		bumpmap		textures/stone/wall_stone_9_local.tga
+
+}
+
+material textures/base_floor/cpufloor1_zombie
+{
+
+		diffusemap 	textures/base_floor/cpufloor1_d.tga
+		specularmap	textures/base_floor/cpufloor1_s.tga
+		bumpmap		textures/base_floor/cpufloor1_local.tga
+
+}
+
+
+material textures/base_floor/squaretile
+{
+	qer_editorimage textures/base_floor/squaretile_d.tga
+		diffusemap 	textures/base_floor/squaretile_d.tga
+		specularmap	textures/base_floor/squaretile_s.tga
+		bumpmap		textures/base_floor/squaretile_local.tga
+
+}
+
+material textures/base_floor/rfceilingtile01
+{
+	qer_editorimage	textures/base_floor/rfceilingtile01_d.tga
+		diffusemap 	textures/base_floor/rfceilingtile01_d.tga
+		specularmap	textures/base_floor/rfceilingtile01_s.tga
+		bumpmap		textures/base_floor/rfceilingtile01_local.tga
+}
+
+material textures/base_floor/rfceilingtile_trim01
+{
+	qer_editorimage	textures/base_floor/rfceilingtile01_trim_d.tga
+		diffusemap 	textures/base_floor/rfceilingtile01_trim_d.tga
+		specularmap	textures/base_floor/rfceilingtile01_trim_s.tga
+		bumpmap		textures/base_floor/rfceilingtile01_trim_local.tga
+}
+
+material textures/concrete/office_01
+{
+	qer_editorimage textures/concrete/office_01_d.tga
+		diffusemap 	textures/concrete/office_01_d.tga
+		specularmap	textures/concrete/office_01_s.tga
+		bumpmap		textures/concrete/office_01_local.tga
+}
+
+material textures/metal/base_white01
+{
+	qer_editorimage textures/metal/base_white01_d.tga
+		diffusemap 	textures/metal/base_white01_d.tga
+		specularmap	textures/metal/base_white01_s.tga
+		bumpmap		textures/metal/base_white01_local.tga
+}
+
+material textures/zombie/fluid_blue_bubble
+{	
+	qer_editorimage
+	noShadows
+	translucent
+	nonSolid
+	twoSided	
+		
+	{
+		blend add	
+		map textures/zombie/fluid_blue_bubble1.tga
+		scroll 0, time * .1
+	}
+
+	{ 
+		blend add
+		map textures/zombie/fluid_blue_bubble2.tga
+		scroll	0, time * .5
+	}
+	
+	{
+		blend add
+		map textures/zombie/fluid_blue_bubble3.tga
+		scroll 0, time * .3
+	}
+
+}
+
+material models/mapobjects/strogg/stroyent/dispersal/digest_tank_02/digestport
+{
+	qer_editorimage models/mapobjects/strogg/stroyent/dispersal/digest_tank_02/digestport_d.tga
+	noselfShadow
+	bumpmap addnormals (models/mapobjects/strogg/stroyent/dispersal/digest_tank_02/digestport_local.tga, heightmap (models/mapobjects/strogg/stroyent/dispersal/digest_tank_02/digestport_h.tga,1))
+	diffusemap 		models/mapobjects/strogg/stroyent/dispersal/digest_tank_02/digestport_d.tga
+	specularmap		models/mapobjects/strogg/stroyent/dispersal/digest_tank_02/digestport_s.tga
+}
+
+
+material particles/zombie/fbeam {
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		blend
+		maskalpha
+		map		makealpha( textures/zombie/fbeam.tga )
+		vertexcolor
+	}
+}
+
+material textures/arctic/snow/iceberg_snowy_terrain
+{
+
+	noshadows
+	noselfshadow
+	surfacetype glass
+	{
+		program 	interaction/subsurface
+		diffusemap	textures/arctic/snow/iceberg_d.tga
+		bumpmap 	textures/arctic/snow/iceberg_local.tga
+		specularmap	textures/arctic/snow/iceberg_s.tga
+		subsurfaceColor 0.1152941, 0.14, 0.102353
+		subsurfacePower	0.3, 8
+		textureMatrix 	diffuseMatrix 
+		
+			{
+				scale 1, 1
+			}
+				textureMatrix specularMatrix 
+			{
+				scale 1, 1
+			}		
+	}
+}
+
+
+// ====================================================
+// Downtown materials
+// ====================================================
+
+//megatexture
+material megatextures/downtown      
+{ 
+	useTemplate megatextures/default<"downtown"> 
+}
+
+//limbo command map image
+
+material commandmaps/downtown
+{
+	templates/game/maps/cmMap( "commandmaps/downtown.tga" )
+	{
+		blend blend
+		map highquality commandmaps/overlay_grid.tga
+	}
+}
+
+// larger scale map for out of bounds area
+material commandmaps/downtown_oob
+{
+	templates/game/maps/cmMap( "commandmaps/downtown_oob.tga" )
+	{
+		blend blend
+		map highquality commandmaps/overlay_grid.tga
+	}
+}
+
+//territory materials
+
+material commandmaps/downtown_territory_01 { // GDF base
+	templates/game/maps/cmIcon( makealpha( commandmaps/downtown/downtown_ter_01.tga ) )
+}						
+
+material commandmaps/downtown_territory_02 { // GDF base
+	templates/game/maps/cmIcon( makealpha( commandmaps/downtown/downtown_ter_02.tga ) )
+}
+
+material commandmaps/downtown_territory_03 { // GDF base
+	templates/game/maps/cmIcon( makealpha( commandmaps/downtown/downtown_ter_03.tga ) )
+}
+
+material commandmaps/downtown_territory_04 { // GDF base
+	templates/game/maps/cmIcon( makealpha( commandmaps/downtown/downtown_ter_04.tga ) )
+}
+
+material commandmaps/downtown_territory_05 { // GDF base
+	templates/game/maps/cmIcon( makealpha( commandmaps/downtown/downtown_ter_05.tga ) )
+}
+
+
+material textures/zombie/panel_test
+{
+	qer_editorimage textures/zombie/panel_local.tga
+	diffusemap 	textures/metal/metal_railing3_1_s.tga
+	specularmap	textures/zombie/panel_s.tga
+	bumpmap		textures/zombie/panel_local.tga
+}
+
+template sewer_dirty_water_scrolling_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/choppyFirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/choppyNextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/sewer",					// Cubemap
+				"time * 0.0",						// Translate X
+				"time * 0.5",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.008",						// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"6"							// Reflection Power
+				"1"							// Glare
+				
+		>
+	}
+}
+
+template sewer_dirty_water_still_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/choppyFirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/choppyNextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/sewer",					// Cubemap
+				"time * 0.03",						// Translate X
+				"time * 0.03",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.008",						// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"6"							// Reflection Power
+				"1"							// Glare
+				
+		>
+	}
+}
+
+
+
+material textures/zombie/sewer_dirty_water_scrolling
+{
+
+qer_editorimage textures/common/water
+	nonsolid
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	
+	useTemplate animations/frames16_interpolate < "sewer_dirty_water_scrolling_frametemplate", 15 //was 10
+	
+}
+
+material textures/zombie/sewer_dirty_water_still
+{
+
+qer_editorimage textures/common/water
+	nonsolid
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	
+	useTemplate animations/frames16_interpolate < "sewer_dirty_water_still_frametemplate", 15 //was 10
+}

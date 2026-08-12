@@ -1,0 +1,261 @@
+
+sound sounds/vehicles/anansi/chaff_fire {
+	volume	-3
+	minDistance	15
+	maxDistance	100
+	sounds/weapons/chaff/gdfchaff_01.wav
+	sounds/weapons/chaff/gdfchaff_02.wav
+	sounds/weapons/chaff/gdfchaff_03.wav
+	sounds/weapons/chaff/gdfchaff_04.wav
+}
+
+sound sounds/vehicles/anansi/chaff_sizzle {
+	minDistance	5
+	maxDistance	50
+	
+	looping
+	
+	sounds/weapons/chaff/sizzle_01.wav
+	sounds/weapons/chaff/sizzle_02.wav
+	sounds/weapons/chaff/sizzle_03.wav
+}
+
+////////////
+// Anansi //
+////////////
+
+sound sounds/vehicles/anansi/gpmg_fire_local {
+	private
+	sounds/vehicles/anansi/fire_12_local.wav
+	sounds/vehicles/anansi/fire_12a_local.wav
+	sounds/vehicles/anansi/fire_12b_local.wav
+
+
+}
+
+sound sounds/vehicles/anansi/gpmg_fire {
+	antiprivate
+	minDistance	15
+	maxDistance	150
+	volume		-3
+	
+	sounds/vehicles/anansi/fire_12.wav
+	sounds/vehicles/anansi/fire_12a.wav
+	sounds/vehicles/anansi/fire_12b.wav
+	
+	
+
+}
+
+sound sounds/vehicles/anansi/gpmg_fire_far {
+	volume -10
+	farDistance 100
+	maxDistance 200
+	antiPrivate
+	
+	sounds/vehicles/anansi/fire_12_far.wav
+	sounds/vehicles/anansi/fire_12a_far.wav
+	sounds/vehicles/anansi/fire_12b_far.wav
+}
+
+
+sound sounds/vehicles/anansi/rotor_start {
+
+	maxDistance 150
+	antiPrivate
+	playOnce
+	volume		-5
+	looping
+	leadin
+	//sounds/vehicles/anansi/rotor_on.wav
+	//sounds/vehicles/anansi/rotor_idle.wav
+	sounds/vehicles/anansi/engine_01_on.wav
+	sounds/vehicles/anansi/engine_01.wav
+}
+
+sound sounds/vehicles/anansi/rotor_stop {
+
+	maxDistance 150
+	antiPrivate
+	volume		-5
+	//sounds/vehicles/anansi/rotor_off.wav
+	sounds/vehicles/anansi/engine_01_off.wav
+}
+
+sound sounds/vehicles/anansi/rotor_throttle {
+
+	maxDistance 150
+	antiPrivate
+	playOnce
+	volume		-10
+	looping
+	//sounds/vehicles/anansi/rotor_throttle.wav
+	sounds/vehicles/anansi/engine_01.wav
+}
+
+sound sounds/vehicles/anansi/rotor_tail {
+
+	volume -10
+	maxDistance 150
+	antiPrivate
+	playOnce
+
+	looping
+	sounds/vehicles/anansi/rotor_tail.wav
+}
+
+sound sounds/vehicles/anansi/turbine_far {
+	farDistance	125
+	maxDistance	200
+	antiPrivate
+	looping
+	volume		0
+	
+	sounds/vehicles/anansi/engine_01_far.wav
+}
+
+sound sounds/vehicles/anansi/turbine_start {
+
+	maxDistance	150
+	antiPrivate
+	playOnce
+	volume		0
+
+	looping
+	leadin
+	//sounds/vehicles/anansi/turbine_on.wav
+	//sounds/vehicles/anansi/turbine_idle.wav
+	sounds/vehicles/anansi/turbo_01_start.wav
+	sounds/vehicles/anansi/turbo_01_loop.wav
+}
+
+sound sounds/vehicles/anansi/turbine_stop {
+
+	maxDistance	150
+	antiPrivate
+	volume	0
+
+	sounds/vehicles/anansi/turbine_off.wav
+	//sounds/vehicles/anansi/turbo_01_stop.wav
+}
+
+
+sound sounds/vehicles/anansi/overdrive_start {
+	minDistance	35
+	maxDistance	200
+	
+	volume		-7
+	//looping
+	//leadin
+	playOnce
+	sounds/vehicles/anansi/turbo_01.wav
+	//sounds/vehicles/anansi/turbo_01_start.wav
+	//sounds/vehicles/anansi/turbo_01_loop.wav
+}
+
+sound sounds/vehicles/anansi/overdrive_stop {
+	minDistance	35
+	maxDistance	200
+	volume		0
+	
+	sounds/vehicles/anansi/turbo_01_stop.wav
+	
+}
+
+
+
+// interior
+
+sound sounds/vehicles/anansi/interior/cockpit {
+	private
+	
+	volume	-25
+	looping 
+	leadin
+			
+	sounds/vehicles/anansi/interior/cockpit_01_start.wav
+	sounds/vehicles/anansi/interior/cockpit_01.wav
+}
+
+sound sounds/vehicles/anansi/interior/rotor_start {
+	private
+	no_occlusion
+	//playOnce
+	volume		-6
+	looping
+	leadin
+
+	//sounds/vehicles/anansi/interior/rotor_on.wav
+	//sounds/vehicles/anansi/interior/rotor_idle.wav
+	sounds/vehicles/anansi/engine_01_on.wav
+	sounds/vehicles/anansi/engine_01.wav
+
+}
+
+sound sounds/vehicles/anansi/interior/rotor_stop {
+
+	private
+	no_occlusion
+	volume		-10
+	sounds/vehicles/anansi/interior/rotor_off.wav
+	//sounds/vehicles/anansi/engine_01_off.wav
+}
+
+sound sounds/vehicles/anansi/interior/rotor_throttle {
+
+	private
+	no_occlusion
+	playOnce
+	volume	-10
+	looping
+	sounds/vehicles/anansi/interior/rotor_throttle.wav
+}
+
+sound sounds/vehicles/anansi/interior/rotor_tail {
+
+	private
+	no_occlusion
+	playOnce
+	volume	-10
+
+	looping
+	sounds/vehicles/anansi/interior/rotor_tail.wav
+}
+
+sound sounds/vehicles/anansi/interior/turbine_start {
+
+	private
+	no_occlusion
+	playOnce
+	volume	-10
+	looping
+	leadin
+	sounds/vehicles/anansi/interior/turbine_on.wav
+	sounds/vehicles/anansi/interior/turbine_idle.wav
+}
+
+sound sounds/vehicles/anansi/interior/turbine_stop {
+
+	private
+	no_occlusion
+	volume	-10
+	sounds/vehicles/anansi/interior/turbine_off.wav
+}
+
+sound sounds/vehicles/anansi/interior/gear_up {
+
+	volume -10
+	private
+	no_occlusion
+
+	sounds/vehicles/anansi/interior/gear_up.wav
+}
+
+sound sounds/vehicles/anansi/interior/gear_down {
+
+	volume -10
+	private
+	no_occlusion
+
+	sounds/vehicles/anansi/interior/gear_down.wav
+}

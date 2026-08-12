@@ -1,0 +1,20 @@
+material models/vegetation/trees/desert/desert_bush01
+{
+	nonsolid
+ 	twoSided
+	noshadows
+	translucent
+	{
+ 		alphatocoverage
+		program		interaction/foliage
+		diffusemap	clamp models/vegetation/trees/desert/desert_bush01_d.tga
+		bumpmap		clamp models/vegetation/trees/desert/desert_bush01_local.tga
+		specularmap	clamp models/vegetation/trees/desert/desert_bush01_s.tga
+		alphaTest 	0.5
+
+		useTemplate wind/animatematrix< 0.12, 0.001 > // Speed, strength
+
+		vertexcolor
+	}
+
+}

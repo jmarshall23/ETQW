@@ -1,0 +1,105 @@
+material models/mapobjects/light_tower/light_tower
+{
+surfaceType	"metal"
+	{
+	
+	 	diffusemap	picmip -1	models/mapobjects/light_tower/light_tower_d.tga
+	 	specularmap	picmip -2	models/mapobjects/light_tower/light_tower_s.tga
+	 	bumpmap		picmip -1	models/mapobjects/light_tower/light_tower_local.tga
+	}
+}
+
+material models/mapobjects/light_tower/light_tower2
+{
+surfaceType	"metal"
+	{
+	
+	 	diffusemap	picmip -1	models/mapobjects/light_tower/light_tower_d.tga
+	 	specularmap	picmip -2	models/mapobjects/light_tower/light_tower_s.tga
+	 	bumpmap		picmip -1	models/mapobjects/light_tower/light_tower_local.tga
+	}
+}
+material models/mapobjects/light_tower/light_tower_noshadows
+{
+noshadows
+surfaceType	"metal"
+	{
+	
+	 	diffusemap	picmip -1	models/mapobjects/light_tower/light_tower_d.tga
+	 	specularmap	picmip -2	models/mapobjects/light_tower/light_tower_s.tga
+	 	bumpmap		picmip -1	models/mapobjects/light_tower/light_tower_local.tga
+	}
+}
+
+material models/mapobjects/light_tower/light_tower2_noshadows
+{
+noshadows
+surfaceType	"metal"
+	{
+	
+	 	diffusemap	picmip -1	models/mapobjects/light_tower/light_tower_d.tga
+	 	specularmap	picmip -2	models/mapobjects/light_tower/light_tower_s.tga
+	 	bumpmap		picmip -1	models/mapobjects/light_tower/light_tower_local.tga
+	}
+}
+
+
+material models/mapobjects/island/beacon/beacon_top_d
+{
+surfaceType	"metal"
+	{
+	 	diffusemap	models/mapobjects/island/beacon/beacon_top_d.tga
+	 	specularmap	models/mapobjects/island/beacon/beacon_top_s.tga
+	 	bumpmap		models/mapobjects/island/beacon/beacon_top_local.tga
+	 	
+	 	//diffuseDetailMap	textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap		textures/detail/bump/metal_detail01_d.tga
+		detailMult 6,6,0,0
+	}
+}
+
+material models/mapobjects/island/beacon/beacon_base_d
+{
+	surfaceType	"metal"
+	{
+	 	diffusemap	models/mapobjects/island/beacon/beacon_base_d.tga
+	 	specularmap	models/mapobjects/island/beacon/beacon_base_s.tga
+	 	bumpmap		models/mapobjects/island/beacon/beacon_base_local.tga
+	 	
+	 	//diffuseDetailMap	textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap		textures/detail/bump/metal_detail01_d.tga
+		detailMult 6,6,0,0
+	}
+}
+
+material models/mapobjects/island/beacon/beacon_top_ds
+{
+surfaceType	"metal"
+	{
+		diffusemap	models/mapobjects/island/beacon/beacon_top_d.tga
+		specularmap	models/mapobjects/island/beacon/beacon_top_s.tga
+		bumpmap		models/mapobjects/island/beacon/beacon_top_local.tga
+	 	
+	 	//diffuseDetailMap	textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap		textures/detail/bump/metal_detail01_d.tga
+		detailMult 6,6,0,0
+	}
+}
+
+material models/mapobjects/island/beacon/beacon_base_ds
+{
+	surfaceType	"metal"
+	{
+	 	diffusemap	models/mapobjects/island/beacon/beacon_base_d.tga
+	 	specularmap	models/mapobjects/island/beacon/beacon_base_s.tga
+	 	bumpmap		models/mapobjects/island/beacon/beacon_base_local.tga
+	 	
+	 	//diffuseDetailMap	textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap		textures/detail/bump/metal_detail01_d.tga
+		detailMult 6,6,0,0
+	}
+}

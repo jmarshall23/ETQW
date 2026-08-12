@@ -1,0 +1,166 @@
+material particles/smoke/normal_smoke_puff02 
+{
+	
+	translucent
+	discrete
+	nonsolid
+	noimpact
+	qer_editorimage textures/particles/smoke/smokepuff02_d.tga
+	{
+		blend blend
+		maskAlpha
+		useTemplate templates/materials/smoke_lit< "textures/particles/smoke/smokepuff02_d.tga", "textures/particles/smoke/cloud_local.tga", 0>		
+	}
+	
+}
+
+material particles/smoke/litsmoke_plume1
+{
+     { 
+     
+          blend GL_ONE, GL_ONE_MINUS_SRC_ALPHA 
+          program sfx/cheap_litsmoke
+          mask          textures/particles/smoke/litsmoke_plume1.tga 
+          map          premultiplyAlpha( makealpha (textures/particles/smoke/litsmoke_plume1.tga) ) 
+          vertexcolor           
+     } 
+}
+
+material particles/smoke/normal_smoke_puff01 
+{
+	
+	translucent
+	discrete
+	nonsolid
+	noimpact
+//	qer_editorimage textures/particles/smoke/smokenormal.tga
+	{
+		blend blend
+		maskAlpha
+		useTemplate templates/materials/smoke_lit< "makealpha(textures/particles/barrelpoof.tga)", "textures/particles/smoke/smokenormal.tga", 0>		
+	}
+	
+}
+
+material particles/smoke/shrapnel_smoke
+{
+	qer_editorimage textures/particles/smoke/shrapnel.tga
+	{
+		blend blend
+		map textures/particles/smoke/shrapnel.tga
+		vertexcolor
+		maskalpha
+		alpha 1
+	}
+}
+
+material particles/smoke/smoke_puff01
+{
+	qer_editorimage textures/particles/smoke/smokepuff_wht01.tga
+	sort nearest
+	{
+		blend blend
+		map clamp textures/particles/smoke/smokepuff_wht01.tga
+		alpha 1
+		vertexcolor
+		maskalpha
+	}
+}
+
+
+material textures/particles/smoke_puff_generic
+{
+   nonsolid
+   noshadows
+   {
+       useTemplate templates/materials/outdoor_light<> 	// adds a sun colour tint to the smoke
+       blend        blend
+       map          textures/effects/smoke_test1
+       vertexColor
+       //maskAlpha
+   }
+}
+
+material particles/smoke/litsmoke_plume
+{
+   nonsolid
+   noshadows
+   {
+       useTemplate templates/materials/outdoor_light<> 	// adds a sun colour tint to the smoke
+       blend        blend
+       map          textures/particles/smoke/litsmoke_plume1
+       vertexColor
+       maskAlpha
+   }
+}
+
+material particles/smoke/smokeflame01
+{
+	qer_editorimage textures/particles/smoke/smokeflame01.tga
+	sort nearest
+	{
+		blend add
+		map clamp textures/particles/smoke/smokeflame01.tga
+		alpha 1
+		vertexcolor
+	}
+}
+
+
+material particles/smoke/smokeflame01_nobloom
+{
+	qer_editorimage textures/particles/smoke/smokeflame01.tga
+	sort nearest
+	{
+		blend add
+		map clamp textures/particles/smoke/smokeflame01.tga
+		//alpha 0
+		vertexcolor
+		maskalpha
+	}
+}
+
+
+
+material particles/smoke/smokeflame01_nobloom_nml
+{
+	
+	qer_editorimage textures/particles/smoke/smokeflame01.tga
+
+	translucent
+	discrete
+	nonsolid
+	noimpact
+
+	{
+		blend add
+		maskAlpha
+		maskDepth
+		useTemplate templates/materials/smoke_lit< "textures/particles/smoke/smokeflame01.tga", "textures/particles/smoke/smokenormal.tga", 0>
+	}
+	
+}
+
+
+material particles/smoke/smoke_trail {
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		blend
+		maskalpha
+		map		makealpha( textures/particles/smoke/smoke_trail01.tga )
+		vertexcolor
+	}
+}
+
+material particles/smoke/cloud_alpha3
+{
+	{
+		blend  blend
+		program sfx/cheap_litsmoke
+		map    textures/particles/cloud_alpha3.tga
+		vertexColor
+	}
+}

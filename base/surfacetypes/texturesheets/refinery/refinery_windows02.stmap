@@ -1,0 +1,77 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/refinery/refinery_windows02 {
+	width	256
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 224 36 ) ( 240 52 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1920 ) ( 624 2048 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 896 ) ( 256 1152 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1152 ) ( 256 1408 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 640 ) ( 256 896 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 512 ) ( 256 640 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 128 1536 ) ( 256 1664 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 128 1408 ) ( 256 1536 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1408 ) ( 128 1664 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1664 ) ( 256 1920 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 256 ) ( 256 512 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 256 256 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 512 ) ( 256 640 )
+	}
+}

@@ -1,0 +1,131 @@
+
+object supply_marker : projectile_missile {
+	void				preinit();
+	
+	boolean				CallForSupply();
+	void				CallForSupplyThread( float delay );
+	boolean				FreeOldSupplies();
+}
+
+void supply_marker::preinit() {
+	if ( !sys.isClient() ) {
+		thread CallForSupplyThread( getFloatKeyWithDefault( "supply_wait_time", 3.f ) );
+	}
+}
+
+void supply_marker::CallForSupplyThread( float delay ) {	
+	entity owner = getOwner();
+	if ( owner != $null_entity ) {
+		owner.vDelayDeployment( delay );
+	}
+
+	startSound( "snd_smoke_start", SND_WEAPON_FIRE );
+
+	sys.wait( delay );
+	boolean ok = CallForSupply();
+	if ( !ok ) {
+		stopEffect( "fx_trail" );
+		if ( owner != $null_entity ) {
+			objManager.PlaySoundForPlayer( getKey( "snd_unknown_target" ), owner );
+			sys.broadcastToolTip( GetToolTip( getKey( "tt_unknown_target" ) ), owner, wstr_empty, wstr_empty, wstr_empty, wstr_empty );
+		}
+	}
+
+
+	if ( ok ) {
+		while ( FreeOldSupplies() ) {
+			// loop until we've freed all we need to
+		}
+
+		sys.requestDeployment( getOwner(), GetDeployObject( getKey( "do_supply_item" ) ), getWorldOrigin(), 0.f, 0.f );	
+	}
+	
+	sys.wait( 5.f );
+	
+	startSound( "snd_smoke_stop", SND_WEAPON_FIRE );
+
+	remove();
+}
+
+object door;
+
+boolean supply_marker::CallForSupply() {
+	entity owner = getOwner();
+	if ( owner == $null_entity ) {
+		return false;
+	}
+	
+	if ( owner.getGameTeam() != getGameTeam() ) {
+		return false;
+	}
+
+	vector pos = getWorldOrigin();
+	vector end = pos;
+	end_z = end_z + 65536.f;
+
+	forceDisableClip();
+	float contents = sys.checkContents( pos, getMins(), getMaxs(), MASK_SHOT_BOUNDINGBOX | MASK_SHOT_RENDERMODEL, $null_entity );
+	if ( contents != 0 ) {
+		forceEnableClip();
+		return false;
+	}
+	
+	sys.tracePoint( pos, end, MASK_SHOT_BOUNDINGBOX | MASK_SHOT_RENDERMODEL, $null_entity );
+	if ( sys.getTraceFraction() == 1.f ) {
+		forceEnableClip();
+		return false;
+	}
+	
+	if ( !( sys.getTraceSurfaceFlags() & SURF_NOIMPACT ) ) {
+		forceEnableClip();
+		return false;
+	}
+
+	sys.tracePoint( pos, pos + '0 0 -64', MASK_SHOT_BOUNDINGBOX | MASK_SHOT_RENDERMODEL, $null_entity );
+	forceEnableClip();
+
+	door ent = sys.getTraceEntity();
+	if ( ent != $null_entity ) {
+		return false;
+	}
+
+	if ( sys.getTraceFraction() == 1.0f ) {
+		return false;
+	}
+
+	return true;
+}
+
+boolean supply_marker::FreeOldSupplies() {
+	entity owner = getOwner();
+	team_base team = owner.getGameTeam();
+	float limit = team.GetMaxSupplies( owner );	
+	sys.assert( limit != 0.f );
+	
+	entity oldest;
+	float oldestTime;
+	float count;
+
+	// fizzle any existing supply drops
+	float i;
+	float num = owner.binGetSize();
+	for ( i = 0; i < num; i++ ) {
+		entity other = owner.binGet( i );
+		if ( other.vIsSupplyDrop() ) {
+			float thisCreationTime = other.vGetSupplyDropCreationTime();
+			if ( oldest == $null_entity || thisCreationTime < oldestTime ) {
+				oldestTime = thisCreationTime;
+				oldest = other;
+			}
+
+			count++;
+		}
+	}
+	
+	if ( count >= limit ) {
+		sys.assert( oldest != $null_entity );
+		oldest.vRemoveObject();
+	}
+	
+	return count > limit;
+}

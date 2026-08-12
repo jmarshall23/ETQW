@@ -1,0 +1,106 @@
+
+sound sounds/weapons/sniperrifle/fire {
+	compression wav
+
+	volume 2
+	maxDistance 75
+	antiPrivate
+	no_dups
+	occlude_once
+
+	sounds/weapons/sniperrifle/new_01.wav
+//	sounds/weapons/sniperrifle/fire_01.wav
+//	sounds/weapons/sniperrifle/fire_02.wav
+//	sounds/weapons/sniperrifle/fire_03.wav
+//	sounds/weapons/sniperrifle/fire_04.wav
+//	sounds/weapons/sniperrifle/fire_05.wav
+}
+
+sound sounds/weapons/sniperrifle/fire/far {
+	compression wav
+
+	volume -10
+	maxDistance 200
+	occlude_once
+
+	sounds/weapons/sniperrifle/fire_far.wav
+}
+
+sound sounds/weapons/sniperrifle/fire/local {
+	compression wav
+
+	private
+	no_dups
+	occlude_once
+
+	sounds/weapons/sniperrifle/new_local_01.wav
+//	sounds/weapons/sniperrifle/fire_local_01.wav
+//	sounds/weapons/sniperrifle/fire_local_02.wav
+//	sounds/weapons/sniperrifle/fire_local_03.wav
+//	sounds/weapons/sniperrifle/fire_local_04.wav
+//	sounds/weapons/sniperrifle/fire_local_05.wav
+//	sounds/weapons/sniperrifle/fire_local_06.wav
+//	sounds/weapons/sniperrifle/fire_local_07.wav
+//	sounds/weapons/sniperrifle/fire_local_08.wav
+//	sounds/weapons/sniperrifle/fire_local_09.wav
+//	sounds/weapons/sniperrifle/fire_local_10.wav
+}
+
+sound sounds/weapons/sniperrifle/chamber {
+
+	volume -8
+	maxDistance 20
+
+	sounds/weapons/sniperrifle/chamber.wav
+}
+
+sound sounds/weapons/sniperrifle/reload {
+
+	volume -10
+	maxDistance 20
+
+	sounds/weapons/sniperrifle/reload.wav
+}
+
+sound sounds/weapons/sniperrifle/cock {
+
+	volume -8
+	maxDistance 20
+
+	sounds/weapons/sniperrifle/cock.wav
+}
+
+sound sounds/weapons/sniperrifle/zoom/in {
+
+	volume -20
+
+	sounds/weapons/sniperrifle/zoom_in.wav
+}
+
+sound sounds/weapons/sniperrifle/zoom/out {
+
+	volume -20
+
+	sounds/weapons/sniperrifle/zoom_out.wav
+}
+
+sound sounds/weapons/sniperrifle/sights/up {
+
+	volume -15
+
+	sounds/weapons/sniperrifle/sights_up.wav
+}
+
+sound sounds/weapons/sniperrifle/sights/down {
+
+	volume -15
+
+	sounds/weapons/sniperrifle/sights_down.wav
+}
+
+sound sounds/weapons/sniperrifle/raise {
+
+	volume -15
+
+	sounds/weapons/sniperrifle/raise.wav
+}

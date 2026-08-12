@@ -1,0 +1,104 @@
+effect effects/base/muzzleflash_small_simple
+{
+	size	5
+
+	spawner "Flame"
+	{
+		count		2,2
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			persist
+			material	"textures/effects/weapons/muzzle_flash2"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 10,0,0,15,0,0 }
+				size { box 1,1,2,2 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { box 2,2,3,3 }
+			}
+		}
+	}
+}effect effects/base/muzzleflash_simple
+{
+	size	17
+
+	spawner "Muzzle Brake"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			blend	add
+			persist
+			material	"textures/effects/weapons/muzzle_flash"
+			trailRepeat	1
+
+			start
+			{
+				size { point 8,8 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { point 12,12 }
+			}
+			lineHit
+		}
+	}
+	emitter "Flame"
+	{
+		duration	0.15,0.15
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.15,0.15
+			persist
+			material	"textures/effects/weapons/muzzle_flash2"
+			trailRepeat	1
+
+			start
+			{
+				position { line 1,0,0,2,0,0 }
+				velocity { box 50,0,0,65,0,0 }
+				size { box 6,6,7,7 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { box 1,1,2,2 }
+			}
+			lineHit
+		}
+	}
+}
+
+

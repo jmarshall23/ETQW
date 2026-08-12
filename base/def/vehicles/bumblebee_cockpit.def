@@ -1,0 +1,32 @@
+//
+// bumblebee cockpit
+//=================================================================================================
+
+export hauser {
+		options -prefix BUMBEECOCKPIT_ -nomerge -sourcedir models/vehicles/gdf_bumblebee/dev_sd -destdir models/vehicles/gdf_bumblebee/
+
+		mesh bumblebee_cockpit_fk_arms.mb 		-dest bumblebee_cockpit.md5mesh				-range 0 0
+
+
+		anim bumblebee_cockpit_fk_arms.mb 		-dest bumblebee_cockpit_center.md5anim 		-range 0 1
+		anim bumblebee_cockpit_fk_arms.mb 		-dest bumblebee_cockpit_fire.md5anim 		-range 4 5
+
+}
+
+
+//==================================================================================================
+//pilot
+//==================================================================================================
+
+
+model vehicle_bumblebee_pilot_cockpit{
+	mesh					models/vehicles/gdf_bumblebee/bumblebee_cockpit.md5mesh
+
+	anim base				models/vehicles/gdf_bumblebee/bumblebee_cockpit_center.md5anim {
+	}
+
+	anim fire				models/vehicles/gdf_bumblebee/bumblebee_cockpit_fire.md5anim {
+	}
+	
+	channel legs			( *right_upperight_arm )
+}

@@ -1,0 +1,31 @@
+
+/******************************************************************************
+
+  OPPRESSOR SOLO ASSIGNMENTS
+
+******************************************************************************/
+
+
+#include "task_includes.include"
+
+templates/tasks/solo_task( oppressor_deploy_firesupport, task_deploy_object )
+	data {
+		"require_eligible1"				"ability_oppressor && ( has_fire_support == false )"
+
+		"deploy_mask"					"7"
+		"deploy_require_active"			"0"
+		"deploy_team"					"strogg"
+		
+		"botTaskType"					"28"
+
+		"def_hint"						"deploy_mission_hint"
+		"tt_task"						"oppressor_deploy_firesupport"
+		"tooltip_ability"				"oppressor"
+	}
+
+/*	waypoint {
+		"mtr_icon"						"hud/icons/missionsystem/mis_field_ops"
+		"mtr_waypoint"					"hud/icons/missionsystem/mis_field_ops"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/mis_sml"
+	}*/
+}

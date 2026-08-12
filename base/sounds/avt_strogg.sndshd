@@ -1,0 +1,19 @@
+sound sounds/deployables/avt_strogg/deploy {
+	volume -3
+	minDistance	5
+	maxDistance 100
+
+	sounds/deployables/avt_strogg/deployseq.wav
+}
+
+sound sounds/deployables/avt_strogg/fire {
+	volume		-1
+	maxDistance 100
+
+	looping
+	leadin
+
+	sounds/deployables/avt_strogg/smartbomb_start_02.wav
+	sounds/deployables/avt_strogg/smartbomb_loop_02.wav
+}
+

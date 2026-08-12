@@ -1,0 +1,98 @@
+// GDF High Command
+
+// Map Island
+
+sound sounds/vo/gdf/highcommand/maps/island/generator/repair/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10401.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/generator/repair {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10402.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/generator/repairing {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10403.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/generator/repairing/half {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10404.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/generator/success {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10405.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/generator/success/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10406.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/vaultdoor/destroy {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10407.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/vaultdoor/planted {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10408.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/vaultdoor/defendexpl {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10409.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/vaultdoor/planted/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10410.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/vaultdoor/disarmed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10411.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/vaultdoor/success {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10412.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/datadisc/take/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10413.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/datadisc/take {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10414.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/datadisc/taken {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10415.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/datadisc/dropped {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10416.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/datadisc/returned {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10417.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/gdfwin {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10424.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/island/gdflose {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/island/10425.wav
+}

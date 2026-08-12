@@ -1,0 +1,23 @@
+
+object mapobject_flag {
+	void			ChangeFlag( object oldTeam, object newTeam );
+	void			OnSetTeam( object oldTeam, object newTeam );
+}
+
+void mapobject_flag::ChangeFlag( object oldTeam, object newTeam ) {
+	if ( oldTeam != $null ) {
+		playAnim( ANIMCHANNEL_ALL, oldTeam.getName() + "_lower" );
+		waitUntil( !isAnimating() );
+	}	
+
+	if ( newTeam != $null ) {
+		playAnim( ANIMCHANNEL_ALL, newTeam.getName() + "_raise" );
+		waitUntil( !isAnimating() );
+		playCycle( ANIMCHANNEL_ALL, newTeam.getName() + "_play" );
+	}
+}
+
+void mapobject_flag::OnSetTeam( object oldTeam, object newTeam ) {
+	sys.killThread( "ChangeFlag_" + getName() );
+	thread ChangeFlag( oldTeam, newTeam );
+}

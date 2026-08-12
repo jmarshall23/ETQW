@@ -1,0 +1,23 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+atlas/volcano/factory_window01.atlas
+***
+*/
+
+surfaceTypeMap textures/window/factory_windowtrim01 {
+	width	512
+	height	128
+	/* areaDefs */
+
+	rect {
+		surfaceType	glass
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 512 128 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 388 0 ) ( 452 128 )
+	}
+}

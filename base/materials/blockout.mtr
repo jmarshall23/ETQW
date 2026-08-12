@@ -1,0 +1,35 @@
+material textures/blockout/block_palegrey
+{
+	
+	qer_editorimage	textures/blockout/block_palegrey_d.tga
+	diffusemap	textures/blockout/block_palegrey_d.tga
+	//specularmap 	textures/blockout/block_palegrey_s.tga
+	bumpmap 	textures/blockout/block_palegrey_local.tga
+}
+
+material textures/blockout/block_midgrey
+{
+	
+	qer_editorimage	textures/blockout/block_midgrey_d.tga
+	diffusemap	textures/blockout/block_midgrey_d.tga
+	//specularmap 	textures/blockout/block_midgrey_s.tga
+	bumpmap 	textures/blockout/block_midgrey_local.tga
+}
+
+material textures/blockout/block_darkgrey
+{
+	
+	qer_editorimage	textures/blockout/block_darkgrey_d.tga
+	diffusemap	textures/blockout/block_darkgrey_d.tga
+	//specularmap 	textures/blockout/block_darkgrey_s.tga
+	bumpmap 	textures/blockout/block_darkgrey_local.tga
+}
+
+material textures/blockout/block_darkblue
+{
+	
+	qer_editorimage	textures/blockout/block_darkblue_d.tga
+	diffusemap	textures/blockout/block_darkblue_d.tga
+	//specularmap 	textures/blockout/block_darkblue_s.tga
+	bumpmap 	textures/blockout/block_darkblue_local.tga
+}

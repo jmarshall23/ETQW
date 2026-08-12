@@ -1,0 +1,119 @@
+/**************************************************************
+	GDF Binoculars Rework
+**************************************************************/
+
+material models/items/binoculars/binoculars_rework
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/binoculars/binoculars_local.tga models/weapons/binoculars/binoculars_hi.lwo
+
+	diffusemap	models/items/binoculars/binoculars_rework_d.tga
+	specularmap	models/items/binoculars/binoculars_rework_s.tga
+	bumpmap 	addnormals(models/items/binoculars/binoculars_rework_local.tga, heightmap(models/items/binoculars/binoculars_rework_h.tga, 4 ) )
+}
+
+material models/items/binoculars/binoculars_rework_world
+{
+	noshadows
+	renderbump -size 512 512 -aa 2 -clampOutput 0 0 1 1 -colormap models/items/binoculars/binoculars_thirdperson_local.tga models/items/binoculars/binoculars_hi.lwo
+
+	diffusemap	models/items/binoculars/binoculars_rework_world_d.tga
+	specularmap	models/items/binoculars/binoculars_rework_world_s.tga
+	bumpmap 	models/items/binoculars/binoculars_rework_world_local.tga
+}
+
+
+/**************************************************************
+	GDF Binoculars
+**************************************************************/
+
+material models/items/binoculars/binoculars
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/binoculars/binoculars_local.tga models/weapons/binoculars/binoculars_hi.lwo
+	
+	diffusemap	picmip -1 partialLoad models/items/binoculars/binoculars_d.tga
+	specularmap	picmip -2 partialLoad models/items/binoculars/binoculars_s.tga
+	bumpmap 	picmip -1 partialLoad addnormals(models/items/binoculars/binoculars_local.tga, heightmap(models/items/binoculars/binoculars_h.tga, 4 ) )
+}
+
+material models/items/binoculars/binoculars_world
+{
+	noshadows
+	renderbump -size 512 512 -aa 2 -clampOutput 0 0 1 1 -colormap models/items/binoculars/binoculars_thirdperson_local.tga models/items/binoculars/binoculars_hi.lwo
+	diffusemap	models/items/binoculars/binoculars_world_d.tga
+	specularmap	models/items/binoculars/binoculars_world_s.tga
+	bumpmap 	models/items/binoculars/binoculars_world_local.tga
+}
+
+/**************************************************************
+	Ammo Pack
+**************************************************************/
+
+material models/techkits/ammo_pack/ammo_pack_thirdperson_glow
+{
+	renderbump -size 1024 256 -clampOutput 0 0 1 1 -colormap models/techkits/ammo_pack/ammo_pack_thirdperson_local.tga models/techkits/ammo_pack/ammo_pack_thirdperson_hi.lwo
+	diffusemap	models/techkits/ammo_pack/ammo_pack_thirdperson_d.tga
+	specularmap	models/techkits/ammo_pack/ammo_pack_thirdperson_s.tga
+	bumpmap 	models/techkits/ammo_pack/ammo_pack_thirdperson_local.tga
+	{
+		blend		add
+		map			models/techkits/ammo_pack/ammo_pack_thirdperson_d.tga
+		red			1 * blinktable[time * 1]
+		green		1 * blinktable[time * 1]
+		blue		1 * blinktable[time * 1]
+	}
+}
+
+material models/techkits/ammo_pack/ammo_pack
+{
+	noshadows
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/techkits/ammo_pack/ammo_pack_local.tga models/techkits/ammo_pack/ammo_pack_hi.lwo
+	diffusemap	models/techkits/ammo_pack/ammo_pack_d.tga
+	specularmap	models/techkits/ammo_pack/ammo_pack_s.tga
+	bumpmap 	addnormals(models/techkits/ammo_pack/ammo_pack_local.tga, heightmap(models/techkits/ammo_pack/ammo_pack_h.tga, 5 ) )
+}
+
+material models/techkits/ammo_pack/ammo_pack_world
+{
+	renderbump -size 1024 512 -clampOutput 0 0 1 1 -colormap models/techkits/supply_pack_local.tga models/techkits/supply_pack_hi.lwo
+	diffusemap	models/techkits/ammo_pack/ammo_pack_world_d.tga
+	specularmap	models/techkits/ammo_pack/ammo_pack_world_s.tga
+	bumpmap 	models/techkits/ammo_pack/ammo_pack_world_local.tga
+}
+
+/**************************************************************
+	Health Pack
+**************************************************************/
+
+material models/items/healthpack/healthpack
+{
+	noshadows
+	renderbump -size 1024 512 -clampOutput 0 0 1 1 -colormap models/techkits/supply_pack_local.tga models/techkits/supply_pack_hi.lwo
+	diffusemap	picmip -1 partialLoad models/items/healthpack/healthpack_d.tga
+	specularmap	picmip -2 partialLoad models/items/healthpack/healthpack_s.tga
+	bumpmap		picmip -1 partialLoad addnormals( models/items/healthpack/healthpack_local.tga, heightmap( models/items/healthpack/healthpack_h.tga, 5 ) )
+}
+
+/**************************************************************
+	Landmine
+**************************************************************/
+
+material models/items/landmine/landmine
+
+{
+	noshadows
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/items/landmine/landmine_local.tga models/items/landmine/landmine_hi.lwo
+	diffusemap	picmip -1	models/items/landmine/landmine_d.tga
+	specularmap	picmip -2	models/items/landmine/landmine_s.tga
+	bumpmap		picmip -1 	addnormals(models/items/landmine/landmine_local.tga, heightmap(models/items/landmine/landmine_h.tga, 5 ) )
+}
+
+material models/items/landmine/landmine_world
+{
+	noshadows
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/items/landmine/landmine_local.tga models/items/landmine/landmine_hi.lwo
+	diffusemap	picmip -2	models/weapons/gdf_landmine/landmine_world_d.tga
+	specularmap	picmip -3	models/weapons/gdf_landmine/landmine_world_s.tga
+	bumpmap		picmip -2 	addnormals(models/weapons/gdf_landmine/landmine_world_local.tga, heightmap(models/weapons/gdf_landmine/landmine_world_h.tga, 3 ) )
+}

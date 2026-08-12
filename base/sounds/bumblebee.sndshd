@@ -1,0 +1,137 @@
+
+///////////////
+// Bumblebee //
+///////////////
+
+sound sounds/vehicles/bumblebee/rotor_start {
+
+	maxDistance 100
+	antiPrivate
+	playOnce
+
+	looping
+	leadin
+	sounds/vehicles/bumblebee/rotor_start.wav
+	sounds/vehicles/bumblebee/rotor_loop.wav
+}
+
+sound sounds/vehicles/bumblebee/rotor_stop {
+
+	maxDistance 100
+	antiPrivate
+
+	sounds/vehicles/bumblebee/rotor_stop.wav
+}
+
+sound sounds/vehicles/bumblebee/turbine_start {
+
+	maxDistance	100
+	antiPrivate
+	playOnce
+
+	looping
+	leadin
+	sounds/vehicles/bumblebee/turbine_start.wav
+	sounds/vehicles/bumblebee/turbine_loop.wav
+}
+
+sound sounds/vehicles/bumblebee/turbine_stop {
+
+	maxDistance	100
+	antiPrivate
+
+	sounds/vehicles/bumblebee/turbine_stop.wav
+}
+
+sound sounds/vehicles/bumblebee/turbo/start {
+
+	volume -5
+	maxDistance 100
+
+	looping
+	leadin
+	sounds/vehicles/bumblebee/turbo_start.wav
+	sounds/vehicles/bumblebee/turbo_loop.wav
+}
+
+
+// interior
+
+sound sounds/vehicles/bumblebee/interior/cockpit {
+
+	volume -10
+	private
+	no_occlusion
+	playOnce
+
+	looping
+	sounds/vehicles/bumblebee/interior/cockpit.wav
+}
+
+sound sounds/vehicles/bumblebee/interior/rotor_start {
+
+	private
+	no_occlusion
+	playOnce
+
+	looping
+	leadin
+	sounds/vehicles/bumblebee/interior/rotor_start.wav
+	sounds/vehicles/bumblebee/interior/rotor_loop.wav
+}
+
+sound sounds/vehicles/bumblebee/interior/rotor_stop {
+
+	private
+	no_occlusion
+
+	sounds/vehicles/bumblebee/interior/rotor_stop.wav
+}
+
+sound sounds/vehicles/bumblebee/interior/rotor_tail {
+
+	private
+	no_occlusion
+	playOnce
+
+	looping
+	sounds/vehicles/bumblebee/interior/rotor_tail.wav
+}
+
+sound sounds/vehicles/bumblebee/interior/turbine_start {
+
+	private
+	no_occlusion
+	playOnce
+
+	looping
+	leadin
+	sounds/vehicles/bumblebee/interior/turbine_start.wav
+	sounds/vehicles/bumblebee/interior/turbine_loop.wav
+}
+
+sound sounds/vehicles/bumblebee/interior/turbine_stop {
+
+	private
+	no_occlusion
+
+	sounds/vehicles/bumblebee/interior/turbine_stop.wav
+}
+
+sound sounds/vehicles/bumblebee/interior/gear_up {
+
+	volume -10
+	private
+	no_occlusion
+
+	sounds/vehicles/bumblebee/interior/gear_up.wav
+}
+
+sound sounds/vehicles/bumblebee/interior/gear_down {
+
+	volume -10
+	private
+	no_occlusion
+
+	sounds/vehicles/bumblebee/interior/gear_down.wav
+}

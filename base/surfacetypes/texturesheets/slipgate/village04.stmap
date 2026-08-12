@@ -1,0 +1,77 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/slipgate/village04 {
+	width	256
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 128 256 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1696 ) ( 256 1728 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1728 ) ( 256 1792 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1536 ) ( 256 1664 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1680 ) ( 256 1696 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1664 ) ( 256 1680 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1792 ) ( 256 2048 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1408 ) ( 256 1536 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 640 ) ( 256 896 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 128 0 ) ( 256 256 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 896 ) ( 256 1152 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1152 ) ( 256 1408 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 256 ) ( 256 640 )
+	}
+}

@@ -1,0 +1,72 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/ark/large_building {
+	width	256
+	height	1024
+	/* areaDefs */
+
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 128 768 ) ( 256 1024 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 896 ) ( 128 1024 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 32 816 ) ( 48 832 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 768 ) ( 128 896 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 640 ) ( 256 768 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 128 384 ) ( 256 640 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 384 ) ( 128 640 )
+	}
+	rect {
+		surfaceType	wood_thick
+		surfaceColor	( 1 1 1 )
+		coords ( 0 128 ) ( 256 384 )
+	}
+	rect {
+		surfaceType	stone
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 256 128 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 245 509 ) ( 251 531 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 188 868 ) ( 198 890 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 248 884 ) ( 252 913 )
+	}
+}

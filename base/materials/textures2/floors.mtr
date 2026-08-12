@@ -1,0 +1,45 @@
+material textures2/floors/metal_floor_01
+{
+	surfaceType	"metal"
+	{
+		diffusemap				textures2/floors/metal_floor_01_d.tga
+		specularmap	picmip -1	textures2/floors/metal_floor_01_s.tga
+		bumpmap		picmip -1	textures2/floors/metal_floor_01_local.tga
+		//vertexColor
+	}
+}
+
+material textures2/floors/metal_floor_02
+{
+	surfaceType	"metal"
+	{
+		diffusemap				textures2/floors/metal_floor_02_d.tga
+		specularmap	picmip -1	textures2/floors/metal_floor_02_s.tga
+		bumpmap		picmip -1	textures2/floors/metal_floor_02_local.tga
+		//vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	4,4,0,0
+	}
+}
+
+material textures2/floors/metal_floor_02_256
+{
+	surfaceType	"metal"
+	{
+		diffusemap				textures2/floors/metal_floor_02_256_d.tga
+		specularmap	picmip -1	textures2/floors/metal_floor_02_256_s.tga
+		bumpmap		picmip -1	textures2/floors/metal_floor_02_256_local.tga
+		//vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	2,2,0,0
+	}
+}
+
+
+

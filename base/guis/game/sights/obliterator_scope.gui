@@ -1,0 +1,177 @@
+
+#include <guis/game/hud/hud.include>
+#include <guis/game/sights/strogg_scope.include>
+
+gui game/sights/obliterator_scope {
+
+	properties {
+		float		zoomLevel = 0.f;
+		string		range = "";
+		float		zoomState = 0.f;
+		float		zoomCycleTransition = 1.f;
+		float		zoomCycleTransitionLerp = 1.f;
+		float		focusFactor = 0.f;
+		float		zoomCycleFocusTransitionLerp = 0.f;
+		float		flags = immediate( flags ) | GUI_FULLSCREEN;
+	}
+	events {
+		onActivate {			
+			globals.gameHud.showPostProcess = immediate( globals.gameHud.showPostProcess + 1 );
+			zoomCycleFocusTransitionLerp = transition( "1", "0", 800 );
+		}
+		onDeactivate { 
+			globals.gameHud.showPostProcess = immediate( globals.gameHud.showPostProcess - 1 );
+		}
+		onNamedEvent "onZoomCycle" {
+			zoomCycleTransitionLerp = transition( "0", "1", 200 );
+			zoomCycleFocusTransitionLerp = transition( "1", "0", 600 );
+		}
+	}
+
+	materials {
+		
+		"guis/assets/weapons/sniper/circle"		"guis/assets/weapons/sniper/circle"
+		"guis/assets/weapons/sniper/circlelines1"	"guis/assets/weapons/sniper/circlelines1"
+		"guis/assets/weapons/sniper/circlelines2"	"guis/assets/weapons/sniper/circlelines2"
+		
+		"guis/assets/vehicles/strogg/circle"		"guis/assets/vehicles/strogg/circlebracket"
+		"guis/assets/ethud/strogg/add_mapticks"		"guis/assets/ethud/strogg/add_mapticks"
+		"guis/assets/vehicles/strogg/archfill"		"guis/assets/vehicles/strogg/archlines"
+	}
+
+	_hud_materials
+	__scope_init( 0.75 )
+
+	windowDef desktop {
+		properties {
+			rect rect = 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT;
+		}
+
+
+
+		windowDef background {
+			properties {
+				rect rect = gui.borderWidth, 0, VIRTUAL_WIDTH - gui.borderWidth, VIRTUAL_HEIGHT;
+			}
+			timeline {
+				onTime 0 {	
+					gui.bgOtl3.backColor = transition( "0,0,0,0", "0.8,0.6,0.4,1", 400, "1, 0" );
+					gui.bgObl3.backColor = transition( "0,0,0,0", "0.8,0.6,0.4,1", 400, "1, 0" );
+					gui.bgOtr3.backColor = transition( "0,0,0,0", "0.8,0.6,0.4,1", 400, "1, 0" );
+					gui.bgObr3.backColor = transition( "0,0,0,0", "0.8,0.6,0.4,1", 400, "1, 0" );				
+				
+					gui.bgOtl2.rect = transition( "150,80,170,160", "95,25,225,215", 500, "0, 1" );
+					gui.bgObl2.rect = transition( "150,240,170,-160", "95,240,225,-215", 500, "0, 1" );
+					gui.bgOtr2.rect = transition( "320,80,-170,160", "320,25,-225,215", 500, "0, 1" );
+					gui.bgObr2.rect = transition( "320,240,-170,-160", "320,240,-225,-215", 500, "0, 1" );
+					
+					gui.bgOtl2.backColor = transition( "0,0,0,0", "1,1,1,1", 200, "1, 0" );
+					gui.bgObl2.backColor = transition( "0,0,0,0", "1,1,1,1", 200, "1, 0" );
+					gui.bgOtr2.backColor = transition( "0,0,0,0", "1,1,1,1", 200, "1, 0" );
+					gui.bgObr2.backColor = transition( "0,0,0,0", "1,1,1,1", 200, "1, 0" );
+					
+					gui.binobgCirc1.rect = transition( "270,200,100,80", "80,10,480,460", 500, "1, 0" );
+					gui.binobgCirc2.rect = transition( "270,200,100,80", "80,10,480,460", 400, "1, 0" );
+					
+					gui.bgOtl3.rect = transition( "70,45,144,195", "110,85,104,155", 350, "1, 0" );
+					gui.bgObl3.rect = transition( "70,240,144,-195", "110,240,104,-155", 350, "1, 0" );
+					gui.bgOtr3.rect = transition( "425,45,-144,195", "425,85,-104,155", 350, "1, 0" );
+					gui.bgObr3.rect = transition( "425,240,-144,-195", "425,240,-104,-155", 350, "1, 0" );
+	
+					
+
+				}
+			}
+			
+			__underlays( "effect" )
+		
+			windowDef bgOtl3 {
+				properties {
+					rect rect = 70,45,144,195;
+					color backColor = 0,0,0,0;
+					string material = "guis/assets/vehicles/strogg/archfill";
+				}
+
+			}
+			windowDef bgObl3 {
+				properties {
+					rect rect = 70,240,144,-195;
+					color backColor = 0,0,0,0;
+					string material = "guis/assets/vehicles/strogg/archfill";
+				}
+
+			}
+		
+			windowDef bgOtr3 {
+				properties {
+					rect rect = 425,45,-144,195;
+					color backColor = 0,0,0,0;
+					string material = "guis/assets/vehicles/strogg/archfill";
+				}
+
+			}
+		
+			windowDef bgObr3 {
+				properties {
+					rect rect = 425,240,-144,-195;
+					color backColor = 0,0,0,0;
+					string material = "guis/assets/vehicles/strogg/archfill";
+				}
+
+			}	
+		
+			windowDef bgOtl2 {
+				properties {
+					rect rect = 150,80,170,160;
+					color backColor = 1,1,1,0;
+					string material = "guis/assets/vehicles/strogg/circle";
+				}
+
+			}
+			windowDef bgObl2 {
+				properties {
+					rect rect = 150,240,170,-160;
+					color backColor = 1,1,1,0;
+					string material = "guis/assets/vehicles/strogg/circle";
+				}
+
+			}
+			windowDef bgOtr2 {
+				properties {
+					rect rect = 320,80,-170,160;
+					color backColor = 1,1,1,0;
+					string material = "guis/assets/vehicles/strogg/circle";
+				}
+
+			}
+			windowDef bgObr2 {
+				properties {
+					rect rect = 320,240,-170,-160;
+					color backColor = 1,1,1,0;
+					string material = "guis/assets/vehicles/strogg/circle";
+				}
+
+			}
+	
+	
+			windowDef binobgCirc1 {
+				properties {
+					rect rect = 	270,200,100,80;
+					color backColor = 0.1,0.02,0,0.8;
+					string material = "guis/assets/weapons/sniper/circlelines1";
+					float	rotation = ( player.yaw ) / 5;
+				}
+
+			}
+	
+			windowDef binobgCirc2 {
+				properties {
+					rect rect = 270, 200, 100, 80;
+					color backColor =  0.2, 0.05, 0, 0.8;
+					string material = "guis/assets/weapons/sniper/circlelines2";
+					float rotation = ( player.yaw * 2 ) + ( ( gui.zoomState - ( ( 1 - gui.zoomCycleTransitionLerp ) * gui.zoomCycleTransition ) ) * 48 );
+				}
+			}
+		}
+	}
+}

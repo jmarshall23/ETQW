@@ -1,0 +1,592 @@
+
+object vehicle_violator {
+	void			preinit();
+	void			init();
+	void			destroy();
+	void			syncFields();
+
+	void			vBomberAttack( vector target, vector attackDir, float attackHeight, entity attacker );
+	void			Update();
+
+	void			CreateFiringMarker();
+	void			ClearFiringMarker();
+
+	void			BeamSounds();
+
+	void			Idle();
+
+	vector			startPos;
+	vector			beamDir;
+
+	float			beamStartTime;
+	float			beamDuration;
+	float			beamStartupDuration;
+	float			beamCoreStartupDuration;
+	float			beamFizzleDuration;
+	float			beamEffectFizzleDuration;
+	
+	float			lastGroundEffectsTime;
+
+	float			beamRotationSpeed;
+
+	entity			owner;
+	
+	float			movementTableIndex;
+
+	boolean			beamSoundsThread;
+
+	object			beamStartEffect;
+	boolean			beamStartEffectPlaying;
+
+	object			beamEffect;
+	boolean			beamEffectPlaying;
+	
+	vector			targetBase;
+
+	entity			firingMarker;
+	
+	float			splashDamage;
+
+	float			beamAreaLength;
+	
+	// marker models
+	void			CreateDirectionMarkers( vector startPosition, vector endPosition );
+	void			FadeDirectionMarkers( float duration, float start, float end );
+	void			RemoveDirectionMarkers();
+	void			PulseDirectionMarkers( float currentTime );
+	void			DirectionMarkerThread();
+	
+	boolean				directionMarkerDrawn;
+	boolean				directionMarkerFaded;
+	float				directionMarkerStartTime;
+	direction_marker	directionMarker0;
+	direction_marker	directionMarker1;
+	direction_marker	directionMarker2;
+	direction_marker	directionMarker3;
+	direction_marker	directionMarker4;
+	direction_marker	directionMarker5;
+	direction_marker	directionMarker6;
+	direction_marker	directionMarker7;
+	direction_marker	directionMarker8;
+	direction_marker	directionMarker9;
+	direction_marker	directionMarker10;
+	direction_marker	directionMarker11;
+	direction_marker	directionMarker12;
+	direction_marker	directionMarker13;
+	direction_marker	directionMarker14;
+	direction_marker	directionMarker15;
+	direction_marker	directionMarker16;
+	direction_marker	directionMarker17;
+	direction_marker	directionMarker18;
+	direction_marker	directionMarker19;
+}
+
+void vehicle_violator::syncFields() {
+	syncBroadcast( "startPos" );
+	syncBroadcast( "beamDir" );
+	syncBroadcast( "beamStartTime" );
+	syncBroadcast( "owner" );
+}
+
+void vehicle_violator::preinit() {
+	beamStartTime		= -1;
+	
+	lastGroundEffectsTime = -1.f;
+
+	beamStartupDuration			= getFloatKey( "beam_startup_duration" );
+	beamCoreStartupDuration		= getFloatKey( "beam_core_startup_duration" );
+	beamDuration				= getFloatKey( "beam_duration" );
+	beamFizzleDuration			= getFloatKey( "beam_fizzle_duration" );
+	beamEffectFizzleDuration	= getFloatKey( "beam_effect_fizzle_duration" );
+	
+	beamRotationSpeed			= getFloatKey( "beam_rotation_speed" );
+	
+	splashDamage				= GetDamage( "damage_violator_splash" );
+
+	beamStartEffectPlaying		= false;
+	beamEffectPlaying			= false;
+
+	beamAreaLength				= getFloatKey( "beam_area_length" );
+
+	movementTableIndex	= GetTable( "exp_x2" );
+}
+
+void vehicle_violator::init() {
+	hide();
+	setState( "Idle" );
+}
+
+void vehicle_violator::Idle() {
+	while( true ) {
+		sys.waitFrame();
+
+		Update();
+	}
+}
+
+void vehicle_violator::vBomberAttack( vector target, vector attackDir, float attackHeight, entity attacker ) {
+	float	arrivalDelay;
+	float	arrivalDelayRandom;
+	vector	dir;
+	vector	endPos;
+	
+	targetBase				= target;
+	targetBase_z			= attackHeight;
+
+	owner					= attacker;
+	setGameTeam( attacker.getGameTeam() );
+
+	arrivalDelay			= getFloatKey( "arrivaldelay" );
+	arrivalDelayRandom		= getFloatKey( "arrivaldelay_random" );
+
+	if( arrivalDelayRandom < arrivalDelay ) {
+		arrivalDelayRandom	= arrivalDelay;
+	}
+	arrivalDelay			= arrivalDelay + sys.random( arrivalDelayRandom );
+
+	beamDuration			= getFloatKey( "beam_duration" );
+
+	dir = sys.vecNormalize( attackDir );
+
+	startPos = target - dir * 0.5f * beamAreaLength;
+	sys.tracePoint( target, startPos, MASK_SOLID | MASK_OPAQUE, $null_entity );
+	startPos = sys.getTraceEndPos();
+
+	endPos = target + dir * beamAreaLength;
+	sys.tracePoint( target, endPos, MASK_SOLID | MASK_OPAQUE, $null_entity );
+	endPos = sys.getTraceEndPos();
+
+	// set proper flight height
+	endPos_z	= attackHeight + 3072.f;
+	startPos_z	= attackHeight + 3072.f;
+
+	beamDir = endPos - startPos;
+
+	beamStartTime = sys.getTime() + arrivalDelay + beamStartupDuration;
+
+	// initalise position
+	setOrigin( startPos );
+	
+	CreateFiringMarker();
+}
+
+void vehicle_violator::Update() {
+	float	currentTime = sys.getTime();
+	float	frac;
+	vector	currentPos;
+	vector	angles;
+	object	traceObject;
+	vector	traceEndPos;
+	vector	traceNormal;
+	entity	collisionEnt;
+
+	if ( beamStartTime < 0 || currentTime < beamStartTime - beamStartupDuration ) {
+		return;
+	}
+
+	if ( currentTime < beamStartTime ) {
+		frac = 0.0f;
+	} else {
+		frac = ( currentTime - beamStartTime ) / beamDuration;
+		
+		if ( !directionMarkerFaded ) {
+			if ( frac > 0.6f ) {
+				directionMarkerFaded = true;
+				FadeDirectionMarkers( 0.5f, 1.0f, 0.0f );
+			}
+		}
+		
+		if ( frac >= 1.0f ) {
+			if ( currentTime - beamStartTime - beamDuration > 6 ) {
+				// give it some time for the particles to die
+				if ( beamStartEffect != $null_entity ) {
+					beamStartEffect.remove();
+					beamStartEffect = $null_entity;
+				}
+				if ( beamEffect != $null_entity ) {
+					beamEffect.remove();
+					beamEffect = $null_entity;
+				}
+
+				if ( !sys.isClient() ) {
+					remove();
+				}
+
+				return;
+			}
+		}
+	}
+	
+	if ( frac < 1.0f ) {
+		CreateDirectionMarkers( startPos, startPos + beamDir );
+		
+		frac = sys.getTableValueExact( movementTableIndex, frac );
+	}
+
+	currentPos = startPos + ( beamDir * frac );
+
+	setOrigin( currentPos );
+
+	sys.tracePoint( currentPos, currentPos + ( vec3_down * MAX_WORLD_SIZE ), MASK_SHOT_RENDERMODEL, $null_entity );
+	string surfaceTypeName = sys.getTraceSurfaceType();
+	traceEndPos = sys.getTraceEndPos();
+	traceNormal = sys.getTraceNormal();
+	collisionEnt = sys.getTraceEntity();
+
+	if( !beamSoundsThread ) {
+		beamSoundsThread = true;
+		thread BeamSounds();
+	}
+
+	// beam visualisation
+
+	if ( currentTime < beamStartTime ) {
+		// beam start effect
+		if ( beamStartEffect == $null_entity ) {
+			beamStartEffect = spawnClientEffect( "fx_beam_start" );
+			if ( beamStartEffect != $null_entity ) {
+				beamStartEffectPlaying = true;
+			}
+		}
+
+		if ( currentTime > ( beamStartTime - beamCoreStartupDuration ) ) {
+			if ( beamEffect == $null_entity ) {
+				beamEffect = spawnClientEffect( "fx_beam" );
+				if ( beamEffect != $null_entity ) {
+					beamEffectPlaying = true;
+
+					beamEffect.setEffectLooping( 1 );
+				}
+			}
+		}
+	} else {
+		if ( currentTime > ( beamStartTime + beamDuration - beamEffectFizzleDuration ) ) {			// Xian Hack
+			if ( beamEffectPlaying ) {
+				beamEffect.endEffect( false );
+				beamEffectPlaying = false;
+			}
+		} else {
+			if ( beamStartEffectPlaying ) {
+				beamStartEffect.endEffect( false );
+				beamStartEffectPlaying = false;
+			}
+
+		/*	if ( beamEffect == $null_entity ) {
+				beamEffect = spawnClientEffect( "fx_beam" );
+				beamEffect.setEffectLooping( 1 );
+				beamEffect.setAngles( sys.vecToAngles( vec3_up ) );
+			}*/
+		}
+	}
+	
+	if ( beamStartEffect != $null_entity ) {
+		beamStartEffect.setOrigin( traceEndPos );
+		
+		float acceleration = beamRotationSpeed / beamStartupDuration;
+		float time = currentTime - ( beamStartTime - beamStartupDuration );
+		
+		angles_x = -90;
+		angles_y = 0.5 * acceleration * time * time;
+		angles_z = 0;
+		
+		beamStartEffect.setAngles( angles );
+	}
+	
+	if ( beamEffect != $null_entity ) {
+		beamEffect.setOrigin( traceEndPos );
+		
+		angles_x = -90;
+		angles_y = beamRotationSpeed * currentTime;
+		angles_z = 0;
+
+		beamEffect.setAngles( angles );
+		
+		if ( sys.getTime() >= ( lastGroundEffectsTime + 0.3f ) ) {
+			sys.tracePoint( currentPos, currentPos + ( vec3_down * MAX_WORLD_SIZE ), MASK_SHOT_RENDERMODEL|CONTENTS_WATER, $null_entity );
+			string fxsurfaceTypeName = sys.getTraceSurfaceType();
+			vector fxtraceEndPos = sys.getTraceEndPos();
+			vector fxtraceNormal = sys.getTraceNormal();
+			
+			float beamTime = beamStartTime + ( beamDuration + 3.5 ) - beamFizzleDuration;		// Xian Hack
+			if ( currentTime < beamTime ) {
+				playOriginEffect( "fx_groundeffect", fxsurfaceTypeName, fxtraceEndPos, fxtraceNormal, 0 );
+				lastGroundEffectsTime = sys.getTime();
+			}
+		}
+		
+	}
+
+	if ( !sys.isClient() ) {
+		float damageScale;
+
+		float fizzleStartTime = beamStartTime + beamDuration - beamFizzleDuration;
+
+		if ( currentTime < beamStartTime ) {
+			damageScale = 0.0f;
+		} else if ( currentTime > fizzleStartTime ) {
+			damageScale = 1.0f - ( ( currentTime - fizzleStartTime ) / beamFizzleDuration );
+		} else {
+			damageScale = 1.0f;
+		}
+
+		if ( damageScale > 0.0f ) {
+			if ( collisionEnt != $null_entity ) {
+				collisionEnt.applyDamage( self, owner, vec3_down, GetDamage( "damage_violator" ), damageScale, traceObject );
+			}
+			sys.applyRadiusDamage( traceEndPos + ( vec3_up * 64.0f ), self, owner, $null_entity, self, splashDamage, damageScale, 1.f );
+		}
+	}
+}
+
+void vehicle_violator::destroy() {
+	ClearFiringMarker();
+
+	if ( beamStartEffect != $null_entity ) {
+		beamStartEffect.remove();
+	}
+	if ( beamEffect != $null_entity ) {
+		beamEffect.remove();
+	}
+
+	RemoveDirectionMarkers();
+}
+
+void vehicle_violator::BeamSounds() {
+	boolean	playingBeamSound;
+
+	float beamTime = sys.getTime() + ( beamDuration + 3.5 ) - beamFizzleDuration;		// Xian Hack
+
+	while ( sys.getTime() < beamTime ) {
+		sys.waitFrame();
+
+		if( !playingBeamSound ) {
+			playingBeamSound = true;
+			startSound( "snd_beam_start", SND_VEHICLE );
+		}
+	}
+
+	startSound( "snd_beam_stop", SND_VEHICLE );
+}
+
+void vehicle_violator::CreateFiringMarker() {
+	if ( !sys.isClient() ) {
+		firingMarker = G_CreateFiringMarker( self, firingMarker, targetBase );
+	}
+}
+
+void vehicle_violator::ClearFiringMarker() {
+	if ( firingMarker != $null_entity ) {
+		thread G_DelayRemoveEntity( firingMarker, 5.f );
+		firingMarker = $null_entity;
+	}
+}
+
+void vehicle_violator::CreateDirectionMarkers( vector startPosition, vector endPosition ) {
+	if ( directionMarkerDrawn ) {
+		return;
+	}
+	
+	directionMarkerDrawn = true;
+	directionMarkerStartTime = sys.getTime();
+
+	entity p = sys.getLocalViewPlayer();
+	if ( p == $null_entity ) {
+		return;
+	}
+
+	if ( getEntityAllegiance( p ) != TA_FRIEND ) {
+		return;
+	}
+
+	string entityDef = getKey( "def_directionmarker" );
+	if ( entityDef == "" ) {
+		return;
+	}
+
+	vector targetDir = endPosition - startPosition;
+	vector basePosition = startPosition + 0.5f * targetDir;
+	targetDir = sys.vecNormalize( targetDir );
+
+	vector half;
+	float halfLength;
+
+	basePosition_z = startPosition_z;
+
+	// calculate marker start position
+	half = basePosition - startPosition;
+	halfLength = min( sys.vecLength( half ), 2048.0f );
+	
+	vector markerStart = basePosition - halfLength * targetDir;
+
+	// calculate marker end position
+	half = endPosition - basePosition;
+	halfLength = min( sys.vecLength( half ), 2048.0f );
+	
+	vector markerEnd = basePosition + halfLength * targetDir;
+
+	float markerLength = sys.vecLength( markerEnd - markerStart );
+	float numMarkers = rint( markerLength / 256.0f ) + 1.0f;
+	
+	vector targetStep = targetDir * ( markerLength / numMarkers );
+	vector targetPos = markerStart;
+
+
+	// spawn direction markers
+	if ( numMarkers > 0.0f ) {
+		directionMarker0 = new direction_marker;
+		directionMarker0.Create( 0, entityDef, targetPos, targetDir );
+	}
+	
+#define CREATE_DIRECTION_MARKER( index )											\
+	if ( numMarkers > (index) ) {													\
+		targetPos += targetStep;													\
+		directionMarker##index = new direction_marker;								\
+		directionMarker##index.Create( (index), entityDef, targetPos, targetDir );	\
+	}
+	
+	CREATE_DIRECTION_MARKER( 1 )
+	CREATE_DIRECTION_MARKER( 2 )
+	CREATE_DIRECTION_MARKER( 3 )
+	CREATE_DIRECTION_MARKER( 4 )
+	CREATE_DIRECTION_MARKER( 5 )
+	CREATE_DIRECTION_MARKER( 6 )
+	CREATE_DIRECTION_MARKER( 7 )
+	CREATE_DIRECTION_MARKER( 8 )
+	CREATE_DIRECTION_MARKER( 9 )
+	CREATE_DIRECTION_MARKER( 10 )
+	CREATE_DIRECTION_MARKER( 11 )
+	CREATE_DIRECTION_MARKER( 12 )
+	CREATE_DIRECTION_MARKER( 13 )
+	CREATE_DIRECTION_MARKER( 14 )
+	CREATE_DIRECTION_MARKER( 15 )
+	CREATE_DIRECTION_MARKER( 16 )
+	CREATE_DIRECTION_MARKER( 17 )
+	CREATE_DIRECTION_MARKER( 18 )
+	CREATE_DIRECTION_MARKER( 19 )
+	
+#undef CREATE_DIRECTION_MARKER
+
+	FadeDirectionMarkers( 0.3f, 0.0f, 1.0f );
+	PulseDirectionMarkers( 0.0f );	// force an update
+
+	thread DirectionMarkerThread();
+}
+
+void vehicle_violator::FadeDirectionMarkers( float duration, float start, float end ) {
+	if ( !directionMarkerDrawn ) {
+		return;
+	}
+	
+	float currentTime = sys.getTime() - directionMarkerStartTime;
+	
+#define FADE_DIRECTION_MARKER( index )										\
+	if ( directionMarker##index != $null ) {								\
+		directionMarker##index.Fade( currentTime, duration, start, end );	\
+	}
+
+	FADE_DIRECTION_MARKER( 0 )
+	FADE_DIRECTION_MARKER( 1 )
+	FADE_DIRECTION_MARKER( 2 )
+	FADE_DIRECTION_MARKER( 3 )
+	FADE_DIRECTION_MARKER( 4 )
+	FADE_DIRECTION_MARKER( 5 )
+	FADE_DIRECTION_MARKER( 6 )
+	FADE_DIRECTION_MARKER( 7 )
+	FADE_DIRECTION_MARKER( 8 )
+	FADE_DIRECTION_MARKER( 9 )
+	FADE_DIRECTION_MARKER( 10 )
+	FADE_DIRECTION_MARKER( 11 )
+	FADE_DIRECTION_MARKER( 12 )
+	FADE_DIRECTION_MARKER( 13 )
+	FADE_DIRECTION_MARKER( 14 )
+	FADE_DIRECTION_MARKER( 15 )
+	FADE_DIRECTION_MARKER( 16 )
+	FADE_DIRECTION_MARKER( 17 )
+	FADE_DIRECTION_MARKER( 18 )
+	FADE_DIRECTION_MARKER( 19 )
+
+#undef FADE_DIRECTION_MARKER
+}
+
+void vehicle_violator::RemoveDirectionMarkers() {
+	sys.killThread( "DirectionMarkerThread_" + getName() );
+
+	directionMarkerDrawn = false;
+	
+#define DELETE_DIRECTION_MARKER( index )		\
+	if ( directionMarker##index != $null ) {	\
+		delete directionMarker##index;			\
+		directionMarker##index = $null;			\
+	}
+	
+	DELETE_DIRECTION_MARKER( 0 )
+	DELETE_DIRECTION_MARKER( 1 )
+	DELETE_DIRECTION_MARKER( 2 )
+	DELETE_DIRECTION_MARKER( 3 )
+	DELETE_DIRECTION_MARKER( 4 )
+	DELETE_DIRECTION_MARKER( 5 )
+	DELETE_DIRECTION_MARKER( 6 )
+	DELETE_DIRECTION_MARKER( 7 )
+	DELETE_DIRECTION_MARKER( 8 )
+	DELETE_DIRECTION_MARKER( 9 )
+	DELETE_DIRECTION_MARKER( 10 )
+	DELETE_DIRECTION_MARKER( 11 )
+	DELETE_DIRECTION_MARKER( 12 )
+	DELETE_DIRECTION_MARKER( 13 )
+	DELETE_DIRECTION_MARKER( 14 )
+	DELETE_DIRECTION_MARKER( 15 )
+	DELETE_DIRECTION_MARKER( 16 )
+	DELETE_DIRECTION_MARKER( 17 )
+	DELETE_DIRECTION_MARKER( 18 )
+	DELETE_DIRECTION_MARKER( 19 )
+	
+#undef DELETE_DIRECTION_MARKER
+}
+
+void vehicle_violator::PulseDirectionMarkers( float currentTime ) {
+	if ( !directionMarkerDrawn ) {
+		return;
+	}
+
+	float pulseTime = currentTime - directionMarkerStartTime;
+
+#define UPDATE_DIRECTION_MARKER( index )			\
+	if ( directionMarker##index != $null ) {		\
+		directionMarker##index.Update( pulseTime );	\
+	}
+
+	UPDATE_DIRECTION_MARKER( 0 )
+	UPDATE_DIRECTION_MARKER( 1 )
+	UPDATE_DIRECTION_MARKER( 2 )
+	UPDATE_DIRECTION_MARKER( 3 )
+	UPDATE_DIRECTION_MARKER( 4 )
+	UPDATE_DIRECTION_MARKER( 5 )
+	UPDATE_DIRECTION_MARKER( 6 )
+	UPDATE_DIRECTION_MARKER( 7 )
+	UPDATE_DIRECTION_MARKER( 8 )
+	UPDATE_DIRECTION_MARKER( 9 )
+	UPDATE_DIRECTION_MARKER( 10 )
+	UPDATE_DIRECTION_MARKER( 11 )
+	UPDATE_DIRECTION_MARKER( 12 )
+	UPDATE_DIRECTION_MARKER( 13 )
+	UPDATE_DIRECTION_MARKER( 14 )
+	UPDATE_DIRECTION_MARKER( 15 )
+	UPDATE_DIRECTION_MARKER( 16 )
+	UPDATE_DIRECTION_MARKER( 17 )
+	UPDATE_DIRECTION_MARKER( 18 )
+	UPDATE_DIRECTION_MARKER( 19 )
+
+#undef UPDATE_DIRECTION_MARKER
+}
+
+void vehicle_violator::DirectionMarkerThread() {
+	while ( true ) {
+		if ( directionMarkerDrawn ) {
+			float currentTime = sys.getTime();
+
+			PulseDirectionMarkers( currentTime );
+		}
+		
+		sys.waitFrame();
+	}
+}

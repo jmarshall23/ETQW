@@ -1,0 +1,31 @@
+
+#include <guis/game/deployment/deployment.include>
+
+
+gui game/deployment/constructor {
+	properties {
+		float flags = immediate( flags ) | GUI_FULLSCREEN;
+	}
+		
+	materials {
+		"ap" 	"guis/assets/deploy/icons/strogg_ap"
+		"av" 	"guis/assets/deploy/icons/strogg_av"
+		"am" 	"guis/assets/deploy/icons/strogg_am"	
+	}
+	_hud_materials
+	_deploy_properties	
+
+	windowDef desktop {	
+		windowDef buttonParent {
+			properties {
+				rect	rect = CENTER_X - ( rect.w * 0.5 ), SCREEN_HEIGHT - 68, 246, 68;
+			}
+			_select( ap, "game/deploy/apt_long",  "guis/game/deploy/msg_apt_strogg", 1, 0 )
+			_select( av, "game/deploy/avt_long",  "guis/game/deploy/msg_avt_strogg", 2, 80 )
+			_select( am, "game/deploy/shield",  "guis/game/deploy/msg_amt_strogg", 3, 160 )
+		}
+		_deploy_info( true )
+		_instructions
+		_warning
+	}
+}

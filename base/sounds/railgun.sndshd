@@ -1,0 +1,147 @@
+sound sounds/weapons/railgun/init {
+
+	minDistance	3
+	maxDistance	15
+	volume		-10
+
+	sounds/weapons/railgun/init_01.wav
+}
+
+sound sounds/weapons/railgun/raise {
+
+	minDistance	1
+	maxDistance	5
+	volume		-5
+	
+	sounds/weapons/railgun/raise_01.wav
+}
+
+sound sounds/weapons/railgun/idle_hum {
+	compression wav
+
+	volume -15
+	maxDistance	15
+	
+	looping
+	leadin
+	sounds/weapons/railgun/idle_hum_03_start.wav
+	sounds/weapons/railgun/idle_hum_03_loop.wav
+}
+
+sound sounds/weapons/railgun/charge {
+
+	volume -5
+	maxDistance 15
+
+	sounds/weapons/railgun/charge.wav
+}
+
+sound sounds/weapons/railgun/unzoom {
+
+	minDistance	3
+	maxDistance	15
+	volume		-15
+
+	sounds/weapons/railgun/unzoom_01.wav
+}
+
+sound sounds/weapons/railgun/zoomin {
+
+	minDistance	3
+	maxDistance	15
+	volume		-10
+
+	sounds/weapons/railgun/zoomin_01.wav
+}
+
+sound sounds/weapons/railgun/zoomout {
+
+	minDistance	3
+	maxDistance	15
+	volume		-10
+
+	sounds/weapons/railgun/zoomout_01.wav
+}
+
+sound sounds/weapons/railgun/fire {
+	compression wav
+
+	maxDistance 75
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/railgun/fire_03a.wav
+}
+
+sound sounds/weapons/railgun/fire/far {
+	compression wav
+
+	volume		-8
+//	farDistance 25
+	maxDistance 200
+//	antiPrivate
+	occlude_once
+
+	sounds/weapons/railgun/fire_03_dista.wav
+}
+
+sound sounds/weapons/railgun/fire/local {
+	compression wav
+
+	unclamped
+	private
+	
+	occlude_once
+
+	//sounds/weapons/railgun/fire_local_03.wav
+	sounds/weapons/railgun/fire_local_03a.wav
+}
+
+sound sounds/weapons/railgun/fire/local_medium {
+	compression wav
+
+	unclamped
+	volume	-2
+	private
+	
+	occlude_once
+
+	//sounds/weapons/railgun/fire_local_03.wav
+	sounds/weapons/railgun/fire_local_03a.wav
+}
+
+sound sounds/weapons/railgun/fire/local_low {
+	compression wav
+
+	unclamped
+	volume	-5
+	private
+	
+	occlude_once
+
+	//sounds/weapons/railgun/fire_local_03.wav
+	sounds/weapons/railgun/fire_local_03a.wav
+}
+
+sound sounds/weapons/railgun/reload {
+
+	maxDistance 20
+
+	sounds/weapons/railgun/reload.wav
+}
+
+sound sounds/weapons/railgun/zoom_in {
+
+	volume -6
+	maxDistance 5
+
+	sounds/weapons/railgun/zoom_in.wav
+}
+
+sound sounds/weapons/railgun/zoom_out {
+
+	volume -6
+	maxDistance 5
+
+	sounds/weapons/railgun/zoom_out.wav
+}

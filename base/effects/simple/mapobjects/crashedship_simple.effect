@@ -1,0 +1,569 @@
+effect effects/mapobjects/crashedship/exhaust_simple
+{
+	size	986
+
+	emitter "unnamed1"
+	{
+		duration	1,1
+		count		4,4
+		attenuateEmitter
+		attenuation	1000,3000
+
+		sprite
+		{
+			duration	4,8
+			blend	add
+			material	"particles/penta/hornetsmoke2"
+			windDeviationAngle 4.000000
+			gravity		-0.05,-0.05
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,30,0 }
+				velocity { box 75,0,0,125,0,0 }
+				acceleration { box -10,-10,-10,10,10,10 }
+				size { line 40,40,60,60 }
+				tint { line 1,0.517647,0.0352941,0,0,0 }
+				fade { line 0.05,0.25 }
+				windStrength { line 0,1.25 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 count 0.25,0.25 }
+				tint { envelope lightningofstable }
+				fade { envelope jrad_smokefade }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 150,150,300,300 }
+				tint { line 0,0,0,0.74902,0.74902,0.74902 }
+				rotate { point 0.166667 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/mapobjects/crashedship/fire_simple
+{
+	size	520
+
+	emitter "smoke 2"
+	{
+		duration	4,4
+		count		1,1
+		inverseDrawOrder
+		attenuation	4096,6144
+
+		sprite
+		{
+			duration	10,20
+			material	"particles/smoke/normal_smoke_puff01"
+			windDeviationAngle 15.000000
+			gravity		-0.02,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 50,0,0,100,0,0 }
+				size { box 50,50,100,100 }
+				tint { line 0.305882,0.266667,0.188235,0.176471,0.176471,0.137255 }
+				fade { point 0 attenuate }
+				windStrength { line 0.2,0.04 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 count 0.25,0.25 }
+				tint { envelope jrad_concavefade }
+				fade { envelope fastinslowout }
+				offset { envelope exp_1minusx/x2 }
+				rotate { envelope exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { box 500,500,250,250 }
+				tint { line 0.168627,0.121569,0.0901961,0.427451,0.388235,0.360784 }
+				fade { line 0.15,0.45 attenuate }
+				offset { line 50,0,0,150,0,0 }
+				rotate { box -0.166667,0.166667 }
+			}
+			lineHit
+		}
+	}
+	emitter "flames 2"
+	{
+		start		0,1
+		duration	4,4
+		count		4,4
+		locked
+		attenuateEmitter
+		attenuation	2048,4096
+
+		sprite
+		{
+			duration	0.5,1.5
+			persist
+			material	"particles/penta/flames"
+			windDeviationAngle 180.000000
+			gravity		-0.06,-0.04
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -10,-75,-75,10,75,75 cone }
+				velocity { box 0,-5,-5,15,5,5 }
+				size { line 15,30,30,60 }
+				tint { line 1,0.501961,0.247059,0.231373,0,0 }
+				fade { point 0 attenuate }
+			}
+
+			motion
+			{
+				size { envelope exp_x2 }
+				tint { envelope rr2_concavefade_start_at_1 }
+				fade { envelope fastinslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 20,40,40,80 }
+				tint { point 0.0901961,0,0 }
+				fade { line 1,0.5 attenuate }
+				rotate { point 0 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "flames 3"
+	{
+		duration	4,4
+		count		4,4
+		locked
+		attenuateEmitter
+		attenuation	2048,4096
+
+		sprite
+		{
+			duration	0.5,1.5
+			persist
+			material	"particles/penta/flames2"
+			windDeviationAngle 180.000000
+			gravity		-0.06,-0.04
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -10,-75,-75,10,75,75 cone }
+				velocity { box 0,-5,-5,5,5,5 }
+				size { line 5,10,10,20 }
+				tint { line 1,0.501961,0.247059,0.203922,0,0 }
+				fade { point 0 attenuate }
+			}
+
+			motion
+			{
+				size { envelope exp_x2 }
+				tint { envelope rr2_concavefade_start_at_1 }
+				fade { envelope fastinslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { box 30,60,60,90 }
+				tint { point 0.0901961,0,0 }
+				fade { point 1 attenuate }
+				rotate { point 0 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/mapobjects/crashedship/haze_simple
+{
+	size	0
+
+}
+
+effect effects/mapobjects/crashedship/fire2_simple
+{
+	size	520
+
+	emitter "smoke 2"
+	{
+		duration	4,4
+		count		1,1
+		inverseDrawOrder
+		attenuation	4096,6144
+
+		sprite
+		{
+			duration	10,20
+			material	"particles/smoke/normal_smoke_puff01"
+			windDeviationAngle 15.000000
+			gravity		-0.02,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 50,0,0,100,0,0 }
+				size { box 50,50,100,100 }
+				tint { line 0.501961,0.25098,0,0.176471,0.176471,0.137255 }
+				fade { point 0 attenuate }
+				windStrength { line 0.2,0.04 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 count 0.25,0.25 }
+				tint { envelope jrad_concavefade }
+				fade { envelope fastinslowout }
+				offset { envelope exp_1minusx/x2 }
+				rotate { envelope exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { box 500,500,250,250 }
+				tint { line 0.164706,0.121569,0.0901961,0.427451,0.384314,0.356863 }
+				fade { line 0.15,0.55 attenuate }
+				offset { line 50,0,0,150,0,0 }
+				rotate { box -0.166667,0.166667 }
+			}
+			lineHit
+		}
+	}
+	emitter "flames 2"
+	{
+		start		0,1
+		duration	4,4
+		count		4,4
+		locked
+		attenuateEmitter
+		attenuation	2048,4096
+
+		sprite
+		{
+			duration	0.5,1.5
+			persist
+			material	"particles/penta/flames"
+			windDeviationAngle 180.000000
+			gravity		-0.06,-0.04
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -10,-75,-75,10,75,75 cone }
+				velocity { box 0,-5,-5,15,5,5 }
+				size { line 30,45,45,120 }
+				tint { line 1,0.501961,0.247059,0.231373,0,0 }
+				fade { point 0 attenuate }
+			}
+
+			motion
+			{
+				size { envelope exp_x2 }
+				tint { envelope rr2_concavefade_start_at_1 }
+				fade { envelope fastinslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 40,80,80,160 }
+				tint { point 0.0901961,0,0 }
+				fade { line 1,0.5 attenuate }
+				rotate { point 0 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "flames 3"
+	{
+		duration	4,4
+		count		4,4
+		locked
+		attenuateEmitter
+		attenuation	2048,4096
+
+		sprite
+		{
+			duration	0.5,1.5
+			persist
+			material	"particles/penta/flames2"
+			windDeviationAngle 180.000000
+			gravity		-0.06,-0.04
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -10,-75,-75,10,75,75 cone }
+				velocity { box 0,-5,-5,5,5,5 }
+				size { line 10,30,30,60 }
+				tint { line 1,0.501961,0.247059,0.203922,0,0 }
+				fade { point 0 attenuate }
+			}
+
+			motion
+			{
+				size { envelope exp_x2 }
+				tint { envelope rr2_concavefade_start_at_1 }
+				fade { envelope fastinslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { box 90,180,180,260 }
+				tint { point 0.0901961,0,0 }
+				fade { point 1 attenuate }
+				rotate { point 0 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/mapobjects/crashedship/sparks_simple
+{
+	size	211
+
+	cutOffDistance	1000
+
+	emitter "spark flash"
+	{
+		duration	0.1,0.1
+		count		2,2
+		orientateIdentity
+		attenuateEmitter
+		attenuation	500,1000
+
+		sprite
+		{
+			duration	0.08,0.08
+			blend	add
+			material	"textures/particles/sparks/sparkflash_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { box 5,5,15,15 }
+				tint { point 1,0.501961,0.247059 }
+				fade { line 0.3,1 }
+				rotate { box 0,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 30,30 }
+			}
+			lineHit
+		}
+	}
+	spawner "sparks_tiny"
+	{
+		count		2,10
+		useMaterialColor
+		attenuateEmitter
+		attenuation	250,350
+
+		line
+		{
+			duration	0.6,0.8
+			blend	add
+			generatedLine
+			persist
+			material	"textures/particles/sparks/spark03"
+			gravity		0.5,0.5
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { line 5,-1,-1,10,1,1 cone }
+				velocity { box -400,-100,-100,400,100,100 }
+				acceleration { point 50,50,50 }
+				friction { point 0.0001,0,0 }
+				size { box 1,2 }
+				tint { point 1,0.501961,0.247059 }
+				offset { point -8,0,0 }
+				length { box 3,0,0,8,0,0 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+				length { envelope exp_1minusx/x2 count 2.5,1,1 }
+			}
+
+			end
+			{
+				size { point 4 }
+				length { box 10,0,0,20,0,0 }
+			}
+			lineHit
+		}
+	}
+	spawner "flash"
+	{
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	500,1000
+
+		sprite
+		{
+			duration	0.125,0.25
+			blend	add
+			persist
+			material	"textures/particles/sparks/sparkflash03"
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -10,-15,-15,10,15,15 }
+				velocity { box 0,-5,-5,5,5,5 }
+				size { box 80,80,140,140 }
+				tint { line 1,0.501961,0.25098,0.501961,0.25098,0 }
+				fade { line 0.1,0.7 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1 offset 0.1,0.1,0.1 }
+			}
+
+			end
+			{
+				tint { point 0.415686,0.207843,0 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/mapobjects/crashedship/fire_nosmoke_simple
+{
+	size	167
+
+	emitter "flames 2"
+	{
+		start		0,1
+		duration	4,4
+		count		4,4
+		locked
+		attenuateEmitter
+		attenuation	2048,4096
+
+		sprite
+		{
+			duration	0.5,1.5
+			persist
+			material	"particles/penta/flames"
+			windDeviationAngle 180.000000
+			gravity		-0.06,-0.04
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -10,-75,-75,10,75,75 cone }
+				velocity { box 0,-5,-5,15,5,5 }
+				size { line 15,30,30,60 }
+				tint { line 1,0.501961,0.247059,0.231373,0,0 }
+				fade { point 0 attenuate }
+			}
+
+			motion
+			{
+				size { envelope exp_x2 }
+				tint { envelope rr2_concavefade_start_at_1 }
+				fade { envelope fastinslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 20,40,40,80 }
+				tint { point 0.0901961,0,0 }
+				fade { line 1,0.5 attenuate }
+				rotate { point 0 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "flames 3"
+	{
+		duration	4,4
+		count		4,4
+		locked
+		attenuateEmitter
+		attenuation	2048,4096
+
+		sprite
+		{
+			duration	0.5,1.5
+			persist
+			material	"particles/penta/flames2"
+			windDeviationAngle 180.000000
+			gravity		-0.06,-0.04
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -10,-75,-75,10,75,75 cone }
+				velocity { box 0,-5,-5,5,5,5 }
+				size { line 5,10,10,20 }
+				tint { line 1,0.501961,0.247059,0.203922,0,0 }
+				fade { point 0 attenuate }
+			}
+
+			motion
+			{
+				size { envelope exp_x2 }
+				tint { envelope rr2_concavefade_start_at_1 }
+				fade { envelope fastinslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { box 30,60,60,90 }
+				tint { point 0.0901961,0,0 }
+				fade { point 1 attenuate }
+				rotate { point 0 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/mapobjects/crashedship/front_dust_simple
+{
+	size	0
+
+}
+
+
+
+
+
+
+

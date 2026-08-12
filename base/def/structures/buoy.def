@@ -1,0 +1,42 @@
+// ========================================================================
+// Export for game
+
+
+export ronn {
+	options -prefix BUOY_ -sourcedir models/nerve/buoy -destdir models/nerve/buoy
+
+	mesh	buoy_mesh.mb		-dest buoy.md5mesh
+	anim	buoy_loop.mb		-dest buoy_loop.md5anim
+
+}
+
+// ========================================================================
+// Models
+//
+
+model island_buoy {
+	mesh							models/nerve/buoy/buoy.md5mesh
+
+	anim idle						models/nerve/buoy/buoy_loop.md5anim {
+		frame begin						sound_channel snd_structure_idle snd_idle
+	}
+
+}
+
+// ========================================================================
+// Entity Def
+//
+
+entityDef island_buoy {
+
+	"editor_color"			"1 .5 0"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+
+	"model"				"island_buoy"
+	"spawnclass"			"idAnimated"
+	"anim"				"idle"
+	"start_anim"			"idle"
+}
+
+

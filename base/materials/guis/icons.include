@@ -1,0 +1,18 @@
+#ifndef __ICONS__
+#define __ICONS__
+
+$template __classIcon( texture )
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip guis/assets/qet/cm_class_base.tga
+		vertexColor
+	}
+	{
+		blend blend
+		map clamp nopicmip "guis/assets/qet/" ## texture
+		vertexAlpha
+	}
+$endtemplate
+
+#endif

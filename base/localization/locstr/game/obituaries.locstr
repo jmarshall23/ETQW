@@ -1,0 +1,1302 @@
+
+// Last one is #str_00011329 currently
+// UPDATE THIS IS YOU ADD ANYTHING PLEASE FOR THE LOVE OF CHEESECAKE
+// Gordon: This file is really badly layed out, should list all weapon obits together
+
+/*
+==================
+ Generic
+================== 
+*/
+
+locString game/obit/killed {
+	text "#str_00011100" // "%a^7 was killed by ^7%b"
+}
+
+locString game/obit/team_killed {
+	text "#str_00011101" // "%a^1 was team killed by ^7%b"
+}
+
+locString game/obit/telefrag {
+	text "#str_00011505" // "%a^1 was telefragged"
+}
+
+/*
+==================
+ Items
+================== 
+*/
+
+// land mine
+
+locString game/obit/landmine {
+	text "#str_00011122" // "%b^7 [Landmine] %a"
+}
+
+locString game/obit/landmine_self {
+	text "#str_00011136" // "^1[Landmine] ^7%a"
+}
+
+locString game/obit/landmine_team {
+	text "#str_00011161" // "%b^1 [Landmine] ^7%a"
+}
+
+locString game/obit/landmine_unknown {
+	text "#str_00011288" // "^1[Landmine] ^7%a"
+}
+
+// trap mine
+
+locString game/obit/trapmine {
+	text "#str_00011123" // "%b^7 [Tripmine] %a"
+}
+
+locString game/obit/trapmine_self {
+	text "#str_00011289" // "^1[Tripmine] ^7%a"
+}
+
+locString game/obit/trapmine_team {
+	text "#str_00011162" // "%b^1 [Tripmine] ^7%a"
+}
+
+locString game/obit/trapmine_unknown {
+	text "#str_00011289" // "^1[Tripmine] ^7%a"
+}
+
+// proximity mine
+
+locString game/obit/proxymine {
+	text "#str_00011306" // "%b^1 [Proximity Mine] ^7%a"
+}
+
+locString game/obit/proxymine_self {
+	text "#str_00011307" // "^1[Proximity Mine] ^0%a"
+}
+
+locString game/obit/proxymine_team {
+	text "#str_00011308" // "%b^1 [Proximity Mine] ^0%a"
+}
+
+locString game/obit/proxymine_unknown {
+	text "#str_00011309" // "^1[Proximity Mine] ^0%a"
+}
+
+locString game/obit/supplycrate_crush {
+	text "#str_00011311" // "^1[Supply Crate]^0 crushed %a"
+}
+
+locString game/obit/supplycrate_crush/friendly {
+	text "#str_00011800" // "^1[Supply Crate]^0 crushed %a"
+}
+
+locString game/obit/teleporter_self {
+	text "#str_00011336" // "%a ^1[Teleporter]^0"
+}
+
+locString game/obit/mininglaser_crush {
+	text "#str_00011312" // "^1[Mining Laser]^0 crushed %a"
+}
+
+locString game/obit/construction_crush {
+	text "#str_00011702" // "%a^0 killed by construction"
+}
+
+locString game/obit/shieldgenerator_crush {
+	text "#str_00011704" // "^1[Strogg Shield Generator]^0 crushed %a"
+}
+
+locString game/obit/tower_kill_unknown {
+	text "#str_00011706" // "%a^0 killed by construction"
+}
+
+locString game/obit/tower_kill {
+	text "#str_00011405" // "%a^0 killed by construction"
+}
+
+locString game/obit/tower_kill_team {
+	text "#str_00011605" // "%a^0 killed by construction"
+}
+
+locString game/obit/tower_kill_self {
+	text "#str_00011504" // "%a^0 killed by construction"
+}
+
+/*
+==================
+ Players
+==================
+*/
+
+locString game/obit/suicide {
+	text "#str_00011102" // "Suicide %a^1"
+}
+
+locString game/obit/makron {
+	text "#str_00011103" // "%a^1 went to see the Makron"
+}
+
+locString game/obit/fall {
+	text "#str_00011104" // "Fall %a"
+}
+
+locString game/obit/drown {
+	text "#str_00011105" // "Drown %a"
+}
+
+locString game/obit/crush {
+	text "#str_00011106" // "Crush %a"
+}
+
+locString game/obit/oob {
+	text "#str_00011277" // "Out of bounds %a"
+}
+
+locString game/obit/deployable_falling {
+	text "#str_00011291" // "Crushed %a"
+}
+
+locString game/obit/deployable_falling/friendly {
+	text "#str_00011801" // "Crushed %a"
+}
+
+locString game/obit/icarus_falling {
+	text "#str_00011331"
+}
+
+locString game/obit/objective_explosion {
+	text "#str_00011320" // "Explosion %a"
+}
+
+locString game/obit/fire {
+	text "#str_00011330" // "Fire %a"
+}
+
+/*
+==================
+ GDF Weapons
+================== 
+*/
+
+locString game/obit/knife {
+	text "#str_00011107" // "%b^0 [Knife] %a"
+}
+
+locString game/obit/knife/backstab {
+	text "#str_00011316" // "%b^0 [Knife Backstab] %a"
+}
+
+locString game/obit/pistol {
+	text "#str_00011108" // "%b^0 [Pistol] %a"
+}
+
+locString game/obit/pistol_silenced {
+	text "#str_00011109" // "%b^0 [Silenced Pistol] %a"
+}
+
+locString game/obit/pistol_machine {
+	text "#str_00011110" // "%b^0 [Machine Pistol] %a"
+}
+
+locString game/obit/pistol_machine_silenced {
+	text "#str_00011111" // "%b^0 [Silenced Machine Pistol] %a"
+}
+
+locString game/obit/assault_rifle {
+	text "#str_00011112" // "%b^0 [Assault Rifle] %a"
+}
+
+locString game/obit/assault_rifle_scoped {
+	text "#str_00011113" // "%b^0 [Scoped Assault Rifle] %a"
+}
+
+locString game/obit/gren_launcher {
+	text "#str_00011114" // "%b^0 [Grenade Launcher] %a"
+}
+
+locString game/obit/shotgun {
+	text "#str_00011115" // "%b^0 [Shotgun] %a"
+}
+
+locString game/obit/sniper {
+	text "#str_00011116" // "%b^0 [Sniper Rifle] %a"
+}
+
+locString game/obit/rocketlauncher {
+	text "#str_00011117" // "%b^0 [Rocket Launcher] %a"
+}
+
+locString game/obit/aamissile {
+	text "#str_00011400" // "%b^0 [AA Missile] %a"
+}
+
+locString game/obit/law {
+	text "#str_00011401" // "%b^0 [LAW] %a"
+}
+
+locString game/obit/gpmg {
+	text "#str_00011118" // "%b^0 [GPMG] %a"
+}
+
+locString game/obit/mg {
+	text "#str_00011313" // "%b^0 [MG] %a"
+}
+
+locString game/obit/mortar {
+	text "#str_00011119" // "%b^0 [Mortar] %a"
+}
+
+locString game/obit/gren_frag {
+	text "#str_00011120" // "%b^0 [Frag Grenade] %a"
+}
+
+locString game/obit/gren_emp {
+	text "#str_00011300" // "%b^0 [Frag Grenade] %a"
+}
+
+locString game/obit/gren_scrambler {
+	text "#str_00011303" // "%b^0 [Frag Grenade] %a"
+}
+
+locString game/obit/he_charge {
+	text "#str_00011121" // "%b^0 [HE Charge] %a"
+}
+
+locString game/obit/satchel {
+	text "#str_00011124" // "%b^0 [Satchel] %a"
+}
+
+locString game/obit/artillery {
+	text "#str_00011125" // "%b^0 [Artillery] %a"
+}
+
+locString game/obit/rockets {
+	text "#str_00011126" // "%b^0 [Rockets] %a"
+}
+
+locString game/obit/ssm {
+	text "#str_00011127" // "%b^0 [SSM] %a"
+}
+
+locString game/obit/vampire {
+	text "#str_00011128" // "%b^0 [Vampire] %a"
+}
+
+locString game/obit/vampire_unknown {
+	text "#str_00011709" // "[Vampire] %a"
+}
+
+locString game/obit/fafff {
+	text "#str_00011129" // "%b^0 [FAFFF] %a"
+}
+
+locString game/obit/sbc {
+	text "#str_00011130" // "%b^0 [SBC] %a"
+}
+
+locString game/obit/gatling {
+	text "#str_00011131" // "%b^0 [Minigun] %a"
+}
+
+locString game/obit/flak {
+	text "#str_00011132" // "%b^0 [FLAK] %a"
+}
+
+locString game/obit/thirdeye {
+	text "#str_00011271" // "%b^0 [Third Eye Camera] %a"
+}
+
+locString game/obit/scud {
+	text "#str_00011278" // "%b^0 [SCUD] %a"
+}
+
+locString game/obit/defibrillator {
+	text "#str_00011292"
+}
+
+locString game/obit/pistol_akimbo {
+	text "#str_00011294"
+}
+
+locString game/obit/pistol_akimbo_silenced {
+	text "#str_00011403"
+}
+
+/*
+==================
+ GDF Suicides
+==================
+*/
+
+locString game/obit/gren_frag_self {
+	text "#str_00011133" // "^1[Frag Grenade] ^0%a"
+}
+
+locString game/obit/gren_frag_unknown {
+	text "#str_00011715" // "^1[Frag Grenade] ^0%a"
+}
+
+locString game/obit/gren_emp_self {
+	text "#str_00011301" // "^1[EMP Grenade] ^0%a"
+}
+
+locString game/obit/gren_emp_unknown {
+	text "#str_00011713" // "[EMP Grenade] ^0%a"
+}
+
+locString game/obit/gren_scrambler_self {
+	text "#str_00011304" // "^1[Scrambler Grenade] ^0%a"
+}
+
+locString game/obit/gren_scrambler_unknown {
+	text "#str_00011714" // "[Scrambler Grenade] ^0%a"
+}
+
+locString game/obit/gren_launcher_self {
+	text "#str_00011134" // "^1[Grenade Launcher] ^0%a"
+}
+
+locString game/obit/gren_launcher_unknown {
+	text "#str_00011712" // "[Grenade Launcher] ^0%a"
+}
+
+locString game/obit/he_charge_self {
+	text "#str_00011135" // "^1[HE Charge] ^0%a"
+}
+
+locString game/obit/he_charge_unknown {
+	text "#str_00011711" // "^1[HE Charge] ^0%a"
+}
+
+locString game/obit/flak_self {
+	text "#str_00011138" // "^1[FLAK] ^0%a"
+}
+
+locString game/obit/fafff_self {
+	text "#str_00011139" // "^1[FAFFF] ^0%a"
+}
+
+locString game/obit/fafff_unknown {
+	text "#str_00011726" // "^1[FAFFF] ^0%a"
+}
+
+locString game/obit/rocketlauncher_self {
+	text "#str_00011140" // "^1[Rocket Launcher] ^0%a"
+}
+
+locString game/obit/rocketlauncher_unknown {
+	text "#str_00011710" // "^1[Rocket Launcher] ^0%a"
+}
+
+locString game/obit/aamissile_self {
+	text "#str_00011500" // "^1[AA Missile] ^0%a"
+}
+
+locString game/obit/aamissile_unknown {
+	text "#str_00011725" // "^1[AA Missile] ^0%a"
+}
+
+locString game/obit/law_self {
+	text "#str_00011501" // "^1[LAW] ^0%a"
+}
+
+locString game/obit/law_unknown {
+	text "#str_00011501" // "^1[LAW] ^0%a"
+}
+
+locString game/obit/artillery_self {
+	text "#str_00011141" // "^1[Artillery] ^0%a"
+}
+
+locString game/obit/artillery_unknown {
+	text "#str_00011717" // "^1[Artillery] ^0%a"
+}
+
+locString game/obit/rockets_self {
+	text "#str_00011142" // "^1[Rockets] ^0%a"
+}
+
+locString game/obit/rockets_unknown {
+	text "#str_00011719" // "^1[Rockets] ^0%a"
+}
+
+locString game/obit/ssm_self {
+	text "#str_00011143" // "^1[SSM] ^0%a"
+}
+
+locString game/obit/ssm_unknown {
+	text "#str_00011721" // "^1[SSM] ^0%a"
+}
+
+locString game/obit/sbc_self {
+	text "#str_00011144" // "^1[SBC] ^0%a"
+}
+
+locString game/obit/vampire_self {
+	text "#str_00011145" // "^1[Vampire] ^0%a"
+}
+
+locString game/obit/thirdeye_self {
+	text "#str_00011272" // "^1[Third Eye Camera] ^0%a"
+}
+
+locString game/obit/scud_self {
+	text "#str_00011280" // "[SSM] ^0%a"
+}
+
+locString game/obit/scud_unknown {
+	text "#str_00011703" // "[SSM] ^0%a"
+}
+
+/*
+==================
+ GDF Team Kills
+==================
+*/
+
+locString game/obit/knife_team {
+	text "#str_00011146" // "%b^1 [Knife] ^0%a"
+}
+
+locString game/obit/knife/backstab_team {
+	text "#str_00011317" // "%b^1 [Knife Backstab] ^0%a"
+}
+
+locString game/obit/pistol_team {
+	text "#str_00011147" // "%b^1 [Pistol] ^0%a"
+}
+
+locString game/obit/pistol_silenced_team {
+	text "#str_00011148" // "%b^1 [Silenced Pistol] ^0%a"
+}
+
+locString game/obit/pistol_machine_team {
+	text "#str_00011149" // "%b^1 [Machine Pistol] ^0%a"
+}
+
+locString game/obit/pistol_machine_silenced_team {
+	text "#str_00011150" // "%b^1 [Silenced Machine Pistol] ^0%a"
+}
+
+locString game/obit/assault_rifle_team {
+	text "#str_00011151" // "%b^1 [Assault Rifle] ^0%a"
+}
+
+locString game/obit/assault_rifle_scoped_team {
+	text "#str_00011152" // "%b^1 [Scoped Assault Rifle] ^0%a"
+}
+
+locString game/obit/gren_launcher_team {
+	text "#str_00011153" // "%b^1 [Grenade Launcher] ^0%a"
+}
+
+locString game/obit/shotgun_team {
+	text "#str_00011154" // "%b^1 [Shotgun] ^0%a"
+}
+
+locString game/obit/sniper_team {
+	text "#str_00011155" // "%b^1 [Sniper Rifle] ^0%a"
+}
+
+locString game/obit/rocketlauncher_team {
+	text "#str_00011156" // "%b^1 [Rocket Launcher] ^0%a"
+}
+
+locString game/obit/aamissile_team {
+	text "#str_00011600" // "%b^1 [AA Missile] ^0%a"
+}
+
+locString game/obit/law_team {
+	text "#str_00011601" // "%b^1 [LAW] ^0%a"
+}
+
+locString game/obit/gpmg_team {
+	text "#str_00011157" // "%b^1 [GPMG] ^0%a"
+}
+
+locString game/obit/mg_team {
+	text "#str_00011314" // "%b^1 [MG] ^0%a"
+}
+
+locString game/obit/mortar_team {
+	text "#str_00011158" // "%b^1 [Mortar] ^0%a"
+}
+
+locString game/obit/gren_frag_team {
+	text "#str_00011159" // "%b^1 [Frag Grenade] ^0%a"
+}
+
+locString game/obit/gren_emp_team {
+	text "#str_00011302" // "%b^1 [Frag Grenade] ^0%a"
+}
+
+locString game/obit/gren_scrambler_team {
+	text "#str_00011305" // "%b^1 [Scrambler] ^0%a"
+}
+
+locString game/obit/he_charge_team {
+	text "#str_00011160" // "%b^1 [HE Charge] ^0%a"
+}
+
+locString game/obit/satchel_team {
+	text "#str_00011163" // "%b^1 [Satchel] ^0%a"
+}
+
+locString game/obit/artillery_team {
+	text "#str_00011164" // "%b^1 [Artillery] ^0%a"
+}
+
+locString game/obit/rockets_team {
+	text "#str_00011165" // "%b^1 [Rockets] ^0%a"
+}
+
+locString game/obit/ssm_team {
+	text "#str_00011166" // "%b^1 [SSM] ^0%a"
+}
+
+locString game/obit/fafff_team {
+	text "#str_00011167" // "%b^1 [FAFFF] ^0%a"
+}
+
+locString game/obit/sbc_team {
+	text "#str_00011168" // "%b^1 [SBC] ^0%a"
+}
+
+locString game/obit/gatling_team {
+	text "#str_00011169" // "%b^1 [Minigun] ^0%a"
+}
+
+locString game/obit/flak_team {
+	text "#str_00011170" // "%b^1 [FLAK] ^0%a"
+}
+
+locString game/obit/vampire_team {
+	text "#str_00011171" // "%b^1 [Vampire] ^0%a"
+}
+
+locString game/obit/thirdeye_team {
+	text "#str_00011273" // "%b^1 [Third Eye Camera] ^0%a"
+}
+
+locString game/obit/scud_team {
+	text "#str_00011279" // "%b^1 [SSM] ^0%a"
+}
+
+locString "game/obit/defibrillator_team" {
+	text "#str_00011293"
+}
+
+locString game/obit/pistol_akimbo_team {
+	text "#str_00011295"
+}
+
+locString game/obit/pistol_akimbo_silenced_team {
+	text "#str_00011607"
+}
+
+/*
+==================
+ Strogg Weapons
+==================
+*/
+
+locString game/obit/spikes {
+	text "#str_00011172" // "%b^7 [Spikes] %a"
+}
+
+locString game/obit/spikes/backstab {
+	text "#str_00011318" // "%b^7 [Spikes Backstab] %a"
+}
+
+locString game/obit/blaster {
+	text "#str_00011173" // "%b^7 [Blaster] %a"
+}
+
+locString game/obit/pistol_lightning {
+	text "#str_00011174" // "%b^7 [Lightning Pistol] %a"
+}
+
+locString game/obit/lacerator {
+	text "#str_00011175" // "%b^7 [Lacerator] %a"
+}
+
+locString game/obit/lacerator_scoped {
+	text "#str_00011404" // "%b^7 [Lacerator] %a"
+}
+
+locString game/obit/railchucker {
+	text "#str_00011176" // "%b^7 [Railchucker] %a"
+}
+
+locString game/obit/nailgun {
+	text "#str_00011177" // "%b^7 [Nailgun] %a"
+}
+
+locString game/obit/railgun {
+	text "#str_00011178" // "%b^7 [Railgun] %a"
+}
+
+locString game/obit/oblit {
+	text "#str_00011179" // "%b^7 [Obliterator] %a"
+}
+
+locString game/obit/hyper {
+	text "#str_00011180" // "%b^7 [Hyperblaster] %a"
+}
+
+locString game/obit/gren_shrap {
+	text "#str_00011181" // "%b^7 [Shrap Grenade] %a"
+}
+
+locString game/obit/stroybomb {
+	text "#str_00011281" // "%b^7 [Stroybomb] %a"
+}
+
+locString game/obit/acid {
+	text "#str_00011182" // "%b^7 [Acid Spleen] %a"
+}
+
+locString game/obit/plasma_charge {
+	text "#str_00011183" // "%b^7 [Plasma Charge] %a"
+}
+
+locString game/obit/drone_flyer {
+	text "#str_00011184" // "%b^7 [Flyer Drone] %a"
+}
+
+locString game/obit/drone_flyer_unknown {
+	text "#str_00011707" // "%b^7 [Flyer Drone] %a"
+}
+
+locString game/obit/howitzer {
+	text "#str_00011185" // "%b^7 [Rail Howitzer] %a"
+}
+
+locString game/obit/plasma_mortar {
+	text "#str_00011186" // "%b^7 [Plasma Mortar] %a"
+}
+
+locString game/obit/ssg {
+	text "#str_00011187" // "%b^7 [SSG] %a"
+}
+
+locString game/obit/violator {
+	text "#str_00011188" // "%b^7 [Violator] %a"
+}
+
+locString game/obit/plasma_cannon {
+	text "#str_00011189" // "%b^7 [Plasma Cannon] %a"
+}
+
+locString game/obit/spawn_host {
+	text "#str_00011190" // "%b^7 [Spawn Host] %a"
+}
+
+locString game/obit/strocket {
+	text "#str_00011274" // "%b^7 [Strocket] %a"
+}
+
+locString game/obit/selfdestruct {
+	text "#str_00011285" // "%b^7 [Self Destruct] %a"
+}
+
+locString game/obit/stroyent_tool {
+	text "#str_00011298" // "%b^0 [Stroyent Tool] %a"
+}
+
+/*
+==================
+ Strogg Suicides
+==================
+*/
+
+locString game/obit/gren_shrap_self {
+	text "#str_00011191" // "^1[Shrap Grenade] ^7%a"
+}
+
+locString game/obit/gren_shrap_unknown {
+	text "#str_00011191" // "^1[Shrap Grenade] ^7%a"
+}
+
+locString game/obit/stroybomb_self {
+	text "#str_00011282" // "^1[Stroybomb] ^7%a"
+}
+
+locString game/obit/stroybomb_unknown {
+	text "#str_00011282" // "^1[Stroybomb] ^7%a"
+}
+
+locString game/obit/acid_self {
+	text "#str_00011192" // "^1[Acid Spleen] ^7%a"
+}
+
+locString game/obit/plasma_charge_self {
+	text "#str_00011193" // "^1[Plasma Charge] ^7%a"
+}
+
+locString game/obit/plasma_charge_unknown {
+	text "#str_00011193" // "^1[Plasma Charge] ^7%a"
+}
+
+locString game/obit/oblit_self {
+	text "#str_00011194" // "^1[Obliterator] ^7%a"
+}
+
+locString game/obit/oblit_unknown {
+	text "#str_00011194" // "^1[Obliterator] ^7%a"
+}
+
+locString game/obit/railchucker_self {
+	text "#str_00011284" // "^1 [Railchucker] ^7%a"
+}
+
+locString game/obit/railchucker_unknown {
+	text "#str_00011284" // "^1 [Railchucker] ^7%a"
+}
+
+locString game/obit/drone_flyer_self {
+	text "#str_00011195" // "^1[Flyer Drone] ^7%a"
+}
+
+locString game/obit/plasma_cannon_self {
+	text "#str_00011196" // "^1[Plasma Cannon] ^7%a"
+}
+
+locString game/obit/howitzer_self {
+	text "#str_00011197" // "^1[Rail Howitzer] ^7%a"
+}
+
+locString game/obit/howitzer_unknown {
+	text "#str_00011716" // "^1[Rail Howitzer] ^7%a"
+}
+
+locString game/obit/plasma_mortar_self {
+	text "#str_00011198" // "^1[Plasma Mortar] ^7%a"
+}
+
+locString game/obit/plasma_mortar_unknown {
+	text "#str_00011718" // "^1[Plasma Mortar] ^7%a"
+}
+
+locString game/obit/ssg_self {
+	text "#str_00011199" // "^1[SSG] ^7%a"
+}
+
+locString game/obit/ssg_unknown {
+	text "#str_00011720" // "^1[SSG] ^7%a"
+}
+
+locString game/obit/violator_self {
+	text "#str_00011200" // "^1[Violator] ^7%a"
+}
+
+locString game/obit/violator_unknown {
+	text "#str_00011722" // "^1[Violator] ^7%a"
+}
+
+locString game/obit/strocket_self {
+	text "#str_00011275" // "^1[Strocket] ^7%a"
+}
+
+/*
+==================
+ Strogg Team Kills
+==================
+*/
+
+locString game/obit/spikes_team {
+	text "#str_00011201" // "%b^7 [Spikes] ^7%a"
+}
+
+locString game/obit/spikes/backstab_team {
+	text "#str_00011319" // "%b^7 [Spikes Backstab] ^7%a"
+}
+
+locString game/obit/blaster_team {
+	text "#str_00011202" // "%b^7 [Blaster] ^7%a"
+}
+
+locString game/obit/pistol_lightning_team {
+	text "#str_00011203" // "%b^7 [Lightning Pistol] ^7%a"
+}
+
+locString game/obit/lacerator_team {
+	text "#str_00011204" // "%b^7 [Lacerator] ^7%a"
+}
+
+locString game/obit/lacerator_scoped_team {
+	text "#str_00011604" // "%b^7 [Lacerator] ^7%a"
+}
+
+locString game/obit/railchucker_team {
+	text "#str_00011205" // "%b^7 [Railchucker] ^7%a"
+}
+
+locString game/obit/nailgun_team {
+	text "#str_00011206" // "%b^7 [Nailgun] ^7%a"
+}
+
+locString game/obit/railgun_team {
+	text "#str_00011207" // "%b^7 [Railgun] ^7%a"
+}
+
+locString game/obit/oblit_team {
+	text "#str_00011208" // "%b^7 [Obliterator] ^7%a"
+}
+
+locString game/obit/hyper_team {
+	text "#str_00011209" // "%b^7 [Hyperblaster] ^7%a"
+}
+
+locString game/obit/gren_shrap_team {
+	text "#str_00011210" // "%b^7 [Shrap Grenade] ^7%a"
+}
+
+locString game/obit/stroybomb_team {
+	text "#str_00011283" // "%b^7 [Stroybomb] ^7%a"
+}
+
+locString game/obit/acid_team {
+	text "#str_00011211" // "%b^7 [Acid Spleen] ^7%a"
+}
+
+locString game/obit/plasma_charge_team {
+	text "#str_00011212" // "%b^7 [Plasma Charge] ^7%a"
+}
+
+locString game/obit/drone_flyer_team {
+	text "#str_00011213" // "%b^7 [Flyer Drone] ^7%a"
+}
+
+locString game/obit/howitzer_team {
+	text "#str_00011214" // "%b^7 [Rail Howitzer] ^7%a"
+}
+
+locString game/obit/plasma_mortar_team {
+	text "#str_00011215" // "%b^7 [Plasma Mortar] ^7%a"
+}
+
+locString game/obit/ssg_team {
+	text "#str_00011216" // "%b^7 [SSG] ^7%a"
+}
+
+locString game/obit/violator_team {
+	text "#str_00011217" // "%b^7 [Violator] ^7%a"
+}
+
+locString game/obit/plasma_cannon_team {
+	text "#str_00011218" // "%b^7 [Plasma Cannon] ^7%a"
+}
+
+locString game/obit/spawn_host_team {
+	text "#str_00011219" // "%b^7 [Spawn Host] ^7%a"
+}
+
+locString game/obit/strocket_team {
+	text "#str_00011276" // "%b^7 [Strocket] ^7%a"
+}
+
+locString game/obit/selfdestruct_team {
+	text "#str_00011286" // "%b^7 [Self Destruct] ^7%a"
+}
+
+locString game/obit/stroyent_tool_team {
+	text "#str_00011299" // "%b^1 [Stroyent Tool] ^0%a"
+}
+
+/*
+==================
+ Vehicles
+==================
+*/
+
+locString game/obit/leak {
+	text "#str_00011220" // "%a^0 couldn't stop the leak"
+}
+
+locString game/obit/veh_exp {
+	text "#str_00011221" // "^0Vehicle Explosion %a"
+}
+
+locString game/obit/veh_exp_empty {
+	text "#str_00011222" // "^1Vehicle Explosion ^0%a"
+}
+
+locString game/obit/veh_flipped {
+	text "#str_00011700" // "%a^0 Killed by overturned vehicle"
+}
+
+/*
+==================
+ GDF Vehicles
+==================
+*/
+
+locString game/obit/anansi {
+	text "#str_00011223" // "%b^7 [Anansi] %a"
+}
+
+locString game/obit/anansi_empty {
+	text "#str_00011224" // "[Anansi] %a"
+}
+
+locString game/obit/badger {
+	text "#str_00011225" // "%b^7 [Badger] %a"
+}
+
+locString game/obit/badger_empty {
+	text "#str_00011226" // "[Badger] %a"
+}
+
+locString game/obit/bumblebee {
+	text "#str_00011227" // "%b^7 [Buffalo] %a"
+}
+
+locString game/obit/bumblebee_empty {
+	text "#str_00011228" // "[Buffalo] %a"
+}
+
+locString game/obit/husky {
+	text "#str_00011229" // "%b^7 [Husky] %a"
+}
+
+locString game/obit/husky_empty {
+	text "#str_00011230" // "[Husky] %a"
+}
+
+locString game/obit/titan {
+	text "#str_00011231" // "%b^7 [Titan] %a"
+}
+
+locString game/obit/titan_empty {
+	text "#str_00011232" // "[Titan] %a"
+}
+
+locString game/obit/trojan {
+	text "#str_00011233" // "%b^7 [Trojan] %a"
+}
+
+locString game/obit/trojan_empty {
+	text "#str_00011234" // "[Trojan] %a"
+}
+
+locString game/obit/mcp_empty_crush {
+	text "#str_00011297" // ^1[MCP]^7 crushed %0"
+}
+
+locString game/obit/magog_empty {
+	text "#str_00011310" // "[Magog] %a"
+}
+
+locString game/obit/mcp {
+	text "#str_00011402" // %b^0 [MCP] %0"
+}
+
+locString game/obit/mcp_empty {
+	text "#str_00011705" // ^1[MCP]^7 %0"
+}
+
+locString game/obit/platypus {
+	text "#str_00011406"
+}
+
+locString game/obit/platypus_empty {
+	text "#str_00011708"
+}
+
+/*
+==================
+ GDF Vehcile Team Kills
+==================
+*/
+
+locString game/obit/anansi_team {
+	text "#str_00011235" // "%b^1 [Anansi] ^7%a"
+}
+
+locString game/obit/badger_team {
+	text "#str_00011236" // "%b^1 [Badger] ^7%a"
+}
+
+locString game/obit/bumblebee_team {
+	text "#str_00011237" // "%b^1 [Buffalo] ^7%a"
+}
+
+locString game/obit/husky_team {
+	text "#str_00011238" // "%b^1 [Husky] ^7%a"
+}
+
+locString game/obit/titan_team {
+	text "#str_00011239" // "%b^1 [Titan] ^7%a"
+}
+
+locString game/obit/trojan_team {
+	text "#str_00011240" // "%b^1 [Trojan] ^7%a"
+}
+
+locString game/obit/mcp_team {
+	text "#str_00011602" // "%b^1 [MCP] ^7%a"
+}
+
+locString game/obit/platypus_team {
+	text "#str_00011606"
+}
+
+/*
+==================
+ Strogg Vehicles
+==================
+*/
+
+locString game/obit/desecrator {
+	text "#str_00011241" // "%b^7 [Desecrator] %a"
+}
+
+locString game/obit/desecrator_empty {
+	text "#str_00011242" // "[Desecrator] %a"
+}
+
+locString game/obit/goliath {
+	text "#str_00011243" // "%b^7 [Goliath] %a"
+}
+
+locString game/obit/goliath_empty {
+	text "#str_00011244" // "[Goliath] %a"
+}
+
+locString game/obit/hog {
+	text "#str_00011245" // "%b^7 [Hog] %a"
+}
+
+locString game/obit/hog_empty {
+	text "#str_00011246" // "[Hog] %a"
+}
+
+locString game/obit/hornet {
+	text "#str_00011247" // "%b^7 [Hornet] %a"
+}
+
+locString game/obit/hornet_empty {
+	text "#str_00011248" // "[Hornet] %a"
+}
+
+locString game/obit/icarus {
+	text "#str_00011249" // "%b^7 [Icarus] %a"
+}
+
+locString game/obit/icarus_empty {
+	text "#str_00011250" // "[Icarus] %a"
+}
+
+/*
+==================
+ Strogg Vehicle Team Kills
+==================
+*/
+
+locString game/obit/desecrator_team {
+	text "#str_00011251" // "%b^1 [Desecrator] ^7%a"
+}
+
+locString game/obit/goliath_team {
+	text "#str_00011252" // "%b^1 [Goliath] ^7%a"
+}
+
+locString game/obit/hog_team {
+	text "#str_00011253" // "%b^1 [Hog] ^7%a"
+}
+
+locString game/obit/hornet_team {
+	text "#str_00011254" // "%b^1 [Hornet] ^7%a"
+}
+
+locString game/obit/icarus_team {
+	text "#str_00011255" // "%b^1 [Icarus] ^7%a"
+}
+
+/*
+==================
+ Turrets
+==================
+*/
+
+locString game/obit/avt {
+	text "#str_00011256" // "AVT %a"
+}
+
+locString game/obit/apt {
+	text "#str_00011257" // "APT %a"
+}
+
+locString game/obit/amt {
+	text "#str_00011258" // "AMT %a"
+}
+
+locString game/obit/base_defence_turret_gdf {
+	text "#str_00011315" // "[GDF Base Defence Turret] %a"
+}
+
+locString game/obit/base_defence_turret_gdf_team {
+	text "#str_00011327" // "^1[GDF Base Defence Turret]^0 %a"
+}
+
+locString game/obit/base_defence_turret_strogg {
+	text "#str_00011328" // "[Strogg Defence Turret] %a"
+}
+
+locString game/obit/base_defence_turret_strogg_team {
+	text "#str_00011329" // "^1[Strogg Base Defence Turret]^0 %a"
+}
+
+/*
+==================
+ Turret Team Kills
+==================
+*/
+
+locString game/obit/avt_team {
+	text "#str_00011259" // "^1AVT ^0%a"
+}
+
+locString game/obit/apt_team {
+	text "#str_00011260" // "^1APT ^0%a"
+}
+
+locString game/obit/amt_team {
+	text "#str_00011261" // "^1AMT ^0%a"
+}
+
+/*
+==================
+ Turret Self Kills
+==================
+*/
+locString game/obit/avt_self {
+	text "#str_00011287"
+}
+
+locString game/obit/deployable/using {
+	text "#str_00011290"
+}
+
+locString game/obit/apt/self {
+	text "#str_00011502" // "APT %a"
+}
+
+locString game/obit/amt/self {
+	text "#str_00011503" // "AMT %a"
+}
+
+locString game/obit/avt_unknown {
+	text "#str_00011727"
+}
+
+/*
+==================
+ Map Specific
+==================
+*/
+
+locString game/obit/area22/shaft {
+	text "#str_00011262" // "%a^1 fell down the shaft"
+}
+
+locString game/obit/canyon/ooze {
+	text "#str_00011263" // "%a^1 fell into the ooze"
+}
+
+locString game/obit/refinery/ticket {
+	text "#str_00011264" // "%a^1 bought a one-way teleportation ticket to Stroggos"
+}
+
+locString game/obit/refinery/trip {
+	text "#str_00011265" // "%a^1 took a trip to Stroggos"
+}
+
+locString game/obit/slipgate/genome {
+	text "#str_00011266" // "%a^1's genome was rejected by the Strogg Slipgate"
+}
+
+locString game/obit/slipgate/slip {
+	text "#str_00011267" // "%a^1 thought he could SLIP through unnoticed"
+}
+
+locString game/obit/slipgate/materialise {
+	text "#str_00011268" // "%a^1 didn't materialise on the other side"
+}
+
+locString game/obit/strogg/base_walls {
+	text "#str_00011269" // "%a^7 got fried by the Strogg Base Walls"
+}
+
+locString game/obit/strogg/doorshield {
+	text "#str_00011270" // "%a^7 got fried by the Strogg Door Shield"
+}
+
+locString game/obit/drop_pod {
+	text "#str_00011296" // "%a^1 got squished by the incoming drop pod!"
+}
+
+locString game/obit/mininglaser {
+	text "#str_00011701"	// "Mining laser %a"
+}
+
+
+
+
+
+locString game/obit/gren_airstrike_marker {
+	text "#str_00011321"
+}
+
+locString game/obit/gren_airstrike_marker_team {
+	text "#str_00011322"
+}
+
+locString game/obit/gren_airstrike_marker_self {
+	text "#str_00011323"
+}
+
+locString game/obit/gren_airstrike_marker_unknown {
+	text "#str_00011723"
+}
+
+
+
+locString game/obit/gren_violator_beacon {
+	text "#str_00011324"
+}
+
+locString game/obit/gren_violator_beacon_team {
+	text "#str_00011325"
+}
+
+locString game/obit/gren_violator_beacon_self {
+	text "#str_00011326"
+}
+
+locString game/obit/gren_violator_beacon_unknown {
+	text "#str_00011724"
+}
+
+
+
+
+locString game/obit/local/killed {
+	text "#str_00011332"
+	arguments 1
+}
+
+locString game/obit/local/killedby {
+	text "#str_00011333"
+	arguments 1
+}
+
+locString game/obit/local/killed_team {
+	text "#str_00011334"
+	arguments 1
+}
+
+locString game/obit/local/killedby_team {
+	text "#str_00011335"
+	arguments 1
+}

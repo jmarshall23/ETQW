@@ -1,0 +1,26 @@
+// Map Sounds
+
+
+sound sounds/maps/slipgate/slipgate1 {
+
+	maxDistance 200
+
+	looping
+	sounds/maps/slipgate/slipgate_01.wav
+}
+
+sound sounds/maps/slipgate/slipgate2 {
+
+	maxDistance 150
+
+	looping
+	sounds/maps/slipgate/slipgate_02.wav
+}
+
+sound sounds/maps/slipgate/slipgate_portal {
+
+	maxDistance 50
+
+	looping
+	sounds/maps/slipgate/slipgate_02.wav
+}

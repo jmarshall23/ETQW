@@ -1,0 +1,429 @@
+// ======================================================
+// Please put a comment above the material specifying 
+// its original .mtr in Quake4
+// ======================================================
+
+// Quake4: barrels_containers.mtr
+material models/raven/mapobjects/strogg/barrels/large1
+{
+    noSelfShadow
+    surfaceType	"metal"
+
+	diffusemap		models/raven/mapobjects/strogg/barrels/large1_d.tga
+	bumpmap addnormals ( models/raven/mapobjects/strogg/barrels/large1_local.tga, heightmap ( models/raven/mapobjects/strogg/barrels/large1_h.tga, 2 ) )
+	specularmap		models/raven/mapobjects/strogg/barrels/large1_s.tga
+}
+
+// Quake4: barrels_containers.mtr
+material models/raven/mapobjects/strogg/barrels/medium1
+{
+    noselfShadow
+	surfaceType	"metal"
+
+	diffusemap		models/raven/mapobjects/strogg/barrels/medium1_d.tga
+	bumpmap 		addnormals ( models/raven/mapobjects/strogg/barrels/medium1_local.tga, heightmap ( models/raven/mapobjects/strogg/barrels/medium1_h.tga, 2 ) )
+	specularmap		models/raven/mapobjects/strogg/barrels/medium1_s.tga
+}
+
+// Quake4: barrels_containers.mtr
+material models/raven/mapobjects/strogg/barrels/medium1_a
+{
+    noSelfShadow
+    surfaceType	"metal"
+     
+	diffusemap		models/raven/mapobjects/strogg/barrels/medium1_a_d.tga
+	bumpmap 		addnormals ( models/raven/mapobjects/strogg/barrels/medium1_local.tga, heightmap ( models/raven/mapobjects/strogg/barrels/medium1_a_h.tga, 2 ) )
+	specularmap		models/raven/mapobjects/strogg/barrels/medium1_a_s.tga
+}
+
+
+// Quake4: barrels_containers.mtr
+material models/raven/mapobjects/strogg/barrels/medium1_b
+{
+    noSelfShadow
+    surfaceType	"metal"
+
+	diffusemap		models/raven/mapobjects/strogg/barrels/medium1_b_d.tga
+	bumpmap 		addnormals ( models/raven/mapobjects/strogg/barrels/medium1_local.tga, heightmap ( models/raven/mapobjects/strogg/barrels/medium1_b_h.tga, 2 ) )
+	specularmap		models/raven/mapobjects/strogg/barrels/medium1_b_s.tga
+}
+
+
+// Quake4: barrels_containers.mtr
+material models/raven/mapobjects/strogg/barrels/medium1_c
+{
+    noSelfShadow
+	surfaceType	"metal"
+
+	diffusemap		models/raven/mapobjects/strogg/barrels/medium1_c_d.tga
+	bumpmap 		addnormals ( models/raven/mapobjects/strogg/barrels/medium1_local.tga, heightmap ( models/raven/mapobjects/strogg/barrels/medium1_c_h.tga, 2 ) )
+	specularmap		models/raven/mapobjects/strogg/barrels/medium1_c_s.tga
+}
+
+// Quake4: barrels_containers.mtr
+material models/raven/mapobjects/strogg/barrels/medium2
+{
+    noselfShadow
+    surfaceType	"metal"
+
+	diffusemap		models/raven/mapobjects/strogg/barrels/medium2_d.tga
+	bumpmap 		addnormals ( models/raven/mapobjects/strogg/barrels/medium2_local.tga, heightmap ( models/raven/mapobjects/strogg/barrels/medium2_h.tga, 2 ) )
+	specularmap		models/raven/mapobjects/strogg/barrels/medium2_s.tga
+}
+
+// Quake4: barrels_containers.mtr
+material models/raven/mapobjects/strogg/barrels/medium2_a
+{
+    noSelfShadow
+   
+
+	diffusemap		models/raven/mapobjects/strogg/barrels/medium2_a_d.tga
+	bumpmap 		addnormals ( models/raven/mapobjects/strogg/barrels/medium2_local.tga, heightmap ( models/raven/mapobjects/strogg/barrels/medium2_a_h.tga, 2 ) )
+	specularmap		models/raven/mapobjects/strogg/barrels/medium2_a_s.tga
+}
+
+
+// Quake4: barrels_containers.mtr
+material models/raven/mapobjects/strogg/barrels/medium2_b
+{
+    noSelfShadow
+    surfaceType	"metal"
+
+	diffusemap		models/raven/mapobjects/strogg/barrels/medium2_b_d.tga
+	bumpmap 		addnormals ( models/raven/mapobjects/strogg/barrels/medium2_local.tga, heightmap ( models/raven/mapobjects/strogg/barrels/medium2_b_h.tga, 2 ) )
+	specularmap		models/raven/mapobjects/strogg/barrels/medium2_b_s.tga
+}
+
+
+// Quake4: barrels_containers.mtr
+material models/raven/mapobjects/strogg/barrels/medium2_c
+{
+    noSelfShadow
+    surfaceType	"metal"
+
+	diffusemap		models/raven/mapobjects/strogg/barrels/medium2_c_d.tga
+	bumpmap 		addnormals ( models/raven/mapobjects/strogg/barrels/medium2_local.tga, heightmap ( models/raven/mapobjects/strogg/barrels/medium2_c_h.tga, 2 ) )
+	specularmap		models/raven/mapobjects/strogg/barrels/medium2_c_s.tga
+}
+
+// Quake4: barrels_containers.mtr
+material models/raven/mapobjects/strogg/barrels/stroyent
+{
+    noselfShadow	
+    unSmoothedTangents
+    surfaceType	"metal"
+
+	diffusemap		models/raven/mapobjects/strogg/barrels/stroyent_d.tga
+	bumpmap 		addnormals ( models/raven/mapobjects/strogg/barrels/stroyent_local.tga, heightmap ( models/raven/mapobjects/strogg/barrels/stroyent_h.tga, 2 ) )
+	specularMap		models/raven/mapobjects/strogg/barrels/stroyent_s.tga
+		{
+			blend add
+			map models/raven/mapobjects/strogg/barrels/stroyent_g.tga
+		}
+}
+
+// Quake4: barrels_containers.mtr
+material models/raven/mapobjects/strogg/barrels/stroyent_b
+{
+    noselfShadow	
+    unSmoothedTangents
+    surfaceType	"metal"
+
+	diffusemap		models/raven/mapobjects/strogg/barrels/stroyent_b_d.tga
+	bumpmap 		addnormals ( models/raven/mapobjects/strogg/barrels/stroyent_local.tga, heightmap ( models/raven/mapobjects/strogg/barrels/stroyent_h.tga, 2 ) )
+	specularmap		models/raven/mapobjects/strogg/barrels/stroyent_s.tga
+		{
+			blend add
+			map models/raven/mapobjects/strogg/barrels/stroyent_b_g.tga
+		}
+
+}
+
+// Quake4: barrels_containers.mtr
+material models/raven/mapobjects/strogg/barrels/stroyent_c
+{
+    noselfShadow	
+    unsmoothedtangents
+	surfaceType	"metal"
+
+	diffusemap		models/raven/mapobjects/strogg/barrels/stroyent_c_d.tga
+	bumpmap 		addnormals ( models/raven/mapobjects/strogg/barrels/stroyent_local.tga, heightmap ( models/raven/mapobjects/strogg/barrels/stroyent_h.tga, 2 ) )
+	specularmap		models/raven/mapobjects/strogg/barrels/stroyent_s.tga
+		{
+			blend add
+			map models/raven/mapobjects/strogg/barrels/stroyent_c_g.tga
+		}
+
+}
+
+// Quake4: barrels_containers.mtr
+material models/raven/mapobjects/strogg/barrels/stroyent_group_2
+{
+   	noselfShadow
+	unSmoothedTangents
+	surfaceType	"metal"
+
+	bumpmap			addnormals (models/raven/mapobjects/strogg/barrels/stroyent_group_2_local.tga, heightmap (models/raven/mapobjects/strogg/barrels/stroyent_group_2_h.tga, 2))
+	diffusemap		models/raven/mapobjects/strogg/barrels/stroyent_group_2_d.tga
+	specularmap		models/raven/mapobjects/strogg/barrels/stroyent_group_2_s.tga
+	{
+		blend add
+		map models/raven/mapobjects/strogg/barrels/stroyent_group_2_g.tga
+	}
+
+}
+
+// Quake4: barrels_containers.mtr
+material models/raven/mapobjects/strogg/cargo_container/generic_lgv2
+{
+	unsmoothedtangents
+	surfaceType	"metal"
+	
+	bumpmap			addnormals (models/raven/mapobjects/strogg/cargo_container/generic_lgv3_local.tga, heightmap (models/raven/mapobjects/strogg/cargo_container/generic_lgv2_h.tga, 2))
+	diffusemap		models/raven/mapobjects/strogg/cargo_container/generic_lgv2_d.tga
+	specularmap		models/raven/mapobjects/strogg/cargo_container/generic_lgv2_s.tga
+
+}
+
+// Quake4: barrels_containers.mtr
+material models/raven/mapobjects/strogg/cargo_container/generic_lgv3
+{
+    unsmoothedtangents
+    surfaceType	"metal"
+	
+	bumpmap			addnormals (models/raven/mapobjects/strogg/cargo_container/generic_lgv3_local.tga, heightmap (models/raven/mapobjects/strogg/cargo_container/generic_lgv3_h.tga, 2))
+	diffusemap		models/raven/mapobjects/strogg/cargo_container/generic_lgv3_d.tga
+	specularmap		models/raven/mapobjects/strogg/cargo_container/generic_lgv3_s.tga
+
+}
+
+// Quake4: misc_equipment.mtr
+material models/raven/mapobjects/strogg/misc_equipment/machine1
+{
+    noselfShadow
+    surfacetype "metal"
+	
+	bumpmap		picmip -1	addnormals (models/raven/mapobjects/strogg/misc_equipment/machine1_local.tga, heightmap (models/raven/mapobjects/strogg/misc_equipment/machine1_h.tga, 2))
+	diffusemap	picmip -1	models/raven/mapobjects/strogg/misc_equipment/machine1_d.tga
+	specularmap	picmip -2	models/raven/mapobjects/strogg/misc_equipment/machine1_s.tga
+}
+
+// Quake4: misc_equipment.mtr
+material models/raven/mapobjects/strogg/misc_equipment/machine3
+{
+    noselfShadow
+	
+	surfaceType	"metal"
+	
+	bumpmap			addnormals (models/raven/mapobjects/strogg/misc_equipment/machine3_local.tga, heightmap (models/raven/mapobjects/strogg/misc_equipment/machine3_h.tga, 2))
+	diffusemap		models/raven/mapobjects/strogg/misc_equipment/machine3_d.tga
+	specularmap		models/raven/mapobjects/strogg/misc_equipment/machine3_s.tga
+}
+
+// Quake4: misc_equipment.mtr
+material models/raven/mapobjects/strogg/misc_equipment/machine5
+{
+    noselfShadow
+	
+	surfaceType	"metal"
+	
+	bumpmap			addnormals (models/raven/mapobjects/strogg/misc_equipment/machine5_local.tga, heightmap (models/raven/mapobjects/strogg/misc_equipment/machine5_h.tga, 2))
+	diffusemap		models/raven/mapobjects/strogg/misc_equipment/machine5_d.tga
+	specularmap		models/raven/mapobjects/strogg/misc_equipment/machine5_s.tga
+}
+
+// Quake4: misc_equipment.mtr
+material models/raven/mapobjects/strogg/misc_equipment/machine7_low
+{
+    noselfShadow
+
+	surfaceType	"metal"
+	 
+	bumpmap			addnormals (models/raven/mapobjects/strogg/misc_equipment/machine7_local.tga, heightmap (models/raven/mapobjects/strogg/misc_equipment/machine7_h.tga, 2))
+	diffusemap		models/raven/mapobjects/strogg/misc_equipment/machine7_d.tga
+	specularmap		models/raven/mapobjects/strogg/misc_equipment/machine7_s.tga
+}
+
+// Quake4: misc_equipment.mtr
+material models/raven/mapobjects/strogg/misc_equipment/machine10
+{
+    noselfShadow
+	
+	surfaceType	"metal"
+	
+	bumpmap		picmip -1	addnormals (models/raven/mapobjects/strogg/misc_equipment/machine10_local.tga, heightmap (models/raven/mapobjects/strogg/misc_equipment/machine10_h.tga, 2))
+	diffusemap	picmip -1	models/raven/mapobjects/strogg/misc_equipment/machine10_d.tga
+	specularmap	picmip -2	models/raven/mapobjects/strogg/misc_equipment/machine10_s.tga
+}
+
+// Quake4: misc_equipment.mtr
+material models/raven/mapobjects/strogg/misc_equipment/machine11
+{
+    noselfShadow
+	surfaceType	"metal"
+	
+	bumpmap		picmip -1	addnormals (models/raven/mapobjects/strogg/misc_equipment/machine11_local.tga, heightmap (models/raven/mapobjects/strogg/misc_equipment/machine11_h.tga, 2))
+	diffusemap	picmip -1	models/raven/mapobjects/strogg/misc_equipment/machine11_d.tga
+	specularmap	picmip -2	models/raven/mapobjects/strogg/misc_equipment/machine11_s.tga
+}
+
+// Quake4: misc_equipment.mtr
+material models/raven/mapobjects/strogg/misc_equipment/pipes01
+{
+   	noselfShadow
+	
+	surfaceType	"metal"
+
+	bumpmap			addnormals (models/raven/mapobjects/strogg/misc_equipment/pipes01_local.tga, heightmap (models/raven/mapobjects/strogg/misc_equipment/pipes01_h.tga, 2))
+	diffusemap		models/raven/mapobjects/strogg/misc_equipment/pipes01_d.tga
+	specularmap		models/raven/mapobjects/strogg/misc_equipment/pipes01_s.tga
+
+}
+
+// Quake4: outdoor.mtr
+material models/raven/mapobjects/strogg/outdoor/pump/pump01
+{
+    noselfShadow	
+	surfaceType	"metal"
+
+	bumpmap		picmip -1	addnormals (models/raven/mapobjects/strogg/outdoor/pump/pump01_local.tga, heightmap (models/raven/mapobjects/strogg/outdoor/pump/pump01_h.tga, 2))
+	diffusemap	picmip -1	models/raven/mapobjects/strogg/outdoor/pump/pump01_d.tga
+	specularmap	picmip -2	models/raven/mapobjects/strogg/outdoor/pump/pump01_s.tga
+
+}
+
+// Quake 4: structural.mtr
+material models/raven/mapobjects/strogg/structural/pillars/pillar_01
+{
+    noselfShadow
+	surfaceType	"metal"
+
+	bumpmap			addnormals (models/raven/mapobjects/strogg/structural/pillars/pillar_01_local.tga, heightmap (models/raven/mapobjects/strogg/structural/pillars/pillar_01_h.tga, 2))
+	diffusemap		models/raven/mapobjects/strogg/structural/pillars/pillar_01_d.tga
+	specularmap		models/raven/mapobjects/strogg/structural/pillars/pillar_01_s.tga
+	
+
+}
+
+// Quake 4: structural.mtr
+material models/raven/mapobjects/strogg/structural/pillars/pillar_01_core
+{
+    noselfShadow
+	surfaceType	"metal"
+	
+	bumpmap		picmip -1	addnormals (models/raven/mapobjects/strogg/structural/pillars/pillar_01_local.tga, heightmap (models/raven/mapobjects/strogg/structural/pillars/pillar_01_core_h.tga, 2))
+	diffusemap	picmip -1	models/raven/mapobjects/strogg/structural/pillars/pillar_01_core_d.tga
+	specularmap	picmip -2	models/raven/mapobjects/strogg/structural/pillars/pillar_01_core_s.tga
+
+}
+// Quake 4: structural.mtr
+material models/raven/mapobjects/strogg/structural/pillars/pillar_01_core2
+{
+    noselfShadow
+	surfaceType	"metal"
+	{
+		bumpmap		picmip -1	addnormals (models/raven/mapobjects/strogg/structural/pillars/pillar_01_local.tga, heightmap (models/raven/mapobjects/strogg/structural/pillars/pillar_01_core2_h.tga, 2))
+		diffusemap	picmip -1	models/raven/mapobjects/strogg/structural/pillars/pillar_01_core2_d.tga
+		specularmap	picmip -2	models/raven/mapobjects/strogg/structural/pillars/pillar_01_core2_s.tga
+	
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	8,8,0,0
+	}
+}
+
+// Quake 4: structural.mtr
+material models/raven/mapobjects/strogg/structural/pillars/pillar_02
+{
+    noselfShadow
+	
+	surfaceType	"metal"
+
+	bumpmap			addnormals (models/raven/mapobjects/strogg/structural/pillars/pillar_02_local.tga, heightmap (models/raven/mapobjects/strogg/structural/pillars/pillar_02_h.tga, 2))
+	diffusemap		models/raven/mapobjects/strogg/structural/pillars/pillar_02_d.tga
+	specularmap		models/raven/mapobjects/strogg/structural/pillars/pillar_02_s.tga
+
+		{
+		blend add 
+		map models/raven/mapobjects/strogg/structural/pillars/pillar_02_g.tga
+		}
+}
+
+// Quake 4: structural.mtr
+material models/raven/mapobjects/strogg/structural/pillars/pillar_03
+{
+    noselfShadow
+	surfaceType	"metal"
+
+	bumpmap			addnormals (models/raven/mapobjects/strogg/structural/pillars/pillar_03_local.tga, heightmap (models/raven/mapobjects/strogg/structural/pillars/pillar_03_h.tga, 2))
+	diffusemap		models/raven/mapobjects/strogg/structural/pillars/pillar_03_d.tga
+	specularmap		models/raven/mapobjects/strogg/structural/pillars/pillar_03_s.tga
+}
+
+///// pipe 
+
+material models/raven/mapobjects/strogg/pipes_wires/pipe_end
+{
+	bumpmap		picmip -1	addnormals (models/raven/mapobjects/strogg/pipes_wires/pipe_end_local.tga, heightmap (models/raven/mapobjects/strogg/pipes_wires/pipe_end_h.tga, 1) )
+	diffusemap	picmip -1	models/raven/mapobjects/strogg/pipes_wires/pipe_end_d.tga
+	specularmap	picmip -2	models/raven/mapobjects/strogg/pipes_wires/pipe_end_s.tga
+}
+
+material models/raven/mapobjects/strogg/pipes_wires/pipe_end_dirty
+{
+
+	bumpmap addnormals (models/raven/mapobjects/strogg/pipes_wires/pipe_end_local.tga, heightmap (models/raven/mapobjects/strogg/pipes_wires/pipe_end_dirty_h.tga, 1) )
+	diffusemap 		models/raven/mapobjects/strogg/pipes_wires/pipe_end_dirty_d.tga
+	specularmap		models/raven/mapobjects/strogg/pipes_wires/pipe_end_dirty_s.tga
+}
+
+material models/raven/mapobjects/strogg/pipes_wires/pipe_end_noshadows
+{
+
+	bumpmap addnormals (models/raven/mapobjects/strogg/pipes_wires/pipe_end_local.tga, heightmap (models/raven/mapobjects/strogg/pipes_wires/pipe_end_h.tga, 1) )
+	diffusemap 		models/raven/mapobjects/strogg/pipes_wires/pipe_end_d.tga
+	specularmap		models/raven/mapobjects/strogg/pipes_wires/pipe_end_s.tga
+}
+
+
+material models/raven/mapobjects/strogg/pipes_wires/tube_rim_1
+{
+	noselfShadow
+	surfacetype "metal"
+	
+	bumpmap		picmip -1	models/raven/mapobjects/strogg/pipes_wires/tube_rim_1_local.tga
+	diffusemap	picmip -1	models/raven/mapobjects/strogg/pipes_wires/tube_rim_1_d.tga
+	specularmap	picmip -2	models/raven/mapobjects/strogg/pipes_wires/tube_rim_1_s.tga
+
+}
+
+
+material	models/mapobjects/marine/lights/small
+{
+      	noselfShadow
+	bumpmap addnormals (models/raven/mapobjects/marine/lights/small_local.tga, heightmap (models/raven/mapobjects/marine/lights/small_h.tga,3 ))
+	diffusemap 		models/raven/mapobjects/marine/lights/small_d.tga
+	specularmap		models/raven/mapobjects/marine/lights/small_s.tga
+}
+
+
+
+material	models/mapobjects/marine/lights/large
+{
+      	noselfShadow
+	bumpmap 	picmip -1	addnormals (models/raven/mapobjects/marine/lights/large_local.tga, heightmap (models/raven/mapobjects/marine/lights/large_h.tga,3 ))
+	diffusemap 	picmip -1	models/raven/mapobjects/marine/lights/large_d.tga
+	specularmap	picmip -2	models/raven/mapobjects/marine/lights/large_s.tga
+}
+
+
+material models/raven/mapobjects/marine/equipment/misc/marine_cot
+{
+    noselfShadow
+	surfaceType	"metal"
+	 
+	bumpmap			picmip -1	addnormals (models/raven/mapobjects/marine/equipment/misc/marine_cot_local.tga, heightmap (models/raven/mapobjects/marine/equipment/misc/marine_cot_h.tga, 2))
+	diffusemap		picmip -1	models/raven/mapobjects/marine/equipment/misc/marine_cot_d.tga
+	specularmap		picmip -2	models/raven/mapobjects/marine/equipment/misc/marine_cot_s.tga
+}

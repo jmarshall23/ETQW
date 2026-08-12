@@ -1,0 +1,127 @@
+!!ARBvp1.0
+#replace normalAttrib with _normalAttrib
+TEMP _normalAttrib;
+TEMP _attribTemp;
+MUL _normalAttrib, vertex.attrib[2], 0.000030518;
+MUL _attribTemp.xy, _normalAttrib, _normalAttrib;
+ADD _attribTemp.x, _attribTemp.xxxx, _attribTemp.yyyy;
+ADD _attribTemp.x, 1, -_attribTemp.x;
+RSQ _attribTemp.x, _attribTemp.x;
+RCP _normalAttrib.z, _attribTemp.x;
+ADD _attribTemp.x, $signAttrib$.x, -1;
+MUL _normalAttrib.z, _normalAttrib.z, _attribTemp.x;
+#replace tangentAttrib with _tangentAttrib
+TEMP _tangentAttrib;
+MUL _tangentAttrib, vertex.attrib[9], 0.000030518;
+MUL _attribTemp.xy, _tangentAttrib, _tangentAttrib;
+ADD _attribTemp.x, _attribTemp.xxxx, _attribTemp.yyyy;
+ADD _attribTemp.x, 1, -_attribTemp.x;
+RSQ _attribTemp.x, _attribTemp.x;
+RCP _tangentAttrib.z, _attribTemp.x;
+ADD _attribTemp.x, $signAttrib$.y, -1;
+MUL _tangentAttrib.z, _tangentAttrib.z, _attribTemp.x;
+ADD _tangentAttrib.w, $signAttrib$.z, -1;
+#replace texCoordAttrib with _texCoordAttrib
+TEMP _texCoordAttrib;
+MUL _texCoordAttrib.xy, vertex.attrib[8], 0.000244141;
+MOV _texCoordAttrib.zw, 1;
+
+		
+		
+		
+
+
+TEMP	bitangent;
+TEMP	R0, R1, R2;
+
+
+	TEMP _pos;
+	TEMP _nrm;
+	TEMP _tan;
+	DP4 _pos.x, vertex.texcoord[5], vertex.position;
+	DP4 _pos.y, vertex.texcoord[6], vertex.position;
+	DP4 _pos.z, vertex.texcoord[7], vertex.position;
+	MOV _pos.w, vertex.position.w;
+
+	DP3 _nrm.x, vertex.texcoord[5], _normalAttrib;
+	DP3 _nrm.y, vertex.texcoord[6], _normalAttrib;
+	DP3 _nrm.z, vertex.texcoord[7], _normalAttrib;
+	
+	DP3 _tan.x, vertex.texcoord[5], _tangentAttrib;
+	DP3 _tan.y, vertex.texcoord[6], _tangentAttrib;
+	DP3 _tan.z, vertex.texcoord[7], _tangentAttrib;
+
+	MOV result.texcoord[6].w, vertex.texcoord[2];
+
+	PARAM  mvp[4]       = { state.matrix.mvp };
+	OUTPUT oPos         = result.position;
+	# Transform the vertex to clip coordinates. 
+	DP4   oPos.x, mvp[0], _pos;
+	DP4   oPos.y, mvp[1], _pos;
+	DP4   oPos.z, mvp[2], _pos;
+	DP4   oPos.w, mvp[3], _pos;
+
+        
+PARAM	defaultTexCoord = { 0, 0.5, 0, 1 };
+
+XPD		bitangent, _nrm, _tan;
+MUL		bitangent, bitangent, _tangentAttrib.w;
+
+# textures 1 takes the base coordinates by the texture matrix
+MOV		result.texcoord[1], defaultTexCoord;
+DP4		result.texcoord[1].x, _texCoordAttrib, program.local[0];
+DP4		result.texcoord[1].y, _texCoordAttrib, program.local[1];
+
+# textures 4 takes the base coordinates by the texture matrix
+MOV		result.texcoord[4], defaultTexCoord;
+DP4		result.texcoord[4].x, _texCoordAttrib, program.local[2];
+DP4		result.texcoord[4].y, _texCoordAttrib, program.local[3];
+
+# generate the vertex color, which can be 1.0, color, or 1.0 - color
+MAD		result.color, vertex.attrib[3], program.local[4], program.local[5];
+
+# build tangent space -> world space conversion matrix
+DP3		result.texcoord[5].x, program.local[6], _tan;
+DP3		result.texcoord[6].x, program.local[7], _tan;
+DP3		result.texcoord[7].x, program.local[8], _tan;
+
+DP3		result.texcoord[5].y, program.local[6], bitangent;
+DP3		result.texcoord[6].y, program.local[7], bitangent;
+DP3		result.texcoord[7].y, program.local[8], bitangent;
+
+DP3		result.texcoord[5].z, program.local[6], _nrm;
+DP3		result.texcoord[6].z, program.local[7], _nrm;
+DP3		result.texcoord[7].z, program.local[8], _nrm;
+
+# calculate vector to eye
+DP4		R0.x, program.local[6], _pos;
+DP4		R0.y, program.local[7], _pos;
+DP4		R0.z, program.local[8], _pos;
+
+# normalize
+TEMP	viewtovec;
+SUB		viewtovec.xyz, R0, program.local[9];
+DP3		viewtovec.w, viewtovec, viewtovec;
+RSQ		R0.w, viewtovec.w;
+MUL		result.texcoord[2], viewtovec, -R0.w;
+#MOV		result.texcoord[2], R0;
+
+
+
+#ifdef enable_detail_fade
+PARAM  mv[4]       = { state.matrix.modelview };
+DP4   R0.w, -mv[2], _pos;
+SUB   R0.w, R0.w, program.local[10].x;
+MAD result.texcoord[1].w, R0.w, program.local[10].y, 1;
+#endif
+
+
+SUB		R2, _pos, program.local[11];
+DP3		R1.x, R2, R2;
+RSQ		R1.y, R1.x;
+MUL		R1.x, R1.y, R1.x;
+MAD		result.color.secondary, R1.x, program.local[12].z, program.local[12].w; 
+
+
+	
+END

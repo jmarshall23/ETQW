@@ -1,0 +1,81 @@
+////////////////
+// Strogg NPC //
+////////////////
+
+// Bombardment //
+
+sound sounds/vo/strogg/npc/bombardment/approved {
+
+	localization/english/sounds/npc/strogg/bombardment/28009.wav
+	localization/english/sounds/npc/strogg/bombardment/28010.wav
+}
+
+sound sounds/vo/strogg/npc/bombardment/invalid {
+
+	localization/english/sounds/npc/strogg/bombardment/28011.wav
+}
+
+sound sounds/vo/strogg/npc/bombardment/friendlyfire {
+
+	localization/english/sounds/npc/strogg/bombardment/28012.wav
+	localization/english/sounds/npc/strogg/bombardment/28013.wav
+}
+
+sound sounds/vo/strogg/npc/bombardment/abort {
+
+	localization/english/sounds/npc/strogg/bombardment/28059.wav
+}
+
+
+// Logistics //
+
+sound sounds/vo/strogg/npc/logistics/approved {
+
+	localization/english/sounds/npc/strogg/logistics/28014.wav
+	localization/english/sounds/npc/strogg/logistics/28016.wav
+}
+
+sound sounds/vo/strogg/npc/logistics/invalid {
+
+	localization/english/sounds/npc/strogg/logistics/28015.wav
+}
+
+sound sounds/vo/strogg/npc/logistics/abort {
+
+	localization/english/sounds/npc/strogg/logistics/28017.wav
+}
+
+
+// Violator //
+
+sound sounds/vo/strogg/npc/violator/approved {
+
+	localization/english/sounds/npc/strogg/violator/28009.wav
+	localization/english/sounds/npc/strogg/violator/28010.wav
+}
+
+sound sounds/vo/strogg/npc/violator/invalid {
+
+	localization/english/sounds/npc/strogg/violator/28011.wav
+}
+
+sound sounds/vo/strogg/npc/violator/friendlyfire {
+
+	localization/english/sounds/npc/strogg/violator/28012.wav
+	localization/english/sounds/npc/strogg/violator/28013.wav
+}
+
+sound sounds/vo/strogg/npc/violator/abort {
+
+	localization/english/sounds/npc/strogg/violator/28059.wav
+}
+
+sound sounds/vo/strogg/npc/violator/recharging {
+
+	localization/english/sounds/npc/strogg/violator/28060.wav
+}
+
+sound sounds/vo/strogg/npc/enemyfiresupport {
+
+	localization/english/sounds/npc/strogg/bombardment/28013.wav
+}

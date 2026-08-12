@@ -1,0 +1,12 @@
+effect effects/maps/valley/strogg_base_simple
+{
+	size	0
+
+}
+
+effect effects/maps/canyon/strogg_base_simple
+{
+	size	0
+
+}
+

@@ -1,0 +1,4741 @@
+material textures/raven/canyon/can_buttress_front_bot
+{
+	qer_editorimage textures/raven/canyon/Can_Buttress_front_bot_d
+	bumpmap addnormals ( textures/raven/canyon/Can_Buttress_front_bot_local, heightmap ( textures/raven/canyon/Can_Buttress_front_bot_h, 1 ) )
+	diffusemap	textures/raven/canyon/Can_Buttress_front_bot_d
+	specularmap	textures/raven/canyon/Can_Buttress_front_bot_s
+}
+material textures/raven/canyon/can_buttress_front_top
+{
+	qer_editorimage textures/raven/canyon/Can_Buttress_front_top_d
+	bumpmap addnormals ( textures/raven/canyon/Can_Buttress_front_top_local, heightmap ( textures/raven/canyon/Can_Buttress_front_top_h, 1 ) )
+	diffusemap	textures/raven/canyon/Can_Buttress_front_top_d
+	specularmap	textures/raven/canyon/Can_Buttress_front_top_s
+}
+material textures/raven/canyon/can_ceiling_concrete
+{
+	qer_editorimage textures/raven/canyon/Can_Ceiling_concrete_d
+	bumpmap addnormals ( textures/raven/canyon/Can_Ceiling_concrete_local, heightmap ( textures/raven/canyon/Can_Ceiling_concrete_h, 1 ) )
+	diffusemap	textures/raven/canyon/Can_Ceiling_concrete_d
+	specularmap	textures/raven/canyon/Can_Ceiling_concrete_s
+}
+
+material textures/raven/canyon/can_plate_02
+{
+	bumpmap addnormals ( textures/raven/canyon/can_plate_02_local, heightmap ( textures/raven/canyon/can_plate_02_h, 1 ) )
+	diffusemap	textures/raven/canyon/can_plate_02_d
+	specularmap	textures/raven/canyon/can_plate_02_s
+}
+
+material textures/raven/canyon/can_plate_02brown
+{
+	bumpmap 	heightmap ( textures/raven/canyon/can_plate_02brown_h, 1 ) 
+	diffusemap	textures/raven/canyon/can_plate_02brown_d
+	specularmap	textures/raven/canyon/can_plate_02brown_s
+}
+
+material textures/raven/canyon/support_1brown
+{
+	bumpmap 	heightmap ( textures/raven/canyon/support_1brown_h, 1 ) 
+	diffusemap	textures/raven/canyon/support_1brown_d
+	specularmap	textures/raven/canyon/support_1brown_s
+}
+
+material textures/raven/canyon/can_plate_0
+{	//Concrete floor for the loading yard
+	qer_editorimage	textures/raven/canyon/Can_Concrete_01_d.tga
+	
+	
+	
+	{
+	blend		bumpmap
+	map		heightmap (textures/raven/canyon/Can_Concrete_01_h.tga, 6)
+	}
+	{
+	blend		diffusemap
+	map		textures/raven/canyon/Can_Concrete_01_d.tga
+	}
+	{
+	blend		specularmap
+	map		textures/raven/canyon/Can_Concrete_01_s.tga
+	}
+}
+material textures/raven/canyon/can_dirt02_2_crackeddirt01
+{	//Dirt to rock transition on the sides of the canyon
+	qer_editorimage	textures/raven/canyon/Can_CrackedDirt_01_d.tga
+//	noSelfShadow
+//	noshadows
+	
+	{		//First bumpmap
+	blend		bumpmap
+	map		heightmap (textures/raven/canyon/Can_CrackedDirt_01_h.tga, 8)
+	}
+	{		//First diffusemap
+	blend		diffusemap		//Rock blend
+	map		textures/raven/canyon/Can_CrackedDirt_01_d.tga
+	vertexColor
+	}
+	{		//First specularmap
+	blend		specularmap
+	map		textures/raven/canyon/Can_CrackedDirt_01_s.tga
+	vertexColor
+	}
+	{		//Second blended bumpmap
+	blend		bumpmap
+	map		heightmap(textures/raven/canyon/Can_Dirt_02_h.tga, 8)
+	}
+	{		//Second blended diffusemap
+	blend		diffusemap
+	map		textures/raven/canyon/Can_Dirt_02_d.tga
+	inverseVertexColor
+	}
+	{		//Second blended specularmap
+	blend		specularmap
+	map		textures/raven/canyon/Can_Dirt_02_s.tga
+	inverseVertexColor
+	}
+}
+material textures/raven/canyon/can_dirt_01
+{	//Early dirt texture. Tiles too much
+	qer_editorimage	textures/raven/canyon/Can_Dirt_01_d.tga
+	
+	
+	{
+	blend		bumpmap
+	map		heightmap(textures/raven/canyon/Can_Dirt_01_h.tga, 8)
+	}
+	{
+	blend		diffusemap
+	map		textures/raven/canyon/Can_Dirt_01_d.tga
+	}
+	{
+	blend		specularmap
+	map		textures/raven/canyon/Can_Dirt_01_s.tga
+	}
+}
+material textures/raven/canyon/can_dirt_02
+{	//New, less-tiling dirt
+	qer_editorimage	textures/raven/canyon/Can_Dirt_02_d.tga
+	
+	{
+	blend		bumpmap
+	map		heightmap(textures/raven/canyon/Can_Dirt_02_h.tga, 8)
+	}
+	{
+	blend		diffusemap
+	map		textures/raven/canyon/Can_Dirt_02_d.tga
+	}
+	{
+	blend		specularmap
+	map		textures/raven/canyon/Can_Dirt_02_s.tga
+	}
+}
+material textures/raven/canyon/can_ledge_lower_01
+{
+	qer_editorimage textures/raven/canyon/Can_Ledge_Lower_01_d
+	
+	bumpmap addnormals ( textures/raven/canyon/Can_Ledge_Lower_01_local, heightmap ( textures/raven/canyon/Can_Ledge_Lower_01_h, 1 ) )
+	diffusemap	textures/raven/canyon/Can_Ledge_Lower_01_d
+	specularmap	textures/raven/canyon/Can_Ledge_Lower_01_s
+}
+material textures/raven/canyon/can_ledge_lower_01brown
+{
+	qer_editorimage textures/raven/canyon/Can_Ledge_Lower_01brown_d
+	bumpmap addnormals ( textures/raven/canyon/Can_Ledge_Lower_01_local, heightmap ( textures/raven/canyon/Can_Ledge_Lower_01brown_h, 1 ) )
+	diffusemap	textures/raven/canyon/Can_Ledge_Lower_01brown_d
+	specularmap	textures/raven/canyon/Can_Ledge_Lower_01brown_s
+}
+material textures/raven/canyon/can_ledge_upper_01
+{
+	surfacetype "metal"
+
+	bumpmap		picmip -1	addnormals ( textures/raven/canyon/can_ledge_upper_01_local, heightmap ( textures/raven/canyon/can_ledge_upper_01_h, 1 ) )
+	diffusemap	picmip -1	textures/raven/canyon/can_ledge_upper_01_d
+	specularmap	picmip -2	textures/raven/canyon/can_ledge_upper_01_s
+}
+material textures/raven/canyon/can_ledge_upper_01brown
+{
+	qer_editorimage textures/raven/canyon/Can_Ledge_Upper_01brown_d
+	bumpmap addnormals ( textures/raven/canyon/Can_Ledge_Upper_01_local, heightmap ( textures/raven/canyon/Can_Ledge_Upper_01brown_h, 1 ) )
+	diffusemap	textures/raven/canyon/Can_Ledge_Upper_01brown_d
+	specularmap	textures/raven/canyon/Can_Ledge_Upper_01brown_s
+}
+material textures/raven/canyon/can_topwall_01
+{
+	qer_editorimage textures/raven/canyon/Can_Topwall_01_d
+	
+	bumpmap addnormals ( textures/raven/canyon/Can_Topwall_01_local, heightmap ( textures/raven/canyon/Can_Topwall_01_h, 1 ) )
+	diffusemap	textures/raven/canyon/Can_Topwall_01_d
+	specularmap	textures/raven/canyon/Can_Topwall_01_s
+}
+
+material textures/raven/canyon/can_topwall_01b
+{
+	qer_editorimage textures/raven/canyon/Can_Topwall_01b_d
+	
+	bumpmap addnormals ( textures/raven/canyon/Can_Topwall_01b_local, heightmap ( textures/raven/canyon/Can_Topwall_01_h, 1 ) )
+	diffusemap	textures/raven/canyon/Can_Topwall_01b_d
+	specularmap	textures/raven/canyon/Can_Topwall_01_s
+}
+
+material textures/raven/canyon/can_topwall_01c
+{
+	qer_editorimage textures/raven/canyon/Can_Topwall_01c_d
+	
+	bumpmap addnormals ( textures/raven/canyon/Can_Topwall_01b_local, heightmap ( textures/raven/canyon/Can_Topwall_01_h, 1 ) )
+	diffusemap	textures/raven/canyon/Can_Topwall_01c_d
+	specularmap	textures/raven/canyon/Can_Topwall_01_s
+}
+
+material textures/raven/canyon/can_topwall_02
+{
+	qer_editorimage textures/raven/canyon/Can_Topwall_02_d
+	
+	bumpmap addnormals ( textures/raven/canyon/Can_Topwall_02_local, heightmap ( textures/raven/canyon/Can_Topwall_02_h, 1 ) )
+	diffusemap	textures/raven/canyon/Can_Topwall_02_d
+	specularmap	textures/raven/canyon/Can_Topwall_02_s
+}
+material textures/raven/command_ship/bc7
+{
+	qer_editorimage textures/raven/command_ship/bc7_d
+	bumpmap addnormals ( textures/raven/command_ship/bc7_local, heightmap ( textures/raven/command_ship/bc7_h, 1 ) )
+	diffusemap	textures/raven/command_ship/bc7_d
+	specularmap	textures/raven/command_ship/bc7_s
+}
+material textures/raven/command_ship/c_wall800
+{
+	qer_editorimage textures/raven/command_ship/c_wall800_d
+	bumpmap addnormals ( textures/raven/command_ship/c_wall800_local, heightmap ( textures/raven/command_ship/c_wall800_h, 1 ) )
+	diffusemap	textures/raven/command_ship/c_wall800_d
+	specularmap	textures/raven/command_ship/c_wall800_s
+}
+material textures/raven/command_ship/c_wall800b
+{
+	qer_editorimage textures/raven/command_ship/c_wall800b_d
+	bumpmap addnormals ( textures/raven/command_ship/c_wall800b_local, heightmap ( textures/raven/command_ship/c_wall800b_h, 1 ) )
+	diffusemap	textures/raven/command_ship/c_wall800b_d
+	specularmap	textures/raven/command_ship/c_wall800b_s
+}
+material textures/raven/command_ship/c_wall800b_plain
+{
+	qer_editorimage textures/raven/command_ship/c_wall800b_plain_d
+	bumpmap addnormals ( textures/raven/command_ship/c_wall800b_plain_local, heightmap ( textures/raven/command_ship/c_wall800b_plain_h, 1 ) )
+	diffusemap	textures/raven/command_ship/c_wall800b_plain_d
+	specularmap	textures/raven/command_ship/c_wall800b_plain_s
+}
+material textures/raven/command_ship/c_wall801
+{
+	qer_editorimage textures/raven/command_ship/c_wall801_d
+	bumpmap addnormals ( textures/raven/command_ship/c_wall801_local, heightmap ( textures/raven/command_ship/c_wall801_h, 1 ) )
+	diffusemap	textures/raven/command_ship/c_wall801_d
+	specularmap	textures/raven/command_ship/c_wall801_s
+}
+material textures/raven/command_ship/cs_railing01c
+{
+	qer_editorimage textures/raven/command_ship/cs_railing01c_d	
+	{
+	blend		bumpmap
+	map		heightmap (textures/raven/command_ship/cs_railing01c_h.tga, 2)
+	}
+	{
+	blend		diffusemap
+	map		textures/raven/command_ship/cs_railing01c_d.tga
+	}
+	{
+	blend		specularmap
+	map		textures/raven/command_ship/cs_railing01c_s.tga
+	}
+}
+material textures/raven/command_ship/csa_cieling1a_med
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/command_ship/csa_cieling1a_med_d
+	bumpmap 	textures/raven/command_ship/csa_cieling1a_med_local
+	diffusemap	textures/raven/command_ship/csa_cieling1a_med_d
+	specularmap	textures/raven/command_ship/csa_cieling1a_med_s
+}
+material textures/raven/command_ship/csa_trim5_med
+{
+	qer_editorimage textures/raven/command_ship/csa_trim5_med_d
+	bumpmap 	textures/raven/command_ship/csa_trim5_local
+	diffusemap	textures/raven/command_ship/csa_trim5_med_d
+	specularmap	textures/raven/command_ship/csa_trim5_med_s
+}
+material textures/raven/terminal/t1_metal1dark
+{
+	qer_editorimage textures/raven/terminal/t1_metal1dark_d.tga
+	
+	bumpmap addnormals	( textures/raven/terminal/t1_metal_local.tga, heightmap ( textures/raven/terminal/t1_metal1_h.tga, 1 ) )
+	specularmap		textures/raven/terminal/t1_metal1dark_s.tga       
+      	diffusemap 		textures/raven/terminal/t1_metal1dark_d.tga
+}
+
+material textures/raven/terminal/t1_metal1dark2
+{
+	qer_editorimage textures/raven/terminal/t1_metal1dark2_d.tga
+	
+	bumpmap addnormals	( textures/raven/terminal/t1_metal_local.tga, heightmap ( textures/raven/terminal/t1_metal1_h.tga, 1 ) )
+	specularmap		textures/raven/terminal/t1_metal1dark2_s.tga       
+      	diffusemap 		textures/raven/terminal/t1_metal1dark2_d.tga
+}
+material textures/raven/terminal/t1_metal1light
+{
+	qer_editorimage textures/raven/terminal/t1_metal1light_ed.tga
+	
+	
+	bumpmap addnormals	( textures/raven/terminal/t1_metal_local.tga, heightmap ( textures/raven/terminal/t1_metal1_h.tga, 1 ) )
+	specularmap		textures/raven/terminal/t1_metal1light_s.tga       
+      	diffusemap 		textures/raven/terminal/t1_metal1light_d.tga
+}
+material textures/raven/common_misc/concrete06
+{	
+	qer_editorimage	textures/raven/common_misc/concrete06_d.tga
+	
+	{
+	blend		bumpmap
+	map		heightmap (textures/raven/common_misc/concrete06_h.tga, 10)
+	}
+	{
+	blend		diffusemap
+	map		textures/raven/common_misc/concrete06_d.tga
+	}
+	{
+	blend		specularmap
+	map		textures/raven/common_misc/concrete06_s.tga
+	}
+}
+material textures/raven/common_misc/concrete07
+{
+	qer_editorimage textures/raven/common_misc/concrete07_d	
+	
+	
+	{
+	blend		bumpmap
+	map		heightmap (textures/raven/common_misc/concrete07_h.tga, 10)
+	}
+	{
+	blend		diffusemap
+	map		textures/raven/common_misc/concrete07_d.tga
+	}
+	{
+	blend		specularmap
+	map		textures/raven/common_misc/concrete07_s.tga
+	}
+}
+material textures/raven/common_misc/concrete09
+{
+	qer_editorimage textures/raven/common_misc/concrete09_d	
+	
+	
+	{
+	blend		bumpmap
+	map		heightmap (textures/raven/common_misc/concrete09_h.tga, 10)
+	}
+	{
+	blend		diffusemap
+	map		textures/raven/common_misc/concrete09_d.tga
+	}
+	{
+	blend		specularmap
+	map		textures/raven/common_misc/concrete09_s.tga
+	}
+}
+material textures/raven/common_misc/concrete_09_test
+{
+	qer_editorimage textures/raven/common_misc/concrete09_d
+	
+	
+	bumpMap heightmap (textures/raven/common_misc/concrete09_h.tga, 2)
+	diffuseMap		textures/raven/common_misc/concrete09_d.tga
+	specularMap		textures/raven/common_misc/concrete09_s.tga
+}
+material textures/raven/common_walls/outdoor_wall1_1a
+{
+	qer_EditorImage		textures/raven/common_walls/outdoor_wall1_1a_d.tga
+	bumpMap addnormals	( textures/raven/common_walls/outdoor_wall1_1_local.tga, heightmap ( textures/raven/common_walls/outdoor_wall1_1_h.tga, 1 ) )
+	diffuseMap			textures/raven/common_walls/outdoor_wall1_1a_d.tga
+	specularMap			textures/raven/common_walls/outdoor_wall1_1a_s.tga
+}
+material textures/raven/common_walls/outdoor_wall1_7
+{
+	qer_editorimage textures/raven/common_walls/outdoor_wall1_7_d
+	
+	bumpmap addnormals ( textures/raven/common_walls/outdoor_wall1_7_local, heightmap ( textures/raven/common_walls/outdoor_wall1_7_h, 1 ) )
+	diffusemap	textures/raven/common_walls/outdoor_wall1_7_d
+	specularmap	textures/raven/common_walls/outdoor_wall1_7_s
+}
+material textures/raven/common_walls/wall1_1
+{
+	qer_editorimage textures/raven/common_walls/wall1_1_d
+	bumpmap addnormals ( textures/raven/common_walls/wall1_1_local, heightmap ( textures/raven/common_walls/wall1_1_h, 1 ) )
+	diffusemap	textures/raven/common_walls/wall1_1_d
+	specularmap	textures/raven/common_walls/wall1_1_s
+}
+material textures/raven/common_walls/wall1_1b
+{
+	qer_editorimage textures/raven/common_walls/wall1_1b_d
+	bumpmap addnormals ( textures/raven/common_walls/wall1_1b_local, heightmap ( textures/raven/common_walls/wall1_1b_h, 1 ) )
+	diffusemap	textures/raven/common_walls/wall1_1b_d
+	specularmap	textures/raven/common_walls/wall1_1b_s
+}
+material textures/raven/common_walls/wall1_2av
+{
+	qer_editorimage textures/raven/common_walls/wall1_2v_d
+	bumpmap addnormals ( textures/raven/common_walls/wall1_2_local, heightmap ( textures/raven/common_walls/wall1_2v_h, 1 ) )
+	diffusemap	textures/raven/common_walls/wall1_2v_d
+	specularmap	textures/raven/common_walls/wall1_2v_s
+}
+
+material textures/raven/common_walls/outdoor_wall1_3
+{
+	qer_editorimage textures/raven/common_walls/outdoor_wall1_3_d
+	bumpmap addnormals ( textures/raven/common_walls/outdoor_wall1_3_local, heightmap ( textures/raven/common_walls/outdoor_wall1_3_h, 1 ) )
+	diffusemap	textures/raven/common_walls/outdoor_wall1_3_d
+	specularmap	textures/raven/common_walls/outdoor_wall1_3_s
+}
+
+material textures/raven/common_walls/outdoor_wall1_8
+{
+	qer_editorimage textures/raven/common_walls/outdoor_wall1_8_d
+	bumpmap addnormals ( textures/raven/common_walls/outdoor_wall1_8_local, heightmap ( textures/raven/common_walls/outdoor_wall1_8_h, 1 ) )
+	diffusemap	textures/raven/common_walls/outdoor_wall1_8_d
+	specularmap	textures/raven/common_walls/outdoor_wall1_8_s
+}
+
+material textures/raven/common_walls/outdoor_wall2_2
+{
+	qer_editorimage textures/raven/common_walls/outdoor_wall2_2_d
+	bumpmap addnormals ( textures/raven/common_walls/outdoor_wall2_2_local, heightmap ( textures/raven/common_walls/outdoor_wall2_2_h, 1 ) )
+	diffusemap	textures/raven/common_walls/outdoor_wall2_2_d
+	specularmap	textures/raven/common_walls/outdoor_wall2_2_s
+}
+
+material textures/raven/common_walls/wall4_1
+{
+	qer_editorimage textures/raven/common_walls/wall4_1_d
+	bumpmap addnormals ( textures/raven/common_walls/wall4_1_local, heightmap ( textures/raven/common_walls/wall4_1_h, 1 ) )
+	diffusemap	textures/raven/common_walls/wall4_1_d
+	specularmap	textures/raven/common_walls/wall4_1_s
+}
+
+material textures/raven/common_walls/wall4_1v
+{
+	qer_editorimage textures/raven/common_walls/wall4_1v_d
+	bumpmap addnormals ( textures/raven/common_walls/wall4_1v_local, heightmap ( textures/raven/common_walls/wall4_1v_h, 1 ) )
+	diffusemap	textures/raven/common_walls/wall4_1v_d
+	specularmap	textures/raven/common_walls/wall4_1v_s
+}
+
+material textures/raven/common_walls/wall4_2v
+{
+	qer_editorimage textures/raven/common_walls/wall4_2v_d
+	bumpmap addnormals ( textures/raven/common_walls/wall4_2v_local, heightmap ( textures/raven/common_walls/wall4_2v_h, 1 ) )
+	diffusemap	textures/raven/common_walls/wall4_2v_d
+	specularmap	textures/raven/common_walls/wall4_2v_s
+}
+
+material textures/raven/common_walls/outdoor_wall1_6a
+{
+	bumpmap 	textures/raven/common_walls/outdoor_wall1_6a_local
+	diffusemap	textures/raven/common_walls/outdoor_wall1_6a_d
+	specularmap	textures/raven/common_walls/outdoor_wall1_6a_s
+	{
+			blend	add
+			map		textures/raven/common_walls/outdoor_wall1_6a_add
+			red		parm0  
+			green	parm1  
+			blue	parm2  
+	}
+}
+
+material textures/raven/proto/bunker_concrete
+{
+	qer_editorimage textures/raven/proto/bunker_concrete_d.tga  
+	bumpmap addnormals ( textures/raven/proto/bunker_concrete_local.tga, heightmap ( textures/raven/proto/bunker_concrete_h.tga, 1 ) )
+	diffusemap	textures/raven/proto/bunker_concrete_d.tga
+	specularmap	textures/raven/proto/bunker_concrete_s.tga
+}
+material textures/raven/stroyent/stroy_steel_03
+{
+	qer_editorimage textures/raven/stroyent/stroy_steel_03_d
+	bumpmap addnormals ( textures/raven/stroyent/stroy_steel_03_local, heightmap ( textures/raven/stroyent/stroy_steel_03_h, 1 ) )
+	diffusemap	textures/raven/stroyent/stroy_steel_03_d
+	specularmap	textures/raven/stroyent/stroy_steel_03_s
+}
+material textures/raven/tram/tr_flatstonewall_c
+{
+	qer_editorimage textures/raven/tram/tr_flatstonewall_c_d
+	bumpmap addnormals ( textures/raven/tram/tr_flatstonewall_u_local, heightmap ( textures/raven/tram/tr_flatstonewall_c_h, 1 ) )
+	diffusemap	textures/raven/tram/tr_flatstonewall_c_d
+	specularmap	textures/raven/tram/tr_flatstonewall_c_s
+}
+material textures/raven/tram/tr_flatstonewall_se
+{
+	qer_editorimage textures/raven/tram/tr_flatstonewall_se_d
+	bumpmap addnormals ( textures/raven/tram/tr_flatstonewall_u_local, heightmap ( textures/raven/tram/tr_flatstonewall_se_h, 1 ) )
+	diffusemap	textures/raven/tram/tr_flatstonewall_se_d
+	specularmap	textures/raven/tram/tr_flatstonewall_se_s
+}
+material textures/raven/tram/tr_flatstonewall_sedirty
+{
+	qer_editorimage textures/raven/tram/tr_flatstonewall_sedirty_d
+	bumpmap addnormals ( textures/raven/tram/tr_flatstonewall_u_local, heightmap ( textures/raven/tram/tr_flatstonewall_sedirty_h, 1 ) )
+	diffusemap	textures/raven/tram/tr_flatstonewall_sedirty_d
+	specularmap	textures/raven/tram/tr_flatstonewall_sedirty_s
+}
+material textures/raven/tram/tr_flatstonewall_u
+{
+	qer_editorimage textures/raven/tram/tr_flatstonewall_u_d
+	bumpmap addnormals ( textures/raven/tram/tr_flatstonewall_u_local, heightmap ( textures/raven/tram/tr_flatstonewall_u_h, 1 ) )
+	diffusemap	textures/raven/tram/tr_flatstonewall_u_d
+	specularmap	textures/raven/tram/tr_flatstonewall_u_s
+}
+material textures/raven/tram/tr_flatstonewall_udirty
+{
+	qer_editorimage textures/raven/tram/tr_flatstonewall_udirty_d
+	bumpmap addnormals ( textures/raven/tram/tr_flatstonewall_u_local, heightmap ( textures/raven/tram/tr_flatstonewall_udirty_h, 1 ) )
+	diffusemap	textures/raven/tram/tr_flatstonewall_udirty_d
+	specularmap	textures/raven/tram/tr_flatstonewall_udirty_s
+}
+material textures/raven/tram/tr_ladder_01dusty
+{
+	qer_editorimage textures/raven/tram/tr_ladder_01dusty_d
+	twosided
+	noshadows
+
+	{       
+		diffusemap textures/raven/tram/tr_ladder_01dusty_d.tga
+		bumpmap addnormals ( textures/raven/tram/tr_ladder_01dusty_local, heightmap ( textures/raven/tram/tr_ladder_01dusty_h, 1 ) )
+		specularmap	textures/raven/tram/tr_ladder_01dusty_s	
+		alphaTest		.5
+	}
+}
+material textures/raven/tram/tr_pipe_outside_05
+{
+	qer_editorimage textures/raven/tram/tr_pipe_outside_05_d
+	bumpmap addnormals ( textures/raven/tram/tr_pipe_outside_05_local, heightmap ( textures/raven/tram/tr_pipe_outside_05_h, 1 ) )
+	diffusemap	textures/raven/tram/tr_pipe_outside_05_d
+	specularmap	textures/raven/tram/tr_pipe_outside_05_s
+}
+material textures/raven/canyon/crate_a_front
+{
+	qer_editorimage textures/raven/canyon/crate_a_front_d
+	bumpmap addnormals ( textures/raven/canyon/crate_a_front_local, heightmap ( textures/raven/canyon/crate_a_front_h, 1 ) )
+	diffusemap	textures/raven/canyon/crate_a_front_d
+	specularmap	textures/raven/canyon/crate_a_front_s
+}
+material textures/raven/command_ship/bc1
+{
+	qer_editorimage textures/raven/command_ship/bc1_d
+	bumpmap addnormals ( textures/raven/command_ship/bc1_local, heightmap ( textures/raven/command_ship/bc1_h, 1 ) )
+	diffusemap	textures/raven/command_ship/bc1_d
+	specularmap	textures/raven/command_ship/bc1_s
+}
+material textures/raven/command_ship/bc3
+{
+	qer_editorimage textures/raven/command_ship/bc3_d
+	bumpmap addnormals ( textures/raven/command_ship/bc3_local, heightmap ( textures/raven/command_ship/bc3_h, 1 ) )
+	diffusemap	textures/raven/command_ship/bc3_d
+	specularmap	textures/raven/command_ship/bc3_s
+}
+material textures/raven/command_ship/bcs3
+{
+	qer_editorimage textures/raven/command_ship/bcs3_d
+	bumpmap addnormals ( textures/raven/command_ship/bcs3_local, heightmap ( textures/raven/command_ship/bcs3_h, 1 ) )
+	diffusemap	textures/raven/command_ship/bcs3_d
+	specularmap	textures/raven/command_ship/bcs3_s
+}
+material textures/raven/command_ship/c_wall8
+{
+	qer_editorimage textures/raven/command_ship/c_wall8_d
+	bumpmap addnormals ( textures/raven/command_ship/c_wall8_local, heightmap ( textures/raven/command_ship/c_wall8_h, 1 ) )
+	diffusemap	textures/raven/command_ship/c_wall8_d
+	specularmap	textures/raven/command_ship/c_wall8_s
+}
+material textures/raven/command_ship/csa_trim5b_1_med
+{
+	qer_editorimage textures/raven/command_ship/csa_trim5b_1_med_d
+	bumpmap 	textures/raven/command_ship/csa_trim5b_1_local
+	diffusemap	textures/raven/command_ship/csa_trim5b_1_med_d
+	specularmap	textures/raven/command_ship/csa_trim5b_1_med_s
+}
+material textures/raven/command_ship/csa_trim5b_3_med
+{
+	qer_editorimage textures/raven/command_ship/csa_trim5b_3_med_d
+	
+	bumpmap 	textures/raven/command_ship/csa_trim5b_3_local
+	diffusemap	textures/raven/command_ship/csa_trim5b_3_med_d
+	specularmap	textures/raven/command_ship/csa_trim5b_3_med_s
+}
+material textures/raven/command_ship/csa_trim5b_med
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/command_ship/csa_trim5b_med_d
+	bumpmap 	textures/raven/command_ship/csa_trim5b_local
+	diffusemap	textures/raven/command_ship/csa_trim5b_med_d
+	specularmap	textures/raven/command_ship/csa_trim5b_med_s
+}
+material textures/raven/terminal/t11_wall01a
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/terminal/t11_wall01a_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t11_wall01a_local, heightmap ( textures/raven/terminal/t11_wall01a_h, 1 ) )
+	diffusemap	textures/raven/terminal/t11_wall01a_d
+	specularmap	textures/raven/terminal/t11_wall01a_s
+}
+material textures/raven/terminal/t11_wall01e
+{
+	qer_editorimage textures/raven/terminal/t11_wall01e_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t11_wall01e_local, heightmap ( textures/raven/terminal/t11_wall01e_h, 1 ) )
+	diffusemap	textures/raven/terminal/t11_wall01e_d
+	specularmap	textures/raven/terminal/t11_wall01e_s
+}
+material textures/raven/terminal/t12_wall_2
+{
+	qer_editorimage textures/raven/terminal/t12_wall_2_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t12_wall_2_local, heightmap ( textures/raven/terminal/t12_wall_2_h, 1 ) )
+	diffusemap	textures/raven/terminal/t12_wall_2_d
+	specularmap	textures/raven/terminal/t12_wall_2_s
+}
+material textures/raven/terminal/t13_ceiling_1
+{
+	qer_editorimage textures/raven/terminal/t13_ceiling_1_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t13_ceiling_1_local, heightmap ( textures/raven/terminal/t13_ceiling_1_h, 1 ) )
+	diffusemap	textures/raven/terminal/t13_ceiling_1_d
+	specularmap	textures/raven/terminal/t13_ceiling_1_s
+}
+material textures/raven/terminal/t2_wall1
+{
+	qer_editorimage textures/raven/terminal/t2_wall1_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t2_wall1_local, heightmap ( textures/raven/terminal/t2_wall1_h, 1 ) )
+	diffusemap	textures/raven/terminal/t2_wall1_d
+	specularmap	textures/raven/terminal/t2_wall1_s
+}
+material textures/raven/terminal/t2_walltrim2
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/terminal/t2_walltrim2_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t2_walltrim2_local, heightmap ( textures/raven/terminal/t2_walltrim2_h, 1 ) )
+	diffusemap	textures/raven/terminal/t2_walltrim2_d
+	specularmap	textures/raven/terminal/t2_walltrim2_s
+}
+material textures/raven/terminal/t3_vtrim_01
+{
+	qer_editorimage textures/raven/terminal/t3_vtrim_01_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t3_vtrim_01_local, heightmap ( textures/raven/terminal/t3_vtrim_01_h, 1 ) )
+	diffusemap	textures/raven/terminal/t3_vtrim_01_d
+	specularmap	textures/raven/terminal/t3_vtrim_01_s
+}
+material textures/raven/terminal/t_shaft_4
+{	
+	surfaceType "metal"
+	qer_editorimage textures/raven/terminal/t_shaft_4_d
+	bumpmap addnormals ( textures/raven/terminal/t_shaft_4_local, heightmap ( textures/raven/terminal/t_shaft_4_h, 1 ) )
+	diffusemap	textures/raven/terminal/t_shaft_4_d
+	specularmap	textures/raven/terminal/t_shaft_4_s
+}
+material textures/raven/common_walls/c_wall_10
+{
+	qer_editorimage textures/raven/common_walls/c_wall_10_d
+	bumpmap addnormals ( textures/raven/common_walls/c_wall_10_local, heightmap ( textures/raven/common_walls/c_wall_10_h, 1 ) )
+	diffusemap	textures/raven/common_walls/c_wall_10_d
+	specularmap	textures/raven/common_walls/c_wall_10_s
+}
+material textures/raven/common_walls/miscpanel1_1
+{
+	qer_editorimage textures/raven/common_walls/miscpanel1_1_d
+	bumpmap addnormals ( textures/raven/common_walls/miscpanel1_1_local, heightmap ( textures/raven/common_walls/miscpanel1_1_h, 1 ) )
+	diffusemap	textures/raven/common_walls/miscpanel1_1_d
+	specularmap	textures/raven/common_walls/miscpanel1_1_s
+}
+material textures/raven/common_walls/miscpanel1_3
+{
+	qer_editorimage textures/raven/common_walls/miscpanel1_3_d
+	bumpmap addnormals ( textures/raven/common_walls/miscpanel1_3_local, heightmap ( textures/raven/common_walls/miscpanel1_3_h, 1 ) )
+	diffusemap	textures/raven/common_walls/miscpanel1_3_d
+	specularmap	textures/raven/common_walls/miscpanel1_3_s
+}
+material textures/raven/common_walls/wall2_5
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/common_walls/wall2_5_d
+	bumpmap addnormals ( textures/raven/common_walls/wall2_5_local, heightmap ( textures/raven/common_walls/wall2_5_h, 1 ) )
+	diffusemap	textures/raven/common_walls/wall2_5_d
+	specularmap	textures/raven/common_walls/wall2_5_s
+}
+material textures/raven/consoles/conmonitorback1d
+{
+	qer_editorimage textures/raven/consoles/conmonitorback1d_d
+	
+	bumpmap addnormals ( textures/raven/consoles/conmonitorback1c_local, heightmap ( textures/raven/consoles/conmonitorback1d_h, 1 ) )
+	diffusemap	textures/raven/consoles/conmonitorback1d_d
+	specularmap	textures/raven/consoles/conmonitorback1d_s
+}
+material textures/raven/consoles/conmonitorxl1d
+{
+	qer_editorimage textures/raven/consoles/conmonitorxl1d_d
+	
+	bumpmap addnormals ( textures/raven/consoles/conmonitorxl1c_local, heightmap ( textures/raven/consoles/conmonitorxl1d_h, 1 ) )
+	diffusemap	textures/raven/consoles/conmonitorxl1d_d
+	specularmap	textures/raven/consoles/conmonitorxl1d_s
+}
+
+material textures/raven/consoles/conmonitorxl1e
+{
+	qer_editorimage textures/raven/consoles/conmonitorxl1e_d
+	
+	bumpmap addnormals ( textures/raven/consoles/conmonitorxl1c_local, heightmap ( textures/raven/consoles/conmonitorxl1e_h, 1 ) )
+	diffusemap	textures/raven/consoles/conmonitorxl1e_d
+	specularmap	textures/raven/consoles/conmonitorxl1e_s
+	{
+		blend	add
+		map		textures/raven/consoles/conmonitorxl1e_add
+		red		parm0  
+		green	parm1  
+		blue	parm2  
+	}
+}
+
+material textures/raven/consoles/console1d
+{
+	qer_editorimage textures/raven/consoles/console1d_d
+	
+	bumpmap addnormals ( textures/raven/consoles/console1c_local, heightmap ( textures/raven/consoles/console1d_h, 1 ) )
+	diffusemap	textures/raven/consoles/console1d_d
+	specularmap	textures/raven/consoles/console1d_s
+}
+material textures/raven/consoles/console3d
+{
+	qer_editorimage textures/raven/consoles/console3d_d
+	
+	bumpmap addnormals ( textures/raven/consoles/console3b_local, heightmap ( textures/raven/consoles/console3d_h, 1 ) )
+	diffusemap	textures/raven/consoles/console3d_d
+	specularmap	textures/raven/consoles/console3d_s
+}
+material textures/raven/consoles/console4d
+{
+	qer_editorimage textures/raven/consoles/console4d_d
+	
+	bumpmap addnormals ( textures/raven/consoles/console4c_local, heightmap ( textures/raven/consoles/console4d_h, 1 ) )
+	diffusemap	textures/raven/consoles/console4d_d
+	specularmap	textures/raven/consoles/console4d_s
+}
+material textures/raven/consoles/console5e
+{
+	qer_editorimage textures/raven/consoles/console5e_d
+	
+	bumpmap addnormals ( textures/raven/consoles/console5c_local, heightmap ( textures/raven/consoles/console5e_h, 1 ) )
+	diffusemap	textures/raven/consoles/console5e_d
+	specularmap	textures/raven/consoles/console5e_s
+}
+material textures/raven/consoles/console7g
+{
+	qer_editorimage textures/raven/consoles/console7g_d
+	
+	bumpmap addnormals ( textures/raven/consoles/console7c_local, heightmap ( textures/raven/consoles/console7g_h, 1 ) )
+	diffusemap	textures/raven/consoles/console7g_d
+	specularmap	textures/raven/consoles/console7g_s
+}
+material textures/raven/consoles/console8e
+{
+	qer_editorimage textures/raven/consoles/console8e_d
+	
+	bumpmap addnormals ( textures/raven/consoles/console8c_local, heightmap ( textures/raven/consoles/console8e_h, 1 ) )
+	diffusemap	textures/raven/consoles/console8e_d
+	specularmap	textures/raven/consoles/console8e_s
+}
+material textures/raven/hub/sh2_panel1a
+{
+	qer_editorimage textures/raven/hub/sh2_panel1a_d
+	bumpmap addnormals ( textures/raven/hub/sh2_panel1a_local, heightmap ( textures/raven/hub/sh2_panel1a_h, 1 ) )
+	diffusemap	textures/raven/hub/sh2_panel1a_d
+	specularmap	textures/raven/hub/sh2_panel1a_s
+}
+material textures/raven/hub/sh2_panel1b
+{
+	qer_editorimage textures/raven/hub/sh2_panel1b_d
+	bumpmap addnormals ( textures/raven/hub/sh2_panel1b_local, heightmap ( textures/raven/hub/sh2_panel1b_h, 1 ) )
+	diffusemap	textures/raven/hub/sh2_panel1b_d
+	specularmap	textures/raven/hub/sh2_panel1b_s
+}
+material textures/raven/hub/sh_outerwalltrim_3
+{
+	qer_editorimage textures/raven/hub/sh_outerwalltrim_3_d
+	bumpmap addnormals ( textures/raven/hub/sh_outerwalltrim_3_local, heightmap ( textures/raven/hub/sh_outerwalltrim_3_h, 1 ) )
+	diffusemap	textures/raven/hub/sh_outerwalltrim_3_d
+	specularmap	textures/raven/hub/sh_outerwalltrim_3_s
+}
+material textures/raven/hub/sh_outerwalltrim_4
+{
+	qer_editorimage textures/raven/hub/sh_outerwalltrim_4_d
+	bumpmap addnormals ( textures/raven/hub/sh_outerwalltrim_4_local, heightmap ( textures/raven/hub/sh_outerwalltrim_4_h, 1 ) )
+	diffusemap	textures/raven/hub/sh_outerwalltrim_4_d
+	specularmap	textures/raven/hub/sh_outerwalltrim_4_s
+}
+material textures/raven/medlabs/chad_panel_1
+{
+	qer_editorimage textures/raven/medlabs/chad_panel_1_d
+	bumpmap addnormals ( textures/raven/medlabs/chad_panel_1_local, heightmap ( textures/raven/medlabs/chad_panel_1_h, 1 ) )
+	diffusemap	textures/raven/medlabs/chad_panel_1_d
+	specularmap	textures/raven/medlabs/chad_panel_1_s
+}
+material textures/raven/medlabs/chad_panel_3
+{
+	qer_editorimage textures/raven/medlabs/chad_panel_3_d
+	bumpmap addnormals ( textures/raven/medlabs/chad_panel_3_local, heightmap ( textures/raven/medlabs/chad_panel_3_h, 1 ) )
+	diffusemap	textures/raven/medlabs/chad_panel_3_d
+	specularmap	textures/raven/medlabs/chad_panel_3_s
+}
+material textures/raven/medlabs/chad_panel_4
+{
+	qer_editorimage textures/raven/medlabs/chad_panel_4_d
+	bumpmap addnormals ( textures/raven/medlabs/chad_panel_4_local, heightmap ( textures/raven/medlabs/chad_panel_4_h, 1 ) )
+	diffusemap	textures/raven/medlabs/chad_panel_4_d
+	specularmap	textures/raven/medlabs/chad_panel_4_s
+}
+material textures/raven/medlabs/chad_panel_4b
+{
+	qer_editorimage textures/raven/medlabs/chad_panel_4b_d
+	bumpmap addnormals ( textures/raven/medlabs/chad_panel_4b_local, heightmap ( textures/raven/medlabs/chad_panel_4b_h, 1 ) )
+	diffusemap	textures/raven/medlabs/chad_panel_4b_d
+	specularmap	textures/raven/medlabs/chad_panel_4b_s
+}
+material textures/raven/medlabs/chad_pipe_1
+{
+	qer_editorimage textures/raven/medlabs/chad_pipe_1_d
+	bumpmap addnormals ( textures/raven/medlabs/chad_pipe_1_local, heightmap ( textures/raven/medlabs/chad_pipe_1_h, 1 ) )
+	diffusemap	textures/raven/medlabs/chad_pipe_1_d
+	specularmap	textures/raven/medlabs/chad_pipe_1_s
+}
+material textures/raven/medlabs/chad_pipe_2
+{
+	qer_editorimage textures/raven/medlabs/chad_pipe_2_d
+	bumpmap addnormals ( textures/raven/medlabs/chad_pipe_2_local, heightmap ( textures/raven/medlabs/chad_pipe_2_h, 1 ) )
+	diffusemap	textures/raven/medlabs/chad_pipe_2_d
+	specularmap	textures/raven/medlabs/chad_pipe_2_s
+}
+material textures/raven/medlabs/med2_ceiling1_ut
+{
+	qer_editorimage textures/raven/medlabs/med2_ceiling1_d.tga
+	unSmoothedTangents
+	
+	bumpMap addnormals	( textures/raven/medlabs/med2_ceiling1_local.tga, heightmap ( textures/raven/medlabs/med2_ceiling1_h.tga, 3 ) )
+	specularMap			textures/raven/medlabs/med2_ceiling1_s.tga       
+    diffuseMap 			textures/raven/medlabs/med2_ceiling1_d.tga
+		
+}
+material textures/raven/medlabs/medwall
+{
+	qer_editorimage textures/raven/medlabs/medwall_d
+	bumpmap addnormals ( textures/raven/medlabs/medwall_local, heightmap ( textures/raven/medlabs/medwall_h, 1 ) )
+	diffusemap	textures/raven/medlabs/medwall_d
+	specularmap	textures/raven/medlabs/medwall_s
+}
+material textures/raven/prison/p2_wall_1
+{
+	qer_editorimage textures/raven/prison/p2_wall_1_d
+	bumpmap addnormals ( textures/raven/prison/p2_wall_1_local, heightmap ( textures/raven/prison/p2_wall_1_h, 1 ) )
+	diffusemap	textures/raven/prison/p2_wall_1_d
+	specularmap	textures/raven/prison/p2_wall_1_s
+}
+material textures/raven/prison/p4_floor_1
+{
+	surfaceType 	"metal"
+	{
+		diffusemap	textures/raven/prison/p4_floor_1_d
+		bumpmap addnormals ( textures/raven/prison/p4_floor_1_local, heightmap ( textures/raven/prison/p4_floor_1_h, 1 ) )
+		specularmap	textures/raven/prison/p4_floor_1_s
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult 3,3,0,0
+	}
+}
+material textures/raven/prison/p4_floor_5
+{
+	qer_editorimage textures/raven/prison/p4_floor_5_d
+	bumpmap addnormals ( textures/raven/prison/p4_floor_5_local, heightmap ( textures/raven/prison/p4_floor_5_h, 1 ) )
+	diffusemap	textures/raven/prison/p4_floor_5_d
+	specularmap	textures/raven/prison/p4_floor_5_s
+}
+material textures/raven/proto/bunker_w_b
+{
+	qer_editorimage textures/raven/proto/bunker_w_b_d.tga  
+	bumpmap addnormals ( textures/raven/proto/bunker_w_b_local.tga, heightmap ( textures/raven/proto/bunker_w_b_h.tga, 1 ) )
+	diffusemap	textures/raven/proto/bunker_w_b_d.tga
+	specularmap	textures/raven/proto/bunker_w_b_s.tga
+}
+material textures/raven/proto/concrete
+{
+	qer_editorimage textures/raven/proto/concrete_d.tga
+	bumpmap addnormals ( textures/raven/proto/concretebase_local.tga, heightmap ( textures/raven/proto/concrete_h.tga, 1 ) )
+	diffusemap	textures/raven/proto/concrete_d.tga
+	specularmap	textures/raven/proto/concrete_s.tga
+}
+material textures/raven/proto/concrete1
+{
+	qer_editorimage textures/raven/proto/concrete1_d.tga
+	bumpmap addnormals ( textures/raven/proto/concretebase_local.tga, heightmap ( textures/raven/proto/concrete1_h.tga, 1 ) )
+	diffusemap	textures/raven/proto/concrete1_d.tga
+	specularmap	textures/raven/proto/concrete1_s.tga
+}
+material textures/raven/proto/concrete3
+{
+	qer_editorimage textures/raven/proto/concrete3_d.tga
+	bumpmap addnormals ( textures/raven/proto/concretebase_local.tga, heightmap ( textures/raven/proto/concrete3_h.tga, 1 ) )
+	diffusemap	textures/raven/proto/concrete3_d.tga
+	specularmap	textures/raven/proto/concrete3_s.tga
+}
+material textures/raven/stroyent/gorefloor_b
+{
+	qer_editorimage textures/raven/stroyent/gorefloor_b_d
+	bumpmap 	textures/raven/stroyent/gorefloor_b_local
+	diffusemap	textures/raven/stroyent/gorefloor_b_d
+	specularmap	textures/raven/stroyent/gorefloor_b_s
+}
+material textures/raven/canyon/door_rim_female
+{
+	qer_editorimage textures/raven/canyon/door_rim_female_d
+	bumpmap addnormals ( textures/raven/canyon/door_rim_female_local, heightmap ( textures/raven/canyon/door_rim_female_h, 1 ) )
+	diffusemap	textures/raven/canyon/door_rim_female_d
+	specularmap	textures/raven/canyon/door_rim_female_s
+}
+material textures/raven/canyon/door_rim_male
+{
+	qer_editorimage textures/raven/canyon/door_rim_male_d
+	bumpmap addnormals ( textures/raven/canyon/door_rim_male_local, heightmap ( textures/raven/canyon/door_rim_male_h, 1 ) )
+	diffusemap	textures/raven/canyon/door_rim_male_d
+	specularmap	textures/raven/canyon/door_rim_male_s
+}
+material textures/raven/canyon/grate_01
+{
+	qer_editorimage textures/raven/canyon/grate_01_d
+	
+	
+	twosided	
+
+	{       
+      		diffusemap textures/raven/canyon/grate_01_d.tga
+		bumpmap addnormals ( textures/raven/canyon/grate_01_local, heightmap ( textures/raven/canyon/grate_01_h, 1 ) )
+		specularmap	textures/raven/canyon/grate_01_s		
+		alphaTest	.5
+	}
+}
+
+material textures/raven/canyon/grate_01b
+{
+	qer_editorimage textures/raven/canyon/grate_01b_d
+	
+	
+	twosided	
+
+	{       
+      		diffusemap textures/raven/canyon/grate_01b_d.tga
+		bumpmap addnormals ( textures/raven/canyon/grate_01_local, heightmap ( textures/raven/canyon/grate_01_h, 1 ) )
+		specularmap	textures/raven/canyon/grate_01_s		
+		alphaTest	.5
+	}
+}
+
+material textures/raven/command_ship/c_flr5_trim
+{
+	qer_editorimage textures/raven/command_ship/c_flr5_trim_d
+	bumpmap addnormals ( textures/raven/command_ship/c_flr5_trim_local, heightmap ( textures/raven/command_ship/c_flr5_trim_h, 1 ) )
+	diffusemap	textures/raven/command_ship/c_flr5_trim_d
+	specularmap	textures/raven/command_ship/c_flr5_trim_s
+}
+material textures/raven/command_ship/c_wall801a
+{
+	qer_editorimage textures/raven/command_ship/c_wall801a_d
+	bumpmap addnormals ( textures/raven/command_ship/c_wall801a_local, heightmap ( textures/raven/command_ship/c_wall801a_h, 1 ) )
+	diffusemap	textures/raven/command_ship/c_wall801a_d
+	specularmap	textures/raven/command_ship/c_wall801a_s
+}
+material textures/raven/command_ship/cs_floor1_1
+{
+	qer_editorimage textures/raven/command_ship/cs_floor1_1_ed
+	bumpmap addnormals ( textures/raven/command_ship/cs_floor1_1_local, heightmap ( textures/raven/command_ship/cs_floor1_1_h, 1 ) )
+	diffusemap	textures/raven/command_ship/cs_floor1_1_d
+	specularmap	textures/raven/command_ship/cs_floor1_1_s
+}
+material textures/raven/command_ship/cs_floor2_1
+{
+	qer_editorimage textures/raven/command_ship/cs_floor2_1_ed
+	bumpmap addnormals ( textures/raven/command_ship/cs_floor2_1_local, heightmap ( textures/raven/command_ship/cs_floor2_1_h, 1 ) )
+	diffusemap	textures/raven/command_ship/cs_floor2_1_d
+	specularmap	textures/raven/command_ship/cs_floor2_1_s
+}
+material textures/raven/command_ship/cs_floor3_1
+{
+	qer_editorimage textures/raven/command_ship/cs_floor3_1_ed
+	bumpmap addnormals ( textures/raven/command_ship/cs_floor3_1_local, heightmap ( textures/raven/command_ship/cs_floor3_1_h, 1 ) )
+	diffusemap	textures/raven/command_ship/cs_floor3_1_d
+	specularmap	textures/raven/command_ship/cs_floor3_1_s
+}
+material textures/raven/command_ship/cs_floorplate1c
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/command_ship/cs_floorplate1c_d
+	bumpmap addnormals ( textures/raven/command_ship/cs_floorplate1c_local, heightmap ( textures/raven/command_ship/cs_floorplate1c_h, 1 ) )
+	diffusemap	textures/raven/command_ship/cs_floorplate1c_d
+	specularmap	textures/raven/command_ship/cs_floorplate1c_s
+}
+material textures/raven/command_ship/cs_longtrim
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/command_ship/cs_longtrim_d
+	bumpmap addnormals ( textures/raven/command_ship/cs_longtrim_local, heightmap ( textures/raven/command_ship/cs_longtrim_h, 1 ) )
+	diffusemap	textures/raven/command_ship/cs_longtrim_d
+	specularmap	textures/raven/command_ship/cs_longtrim_s
+}
+material textures/raven/command_ship/cs_pipediamond
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/command_ship/cs_pipediamond_d
+	bumpmap 	textures/raven/command_ship/cs_pipediamond_local
+	diffusemap	textures/raven/command_ship/cs_pipediamond_d
+	specularmap	textures/raven/command_ship/cs_pipediamond_s
+	vertexColor
+}
+material textures/raven/command_ship/cs_pipediamond_01
+{
+	qer_editorimage	textures/raven/command_ship/cs_pipediamond_01_d.tga
+	{
+		bumpmap			textures/raven/command_ship/cs_pipediamond_local.tga
+		diffusemap		textures/raven/command_ship/cs_pipediamond_01_d.tga
+		specularmap		textures/raven/command_ship/cs_pipediamond_s.tga
+		vertexColor
+	}
+}
+material textures/raven/command_ship/cs_pipediamond_02
+{
+	qer_editorimage	textures/raven/command_ship/cs_pipediamond_02_d.tga
+	{
+		bumpmap			textures/raven/command_ship/cs_pipediamond_local.tga
+		diffusemap		textures/raven/command_ship/cs_pipediamond_02_d.tga
+		specularmap		textures/raven/command_ship/cs_pipediamond_s.tga
+		vertexColor
+	}
+}
+material textures/raven/command_ship/cs_pipediamond_03
+{
+	surfacetype "metal"
+	{
+		bumpmap			textures/raven/command_ship/cs_pipediamond_local.tga
+		diffusemap		textures/raven/command_ship/cs_pipediamond_03_d.tga
+		specularmap		textures/raven/command_ship/cs_pipediamond_s.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	1.5,3,0,0
+	}
+}
+material textures/raven/command_ship/cs_pipehexigon
+{
+	qer_editorimage textures/raven/command_ship/cs_pipehexigon_d
+	bumpmap addnormals ( textures/raven/command_ship/cs_pipehexigon_local, heightmap ( textures/raven/command_ship/cs_pipehexigon_h, 1 ) )
+	diffusemap	textures/raven/command_ship/cs_pipehexigon_d
+	specularmap	textures/raven/command_ship/cs_pipehexigon_s
+}
+material textures/raven/command_ship/cs_pipehexigon_01
+{
+	qer_editorimage	textures/raven/command_ship/cs_pipehexigon_01_d.tga
+	bumpmap		addnormals( textures/raven/command_ship/cs_pipehexigon_local.tga, heightmap( textures/raven/command_ship/cs_pipehexigon_h.tga, 1 ) )
+	diffusemap		textures/raven/command_ship/cs_pipehexigon_01_d.tga
+	specularmap		textures/raven/command_ship/cs_pipehexigon_s.tga
+}
+material textures/raven/command_ship/cs_pipehexigon_02
+{
+	qer_editorimage	textures/raven/command_ship/cs_pipehexigon_02_d.tga
+	bumpmap		addnormals( textures/raven/command_ship/cs_pipehexigon_local.tga, heightmap( textures/raven/command_ship/cs_pipehexigon_h.tga, 1 ) )
+	diffusemap		textures/raven/command_ship/cs_pipehexigon_02_d.tga
+	specularmap		textures/raven/command_ship/cs_pipehexigon_s.tga
+}
+material textures/raven/command_ship/cs_pipehexigon_03
+{
+	qer_editorimage	textures/raven/command_ship/cs_pipehexigon_03_d.tga
+	bumpmap		addnormals( textures/raven/command_ship/cs_pipehexigon_local.tga, heightmap( textures/raven/command_ship/cs_pipehexigon_h.tga, 1 ) )
+	diffusemap		textures/raven/command_ship/cs_pipehexigon_03_d.tga
+	specularmap		textures/raven/command_ship/cs_pipehexigon_s.tga
+}
+material textures/raven/command_ship/cs_prisonpipecapt
+{
+	qer_editorimage textures/raven/command_ship/cs_prisonpipecapt_d
+	{       
+		diffusemap textures/raven/command_ship/cs_prisonpipecapt_d.tga
+		bumpmap addnormals ( textures/raven/command_ship/cs_prisonpipecapt_local, heightmap ( textures/raven/command_ship/cs_prisonpipecapt_h, 1 ) )
+		specularmap	textures/raven/command_ship/cs_prisonpipecapt_s
+		alphaTest		.5
+	}
+}
+material textures/raven/command_ship/cs_trim1_2
+{
+	qer_editorimage textures/raven/command_ship/cs_trim1_2_d
+	bumpmap addnormals ( textures/raven/command_ship/cs_trim1_2_local, heightmap ( textures/raven/command_ship/cs_trim1_2_h, 1 ) )
+	diffusemap	textures/raven/command_ship/cs_trim1_2_d
+	specularmap	textures/raven/command_ship/cs_trim1_2_s
+}
+material textures/raven/command_ship/cs_trim2_2
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/command_ship/cs_trim2_2_d
+	bumpmap addnormals ( textures/raven/command_ship/cs_trim2_2_local, heightmap ( textures/raven/command_ship/cs_trim2_2_h, 1 ) )
+	diffusemap	textures/raven/command_ship/cs_trim2_2_d
+	specularmap	textures/raven/command_ship/cs_trim2_2_s
+}
+material textures/raven/command_ship/csa_flrtrim_01
+{
+	qer_editorimage textures/raven/command_ship/csa_flrtrim_01_d
+	bumpmap addnormals ( textures/raven/command_ship/csa_flrtrim_01_local, heightmap ( textures/raven/command_ship/csa_flrtrim_01_h, 1 ) )
+	diffusemap	textures/raven/command_ship/csa_flrtrim_01_d
+	specularmap	textures/raven/command_ship/csa_flrtrim_01_s
+}
+material textures/raven/command_ship/csa_flrtrim_03
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/command_ship/csa_flrtrim_03_d
+	bumpmap addnormals ( textures/raven/command_ship/csa_flrtrim_03_local, heightmap ( textures/raven/command_ship/csa_flrtrim_03_h, 1 ) )
+	diffusemap	textures/raven/command_ship/csa_flrtrim_03_d
+	specularmap	textures/raven/command_ship/csa_flrtrim_03_s
+}
+material textures/raven/command_ship/csa_flrtrim_04b
+{
+	qer_editorimage textures/raven/command_ship/csa_flrtrim_04b_d
+	bumpmap addnormals ( textures/raven/command_ship/csa_flrtrim_04b_local, heightmap ( textures/raven/command_ship/csa_flrtrim_04b_h, 1 ) )
+	diffusemap	textures/raven/command_ship/csa_flrtrim_04b_d
+	specularmap	textures/raven/command_ship/csa_flrtrim_04b_s
+}
+material textures/raven/command_ship/csa_flrtrim_06b
+{
+	qer_editorimage textures/raven/command_ship/csa_flrtrim_06b_d
+	bumpmap 	textures/raven/command_ship/csa_flrtrim_06b_local
+	diffusemap	textures/raven/command_ship/csa_flrtrim_06b_d
+	specularmap	textures/raven/command_ship/csa_flrtrim_06b_s
+}
+material textures/raven/command_ship/csa_trim5e_1_med
+{
+	qer_editorimage textures/raven/command_ship/csa_trim5e_1_med_d
+	
+	bumpmap 	textures/raven/command_ship/csa_trim5e_1_local
+	diffusemap	textures/raven/command_ship/csa_trim5e_1_med_d
+	specularmap	textures/raven/command_ship/csa_trim5e_1_med_s
+}
+material textures/raven/command_ship/csa_trim5e_2_med
+{
+	qer_editorimage textures/raven/command_ship/csa_trim5e_2_med_d
+	
+	bumpmap 	textures/raven/command_ship/csa_trim5e_2_local
+	diffusemap	textures/raven/command_ship/csa_trim5e_2_med_d
+	specularmap	textures/raven/command_ship/csa_trim5e_2_med_s
+}
+material textures/raven/command_ship/csa_trim5e_med
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/command_ship/csa_trim5e_med_d
+	
+	bumpmap 	textures/raven/command_ship/csa_trim5e_local
+	diffusemap	textures/raven/command_ship/csa_trim5e_med_d
+	specularmap	textures/raven/command_ship/csa_trim5e_med_s
+}
+material textures/raven/command_ship/csa_trim5f_med
+{
+	qer_editorimage textures/raven/command_ship/csa_trim5f_med_d
+	bumpmap 	textures/raven/command_ship/csa_trim5f_local
+	diffusemap	textures/raven/command_ship/csa_trim5f_med_d
+	specularmap	textures/raven/command_ship/csa_trim5f_med_s
+}
+material textures/raven/terminal/c_trim2
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/terminal/c_trim2_d
+	
+	bumpmap addnormals ( textures/raven/terminal/c_trim2_local, heightmap ( textures/raven/terminal/c_trim2_h, 1 ) )
+	diffusemap	textures/raven/terminal/c_trim2_d
+	specularmap	textures/raven/terminal/c_trim2_s
+}
+material textures/raven/terminal/chiclightflat
+{
+	qer_editorimage textures/raven/terminal/chiclightflat_d
+	
+	noshadows
+	nonsolid
+	{       
+	      	diffusemap textures/raven/terminal/chiclightflat_d
+		bumpmap addnormals ( textures/raven/terminal/chiclightflat_local, heightmap ( textures/raven/terminal/chiclightflat_h, 1 ) )
+		specularmap	textures/raven/terminal/chiclightflat_s
+		alphaTest .5
+	}
+	{
+		if(Parm4!=1)
+		blend GL_ONE, GL_ONE
+		map textures/raven/terminal/chiclightflat_g
+	}
+	{
+		if(Parm4 == 1)
+		blend add
+		map	textures/raven/terminal/chiclightflat_g
+		red Parm0
+		green Parm1
+		blue Parm2
+	}
+	
+}
+material textures/raven/terminal/hvac_ducts
+{	//Aaarrrrgggghhhh!!!! Oh, the hatred! Somehow it is re-parsing my filenames if I use the generic!!
+	qer_editorimage textures/raven/terminal/HVAC_Duct_d.tga
+	
+	bumpmap		addnormals(textures/raven/terminal/HVAC_Duct_local.tga, heightmap(textures/raven/terminal/HVAC_Duct_h.tga,1))
+	specularmap	textures/raven/terminal/HVAC_Duct_s.tga       
+	diffusemap	textures/raven/terminal/HVAC_Duct_d.tga
+}
+material textures/raven/terminal/media_trim_2
+{
+	qer_editorimage textures/raven/terminal/media_trim_2_d
+	
+	bumpmap addnormals ( textures/raven/terminal/media_trim_2_local, heightmap ( textures/raven/terminal/media_trim_2_h, 1 ) )
+	diffusemap	textures/raven/terminal/media_trim_2_d
+	specularmap	textures/raven/terminal/media_trim_2_s
+}
+material textures/raven/terminal/process2_textglass1
+{
+	translucent
+	twoSided
+	noshadows
+	nonsolid
+	
+	qer_editorimage		textures/raven/terminal/process2_glasstext1.tga
+	{
+		blend add
+		map uncompressed textures/raven/terminal/process2_glasstext1.tga
+		scroll time * .2 , time * -0.1
+	}
+	{
+		blend add
+		program sfx/cubemap
+	}	
+}
+material textures/raven/terminal/small_light7_orange
+{
+	qer_EditorImage		textures/raven/common_lights/small_light7.tga
+	nonSolid
+	noShadows
+	bumpMap			textures/raven/common_lights/small_light7_local.tga
+	diffuseMap		textures/raven/common_lights/small_light7_d.tga
+	specularMap		textures/raven/common_lights/small_light7_s.tga
+	
+	
+	{
+		blend		add
+		map			textures/raven/common_lights/small_light7_add.tga
+		red		1 
+		green		0.49 
+		blue		0.15
+	}
+}
+material textures/raven/terminal/square_hole
+{
+	qer_editorimage textures/raven/terminal/square_hole_d
+	
+	
+
+	{       
+      		diffusemap textures/raven/terminal/square_hole_d.tga
+		bumpmap addnormals ( textures/raven/terminal/square_hole_local, heightmap ( textures/raven/terminal/square_hole_h, 1 ) )
+		specularmap	textures/raven/terminal/square_hole_s
+		alphaTest	.5
+	}
+}
+material textures/raven/terminal/t13_trim_3
+{
+	qer_editorimage textures/raven/terminal/t13_trim_3_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t13_trim_3_local, heightmap ( textures/raven/terminal/t13_trim_3_h, 1 ) )
+	diffusemap	textures/raven/terminal/t13_trim_3_d
+	specularmap	textures/raven/terminal/t13_trim_3_s
+}
+material textures/raven/terminal/t13_trim_4
+{
+	qer_editorimage textures/raven/terminal/t13_trim_4_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t13_trim_4_local, heightmap ( textures/raven/terminal/t13_trim_4_h, 1 ) )
+	diffusemap	textures/raven/terminal/t13_trim_4_d
+	specularmap	textures/raven/terminal/t13_trim_4_s
+}
+material textures/raven/terminal/t1_floor1
+{
+	qer_editorimage textures/raven/terminal/t1_floor1_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t1_floor1_local, heightmap ( textures/raven/terminal/t1_floor1_h, 1 ) )
+	diffusemap	textures/raven/terminal/t1_floor1_d
+	specularmap	textures/raven/terminal/t1_floor1_s
+}
+material textures/raven/terminal/t1_floor2
+{
+	qer_editorimage textures/raven/terminal/t1_floor2_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t1_floor2_local, heightmap ( textures/raven/terminal/t1_floor2_h, 1 ) )
+	diffusemap	textures/raven/terminal/t1_floor2_d
+	specularmap	textures/raven/terminal/t1_floor2_s
+}
+material textures/raven/terminal/t1_metal1
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/terminal/t1_metal1_d.tga
+	
+	bumpmap 		picmip -1	addnormals ( textures/raven/terminal/t1_metal_local.tga, heightmap ( textures/raven/terminal/t1_metal1_h.tga, 1 ) )
+	specularmap		picmip -1	textures/raven/terminal/t1_metal1_s.tga       
+      	diffusemap 		picmip -1	textures/raven/terminal/t1_metal1_d.tga
+}
+material textures/raven/terminal/t1_metal3
+{
+	qer_editorimage textures/raven/terminal/t1_metal3_ed.tga
+	
+	
+	bumpmap addnormals	( textures/raven/terminal/t1_metal3_local.tga, heightmap ( textures/raven/terminal/t1_metal3_h.tga, 1 ) )
+	specularmap		textures/raven/terminal/t1_metal3_s.tga       
+      	diffusemap 		textures/raven/terminal/t1_metal3_d.tga
+}
+material textures/raven/terminal/t2_ceiling1
+{
+	qer_editorimage textures/raven/terminal/t2_ceiling1_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t2_ceiling1_local, heightmap ( textures/raven/terminal/t2_ceiling1_h, 1 ) )
+	diffusemap	textures/raven/terminal/t2_ceiling1_d
+	specularmap	textures/raven/terminal/t2_ceiling1_s
+}
+material textures/raven/terminal/t2_floor1
+{
+	surfaceType "metal"
+	
+	qer_editorimage textures/raven/terminal/t2_floor1_d
+	{
+		bumpmap 	picmip -1	addnormals ( textures/raven/terminal/t2_floor1_local, heightmap ( textures/raven/terminal/t2_floor1_h, 1 ) )
+		diffusemap	picmip -1	textures/raven/terminal/t2_floor1_d
+		specularmap	picmip -2	textures/raven/terminal/t2_floor1_s
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0
+	}
+}
+material textures/raven/terminal/t2_trim1
+{
+	qer_editorimage textures/raven/terminal/t2_trim1_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t2_trim1_local, heightmap ( textures/raven/terminal/t2_trim1_h, 1 ) )
+	diffusemap	textures/raven/terminal/t2_trim1_d
+	specularmap	textures/raven/terminal/t2_trim1_s
+}
+material textures/raven/terminal/t3_floor_01
+{
+	qer_editorimage textures/raven/terminal/t3_floor_01_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t3_floor_01_local, heightmap ( textures/raven/terminal/t3_floor_01_h, 1 ) )
+	diffusemap	textures/raven/terminal/t3_floor_01_d
+	specularmap	textures/raven/terminal/t3_floor_01_s
+}
+material textures/raven/terminal/t4_floor_2
+{
+	qer_editorimage textures/raven/terminal/t4_floor_2_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t4_floor_2_local, heightmap ( textures/raven/terminal/t4_floor_2_h, 1 ) )
+	diffusemap	textures/raven/terminal/t4_floor_2_d
+	specularmap	textures/raven/terminal/t4_floor_2_s
+}
+material textures/raven/terminal/t4_walltrim_1
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/terminal/t4_walltrim_1_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t4_walltrim_1_local, heightmap ( textures/raven/terminal/t4_walltrim_1_h, 1 ) )
+	diffusemap	textures/raven/terminal/t4_walltrim_1_d
+	specularmap	textures/raven/terminal/t4_walltrim_1_s
+}
+material textures/raven/terminal/t5_ceilingtrim_1
+{
+	qer_editorimage textures/raven/terminal/t5_ceilingtrim_1_d
+	
+	bumpmap		picmip -1	addnormals ( textures/raven/terminal/t5_ceilingtrim_1_local, heightmap ( textures/raven/terminal/t5_ceilingtrim_1_h, 1 ) )
+	diffusemap	picmip -1	textures/raven/terminal/t5_ceilingtrim_1_d
+	specularmap	picmip -2	textures/raven/terminal/t5_ceilingtrim_1_s
+}
+material textures/raven/terminal/t5_walltrim_3
+{
+	qer_editorimage textures/raven/terminal/t5_walltrim_3_d
+	
+	bumpmap		picmip -1	addnormals ( textures/raven/terminal/t5_walltrim_3_local, heightmap ( textures/raven/terminal/t5_walltrim_3_h, 1 ) )
+	diffusemap	picmip -1	textures/raven/terminal/t5_walltrim_3_d
+	specularmap	picmip -2	textures/raven/terminal/t5_walltrim_3_s
+}
+material textures/raven/terminal/t6_wall_10
+{
+	qer_editorimage textures/raven/terminal/t6_wall_10_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t6_wall_10_local, heightmap ( textures/raven/terminal/t6_wall_10_h, 1 ) )
+	diffusemap	textures/raven/terminal/t6_wall_10_d
+	specularmap	textures/raven/terminal/t6_wall_10_s
+}
+material textures/raven/terminal/t6_wall_2
+{
+	qer_editorimage textures/raven/terminal/t6_wall_2_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t6_wall_2_local, heightmap ( textures/raven/terminal/t6_wall_2_h, 1 ) )
+	diffusemap	textures/raven/terminal/t6_wall_2_d
+	specularmap	textures/raven/terminal/t6_wall_2_s
+}
+material textures/raven/terminal/t6_wall_4
+{
+	qer_editorimage textures/raven/terminal/t6_wall_4_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t6_wall_4_local, heightmap ( textures/raven/terminal/t6_wall_4_h, 1 ) )
+	diffusemap	textures/raven/terminal/t6_wall_4_d
+	specularmap	textures/raven/terminal/t6_wall_4_s
+}
+material textures/raven/terminal/t7_walltrim_3
+{
+	qer_editorimage textures/raven/terminal/t7_walltrim_3_d
+	bumpmap addnormals ( textures/raven/terminal/t7_walltrim_3_local, heightmap ( textures/raven/terminal/t7_walltrim_3_h, 1 ) )
+	diffusemap	textures/raven/terminal/t7_walltrim_3_d
+	specularmap	textures/raven/terminal/t7_walltrim_3_s
+}
+material textures/raven/terminal/t7_walltrim_5
+{
+	qer_editorimage textures/raven/terminal/t7_walltrim_5_d
+	
+	bumpmap addnormals ( textures/raven/terminal/t7_walltrim_5_local, heightmap ( textures/raven/terminal/t7_walltrim_5_h, 1 ) )
+	diffusemap	textures/raven/terminal/t7_walltrim_5_d
+	specularmap	textures/raven/terminal/t7_walltrim_5_s
+}
+material textures/raven/terminal/t8_pillar_1
+{
+	qer_editorimage textures/raven/terminal/t8_pillar_1_d
+	bumpmap addnormals ( textures/raven/terminal/t8_pillar_1_local, heightmap ( textures/raven/terminal/t8_pillar_1_h, 1 ) )
+	diffusemap	textures/raven/terminal/t8_pillar_1_d
+	specularmap	textures/raven/terminal/t8_pillar_1_s
+}
+material textures/raven/terminal/t8_pillar_2
+{
+	qer_editorimage textures/raven/terminal/t8_pillar_2_d
+	bumpmap addnormals ( textures/raven/terminal/t8_pillar_2_local, heightmap ( textures/raven/terminal/t8_pillar_2_h, 1 ) )
+	diffusemap	textures/raven/terminal/t8_pillar_2_d
+	specularmap	textures/raven/terminal/t8_pillar_2_s
+}
+material textures/raven/terminal/t8_pillar_2a
+{
+	qer_editorimage textures/raven/terminal/t8_pillar_2a_d
+	bumpmap addnormals ( textures/raven/terminal/t8_pillar_2a_local, heightmap ( textures/raven/terminal/t8_pillar_2a_h, 1 ) )
+	diffusemap	textures/raven/terminal/t8_pillar_2a_d
+	specularmap	textures/raven/terminal/t8_pillar_2a_s
+}
+material textures/raven/terminal/t8_pillar_3
+{
+	qer_editorimage textures/raven/terminal/t8_pillar_3_d
+	bumpmap addnormals ( textures/raven/terminal/t8_pillar_3_local, heightmap ( textures/raven/terminal/t8_pillar_3_h, 1 ) )
+	diffusemap	textures/raven/terminal/t8_pillar_3_d
+	specularmap	textures/raven/terminal/t8_pillar_3_s
+}
+material textures/raven/terminal/t_shaft_4b
+{
+	qer_editorimage textures/raven/terminal/t_shaft_4b_d
+	bumpmap addnormals ( textures/raven/terminal/t_shaft_4b_local, heightmap ( textures/raven/terminal/t_shaft_4b_h, 1 ) )
+	diffusemap	textures/raven/terminal/t_shaft_4b_d
+	specularmap	textures/raven/terminal/t_shaft_4b_s
+}
+
+material textures/raven/terminal/t_window_alpha_01
+{
+	qer_editorimage textures/raven/terminal/t_window_alpha_01_d.tga
+
+	surfaceType "glass"	
+	twoSided
+	noshadows
+   
+	{       
+  		diffuseMap 	picmip -1	textures/raven/terminal/t_window_alpha_01_d.tga
+		bumpmap 	picmip -1	addnormals	( textures/raven/terminal/t_window_alpha_01_local.tga, heightmap ( textures/raven/terminal/t_window_alpha_01_h.tga, 1 ) )
+		specularmap	picmip -2	textures/raven/terminal/t_window_alpha_01_s.tga    
+ 		alphaTest .5
+	}
+}
+
+material textures/raven/terminal/t_window_alpha_01_nonsolid
+{
+	qer_editorimage textures/raven/terminal/t_window_alpha_01_d.tga
+
+	surfaceType "glass"	
+	twoSided
+	noshadows
+	nonSolid
+   
+	{       
+  		diffuseMap 	picmip -1	textures/raven/terminal/t_window_alpha_01_d.tga
+		bumpmap 	picmip -1	addnormals	( textures/raven/terminal/t_window_alpha_01_local.tga, heightmap ( textures/raven/terminal/t_window_alpha_01_h.tga, 1 ) )
+		specularmap	picmip -2	textures/raven/terminal/t_window_alpha_01_s.tga    
+ 		alphaTest .5
+	}
+}
+
+material textures/raven/terminal/t_window_alpha_01extra
+{
+	qer_editorimage textures/raven/terminal/t_window_alpha_01extra_d.tga
+	
+	twoSided
+	noshadows
+
+	{       
+      		diffuseMap textures/raven/terminal/t_window_alpha_01extra_d.tga
+		bumpmap addnormals	( textures/raven/terminal/t_window_alpha_01_local.tga, heightmap ( textures/raven/terminal/t_window_alpha_01extra_h.tga, 1 ) )
+		specularMap		textures/raven/terminal/t_window_alpha_01extra_s.tga       
+	 	alphaTest .5
+	}
+}
+
+material textures/raven/terminal/t_window_alpha_02_glass
+{
+	qer_editorimage textures/raven/terminal/t_window_alpha_02_d.tga
+	twoSided
+	noshadows
+	{
+		blend blend
+		map uncompressed textures/raven/glass/clean_d_alpha.tga
+		// Removed ignore alphatest
+	}
+	
+	{
+		blend  add
+		program sfx/cubemap
+		// Removed ignore alphatest
+	}	
+	{       
+		specularMap textures/raven/terminal/t_window_alpha_02_s.tga      	
+		diffuseMap textures/raven/terminal/t_window_alpha_02_d.tga
+		bumpMap addnormals	( textures/raven/terminal/t_window_alpha_02_local.tga, heightmap ( textures/raven/terminal/t_window_alpha_02_h.tga, 1 ) )
+		alphaTest .5
+	}
+//{
+//	translucent
+//	twoSided
+//	noshadows
+//	
+//}
+}
+material textures/raven/terminal/t_wirebundle_thick
+{
+	qer_editorimage textures/raven/terminal/t_wirebundle_thick_d
+	
+	nonsolid
+	twosided	
+	{       
+      		diffusemap textures/raven/terminal/t_wirebundle_thick_d.tga
+		bumpmap addnormals ( textures/raven/terminal/t_wirebundle_thick_local, heightmap ( textures/raven/terminal/t_wirebundle_thick_h, 1 ) )
+		specularmap	textures/raven/terminal/t_wirebundle_thick_s
+		alphaTest	.5
+	}
+}
+material textures/raven/terminal/t_wirebundle_thick_2
+{
+	qer_editorimage textures/raven/terminal/t_wirebundle_thick_2_d
+	
+	nonsolid
+	twosided	
+
+	{       
+      		diffusemap textures/raven/terminal/t_wirebundle_thick_2_d.tga
+		bumpmap addnormals ( textures/raven/terminal/t_wirebundle_thick_2_local, heightmap ( textures/raven/terminal/t_wirebundle_thick_2_h, 1 ) )
+		specularmap	textures/raven/terminal/t_wirebundle_thick_2_s
+		alphaTest	.5
+	}
+}
+material textures/raven/terminal/t_wirebundle_thick_3
+{
+	qer_editorimage textures/raven/terminal/t_wirebundle_thick_3_d
+	
+	nonsolid
+	twosided	
+
+	{       
+      		diffusemap  	picmip -1	textures/raven/terminal/t_wirebundle_thick_3_d.tga
+		bumpmap 	picmip -1	addnormals ( textures/raven/terminal/t_wirebundle_thick_3_local, heightmap ( textures/raven/terminal/t_wirebundle_thick_3_h, 1 ) )
+		specularmap	picmip -2	textures/raven/terminal/t_wirebundle_thick_3_s
+		alphaTest	.5
+		
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+        	detailMult 2,2,0,0 
+	}
+}
+material textures/raven/terminal/t_wirebundle_thin
+{
+	qer_editorimage textures/raven/terminal/t_wirebundle_thin_d
+	
+	nonsolid
+	twosided	
+
+	{       
+      		diffusemap 	picmip -1	textures/raven/terminal/t_wirebundle_thin_d.tga
+		bumpmap 	picmip -1	addnormals ( textures/raven/terminal/t_wirebundle_thin_local, heightmap ( textures/raven/terminal/t_wirebundle_thin_h, 1 ) )
+		specularmap	picmip -2	textures/raven/terminal/t_wirebundle_thin_s
+		alphaTest	.5
+				
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+        	detailMult 2,2,0,0 
+	}
+}
+material textures/raven/terminal/t_wirebundle_thin_2
+{
+	qer_editorimage textures/raven/terminal/t_wirebundle_thin_2_d
+	
+	nonsolid
+	twosided	
+
+	{       
+      		diffusemap textures/raven/terminal/t_wirebundle_thin_2_d.tga
+		bumpmap addnormals ( textures/raven/terminal/t_wirebundle_thin_2_local, heightmap ( textures/raven/terminal/t_wirebundle_thin_2_h, 1 ) )
+		specularmap	textures/raven/terminal/t_wirebundle_thin_2_s		
+		alphaTest	.5
+	}
+}
+material textures/raven/terminal/t_wirebundle_thin_3
+{
+	qer_editorimage textures/raven/terminal/t_wirebundle_thin_3_d
+	
+	nonsolid
+	twosided	
+
+	{       
+      		diffusemap textures/raven/terminal/t_wirebundle_thin_3_d.tga
+		bumpmap addnormals ( textures/raven/terminal/t_wirebundle_thin_3_local, heightmap ( textures/raven/terminal/t_wirebundle_thin_3_h, 1 ) )
+		specularmap	textures/raven/terminal/t_wirebundle_thin_3_s		
+		alphaTest	.5
+	}
+}
+material textures/raven/terminal/t_wirecap
+{
+	qer_editorimage textures/raven/terminal/t_wirecap_d
+	
+	
+
+	{       
+      		diffusemap textures/raven/terminal/t_wirecap_d.tga
+		bumpmap addnormals ( textures/raven/terminal/t_wirecap_local, heightmap ( textures/raven/terminal/t_wirecap_h, 1 ) )
+		specularmap	textures/raven/terminal/t_wirecap_s		
+		alphaTest	.5
+	}
+}
+material textures/raven/terminal/tn_fronta_1
+{
+	qer_editorimage textures/raven/terminal/tn_fronta_1_d
+	
+	bumpmap addnormals ( textures/raven/terminal/tn_fronta_1_local, heightmap ( textures/raven/terminal/tn_fronta_1_h, 1 ) )
+	diffusemap	textures/raven/terminal/tn_fronta_1_d
+	specularmap	textures/raven/terminal/tn_fronta_1_s
+}
+material textures/raven/terminal/tunlight
+{
+	qer_editorimage textures/raven/terminal/tunlight_d
+	bumpmap addnormals ( textures/raven/terminal/tunlight_local, heightmap ( textures/raven/terminal/tunlight_h, 1 ) )
+	diffusemap	textures/raven/terminal/tunlight_d
+	specularmap	textures/raven/terminal/tunlight_s
+	{
+		blend		GL_ONE, GL_ONE
+		map			textures/raven/terminal/tunlight_g
+		red		Parm0  
+		green		Parm1  
+		blue		Parm2  
+	}
+}
+material textures/raven/common_floors/c_4floor_1b
+{
+	qer_editorimage textures/raven/common_floors/c_4floor_1b_d
+	
+	bumpmap addnormals ( textures/raven/common_floors/c_4floor_1b_local, heightmap ( textures/raven/common_floors/c_4floor_1b_h, 1 ) )
+	diffusemap	textures/raven/common_floors/c_4floor_1b_d
+	specularmap	textures/raven/common_floors/c_4floor_1b_s
+}
+material textures/raven/common_floors/c_floor_1
+{
+	qer_editorimage textures/raven/common_floors/c_floor_1_d
+	bumpmap addnormals ( textures/raven/common_floors/c_floor_1_local, heightmap ( textures/raven/common_floors/c_floor_1_h, 1 ) )
+	diffusemap	textures/raven/common_floors/c_floor_1_d
+	specularmap	textures/raven/common_floors/c_floor_1_s
+}
+material textures/raven/common_floors/c_floor_1b
+{
+	qer_editorimage textures/raven/common_floors/c_floor_1b_d.tga
+	bumpMap addnormals ( textures/raven/common_floors/c_floor_1_local.tga, heightmap ( textures/raven/common_floors/c_floor_1_h.tga, 1 ) )
+	diffusemap	textures/raven/common_floors/c_floor_1b_d.tga
+	specularmap	textures/raven/common_floors/c_floor_1_s.tga
+}
+material textures/raven/common_floors/c_floor_4a
+{
+	qer_editorimage textures/raven/common_floors/c_floor_4a_d
+	bumpmap addnormals ( textures/raven/common_floors/c_floor_4a_local, heightmap ( textures/raven/common_floors/c_floor_4a_h, 1 ) )
+	diffusemap	textures/raven/common_floors/c_floor_4a_d
+	specularmap	textures/raven/common_floors/c_floor_4a_s
+}
+material textures/raven/common_floors/steptop16c
+{
+	qer_editorimage textures/raven/common_floors/steptop16c_d
+	bumpmap addnormals ( textures/raven/common_floors/steptop16c_local, heightmap ( textures/raven/common_floors/steptop16c_h, 1 ) )
+	diffusemap	textures/raven/common_floors/steptop16c_d
+	specularmap	textures/raven/common_floors/steptop16c_s
+	{
+		blend		GL_ONE, GL_ONE
+		map			textures/raven/common_floors/steptop16c_g
+		red		Parm0  
+		green		Parm1  
+		blue		Parm2  
+	}
+}
+
+material textures/raven/common_lights/light1_1
+{
+	qer_EditorImage	textures/raven/common_lights/light1_1_d.tga
+	bumpMap			textures/raven/common_lights/light1_1_local.tga
+	diffuseMap		textures/raven/common_lights/light1_1_d.tga
+	specularMap		textures/raven/common_lights/light1_1_s.tga
+	{
+		blend		add
+		map			textures/raven/common_lights/light1_1_add.tga
+		red			parm0
+		green		parm1
+		blue		parm2
+	}
+}
+material textures/raven/common_lights/rect_light10
+{
+	qer_editorimage textures/raven/common_lights/rect_light10_d
+	
+	
+	bumpmap addnormals ( textures/raven/common_lights/rect_light10_local, heightmap ( textures/raven/common_lights/rect_light10_h, 1 ) )
+	diffusemap	textures/raven/common_lights/rect_light10_d
+	specularmap	textures/raven/common_lights/rect_light10_s
+	{
+		blend		GL_ONE, GL_ONE
+		map			textures/raven/common_lights/rect_light10_g
+		red		Parm0  
+		green		Parm1  
+		blue		Parm2  
+	}
+}
+material textures/raven/common_lights/rect_light2
+{
+	qer_editorimage textures/raven/common_lights/rect_light2_d
+	
+	
+	bumpmap addnormals ( textures/raven/common_lights/rect_light2_local, heightmap ( textures/raven/common_lights/rect_light2_h, 1 ) )
+	diffusemap	textures/raven/common_lights/rect_light2_d
+	specularmap	textures/raven/common_lights/rect_light2_s
+	{
+		blend		GL_ONE, GL_ONE
+		map			textures/raven/common_lights/rect_light2_g
+		red		Parm0  
+		green		Parm1  
+		blue		Parm2  
+	}
+}
+material textures/raven/common_lights/rect_light4
+{
+	qer_editorimage textures/raven/common_lights/rect_light4_d
+	
+	
+	bumpmap 	textures/raven/common_lights/rect_light4_local
+	diffusemap	textures/raven/common_lights/rect_light4_d
+	specularmap	textures/raven/common_lights/rect_light4_s
+	{
+		blend		GL_ONE, GL_ONE
+		map			textures/raven/common_lights/rect_light4_g
+		red		Parm0  
+		green		Parm1  
+		blue		Parm2  
+	}
+}
+material textures/raven/common_lights/rect_light5_mcc_med
+{
+	qer_editorimage textures/raven/common_lights/rect_light5_d
+	
+	
+	bumpmap addnormals ( textures/raven/common_lights/rect_light5_local, heightmap ( textures/raven/common_lights/rect_light5_h, 1 ) )
+	diffusemap	textures/raven/common_lights/rect_light5_d
+	specularmap	textures/raven/common_lights/rect_light5_s
+	{
+		blend		GL_ONE, GL_ONE
+		map			textures/raven/common_lights/rect_light5_mccmed_g
+		red		Parm0  
+		green		Parm1  
+		blue		Parm2  
+	}
+}
+material textures/raven/common_lights/rect_light6
+{
+	qer_editorimage textures/raven/common_lights/rect_light6_d
+	
+	
+	bumpmap addnormals ( textures/raven/common_lights/rect_light6_local, heightmap ( textures/raven/common_lights/rect_light6_h, 1 ) )
+	diffusemap	textures/raven/common_lights/rect_light6_d
+	specularmap	textures/raven/common_lights/rect_light6_s
+	{
+		blend		GL_ONE, GL_ONE
+		map			textures/raven/common_lights/rect_light6_g
+		red		Parm0  
+		green		Parm1  
+		blue		Parm2  
+	}
+}
+material textures/raven/common_lights/rect_light8
+{
+	qer_editorimage textures/raven/common_lights/rect_light8_d
+	
+	
+	bumpmap addnormals ( textures/raven/common_lights/rect_light8_local, heightmap ( textures/raven/common_lights/rect_light8_h, 1 ) )
+	diffusemap	textures/raven/common_lights/rect_light8_d
+	specularmap	textures/raven/common_lights/rect_light8_s
+	{
+		blend		GL_ONE, GL_ONE
+		map			textures/raven/common_lights/rect_light8_g
+		red		Parm0  
+		green		Parm1  
+		blue		Parm2  
+	}
+}
+material textures/raven/common_lights/small_light6
+{
+	qer_editorimage textures/raven/common_lights/small_light6_d
+	
+	
+	bumpmap addnormals ( textures/raven/common_lights/small_light6_local, heightmap ( textures/raven/common_lights/small_light6_h, 1 ) )
+	diffusemap	textures/raven/common_lights/small_light6_d
+	specularmap	textures/raven/common_lights/small_light6_s
+	{
+		blend		GL_ONE, GL_ONE
+		map			textures/raven/common_lights/small_light6_g
+		red		Parm0  
+		green		Parm1  
+		blue		Parm2  
+	}
+}
+
+material textures/raven/common_lights/small_light6_nonsolid
+{
+	qer_editorimage textures/raven/common_lights/small_light6_d
+	nonsolid
+	
+	bumpmap addnormals ( textures/raven/common_lights/small_light6_local, heightmap ( textures/raven/common_lights/small_light6_h, 1 ) )
+	diffusemap	textures/raven/common_lights/small_light6_d
+	specularmap	textures/raven/common_lights/small_light6_s
+	{
+		blend		GL_ONE, GL_ONE
+		map			textures/raven/common_lights/small_light6_g
+		vertexColor
+	}
+}
+
+material textures/raven/common_lights/small_light7
+{
+	surfaceType "metal"
+	qer_EditorImage	textures/raven/common_lights/small_light7_d.tga
+	bumpMap			textures/raven/common_lights/small_light7_local.tga
+	diffuseMap		textures/raven/common_lights/small_light7_d.tga
+	specularMap		textures/raven/common_lights/small_light7_s.tga
+	{
+		blend		add
+		map			textures/raven/common_lights/small_light7_add.tga
+		red			parm0
+		green		parm1
+		blue		parm2
+	}
+}
+material textures/raven/common_lights/small_light7_ns_redpulse
+{
+	qer_EditorImage		textures/raven/common_lights/small_light7.tga
+	nonSolid
+	noShadows
+	bumpMap			textures/raven/common_lights/small_light7_local.tga
+	diffuseMap		textures/raven/common_lights/small_light7_d.tga
+	specularMap		textures/raven/common_lights/small_light7_s.tga
+	{
+		blend		add
+		map			textures/raven/common_lights/small_light7_add.tga
+		red		1.000000 * blinktable[time * 2]  
+		green		0.266667 * blinktable[time * 2]  
+		blue		0.000000 * blinktable[time * 2] 
+	}
+}
+material textures/raven/common_lights/strip_light1
+{
+	qer_editorimage textures/raven/common_lights/strip_light1_d
+	
+	
+	bumpmap addnormals ( textures/raven/common_lights/strip_light1_local, heightmap ( textures/raven/common_lights/strip_light1_h, 1 ) )
+	diffusemap	textures/raven/common_lights/strip_light1_d
+	specularmap	textures/raven/common_lights/strip_light1_s
+	{
+		blend		GL_ONE, GL_ONE
+		map			textures/raven/common_lights/strip_light1_g
+		red		Parm0  
+		green		Parm1  
+		blue		Parm2  
+	}
+}
+material textures/raven/common_lights/strip_light2
+{
+	qer_editorimage textures/raven/common_lights/strip_light2_d
+	
+	
+	bumpmap addnormals ( textures/raven/common_lights/strip_light2_local, heightmap ( textures/raven/common_lights/strip_light2_h, 1 ) )
+	diffusemap	textures/raven/common_lights/strip_light2_d
+	specularmap	textures/raven/common_lights/strip_light2_s
+	{
+		blend		GL_ONE, GL_ONE
+		map			textures/raven/common_lights/strip_light2_g
+		red		Parm0  
+		green		Parm1  
+		blue		Parm2  
+	}
+}
+material textures/raven/common_trims/c_trim2b
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/common_trims/c_trim2b_d
+	bumpmap addnormals ( textures/raven/common_trims/c_trim2b_local, heightmap ( textures/raven/common_trims/c_trim2b_h, 1 ) )
+	diffusemap	textures/raven/common_trims/c_trim2b_d
+	specularmap	textures/raven/common_trims/c_trim2b_s
+}
+material textures/raven/common_trims/trim3_2
+{
+	qer_editorimage textures/raven/common_trims/trim3_2_d
+	bumpmap 	textures/raven/common_trims/trim3_2_local
+	diffusemap	textures/raven/common_trims/trim3_2_d
+	specularmap	textures/raven/common_trims/trim3_2_s
+}
+material textures/raven/common_trims/trim5_2
+{
+	qer_editorimage textures/raven/common_trims/trim5_2_d
+	bumpmap addnormals ( textures/raven/common_trims/trim5_2_local, heightmap ( textures/raven/common_trims/trim5_2_h, 1 ) )
+	diffusemap	textures/raven/common_trims/trim5_2_d
+	specularmap	textures/raven/common_trims/trim5_2_s
+}
+material textures/raven/common_trims/trim6_1
+{
+	qer_editorimage textures/raven/common_trims/trim6_1_d
+	bumpmap addnormals ( textures/raven/common_trims/trim6_1_local, heightmap ( textures/raven/common_trims/trim6_1_h, 1 ) )
+	diffusemap	textures/raven/common_trims/trim6_1_d
+	specularmap	textures/raven/common_trims/trim6_1_s
+}
+
+material textures/raven/common_trims/trim6_2
+{
+	qer_editorimage textures/raven/common_trims/trim6_1_d
+	bumpmap addnormals ( textures/raven/common_trims/trim6_1_local, heightmap ( textures/raven/common_trims/trim6_1_h, 1 ) )
+	diffusemap	textures/raven/common_trims/trim6_1_d
+	specularmap	textures/raven/common_trims/trim6_2_s
+}
+
+material textures/raven/common_trims/walltrim1_1
+{
+	surfacetype "metal"
+	{
+		diffusemap				textures/raven/common_trims/walltrim1_1_d
+		bumpmap		picmip -1	addnormals ( textures/raven/common_trims/walltrim1_1_local, heightmap ( textures/raven/common_trims/walltrim1_1_h, 1 ) )
+		specularmap	picmip -2	textures/raven/common_trims/walltrim1_1_s
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	1,4,0,0
+	}
+}
+
+material textures/raven/common_trims/walltrim1_1_noshadows
+{
+	noshadows
+	qer_editorimage textures/raven/common_trims/walltrim1_1_d
+	
+	{
+		bumpmap		picmip -1	addnormals ( textures/raven/common_trims/walltrim1_1_local, heightmap ( textures/raven/common_trims/walltrim1_1_h, 1 ) )
+		diffusemap				textures/raven/common_trims/walltrim1_1_d
+		specularmap	picmip -2	textures/raven/common_trims/walltrim1_1_s
+		vertexcolor
+	}
+}
+
+material textures/raven/common_trims/walltrim1_1_yellow
+{
+	qer_editorimage textures/raven/common_trims/walltrim1_1_yellow_d
+	bumpmap		picmip -1	addnormals ( textures/raven/common_trims/walltrim1_1_local, heightmap ( textures/raven/common_trims/walltrim1_1_h, 1 ) )
+	diffusemap				textures/raven/common_trims/walltrim1_1_yellow_d
+	specularmap	picmip -2	textures/raven/common_trims/walltrim1_1_s
+}
+
+material textures/raven/common_walls/c_p4_beam_2
+{
+	qer_editorimage textures/raven/common_walls/c_p4_beam_2_d
+	
+	bumpmap addnormals ( textures/raven/common_walls/c_p4_beam_2_local, heightmap ( textures/raven/common_walls/c_p4_beam_2_h, 1 ) )
+	diffusemap	textures/raven/common_walls/c_p4_beam_2_d
+	specularmap	textures/raven/common_walls/c_p4_beam_2_s
+}
+
+material textures/raven/common_walls/c_p4_beam_2b
+{
+	qer_editorimage textures/raven/common_walls/c_p4_beam_2b_d
+	
+	{
+		bumpmap addnormals ( textures/raven/common_walls/c_p4_beam_2_local, heightmap ( textures/raven/common_walls/c_p4_beam_2_h, 1 ) )
+		diffusemap	textures/raven/common_walls/c_p4_beam_2b_d
+		specularmap	textures/raven/common_walls/c_p4_beam_2_s
+		vertexcolor
+	}
+}
+
+material textures/raven/common_walls/c_p4_beam_2b_noshadows
+{
+	noshadows
+	qer_editorimage textures/raven/common_walls/c_p4_beam_2b_d
+	
+	{
+		bumpmap addnormals ( textures/raven/common_walls/c_p4_beam_2_local, heightmap ( textures/raven/common_walls/c_p4_beam_2_h, 1 ) )
+		diffusemap	textures/raven/common_walls/c_p4_beam_2b_d
+		specularmap	textures/raven/common_walls/c_p4_beam_2_s
+		vertexcolor
+	}
+}
+
+material textures/raven/common_walls/c_wall_8
+{
+	qer_editorimage textures/raven/common_walls/c_wall_8_d
+	bumpmap addnormals ( textures/raven/common_walls/c_wall_8_local, heightmap ( textures/raven/common_walls/c_wall_8_h, 1 ) )
+	diffusemap	textures/raven/common_walls/c_wall_8_d
+	specularmap	textures/raven/common_walls/c_wall_8_s
+}
+material textures/raven/common_walls/c_walltrim02a
+{
+	qer_editorimage textures/raven/common_walls/c_walltrim02a_d
+	bumpmap addnormals ( textures/raven/common_walls/c_walltrim02a_local, heightmap ( textures/raven/common_walls/c_walltrim02a_h, 1 ) )
+	diffusemap	textures/raven/common_walls/c_walltrim02a_d
+	specularmap	textures/raven/common_walls/c_walltrim02a_s
+}
+material textures/raven/core/floor1_1
+{
+	qer_editorimage textures/raven/core/floor1_1_d
+	bumpmap addnormals ( textures/raven/core/floor1_1_local, heightmap ( textures/raven/core/floor1_1_h, 1 ) )
+	diffusemap	textures/raven/core/floor1_1_d
+	specularmap	textures/raven/core/floor1_1_s
+}
+material textures/raven/core/floor2_1
+{
+	qer_editorimage textures/raven/core/floor2_1_d
+	bumpmap addnormals ( textures/raven/core/floor2_1_local, heightmap ( textures/raven/core/floor2_1_h, 1 ) )
+	diffusemap	textures/raven/core/floor2_1_d
+	specularmap	textures/raven/core/floor2_1_s
+}
+material textures/raven/core/fluid_blue_bubble_slow
+{
+	noShadows
+	translucent
+	nonSolid
+	twoSided	
+	
+	{
+		blend diffuseMap	
+		map textures/raven/core/fluid_blue_bubble1.tga
+		scroll 0, time * .025
+	}
+	{ 
+		blend add
+		map textures/raven/core/fluid_blue_bubble2.tga
+		scroll	0, time * .15
+	}
+	
+	{
+		blend add
+		map textures/raven/core/fluid_blue_bubble3.tga
+		scroll 0, time * .015
+	}
+}
+material textures/raven/core/sc2_floorplate1c
+{
+	qer_editorimage textures/raven/core/sc2_floorplate1c_d
+	bumpmap addnormals ( textures/raven/core/sc2_floorplate1c_local, heightmap ( textures/raven/core/sc2_floorplate1c_h, 1 ) )
+	diffusemap	textures/raven/core/sc2_floorplate1c_d
+	specularmap	textures/raven/core/sc2_floorplate1c_s
+}
+material textures/raven/core/sc2_floorrun1
+{
+	qer_editorimage textures/raven/core/sc2_floorrun1_d
+	bumpmap addnormals ( textures/raven/core/sc2_floorrun1_local, heightmap ( textures/raven/core/sc2_floorrun1_h, 1 ) )
+	diffusemap	textures/raven/core/sc2_floorrun1_d
+	specularmap	textures/raven/core/sc2_floorrun1_s
+}
+material textures/raven/core/sc_basepanel1
+{
+	qer_editorimage textures/raven/core/sc_basepanel1_d
+	bumpmap addnormals ( textures/raven/core/sc_basepanel1_local, heightmap ( textures/raven/core/sc_basepanel1_h, 1 ) )
+	diffusemap	textures/raven/core/sc_basepanel1_d
+	specularmap	textures/raven/core/sc_basepanel1_s
+}
+material textures/raven/core/sc_basepanel10
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/core/sc_basepanel10_d
+	bumpmap addnormals ( textures/raven/core/sc_basepanel10_local, heightmap ( textures/raven/core/sc_basepanel10_h, 1 ) )
+	diffusemap	textures/raven/core/sc_basepanel10_d
+	specularmap	textures/raven/core/sc_basepanel10_s
+}
+material textures/raven/core/sc_basepanel2b
+{
+	qer_editorimage textures/raven/core/sc_basepanel2b_d
+	bumpmap addnormals ( textures/raven/core/sc_basepanel2b_local, heightmap ( textures/raven/core/sc_basepanel2b_h, 1 ) )
+	diffusemap	textures/raven/core/sc_basepanel2b_d
+	specularmap	textures/raven/core/sc_basepanel2b_s
+}
+material textures/raven/core/sc_bigtube_00
+{
+	qer_editorimage textures/raven/core/sc_bigtube_00_d
+	bumpmap addnormals ( textures/raven/core/sc_bigtube_00_local, heightmap ( textures/raven/core/sc_bigtube_00_h, 1 ) )
+	diffusemap	textures/raven/core/sc_bigtube_00_d
+	specularmap	textures/raven/core/sc_bigtube_00_s
+}
+material textures/raven/core/sc_floor1
+{
+	qer_editorimage textures/raven/core/sc_floor1_d
+	bumpmap addnormals ( textures/raven/core/sc_floor1_local, heightmap ( textures/raven/core/sc_floor1_h, 1 ) )
+	diffusemap	textures/raven/core/sc_floor1_d
+	specularmap	textures/raven/core/sc_floor1_s
+}
+material textures/raven/core/sc_longtrim
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/core/sc_longtrim_qer.tga
+	bumpmap addnormals ( textures/raven/core/sc_longtrim_local.tga, heightmap ( textures/raven/core/sc_longtrim_h.tga, 1 ) )
+	diffusemap	textures/raven/core/sc_longtrim_d.tga
+	specularmap	textures/raven/core/sc_longtrim_s.tga
+}
+material textures/raven/decals/pressurepanel_a
+{
+ 	noShadows
+	qer_editorimage 	textures/raven/decals/pressurepanel_a.tga
+	nonsolid
+
+	{       
+		diffusemap textures/raven/decals/pressurepanel_a_d.tga
+		bumpmap			textures/raven/decals/pressurepanel_local.tga
+		specularmap		textures/raven/decals/pressurepanel_s.tga
+		alphaTest 	0.5
+	}
+	
+}
+
+material textures/raven/hub/floor1_1
+{
+	qer_editorimage textures/raven/hub/floor1_1_d
+	bumpmap addnormals ( textures/raven/hub/floor1_1_local, heightmap ( textures/raven/hub/floor1_1_h, 1 ) )
+	diffusemap	textures/raven/hub/floor1_1_d
+	specularmap	textures/raven/hub/floor1_1_s
+}
+material textures/raven/hub/floor2_1
+{
+	qer_editorimage textures/raven/hub/floor2_1_d
+	bumpmap addnormals ( textures/raven/hub/floor2_1_local, heightmap ( textures/raven/hub/floor2_1_h, 1 ) )
+	diffusemap	textures/raven/hub/floor2_1_d
+	specularmap	textures/raven/hub/floor2_1_s
+}
+
+material textures/raven/hub/floor4_1
+{
+	qer_editorimage textures/raven/hub/floor4_1_d
+	bumpmap addnormals ( textures/raven/hub/floor2_1_local, heightmap ( textures/raven/hub/floor2_1_h, 1 ) )
+	diffusemap	textures/raven/hub/floor4_1_d
+	specularmap	textures/raven/hub/floor4_1_s
+}
+
+material textures/raven/hub/floor3_1_onesided
+{	//This shader is 2-sided, uses an alphatest, but does not cast shadows
+	qer_editorimage textures/raven/hub/floor3_1_d
+	noshadows
+	
+
+	{       
+     		diffusemap  textures/raven/hub/floor3_1_d.tga
+		bumpmap addnormals (textures/raven/hub/floor3_1_local, heightmap (textures/raven/hub/floor3_1_h, 1 ) )
+		specularmap	textures/raven/hub/floor3_1_s
+		alphaTest	.5
+	}
+}
+material textures/raven/hub/floortrim1_1
+{
+	qer_editorimage textures/raven/hub/floortrim1_1_d
+	bumpmap addnormals ( textures/raven/hub/floortrim1_1_local, heightmap ( textures/raven/hub/floortrim1_1_h, 1 ) )
+	diffusemap	textures/raven/hub/floortrim1_1_d
+	specularmap	textures/raven/hub/floortrim1_1_s
+}
+material textures/raven/hub/sh2_floorplate1c
+{
+	qer_editorimage textures/raven/hub/sh2_floorplate1c_d
+	bumpmap addnormals ( textures/raven/hub/sh2_floorplate1c_local, heightmap ( textures/raven/hub/sh2_floorplate1c_h, 1 ) )
+	diffusemap	textures/raven/hub/sh2_floorplate1c_d
+	specularmap	textures/raven/hub/sh2_floorplate1c_s
+}
+material textures/raven/hub/sh2_floorrun1
+{
+	qer_editorimage textures/raven/hub/sh2_floorrun1_d
+	bumpmap addnormals ( textures/raven/hub/sh2_floorrun1_local, heightmap ( textures/raven/hub/sh2_floorrun1_h, 1 ) )
+	diffusemap	textures/raven/hub/sh2_floorrun1_d
+	specularmap	textures/raven/hub/sh2_floorrun1_s
+}
+material textures/raven/hub/sh2_floorrun2
+{
+	qer_editorimage textures/raven/hub/sh2_floorrun2_d
+	bumpmap addnormals ( textures/raven/hub/sh2_floorrun2_local, heightmap ( textures/raven/hub/sh2_floorrun2_h, 1 ) )
+	diffusemap	textures/raven/hub/sh2_floorrun2_d
+	specularmap	textures/raven/hub/sh2_floorrun2_s
+}
+material textures/raven/hub/sh2_girder1
+{
+	qer_editorimage textures/raven/hub/sh2_girder1_d
+		
+	twosided	
+
+	{       
+      		diffusemap textures/raven/hub/sh2_girder1_d.tga
+		bumpmap addnormals ( textures/raven/hub/sh2_girder1_local, heightmap ( textures/raven/hub/sh2_girder1_h, 1 ) )
+		specularmap	textures/raven/hub/sh2_girder1_s
+		alphaTest	.5
+	}
+}
+material textures/raven/hub/sh_basepanel10
+{
+	qer_editorimage textures/raven/hub/sh_basepanel10_d
+	bumpmap addnormals ( textures/raven/hub/sh_basepanel10_local, heightmap ( textures/raven/hub/sh_basepanel10_h, 1 ) )
+	diffusemap	textures/raven/hub/sh_basepanel10_d
+	specularmap	textures/raven/hub/sh_basepanel10_s
+}
+material textures/raven/hub/sh_basepanel2b
+{
+	qer_editorimage textures/raven/hub/sh_basepanel2b_d
+	bumpmap addnormals ( textures/raven/hub/sh_basepanel2b_local, heightmap ( textures/raven/hub/sh_basepanel2b_h, 1 ) )
+	diffusemap	textures/raven/hub/sh_basepanel2b_d
+	specularmap	textures/raven/hub/sh_basepanel2b_s
+}
+material textures/raven/hub/sh_basepanel2c
+{
+	qer_editorimage textures/raven/hub/sh_basepanel2c_d
+	bumpmap addnormals ( textures/raven/hub/sh_basepanel2c_local, heightmap ( textures/raven/hub/sh_basepanel2c_h, 1 ) )
+	diffusemap	textures/raven/hub/sh_basepanel2c_d
+	specularmap	textures/raven/hub/sh_basepanel2c_s
+}
+material textures/raven/hub/sh_bigtube_00a
+{
+	qer_editorimage textures/raven/hub/sh_bigtube_00a_d
+	bumpmap addnormals ( textures/raven/hub/sh_bigtube_00_local.tga, heightmap ( textures/raven/hub/sh_bigtube_00_h.tga, 1 ) )
+	diffusemap	textures/raven/hub/sh_bigtube_00a_d.tga
+	specularmap	textures/raven/hub/sh_bigtube_00_s.tga
+}
+material textures/raven/hub/sh_cpu32_side
+{
+	qer_editorimage textures/raven/hub/sh_cpu32_side_d
+	bumpmap addnormals ( textures/raven/hub/sh_cpu32_side_local, heightmap ( textures/raven/hub/sh_cpu32_side_h, 1 ) )
+	diffusemap	textures/raven/hub/sh_cpu32_side_d
+	specularmap	textures/raven/hub/sh_cpu32_side_s
+}
+material textures/raven/hub/sh_grate_01
+{	//diagonal grating with thicker bars
+	qer_editorimage	textures/raven/hub/sh_grate_01_qer.tga
+	noshadows
+	twosided
+	{
+		diffusemap textures/raven/hub/sh_grate_01_d.tga
+		bumpmap addnormals(textures/raven/hub/sh_grate_01_local.tga,heightmap(textures/raven/hub/sh_grate_01_h.tga,4))
+		specularmap textures/raven/hub/sh_grate_01_s.tga
+		alphatest	.5	
+			
+		rotate	.125
+		scale		10,10
+	}
+
+}
+material textures/raven/hub/sh_light2
+{
+	qer_editorimage textures/raven/hub/sh_light2_d
+	bumpmap addnormals ( textures/raven/hub/sh_light2_local, heightmap ( textures/raven/hub/sh_light2_h, 1 ) )
+	diffusemap	textures/raven/hub/sh_light2_d
+	specularmap	textures/raven/hub/sh_light2_s
+	{
+		blend		GL_ONE, GL_ONE
+		map			textures/raven/hub/sh_light2_g.tga
+		red		Parm0  
+		green		Parm1  
+		blue		Parm2  
+	}
+}
+material textures/raven/hub/sh_light3
+{
+	qer_editorimage textures/raven/hub/sh_light3_d
+	noshadows
+	nonsolid
+
+	{       
+	      	diffusemap textures/raven/hub/sh_light3_d
+		bumpmap addnormals ( textures/raven/hub/sh_light3_local, heightmap ( textures/raven/hub/sh_light3_h, 1 ) )
+		specularmap	textures/raven/hub/sh_light3_s
+		alphaTest .5
+	}
+	{
+		if(Parm4!=1)
+		blend GL_ONE, GL_ONE
+		map textures/raven/hub/sh_light3_g
+	}
+	{
+		if(Parm4 == 1)
+		blend add
+		map	textures/raven/hub/sh_light3_g
+		red Parm0
+		green Parm1
+		blue Parm2
+	}
+	
+}
+
+material textures/raven/hub/sh_longtrim
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/hub/sh_longtrim_qer.tga
+	{
+		bumpmap		addnormals ( textures/raven/hub/sh_longtrim_local.tga, heightmap ( textures/raven/hub/sh_longtrim_h.tga, 1 ) )
+		diffusemap	textures/raven/hub/sh_longtrim_d.tga
+		specularmap	textures/raven/hub/sh_longtrim_s.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	0.25,4,0,0
+	}
+}
+
+material textures/raven/hub/sh_outerwalltrim_1
+{
+	qer_editorimage textures/raven/hub/sh_outerwalltrim_1_d
+	bumpmap		picmip -1	addnormals ( textures/raven/hub/sh_outerwalltrim_1_local, heightmap ( textures/raven/hub/sh_outerwalltrim_1_h, 1 ) )
+	diffusemap	picmip -1	textures/raven/hub/sh_outerwalltrim_1_d
+	specularmap	picmip -2	textures/raven/hub/sh_outerwalltrim_1_s
+}
+material textures/raven/hub/sh_step1a
+{
+	qer_editorimage textures/raven/hub/sh_step1a_d
+	bumpmap addnormals ( textures/raven/hub/sh_step1a_local, heightmap ( textures/raven/hub/sh_step1a_h, 1 ) )
+	diffusemap	textures/raven/hub/sh_step1a_d
+	specularmap	textures/raven/hub/sh_step1a_s
+}
+material textures/raven/hub/sh_vertpanel10
+{
+	qer_editorimage textures/raven/hub/sh_vertpanel10_d
+	bumpmap addnormals ( textures/raven/hub/sh_vertpanel10_local, heightmap ( textures/raven/hub/sh_vertpanel10_h, 1 ) )
+	diffusemap	textures/raven/hub/sh_vertpanel10_d
+	specularmap	textures/raven/hub/sh_vertpanel10_s
+}
+material textures/raven/hub/sh_vertpanel6
+{
+	qer_editorimage textures/raven/hub/sh_vertpanel6_d
+	bumpmap addnormals ( textures/raven/hub/sh_vertpanel6_local, heightmap ( textures/raven/hub/sh_vertpanel6_h, 1 ) )
+	diffusemap	textures/raven/hub/sh_vertpanel6_d
+	specularmap	textures/raven/hub/sh_vertpanel6_s
+}
+material textures/raven/hub/sh_vertpanel6plain
+{
+	qer_editorimage textures/raven/hub/sh_vertpanel6plain_d
+	bumpmap addnormals ( textures/raven/hub/sh_vertpanel6plain_local, heightmap ( textures/raven/hub/sh_vertpanel6plain_h, 1 ) )
+	diffusemap	textures/raven/hub/sh_vertpanel6plain_d
+	specularmap	textures/raven/hub/sh_vertpanel6plain_s
+}
+material textures/raven/hub/sh_vertpipe1c
+{
+	qer_editorimage textures/raven/hub/sh_vertpipe1c_d
+	bumpmap addnormals ( textures/raven/hub/sh_vertpipe1a_local.tga, heightmap ( textures/raven/hub/sh_vertpipe1a_h.tga, 1 ) )
+	diffusemap	textures/raven/hub/sh_vertpipe1c_d.tga
+	specularmap	textures/raven/hub/sh_vertpipe1a_s.tga
+}
+material textures/raven/hub/sh_wallpanel1
+{
+	qer_editorimage textures/raven/hub/sh_wallpanel1_d
+	bumpmap addnormals ( textures/raven/hub/sh_wallpanel1_local, heightmap ( textures/raven/hub/sh_wallpanel1_h, 1 ) )
+	diffusemap	textures/raven/hub/sh_wallpanel1_d
+	specularmap	textures/raven/hub/sh_wallpanel1_s
+}
+material textures/raven/hub/sh_wallpanel1a
+{
+	qer_editorimage textures/raven/hub/sh_wallpanel1a_d
+	bumpmap addnormals ( textures/raven/hub/sh_wallpanel1a_local, heightmap ( textures/raven/hub/sh_wallpanel1a_h, 1 ) )
+	diffusemap	textures/raven/hub/sh_wallpanel1a_d
+	specularmap	textures/raven/hub/sh_wallpanel1a_s
+}
+material textures/raven/hub/step1_1
+{
+	qer_EditorImage	textures/raven/hub/step1_1_d.tga
+	bumpMap			textures/raven/hub/step1_1_local.tga
+	diffuseMap		textures/raven/hub/step1_1_d.tga
+	specularMap		textures/raven/hub/step1_1_s.tga
+	{
+		blend		add
+		map			textures/raven/hub/step1_1_add.tga
+		red			parm0
+		green		parm1
+		blue		parm2
+	}
+}
+material textures/raven/hub/techpipe1_2
+{
+	qer_EditorImage	textures/raven/hub/techpipe1_2_d.tga
+	bumpMap			textures/raven/hub/techpipe1_2_local.tga
+	diffuseMap		textures/raven/hub/techpipe1_2_d.tga
+	specularMap		textures/raven/hub/techpipe1_2_s.tga
+}
+material textures/raven/medlabs/chad_panel_6
+{
+	qer_editorimage textures/raven/medlabs/chad_panel_6_d
+	bumpmap addnormals ( textures/raven/medlabs/chad_panel_6_local, heightmap ( textures/raven/medlabs/chad_panel_6_h, 1 ) )
+	diffusemap	textures/raven/medlabs/chad_panel_6_d
+	specularmap	textures/raven/medlabs/chad_panel_6_s
+}
+material textures/raven/medlabs/fluid_green_bubble_slow
+{
+	noShadows
+	translucent
+	nonSolid
+	twoSided	
+	deform	turbulent	sintable .0295 time * .2 1
+	
+	
+	{
+		if ( glslPrograms )== 1
+		blend add
+		
+		glslProgram	glsl/Displacement.glsl
+		shaderParm		scrollX				0
+		shaderParm		scrollY				time * .65
+		shaderParm		sizeX				sintable[time * .0552]
+		shaderParm		sizeY				.25
+		shaderParm		texCoordSize		.25
+		shaderTexture	Image				textures/raven/medlabs/fluid_green_bubble5.tga
+		shaderTexture	DisplacementMap		gfx/test/pnh3.tga
+	}
+	{ 
+		If ( glslPrograms )== 1		
+		blend add
+		map textures/raven/medlabs/fluid_green_bubble2.tga
+		scroll	0, time * .15
+	}
+	
+	{
+		If ( glslPrograms )== 1		
+		blend add
+		map textures/raven/medlabs/fluid_green_bubble3.tga
+		scroll 0, time * .015
+	}
+	///if no glsl
+	
+	{
+		if ( glslPrograms )== 0
+		blend diffuseMap	
+		map textures/raven/medlabs/fluid_green_bubble1.tga
+		scroll 0, time * .025
+	}
+	{ 
+		If ( glslPrograms )== 0		
+		blend add
+		map textures/raven/medlabs/fluid_green_bubble2.tga
+		scroll	0, time * .15
+	}
+	
+	{
+		If ( glslPrograms )== 0		
+		blend add
+		map textures/raven/medlabs/fluid_green_bubble3.tga
+		scroll 0, time * .015
+	}
+}
+material textures/raven/medlabs/mdl_floor_03
+{
+	qer_editorimage textures/raven/medlabs/Mdl_Floor_03_d
+	bumpmap addnormals ( textures/raven/medlabs/Mdl_Floor_03_local, heightmap ( textures/raven/medlabs/Mdl_Floor_03_h, 1 ) )
+	diffusemap	textures/raven/medlabs/Mdl_Floor_03_d
+	specularmap	textures/raven/medlabs/Mdl_Floor_03_s
+}
+material textures/raven/medlabs/medbeam
+{
+	qer_editorimage textures/raven/medlabs/medbeam_d
+	bumpmap addnormals ( textures/raven/medlabs/medbeam_local, heightmap ( textures/raven/medlabs/medbeam_h, 1 ) )
+	diffusemap	textures/raven/medlabs/medbeam_d
+	specularmap	textures/raven/medlabs/medbeam_s
+}
+material textures/raven/medlabs/medglass
+{
+	noSelfShadow
+	noshadows
+	twosided
+	translucent
+	
+	forceoverlays
+	sort decal
+	
+	qer_editorimage textures/raven/glass/medlabs
+	{	
+		maskcolor				
+	    map	makealpha(textures/raven/glass/medlabs.tga)
+	}
+	{
+	    blend GL_DST_ALPHA, gl_one
+		program sfx/cubemap
+		red   Parm0
+		green Parm1
+		blue  Parm2
+	}
+}
+material textures/raven/medlabs/sflpanel4a
+{
+	qer_editorimage		textures/raven/medlabs/sflpanel4a.tga
+	bumpmap			textures/raven/medlabs/sflpanel4a_local.tga
+	diffusemap		textures/raven/medlabs/sflpanel4a_d.tga
+	specularmap		textures/raven/medlabs/sflpanel4a_s.tga
+}
+material textures/raven/medlabs/tubearmsplatform_beamtopbottom
+{
+	noShadows
+	qer_editorimage textures/raven/medlabs/tubearmsplatform_beamtopbottom_d.tga
+	bumpmap addnormals	( textures/raven/medlabs/tubearmsplatform_beamtopbottom_local.tga, heightmap ( textures/raven/medlabs/tubearmsplatform_beamtopbottom_h.tga, 1 ) )
+	specularmap		textures/raven/medlabs/tubearmsplatform_beamtopbottom_s.tga       
+      	diffusemap 		textures/raven/medlabs/tubearmsplatform_beamtopbottom_d.tga
+}
+material textures/raven/medlabs/tubearmsplatform_platformtopbottom
+{
+	surfaceType "metal"
+	noShadows
+	qer_editorimage textures/raven/medlabs/tubearmsplatform_platformtopbottom_d.tga
+	bumpmap 		picmip -1	addnormals ( textures/raven/medlabs/tubearmsplatform_platformtopbottom_local.tga, heightmap ( textures/raven/medlabs/tubearmsplatform_platformtopbottom_h.tga, 1 ) )
+	specularmap		picmip -1	textures/raven/medlabs/tubearmsplatform_platformtopbottom_s.tga       
+      	diffusemap 		picmip -1	textures/raven/medlabs/tubearmsplatform_platformtopbottom_d.tga
+}
+material textures/raven/prison/prison_pipe1a
+{
+	qer_editorimage textures/raven/prison/prison_pipe1a_d
+	bumpmap addnormals ( textures/raven/prison/prison_pipe1a_local, heightmap ( textures/raven/prison/prison_pipe1a_h, 1 ) )
+	diffusemap	textures/raven/prison/prison_pipe1a_d
+	specularmap	textures/raven/prison/prison_pipe1a_s
+}
+material textures/raven/prison/prison_steptop16
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/prison/prison_steptop16_d
+	bumpmap addnormals ( textures/raven/prison/prison_steptop16_local, heightmap ( textures/raven/prison/prison_steptop16_h, 1 ) )
+	diffusemap	textures/raven/prison/prison_steptop16_d
+	specularmap	textures/raven/prison/prison_steptop16_s
+}
+material textures/raven/proto/proto_light_1
+{
+	qer_editorimage textures/raven/proto/proto_light_1_edit.tga
+	bumpmap addnormals	( textures/raven/proto/proto_light_1_local.tga, heightmap ( textures/raven/proto/proto_light_1_h.tga, 1 ) )
+	specularmap		textures/raven/proto/proto_light_1_s.tga
+      	diffusemap 		textures/raven/proto/proto_light_1_d.tga
+	{
+		blend GL_ONE, GL_ONE
+		map textures/raven/proto/proto_light_1_glow.tga
+//		rgb		plighttable[ time * 1.5 ]
+	}
+}
+material textures/raven/proto/proto_trim_1
+{
+	qer_editorimage textures/raven/proto/proto_trim_1_d.tga
+	bumpmap addnormals	( textures/raven/proto/proto_trim_1_local.tga, heightmap ( textures/raven/proto/proto_trim_1_h.tga, 1 ) )
+	specularmap		textures/raven/proto/proto_trim_1_s.tga       
+      	diffusemap 		textures/raven/proto/proto_trim_1_d.tga
+}
+material textures/raven/proto/proto_trim_1_glow
+{
+	qer_editorimage textures/raven/proto/proto_trim_1_glow.tga
+	bumpmap addnormals	( textures/raven/proto/proto_trim_1_local.tga, heightmap ( textures/raven/proto/proto_trim_1_h.tga, 1 ) )
+	specularmap		textures/raven/proto/proto_trim_1_s.tga       
+      	diffusemap 		textures/raven/proto/proto_trim_1_d.tga
+		
+	{
+		blend GL_ONE, GL_ONE
+		map textures/raven/proto/proto_trim_1_glow.tga
+	}
+}
+material textures/raven/proto/ribbedplate
+{
+	qer_editorimage textures/raven/proto/ribbedplate_d.tga
+	bumpmap addnormals ( textures/raven/proto/ribbedplate_local.tga, heightmap ( textures/raven/proto/ribbedplate_h.tga, 1) )
+	diffusemap	textures/raven/proto/ribbedplate_d.tga
+	specularmap	textures/raven/proto/ribbedplate_s.tga
+}
+material textures/raven/proto/side_piece
+{
+	qer_editorimage textures/raven/proto/side_piece_d
+	bumpmap addnormals ( textures/raven/proto/side_piece_local.tga, heightmap ( textures/raven/proto/side_piece_h.tga, 3 ) )
+	diffusemap	textures/raven/proto/side_piece_d.tga
+	specularmap	textures/raven/proto/side_piece_s.tga
+}
+material textures/raven/test/mdecal1
+{
+	surfaceType "metal"
+	qer_editorimage	textures/raven/test/mdecal1_d.tga
+	noShadows
+	{
+		diffuseMap textures/raven/test/mdecal1_d.tga
+		bumpMap heightmap (textures/raven/test/mdecal1_h, 2)
+		specularMap		textures/raven/test/mdecal1_s.tga
+		alphaTest 0.5
+	}	
+}
+material textures/raven/test/mdecal2
+{
+	qer_editorimage	textures/raven/test/mdecal2_d.tga
+	noShadows
+	{
+		diffuseMap textures/raven/test/mdecal2_d.tga
+		bumpMap heightmap (textures/raven/test/mdecal1_h, 2)
+		specularMap		textures/raven/test/mdecal1_s.tga
+		alphaTest 0.5
+	}	
+}
+material textures/raven/test/mdecal3
+{
+	qer_editorimage	textures/raven/test/mdecal3_d.tga
+	noShadows
+	{
+		diffuseMap textures/raven/test/mdecal3_d.tga
+		bumpMap heightmap (textures/raven/test/mdecal1_h, 2)
+		specularMap		textures/raven/test/mdecal1_s.tga
+		alphaTest 0.5
+	}	
+}
+material textures/raven/test/msign2
+{
+	qer_editorimage textures/raven/test/msign2.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/test/msign2.tga 	//for light decals
+}
+material textures/raven/test/msign9
+{
+	qer_editorimage textures/raven/test/msign9.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/test/msign9.tga 	//for light decals
+}
+material textures/raven/tram/tr_steptop16
+{
+	qer_editorimage textures/raven/tram/tr_steptop16_d
+	bumpmap addnormals ( textures/raven/tram/tr_steptop16_local, heightmap ( textures/raven/tram/tr_steptop16_h, 1 ) )
+	diffusemap	textures/raven/tram/tr_steptop16_d
+	specularmap	textures/raven/tram/tr_steptop16_s
+}
+
+material textures/raven/glass/terminal
+{
+	noSelfShadow
+	noshadows
+	twosided
+	translucent
+	forceoverlays
+	sort decal	
+	qer_editorimage		textures/raven/glass/terminal_d.tga
+
+	bumpmap heightmap ( textures/raven/glass/terminal_h.tga, 7 )
+	specularmap	 textures/raven/glass/terminal_s.tga
+
+	{
+//	 	uncompressed
+		blend blend
+		map textures/raven/glass/terminal_d.tga
+	}
+
+	{
+		blend add
+		program sfx/cubemap
+	}	
+
+}
+
+material textures/raven/common_misc/smolder
+{
+	qer_EditorImage		textures/raven/common_misc/smolder_d.tga
+	bumpmap addnormals	( textures/raven/common_misc/smolder_local.tga, heightmap ( textures/raven/common_misc/smolder_h.tga, 1 ) )
+	diffuseMap		textures/raven/common_misc/smolder_d.tga
+	specularMap		textures/raven/common_misc/smolder_s.tga
+	{
+		maskcolor
+		map makealpha(textures/raven/common_misc/smolder_g_alpha.tga)
+		//VertexColor
+		//AlphaZeroClamp
+	}
+	
+	{
+		blend	GL_DST_ALPHA, GL_ONE
+		maskalpha
+		map	textures/raven/common_misc/smolder_g.tga
+		rotate	sintable[time * 0.0007]
+		rgb	ember1[time * 0.077]
+		scale	0.1, 0.1
+		scroll	sintable[time * 0.00625], costable[time * 0.0187]
+		//VertexColor
+	}
+}
+
+material textures/raven/canyon/can_ledge_upper_01browner
+{
+	qer_editorimage textures/raven/canyon/Can_Ledge_Upper_01browner_d
+	
+	bumpmap addnormals ( textures/raven/canyon/Can_Ledge_Upper_01_local, heightmap ( textures/raven/canyon/Can_Ledge_Upper_01_h, 1 ) )
+	diffusemap	textures/raven/canyon/Can_Ledge_Upper_01browner_d
+	specularmap	textures/raven/canyon/Can_Ledge_Upper_01_s
+}
+
+material textures/raven/canyon/can_buttress_front_topbrowner
+{
+	qer_editorimage textures/raven/canyon/Can_Buttress_front_topbrowner_d
+	bumpmap addnormals ( textures/raven/canyon/Can_Buttress_front_top_local, heightmap ( textures/raven/canyon/Can_Buttress_front_top_h, 1 ) )
+	diffusemap	textures/raven/canyon/Can_Buttress_front_topbrowner_d
+	specularmap	textures/raven/canyon/Can_Buttress_front_top_s
+}
+
+
+
+material textures/raven/command_ship/csa_trim6
+{
+	qer_editorimage textures/raven/command_ship/csa_trim6_d
+	bumpMap addnormals ( textures/raven/command_ship/csa_trim6_local.tga, heightmap ( textures/raven/command_ship/csa_trim6_h.tga, 1 ) )
+	diffusemap	textures/raven/command_ship/csa_trim6_d
+	specularmap	textures/raven/command_ship/csa_trim6_s
+}
+
+
+material textures/raven/command_ship/csa_trim6b
+{
+	qer_editorimage textures/raven/command_ship/csa_trim6b_d
+	bumpMap addnormals ( textures/raven/command_ship/csa_trim6b_local.tga, heightmap ( textures/raven/command_ship/csa_trim6b_h.tga, 1 ) )
+	diffusemap	textures/raven/command_ship/csa_trim6_d
+	specularmap	textures/raven/command_ship/csa_trim6b_med_s
+}
+
+
+material textures/raven/command_ship/csa_trim6b_med
+{
+	qer_editorimage textures/raven/command_ship/csa_trim6b_med_d
+	bumpmap 	textures/raven/command_ship/csa_trim6b_local
+	diffusemap	textures/raven/command_ship/csa_trim6b_med_d
+	specularmap	textures/raven/command_ship/csa_trim6b_med_s
+}
+
+material textures/raven/command_ship/csa_trim7
+{
+	qer_editorimage textures/raven/command_ship/csa_trim7_d
+	bumpMap addnormals ( textures/raven/command_ship/csa_trim7_local.tga, heightmap ( textures/raven/command_ship/csa_trim7_h.tga, 1 ) )
+	diffusemap	textures/raven/command_ship/csa_trim7_d
+	specularmap	textures/raven/command_ship/csa_trim7_s
+}
+
+material textures/raven/command_ship/csa_trim7_med
+{
+	qer_editorimage textures/raven/command_ship/csa_trim7_med_d
+	bumpmap 	textures/raven/command_ship/csa_trim7_local
+	diffusemap	textures/raven/command_ship/csa_trim7_med_d
+	specularmap	textures/raven/command_ship/csa_trim7_med_s
+}
+
+material textures/raven/command_ship/csa_trim8a
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/command_ship/csa_trim8a_d
+	bumpMap addnormals ( textures/raven/command_ship/csa_trim8a_local.tga, heightmap ( textures/raven/command_ship/csa_trim8a_h.tga, 1 ) )
+	diffusemap	textures/raven/command_ship/csa_trim8a_d
+	specularmap	textures/raven/command_ship/csa_trim8a_s
+}
+
+material textures/raven/command_ship/csa_trim8a_med
+{
+	qer_editorimage textures/raven/command_ship/csa_trim8a_med_d
+	bumpmap 	textures/raven/command_ship/csa_trim8a_med_local
+	diffusemap	textures/raven/command_ship/csa_trim8a_med_d
+	specularmap	textures/raven/command_ship/csa_trim8a_med_s
+}
+
+material textures/raven/command_ship/csa_trim9
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/command_ship/csa_trim9_d
+	bumpMap addnormals ( textures/raven/command_ship/csa_trim9_local.tga, heightmap ( textures/raven/command_ship/csa_trim9_h.tga, 1 ) )
+	diffusemap	textures/raven/command_ship/csa_trim9_d
+	specularmap	textures/raven/command_ship/csa_trim9_s
+}
+
+material textures/raven/command_ship/csa_trim9_med
+{
+	qer_editorimage textures/raven/command_ship/csa_trim9_med_d
+	bumpmap 	textures/raven/command_ship/csa_trim9_local
+	diffusemap	textures/raven/command_ship/csa_trim9_med_d
+	specularmap	textures/raven/command_ship/csa_trim9_med_s
+}
+
+material textures/raven/command_ship/csa_wall4
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/command_ship/csa_wall4_d
+	bumpMap addnormals ( textures/raven/command_ship/csa_wall4_local.tga, heightmap ( textures/raven/command_ship/csa_wall4_h.tga, 1 ) )
+	diffusemap	textures/raven/command_ship/csa_wall4_d
+	specularmap	textures/raven/command_ship/csa_wall4_s
+}
+
+material textures/raven/command_ship/csa_wall5_med
+{
+	qer_editorimage textures/raven/command_ship/csa_wall5_med_d
+	bumpmap 	textures/raven/command_ship/csa_wall5_local
+	diffusemap	textures/raven/command_ship/csa_wall5_med_d
+	specularmap	textures/raven/command_ship/csa_wall5_med_s
+}
+
+material textures/raven/command_ship/csa_wall8
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/command_ship/csa_wall8_d
+	bumpMap addnormals ( textures/raven/command_ship/csa_wall8_local.tga, heightmap ( textures/raven/command_ship/csa_wall8_h.tga, 1 ) )
+	diffusemap	textures/raven/command_ship/csa_wall8_d
+	specularmap	textures/raven/command_ship/csa_wall8_s
+}
+
+material textures/raven/command_ship/csa_wall13b
+{
+	qer_editorimage textures/raven/command_ship/csa_wall13b_d
+	bumpmap 	textures/raven/command_ship/csa_wall13b_local
+	diffusemap	textures/raven/command_ship/csa_wall13b_d
+	specularmap	textures/raven/command_ship/csa_wall13b_s
+}
+
+material textures/raven/command_ship/csa_wall15
+{
+	qer_editorimage textures/raven/command_ship/csa_wall15_d
+	bumpMap addnormals ( textures/raven/command_ship/csa_wall15_local.tga, heightmap ( textures/raven/command_ship/csa_wall15_h.tga, 1 ) )
+	diffusemap	textures/raven/command_ship/csa_wall15_d
+	specularmap	textures/raven/command_ship/csa_wall15_s
+}
+
+material textures/raven/command_ship/csa_wall16
+{
+	qer_editorimage textures/raven/command_ship/csa_wall16_d
+	bumpmap 	textures/raven/command_ship/csa_wall16_local
+	diffusemap	textures/raven/command_ship/csa_wall16_d
+	specularmap	textures/raven/command_ship/csa_wall16_s
+}
+
+material textures/raven/command_ship/csa_wall16_med
+{
+	qer_editorimage textures/raven/command_ship/csa_wall16_med_d
+	bumpmap 	textures/raven/command_ship/csa_wall16_local
+	diffusemap	textures/raven/command_ship/csa_wall16_med_d
+	specularmap	textures/raven/command_ship/csa_wall16_med_s
+}
+
+material textures/raven/command_ship/csa_wall16b
+{
+	qer_editorimage textures/raven/command_ship/csa_wall16b_d
+	bumpMap addnormals ( textures/raven/command_ship/csa_wall16b_local.tga, heightmap ( textures/raven/command_ship/csa_wall16b_h.tga, 1 ) )
+	diffusemap	textures/raven/command_ship/csa_wall16b_d
+	specularmap	textures/raven/command_ship/csa_wall16b_s
+}
+
+material textures/raven/command_ship/csa_wall17
+{
+	qer_editorimage textures/raven/command_ship/csa_wall17_d
+	bumpmap 	textures/raven/command_ship/csa_wall17_local
+	diffusemap	textures/raven/command_ship/csa_wall17_d
+	specularmap	textures/raven/command_ship/csa_wall17_s
+}
+
+material textures/raven/command_ship/csa_wall18
+{
+	qer_editorimage textures/raven/command_ship/csa_wall18_d
+	bumpmap 	textures/raven/command_ship/csa_wall18_local
+	diffusemap	textures/raven/command_ship/csa_wall18_d
+	specularmap	textures/raven/command_ship/csa_wall18_s
+}
+
+material textures/raven/command_ship/csa_wall18_med
+{
+	qer_editorimage textures/raven/command_ship/csa_wall18_med_d
+	bumpmap 	textures/raven/command_ship/csa_wall18_local
+	diffusemap	textures/raven/command_ship/csa_wall18_med_d
+	specularmap	textures/raven/command_ship/csa_wall18_med_s
+}
+
+material textures/raven/command_ship/csa_wall18a
+{
+	qer_editorimage textures/raven/command_ship/csa_wall18a_d
+	bumpmap 	textures/raven/command_ship/csa_wall18a_local
+	diffusemap	textures/raven/command_ship/csa_wall18a_d
+	specularmap	textures/raven/command_ship/csa_wall18a_s
+}
+
+material textures/raven/command_ship/csa_wall19a
+{
+	qer_editorimage textures/raven/command_ship/csa_wall19a_d
+	bumpmap 	textures/raven/command_ship/csa_wall19a_local
+	diffusemap	textures/raven/command_ship/csa_wall19a_d
+	specularmap	textures/raven/command_ship/csa_wall19a_s
+}
+
+material textures/raven/command_ship/csa_wall19a_mar
+{
+	qer_editorimage textures/raven/command_ship/csa_wall19a_mar_d
+	bumpMap addnormals ( textures/raven/command_ship/csa_wall19a_mar_local.tga, heightmap ( textures/raven/command_ship/csa_wall19a_mar_h.tga, 1 ) )
+	diffusemap	textures/raven/command_ship/csa_wall19a_mar_d
+	specularmap	textures/raven/command_ship/csa_wall19a_mar_s
+}
+
+material textures/raven/command_ship/csa_wall19b_mar
+{
+	qer_editorimage textures/raven/command_ship/csa_wall19b_mar_d
+	bumpMap addnormals ( textures/raven/command_ship/csa_wall19b_mar_local.tga, heightmap ( textures/raven/command_ship/csa_wall19b_mar_h.tga, 1 ) )
+	diffusemap	textures/raven/command_ship/csa_wall19b_mar_d
+	specularmap	textures/raven/command_ship/csa_wall19b_mar_s
+}
+
+material textures/raven/command_ship/csa_wall19b
+{
+	qer_editorimage textures/raven/command_ship/csa_wall19b_d
+	bumpmap 	textures/raven/command_ship/csa_wall19b_local
+	diffusemap	textures/raven/command_ship/csa_wall19b_d
+	specularmap	textures/raven/command_ship/csa_wall19b_s
+}
+
+material textures/raven/command_ship/csa_wall19c
+{
+	qer_editorimage textures/raven/command_ship/csa_wall19c_d
+	bumpmap 	textures/raven/command_ship/csa_wall19c_local
+	diffusemap	textures/raven/command_ship/csa_wall19c_d
+	specularmap	textures/raven/command_ship/csa_wall19c_s
+}
+
+material textures/raven/command_ship/cswall_01
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/command_ship/cswall_01_d
+	bumpMap addnormals ( textures/raven/command_ship/cswall_01_local.tga, heightmap ( textures/raven/command_ship/cswall_01_h.tga, 1 ) )
+	diffusemap	textures/raven/command_ship/cswall_01_d
+	specularmap	textures/raven/command_ship/cswall_01_s
+}
+
+material textures/raven/command_ship/cswall_01b
+{
+	qer_editorimage textures/raven/command_ship/cswall_01b_d
+	bumpMap addnormals ( textures/raven/command_ship/cswall_01b_local.tga, heightmap ( textures/raven/command_ship/cswall_01b_h.tga, 1 ) )
+	diffusemap	textures/raven/command_ship/cswall_01b_d
+	specularmap	textures/raven/command_ship/cswall_01b_s
+}
+
+
+
+
+
+
+//MODELS
+
+//-----------------------------------------------------------------------------------------------
+
+material models/mapobjects/marine/equipment/monitors/mcc_monitor01
+{
+      	noselfShadow
+		unsmoothedtangents
+
+	
+
+	diffusemap 	models/mapobjects/marine/equipment/monitors/mcc_monitor01_d.tga
+	bumpmap addnormals (models/mapobjects/marine/equipment/monitors/mcc_monitor01_local.tga, heightmap (models/mapobjects/marine/equipment/monitors/mcc_monitor01_h.tga, 2 ))
+	specularmap	models/mapobjects/marine/equipment/monitors/mcc_monitor01_s.tga
+}
+
+//-----------------------------------------------------------------------------------------------
+
+material models/mapobjects/marine/equipment/monitors/mcc_monitor02
+{
+	surfaceType "metal"
+      	noselfShadow
+		unsmoothedtangents
+
+	
+
+	diffusemap 	models/mapobjects/marine/equipment/monitors/mcc_monitor02_d.tga
+	bumpmap addnormals (models/mapobjects/marine/equipment/monitors/mcc_monitor02_local.tga, heightmap (models/mapobjects/marine/equipment/monitors/mcc_monitor02_h.tga, 2 ))
+	specularmap	models/mapobjects/marine/equipment/monitors/mcc_monitor02_s.tga
+}
+
+//-----------------------------------------------------------------------------------------------
+
+
+material models/mapobjects/marine/equipment/monitors/mcc_monitor03
+{
+      	noselfShadow
+		unsmoothedtangents
+
+	
+
+	diffusemap 	models/mapobjects/marine/equipment/monitors/mcc_monitor03_d.tga
+	bumpmap addnormals (models/mapobjects/marine/equipment/monitors/mcc_monitor03_local.tga, heightmap (models/mapobjects/marine/equipment/monitors/mcc_monitor03_h.tga, 2 ))
+	specularmap	models/mapobjects/marine/equipment/monitors/mcc_monitor03_s.tga
+}
+
+
+
+
+
+material models/mapobjects/marine/equipment/monitors/mcc_monitorArm
+{
+      	noselfShadow
+		unsmoothedtangents
+
+	
+
+	diffusemap 	models/mapobjects/marine/equipment/monitors/mcc_monitorArm_d.tga
+	bumpmap addnormals (models/mapobjects/marine/equipment/monitors/mcc_monitorArm_local.tga, heightmap (models/mapobjects/marine/equipment/monitors/mcc_monitorArm_h.tga, 2 ))
+	specularmap	models/mapobjects/marine/equipment/monitors/mcc_monitorArm_s.tga
+}
+
+
+
+
+
+//
+
+
+
+
+
+
+//----------------------------------
+//	MARINE DECALS
+//----------------------------------
+
+material textures/raven/decals/_marine/liftup
+{
+	qer_editorimage textures/raven/decals/_marine/liftup.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/liftup.tga
+	}
+}
+
+material textures/raven/decals/_marine/pulldown
+{
+	qer_editorimage textures/raven/decals/_marine/pulldown.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/pulldown.tga
+	}
+}
+
+material textures/raven/decals/_marine/rotate
+{
+	qer_editorimage textures/raven/decals/_marine/rotate.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/rotate.tga
+	}
+}
+
+material textures/raven/decals/_marine/numbers1.tga
+{
+	qer_editorimage textures/raven/decals/_marine/numbers1.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/numbers1.tga
+	}
+}
+
+material textures/raven/decals/_marine/numbers2.tga
+{
+	qer_editorimage textures/raven/decals/_marine/numbers2.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/numbers2.tga
+	}
+}
+
+material textures/raven/decals/_marine/numbers3.tga
+{
+	qer_editorimage textures/raven/decals/_marine/numbers3.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/numbers3.tga
+	}
+}
+
+material textures/raven/decals/_marine/numbers4.tga
+{
+	qer_editorimage textures/raven/decals/_marine/numbers4.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/numbers4.tga
+	}
+}
+
+
+material textures/raven/decals/_marine/cautiontag
+{
+	qer_editorimage textures/raven/decals/_marine/cautiontag.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/cautiontag.tga
+	}
+}
+
+material textures/raven/decals/_marine/cautionarrow
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/decals/_marine/cautionarrow.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/cautionarrow.tga
+	}
+}
+
+material textures/raven/decals/_marine/cautionstrip
+{
+	qer_editorimage textures/raven/decals/_marine/cautionstrip.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/cautionstrip.tga
+	}
+}
+
+material textures/raven/decals/_marine/arrows2
+{
+	qer_editorimage textures/raven/decals/_marine/arrows2.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/arrows2.tga
+	}
+}
+
+material textures/raven/decals/_marine/step
+{
+	qer_editorimage textures/raven/decals/_marine/step.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/step.tga
+	}
+}
+
+material textures/raven/decals/_marine/corner
+{
+	qer_editorimage textures/raven/decals/_marine/corner.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{
+		diffuseMap textures/raven/decals/_marine/corner.tga 	//for light decals
+		red .24
+		green .24
+		blue .24
+	}
+}
+
+material textures/raven/decals/_marine/arrows1
+{
+	qer_editorimage textures/raven/decals/_marine/arrows1.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{
+		diffuseMap textures/raven/decals/_marine/arrows1.tga 	//for light decals
+		red .24
+		green .24
+		blue .24
+	}
+}
+
+material textures/raven/decals/_marine/line1
+{
+	qer_editorimage textures/raven/decals/_marine/line1.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{
+		diffuseMap textures/raven/decals/_marine/line1.tga 	//for light decals
+		red .24
+		green .24
+		blue .24
+	}
+}
+
+material textures/raven/decals/_marine/line2
+{
+	qer_editorimage textures/raven/decals/_marine/line2.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{
+		diffuseMap textures/raven/decals/_marine/line2.tga 	//for light decals
+		red .24
+		green .24
+		blue .24
+	}
+}
+
+material textures/raven/decals/_marine/arrow2
+{
+	qer_editorimage textures/raven/decals/_marine/arrow2.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{
+		diffuseMap textures/raven/decals/_marine/arrow2.tga 	//for light decals
+		red .24
+		green .24
+		blue .24
+	}
+}
+
+material textures/raven/decals/_marine/alphabet_lighten
+{
+	qer_editorimage textures/raven/decals/_marine/alphabet_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+
+	{
+       	blend add
+       	map textures/raven/decals/_marine/alphabet.tga
+		red .7
+		green .7
+		blue .7
+	}
+}
+
+material textures/raven/decals/_marine/sbet_darken
+{
+	qer_editorimage textures/raven/decals/_marine/alphabet_darken.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+
+
+	{
+		blend	GL_ZERO, GL_ONE_MINUS_SRC_COLOR		//inverted decal that darkens
+		Map textures/raven/decals/_marine/alphabet.tga
+	}
+}
+
+material textures/raven/decals/_marine/arrow1
+{
+	qer_editorimage textures/raven/decals/_marine/arrow1_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+
+	{
+       	blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR								//inverse multiplicative blend
+		Map textures/raven/decals/_marine/arrow1.tga
+	}	
+}
+
+
+//	SIGNS
+
+material textures/raven/decals/_marine/sign_interrogation
+{
+	qer_editorimage textures/raven/decals/_marine/sign_interrogation_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_interrogation.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/sign_morgue
+{
+	qer_editorimage textures/raven/decals/_marine/sign_morgue_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_morgue.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/sign_combatinfocenter
+{
+	qer_editorimage textures/raven/decals/_marine/sign_combatinfocenter_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_combatinfocenter.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/sign_storagelocker
+{
+	qer_editorimage textures/raven/decals/_marine/sign_storagelocker_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_storagelocker.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/sign_defensecannon
+{
+	qer_editorimage textures/raven/decals/_marine/sign_defensecannon_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_defensecannon.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/sign_holdingcell
+{
+	qer_editorimage textures/raven/decals/_marine/sign_holdingcell_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_holdingcell.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/sign_deck01_rt
+{
+	qer_editorimage textures/raven/decals/_marine/sign_deck01_rt_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_deck01_rt.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/sign_deck01_lf
+{
+	qer_editorimage textures/raven/decals/_marine/sign_deck01_lf_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_deck01_lf.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/sign_deck02_rt
+{
+	qer_editorimage textures/raven/decals/_marine/sign_deck02_rt_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_deck02_rt.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/sign_deck02_lf
+{
+	qer_editorimage textures/raven/decals/_marine/sign_deck02_lf_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_deck02_lf.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/sign_deck03_rt
+{
+	qer_editorimage textures/raven/decals/_marine/sign_deck03_rt_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_deck03_rt.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/sign_deck03_lf
+{
+	qer_editorimage textures/raven/decals/_marine/sign_deck03_lf_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_deck03_lf.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/sign_deck04_rt
+{
+	qer_editorimage textures/raven/decals/_marine/sign_deck04_rt_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_deck04_rt.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/sign_deck04_lf
+{
+	qer_editorimage textures/raven/decals/_marine/sign_deck04_lf_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_deck04_lf.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/sign_centralcommand
+{
+	qer_editorimage textures/raven/decals/_marine/sign_centralcommand_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_centralcommand.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/sign_navigation
+{
+	qer_editorimage textures/raven/decals/_marine/sign_navigation_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_navigation.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/sign_cargobay
+{
+	qer_editorimage textures/raven/decals/_marine/sign_cargobay_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/sign_cargobay.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/misctext1
+{
+	qer_editorimage textures/raven/decals/_marine/misctext1_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/misctext1.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/misctext2
+{
+	qer_editorimage textures/raven/decals/_marine/misctext2_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/misctext2.tga 	//for light decals
+}
+
+material textures/raven/decals/_marine/misctext3
+{
+	qer_editorimage textures/raven/decals/_marine/misctext3_ed.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+		diffuseMap	textures/raven/decals/_marine/misctext3.tga 	//for light decals
+}
+
+
+//	OVERLAY DECALS
+
+material textures/raven/decals/_marine/poisonous
+{
+	qer_editorimage textures/raven/decals/_marine/poisonous.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/poisonous.tga
+	}
+}
+
+material textures/raven/decals/_marine/ladder
+{
+	qer_editorimage textures/raven/decals/_marine/ladder.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/ladder.tga
+	}
+}
+
+material textures/raven/decals/_marine/fireextinguisher
+{
+	qer_editorimage textures/raven/decals/_marine/fireextinguisher.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/fireextinguisher.tga
+	}
+}
+
+material textures/raven/decals/_marine/caution
+{
+	qer_editorimage textures/raven/decals/_marine/caution.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/caution.tga
+	}
+}
+
+material textures/raven/decals/_marine/shutoff_valve
+{
+	qer_editorimage textures/raven/decals/_marine/shutoff_valve.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/shutoff_valve.tga
+	}
+}
+
+material textures/raven/decals/_marine/biohazard
+{
+	qer_editorimage textures/raven/decals/_marine/biohazard.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/biohazard.tga
+	}
+}
+
+material textures/raven/decals/_marine/medical
+{
+	qer_editorimage textures/raven/decals/_marine/medical.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/medical.tga
+	}
+}
+
+material textures/raven/decals/_marine/firstaid
+{
+	qer_editorimage textures/raven/decals/_marine/firstaid.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/firstaid.tga
+	}
+}
+
+material textures/raven/decals/_marine/airlock1
+{
+	qer_editorimage textures/raven/decals/_marine/airlock1.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/airlock1.tga
+	}
+}
+
+material textures/raven/decals/_marine/airlock2
+{
+	qer_editorimage textures/raven/decals/_marine/airlock2.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/airlock2.tga
+	}
+}
+material textures/raven/decals/_marine/caution_voltage
+{
+	qer_editorimage textures/raven/decals/_marine/caution_voltage.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/caution_voltage.tga
+	}
+}
+
+material textures/raven/decals/_marine/caution_voltage2
+{
+	qer_editorimage textures/raven/decals/_marine/caution_voltage2.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/caution_voltage2.tga
+	}
+}
+
+material textures/raven/decals/_marine/caution_voltage3
+{
+	qer_editorimage textures/raven/decals/_marine/caution_voltage3.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/caution_voltage3.tga
+	}
+}
+
+material textures/raven/decals/_marine/caution_hazwaste
+{
+	qer_editorimage textures/raven/decals/_marine/caution_hazwaste.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/caution_hazwaste.tga
+	}
+}
+
+material textures/raven/decals/_marine/caution_munitions
+{
+	qer_editorimage textures/raven/decals/_marine/caution_munitions.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/caution_munitions.tga
+	}
+}
+
+material textures/raven/decals/_marine/caution_munitions2
+{
+	qer_editorimage textures/raven/decals/_marine/caution_munitions2.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/caution_munitions2.tga
+	}
+}
+
+material textures/raven/decals/_marine/caution_flammable
+{
+	qer_editorimage textures/raven/decals/_marine/caution_flammable.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/caution_flammable.tga
+	}
+}
+
+material textures/raven/decals/_marine/caution_flammable2
+{
+	qer_editorimage textures/raven/decals/_marine/caution_flammable2.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/caution_flammable2.tga
+	}
+}
+
+material textures/raven/decals/_marine/caution_flammable3
+{
+	qer_editorimage textures/raven/decals/_marine/caution_flammable3.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/caution_flammable3.tga
+	}
+}
+
+material textures/raven/decals/_marine/caution_radioactive
+{
+	qer_editorimage textures/raven/decals/_marine/caution_radioactive.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/caution_radioactive.tga
+	}
+}
+
+material textures/raven/decals/_marine/caution_radioactive2
+{
+	qer_editorimage textures/raven/decals/_marine/caution_radioactive2.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/caution_radioactive2.tga
+	}
+}
+
+material textures/raven/decals/_marine/caution_radioactive3
+{
+	qer_editorimage textures/raven/decals/_marine/caution_radioactive3.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/caution_radioactive3.tga
+	}
+}
+
+material textures/raven/decals/_marine/caution_laser
+{
+	qer_editorimage textures/raven/decals/_marine/caution_laser.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/caution_laser.tga
+	}
+}
+
+material textures/raven/decals/_marine/caution_laser2
+{
+	qer_editorimage textures/raven/decals/_marine/caution_laser2.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/caution_laser2.tga
+	}
+}
+
+material textures/raven/decals/_marine/restrictedarea
+{
+	qer_editorimage textures/raven/decals/_marine/restrictedarea.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/restrictedarea.tga
+	}
+}
+
+material textures/raven/decals/_marine/caution_machinery
+{
+	qer_editorimage textures/raven/decals/_marine/caution_machinery.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/caution_machinery.tga
+	}
+}
+
+material textures/raven/decals/_marine/logo_color128
+{
+	qer_editorimage textures/raven/decals/_marine/logo_color128.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/logo_color128.tga
+	}
+}
+
+material textures/raven/decals/_marine/logo_color64
+{
+	qer_editorimage textures/raven/decals/_marine/logo_color64.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/logo_color64.tga
+	}
+}
+
+material textures/raven/decals/_marine/unitlogo_color64
+{
+	qer_editorimage textures/raven/decals/_marine/unitlogo_color64.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/_marine/unitlogo_color64.tga
+	}
+}
+
+
+material models/mapobjects/marine/equipment/locker/closed
+{
+      	noselfShadow
+		unsmoothedtangents
+	surfaceType "metal"
+	
+
+	diffusemap 	models/mapobjects/marine/equipment/locker/closed_d.tga
+	bumpmap addnormals (models/mapobjects/marine/equipment/locker/closed_local.tga, heightmap (models/mapobjects/marine/equipment/locker/closed_h.tga, 2 ))
+	specularmap	models/mapobjects/marine/equipment/locker/closed_s.tga
+}
+
+
+material models/mapobjects/marine/equipment/doors/single_door/door1
+{
+  	noselfShadow
+	unsmoothedtangents
+	surfaceType "metal"
+
+	diffusemap 	models/mapobjects/marine/equipment/doors/single_door/door1_d.tga
+	bumpmap addnormals (models/mapobjects/marine/equipment/doors/single_door/door1_local.tga, heightmap(models/mapobjects/marine/equipment/doors/single_door/door1_h.tga, 2 ))
+	specularmap	models/mapobjects/marine/equipment/doors/single_door/door1_s.tga
+}
+
+material models/mapobjects/marine/equipment/doors/single_door/window_door
+{
+      	noselfShadow
+		unsmoothedtangents
+
+ 
+	diffusemap 	models/mapobjects/marine/equipment/doors/single_door/window_door_d.tga
+	bumpmap addnormals (models/mapobjects/marine/equipment/doors/single_door/window_door_local.tga, heightmap(models/mapobjects/marine/equipment/doors/single_door/window_door_h.tga, 2 ))
+	specularmap	models/mapobjects/marine/equipment/doors/single_door/window_door_s.tga
+}
+
+material models/mapobjects/marine/equipment/doors/single_door/frame
+{
+		surfacetype "metal"
+      	noselfShadow
+		unsmoothedtangents
+
+  
+	diffusemap 	models/mapobjects/marine/equipment/doors/single_door/frame_d.tga
+	bumpmap addnormals (models/mapobjects/marine/equipment/doors/single_door/frame_local.tga, heightmap(models/mapobjects/marine/equipment/doors/single_door/frame_h.tga, 2 ))
+	specularmap	models/mapobjects/marine/equipment/doors/single_door/frame_s.tga
+
+        {
+		blend add
+		map models/mapobjects/marine/equipment/doors/single_door/frame_glow.tga
+		red		Parm0
+		green	Parm1
+		blue	Parm2
+		colored
+	}
+	
+
+	
+}
+
+material models/mapobjects/marine/equipment/doors/single_door/rail
+{
+      	noselfShadow
+		unsmoothedtangents
+
+
+	diffusemap 	models/mapobjects/marine/equipment/doors/single_door/rail_d.tga
+	bumpmap addnormals (models/mapobjects/marine/equipment/doors/single_door/rail_local.tga, heightmap(models/mapobjects/marine/equipment/doors/single_door/rail_h.tga, 2 ))
+	specularmap	models/mapobjects/marine/equipment/doors/single_door/rail_s.tga
+}
+
+
+
+
+//==============================
+
+
+material textures/decals/sdirt6
+{
+	DECAL_MACRO
+	translucent
+	nonsolid
+	noimpact
+	noshadows
+	qer_editorimage	textures/decals/sdirt6.tga
+	{
+		blend 	gl_zero,gl_one_minus_src_color
+		map 	textures/decals/sdirt6.tga
+		colored
+	}	
+}
+
+material textures/decals/sdirt7
+{
+	DECAL_MACRO
+	translucent
+	nonsolid
+	noimpact
+	noshadows
+	qer_editorimage	textures/decals/sdirt7.tga
+	{
+		blend 	gl_zero,gl_one_minus_src_color
+		map 	textures/decals/sdirt7.tga
+		colored
+	}	
+}
+
+material textures/decals/stainwallfade
+{
+
+	DECAL_MACRO
+	qer_editorimage	textures/decals/stainwallfade.tga
+	{
+		blend gl_dst_color,gl_zero
+		map textures/decals/stainwallfade.tga
+	}	
+}
+
+
+material textures/decals/stainwall
+{
+
+	DECAL_MACRO
+	//polygonOffset
+	qer_editorimage	textures/decals/stainwall.tga
+	{
+		blend gl_dst_color,gl_zero
+		map textures/decals/stainwall.tga
+	}	
+}
+
+//----------------------------------
+//	GRUNGE MAPS
+//----------------------------------
+
+material textures/raven/decals/_grungemaps/grunge1
+{
+	qer_editorimage textures/raven/decals/_grungemaps/grunge1.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+
+	{
+       	blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR								//inverse multiplicative blend
+		Map textures/raven/decals/_grungemaps/grunge1.tga
+	}
+}
+
+material textures/raven/decals/_grungemaps/grunge2
+{
+	qer_editorimage textures/raven/decals/_grungemaps/grunge2.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+
+	{
+       	blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR								//inverse multiplicative blend
+		Map textures/raven/decals/_grungemaps/grunge2.tga
+	}
+}
+
+material textures/raven/decals/_grungemaps/grunge8
+{
+	qer_editorimage textures/raven/decals/_grungemaps/grunge8.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+
+	{
+		blend GL_DST_COLOR, GL_SRC_COLOR		
+		Map textures/raven/decals/_grungemaps/grunge8.tga
+	}
+}
+
+material textures/raven/decals/_grungemaps/grunge_scratches1
+{
+	surfaceType "metal"
+	qer_editorimage textures/raven/decals/_grungemaps/grunge_scratches1.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+
+	{
+       	blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR								//inverse multiplicative blend
+		Map textures/raven/decals/_grungemaps/grunge_scratches1.tga
+	}
+}
+
+//----------------------------------
+//  strogg wall banners
+//----------------------------------
+
+
+material textures/raven/banners/1_tall
+{
+	qer_editorimage	textures/raven/banners/1_tall.tga
+	noShadows
+	nonSolid
+	twoSided
+	{
+		diffusemap 	textures/raven/banners/1_tall.tga
+		bumpMap 	heightmap (textures/raven/banners/1_tall.tga, 1)
+		specularMap	textures/raven/banners/1_tall_s.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/raven/banners/1_tall_ripped
+{
+	qer_editorimage	textures/raven/banners/1_tall_r.tga
+	noShadows
+	nonSolid
+	twoSided
+	{
+		diffusemap 	textures/raven/banners/1_tall_r.tga
+		bumpMap		heightmap (textures/raven/banners/1_h.tga, 3)
+		specularMap	textures/raven/banners/1_tall_r_s.tga
+		alphaTest 0.5
+		translate	0, 0.5
+		rotate		sinTable [ time * 0.15 + 1 ] * 0.005
+ 		translate	0, -0.5
+	}
+}
+
+material textures/raven/banners/2_tall
+{
+	qer_editorimage	textures/raven/banners/2_tall.tga
+	noShadows
+	nonSolid
+	twoSided
+	{
+		diffusemap 	textures/raven/banners/2_tall.tga
+		bumpMap 	heightmap (textures/raven/banners/2_tall.tga, 1)
+		specularMap	textures/raven/banners/2_tall_s.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/raven/banners/2_tall_ripped
+{
+	qer_editorimage	textures/raven/banners/2_tall_r.tga
+	noShadows
+	nonSolid
+	twoSided
+	{
+		diffusemap 	textures/raven/banners/2_tall_r.tga
+		bumpMap		heightmap (textures/raven/banners/2_h.tga, 3)
+		specularMap	textures/raven/banners/2_tall_r_s.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/raven/banners/3_tall
+{
+	qer_editorimage	textures/raven/banners/3_tall.tga
+	noShadows
+	nonSolid
+	twoSided
+	{
+		diffusemap 	textures/raven/banners/3_tall.tga
+		bumpMap 	heightmap (textures/raven/banners/1_tall.tga, 1)
+		specularMap	textures/raven/banners/3_tall_s.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/raven/banners/3_tall_ripped
+{
+	qer_editorimage	textures/raven/banners/3_tall_r.tga
+	noShadows
+	nonSolid
+	twoSided
+	{
+		diffusemap 	textures/raven/banners/3_tall_r.tga
+		bumpMap		heightmap (textures/raven/banners/1_h.tga, 3)
+		specularMap	textures/raven/banners/3_tall_r_s.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/raven/banners/4_tall
+{
+	qer_editorimage	textures/raven/banners/4_tall.tga
+	noShadows
+	nonSolid
+	twoSided
+	{
+		diffusemap 	textures/raven/banners/4_tall.tga
+		bumpMap 	heightmap (textures/raven/banners/2_tall.tga, 1)
+		specularMap	textures/raven/banners/4_tall_s.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/raven/banners/4_tall_ripped
+{
+	qer_editorimage	textures/raven/banners/4_tall_r.tga
+	noShadows
+	nonSolid
+	twoSided
+	{
+		diffusemap 	textures/raven/banners/4_tall_r.tga
+		bumpMap		heightmap (textures/raven/banners/2_h.tga, 3)
+		specularMap	textures/raven/banners/4_tall_r_s.tga
+		alphaTest 0.5
+	}
+}
+
+////////// short //////////////
+
+
+material textures/raven/banners/1_short
+{
+	qer_editorimage	textures/raven/banners/1_short.tga
+	noShadows
+	nonSolid
+	twoSided
+	{
+		diffusemap 	textures/raven/banners/1_short.tga
+		bumpMap 	heightmap (textures/raven/banners/1_short.tga, 1)
+		specularMap	textures/raven/banners/1_short_s.tga
+		alphaTest 0.5
+	}
+}
+
+
+material textures/raven/banners/3_short
+{
+	qer_editorimage	textures/raven/banners/3_short.tga
+	noShadows
+	nonSolid
+	twoSided
+	
+	{
+		diffusemap 	textures/raven/banners/3_short.tga
+		bumpMap 	heightmap (textures/raven/banners/3_short.tga, 1)
+		specularMap	textures/raven/banners/3_short_s.tga
+		alphaTest 0.5
+		//translate	0, 0.5
+		rotate		sinTable [ time * 0.15 + 1 ] * 0.005
+ 		//translate	0, -0.5
+	}
+}
+
+material textures/raven/banners/4_short
+{
+	qer_editorimage	textures/raven/banners/4_short.tga
+	noShadows
+	nonSolid
+	twoSided
+	{
+		diffusemap 	textures/raven/banners/4_short.tga
+		bumpMap 	heightmap (textures/raven/banners/4_short.tga, 1)
+		specularMap	textures/raven/banners/4_short_s.tga
+		alphaTest 0.5
+	}
+}
+
+
+
+//----------------------------------
+//  strogg wall banner shadows
+//----------------------------------
+
+////////// tall //////////////
+
+material textures/raven/banners/1_tall_shadow
+{
+	qer_editorimage	textures/raven/banners/1_tall_shd.tga
+	noShadows
+	nonSolid
+	{
+       	blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR								//inverse multiplicative blend
+		Map textures/raven/banners/1_tall_shd.tga
+		red Parm4
+		green Parm4
+		blue Parm4
+	}
+}
+
+material textures/raven/banners/1_tall_ripped_shadow
+{
+	qer_editorimage	textures/raven/banners/1_tall_r_shd.tga
+	noShadows
+	nonSolid
+	{
+       	blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR								//inverse multiplicative blend
+		Map textures/raven/banners/1_tall_r_shd.tga
+		red Parm4
+		green Parm4
+		blue Parm4
+	}
+}
+
+material textures/raven/banners/2_tall_shadow
+{
+	qer_editorimage	textures/raven/banners/2_tall_shd.tga
+	noShadows
+	nonSolid
+	{
+       	blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR								//inverse multiplicative blend
+		Map textures/raven/banners/2_tall_shd.tga
+		red Parm4
+		green Parm4
+		blue Parm4
+	}
+}
+
+material textures/raven/banners/2_tall_ripped_shadow
+{
+	qer_editorimage	textures/raven/banners/2_tall_r_shd.tga
+	noShadows
+	nonSolid
+	{
+       	blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR								//inverse multiplicative blend
+		Map textures/raven/banners/2_tall_r_shd.tga
+		red Parm4
+		green Parm4
+		blue Parm4
+	}
+}
+
+material textures/raven/banners/3_tall_shadow
+{
+	qer_editorimage	textures/raven/banners/1_tall_shd.tga
+	noShadows
+	nonSolid
+	{
+       	blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR								//inverse multiplicative blend
+		Map textures/raven/banners/1_tall_shd.tga
+		scale -1, 1
+		red Parm4
+		green Parm4
+		blue Parm4
+	}
+}
+
+material textures/raven/banners/3_tall_ripped_shadow
+{
+	qer_editorimage	textures/raven/banners/1_tall_r_shd.tga
+	noShadows
+	nonSolid
+	{
+       	blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR								//inverse multiplicative blend
+		Map textures/raven/banners/1_tall_r_shd.tga
+		scale -1, 1
+		red Parm4
+		green Parm4
+		blue Parm4
+	}
+}
+
+material textures/raven/banners/4_tall_shadow
+{
+	qer_editorimage	textures/raven/banners/2_tall_shd.tga
+	noShadows
+	nonSolid
+	{
+       	blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR								//inverse multiplicative blend
+		Map textures/raven/banners/2_tall_shd.tga
+		scale -1, 1
+		red Parm4
+		green Parm4
+		blue Parm4
+	}
+}
+
+material textures/raven/banners/4_tall_ripped_shadow
+{
+	qer_editorimage	textures/raven/banners/2_tall_r_shd.tga
+	noShadows
+	nonSolid
+	{
+       	blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR								//inverse multiplicative blend
+		Map textures/raven/banners/2_tall_r_shd.tga
+		scale -1, 1
+		red Parm4
+		green Parm4
+		blue Parm4
+	}
+}
+
+////////// short //////////////
+
+material textures/raven/banners/1_short_shadow
+{
+	noShadows
+	nonSolid
+	{
+       	blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR								//inverse multiplicative blend
+		Map textures/raven/banners/2_short_shd.tga
+		red Parm4
+		green Parm4
+		blue Parm4
+	}
+}
+
+material textures/raven/banners/2_short_shadow
+{
+	noShadows
+	nonSolid
+	{
+       	blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR								//inverse multiplicative blend
+		Map textures/raven/banners/2_short_shd.tga
+		red Parm4
+		green Parm4
+		blue Parm4
+	}
+}
+
+material textures/raven/banners/3_short_shadow
+{
+	noShadows
+	nonSolid
+	{
+       	blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR								//inverse multiplicative blend
+		Map textures/raven/banners/2_short_shd.tga
+		scale -1, 1
+		red Parm4
+		green Parm4
+		blue Parm4
+	}
+}
+
+material textures/raven/banners/4_short_shadow
+{
+
+	noShadows
+	nonSolid
+	{
+       	blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR								//inverse multiplicative blend
+		Map textures/raven/banners/2_short_shd.tga
+		scale -1, 1
+		red Parm4
+		green Parm4
+		blue Parm4
+	}
+}
+
+/// end banenrs
+
+
+/// decals
+
+material textures/raven/decals/military_color
+{
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+	
+	{	
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/raven/decals/military_color.tga
+	}
+}
+
+material textures/raven/hub/techpipe1_1
+{
+	qer_EditorImage	textures/raven/hub/techpipe1_1_ed.tga
+	bumpMap			textures/raven/hub/techpipe1_1_local.tga
+	diffuseMap		textures/raven/hub/techpipe1_1_d.tga
+	specularMap		textures/raven/hub/techpipe1_1_s.tga
+	{
+		blend		add
+		map			textures/raven/hub/techpipe1_1_add.tga
+		red			parm0
+		green		parm1
+		blue		parm2
+	}
+}
+
+material textures/raven/hub/techpipe1_1_red
+{
+	surfaceType "metal"
+	qer_EditorImage	textures/raven/hub/techpipe1_1_ed.tga
+	{
+		program	interaction/selfillum_detail
+		bumpMap			textures/raven/hub/techpipe1_1_local.tga
+		diffuseMap		textures/raven/hub/techpipe1_1_d.tga
+		specularMap		textures/raven/hub/techpipe1_1_s.tga
+		selfIllumMap	textures/raven/hub/techpipe1_1_red_add.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	1,4,0,0
+	}
+}
+
+/*
+material textures/raven/glass/clean_terminal02
+{
+	noSelfShadow
+	noshadows
+	twosided
+	translucent
+	forceOverlays
+	sort decal
+	surfacetype glass
+	qer_editorimage		textures/glass/terminal_glass.tga
+	{	
+		maskcolor				
+	    map	makealpha(textures/glass/patternglass6.tga)
+	}
+	{
+	    blend GL_DST_ALPHA, gl_one
+	    maskalpha
+		cubeMap		gfx/env/gen4
+        texgen		reflect
+		red   Parm0
+		green Parm1
+		blue  Parm2
+	}
+}
+*/
+material textures/raven/common_trims/c_beam32t
+{
+	surfaceType "metal"
+	qer_editorimage	textures/raven/common_trims/c_beam32t_d.tga
+	noshadows
+	twoSided
+	{
+		bumpmap addnormals (textures/raven/common_trims/c_beam32t_local.tga, heightmap(textures/raven/common_trims/c_beam32t_h.tga, 1 ))
+		specularmap textures/raven/common_trims/c_beam32t_s.tga
+		diffusemap textures/raven/common_trims/c_beam32t_d.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/raven/common_trims/c_beam32t_red
+{
+	surfaceType "metal"
+	qer_editorimage	textures/raven/common_trims/c_beam32t_red_d.tga
+	noshadows
+	twoSided
+	{
+		bumpmap addnormals (textures/raven/common_trims/c_beam32t_red_local.tga, heightmap(textures/raven/common_trims/c_beam32t_red_h.tga, 1 ))
+		specularmap textures/raven/common_trims/c_beam32t_red_s.tga
+		diffusemap textures/raven/common_trims/c_beam32t_red_d.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/raven/common_trims/c_beam32t_silver
+{
+	surfaceType "metal"
+	qer_editorimage	textures/raven/common_trims/c_beam32t_sil_d.tga
+	noshadows
+	twoSided
+	{
+		bumpmap addnormals (textures/raven/common_trims/c_beam32t_sil_local.tga, heightmap(textures/raven/common_trims/c_beam32t_sil_h.tga, 1 ))
+		specularmap textures/raven/common_trims/c_beam32t_sil_s.tga
+		diffusemap textures/raven/common_trims/c_beam32t_sil_d.tga
+		alphaTest 0.5
+		vertexcolor
+	}
+}
+
+material textures/raven/common_trims/c_trim2_noshadows
+{
+	qer_EditorImage		textures/raven/common_trims/c_trim2_noshadows.tga
+	noShadows
+	bumpMap			addnormals (textures/raven/common_trims/c_trim2_local.tga, heightmap (textures/raven/common_trims/c_trim2_h.tga, 1))
+	diffuseMap		textures/raven/common_trims/c_trim2_d.tga
+	specularMap		textures/raven/common_trims/c_trim2_s.tga
+}
+
+// intestines
+
+material textures/raven/stroyent/intestine_a
+{
+	qer_EditorImage textures/raven/stroyent/intestine_a_d.tga
+
+	{
+	bumpMap addnormals ( textures/raven/stroyent/intestine_a_local.tga, heightmap ( textures/raven/stroyent/intestine_a_h.tga, 2 ) )
+	scroll 0, time * .1 
+	}
+	
+	{
+	diffuseMap	textures/raven/stroyent/intestine_a_d.tga
+	scroll 0, time * .1 
+	}
+	
+	/*{
+	specularMap	textures/raven/stroyent/intestine_a_s.tga
+	scroll 0,  time * .1 
+	}*/
+}
+
+material textures/raven/stroyent/intestine_b
+{	
+	qer_EditorImage textures/raven/stroyent/intestine_b_d.tga
+	surfacetype flesh
+	{
+	bumpMap addnormals (textures/raven/stroyent/intestine_b_local.tga, heightmap ( textures/raven/stroyent/intestine_b_h.tga, 8 ) )
+	//Scale 1, intestinescale [time*0.125]
+	scroll 0, time*.125
+	rotate		sinTable [ time * 0.15 + 1 ] * 0.005
+	}
+	
+	{
+	diffuseMap	textures/raven/stroyent/intestine_b_d.tga
+	//Scale 1, intestinescale [time*0.125]
+	scroll 1, time*.125
+	rotate		sinTable [ time * 0.15 + 1 ] * 0.005
+	}
+	
+	
+	/*{
+	specularMap	textures/raven/stroyent/intestine_b_s.tga
+	//Scale 1, intestinescale [time*0.125]
+	scroll 0, time*.125
+	}*/
+}
+
+/// end intestines
+
+material textures/raven/terminal/t13_wall_3_twosided
+{
+	qer_editorimage textures/raven/terminal/t13_wall_3_d.tga
+
+	twoSided
+
+	bumpmap addnormals (textures/raven/terminal/t13_wall_3_local.tga, heightmap (textures/raven/terminal/t13_wall_3_h.tga, 1 ) )
+	diffusemap	textures/raven/terminal/t13_wall_3_d.tga
+	specularmap	textures/raven/terminal/t13_wall_3_s.tga
+}
+
+material textures/raven/common_misc/pipe1_2_black_clean
+{
+	qer_editorimage textures/raven/common_misc/pipe1_2_black_clean_d.tga
+
+	twoSided
+
+	bumpmap addnormals (textures/raven/common_misc/pipe1_2_local.tga, heightmap (textures/raven/common_misc/pipe1_2_black_clean_h.tga, 1 ) )
+	diffusemap	textures/raven/common_misc/pipe1_2_black_clean_d.tga
+	specularmap	textures/raven/common_misc/pipe1_2_black_clean_s.tga
+}
+
+material textures/raven/common_misc/pipe1_2a_black_clean
+{
+	qer_editorimage textures/raven/common_misc/pipe1_2a_black_clean_d.tga
+
+	twoSided
+
+	bumpmap addnormals (textures/raven/common_misc/pipe1_2_local.tga, heightmap (textures/raven/common_misc/pipe1_2a_black_clean_h.tga, 1 ) )
+	diffusemap	textures/raven/common_misc/pipe1_2a_black_clean_d.tga
+	specularmap	textures/raven/common_misc/pipe1_2a_black_clean_s.tga
+}
+
+material textures/raven/glass/marineglass3
+ {
+	noSelfShadow
+	noshadows
+	twosided
+	translucent
+	surfaceType "glass"
+	forceoverlays
+	sort decal
+
+	qer_EditorImage textures/raven/glass/marineglass3.tga
+
+    	{
+      	blend	add
+		map	textures/raven/glass/patternglass6.tga
+		red Parm0 
+		green Parm1 
+   				blue  Parm2
+	}
+	{
+	    blend blend
+	   	map textures/raven/glass/marineglass3.tga
+	   	scale	 32 , 32
+	}
+	{	
+		specularMap textures/raven/glass/marineglass3_s.tga
+		scale	 32 , 32
+	}
+}

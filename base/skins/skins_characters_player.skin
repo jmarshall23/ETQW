@@ -1,0 +1,143 @@
+// =============================
+// Engineer Lens
+// =============================
+skin skins/models/tools/binoculars/binoculars_lens_engineer {
+	models/tools/binoculars/binoculars_lens		models/tools/binoculars/binoculars_lens_engineer
+	dummy/flesh/shader1				models/characters/edf_player/gdf_arm
+}
+skin skins/models/tools/binoculars/binoculars_lens_engineer_arctic {
+	models/tools/binoculars/binoculars_lens		models/tools/binoculars/binoculars_lens_engineer
+	dummy/flesh/shader1				models/characters/edf_player/gdf_arm_arctic
+}
+
+// =============================
+// Field Ops Lens
+// =============================
+skin skins/models/tools/binoculars/binoculars_lens_fieldops {
+	models/tools/binoculars/binoculars_lens		models/tools/binoculars/binoculars_lens_fieldops
+	dummy/flesh/shader1				models/characters/edf_player/gdf_arm
+}
+skin skins/models/tools/binoculars/binoculars_lens_fieldops_arctic {
+	models/tools/binoculars/binoculars_lens		models/tools/binoculars/binoculars_lens_fieldops
+	dummy/flesh/shader1				models/characters/edf_player/gdf_arm_arctic
+}
+
+// =============================
+// Covert Ops Lens
+// =============================
+skin skins/models/tools/binoculars/binoculars_lens_covertops {
+	models/tools/binoculars/binoculars_lens		models/tools/binoculars/binoculars_lens_covertops
+	dummy/flesh/shader1				models/characters/edf_player/gdf_arm
+}
+skin skins/models/tools/binoculars/binoculars_lens_covertops_arctic {
+	models/tools/binoculars/binoculars_lens		models/tools/binoculars/binoculars_lens_covertops
+	dummy/flesh/shader1				models/characters/edf_player/gdf_arm_arctic
+}
+
+
+skin skins/edf/players/body/fade {
+	dummy/flesh/shader1							models/characters/edf_player/techpacks_fade
+	dummy/flesh/shader2							models/characters/edf_player/edf_helmets_fade
+	models/characters/edf_player/playerhead		models/characters/edf_player/playerhead_fade
+	models/characters/edf_player/field_ops_visor    models/characters/edf_player/field_ops_visor_fade
+	models/characters/edf_player/engineer_visor     models/characters/edf_player/engineer_visor_fade
+	models/characters/edf_player/ranger_visor       models/characters/edf_player/ranger_visor_fade
+}
+
+skin skins/player/spawnhost {
+	dummy/flesh/shader1							models/characters/edf_player/techpacks_spawnhosted
+	dummy/flesh/shader2							models/characters/edf_player/edf_helmets_spawnhosted
+	models/characters/edf_player/playerhead		models/characters/edf_player/playerhead_spawnhosted
+}
+
+
+skin skins/characters/edf_player/gdf_arm {
+	dummy/flesh/shader1							models/characters/edf_player/gdf_arm
+}
+
+
+skin skins/characters/edf_player/gdf_arm_arctic {
+	dummy/flesh/shader1							models/characters/edf_player/gdf_arm_arctic
+}
+
+skin skins/edf/players/body/fade/arctic {
+	dummy/flesh/shader1							models/characters/edf_player/techpacks_fade/arctic
+	dummy/flesh/shader2							models/characters/edf_player/edf_helmets_fade/arctic
+	models/characters/edf_player/playerhead		models/characters/edf_player/playerhead_fade
+	models/characters/edf_player/field_ops_visor    models/characters/edf_player/field_ops_visor_fade
+	models/characters/edf_player/engineer_visor     models/characters/edf_player/engineer_visor_fade
+	models/characters/edf_player/ranger_visor       models/characters/edf_player/ranger_visor_fade
+}
+
+skin skins/player/spawnhost/arctic {
+	dummy/flesh/shader1							models/characters/edf_player/techpacks_spawnhosted/arctic
+	dummy/flesh/shader2							models/characters/edf_player/edf_helmets_spawnhosted/arctic
+	models/characters/edf_player/playerhead		models/characters/edf_player/playerhead_spawnhosted
+}
+
+
+
+
+skin heatSight {
+	// Special atmosphere
+	atmospheres/default 						penta/heat_sight_atmosphere
+	
+
+	// Edf Players
+	models/characters/edf_player/techpacks		penta/heat_sight
+	models/characters/edf_player/edf_player		penta/heat_sight
+	models/characters/edf_player/playerhead		penta/heat_sight
+	models/characters/edf_player/edf_hands		penta/heat_sight
+	models/characters/edf_player/ranger_hands	penta/heat_sight
+
+	// Strogg Players
+	models/characters/strogg/techpacks			penta/heat_sight
+	models/characters/strogg/heads				penta/heat_sight
+	
+	// Edf Vehicles
+
+	models/vehicles/edf_badger/badger			penta/heat_sight
+	models/vehicles/edf_trojan/trojan			penta/heat_sight
+	models/vehicles/edf_trojan/trojan_wheels	penta/heat_sight
+
+	models/vehicles/edf_trojan/trojan_extra		penta/heat_sight
+
+	models/vehicles/edf_titan/titan				penta/heat_sight
+	models/vehicles/edf_titan/titan_wheels		penta/heat_sight
+	models/vehicles/edf_titan/titan_track_left	penta/heat_sight
+	models/vehicles/edf_titan/titan_track_right	penta/heat_sight
+	models/vehicles/edf_anansi/anansi			penta/heat_sight
+	models/vehicles/edf_husky/husky				penta/heat_sight
+	models/vehicles/edf_mcp/mcp					penta/heat_sight
+
+	models/vehicles/edf_mcp/mcp_wheel			penta/heat_sight
+
+	models/vehicles/gdf_platypus/platypus		penta/heat_sight
+	models/vehicles/gdf_bumblebee/bumblebee		penta/heat_sight
+
+	// Strogg vehicles
+	models/vehicles/strogg_hog/hog					penta/heat_sight
+	models/vehicles/strogg_hog/hog_wheels			penta/heat_sight
+	models/vehicles/strogg_desecrator/desecrator	penta/heat_sight
+	models/vehicles/strogg_goliath/goliath			penta/heat_sight
+	models/vehicles/strogg_goliath/goliath_railgun	penta/heat_sight
+	models/vehicles/strogg_hornet/hornet			penta/heat_sight
+	models/vehicles/strogg_icarus/icarus			penta/heat_sight
+}
+
+
+skin skins/players/gdf/arctic {
+	dummy/flesh/shader1						models/characters/edf_player/techpacks_arctic
+	dummy/flesh/shader2						models/characters/edf_player/edf_helmets_acrtic
+}
+
+skin skins/players/gdf/temperate {
+	dummy/flesh/shader1						models/characters/edf_player/techpacks
+	dummy/flesh/shader2						models/characters/edf_player/edf_helmets
+}
+
+skin skins/strogg/players/body/fade {
+	models/characters/strogg/techpacks		models/characters/strogg/techpacks_fade
+	models/characters/strogg/heads			models/characters/strogg/heads_fade
+}
+

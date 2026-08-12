@@ -1,0 +1,75 @@
+
+material models/henning/slipgatedetail
+{
+	//renderbump -size 512 2048  -colorMap -trace 0.04 -clampTextureSpace -overdrawMap  models/henning/slipgatedetail_local.tga models/henning/awning_high.obj
+	noselfshadow
+	{
+	bumpmap		picmip -1	models/mapobjects/slipgate/slipgatedetail_local.tga
+	diffusemap	picmip -1	models/mapobjects/slipgate/slipgatedetail_d.tga
+	specularmap	picmip -2	models/mapobjects/slipgate/slipgatedetail_s.tga
+	alphaTest	0.5
+	vertexcolor
+	}
+}
+
+material models/henning/slipgatedetail_noshadows
+{
+	//renderbump -size 512 2048  -colorMap -trace 0.04 -clampTextureSpace -overdrawMap  models/henning/slipgatedetail_local.tga models/henning/awning_high.obj
+	noshadows
+	noselfshadow
+	{
+		bumpmap		picmip -1	models/mapobjects/slipgate/slipgatedetail_local.tga
+		diffusemap	picmip -1	models/mapobjects/slipgate/slipgatedetail_d.tga
+		specularmap	picmip -2	models/mapobjects/slipgate/slipgatedetail_s.tga
+		alphaTest	0.5
+		vertexcolor
+	}
+}
+
+
+material models/henning/slipgatedetail_ts
+{
+	noselfshadow
+	surfaceTypeMap	"models/mapobjects/slipgate/slipgatedetail_ts"
+	{
+		bumpmap		picmip -1	models/mapobjects/slipgate/slipgatedetail_ts_local.tga
+		diffusemap	picmip -1	models/mapobjects/slipgate/slipgatedetail_ts_d.tga
+		specularmap	picmip -2	models/mapobjects/slipgate/slipgatedetail_ts_s.tga
+		alphaTest	0.5
+		vertexcolor
+		
+		//diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		//specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		//bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		//detailMult 2.5,20,0,0
+	}
+}
+
+material models/henning/slipgatedetail_ts_noshadows
+{
+	noshadows
+	noselfshadow
+	surfaceTypeMap	"models/mapobjects/slipgate/slipgatedetail_ts"
+	{
+		bumpmap		picmip -1	models/mapobjects/slipgate/slipgatedetail_ts_local.tga
+		diffusemap	picmip -1	models/mapobjects/slipgate/slipgatedetail_ts_d.tga
+		specularmap	picmip -2	models/mapobjects/slipgate/slipgatedetail_ts_s.tga
+		alphaTest	0.5
+		vertexcolor
+		
+		//diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		//specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		//bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		//detailMult 2.5,20,0,0
+	}
+}
+
+material textures2/plaster/slipgatepots
+{
+	noselfshadow
+	{
+		bumpmap		picmip -1	textures2/plaster/dirtwall04_local.tga
+		diffusemap	picmip -1	textures2/plaster/dirtwall04_d.tga
+		specularmap	picmip -2	textures2/plaster/dirtwall04_s.tga
+	}
+}

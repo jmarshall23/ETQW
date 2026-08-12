@@ -1,0 +1,1669 @@
+// texture used in Area22
+material textures/decals/desert_testing_site_logo
+{
+	qer_editorimage textures/decals/desert_testing_site_logo.tga
+	noShadows
+	noimpact
+
+	{
+		diffusemap textures/decals/desert_testing_site_logo.tga
+		alphaTest 0.1
+	}
+}
+
+material textures/decals/a22
+{
+	qer_editorimage textures/decals/a22.tga
+	sort decal
+	noShadows
+	nonsolid
+	noimpact
+	polygonOffset
+
+	{
+		blend gl_src_alpha, gl_one
+		map textures/decals/a22.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+material textures/decals/bulletglass2
+{
+	sort decal
+	translucent
+	nonsolid
+	noimpact
+	twosided
+	noshadows
+	polygonOffset
+	qer_editorimage	textures/decals/bulletglass2_d.tga
+	{
+		diffuseMap textures/decals/bulletglass2_d.tga
+	}
+}
+
+
+material textures/decals/bulletglass1
+{
+	sort decal
+	translucent
+	nonsolid
+	noimpact
+	twosided
+	noshadows
+	polygonOffset
+	qer_editorimage	textures/decals/bulletglass1_d.tga
+
+	diffuseMap textures/decals/bulletglass1_d.tga
+}
+
+
+material textures/decals/bulleth01
+{
+	qer_editorimage textures/decals/bulleth01.tga
+	sort decal
+	polygonOffset
+
+	{
+	 	diffusemap	textures/decals/bulleth01_d.tga
+	 	specularmap 	textures/decals/bulleth01_s.tga
+		bumpmap		textures/decals/bulleth01_local.tga
+		alphaTest 0.5
+	}
+
+}
+
+
+
+material textures/cc/cc_decals01
+{
+	qer_editorimage		textures/cc/decals01.tga
+	sort decal
+	noShadows
+	twosided
+	nonsolid
+	noimpact
+	translucent
+	polygonOffset
+
+	diffuseMap textures/cc/decals01.tga
+}
+
+
+
+material models/mapobjects/cargo/edf_container
+{
+	qer_editorimage		textures/decals/edf_container.tga
+	noShadows
+	twosided
+	nonsolid
+	noimpact
+	translucent
+
+	{
+		blend		filter
+       		map		textures/decals/edf_container.tga
+	}
+}
+
+material textures/decals/tunnel
+{
+	noshadows
+	translucent
+
+	qer_editorimage		textures/decals/tunnel.tga
+
+	{
+		alpha		tunnelVisionSolidAlpha[ parm3 ] - (time-parm0)*0.25
+	    	blend		blend
+		centerscale	0.65 + 0.05 * sinTable[ time ], 0.65 + 0.05 * sinTable[ time ]
+		rotate time * -.01
+		map    		clamp textures/decals/tunnel.tga
+
+	}
+	{
+		alpha		tunnelVisionSolidAlpha[ parm3 ] - (time-parm0)*0.25
+		blend		blend
+		centerscale	0.65+0.05*sinTable[time], 0.65+0.05*sinTable[time]
+		rotate time * .006
+		map    		clamp textures/decals/tunnel.tga
+	}
+}
+
+material textures/decals/floor_stripetrim2
+{
+	qer_editorimage textures/decals/floor_stripetrim2.tga
+	DECAL_MACRO
+	noShadows
+	nonsolid
+	noimpact
+	translucent
+	polygonOffset
+
+	diffuseMap	textures/decals/floor_stripetrim2.tga
+
+ }
+
+material textures/decals/floor_stripe
+{
+	qer_editorimage textures/decals/floor_stripe.tga
+	sort decal
+	noShadows
+	nonsolid
+	noimpact
+	translucent
+
+
+	diffuseMap textures/decals/floor_stripe.tga
+ }
+
+material textures/decals/floor_drain
+
+{
+	noShadows
+	//polygonOffset
+	nonsolid
+	noimpact
+	qer_editorimage textures/decals/floor_drain.tga
+
+	{
+      	 	specularmap	textures/decals/floor_drain_s.tga
+		bumpmap 	textures/decals/floor_drain_local.tga
+	 	diffusemap	textures/decals/floor_drain_d.tga
+		alphaTest 0.5
+	}
+
+
+
+}
+
+material textures/decals/fgrill2
+
+{
+ 	noShadows
+	nonsolid
+	noimpact
+	qer_editorimage textures/decals/fgrill2.tga
+
+	{
+		diffusemap textures/decals/fgrill2_d.tga
+	 	alphaTest 0.5
+		specularmap	textures/decals/fgrill2_s.tga
+		bumpmap 	addnormals( textures/decals/fgrill_local.tga , heightmap ( textures/decals/fgrill2_b.tga, 1 ) )
+	}
+
+
+
+}
+
+material textures/decals/driver
+{
+	qer_editorimage textures/decals/driver.tga
+	sort decal
+	noShadows
+	noimpact
+	translucent
+	polygonOffset
+
+	{
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/decals/driver.tga
+	}
+}
+
+material textures/decals/equipment
+{
+	qer_editorimage textures/decals/equipment.tga
+	sort decal
+	noShadows
+	noimpact
+	translucent
+	polygonOffset
+
+	{
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/decals/equipment.tga
+	}
+}
+
+material textures/decals/greystatica
+{
+	noshadows
+	translucent
+
+	qer_editorimage		textures/decals/greystatica.tga
+	{
+		blend		add
+		translate time * staticatable[ time * 10 ], time *staticatable[ time * 10 ]
+		rotate time * 7
+		map    textures/decals/greystatica.tga
+		red		Parm0
+        	green   Parm1
+       		blue	Parm2
+	}
+	{
+	    	blend		add
+		translate time * staticatable[ time * 20 ],time * staticatable[ time * 20 ]
+		rotate time * 6
+		map    textures/decals/greystatica.tga
+		red		Parm0
+        	green   Parm1
+        	blue	Parm2
+	}
+}
+
+// used for the deployment grid
+material textures/decals/white_decal {
+	qer_editorimage _white
+	sort decal
+	noShadows
+	noimpact
+	polygonOffset
+
+	{
+		map textures/effects/gridlines03.tga
+		vertexcolor
+		blend add
+		maskalpha
+	}
+}
+
+material textures/decals/white_decal_dark {
+	qer_editorimage _white
+	sort decal
+	noShadows
+	noimpact
+	polygonOffset
+
+	{
+		map textures/effects/gridlines03.tga
+		vertexcolor
+		blend add
+		red 0.25
+		green 0.25
+		blue 0.25
+		maskalpha
+	}
+}
+
+// used for the MCP parking spot in Canyon
+material textures/decals/mcp_deployzone_canyon {
+	qer_editorimage textures/effects/mcp_deployzone_canyon.tga
+
+	sort decal
+	polygonOffset
+	nonsolid
+	translucent
+
+	{
+		map textures/effects/mcp_deployzone_canyon.tga
+		blend add
+		maskalpha
+	}
+}
+
+// used for the MCP parking spot in Valley
+material textures/decals/mcp_deployzone_valley {
+	qer_editorimage textures/effects/mcp_deployzone_valley.tga
+
+	sort decal
+	polygonOffset
+	nonsolid
+	translucent
+
+	{
+		map textures/effects/mcp_deployzone_valley.tga
+		blend add
+		maskalpha
+	}
+}
+
+material textures/decals/deploy_arrows {
+	sort decal
+	noShadows
+	noImpact
+	polygonOffset
+
+	{
+		map nopicmip guis/assets/hud/edf/deploy/arrows.tga
+		vertexcolor
+		blend add
+		maskalpha
+	}
+}
+
+material textures/decals/artyLine {
+	qer_editorimage _white
+	sort decal
+	noShadows
+	noimpact
+	polygonOffset
+	{
+		blend blend
+		map nopicmip models/guis/assets/wayptarrows2.tga
+		translate time * -3, 0
+		scale 12, 1
+		alpha 0.25
+	}
+	{
+		program trivialBlendy
+		blend add
+		map nopicmip models/guis/assets/wayptarrows2.tga
+		mask models/guis/assets/wayptarrows2_f 
+		textureMatrix bumpMatrix{translate time * -1, 0}
+		translate time * -3, 0
+		scale 12, 1
+	}
+}
+
+material textures/decals/airStrikeArrow {
+	qer_editorimage _white
+	sort decal
+	noShadows
+	noimpact
+	polygonOffset
+
+	{
+		map clamp guis/assets/hud/edf/target/icon_arrow.tga
+		vertexColor
+		blend blend
+	}
+}
+
+material textures/decals/airStrikeMarker {
+	qer_editorimage _white
+	sort decal
+	noShadows
+	noimpact
+	polygonOffset
+
+	{
+		map clamp guis/assets/hud/edf/target/icon_target.tga
+		vertexColor
+		blend blend
+	}
+}
+
+material textures/decals/artilleryMarker {
+	qer_editorimage _white
+	sort decal
+	noShadows
+	noimpact
+	polygonOffset
+
+	{
+		map clamp guis/assets/hud/edf/target/icon_rings.tga
+		vertexColor
+		blend blend
+	}
+}
+
+material models/mapobjects/bloodstains
+{
+	noShadows
+	twosided
+	nonsolid
+	noimpact
+	translucent
+
+	{
+		blend		filter
+       		map		textures/decals/blood01_d.tga
+	}
+}
+
+material textures/decals/decals_wall01
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall01_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall02
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall02_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall03
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall03_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall04
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall04_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall05
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall05_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall06
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall06_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall07
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall07_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall08
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall08_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall09
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall09_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall10
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall10_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall11
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall11_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall12
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall12_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall13
+{
+	nonsolid
+	{
+		diffusemap	picmip -1	textures/decals/decals_wall13_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall14
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall14_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall15
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall15_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall16
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall16_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall17
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall17_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall18
+{
+	nonsolid
+	{
+		diffusemap	picmip -1	textures/decals/decals_wall18_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall19
+{
+	nonsolid
+	{
+		diffusemap	textures/decals/decals_wall19_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall20
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall20_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall21
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall21_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall22
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall22_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall23
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall23_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall24
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall24_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall25
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall25_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall26
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall26_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/decals_wall27
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/decals_wall27_d.tga
+		alphaTest	0.1
+	}
+
+}
+
+
+material textures/decals/graffiti01
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti01.tga
+	}
+}
+
+material textures/decals/graffiti02
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti02.tga
+	}
+}
+
+material textures/decals/graffiti03
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti03.tga
+	}
+}
+
+material textures/decals/graffiti04
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti04.tga
+	}
+}
+
+material textures/decals/graffiti05
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti05.tga
+	}
+}
+
+material textures/decals/graffiti06
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti06.tga
+	}
+}
+
+material textures/decals/graffiti07
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti07.tga
+	}
+}
+
+material textures/decals/graffiti08
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti08.tga
+	}
+}
+
+material textures/decals/graffiti09
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti09.tga
+	}
+}
+
+material textures/decals/graffiti10
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti10.tga
+	}
+}
+
+material textures/decals/graffiti11
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti11.tga
+	}
+}
+
+material textures/decals/graffiti12
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti12.tga
+	}
+}
+
+material textures/decals/graffiti13
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti13.tga
+	}
+}
+
+material textures/decals/graffiti14
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti14.tga
+	}
+}
+
+material textures/decals/graffiti15
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti15.tga
+	}
+}
+
+material textures/decals/graffiti16
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti16.tga
+	}
+}
+
+material textures/decals/graffiti17
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti17.tga
+	}
+}
+
+material textures/decals/graffiti18
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti18.tga
+	}
+}
+
+material textures/decals/graffiti19
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti19.tga
+	}
+}
+
+material textures/decals/graffiti20
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti20.tga
+	}
+}
+
+material textures/decals/graffiti21
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti21.tga
+	}
+}
+
+material textures/decals/graffiti22
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti22.tga
+	}
+}
+
+material textures/decals/graffiti23
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti23.tga
+	}
+}
+
+material textures/decals/graffiti24
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti24.tga
+	}
+}
+
+material textures/decals/graffiti25
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti25.tga
+	}
+}
+
+material textures/decals/graffiti26
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti26.tga
+	}
+}
+
+material textures/decals/graffiti27
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti27.tga
+	}
+}
+
+material textures/decals/graffiti28
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti28.tga
+	}
+}
+
+material textures/decals/graffiti29
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti29.tga
+	}
+}
+
+material textures/decals/graffiti30
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti30.tga
+	}
+}
+
+material textures/decals/graffiti31
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti31.tga
+	}
+}
+
+material textures/decals/graffiti32
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti32.tga
+	}
+}
+
+material textures/decals/graffiti33
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti33.tga
+	}
+}
+
+material textures/decals/graffiti34
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti34.tga
+	}
+}
+
+material textures/decals/graffiti35
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti35.tga
+	}
+}
+
+material textures/decals/graffiti36
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti36.tga
+	}
+}
+
+material textures/decals/graffiti37
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti37.tga
+	}
+}
+
+material textures/decals/graffiti38
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti38.tga
+	}
+}
+
+material textures/decals/graffiti39
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti39.tga
+	}
+}
+
+material textures/decals/graffiti40
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti40.tga
+	}
+}
+
+material textures/decals/graffiti41
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti41.tga
+	}
+}
+
+material textures/decals/graffiti42
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti42.tga
+	}
+}
+
+material textures/decals/graffiti43
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti43.tga
+	}
+}
+
+material textures/decals/graffiti44
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti44.tga
+	}
+}
+
+material textures/decals/graffiti45
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti45.tga
+	}
+}
+
+material textures/decals/graffiti46
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti46.tga
+	}
+}
+
+material textures/decals/graffiti47
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti47.tga
+	}
+}
+
+material textures/decals/graffiti48
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti48.tga
+	}
+}
+
+material textures/decals/graffiti49
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	textures/decals/graffiti49.tga
+	}
+}
+
+material textures/decals/sidewalkchunk01
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/sidewalkchunk01_d.tga
+		bumpmap		textures/decals/sidewalkchunk01_local.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/sidewalkchunk02
+{
+	nonsolid
+	noshadows
+	{
+		diffusemap 	textures/decals/sidewalkchunk02_d.tga
+		bumpmap		textures/decals/sidewalkchunk02_local.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/sidewalkchunk03
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/sidewalkchunk03_d.tga
+		bumpmap		textures/decals/sidewalkchunk03_local.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/sidewalkchunk04
+{
+	polygonOffset
+		sort decal	
+		nonsolid
+		noshadows
+ 	translucent
+	//nonsolid
+	{
+		diffusemap 	picmip -1	textures/decals/sidewalkchunk04_d.tga
+		bumpmap		picmip -1	textures/decals/sidewalkchunk04_local.tga
+		alphaTest	0.1
+	}
+
+}
+
+material textures/decals/sidewalkpatch01
+{
+	nonsolid
+	{
+		diffusemap 	textures/decals/sidewalkpatch01_d.tga
+		bumpmap		textures/decals/sidewalkpatch01_local.tga
+		specularmap	textures/decals/sidewalkpatch01_s.tga
+		alphaTest	0.1
+	}
+
+}
+
+material texturesheets/ark/icecles
+{
+	noShadows
+	nonsolid
+	translucent
+	sort postprocess
+	{
+		program water/simple_cube_mask
+		bumpMap texturesheets/ark/snow_ice_1_local.tga
+		diffuseMap texturesheets/ark/snow_ice_1_d.tga
+		map clamp highquality textures/penta/specular.tga
+		water_tint	0.9, 0.9, 1
+		water_distortion 2
+		water_fresnel 3
+		water_glare	1
+		water_offset 0, 0
+		water_desat 0
+	}
+	{
+		blend blend
+		map texturesheets/ark/snow_ice_1_d.tga
+	}
+}
+
+material texturesheets/ark/decals_ark
+{
+	qer_editorimage texturesheets/ark/ark_decals_d_ts.tga
+	polygonOffset
+	sort decal
+	nonsolid
+ 	translucent
+	{
+		program filterVertexColorCoverage
+ 		blend filter
+		map picmip -1	texturesheets/ark/ark_decals_d_ts
+		maskAlpha
+		vertexcolor
+		maskDepth
+		depthFunc lequal
+	}
+}
+
+material textures/decals/labmarkings01
+{
+	noShadows
+	nonsolid
+	{
+		diffusemap 	textures/decals/labmarkings01_d.tga
+		bumpmap		textures/decals/labmarkings01_local.tga
+		specularmap	textures/decals/labmarkings01_s.tga
+		alphaTest	0.1
+	}
+
+}
+
+
+material textures/decals/busstop01_groundglass
+{
+	qer_editorimage textures/decals/busstop01_groundglass_d.tga
+	noShadows
+	nonsolid
+	{
+
+		diffusemap textures/decals/busstop01_groundglass_d.tga
+		alphaTest 0.1
+	}
+}
+
+//
+//	Particle system decals
+//
+
+material textures/particles/decals/bullethole
+{
+	qer_editorimage textures/particles/decals/bulletscorch.tga
+	sort decal
+	noShadows
+	noimpact
+	translucent
+	polygonOffset
+	{
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		program sfx/blendDecalBlendFade
+		parameters time, 1 / 5
+		map textures/particles/decals/bulletscorch.tga
+		vertexcolor
+	}
+}
+
+material textures/particles/decals/bullethole_metal
+{
+	qer_editorimage textures/particles/decals/bullethole.tga
+	sort decal
+	noShadows
+	noimpact
+	translucent
+	polygonOffset
+	{
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		program sfx/blendDecalBlendFade
+		parameters time, 1 / 5
+		map textures/particles/decals/bullethole.tga
+	}
+	decalInfo 5 5 ( 1 1 1 1 ) ( 0 0 0 0 )
+}
+
+material textures/particles/decals/blasterscorch
+{
+	qer_editorimage textures/particles/decals/blasterscorch.tga
+	sort decal
+	noShadows
+	noimpact
+	translucent
+	polygonOffset
+	{
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		map textures/particles/decals/blasterscorch.tga
+	}
+	{
+		blend add
+		map textures/particles/decals/blasterscorch_add.tga
+	}
+}
+
+material textures/particles/decals/bulletglass
+{
+	qer_editorimage textures/particles/decals/bulletglass.tga
+	sort decal
+	noShadows
+	noimpact
+	translucent
+	polygonOffset
+	{
+		blend add
+		map textures/particles/decals/bulletglass.tga
+		vertexcolor
+	}
+}
+
+//
+//	"Real" system decals (these need decalInfo in the material generally)
+//
+
+material textures/particles/decals/scorch1
+{
+	qer_editorimage textures/particles/decals/scorch1.tga
+	sort decal
+	noShadows
+	noimpact
+	translucent
+	polygonOffset 0.3
+	{
+		//blend GL_DST_COLOR, GL_SRC_COLOR
+		program sfx/blendDecalBlendFade
+		parameters time, 1 / 5
+
+		map textures/particles/decals/scorch1.tga
+		vertexcolor
+	}
+	decalInfo 5 5 ( 1 1 1 1 ) ( 0 0 0 0 )
+}
+
+
+material textures/particles/decals/expmark1
+{
+	qer_editorimage textures/particles/decals/expmark1.tga
+	sort decal
+	noShadows
+	noimpact
+	translucent
+	polygonOffset 0.3
+	{
+		blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR
+		map textures/particles/decals/expmark1.tga
+		vertexcolor
+	}
+	decalInfo 3 3 ( 0.5 0.5 0.5 0.6 ) ( 0 0 0 0 )
+}
+
+material textures/particles/decals/crashland_strog
+{
+	sort decal
+	discrete
+	nonsolid
+ 	translucent
+ 	noshadows
+ 	polygonoffset 1
+	{
+		program sfx/blendFilterFade
+		blend filter
+
+		map textures/particles/decals/crashland_shadow.tga
+		red 1 * mguitable[ time * 0.5 ]
+		green 0.6 * mguitable[ time * 0.5 ]
+		blue 0.1 * mguitable[ time * 0.5 ]
+		maskAlpha
+		vertexcolor
+	}
+	{
+		blend add //GL_ZERO, GL_ONE_MINUS_SRC_COLOR
+
+		map textures/particles/decals/crashland.tga
+		red 1 * mguitable[ time * 0.5 ]
+		green 0.6 * mguitable[ time * 0.5 ]
+		blue 0.1 * mguitable[ time * 0.5 ]
+		maskAlpha
+		vertexcolor
+	}
+	decalInfo 0.7 0.7 ( 1 1 1 1 ) ( 0 0 0 0 )
+}
+
+
+material textures/particles/decals/sheet
+{
+	qer_editorimage textures/particles/decals/bullethole.tga
+	sort decal
+	noShadows
+	noimpact
+	translucent
+	polygonOffset 0.3
+	{
+		blend blend
+		program sfx/blendDecalBlendFade
+		parameters time, 1 / 5
+		map clamp textures/particles/decals/sheet.tga
+		maskAlpha
+	}
+}
+
+material textures/decals/wires01
+
+{
+	noShadows
+	//polygonOffset
+	nonsolid
+	twosided
+	noimpact
+	qer_editorimage textures/decals/wires01_d.tga
+
+	{
+      	specularmap	textures/decals/wires01_s.tga
+		bumpmap 	textures/decals/wires01_local.tga
+	 	diffusemap	textures/decals/wires01_d.tga
+		alphaTest 0.5
+	}
+
+
+
+}
+
+material textures/decals/wires01_solid
+
+{
+	noShadows
+	twosided
+	noimpact
+	qer_editorimage textures/decals/wires01_d.tga
+
+	{
+      	specularmap	textures/decals/wires01_s.tga
+		bumpmap 	textures/decals/wires01_local.tga
+	 	diffusemap	textures/decals/wires01_d.tga
+		alphaTest 0.5
+	}
+
+
+
+}
+
+material textures/particles/decals/afterglow
+{
+	qer_editorimage textures/particles/sparks/sparkflash03.tga
+	sort decal
+	noShadows
+	noimpact
+	translucent
+	polygonOffset
+	{
+		blend add
+		map clamp textures/particles/sparks/sparkflash03.tga
+		vertexcolor
+		maskalpha
+	}
+	decalInfo 1.5 3 ( 1 .5 .24 1 ) ( 0 0 0 0 )
+}
+
+material textures/decals/knifescratch
+{
+	qer_editorimage textures/decals/knifescratch.tga
+	sort decal
+	noShadows
+	noimpact
+	translucent
+	polygonOffset 0.125
+	{
+		blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR
+		map textures/decals/knifescratch.tga
+		vertexcolor
+		maskalpha
+	}
+	decalInfo 5 5 ( 1 1 1 1 ) ( 0 0 0 0 )
+}
+
+material textures/decals/knifescratch_glow
+{
+	qer_editorimage textures/decals/knifescratch_glow.tga
+	sort decal
+	noShadows
+	noimpact
+	translucent
+	polygonOffset
+	{
+		blend add
+		map clamp textures/decals/knifescratch_glow.tga
+		vertexcolor
+		maskalpha
+	}
+	decalInfo 1 1 ( 1 .5 .24 1 ) ( 0 0 0 0 )
+}
+
+material textures/particles/decals/expmark1_nofade
+{
+	qer_editorimage textures/particles/decals/expmark1.tga
+	sort decal
+	noShadows
+	noimpact
+	translucent
+	polygonOffset
+	nonsolid
+	{
+		blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR
+		map textures/particles/decals/expmark1.tga
+		vertexcolor
+	}
+	decalInfo 300 300 ( 1 1 1 1 ) ( 1 1 1 1 )
+}
+
+material textures/particles/decals/goliath_cracked
+{
+	qer_editorimage textures/particles/decals/goliath_cracked.tga
+	sort decal
+	noShadows
+	noimpact
+	translucent
+	polygonOffset 0.3
+	{
+		blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR
+		map textures/particles/decals/goliath_cracked.tga
+		vertexcolor
+	}
+	decalInfo 5 5 ( 1 1 1 1 ) ( 0 0 0 0 )
+}
+
+material textures/particles/decals/goliath_foot
+{
+	qer_editorimage textures/particles/decals/expmark1.tga
+	sort decal
+	noShadows
+	noimpact
+	translucent
+	polygonOffset 0.3
+	{
+		blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR
+		map textures/particles/decals/expmark1.tga
+		vertexcolor
+	}
+	decalInfo 5 5 ( .5 .5 .5 .5 ) ( 0 0 0 0 )
+}
+
+material textures/decals/shadow_gradient
+{
+	sort decal
+	nonsolid
+	translucent
+ 	polygonOffset
+ 	{
+ 		program 	filterVertexColorCoverage
+ 		blend		filter
+ 		map 		picmip -1	texturesheets/sewer/gradiencik_d.tga
+ 		vertexcolor
+ 	}
+}

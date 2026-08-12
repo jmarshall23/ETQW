@@ -1,0 +1,40 @@
+// --------------------------------------------
+// CANYON STUFF
+// --------------------------------------------
+
+stuffType canyon/canyon_grass {
+	Model	"stuff/canyon/canyon_grass01.lwo"
+	Model	"stuff/canyon/canyon_grass02.lwo"
+	Model	"stuff/canyon/canyon_grass03.lwo"
+}
+
+stuffType canyon/canyon_reed {
+	Model	"stuff/canyon/canyon_reed01.lwo"
+	Model	"stuff/canyon/canyon_reed02.lwo"
+	Model	"stuff/canyon/canyon_reed03.lwo"
+}
+
+stuffType canyon/canyon_rubbish {
+	Model	"stuff/canyon/canyon_rubbish01.lwo"
+	Model	"stuff/canyon/canyon_rubbish02.lwo"
+	Model	"stuff/canyon/canyon_rubbish03.lwo"
+	Model	"stuff/canyon/canyon_rubbish04.lwo"
+}
+
+stuffType canyon/canyon_rock {
+	Model	"stuff/canyon/canyon_rock01.lwo"
+	Model	"stuff/canyon/canyon_rock02.lwo"
+	Model	"stuff/canyon/canyon_rock03.lwo"
+	Model	"stuff/canyon/canyon_rock04.lwo"
+	Model	"stuff/canyon/canyon_rock05.lwo"
+	Model	"stuff/canyon/canyon_rock06.lwo"
+	Model	"stuff/canyon/canyon_rock07.lwo"
+	Model	"stuff/canyon/canyon_rock08.lwo"
+}
+
+stuffType canyon/canyon_rock_small {
+	Model	"stuff/canyon/canyon_rock_small01.lwo"
+	Model	"stuff/canyon/canyon_rock_small02.lwo"
+	Model	"stuff/canyon/canyon_rock_small03.lwo"
+	Model	"stuff/canyon/canyon_rock_small04.lwo"
+}

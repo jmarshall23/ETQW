@@ -1,0 +1,13 @@
+material models/weapons/shells/sgun_shell
+{
+	diffusemap	picmip -1	models/weapons/shells/sgun_shell_d.tga
+	specularmap	picmip -2	models/weapons/shells/sgun_shell_s.tga
+	bumpmap		picmip -1	models/weapons/shells/sgun_shell_local.tga
+}
+
+material models/weapons/shells/mg_shell
+{
+	diffusemap	picmip -1	models/weapons/shells/mg_shell_d.tga
+	specularmap	picmip -2	models/weapons/shells/mg_shell_s.tga
+	bumpmap		picmip -1	models/weapons/shells/mg_shell_local.tga
+}

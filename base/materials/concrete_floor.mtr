@@ -1,0 +1,93 @@
+material textures2/floors/concrete_tiles01_vcolor
+{
+	surfaceType	"concrete"
+	{
+		diffusemap	picmip -1	textures2/floors/concrete_tiles01_d.tga
+		specularmap	picmip -2	textures2/floors/concrete_tiles01_s.tga
+		bumpmap		picmip -1	textures2/floors/concrete_tiles01_local.tga
+		vertexcolor
+ 	}
+}
+
+material textures/concrete/concrete_floor01
+{
+	surfaceType	"concrete"
+	{
+		diffusemap	picmip -1	textures/concrete/concrete_floor01_d.tga
+		specularmap				_black
+		bumpmap					textures/concrete/concrete_floor01_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	4,4,0,0
+		vertexcolor
+ 	}
+}
+
+material textures/concrete/concrete_floor01a
+{
+	surfaceType	"concrete"
+	{
+		diffusemap	picmip -1	textures/concrete/concrete_floor01_d.tga
+		specularmap				_black
+		bumpmap					textures/concrete/concrete_floor01_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailMult	4,4,0,0
+		vertexcolor
+ 	}
+}
+
+material textures/concrete/concrete_floor02
+{
+	surfaceType	"concrete"
+	{
+		diffusemap	picmip -1	textures/concrete/concrete_floor02_d.tga
+		specularmap			_black
+		bumpmap				_flat
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailMult	3,3,0,0
+		
+		vertexcolor
+	}
+}
+
+material textures/concrete/concrete_floor02a
+{
+	surfaceType	"concrete"
+	{
+		diffusemap	picmip -1	textures/concrete/concrete_floor02_d.tga
+		specularmap				_black
+		bumpmap					_flat
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	4,4,0,0
+		
+		vertexcolor
+	}
+}
+
+material textures2/floors/concrete_tiles01
+{
+	surfaceType	"concrete"
+	{
+		diffusemap	picmip -1	textures2/floors/concrete_tiles01_d.tga
+		specularmap	picmip -2	textures2/floors/concrete_tiles01_s.tga
+		bumpmap		picmip -1	textures2/floors/concrete_tiles01_local.tga
+			
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	4,4,0,0
+		
+		vertexColor
+ 	}
+}

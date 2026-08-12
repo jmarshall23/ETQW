@@ -1,0 +1,49 @@
+///////////////////////////
+// Generic Player Sounds //
+///////////////////////////
+
+sound sounds/players/movement/water/idle {
+
+	volume -10
+	playOnce
+
+	looping
+	sounds/players/water_idle.wav
+}
+
+sound sounds/players/movement/water/swim {
+
+	volume -10
+	playOnce
+
+	looping
+	sounds/players/water_swim.wav
+}
+
+sound sounds/players/movement/water/jump {
+
+	sounds/players/water_jump.wav
+}
+
+sound sounds/players/movement/land/hard {
+
+	sounds/players/land_hurt.wav
+}
+
+sound sounds/players/freefall {
+
+	volume -10
+	omnidirectional
+	playOnce
+
+	sounds/players/freefall.wav
+}
+
+
+sound sounds/players/target_lock_alarm {
+
+	volume -15
+
+	looping
+	sounds/weapons/misc/target_lock_alarm.wav
+}

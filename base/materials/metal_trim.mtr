@@ -1,0 +1,37 @@
+material textures/metal_trim/vent_single_panel_01
+{
+	surfacetype "metal"
+	{
+		diffusemap				textures/metal_trim/vent_single_panel_01_d.tga
+		specularmap	picmip -1	textures/metal_trim/vent_single_panel_01_s.tga
+		bumpmap					textures/metal_trim/vent_single_panel_01_local.tga
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	1.6,1.6,0,0
+	}
+}
+
+material textures/metal_trim/metal_grill_01
+{
+	qer_editorimage textures2/lab/lab_wall_grill_2_d.tga
+	diffusemap	textures2/lab/lab_wall_grill_2_d.tga
+	specularmap     textures2/lab/lab_wall_grill_2_s.tga
+	bumpmap 	textures2/lab/lab_wall_grill_2_local.tga
+}
+
+material textures/metal/metal_trim_28_256
+{
+	diffusemap	textures/metal/metal_trim_28_256_d.tga
+	specularmap     textures/metal/metal_trim_28_256_s.tga
+	bumpmap 	textures/metal/metal_trim_26_256_local.tga
+}
+
+material textures/metal_trim/hazzard_strip
+{
+		qer_editorimage textures/metal_trim/hazzard_strip_d.tga
+		diffusemap 	textures/metal_trim/hazzard_strip_d.tga
+		specularmap	textures/metal_trim/hazzard_strip_s.tga
+		bumpmap		textures/metal_trim/hazzard_strip_local.tga
+}

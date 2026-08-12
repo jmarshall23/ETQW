@@ -1,0 +1,11 @@
+
+entityDef vehicle_mcp_caller {
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"drop_caller"
+
+	"editor_preview_model"			"models/mapobjects/helpers/gdf_mcp.lwo"
+
+	"def_drop_object"				"vehicle_magog_npc"
+	"def_drop_item"					"vehicle_mcp"
+	"drop_team"						"gdf"
+}

@@ -1,0 +1,155 @@
+// Temperate Ambience Sounds
+
+sound sounds/maps/temperate/transformer_01 {
+
+	volume -30
+	maxDistance 50
+
+	looping
+	sounds/ambience/temperate/transformer_01.ogg
+}
+
+sound sounds/maps/temperate/transformer_02 {
+
+	volume -20
+	maxDistance 50
+
+	looping
+	sounds/ambience/temperate/transformer_02.ogg
+}
+
+sound sounds/maps/temperate/wind_01 {
+
+	volume -30
+	global
+
+	looping
+	sounds/ambience/temperate/wind_01.ogg
+}
+
+sound sounds/maps/temperate/wind_02 {
+
+	volume -10
+	maxDistance 200
+
+	looping
+	sounds/ambience/temperate/wind_02.ogg
+}
+
+sound sounds/maps/temperate/waves_01 {
+
+	volume -15
+	maxDistance 50
+
+	looping
+	sounds/ambience/temperate/waves_onshore_01.ogg
+}
+
+sound sounds/maps/temperate/waves_02 {
+
+	volume -15
+	maxDistance 50
+
+	looping
+	sounds/ambience/temperate/waves_onshore_02.ogg
+}
+
+sound sounds/maps/temperate/machinery_01 {
+
+	volume -10
+	maxDistance 50
+
+	looping
+	sounds/ambience/temperate/machinery_01.ogg
+}
+
+sound sounds/maps/temperate/machinery_02 {
+
+	volume 0
+	maxDistance 50
+
+	looping
+	sounds/ambience/temperate/machinery_02.ogg
+}
+
+sound sounds/maps/temperate/industrial_01 {
+
+	volume -10
+	maxDistance 50
+
+	looping
+	sounds/ambience/temperate/industrial_01.ogg
+}
+
+sound sounds/maps/temperate/industrial_02 {
+
+	volume -10
+	maxDistance 50
+
+	looping
+	sounds/ambience/temperate/industrial_02.ogg
+}
+
+sound sounds/maps/temperate/hangar_01 {
+
+	volume -5
+	maxDistance 50
+
+	looping
+	sounds/ambience/temperate/hangar_01.ogg
+}
+
+sound sounds/maps/temperate/rumble_01 {
+
+	volume -20
+	maxDistance 50
+
+	looping
+	sounds/ambience/temperate/rumble_01.ogg
+}
+
+sound sounds/maps/temperate/birds_01 {
+
+	volume -15
+	maxDistance 100
+
+	looping
+	sounds/ambience/temperate/birds_01.ogg
+}
+
+sound sounds/maps/temperate/birds_02 {
+
+	volume -20
+	maxDistance 100
+
+	looping
+	sounds/ambience/temperate/birds_02.ogg
+}
+
+sound sounds/maps/temperate/birds_03 {
+
+	volume -10
+	maxDistance 100
+
+	looping
+	sounds/ambience/temperate/birds_03.ogg
+}
+
+sound sounds/maps/temperate/thunder {
+
+	global
+
+	sounds/ambience/temperate/thunder_01.ogg
+	sounds/ambience/temperate/thunder_02.ogg
+	sounds/ambience/temperate/thunder_03.ogg
+	sounds/ambience/temperate/thunder_04.ogg
+}
+
+
+sound sounds/ambience/temperate/thunder_04 {
+	sounds/ambience/temperate/thunder_04.wav
+}
+
+sound sounds/ambience/temperate/wind_02 {
+	sounds/ambience/temperate/wind_02.wav
+}

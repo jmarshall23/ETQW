@@ -1,0 +1,93 @@
+
+/******************************************************************************
+
+  TECHNICIAN SOLO ASSIGNMENTS
+
+******************************************************************************/
+
+
+#include "task_includes.include"
+
+//
+// Spawn Host
+//
+
+templates/tasks/solo_task( technician_create_spawnhost, task_create_spawnhost )
+	data {
+		"require_eligible1"				"ability_technician"
+		"waypoint"						"1"
+		"priority"						"0"
+		"time_limit"					"0"
+		
+		"mtr_cm_icon"					"hud/icons/missionsystem/technician_create_spawnhost"
+		"icon_sort_cm_request"			"-103"
+
+		"botTaskType"					"23"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/mis_spawnhost"
+		"mtr_waypoint"					"hud/icons/missionsystem/mis_spawnhost"	
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/mis_sml"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/tsk_spawnhost"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/tsk_sml"
+		"range"							"1024"
+		"min_range"						"64"
+	}
+}
+
+//
+// Supply
+//
+
+templates/tasks/solo_task( technician_supply_player, task_supply_player_strogg )
+	data {
+		"require_eligible1"				"ability_technician && ( same_entity == false )"
+		"waypoint"						"1"
+		"priority"						"0"
+		"task"							"1"
+		"time_limit"					"30"
+		
+		"tt_task"						"supply_player_strogg"
+		
+		"botTaskType"					"1"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/tsk_stroyent_technician"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/tsk_stroyent_technician"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/tsk_sml"
+		"range"							"2048"
+		"min_range"						"128"
+		"team_colored"					"1"
+	}
+}
+
+//
+// Revive
+//
+
+templates/tasks/solo_task( technician_revive_player, task_revive_player_strogg )
+	data {
+		"require_eligible1"				"ability_technician && same_team && ( same_entity == false )"
+		"waypoint"						"1"
+		"priority"						"0"
+		"show_eligible"					"1"
+		"task"							"1"
+		"tt_task"						"revive_player_strogg"
+
+		"botTaskType"					"0"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/mis_revive"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/mis_revive"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/mis_sml"
+		"range"							"2048"
+		"min_range"						"64"
+		"team_colored"					"1"
+	}
+}

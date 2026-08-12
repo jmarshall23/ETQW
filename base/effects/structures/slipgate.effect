@@ -1,0 +1,1914 @@
+effect effects/structures/slipgatebubble
+{
+	size	1763
+
+	emitter "glow"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	1,1
+			material	"textures/effects/slipgate/slipgate_glow"
+			trailRepeat	1
+
+			start
+			{
+				position { point -130,0,0 }
+				size { point 900,900 }
+				tint { point 0.603922,0.286275,0.0784314 }
+				rotate { point 0,0,0.5 }
+			}
+
+			motion
+			{
+				size { envelope bathroomtable }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 1200,1200 }
+				rotate { point 0,0,-0.5 }
+			}
+			lineHit
+		}
+	}
+	emitter "twist3"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	4,4
+			material	"textures/effects/slipgate/slipgate_warp"
+			trailRepeat	1
+
+			start
+			{
+				position { point -130,0,0 }
+				size { point 900,900 }
+				tint { point 0.741176,0.211765,0.121569 }
+				rotate { point 0,0,1 }
+			}
+
+			motion
+			{
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				rotate { point 0,0,-1 }
+			}
+			lineHit
+		}
+	}
+	spawner "twist1"
+	{
+		count		1,1
+
+		oriented
+		{
+			duration	2,2
+			material	"textures/effects/slipgate/slipgate_warp"
+			trailRepeat	1
+
+			start
+			{
+				position { point -130,0,0 }
+				size { point 800,800 }
+				tint { point 0.796078,0.211765,0.0666667 }
+				rotate { point 0,0,1 }
+			}
+
+			motion
+			{
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				rotate { point 0,0,-1 }
+			}
+			lineHit
+		}
+	}
+	spawner "twist2"
+	{
+		count		1,1
+
+		oriented
+		{
+			duration	4,4
+			material	"textures/effects/slipgate/slipgate_warp"
+			trailRepeat	1
+
+			start
+			{
+				position { point -130,0,0 }
+				size { point 300,300 }
+				tint { point 0.729412,0.286275,0.219608 }
+				fade { point 0 }
+				rotate { point 0,0,-1 }
+			}
+
+			motion
+			{
+				fade { envelope convexfade count 1.3 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				fade { point 1 }
+				rotate { point 0,0,1 }
+			}
+			lineHit
+		}
+	}
+	spawner "fire"
+	{
+		count		15,15
+
+		sprite
+		{
+			duration	3,4
+			blend	add
+			persist
+			material	"particles/fire4afogged"
+			gravity		0.04,0.04
+			trailRepeat	1
+
+			start
+			{
+				position { point -180,0,0 }
+				velocity { box 0,-40,-40,0,40,40 }
+				size { point 150,150 }
+				tint { line 1,0.501961,0.247059,0.509804,0.254902,0 }
+				fade { point 0 }
+				offset { sphere -350,-600,-500,250,600,450 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope costable }
+				fade { envelope shamus_fastinholdslowout count 0.9 offset 0.001 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 150,150,250,250 }
+				fade { line 0.1,0.4 }
+				rotate { box -1,1 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/structures/slipgatebubble_activated_snow
+{
+	size	1763
+
+	emitter "glow"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	2,2
+			material	"textures/effects/slipgate/slipgate_glow"
+			trailRepeat	1
+
+			start
+			{
+				position { point -130,0,0 }
+				size { point 900,900 }
+				tint { point 0.603922,0.286275,0.0784314 }
+				rotate { point 0,0,0.5 }
+			}
+
+			motion
+			{
+				size { envelope bathroomtable }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 1200,1200 }
+				rotate { point 0,0,-0.5 }
+			}
+			lineHit
+		}
+	}
+	emitter "twist3"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	4,4
+			material	"textures/effects/slipgate/slipgate_warp"
+			trailRepeat	1
+
+			start
+			{
+				position { point -130,0,0 }
+				size { point 900,900 }
+				tint { point 0.745098,0.215686,0.121569 }
+				rotate { point 0,0,1 }
+			}
+
+			motion
+			{
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				rotate { point 0,0,-1 }
+			}
+			lineHit
+		}
+	}
+	spawner "twist1"
+	{
+		count		1,1
+
+		oriented
+		{
+			duration	2,2
+			material	"textures/effects/slipgate/slipgate_warp"
+			trailRepeat	1
+
+			start
+			{
+				position { point -130,0,0 }
+				size { point 800,800 }
+				tint { point 0.796079,0.215686,0.0705882 }
+				rotate { point 0,0,1 }
+			}
+
+			motion
+			{
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				rotate { point 0,0,-1 }
+			}
+			lineHit
+		}
+	}
+	spawner "twist2"
+	{
+		count		1,1
+
+		oriented
+		{
+			duration	4,4
+			material	"textures/effects/slipgate/slipgate_warp"
+			trailRepeat	1
+
+			start
+			{
+				position { point -130,0,0 }
+				size { point 300,300 }
+				tint { point 0.733333,0.286275,0.223529 }
+				fade { point 0 }
+				rotate { point 0,0,-1 }
+			}
+
+			motion
+			{
+				fade { envelope convexfade count 1.3 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				fade { point 1 }
+				rotate { point 0,0,1 }
+			}
+			lineHit
+		}
+	}
+	spawner "portal"
+	{
+		count		1,1
+		constant
+
+		oriented
+		{
+			duration	1.1,1.1
+			material	"textures/effects/slipgate/slipgate_portal_snow"
+			trailRepeat	1
+
+			start
+			{
+				position { point -50,0,0 }
+				size { point 1000,1000 }
+				tint { point 0,0,0 }
+			}
+
+			motion
+			{
+				size { envelope firetable_m }
+				fade { envelope large_weapon_spread }
+			}
+
+			end
+			{
+				size { point 950,950 }
+			}
+			lineHit
+		}
+	}
+	spawner "fire"
+	{
+		count		15,15
+
+		sprite
+		{
+			duration	3,4
+			blend	add
+			persist
+			material	"particles/fire4afogged"
+			gravity		0.04,0.04
+			trailRepeat	1
+
+			start
+			{
+				position { point -180,0,0 }
+				velocity { box 0,-40,-40,0,40,40 }
+				size { point 150,150 }
+				tint { line 1,0.501961,0.247059,0.509804,0.254902,0 }
+				fade { point 0 }
+				offset { sphere -350,-600,-500,250,600,450 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope costable }
+				fade { envelope shamus_fastinholdslowout count 0.9 offset 0.001 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 150,150,250,250 }
+				fade { line 0.1,0.4 }
+				rotate { box -1,1 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/structures/slipgatebubble_activated_sand
+{
+	size	1763
+
+	emitter "glow"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	2,2
+			material	"textures/effects/slipgate/slipgate_glow"
+			trailRepeat	1
+
+			start
+			{
+				position { point -130,0,0 }
+				size { point 900,900 }
+				tint { point 0.603922,0.286275,0.0784314 }
+				rotate { point 0,0,0.5 }
+			}
+
+			motion
+			{
+				size { envelope bathroomtable }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 1200,1200 }
+				rotate { point 0,0,-0.5 }
+			}
+			lineHit
+		}
+	}
+	emitter "twist3"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	4,4
+			material	"textures/effects/slipgate/slipgate_warp"
+			trailRepeat	1
+
+			start
+			{
+				position { point -130,0,0 }
+				size { point 900,900 }
+				tint { point 0.745098,0.215686,0.121569 }
+				rotate { point 0,0,1 }
+			}
+
+			motion
+			{
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				rotate { point 0,0,-1 }
+			}
+			lineHit
+		}
+	}
+	spawner "twist1"
+	{
+		count		1,1
+
+		oriented
+		{
+			duration	2,2
+			material	"textures/effects/slipgate/slipgate_warp"
+			trailRepeat	1
+
+			start
+			{
+				position { point -130,0,0 }
+				size { point 800,800 }
+				tint { point 0.796079,0.215686,0.0705882 }
+				rotate { point 0,0,1 }
+			}
+
+			motion
+			{
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				rotate { point 0,0,-1 }
+			}
+			lineHit
+		}
+	}
+	spawner "twist2"
+	{
+		count		1,1
+
+		oriented
+		{
+			duration	4,4
+			material	"textures/effects/slipgate/slipgate_warp"
+			trailRepeat	1
+
+			start
+			{
+				position { point -130,0,0 }
+				size { point 300,300 }
+				tint { point 0.733333,0.286275,0.223529 }
+				fade { point 0 }
+				rotate { point 0,0,-1 }
+			}
+
+			motion
+			{
+				fade { envelope convexfade count 1.3 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				fade { point 1 }
+				rotate { point 0,0,1 }
+			}
+			lineHit
+		}
+	}
+	spawner "portal"
+	{
+		count		1,1
+		constant
+
+		oriented
+		{
+			duration	1.1,1.1
+			material	"textures/effects/slipgate/slipgate_portal_sand"
+			trailRepeat	1
+
+			start
+			{
+				position { point -50,0,0 }
+				size { point 1000,1000 }
+				tint { point 0,0,0 }
+			}
+
+			motion
+			{
+				size { envelope firetable_m }
+				fade { envelope large_weapon_spread }
+			}
+
+			end
+			{
+				size { point 950,950 }
+			}
+			lineHit
+		}
+	}
+	spawner "fire"
+	{
+		count		15,15
+
+		sprite
+		{
+			duration	3,4
+			blend	add
+			persist
+			material	"particles/fire4afogged"
+			gravity		0.04,0.04
+			trailRepeat	1
+
+			start
+			{
+				position { point -180,0,0 }
+				velocity { box 0,-40,-40,0,40,40 }
+				size { point 150,150 }
+				tint { line 1,0.501961,0.247059,0.509804,0.254902,0 }
+				fade { point 0 }
+				offset { sphere -350,-600,-500,250,600,450 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope costable }
+				fade { envelope shamus_fastinholdslowout count 0.9 offset 0.001 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 150,150,250,250 }
+				fade { line 0.1,0.4 }
+				rotate { box -1,1 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+effect effects/structures/slipgateground_sand
+{
+	size	1637
+
+	emitter "dust3"
+	{
+		duration	1,1
+		count		10,10
+		attenuateEmitter
+		attenuation	512,3072
+
+		sprite
+		{
+			duration	2,2
+			persist
+			material	"particles/dustcloud_02_litsmoke"
+			windDeviationAngle 40.000000
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { point 400,0,0 }
+				velocity { box 12,-1,-1,25,1,1 }
+				friction { point 0.0001,0,0 }
+				size { line 200,200,300,300 }
+				tint { point 1,0.32549,0 }
+				fade { line 0.2,0.3 attenuate }
+				offset { line -1000,-800,100,-1000,800,100 }
+				rotate { box -1.25,1.25 }
+			}
+
+			motion
+			{
+				size { envelope shamus_scurve }
+				tint { envelope costable count 0.4,0.4,0.4 offset -0.1,-0.1,-0.1 }
+				fade { envelope costable count 1.1 }
+				offset { envelope linear }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { point 100,100 }
+				tint { point 0.827451,0.678431,0.478431 }
+				fade { point 0 attenuate }
+				offset { line 500,0,0,500,0,300 }
+				rotate { box -0.416667,0.416667 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/structures/slipgateground_snow
+{
+	size	1462
+
+	emitter "dust4"
+	{
+		duration	1,1
+		count		10,10
+		attenuateEmitter
+		attenuation	512,3072
+
+		sprite
+		{
+			duration	2,2
+			persist
+			material	"particles/dustcloud_02_litsmoke"
+			windDeviationAngle 40.000000
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { point 400,0,0 }
+				velocity { box 12,-1,-1,25,1,1 }
+				friction { point 0.0001,0,0 }
+				size { line 200,200,300,300 }
+				tint { point 1,0.32549,0 }
+				fade { line 0.2,0.3 attenuate }
+				offset { line -1000,-800,100,-1000,800,100 }
+				rotate { box -1.25,1.25 }
+			}
+
+			motion
+			{
+				size { envelope shamus_scurve }
+				tint { envelope costable count 0.4,0.4,0.4 offset -0.1,-0.1,-0.1 }
+				fade { envelope costable count 1.1 }
+				offset { envelope linear }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { point 100,100 }
+				tint { point 1,1,1 }
+				fade { point 0 attenuate }
+				offset { line 500,0,0,500,0,300 }
+				rotate { box -0.416667,0.416667 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/structures/slipgateportal_sand
+{
+	size	3967
+
+	emitter "portal"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	1,1
+			material	"textures/effects/slipgate/slipgate_portal_sand"
+			trailRepeat	1
+
+			start
+			{
+				position { point -1000,0,0 }
+				size { point 150,150 }
+				tint { point 0.121569,0.121569,0.121569 }
+				fade { point 0 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 }
+				fade { envelope convexfade count 1.3 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 100,100 }
+				fade { point 1 }
+			}
+		}
+	}
+	emitter "twist2"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	2,2
+			material	"textures/effects/slipgate/slipgate_warp"
+			trailRepeat	1
+
+			start
+			{
+				position { point -1000,0,0 }
+				size { point 300,300 }
+				tint { point 0.588235,0.156863,0.0941177 }
+				fade { point 0 }
+				rotate { point 0,0,1.66667 }
+			}
+
+			motion
+			{
+				tint { envelope senetable3 count 3,3,3 }
+				fade { envelope convexfade count 1.3 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				tint { point 0.278431,0.0941177,0.0862745 }
+				fade { point 1 }
+				rotate { point 0,0,-1.66667 }
+			}
+		}
+	}
+	emitter "twist3"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	2,2
+			material	"textures/effects/slipgate/slipgate_warp"
+			trailRepeat	1
+
+			start
+			{
+				position { point -800,0,0 }
+				size { point 300,300 }
+				tint { point 0.521569,0.223529,0.137255 }
+				fade { point 0 }
+				rotate { point 0,0,1.66667 }
+			}
+
+			motion
+			{
+				tint { envelope senetable3 count 2,2,2 }
+				fade { envelope convexfade count 1.3 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				fade { point 1 }
+				rotate { point 0,0,-1.66667 }
+			}
+		}
+	}
+	emitter "glow"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	1.02,1.02
+			material	"textures/effects/slipgate/slipgate_glow"
+			trailRepeat	1
+
+			start
+			{
+				position { point -1000,0,0 }
+				size { point 1000,1000 }
+				tint { point 0.92549,0.568627,0.32549 }
+				rotate { point 0,0,-0.5 }
+			}
+
+			motion
+			{
+				size { envelope bathroomtable }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 1200,1200 }
+				rotate { point 0,0,0.5 }
+			}
+		}
+	}
+	emitter "glow2"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	1.02,1.02
+			material	"textures/effects/slipgate/slipgate_glow"
+			trailRepeat	1
+
+			start
+			{
+				position { point -1300,0,0 }
+				size { point 1000,1000 }
+				tint { point 0.376471,0.176471,0.0431373 }
+				rotate { point 0,0,0.361111 }
+			}
+
+			motion
+			{
+				size { envelope bathroomtable count 2,2 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 1200,1200 }
+				rotate { point 0,0,-0.361111 }
+			}
+		}
+	}
+	emitter "glow3"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	1.02,1.02
+			material	"textures/effects/slipgate/slipgate_glow"
+			trailRepeat	1
+
+			start
+			{
+				position { point -950,0,0 }
+				size { point 1000,1000 }
+				tint { point 0.945098,0.721569,0.588235 }
+				rotate { point 0,0,-0.5 }
+			}
+
+			motion
+			{
+				size { envelope bathroomtable }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 1200,1200 }
+				rotate { point 0,0,0.5 }
+			}
+		}
+	}
+	spawner "fire"
+	{
+		count		6,6
+
+		sprite
+		{
+			duration	1,4
+			blend	add
+			persist
+			material	"particles/fire5a"
+			gravity		0.05,0.05
+			trailRepeat	1
+
+			start
+			{
+				position { point -1300,0,0 }
+				velocity { box 0,-60,-60,0,60,60 }
+				size { point 150,150 }
+				tint { line 1,0.501961,0.247059,0.509804,0.254902,0 }
+				fade { point 0 }
+				offset { line 0,-650,-600,0,-650,600 }
+				rotate { box 1,-1 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope costable }
+				fade { envelope shamus_fastinholdslowout count 0.9 offset 0.001 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 150,150,250,250 }
+				fade { line 0.1,0.7 }
+				rotate { box -1,1 relative }
+			}
+		}
+	}
+	spawner "fire2"
+	{
+		count		6,6
+
+		sprite
+		{
+			duration	1,4
+			blend	add
+			persist
+			material	"particles/fire5a"
+			gravity		0.05,0.05
+			trailRepeat	1
+
+			start
+			{
+				position { point -1300,0,0 }
+				velocity { box 0,-60,-60,0,60,60 }
+				size { point 150,150 }
+				tint { line 0.733333,0.258824,0,0.509804,0.254902,0 }
+				fade { point 0 }
+				offset { line 0,650,-600,0,650,600 }
+				rotate { box 1,-1 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope costable }
+				fade { envelope shamus_fastinholdslowout count 0.9 offset 0.001 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 150,150,250,250 }
+				fade { line 0.1,0.4 }
+				rotate { box -1,1 relative }
+			}
+		}
+	}
+	spawner "fire3"
+	{
+		count		6,6
+
+		sprite
+		{
+			duration	1,4
+			blend	add
+			persist
+			material	"particles/fire5a"
+			gravity		0.05,0.05
+			trailRepeat	1
+
+			start
+			{
+				position { point -1300,0,0 }
+				velocity { box 0,-60,-60,0,60,60 }
+				size { point 150,150 }
+				tint { line 0.658824,0.227451,0,0.509804,0.254902,0 }
+				fade { point 0 }
+				offset { line 0,-700,-450,0,700,-450 }
+				rotate { box 1,-1 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope costable }
+				fade { envelope shamus_fastinholdslowout count 0.9 offset 0.001 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 150,150,250,250 }
+				fade { line 0.1,0.4 }
+				rotate { box -1,1 relative }
+			}
+		}
+	}
+	spawner "fire4"
+	{
+		count		6,6
+
+		sprite
+		{
+			duration	1,4
+			blend	add
+			persist
+			material	"particles/fire5a"
+			gravity		0.01,0.04
+			trailRepeat	1
+
+			start
+			{
+				position { point -1300,0,0 }
+				velocity { box 0,-60,-60,0,60,60 }
+				size { point 150,150 }
+				tint { line 0.65098,0.227451,0,0.509804,0.254902,0 }
+				fade { point 0 }
+				offset { line 0,-700,550,0,700,550 }
+				rotate { box 1,-1 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope costable }
+				fade { envelope shamus_fastinholdslowout count 0.9 offset 0.001 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 150,150,250,250 }
+				fade { line 0.1,0.4 }
+				rotate { box -1,1 relative }
+			}
+		}
+	}
+	emitter "dust3"
+	{
+		duration	1,1
+		count		10,10
+		attenuateEmitter
+		attenuation	512,3072
+
+		sprite
+		{
+			duration	2,2
+			persist
+			material	"particles/fire5a"
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { point -2000,0,0 }
+				velocity { box 0,-1,-1,0,1,1 }
+				size { line 200,200,300,300 }
+				tint { line 0.0509804,0.0156863,0,0.0235294,0.00784314,0 }
+				fade { point 1 attenuate }
+				offset { sphere 0,-800,-800,0,800,800 }
+				rotate { box -1.25,1.25 }
+			}
+
+			motion
+			{
+				size { envelope shamus_scurve }
+				fade { envelope costable count 1.1 }
+				offset { envelope linear count 1.5,1,1 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { point 400,400 }
+				fade { point 0 attenuate }
+				offset { point 1500,0,0 }
+				rotate { box -0.416667,0.416667 }
+			}
+		}
+	}
+	emitter "Sparklies"
+	{
+		duration	1,1
+		count		50,50
+
+		sprite
+		{
+			duration	3,6
+			blend	add
+			material	"particles/fire5a"
+			trailRepeat	1
+			trailType	motion
+			trailTime	0.1,0.3
+			trailCount	2,2
+			trailScale	0.500000
+			trailMaterial	"textures/effects/motionblur_nobloom"
+
+			start
+			{
+				position { spiral -1500,-40,-40,-1500,40,40,32 }
+				velocity { point 500,0,0 }
+				size { line 0.5,0.5,1,1 }
+				tint { line 0.423529,0.137255,0.0431373,0.407843,0.129412,0.0352941 }
+				fade { line 0.4,1 }
+				offset { spiral -30,-30,-30,30,30,30,360 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope jrad_alphain }
+			}
+		}
+	}
+	emitter "dirt streaks3"
+	{
+		duration	1,1
+		count		25,25
+		useMaterialColor
+		attenuateEmitter
+		attenuation	1024,3072
+
+		line
+		{
+			duration	0.3,0.5
+			persist
+			material	"particles/dust_spike"
+			gravity		0.001,0.01
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { line -1300,-2,-2,-1300,2,2 cone }
+				velocity { box 1,-34,-34,5,34,34 }
+				size { box 1,2 }
+				tint { line 0.776471,0.180392,0.0901961,0.788235,0.309804,0.0784314 }
+				fade { line 0.6,0.2 }
+				offset { sphere -1,-50,-50,-1,50,50 }
+				length { box -30,0,0,-80,0,0 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 }
+				fade { envelope rr2_concavefade_start_at_1 offset 0.1 }
+				length { envelope exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { box 13,40 }
+				length { box -600,0,0,-1000,0,0 }
+			}
+		}
+	}
+	emitter "twist4"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point -1000,0,0 }
+				size { point 150,150 }
+				tint { point 0.145098,0.0392157,0.0196078 }
+				fade { point 0 }
+				rotate { point 0,0,1.66667 }
+			}
+
+			motion
+			{
+				fade { envelope convexfade count 1.3 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				fade { point 0.3 }
+				rotate { point 0,0,-1.66667 }
+			}
+		}
+	}
+	light "main light"
+	{
+
+		light
+		{
+			duration	1,1
+			material	"lights/biground1"
+			trailRepeat	1
+
+			start
+			{
+				position { point -1000,-100,0 }
+				size { point 2000,2000,2000 }
+				tint { point 0.945098,0.305882,0.0862745 }
+			}
+
+			motion
+			{
+				tint { envelope hologram3atable2 }
+			}
+		}
+	}
+	light "main light2"
+	{
+
+		light
+		{
+			duration	1,1
+			material	"lights/biground1"
+			trailRepeat	1
+
+			start
+			{
+				position { point -700,-100,0 }
+				size { point 500,500,500 }
+				tint { point 0.945098,0.305882,0.0862745 }
+			}
+
+			motion
+			{
+				tint { envelope hologram3atable2 count 3,3,3 }
+			}
+		}
+	}
+	emitter "dust4"
+	{
+		duration	1,1
+		count		10,10
+		attenuateEmitter
+		attenuation	512,3072
+
+		sprite
+		{
+			duration	2,2
+			persist
+			material	"textures/particles/muzzleflash_haze"
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { point -1500,0,0 }
+				velocity { box 0,-1,-1,0,1,1 }
+				size { line 200,200,300,300 }
+				fade { point 1 attenuate }
+				offset { sphere 0,-800,-800,0,800,800 }
+				rotate { box -1.25,1.25 }
+			}
+
+			motion
+			{
+				size { envelope shamus_scurve }
+				fade { envelope costable count 1.1 }
+				offset { envelope linear count 1.5,1,1 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { box 400,400,600,600 }
+				fade { point 0 attenuate }
+				offset { point 1500,0,0 }
+				rotate { box -0.416667,0.416667 }
+			}
+		}
+	}
+	sound "unnamed17"
+	{
+		soundShader	"sounds/maps/slipgate/slipgate_portal"
+		volume	10,10
+		freqshift	0.7,1.5
+	}
+}
+
+effect effects/structures/slipgateportal_snow
+{
+	size	3967
+
+	emitter "portal"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	1,1
+			material	"textures/effects/slipgate/slipgate_portal_snow"
+			trailRepeat	1
+
+			start
+			{
+				position { point -1000,0,0 }
+				size { point 150,150 }
+				tint { point 0.121569,0.121569,0.121569 }
+				fade { point 0 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 }
+				fade { envelope convexfade count 1.3 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 100,100 }
+				fade { point 1 }
+			}
+		}
+	}
+	emitter "twist2"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	2,2
+			material	"textures/effects/slipgate/slipgate_warp"
+			trailRepeat	1
+
+			start
+			{
+				position { point -1000,0,0 }
+				size { point 300,300 }
+				tint { point 0.588235,0.156863,0.0941177 }
+				fade { point 0 }
+				rotate { point 0,0,1.66667 }
+			}
+
+			motion
+			{
+				tint { envelope senetable3 count 3,3,3 }
+				fade { envelope convexfade count 1.3 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				tint { point 0.278431,0.0941177,0.0862745 }
+				fade { point 1 }
+				rotate { point 0,0,-1.66667 }
+			}
+		}
+	}
+	emitter "twist3"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	2,2
+			material	"textures/effects/slipgate/slipgate_warp"
+			trailRepeat	1
+
+			start
+			{
+				position { point -800,0,0 }
+				size { point 300,300 }
+				tint { point 0.521569,0.223529,0.137255 }
+				fade { point 0 }
+				rotate { point 0,0,1.66667 }
+			}
+
+			motion
+			{
+				tint { envelope senetable3 count 2,2,2 }
+				fade { envelope convexfade count 1.3 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				fade { point 1 }
+				rotate { point 0,0,-1.66667 }
+			}
+		}
+	}
+	emitter "glow"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	1.02,1.02
+			material	"textures/effects/slipgate/slipgate_glow"
+			trailRepeat	1
+
+			start
+			{
+				position { point -1000,0,0 }
+				size { point 1000,1000 }
+				tint { point 0.92549,0.568627,0.32549 }
+				rotate { point 0,0,-0.5 }
+			}
+
+			motion
+			{
+				size { envelope bathroomtable }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 1200,1200 }
+				rotate { point 0,0,0.5 }
+			}
+		}
+	}
+	emitter "glow2"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	1.02,1.02
+			material	"textures/effects/slipgate/slipgate_glow"
+			trailRepeat	1
+
+			start
+			{
+				position { point -1300,0,0 }
+				size { point 1000,1000 }
+				tint { point 0.376471,0.176471,0.0431373 }
+				rotate { point 0,0,0.361111 }
+			}
+
+			motion
+			{
+				size { envelope bathroomtable count 2,2 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 1200,1200 }
+				rotate { point 0,0,-0.361111 }
+			}
+		}
+	}
+	emitter "glow3"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	1.02,1.02
+			material	"textures/effects/slipgate/slipgate_glow"
+			trailRepeat	1
+
+			start
+			{
+				position { point -950,0,0 }
+				size { point 1000,1000 }
+				tint { point 0.945098,0.721569,0.588235 }
+				rotate { point 0,0,-0.5 }
+			}
+
+			motion
+			{
+				size { envelope bathroomtable }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 1200,1200 }
+				rotate { point 0,0,0.5 }
+			}
+		}
+	}
+	spawner "fire"
+	{
+		count		6,6
+
+		sprite
+		{
+			duration	1,4
+			blend	add
+			persist
+			material	"particles/fire5a"
+			gravity		0.05,0.05
+			trailRepeat	1
+
+			start
+			{
+				position { point -1300,0,0 }
+				velocity { box 0,-60,-60,0,60,60 }
+				size { point 150,150 }
+				tint { line 1,0.501961,0.247059,0.509804,0.254902,0 }
+				fade { point 0 }
+				offset { line 0,-650,-600,0,-650,600 }
+				rotate { box 1,-1 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope costable }
+				fade { envelope shamus_fastinholdslowout count 0.9 offset 0.001 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 150,150,250,250 }
+				fade { line 0.1,0.7 }
+				rotate { box -1,1 relative }
+			}
+		}
+	}
+	spawner "fire2"
+	{
+		count		6,6
+
+		sprite
+		{
+			duration	1,4
+			blend	add
+			persist
+			material	"particles/fire5a"
+			gravity		0.05,0.05
+			trailRepeat	1
+
+			start
+			{
+				position { point -1300,0,0 }
+				velocity { box 0,-60,-60,0,60,60 }
+				size { point 150,150 }
+				tint { line 0.733333,0.258824,0,0.509804,0.254902,0 }
+				fade { point 0 }
+				offset { line 0,650,-600,0,650,600 }
+				rotate { box 1,-1 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope costable }
+				fade { envelope shamus_fastinholdslowout count 0.9 offset 0.001 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 150,150,250,250 }
+				fade { line 0.1,0.4 }
+				rotate { box -1,1 relative }
+			}
+		}
+	}
+	spawner "fire3"
+	{
+		count		6,6
+
+		sprite
+		{
+			duration	1,4
+			blend	add
+			persist
+			material	"particles/fire5a"
+			gravity		0.05,0.05
+			trailRepeat	1
+
+			start
+			{
+				position { point -1300,0,0 }
+				velocity { box 0,-60,-60,0,60,60 }
+				size { point 150,150 }
+				tint { line 0.658824,0.227451,0,0.509804,0.254902,0 }
+				fade { point 0 }
+				offset { line 0,-700,-450,0,700,-450 }
+				rotate { box 1,-1 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope costable }
+				fade { envelope shamus_fastinholdslowout count 0.9 offset 0.001 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 150,150,250,250 }
+				fade { line 0.1,0.4 }
+				rotate { box -1,1 relative }
+			}
+		}
+	}
+	spawner "fire4"
+	{
+		count		6,6
+
+		sprite
+		{
+			duration	1,4
+			blend	add
+			persist
+			material	"particles/fire5a"
+			gravity		0.01,0.04
+			trailRepeat	1
+
+			start
+			{
+				position { point -1300,0,0 }
+				velocity { box 0,-60,-60,0,60,60 }
+				size { point 150,150 }
+				tint { line 0.65098,0.227451,0,0.509804,0.254902,0 }
+				fade { point 0 }
+				offset { line 0,-700,550,0,700,550 }
+				rotate { box 1,-1 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope costable }
+				fade { envelope shamus_fastinholdslowout count 0.9 offset 0.001 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 150,150,250,250 }
+				fade { line 0.1,0.4 }
+				rotate { box -1,1 relative }
+			}
+		}
+	}
+	emitter "dust3"
+	{
+		duration	1,1
+		count		10,10
+		attenuateEmitter
+		attenuation	512,3072
+
+		sprite
+		{
+			duration	2,2
+			persist
+			material	"particles/fire5a"
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { point -2000,0,0 }
+				velocity { box 0,-1,-1,0,1,1 }
+				size { line 200,200,300,300 }
+				tint { line 0.0509804,0.0156863,0,0.0235294,0.00784314,0 }
+				fade { point 1 attenuate }
+				offset { sphere 0,-800,-800,0,800,800 }
+				rotate { box -1.25,1.25 }
+			}
+
+			motion
+			{
+				size { envelope shamus_scurve }
+				fade { envelope costable count 1.1 }
+				offset { envelope linear count 1.5,1,1 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { point 400,400 }
+				fade { point 0 attenuate }
+				offset { point 1500,0,0 }
+				rotate { box -0.416667,0.416667 }
+			}
+		}
+	}
+	emitter "Sparklies"
+	{
+		duration	1,1
+		count		50,50
+
+		sprite
+		{
+			duration	3,6
+			blend	add
+			material	"particles/fire5a"
+			trailRepeat	1
+			trailType	motion
+			trailTime	0.1,0.3
+			trailCount	2,2
+			trailScale	0.500000
+			trailMaterial	"textures/effects/motionblur_nobloom"
+
+			start
+			{
+				position { spiral -1500,-40,-40,-1500,40,40,32 }
+				velocity { point 500,0,0 }
+				size { line 0.5,0.5,1,1 }
+				tint { line 0.423529,0.137255,0.0431373,0.407843,0.129412,0.0352941 }
+				fade { line 0.4,1 }
+				offset { spiral -30,-30,-30,30,30,30,360 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope jrad_alphain }
+			}
+		}
+	}
+	emitter "dirt streaks3"
+	{
+		duration	1,1
+		count		25,25
+		useMaterialColor
+		attenuateEmitter
+		attenuation	1024,3072
+
+		line
+		{
+			duration	0.3,0.5
+			persist
+			material	"particles/dust_spike"
+			gravity		0.001,0.01
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { line -1300,-2,-2,-1300,2,2 cone }
+				velocity { box 1,-34,-34,5,34,34 }
+				size { box 1,2 }
+				tint { line 0.776471,0.180392,0.0901961,0.788235,0.309804,0.0784314 }
+				fade { line 0.6,0.2 }
+				offset { sphere -1,-50,-50,-1,50,50 }
+				length { box -30,0,0,-80,0,0 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 }
+				fade { envelope rr2_concavefade_start_at_1 offset 0.1 }
+				length { envelope exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { box 13,40 }
+				length { box -600,0,0,-1000,0,0 }
+			}
+		}
+	}
+	emitter "twist4"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point -1000,0,0 }
+				size { point 150,150 }
+				tint { point 0.145098,0.0392157,0.0196078 }
+				fade { point 0 }
+				rotate { point 0,0,1.66667 }
+			}
+
+			motion
+			{
+				fade { envelope convexfade count 1.3 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				fade { point 0.3 }
+				rotate { point 0,0,-1.66667 }
+			}
+		}
+	}
+	light "main light"
+	{
+
+		light
+		{
+			duration	1,1
+			material	"lights/biground1"
+			trailRepeat	1
+
+			start
+			{
+				position { point -1000,-100,0 }
+				size { point 2000,2000,2000 }
+				tint { point 0.945098,0.305882,0.0862745 }
+			}
+
+			motion
+			{
+				tint { envelope hologram3atable2 }
+			}
+		}
+	}
+	light "main light2"
+	{
+
+		light
+		{
+			duration	1,1
+			material	"lights/biground1"
+			trailRepeat	1
+
+			start
+			{
+				position { point -700,-100,0 }
+				size { point 500,500,500 }
+				tint { point 0.945098,0.305882,0.0862745 }
+			}
+
+			motion
+			{
+				tint { envelope hologram3atable2 count 3,3,3 }
+			}
+		}
+	}
+	emitter "dust4"
+	{
+		duration	1,1
+		count		10,10
+		attenuateEmitter
+		attenuation	512,3072
+
+		sprite
+		{
+			duration	2,2
+			persist
+			material	"textures/particles/muzzleflash_haze"
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { point -1500,0,0 }
+				velocity { box 0,-1,-1,0,1,1 }
+				size { line 200,200,300,300 }
+				fade { point 1 attenuate }
+				offset { sphere 0,-800,-800,0,800,800 }
+				rotate { box -1.25,1.25 }
+			}
+
+			motion
+			{
+				size { envelope shamus_scurve }
+				fade { envelope costable count 1.1 }
+				offset { envelope linear count 1.5,1,1 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { box 400,400,600,600 }
+				fade { point 0 attenuate }
+				offset { point 1500,0,0 }
+				rotate { box -0.416667,0.416667 }
+			}
+		}
+	}
+	sound "unnamed17"
+	{
+		soundShader	"sounds/maps/slipgate/slipgate_portal"
+		volume	10,10
+		freqshift	0.7,1.5
+	}
+}
+
+
+

@@ -1,0 +1,30 @@
+
+sound sounds/weapons/plasmacannon/fire {
+	compression wav
+
+	minDistance 25
+	maxDistance 100
+	shakes 0.05
+
+	sounds/weapons/plasmacannon/fire_07.wav
+}
+
+sound sounds/weapons/plasmacannon/fire_small {
+	compression wav
+
+	maxDistance 125
+
+	sounds/weapons/plasmacannon/fire_small_01.wav
+	sounds/weapons/plasmacannon/fire_small_02.wav
+}
+
+sound sounds/weapons/plasmacannon/fly {
+	compression wav
+
+	maxDistance 75
+
+	looping
+	leadin
+	sounds/weapons/plasmacannon/fly_start.wav
+	sounds/weapons/plasmacannon/fly_loop.wav
+}

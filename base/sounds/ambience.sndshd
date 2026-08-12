@@ -1,0 +1,350 @@
+// ETQW Ambience Sounds
+
+
+sound ambience_smolder {
+
+	maxDistance	50
+	volume -5
+
+	looping
+	sounds/vehicles/misc/burn_loop_01.wav
+}
+
+sound ambience_war_01 {
+
+	volume -10
+	minDistance 250
+	maxDistance 500
+	omnidirectional
+
+	looping
+	sounds/ambience/war/war_01.wav
+}
+
+sound ambience_war_02 {
+
+	volume -10
+	minDistance 250
+	maxDistance 500
+	omnidirectional
+
+	looping
+	sounds/ambience/war/war_02.wav
+}
+
+sound ambience_desert_global_01 {
+
+	volume -40
+	global
+
+	looping
+	sounds/ambience/desert/crickets_03.wav
+}
+
+sound ambience_desert_global_02 {
+
+	volume -35
+	global
+
+	looping
+	sounds/ambience/wind/wind_02.wav
+}
+
+sound ambience_desert_wind_01 {
+
+	volume -15
+
+	minDistance 200
+	maxDistance 400
+
+	looping
+	sounds/ambience/wind/wind_04.wav
+}
+
+sound ambience_desert_wind_02 {
+
+	maxDistance 100
+
+	looping
+	sounds/ambience/wind/wind_04.wav
+}
+
+sound ambience_desert_wind_03 {
+
+	maxDistance 100
+
+	looping
+	sounds/ambience/wind/wind_05.wav
+}
+
+sound ambience_desert_wind_04 {
+
+	volume -25
+
+	minDistance 50
+	maxDistance 300
+
+	looping
+	sounds/ambience/wind/wind_01.wav
+}
+
+sound ambience_desert_wind_bush {
+
+	maxDistance 50
+
+	sounds/ambience/wind/wind_bush_01.wav
+	sounds/ambience/wind/wind_bush_02.wav
+}
+
+sound ambience_desert_wind_gale {
+
+	volume -10
+	maxDistance 50
+
+	sounds/ambience/wind/wind_gale_01.wav
+}
+
+sound ambience_desert_cricket_01 {
+
+	volume -40
+	maxDistance 100
+	no_dups
+
+	sounds/ambience/desert/crickets_01a.wav
+	sounds/ambience/desert/crickets_01b.wav
+	sounds/ambience/desert/crickets_01c.wav
+	sounds/ambience/desert/crickets_01d.wav
+	sounds/ambience/desert/crickets_01e.wav
+}
+
+sound ambience_desert_cricket_02 {
+
+	volume -40
+	maxDistance 100
+
+	looping
+	sounds/ambience/desert/crickets_02.wav
+}
+
+sound ambience_roomtone_02 {
+
+	volume -10
+	maxDistance 20
+
+	looping
+	sounds/ambience/rooms/roomtone_02.wav
+}
+
+sound ambience_waves_01 {
+
+	volume -10
+	maxDistance 50
+
+	looping
+	sounds/ambience/water/waves_onshore_01.wav
+}
+
+sound ambience_waves_02 {
+
+	volume -10
+	maxDistance 50
+
+	looping
+	sounds/ambience/water/waves_onshore_01.wav
+}
+
+sound sounds/ambience/waves_loud_01 {
+
+	volume -1
+	maxDistance 80
+
+	looping
+	sounds/ambience/water/waves_onshore_01.wav
+}
+
+sound sounds/ambience/rain/rain_02 {
+
+	volume -4
+	omnidirectional
+
+	looping
+	sounds/ambience/rain/rain_02.wav
+}
+
+sound sounds/ambience/rain/rain_02_notglobal {
+
+	volume -4
+	omnidirectional
+
+	looping
+	sounds/ambience/rain/rain_02.wav
+}
+sound sounds/ambience/rain/medium_01 {
+
+	volume -10
+	omnidirectional
+
+	looping
+	sounds/ambience/rain/rain_01.wav
+}
+
+sound sounds/ambience/thunder/medium_01 {
+
+	global
+
+	sounds/ambience/temperate/thunder_01.wav
+	sounds/ambience/temperate/thunder_02.wav
+	sounds/ambience/temperate/thunder_03.wav
+	sounds/ambience/temperate/thunder_04.wav
+}
+
+
+////////////
+// Valley //
+////////////
+
+sound ambience_valley_global {
+
+	volume -30
+	global
+
+	looping
+	sounds/ambience/valley/light_01.ogg
+}
+
+sound ambience_valley_pond {
+
+	volume -10
+
+	looping
+	sounds/ambience/valley/lake_01.ogg
+}
+
+// distance War explosions
+
+sound sounds/ambience/war/distant_explosion_01 {
+	sounds/ambience/war/distant_explosion_01.wav
+}
+
+sound ambience_distant_explosion_01 {
+
+	//volume -10
+	minDistance 250
+	maxDistance 500
+
+	sounds/ambience/war/distant_explosion_01.wav
+}
+
+sound ambience_distant_explosion_02 {
+
+	//volume -10
+	minDistance 250
+	maxDistance 500
+
+	sounds/ambience/war/distant_explosion_02.wav
+}
+
+sound ambience_distant_explosion_03 {
+
+	//volume -10
+	minDistance 250
+	maxDistance 500
+
+	sounds/ambience/war/distant_explosion_03.wav
+}
+
+sound ambience_distant_explosion_04 {
+
+	//volume -10
+	minDistance 250
+	maxDistance 500
+
+	sounds/ambience/war/distant_explosion_04.wav
+}
+
+sound ambience_distant_explosion_05 {
+
+	//volume -10
+	minDistance 250
+	maxDistance 500
+
+	sounds/ambience/war/distant_explosion_05.wav
+}
+
+sound ambience_air_01 {
+
+	//volume -10
+
+	looping
+	sounds/soundscape/air/air_01.wav
+}
+
+sound ark_tubes_loop {
+
+	volume 0
+	maxDistance 80
+
+	looping
+	sounds/ambience/pipes/water/waterflow_03.wav
+}
+
+sound ark_tubes_explode {
+
+	volume 0
+	maxDistance 80
+
+	sounds/vehicles/misc/water_enter_01.wav
+	sounds/vehicles/misc/water_exit_01.wav
+}
+
+sound sounds/soundscape/tech/sidle_01 {
+	sounds/soundscape/tech/sidle_01.wav
+}
+
+sound sounds/ambience/desert/crickets_01b {
+	sounds/ambience/desert/crickets_01b.wav
+}
+
+sound sounds/ambience/desert/crickets_02 {
+	sounds/ambience/desert/crickets_02.wav
+}
+
+sound sounds/ambience/desert/crickets_03 {
+	sounds/ambience/desert/crickets_03.wav
+}
+
+sound sounds/ambience/desert/crickets_01e {
+	sounds/ambience/desert/crickets_01e.wav
+}
+
+sound sounds/ambience/desert/crickets_01d {
+	sounds/ambience/desert/crickets_01d.wav
+}
+
+sound sounds/ambience/desert/crickets_01c {
+	sounds/ambience/desert/crickets_01c.wav
+}
+
+sound sounds/ambience/desert/crickets_01a {
+	sounds/ambience/desert/crickets_01a.wav
+}
+
+sound sounds/soundscape/lowfreq/bmover_01 {
+	sounds/soundscape/lowfreq/bmover_01.wav
+}
+
+sound sounds/ambience/rooms/roomtone_01 {
+	sounds/ambience/rooms/roomtone_01.wav
+}
+
+sound sounds/ambience/rooms/roomtone_02 {
+	sounds/ambience/rooms/roomtone_02.wav
+}
+
+sound sounds/ambience/wind/wind_bush_01 {
+	sounds/ambience/wind/wind_bush_01.wav
+}
+
+sound sounds/ambience/wind/wind_bush_02 {
+	sounds/ambience/wind/wind_bush_02.wav
+}

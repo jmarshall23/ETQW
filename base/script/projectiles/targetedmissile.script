@@ -1,0 +1,32 @@
+/***********************************************************************
+
+projectile_targetedmissile.script
+
+***********************************************************************/
+
+object projectile_targetedmissile : projectile_homingmissile {
+	void		UpdateFocusedTargeting();
+};
+
+void projectile_targetedmissile::UpdateFocusedTargeting() {
+	vector enemyOrg;
+	vector dir;
+	
+	player myPlayer = getOwner();
+	if ( myPlayer == $null_entity ) {
+		return;	
+	}
+	
+	enemyOrg = myPlayer.lastValidTarget;
+	
+	enemyOrg = enemyOrg - getWorldOrigin(); // adjust for own origin
+	dir = sys.vecNormalize( enemyOrg );
+	
+	float maxTurnRate = 135.0f * ( sys.getTime() - spawnTime );
+	if ( maxTurnRate > 180.0f ) {
+		maxTurnRate = 180.0f;
+	}
+	
+	turnTowards( dir, maxTurnRate );
+}
+

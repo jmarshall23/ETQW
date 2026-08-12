@@ -1,0 +1,54 @@
+// --------------------------------------------
+// VALLEY STUFF
+// --------------------------------------------
+
+stuffType valley/valley_grass_01 {
+	Model	"stuff/valley/valley_grass02.lwo"
+	Model	"stuff/valley/valley_grass03.lwo"
+}
+
+stuffType valley/valley_grass_02 {
+	Model	"stuff/valley/valley_grass01.lwo"
+	Model	"stuff/valley/valley_grass02.lwo"
+}
+
+stuffType valley/valley_grass_03 {
+	Model	"stuff/valley/valley_grass04.lwo"
+	Model	"stuff/valley/valley_grass05.lwo"
+}
+
+stuffType valley/valley_flower {
+	Model	"stuff/valley/valley_flower01.lwo"
+	Model	"stuff/valley/valley_flower02.lwo"
+}
+
+stuffType valley/valley_straw {
+	Model	"stuff/valley/valley_straw01.lwo"
+	Model	"stuff/valley/valley_straw02.lwo"
+	Model	"stuff/valley/valley_straw03.lwo"
+}
+
+stuffType valley/valley_rubbish {
+	Model	"stuff/valley/valley_rubbish01.lwo"
+	Model	"stuff/valley/valley_rubbish02.lwo"
+	Model	"stuff/valley/valley_rubbish03.lwo"
+	Model	"stuff/valley/valley_rubbish04.lwo"
+}
+
+stuffType valley/valley_rock {
+	Model	"stuff/valley/valley_rock01.lwo"
+	Model	"stuff/valley/valley_rock02.lwo"
+	Model	"stuff/valley/valley_rock03.lwo"
+	Model	"stuff/valley/valley_rock04.lwo"
+	Model	"stuff/valley/valley_rock05.lwo"
+	Model	"stuff/valley/valley_rock06.lwo"
+	Model	"stuff/valley/valley_rock07.lwo"
+	Model	"stuff/valley/valley_rock08.lwo"
+}
+
+stuffType valley/valley_rock_small {
+	Model	"stuff/valley/valley_rock_small01.lwo"
+	Model	"stuff/valley/valley_rock_small02.lwo"
+	Model	"stuff/valley/valley_rock_small03.lwo"
+	Model	"stuff/valley/valley_rock_small04.lwo"
+}

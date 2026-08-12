@@ -1,0 +1,8 @@
+
+sound sounds/deployables/avt_gdf/deploy {
+
+	volume -10
+	maxDistance 50
+
+	sounds/deployables/avt_gdf/deploy.wav
+}

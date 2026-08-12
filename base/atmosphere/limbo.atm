@@ -1,0 +1,82 @@
+atmosphere limbo {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.7614510059 0.0022058082 0.6482188106 )
+	sunColor ( 0.8164445162 0.7547906041 0.6262265444 )
+	sunHaloScale 0.400000006
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8899999857 0.3599999845 0 1 )
+		glareBases ( 0.1700000018 0.3100000024 0 0 )
+	}
+	fogDistHalf 9020
+	fogHeightHalf 400
+	fogHeightOffset 1000
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "limbo"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+ambientCubeMap limbo {
+	ambientLight {
+		color 0.3725490272 0.3882353008 0.4078431427
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1019607857 0.1019607857 0.1019607857
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0 0 0
+		direction 1 0 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3098039329 0.3098039329 0.3098039329
+		direction -1 0 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1921568662 0.1921568662 0.1921568662
+		direction -0.034899462 0.9993908405 -0.0000000437
+		name "Light4"
+	}
+	ambientLight {
+		color 0.4274509847 0.4549019635 0.4666666687
+		direction 0.0174523834 -0.9998477101 -0.0000000437
+		name "Light5"
+	}
+	envMap "env/valley"
+	ambientColor 0 0 0
+	highLightColor 0 0 0
+	brightness 1
+}
+

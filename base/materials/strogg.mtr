@@ -1,0 +1,89 @@
+material textures/strogg/fluid_blue_bubble
+{
+	qer_editorimage textures/strogg/fluid_blue_bubble1.tga
+	NoShadows
+	translucent
+	nonSolid
+	twoSided
+   
+   	{
+   		blend add	
+   		map textures/strogg/fluid_blue_bubble1.tga
+   		scroll 0, time * .1
+  	}
+	{ 
+		blend add
+		map textures/strogg/fluid_blue_bubble2.tga
+		scroll	0, time * .5
+	}	
+	{
+		blend add
+		map textures/strogg/fluid_blue_bubble3.tga
+		scroll 0, time * .3
+	}
+
+}
+
+material textures/strogg/fluid_green_bubble
+{
+	qer_editorimage textures/strogg/fluid_green_bubble1.tga
+	NoShadows
+	translucent
+	nonSolid
+	twoSided
+	{
+		blend add
+		depthfunc less
+		map textures/strogg/fluid_blue_bubble3.tga
+		scroll 0, time * .3
+		vertexcolor
+	}
+	
+}
+
+material textures/strogg/fluid_red_bubble
+{
+	qer_editorimage textures/strogg/fluid_red_bubble1.tga
+	NoShadows
+	translucent
+	nonSolid
+	twoSided
+   
+   	{
+   		blend add	
+   		map textures/strogg/fluid_red_bubble1.tga
+   		scroll 0, time * .1
+  	}
+	{ 
+		blend add
+		map textures/strogg/fluid_red_bubble2.tga
+		scroll	0, time * .5
+	}	
+	{
+		blend add
+		map textures/strogg/fluid_blue_bubble3.tga
+		scroll 0, time * .3
+	}
+
+}
+
+material textures/strogg/dna_lab_fluid
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend add
+		map 	textures/sfx/cloudy_water.tga
+		rotate time * .00001
+		scroll 0, time * .05
+		vertexcolor
+	}
+    {
+		blend add
+		map textures/strogg/fluid_blue_bubble3.tga
+		scroll 0, time * .3
+		vertexcolor
+	}
+}

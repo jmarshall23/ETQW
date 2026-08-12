@@ -1,0 +1,186 @@
+
+/*************************************************************
+
+	New Fog material
+	This material should not be modified, just change the fox image in the atmosphere editor
+
+*************************************************************/
+
+material atmospheres/skydomes/foglayer {
+	{
+		blend blend
+		maskalpha
+		program skies/fog_overlay
+		matrix	cosTable[ sun_azimuth / 360 ], sinTable[ sun_azimuth / 360 ], 0, sinTable[ sun_azimuth / 360 ] * -1, cosTable[ sun_azimuth / 360 ], 0
+	}
+}
+
+
+/*************************************************************
+
+	Examples
+
+*************************************************************/
+
+// You should make new versions of this material by sticking in your own cubemap images
+material atmospheres/skydomes/cloudmatte_example {
+	useTemplate material/cloudmatte< "cubeMap atmosphere/skies/day_sky01_cube" >
+}
+
+
+/*************************************************************
+
+	Map scpecific
+
+*************************************************************/
+
+// used by Valley01
+material atmospheres/skydomes/valley_final {
+	useTemplate material/skybox< "highquality atmosphere/skies/valleysky" >
+}
+
+// used by Outskirts
+material atmospheres/skydomes/day_sky03_v2 {
+	useTemplate material/cloudmatte< "cubeMap atmosphere/skies/day_sky03_v2_cube" >
+}
+
+// used by Canyon01
+material atmospheres/skydomes/canyon01 {
+	useTemplate material/cloudmatte< "cubeMap atmosphere/skies/canyonsky_cube" >
+}
+
+// used by Canyon01
+material atmospheres/skydomes/canyon_clouds {
+	useTemplate material/medium_cube_template< "cubeMap atmosphere/clouds/canyon_clouds_cube" >
+}
+
+// used by refinery03
+material atmospheres/skydomes/refinery_dust {
+	useTemplate material/medium_cube_template< "cubeMap atmosphere/skies/refinery_dust_cube" >
+}
+
+// used by refinery03
+material atmospheres/skydomes/refinery_sky {
+	useTemplate material/cloudmatte< "cubeMap atmosphere/skies/ph_day4_cube" >
+}
+
+// used by slipgate_sky
+material atmospheres/skydomes/slipgate_sky {
+	useTemplate material/medium_cube_template< "cubeMap atmosphere/skies/slipgate_sky_cube" >
+}
+
+// used by slipgate_desert01
+material atmospheres/skydomes/slipgate_desert {
+	useTemplate material/skybox< "highquality atmosphere/skies/slipgate_desert" >
+}
+
+// used by slipgate_desert01
+material atmospheres/skydomes/slipgate_desert_final {
+	useTemplate material/skybox< "highquality atmosphere/skies/slipgate_desert2" >
+}
+
+// used by slipgate_snow01
+material atmospheres/skydomes/slipgate_snow {
+	useTemplate material/skybox< "highquality atmosphere/skies/slipgate_snow" >
+}
+
+// used by slipgate_snow01
+material atmospheres/skydomes/slipgate_vortex {
+	useTemplate material/skybox< "highquality atmosphere/skies/slipgate_vortex" >
+	
+}
+
+// used by area22
+material atmospheres/skydomes/area22 {
+	useTemplate material/skybox< "highquality atmosphere/skies/area22" >
+}
+
+// used by island
+material atmospheres/skydomes/island_sky {
+	useTemplate material/cloudmatte< "cubeMap atmosphere/skies/island_sky" >
+}
+
+// NEW used by island
+material atmospheres/skydomes/island_clouds {
+	useTemplate material/medium_cube_template< "cubeMap atmosphere/clouds/island_clouds_cube" >
+}
+
+// NEW used by slipgate
+material atmospheres/skydomes/slipgate_vortex2 {
+	useTemplate material/medium_cube_template< "cubeMap atmosphere/skies/vortex_cube" >
+}
+	
+
+// NEW used by Island
+material atmospheres/skydomes/island_dramatic {
+    useTemplate material/skybox< "highquality atmosphere/skies/island" >
+}
+
+// NEW used by Island
+material atmospheres/skydomes/island_final {
+    useTemplate material/skybox< "highquality atmosphere/skies/island_new" >
+}
+
+// NEW used by Ark
+material atmospheres/skydomes/ark_dramatic {
+    useTemplate material/skybox< "highquality atmosphere/skies/arkcloudy" >
+}
+
+// NEW used by canyon
+material atmospheres/skydomes/canyon_newest {
+    useTemplate material/skybox< "highquality atmosphere/skies/canyon" >
+}
+
+// NEW used by sewer
+material atmospheres/skydomes/sewer {
+    useTemplate material/skybox< "highquality atmosphere/skies/sewer" >
+}
+
+// NEW used by sewer
+material atmospheres/skydomes/sewer_autumn {
+    useTemplate material/skybox< "highquality atmosphere/skies/sewer_autumn" >
+}
+
+// NEW used by Outskirts
+material atmospheres/skydomes/outskirts {
+    useTemplate material/skybox< "highquality atmosphere/skies/outskirts" >
+}
+// NEW used by Quarry
+material atmospheres/skydomes/quarry_new {
+    useTemplate material/skybox< "highquality atmosphere/skies/quarry_new" >
+}
+
+// NEW used by salvage
+material atmospheres/skydomes/salvage_new {
+    useTemplate material/skybox< "highquality atmosphere/skies/salvage_new" >
+}
+
+// NEW used by refinery
+material atmospheres/skydomes/refinery_final {
+    useTemplate material/skybox< "highquality atmosphere/skies/refinery_new" >
+}
+
+// NEW used by outskirts
+material atmospheres/skydomes/outskirts_new {
+    useTemplate material/skybox< "highquality atmosphere/skies/outskirts_new" >
+}
+
+// NEW used by outskirts
+material atmospheres/skydomes/outskirts_revised {
+    useTemplate material/skybox< "highquality atmosphere/skies/outskirts_final" >
+}
+
+// NEW used by outskirts
+material atmospheres/skydomes/outskirts_lightning {
+    useTemplate material/skybox< "highquality atmosphere/skies/outskirts_lightning" >
+}
+
+// NEW used by outskirts
+material atmospheres/skydomes/outskirts_lightning_strike {
+    {
+    	blend blend
+    	map		clamp atmosphere/skies/outskirts_lightning_strike.tga
+    	scale		28, 3
+    	translate	-0.8, 0.4
+    }
+}

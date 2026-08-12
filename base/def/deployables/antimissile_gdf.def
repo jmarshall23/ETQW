@@ -1,0 +1,378 @@
+// Export
+// ========================================================================
+export hauser {
+
+options -prefix AAIR_ -rotate 90 -sourcedir models/structures/edf/deployables/weapons/anti_air_turret/dev_sd -destdir models/structures/edf/deployables/weapons/anti_air_turret -keep muzzle1 muzzle2 muzzle3 joint3 -keepmesh polySurface380 polySurface165 polySurface168 polySurface169 polySurface170 polySurface171 polySurface172 polySurface173 polySurface174 polySurface175 polySurface129 polySurface138 polySurface177 polySurface144 polySurface150 lod0_shadow_01 lod0_shadow_02 lod0_shadow_03 lod0_shadow_04 lod0_shadow_05 lod0_shadow_06 lod0_shadow_07 lod0_shadow_08 lod0_shadow_09 lod0_shadow_10 lod0_shadow_11 lod0_shadow_12 lod0_shadow_13 shadow_antiair_base shadow_antiair_radar shadow_antiair_leftarm shadow_antiair_rightarm shadow_antiair_topsensor shadow_antiair_rightgattling shadow_antiair_leftgattling shadow_antiair_main shadow_antiair_camerabase shadow_antiair_rightammo shadow_antiair_rightarmsupport shadow_antiair_leftammo shadow_antiair_leftarmsupport shadow_antiair_camera antiair_base antiair_radar antiair_leftarm antiair_rightarm antiair_topsensor antiair_rightgattling antiair_leftgattling antiair_main antiair_camerabase antiair_rightammo antiair_rightarmsupport antiair_leftammo antiair_leftarmsupport antiair_camera -parent 1 2 -parent 2 3 -parent 3 joint16 -parent 4 5 -parent 5 6 -parent 6 joint12
+
+	mesh	anti_air_rework_anims.mb		-dest anti_air_turret.md5mesh -range 77 77
+
+
+	anim	anti_air_rework_anims.mb		-dest anti_air_undeployed.md5anim -range 1 1
+	anim	anti_air_rework_anims.mb		-dest anti_air_deploy.md5anim -range 1 77
+
+	anim	anti_air_rework_anims.mb		-dest anti_air_preik.md5anim -range 1 37
+	anim	anti_air_rework_anims.mb		-dest anti_air_postik.md5anim -range 38 77
+
+
+	anim	anti_air_rework_anims.mb		-dest anti_air_idle.md5anim -range 77 306
+	anim	anti_air_rework_anims.mb		-dest anti_air_fire.md5anim -range 77 77
+	anim	anti_air_rework_anims.mb		-dest anti_air_reload.md5anim -range 38 77
+
+	anim	anti_air_rework_anims.mb		-dest anti_air_damaged.md5anim -range 306 338
+	anim	anti_air_rework_anims.mb		-dest anti_air_disabled.md5anim -range 347 390
+	anim	anti_air_rework_anims.mb		-dest anti_air_disabled_to_damaged.md5anim -range 338 338
+	anim	anti_air_rework_anims.mb		-dest anti_air_damaged_to_idle.md5anim -range 77 77
+
+
+}
+
+/*
+export hauser {
+	options -prefix AAIR_ -rotate 90 -noJoints -sourcedir models/structures/edf/deployables/weapons/anti_air_turret/dev_sd -destdir  models/structures/edf/deployables/weapons/anti_air_turret	-keep muzzle1 muzzle2 muzzle3 joint3 -keepmesh polySurface179 polySurface180 polySurface233 polySurface232 polySurface231 polySurface230 polySurface229 polySurface228 polySurface227 polySurface182 polySurface185 polySurface187 polySurface191 polySurface219 polySurface226 lod2_shadow_01 lod2_shadow_03 lod2_shadow_04 lod2_shadow_05 lod2_shadow_06 lod2_shadow_07 lod2_shadow_12 shadow_antiair_base shadow_antiair_radar shadow_antiair_leftarm shadow_antiair_rightarm shadow_antiair_topsensor shadow_antiair_rightgattling shadow_antiair_main shadow_antiair_leftgattling shadow_antiair_camerabase shadow_antiair_rightammo shadow_antiair_rightarmsupport shadow_antiair_leftammo shadow_antiair_leftarmsupport shadow_antiair_camera antiair_base antiair_radar antiair_leftarm antiair_rightarm antiair_rightgattling antiair_topsensor antiair_leftgattling antiair_main antiair_camerabase antiair_rightammo antiair_rightarmsupport antiair_leftammo antiair_leftarmsupport antiair_camera
+
+	mesh	anti_air_rework_anims.mb		-dest anti_air_turret_lod1.md5mesh -range 77 77
+}
+
+export hauser {
+	options -prefix AAIR_ -rotate 90 -noJoints -sourcedir models/structures/edf/deployables/weapons/anti_air_turret/dev_sd -destdir  models/structures/edf/deployables/weapons/anti_air_turret 	-keep muzzle1 muzzle2 muzzle3 joint3 -keepmesh polySurface179 polySurface180 polySurface233 polySurface232 polySurface231 polySurface230 polySurface229 polySurface228 polySurface227 polySurface182 polySurface185 polySurface187 polySurface191 polySurface219 polySurface226 lod2_shadow_01 lod2_shadow_03 lod2_shadow_04 lod2_shadow_05 lod2_shadow_06 lod2_shadow_07 lod2_shadow_12 shadow_antiair_base shadow_antiair_radar shadow_antiair_leftarm shadow_antiair_rightarm shadow_antiair_topsensor shadow_antiair_rightgattling shadow_antiair_main shadow_antiair_leftgattling shadow_antiair_camerabase shadow_antiair_rightammo shadow_antiair_rightarmsupport shadow_antiair_leftammo shadow_antiair_leftarmsupport shadow_antiair_camera antiair_base antiair_radar antiair_leftarm antiair_rightarm antiair_rightgattling antiair_topsensor antiair_leftgattling antiair_main antiair_camerabase antiair_rightammo antiair_rightarmsupport antiair_leftammo antiair_leftarmsupport antiair_camera
+
+	mesh	anti_air_rework_anims.mb		-dest anti_air_turret_lod2.md5mesh -range 77 77
+}
+
+*/
+
+export hauser {
+	options -prefix AAIR_ -rotate 90 -sourcedir models/structures/edf/deployables/weapons/anti_air_turret/dev_sd -destdir  models/structures/edf/deployables/weapons/anti_air_turret 	-keep muzzle1 muzzle2 muzzle3 joint3 -keepmesh polySurface179 polySurface180 polySurface233 polySurface232 polySurface231 polySurface230 polySurface229 polySurface228 polySurface227 polySurface182 polySurface185 polySurface187 polySurface191 polySurface219 polySurface226 lod2_shadow_01 lod2_shadow_03 lod2_shadow_04 lod2_shadow_05 lod2_shadow_06 lod2_shadow_07 lod2_shadow_12 shadow_antiair_base shadow_antiair_radar shadow_antiair_leftarm shadow_antiair_rightarm shadow_antiair_topsensor shadow_antiair_rightgattling shadow_antiair_main shadow_antiair_leftgattling shadow_antiair_camerabase shadow_antiair_rightammo shadow_antiair_rightarmsupport shadow_antiair_leftammo shadow_antiair_leftarmsupport shadow_antiair_camera antiair_base antiair_radar antiair_leftarm antiair_rightarm antiair_rightgattling antiair_topsensor antiair_leftgattling antiair_main antiair_camerabase antiair_rightammo antiair_rightarmsupport antiair_leftammo antiair_leftarmsupport antiair_camera  -parent 1 2 -parent 2 3 -parent 3 joint16 -parent 4 5 -parent 5 6 -parent 6 joint12
+
+	addoptions -noJoints
+
+	mesh	anti_air_rework_anims.mb		-dest anti_air_turret_lod1.md5mesh -range 77 77
+	mesh	anti_air_rework_anims.mb		-dest anti_air_turret_lod2.md5mesh -range 77 77
+	mesh	anti_air_rework_anims.mb		-dest anti_air_turret_lod3.md5mesh -range 77 77
+}
+
+/*
+export hauser {
+
+options -prefix AAIR_ -rotate 90 -sourcedir models/structures/edf/deployables/weapons/anti_air_turret/dev_sd -destdir models/structures/edf/deployables/weapons/anti_air_turret -keep muzzle1 muzzle2 muzzle3 joint3 -keepmesh shadow_antiair_base shadow_antiair_radar shadow_antiair_leftarm shadow_antiair_rightarm shadow_antiair_topsensor shadow_antiair_rightgattling shadow_antiair_leftgattling shadow_antiair_main shadow_antiair_camerabase shadow_antiair_rightammo shadow_antiair_rightarmsupport shadow_antiair_leftammo shadow_antiair_leftarmsupport shadow_antiair_camera antiair_meshes antiair_base antiair_radar antiair_leftarm antiair_rightarm antiair_topsensor antiair_rightgattling antiair_leftgattling antiair_main antiair_camerabase antiair_rightammo antiair_rightarmsupport antiair_leftammo antiair_leftarmsupport antiair_camera
+
+	mesh	anti_air_turretonly_rework_anims.mb		-dest anti_air_turretonly.md5mesh -range 77 77
+
+	anim	anti_air_turretonly_rework_anims.mb		-dest anti_air_turretonly_idle.md5anim -range 77 306
+	anim	anti_air_turretonly_rework_anims.mb		-dest anti_air_turretonly_fire.md5anim -range 340 342 -xyzprecision 0.0001
+}
+
+*/
+
+
+
+
+
+
+
+// Models
+// ========================================================================
+
+model deployable_antimissile {
+	mesh							models/structures/edf/deployables/weapons/anti_air_turret/anti_air_turret.md5mesh
+
+	anim base						models/structures/edf/deployables/weapons/anti_air_turret/anti_air_idle.md5anim {
+	}
+
+	anim undeployed					models/structures/edf/deployables/weapons/anti_air_turret/anti_air_undeployed.md5anim {
+	}
+
+	anim damaged					models/structures/edf/deployables/weapons/anti_air_turret/anti_air_damaged.md5anim {
+	}
+
+	anim fire						models/structures/edf/deployables/weapons/anti_air_turret/anti_air_fire.md5anim {
+	}
+
+	anim destroyed					models/structures/edf/deployables/weapons/anti_air_turret/anti_air_disabled.md5anim {
+	}
+
+	anim deploy						models/structures/edf/deployables/weapons/anti_air_turret/anti_air_deploy.md5anim {
+		frame 1							sound_channel snd_deployable_deploy snd_deploy
+	}
+
+	anim pre_ik						models/structures/edf/deployables/weapons/anti_air_turret/anti_air_preik.md5anim {
+		frame 1							sound_channel snd_deployable_deploy snd_deploy
+	}
+
+	anim post_ik						models/structures/edf/deployables/weapons/anti_air_turret/anti_air_postik.md5anim {
+	}
+
+	anim disabled_to_damaged		models/structures/edf/deployables/weapons/anti_air_turret/anti_air_disabled_to_damaged.md5anim {
+	}
+
+	anim damaged_to_idle			models/structures/edf/deployables/weapons/anti_air_turret/anti_air_damaged_to_idle.md5anim {
+	}
+}
+
+
+model antimissile_turretonly {
+	mesh							models/structures/edf/deployables/weapons/anti_air_turret/anti_air_turretonly.md5mesh
+
+	anim base						models/structures/edf/deployables/weapons/anti_air_turret/anti_air_turretonly_idle.md5anim {
+	}
+
+	anim fire						models/structures/edf/deployables/weapons/anti_air_turret/anti_air_turretonly_fire.md5anim {
+	}
+}
+
+model antimissile_turretonly_arctic {
+	mesh							models/structures/edf/deployables/weapons/anti_air_turret/anti_air_turretonly_arctic.md5mesh
+
+	anim base						models/structures/edf/deployables/weapons/anti_air_turret/anti_air_turretonly_idle.md5anim {
+	}
+
+	anim fire						models/structures/edf/deployables/weapons/anti_air_turret/anti_air_turretonly_fire.md5anim {
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========================================================================
+
+deployObject deployobject_amt_gdf {
+	"name"							"anti_missile_turret"
+	"title"							"game/deploy/amt_long"
+	"wait_time"						"40000"
+	"def_deployable"				"deployable_amt_gdf"
+	"def_deployable_carrier"		"vehicle_cargoplane"
+	"str_placement"					"deployitem_amt_gdf_placement_model"
+	"mask"							"dm_default"
+	"max_height_diff"				"512"
+	"object_radius"					"2048"
+	"ti_kill_filter"				"target_deploy_kill"
+	"category"						"defences"
+}
+
+stringMap deployitem_amt_gdf_placement_model {
+	"model"							"models/structures/edf/deployables/weapons/anti_air_turret/anti_air.lwo"
+	"skin"							"deployEffect"
+	"maxVisDist"					"2560"
+	"pushIntoOutsideAreas"			"1"
+}
+
+stringMap deployable_amt_gdf_aimer {
+	"min_yaw_turn"					"120"
+	"max_yaw_turn"					"180"
+
+	"min_pitch_turn"				"120"
+	"max_pitch_turn"				"180"
+
+	"min_pitch"						"-30"
+	"max_pitch"						"90"
+
+	"joint_yaw"						"joint2"
+	"joint_pitch"					"joint3"
+	"joint_barrel"					"muzzle3"
+
+	"deployed_anim"					"base"
+}
+
+entityDef deployable_amt_gdf_cc {
+	"inherit"						"deployable_amt_gdf"
+	"scriptobject"					"deployable_antissg_cc"
+
+	"editor_skipmenu"				"0"
+
+	"model"							"antimissile_turretonly"
+	"cm_model"						"models/structures/edf/deployables/weapons/anti_ssm_turret/clipmodel.lwo"
+
+	"task_hack"						""
+	"task_destroy"					""
+
+	"num_ik"						"0"
+
+	"health"						"0"
+
+	"editor_usage"					"The GDF Command Center Anti Missile Turret"
+}
+
+entityDef deployable_amt_gdf_cc_arctic {
+	"inherit"						"deployable_amt_gdf_cc"
+	"model"							"antimissile_turretonly_arctic"
+}
+
+entityDef deployable_amt_gdf {
+	"inherit"						"deployable_base"
+	"inherit1"						"deployable_gdf"
+
+	"title"							"game/deploy/amt_long"
+
+	"climate_skin_key"				"deployable_assm"
+
+	"mtr_commandmap"				"guis/assets/commandmap/icon_def_deploy"
+	"mtr_commandmap_unknown"		"guis/assets/commandmap/icon_def_deploy"
+
+	"icon_size_cm"					"8"
+
+	"editor_color"					".3 .3 1"
+	"editor_usage"					"The EDF Anti Missile Turret"
+	"editor_mins"					"-32 -64 0"
+	"editor_maxs"					"32 64 64"
+
+	"spawnclass"					"sdDefenceTurret"
+	"scriptobject"					"deployable_antissg"
+
+	"model"							"deployable_antimissile"
+	"cm_model"						"models/structures/edf/deployables/weapons/anti_armour_turret/clipmodel.lwo"
+
+	"task_name"						"game/deploy/amt"
+
+	"stat_name"						"antimissile_gdf"
+
+	"ch_name"						"game/deploy/amt_long"
+	"option_combat_model"			"1"
+	"option_crosshair_interface"	"1"
+	"option_commandmap_interface"	"1"
+	"option_crosshair_offset"		"0 0 128"
+	"option_no_inhibit_physics"		"1"
+
+	"option_allow_abilities"		"1"
+	"ability_1"						"defense_turret"
+
+	"mtr_color"						"guis/assets/deploy/icons/gdf_am"
+	"mtr_desat"						"guis/assets/deploy/icons/gdf_am_desat"
+	"mtr_half_desat"				"guis/assets/deploy/icons/gdf_am_half_desat"
+	"mtr_full_desat"				"guis/assets/deploy/icons/gdf_am_bright_desat"
+
+	// jotun parachuting stuff
+	"option_simple_physics"			"1"
+	"drop_snap"						"1"
+	"freeze_on_spawn"				"1"
+	"parachute_offset"				"0 0 150"
+	"gravity"						"800"
+
+	"health"						"4000"
+	"repair_multiplier"				"1.5"
+
+	"action_time"					"30"
+
+	"fireRate"						"0.03"
+	"spread"						"0"
+	"numProjectiles"				"1"
+	"missile_velocity"				"1"
+
+	"str_aim_data"					"deployable_amt_gdf_aimer"
+
+	"range_min"						"0"
+	"range_max"						"90"
+
+	"joint_barrel"					"muzzle3"
+
+	"use_brass"						"1"
+
+	"num_ik"						"2"
+	"str_ik0"						"sounds/deployables/amt_gdf/leg_1_ik"
+	"str_ik1"						"sounds/deployables/amt_gdf/leg_2_ik"
+
+	"use_tracers"					"1"
+	"fx_tracer"						"effects/base/tracers_large"
+	"effectchance fx_tracer"		"0.8"
+	"num_tracerjoints"				"2"
+	"joint_tracer1"					"muzzle1"
+	"joint_tracer2"					"muzzle2"
+
+	"joint_spin1"					"gatling_left"
+	"joint_spin2"					"gatling_right"
+
+	"def_projectile"				"projectile_deployable_antiair"
+
+	"snd_deploy"					"sounds/deployables/amt_gdf/deploy"
+	"snd_fire"						"sounds/weapons/gatling/fire/start"
+	"snd_fire_far"					"sounds/weapons/gatling/fire/far/start"
+	"snd_fire_trail"				"sounds/weapons/gatling/fire/stop"
+	"snd_fire_far_trail"			"sounds/weapons/gatling/fire/far/stop"
+
+	"fx_muzzle"						"effects/deployables/antimissile_muzzleflash"
+	"fx_death"						"effects/deployables/anti_missile_destroy"
+	"fx_hitground"					"effects/deployables/landfall_hitground_small"
+	"fx_emped"						"effects/generic_smoke/emp"
+	
+	"emp_effect_joint"				"joint2"
+
+	"ti_target_info"				"target_antiair"
+
+	"do_object"						"deployobject_antissg"
+
+	"prof_destroy"					"pro_antimissile_engineer"
+
+	"tt_destroyed_missile"			"amt_destroyed_missile_gdf"
+
+	"deployable_type"				"64"
+
+	"play_hitground_effect"			"1"
+
+	"contextmenu_quickchat_enemy"	"quickchat/context/attack/aitspotted"
+	
+	"deploybonus_requireactive"		"1"
+	"prof_deploybonus"				"pro_engineer_deploy_bonus"
+}
+
+
+
+
+stringMap sounds/deployables/amt_gdf/leg_1_ik {
+	"joint_upper"					"3"
+	"joint_middle"					"2"
+	"joint_lower"					"1"
+
+	"direction"						"0 0 -1"
+
+	"max_up_trace"					"40"
+	"max_down_trace"				"20"
+
+	"helper_type"					"legIK"
+
+	"blend_rate"					"1.4"
+}
+
+stringMap sounds/deployables/amt_gdf/leg_2_ik {
+	"joint_upper"					"6"
+	"joint_middle"					"5"
+	"joint_lower"					"4"
+
+	"direction"						"0 0 -1"
+
+	"max_up_trace"					"40"
+	"max_down_trace"				"20"
+
+	"helper_type"					"legIK"
+
+	"blend_rate"					"1.4"
+}
+
+
+// ========================================================================
+
+damageFilter damage_deployable_antiair {
+	type {
+		target	"target_antiair"
+		damage	1000
+	}
+}
+
+damageDef damage_deployable_antiair {
+	damage							"damage_deployable_antiair"
+
+	tt_obituary						"tooltips/killmsgs/turrets/amt"
+	tt_obituary_self				"tooltips/killmsgs/turrets/amt/self"
+	tt_obituary_team_kill			"tooltips/killmsgs/turrets/amt/teamkill"
+	tt_obituary_unknown				"tooltips/killmsgs/turrets/amt/self"
+}

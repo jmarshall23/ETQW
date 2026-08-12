@@ -1,0 +1,156 @@
+/***********************************************************************
+
+	reexportModels tools\pliers.def
+
+***********************************************************************/
+
+// ========================================================================
+// Export
+//
+export hauser {
+	options -prefix PLIERS_ -sourcedir models/techkits/pliers/dev_sd -destdir models/tools/pliers/ -keep
+
+/*
+	mesh	pliers_base_file.mb		-dest models/tools/pliers/view.md5mesh
+
+	anim	pliers_idle.mb			-dest models/tools/pliers/idle.md5anim
+
+
+
+ 	anim	pliers_raise.mb			-dest models/tools/pliers/raise.md5anim
+ 	*/
+ 	anim	pliers_lower.mb			-dest models/tools/pliers/lower.md5anim
+ 	/*
+ 	anim	pliers_fire3.mb			-dest models/tools/pliers/start_fire.md5anim -range 1 5
+
+ 	anim	pliers_fire3.mb			-dest models/tools/pliers/fire.md5anim -range 6 48
+	anim	pliers_fire3.mb			-dest models/tools/pliers/end_fire.md5anim -range 47 57
+*/
+
+
+}
+
+
+// ========================================================================
+// view Models
+//
+model viewmodel_pliers {
+	mesh						models/tools/pliers/view.md5mesh
+
+	anim idle					models/tools/pliers/idle.md5anim {
+		frame 102					sound_channel snd_weapon_idle snd_idle
+	}
+
+	anim fire_start				models/tools/pliers/start_fire.md5anim {
+	}
+
+	anim fire					models/tools/pliers/fire.md5anim {
+	}
+
+	anim fire_end				models/tools/pliers/end_fire.md5anim {
+	}
+
+	anim putaway 				models/tools/pliers/lower.md5anim {
+	}
+
+	anim raise 					models/tools/pliers/raise.md5anim {
+	}
+}
+
+// ========================================================================
+// Entity DEFS
+//
+invItemDef inventory/tools/pliers {
+	type							"tool"
+	slot							"tool"
+	name							"game/weapons/pliers"
+	model							"models/tools/pliers/pliers_player.lwo"
+	joint							"Spine"
+
+	data {
+		"model_view" 				"viewmodel_pliers"
+		"model_world" 				"models/tools/pliers/pliers_world.lwo"
+		"joint_attach"				"RightHand"
+
+		"view_offset"				"5 -1.3 -1.3"
+		"view_foreshorten"			"0.55"
+		"anim_prefix"				"pliers"
+		"anim_prefix_class"			"tool"
+
+		"weapon_scriptobject"		"tool_pliers"
+		"use_hold_anims"			"1"
+
+		"charge_per_use"			"2"
+		"repair_count"				"15"
+		"fire_rate"					"0.1"
+		"show_charge"				"1"
+
+		"snd_start"					"sounds/tools/pliers/start"
+		"snd_stop"					"sounds/tools/pliers/stop"
+		"snd_idle"					"sounds/tools/pliers/idle"
+
+		"melee_distance"			"88"
+
+		"can_disarm_charge"			"1"
+		"can_arm_normal"			"1"
+		"can_enable"				"1"
+		"can_repair"				"1"
+		"can_construct"				"1"
+
+		"activate_attack"			"1"
+
+		"mtr_weaponmenu"			"guis/assets/icons/weapons/pliers"
+
+		"climate_skin_key"			"weapon_gdf"
+
+		"crosshair"					"none"
+
+		"crosshair_spread_min"		"0.1"
+		"crosshair_spread_max"		"0.1"
+		"crosshair_spread_scale"	"1"
+
+		"spread_min"				"0"
+		"spread_max"				"0"
+
+		"spread_crouch_min"			"0"
+		"spread_crouch_max"			"0"
+
+		"spread_prone_min"			"0"
+		"spread_prone_max"			"0"
+
+		"spread_jump_min"			"0"
+		"spread_jump_max"			"0"
+
+		"weapon_menu_ignore"		"0"
+
+		"player_weapon_num"			"12"
+
+		"tt_intro_1"				"pliers_intro_1"
+		"tt_intro_2"				"pliers_intro_2"
+		"tt_action_failed"			"pliers_action_failed"
+		"tt_enemy_repair"			"pliers_enemy_repair"
+
+		"needsAmmoBox"			"0"
+
+	}
+}
+
+toolTip pliers_intro_1 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/pliers_1"
+}
+
+toolTip pliers_intro_2 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/generic/fire_activate_use_item"
+}
+
+toolTip pliers_action_failed {
+	sound "sounds/ui/main/cannot"
+	text "game/tt/intro/pliers_action_failed"
+}
+
+toolTip pliers_enemy_repair {
+	sound "sounds/ui/main/cannot"
+	text "game/tt/intro/pliers_enemy_repair"
+}

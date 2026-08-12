@@ -1,0 +1,401 @@
+// ========================
+// GDF Base fort
+// ========================
+material texturesheets/slipgate/fort01
+{
+	surfaceTypeMap "texturesheets/slipgate/fort01.stmap"
+	{
+		diffusemap 		picmip -1	texturesheets/slipgate/fort01_d.tga
+		specularmap 	picmip -2	texturesheets/slipgate/fort01_s.tga
+		bumpmap 		picmip -1	texturesheets/slipgate/fort01_local.tga
+		vertexcolor
+	
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 3,12,0,0 
+	}
+}
+
+material texturesheets/slipgate/fort01_noshadows
+{
+	surfaceTypeMap "texturesheets/slipgate/fort01.stmap"
+	noshadows
+	{
+		diffusemap 		picmip -1	texturesheets/slipgate/fort01_d.tga
+		specularmap 	picmip -2	texturesheets/slipgate/fort01_s.tga
+		bumpmap 		picmip -1	texturesheets/slipgate/fort01_local.tga
+		vertexcolor
+	
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 3,12,0,0 
+	}
+}
+
+material texturesheets/slipgate/fort01_mindist
+{
+	nonsolid
+	//noshadows
+	{
+		diffusemap 		picmip -1	texturesheets/slipgate/fort01_d.tga
+		vertexcolor
+	}
+}
+
+material texturesheets/slipgate/fort04_decals
+{
+	polygonOffset 0.00525
+	sort decal	
+	nonsolid
+ 	translucent
+
+	{
+		program 		filterVertexColorCoverage
+		blend 			filter
+		map				picmip -1	texturesheets/slipgate/fort04_decals_d.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material texturesheets/slipgate/fort04_decals_offset
+{
+	polygonOffset
+	sort decal	
+	nonsolid
+ 	translucent
+
+	{
+		program 		filterVertexColorCoverage
+		blend 			filter
+		map				picmip -1	texturesheets/slipgate/fort04_decals_d.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material texturesheets/slipgate/fort05_modern
+{
+	surfaceTypeMap "texturesheets/slipgate/fort05_modern.stmap"
+	{
+		diffusemap 		picmip -1	texturesheets/slipgate/fort05_modern_d.tga
+		specularmap 	picmip -2	texturesheets/slipgate/fort05_modern_s.tga
+		bumpmap 		picmip -1	texturesheets/slipgate/fort05_modern_local.tga
+		vertexcolor
+	
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,16,0,0 
+	}
+}
+
+material texturesheets/slipgate/fort05_modern_noshadows
+{
+	surfaceTypeMap "texturesheets/slipgate/fort05_modern.stmap"
+	noshadows
+	{
+		diffusemap 		picmip -1	texturesheets/slipgate/fort05_modern_d.tga
+		specularmap 	picmip -2	texturesheets/slipgate/fort05_modern_s.tga
+		bumpmap 		picmip -1	texturesheets/slipgate/fort05_modern_local.tga
+		vertexcolor
+	
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,16,0,0 
+	}
+}
+
+// ========================
+// The Village
+// ========================
+material texturesheets/slipgate/villagewall01
+{
+	{
+		bumpmap			picmip -1	texturesheets/slipgate/villagewall01_local.tga
+		diffusemap		picmip -1	texturesheets/slipgate/villagewall01_d.tga
+		specularmap		picmip -2	texturesheets/slipgate/villagewall01_s.tga
+		vertexcolor
+		
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,16,0,0
+	}
+}
+
+material texturesheets/slipgate/villagewall01_noshadows
+{
+	noshadows
+	{
+		bumpmap			picmip -1	texturesheets/slipgate/villagewall01_local.tga
+		diffusemap		picmip -1	texturesheets/slipgate/villagewall01_d.tga
+		specularmap		picmip -2	texturesheets/slipgate/villagewall01_s.tga
+		vertexcolor
+		
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,16,0,0 
+	}
+}
+
+material texturesheets/slipgate/village02
+{
+	surfaceTypeMap "texturesheets/slipgate/village02.stmap"
+	{
+		bumpmap			picmip -1	texturesheets/slipgate/village02_local.tga
+		diffusemap		picmip -1	texturesheets/slipgate/village02_d.tga
+		specularmap		picmip -2	texturesheets/slipgate/village02_s.tga
+		vertexcolor
+	
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 3,6,0,0 
+	}
+}
+
+material texturesheets/slipgate/village02_noshadows
+{
+	surfaceTypeMap "texturesheets/slipgate/village02.stmap"
+	noshadows
+	{
+		bumpmap			picmip -1	texturesheets/slipgate/village02_local.tga
+		diffusemap		picmip -1	texturesheets/slipgate/village02_d.tga
+		specularmap		picmip -2	texturesheets/slipgate/village02_s.tga
+		vertexcolor
+	
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 3,6,0,0 
+	}
+}
+
+material texturesheets/slipgate/village03
+{
+	surfaceTypeMap "texturesheets/slipgate/village03.stmap"
+	{
+		bumpmap			picmip -1	texturesheets/slipgate/village03_local.tga
+		diffusemap		picmip -1	texturesheets/slipgate/village03_d.tga
+		specularmap		picmip -2	texturesheets/slipgate/village03_s.tga
+		vertexcolor
+	
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 3,12,0,0 
+	}
+}
+
+material texturesheets/slipgate/village03_noshadows
+{
+	surfaceTypeMap "texturesheets/slipgate/village03.stmap"
+	noshadows
+	{
+		bumpmap			picmip -1	texturesheets/slipgate/village03_local.tga
+		diffusemap		picmip -1	texturesheets/slipgate/village03_d.tga
+		specularmap		picmip -2	texturesheets/slipgate/village03_s.tga
+		vertexcolor
+	
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 3,12,0,0 
+	}
+}
+
+material texturesheets/slipgate/village04
+{
+	surfaceTypeMap "texturesheets/slipgate/village04.stmap"
+	{
+		bumpmap			picmip -1	texturesheets/slipgate/village04_local.tga
+		diffusemap		picmip -1	texturesheets/slipgate/village04_d.tga
+		specularmap		picmip -2	texturesheets/slipgate/village04_s.tga
+		vertexcolor
+	
+		diffuseDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/metal_detail01_local.tga
+		detailMult 2.5,20,0,0 
+	}
+}
+
+material texturesheets/slipgate/village04_noshadows
+{
+	surfaceTypeMap "texturesheets/slipgate/village04.stmap"
+	noshadows
+	{
+		bumpmap			picmip -1	texturesheets/slipgate/village04_local.tga
+		diffusemap		picmip -1	texturesheets/slipgate/village04_d.tga
+		specularmap		picmip -2	texturesheets/slipgate/village04_s.tga
+		vertexcolor
+	
+		bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+		detailMult 1,8,0,0 
+	}
+}
+
+material texturesheets/slipgate/village04_mindist
+{
+	sort decal
+	nonsolid
+ 	translucent
+
+ 	{
+ 		program 		filterVertexColorCoverage
+ 		blend			filter
+		map				picmip -1	texturesheets/slipgate/village04_d.tga
+		vertexcolor
+	}
+}
+
+material texturesheets/slipgate/trims01
+{
+	surfacetype "concrete"
+	{
+		bumpmap		picmip -1	texturesheets/slipgate/trims01_local.tga
+		diffusemap	picmip -1	texturesheets/slipgate/trims01_d.tga
+		specularmap	picmip -2	texturesheets/slipgate/trims01_s.tga
+		vertexcolor
+	
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+	}
+}
+
+material texturesheets/slipgate/trims01_noshadows
+{
+	surfacetype "concrete"
+	noshadows
+	{
+		bumpmap		picmip -1	texturesheets/slipgate/trims01_local.tga
+		diffusemap	picmip -1	texturesheets/slipgate/trims01_d.tga
+		specularmap	picmip -2	texturesheets/slipgate/trims01_s.tga
+		vertexcolor
+	
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+	}
+}
+
+// ========================
+// Village mapobjects
+// ========================
+material models/mapobjects/slipgate/slipgate_mapobjects01
+{
+	surfacetype "metal"
+	{
+		program	interaction/basic_detailwm
+		diffusemap		picmip -1	models/mapobjects/slipgate/office/slipgate_mapobjects01_d.tga
+		bumpmap			picmip -2	models/mapobjects/slipgate/office/slipgate_mapobjects01_local.tga
+		specularmap		picmip -2	models/mapobjects/slipgate/office/slipgate_mapobjects01_s.tga
+		vertexcolor
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		detailMult 5,5,0,0
+		detailWeightMap			models/mapobjects/slipgate/office/slipgate_mapobjects01_detailmask.tga
+	}
+}
+
+material models/mapobjects/slipgate/slipgate_mapobjects01_noshadows
+{
+	noshadows
+	surfacetype "metal"
+	{
+		program	interaction/basic_detailwm
+		diffusemap		picmip -1	models/mapobjects/slipgate/office/slipgate_mapobjects01_d.tga
+		bumpmap			picmip -2	models/mapobjects/slipgate/office/slipgate_mapobjects01_local.tga
+		specularmap		picmip -2	models/mapobjects/slipgate/office/slipgate_mapobjects01_s.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		detailMult 5,5,0,0
+		detailWeightMap			models/mapobjects/slipgate/office/slipgate_mapobjects01_detailmask.tga
+	}
+}
+
+// ========================
+// Snow side research buildings
+// ========================
+material texturesheets/slipgate/snow_research_1
+{
+	surfaceTypeMap "texturesheets/slipgate/snow_research_1.stmap"
+	{
+		diffusemap 		picmip -1	texturesheets/slipgate/snow_research_1_d.tga
+		specularmap 	picmip -2	texturesheets/slipgate/snow_research_1_s.tga
+		bumpmap 		picmip -1	texturesheets/slipgate/snow_research_1_local.tga
+		vertexcolor
+		
+		bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+		detailMult 2,8,0,0		
+	}
+}
+
+material texturesheets/slipgate/snow_research_2
+{
+	surfaceTypeMap "texturesheets/slipgate/snow_research_2.stmap"
+	{
+		diffusemap 		picmip -1	texturesheets/slipgate/snow_research_2_d.tga
+		specularmap 	picmip -2	texturesheets/slipgate/snow_research_2_s.tga
+		bumpmap 		picmip -1	texturesheets/slipgate/snow_research_2_local.tga
+		vertexcolor
+		
+		bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+		detailMult 1,8,0,0		
+	}
+}
+
+material texturesheets/slipgate/snow_research_glass01
+{
+	noSelfShadow
+	noshadows
+	nonsolid
+	twosided
+	translucent
+	useTemplate templates/windowglass_mask <
+		texturesheets/slipgate/snow_research_glass01_d.tga,
+		texturesheets/slipgate/snow_research_glass01_local.tga,
+		texturesheets/slipgate/snow_research_glass01_mask.tga,
+		2, 1.0, 0.3
+	>
+	{
+		blend blend
+		depthfunc less
+		map texturesheets/slipgate/snow_research_glass01_dirt.tga
+		
+	}
+}
+
+// ========================
+// Strogg textures
+// ========================
+material texturesheets/slipgate/strogg_sheet01
+{
+	surfaceTypeMap "texturesheets/slipgate/strogg_sheet01.stmap"
+	{
+		bumpmap			picmip -1	texturesheets/slipgate/strogg_sheet01_local.tga
+		diffusemap		picmip -1	texturesheets/slipgate/strogg_sheet01_d.tga
+		specularmap		picmip -2	texturesheets/slipgate/strogg_sheet01_s.tga
+		vertexcolor
+		
+		bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+		detailMult 1,8,0.4,0.1		
+	}
+}
+
+material texturesheets/slipgate/strogg_sheet02
+{
+	surfaceTypeMap "texturesheets/slipgate/strogg_sheet02.stmap"
+	{
+		bumpmap			picmip -1	texturesheets/slipgate/strogg_sheet02_local.tga
+		diffusemap		picmip -1	texturesheets/slipgate/strogg_sheet02_d.tga
+		specularmap		picmip -2	texturesheets/slipgate/strogg_sheet02_s.tga
+		vertexcolor
+		
+		bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+		detailMult 2,8,0.4,0.1		
+	}
+}
+
+material texturesheets/slipgate/strogg_decals01
+{
+	sort decal
+	nonsolid
+ 	translucent
+ 	polygonOffset
+
+ 	{
+ 		program 		filterVertexColorCoverageFogged
+ 		blend			filter
+ 		map 			picmip -1	texturesheets/slipgate/strogg_decals01_d.tga
+ 		vertexcolor
+ 	}
+}

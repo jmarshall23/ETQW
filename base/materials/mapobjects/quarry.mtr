@@ -1,0 +1,236 @@
+material models/mapobjects/quarry/enercell
+{
+	//noshadows
+	surfacetype "metal"
+	diffusemap	picmip -1	models/mapobjects/quarry/enercell/enercell_d.tga
+	specularmap	picmip -2	models/mapobjects/quarry/enercell/enercell_s.tga
+	bumpmap		picmip -1	models/mapobjects/quarry/enercell/enercell_local.tga
+
+	noplant
+	{
+		blend	add
+		map					models/mapobjects/quarry/enercell/enercell_glow.tga
+		rgb	sintable [time * .75] + 1.4
+	}
+}
+
+material models/mapobjects/quarry/cellpod/cellpod_d
+{
+	surfacetype "metal"
+	//noshadows
+	{
+		diffusemap	picmip -1	models/mapobjects/quarry/cellpod/cellpod_d.tga
+		specularmap	picmip -2	models/mapobjects/quarry/cellpod/cellpod_s.tga
+		bumpmap		picmip -1	models/mapobjects/quarry/cellpod/cellpod_local.tga
+	}
+	{
+		blend	add
+		map						models/mapobjects/quarry/cellpod/cellpod_add.tga
+		rgb		sintable[ time * .5 ] + 1.4
+	}
+}
+
+material models/mapobjects/quarry/silo/silo
+{
+	diffusemap	picmip -1	models/mapobjects/quarry/silo/silo_d.tga
+	specularmap	picmip -2	models/mapobjects/quarry/silo/silo_s.tga
+	bumpmap		picmip -1	models/mapobjects/quarry/silo/silo_local.tga
+}
+
+material models/mapobjects/quarry/crashed_scarab_clip
+{
+	qer_editorimage			textures/common/clip.tga
+	//noimpact
+	//nonsolid
+	playerclip
+	flyerhiveclip
+	vehicleclip
+	noshadows
+	collision
+	surfaceType	"metal"
+}
+
+material models/mapobjects/quarry/crashrock/crashrocks
+{
+	{
+		diffusemap	picmip -1	models/mapobjects/quarry/crashrock/crashrocks_d.tga
+		specularmap	picmip -2	models/mapobjects/quarry/crashrock/crashrocks_s.tga
+		bumpmap		picmip -1	models/mapobjects/quarry/crashrock/crashrocks_local.tga
+		vertexcolor
+	}
+}
+
+material models/mapobjects/quarry/pod_impact/pod_impact
+{
+	nonsolid
+	{
+		diffusemap	picmip -1	models/mapobjects/quarry/pod_impact/pod_impact_d.tga
+		specularmap	picmip -2	models/mapobjects/quarry/pod_impact/pod_impact_s.tga
+		bumpmap		picmip -1	models/mapobjects/quarry/pod_impact/pod_impact_local.tga
+		vertexcolor
+	}
+}
+
+material models/mapobjects/quarry/pod_impact/pod_impact_crater
+{
+	nonsolid
+	{
+		diffusemap	picmip -1	models/mapobjects/quarry/pod_impact/pod_impact_crater_d.tga
+		specularmap	picmip -2	models/mapobjects/quarry/pod_impact/pod_impact_crater_s.tga
+		bumpmap		picmip -1	models/mapobjects/quarry/pod_impact/pod_impact_crater_local.tga
+		//vertexcolor
+	}
+}
+
+material models/mapobjects/quarry/crashed_scarab
+{
+	surfaceType	"metal"
+	noshadows
+	{
+		program	interaction/strogg_detail
+		diffusemap	picmip -1	models/mapobjects/quarry/scarabsheet_d.tga
+		specularmap	picmip -2	models/mapobjects/quarry/scarabsheet_s.tga
+		bumpmap		picmip -1	models/mapobjects/quarry/scarabsheet_local.tga
+		selfillummap			_black
+		alphaTest	0.5
+		vertexcolor
+		
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult	15,30,0,0
+	}
+	{
+		blend	add
+		map models/mapobjects/quarry/scarabsheet_add.tga
+		rgb		flickerblink[ time * .5 ]
+	}
+}
+
+material models/mapobjects/quarry/crashed_scarab_smoove
+{
+	surfaceType "metal"
+	noshadows
+	{
+		program	interaction/strogg_detail
+		diffusemap	picmip -1	models/mapobjects/quarry/scarabsheet_d.tga
+		specularmap	picmip -2	models/mapobjects/quarry/scarabsheet_s.tga
+		bumpmap		picmip -1	models/mapobjects/quarry/scarabsheet_local.tga
+		selfillummap			_black
+		alphaTest	0.5
+		vertexcolor
+	
+		diffuseDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap			textures/detail/bump/strogg_detail01_d.tga
+		detailMult	15,30,0,0
+	}
+	{
+		blend	add
+		map						models/mapobjects/quarry/scarabsheet_add.tga
+		rgb		flickerblink[ time * .5 ]
+	}
+}
+
+material models/mapobjects/quarry/crashed_scarab_mod
+{
+	surfaceType	"metal"
+	{
+		program		interaction/strogg_detailwm
+		diffusemap	picmip -1	textures/strogg/modular_d.tga
+		specularmap	picmip -2	textures/strogg/modular_s.tga
+		bumpmap		picmip -1	textures/strogg/modular_local.tga
+		selfillummap			_black
+
+		diffuseDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap			textures/detail/bump/strogg_detail01_d.tga
+		detailMult	6,24,0,0
+		detailWeightMap			models/mapobjects/quarry/modular_detmask.tga
+	}
+}
+
+material models/mapobjects/quarry/crashed_scarab_mod2
+{
+	surfaceType	"metal"
+	noshadows
+	{
+		program		interaction/strogg_detailwm
+		diffusemap	picmip -1	textures/strogg/modular2_d.tga
+		specularmap	picmip -2	textures/strogg/modular2_s.tga
+		bumpmap		picmip -1	textures/strogg/modular2_local.tga
+		selfillummap			_black
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	5,20,0,0
+		detailWeightMap			textures/strogg/modular2_detailmask.tga
+	}
+	{
+		blend	add
+		map						textures/strogg/modular2_glow.tga
+		rgb		flickerblink[ time * .2 ]
+	}
+}
+
+material models/mapobjects/quarry/crashed_scarab_mod_smoove
+{
+	surfaceType	"metal"
+	{
+		program		interaction/strogg_detailwm
+		diffusemap	picmip -1	textures/strogg/modular_d.tga
+		specularmap	picmip -2	textures/strogg/modular_s.tga
+		bumpmap		picmip -1	textures/strogg/modular_local.tga
+		selfillummap			_black
+
+		diffuseDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap			textures/detail/bump/strogg_detail01_d.tga
+		detailMult	6,24,0,0
+		detailWeightMap			models/mapobjects/quarry/modular_detmask.tga
+	}
+}
+
+material models/mapobjects/quarry/crashed_scarab_mod2_smoove
+{
+	surfaceType	"metal"
+	{
+		program		interaction/strogg_detailwm
+		diffusemap	picmip -1	textures/strogg/modular2_d.tga
+		specularmap	picmip -2	textures/strogg/modular2_s.tga
+		bumpmap		picmip -1	textures/strogg/modular2_local.tga
+		selfillummap			_black
+
+		diffuseDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap			textures/detail/bump/strogg_detail01_d.tga
+		detailMult	6,24,0,0
+		detailWeightMap			models/mapobjects/quarry/modular2_detmask.tga
+	}
+}
+
+material models/mapobjects/quarry/quarry_generator01/quarry_generator01
+{
+	surfacetype "metal"
+	diffusemap	picmip -1	models/mapobjects/quarry/quarry_generator01/quarry_generator01_d.tga
+	specularmap	picmip -2	models/mapobjects/quarry/quarry_generator01/quarry_generator01_s.tga
+	bumpmap		picmip -1	models/mapobjects/quarry/quarry_generator01/quarry_generator01_local.tga
+}
+
+material models/mapobjects/quarry/scarabdecal
+{
+	noShadows
+	nonsolid
+	noimpact
+	{
+		diffusemap			models/mapobjects/quarry/scarabdecal.tga
+		alphaTest	0.5
+	}
+	{
+		blend	add
+		map					models/mapobjects/quarry/scarabdecal_glow.tga
+	}
+}
+
+

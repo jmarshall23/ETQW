@@ -1,0 +1,80 @@
+atmosphere canyon_bridge01 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.0934372917 -0.5204188824 0.8487837315 )
+	sunColor ( 0.7490196228 0.7490196228 0.7490196228 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.2600000203
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 9900
+	fogHeightHalf 9900
+	fogHeightOffset 9900
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon_bridge01"
+	skyGradientImage "atmosphere/skies/day_cloudy2"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+ambientCubemap canyon_bridge01 {
+	AmbientLight {
+		Color 0.4000000358 0.4000000358 0.4000000358
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.2470588386 0.2470588386 0.2470588386
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.4470588565 0.4470588565 0.4470588565
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.2980392277 0.2980392277 0.2980392277
+		Direction -1 0 0
+	}
+	AmbientLight {
+		Color 0.4901961088 0.4901961088 0.4901961088
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.4117647409 0.4117647409 0.4117647409
+		Direction 1 0 0
+	}
+}
+
+
+
+
+
+
+

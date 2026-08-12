@@ -1,0 +1,115 @@
+
+locString game/achievements/achievements				{ text "#str_00010092" arguments 2 }
+
+locString game/achievements/soldier_level1_task1 		{ text "#str_00016000" }
+locString game/achievements/soldier_level1_task2 		{ text "#str_00016001" }
+
+locString game/achievements/soldier_level2_task1 		{ text "#str_00016002" }
+locString game/achievements/soldier_level2_task2 		{ text "#str_00016003" }
+locString game/achievements/soldier_level2_task3 		{ text "#str_00016004" }
+
+locString game/achievements/soldier_level3_task1 		{ text "#str_00016005" }
+locString game/achievements/soldier_level3_task2 		{ text "#str_00016006" }
+locString game/achievements/soldier_level3_task3 		{ text "#str_00016007" }
+
+locString game/achievements/engineer_level1_task1 		{ text "#str_00016008" }
+locString game/achievements/engineer_level1_task2 		{ text "#str_00016009" }
+
+locString game/achievements/engineer_level2_task1 		{ text "#str_00016010" }
+locString game/achievements/engineer_level2_task2 		{ text "#str_00016011" }
+locString game/achievements/engineer_level2_task3 		{ text "#str_00016012" }
+
+locString game/achievements/engineer_level3_task1 		{ text "#str_00016013" }
+locString game/achievements/engineer_level3_task2 		{ text "#str_00016014" }
+locString game/achievements/engineer_level3_task3 		{ text "#str_00016015" }
+locString game/achievements/engineer_level3_task4 		{ text "#str_00016016" }
+
+locString game/achievements/medic_level1_task1 			{ text "#str_00016017" }
+
+locString game/achievements/medic_level2_task1 			{ text "#str_00016018" }
+locString game/achievements/medic_level2_task2 			{ text "#str_00016019" }
+
+locString game/achievements/medic_level3_task1 			{ text "#str_00016020" }
+locString game/achievements/medic_level3_task2 			{ text "#str_00016021" }
+locString game/achievements/medic_level3_task3 			{ text "#str_00016022" }
+locString game/achievements/medic_level3_task4 			{ text "#str_00016023" }
+
+locString game/achievements/covertops_level1_task1 		{ text "#str_00016024" }
+locString game/achievements/covertops_level1_task2 		{ text "#str_00016025" }
+
+locString game/achievements/covertops_level2_task1 		{ text "#str_00016026" }
+locString game/achievements/covertops_level2_task2 		{ text "#str_00016027" }
+locString game/achievements/covertops_level2_task3 		{ text "#str_00016028" }
+
+locString game/achievements/covertops_level3_task1 		{ text "#str_00016029" }
+locString game/achievements/covertops_level3_task2 		{ text "#str_00016030" }
+locString game/achievements/covertops_level3_task3 		{ text "#str_00016031" }
+locString game/achievements/covertops_level3_task4 		{ text "#str_00016032" }
+locString game/achievements/covertops_level3_task5 		{ text "#str_00016033" }
+
+
+locString game/achievements/fieldops_level1_task1 		{ text "#str_00016034" }
+
+locString game/achievements/fieldops_level2_task1 		{ text "#str_00016035" }
+locString game/achievements/fieldops_level2_task2 		{ text "#str_00016036" }
+
+locString game/achievements/fieldops_level3_task1 		{ text "#str_00016037" }
+locString game/achievements/fieldops_level3_task2 		{ text "#str_00016038" }
+
+locString game/achievements/lightweapons_level1_task1 	{ text "#str_00016039" }
+locString game/achievements/lightweapons_level1_task2 	{ text "#str_00016040" }
+locString game/achievements/lightweapons_level1_task3 	{ text "#str_00016041" }
+
+locString game/achievements/lightweapons_level2_task1 	{ text "#str_00016042" }
+locString game/achievements/lightweapons_level2_task2 	{ text "#str_00016043" }
+
+locString game/achievements/lightweapons_level3_task1 	{ text "#str_00016044" }
+locString game/achievements/lightweapons_level3_task2 	{ text "#str_00016045" }
+
+locString game/achievements/battlesense_level1_task1 	{ text "#str_00016046" }
+locString game/achievements/battlesense_level2_task1 	{ text "#str_00016047" }
+locString game/achievements/battlesense_level3_task1 	{ text "#str_00016048" }
+
+locString game/achievements/vehicles_level1_task1 		{ text "#str_00016049" }
+locString game/achievements/vehicles_level1_task2 		{ text "#str_00016050" }
+
+locString game/achievements/vehicles_level2_task1 		{ text "#str_00016051" }
+locString game/achievements/vehicles_level2_task2 		{ text "#str_00016052" }
+
+locString game/achievements/vehicles_level3_task1 		{ text "#str_00016053" }
+locString game/achievements/vehicles_level3_task2 		{ text "#str_00016054" }
+
+
+locString game/achievements/soldier_level1 				{ text "#str_00016154" }
+locString game/achievements/soldier_level2 				{ text "#str_00016155" }
+locString game/achievements/soldier_level3 				{ text "#str_00016156" }
+locString game/achievements/engineer_level1 			{ text "#str_00016157" }
+locString game/achievements/engineer_level2 			{ text "#str_00016158" }
+locString game/achievements/engineer_level3 			{ text "#str_00016159" }
+locString game/achievements/medic_level1 				{ text "#str_00016160" }
+locString game/achievements/medic_level2 				{ text "#str_00016161" }
+locString game/achievements/medic_level3 				{ text "#str_00016162" }
+locString game/achievements/covertops_level1 			{ text "#str_00016163" }
+locString game/achievements/covertops_level2 			{ text "#str_00016164" }
+locString game/achievements/covertops_level3 			{ text "#str_00016165" }
+locString game/achievements/fieldops_level1 			{ text "#str_00016166" }
+locString game/achievements/fieldops_level2 			{ text "#str_00016167" }
+locString game/achievements/fieldops_level3 			{ text "#str_00016168" }
+locString game/achievements/lightweapons_level1 		{ text "#str_00016169" }
+locString game/achievements/lightweapons_level2 		{ text "#str_00016170" }
+locString game/achievements/lightweapons_level3 		{ text "#str_00016171" }
+locString game/achievements/battlesense_level1 			{ text "#str_00016172" }
+locString game/achievements/battlesense_level2 			{ text "#str_00016173" }
+locString game/achievements/battlesense_level3 			{ text "#str_00016174" }
+locString game/achievements/vehicles_level1 			{ text "#str_00016175" }
+locString game/achievements/vehicles_level2 			{ text "#str_00016176" }
+locString game/achievements/vehicles_level3 			{ text "#str_00016177" }
+
+locString game/overview/prof_total_0 					{ text "#str_00016178" arguments 1 }
+locString game/overview/prof_total_1 					{ text "#str_00016179" arguments 1 }
+locString game/overview/prof_total_2 					{ text "#str_00016180" arguments 1 }
+locString game/overview/prof_total_3 					{ text "#str_00016181" arguments 1 }
+locString game/overview/prof_total_4 					{ text "#str_00016182" arguments 1 }
+locString game/overview/prof_total_5 					{ text "#str_00016183" arguments 1 }
+locString game/overview/prof_total_6 					{ text "#str_00016184" arguments 1 }
+locString game/overview/prof_total_7 					{ text "#str_00016185" arguments 1 }

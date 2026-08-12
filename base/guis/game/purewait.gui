@@ -1,0 +1,34 @@
+gui purewait {
+
+	properties {
+		float flags = immediate( flags ) | GUI_FULLSCREEN & ~GUI_INTERACTIVE;
+	}
+
+	materials {
+		"blur_effect"	"guis/effects/blur"
+	}
+
+	windowDef desktop {
+		properties {
+			rect	rect = 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT;
+			string	material	= "blur_effect";
+			color	backcolor	= 1, 1, 1, 1;
+		}
+		
+		/*events {
+			onActivate {
+				backcolor.a = transition( 0.001, 1, 5000 );
+			}
+		}*/
+	}
+	
+	windowDef waitingForServerMsg {
+		properties {
+			rect rect = 0, CENTER_Y - 56, SCREEN_WIDTH, 16;
+			color foreColor = 1, 1, 1, 1;
+			float fontSize = 18;
+			handle localizedText = localize( "guis/mainmenu/loading/waitingforserver" );
+			float flags = immediate( flags ) | WF_DROPSHADOW;
+		}
+	}
+}

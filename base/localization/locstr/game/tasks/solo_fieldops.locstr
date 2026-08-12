@@ -1,0 +1,8 @@
+
+locString game/tasks/fieldops_supply_player/title {
+	text "#str_01003000"
+}
+
+locString game/tasks/fieldops_deploy_firesupport/title {
+	text "#str_01003010"
+}

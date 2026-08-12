@@ -1,0 +1,103 @@
+
+material models/mapobjects/gdf_base/texture
+  {
+ //	 	renderbump -size 256 512 -colormap -aa 2 models/weapons/missiles/air_strike/bomb_local.tga models/weapons/missiles/air_strike/bomb_hi.lwo
+  	
+  	
+  	diffusemap	picmip -1	models/mapobjects/gdf_base/texture.tga
+  	specularmap	picmip -2	models/mapobjects/gdf_base/texture_s.tga
+   	bumpmap		picmip -1	models/mapobjects/gdf_base/texture_local.tga
+  }
+
+material models/mapobjects/gdf_base/texture2
+  {
+ //	 	renderbump -size 256 512 -colormap -aa 2 models/weapons/missiles/air_strike/bomb_local.tga models/weapons/missiles/air_strike/bomb_hi.lwo
+ 	
+  	
+  	diffusemap	picmip -1	models/mapobjects/gdf_base/texture2.tga
+  	specularmap	picmip -2	models/mapobjects/gdf_base/texture2_s.tga
+   	bumpmap		picmip -1	models/mapobjects/gdf_base/texture2_local2.tga
+  }
+
+material models/mapobjects/gdf_base/gdf_base_sheeted
+  { 
+  	noshadows
+	{ 	
+		program	interaction/basic_detailwm		
+		diffusemap	picmip -1	models/mapobjects/gdf_base/gdf_base_d.tga
+  		specularmap	picmip -2	models/mapobjects/gdf_base/gdf_base_s.tga
+		bumpmap 	picmip -1	models/mapobjects/gdf_base/gdf_base_local.tga
+		vertexColor
+  	 	
+  		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+  		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+        detailMult 2,16,0,0
+        detailWeightMap			models/mapobjects/gdf_base/gdf_base_detailmask.tga
+	}
+}
+
+material models/mapobjects/gdf_base/gdf_base_sheeted_shadows
+  { 
+  	
+	{ 	
+		program	interaction/basic_detailwm		
+		diffusemap	picmip -1	models/mapobjects/gdf_base/gdf_base_d.tga
+  		specularmap	picmip -2	models/mapobjects/gdf_base/gdf_base_s.tga
+		bumpmap 	picmip -1	models/mapobjects/gdf_base/gdf_base_local.tga
+		vertexColor
+  	 	
+  		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+  		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+        detailMult 2,16,0,0
+        detailWeightMap			models/mapobjects/gdf_base/gdf_base_detailmask.tga
+	}
+}
+
+material models/mapobjects/gdf_base/gdf_base_sheeted_nooverlays
+  { 
+  	noshadows
+  	nooverlays
+	{ 	
+		program	interaction/basic_detailwm		
+		diffusemap	picmip -1	models/mapobjects/gdf_base/gdf_base_d.tga
+  		specularmap	picmip -2	models/mapobjects/gdf_base/gdf_base_s.tga
+		bumpmap 	picmip -1	models/mapobjects/gdf_base/gdf_base_local.tga
+		vertexColor
+  	 	
+  		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+  		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+        detailMult 2,16,0,0
+        detailWeightMap			models/mapobjects/gdf_base/gdf_base_detailmask.tga
+	}
+}
+
+ 	/**************
+  shell	renderbump models/weapons/missiles/air_strike/bomb_lo.lwo	
+   **************/
+  
+material models/weapons/missiles/air_strike/bomb
+  {
+  	renderbump -size 256 512 -colormap -aa 2 models/weapons/missiles/air_strike/bomb_local.tga models/weapons/missiles/air_strike/bomb_hi.lwo
+  	noSelfShadow
+  	
+  	diffusemap	picmip -1	models/weapons/missiles/air_strike/bomb_d.tga
+  	specularmap	picmip -2	models/weapons/missiles/air_strike/bomb_s.tga
+   	bumpmap		picmip -1 	models/weapons/missiles/air_strike/bomb_local.tga
+  }
+
+/**************
+ shell	renderbump models/weapons/missiles/artillery/shell_lo.lwo	
+  **************/
+ 
+material models/weapons/missiles/artillery/shell
+ {
+ 	renderbump -size 256 512 -colormap -aa 2 models/weapons/missiles/artillery/shell_local.tga models/weapons/missiles/artillery/shell_hi.lwo
+ 	
+ 	diffusemap	models/weapons/missiles/artillery/shell_d.tga
+ 	specularmap	models/weapons/missiles/artillery/shell_s.tga
+  	bumpmap 	models/weapons/missiles/artillery/shell_local.tga
+ 
+ }

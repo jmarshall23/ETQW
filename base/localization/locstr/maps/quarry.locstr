@@ -1,0 +1,158 @@
+
+/*
+=================
+ Localization for map
+=================
+*/
+
+locString maps/quarry/strogg_relay {
+	text "#str_00100250"
+}
+
+locString maps/quarry/gdf_side_gate {
+	text "#str_00100252"
+}
+
+locString maps/quarry/gdf_front_gate {
+	text "#str_00100253"
+}
+
+locString maps/quarry/gdf_rear_gate {
+	text "#str_00100254"
+}
+
+locString maps/quarry/access_panel {
+	text "#str_00100255"
+}
+
+locString maps/quarry/strogg_base_gate {
+	text "#str_00100263"
+}
+
+locString maps/quarry/rail_yard_gate {
+	text "#str_00100264"
+}
+
+locString maps/quarry/strogg_railyard_spawn {
+	text "#str_00100281"
+}
+
+locString maps/quarry/gdf_quarryworks_spawn {
+	text "#str_00100282"
+}
+
+/*
+=================
+ Objectives
+================= 
+*/
+
+
+locString maps/quarry/obj_destroyed_jammer {
+	text "#str_00100256"
+	arguments 1
+}
+
+locString maps/quarry/obj_constructed_relay {
+	text "#str_00100257"
+	arguments 1
+}
+
+locString maps/quarry/obj_planted_beacon {
+	text "#str_00100258"
+	arguments 1
+}
+
+// destroy_jammer
+locString maps/quarry/gdf_destroy_jammer {
+	text "#str_00100265"
+}
+
+locString maps/quarry/strogg_destroy_jammer {
+	text "#str_00100266"
+}
+
+locString maps/quarry/gdf_destroy_jammer_short {
+	text "#str_00100267"
+}
+
+locString maps/quarry/strogg_destroy_jammer_short {
+	text "#str_00100268"
+}
+
+// capture the parts
+locString maps/quarry/part_1 {
+	text "#str_00100269"
+}
+locString maps/quarry/part_2 {
+	text "#str_00100270"
+}
+locString maps/quarry/part_3 {
+	text "#str_00100271"
+}
+
+/*
+====================
+data node
+====================
+*/
+
+locString maps/quarry/console {
+	text "#str_00100272"
+}
+
+/*
+====================
+Strogg Ship OBJ
+====================
+*/
+
+locString maps/quarry/gdf_crashed_ship {
+	text "#str_00100273"
+}
+
+locString maps/quarry/strogg_crashed_ship {
+	text "#str_00100274"
+}
+
+locString maps/quarry/gdf_crashed_ship_short {
+	text "#str_00100275"
+}
+
+locString maps/quarry/strogg_crashed_ship_short {
+	text "#str_00100276"
+}
+
+/*
+=================
+ Map info
+================= 
+*/
+
+locString maps/quarry/briefing {
+	text "#str_00100260"
+}
+
+locString maps/quarry/campaign {
+	text "#str_00100261"
+}
+
+locString maps/quarry/location {
+	text "#str_00100262"
+}
+
+/*
+=================
+Guard Tower
+================= 
+*/
+
+locString maps/quarry/obj_construct_tower_crashsite {
+	text "#str_00100283"
+	arguments 1
+}
+
+locString maps/quarry/obj_construct_tower_crashsite_complete {
+	text "#str_00100284"
+	arguments 1
+}

@@ -1,0 +1,491 @@
+atmosphere island_dramatic {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.1126902401 -0.7054165602 0.6997774243 )
+	sunColor ( 0.6470588446 0.6196078658 0.4666666687 )
+	sunHaloScale 0.0700000003
+	sunHaloBias -0.3200000226
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "m1k3/sunsprite"
+	sunFlareSize 0
+	sunFlareTime 462
+	enableSunFlareAziZen 1
+	sunFlareAzi 170
+	sunFlareZen 8
+	postProcessParms {
+		tint ( 1 0.8235294819 0.7607843876 )
+		saturation 1
+		contrast 1
+		glareParms ( 1.2899999619 0.8899999857 0 0.4099999964 )
+		glareBases ( 0.2899999917 0.2199999988 0 0 )
+	}
+	fogDistHalf 327
+	fogHeightHalf 1078
+	fogHeightOffset 8824
+	fogColor ( 0.4196078479 0.4196078479 0.4196078479 )
+	fogStart 0
+	fogEnd 52750
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "island_dramatic"
+	skyGradientImage "atmosphere/skies/fog_island"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/island_dramatic" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.5 1 0.8980389833 0.7921569943 0.0020000001 0 0 0 0 0 0 0 )
+	}
+}
+
+ambientCubemap island_bunker {
+	ambientLight {
+		color 0.3176470697 0.2784313858 0.2666666806
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2431372702 0.2588235438 0.2901960909
+		direction 0.0000000243 0.0000000004 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3333333433 0.3019607961 0.2862745225
+		direction 0.873421073 -0.0457740575 0.4848096371
+		name "Light2"
+	}
+	ambientLight {
+		color 0.4392157197 0.4235294461 0.4235294461
+		direction 0.2824094296 -0.9237194657 0.2588190436
+		name "Light3"
+	}
+	ambientLight {
+		color 0.4588235617 0.4470588565 0.4313725829
+		direction 0.3113423586 0.9042038918 0.2923717201
+		name "Light4"
+	}
+	ambientLight {
+		color 0.4313725829 0.4196078777 0.4235294461
+		direction -0.8848460317 0.3755948842 0.2756373584
+		name "Light5"
+	}
+	indoors
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+
+atmosphere island {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( 0.5889123082 -0.7908723354 0.1664435863 )
+	sunColor ( 0.8078432083 0.6078431606 0.5176470876 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 0.8352941871 0.741176486 )
+		saturation 0.7799999714
+		contrast 1.0299999714
+		glareParms ( 1.0199999809 0.2199999988 0.8799999952 0.8999999762 )
+		glareBases ( 0 0 0 0 )
+	}
+	fogDistHalf 3562
+	fogHeightHalf 1340
+	fogHeightOffset 6078
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "island"
+	skyGradientImage "atmosphere/skies/islandbc_sky02"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 146
+	windStrengthDev 133
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/island_sky" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+ambientCubemap island {
+	ambientLight {
+		color 0.3254902065 0.3215686381 0.482352972
+		direction 0 0 1
+		name "top sky"
+	}
+	ambientLight {
+		color 0.3333333433 0.3529411852 0.4470588565
+		direction 0 0 -1
+		name "ground bounce"
+	}
+	ambientLight {
+		color 0.4235294461 0.4509804249 0.7058823705
+		direction 0.285982728 0.9354072213 0.2079117
+		name "Light2"
+	}
+	ambientLight {
+		color 0.7137255073 0.6588235497 0.7176470757
+		direction 0.4534747601 -0.8528618813 0.2588190436
+		name "Light3"
+	}
+	ambientLight {
+		color 0.5058823824 0.521568656 0.6588235497
+		direction -0.8843650818 0.4506065547 0.1218693554
+		name "Light4"
+	}
+	ambientLight {
+		color 0.6549019814 0.5137255192 0.4901961088
+		direction 0.9781476259 0 0.2079117
+		name "Light5"
+	}
+	ambientLight {
+		color 0.3411764801 0.3960784674 0.7254902124
+		direction -0.7036204934 -0.6794784069 0.2079117
+		name "Light6"
+	}
+	envMap "env/island"
+	ambientColor 0 0 0
+	highLightColor 0 0 0
+}
+
+ambientCubemap island_interior_01 {
+	ambientLight {
+		color 0.3764706254 0.3843137622 0.4196078777
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.250980407 0.270588249 0.2823529541
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.1882353127 0.2039215863 0.2117647231
+		direction 0 -1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.1882353127 0.2039215863 0.2156862915
+		direction -1 0 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1725490242 0.180392161 0.1921568811
+		direction 0 1 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.1921568811 0.2039215863 0.2117647231
+		direction 1 0 0
+		name "Light5"
+	}
+	indoors
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+
+ambientCubeMap island_interior_02 {
+	ambientLight {
+		color 0.3450980484 0.3490196168 0.3843137622
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2039215863 0.2196078598 0.231372565
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.2901960909 0.3176470697 0.3333333433
+		direction 0 -1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.160784319 0.1764705926 0.1882353127
+		direction -1 0 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1019607931 0.1058823615 0.1137254983
+		direction 0 1 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.1764705926 0.1882353127 0.1960784495
+		direction 1 0 0
+		name "Light5"
+	}
+	indoors
+	envMap "env/island/gen_bunker"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+ambientCubeMap island_sewer {
+	ambientLight {
+		color 0.3450980484 0.3490196168 0.3843137622
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2039215863 0.2196078598 0.231372565
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.2901960909 0.3176470697 0.3333333433
+		direction 0 -1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.160784319 0.1764705926 0.1882353127
+		direction -1 0 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1019607931 0.1058823615 0.1137254983
+		direction 0 1 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.1764705926 0.1882353127 0.1960784495
+		direction 1 0 0
+		name "Light5"
+	}
+	indoors
+	envMap "env/island/sewer"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+atmosphere island_dramatic2 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.3553715348 -0.6780826449 0.6433622837 )
+	sunColor ( 0.8431373239 0.7607843876 0.6666666865 )
+	sunHaloScale 0.0700000003
+	sunHaloBias -0.3200000226
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 44298
+	sunFlareTime 0
+	enableSunFlareAziZen 1
+	sunFlareAzi 163
+	sunFlareZen 8
+	postProcessParms {
+		tint ( 1 0.9137255549 0.6901960969 )
+		saturation 1.0699999332
+		contrast 1.0299999714
+		glareParms ( 1 0.8899999857 0 0 )
+		glareBases ( 0.4099999964 0.7699999809 0 0 )
+	}
+	fogDistHalf 2222
+	fogHeightHalf 1078
+	fogHeightOffset 6471
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "island_dramatic"
+	skyGradientImage "atmosphere/skies/fog_island"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/island_dramatic" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/island_clouds" {
+		style old
+		parms 12 ( 0.6750000119 0.7294120193 0.6000000238 0.5764709711 0.001 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.5 1 0.8980389833 0.7921569943 0.0005 0 0 0 0 0 0 0 )
+	}
+}
+
+ambientCubeMap island_dramatic {
+	ambientLight {
+		color 0.1411764771 0.1294117719 0.1215686351
+		direction 0.4328836501 0.618221879 0.6560590267
+		name "Light6"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1568627506 0.1411764771 0.1333333403
+		direction -0.9387347102 -0.2870000303 0.1908090115
+		name "Light1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1529411823 0.1372549087 0.1294117719
+		direction 0.0605435073 0.6920149922 -0.719339788
+		name "Light2"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3019607961 0.3254902065 0.3764705956
+		direction -0.1021256223 -0.4423547387 0.8910065293
+		name "Light3"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.160784319 0.1411764771 0.1333333403
+		direction 0.4890811443 -0.2711021006 -0.8290375471
+		name "Light4"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1686274558 0.1490196139 0.1411764771
+		direction 0.8743547797 0.464902699 0.1391731054
+		name "Light5"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1764705926 0.1568627506 0.1490196139
+		direction -0.374378413 0.9266190529 -0.0348994844
+		name "Light6"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1764705926 0.1568627506 0.1490196139
+		direction -0.3545852602 0.5674549341 0.7431448102
+		name "Light7"
+		ambient 1
+		specular 1
+	}
+	envMap "env/island"
+	ambientColor 0.5 0.5 0.5
+	minSpecAmbientColor 0.5882353187 0.5333333611 0.5137255192
+	minSpecShadowColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+ambientCubemap island_observatory { 	
+ambientLight {
+		color 0.3176470697 0.2784313858 0.2666666806
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2431372702 0.2588235438 0.2901960909
+		direction 0.0000000243 0.0000000004 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3333333433 0.3019607961 0.2862745225
+		direction 0.873421073 -0.0457740575 0.4848096371
+		name "Light2"
+	}
+	ambientLight {
+		color 0.4392157197 0.4235294461 0.4235294461
+		direction 0.2824094296 -0.9237194657 0.2588190436
+		name "Light3"
+	}
+	ambientLight {
+		color 0.4588235617 0.4470588565 0.4313725829
+		direction 0.3113423586 0.9042038918 0.2923717201
+		name "Light4"
+	}
+	ambientLight {
+		color 0.4313725829 0.4196078777 0.4235294461
+		direction -0.8848460317 0.3755948842 0.2756373584
+		name "Light5"
+	}
+	envMap "env/island/observatory"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+
+atmosphere island_final {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.4381282032 -0.5201604366 0.73312819 )
+	sunColor ( 0.8431372643 0.5803921819 0.3568627536 )
+	sunHaloScale 0.0700000003
+	sunHaloBias -0.3200000226
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/lights/sunsprite"
+	sunFlareSize 51282
+	sunFlareTime 325
+	enableSunFlareAziZen 1
+	sunFlareAzi 133
+	sunFlareZen 21
+	postProcessParms {
+		tint ( 1 0.9333333373 0.870588243 )
+		saturation 1
+		contrast 1
+		glareParms ( 1.2899999619 0.6200000048 1 0.7999999523 )
+		glareBases ( 0.5 1 0 0 )
+	}
+	fogDistHalf 327
+	fogHeightHalf 1078
+	fogHeightOffset 8824
+	fogColor ( 0.2823529541 0.2431372553 0.2274509817 )
+	fogStart 0
+	fogEnd 40058
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "island_dramatic"
+	skyGradientImage "atmosphere/skies/fog_island"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/island_final" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+

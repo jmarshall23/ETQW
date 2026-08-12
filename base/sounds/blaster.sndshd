@@ -1,0 +1,85 @@
+
+sound sounds/weapons/blaster/raise {
+
+	minDistance	4
+	maxDistance	15
+	volume		-10
+	
+	sounds/weapons/blaster/raise_03.wav
+
+}
+
+sound sounds/weapons/blaster/fire {
+
+	volume -4
+	minDistance	10
+	maxDistance 75
+	antiprivate
+	occlude_once
+
+	sounds/weapons/blaster/fire_01b.wav
+	sounds/weapons/blaster/fire_02b.wav
+}
+
+sound sounds/weapons/blaster/fire/local {
+	compression wav
+
+	volume -3
+	private
+	occlude_once
+
+	sounds/weapons/blaster/new_local_01.wav
+	sounds/weapons/blaster/new_local_02.wav
+}
+
+sound sounds/weapons/blaster/fire/far {
+	compression wav
+
+	volume -20
+	farDistance 25
+	maxDistance 150
+
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/blaster/nfire_02_far.wav
+}
+
+sound sounds/weapons/blaster/fire/charged {
+
+	volume -4
+	minDistance	10
+	maxDistance 150
+	antiprivate
+	occlude_once
+
+	sounds/weapons/blaster/fire_charged.wav
+}
+
+sound sounds/weapons/blaster/fire/charged/local {
+	compression wav
+
+	volume -3
+	private
+	occlude_once
+
+//	sounds/weapons/blaster/fire_charged_local.wav
+	sounds/weapons/blaster/new_charged_local.wav
+}
+
+sound sounds/weapons/blaster/steam {
+
+	volume -10
+
+	sounds/weapons/blaster/steam.wav
+}
+
+sound sounds/weapons/blaster/charge {
+
+	volume -10
+
+	looping
+	leadin
+	sounds/weapons/blaster/charge_start.wav
+	sounds/weapons/blaster/charge_loop.wav
+}

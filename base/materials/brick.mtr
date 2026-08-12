@@ -1,0 +1,161 @@
+material textures/brick/brickwall01
+{
+		diffusemap	picmip -1	textures/brick/brickwall01_d.tga
+		specularmap	picmip -2	textures/brick/brickwall01_s.tga
+		bumpmap		picmip -1	textures/brick/brickwall01_local.tga
+}
+
+material textures/brick/brickwall01a // slightly whiter for snow maps
+{
+		diffusemap	picmip -1	textures/brick/brickwall01a_d.tga
+		specularmap	picmip -2	textures/brick/brickwall01_s.tga
+		bumpmap		picmip -1	textures/brick/brickwall01_local.tga
+}
+
+material textures/brick/brickwall02
+{
+		diffusemap	picmip -1	textures/brick/brickwall02_d.tga
+		specularmap	picmip -2	textures/brick/brickwall02_s.tga
+		bumpmap		picmip -1	textures/brick/brickwall02_local.tga
+}
+
+material textures/brick/brickwall03
+{
+		diffusemap	picmip -1	textures/brick/brickwall03_d.tga
+		specularmap	picmip -2	textures/brick/brickwall03_s.tga
+		bumpmap		picmip -1	textures/brick/brickwall03_local.tga
+}
+
+material textures/brick/brickwall04
+{
+		diffusemap	picmip -1	textures/brick/brickwall04_d.tga
+		specularmap	picmip -2	textures/brick/brickwall04_s.tga
+		bumpmap		picmip -1	textures/brick/brickwall04_local.tga
+}
+
+material textures/brick/brickwall05
+{
+		diffusemap	picmip -1	textures/brick/brickwall05_d.tga
+		specularmap	picmip -2	textures/brick/brickwall05_s.tga
+		bumpmap		picmip -1	textures/brick/brickwall05_local.tga
+}
+
+material textures/brick/brickwall06
+{
+		diffusemap	picmip -1	textures/brick/brickwall06_d.tga
+		specularmap	picmip -2	textures/brick/brickwall06_s.tga
+		bumpmap		picmip -1	textures/brick/brickwall06_local.tga
+}
+
+material textures/brick/brickwall06a
+{
+		diffusemap	picmip -1	textures/brick/brickwall06a_d.tga
+		//specularmap	picmip -2	textures/brick/brickwall06_s.tga
+		bumpmap		picmip -1	textures/brick/brickwall06_local.tga
+}
+
+material textures/brick/brickwall06c
+{
+		diffusemap	picmip -1	textures/brick/brickwall06c_d.tga
+		//specularmap	picmip -2	textures/brick/brickwall06_s.tga
+		bumpmap		picmip -1	textures/brick/brickwall06_local.tga
+}
+
+material textures/brick/brickwall06ad
+{
+		diffusemap	picmip -1	textures/brick/brickwall06d_d.tga
+		//specularmap	picmip -2	textures/brick/brickwall06_s.tga
+		bumpmap		picmip -1	textures/brick/brickwall06_local.tga
+}
+
+
+material textures/brick/brickwall07
+{
+		diffusemap	picmip -1	textures/brick/brickwall07_d.tga
+		specularmap	picmip -2	textures/brick/brickwall07_s.tga
+		bumpmap		picmip -1	textures/brick/brickwall07_local.tga
+}
+
+material textures/brick/brickwall08
+{
+		diffusemap	picmip -1	textures/brick/brickwall08_d.tga
+		specularmap	picmip -2	textures/brick/brickwall08_s.tga
+		bumpmap		picmip -1	textures/brick/brickwall08_local.tga
+}
+
+material textures/brick/brickwall09
+{
+		diffusemap	picmip -1	textures/brick/brickwall09_d.tga
+		specularmap	picmip -2	textures/brick/brickwall09_s.tga
+		bumpmap		picmip -1	textures/brick/brickwall09_local.tga
+}
+
+material textures/brick/brickwall10
+{
+		diffusemap	picmip -1	textures/brick/brickwall10_d.tga
+		specularmap	picmip -2	textures/brick/brickwall10_s.tga
+		bumpmap		picmip -1	textures/brick/brickwall10_local.tga
+}
+
+material textures/brick/paintedbrick_01
+{
+		diffusemap	picmip -1	textures/brick/paintedbrick_01_d.tga
+		specularmap	picmip -2	textures/brick/paintedbrick_01_s.tga
+		bumpmap		picmip -1	textures/brick/paintedbrick_01_local.tga
+}
+
+material textures/brick/limestone_shortwall01
+{
+		diffusemap	picmip -1	textures/brick/limestone_shortwall01_d.tga
+		specularmap	picmip -2	textures/brick/limestone_shortwall01_s.tga
+		bumpmap		picmip -1	textures/brick/limestone_shortwall01_local.tga
+}
+
+material textures/brick/brick_wall1
+{
+		diffusemap	picmip -1	textures/brick/brick_wall1_d.tga
+		specularmap	picmip -2	textures/brick/brick_wall1_s.tga
+		bumpmap		picmip -1	textures/brick/brick_wall1_local.tga
+}
+
+material textures/brick/brick_wall2
+{
+		diffusemap	picmip -1	textures/brick/brick_wall2_d.tga
+		specularmap	picmip -2	textures/brick/brick_wall2_s.tga
+		bumpmap		picmip -1	textures/brick/brick_wall2_local.tga
+}
+
+material textures/brick/brick_wall2_1
+{
+		diffusemap	picmip -1	textures/brick/brick_wall2_1_d.tga
+		specularmap	picmip -2	textures/brick/brick_wall2_s.tga
+		bumpmap		picmip -1	textures/brick/brick_wall2_local.tga
+}
+
+material textures/brick/brick_wall2_2
+{
+		diffusemap	picmip -1	textures/brick/brick_wall2_2_d.tga
+		specularmap	picmip -2	textures/brick/brick_wall2_2_s.tga
+		bumpmap		picmip -1	textures/brick/brick_wall2_local.tga
+}
+
+material textures/brick/brickwall06b
+{
+		diffusemap	picmip -1	textures/brick/brickwall06b_d.tga
+		//specularmap	picmip -2	textures/brick/brickwall09_s.tga
+		bumpmap		picmip -1	textures/brick/brickwall09_local.tga
+}
+
+material textures2/brick/brick_trim_1
+{
+		diffusemap	picmip -1	textures2/brick/brick_trim_1_d.tga
+		specularmap	picmip -2	textures2/brick/brick_trim_1_s.tga
+		bumpmap		picmip -1	textures2/brick/brick_trim_1_local.tga
+}
+
+material textures2/brick/brick_wall_2
+{
+		diffusemap	picmip -1	textures2/brick/brick_wall_2_d.tga
+		specularmap	picmip -2	textures2/brick/brick_wall_2_s.tga
+		bumpmap		picmip -1	textures2/brick/brick_wall_2_local.tga
+}

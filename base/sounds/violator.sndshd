@@ -1,0 +1,58 @@
+
+sound sounds/deployables/violator/tab_klink {
+	minDistance	2
+	maxDistance	15
+	volume		-11
+	
+	sounds/vehicles/violator/klink_01g.wav
+}
+
+sound sounds/deployables/violator/idle {
+	minDistance	2
+	maxDistance	15
+
+	volume		-21
+
+	looping
+	leadin
+	
+	sounds/vehicles/violator/hands_01_start.wav
+	sounds/vehicles/violator/hands_01_loop.wav
+}
+
+
+
+sound sounds/deployables/violator/deploy {
+
+	volume -10
+	maxDistance 50
+
+	sounds/deployables/violator/deploy.wav
+}
+
+sound sounds/deployables/violator/beam/start {
+	unclamped
+	volume 1
+	minDistance	25
+	maxDistance 200
+	shakes		0.07
+
+	looping
+	leadin
+	//sounds/deployables/violator/beam_start_05.wav
+	//sounds/deployables/violator/beam_loop_05.wav
+	sounds/deployables/violator/beam07_start.wav
+	sounds/deployables/violator/beam07_loop.wav
+}
+
+sound sounds/deployables/violator/beam/stop {
+	unclamped
+	volume 1
+	minDistance	25
+	maxDistance 200
+	shakes		0.07
+
+	//sounds/deployables/violator/beam_stop_02.wav
+	//sounds/deployables/violator/beam_stop_05.wav
+	sounds/deployables/violator/beam07_stop.wav
+}

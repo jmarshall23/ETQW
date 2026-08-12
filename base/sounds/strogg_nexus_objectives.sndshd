@@ -1,0 +1,729 @@
+// Strogg Nexus
+
+// Generic Objectives
+
+// Jamming Tower
+
+sound sounds/vo/strogg/nexus/objectives/jamtower/destroy/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/jamtower/25001.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/jamtower/destroy {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/jamtower/25002.wav
+	localization/english/sounds/vo/strogg/nexus/objectives/jamtower/25508.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/jamtower/planted {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/jamtower/25003.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/jamtower/defendexpl {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/jamtower/25004.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/jamtower/planted/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/jamtower/25005.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/jamtower/disarmed {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/jamtower/25006.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/jamtower/destroyed {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/jamtower/25007.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/jamtower/offline {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/jamtower/25008.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/jamtower/destroyed/short {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/jamtower/25503.wav
+}
+
+// ao: all references to this should point to the other sound shader using this wav.
+sound sounds/vo/strogg/nexus/objectives/jamtower/destroyed/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/jamtower/25007.wav
+}
+
+// Mining Laser
+
+sound sounds/vo/strogg/nexus/objectives/mininglaser/construct/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mininglaser/25011.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mininglaser/construct {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mininglaser/25012.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mininglaser/constructing {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mininglaser/25013.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mininglaser/constructing/half {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mininglaser/25014.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mininglaser/constructed {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mininglaser/25405.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mininglaser/constructed/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mininglaser/25016.wav
+}
+
+
+// Bridge
+
+sound sounds/vo/strogg/nexus/objectives/bridge/stop {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/bridge/25021.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/bridge/stop/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/bridge/25022.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/bridge/constructing {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/bridge/25023.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/bridge/constructing/half {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/bridge/25024.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/bridge/constructed/firststage {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/bridge/25025.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/bridge/constructed/half {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/bridge/25026.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/bridge/constructed {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/bridge/25406.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/bridge/constructed/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/bridge/25029.wav
+}
+
+
+// Foot Bridge
+
+sound sounds/vo/strogg/nexus/objectives/footbridge/stop/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/bridge/25171.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/footbridge/stop {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/bridge/25172.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/footbridge/constructing {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/bridge/25173.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/footbridge/constructing/half {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/bridge/25174.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/footbridge/constructed/half {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/bridge/25175.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/footbridge/constructed {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/bridge/25176.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/footbridge/complete {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/bridge/25177.wav
+}
+
+
+// MCP
+
+sound sounds/vo/strogg/nexus/objectives/mcp/stop/outpostdeploy/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25031.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/stop/outpostdeploy {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25032.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/stop/outpost {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25033.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/disable {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25034.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/stop {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25035.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/checkpoint/near {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25036.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/checkpoint {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25037.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/checkpoint/past {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25038.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/outpost/half {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25039.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/outpost/near {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25040.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/repair {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25042.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/repairing {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25043.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/repaired {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25044.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/repair/firessm {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25046.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/awol/warning1 {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25047.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/awol/warning2 {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25048.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/awol/replace {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25049.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/outpost/deployed {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25050.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/outpost/lost {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25052.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/outpost/lost/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25053.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/mcp/disabled {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/mcp/25054.wav
+}
+
+
+// Shield Gen
+
+sound sounds/vo/strogg/nexus/objectives/shieldgen/stoppedssm {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/shieldgen/25061.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/shieldgen/defend/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/shieldgen/25062.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/shieldgen/defend {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/shieldgen/25063.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/shieldgen/hacking {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/shieldgen/25064.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/shieldgen/hacking/half {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/shieldgen/25065.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/shieldgen/hacked/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/shieldgen/25066.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/shieldgen/hacked {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/shieldgen/25407.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/shieldgen/firessm {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/shieldgen/25408.wav
+}
+
+
+// EMP Disruptor
+
+sound sounds/vo/strogg/nexus/objectives/empdisruptor/stop/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/empdisruptor/25131.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/empdisruptor/stop {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/empdisruptor/25132.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/empdisruptor/constructing {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/empdisruptor/25133.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/empdisruptor/constructing/half {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/empdisruptor/25134.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/empdisruptor/constructing/near {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/empdisruptor/25135.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/empdisruptor/constructed {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/empdisruptor/25136.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/empdisruptor/online {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/empdisruptor/25137.wav
+}
+
+
+// Flyer Drone
+
+sound sounds/vo/strogg/nexus/objectives/flyerdrone/destroy {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/flyerdrone/25161.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/flyerdrone/objective/integrity80 {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/flyerdrone/25162.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/flyerdrone/objective/integrity60 {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/flyerdrone/25163.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/flyerdrone/objective/integrity40 {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/flyerdrone/25164.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/flyerdrone/objective/integrity20 {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/flyerdrone/25165.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/flyerdrone/objective/damaged {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/flyerdrone/25166.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/flyerdrone/objective/destroyed/half {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/flyerdrone/25167.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/flyerdrone/objective/destroyed/near {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/flyerdrone/25168.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/flyerdrone/objective/destroyed {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/flyerdrone/25169.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/flyerdrone/objective/destroyed/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/flyerdrone/25413.wav
+}
+
+
+// Barricades
+
+sound sounds/vo/strogg/nexus/objectives/barricade/defend/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/barricade/25181.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/barricade/defend {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/barricade/25182.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/barricade/planted {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/barricade/25183.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/barricade/disarm {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/barricade/25184.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/barricade/planted/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/barricade/25185.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/barricade/30seconds {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/barricade/25186.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/barricade/20seconds {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/barricade/25187.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/barricade/10seconds {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/barricade/25188.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/barricade/disarmed {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/barricade/25189.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/barricade/destroyed {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/barricade/25414.wav
+}
+
+
+// Forward Spawn
+
+sound sounds/vo/strogg/nexus/objectives/forwardspawn/capture {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/forwardspawn/25201.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/forwardspawn/capturing/strogg {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/forwardspawn/25202.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/forwardspawn/captured {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/forwardspawn/25203.wav
+	localization/english/sounds/vo/strogg/nexus/objectives/forwardspawn/25204.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/forwardspawn/captured/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/forwardspawn/25205.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/forwardspawn/capturing/gdf {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/forwardspawn/25206.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/forwardspawn/recapture {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/forwardspawn/25207.wav
+}
+
+
+// Generic Destruction Objectives
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/defend/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25071.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/defend {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25072.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/planted/gdf {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25073.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/disarm {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25074.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/planted/gdf/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25075.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/30seconds/gdf {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25076.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/20seconds/gdf {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25077.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/10seconds/gdf {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25078.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/disarmed/strogg {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25080.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/destroyed/gdf {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25409.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/destroy/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25091.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/estroy {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25092.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/planted/strogg {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25093.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/defendexpl {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25094.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/planted/strogg/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25095.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/30seconds/strogg {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25096.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/20seconds/strogg {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25097.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/10seconds/strogg {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25098.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/disarmed/gdf {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25100.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericdestruction/destroyed/strogg {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25410.wav
+	localization/english/sounds/vo/strogg/nexus/objectives/destroy/25101.wav
+}
+
+
+// Generic Hacking Objectives
+
+sound sounds/vo/strogg/nexus/objectives/generichacking/defend {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/hack/25111.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/generichacking/defend/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/hack/25112.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/generichacking/hacking/gdf {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/hack/25113.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/generichacking/hacking/gdf/half {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/hack/25114.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/generichacking/hacked/gdf {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/hack/25415.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/generichacking/hack {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/hack/25121.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/generichacking/hack/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/hack/25122.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/generichacking/hacking/strogg {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/hack/25123.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/generichacking/hacking/strogg/half {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/hack/25124.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/generichacking/hacked/strogg {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/hack/25412.wav
+}
+
+
+// Generic Stealing Objectives
+
+sound sounds/vo/strogg/nexus/objectives/genericstealing/defend/long {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/steal/25141.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericstealing/defend {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/steal/25142.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericstealing/stolen/gdf {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/steal/25143.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericstealing/taken/gdf {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/steal/25144.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericstealing/taken/gdf/stop {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/steal/25145.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericstealing/dropped/gdf {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/steal/25146.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericstealing/returned/strogg {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/steal/25147.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericstealing/steal {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/steal/25151.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericstealing/take {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/steal/25152.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericstealing/stolen/strogg {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/steal/25153.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericstealing/taken/strogg {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/steal/25154.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericstealing/taken/strogg/escort {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/steal/25155.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericstealing/dropped/strogg {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/steal/25156.wav
+}
+
+sound sounds/vo/strogg/nexus/objectives/genericstealing/returned/gdf {
+
+	localization/english/sounds/vo/strogg/nexus/objectives/steal/25157.wav
+}

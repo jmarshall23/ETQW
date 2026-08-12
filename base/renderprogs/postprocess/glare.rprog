@@ -1,0 +1,498 @@
+renderProgram postprocess/downsample {
+
+	program vertex cg { <%
+		struct VsInputs {
+			float3 pos	: $positionAttrib;
+			float2 tex	: $texCoordAttrib;
+			float4 col	: $colorAttrib;
+		};
+
+		struct VsOutputs {
+			float2 texCoord0   : TEXCOORD0;
+			float2 texCoord1   : TEXCOORD1;
+			float2 texCoord2   : TEXCOORD2;
+			float2 texCoord3   : TEXCOORD3;
+			float4 col		   : COLOR0;
+		};
+		
+		float2 screenSize : $currentRenderTexelSize;
+
+		VsOutputs vertex(VsInputs indata) {
+			VsOutputs outdata;
+
+			$if r_32ByteVtx
+			indata.tex *= 1.f/4096.f;
+			$endif
+
+			float2 coord = indata.tex.xy * screenSize;
+			coord.y = screenSize.y - coord.y;
+			
+			outdata.texCoord0 = coord;
+			outdata.texCoord1 = coord + float2(2, 0);
+			outdata.texCoord2 = coord + float2(2, 2);
+			outdata.texCoord3 = coord + float2(0, 2);
+			outdata.col = indata.col;
+			
+			return outdata;
+		}
+	%> }
+
+	program fragment cg { <%		
+		struct VsOutputs {
+			float2 texCoord0   : TEXCOORD0;
+			float2 texCoord1   : TEXCOORD1;
+			float2 texCoord2   : TEXCOORD2;
+			float2 texCoord3   : TEXCOORD3;
+			float4 col		   : COLOR0;
+		};
+
+		samplerRECT framebuffer : $currentRender;
+
+		uniform float4 glareParameters : $postGlareParameters;
+
+		float4 fragment( VsOutputs indata ) : COLOR {
+			float4 c;
+			c = texRECT( framebuffer, indata.texCoord0 ) * 0.25;
+			c += texRECT( framebuffer, indata.texCoord1 ) * 0.25;
+			c += texRECT( framebuffer, indata.texCoord2 ) * 0.25;
+			c += texRECT( framebuffer, indata.texCoord3 ) * 0.25;
+			return c;
+		}
+	%> }
+}
+
+/**
+	This one does some extra stuff based on the post process parameters
+*/
+renderProgram postprocess/downsample_glare {
+
+	program vertex reference postprocess/downsample
+
+	program fragment cg { <%		
+		struct VsOutputs {
+			float2 texCoord0   : TEXCOORD0;
+			float2 texCoord1   : TEXCOORD1;
+			float2 texCoord2   : TEXCOORD2;
+			float2 texCoord3   : TEXCOORD3;
+			float4 col		   : COLOR0;
+		};
+
+		samplerRECT framebuffer : $currentRender;
+
+		float luminance( float3 c ){
+			return dot( c, float3( 0.33, 0.33, 0.33 ) );
+		}
+
+
+		uniform float4 glareParameters : $postGlareParameters;
+
+		float4 fragment( VsOutputs indata ) : COLOR {
+
+			float4 c;
+
+			c = texRECT( framebuffer, indata.texCoord0 ) * 0.25;
+			c += texRECT( framebuffer, indata.texCoord1 ) * 0.25;
+			c += texRECT( framebuffer, indata.texCoord2 ) * 0.25;
+			c += texRECT( framebuffer, indata.texCoord3 ) * 0.25;
+			float scale = lerp( 1, smoothstep( glareParameters.z, 1.0, luminance (c.rgb ) ), glareParameters.w )*( c.a );
+			return c * float4( scale, scale, scale, 1 );
+		}
+	%> }
+}
+
+renderProgram postprocess/blur_bilinear {
+
+	program vertex cg { <%
+		struct VsInputs {
+			float3 pos	: $positionAttrib;
+			float2 tex	: $texCoordAttrib;
+		};
+
+		struct VsOutputs {
+			float2 texCoord0   : TEXCOORD0;
+			float2 texCoord1   : TEXCOORD1;
+			float2 texCoord2   : TEXCOORD2;
+			float2 texCoord3   : TEXCOORD3;
+			float2 texCoord4   : TEXCOORD4;
+			float2 texCoord5   : TEXCOORD5;
+			float2 texCoord6   : TEXCOORD6;
+			float2 texCoord7   : TEXCOORD7;
+		};
+
+		float2 screenSize : $currentRenderTexelSize;
+		float2 blurSize : $parameters;
+		
+		//Offset texture coords by half a texel so we can use bilinear interpolation on them
+		//This gives the same filter factor for two neighbouring texels but who cares it looks good...
+		VsOutputs vertex(VsInputs indata) {
+			VsOutputs outdata;
+			screenSize *= 0.25;// Blurring happens at 1/4 of the screen size
+
+			$if r_32ByteVtx
+			indata.tex *= 1.f/4096.f;
+			$endif
+			
+			float2 coord = indata.tex.xy * screenSize; 
+			coord.y =  screenSize.y - coord.y;
+			
+			outdata.texCoord0 = coord + 6.5 * blurSize;
+			outdata.texCoord1 = coord + 4.5 * blurSize;
+			outdata.texCoord2 = coord + 2.5 * blurSize;
+			outdata.texCoord3 = coord + 0.5 * blurSize;
+			outdata.texCoord4 = coord - 0.5 * blurSize;
+			outdata.texCoord5 = coord - 2.5 * blurSize;
+			outdata.texCoord6 = coord - 4.5 * blurSize;
+			outdata.texCoord7 = coord - 6.5 * blurSize;
+
+			return outdata;
+		}
+	%> }
+
+	program fragment cg { <%
+		struct VsOutputs {
+			float2 texCoord0   : TEXCOORD0;
+			float2 texCoord1   : TEXCOORD1;
+			float2 texCoord2   : TEXCOORD2;
+			float2 texCoord3   : TEXCOORD3;
+			float2 texCoord4   : TEXCOORD4;
+			float2 texCoord5   : TEXCOORD5;
+			float2 texCoord6   : TEXCOORD6;
+			float2 texCoord7   : TEXCOORD7;
+		};
+
+		samplerRECT sourceBuffer : $map;
+
+		#define WT9_0 1.0
+		#define WT9_1 0.8
+		#define WT9_2 0.6
+		#define WT9_3 0.4
+
+		//the compiler precalculates all the normalization factors...
+		#define WT9_NORMALIZE (2.0*(WT9_0+WT9_1+WT9_2+WT9_3))
+
+		float4 fragment(VsOutputs indata) : COLOR {
+			float4 result = 0;
+			result += texRECT(sourceBuffer, indata.texCoord0) * (WT9_3/WT9_NORMALIZE);
+			result += texRECT(sourceBuffer, indata.texCoord1) * (WT9_2/WT9_NORMALIZE);
+			result += texRECT(sourceBuffer, indata.texCoord2) * (WT9_1/WT9_NORMALIZE);
+			result += texRECT(sourceBuffer, indata.texCoord3) * (WT9_0/WT9_NORMALIZE);
+			result += texRECT(sourceBuffer, indata.texCoord4) * (WT9_0/WT9_NORMALIZE);
+			result += texRECT(sourceBuffer, indata.texCoord5) * (WT9_1/WT9_NORMALIZE);
+			result += texRECT(sourceBuffer, indata.texCoord6) * (WT9_2/WT9_NORMALIZE);
+			result += texRECT(sourceBuffer, indata.texCoord7) * (WT9_3/WT9_NORMALIZE);
+			return result;
+		}
+	%> }
+}
+
+renderProgram postprocess/glow {
+
+	program vertex cg { <%
+		struct VsInputs {
+			float3 pos : $positionAttrib;
+			float2 tex : $texCoordAttrib;
+		};
+
+		struct VsOutputs {
+			float2 texCoord0 : TEXCOORD0;
+			float2 texCoord1 : TEXCOORD1;
+		};
+		
+		float2 screenSize : $currentRenderTexelSize;
+		//float2 blurSize : $parameters;	
+
+		VsOutputs vertex( VsInputs indata ) {
+			VsOutputs outdata;
+
+			$if r_32ByteVtx
+			indata.tex *= 1.f/4096.f;
+			$endif
+
+			float2 coord = indata.tex.xy;
+			coord.y =  1 - coord.y;
+			
+			float2 blurSize = screenSize * 0.25;
+			
+			outdata.texCoord0 = coord * screenSize;
+			outdata.texCoord1 = coord * blurSize;
+			return outdata;
+		}
+	%> }
+
+	program fragment cg { <%
+		struct VsOutputs {
+			float2 texCoord0 : TEXCOORD0;
+			float2 texCoord1 : TEXCOORD1;
+		};
+		
+		samplerRECT blurbuffer : $map;
+		samplerRECT framebuffer : $currentRender;
+
+		uniform float4 glareParameters : $postGlareParameters;
+		uniform float4 postSaturationContrast : $postSaturationContrast;
+		uniform float4 postTint : $postTint;
+	
+		float4 fragment( VsOutputs indata ) : COLOR {
+			//float4 rain = tex2D( rainmask, indata.texCoord1 );
+			//indata.texCoord0 += ( rain.xy * 2.0 - 1.0 ) * -0.0;
+
+			float4 clean = texRECT( framebuffer, indata.texCoord0 );
+			float4 blur = texRECT( blurbuffer, indata.texCoord1 );
+			float4 final = clean * glareParameters.x + blur * glareParameters.y;
+
+			float4 grayscale = dot( final.rgb, float3( 0.299, 0.587, 0.114 ) );
+			return lerp( float4( 0.5, 0.5, 0.5, 0.5 ), lerp( grayscale, final, postSaturationContrast.x ) , postSaturationContrast.y ) * postTint;
+		}
+	%> }
+}
+
+renderProgram postprocess/glowStrogg {
+
+	program vertex cg { <%
+		struct VsInputs {
+			float3 pos : $positionAttrib;
+			float2 tex : $texCoordAttrib;
+		};
+
+		struct VsOutputs {
+			float2 texCoord0 : TEXCOORD0;
+			float2 texCoord1 : TEXCOORD1;
+			float2 texCoord2 : TEXCOORD2;
+		};
+		
+		float2 screenSize : $currentRenderTexelSize;
+		float4 parameters : $parameters;
+
+		VsOutputs vertex( VsInputs indata ) {
+			VsOutputs outdata;
+
+			$if r_32ByteVtx
+			indata.tex *= 1.f/4096.f;
+			$endif
+
+			float2 coord = indata.tex.xy;
+			coord.y =  1 - coord.y;
+			
+			float2 blurSize = screenSize * 0.25;
+			
+			outdata.texCoord0 = coord * screenSize;
+			outdata.texCoord1 = coord * blurSize;
+			outdata.texCoord2 = coord;
+			outdata.texCoord2.y = ( outdata.texCoord2.y + parameters.z ) * 2;
+			return outdata;
+		}
+	%> }
+
+	program fragment cg { <%
+		struct VsOutputs {
+			float2 texCoord0 : TEXCOORD0;
+			float2 texCoord1 : TEXCOORD1;
+			float2 texCoord2 : TEXCOORD2;
+		};
+		
+		samplerRECT blurbuffer : $map;
+		sampler2D dsdtNoise : $mask;
+		samplerRECT framebuffer : $currentRender;
+
+		uniform float4 glareParameters : $postGlareParameters;
+		uniform float4 postSaturationContrast : $postSaturationContrast;
+		uniform float4 postTint : $postTint;
+		
+		float4 parameters : $parameters;
+		float4 screenSize : $currentRenderTexelSize;
+	
+		float4 fragment( VsOutputs indata ) : COLOR {
+			float4 dstd = tex2D( dsdtNoise, indata.texCoord2 );
+			
+			//float angle = parameters.x;
+			float scale = parameters.y;
+
+			// dsdt offset
+			float2 texcoord;
+			float a1 = ( /*cos( angle ) * */scale / 16 ) * screenSize.x;
+			float a2 = ( /*-sin( angle ) * */scale / 16 ) * screenSize.y;
+			float a3 = -a2;
+			float a4 = a1;
+			
+			texcoord.x = indata.texCoord0.x + ( a1 * dstd.x + a3 * dstd.y ) * 1;
+			texcoord.y = indata.texCoord0.y + ( a2 * dstd.x + a4 * dstd.y ) * 0.4;
+
+			float4 color;
+			float4 clean;
+
+			clean = texRECT( framebuffer, texcoord );
+color = clean;
+
+			float4 blur = texRECT( blurbuffer, indata.texCoord1 );
+			float4 final = clean * glareParameters.x + blur * glareParameters.y;
+
+			float4 grayscale = dot( final.rgb, float3( 0.299, 0.587, 0.114 ) );
+
+			return lerp( float4( 0.5, 0.5, 0.5, 0.5 ), lerp( grayscale, final, postSaturationContrast.x ) , postSaturationContrast.y ) * postTint;
+		}
+	%> }
+}
+
+renderProgram postprocess/showrect {
+
+	program vertex cg { <%
+		struct VsInputs {
+			float3 pos	: $positionAttrib;
+			float4 tex	: $texCoordAttrib;
+		};
+
+		struct VsOutputs {
+			float2 texCoord0   : TEXCOORD0;
+		};
+
+		float4 mat_s : $diffuseMatrix_s;	
+		float4 mat_t : $diffuseMatrix_t;	
+
+		VsOutputs vertex(VsInputs indata) {
+			VsOutputs outdata;
+
+			$if r_32ByteVtx
+			indata.tex.xy *= 1.f/4096.f;
+			indata.tex.zw = 1.f;
+			$endif
+			
+			outdata.texCoord0.x = dot( indata.tex, mat_s );
+			outdata.texCoord0.y = dot( indata.tex, mat_t );
+
+			return outdata;
+		}
+	%> }
+
+	program fragment cg { <%
+		struct VsOutputs {
+			float2 texCoord0   : TEXCOORD0;
+		};
+		
+		samplerRECT blurbuffer : $map;
+
+		float4 fragment(VsOutputs indata) : COLOR {
+			return texRECT( blurbuffer, indata.texCoord0 );
+		}
+	%> }
+}
+
+renderProgram postprocess/heatsight {
+
+	program vertex cg { <%
+		struct VsInputs {
+			float3 pos : $positionAttrib;
+			float2 tex : $texCoordAttrib;
+		};
+
+		struct VsOutputs {
+			float2 texCoord0 : TEXCOORD0;
+			float2 texCoord1 : TEXCOORD1;
+		};
+		
+		float2 screenSize : $currentRenderTexelSize;
+		//float2 blurSize : $parameters;	
+
+		VsOutputs vertex( VsInputs indata ) {
+			VsOutputs outdata;
+
+			$if r_32ByteVtx
+			indata.tex *= 1.f/4096.f;
+			$endif
+
+			float2 coord = indata.tex.xy;
+			coord.y =  1 - coord.y;
+			
+			float2 blurSize = screenSize * 0.25;
+			
+			outdata.texCoord0 = coord * screenSize;
+			outdata.texCoord1 = coord * blurSize;
+			return outdata;
+		}
+	%> }
+
+	program fragment cg { <%
+		$include "noise.hg"
+		
+		struct VsOutputs {
+			float2 texCoord0 : TEXCOORD0;
+			float2 texCoord1 : TEXCOORD1;
+		};
+		
+		samplerRECT blurbuffer : $map;
+		samplerRECT framebuffer : $currentRender;
+		sampler2D gradient : $mask;
+
+		uniform float4 glareParameters : $postGlareParameters;
+		uniform float4 postSaturationContrast : $postSaturationContrast;
+		uniform float4 postTint : $postTint;
+		uniform float time : $parameters;
+	
+		float4 fragment( VsOutputs indata ) : COLOR {
+			//float4 rain = tex2D( rainmask, indata.texCoord1 );
+			//indata.texCoord0 += ( rain.xy * 2.0 - 1.0 ) * -0.0;
+
+			//float4 clean = texRECT( framebuffer, indata.texCoord0 );
+			float4 blur = texRECT( blurbuffer, indata.texCoord1 );
+			//float4 final = clean * glareParameters.x + blur * glareParameters.y;
+
+			//float4 grayscale = dot( final.rgb, float3( 0.299, 0.587, 0.114 ) );
+			//return lerp( float4( 0.5, 0.5, 0.5, 0.5 ), lerp( grayscale, final, postSaturationContrast.x ) , postSaturationContrast.y ) * postTint;
+			//float noise = bandLimitedNoise( float3( indata.texCoord1 * 0.05, time * 0.1 ) ) * 0.3 + 0.7; 
+			return tex2D( gradient, float2( blur.x, 0 ) ) /** noise*/;
+		}
+	%> }
+}
+
+renderProgram postprocess/motionblur {
+
+	program vertex cg { <%
+		struct VsInputs {
+			float3 pos	: $positionAttrib;
+			float4 tex	: $texCoordAttrib;
+		};
+
+		struct VsOutputs {
+			float2 texCoord0   : TEXCOORD0;
+		};
+
+		float4 mat_s : $diffuseMatrix_s;	
+		float4 mat_t : $diffuseMatrix_t;	
+
+		VsOutputs vertex(VsInputs indata) {
+			VsOutputs outdata;
+
+			$if r_32ByteVtx
+			indata.tex.xy *= 1.f/4096.f;
+			indata.tex.zw = 1.f;
+			$endif
+			
+			outdata.texCoord0.x = dot( indata.tex, mat_s );
+			outdata.texCoord0.y = dot( indata.tex, mat_t );
+
+			return outdata;
+		}
+	%> }
+
+	program fragment cg { <%
+		struct VsOutputs {
+			float2 wpos		   : WPOS;
+			float2 texCoord0   : TEXCOORD0;
+		};
+		
+		samplerRECT blurbuffer : $currentRender;
+		float2	screenMovement : $viewMovement;
+
+		float4 fragment(VsOutputs indata) : COLOR {
+		
+			float4 accum = 0.f;
+			for (float i=0; i<4; i+=1) {
+				float4 previous2 = texRECT( blurbuffer, indata.wpos - screenMovement * i * 5);
+				accum += previous2;
+			}
+			return accum / 4;
+			//float4 previous1 = texRECT( blurbuffer, indata.wpos - screenMovement * 25);
+			//float4 current = texRECT( blurbuffer, indata.wpos);
+			//return (previous2*0.6 + previous1*0.3 + current*0.1);
+		}
+	%> }
+}

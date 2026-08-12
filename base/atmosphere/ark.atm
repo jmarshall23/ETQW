@@ -1,0 +1,748 @@
+atmosphere ark {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( -0.123656854 -0.8945870996 0.4294450283 )
+	sunColor ( 0.4862745404 0.4431372881 0.4078431726 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright2"
+	sunSpriteSize 39912
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.7899999619 0.4899999797 0 1 )
+		glareBases ( 0.0899999961 0.0899999961 0 0 )
+	}
+	fogDistHalf 3105
+	fogHeightHalf 1111
+	fogHeightOffset 2275
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "ark"
+	skyGradientImage "atmosphere/skies/arctic"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 80
+	windAngleDev 25
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 2
+		maxParticles 3000
+		heightMin 3
+		heightMax 5
+		weightMin 1
+		weightMax 1.1000000238
+		timeMin 0
+		timeMax 500
+		windScale 2
+		gustWindScale 2
+		fallMin 60
+		fallMax 80
+		tumbleStrength 24
+		precipitationDistance 1000
+		material "precipitation/snowflake2"
+	}
+}
+
+
+
+
+
+ambientCubemap ark {
+	ambientLight {
+		color 0.2745098174 0.3019607961 0.392156899
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.270588249 0.2745098174 0.2941176593
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.6039215922 0.6705882549 0.7137255073
+		direction 0.2071204931 0.9744254351 0.0871557519
+		name "Light2"
+	}
+	ambientLight {
+		color 0.784313798 0.7764706612 0.6274510026
+		direction 0.0173223317 -0.9923949838 0.1218693554
+		name "Light3"
+	}
+	ambientLight {
+		color 0.2980392277 0.3215686381 0.392156899
+		direction -0.8843650818 0.4506065547 0.1218693554
+		name "Light4"
+	}
+	ambientLight {
+		color 0.5490196347 0.5725490451 0.6392157078
+		direction 1 0 0
+		name "Light5"
+	}
+	ambientLight {
+		color 0.3450980484 0.3568627536 0.392156899
+		direction -0.7036204934 -0.6794784069 0.2079117
+		name "Light6"
+	}
+	envMap "env/ark"
+	ambientColor 0.2980392277 0.2980392277 0.2980392277
+	highLightColor 0.8235294819 0.8588235974 0.8784314394
+}ambientCubeMap ark_facility {
+	ambientLight {
+		color 0.2078431398 0.2117647082 0.2352941185
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1333333403 0.1411764771 0.1568627506
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.1725490242 0.1843137294 0.1960784346
+		direction 0 -1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.1686274558 0.180392161 0.1960784346
+		direction -1 0 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1725490242 0.180392161 0.1960784346
+		direction 0 1 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.1764705926 0.1843137294 0.1960784346
+		direction 1 0 0
+		name "Light5"
+	}
+	indoors
+	envMap "env/ark/facility"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+ambientCubeMap ark_facility_dna_room {
+	ambientLight {
+		color 0.2078431398 0.2117647082 0.2352941185
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1372549087 0.1490196139 0.1568627506
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.1725490242 0.1843137294 0.1960784346
+		direction 0 -1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.1686274558 0.1843137294 0.1960784346
+		direction -1 0 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1725490242 0.180392161 0.1960784346
+		direction 0 1 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.1764705926 0.1843137294 0.1960784346
+		direction 1 0 0
+		name "Light5"
+	}
+	indoors
+	envMap "env/ark/facility_dna_room"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+ambientCubeMap ark_biodome {
+	ambientLight {
+		color 0.4980392158 0.490196079 0.3960784376
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2666666806 0.2784313858 0.2431372553
+		direction 0.7660444379 0 0.6427876353
+		name "Light1"
+	}
+	ambientLight {
+		color 0.4666666687 0.490196079 0.3921568692
+		direction -0.1948132962 -0.8438292742 0.4999999702
+		name "Light2"
+	}
+	ambientLight {
+		color 0.2549019754 0.2823529541 0.2313725501
+		direction 0.3938067555 -0.630222559 -0.6691306829
+		name "Light3"
+	}
+	ambientLight {
+		color 0.270588249 0.2823529541 0.2196078449
+		direction -0.2805098295 0.4319472015 -0.8571673036
+		name "Light4"
+	}
+	indoors
+	envMap "env/ark/biodome"
+	ambientColor 0.5529412031 0.5647059083 0.4549019635
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 0.8999999762
+}
+
+
+
+
+
+
+
+ambientCubemap ark_facility_vent {
+	ambientLight {
+		color 0.0745098069 0.0745098069 0.0745098069
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.0745098069 0.0745098069 0.0745098069
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.0745098069 0.0745098069 0.0745098069
+		direction 0 -1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.0745098069 0.0745098069 0.0745098069
+		direction -1 0 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.0745098069 0.0745098069 0.0745098069
+		direction 0 1 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.0745098069 0.0745098069 0.0745098069
+		direction 1 0 0
+		name "Light5"
+	}
+	indoors
+	envMap "env/terminal1"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+
+
+ambientCubemap ark_house {
+	ambientLight {
+		color 0.2980392277 0.3098039329 0.2941176593
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2549019754 0.2549019754 0.2549019754
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3176470697 0.3176470697 0.3176470697
+		direction 0.9519067407 0.2729548812 -0.1391730905
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3372549117 0.3372549117 0.3372549117
+		direction -0.3158973455 -0.9174326062 0.2419219017
+		name "Light3"
+	}
+	ambientLight {
+		color 0.3019607961 0.3019607961 0.3019607961
+		direction -0.446036011 0.7423286438 0.5
+		name "Light5"
+	}
+	indoors
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}ambientCubeMap ark_town_cafe {
+	ambientLight {
+		color 0.1411764771 0.1411764771 0.1411764771
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.0980392173 0.0980392173 0.0980392173
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.160784319 0.160784319 0.160784319
+		direction 0.9519067407 0.2729548812 -0.1391730905
+		name "Light2"
+	}
+	ambientLight {
+		color 0.180392161 0.180392161 0.180392161
+		direction -0.3158973455 -0.9174326062 0.2419219017
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1450980455 0.1450980455 0.1450980455
+		direction -0.446036011 0.7423286438 0.5
+		name "Light5"
+	}
+	indoors
+	envMap "env/ark/town_cafe"
+	ambientColor 0.4980392158 0.4980392158 0.4980392158
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+
+
+ambientCubemap ark_town_inn{
+	ambientLight {
+		color 0.2980392277 0.3098039329 0.2941176593
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2549019754 0.2549019754 0.2549019754
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3176470697 0.3176470697 0.3176470697
+		direction 0.9519067407 0.2729548812 -0.1391730905
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3372549117 0.3372549117 0.3372549117
+		direction -0.3158973455 -0.9174326062 0.2419219017
+		name "Light3"
+	}
+	ambientLight {
+		color 0.3019607961 0.3019607961 0.3019607961
+		direction -0.446036011 0.7423286438 0.5
+		name "Light5"
+	}
+	envMap "env/ark/town_inn"
+	indoors
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+
+
+
+ambientCubemap ark_facility_entrance {
+	ambientLight {
+		color 0.1450980455 0.1529411823 0.1764705926
+		direction -0.7547096014 0.0000000184 0.6560590267
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1450980455 0.1529411823 0.1764705926
+		direction 0.7660444379 0 0.6427876353
+		name "Light1"
+	}
+	ambientLight {
+		color 0.231372565 0.2392157018 0.2745098174
+		direction 0 0 1
+		name "Light2"
+	}
+	ambientLight {
+		color 0.1450980455 0.1529411823 0.1764705926
+		direction 0.0000000093 0.7660444379 0.6427876353
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1450980455 0.1529411823 0.1764705926
+		direction 0.0000000093 -0.7660444379 0.6427876353
+		name "Light4"
+	}
+	ambientLight {
+		color 0.1921568811 0.2039215863 0.2352941334
+		direction 0.7071067691 0.7071067691 0.0000000122
+		name "Light5"
+	}
+	ambientLight {
+		color 0.1921568811 0.2039215863 0.2352941334
+		direction -0.7071067691 0.7071067691 0.0000000122
+		name "Light6"
+	}
+	ambientLight {
+		color 0.1568627506 0.1686274558 0.1960784495
+		direction 0.7071067691 -0.7071067691 0.0000000122
+		name "Light7"
+	}
+	ambientLight {
+		color 0.160784319 0.1686274558 0.1960784495
+		direction -0.7071067691 -0.7071067691 0.0000000122
+		name "Light8"
+	}
+	ambientLight {
+		color 0.1254902035 0.1333333403 0.1568627506
+		direction 0.0000000243 0 -1
+		name "Light9"
+	}
+	ambientLight {
+		color 0.0627451017 0.0666666701 0.0784313753
+		direction 0.7660444379 0 -0.6427875757
+		name "Light10"
+	}
+	ambientLight {
+		color 0.0627451017 0.0666666701 0.0784313753
+		direction -0.7660444379 0.0000000186 -0.6427875757
+		name "Light11"
+	}
+	ambientLight {
+		color 0.0627451017 0.0666666701 0.0784313753
+		direction 0.0000000093 0.7660444379 -0.6427875757
+		name "Light12"
+	}
+	ambientLight {
+		color 0.0627451017 0.0666666701 0.0784313753
+		direction 0.0000000093 -0.7660444379 -0.6427875757
+		name "Light13"
+	}
+	indoors
+}atmosphere ark_grey {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( -0.1177961379 -0.8309361339 0.5437548757 )
+	sunColor ( 0.4901961088 0.4784314036 0.4941176772 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_very_bright"
+	sunSpriteSize 100000
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 0.9882353544 0.9607843757 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.7899999619 0.349999994 0 0.7400000095 )
+		glareBases ( 1 0 0 0 )
+	}
+	fogDistHalf 2560
+	fogHeightHalf 10000
+	fogHeightOffset 4510
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "ark_dirty"
+	skyGradientImage "atmosphere/snowsky04"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 80
+	windAngleDev 25
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudy_dark_01" {
+		style old
+		parms 12 ( 0.625 0.7137259841 0.7137259841 0.7137259841 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 2
+		maxParticles 1500
+		heightMin 3
+		heightMax 5
+		weightMin 1.5
+		weightMax 2.5
+		timeMin 0
+		timeMax 500
+		windScale 1
+		gustWindScale 1.2000000477
+		fallMin 55
+		fallMax 105
+		tumbleStrength 20
+		precipitationDistance 1000
+		material "penta/snowflake"
+	}
+}
+
+
+
+
+
+ambientCubemap ark_dirty {
+	ambientLight {
+		color 0.2588235438 0.270588249 0.2823529541
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2980392277 0.2941176593 0.2901960909
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.2901960909 0.2862745225 0.2784313858
+		direction 0.1756406128 0.9035925865 0.3907311261
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3372549117 0.3450980484 0.3568627536
+		direction 0.0173223317 -0.9923949838 0.1218693554
+		name "Light3"
+	}
+	ambientLight {
+		color 0.2431372702 0.2666666806 0.2784313858
+		direction -0.8843650818 0.4506065547 0.1218693554
+		name "Light4"
+	}
+	ambientLight {
+		color 0.4117647409 0.4000000358 0.392156899
+		direction 1 0 0
+		name "Light5"
+	}
+	ambientLight {
+		color 0.4156863093 0.4000000358 0.3803921938
+		direction -0.7036204934 -0.6794784069 0.2079117
+		name "Light6"
+	}
+}ambientCubeMap ark_clear_amb {
+	ambientLight {
+		color 0.0705882385 0.0588235296 0.0509803928
+		direction 0 0 1
+		name "Light0"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1411764771 0.1333333403 0.1176470667
+		direction 0.000000024 0.0000000042 -1
+		name "Light1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1333333403 0.1372549087 0.1568627506
+		direction -0.6682710052 0.5221105218 0.5299192667
+		name "Light2"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.2000000179 0.2235294282 0.250980407
+		direction 0.498244524 -0.7386778593 0.453990519
+		name "Light3"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1882352978 0.1529411823 0.1372549087
+		direction -0.9193972349 -0.1621145606 0.3583679497
+		name "Light4"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.0705882385 0.0862745121 0.1254902035
+		direction 0.7347357869 0.4414737821 0.5150380731
+		name "Light6"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1882352978 0.1529411823 0.1372549087
+		direction -0.5916891098 -0.705147624 0.3907311261
+		name "Light7"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.0627451017 0.0352941193 0.0156862754
+		direction 0.8470246196 -0.3422201574 0.4067366421
+		name "Light7"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.0627451017 0.0352941193 0.0156862754
+		direction 0.0503085591 0.9599443078 0.2756373584
+		name "Light8"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1333333403 0.1372549087 0.1568627506
+		direction 0.0299147069 0.8566451669 0.5150380731
+		name "Light9"
+		ambient 1
+		specular 1
+	}
+	envMap "env/ark"
+	ambientColor 0.5 0.5 0.5
+	minSpecAmbientColor 0.6000000238 0.5490196347 0.521568656
+	minSpecShadowColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1.0299999714
+}atmosphere ark_clear {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( -0.7237007022 -0.4969281852 0.4788733721 )
+	sunColor ( 0.5098039508 0.2941176593 0.1686274558 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_orange"
+	sunSpriteSize 100000
+	sunFlareMaterial "m1k3/sunsprite"
+	sunFlareSize 39035
+	sunFlareTime 53
+	enableSunFlareAziZen 1
+	sunFlareAzi 236
+	sunFlareZen 12
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 1.1100000143 0.7099999785 0.7400000095 0.4799999893 )
+		glareBases ( 1 0.5 0 0 )
+	}
+	fogDistHalf 10000
+	fogHeightHalf 10000
+	fogHeightOffset 8980
+	fogColor ( 0.4313725531 0.4078431427 0.4039215744 )
+	fogStart 0
+	fogEnd 36311
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "ark_clear_amb"
+	skyGradientImage "atmosphere/skies/arkcloudy_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 80
+	windAngleDev 30
+	windStrength 19
+	windStrengthDev 4
+	cloudLayer "atmospheres/skydomes/ark_dramatic" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 2
+		maxParticles 2000
+		heightMin 2
+		heightMax 4
+		weightMin 1
+		weightMax 1.1000000238
+		timeMin 0
+		timeMax 500
+		windScale 2
+		gustWindScale 2
+		fallMin 60
+		fallMax 80
+		tumbleStrength 50
+		precipitationDistance 1000
+		material "precipitation/snowflake02_slipgate_night"
+		effect "_default"
+	}
+}
+
+
+
+
+
+ambientCubeMap ark_church {
+	ambientLight {
+		color 0.0980392173 0.0901960805 0.0901960805
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1215686277 0.1215686277 0.1215686277
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.1568627506 0.1568627506 0.1568627506
+		direction 0.5327143669 0.7332183719 0.4226182699
+		name "Light2"
+	}
+	ambientLight {
+		color 0.1764705926 0.1764705926 0.1764705926
+		direction 0.3562720716 -0.8818042278 0.3090170026
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1764705926 0.1764705926 0.1764705926
+		direction -0.9334382415 0.0162932482 0.3583679497
+		name "Light5"
+	}
+	indoors
+	envMap "env/ark/town_church"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+
+
+
+
+ambientCubemap ark_biodome_new {
+	ambientLight {
+		color 0.3764706254 0.3843137622 0.4196078777
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.250980407 0.270588249 0.2823529541
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.1882353127 0.2039215863 0.2117647231
+		direction 0 -1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.1882353127 0.2039215863 0.2156862915
+		direction -1 0 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1725490242 0.180392161 0.1921568811
+		direction 0 1 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.1921568811 0.2039215863 0.2117647231
+		direction 1 0 0
+		name "Light5"
+	}
+	indoors
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+

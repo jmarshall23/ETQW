@@ -1,0 +1,26 @@
+//
+// Trojan cockpit rear
+//=================================================================================================
+
+export hauser {
+		options -prefix TROJANCOCKPIT_ -sourcedir models/vehicles/edf_trojan/dev_sd -destdir models/vehicles/edf_trojan/	-keep origin	-keepmesh Trojan_cockpit_rear rear_guis_top rear_guis_bottom Trojan_cockpit_front blockwater stop_stuff rear_strap1 rear_handle1 rear_strap2 rear_handle2 rear_strap3 rear_handle3 rear_strap4 rear_handle4 rear_strap5 steering_wheel lever fake_front_gui fake_front_gui2 fake_front_gui3 shadowrear
+
+		mesh trojan_cockpit_reworked.mb    	-dest cockpit_rear.md5mesh
+		anim trojan_cockpit_reworked.mb 	-dest cockpit_rear.md5anim -range 150 150
+
+
+
+
+
+
+}
+
+//==================================================================================================
+
+model vehicle_trojan_cockpit_rear {
+	mesh							models/vehicles/edf_trojan/cockpit_rear.md5mesh
+
+	anim center						models/vehicles/edf_trojan/cockpit_rear.md5anim {
+	}
+
+}

@@ -1,0 +1,28 @@
+
+sound sounds/weapons/haw/fire {
+
+	maxDistance 125
+	occlude_once
+
+	sounds/weapons/rocketlauncher/fire_01.wav
+	sounds/weapons/rocketlauncher/fire_02.wav
+}
+
+sound sounds/weapons/haw/fly {
+
+	volume -10
+	maxDistance 75
+
+	looping
+	leadin
+	sounds/weapons/haw/fly_start.wav
+	sounds/weapons/haw/fly_loop.wav
+}
+
+sound sounds/weapons/haw/release {
+
+	volume -10
+	maxDistance 25
+
+	sounds/weapons/haw/release.wav
+}

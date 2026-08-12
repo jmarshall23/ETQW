@@ -1,0 +1,871 @@
+effect effects/impacts/bullets_small/impact_default_simple
+{
+	size	141
+
+	cutOffDistance	3500
+
+	sound "Impact Sound2"
+	{
+		soundShader	"sounds/weapons/impacts/stone"
+		volume	14,18
+		freqshift	0.8,1
+	}
+	spawner "dirt_blur"
+	{
+		count		1,1
+		useMaterialColor
+
+		line
+		{
+			duration	0.7,1
+			blend	add
+			persist
+			material	"particles/debris/debris_smallblast2"
+			gravity		0.001,0.001
+			trailRepeat	1
+
+			start
+			{
+				position { point 10,0,0 cone }
+				velocity { box -10,-1,-1,-10,1,1 }
+				size { box 14,20 }
+				offset { point -10,0,0 }
+				length { box 20,0,0,30,0,0 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope concavefade offset 0.4 }
+				length { envelope rich_convexsustain count 1,0,0 }
+			}
+
+			end
+			{
+				size { box 16,25 }
+				length { box 70,-8,-8,100,8,8 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+effect effects/impacts/bullets_small/impact_flesh_simple
+{
+	size	82
+
+	cutOffDistance	7000
+
+	sound "Impact Sound"
+	{
+		soundShader	"sounds/weapons/impacts/flesh"
+		volume	5,12
+		freqshift	0.7,1
+	}
+	spawner "dirt_blur"
+	{
+		count		1,1
+		useMaterialColor
+
+		line
+		{
+			duration	0.7,1
+			blend	add
+			persist
+			material	"particles/debris/debris_bigblast"
+			gravity		0.001,0.001
+			trailRepeat	1
+
+			start
+			{
+				position { point 10,0,0 cone }
+				velocity { box -10,-1,-1,-10,1,1 }
+				size { box 4,12 }
+				offset { point -10,0,0 }
+				length { box 5,0,0,10,0,0 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope concavefade offset 0.4 }
+				length { envelope rich_convexsustain count 1,0,0 }
+			}
+
+			end
+			{
+				size { box 6,20 }
+				length { box 30,-8,-8,45,8,8 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/impacts/bullets_small/impact_liquid_simple
+{
+	size	184
+
+	cutOffDistance	3500
+
+	sound "Impact Sound"
+	{
+		soundShader	"sounds/weapons/impacts/water"
+		volume	2,5
+		freqshift	0.75,1.5
+	}
+	spawner "splash line2"
+	{
+		count		1,1
+
+		line
+		{
+			duration	0.5,1
+			persist
+			material	"particles/water/splash_dir_04"
+			gravity		0.001,0.1
+			trailRepeat	1
+
+			start
+			{
+				position { point 1,0,0 cone }
+				velocity { box 0,-5,-5,0,5,5 }
+				friction { point 10,0,0 }
+				size { point 10 }
+				fade { line 0.1,0.5 }
+				offset { point -10,0,0 }
+				length { point 10,0,0 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 count 4 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+				length { envelope fastinslowout count 1,0,0 }
+			}
+
+			end
+			{
+				size { point 20 }
+				length { box 80,0,0,150,0,0 }
+			}
+			lineHit
+		}
+	}
+	emitter "spray_flat3"
+	{
+		duration	1,1
+		count		1,1
+		useMaterialColor
+		attenuateEmitter
+		attenuation	200,250
+
+		oriented
+		{
+			duration	1,2
+			persist
+			material	"particles/water/impact_ripple_02"
+			trailRepeat	1
+
+			start
+			{
+				position { point 3,0,0 }
+				size { line 10,10,12,12 }
+				tint { point 0.886275,0.886275,0.886275 }
+				fade { line 0.5,1 }
+				rotate { box 0,0,-0.0138889,0,0,0.0138889 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				fade { envelope explosion_cloud }
+				rotate { envelope exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { point 60,60 }
+				rotate { box 0,0,-0.0416667,0,0,0.0416667 }
+			}
+			lineHit
+		}
+	}
+	emitter "unnamed1"
+	{
+		duration	0.2,0.2
+		count		1,1
+		attenuateEmitter
+		attenuation	200,250
+
+		sprite
+		{
+			duration	0.2,0.4
+			material	"particles/water/splash_dir_02"
+			trailRepeat	1
+
+			start
+			{
+				position { sphere 5,-5,-5,5,5,5 }
+				velocity { box 50,-15,-15,100,15,15 }
+				acceleration { point 0,0,-40 }
+				size { point 5,8 }
+				offset { sphere 0,-5,-5,0,5,5 }
+				rotate { box -0.0416667,0.0416667 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope rr2_convexfade_start_at_1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 40,80 }
+				rotate { box 0.0416667,-0.0416667 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/impacts/bullets_small/impact_plastic_simple
+{
+	size	141
+
+	cutOffDistance	3500
+
+	sound "Impact Sound2"
+	{
+		soundShader	"sounds/weapons/impacts/plastic"
+		volume	4,6
+		freqshift	0.8,1
+	}
+	spawner "dirt_blur"
+	{
+		count		1,1
+		useMaterialColor
+
+		line
+		{
+			duration	0.7,1
+			blend	add
+			persist
+			material	"particles/debris/debris_smallblast"
+			gravity		0.001,0.001
+			trailRepeat	1
+
+			start
+			{
+				position { point 10,0,0 cone }
+				velocity { box -10,-1,-1,-10,1,1 }
+				size { box 14,20 }
+				fade { line 0.4,0.6 }
+				offset { point -10,0,0 }
+				length { box 20,0,0,30,0,0 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope concavefade offset 0.4 }
+				length { envelope rich_convexsustain count 1,0,0 }
+			}
+
+			end
+			{
+				size { box 16,25 }
+				length { box 70,-8,-8,100,8,8 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/impacts/bullets_small/impact_sand_simple
+{
+	size	141
+
+	cutOffDistance	3500
+
+	sound "Impact Sound"
+	{
+		soundShader	"sounds/weapons/impacts/dirt"
+		volume	6,8
+		freqshift	0.75,1
+	}
+	spawner "dirt_blur"
+	{
+		count		1,1
+		useMaterialColor
+
+		line
+		{
+			duration	0.7,1
+			blend	add
+			persist
+			material	"particles/debris/debris_smallblast"
+			gravity		0.001,0.001
+			trailRepeat	1
+
+			start
+			{
+				position { point 10,0,0 cone }
+				velocity { box -10,-1,-1,-10,1,1 }
+				size { box 14,20 }
+				fade { line 0.5,1 }
+				offset { point -10,0,0 }
+				length { box 20,0,0,30,0,0 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope concavefade offset 0.4 }
+				length { envelope rich_convexsustain count 1,0,0 }
+			}
+
+			end
+			{
+				size { box 16,25 }
+				length { box 70,-8,-8,100,8,8 }
+			}
+			lineHit
+		}
+	}
+}effect effects/impacts/bullets_small/impact_snow_simple
+{
+	size	141
+
+	cutOffDistance	3500
+
+	sound "Impact Sound2"
+	{
+		soundShader	"sounds/weapons/impacts/dirt"
+		volume	6,8
+		freqshift	0.75,1
+	}
+	spawner "dirt_blur"
+	{
+		count		1,1
+		useMaterialColor
+
+		line
+		{
+			duration	0.7,1
+			blend	add
+			persist
+			material	"particles/debris/debris_smallblast2"
+			gravity		0.001,0.001
+			trailRepeat	1
+
+			start
+			{
+				position { point 10,0,0 cone }
+				velocity { box -10,-1,-1,-10,1,1 }
+				size { box 14,20 }
+				offset { point -10,0,0 }
+				length { box 20,0,0,30,0,0 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope concavefade offset 0.4 }
+				length { envelope rich_convexsustain count 1,0,0 }
+			}
+
+			end
+			{
+				size { box 16,25 }
+				length { box 70,-8,-8,100,8,8 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/impacts/bullets_small/impact_stone_simple
+{
+	size	141
+
+	cutOffDistance	3500
+
+	sound "Impact Sound2"
+	{
+		soundShader	"sounds/weapons/impacts/stone"
+		volume	14,18
+		freqshift	0.8,1
+	}
+	spawner "dirt_blur"
+	{
+		count		1,1
+		useMaterialColor
+
+		line
+		{
+			duration	0.7,1
+			blend	add
+			persist
+			material	"particles/debris/debris_smallblast2"
+			gravity		0.001,0.001
+			trailRepeat	1
+
+			start
+			{
+				position { point 10,0,0 cone }
+				velocity { box -10,-1,-1,-10,1,1 }
+				size { box 14,20 }
+				offset { point -10,0,0 }
+				length { box 20,0,0,30,0,0 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope concavefade offset 0.4 }
+				length { envelope rich_convexsustain count 1,0,0 }
+			}
+
+			end
+			{
+				size { box 16,25 }
+				length { box 70,-8,-8,100,8,8 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+effect effects/impacts/bullets_small/impact_pavement_simple
+{
+	size	141
+
+	cutOffDistance	3500
+
+	sound "Impact Sound2"
+	{
+		soundShader	"sounds/weapons/impacts/stone"
+		volume	14,18
+		freqshift	0.8,1
+	}
+	spawner "dirt_blur"
+	{
+		count		1,1
+		useMaterialColor
+
+		line
+		{
+			duration	0.7,1
+			blend	add
+			persist
+			material	"particles/debris/debris_smallblast"
+			gravity		0.001,0.001
+			trailRepeat	1
+
+			start
+			{
+				position { point 10,0,0 cone }
+				velocity { box -10,-1,-1,-10,1,1 }
+				size { box 14,20 }
+				offset { point -10,0,0 }
+				length { box 20,0,0,30,0,0 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope concavefade offset 0.4 }
+				length { envelope rich_convexsustain count 1,0,0 }
+			}
+
+			end
+			{
+				size { box 16,25 }
+				length { box 70,-8,-8,100,8,8 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/impacts/bullets_small/impact_metal_simple
+{
+	size	115
+
+	cutOffDistance	3500
+
+	sound "Impact Sound2"
+	{
+		soundShader	"sounds/weapons/impacts/metal"
+		volume	2,4
+		freqshift	0.6,2
+	}
+	emitter "spark flash"
+	{
+		duration	0.1,0.1
+		count		1,1
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.08,0.08
+			blend	add
+			material	"textures/particles/sparks/sparkflash_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { line 1,0,0,2,0,0 }
+				size { box 5,5,15,15 }
+				fade { line 0.3,1 }
+				rotate { box 0,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 30,30 }
+			}
+			lineHit
+		}
+	}
+	spawner "flash2"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.125,0.25
+			persist
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point 2,0,0 }
+				velocity { box 0,-5,-5,5,5,5 }
+				size { line 50,50,80,80 }
+				tint { line 0,0,0,0.254902,0.254902,0.254902 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1 offset 0.1,0.1,0.1 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/impacts/bullets_small/impact_grass_simple
+{
+	size	141
+
+	cutOffDistance	3500
+
+	sound "Impact Sound"
+	{
+		soundShader	"sounds/weapons/impacts/dirt"
+		volume	6,8
+		freqshift	0.75,1
+	}
+	spawner "grass"
+	{
+		count		5,5
+		useMaterialColor
+		attenuateEmitter
+		attenuation	150,200
+
+		sprite
+		{
+			duration	0.33,1
+			persist
+			material	"particles/debris/debris_grass01"
+			gravity		0.35,0.75
+			trailRepeat	1
+
+			start
+			{
+				position { point 2,0,0 }
+				velocity { box 250,-25,-25,180,25,25 }
+				size { line 0.25,1,0.75,2 }
+				tint { line 0.839216,0.819608,0.592157,0.14902,0.313726,0.14902 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				fade { envelope concavefade }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				fade { line 0,0.75 }
+				rotate { box 1,-1 }
+			}
+			lineHit
+		}
+	}
+	spawner "dirt_blur"
+	{
+		count		1,1
+		useMaterialColor
+
+		line
+		{
+			duration	0.7,1
+			blend	add
+			persist
+			material	"particles/debris/debris_smallblast"
+			gravity		0.001,0.001
+			trailRepeat	1
+
+			start
+			{
+				position { point 10,0,0 cone }
+				velocity { box -10,-1,-1,-10,1,1 }
+				size { box 14,20 }
+				tint { line 0.552941,0.513726,0.447059,0.701961,0.67451,0.635294 }
+				offset { point -10,0,0 }
+				length { box 20,0,0,30,0,0 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope concavefade offset 0.4 }
+				length { envelope rich_convexsustain count 1,0,0 }
+			}
+
+			end
+			{
+				size { box 16,25 }
+				length { box 70,-8,-8,100,8,8 }
+			}
+			lineHit
+		}
+	}
+}effect effects/impacts/bullets_small/impact_glass_simple
+{
+	size	46
+
+	cutOffDistance	3500
+
+	sound "Impact Sound2"
+	{
+		soundShader	"sounds/weapons/impacts/glass"
+		volume	11,15
+	}
+	spawner "animated3"
+	{
+		count		2,2
+		useMaterialColor
+
+		sprite
+		{
+			duration	0.2,0.5
+			persist
+			material	"particles/debris/dustcloud_4"
+			gravity		0.0125,0.05
+			trailRepeat	1
+
+			start
+			{
+				position { sphere 5,-5,-5,5,5,5 }
+				velocity { box 5,-2,-2,25,2,2 }
+				acceleration { box 0,-20,-20,0,20,20 }
+				friction { point 0.25,0,0 }
+				size { point 5,5 }
+				fade { point 0 }
+				rotate { box -0.25,0.25 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 offset -0.01,-0.01 }
+				fade { envelope fastinslowout offset -0.0125 }
+				offset { envelope exp_1minusx/x2 count 2.5,1.75,1.75 offset -0.05,-0.05,-0.05 }
+			}
+
+			end
+			{
+				size { line 15,15,20,20 }
+				fade { line 0.6,0.7 }
+				offset { line 5,0,0,10,0,0 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+effect effects/impacts/bullets_small/impact_wood_simple
+{
+	size	221
+
+	cutOffDistance	3500
+
+	sound "Impact Sound"
+	{
+		soundShader	"sounds/weapons/impacts/wood"
+		volume	6,8
+		freqshift	0.75,1
+	}
+	spawner "dirt_blur"
+	{
+		count		1,1
+		useMaterialColor
+
+		line
+		{
+			duration	0.7,1
+			blend	add
+			persist
+			material	"particles/debris/debris_smallblast"
+			gravity		0.001,0.001
+			trailRepeat	1
+
+			start
+			{
+				position { point 10,0,0 cone }
+				velocity { box -10,-1,-1,-10,1,1 }
+				size { box 8,14 }
+				tint { line 0.552941,0.513726,0.447059,0.701961,0.67451,0.635294 }
+				fade { point 0.7 }
+				offset { point -10,0,0 }
+				length { box 20,0,0,30,0,0 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope concavefade offset 0.4 }
+				length { envelope rich_convexsustain count 1,0,0 }
+			}
+
+			end
+			{
+				size { box 10,16 }
+				length { box 60,-8,-8,70,8,8 }
+			}
+			lineHit
+		}
+	}
+	spawner "wood chips"
+	{
+		count		5,5
+		useMaterialColor
+		attenuateEmitter
+		attenuation	200,250
+
+		sprite
+		{
+			duration	1,1.8
+			persist
+			material	"particles/debris/debris_woodchips01"
+			numFrames 8
+			gravity		0.3,0.5
+			trailRepeat	1
+
+			start
+			{
+				position { point 2,0,0 }
+				velocity { box 15,-100,-100,230,100,100 }
+				size { line 1,1,5,5 }
+				fade { point 0 }
+				rotate { box 1.38889,-1.38889 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope fastinslowout offset 0.1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 0,0 }
+				fade { point 1 }
+				rotate { box -1.38889,1.38889 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/impacts/bullets_small/impact_dirt_simple
+{
+	size	141
+
+	cutOffDistance	3500
+
+	sound "Impact Sound"
+	{
+		soundShader	"sounds/weapons/impacts/dirt"
+		volume	6,8
+		freqshift	0.75,1
+	}
+	spawner "dirt_blur"
+	{
+		count		1,1
+		useMaterialColor
+
+		line
+		{
+			duration	0.7,1
+			blend	add
+			persist
+			material	"particles/debris/debris_smallblast"
+			gravity		0.001,0.001
+			trailRepeat	1
+
+			start
+			{
+				position { point 10,0,0 cone }
+				velocity { box -10,-1,-1,-10,1,1 }
+				size { box 14,20 }
+				tint { line 0.552941,0.513726,0.447059,0.701961,0.67451,0.635294 }
+				offset { point -10,0,0 }
+				length { box 20,0,0,30,0,0 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope concavefade offset 0.4 }
+				length { envelope rich_convexsustain count 1,0,0 }
+			}
+
+			end
+			{
+				size { box 16,25 }
+				length { box 70,-8,-8,100,8,8 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+

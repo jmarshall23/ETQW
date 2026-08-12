@@ -1,0 +1,237 @@
+/////////
+// MCP //
+/////////
+
+sound sounds/vehicles/mcp/movements/movement_01 {
+	minDistance	5
+	maxDistance	75
+	volume		-8
+
+	sounds/vehicles/mcp/movements/movement_01.wav
+}
+
+sound sounds/vehicles/mcp/movements/movement_5s_01 {
+	minDistance	5
+	maxDistance	75
+	volume		-5
+	sounds/vehicles/mcp/movements/movement_5s_01.wav
+}
+
+sound sounds/vehicles/mcp/movements/radio_dish {
+	minDistance	5
+	maxDistance	75
+	volume		-5
+
+	sounds/vehicles/mcp/movements/radio_dish_up.wav
+}
+
+sound sounds/vehicles/mcp/movements/movement_02 {
+	minDistance 	5
+	maxDistance	75
+	volume		-5
+
+	sounds/vehicles/mcp/movements/movement_02.wav
+}
+
+sound sounds/vehicles/mcp/movements/movement_03 {
+	minDistance 	5
+	maxDistance	75
+	volume		-5
+
+	sounds/vehicles/mcp/movements/movement_03.wav
+}
+
+sound sounds/vehicles/mcp/movements/movement_04 {
+	//Short movement raising MCP up off it's supports
+	minDistance 	5
+	maxDistance	75
+	volume		-8
+
+	sounds/vehicles/mcp/movements/movement_04.wav
+}
+
+sound sounds/vehicles/mcp/movements/movement_05 {
+	//Opening flaps for radio dish
+	minDistance 	5
+	maxDistance	75
+	volume		-8
+
+	sounds/vehicles/mcp/movements/movement_05.wav
+}
+
+sound sounds/vehicles/mcp/movements/movement_06 {
+	//Opening missile silo flaps
+	minDistance 	5
+	maxDistance	75
+	volume		-8
+
+	sounds/vehicles/mcp/movements/movement_06.wav
+}
+
+
+sound sounds/vehicles/mcp/engine/start {
+
+	maxDistance	100
+
+	antiPrivate
+
+	sounds/vehicles/mcp/engine_start.wav
+}
+
+sound sounds/vehicles/mcp/engine/stop {
+
+	maxDistance	100
+
+	antiPrivate
+
+	sounds/vehicles/mcp/engine_stop.wav
+}
+
+sound sounds/vehicles/mcp/engine/idle {
+
+	maxDistance	100
+
+	antiPrivate
+
+	looping
+	sounds/vehicles/mcp/engine_idle.wav
+}
+
+sound sounds/vehicles/mcp/engine/drive {
+
+	maxDistance	100
+
+	antiPrivate
+
+	looping
+	sounds/vehicles/mcp/engine_drive.wav
+}
+
+sound sounds/vehicles/mcp/engine/hardaccel {
+
+	maxDistance	100
+
+	antiPrivate
+
+	looping
+	sounds/vehicles/mcp/engine_hardaccel.wav
+}
+
+sound sounds/vehicles/mcp/tracks {
+
+	maxDistance	50
+
+	antiPrivate
+	playOnce
+
+	looping
+	sounds/vehicles/mcp/tracks.wav
+}
+
+sound sounds/vehicles/mcp/treads {
+
+	maxDistance	50
+
+	antiPrivate
+	playOnce
+
+	looping
+	sounds/vehicles/mcp/treads.wav
+}
+
+sound sounds/vehicles/mcp/horn {
+
+	maxDistance 50
+
+	playOnce
+
+	sounds/vehicles/mcp/horn.wav
+}
+
+sound sounds/vehicles/mcp/horn/stop {
+
+	maxDistance 50
+
+	sounds/vehicles/mcp/horn_stop.wav
+}
+
+sound sounds/vehicles/mcp/deploy {
+
+	maxDistance 50
+
+	no_occlusion
+
+	sounds/vehicles/mcp/deploy_feet.wav
+}
+
+sound sounds/vehicles/mcp/interior/cockpit {
+
+	volume -25
+
+	private
+	playOnce
+	no_occlusion
+
+	looping
+	sounds/vehicles/mcp/interior/cockpit.wav
+}
+
+sound sounds/vehicles/mcp/interior/engine/start {
+
+	volume -5
+
+	private
+	no_occlusion
+
+	sounds/vehicles/mcp/interior/engine_start.wav
+}
+
+sound sounds/vehicles/mcp/interior/engine/stop {
+
+	volume -5
+
+	private
+	no_occlusion
+
+	sounds/vehicles/mcp/interior/engine_stop.wav
+}
+
+sound sounds/vehicles/mcp/interior/engine/idle {
+
+	volume -5
+
+	private
+
+	looping
+	sounds/vehicles/mcp/interior/engine_idle.wav
+}
+
+sound sounds/vehicles/mcp/interior/engine/drive {
+
+	volume -5
+
+	private
+
+	looping
+	sounds/vehicles/mcp/interior/engine_drive.wav
+}
+
+sound sounds/vehicles/mcp/interior/engine/hardaccel {
+
+	volume -5
+
+	private
+
+	looping
+	sounds/vehicles/mcp/interior/engine_hardaccel.wav
+}
+
+sound sounds/vehicles/mcp/interior/tracks {
+
+	private
+	playOnce
+	no_occlusion
+
+	looping
+	sounds/vehicles/mcp/interior/tracks.wav
+}

@@ -1,0 +1,68 @@
+// Strogg Nexus
+
+// Map Valley
+
+sound sounds/vo/strogg/nexus/maps/valley/bridge/fail {
+
+	localization/english/sounds/vo/strogg/nexus/maps/valley/22001.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/valley/mcp/stop/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/valley/22002.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/valley/mcp/enteredtunnel {
+
+	localization/english/sounds/vo/strogg/nexus/maps/valley/22003.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/valley/mcp/halftunnel {
+
+	localization/english/sounds/vo/strogg/nexus/maps/valley/22004.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/valley/mcp/exittunnel {
+
+	localization/english/sounds/vo/strogg/nexus/maps/valley/22005.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/valley/contaminator/defend/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/valley/22006.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/valley/contaminator/defend {
+
+	localization/english/sounds/vo/strogg/nexus/maps/valley/22008.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/valley/contaminator/planted {
+
+	localization/english/sounds/vo/strogg/nexus/maps/valley/22009.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/valley/contaminator/disarm {
+
+	localization/english/sounds/vo/strogg/nexus/maps/valley/22010.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/valley/contaminator/planted/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/valley/22011.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/valley/contaminator/disarmed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/valley/22012.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/valley/stroggwin {
+
+	localization/english/sounds/vo/strogg/nexus/maps/valley/22014.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/valley/strogglose {
+
+	localization/english/sounds/vo/strogg/nexus/maps/valley/22013.wav
+}

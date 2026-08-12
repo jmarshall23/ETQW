@@ -1,0 +1,541 @@
+
+#include <materials/commandmaps.include>
+
+
+material commandmaps/broken {
+	{
+		map _white
+		colored
+		red 0.25
+		green 0.25
+		blue 0.25
+		writeDepth
+	}
+	{
+		blend		add
+		translate 	time * jrad_statictable[ time * 5 ], time * jrad_statictable[ time * 5 ]
+		rotate 		time * 7
+		map    		textures/decals/greystatic.tga
+		alpha 		0.1
+		scale		parm7, parm7
+	}
+	
+}
+
+
+// ====================================================
+// Area22
+// ====================================================
+material commandmaps/area22
+{	
+	templates/game/maps/cmMap( "commandmaps/area22.tga" )
+}
+
+// larger scale map for out of bounds area
+material commandmaps/area22_oob
+{
+	templates/game/maps/cmMap( "commandmaps/area22_oob.tga" )
+}
+
+material commandmaps/area22_territory_01 { // Strogg base
+	templates/game/maps/cmIcon( makealpha( commandmaps/area22/area22_ter01.tga ) )
+}
+
+material commandmaps/area22_territory_02 { // Objective 1
+	templates/game/maps/cmIcon( makealpha( commandmaps/area22/area22_ter02.tga ) )
+}
+
+material commandmaps/area22_territory_03 { // Objective 2
+	templates/game/maps/cmIcon( makealpha( commandmaps/area22/area22_ter03.tga ) )
+}
+
+material commandmaps/area22_territory_04 { // Objective 3
+	templates/game/maps/cmIcon( makealpha( commandmaps/area22/area22_ter04.tga ) )
+}
+/*
+material commandmaps/area22_territory_05 { // GDF Base
+	templates/game/maps/cmIcon( makealpha( commandmaps/area22/area22_ter05.tga ) )
+}
+*/
+
+
+
+// ====================================================
+// Ark
+// ====================================================
+
+material commandmaps/ark
+{
+	templates/game/maps/cmMap( "commandmaps/ark.tga" )
+}
+
+// larger scale map for out of bounds area
+material commandmaps/ark_oob
+{
+	templates/game/maps/cmMap( "commandmaps/ark_oob.tga" )
+}
+
+material commandmaps/ark_territory_01 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/ark/ark_ter01.tga ) )
+}
+
+material commandmaps/ark_territory_02 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/ark/ark_ter02.tga ) )
+}
+
+material commandmaps/ark_territory_03 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/ark/ark_ter03.tga ) )
+}
+
+material commandmaps/ark_territory_04 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/ark/ark_ter04.tga ) )
+}
+
+
+
+// ====================================================
+// Canyon
+// ====================================================
+material commandmaps/canyon
+{
+	templates/game/maps/cmMap( "commandmaps/canyon.tga" )
+}
+
+// larger scale map for out of bounds area
+material commandmaps/canyon_oob
+{
+	templates/game/maps/cmMap( "commandmaps/canyon_oob.tga" )
+}
+
+material commandmaps/canyon_territory_01 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/canyon/canyon_ter01.tga ) )
+}
+
+material commandmaps/canyon_territory_02 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/canyon/canyon_ter02.tga ) )
+}
+
+material commandmaps/canyon_territory_03 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/canyon/canyon_ter03.tga ) )
+}
+
+material commandmaps/canyon_territory_04 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/canyon/canyon_ter04.tga ) )
+}
+
+material commandmaps/canyon_territory_05 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/canyon/canyon_ter05.tga ) )
+}
+
+
+
+// ====================================================
+// Ghost Town
+// ====================================================
+material commandmaps/outskirts
+{
+	templates/game/maps/cmMap( "commandmaps/outskirts.tga" )
+}
+
+// larger scale map for out of bounds area
+material commandmaps/outskirts_oob
+{
+	templates/game/maps/cmMap( "commandmaps/outskirts_oob.tga" )
+}
+
+material commandmaps/outskirts_territory_01 { // GDF start
+	templates/game/maps/cmIcon( makealpha( commandmaps/outskirts/outskirts_ter01.tga ) )
+}
+
+material commandmaps/outskirts_territory_02 { // Neutral territory
+	templates/game/maps/cmIcon( makealpha( commandmaps/outskirts/outskirts_ter02.tga ) )
+}
+
+material commandmaps/outskirts_territory_03 { // Neutral territory
+	templates/game/maps/cmIcon( makealpha( commandmaps/outskirts/outskirts_ter03.tga ) )
+}
+
+material commandmaps/outskirts_territory_04 { // Strogg base
+	templates/game/maps/cmIcon( makealpha( commandmaps/outskirts/outskirts_ter04.tga ) )
+}
+
+material commandmaps/outskirts_territory_05 { // Strogg base
+	templates/game/maps/cmIcon( makealpha( commandmaps/outskirts/outskirts_ter05.tga ) )
+}
+
+
+// ====================================================
+// Island
+// ====================================================
+
+material commandmaps/island
+{
+	templates/game/maps/cmMap( "commandmaps/island.tga" )
+}
+
+// larger scale map for out of bounds area
+material commandmaps/island_oob
+{
+	templates/game/maps/cmMap( "commandmaps/island_oob.tga" )
+}
+
+material commandmaps/island_territory_01 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/island/island_ter01.tga ) )
+}
+
+material commandmaps/island_territory_02 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/island/island_ter02.tga ) )
+}
+
+material commandmaps/island_territory_03 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/island/island_ter03.tga ) )
+}
+
+material commandmaps/island_territory_04 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/island/island_ter04.tga ) )
+}
+
+/*
+material commandmaps/island_territory_05 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/island/island_ter05.tga ) )
+}
+*/
+
+
+// ====================================================
+// Mothership
+// ====================================================
+
+/*
+material commandmaps/mothership
+{
+	templates/game/maps/cmMap( "commandmaps/mothership.tga" )
+}
+*/
+
+// ====================================================
+// Quarry
+// ====================================================
+//material commandmaps/quarry
+//{
+//	{
+//		blend blend
+//		map commandmaps/quarry.tga
+//		forceDepth
+//	}
+//}
+
+// larger scale map for out of bounds area
+material commandmaps/quarry_oob
+{
+	templates/game/maps/cmMap( "commandmaps/quarry_oob.tga" )
+}
+
+material commandmaps/quarry
+{
+	templates/game/maps/cmMap( "commandmaps/quarry.tga" )
+}
+
+material commandmaps/quarry_territory_01 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/quarry/quarry_ter01.tga ) )
+}
+
+material commandmaps/quarry_territory_02 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/quarry/quarry_ter02.tga ) )
+}
+
+material commandmaps/quarry_territory_03 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/quarry/quarry_ter03.tga ) )
+}
+
+material commandmaps/quarry_territory_04 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/quarry/quarry_ter04.tga ) )
+}
+
+material commandmaps/quarry_territory_05 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/quarry/quarry_ter05.tga ) )
+}
+
+
+// ====================================================
+// Refinery
+// ====================================================
+
+material commandmaps/refinery
+{
+	templates/game/maps/cmMap( "commandmaps/refinery.tga" )
+}
+
+// larger scale map for out of bounds area
+material commandmaps/refinery_oob
+{
+	templates/game/maps/cmMap( "commandmaps/refinery_oob.tga" )
+}
+
+material commandmaps/refinery_territory_01 { // Strogg base
+	templates/game/maps/cmIcon( makealpha( commandmaps/refinery/refinery_ter01.tga ) )
+}
+
+material commandmaps/refinery_territory_02 { // Neutral territory
+	templates/game/maps/cmIcon( makealpha( commandmaps/refinery/refinery_ter02.tga ) )
+}
+
+material commandmaps/refinery_territory_03 { // Outpost
+	templates/game/maps/cmIcon( makealpha( commandmaps/refinery/refinery_ter03.tga ) )
+}
+
+material commandmaps/refinery_territory_04 { // GDF base
+	templates/game/maps/cmIcon( makealpha( commandmaps/refinery/refinery_ter04.tga ) )
+}
+/*
+material commandmaps/refinery_territory_05 { // GDF base
+	templates/game/maps/cmIcon( makealpha( commandmaps/refinery/refinery_ter05.tga ) )
+}
+*/
+
+
+// ====================================================
+// Salvage
+// ====================================================
+
+material commandmaps/salvage
+{
+	templates/game/maps/cmMap( "commandmaps/salvage.tga" )
+}
+
+// larger scale map for out of bounds area
+material commandmaps/salvage_oob
+{
+	templates/game/maps/cmMap( "commandmaps/salvage_oob.tga" )
+}
+
+material commandmaps/salvage_territory_01 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/salvage/salvage_ter01.tga ) )
+}
+
+material commandmaps/salvage_territory_02 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/salvage/salvage_ter02.tga ) )
+}
+
+material commandmaps/salvage_territory_03 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/salvage/salvage_ter03.tga ) )
+}
+
+material commandmaps/salvage_territory_04 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/salvage/salvage_ter04.tga ) )
+}
+
+
+// ====================================================
+// Sewer
+// ====================================================
+
+material commandmaps/sewer
+{
+	templates/game/maps/cmMap( "commandmaps/sewer.tga" )
+}
+
+// larger scale map for out of bounds area
+material commandmaps/sewer_oob
+{
+	templates/game/maps/cmMap( "commandmaps/sewer_oob.tga" )
+}
+
+material commandmaps/sewer_territory_01 { // GDF base
+	templates/game/maps/cmIcon( makealpha( commandmaps/sewer/sewer_ter01.tga ) )
+}
+
+material commandmaps/sewer_territory_02 { // Strogg base
+	templates/game/maps/cmIcon( makealpha( commandmaps/sewer/sewer_ter02.tga ) )
+}
+
+material commandmaps/sewer_territory_03 { // Bridge area
+	templates/game/maps/cmIcon( makealpha( commandmaps/sewer/sewer_ter03.tga ) )
+}
+
+/*
+material commandmaps/sewer_territory_04 { // Outpost 1
+	templates/game/maps/cmIcon( makealpha( commandmaps/sewer/sewer_ter04.tga ) )
+}
+*/
+
+/*
+material commandmaps/sewer_territory_05 { // Outpost 2
+	templates/game/maps/cmIcon( makealpha( commandmaps/sewer/sewer_ter05.tga ) )
+}
+*/
+
+
+// ====================================================
+// Slipgate
+// ====================================================
+material commandmaps/slipgate // Combined, square command map (needs to be deleted when the map is fully functional)
+{
+	templates/game/maps/cmMap( "commandmaps/slipgate.tga" )
+}
+
+material commandmaps/slipgate_1 // Desert Side
+{
+	templates/game/maps/cmMap( "commandmaps/slipgate_1.tga" )
+}
+
+material commandmaps/slipgate_2 // Snow Side
+{
+	templates/game/maps/cmMap( "commandmaps/slipgate_2.tga" )
+}
+
+// larger scale map for out of bounds area
+material commandmaps/slipgate_oob_1 // Desert Side
+{
+	templates/game/maps/cmMap( "commandmaps/slipgate_oob_1.tga" )
+}
+
+material commandmaps/slipgate_oob_2 // Snow Side
+{
+	templates/game/maps/cmMap( "commandmaps/slipgate_oob_2.tga" )
+}
+
+material commandmaps/slipgate_territory_01 { 
+	templates/game/maps/cmIcon( makealpha( commandmaps/slipgate/slipgate_ter01.tga ) )
+}
+
+material commandmaps/slipgate_territory_02 { 
+	templates/game/maps/cmIcon( makealpha( commandmaps/slipgate/slipgate_ter02.tga ) )
+}
+
+material commandmaps/slipgate_territory_03 { 
+	templates/game/maps/cmIcon( makealpha( commandmaps/slipgate/slipgate_ter03.tga ) )
+}
+
+material commandmaps/slipgate_territory_04 { 
+	templates/game/maps/cmIcon( makealpha( commandmaps/slipgate/slipgate_ter04.tga ) )
+}
+
+material commandmaps/slipgate_territory_05 { 
+	templates/game/maps/cmIcon( makealpha( commandmaps/slipgate/slipgate_ter05.tga ) )
+}
+
+material commandmaps/slipgate_territory_06 { 
+	templates/game/maps/cmIcon( makealpha( commandmaps/slipgate/slipgate_ter06.tga ) )
+}
+
+
+// ====================================================
+// Valley
+// ====================================================
+
+material commandmaps/valley
+{
+	templates/game/maps/cmMap( "commandmaps/valley.tga" )
+}
+
+material commandmaps/valley_bot
+{
+	templates/game/maps/cmMap( "commandmaps/valley_bot.tga" )
+}
+
+// larger scale map for out of bounds area
+material commandmaps/valley_oob
+{
+	templates/game/maps/cmMap( "commandmaps/valley_oob.tga" )
+}
+
+material commandmaps/valley_territory_01 { // GDF base
+	templates/game/maps/cmIcon( makealpha( commandmaps/valley/valley_ter01.tga ) )
+}
+
+material commandmaps/valley_territory_02 { // Strogg base
+	templates/game/maps/cmIcon( makealpha( commandmaps/valley/valley_ter02.tga ) )
+}
+
+material commandmaps/valley_territory_03 { // Bridge area
+	templates/game/maps/cmIcon( makealpha( commandmaps/valley/valley_ter03.tga ) )
+}
+
+material commandmaps/valley_territory_04 { // Outpost 1
+	templates/game/maps/cmIcon( makealpha( commandmaps/valley/valley_ter04.tga ) )
+}
+
+material commandmaps/valley_territory_05 { // Outpost 2
+	templates/game/maps/cmIcon( makealpha( commandmaps/valley/valley_ter05.tga ) )
+}
+
+
+// ====================================================
+// Volcano
+// ====================================================
+material commandmaps/volcano
+{	
+	templates/game/maps/cmMap( "commandmaps/volcano.tga" )
+}
+
+// larger scale map for out of bounds area
+material commandmaps/volcano_oob
+{
+	templates/game/maps/cmMap( "commandmaps/volcano_oob.tga" )
+}
+
+material commandmaps/volcano_territory_01 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/volcano/volcano_ter01.tga ) )
+}
+
+material commandmaps/volcano_territory_02 { 
+	templates/game/maps/cmIcon( makealpha( commandmaps/volcano/volcano_ter02.tga ) )
+}
+
+material commandmaps/volcano_territory_03 { 
+	templates/game/maps/cmIcon( makealpha( commandmaps/volcano/volcano_ter03.tga ) )
+}
+
+material commandmaps/volcano_territory_04 { 
+	templates/game/maps/cmIcon( makealpha( commandmaps/volcano/volcano_ter04.tga ) )
+}
+
+
+// ====================================================
+// Test Maps, odd bits, etc
+// ====================================================
+material commandmaps/default
+{
+	{
+		blend blend
+		map commandmaps/default.tga
+		writeDepth
+	}
+}
+
+material commandmaps/vehicleTrack
+{
+	templates/game/maps/cmMap( "commandmaps/temperate_new.tga" )
+}
+
+// ====================================================
+// Temperate New
+// ====================================================
+material commandmaps/temperate_new {
+	templates/game/maps/cmMap( "commandmaps/temperate_new.tga" )
+}
+
+material commandmaps/temperate_new_territory_01 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/temperate_new/temperate_ter01.tga ) )
+}
+
+// ====================================================
+// Bottest2
+// ====================================================
+
+material commandmaps/bottest2
+{
+	templates/game/maps/cmMap( "commandmaps/bottest2.tga" )
+}
+
+// ====================================================
+// Model border material
+// ====================================================
+
+material models/commandmaps/territory_border
+{
+	{
+		diffusemap	models/commandmaps/territory_border.tga
+	}
+}

@@ -1,0 +1,1964 @@
+effect effects/impacts/hecharge/explosion_default
+{
+	size	1980
+
+	cutOffDistance	10000
+
+	sound "Debris Sound"
+	{
+		start		1,1.5
+		soundShader	"sounds/weapons/impacts/debris_small"
+	}
+	sound "Close Distance Explosion Sound2"
+	{
+		soundShader	"sounds/tools/hecharge/explode"
+	}
+	sound "Far Distance Explosion Sound2"
+	{
+		soundShader	"sounds/tools/hecharge/explode/far"
+	}
+	sound "Shrapnel Sound"
+	{
+		start		0.4,0.6
+		soundShader	"sounds/weapons/misc/shrapnel"
+	}
+	spawner "ground dust2"
+	{
+		count		8,8
+		attenuateEmitter
+		attenuation	1400,1400
+
+		sprite
+		{
+			duration	2,5
+			persist
+			material	"particles/dustcloud_02_litsmoke"
+			gravity		0.0025,0.0125
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -5,-5,-5,5,5,5 }
+				velocity { box 20,-150,-150,-50,150,150 }
+				friction { box 0.025,0,0,0.125,0,0 }
+				size { box 5,5,2,2 }
+				tint { line 0.203922,0.196078,0.188235,0.541176,0.521569,0.458824 }
+				fade { line 0.4,1 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 count 10,10 }
+				tint { envelope linear }
+				fade { envelope rr2_concavefade_start_at_1 offset 0.1 }
+				offset { envelope exp_1minusx/x2 count 15,15,15 }
+				rotate { envelope shamus_exp_1minusx/x2 count 0.5 }
+			}
+
+			end
+			{
+				size { line 300,300,400,400 }
+				tint { line 0.792157,0.756863,0.709804,0.254902,0.247059,0.227451 }
+				offset { cylinder -150,-400,-400,150,400,400 surface }
+				rotate { box -0.25,0.25 }
+			}
+			lineHit
+		}
+	}
+	spawner "shrapnel_1"
+	{
+		start		0.1,0.1
+		count		30,30
+		attenuateEmitter
+		attenuation	100,200
+
+		sprite
+		{
+			duration	2,4
+			material	"textures/particles/sparks/sparkflash03b"
+			gravity		0.3,0.9
+			trailRepeat	1
+			trailType	motion
+			trailTime	0.05,0.1
+			trailCount	3,7
+			trailScale	0.500000
+			trailMaterial	"textures/effects/motionblur"
+
+			start
+			{
+				velocity { box 10,-500,-500,700,500,500 }
+				size { line 2,2,5,5 }
+				tint { line 0.772549,0.772549,0.772549,0.345098,0.345098,0.313726 }
+				offset { sphere -130,-130,-130,130,130,130 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { point 2,2 }
+			}
+			lineHit
+		}
+	}
+	spawner "ground smoke2"
+	{
+		count		15,15
+		useMaterialColor
+		attenuateEmitter
+		attenuation	1400,1400
+
+		sprite
+		{
+			duration	2,4
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		0,0.0125
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -5,-5,-5,5,5,5 }
+				velocity { box 20,-15,-15,50,15,15 }
+				friction { box 0.025,0,0,0.125,0,0 }
+				size { line 25,25,10,10 }
+				tint { line 0.282353,0.282353,0.282353,0.427451,0.415686,0.380392 }
+				fade { point 0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 count 4,4 }
+				tint { envelope linear }
+				fade { envelope shamus_fastinholdslowout }
+				offset { envelope exp_1minusx/x2 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 100,100,200,200 }
+				tint { point 0.47451,0.47451,0.47451 }
+				fade { line 0.9,0.5 }
+				offset { cylinder 150,-600,-600,25,600,600 surface }
+				rotate { box -0.5,0.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "flash2"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.5,0.5
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				size { line 1200,1200,1400,1400 }
+				tint { point 0.282353,0.109804,0 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope rr2_concavefade_start_at_1_fast }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { point 1000,1000 }
+			}
+			lineHit
+		}
+	}
+	emitter "afterburn"
+	{
+		start		0.2,0.2
+		duration	1,1
+		count		1,1
+		attenuateEmitter
+		attenuation	400,500
+
+		sprite
+		{
+			duration	0.7,0.7
+			blend	add
+			persist
+			material	"particles/explosion/explode07"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,0 cone }
+				size { point 200,200 }
+				tint { point 0.439216,0.258824,0.0666667 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1 }
+				offset { envelope exp_1minusx/x2 count 2,2,2 }
+				rotate { envelope convexfade count 99 }
+			}
+
+			end
+			{
+				rotate { box 1,-1 }
+			}
+			lineHit
+		}
+	}
+	spawner "flames3"
+	{
+		count		5,5
+
+		sprite
+		{
+			duration	0.8,0.8
+			persist
+			material	"particles/explosion/explode32strip02"
+			trailRepeat	1
+
+			start
+			{
+				position { point 50,0,0 }
+				velocity { box 25,0,0,100,0,0 }
+				size { line 175,175,300,300 }
+				tint { line 1,1,1,0.74902,0.74902,0.74902 }
+				offset { sphere -300,-300,-300,300,300,300 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+	spawner "dirt streaks3"
+	{
+		start		0,0.1
+		count		15,15
+		useMaterialColor
+		attenuateEmitter
+		attenuation	300,500
+
+		line
+		{
+			duration	0.4,1
+			persist
+			material	"particles/dust_spike2"
+			gravity		0.005,0.02
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere 1,-2,-2,1,2,2 cone }
+				velocity { box -1,-1,-1,1,1,1 }
+				size { box 1,2 }
+				tint { line 0.498039,0.498039,0.498039,0.396078,0.388235,0.360784 }
+				fade { line 0.5,1 }
+				offset { sphere -10,-10,-10,10,10,10 }
+				length { box 4,0,0,2,0,0 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 }
+				tint { envelope linear }
+				fade { envelope rr2_concavefade_start_at_1 offset 0.1 }
+				length { envelope exp_1minusx/x2 count 4,4,4 }
+			}
+
+			end
+			{
+				size { box 20,40 }
+				tint { line 0.611765,0.576471,0.54902,0.721569,0.713726,0.537255 }
+				length { box 350,0,0,650,0,0 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+effect effects/impacts/charges_temp
+{
+	size	3810
+
+	spawner "Chips3"
+	{
+		count		15,15
+		useMaterialColor
+		attenuateEmitter
+		attenuation	1024,4096
+
+		sprite
+		{
+			duration	4,6
+			persist
+			material	"particles/debris/debris_smallbits2"
+			gravity		0.4,1.4
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere 50,-50,-50,10,50,50 }
+				velocity { box 1200,-10,-10,1200,10,10 }
+				size { line 100,100,75,75 }
+				tint { line 0.0823529,0.0823529,0.0823529,0.501961,0.501961,0.501961 }
+				fade { point 0 }
+				offset { sphere 10,-2,-2,50,2,2 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope convexfade count 4,4 }
+				fade { envelope fastinslowout }
+				offset { envelope exp_1minusx/x2 count 8,8,8 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { box 350,350,250,250 }
+				fade { point 1 }
+				offset { sphere 100,-10,-10,300,10,10 surface }
+				rotate { box 0.0833333,-0.0833333 }
+			}
+		}
+	}
+	spawner "Chips"
+	{
+		count		15,15
+		useMaterialColor
+		attenuateEmitter
+		attenuation	1024,4096
+
+		sprite
+		{
+			duration	4,6
+			persist
+			material	"particles/debris/debris_smallbits"
+			gravity		0.4,1.4
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere 50,-10,-10,10,10,10 }
+				velocity { box 1000,-10,-10,1000,10,10 }
+				size { line 100,100,75,75 }
+				tint { line 0.254902,0.227451,0.184314,0.501961,0.501961,0.501961 }
+				fade { point 0 }
+				offset { sphere 10,-2,-2,50,2,2 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope convexfade count 4,4 }
+				fade { envelope fastinslowout }
+				offset { envelope exp_1minusx/x2 count 8,8,8 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { box 350,350,250,250 }
+				fade { point 1 }
+				offset { sphere 100,-10,-10,300,10,10 surface }
+				rotate { box 0.0833333,-0.0833333 }
+			}
+		}
+	}
+	spawner "dirt smoke"
+	{
+		start		0.12,0.15
+		count		4,4
+
+		sprite
+		{
+			duration	2.2,3.2
+			persist
+			material	"textures/particles/smoke_puff_generic"
+			gravity		0.4,0.6
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -15,-25,-25,325,25,25 }
+				velocity { box 200,-150,-150,675,150,150 }
+				size { line 25,25,50,50 }
+				tint { point 0.513726,0.501961,0.411765 }
+				rotate { box -0.0138889,0.0138889 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 count 0.5,0.5 }
+				tint { envelope linear }
+				fade { envelope jrad_alphain }
+				rotate { envelope linear count 0.5 }
+			}
+
+			end
+			{
+				size { line 400,400,500,500 }
+				tint { point 0.427451,0.419608,0.337255 }
+				rotate { box -0.00277778,0.00277778 }
+			}
+		}
+	}
+	spawner "dirt stones"
+	{
+		start		0.25,0.5
+		count		25,25
+		attenuateEmitter
+		attenuation	100,150
+
+		sprite
+		{
+			duration	1,3
+			persist
+			material	"particles/debris/debris_stone01"
+			gravity		0.5,1
+			trailRepeat	1
+
+			start
+			{
+				position { sphere 0,-25,-25,300,25,25 }
+				velocity { box 400,-300,-300,900,300,300 }
+				size { line 2,2,8,8 }
+				tint { point 0.513726,0.501961,0.411765 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				fade { envelope aa_testblasttable2 }
+				rotate { envelope linear count 0.5 }
+			}
+
+			end
+			{
+				size { point 0,0 }
+				tint { point 0.427451,0.419608,0.337255 }
+				fade { point 1 }
+				rotate { box -0.125,0.125 }
+			}
+		}
+	}
+	spawner "dirt rain down"
+	{
+		count		5,5
+		useMaterialColor
+
+		sprite
+		{
+			duration	2.5,4
+			persist
+			material	"particles/debris/debris_dirtfly01"
+			gravity		0.5,0.8
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -15,-25,-25,0,25,25 }
+				velocity { box 500,-125,-125,950,125,125 }
+				size { point 10,10 }
+				fade { point 0 }
+				offset { box -10,-10,-20,10,10,20 }
+				windStrength { point 0.2 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 count 0.5,0.5 }
+				tint { envelope linear }
+				fade { envelope shamus_fastinslowout }
+				offset { envelope shamus_exp_1minusx/x2 count 2,2,2 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 300,300,500,500 }
+				tint { point 0.643137,0.588235,0.541176 }
+				fade { line 0.5,0.25 }
+				offset { line 150,0,0,50,0,0 }
+				rotate { box -1.05556,1.05556 }
+			}
+		}
+	}
+	spawner "dirt rain down2"
+	{
+		count		5,5
+		useMaterialColor
+
+		sprite
+		{
+			duration	2.5,4
+			persist
+			material	"particles/debris/debris_smallbits"
+			gravity		0.5,0.8
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -15,-25,-25,0,25,25 }
+				velocity { box 500,-125,-125,950,125,125 }
+				size { point 10,10 }
+				tint { point 0.380392,0.341176,0.305882 }
+				fade { point 0 }
+				offset { box -10,-10,-20,10,10,20 }
+				windStrength { point 0.2 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 count 0.5,0.5 }
+				tint { envelope linear }
+				fade { envelope shamus_fastinslowout }
+				offset { envelope shamus_exp_1minusx/x2 count 2,2,2 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 300,300,500,500 }
+				tint { point 0.215686,0.188235,0.168627 }
+				fade { point 0.9 }
+				offset { line 150,0,0,50,0,0 }
+				rotate { box -1.05556,1.05556 }
+			}
+		}
+	}
+	spawner "Chips2"
+	{
+		start		0.01,0.01
+		count		10,10
+		useMaterialColor
+		attenuateEmitter
+		attenuation	1024,4096
+
+		sprite
+		{
+			duration	4,6
+			persist
+			material	"particles/debris/debris_stone_compound"
+			gravity		0.8,1.4
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere 50,-50,-50,10,50,50 }
+				velocity { box 400,-10,-10,600,10,10 }
+				size { line 100,100,75,75 }
+				tint { line 0.854902,0.776471,0.721569,0.501961,0.501961,0.501961 }
+				fade { point 0 }
+				offset { sphere 10,-2,-2,50,2,2 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope convexfade count 4,4 }
+				fade { envelope emptytable }
+				offset { envelope exp_1minusx/x2 count 8,8,8 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { box 350,350,250,250 }
+				fade { point 1 }
+				offset { sphere 100,-10,-10,300,10,10 surface }
+				rotate { box 0.0833333,-0.0833333 }
+			}
+		}
+	}
+	spawner "Chips4"
+	{
+		count		30,30
+		useMaterialColor
+		attenuateEmitter
+		attenuation	0,1024
+
+		sprite
+		{
+			duration	0.75,1.5
+			persist
+			material	"particles/debris/debris_stone02"
+			gravity		0.75,1
+			trailRepeat	1
+
+			start
+			{
+				position { point 2,0,0 }
+				velocity { box 450,-275,-275,550,275,275 }
+				size { line 10,10,5,5 }
+				tint { line 0.501961,0.501961,0.501961,0.262745,0.211765,0.160784 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				fade { envelope shattertable2 offset 0.1 }
+				offset { envelope exp_1minusx/x2 }
+				rotate { envelope exp_1minusx/x2 }
+			}
+
+			end
+			{
+				offset { line 100,0,0,200,0,0 }
+				rotate { box -0.5,0.5 }
+			}
+		}
+	}
+	spawner "Sparks"
+	{
+		count		25,25
+		attenuateEmitter
+		attenuation	300,1500
+
+		sprite
+		{
+			duration	0.2,0.8
+			persist
+			material	"textures/effects/spark"
+			gravity		1,1
+			trailRepeat	1
+			trailType	motion
+			trailTime	0.25,0.25
+			trailCount	5,5
+			trailScale	0.500000
+			trailMaterial	"textures/effects/motionblur_nobloom"
+
+			start
+			{
+				velocity { box -800,-800,-800,800,800,800 }
+				size { box 0.5,0.5,1,1 }
+				tint { point 1,0.501961,0.247059 }
+			}
+
+			motion
+			{
+				size { envelope fastinslowout }
+				tint { envelope fivestage }
+			}
+
+			end
+			{
+				size { box 1,1,2,2 }
+			}
+		}
+	}
+	spawner "Explosion Flash"
+	{
+		count		2,2
+
+		sprite
+		{
+			duration	0.5,0.5
+			blend	add
+			persist
+			material	"textures/particles/boomboom"
+			generatedNormal
+			trailRepeat	1
+
+			start
+			{
+				fade { point 0 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				fade { envelope watersplashrgbtable }
+			}
+
+			end
+			{
+				size { point 512,512 }
+				fade { point 1 }
+			}
+		}
+	}
+	spawner "Flash"
+	{
+		count		1,1
+
+		sprite
+		{
+			duration	0.125,0.25
+			blend	add
+			persist
+			material	"textures/particles/boomboom"
+			trailRepeat	1
+
+			start
+			{
+				size { point 100,100 }
+				fade { point 0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				fade { envelope woundfade }
+				rotate { envelope shamus_exp_1minusx/x2 count 2 }
+			}
+
+			end
+			{
+				size { box 400,400,300,300 }
+				fade { point 1 }
+				rotate { box -0.25,0.25 }
+			}
+		}
+	}
+	spawner "core2"
+	{
+		count		2,2
+		locked
+		attenuateEmitter
+		attenuation	1024,8192
+
+		sprite
+		{
+			duration	0.025,0.125
+			persist
+			material	"textures/effects/weapons/flash"
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -10,-250,-250,10,250,250 surface }
+				velocity { box 0,-5,-5,5,5,5 }
+				size { box 700,700,900,900 }
+				tint { point 0.74902,0.74902,0.74902 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1 offset 0.1,0.1,0.1 }
+			}
+		}
+	}
+	spawner "unnamed19"
+	{
+		count		6,10
+
+		oriented
+		{
+			duration	1,1
+			material	"particles/smoke/shrapnel_smoke"
+			trailRepeat	1
+
+			start
+			{
+				size { point 20,300 }
+				tint { line 0.784314,0.756863,0.72549,0.235294,0.219608,0.2 }
+				offset { point 1,0,3 }
+				rotate { box 0.0277778,0.138889,0.138889,0.555556,0.166667,0.555556 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				fade { envelope concavefade }
+			}
+
+			end
+			{
+				size { box 100,1000,400,3000 }
+			}
+		}
+	}
+	spawner "smoke line"
+	{
+		count		8,8
+
+		line
+		{
+			duration	0.8,1.2
+			generatedLine
+			persist
+			material	"textures/particles/smoke_puff_generic"
+			trailRepeat	1
+
+			start
+			{
+				position { line -25,0,0,-75,0,0 cone }
+				velocity { box 100,-50,-50,100,50,50 }
+				tint { point 0.584314,0.537255,0.447059 }
+				length { box -400,-400,600,400,400,600 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope rr2_concavefade_start_at_1 offset 0.1 }
+				length { envelope linear }
+			}
+
+			end
+			{
+				size { box 100,250 }
+				length { point 0,0,1000 }
+			}
+		}
+	}
+	spawner "outerfire emiter3"
+	{
+		start		0.1,0.1
+		count		5,5
+		locked
+		attenuateEmitter
+		attenuation	1024,2048
+
+		sprite
+		{
+			duration	0.25,0.35
+			blend	add
+			persist
+			material	"particles/explosion/explode07"
+			gravity		-0.1,-0.001
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -25,-100,-100,75,100,100 }
+				velocity { box 20,-15,-15,60,15,15 }
+				size { line 50,50,100,100 }
+				tint { line 1,0.74902,0.501961,1,1,1 }
+				offset { sphere -5,-5,-5,5,5,5 surface }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 count 2,2 }
+				tint { envelope rr2_convexfade_start_at_1 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.05 }
+				offset { envelope exp_1minusx/x2 }
+				rotate { envelope exp_1minusx/x2 count 0.5 }
+			}
+
+			end
+			{
+				size { line 200,150,100,100 }
+				offset { sphere -75,-125,-125,150,125,125 surface }
+				rotate { box -1,1 }
+			}
+		}
+	}
+	spawner "unnamed21"
+	{
+		count		3,5
+
+		oriented
+		{
+			duration	1,1
+			material	"particles/smoke/shrapnel_smoke"
+			trailRepeat	1
+
+			start
+			{
+				angle { point 0.555556,-0.555556,-0.555556 }
+				size { point 20,300 }
+				tint { line 0.752941,0.752941,0.752941,0.282353,0.243137,0.207843 }
+				offset { point 1,0,3 }
+				rotate { box 0.0277778,0.138889,0.138889,0.555556,0.166667,0.555556 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				fade { envelope concavefade }
+			}
+
+			end
+			{
+				size { box 100,1000,400,3000 }
+			}
+		}
+	}
+	spawner "base fire"
+	{
+		start		0.05,0.05
+		count		4,4
+		locked
+		attenuateEmitter
+		attenuation	1024,2048
+
+		sprite
+		{
+			duration	0.1,0.3
+			blend	add
+			persist
+			material	"particles/explosion/explode07"
+			gravity		-0.01,-0.001
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -25,-25,-25,25,25,25 }
+				velocity { box 120,-5,-5,60,5,5 }
+				size { line 50,50,100,100 }
+				tint { point 0,0,0 }
+				fade { point 0 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 }
+				tint { envelope fastinslowout }
+				fade { envelope fastinslowout }
+			}
+
+			end
+			{
+				size { line 150,150,200,200 }
+				tint { line 1,1,1,0.74902,0.74902,0.74902 }
+				fade { point 1 }
+			}
+		}
+	}
+	spawner "core"
+	{
+		count		3,5
+		locked
+		attenuateEmitter
+		attenuation	1024,10240
+
+		sprite
+		{
+			duration	0.125,0.25
+			persist
+			material	"textures/effects/weapons/flash"
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -10,-25,-25,10,25,25 }
+				velocity { box 0,-5,-5,5,5,5 }
+				size { box 50,50,150,150 }
+				tint { line 0.0823529,0.0431373,0,0.294118,0.192157,0.121569 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope rr2_concavefade_start_at_1 offset 0.1,0.1,0.1 }
+			}
+
+			end
+			{
+				size { box 150,150,250,250 }
+			}
+		}
+	}
+	spawner "out smoke2"
+	{
+		start		0.02,0.02
+		count		8,8
+
+		sprite
+		{
+			duration	0.2,0.4
+			persist
+			material	"particles/smoke/normal_smoke_puff02"
+			gravity		0,0.1
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -50,-50,-50,0,50,50 }
+				velocity { box 0,-890,-890,550,890,890 }
+				size { line 75,75,100,100 }
+				tint { point 0.611765,0.537255,0.509804 }
+				fade { point 0 }
+				rotate { box -0.0138889,0.0138889 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope linear }
+				fade { envelope fastinslowout offset 0.1 }
+				rotate { envelope linear count 0.5 }
+			}
+
+			end
+			{
+				size { line 750,750,450,450 }
+				tint { point 0.639216,0.576471,0.501961 }
+				fade { line 0.3,0.6 }
+				rotate { box -0.0138889,0.0138889 }
+			}
+		}
+	}
+	spawner "dirt blast2"
+	{
+		start		0.05,0.07
+		count		5,5
+
+		line
+		{
+			duration	0.4,0.5
+			generatedLine
+			persist
+			material	"particles/debris/debris_dirtdust01"
+			trailRepeat	1
+
+			start
+			{
+				position { sphere 0,-50,-50,0,50,50 cone }
+				velocity { box 600,-700,-700,600,700,700 }
+				size { box 25,50 }
+				tint { point 0.384314,0.301961,0.227451 }
+				fade { point 0.2 }
+				length { point 0,0,200 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope rr2_concavefade_start_at_1 }
+				length { envelope linear }
+			}
+
+			end
+			{
+				size { point 150 }
+				length { point 0,0,800 }
+			}
+		}
+	}
+}
+
+effect effects/impacts/hecharge/explosion_pavement
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/hecharge/explosion_default"
+	}
+}
+
+effect effects/impacts/hecharge/explosion_dirt
+{
+	size	2457
+
+	cutOffDistance	10000
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/hecharge/explosion_default"
+	}
+	spawner "dirt rain down"
+	{
+		count		5,5
+		useMaterialColor
+		attenuateEmitter
+		attenuation	500,1500
+
+		sprite
+		{
+			duration	2.5,4
+			persist
+			material	"particles/debris/debris_dirtfly01"
+			gravity		0.5,0.8
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -15,-25,-25,0,25,25 }
+				velocity { box 500,-125,-125,950,125,125 }
+				size { point 10,10 }
+				fade { point 0 }
+				offset { box -10,-10,-20,10,10,20 }
+				windStrength { point 0.2 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 count 0.5,0.5 }
+				tint { envelope linear }
+				fade { envelope shamus_fastinslowout }
+				offset { envelope shamus_exp_1minusx/x2 count 2,2,2 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 300,300,500,500 }
+				tint { point 0.643137,0.588235,0.541176 }
+				fade { line 0.5,0.25 }
+				offset { line 150,0,0,50,0,0 }
+				rotate { box -1.05556,1.05556 }
+			}
+			lineHit
+		}
+	}
+	spawner "dirt rain down2"
+	{
+		count		5,5
+		useMaterialColor
+		attenuateEmitter
+		attenuation	500,1500
+
+		sprite
+		{
+			duration	2.5,4
+			persist
+			material	"particles/debris/debris_smallbits"
+			gravity		0.5,0.8
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -15,-25,-25,0,25,25 }
+				velocity { box 500,-125,-125,950,125,125 }
+				size { point 10,10 }
+				tint { point 0.380392,0.341176,0.305882 }
+				fade { point 0 }
+				offset { box -10,-10,-20,10,10,20 }
+				windStrength { point 0.2 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 count 0.5,0.5 }
+				tint { envelope linear }
+				fade { envelope shamus_fastinslowout }
+				offset { envelope shamus_exp_1minusx/x2 count 2,2,2 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 300,300,500,500 }
+				tint { point 0.215686,0.188235,0.168627 }
+				fade { point 0.9 }
+				offset { line 150,0,0,50,0,0 }
+				rotate { box -1.05556,1.05556 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/impacts/hecharge/explosion_metal
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/hecharge/explosion_default"
+	}
+}
+
+effect effects/impacts/hecharge/explosion_sand
+{
+	size	1716
+
+	cutOffDistance	10000
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/hecharge/explosion_default"
+	}
+	spawner "Horizontal Sand Burst"
+	{
+		count		25,25
+		locked
+		attenuateEmitter
+		attenuation	500,1500
+
+		sprite
+		{
+			duration	2.2,2.2
+			persist
+			material	"textures/particles/sand_heavy"
+			gravity		0.7,0.7
+			trailRepeat	1
+
+			start
+			{
+				position { spiral 0,-64,-64,0,64,64,64 }
+				velocity { box 250,-900,-900,450,900,900 }
+				size { point 64,64 }
+				tint { point 0.454902,0.352941,0.270588 }
+				offset { box 0,-64,-64,0,64,64 }
+			}
+
+			motion
+			{
+				size { envelope jrad_convexfade }
+				fade { envelope jrad_alphain }
+			}
+
+			end
+			{
+				size { point 200,200 }
+			}
+			lineHit
+		}
+	}
+	emitter "Vertical Sand Burst"
+	{
+		duration	0.3,0.3
+		count		40,40
+		locked
+		attenuateEmitter
+		attenuation	500,1500
+
+		sprite
+		{
+			duration	2.2,2.2
+			persist
+			material	"textures/particles/sand_heavy"
+			gravity		0.7,0.7
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 700,-200,-200,1000,200,200 }
+				size { point 64,64 }
+				tint { point 0.639216,0.501961,0.392157 }
+				offset { box 0,-64,-64,0,64,64 }
+			}
+
+			motion
+			{
+				size { envelope jrad_convexfade }
+				fade { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 200,200 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/impacts/hecharge/explosion_snow
+{
+	size	1716
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/hecharge/explosion_default"
+	}
+	spawner "Horizontal Sand Burst"
+	{
+		count		25,25
+		locked
+		attenuateEmitter
+		attenuation	500,1500
+
+		sprite
+		{
+			duration	2.2,2.2
+			persist
+			material	"particles/debris/debris_snow"
+			gravity		0.7,0.7
+			trailRepeat	1
+
+			start
+			{
+				position { spiral 0,-64,-64,0,64,64,64 }
+				velocity { box 250,-900,-900,450,900,900 }
+				size { point 64,64 }
+				tint { point 0.454902,0.352941,0.270588 }
+				offset { box 0,-64,-64,0,64,64 }
+			}
+
+			motion
+			{
+				size { envelope jrad_convexfade }
+				fade { envelope jrad_alphain }
+			}
+
+			end
+			{
+				size { point 200,200 }
+			}
+		}
+	}
+	emitter "Vertical Sand Burst"
+	{
+		duration	0.3,0.3
+		count		40,40
+		locked
+		attenuateEmitter
+		attenuation	500,1500
+
+		sprite
+		{
+			duration	2.2,2.2
+			persist
+			material	"particles/debris/debris_snow"
+			gravity		0.7,0.7
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 700,-200,-200,1000,200,200 }
+				size { point 64,64 }
+				tint { point 0.639216,0.501961,0.392157 }
+				offset { box 0,-64,-64,0,64,64 }
+			}
+
+			motion
+			{
+				size { envelope jrad_convexfade }
+				fade { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 200,200 }
+			}
+		}
+	}
+}
+
+effect effects/impacts/plasmacharge/explosion_default
+{
+	size	2596
+
+	cutOffDistance	10000
+
+	sound "Far Distance Explosion Sound"
+	{
+		soundShader	"sounds/tools/plasmacharge/explode/far"
+	}
+	sound "Close Distance Explosion Sound"
+	{
+		soundShader	"sounds/tools/plasmacharge/explode"
+	}
+	sound "Shrapnel Sound"
+	{
+		start		0.4,0.6
+		soundShader	"sounds/weapons/misc/shrapnel"
+	}
+	sound "Debris Sound"
+	{
+		start		1,1.5
+		soundShader	"sounds/weapons/impacts/debris_small"
+	}
+	spawner "ground dust3"
+	{
+		count		8,8
+		attenuateEmitter
+		attenuation	1400,1400
+
+		sprite
+		{
+			duration	2,5
+			persist
+			material	"particles/dustcloud_02_litsmoke"
+			gravity		0.0025,0.0125
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -5,-5,-5,5,5,5 }
+				velocity { box 20,-150,-150,-50,150,150 }
+				friction { box 0.025,0,0,0.125,0,0 }
+				size { box 5,5,2,2 }
+				tint { line 0.203922,0.196078,0.188235,0.541176,0.521569,0.458824 }
+				fade { line 0.4,1 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 count 10,10 }
+				tint { envelope linear }
+				fade { envelope rr2_concavefade_start_at_1 offset 0.1 }
+				offset { envelope exp_1minusx/x2 count 15,15,15 }
+				rotate { envelope shamus_exp_1minusx/x2 count 0.5 }
+			}
+
+			end
+			{
+				size { line 300,300,400,400 }
+				tint { line 0.792157,0.756863,0.709804,0.254902,0.247059,0.227451 }
+				offset { cylinder -150,-400,-400,150,400,400 surface }
+				rotate { box -0.25,0.25 }
+			}
+			lineHit
+		}
+	}
+	spawner "shrapnel_2"
+	{
+		start		0.1,0.1
+		count		30,30
+		attenuateEmitter
+		attenuation	100,200
+
+		sprite
+		{
+			duration	2,4
+			material	"textures/particles/sparks/sparkflash03b"
+			gravity		0.3,0.9
+			trailRepeat	1
+			trailType	motion
+			trailTime	0.05,0.1
+			trailCount	3,7
+			trailScale	0.500000
+			trailMaterial	"textures/effects/motionblur"
+
+			start
+			{
+				velocity { box 10,-500,-500,700,500,500 }
+				size { line 2,2,5,5 }
+				tint { line 0.772549,0.772549,0.772549,0.345098,0.345098,0.313726 }
+				offset { sphere -130,-130,-130,130,130,130 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { point 2,2 }
+			}
+			lineHit
+		}
+	}
+	spawner "ground smoke2"
+	{
+		count		15,15
+		useMaterialColor
+		attenuateEmitter
+		attenuation	1400,1400
+
+		sprite
+		{
+			duration	2,4
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		0,0.0125
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -5,-5,-5,5,5,5 }
+				velocity { box 20,-15,-15,50,15,15 }
+				friction { box 0.025,0,0,0.125,0,0 }
+				size { line 25,25,10,10 }
+				tint { line 0.282353,0.282353,0.282353,0.427451,0.415686,0.380392 }
+				fade { point 0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 count 4,4 }
+				tint { envelope linear }
+				fade { envelope shamus_fastinholdslowout }
+				offset { envelope exp_1minusx/x2 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 100,100,200,200 }
+				tint { point 0.47451,0.47451,0.47451 }
+				fade { line 0.9,0.5 }
+				offset { cylinder 150,-600,-600,25,600,600 surface }
+				rotate { box -0.5,0.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "flash2"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.5,0.5
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				size { line 1200,1200,1400,1400 }
+				tint { point 0.282353,0.109804,0 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope rr2_concavefade_start_at_1_fast }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { point 1000,1000 }
+			}
+			lineHit
+		}
+	}
+	emitter "afterburn2"
+	{
+		start		0.2,0.2
+		duration	1,1
+		count		1,1
+		attenuateEmitter
+		attenuation	400,500
+
+		sprite
+		{
+			duration	0.7,0.7
+			blend	add
+			persist
+			material	"particles/explosion/explode07"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,0 cone }
+				size { point 200,200 }
+				tint { point 0.439216,0.258824,0.0666667 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1 }
+				offset { envelope exp_1minusx/x2 count 2,2,2 }
+				rotate { envelope convexfade count 99 }
+			}
+
+			end
+			{
+				rotate { box 1,-1 }
+			}
+			lineHit
+		}
+	}
+	spawner "flames4"
+	{
+		count		5,5
+
+		sprite
+		{
+			duration	0.8,0.8
+			persist
+			material	"particles/explosion/explode32strip02"
+			trailRepeat	1
+
+			start
+			{
+				position { point 50,0,0 }
+				velocity { box 25,0,0,100,0,0 }
+				size { line 175,175,300,300 }
+				tint { line 1,1,1,0.74902,0.74902,0.74902 }
+				offset { sphere -300,-300,-300,300,300,300 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+	spawner "dirt streaks4"
+	{
+		start		0,0.1
+		count		15,15
+		useMaterialColor
+		attenuateEmitter
+		attenuation	300,500
+
+		line
+		{
+			duration	0.4,1
+			persist
+			material	"particles/dust_spike2"
+			gravity		0.005,0.02
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere 1,-2,-2,1,2,2 cone }
+				velocity { box -1,-1,-1,1,1,1 }
+				size { box 1,2 }
+				tint { line 0.498039,0.498039,0.498039,0.396078,0.388235,0.360784 }
+				fade { line 0.5,1 }
+				offset { sphere -10,-10,-10,10,10,10 }
+				length { box 4,0,0,2,0,0 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 }
+				tint { envelope linear }
+				fade { envelope rr2_concavefade_start_at_1 offset 0.1 }
+				length { envelope exp_1minusx/x2 count 4,4,4 }
+			}
+
+			end
+			{
+				size { box 20,40 }
+				tint { line 0.611765,0.576471,0.54902,0.721569,0.713726,0.537255 }
+				length { box 350,0,0,650,0,0 }
+			}
+			lineHit
+		}
+	}
+	spawner "unnamed8"
+	{
+		count		7,9
+		locked
+		calcDuration
+
+		sprite
+		{
+			duration	0.35,0.35
+			blend	add
+			persist
+			material	"particles/explosion/explode_burst01"
+			trailRepeat	1
+
+			start
+			{
+				position { line 20,-30,-30,35,30,30 }
+				size { line 175,175,250,250 }
+				tint { line 0.945098,0.47451,0.160784,0.921569,0.184314,0.184314 }
+				offset { sphere 50,-300,-300,450,300,300 }
+				rotate { box -0.166667,0.166667 }
+			}
+
+			motion
+			{
+				fade { envelope concavefade }
+			}
+			lineHit
+		}
+	}
+	spawner "flash4"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.5,1
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point 100,0,0 }
+				size { line 800,800,1800,1800 }
+				tint { line 0.239216,0.00392157,0,0.356863,0.0156863,0.00392157 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope rr2_concavefade_start_at_1_fast }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { point 500,500 }
+			}
+			lineHit
+		}
+	}
+	spawner "Dust cloud2"
+	{
+		count		10,10
+		attenuateEmitter
+		attenuation	1400,1400
+
+		sprite
+		{
+			duration	3,5
+			blend	add
+			persist
+			material	"particles/fire4a"
+			gravity		-0.00125,0.0125
+			trailRepeat	1
+
+			start
+			{
+				position { line -1,-1,-1,1,1,1 }
+				velocity { box -60,-15,-15,15,15,15 }
+				size { point 10,10 }
+				tint { line 0.941177,0.278431,0.184314,0.85098,0.301961,0.0666667 }
+				fade { point 0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope shamus_exp_1minusx/x2 count 2,2,2 }
+				fade { envelope shamus_fastinholdslowout offset 0.025 }
+				offset { envelope shamus_exp_1minusx/x2 count 4,4,4 offset -0.025,-0.025,-0.025 }
+				rotate { envelope shamus_exp_1minusx/x2 count 2 }
+			}
+
+			end
+			{
+				size { line 120,120,240,240 }
+				tint { point 0.152941,0.0627451,0.0627451 }
+				fade { line 0.7,1 }
+				offset { sphere 50,-400,-400,125,400,400 surface }
+				rotate { box -1,1 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+
+effect effects/impacts/plasmacharge/explosion_pavement
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/plasmacharge/explosion_default"
+	}
+}
+
+effect effects/impacts/plasmacharge/explosion_dirt
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/plasmacharge/explosion_default"
+	}
+}
+
+effect effects/impacts/plasmacharge/explosion_metal
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/plasmacharge/explosion_default"
+	}
+}
+
+effect effects/impacts/plasmacharge/explosion_sand
+{
+	size	1716
+
+	cutOffDistance	10000
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/plasmacharge/explosion_default"
+	}
+	spawner "Horizontal Sand Burst"
+	{
+		count		25,25
+		locked
+		attenuateEmitter
+		attenuation	500,1500
+
+		sprite
+		{
+			duration	2.2,2.2
+			persist
+			material	"textures/particles/sand_heavy"
+			gravity		0.7,0.7
+			trailRepeat	1
+
+			start
+			{
+				position { spiral 0,-64,-64,0,64,64,64 }
+				velocity { box 250,-900,-900,450,900,900 }
+				size { point 64,64 }
+				tint { point 0.454902,0.352941,0.270588 }
+				offset { box 0,-64,-64,0,64,64 }
+			}
+
+			motion
+			{
+				size { envelope jrad_convexfade }
+				fade { envelope jrad_alphain }
+			}
+
+			end
+			{
+				size { point 200,200 }
+			}
+			lineHit
+		}
+	}
+	emitter "Vertical Sand Burst"
+	{
+		duration	0.3,0.3
+		count		40,40
+		locked
+		attenuateEmitter
+		attenuation	500,1500
+
+		sprite
+		{
+			duration	2.2,2.2
+			persist
+			material	"textures/particles/sand_heavy"
+			gravity		0.7,0.7
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 700,-200,-200,1000,200,200 }
+				size { point 64,64 }
+				tint { point 0.639216,0.501961,0.392157 }
+				offset { box 0,-64,-64,0,64,64 }
+			}
+
+			motion
+			{
+				size { envelope jrad_convexfade }
+				fade { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 200,200 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/impacts/plasmacharge/explosion_snow
+{
+	size	1716
+
+	cutOffDistance	10000
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/plasmacharge/explosion_default"
+	}
+	spawner "Horizontal snow Burst"
+	{
+		count		20,20
+		locked
+		attenuateEmitter
+		attenuation	500,1500
+
+		sprite
+		{
+			duration	2.2,2.2
+			persist
+			material	"particles/debris/debris_snow"
+			gravity		0.7,0.7
+			trailRepeat	1
+
+			start
+			{
+				position { spiral 0,-64,-64,0,64,64,64 }
+				velocity { box 250,-900,-900,450,900,900 }
+				size { point 64,64 }
+				tint { point 0.454902,0.352941,0.270588 }
+				offset { box 0,-64,-64,0,64,64 }
+			}
+
+			motion
+			{
+				size { envelope jrad_convexfade }
+				fade { envelope jrad_alphain }
+			}
+
+			end
+			{
+				size { point 200,200 }
+			}
+			lineHit
+		}
+	}
+	emitter "Vertical snow Burst"
+	{
+		duration	0.3,0.3
+		count		20,20
+		locked
+		attenuateEmitter
+		attenuation	500,1500
+
+		sprite
+		{
+			duration	2.2,2.2
+			persist
+			material	"particles/debris/debris_snow"
+			gravity		0.7,0.7
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 700,-200,-200,1000,200,200 }
+				size { point 64,64 }
+				tint { point 0.639216,0.501961,0.392157 }
+				offset { box 0,-64,-64,0,64,64 }
+			}
+
+			motion
+			{
+				size { envelope jrad_convexfade }
+				fade { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 200,200 }
+			}
+			lineHit
+		}
+	}
+}

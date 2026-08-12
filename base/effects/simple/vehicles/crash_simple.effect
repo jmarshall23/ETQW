@@ -1,0 +1,298 @@
+effect effects/vehicles/crash_simple
+{
+	size	223
+
+	cutOffDistance	1000
+
+	sound "Crash Sound"
+	{
+		soundShader	"sounds/vehicles/misc/crash"
+		freqshift	1,0.7
+	}
+	spawner "animated2"
+	{
+		count		1,1
+		useMaterialColor
+		attenuateEmitter
+		attenuation	700,700
+
+		sprite
+		{
+			duration	0.75,1.75
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		0.0125,0.05
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -2,-5,-5,15,5,5 }
+				velocity { box 5,-5,-5,5,5,5 }
+				acceleration { box 0,-60,-60,0,60,60 }
+				friction { point 0.25,0,0 }
+				size { point 20,20 }
+				tint { line 0.866667,0.784314,0.67451,0.219608,0.203922,0.156863 }
+				fade { point 0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 offset -0.05,-0.05 }
+				tint { envelope linear }
+				fade { envelope fastinslowout offset -0.0125 }
+				offset { envelope exp_1minusx/x2 count 2.5,1.75,1.75 offset -0.1,-0.1,-0.1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 90,90,120,120 }
+				tint { line 0,0,0,0.756863,0.701961,0.501961 }
+				fade { line 0.3,0.6 }
+				offset { sphere -2.5,-2.5,-2.5,2.5,2.5,2.5 }
+				rotate { box -0.166667,0.166667 }
+			}
+			lineHit
+		}
+	}
+	spawner "Chips"
+	{
+		count		5,5
+		useMaterialColor
+		attenuateEmitter
+		attenuation	300,700
+
+		sprite
+		{
+			duration	0.75,1
+			persist
+			material	"particles/debris/debris_metal01"
+			gravity		0.5,0.8
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 150,-145,-145,400,145,145 }
+				size { box 0.5,0.5,5,5 }
+				tint { line 1,1,1,0.639216,0.639216,0.639216 }
+				offset { sphere -5,-5,-5,5,5,5 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shattertable2 offset 0.1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 0.3,0.3 }
+				rotate { box 1,-1 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+effect effects/vehicles/crash_heavy_simple
+{
+	size	1698
+
+	sound "Crash Sound"
+	{
+		soundShader	"sounds/vehicles/misc/crash/hard"
+	}
+}
+
+effect effects/vehicles/crash_medium_simple
+{
+	size	1698
+
+	sound "Crash Sound"
+	{
+		soundShader	"sounds/vehicles/misc/crash/medium"
+	}
+}
+
+effect effects/vehicles/crash_light_simple
+{
+	size	1698
+
+	sound "Crash Sound"
+	{
+		soundShader	"sounds/vehicles/misc/crash/soft"
+	}
+}effect effects/vehicles/scrape_simple
+{
+	size	307
+
+	sound "Scrape Sound"
+	{
+		soundShader	"sounds/vehicles/misc/scrape"
+		freqshift	0,2
+	}
+	spawner "core"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.125,0.25
+			persist
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -5,-5,-5,5,5,5 }
+				velocity { box 0,-5,-5,5,5,5 }
+				size { line 20,20,50,50 }
+				tint { line 0.290196,0.290196,0.290196,0.0784314,0.0431373,0 }
+				fade { line 1,0.5 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1 offset 0.1,0.1,0.1 }
+			}
+			lineHit
+		}
+	}
+	emitter "spark flash"
+	{
+		duration	0.1,0.1
+		count		2,2
+		locked
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.08,0.08
+			material	"textures/particles/sparks/sparkflash_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 5,5 }
+				fade { line 0.3,1 }
+				rotate { box 0,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { line 25,25,40,40 }
+			}
+			lineHit
+		}
+	}
+	spawner "unnamed11"
+	{
+		count		5,5
+		locked
+		attenuateEmitter
+		attenuation	250,350
+
+		line
+		{
+			duration	0.1,1.3
+			generatedLine
+			material	"textures/particles/sparks/spark03"
+			gravity		0.5,1.5
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -5,-5,-5,5,5,5 }
+				velocity { box 50,0,-15,300,100,400 }
+				size { box 1,3 }
+				length { box 12,0,0,10,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+				length { envelope linear }
+			}
+
+			end
+			{
+				length { box 2,0,0,4,0,0 }
+			}
+			lineHit
+		}
+	}
+	spawner "Chips"
+	{
+		count		0.1,2
+		useMaterialColor
+		attenuateEmitter
+		attenuation	250,350
+
+		sprite
+		{
+			duration	0.75,1
+			persist
+			material	"particles/debris/debris_metal01"
+			gravity		0.5,0.8
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 150,-145,-145,400,145,145 }
+				size { box 0.5,0.5,3,3 }
+				tint { line 1,1,1,0.639216,0.639216,0.639216 }
+				offset { sphere -5,-5,-5,5,5,5 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shattertable2 offset 0.1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 0.3,0.3 }
+				rotate { box 1,-1 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+

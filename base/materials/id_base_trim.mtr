@@ -1,0 +1,196 @@
+material textures/base_trim/strim_noshadow
+{
+	noshadows
+	qer_editorimage	textures/base_trim/strim_noshadow.tga
+	diffusemap		textures/base_trim/strim_d.tga
+	specularmap		textures/base_trim/strim_s.tga
+}
+
+
+material textures/base_trim/strim
+{
+	surfaceType "metal"
+	qer_editorimage	textures/base_trim/strim.tga
+	diffusemap		textures/base_trim/strim_d.tga
+	specularmap		textures/base_trim/strim_s.tga
+}
+
+material textures/base_trim/strim_rusty
+{
+	surfacetype "metal"
+	{
+		diffusemap		textures/base_trim/strim_rusty_d.tga
+		specularmap		textures/base_trim/strim_s.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult 2,2,0,0
+	}
+}
+
+material textures/base_trim/strim_rusty_noshadows
+{
+	noshadows
+	surfacetype "metal"
+	{
+		diffusemap		textures/base_trim/strim_rusty_d.tga
+		specularmap		textures/base_trim/strim_s.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult 2,2,0,0
+	}
+}
+
+material textures/base_trim/asp3
+{
+	surfaceType "metal"
+	qer_editorimage	textures/base_trim/asp3.tga
+	bumpmap	addnormals( textures/base_trim/adriansketchp3_local.tga, heightmap( textures/base_trim/asp3bumpadd.tga, 6 ) )
+	diffusemap	textures/base_trim/asp3dif.tga
+	specularmap	textures/base_trim/asp3spec.tga
+}
+
+material textures/base_trim/bluetex4j_ed
+{
+	surfaceType "metal"
+	qer_editorimage	textures/base_trim/bluetex4j_ed.tga
+	bumpmap		textures/base_trim/bluetex4j_local.tga
+	diffusemap		textures/base_trim/bluetex4jdif.tga
+	specularmap		textures/base_trim/bluetex4jspec.tga
+}
+
+material textures/base_trim/bluetex4k_ed
+{
+	surfaceType "metal"
+	qer_editorimage	textures/base_trim/bluetex4k_ed.tga
+	bumpmap		textures/base_trim/bluetex4k_local.tga
+	diffusemap		textures/base_trim/bluetex4kdif.tga
+	specularmap		textures/base_trim/bluetex4kspec.tga
+}
+
+material textures/base_trim/bluetex4g_ed
+{
+	surfaceType "metal"
+	qer_editorimage	textures/base_trim/bluetex4g_ed.tga
+	bumpmap		textures/base_trim/bluetex4g_local.tga
+	diffusemap		textures/base_trim/bluetex4gdif.tga
+	specularmap		textures/base_trim/bluetex4gspec.tga
+}
+
+
+material textures/base_trim/bluetex4h_ed
+{
+	surfaceType "metal"
+	qer_editorimage	textures/base_trim/bluetex4h_ed.tga
+	bumpmap		textures/base_trim/bluetex4h_local.tga
+	diffusemap		textures/base_trim/bluetex4hdif.tga
+	specularmap		textures/base_trim/bluetex4hspec.tga
+}
+
+material textures/base_trim/bluetex3k2
+{
+	qer_editorimage	textures/base_trim/bluetex3k2.tga
+	bumpmap		textures/base_trim/bluetex3k2_local.tga
+	diffusemap		textures/base_trim/bluetex3k2_d.tga
+	specularmap		textures/base_trim/bluetex3k2_s.tga
+}
+
+material textures/base_trim/a_bluetex3k2_07
+{
+	surfaceType "metal"
+	qer_editorimage	textures/base_trim/a_bluetex3k2_07.tga
+	bumpmap		addnormals (textures/base_trim/a_bluetex3k2_local.tga, heightmap (textures/base_trim/a_bluetex3k2_b07.tga, 3 )) 
+	diffusemap		textures/base_trim/a_bluetex3k2_d07.tga
+	specularmap		textures/base_trim/a_bluetex3k2_s07.tga
+}
+
+material textures/base_trim/a_bluetex4j_07
+{
+	qer_editorimage	textures/base_trim/a_bluetex4j_07.tga
+	bumpmap		addnormals( textures/base_trim/a_bluetex4j_local.tga, heightmap( textures/base_trim/a_bluetex4j_b07.tga, 3 ) )
+	diffusemap		textures/base_trim/a_bluetex4j_d07.tga
+	specularmap		textures/base_trim/a_bluetex4j_s07.tga
+}
+
+material textures/base_trim/grate1ashiny
+{
+	surfaceType "metal"
+	qer_editorimage	textures/base_trim/grate1a_shiny.tga
+	noshadows
+	twoSided
+	{
+		bumpmap models/seneca/textures/grate1_local.tga
+		specularmap	picmip -2	models/seneca/textures/grate1a_s.tga
+		diffusemap models/seneca/textures/grate1a_d.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/base_trim/ladder
+{
+	qer_editorimage textures/base_trim/ladder_ed.tga
+	noshadows
+	twoSided
+	nonsolid
+
+	{
+		specularmap	textures/base_trim/ladder_s.tga
+		bumpmap		textures/base_trim/ladder_local.tga
+		diffusemap	textures/base_trim/ladder_d.tga
+		alphaTest 0.5
+	}
+
+}
+
+material textures/base_trim/a_treadpanel_d03
+{
+	surfaceType "metal"
+	qer_editorimage textures/base_trim/a_treadpanel_d03.tga
+
+	diffusemap	textures/base_trim/a_treadpanel_d03.tga
+	specularmap	textures/base_trim/a_treadpanel_s02.tga
+	bumpmap	        textures/base_trim/a_treadpanel_local.tga
+        
+}
+
+material textures/base_trim/understair
+{
+	qer_editorimage textures/base_trim/understair.tga
+
+	diffusemap	textures/base_trim/understair_d.tga
+	specularmap	textures/base_trim/understair_s.tga
+	bumpmap		heightmap (textures/base_trim/understair_b.tga, 8)
+       
+}
+
+material textures/base_trim/btrim01
+{
+	qer_editorimage textures/base_trim/btrim01.tga
+
+	diffusemap	textures/base_trim/btrim_d.tga
+	specularmap	textures/base_trim/btrim_s.tga
+	bumpmap	        heightmap (textures/base_trim/ytrim_b.tga, 5)      
+}
+
+material textures/base_trim/a_sfltrim3yel_d03e
+{
+	surfaceType "metal"
+	{
+		diffusemap	textures/base_trim/a_sfltrim3yel_d03e.tga    
+		specularmap	textures/base_trim/a_sfltrim3yel_s03e.tga         
+		bumpmap 	textures/base_trim/a_sfltrim3yel_l03e.tga      
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	2,1,0,0
+		vertexcolor
+	}
+}
+
+
+
+

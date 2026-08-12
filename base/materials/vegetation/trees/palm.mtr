@@ -1,0 +1,42 @@
+//PALM TREES, SURPRISINGLY ENOUGH!
+
+material models/vegetation/trees/palm/palm01_leaf
+{	
+	nonsolid
+	noshadows
+	twoSided
+	{
+/*		useTemplate material/foliage_translucent_stage<
+			"models/vegetation/trees/palm/palm01_leaf_d.tga",
+			"models/vegetation/trees/palm/palm01_leaf_transluceny.tga",
+			"models/vegetation/trees/palm/palm01_leaf_local.tga",
+			"models/vegetation/trees/palm/palm01_leaf_s.tga",
+			"1.0",				// translucency multiplier
+			"0.7", "0.9", "0.7"	// light scattering rgb
+		>	*/
+		
+		//program interaction/foliage
+		diffuseMap	picmip -1	models/vegetation/trees/palm/palm01_leaf_d.tga
+		bumpMap		picmip -1	models/vegetation/trees/palm/palm01_leaf_local.tga
+		alphatest	0.3
+		
+		useTemplate	wind/animatematrix_right< 0.15, 0.002 >
+	}
+}
+
+material models/vegetation/trees/palm/palm01_bark
+{
+	noshadows
+	nonsolid
+	{
+		diffusemap	picmip -1	models/vegetation/trees/palm/palm01_bark_d.tga
+		bumpmap		picmip -1	models/vegetation/trees/palm/palm01_bark_local.tga
+		specularmap	picmip -2	models/vegetation/trees/palm/palm01_bark_s.tga
+		alphaTest 	0.1
+		vertexcolor
+		
+		bumpDetailMap			textures/detail/bump/bark_detail01_local.tga
+		specDetailMap			textures/detail/bump/bark_detail01_d.tga
+		detailMult 10,10,0,0 
+	}
+}

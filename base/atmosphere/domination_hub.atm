@@ -1,0 +1,53 @@
+ambientCubemap domination_hub {
+	ambientLight {
+		color 0.2745098174 0.2745098174 0.2745098174
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2352941334 0.2352941334 0.2352941334
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.2352941334 0.2352941334 0.2352941334
+		direction 0.1756406128 0.9035925865 0.3907311261
+		name "Light2"
+	}
+	ambientLight {
+		color 0.2352941334 0.2352941334 0.2352941334
+		direction 0.0173223317 -0.9923949838 0.1218693554
+		name "Light3"
+	}
+	ambientLight {
+		color 0.2352941334 0.2352941334 0.2352941334
+		direction -0.8843650818 0.4506065547 0.1218693554
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2352941334 0.2352941334 0.2352941334
+		direction 1 0 0
+		name "Light5"
+	}
+	ambientLight {
+		color 0.1568627506 0.1568627506 0.1568627506
+		direction -0.7036204934 -0.6794784069 0.2079117
+		name "Light6"
+	}
+	ambientColor 0.2352941334 0.2352941334 0.2352941334
+	highLightColor 0.2352941334 0.2352941334 0.2352941334
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

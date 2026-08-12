@@ -1,0 +1,60 @@
+material guis/assets/limbo/endscr_1_gdf
+{
+	sort gui
+	{
+		blend blend
+		map clamp linear nopicmip makealpha(guis/assets/limbo/endscr_1_gdf.tga)
+		vertexColor
+	}
+}
+
+material guis/assets/limbo/endscr_1_strogg
+{
+	sort gui
+	{
+		blend blend
+		map clamp linear nopicmip makealpha(guis/assets/limbo/endscr_1_strogg.tga)
+		vertexColor
+	}
+}
+
+material guis/assets/limbo/endscr_2_gdf
+{
+	sort gui
+	{
+		blend filter
+		map clamp guis/assets/limbo/endscr_2_gdf.tga
+		vertexColor
+	}
+}
+
+material guis/assets/limbo/endscr_2_strogg
+{
+	sort gui
+	{
+		blend filter
+		map clamp guis/assets/limbo/endscr_2_strogg.tga
+		vertexColor
+	}
+}
+
+material guis/assets/limbo/endscr_3
+{
+	sort gui
+	{
+		blend add
+		map clamp highquality guis/assets/limbo/endscr_3.tga
+		rgb 0.4
+		vertexColor
+	}
+}
+
+material guis/assets/limbo/campaign_status
+{
+	sort gui
+	{
+		blend blend
+		map clamp linear nopicmip makealpha(guis/assets/limbo/campaign_status.tga)
+		vertexColor
+	}
+}

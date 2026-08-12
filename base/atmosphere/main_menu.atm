@@ -1,0 +1,77 @@
+atmosphere main_menu {
+	sunMaterial "atmospheres/default"
+	sunDir ( -0.2786397338 -0.8299871087 0.4831990004 )
+	sunColor ( 0.4431372881 0.4980392456 0.5411764979 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright2"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 0.9921569228 0.9529412389 )
+		saturation 1
+		contrast 1
+		glareParms ( 1.0699999332 1.0199999809 0 1 )
+		glareBases ( 0 0 0 0 )
+	}
+	fogDistHalf 10000
+	fogHeightHalf 4739
+	fogHeightOffset -392
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "main_menu"
+	skyGradientImage "atmosphere/blankfog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 146
+	windStrengthDev 133
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+ambientCubemap main_menu {
+	ambientLight {
+		color 1 0.9921569228 0.9215686917
+		direction 0.2663193047 -0.693785429 0.6691306233
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1411764771 0.1725490242 0.1882352978
+		direction -0.0594400875 0.6794031262 -0.7313537598
+		name "Light1"
+	}
+	ambientColor 0.4941176474 0.4941176474 0.6156862974
+	highLightColor 0 0 0
+	brightness 1.1499999762
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

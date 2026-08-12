@@ -1,0 +1,489 @@
+material particles/penta/ssm_flash {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend add
+		map textures/particles/explosion/explode32strip01.tga
+		useTemplate templates/materials/animate<32, 1.8>
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/penta/ssm_flash_slow {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend add
+		map textures/particles/explosion/explode32strip01.tga
+		useTemplate templates/materials/animate<32, 10>
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/penta/ssm_flash_fast {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend add
+		map textures/particles/explosion/explode32strip01.tga
+		useTemplate templates/materials/animate<32, 0.75>
+		vertexcolor
+		maskalpha
+	}
+}
+
+
+material particles/penta/hornetheathaze {
+	noshadows
+	translucent
+	nonsolid
+	sort postprocess
+	{
+		program heatHazeWithVertex
+		deformScroll 0, 0
+		deformMagnitude 1
+		bumpMap textures/particles/smoke/smokenormal.tga
+		maskAlpha
+	}
+	/*{
+		map _white
+		vertexcolor
+	}*/
+}
+
+material particles/penta/hornetsmoke2 {
+	qer_editorimage textures/particles/smoke/smokepuff.tga
+	{
+		blend		blend
+		map		makealpha( textures/particles/smoke/smokepuff.tga )
+		maskalpha
+		vertexcolor
+	}
+}
+
+material particles/penta/smoketrail
+{
+	twoSided
+	{
+		blend blend
+		map makealpha( textures/particles/smoke/smoke_trail02.tga )
+		vertexcolor
+	}
+}
+
+
+material particles/penta/pasmacannon_bolt {
+	noshadows
+	translucent
+	nonsolid
+	sort postprocess
+	{
+		program heatHaze
+		deformScroll 0, 0
+		deformMagnitude 60
+		bumpMap textures/particles/vppinch.tga
+		maskAlpha
+	}
+	{
+		blend		add
+		color	1, 0.4274, 0.003, 1
+		map		textures/particles/shockwave.tga
+		maskalpha
+		rotate time * 0.5
+	}
+	/*{
+		blend		filter
+		map		clamp textures/particles/pasma_filter.tga
+		maskalpha
+		rotate time * 0.2
+	}*/
+}
+
+material particles/penta/pasmacannon_trail {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		color	1, 0.4274, 0.003, 1
+		map		textures/particles/shockwave.tga
+		maskalpha
+		rotate time * 0.5
+		vertexcolor
+	}
+}
+
+material particles/penta/pasmacannon_core {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		filter
+		maskalpha
+		map		clamp textures/particles/plasmacore.tga
+		rotate		time * -0.2
+
+	}
+	{
+		blend		filter
+		maskalpha
+		map		clamp textures/particles/plasmacore.tga
+		//scale		1, -1
+		rotate		time * 0.3
+
+	}
+	{
+		blend		add
+		maskalpha
+		map		clamp textures/particles/plasmacore2.tga
+		rotate		time * 0.25
+
+	}
+	{
+		blend		add
+		maskalpha
+		map		clamp textures/particles/plasmacore2.tga
+		rotate		time * -0.35
+
+	}
+
+}
+
+
+material particles/penta/pasmacannon_spike {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		maskalpha
+		map		textures/particles/plasmacore_spike.tga
+		translate	firetable[ time * 2 ] * -0.1, 0
+	}
+}
+
+material particles/penta/plasmacannon_trail {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		maskalpha
+		map		clamp textures/particles/plasmacore2.tga
+		vertexcolor
+
+	}
+}
+
+material particles/penta/plasmacannon_trailsmoke {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		blend
+		maskalpha
+		map		clamp makealpha( textures/particles/barrelpoof.tga )
+		vertexcolor
+
+	}
+}
+
+material particles/penta/bosonorb_shockwave {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		maskalpha
+		color	1, 0.4274, 0.003, 1
+		map		textures/particles/shockwave.tga
+		vertexcolor
+	}
+}
+
+material particles/penta/blue_shockwave {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		maskalpha
+		color	0.0862, 0.6666, 0.9372, 1
+		map		textures/particles/shockwave.tga
+		vertexcolor
+	}
+}
+
+material particles/penta/shockwave {
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		add
+		maskalpha
+		map		textures/particles/shockwave.tga
+		vertexcolor
+	}
+}
+
+material particles/penta/shockwave_burn {
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		GL_ZERO, GL_ONE_MINUS_SRC_COLOR
+		maskalpha
+		map		textures/particles/shockwave.tga
+		vertexcolor
+	}
+}
+
+material particles/penta/bosonorb_shockwave2 {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		maskalpha
+		map		textures/particles/blackhole_luma.tga
+		vertexcolor
+	}
+}
+
+material particles/penta/bosonorb_trail {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		maskalpha
+		map		textures/particles/plasmacore2.tga
+		vertexcolor
+	}
+}
+
+material particles/penta/bosonorb_muzzle_flash {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		maskalpha
+		map		textures/particles/barrelexpsmall.tga
+		vertexcolor
+	}
+}
+
+material particles/penta/bosonorb_muzzle_flame
+{
+	qer_editorimage textures/effects/weapons/muzzleflash_s2a.tga
+	sort nearest
+	{
+		blend add
+		map clamp textures/effects/weapons/muzzleflash_s2a.tga
+		useTemplate templates/materials/animate< 8, 0.2 >
+		alpha 1
+		maskalpha
+		vertexcolor
+	}
+}
+
+material particles/penta/bosonorb_muzzle_shockwave
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		add
+		maskalpha
+		color	1, 0.4274, 0.003, 1
+		map		textures/particles/shockwave.tga
+		vertexcolor
+	}
+}
+
+material particles/penta/bosonorb_sparktrail2
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		add
+		maskalpha
+		map		textures/particles/smoke/flame_trail02.tga
+		vertexcolor
+	}
+}
+
+material particles/penta/furryball
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		blend
+		maskalpha
+		map		makealpha( textures/particles/spikeball.tga )
+		maskDepth
+		vertexcolor
+	}
+}
+
+
+material particles/penta/furryball_heathaze
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	sort postprocess
+	{
+		program	heatHazeWithVertex
+		blend		blend
+		maskalpha
+		bumpMap		heightmap( textures/particles/spikeball.tga, 8 )
+		deformMagnitude 4
+		maskDepth
+		vertexcolor
+	}
+}
+
+material particles/penta/furryball_add
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		add
+		maskalpha
+		map		textures/particles/spikeball.tga
+		maskDepth
+		vertexcolor
+	}
+}
+
+material particles/penta/furryball_mini
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		blend
+		maskalpha
+		map		makealpha( textures/particles/spikeball_mini.tga )
+		maskDepth
+		vertexcolor
+	}
+}
+
+
+material particles/penta/furryball_mini_heathaze
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	sort postprocess
+	{
+		program	heatHazeWithVertex
+		blend		blend
+		maskalpha
+		bumpMap		heightmap( textures/particles/spikeball_mini.tga, 4 )
+		maskDepth
+		vertexcolor
+	}
+}
+
+material particles/penta/furryball_mini_add
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		add
+		maskalpha
+		map		textures/particles/spikeball_mini.tga
+		maskDepth
+		vertexcolor
+	}
+}
+
+material particles/penta/blaster_blue
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		add
+		maskalpha
+		map		textures/effects/weapons/blaster_fly_blue.tga
+		vertexcolor
+	}
+}
+
+material particles/penta/traillines
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		add
+		maskalpha
+		map		textures/particles/traillines.tga
+		vertexcolor
+	}
+}
+
+material particles/penta/traillines_burn
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		GL_ZERO, GL_ONE_MINUS_SRC_COLOR
+		maskalpha
+		map		textures/particles/traillines.tga
+		vertexcolor
+	}
+}
+
+material penta/blend_fire_smoke {
+	{
+		blend GL_ONE, GL_ONE_MINUS_SRC_ALPHA
+		program sfx/cheap_litsmoke_fire
+		mask		textures/particles/barrelexpsmall.tga
+		map		premultiplyAlpha( makealpha (textures/particles/dustcloud_02.tga) )
+		vertexcolor		
+	}
+}
+
+material penta/blend_fire_smoke_trail {
+	twosided
+	{
+		blend GL_ONE, GL_ONE_MINUS_SRC_ALPHA
+		program sfx/cheap_litsmoke_fire
+		mask	textures/particles/smoke/flame_trail02.tga
+		map		premultiplyAlpha( makealpha ( textures/particles/smoke/smoke_trail02_line_mask.tga ) )
+		vertexcolor		
+		
+		scale 10, 1
+		rotate 0.25
+		translate 0, time * -0.5
+	}
+}

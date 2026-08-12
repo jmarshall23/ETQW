@@ -1,0 +1,73 @@
+object weapon_dummy : weapon_base {
+	void		init();
+	void		Idle();
+	void		Sprint();
+}
+
+void weapon_dummy::init() {
+	weaponState( "Raise", 0 );
+}
+
+void weapon_dummy::Idle() {
+	mainFireDown = true;
+
+	weaponReady();
+
+	playCycle( ANIMCHANNEL_ALL, "idle" );
+	
+	sys.wait( 0.2f );
+	
+	while ( true ) {
+		if ( WEAPON_LOWERWEAPON ) {
+			weaponState( "Lower", 4 );
+		}
+		if ( WEAPON_ATTACK ) {
+			if ( !mainFireDown ) {
+				if ( !sys.isClient() ) {
+					myPlayer.disguise( $null_entity );
+				}
+			}
+		} else {
+			mainFireDown = false;
+		}
+
+		if ( myPlayer.AI_SPRINT ) {
+			weaponState( "Sprint", 4 );
+		}
+
+		sys.waitFrame();
+	}
+}
+
+void weapon_dummy::Sprint() {
+	weaponReady();
+
+	if ( hasWeaponAnim( "start_sprint" ) ) {
+		playAnim( ANIMCHANNEL_ALL, "start_sprint" );
+		waitUntil( animDone( ANIMCHANNEL_ALL, 4 ) );
+	}
+
+	StartIdleEffect();
+
+	while ( true ) {
+		if ( WEAPON_LOWERWEAPON ) {
+			LeaveSprint( "Lower", 4 );
+		}
+
+		if ( WEAPON_ATTACK ) {
+			if ( !mainFireDown ) {
+				if ( !sys.isClient() ) {
+					myPlayer.disguise( $null_entity );
+				}
+			}
+		} else {
+			mainFireDown = false;
+		}
+
+		if ( !myPlayer.AI_SPRINT ) {
+			LeaveSprint( "Idle", 4 );
+		}
+
+		sys.waitFrame();
+	}
+}

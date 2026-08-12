@@ -1,0 +1,214 @@
+object vehicle_cockpit_light {
+	void				init();
+
+	void				Idle();
+	
+	entity				myVehicle;
+	entity				myCockpit;
+}
+
+void vehicle_cockpit_light::init() {		
+	setOrigin( getVectorKey( "origin" ) );
+	bind( myVehicle );
+
+	setState( "Idle" );
+}
+
+void vehicle_cockpit_light::Idle() {
+	turnOn();
+	while ( true ) {
+		if ( myVehicle == $null_entity || myCockpit == $null_entity ) {
+			remove();
+		}
+		
+		sys.waitFrame();
+	}
+}
+
+
+
+
+object vehicle_basic_cockpit {
+	void				preinit();
+	void				init();
+
+	void				Idle();
+	void				Idle_Jointed();
+	void				Idle_View();	
+	
+	void				OnCockpitSetup( entity v );
+
+	void				OnEntered() { ; }
+	
+	void				StartEMPEffect();
+	void				StopEMPEffect();
+	
+	handle				empEffect;
+	
+	entity				myVehicle;
+	float				jointHandle;
+	vector				largeFov;
+	
+	boolean				noEmpEffects;
+	
+	vector				offset;
+	float				passengerId;
+}
+
+void vehicle_basic_cockpit::preinit() {
+	offset = getVectorKey( "offset" );
+	largeFov = getVectorKey( "largeFov" );
+	noEmpEffects = getIntKey( "no_emp_effects" );
+	empEffect = 0;
+}
+
+void vehicle_basic_cockpit::init() {
+	string climateSkinKey = getKey( "climate_skin_key" );
+	if ( climateSkinKey != "" ) {
+		setSkin( sys.getClimateSkin( "skin_" + climateSkinKey ) );
+	}
+
+	jointHandle = myVehicle.getJointHandle( getKey( "joint_attach" ) );
+	passengerId	= getFloatKey( "passenger_id" ) - 1;
+	
+	// create the lights
+	float i = 1;
+	while ( 1 ) {
+		string lightDefName = getKey( "def_light" + i );
+		if ( lightDefName == "" ) {
+			break;
+		}
+		
+		vehicle_cockpit_light light = sys.spawnClient( lightDefName );
+		if ( light != $null_entity ) {
+			light.myVehicle = myVehicle;
+			light.myCockpit = self;
+		}
+		i++;
+	}
+	
+	OnEntered();
+	
+	if ( passengerId != -1 && !getFloatKey( "force_joint_idle" ) ) {
+		setState( "Idle_View" );
+	}
+
+	if ( jointHandle == INVALID_JOINT ) {
+		jointHandle = myVehicle.getJointHandle( "origin" );
+	}
+	if ( jointHandle == INVALID_JOINT ) {
+		setState( "Idle" );
+	}
+	setState( "Idle_Jointed" );
+}
+
+void vehicle_basic_cockpit::StartEMPEffect() {
+	if ( empEffect ) {
+		return;
+	}
+	
+	empEffect = playEffect( "fx_emped", getKey( "joint_fx_emped" ), 0 );
+}
+
+void vehicle_basic_cockpit::StopEMPEffect() {
+	if ( !empEffect ) {
+		return;
+	}
+	
+	stopEffectHandle( empEffect );
+	empEffect = 0;
+}
+
+void vehicle_basic_cockpit::Idle_Jointed() {
+	while ( true ) {		
+		vector localOffset = offset;
+		float fov = sys.getDefaultFov();
+		if ( fov > 90.f ) {
+			float val = (fov - 90.f) / (110.f-90.f);
+			if ( val > 1.f ) {
+				val = 1.f;
+			}
+			localOffset = localOffset + val * largeFov;
+		}
+		vector jointOrigin = myVehicle.getJointPos( jointHandle );
+		vector jointAngles = myVehicle.getJointAngle( jointHandle );
+		vector worldOffset = sys.rotateVecByAngles( localOffset, jointAngles );
+		setOrigin( jointOrigin + worldOffset );
+		setAngles( jointAngles );
+		
+		if ( !noEmpEffects ) {
+			if ( myVehicle.isWeaponEMPed() ) {
+				StartEMPEffect();
+			} else {
+				StopEMPEffect();
+			}
+		}
+
+		sys.waitFrame();
+	}
+}
+
+void vehicle_basic_cockpit::Idle() {
+	while ( true ) {
+		vector localOffset = offset;
+		float fov = sys.getDefaultFov();
+		if ( fov > 90.f ) {
+			float val = (fov - 90.f) / (110.f-90.f);
+			if ( val > 1.f ) {
+				val = 1.f;
+			}
+			localOffset = localOffset + val * largeFov;
+		}
+		vector jointOrigin = myVehicle.getWorldOrigin();
+		vector jointAngles = myVehicle.getAngles();
+		vector worldOffset = sys.rotateVecByAngles( localOffset, jointAngles );
+		setOrigin( jointOrigin + worldOffset );
+		setAngles( jointAngles );
+		
+		if ( !noEmpEffects ) {
+			if ( myVehicle.isWeaponEMPed() ) {
+				StartEMPEffect();
+			} else {
+				StopEMPEffect();
+			}
+		}
+
+		sys.waitFrame();
+	}
+}
+
+void vehicle_basic_cockpit::Idle_View() {
+	entity p = myVehicle.getPositionPlayer( passengerId );
+
+	while ( p != $null_entity ) {		
+		vector localOffset = offset;
+		float fov = sys.getDefaultFov();
+		if ( fov > 90.f ) {
+			float val = (fov - 90.f) / (110.f-90.f);
+			if ( val > 1.f ) {
+				val = 1.f;
+			}
+			localOffset = localOffset + val * largeFov;
+		}
+		vector jointOrigin = p.getViewOrigin();
+		vector jointAngles = p.getRenderViewAngles();		
+		vector worldOffset = sys.rotateVecByAngles( localOffset, jointAngles );
+		
+		setOrigin( jointOrigin + worldOffset );
+		setAngles( jointAngles );
+		
+		if ( !noEmpEffects ) {
+			if ( myVehicle.isWeaponEMPed() ) {
+				StartEMPEffect();
+			} else {
+				StopEMPEffect();
+			}
+		}
+
+		sys.waitFrame();
+	}
+}
+
+void vehicle_basic_cockpit::OnCockpitSetup( entity v ) {
+	myVehicle	= v;
+}

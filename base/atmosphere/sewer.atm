@@ -1,0 +1,255 @@
+atmosphere sewer {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright"
+	sunDir ( -0.1110843942 -0.2576030791 0.9598442316 )
+	sunColor ( 0.7725490928 0.7333333492 0.6078431606 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_orange"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 333
+	sunFlareZen -30
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8899999857 0.969999969 0.7799999714 0.8399999738 )
+		glareBases ( 0 1 0 0 )
+	}
+	fogDistHalf 10000
+	fogHeightHalf 2104
+	fogHeightOffset 4744
+	fogColor ( 0.7450980544 0.8156862855 0.8784313798 )
+	fogStart 0
+	fogEnd 33429
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "sewer"
+	skyGradientImage "atmosphere/skies/sewer_mist"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/canyon01" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/tiledclouds" {
+		style old
+		parms 12 ( 0.6000000238 1 1 1 0.0015 1 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/canyon_clouds" {
+		style old
+		parms 12 ( 0.625 1 1 1 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/sprites/sundisc" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere sewer_bright {
+	sunMaterial "atmospheres/lights/scrolling_clouds_temperate"
+	sunDir ( 0.1473006904 -0.2387501001 0.9598442316 )
+	sunColor ( 0.9490196109 0.8000000119 0.5882353187 )
+	sunHaloScale 0.0700000003
+	sunHaloBias -0.3200000226
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/lights/sunsprite2"
+	sunFlareSize 25641
+	sunFlareTime 0
+	enableSunFlareAziZen 1
+	sunFlareAzi 145
+	sunFlareZen 19
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 1 1 1 0.8499999642 )
+		glareBases ( 1 1 0 0 )
+	}
+	fogDistHalf 692
+	fogHeightHalf 1643
+	fogHeightOffset 9274
+	fogColor ( 0.5960784554 0.6392157078 0.6862745285 )
+	fogStart 0
+	fogEnd 72622
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "sewer"
+	skyGradientImage "atmosphere/skies/sewer_autumn_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sewer_autumn" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere sewer_blue {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright"
+	sunDir ( 0.1473006904 -0.2387501001 0.9598442316 )
+	sunColor ( 0.9490196109 0.8039215803 0.5882353187 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 31624
+	sunFlareMaterial "atmospheres/lights/sunsprite2"
+	sunFlareSize 82051
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 1 1 1 0.9499999881 )
+		glareBases ( 1 1 0 0 )
+	}
+	fogDistHalf 10000
+	fogHeightHalf 2104
+	fogHeightOffset 4744
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "sewer"
+	skyGradientImage "atmosphere/skies/sewer_mist"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/canyon01" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/tiledclouds" {
+		style old
+		parms 12 ( 0.6000000238 1 1 1 0.0015 1 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/canyon_clouds" {
+		style old
+		parms 12 ( 0.625 1 1 1 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/sprites/sundisc" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+ambientCubeMap sewer {
+	ambientLight {
+		color 0.2431372553 0.2862745225 0.3333333433
+		direction 0 0 1
+		name "Light0"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.2745098174 0.2745098174 0.2745098174
+		direction 0.0000000243 0 -1
+		name "Light1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.2392156869 0.2588235438 0.3137255013
+		direction -0.3562720716 0.8818042874 0.3090169728
+		name "Light2"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3490196168 0.3568627536 0.3764705956
+		direction 0.3408282101 -0.8878877163 0.3090169728
+		name "Light3"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3333333433 0.3490196168 0.400000006
+		direction -0.8754521608 -0.3716074228 0.3090169728
+		name "Light4"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.2941176593 0.3294117749 0.3764705956
+		direction 0.9186500907 0.2461515367 0.3090169728
+		name "Light5"
+		ambient 1
+		specular 1
+	}
+	envMap "env/sewer"
+	ambientColor 0.1725490242 0.1725490242 0.1725490242
+	minSpecAmbientColor 0.6666666865 0.6666666865 0.6666666865
+	minSpecShadowColor 0.5 0.5 0.5
+	highLightColor 0.8470588326 0.8156862855 0.78039217
+	brightness 1
+}
+
+ambientCubeMap sewer_interior {
+	ambientLight {
+		color 0.2941176593 0.3215686381 0.3529411852
+		direction 0 0 1
+		name "sky"
+	}
+	ambientLight {
+		color 0.1960784346 0.1960784346 0.1960784346
+		direction 0 0 -1
+		name "ground"
+	}
+	ambientLight {
+		color 0.3529411852 0.3529411852 0.3529411852
+		direction 0 -1 0
+		name "south"
+	}
+	ambientLight {
+		color 0.2549019754 0.2470588237 0.250980407
+		direction -1 0 0
+		name "west"
+	}
+	ambientLight {
+		color 0.2078431398 0.200000003 0.2156862766
+		direction 0 1 0
+		name "north"
+	}
+	ambientLight {
+		color 0.2352941185 0.2352941185 0.2352941185
+		direction 1 0 0
+		name "east"
+	}
+	envMap "env/sewer/overflowroom"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+

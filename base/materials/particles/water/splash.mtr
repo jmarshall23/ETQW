@@ -1,0 +1,246 @@
+material particles/water/splash_dir_01
+{
+	qer_editorimage textures/particles/water/splash_dir_01.tga
+	{
+		blend blend
+		map clamp makealpha(textures/particles/water/splash_dir_01.tga)
+		alpha 1
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/water/splash_dir_02
+{
+	qer_editorimage textures/particles/water/splash_dir_02.tga
+	{
+		blend blend
+		map clamp makealpha(textures/particles/water/splash_dir_02.tga)
+		alpha 1
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/water/splash_dir_03
+{
+	qer_editorimage textures/particles/water/splash_dir_03.tga
+	{
+		blend blend
+		map clamp makealpha(textures/particles/water/splash_dir_03.tga)
+		alpha 1
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/water/splash_dir_04
+{
+	qer_editorimage textures/particles/water/splash_dir_04.tga
+	{
+		blend blend
+		map clamp makealpha(textures/particles/water/splash_dir_04.tga)
+		alpha 1
+		vertexcolor
+		maskalpha
+
+	}
+}
+
+material particles/water/hover_ripple
+{
+	qer_editorimage textures/particles/water/hover_ripple.tga
+	{
+		blend add
+		map clamp textures/particles/water/hover_ripple.tga
+		alpha 1
+		vertexcolor
+	}
+}
+
+material particles/water/impact_ripple_01
+{
+	qer_editorimage textures/particles/water/impact_ripple_01.tga
+	{
+		blend add
+		map clamp textures/particles/water/impact_ripple_01.tga
+		alpha 1
+		vertexcolor
+	}
+}
+
+material particles/water/impact_ripple_02
+{
+	qer_editorimage textures/particles/water/impact_ripple_01.tga
+	{
+		blend blend
+		map makealpha (textures/particles/water/impact_ripple_01.tga)
+		maskalpha
+		vertexcolor
+	}
+}
+
+material particles/water/spray_light_01
+{
+	qer_editorimage textures/particles/water/spray_light_01.tga
+	{
+		blend blend
+		map clamp makealpha(textures/particles/water/spray_light_01.tga)
+		alpha 1
+		vertexcolor
+		maskalpha
+		maskDepth
+	}
+}
+
+material particles/water/spray_light_01_underwater
+{
+	qer_editorimage textures/particles/water/spray_light_01.tga
+	sort refractable //used underwater
+	{
+		blend blend
+		map clamp makealpha(textures/particles/water/spray_light_01.tga)
+		alpha 1
+		vertexcolor
+		maskalpha
+		maskDepth
+	}
+}
+
+material particles/water/spray_heavy_01
+{
+	qer_editorimage textures/particles/water/spray_heavy_01.tga
+	{
+		blend blend
+		map clamp makealpha(textures/particles/water/spray_heavy_01.tga)
+		alpha 1
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/water/spray_heavy_01_underwater
+{
+	qer_editorimage textures/particles/water/spray_heavy_01.tga
+	sort refractable
+	{
+		blend blend
+		map clamp makealpha(textures/particles/water/spray_heavy_01.tga)
+		alpha 1
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/water/wake_test
+{
+	qer_editorimage textures/particles/water/spray_heavy_01.tga
+	sort far
+	twosided
+	translucent
+	forceAtmosphere
+
+	{
+		useTemplate material/water_wake<
+					"textures/particles/water/wake_edge_local.tga",		// Bumpmap
+					"textures/particles/water/wake_edge_mask.tga"
+					"env/underwater"
+					"1",					// Translate X
+					"0",					// Translate Y
+					"1.0",					// R
+					"1.0",					// G
+					"1.0",					// B
+					"0.1",					// Distortion Strength
+					"5"					// Reflection Power
+					"3"					// Glare
+					"4"
+		>
+	}
+
+	{
+		blend blend
+		map textures/particles/water/wake_edge_d.tga
+		//clamp
+		alpha 1
+		vertexcolor
+	}
+
+}
+
+material particles/water/wake_center
+{
+	qer_editorimage textures/particles/water/spray_heavy_01.tga
+	sort far
+	twosided
+	translucent
+	forceAtmosphere
+
+	{
+		useTemplate material/water_wake<
+					"picmip -1 textures/particles/water/wake_02_local.tga",		// Bumpmap
+					"textures/particles/water/wake_02_mask.tga"
+					"env/underwater"
+					"1",					// Translate X
+					"0",					// Translate Y
+					"1.0",					// R
+					"1.0",					// G
+					"1.0",					// B
+					"0.1",					// Distortion Strength
+					"6"					// Reflection Power
+					"3"					// Glare
+		>
+	}
+
+	{
+		blend blend
+		map textures/particles/water/wake_center.tga
+		//clamp
+		alpha 1
+		vertexcolor
+	}
+}
+
+material particles/water/rain_hitx
+{
+	qer_editorimage textures/particles/rain_hit_mask.tga
+	sort postprocess
+	nonsolid
+	translucent
+
+	{
+		vertexcolor
+		program heatHazeWithMaskAndVertex
+		deformScroll 0
+		deformMagnitude 50
+		bumpMap textures/particles/rain_hit_local.tga
+		mask textures/particles/rain_hit_mask.tga
+	}
+
+}
+
+material particles/water/rain_hit 
+{
+	qer_editorimage textures/particles/rain_hit_mask.tga
+	nonsolid
+	twosided
+	//water
+	surfaceType "none"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide particles/water/rain_hit 
+
+{
+	program	water/simple_cube_alpha
+	diffuseMap textures/particles/rain_hit_mask.tga
+	bumpMap textures/particles/rain_hit_local.tga
+	map clamp highquality textures/penta/specular.tga
+	environmentCubeMap cubemap env/volcano
+	water_tint	  1, 1, 1
+	water_distortion  8, 0.1, 1, 0	
+	water_fresnel	  8
+	water_glare	  4
+	water_offset 0, 0, 0, 0 
+	water_desat 0.4
+}
+}

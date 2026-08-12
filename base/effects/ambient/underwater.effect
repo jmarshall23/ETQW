@@ -1,0 +1,45 @@
+effect effects/ambient/underwater
+{
+	size	2176
+
+	emitter "dust2"
+	{
+		duration	8,8
+		count		30,30
+
+		sprite
+		{
+			duration	1,2
+			persist
+			material	"particles/dustcloud_02"
+			gravity		-0.0001,0.01
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -1500,-1500,-500,1500,1500,500 }
+				direction { point 0,0,8 }
+				size { line 768,768,512,512 }
+				tint { point 0.8,0.8,0.85 }
+				fade { point 0 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				tint { envelope shamus_exp_1minusx/x2 }
+				fade { envelope shamus_fastinslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				tint { point 0.7,0.7,0.75 }
+				fade { point 0.063 }
+				rotate { box -0.25,0.25 relative }
+			}
+			lineHit
+		}
+	}
+}
+

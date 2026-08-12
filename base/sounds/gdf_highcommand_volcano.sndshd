@@ -1,0 +1,128 @@
+// GDF High Command
+
+// Map Volcano
+
+sound sounds/vo/gdf/highcommand/maps/volcano/controls/defend/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13001.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/controls/defend {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13002.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/controls/hacking {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13003.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/controls/hacking/half {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13004.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/controls/hacked {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13005.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/beach/defend {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13006.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/door/destroyed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13007.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/bunker/destroyed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13008.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/wall/destroyed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13009.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/transformer/defend/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13010.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/transformer/defend {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13011.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/transformer/planted {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13012.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/transformer/disarm {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13013.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/transformer/planted/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13014.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/transformer/disarmed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13015.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/transformer/destroyed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13016.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/core/defend/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13017.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/core/defend {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13018.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/core/integrity80 {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13019.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/core/integrity60 {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13020.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/core/integrity40 {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13021.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/core/integrity20 {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13022.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/gdfwin {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13023.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/gdflose {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/13024.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/volcano/core/defend/flyerdrone {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/volcano/15502.wav
+}

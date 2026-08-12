@@ -1,0 +1,8 @@
+
+skin skins/vehicles/gdf/anansi/temperate {
+	dummy/metal/shader1		models/vehicles/edf_anansi/anansi
+}
+
+skin skins/vehicles/gdf/anansi/arctic {
+	dummy/metal/shader1		models/vehicles/edf_anansi/anansi_arctic
+}

@@ -1,0 +1,23 @@
+
+// this is shared with the GUI system
+
+#ifndef __base_defines__
+#define __base_defines__
+
+#define ART_CS_IDLE			0
+#define ART_CS_FIRING		1
+
+#define MATH_PI 3.141592654f
+
+
+#define DEPLOYABLE_STOP_YAW_SOUND	fadeSound( SND_DEPLOYABLE_YAW, -60.f, 0.05f );
+#define DEPLOYABLE_STOP_PITCH_SOUND fadeSound( SND_DEPLOYABLE_PITCH, -60.f, 0.05f );
+#define DEPLOYABLE_PLAY_YAW_SOUND	fadeSound( SND_DEPLOYABLE_YAW, 0.f, 0.1f );
+#define DEPLOYABLE_PLAY_PITCH_SOUND	fadeSound( SND_DEPLOYABLE_PITCH, 0.f, 0.1f );
+
+#define DS_NORMAL			0
+#define DS_DAMAGED			1
+#define DS_DISABLED			2
+#define DS_REMOVED			3
+
+#endif // !__base_defines__

@@ -1,0 +1,41 @@
+material particles/plasma_explosion {
+	noatmosphere
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		maskalpha
+		map		textures/particles/plasma_explosion.tga
+		vertexcolor
+	}
+}
+
+material particles/ring_blue {
+	noatmosphere
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		add
+		maskalpha
+		map		textures/particles/ring_blue.tga
+		vertexcolor
+	}
+}
+
+material particles/plasma_distort {
+	noatmosphere
+	noshadows
+	sort postprocess
+	translucent
+	nonsolid
+	{
+		program heatHazeWithVertex
+		deformScroll 0, 0
+		deformMagnitude 16
+		bumpMap textures/particles/vppinch.tga   
+		maskAlpha
+	}	
+}

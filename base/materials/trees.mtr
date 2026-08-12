@@ -1,0 +1,298 @@
+/**********************************************************************
+  Tree Branches
+**********************************************************************/
+
+material models/vegetation/tree/cottonwood/heavy_branch_dark
+{
+ 	twoSided
+ 	nonsolid
+ 	noshadows
+ 	translucent
+ 	{
+ 		diffusemap models/vegetation/trees/cottonwood/heavy_branch_dark.tga
+ 		alphaTest 	0.25
+ 	}
+}
+
+material models/vegetation/tree/cottonwood/heavy_branch
+{
+ 	twoSided
+ 	nonsolid
+ 	noshadows
+ 	translucent
+ 	{
+ 		diffusemap models/vegetation/trees/cottonwood/linden_branch_noleaves_d.tga
+ 		bumpmap			models/vegetation/trees/cottonwood/linden_branch_noleaves_local.tga
+ 		alphaTest 	0.25
+ 	}
+    
+}
+
+/**********************************************************************
+   Tree Barks
+**********************************************************************/
+
+material models/vegetation/tree/dark_rough_bark
+{
+//  noSelfShadow
+ 	noshadows
+ 	qer_editorimage		models/vegetation/trunks/dark_rough_bark_rob_d.tga
+	diffusemap			models/vegetation/trunks/dark_rough_bark_rob_d.tga
+	bumpmap				models/vegetation/trunks/rough_bark_l.tga
+//	bumpmap				heightmap (models/vegetation/trunks/rough_bark_h.tga, 4)
+}
+ material models/vegetation/tree/rough_bark
+{
+//  noSelfShadow
+ 	noshadows
+ 	qer_editorimage		models/vegetation/trunks/rough_bark_d.tga
+	diffusemap			models/vegetation/trunks/rough_bark_d.tga
+	bumpmap				models/vegetation/trunks/rough_bark_l.tga
+//	bumpmap				heightmap (models/vegetation/trunks/rough_bark_h.tga, 4)
+}
+
+material models/vegetation/tree/cottonwood/cottonwood_bark
+{
+//  noSelfShadow
+ 	renderbump			-size 1024 1024 models/vegetation/trees/cottonwood/cottonwood.tga models/vegetation/trees/cottonwood/cottonwood_hi.obj
+    noshadows
+ 	//specularmap			models/vegetation/trees/cottonwood/cottonwood_bark_s.tga
+	diffusemap			models/vegetation/trees/cottonwood/cottonwood_bark_d.tga
+//	bumpmap				models/vegetation/trees/cottonwood/cottonwood_bark_local.tga
+    bumpmap				addnormals( models/vegetation/trees/cottonwood/cottonwood_bark_local.tga , heightmap( models/vegetation/trees/cottonwood/cottonwood_bark_h.tga , 3) )
+}
+
+material models/vegetation/tree/cottonwood/cottonwood_bark_rob
+{
+//  noSelfShadow
+ 	renderbump			-size 1024 1024 models/vegetation/trees/cottonwood/cottonwood.tga models/vegetation/trees/cottonwood/cottonwood_hi.obj
+    noshadows
+ 	//specularmap			models/vegetation/trees/cottonwood/cottonwood_bark_s.tga
+	diffusemap			models/vegetation/trees/cottonwood/cottonwood_bark_rob_d.tga
+//	bumpmap				models/vegetation/trees/cottonwood/cottonwood_bark_local.tga
+    bumpmap				addnormals( models/vegetation/trees/cottonwood/cottonwood_bark_local.tga , heightmap( models/vegetation/trees/cottonwood/cottonwood_bark_h.tga , 3) )
+}
+
+
+/**********************************************************************
+  Tree Foliage
+**********************************************************************/
+
+material models/vegetation/tree/cottonwood/cottonwood_foliage
+{
+ 	nonsolid
+ 	noshadows
+	{
+ 		alphatocoverage
+		program 	interaction/foliage
+  		diffusemap 	clamp models/vegetation/trees/cottonwood/cottonwood_branch4_d.tga
+ 		alphaTest 	0.25
+ 		
+		translate	0, 0.5
+		rotate		sinTable [ time * 0.15 + 1 ] * 0.005
+ 		translate	0, -0.5
+ 	}
+}
+
+material models/vegetation/tree/cottonwood/cottonwood_foliage_rob
+{
+ 	nonsolid
+ 	noshadows
+	{
+ 		alphatocoverage
+		program 	interaction/foliage
+  		diffusemap clamp models/vegetation/trees/cottonwood/cottonwood_branch_rob_d.tga
+ 		alphaTest 	0.25
+		translate	0, 0.5
+		rotate		sinTable [ time * 0.15 + 1 ] * 0.005
+ 		translate	0, -0.5
+ 	}
+
+}
+
+material models/vegetation/tree/cottonwood/cottonwood_foliage_rob2
+{
+ 	nonsolid
+ 	noshadows
+	{
+ 		alphatocoverage
+		program 	interaction/foliage
+  		diffusemap clamp models/vegetation/trees/cottonwood/cottonwood_branch_green_rob_d.tga
+ 		alphaTest 	0.25
+
+		translate	0, 0.5
+		rotate		sinTable [ time * 0.15 + 1 ] * 0.005
+ 		translate	0, -0.5
+ 	}
+
+
+}
+
+
+material models/vegetation/tree/cottonwood/cottonwood_foliage_rob1
+{
+ 	nonsolid
+ 	noshadows
+	{
+ 		alphatocoverage
+		program 	interaction/foliage
+  		diffusemap clamp models/vegetation/trees/cottonwood/cottonwood_branch3_rob_d.tga
+ 		alphaTest 	0.25
+ 	
+		translate	0, 0.5
+		rotate		sinTable [ time * 0.15 + 1 ] * 0.005
+ 		translate	0, -0.5
+ 	}
+}
+
+
+material models/vegetation/tree/cottonwood/cottonwood_canopy
+{
+ 	nonsolid
+ 	noshadows
+ 	{
+ 		alphatocoverage
+ 		program 	interaction/foliage
+  		diffusemap clamp models/vegetation/trees/cottonwood/cottonwood_canopy5_d.tga
+ 		alphaTest 	0.25
+ 		
+		translate	0, 0.5
+		rotate		sinTable [ time * 0.15 + 1 ] * 0.005
+ 		translate	0, -0.5
+ 	}
+}
+
+material models/vegetation/tree/cottonwood/cottonwood_canopy_rob
+{
+ 	nonsolid
+ 	noshadows
+ 	{
+ 		alphatocoverage
+ 		program 	interaction/foliage
+  		diffusemap clamp models/vegetation/trees/cottonwood/cottonwood_canopy2_rob_d.tga
+ 		alphaTest 	0.25
+ 		
+		translate	0, 0.5
+		rotate		sinTable [ time * 0.15 + 1 ] * 0.005
+ 		translate	0, -0.5
+ 	}
+}
+
+
+material models/vegetation/trees/linden_foliage
+{
+ 	nonsolid
+ 	noshadows
+ 	{
+    		diffusemap	models/mapobjects/cottonwood/linden_branch_autumn_d2.tga
+ 		bumpmap 	models/mapobjects/tree/linden_branch_local.tga
+ 		alphaTest 	0.25
+ 	}	
+}
+
+material models/vegetation/tree/cottonwood/cottonwood_sheet
+{
+ 	nonsolid
+ 	noshadows
+ 	{
+ 		alphatocoverage
+ 		program 	interaction/foliage
+  		diffusemap	clamp models/vegetation/trees/cottonwood/cottonwood_sheet.tga
+ 		alphaTest 	0.25
+
+		translate	0, 0.5
+		rotate		sinTable [ time * 0.15 + 1 ] * 0.005
+ 		translate	0, -0.5
+ 	}
+}
+
+/**********************************************************************
+   natfx tree tests
+**********************************************************************/
+
+material models/mapobjects/foliage/nat01a
+  {
+ 	twoSided
+ 	nonsolid
+ 	noshadows
+ 	translucent
+ 	{
+ 		diffusemap 	models/mapobjects/tree/nat_leaves_01a.tga
+ 		bumpmap 	models/mapobjects/tree/nat_leaves_01a_local.tga
+ 		alphaTest 	0.25
+ 	}
+}
+
+material models/mapobjects/foliage/nat01b
+ {
+ 	twoSided
+ 	nonsolid
+ 	noshadows
+ 	translucent
+ 	{
+ 		diffusemap	models/mapobjects/tree/nat_leaves_01b.tga
+ 		bumpmap 	models/mapobjects/tree/nat_leaves_01b_local.tga
+ 		alphaTest 	0.25
+ 	}
+}
+
+material models/mapobjects/foliage/nat01c
+{
+ 	twoSided
+ 	nonsolid
+ 	noshadows
+ 	translucent
+ 	{
+ 		diffusemap 	models/mapobjects/tree/nat_leaves_01c.tga
+ 		bumpmap 	models/mapobjects/tree/nat_leaves_01c_local.tga
+ 		alphaTest 	0.25
+ 	}
+    
+}
+
+material models/mapobjects/foliage/nat01c/2sided
+  {
+ 	twoSided
+	nonsolid
+ 	noshadows
+  	translucent
+ 	{
+ 		diffusemap	models/mapobjects/tree/nat_tree_01.tga
+ 		alphaTest 	0.25
+ 	}
+}
+
+material models/mapobjects/foliage/nat01c/prelight
+  {
+   twoSided
+  	{
+ 		diffusemap 	models/mapobjects/tree/nat_tree_01_prelight.tga
+ 		vertexColor
+ 		alphaTest 	0.25
+	}
+}
+
+////////////// palms of davros
+
+material models/vegetation/trees/palm/palm_leaf
+{
+ 	nonsolid
+ 	noshadows
+	{
+ 		alphatocoverage
+		program 	interaction/foliage
+  		diffusemap 	clamp models/vegetation/trees/palm/palm_leaf.tga
+ 		alphaTest 	0.25
+ 		
+		translate	0, 0.5
+		rotate		sinTable [ time * 0.15 + 1 ] * 0.005
+ 		translate	0, -0.5
+ 	}
+}
+
+material models/vegetation/trees/palm/palm_trunk
+{
+ 	noshadows
+	diffusemap		models/vegetation/trees/palm/palm_trunk.tga
+	bumpmap			models/vegetation/trees/palm/palm_trunk_local.tga
+}

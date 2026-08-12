@@ -1,0 +1,349 @@
+atmosphere quarry {
+	sunMaterial "atmospheres/lights/scrolling_clouds_temperate"
+	sunDir ( 0.1050025895 -0.7254762053 0.6801902652 )
+	sunColor ( 0.6392157078 0.5372549295 0.4274510145 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright2"
+	sunSpriteSize 100000
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 0.9921569228 0.9529412389 )
+		saturation 1
+		contrast 1
+		glareParms ( 1.0699999332 1.0199999809 0 1 )
+		glareBases ( 0 0 0 0 )
+	}
+	fogDistHalf 7614
+	fogHeightHalf 8824
+	fogHeightOffset 784
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "quarry"
+	skyGradientImage "atmosphere/cloudyfog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 146
+	windStrengthDev 133
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/highalt_tiled" {
+		style old
+		parms 12 ( 0.1607840061 0.1294119954 0.1137249991 0.375 0.3300000131 0.0070000002 0.0049999999 5.6500000954 3.0499999523 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudy_dark_01" {
+		style old
+		parms 12 ( 0.7749999762 0.4078429937 0.3960779905 0.400000006 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.7049999833 0.7686269879 0.7372549772 0.7372549772 0.0015 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_01" {
+		style old
+		parms 12 ( 0.6999999881 0.2078430057 0.1960780025 0.1960780025 0.001 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6000000238 0.3450979888 0.3176470101 0.3176470101 0.0024999999 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/sprites/sundisc_bright" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere quarry_night {
+	sunMaterial "atmospheres/lights/lightning"
+	sunDir ( 0.6844599247 -0.2835979164 0.6716300249 )
+	sunColor ( 0.2862745225 0.3058823645 0.360784322 )
+	sunHaloScale 0.0299999993
+	sunHaloBias -0.3400000036
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 100000
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.8588235974 0.8588235974 0.8588235974 )
+		saturation 0.6999999881
+		contrast 1.0499999523
+		glareParms ( 0.5999999642 0.3999999762 0 0 )
+		glareBases ( 1 1 0 0 )
+	}
+	fogDistHalf 196
+	fogHeightHalf 2288
+	fogHeightOffset 6706
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "quarry_night"
+	skyGradientImage "atmosphere/skies/ph_night"
+	farClip 0
+	isNight 1
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 43
+	windStrength 53
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/lightning" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 1
+		maxParticles 3000
+		heightMin 50
+		heightMax 150
+		weightMin 1.5
+		weightMax 2.5
+		timeMin 0
+		timeMax 500
+		windScale 3
+		gustWindScale 5
+		fallMin 600
+		fallMax 800
+		tumbleStrength 0
+		precipitationDistance 1000
+		material "penta/raindrop"
+	}
+}
+
+
+
+ambientCubemap quarry {
+	ambientLight {
+		color 0.2156862915 0.1882353127 0.1882353127
+		direction -0.7660444379 0.0000000186 0.6427876353
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2156862915 0.2039215863 0.1882353127
+		direction 0.7660444379 0 0.6427876353
+		name "Light1"
+	}
+	ambientLight {
+		color 0.2352941334 0.2352941334 0.2352941334
+		direction 0 0 1
+		name "Light2"
+	}
+	ambientLight {
+		color 0.1960784495 0.1882353127 0.2156862915
+		direction -0.3622796237 0.8534772396 0.3746066093
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1568627506 0.1333333403 0.1098039299
+		direction 0.0000000093 -0.7660444379 0.6427876353
+		name "Light4"
+	}
+	ambientLight {
+		color 0.1960784495 0.1725490242 0.160784319
+		direction 0.7071067691 0.7071067691 0.0000000122
+		name "Light5"
+	}
+	ambientLight {
+		color 0.1960784495 0.1725490242 0.1725490242
+		direction 0.0663747936 -0.5405793786 -0.8386705518
+		name "Light6"
+	}
+}
+
+ambientCubemap quarry_night {
+	ambientLight {
+		color 0.1176470667 0.1176470667 0.1176470667
+		direction -0.7660444379 0.0000000186 0.6427876353
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1176470667 0.1176470667 0.1176470667
+		direction 0.7660444379 0 0.6427876353
+		name "Light1"
+	}
+	ambientLight {
+		color 0.1372549087 0.1372549087 0.1372549087
+		direction 0 0 1
+		name "Light2"
+	}
+	ambientLight {
+		color 0.1176470667 0.1176470667 0.1176470667
+		direction 0.0000000093 0.7660444379 0.6427876353
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1176470667 0.1176470667 0.1176470667
+		direction 0.0000000093 -0.7660444379 0.6427876353
+		name "Light4"
+	}
+	ambientLight {
+		color 0.0980392247 0.0980392247 0.0980392247
+		direction 0.7071067691 0.7071067691 0.0000000122
+		name "Light5"
+	}
+	ambientLight {
+		color 0.0980392247 0.0980392247 0.0980392247
+		direction -0.7071067691 0.7071067691 0.0000000122
+		name "Light6"
+	}
+	ambientLight {
+		color 0.0980392247 0.0980392247 0.0980392247
+		direction 0.7071067691 -0.7071067691 0.0000000122
+		name "Light7"
+	}
+	ambientLight {
+		color 0.0980392247 0.0980392247 0.0980392247
+		direction -0.7071067691 -0.7071067691 0.0000000122
+		name "Light8"
+	}
+	ambientLight {
+		color 0.0980392247 0.0980392247 0.0980392247
+		direction 0.0000000243 0 -1
+		name "Light9"
+	}
+	ambientLight {
+		color 0.0784313753 0.0784313753 0.0784313753
+		direction 0.7660444379 0 -0.6427875757
+		name "Light10"
+	}
+	ambientLight {
+		color 0.0784313753 0.0784313753 0.0784313753
+		direction -0.7660444379 0.0000000186 -0.6427875757
+		name "Light11"
+	}
+	ambientLight {
+		color 0.0784313753 0.0784313753 0.0784313753
+		direction 0.0000000093 0.7660444379 -0.6427875757
+		name "Light12"
+	}
+	ambientLight {
+		color 0.0784313753 0.0784313753 0.0784313753
+		direction 0.0000000093 -0.7660444379 -0.6427875757
+		name "Light13"
+	}
+}atmosphere quarry_cold {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( 0.2808016241 -0.4676216543 0.8381410837 )
+	sunColor ( 0.7098039389 0.6274510026 0.5843137503 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 100000
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 0.9300000072
+		contrast 1
+		glareParms ( 0.9300000072 0.2199999988 1 0.6100000143 )
+		glareBases ( 0.0700000003 0.0899999961 0 0 )
+	}
+	fogDistHalf 7582
+	fogHeightHalf 9477
+	fogHeightOffset 8078
+	fogColor ( 0.4823529422 0.490196079 0.5058823824 )
+	fogStart 0
+	fogEnd 26801
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "quarry_cold"
+	skyGradientImage "atmosphere/skies/day_cloudy2_blur"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 80
+	windAngleDev 25
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/quarry_new" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+
+ambientCubemap quarry_cold {
+	ambientLight {
+		color 0.3960784674 0.3647058904 0.3490196168
+		direction 0.3860809803 0.8279533386 -0.4067366421
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3058823645 0.2784313858 0.2666666806
+		direction 0.6527653337 -0.6759582758 0.342020154
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3803921938 0.3490196168 0.3333333433
+		direction -0.8688333631 0.2823010981 -0.4067366421
+		name "Light0"
+	}
+	ambientLight {
+		color 0.3215686381 0.2941176593 0.2823529541
+		direction 0.0172825381 -0.9901172519 0.1391731054
+		name "Light5"
+	}
+	ambientLight {
+		color 0.1725490242 0.1568627506 0.1490196139
+		direction -0.1096698716 0.7803418636 0.6156615019
+		name "Light6"
+	}
+	ambientLight {
+		color 0.160784319 0.1450980455 0.1411764771
+		direction -0.802964747 -0.4635919333 -0.3746065795
+		name "Light5"
+	}
+	ambientLight {
+		color 0.2156862915 0.1960784495 0.1882353127
+		direction 0 0 1
+		name "Light6"
+	}
+	envMap "env/quarry"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

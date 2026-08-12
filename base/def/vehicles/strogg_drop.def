@@ -1,0 +1,30 @@
+
+entityDef vehicle_strogg_drop {
+	"editor_color"					"1 .5 0"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					""
+
+	"spawnclass"					"sdScriptEntity"
+	"scriptObject"					"strogg_drop"
+
+	"aor_layout"					"missile"
+
+	"info_name"						"game/vec/dropper"
+
+	"icon_size_cm"					"32"
+	"mtr_commandmap"				"guis/assets/qet/cm_vampire"
+
+	"fx_trail"						"effects/deployables/landfall_trail"
+	"fx_booster"					"effects/deployables/landfall_booster"
+	"fx_hitground"					"effects/deployables/landfall_hitground"
+
+	"snd_landfall"					"sounds/vehicles/slamship/landfall"
+	"snd_landfall_far"				"sounds/vehicles/slamship/landfall/far"
+	"snd_impact"					"sounds/vehicles/slamship/impact"
+	"snd_cancel_deploy"				"sounds/vo/strogg/npc/logistics/abort"
+
+	"model"							""
+
+	"collection_deliver"			"deliver"
+}

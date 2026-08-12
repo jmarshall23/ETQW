@@ -1,0 +1,48 @@
+//zzzzzzzzzzzzzzzzzzzzzz//
+// Trojan cockpit front
+//=================================================================================================
+
+export frankie {
+		options -prefix TROJANCOCKPIT_ -sourcedir models/vehicles/edf_trojan/dev_sd -destdir models/vehicles/edf_trojan/	-keep origin -keepmesh Trojan_cockpit_rear Trojan_cockpit_front stop_stuff blockwater right_arm_mesh right_hand_mesh left_hand_mesh left_arm_mesh gui gui2 gui3 steering_wheel Front_windows front_strap1 front_strap2 front_strap3 front_strap4 lever wingmirror wingmirrorglass shadowfront shadowrear shadowsteeringwheel
+
+		mesh trojan_cockpit_reworked.mb 	-dest cockpit.md5mesh
+		anim trojan_cockpit_reworked.mb 	-dest center.md5anim -range 0 0
+		anim trojan_cockpit_reworked.mb 	-dest turning_right.md5anim -range 0 30
+		anim trojan_cockpit_reworked.mb 	-dest turning_left.md5anim  -range 60 90
+		anim trojan_cockpit_reworked.mb 	-dest into.md5anim -range 126 143
+
+}
+
+//==================================================================================================
+
+model vehicle_trojan_cockpit_front {
+	mesh							models/vehicles/edf_trojan/cockpit.md5mesh
+
+	anim center						models/vehicles/edf_trojan/center.md5anim {
+	}
+
+	anim turning_left					models/vehicles/edf_trojan/turning_left.md5anim {
+	}
+
+	anim turning_right					models/vehicles/edf_trojan/turning_right.md5anim {
+	}
+
+	anim into							models/vehicles/edf_trojan/into.md5anim {
+	}
+}
+
+model vehicle_trojan_cockpit_front2 {
+	mesh								models/vehicles/edf_trojan/cockpit.md5mesh
+
+	anim center							models/vehicles/edf_trojan/center.md5anim {
+	}
+
+	anim turning_left					models/vehicles/edf_trojan/turning_left.md5anim {
+	}
+
+	anim turning_right					models/vehicles/edf_trojan/turning_right.md5anim {
+	}
+
+	anim into							models/vehicles/edf_trojan/into.md5anim {
+	}
+}

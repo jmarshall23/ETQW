@@ -1,0 +1,68 @@
+/*******************************
+CC Console Part 1 Side
+renderbump models/mapobjects/cc_console/cc_consolep1_lo.lwo
+*******************************/
+
+material models/mapobjects/cc_console/cc_consolep1
+
+{
+	surfaceType "metal"
+	 unsmoothedtangents
+	 renderbump -size 512 512 -trace 0.1 -aa 2 models/mapobjects/cc_console/cc_consolep1.tga models/mapobjects/cc_console/cc_consolep1_hi.lwo
+
+	 diffusemap	textures/common/gray.tga
+	 bumpmap 	models/mapobjects/cc_console/cc_consolep1.tga
+	 specularmap	textures/raven/terminal/t1_metal1dark_s.tga  
+}
+
+
+/*******************************
+CC Console Part 2 Side
+renderbump models/mapobjects/cc_console/cc_consolep2_lo.lwo
+*******************************/
+
+material models/mapobjects/cc_console/cc_consolep2
+
+{
+	surfaceType "metal"
+	 unsmoothedtangents
+	 renderbump -size 512 512 -aa 1 models/mapobjects/cc_console/cc_consolep2.tga models/mapobjects/cc_console/cc_consolep2_hi.lwo
+
+	 diffusemap	textures/common/gray.tga
+	 bumpmap 	models/mapobjects/cc_console/cc_consolep2.tga
+	 specularmap	textures/raven/terminal/t1_metal1dark_s.tga  
+}
+
+/*******************************
+CC Console Part 3 Side
+renderbump models/mapobjects/cc_console/cc_consolep3_lo.lwo
+*******************************/
+
+material models/mapobjects/cc_console/cc_consolep3
+
+{
+	surfaceType "metal"
+	 unsmoothedtangents
+	 renderbump -size 512 512 -aa 2 models/mapobjects/cc_console/cc_consolep3.tga models/mapobjects/cc_console/cc_consolep3_hi.lwo
+
+	 diffusemap	textures/common/gray.tga
+	 bumpmap 	models/mapobjects/cc_console/cc_consolep3.tga
+	 specularmap	textures/raven/terminal/t1_metal1dark_s.tga  
+}
+
+/*******************************
+CC Console Part 4 Side
+renderbump models/mapobjects/cc_console/cc_consolep4_lo.lwo
+*******************************/
+
+material models/mapobjects/cc_console/cc_consolep4
+
+{
+	surfaceType "metal"
+	 unsmoothedtangents
+	 renderbump -size 512 512 -aa 2 models/mapobjects/cc_console/cc_consolep4.tga models/mapobjects/cc_console/cc_consolep4_hi.lwo
+
+	 diffusemap	models/mapobjects/cc_console/cc_consolep4_color.tga
+	 bumpmap 	models/mapobjects/cc_console/cc_consolep4.tga
+	  
+}

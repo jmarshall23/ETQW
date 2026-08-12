@@ -1,0 +1,109 @@
+
+entityDef speaker_distance_test {
+	"spawnclass"			"sdScriptEntity"
+	"scriptobject"			"interactive"
+
+	"fire_rate"				"0.1"
+
+	"snd_fire"				"sounds/weapons/gpmg/fire"
+	"snd_fire_far"			"sounds/weapons/gpmg/fire/far"
+}
+
+entityDef speaker_distance_test2 {
+	"spawnclass"			"sdScriptEntity"
+	"scriptobject"			"interactive"
+
+	"fire_rate"				"4"
+
+	"snd_fire"				"sounds/tools/plasmacharge/explode"
+	"snd_fire_far"			"sounds/tools/plasmacharge/explode/far"
+}
+
+entityDef speaker_distance_loop_test {
+	"spawnclass"			"sdScriptEntity"
+	"scriptobject"			"interactive"
+
+	"looping_test"			"1"
+
+	"fire_pause"			"3"
+
+	"snd_fire"				"sounds/deployables/gdf/apt/fire/start"
+	"snd_fire_stop"			"sounds/deployables/gdf/apt/fire/stop"
+	"snd_fire_far"			"sounds/deployables/gdf/apt/fire/far"
+	"snd_fire_far_stop"		"sounds/deployables/gdf/apt/fire/far/stop"
+}
+
+entityDef speaker_distance_loop_test2 {
+	"spawnclass"			"sdScriptEntity"
+	"scriptobject"			"interactive"
+
+	"looping_test"			"1"
+
+	"fire_pause"			"3"
+
+	"snd_fire"				"sounds/weapons/gatling/fire/start"
+	"snd_fire_stop"			"sounds/weapons/gatling/fire/stop"
+	"snd_fire_far"			"sounds/weapons/gatling/fire/far/start"
+	"snd_fire_far_stop"		"sounds/weapons/gatling/fire/far/stop"
+}
+
+entityDef speaker_gpmg_test {
+	"spawnclass"			"sdScriptEntity"
+	"scriptobject"			"interactive"
+
+	"fire_rate"				"0.1"
+
+	"snd_fire"				"sounds/weapons/gpmg/fire"
+	"snd_fire_far"			"sounds/weapons/gpmg/fire/far"
+}
+
+entityDef speaker_assaultrifle_test {
+	"spawnclass"			"sdScriptEntity"
+	"scriptobject"			"interactive"
+
+	"fire_rate"				"0.08"
+
+	"snd_fire"				"sounds/weapons/assaultrifle/fire"
+	"snd_fire_far"			"sounds/weapons/assaultrifle/fire/far"
+}
+
+entityDef speaker_shotgun_test {
+	"spawnclass"			"sdScriptEntity"
+	"scriptobject"			"interactive"
+
+	"fire_rate"				"0.9"
+
+	"snd_fire"				"sounds/weapons/shotgun/fire"
+	"snd_fire_far"			"sounds/weapons/shotgun/fire/far"
+}
+
+entityDef speaker_machinepistol_test {
+	"spawnclass"			"sdScriptEntity"
+	"scriptobject"			"interactive"
+
+	"fire_rate"				"0.06"
+
+	"snd_fire"				"sounds/weapons/machinepistol/fire"
+	"snd_fire_far"			"sounds/weapons/machinepistol/fire/far"
+}
+
+entityDef speaker_sniperrifle_test {
+	"spawnclass"			"sdScriptEntity"
+	"scriptobject"			"interactive"
+
+	"fire_rate"				"5"
+
+	"snd_fire"				"sounds/weapons/sniperrifle/fire"
+	"snd_fire_far"			"sounds/weapons/sniperrifle/fire/far"
+}
+
+entityDef speaker_pistol_test {
+	"spawnclass"			"sdScriptEntity"
+	"scriptobject"			"interactive"
+
+	"fire_rate"				"0.5"
+
+	"snd_fire"				"sounds/weapons/pistol/fire"
+	"snd_fire_far"			"sounds/weapons/pistol/fire/far"
+}
+

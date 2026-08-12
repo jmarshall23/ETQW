@@ -1,0 +1,378 @@
+
+entityDef placement_player {
+	"spawnclass"			"idAnimatedEntity"
+	"scriptobject"			"placement_player"
+	
+	"anim"					"idle"
+	
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 72"
+	
+	"editor_rendermode_visible" "1"
+	
+	"editor_var anim"		"Animation to use"
+	"editor_float frame"	"Frame of the animation to use"
+	"editor_bool cycle"		"Cycle the animation"
+	"editor_model model"	"Model to use"
+	"editor_callback model"		"model://models"
+	
+	"editor_var skin"			"Skin to apply to the model"
+	"editor_callback skin"		"decl://skin"
+	
+	"editor_model weapon_model"	"Weapon def to spawn"
+	"editor_var	weapon_joint"	"Joint to spawn the weapon on"
+	"editor_var weapon_effect"	"Effect to play on the weapon"
+	"editor_var weapon_effect_joint"	"Joint to play the weapon_effect on"
+	"editor_float weapon_effect_wait"	"Delay between playing weapon_effects"
+	
+	"editor_var joint1"			"Joint name to adjust (use joint2, joint3, etc to adjust more)"
+	"editor_float joint1_pitch"	"Pitch of joint1 (use joint1_pitch, etc to adjust more)"
+	"editor_float joint1_yaw"	"Yaw of joint1 (use joint1_yaw, etc to adjust more)"
+	"editor_float joint1_roll"	"Roll of joint1 (use joint1_roll, etc to adjust more)"
+	
+	"editor_var waist_joint"	"Default 'Spine'"
+	"editor_float waist_pitch"	"Pitch of the waist_joint"
+	"editor_float waist_yaw"	"Yaw of the waist_joint"
+	"editor_float waist_roll"	"Roll of the waist_joint"
+	
+	"editor_var head_joint"		"Default 'Head'"
+	"editor_float head_pitch"	"Pitch of the head_joint"
+	"editor_float head_yaw"		"Yaw of the head_joint"
+	"editor_float head_roll"	"Roll of the head_joint"
+	
+	"editor_var neck_joint"		"Default 'Neck'"
+	"editor_float neck_pitch"	"Pitch of the neck_joint"
+	"editor_float neck_yaw"		"Yaw of the neck_joint"
+	"editor_float neck_roll"	"Roll of the neck_joint"
+}
+
+entityDef placement_player_gdf {
+	"inherit"				"placement_player"
+	"model"					"models/players/gdf"
+	"skin"					"skins/players/gdf/temperate"
+	"weapon_joint"			"weapon"
+	"weapon_effect_joint"	"muzzle"
+	"weapon_effect_wait"	"0.05"
+	"weapon_effect"			"fx_muzzle_flash_assaultrifle"
+	"model1"				"models/weapons/gdf_pistol/pistol_player.lwo"
+	"model1_joint"			"RightUpLeg"
+}
+
+entityDef placement_player_strogg {
+	"inherit"				"placement_player"
+	"model"					"models/players/strogg"
+	"weapon_joint"			"weapon_attach"
+	"weapon_effect"			"fx_muzzle_flash_lacerator"
+	"weapon_effect_joint"	"muzzle"
+	"weapon_effect_wait"	"0.05"
+}
+
+
+// Add required effect files here
+
+entityDef placement_weapon {
+	"spawnclass"					"idAnimatedEntity"
+	"scriptobject"					"placement_weapon"
+
+	"fx_muzzle_flash_assaultrifle"	"effects/weapons/assaultrifle_muzzleflash_world"
+	"fx_muzzle_flash_shotgun"	"effects/weapons/shotgun_muzzleflash"
+	"fx_muzzle_flash_machinepistol"	"effects/weapons/machinepistol_muzzleflash"
+	"fx_muzzle_flash_pistol"	"effects/weapons/pistol_muzzleflash"
+	"fx_muzzle_flash_blaster"	"effects/weapons/blaster_muzzleflash"
+	"fx_muzzle_flash_rocketlauncher"	"effects/weapons/law_muzzleflash_world"
+	"fx_muzzle_flash_lacerator"	"effects/weapons/lacerator_muzzleflash_world"
+}
+
+entityDef placement_camera {
+	"spawnclass"			"sdCamera_Placement"
+	"fov"					"90"
+	
+	"editor_spawnclass"		"sdEntityClass_Camera"
+	"editor_mins"			"-8 -8 -8"
+	"editor_maxs"			"8 8 8"
+	"editor_color"			"0 0 1"
+	"editor_camera"			"1"
+	
+	"networkSync"			"1"
+	
+	"collection_mountables"	"placement_cameras"
+}
+
+entityDef radiant_camera {
+	"spawnclass"			"sdCamera_Placement"
+	"fov"					"90"
+	
+	"editor_mins"			"-8 -8 -8"
+	"editor_maxs"			"8 8 8"
+	"editor_color"			"0 0 1"
+	"editor_camera"			"1"
+	"noscriptobject"		"1"
+}
+
+entityDef placement_vehicle {
+	"spawnclass"			"idAnimatedEntity"
+	"scriptobject"			"placement_vehicle"	
+	
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 72"
+	
+	"editor_rendermode_visible" "1"
+	
+	"editor_skipmenu"	"1"
+	"editor_var skin"			"Skin to apply to the model"
+	"editor_callback skin"		"decl://skin"
+}
+
+
+// STROGG VEHICLES
+
+entityDef placement_goliath {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"vehicle_goliath"
+	
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+entityDef placement_desecrator {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"vehicle_desecrator"
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+entityDef placement_hornet {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"vehicle_hornet"
+
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+entityDef placement_hog {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"vehicle_hog"
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+entityDef placement_icarus {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"vehicle_icarus"
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+
+// GDF VEHICLES
+
+entityDef placement_badger {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"vehicle_badger"
+
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+	"skin"				"skins/vehicles/gdf/badger/temperate"
+}
+
+entityDef placement_titan {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"vehicle_titan"
+
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+	"skin"				"skins/vehicles/gdf/titan/temperate"
+	
+}
+
+entityDef placement_trojan {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"vehicle_trojan"
+
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+	"skin"				"skins/vehicles/gdf/trojan/temperate"
+}
+
+entityDef placement_anansi {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"vehicle_anansi"
+	
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+	"skin"				"skins/vehicles/gdf/anansi/temperate"
+}
+
+entityDef placement_bumblebee {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"vehicle_bumblebee"
+
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+	"skin"				"skins/vehicles/gdf/bumblebee/temperate"
+}
+
+entityDef placement_husky {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"vehicle_husky"
+
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+	"skin"				"skins/vehicles/gdf/husky/temperate"
+}
+
+entityDef placement_mcp {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"vehicle_mcp"
+
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+	"skin"				"skins/vehicles/gdf/mcp/temperate"
+}
+
+entityDef placement_platypus {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"vehicle_platypus"
+	
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+
+// GDF SUPPORT VEHICLES
+
+entityDef placement_d_vampire_gdf {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"vehicle_vampire"
+	
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+entityDef placement_magog {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"vehicle_magog_npc"
+
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+	"skin"				"skins/vehicles/gdf/magog/temperate"
+}
+
+entityDef placement_jotun {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"vehicle_cargoplane"
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+
+// DEPLOYABLES
+
+// TURRETS
+
+entityDef placement_d_antiveh_strogg {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"deployable_antiarmour_strogg"
+	
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+entityDef placement_d_antiveh_gdf {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"deployable_antiarmour_gdf"
+	
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+	"skin"				"skins/structures/edf/deployables/weapons/anti_personnel_turret/turret"
+}
+
+entityDef placement_d_antiper_strogg {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"deployable_antipersonnel_strogg"
+	
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+entityDef placement_d_antiper_gdf {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"deployable_antipersonnel_gdf"
+	
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+	"skin"				"skins/structures/edf/deployables/weapons/anti_personnel_turret/turret"
+}
+
+entityDef placement_d_shield_generator_strogg {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"deployable_shield_generator"
+	
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+entityDef placement_d_antimiss_gdf {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"deployable_amt_gdf"
+
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+	"skin"				"skins/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm"
+}
+
+
+// RADARS
+
+entityDef placement_d_psiradar_strogg {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"deployable_psi"
+	
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+entityDef placement_d_radar_gdf {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"deployable_radar"
+	
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+	"skin"				"skins/structures/edf/deployables/intel"
+}
+
+
+// ARTILLERY PIECES
+
+entityDef placement_d_artillery_gdf {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"deployable_artillery"
+
+	"skin"				"skins/structures/edf/fsb/artillery/artillery"
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+entityDef placement_d_rockets_gdf {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"deployable_rockets"
+
+	"skin"				"skins/structures/edf/fsb/rockets/rockets"
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+entityDef placement_d_ssm_gdf {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"deployable_ssm"
+
+	"skin"				"skins/structures/edf/fsb/ssm/ssm"
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+entityDef placement_d_railhowitzer_strogg {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"deployable_railhowitzer"
+	
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+entityDef placement_d_plasmamortar_strogg {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"deployable_plasmamortar"
+	
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+entityDef placement_d_ssg_strogg {
+	"inherit1"			"placement_vehicle"
+	"inherit"			"deployable_ssg"
+	
+	"editor_skipmenu"		"0"	//override the vehicle_base flag
+}
+
+
+// MISC
+
+entityDef placement_rotator {
+	"editor_mins"			"-8 -8 -8"
+	"editor_maxs"			"8 8 8"
+	"editor_color"			"0 0 1"
+	
+	"spawnclass"			"sdScriptEntity"
+	"scriptobject"			"placement_rotator"
+}

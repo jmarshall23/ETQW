@@ -1,0 +1,40 @@
+
+material guis/nodraw
+{
+	sort gui
+}
+
+material _white_depth
+{
+	sort gui
+	{
+		if( parm11 == 0 )
+		program trivialMaskImageScreen
+		mask clamp textures/common/cmmask.tga
+		parameters parm4, parm5, parm6, parm7
+		blend blend
+		vertexColor
+		map clamp "_white"
+//		depthFunc equal
+	}
+	{
+		if( parm11 != 0 )
+		blend blend
+		vertexColor
+		map clamp "_white"
+	}
+}
+
+// ====================================================
+// material for Artillery Binoculars
+// ====================================================
+
+material guis/assets/qet/binocs
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/binocs.tga
+		vertexColor
+	}
+}

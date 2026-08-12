@@ -1,0 +1,14 @@
+
+entityDef vo_manager_base {
+	"spawnclass"				"sdScriptEntity"
+
+	"editor_color"				".3 .3 1"
+	"editor_mins"				"-8 -8 -8"
+	"editor_maxs"				"8 8 8"
+	"editor_usage"				"VO Manager"
+	"editor_skipmenu"			"1"
+	
+	"scriptobject"				"vo_manager"
+
+	"option_network_interface"	"1"
+}

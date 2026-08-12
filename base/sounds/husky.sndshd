@@ -1,0 +1,84 @@
+///////////
+// Husky //
+///////////
+
+sound sounds/vehicles/husky/engine/start {
+
+	maxDistance	75
+	playOnce
+
+	sounds/vehicles/husky/engine_start.wav
+}
+
+sound sounds/vehicles/husky/engine/stop {
+
+	maxDistance	75
+
+	sounds/vehicles/husky/engine_stop.wav
+}
+
+sound sounds/vehicles/husky/engine/idle {
+
+	maxDistance	75
+	playOnce
+
+	looping
+	sounds/vehicles/husky/engine_idle.wav
+}
+
+sound sounds/vehicles/husky/engine/drive {
+
+	maxDistance	75
+	playOnce
+
+	looping
+	sounds/vehicles/husky/engine_drive.wav
+}
+
+sound sounds/vehicles/husky/engine/hardaccel {
+
+	volume -5
+	maxDistance	75
+	playOnce
+
+	looping
+	sounds/vehicles/husky/engine_hardaccel.wav
+}
+
+sound sounds/vehicles/husky/overdrive {
+
+	volume -8
+	maxDistance	75
+	playOnce
+
+	looping
+	leadin
+	sounds/vehicles/misc/overdrive_start_gdf.wav
+	sounds/vehicles/misc/overdrive_loop_gdf.wav
+}
+
+sound sounds/vehicles/husky/overdrive/stop {
+
+	volume		-5
+	maxDistance	75
+
+	playOnce
+
+	sounds/vehicles/misc/overdrive_stop_gdf.wav
+}
+
+sound sounds/vehicles/husky/horn {
+
+	maxDistance 50
+	playOnce
+
+	looping
+	sounds/vehicles/husky/horn_loop.wav
+}
+
+sound sounds/vehicles/husky/horn/stop {
+
+	maxDistance 50
+
+	sounds/vehicles/husky/horn_stop.wav
+}

@@ -1,0 +1,585 @@
+effect effects/weapons/spikes_raise
+{
+	size	29
+
+	cutOffDistance	100
+
+	spawner "spark flash2"
+	{
+		count		1,1
+		locked
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.2,0.2
+			material	"textures/particles/sparks/sparkflash_strip02"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 7,7 }
+				tint { line 1,0.74902,0.509804,0.737255,0.737255,0.737255 }
+				fade { line 0.1,0.3 }
+				offset { point 0,-5,0 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 10,10 }
+			}
+			lineHit
+		}
+	}
+	spawner "spark flash3"
+	{
+		start		0.1,0.1
+		count		3,3
+		locked
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.2,0.2
+			material	"textures/particles/sparks/sparkflash_strip02"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 4,4 }
+				tint { line 1,0.74902,0.509804,0.792157,0.792157,0.792157 }
+				fade { line 0.3,0.6 }
+				offset { point 0,-3,0 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 6,6 }
+			}
+			lineHit
+		}
+	}
+	spawner "spark flash4"
+	{
+		start		0.15,0.15
+		count		3,3
+		locked
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.2,0.2
+			material	"textures/particles/sparks/sparkflash_strip02"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 4,4 }
+				tint { point 1,0.74902,0.509804 }
+				fade { line 0.3,0.4 }
+				offset { point -2,-15,2 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 6.5,6.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "centre sparks"
+	{
+		count		1,1
+		locked
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.2,0.2
+			blend	add
+			material	"textures/particles/sparks/sparkflash_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 4,4 }
+				tint { point 0.921569,0.74902,0.501961 }
+				fade { line 0.1,0.3 }
+				offset { point 0,-7,-4 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 7,7 }
+			}
+			lineHit
+		}
+	}
+	spawner "centre sparks2"
+	{
+		count		1,1
+		locked
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.2,0.2
+			blend	add
+			material	"textures/particles/sparks/sparkflash_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point -5,0,0 }
+				size { point 3,3 }
+				tint { point 1,0.74902,0.509804 }
+				fade { line 0.1,0.3 }
+				offset { point 0,-7,-4 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 6,6 }
+			}
+			lineHit
+		}
+	}
+	spawner "FLASH!"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			material	"textures/particles/sparks/sparkflash03"
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,-37,37 }
+				size { point 17,17 }
+				offset { point 0,-2,-2 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 0,0 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+effect effects/impacts/spikes/impact_default
+{
+	size	28
+
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_default"
+	}
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_default"
+	}
+	decal "stain"
+	{
+		decalAxis	6
+
+		decal
+		{
+			duration	0.002,0.002
+			material	"textures/decals/knifescratch"
+			trailRepeat	1
+
+			start
+			{
+				size { point 16,16,16 }
+			}
+		}
+	}
+	decal "stain2"
+	{
+		decalAxis	6
+
+		decal
+		{
+			duration	0.002,0.002
+			material	"textures/decals/knifescratch_glow"
+			trailRepeat	1
+
+			start
+			{
+				size { point 16,16,16 }
+			}
+		}
+	}
+}
+
+effect effects/impacts/spikes/impact_pavement
+{
+	size	28
+
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_default"
+	}
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_pavement"
+	}
+	decal "stain"
+	{
+		decalAxis	6
+
+		decal
+		{
+			duration	0.002,0.002
+			material	"textures/decals/knifescratch"
+			trailRepeat	1
+
+			start
+			{
+				size { point 16,16,16 }
+			}
+		}
+	}
+	decal "stain2"
+	{
+		decalAxis	6
+
+		decal
+		{
+			duration	0.002,0.002
+			material	"textures/decals/knifescratch_glow"
+			trailRepeat	1
+
+			start
+			{
+				size { point 12,12,12 }
+			}
+		}
+	}
+}
+
+effect effects/impacts/spikes/impact_flesh
+{
+	size	8
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_flesh"
+	}
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_flesh"
+	}
+}
+
+effect effects/impacts/spikes/impact_liquid
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_liquid"
+	}
+}
+
+effect effects/impacts/spikes/impact_plastic
+{
+	size	8
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_default"
+	}
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_plastic"
+	}
+}
+
+effect effects/impacts/spikes/impact_sand
+{
+	size	28
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_ground"
+	}
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_sand"
+	}
+	decal "stain"
+	{
+		decalAxis	6
+
+		decal
+		{
+			duration	0.002,0.002
+			material	"textures/decals/knifescratch"
+			trailRepeat	1
+
+			start
+			{
+				size { point 16,16,16 }
+			}
+		}
+	}
+	decal "stain2"
+	{
+		decalAxis	6
+
+		decal
+		{
+			duration	0.002,0.002
+			material	"textures/decals/knifescratch_glow"
+			trailRepeat	1
+
+			start
+			{
+				size { point 12,12,12 }
+			}
+		}
+	}
+}effect effects/impacts/spikes/impact_stone
+{
+	size	28
+
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_default"
+	}
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_stone"
+	}
+	decal "stain"
+	{
+		detail		0.9
+		decalAxis	6
+
+		decal
+		{
+			duration	0.002,0.002
+			material	"textures/decals/knifescratch"
+			trailRepeat	1
+
+			start
+			{
+				size { point 16,16,16 }
+			}
+			lineHit
+		}
+	}
+	decal "stain2"
+	{
+		detail		0.9
+		decalAxis	6
+
+		decal
+		{
+			duration	0.002,0.002
+			material	"textures/decals/knifescratch_glow"
+			trailRepeat	1
+
+			start
+			{
+				size { point 12,12,12 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/impacts/spikes/impact_metal
+{
+	size	28
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_default"
+	}
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_metal"
+	}
+	decal "stain"
+	{
+		decalAxis	6
+
+		decal
+		{
+			duration	0.002,0.002
+			material	"textures/decals/knifescratch"
+			trailRepeat	1
+
+			start
+			{
+				size { point 16,16,16 }
+			}
+		}
+	}
+	decal "stain2"
+	{
+		decalAxis	6
+
+		decal
+		{
+			duration	0.002,0.002
+			material	"textures/decals/knifescratch_glow"
+			trailRepeat	1
+
+			start
+			{
+				size { point 16,16,16 }
+			}
+		}
+	}
+}
+
+
+
+effect effects/impacts/spikes/impact_grass
+{
+	size	28
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_ground"
+	}
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_grass"
+	}
+	decal "stain"
+	{
+		decalAxis	6
+
+		decal
+		{
+			duration	0.002,0.002
+			material	"textures/decals/knifescratch"
+			trailRepeat	1
+
+			start
+			{
+				size { point 16,16,16 }
+			}
+		}
+	}
+}effect effects/impacts/spikes/impact_glass
+{
+	size	8
+
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_default"
+	}
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_glass"
+	}
+}
+
+
+
+effect effects/impacts/spikes/impact_wood
+{
+	size	28
+
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_default"
+	}
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_wood"
+	}
+	decal "stain"
+	{
+		detail		0.9
+		decalAxis	6
+
+		decal
+		{
+			duration	0.002,0.002
+			material	"textures/decals/knifescratch"
+			trailRepeat	1
+
+			start
+			{
+				size { point 16,16,16 }
+			}
+			lineHit
+		}
+	}
+	decal "stain2"
+	{
+		detail		0.9
+		decalAxis	6
+
+		decal
+		{
+			duration	0.002,0.002
+			material	"textures/decals/knifescratch_glow"
+			trailRepeat	1
+
+			start
+			{
+				size { point 12,12,12 }
+			}
+			lineHit
+		}
+	}
+}
+

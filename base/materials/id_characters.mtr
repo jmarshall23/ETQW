@@ -1,0 +1,175 @@
+material models/characters/male_npc/marine/stump
+{
+        noselfShadow
+		  
+		//unsmoothedTangents
+	forceOverlays
+	surfaceType flesh
+
+
+	renderbump  -size 512 512  -trace 0.07 -colorMap -aa 2   models/characters/male_npc/marine/stump_local.tga models/characters/male_npc/marine/stump_hi.lwo
+
+/*
+	{
+		if ( parm6 == 1 )
+		blend		diffusemap
+		map			clamp models/characters/male_npc/marine/stump.tga
+		alphaTest	0.5 + 0.5 * sintable [ time * .2  ]
+	}
+	{
+		if ( parm6 == 0 )
+		blend		diffusemap
+		map			clamp models/characters/male_npc/marine/stump.tga
+		alphaTest	0
+	}
+*/
+
+
+	diffusemap clamp models/characters/male_npc/marine/stump.tga                  
+	bumpmap clamp addnormals(models/characters/male_npc/marine/stump_local.tga, heightmap(models/characters/male_npc/marine/stump_h.tga, 5 ) )       
+	specularmap	clamp models/characters/male_npc/marine/stump_s.tga
+}
+
+material models/characters/male_npc/marine/marine {
+	noSelfShadow
+	unsmoothedTangents
+	surfaceType flesh
+	forceOverlays
+	collision
+
+	renderbump  -size 1024 1024 -trace 0.07 -colorMap -aa 2  models/characters/male_npc/marine/marine_local.tga models/characters/male_npc/marine/marine_hi.lwo
+
+    diffusemap	  models/characters/male_npc/marine/marine_desert_camo.tga
+	bumpmap		  addnormals( models/characters/male_npc/marine/marine_local.tga, heightmap( models/characters/male_npc/marine/marine_h.tga, 5 ) )
+    specularmap	  models/characters/male_npc/marine/marine_desert_camo_s.tga
+}
+
+//ADDED BY RICH
+material models/characters/male_npc/marine/strogg{
+	noSelfShadow
+	unsmoothedTangents
+	surfaceType flesh
+	forceOverlays
+	collision
+
+	renderbump  -size 1024 1024 -trace 0.07 -colorMap -aa 2  models/characters/male_npc/marine/marine_local.tga models/characters/male_npc/marine/marine_hi.lwo
+
+    diffusemap	  models/characters/male_npc/marine/strogg.tga
+	bumpmap		  addnormals( models/characters/male_npc/marine/marine_local.tga, heightmap( models/characters/male_npc/marine/marine_h.tga, 5 ) )
+    specularmap	  models/characters/male_npc/marine/marine_desert_camo_s.tga
+}
+
+material models/characters/male_npc/marine/marine2
+{
+       noSelfShadow
+		unsmoothedTangents
+		surfaceType flesh
+		forceOverlays
+		collision
+
+	{	// burning corpse effect
+		if	parm7			// only when dead
+		// make a burned away alpha test for the normal skin
+		blend	gl_zero, gl_one			// don't draw anything
+
+		map models/monsters/spectre/dis2.tga	// replace this with a monster-specific texture
+		alphaTest 0.05 + 1.7 * (time - parm7)
+	}
+
+	renderbump  -size 1024 1024 -trace 0.07 -colorMap -aa 2  models/characters/male_npc/marine/marine_local.tga models/characters/male_npc/marine/marine_hi.lwo
+        diffusemap	  models/characters/male_npc/marine/marine.tga
+		bumpmap		  addnormals(models/characters/male_npc/marine/marine_local.tga, heightmap(models/characters/male_npc/marine/marine_h.tga, 5 ) )
+        specularmap	  models/characters/male_npc/marine/marine_s.tga
+}
+
+material models/characters/sarge2/helmet {
+    noselfShadow
+	unsmoothedTangents
+	collision
+	forceOverlays
+	surfaceType		metal
+
+	renderbump		-size 512 512 -aa 2  models/characters/sarge2/helmet_local.tga models/characters/sarge2/helmet_hi.lwo
+
+	diffusemap	    models\characters\male_npc\marine\marine_helmet_d.tga
+	bumpmap			models\characters\male_npc\marine\marine_helmet_l.tga
+    specularmap		models\characters\male_npc\marine\marine_helmet_s.tga
+}
+
+//ADDED BY RICH
+material models/characters/sarge2/strogg_helmet {
+    noselfShadow
+	unsmoothedTangents
+	collision
+	forceOverlays
+	surfaceType		metal
+
+	renderbump		-size 512 512 -aa 2  models/characters/sarge2/helmet_local.tga models/characters/sarge2/helmet_hi.lwo
+
+	diffusemap	    models\characters\male_npc\marine\strogg_helmet_d.tga
+	bumpmap			models\characters\male_npc\marine\marine_helmet_l.tga
+    specularmap		models\characters\male_npc\marine\marine_helmet_s.tga
+}
+
+material models/characters/male_npc/soldier/soldier
+{
+	noselfShadow
+	unsmoothedTangents
+	surfaceType flesh
+	forceOverlays
+
+
+	{	// burning corpse effect
+		if	parm7			// only when dead
+		// make a burned away alpha test for the normal skin
+		blend	gl_zero, gl_one			// don't draw anything
+
+		map models/monsters/spectre/dis2.tga	// replace this with a monster-specific texture
+		alphaTest 0.05 + 2 * (time - parm7)
+	}
+
+	renderbump  -size 1024 1024 -trace 0.03 -colorMap -aa 2  models/characters/male_npc/soldier/soldier_local.tga models/characters/male_npc/soldier/soldier_hi.lwo
+
+
+ 	diffusemap	  models/characters/male_npc/soldier/soldier.tga
+	bumpmap		addnormals(models/characters/male_npc/soldier/soldier_local.tga, heightmap(models/characters/male_npc/soldier/soldier_h.tga, 5 ) )
+	specularmap	models/characters/male_npc/soldier/soldier_s.tga
+}
+
+material models/characters/player/body
+{
+        noselfShadow
+		clamp
+	renderbump  -size 1024 2048 -trace 0.03 -colorMap -aa 2  models/characters/player/body_local.tga models/characters/player/body_hi.lwo
+
+
+ 	diffusemap	  models/characters/player/body.tga
+	bumpmap		addnormals(models/characters/player/body_local.tga, heightmap(models/characters/player/body_h.tga, 5 ) )
+	specularmap	models/characters/player/body_s.tga
+}
+
+material models/characters/player/arm2
+{
+        noselfShadow
+	noShadows
+	renderbump  -size 1024 2048 -trace 0.1 -colorMap   models/characters/player/arm2_local.tga models/characters/player/arm1_hi.lwo
+
+
+
+        diffusemap	models/characters/player/arm2.tga
+	bumpmap addnormals(models/characters/player/arm2_local.tga, heightmap(models/characters/player/arm2_h.tga, 3 ) )
+	specularmap	models/characters/player/arm2_s.tga
+}
+
+material models/characters/player/arm2_invis
+{
+        noselfShadow
+	noShadows
+	renderbump  -size 1024 2048 -trace 0.1 -colorMap   models/characters/player/arm2_local.tga models/characters/player/arm1_hi.lwo
+
+
+	translucent
+        
+        bumpmap addnormals(models/characters/player/arm2_local.tga, heightmap(models/characters/player/arm2_h.tga, 3 ) )
+	specularmap models/invis_s.tga	
+}

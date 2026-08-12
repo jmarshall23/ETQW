@@ -1,0 +1,584 @@
+effect effects/base/bullets/ricochet_blank
+{
+}
+
+effect effects/base/bullets/ricochet
+{
+	size	181
+
+	sound "Ricochet Sound"
+	{
+		soundShader	"sounds/weapons/impacts/ricochet"
+		freqshift	0.75,1.25
+	}
+}effect effects/base/bullets/default
+{
+	size	30
+
+	sound "Impact Sound"
+	{
+		soundShader	"sounds/weapons/impacts/stone"
+		freqshift	0.75,1.5
+	}
+	spawner "SmokePuff"
+	{
+		count		1,1
+
+		sprite
+		{
+			duration	0.5,1
+			blend	add
+			persist
+			material	"textures/particles/smokepuff"
+			generatedNormal
+			trailRepeat	1
+
+			start
+			{
+				position { point 2,0,0 }
+				velocity { box 2,-3,-3,15,3,3 }
+				tint { point 0.803922,0.760784,0.705882 }
+				rotate { box 0,0.0416667 }
+			}
+
+			motion
+			{
+				size { envelope fogtomie }
+				tint { envelope testblasttable }
+				fade { envelope fogtomie }
+				rotate { envelope hud1 }
+			}
+
+			end
+			{
+				size { point 15,15 }
+				rotate { box 0.125,0.25 }
+			}
+		}
+	}
+}effect effects/base/bullets/impact_flesh
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/bullets_small/impact_flesh"
+	}
+}
+
+effect effects/base/bullets/impact_liquid
+{
+	size	8
+
+	cutOffDistance	1000
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/bullets_small/impact_liquid"
+	}
+}
+
+effect effects/base/bullets/impact_plastic
+{
+	size	8
+
+	cutOffDistance	1000
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/bullets_small/impact_plastic"
+	}
+}
+
+effect effects/base/bullets/impact_sand
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/bullets_small/impact_sand"
+	}
+}
+
+effect effects/base/bullets/impact_stone
+{
+	size	8
+
+	cutOffDistance	1000
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/bullets_small/impact_stone"
+	}
+}
+
+effect effects/base/bullets/impact_pavement
+{
+	size	8
+
+	cutOffDistance	1000
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/bullets_small/impact_pavement"
+	}
+}
+
+effect effects/base/bullets/impact_metal
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/bullets_small/impact_metal"
+	}
+}
+
+effect effects/base/bullets/impact_grass
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/bullets_small/impact_grass"
+	}
+}
+
+effect effects/base/bullets/impact_large_sand
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/bullets_large/impact_sand"
+	}
+}
+
+effect effects/base/bullets/impact_large_snow
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/bullets_large/impact_snow"
+	}
+}
+
+effect effects/base/bullets/impact_large_grass
+{
+	size	8
+
+	cutOffDistance	3000
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/bullets_large/impact_grass"
+	}
+}
+
+effect effects/base/bullets/impact_glass
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/bullets_small/impact_glass"
+	}
+}
+
+effect effects/base/bullets/impact_wood
+{
+	size	8
+
+	cutOffDistance	1000
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/bullets_small/impact_wood"
+	}
+}effect effects/base/bullets/impact_forcefield
+{
+	size	115
+
+	cutOffDistance	2500
+
+	sound "Impact Sound"
+	{
+		soundShader	"sounds/weapons/impacts/shield"
+		volume	5,8
+		freqshift	0.5,2
+	}
+	sound "Impact Sound2"
+	{
+		soundShader	"sounds/weapons/lacerator/projectile_impact"
+		volume	6,10
+		freqshift	0.5,1.5
+	}
+	emitter "warp2"
+	{
+		duration	1,1
+		density		1,1
+		attenuateEmitter
+		attenuation	200,250
+
+		oriented
+		{
+			duration	1,3
+			blend	add
+			material	"textures/effects/ssm_shockwave3"
+			trailRepeat	1
+
+			start
+			{
+				position { point 5,0,0 }
+				size { line 20,20,40,40 }
+				offset { line -5,0,0,5,0,0 }
+			}
+
+			motion
+			{
+				size { envelope shamus_fastinslowout count 0.9,0.9 offset 0.4,0.4 }
+				tint { envelope convexfade }
+				fade { envelope shamus_fastinslowout }
+			}
+
+			end
+			{
+				size { line 5,5,10,10 }
+				fade { point 1 }
+			}
+			lineHit
+		}
+	}
+	spawner "unnamed1"
+	{
+		count		2,2
+		attenuateEmitter
+		attenuation	200,250
+
+		oriented
+		{
+			duration	4,4
+			persist
+			material	"textures/sfx/forceripple"
+			flipNormal
+			trailRepeat	1
+
+			start
+			{
+				position { point 1,0,0 }
+				size { line 2,2,6,6 }
+				rotate { box 0,0,0,0,0,1 }
+			}
+
+			motion
+			{
+				size { envelope convexfade }
+				tint { envelope concavefade }
+				fade { envelope concavefade }
+			}
+
+			end
+			{
+				size { line 10,10,30,30 }
+			}
+			lineHit
+		}
+	}
+	emitter "smokey2"
+	{
+		duration	0.5,0.5
+		count		3,3
+		attenuateEmitter
+		attenuation	100,150
+
+		sprite
+		{
+			duration	1,1
+			blend	add
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 35,-20,-20,50,20,20 }
+				size { line 4,4,8,8 }
+				tint { point 0.858824,0.52549,0.156863 }
+				fade { line 0.1,0.5 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope rr2_concavefade_start_at_1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 30,30,45,45 }
+				rotate { box -0.25,0.25 relative }
+			}
+			lineHit
+		}
+	}
+	spawner "dirt_blur"
+	{
+		count		1,1
+		useMaterialColor
+
+		line
+		{
+			duration	0.4,0.4
+			blend	add
+			persist
+			material	"textures/effects/weapons/ground_flash"
+			gravity		0.001,0.001
+			trailRepeat	1
+
+			start
+			{
+				position { point 3,0,0 cone }
+				velocity { box 0,-10,-10,0,10,10 }
+				size { box 10,22 }
+				tint { line 0.792157,0.615686,0.207843,0.807843,0.317647,0.192157 }
+				offset { point -10,0,0 }
+				length { box 50,0,0,80,0,0 }
+			}
+			lineHit
+		}
+	}
+	spawner "glow2"
+	{
+		count		1,1
+		attenuateEmitter
+		attenuation	200,250
+
+		oriented
+		{
+			duration	3,3
+			blend	add
+			material	"textures/particles/sparks/sparkflash03"
+			trailRepeat	1
+
+			start
+			{
+				size { line 15,15,21,21 }
+				tint { line 0.992157,0.211765,0.0156863,1,0.501961,0.247059 }
+				fade { line 0.7,1 }
+				rotate { box 0,0,0,0,0,2 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope exp_x2 }
+			}
+
+			end
+			{
+				size { point 30,30 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/base/bullets/impact_forcefield_big
+{
+	size	115
+
+	cutOffDistance	3000
+
+	sound "Impact Sound"
+	{
+		soundShader	"sounds/weapons/impacts/shield"
+		volume	5,8
+		freqshift	0.5,2
+	}
+	sound "Impact Sound2"
+	{
+		soundShader	"sounds/weapons/lacerator/projectile_impact"
+		volume	6,10
+		freqshift	0.5,1.5
+	}
+	emitter "warp2"
+	{
+		duration	1,1
+		density		1,1
+		attenuation	200,250
+
+		oriented
+		{
+			duration	1,3
+			blend	add
+			material	"textures/effects/ssm_shockwave3"
+			trailRepeat	1
+
+			start
+			{
+				position { point 5,0,0 }
+				size { line 40,40,70,70 }
+				offset { line -5,0,0,5,0,0 }
+			}
+
+			motion
+			{
+				size { envelope shamus_fastinslowout count 0.9,0.9 offset 0.4,0.4 }
+				tint { envelope convexfade }
+				fade { envelope shamus_fastinslowout }
+			}
+
+			end
+			{
+				size { line 10,10,20,20 }
+				fade { point 1 }
+			}
+			lineHit
+		}
+	}
+	spawner "unnamed1"
+	{
+		count		2,2
+		attenuateEmitter
+		attenuation	250,300
+
+		oriented
+		{
+			duration	4,4
+			persist
+			material	"textures/sfx/forceripple"
+			flipNormal
+			trailRepeat	1
+
+			start
+			{
+				position { point 1,0,0 }
+				size { line 2,2,6,6 }
+				rotate { box 0,0,0,0,0,1 }
+			}
+
+			motion
+			{
+				size { envelope convexfade }
+				tint { envelope concavefade }
+				fade { envelope concavefade }
+			}
+
+			end
+			{
+				size { line 20,20,50,50 }
+			}
+			lineHit
+		}
+	}
+	emitter "smokey2"
+	{
+		duration	0.5,0.5
+		count		3,3
+		attenuateEmitter
+		attenuation	150,200
+
+		sprite
+		{
+			duration	1,1
+			blend	add
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 35,-20,-20,50,20,20 }
+				size { line 4,4,8,8 }
+				tint { point 0.858824,0.52549,0.156863 }
+				fade { line 0.1,0.5 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope rr2_concavefade_start_at_1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 30,30,45,45 }
+				rotate { box -0.25,0.25 relative }
+			}
+			lineHit
+		}
+	}
+	spawner "dirt_blur"
+	{
+		count		1,1
+		useMaterialColor
+
+		line
+		{
+			duration	0.4,0.4
+			blend	add
+			persist
+			material	"textures/effects/weapons/ground_flash"
+			gravity		0.001,0.001
+			trailRepeat	1
+
+			start
+			{
+				position { point 3,0,0 cone }
+				velocity { box 0,-10,-10,0,10,10 }
+				size { box 10,22 }
+				tint { line 0.792157,0.615686,0.207843,0.807843,0.317647,0.192157 }
+				offset { point -10,0,0 }
+				length { box 50,0,0,80,0,0 }
+			}
+			lineHit
+		}
+	}
+	spawner "glow2"
+	{
+		count		1,1
+		attenuateEmitter
+		attenuation	250,300
+
+		oriented
+		{
+			duration	3,3
+			blend	add
+			material	"textures/particles/sparks/sparkflash03"
+			trailRepeat	1
+
+			start
+			{
+				size { line 15,15,21,21 }
+				tint { line 0.992157,0.211765,0.0156863,1,0.501961,0.247059 }
+				fade { line 0.7,1 }
+				rotate { box 0,0,0,0,0,2 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope exp_x2 }
+			}
+
+			end
+			{
+				size { point 30,30 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+

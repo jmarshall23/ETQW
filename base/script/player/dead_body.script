@@ -1,0 +1,461 @@
+object dead_body {
+	void				init();
+	void				syncFields();
+	void				destroy();
+
+	void				PrePlayerFullyKilled( player p );
+
+	float				OnUpdateCrosshairInfo( entity p );
+	float				OnActivate( entity p, float distance );
+
+	float				GetActivateCode( entity p, float distance );
+
+	boolean				vCheckActionCode( entity p, float actionCode );
+
+	void				Fizzle();
+	void				DoFizzle();
+	void				vCancel();
+	void				CheckEarlyFizzle();
+
+	boolean				vShouldCreateSpawnHost( entity p );
+	void				vForceRespawn();
+	void				vPossess( entity p );
+
+	void				vOnContextSpawnHost( entity p );
+
+	boolean				vDisablePlantCharge() { return true; }
+
+	void				CompleteSpawnHostTask();
+	void				InitSpawnHostTask();
+	void				FreeSpawnHostTask();
+
+	boolean				spawnHostCreated;	
+	boolean				uniformStolen;
+
+	float				lastStealTime;
+	float				stolenCount;
+	float				maxStolenCount;
+	entity				lastStealPlayer;
+
+	float				spawnHostCount;
+	float				maxSpawnHostCount;
+
+	string				spawnhostSkin;
+	string				fadeSkin;	
+
+	float				useMeToolTip1_Disguise;
+
+	float				useMeToolTip1_SpawnHost;
+	float				useMeToolTip2_SpawnHost;
+
+	void				OnSpawnHostCreated();
+	void				OnSyncFizzleChanged();
+
+	boolean				IsActionable( entity p ) { 
+		if ( spawnHostCreated ) {
+			return false;
+		}
+
+		if ( uniformStolen ) {
+			return false;
+		}
+
+		if ( sys.getTime() < lastStealTime + 0.5f ) {
+			if ( lastStealPlayer != p ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	boolean				IsSpawnHostable();
+
+	boolean				fizzleStarted;
+	boolean				syncFizzleStarted;
+
+	task				spawnHostTask;
+
+//mal: need some callbacks so that I can access this easily in the code.
+	boolean			IsSpawnHost() { return spawnHostCreated; }
+	boolean			HasNoUniform() { return uniformStolen; } 
+}
+
+void dead_body::init() {
+	maxStolenCount = getFloatKey( "max_possess_count" );
+	maxSpawnHostCount = getFloatKey( "max_spawnhost_count" );
+
+	string climateKey = getKey( "climate_key" );
+	if ( climateKey == "" ) {
+		sys.warning( "dead_body::init no climate key set" );
+	}
+
+	spawnhostSkin = sys.getClimateSkin( "skin_" + climateKey + "_spawnhost" );
+	fadeSkin = sys.getClimateSkin( "skin_" + climateKey + "_fade" );
+
+	useMeToolTip1_Disguise = GetToolTip( getKey( "tt_intro_use_me_1_disguise" ) );
+
+	useMeToolTip1_SpawnHost = GetToolTip( getKey( "tt_intro_use_me_1_spawnhost" ) );
+	useMeToolTip2_SpawnHost = GetToolTip( getKey( "tt_intro_use_me_2_spawnhost" ) );
+
+	thread Fizzle();
+	
+	if ( !sys.isClient() ) {
+		sys.wait( 1.f );
+		CheckEarlyFizzle();
+	}
+}
+
+void dead_body::syncFields() {
+	sync( "stolenCount" );
+	sync( "spawnHostCount" );
+	sync( "lastStealTime" );
+	syncBroadcast( "syncFizzleStarted" );
+	syncBroadcast( "lastStealPlayer" );
+	syncBroadcast( "uniformStolen" );
+	syncBroadcast( "spawnHostCreated" );
+	syncCallback( "syncFizzleStarted", "OnSyncFizzleChanged" );
+	syncCallback( "spawnHostCreated", "OnSpawnHostCreated" );
+}
+
+void dead_body::OnSyncFizzleChanged() {
+	thread DoFizzle();
+}
+
+void dead_body::OnSpawnHostCreated() {
+	setSkin( spawnhostSkin );
+	CompleteSpawnHostTask();
+}
+
+void dead_body::destroy() {
+	FreeSpawnHostTask();
+}
+
+void dead_body::PrePlayerFullyKilled( player p ) {
+	if ( !sys.isClient() ) {
+		if ( p ) {
+			if ( p.HasSpawnHostTask() ) {
+				InitSpawnHostTask();
+			}
+		}
+	}
+}
+
+void dead_body::Fizzle() {
+	sys.wait( 30.f );
+	vCancel();
+}
+
+void dead_body::vCancel() {
+	thread DoFizzle();
+}
+
+void dead_body::DoFizzle() {
+	if ( fizzleStarted ) {
+		return;
+	}
+	if ( !sys.isClient() ) {
+		syncFizzleStarted = true;
+	}
+	fizzleStarted = true;
+
+	setSkin( fadeSkin );
+	setShaderParm( 6, sys.getTime() );
+
+	sys.wait( 1.f );
+
+	if ( !sys.isClient() ) {
+		remove();
+	}
+}
+
+void dead_body::vForceRespawn() {
+	if ( !sys.isClient() ) {
+		spawnHostCreated = true;
+		OnSpawnHostCreated();
+	}
+}
+
+boolean dead_body::vShouldCreateSpawnHost( entity p ) {
+	if ( getEntityAllegiance( p ) != TA_ENEMY ) {
+		return false;
+	}
+
+	if ( !IsActionable( p ) ) {
+		return false;
+	}
+
+	return true;
+}
+
+boolean dead_body::vCreateSpawnHost( entity other, string hostName ) {	
+	spawnHostCount = spawnHostCount + 1;
+	if ( spawnHostCount >= maxSpawnHostCount ) {
+		if ( !sys.isClient() ) {
+			entity host = sys.spawn( hostName );
+			host.setAngles( getRenderViewAngles() );
+			host.setOrigin( getWorldOrigin() );
+			host.setGameTeam( other.getGameTeam() );
+			host.vSetOwner( other );
+			host.vSetBody( self );
+
+			spawnHostCreated = true;
+			OnSpawnHostCreated();		
+		}
+		return true;	
+	}
+
+	return false;
+}
+
+boolean dead_body::vCheckActionCode( entity p, float actionCode ) {
+	if ( actionCode == AC_POSSESS ) {
+		if ( getEntityAllegiance( p ) != TA_ENEMY ) {
+			return false;
+		}
+
+		if ( p.vGetCarryableItem() != $null_entity ) {
+			return false;
+		}
+		
+		return IsActionable( p );
+	}
+
+	return false;
+}
+
+float dead_body::GetActivateCode( entity p, float distance ) {
+	if ( p.getViewingEntity() != p ) {
+		return AK_NONE;
+	}
+
+	if ( p.getHealth() <= 0 ) {
+		return AK_NONE;
+	}
+
+	if ( distance > 128.f ) {
+		return AK_NONE;
+	}
+
+	if ( getEntityAllegiance( p ) != TA_ENEMY ) {
+		return AK_NONE;
+	}
+
+	if ( IsActionable( p ) ) {
+		team_base team = p.getGameTeam();
+		if ( team.HasActionItem( p, AK_SPAWNHOST ) ) {
+			return AK_SPAWNHOST;
+		}
+
+		if ( p.vGetCarryableItem() == $null_entity ) {
+			return AK_DISGUISE;
+		}
+	}
+
+	return AK_NONE;
+}
+
+float dead_body::OnActivate( entity p, float distance ) {
+	if ( distance > 128.f  || sys.isClient() ) {
+		return 0.f;
+	}
+
+	float code = GetActivateCode( p, distance );
+	if ( p.vHasActionItem( code ) ) {
+		p.vSelectActionItem( code );
+		return 1.f;
+	}
+
+	return 0.f;
+}
+
+float dead_body::OnUpdateCrosshairInfo( entity p ) {
+	if ( spawnHostCreated ) {
+		return 0.f;
+	}
+
+	if ( !sys.doClientSideStuff() ) {
+		return 1.f;
+	}
+
+	float allegiance = getEntityAllegiance( p );
+
+	vector color = GetAllegianceColor( allegiance );
+	string title;
+	float distance = chGetDistance();
+	float range = InchesToMetres( distance );
+
+	vector up;
+	up_z = 64.f;
+
+	chSetNumLines( 0 );
+	float index;
+
+	up_z = 32.f;
+
+	team_base team;
+
+	if ( p != $null_entity ) {
+		// see if theres a valid action to perform
+		float code = GetActivateCode( p, distance );
+		if ( code != AK_NONE ) {
+			if ( p.vHasActionItem( code ) ) {
+				index = chAddLine();
+				chSetLineMaterial( index, p.vGetActionIcon( code ) );
+				chSetLineType( index, CI_IMAGE );
+				chSetLineSize( index, 64, 64 );
+				chSetLineColor( index, g_colorWhite, 0.9f );
+
+				if ( p.isLocalPlayer() ) {
+					if ( !p.isToolTipPlaying() ) {
+						if ( sys.getTime() - p.getCrosshairStartTime() > 1.f ) {
+							if ( code == AK_DISGUISE ) {
+								p.sendToolTip( useMeToolTip1_Disguise );
+							} else {
+								if ( p.getCurrentWeapon() != p.vGetActionItem( code ) ) {
+									p.sendToolTip( useMeToolTip1_SpawnHost );
+								} else {
+									p.sendToolTip( useMeToolTip2_SpawnHost );
+								}
+							}
+						}
+					}
+				}
+			}
+		} else if ( p.vHasActionItem( AK_DISGUISE ) ) {
+			if ( distance < DISTANCE_FOR_ACTION ) {
+				if ( getEntityAllegiance( p ) == TA_ENEMY ) {
+					if ( p.vGetCarryableItem() != $null_entity ) {
+						if ( sys.getTime() - p.getCrosshairStartTime() > 2.f ) {
+							if ( !p.isToolTipPlaying() ) {
+								p.sendToolTip( GetToolTip( p.getKey( "tt_nodisguise_carryable" ) ) );
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return 1.f;
+}
+
+float dead_body::vGetPliersProgressBarValue( float action ) {
+	if ( action == AC_POSSESS ) {
+		return stolenCount / maxStolenCount;
+	}
+	if ( action == AC_SPAWNHOST ) {
+		return spawnHostCount / maxSpawnHostCount;
+	}
+
+	return 0.f;
+}
+
+void dead_body::vPossess( entity p ) {
+	if ( lastStealPlayer != p ) {
+		lastStealPlayer = p;
+		stolenCount = 0;
+	}
+	lastStealTime = sys.getTime();
+
+	player playerP = p;
+	if ( playerP != $null_entity ) {
+		playerP.ShowProgressBar( self, AC_POSSESS );
+	}
+
+	if ( stolenCount >= maxStolenCount ) {
+		if ( sys.isClient() ) {
+			return;
+		}
+		stolenCount = 0;
+	}
+
+	float count = 1;
+
+	team_base team = p.getGameTeam();
+	if ( team != $null ) {
+		if ( team.HasFastDisguise( p ) ) {
+			count = count * 1.25f;
+		}
+	}
+
+	stolenCount = stolenCount + count;
+	if ( stolenCount >= maxStolenCount ) {
+		if ( !sys.isClient() ) {
+			uniformStolen = true;
+			p.disguise( self );
+
+			string statName = team.getName() + "_disguise_uses";
+			sys.increaseStatInt( sys.allocStatInt( statName ), p.getEntityNumber(), 1 );
+
+			FreeSpawnHostTask();
+
+		}
+
+		vCancel();
+	}
+}
+
+void dead_body::vOnContextSpawnHost( entity p ) {
+	if ( uniformStolen || spawnHostCreated ) {
+		return;
+	}
+	
+	InitSpawnHostTask();
+}
+
+void dead_body::CompleteSpawnHostTask() {
+	if ( spawnHostTask != $null ) {
+		spawnHostTask.complete();
+		spawnHostTask.setTimeout( 1.f );
+		spawnHostTask = $null;
+	}
+}
+
+void dead_body::FreeSpawnHostTask() {
+	if ( spawnHostTask != $null ) {
+		spawnHostTask.free();
+	}
+}
+
+void dead_body::InitSpawnHostTask() {
+	if ( spawnHostTask != $null ) {
+		return;
+	}
+
+	float taskHandle = GetPlayerTask( getKey( "task_create_spawn_host" ) );
+	if ( taskHandle != -1 ) {
+		spawnHostTask = taskManager.allocEntityTask( taskHandle, self );
+	}
+}
+
+boolean dead_body::IsSpawnHostable() {
+	if ( getGameTeam() == stroggTeam ) {
+		return false;
+	}
+
+	return !spawnHostCreated && !uniformStolen;
+}
+
+void dead_body::CheckEarlyFizzle() {
+	vector mins = getWorldOrigin();
+	vector maxs = getWorldOrigin();
+
+	mins_x -= 30.f;
+	mins_y -= 30.f;
+	mins_z -= 20.f;
+	maxs_x += 30.f;
+	maxs_y += 30.f;
+	maxs_z += 20.f;
+
+//	sys.debugBounds( g_colorRed, mins, maxs, 10.f );
+	float count = entitiesInBounds( mins, maxs, -1, true );
+	float index;
+	for ( index = 0; index < count; index++ ) {
+		entity other = getBoundsCacheEntity( index );
+		if ( other.vDecayBody() ) {
+			DoFizzle();
+			return;
+		}
+	}
+}

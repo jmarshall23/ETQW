@@ -1,0 +1,86 @@
+effect effects/weapons/repairdrone_loop_simple
+{
+	size	104
+
+	cutOffDistance	200
+
+	emitter "spark flash"
+	{
+		duration	0.1,0.1
+		count		2,2
+		locked
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.08,0.08
+			blend	add
+			material	"textures/particles/sparks/sparkflash_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point 150,-12,0 }
+				size { box 5,5,10,10 }
+				tint { line 0.984314,0.301961,0.301961,0.94902,0.52549,0.52549 }
+				fade { line 0.1,0.8 }
+				rotate { box 0,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { box 15,15,20,20 }
+			}
+			lineHit
+		}
+	}
+}effect effects/weapons/repairdrone_loop_world_simple
+{
+	size	37
+
+	cutOffDistance	200
+
+	emitter "spark flash"
+	{
+		duration	0.1,0.1
+		count		2,2
+		locked
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.08,0.08
+			blend	add
+			material	"textures/particles/sparks/sparkflash_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,17,0 }
+				size { box 5,5,10,10 }
+				tint { line 0.984314,0.301961,0.301961,0.94902,0.52549,0.52549 }
+				fade { line 0.1,0.8 }
+				rotate { box 0,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { box 15,15,20,20 }
+			}
+			lineHit
+		}
+	}
+}
+

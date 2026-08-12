@@ -1,0 +1,15 @@
+material models/mapobjects/road_signs/billboard_roadsign_01
+{
+	noshadows
+	{
+		//program	interaction/basic_detail_alphatest
+		diffusemap	picmip -1	models/mapobjects/road_signs/billboard_roadsign_01_d.tga
+		specularmap	picmip -2	models/mapobjects/road_signs/billboard_roadsign_01_s.tga
+		bumpmap		picmip -1	models/mapobjects/road_signs/billboard_roadsign_01_local.tga
+		alphaTest 	0.2
+		
+	 	//bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+	 	//specDetailMap	_gray
+        	//detailMult 5,5,0,0 
+	}
+}

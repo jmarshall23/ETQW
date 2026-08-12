@@ -1,0 +1,83 @@
+material models/vegetation/trees/japanese/japanese_leaves
+{
+	nonsolid
+	noshadows
+	twoSided
+ 	{
+ 		alphatocoverage
+  		program interaction/foliage
+  		diffusemap 			picmip -1	clamp models/vegetation/trees/japanese/japanese_leaves_d.tga
+ 		alphaTest 	0.25
+ 		alphatocoverage
+ 		
+		useTemplate wind/animatematrix_left< 0.5, 0.0005 > // Speed, strength	
+ 	}
+}
+
+material models/vegetation/trees/japanese/japanese_bark
+{
+	nonsolid
+	noshadows	
+	{
+		diffusemap				models/vegetation/trees/japanese/japanese_bark_d.tga
+		bumpmap		picmip -1	models/vegetation/trees/japanese/japanese_bark_local.tga
+		specularmap	picmip -2	models/vegetation/trees/japanese/japanese_bark_s.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/bark_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/bark_detail01_local.tga
+		specDetailMap			textures/detail/bump/bark_detail01_d.tga
+        detailMult 11,11,0,0 
+	}
+}
+
+material models/vegetation/trees/japanese/japanese_branches
+{
+	nonsolid
+	twoSided
+	noshadows
+	{
+ 		alphatocoverage
+		program interaction/foliage
+		diffusemap 	picmip -1		clamp models/vegetation/trees/japanese/japanese_branches_d.tga
+		bumpmap		picmip -1		clamp models/vegetation/trees/japanese/japanese_branches_local.tga
+		specularmap	picmip -2		clamp models/vegetation/trees/japanese/japanese_branches_s.tga
+
+		alphaTest 	0.17
+
+		useTemplate wind/animatematrix< 0.5, 0.001 > // Speed, strength
+	}
+}
+
+material models/vegetation/trees/japanese/japanese_pinebark
+{
+	nonsolid
+	noshadows
+	{
+		diffusemap				models/vegetation/trees/japanese/japanese_pinebark_d.tga
+		bumpmap		picmip -1	models/vegetation/trees/japanese/japanese_pinebark_local.tga
+		specularmap	picmip -1	models/vegetation/trees/japanese/japanese_pinebark_s.tga
+		vertexcolor
+
+		diffuseDetailMap		textures/detail/bump/bark_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/bark_detail01_local.tga
+		specDetailMap			textures/detail/bump/bark_detail01_d.tga
+        detailMult 10,10,0,0 
+	}
+}
+
+material models/vegetation/trees/japanese/japanese_pinebranches
+{
+	nonsolid
+	twoSided
+	{
+ 		alphatocoverage
+		program interaction/foliage
+		diffusemap				clamp models/vegetation/trees/japanese/japanese_pinebranches_d.tga
+		bumpmap		picmip -1	clamp models/vegetation/trees/japanese/japanese_pinebranches_local.tga
+		specularmap	picmip -1	clamp models/vegetation/trees/japanese/japanese_pinebranches_s.tga
+		alphaTest 	0.3
+
+		useTemplate wind/animatematrix< 0.5, 0.0005 > // Speed, strength
+	}
+}

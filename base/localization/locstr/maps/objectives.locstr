@@ -1,0 +1,117 @@
+
+locString maps/obj/complete_msg {
+	text "#str_00101000"
+	arguments 1
+}
+
+locString maps/obj/complete_obj_generic {
+	text "#str_00101001"
+}
+
+locString maps/generic/obj_construct {
+	text "#str_00101002"
+	arguments 1
+}
+
+locString maps/generic/obj_construct_tower {
+	text "#str_00101021"
+	arguments 1
+}
+
+locString maps/generic/obj_construct_gun {
+	text "#str_00101022"
+	arguments 1
+}
+
+locString maps/generic/obj_hacking {
+	text "#str_00101003"
+	arguments 1
+}
+
+locString maps/generic/obj_hacked {
+	text "#str_00101024"
+	arguments 1
+}
+
+locString maps/generic/obj_hackable {
+	text "#str_00101004"
+}
+
+locString maps/generic/obj_planted {
+	text "#str_00101007"
+	arguments 1
+}
+
+locString maps/generic/obj_disarmed {
+	text "#str_00101008"
+	arguments 1
+}
+
+locString maps/generic/hack_delaying_reinforcements {
+	text "#str_00101005"
+	arguments 2
+}
+
+locString maps/generic/hack_delayed_reinforcements {
+	text "#str_00101006"
+	arguments 2
+}
+
+// generic objectives/tasks
+locString maps/generic/guard_tower {
+	text "#str_00101010"
+}
+
+locString maps/generic/bridge {
+	text "#str_00101019"
+}
+
+locString maps/generic/gun_nest {
+	text "#str_00101020"
+}
+
+// items
+locString maps/generic/item/dropped/player {
+	text "#str_00101011"
+	arguments 2
+}
+
+locString maps/generic/item/dropped/empty {
+	text "#str_00101012"
+	arguments 1
+}
+
+locString maps/generic/item/returned/player {
+	text "#str_00101013"
+	arguments 2
+}
+
+locString maps/generic/item/returned/empty {
+	text "#str_00101014"
+	arguments 1
+}
+
+locString maps/generic/item/grabbed {
+	text "#str_00101015"
+	arguments 2
+}
+
+locString maps/generic/item/captured {
+	text "#str_00101016"
+	arguments 2
+}
+
+
+locString maps/generic/zappor/constructed {
+	text "#str_00101017"
+	arguments 1
+}
+
+locString maps/generic/mcp/destroyed {
+	text "#str_00101018"
+}
+
+locString maps/generic/obj_transmit {
+	text "#str_00101023"
+	arguments 1
+}

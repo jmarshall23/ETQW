@@ -1,0 +1,840 @@
+// ========================================================================================
+// AREA22
+// ========================================================================================
+material guis/assets/etlimbo/maps/area22/gdf_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/area22/gdf_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/area22/gdf_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/area22/gdf_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/area22/gdf_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/area22/gdf_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/area22/strogg_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/area22/strogg_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/area22/strogg_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/area22/strogg_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/area22/strogg_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/area22/strogg_objective3"
+	}
+}
+
+// ========================================================================================
+// ARK
+// ========================================================================================
+material guis/assets/etlimbo/maps/ark/gdf_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/ark/gdf_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/ark/gdf_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/ark/gdf_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/ark/gdf_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/ark/gdf_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/ark/gdf_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/ark/gdf_objective4"
+	}
+}
+
+material guis/assets/etlimbo/maps/ark/strogg_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/ark/strogg_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/ark/strogg_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/ark/strogg_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/ark/strogg_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/ark/strogg_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/ark/strogg_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/ark/strogg_objective4"
+	}
+}
+
+// ========================================================================================
+// CANYON
+// ========================================================================================
+material guis/assets/etlimbo/maps/canyon/gdf_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/canyon/gdf_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/canyon/gdf_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/canyon/gdf_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/canyon/gdf_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/canyon/gdf_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/canyon/gdf_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/canyon/gdf_objective4"
+	}
+}
+
+material guis/assets/etlimbo/maps/canyon/strogg_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/canyon/strogg_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/canyon/strogg_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/canyon/strogg_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/canyon/strogg_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/canyon/strogg_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/canyon/strogg_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/canyon/strogg_objective4"
+	}
+}
+
+// ========================================================================================
+// GHOST TOWN
+// ========================================================================================
+material guis/assets/etlimbo/maps/ghost_town/gdf_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/ghost_town/gdf_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/ghost_town/gdf_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/ghost_town/gdf_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/ghost_town/gdf_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/ghost_town/gdf_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/ghost_town/gdf_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/ghost_town/gdf_objective4"
+	}
+}
+
+material guis/assets/etlimbo/maps/ghost_town/strogg_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/ghost_town/strogg_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/ghost_town/strogg_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/ghost_town/strogg_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/ghost_town/strogg_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/ghost_town/strogg_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/ghost_town/strogg_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/ghost_town/strogg_objective4"
+	}
+}
+
+// ========================================================================================
+// ISLAND
+// ========================================================================================
+material guis/assets/etlimbo/maps/island/gdf_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/island/gdf_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/island/gdf_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/island/gdf_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/island/gdf_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/island/gdf_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/island/gdf_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/island/gdf_objective4"
+	}
+}
+
+
+material guis/assets/etlimbo/maps/island/strogg_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/island/strogg_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/island/strogg_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/island/strogg_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/island/strogg_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/island/strogg_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/island/strogg_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/island/strogg_objective4"
+	}
+}
+
+// ========================================================================================
+// MOTHERSHIP
+// ========================================================================================
+
+
+// ========================================================================================
+// QUARRY
+// ========================================================================================
+material guis/assets/etlimbo/maps/quarry/gdf_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/quarry/gdf_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/quarry/gdf_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/quarry/gdf_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/quarry/gdf_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/quarry/gdf_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/quarry/gdf_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/quarry/gdf_objective4"
+	}
+}
+
+material guis/assets/etlimbo/maps/quarry/strogg_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/quarry/strogg_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/quarry/strogg_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/quarry/strogg_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/quarry/strogg_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/quarry/strogg_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/quarry/strogg_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/quarry/strogg_objective4"
+	}
+}
+
+// ========================================================================================
+// REFINERY
+// ========================================================================================
+material guis/assets/etlimbo/maps/refinery/gdf_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/refinery/gdf_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/refinery/gdf_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/refinery/gdf_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/refinery/gdf_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/refinery/gdf_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/refinery/gdf_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/refinery/gdf_objective4"
+	}
+}
+
+material guis/assets/etlimbo/maps/refinery/strogg_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/refinery/strogg_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/refinery/strogg_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/refinery/strogg_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/refinery/strogg_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/refinery/strogg_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/refinery/strogg_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/refinery/strogg_objective4"
+	}
+}
+
+// ========================================================================================
+// SALVAGE
+// ========================================================================================
+material guis/assets/etlimbo/maps/salvage/gdf_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/salvage/gdf_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/salvage/gdf_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/salvage/gdf_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/salvage/gdf_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/salvage/gdf_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/salvage/strogg_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/salvage/strogg_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/salvage/strogg_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/salvage/strogg_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/salvage/strogg_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/salvage/strogg_objective3"
+	}
+}
+
+// ========================================================================================
+// SLIPGATE
+// ========================================================================================
+material guis/assets/etlimbo/maps/slipgate/gdf_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/slipgate/gdf_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/slipgate/gdf_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/slipgate/gdf_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/slipgate/gdf_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/slipgate/gdf_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/slipgate/gdf_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/slipgate/gdf_objective4"
+	}
+}
+
+material guis/assets/etlimbo/maps/slipgate/strogg_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/slipgate/strogg_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/slipgate/strogg_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/slipgate/strogg_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/slipgate/strogg_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/slipgate/strogg_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/slipgate/strogg_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/slipgate/strogg_objective4"
+	}
+}
+
+// ========================================================================================
+// VALLEY
+// ========================================================================================
+material guis/assets/etlimbo/maps/valley/gdf_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/valley/gdf_objective1"
+	}
+}
+
+
+material guis/assets/etlimbo/maps/valley/gdf_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/valley/gdf_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/valley/gdf_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/valley/gdf_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/valley/gdf_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/valley/gdf_objective4"
+	}
+}
+
+material guis/assets/etlimbo/maps/valley/strogg_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/valley/strogg_objective1"
+	}
+}
+
+
+material guis/assets/etlimbo/maps/valley/strogg_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/valley/strogg_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/valley/strogg_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/valley/strogg_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/valley/strogg_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/valley/strogg_objective4"
+	}
+}
+
+// ========================================================================================
+// VOLCANO
+// ========================================================================================
+material guis/assets/etlimbo/maps/volcano/gdf_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/volcano/gdf_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/volcano/gdf_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/volcano/gdf_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/volcano/gdf_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/volcano/gdf_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/volcano/gdf_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/volcano/gdf_objective4"
+	}
+}
+
+material guis/assets/etlimbo/maps/volcano/strogg_objective1 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/volcano/strogg_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/volcano/strogg_objective2 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/volcano/strogg_objective2"
+	}
+}
+
+material guis/assets/etlimbo/maps/volcano/strogg_objective3 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/volcano/strogg_objective3"
+	}
+}
+
+material guis/assets/etlimbo/maps/volcano/strogg_objective4 {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/volcano/strogg_objective4"
+	}
+}
+//////////////////////////////////////////////
+///////////////zombie's test map//////////////
+//////////////////////////////////////////////
+
+material guis/assets/etlimbo/maps/zombie_terrain/gdf_objective1{
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/zombie_terrain/gdf_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/zombie_terrain/gdf_objective2{
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/zombie_terrain/gdf_objective2"
+	}
+}
+// strogg objectives (temp shots at the moment)
+
+material guis/assets/etlimbo/maps/zombie_terrain/strogg_objective1{
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/zombie_terrain/strogg_objective1"
+	}
+}
+
+material guis/assets/etlimbo/maps/zombie_terrain/strogg_objective2{
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/etlimbo/maps/zombie_terrain/strogg_objective2"
+	}
+}
+
+
+
+

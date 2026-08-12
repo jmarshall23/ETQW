@@ -1,0 +1,227 @@
+
+/*
+=================
+ Localization for GUI
+=================
+*/
+
+locString guis/limbo/class_sel {
+	text "#str_00010001"
+}
+
+locString guis/limbo/class_desc {
+	text "#str_00010002"
+}
+
+locString guis/limbo/special_tools {
+	text "#str_00010003"
+}
+
+locString guis/limbo/main_weapon {
+	text "#str_00010004"
+}
+
+locString guis/limbo/weapon_name {
+	text "#str_00010005"
+}
+
+locString guis/limbo/weapon_count {
+	text "#str_00010006"
+	arguments 2
+}
+
+locString guis/limbo/class_objectives {
+	text "#str_00010009"
+}
+
+locString guis/limbo/team_objectives {
+	text "#str_00010010"
+}
+
+locString guis/limbo/map_overview {
+	text "#str_00010011"
+}
+
+locString guis/limbo/currently_spectating {
+	text "#str_00010012"
+}
+
+locString guis/limbo/spectate {
+	text "#str_00010014"
+}
+
+locString guis/limbo/deploy {
+	text "#str_00010015"
+}
+
+locString guis/limbo/select_weapon {
+	text "#str_00010016"
+}
+
+locString guis/limbo/respawn {
+	text "#str_00010018"
+}
+
+locString guis/limbo/no_tools {
+	text "#str_00010019"
+}
+
+locString guis/limbo/choose_weapon {
+	text "#str_00010020"
+	arguments 1
+}
+
+locString guis/limbo/no_weapons {
+	text "#str_00010021"
+}
+
+locString guis/limbo/double_click_to_join {
+	text "#str_00010028"
+	arguments 1
+}
+
+locString guis/limbo/role {
+	text "#str_00020000"
+}
+
+locString guis/limbo/prof {
+	text "#str_00020001"
+}
+
+locString guis/limbo/total_xp {
+	text "#str_00020002"
+}
+
+locString guis/limbo/rank_levels {
+	text "#str_00020003"
+}
+
+locString guis/limbo/awards {
+	text "#str_00020004"
+}
+
+locString guis/limbo/rewards {
+	text "#str_00020005"
+}
+
+locString guis/limbo/campaign {
+	text "#str_00020006"
+}
+
+locString guis/limbo/overview {
+	text "#str_00020007"
+}
+
+locString guis/limbo/classes {
+	text "#str_00020008"
+}
+
+locString guis/limbo/weapons {
+	text "#str_00020009"
+}
+
+locString guis/limbo/tools {
+	text "#str_00020010"
+}
+
+locString guis/limbo/vehicles {
+	text "#str_00020011"
+}
+
+locString guis/limbo/deployables {
+	text "#str_00020012"
+}
+
+locString guis/limbo/refreshstats {
+	text "#str_00020013"
+}
+
+locString guis/limbo/persistentstats {
+	text "#str_00020014"
+}
+
+locString guis/limbo/mapinfo {
+	text "#str_00020015"
+}
+
+locString guis/limbo/globalchat {
+	text "#str_00020016"
+}
+
+locString guis/limbo/vote {
+	text "#str_00020017"
+}
+
+locString guis/limbo/admin {
+	text "#str_00020018"
+}
+
+locString guis/limbo/clicktoedit {
+	text "#str_00020019"
+	arguments 1
+}
+
+locString guis/limbo/clicktochange {
+	text "#str_00020020"
+}
+
+locString guis/limbo/clicktodeploy {
+	text "#str_00020021"
+}
+
+locString guis/limbo/clicktosuicide {
+	text "#str_00020022"
+}
+
+locString guis/limbo/clicktospectate {
+	text "#str_00020023"
+}
+
+locString guis/limbo/nextvotetime {
+	text "#str_00020024"
+	arguments 1
+}
+
+locString guis/limbo/vehicles_deployables {
+	text "#str_00020025"
+}
+
+locString guis/limbo/weapons_tools {
+	text "#str_00020026"
+}
+
+locString guis/limbo/achievements {
+	text "#str_00020027"
+}
+
+locString guis/limbo/gdf_weapons {
+	text "#str_00020028"
+}
+
+locString guis/limbo/gdf_tools {
+	text "#str_00020029"
+}
+
+locString guis/limbo/strogg_weapons {
+	text "#str_00020030"
+}
+
+locString guis/limbo/strogg_tools {
+	text "#str_00020031"
+}
+
+locString guis/limbo/dblclicktospectate {
+	text "#str_00020032"
+}
+
+locString guis/limbo/categories {
+	text "#str_00020033"
+}
+
+locString guis/limbo/limbo_vo_reset {
+	text "#str_00020034"
+}
+
+locString guis/limbo/autojoin {
+	text "#str_00020035"
+}

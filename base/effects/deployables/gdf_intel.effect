@@ -1,0 +1,103 @@
+effect effects/deployables/radar_destroy
+{
+	size	8
+
+	effect "Explosion"
+	{
+		effect	"effects/deployables/destroy"
+	}
+}
+
+
+
+effect effects/deployables/vampire_destroy
+{
+	size	1518
+
+	spawner "Base"
+	{
+		count		1,1
+
+		debris
+		{
+			duration	1,1
+			entityDef	"deployable_radar_gdf_base"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box -2000,-2000,1000,2000,2000,2000 }
+				rotate { box 0,0,0,1,1,1 }
+			}
+
+			motion
+			{
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				rotate { point 1,0,0 relative }
+			}
+		}
+	}
+	spawner "Wheel"
+	{
+		count		1,1
+
+		debris
+		{
+			duration	1,1
+			entityDef	"deployable_radar_gdf_wheel"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box -400,-400,300,400,400,400 }
+				rotate { box 0,0,0,1,1,1 }
+			}
+
+			motion
+			{
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				rotate { point 1,0,0 relative }
+			}
+		}
+	}
+	spawner "Awacs"
+	{
+		count		1,1
+
+		debris
+		{
+			duration	1,1
+			entityDef	"deployable_radar_gdf_radar"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box -1000,-1000,600,1000,1000,800 }
+				rotate { box 0,0,0,1,1,1 }
+			}
+
+			motion
+			{
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				rotate { point 1,0,0 relative }
+			}
+		}
+	}
+	effect "Explosion"
+	{
+		effect "effects/deployables/destroy"
+	}
+}
+

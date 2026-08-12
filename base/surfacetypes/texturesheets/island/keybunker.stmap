@@ -1,0 +1,52 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/island/keybunker {
+	width	256
+	height	1024
+	/* areaDefs */
+
+	rect {
+		surfaceType	glass
+		surfaceColor	( 1 1 1 )
+		coords ( 128 768 ) ( 256 800 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 512 ) ( 256 768 )
+	}
+	rect {
+		surfaceType	glass
+		surfaceColor	( 1 1 1 )
+		coords ( 0 768 ) ( 128 800 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 832 ) ( 256 896 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 800 ) ( 256 832 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 896 ) ( 256 1152 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 256 ) ( 256 512 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 256 256 )
+	}
+}

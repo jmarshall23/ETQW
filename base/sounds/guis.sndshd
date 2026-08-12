@@ -1,0 +1,79 @@
+// GUI Sounds
+
+// Admin
+
+sound sounds/guis/admin/login {
+
+	sounds/guis/admin/login.wav
+}
+
+sound gui_boop {
+
+	volume -20
+	sounds/guis/boop.wav
+}
+
+sound gui_click {
+
+	volume -5
+
+	sounds/guis/click.wav
+}
+
+sound gui_cancel {
+
+	sounds/guis/cancel.wav
+}
+
+sound gui_confirm {
+
+	volume -10
+
+	sounds/guis/confirm.wav
+}
+
+sound gui_close {
+
+	volume -10
+
+	sounds/guis/close.wav
+}
+
+sound gui_wipe {
+
+	sounds/guis/slide.wav
+}
+
+sound gui_hover {
+
+	volume -10
+
+	sounds/guis/hover.wav
+}
+
+sound message_beep {
+
+	volume -6
+
+	sounds/guis/beep.wav
+}
+
+////////////////////////////////////////////////////////////
+
+sound gui_enter {
+
+	// id sound
+
+	volume		-5
+
+	sounds/guis/twobeep_test1.wav
+}
+
+sound gui_exit {
+
+	// id sound
+
+	volume		-5
+
+	sounds/guis/twobeep_test3.wav
+}

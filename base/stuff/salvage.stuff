@@ -1,0 +1,46 @@
+// --------------------------------------------
+// SALVAGE STUFF
+// --------------------------------------------
+
+stuffType salvage/salvage_grass {
+	Model	"stuff/salvage/salvage_grass01.lwo"
+	Model	"stuff/salvage/salvage_grass02.lwo"
+	Model	"stuff/salvage/salvage_grass03.lwo"
+}
+
+stuffType salvage/salvage_grass_large {
+	Model	"stuff/salvage/salvage_grass_large01.lwo"
+	Model	"stuff/salvage/salvage_grass_large02.lwo"
+	Model	"stuff/salvage/salvage_grass_large03.lwo"
+}
+
+stuffType salvage/salvage_twigs {
+	Model	"stuff/salvage/salvage_twigs_01.lwo"
+	Model	"stuff/salvage/salvage_twigs_02.lwo"
+	Model	"stuff/salvage/salvage_twigs_03.lwo"
+	Model	"stuff/salvage/salvage_twigs_04.lwo"
+	Model	"stuff/salvage/salvage_twigs_05.lwo"
+}
+
+stuffType salvage/salvage_twigs_large {
+	Model	"stuff/salvage/salvage_twigs_large_01.lwo"
+	Model	"stuff/salvage/salvage_twigs_large_02.lwo"
+}
+
+stuffType salvage/salvage_rock {
+	Model	"stuff/salvage/salvage_rock01.lwo"
+	Model	"stuff/salvage/salvage_rock02.lwo"
+	Model	"stuff/salvage/salvage_rock03.lwo"
+	Model	"stuff/salvage/salvage_rock04.lwo"
+	Model	"stuff/salvage/salvage_rock05.lwo"
+	Model	"stuff/salvage/salvage_rock06.lwo"
+	Model	"stuff/salvage/salvage_rock07.lwo"
+	Model	"stuff/salvage/salvage_rock08.lwo"
+}
+
+stuffType salvage/salvage_rock_small {
+	Model	"stuff/salvage/salvage_rock_small01.lwo"
+	Model	"stuff/salvage/salvage_rock_small02.lwo"
+	Model	"stuff/salvage/salvage_rock_small03.lwo"
+	Model	"stuff/salvage/salvage_rock_small04.lwo"
+}

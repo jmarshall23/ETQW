@@ -1,0 +1,168 @@
+
+#include <guis/common/utility.include>
+#include <guis/game/fireteam.include>
+#include <guis/game/hud/hud.include>
+
+#include <guis/common/colors.include>
+#include <guis/mainmenu/utility.include>
+#include <guis/mainmenu/components/dialog.include>
+#include <guis/mainmenu/components/edit.include>
+#include <guis/mainmenu/components/window.include>
+
+gui fireteam {
+	properties {
+		float	flags 		= immediate( flags ) | GUI_FULLSCREEN;		
+	}
+	
+	sounds {
+		"cannot"			"sounds/ui/main/cannot"
+	}
+
+	_hud_materials
+	_dlg_init
+	_wnd_init
+
+	events {
+		onActivate {
+			mainPanel.playerListPage = 0;
+			gui.focusedWindow = "mainPanel";
+			postNamedEvent( "chooseDialog" );
+			mainPanel.colorMultiplier.a = transition( mainPanel.colorMultiplier.a, 1, 100 );
+			desktop.colorMultiplier.a = transition( desktop.colorMultiplier.a, 1, 100 );
+		}
+		onDeactivate {
+			mainPanel.dialogPage = -1;
+			mainPanel.colorMultiplier.a = 0;
+			desktop.colorMultiplier.a = 0;
+		}
+		onNamedEvent "chooseDialog" {
+			if ( player.fireTeamLeader ) {
+				mainPanel.dialogPage = FIRETEAM_DIALOG_LEADER_MANAGE;
+				gui.mainPanel.postNamedEvent( "updateList" );
+				return;
+			}
+			
+			if ( player.fireTeamActive ) {
+				mainPanel.dialogPage = FIRETEAM_DIALOG_MANAGE;
+				gui.mainPanel.postNamedEvent( "updateList" );
+				return;
+			}
+
+			mainPanel.dialogPage = FIRETEAM_DIALOG_MAIN;
+			gui.mainPanel.postNamedEvent( "updateList" );
+			return;		
+		
+		}
+	}
+
+	windowdef desktop {
+		properties {
+			rect rect = SCREEN_WIDTH - ( rect.w + 2 ), 250, 200, 165;
+			float flags = immediate( flags ) | WF_CAPTURE_KEYS;
+			color	colorMultiplier		= 1,1,1,0;
+		}
+		_draw_dialog_frame( drawText, text, "nogradient" )
+		events {
+			onPropertyChanged "gui.edtFireTeamName.visible" {
+				if ( gui.edtFireTeamName.visible == false ) {
+					rect.h = gui.mainPanel.absoluteRect.h + 20;
+				} else {
+					rect.h = gui.mainPanel.absoluteRect.h + 55;
+				}			
+			}
+		}
+	}
+	
+	windowdef mainPanel {
+		type list;
+		_med_text_props
+				
+		properties {
+			rect 	rect 				= 0, 16, 194, 300;
+			vec2	textAlignment 		= 0,1;				
+			color 	backColor 			= 0,0,0,0;
+			float	flags				= immediate( flags ) | WF_AUTO_SIZE_HEIGHT | WF_TRUNCATE_TEXT | LF_NO_KEY_EVENTS;
+			
+			float	dialogPage			= FIRETEAM_DIALOG_MAIN;
+			
+			string	command;
+			float	playerListPage;
+			
+			color	colorMultiplier		= 1,1,1,0;
+		}
+		events {
+			_handleKeyEvents
+
+			onCreate {
+				self.insertColumn( gui.blankWStr, 180, 0 );	// Title
+				self.insertColumn( gui.blankWStr, 0, 1 );	// Command
+			}
+
+			onNamedEvent "updateList" {
+				_updateMenu
+			}
+			onPropertyChanged "visible" {
+				if ( visible ) {
+					colorMultiplier.a = transition( colorMultiplier.a, 0, 1000 );
+				} else {
+					colorMultiplier.a = transition( colorMultiplier.a, 1, 1000 );
+				}
+			}
+		}
+		timeline {
+			onTime 0 {
+				if( visible ) {
+					if ( dialogPage != -1 ) {
+						postNamedEvent( "updateList" );
+						//requestLayout();
+					}
+				}
+			}
+			onTime 250 {
+				timeline.default.resetTime( 0 );
+			}
+		}
+	}
+	_edit( FireTeamName, 4, _bottom( desktop ), gui.desktop.rect.w - 8, EDIT_HEIGHT )
+		properties {
+			float	maxTextLength = 20;
+			float 	flags = immediate( flags );
+			float	visible = false;
+			handle	localizedText = localize( "guis/hud/fireteam/menu/rename_dialog" );
+		}
+		events {
+			onGainFocus {
+				visible = true;
+				gui.flags = immediate( gui.flags ) | GUI_CATCH_ALL_EVENTS;
+				gui.bindContext = "menu";
+			}
+			onLoseFocus {
+				visible = false;
+				gui.flags = immediate( gui.flags ) & ~GUI_CATCH_ALL_EVENTS;
+				gui.bindContext = "";
+			}
+			onAccept {
+				if( compare( editText, "" ) == false ) {
+					gui.consoleCommand( "fireteam name " + _quote + editText + _quote + _newline );
+					gui.playGameSound( "accept" );
+				}
+				self.clearText();
+				gui.deactivate();
+			}
+			onCancel {
+				self.clearText();
+				gui.focusedWindow = "mainPanel";
+			}
+			onPreDraw {
+				callSuper();
+				drawLocalizedText( localizedText, "absoluterect.x, absoluterect.y - 15, absoluterect.w, absoluterect.h", COLOR_WHITE, 12, DTF_LEFT | DTF_TOP | DTF_SINGLELINE );
+				gui.scriptPushFloat( true );
+			}
+		}
+		timeLine {
+			onTime 100 {
+				self.clearText();
+			}
+		}
+	_end_edit
+}

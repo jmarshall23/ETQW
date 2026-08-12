@@ -1,0 +1,30 @@
+material models/mapobjects/radio_mast/radio_mast2
+{
+	nonSolid
+	noShadows
+	surfacetype "metal"
+	{
+		diffusemap	models/mapobjects/radio_mast/radio_mast02_d.tga
+		specularmap	models/mapobjects/radio_mast/radio_mast02_s.tga
+ 		bumpmap 	models/mapobjects/radio_mast/radio_mast02_local.tga
+ 		vertexcolor
+ 		
+ 		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+ 		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+ 		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	2,4,0,0
+ 	}
+}
+
+material models/mapobjects/radio_mast/radio_mast_extras2
+{
+	twoSided
+	noShadows
+	{
+		alphaTest 0.5
+		diffusemap	models/mapobjects/radio_mast/radio_mast_extras02_d.tga
+		specularmap	models/mapobjects/radio_mast/radio_mast_extras02_s.tga
+	 	bumpmap 	models/mapobjects/radio_mast/radio_mast_extras02_local.tga
+	 	vertexcolor
+	}
+}

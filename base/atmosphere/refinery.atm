@@ -1,0 +1,259 @@
+atmosphere refinery01 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.7041920424 -0.3474053144 0.6192117333 )
+	sunColor ( 0.7529411912 0.5607843399 0.3725490272 )
+	sunHaloScale 0.0700000003
+	sunHaloBias -0.3200000226
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 0.9215686321 0.8039215803 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.9300000072 1.0199999809 1 0.5799999833 )
+		glareBases ( 0.3400000036 0.3400000036 0 0 )
+	}
+	fogDistHalf 3256
+	fogHeightHalf 5476
+	fogHeightOffset 8375
+	fogColor ( 0.6745098233 0.5843137503 0.4470588267 )
+	fogStart 0
+	fogEnd 21614
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "refinery01_ambient"
+	skyGradientImage "atmosphere/skies/refinery_new"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/refinery_final" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 2
+		maxParticles 0
+		heightMin 3
+		heightMax 5
+		weightMin 1.5
+		weightMax 2.5
+		timeMin 0
+		timeMax 500
+		windScale 36
+		gustWindScale 40
+		fallMin 55
+		fallMax 105
+		tumbleStrength 24
+		precipitationDistance 1000
+		material "_default"
+	}
+}
+
+
+
+
+ambientCubeMap refinery01_ambient {
+	ambientLight {
+		color 0.1921568811 0.1921568811 0.1411764771
+		direction 0 0 1
+		name "Light0"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3803921938 0.3254902065 0.2666666806
+		direction 0 0 -1
+		name "Light1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.392156899 0.3568627536 0.2901960909
+		direction 0.3039440513 0.8827176094 0.3583679497
+		name "Light2"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.250980407 0.2117647231 0.1843137294
+		direction -0.8878877163 0.2884922326 0.3583679497
+		name "Light4"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.250980407 0.250980407 0.250980407
+		direction 0.9323009849 0.0488598235 0.3583679497
+		name "Light5"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.392156899 0.3725490272 0.3411764801
+		direction -0.4808294177 -0.8002346158 0.3583679497
+		name "Light6"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.250980407 0.250980407 0.250980407
+		direction 0.6367003322 -0.6827774644 0.3583679497
+		name "Light6"
+		ambient 1
+		specular 1
+	}
+	envMap "env/refinery/refinery_water"
+	ambientColor 0.5 0.5 0.5
+	minSpecAmbientColor 0.6274510026 0.5803921819 0.5450980663
+	minSpecShadowColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+
+
+ambientCubemap refinery_building {
+	ambientLight {
+		color 0.2980392277 0.3098039329 0.2941176593
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2549019754 0.2549019754 0.2549019754
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3176470697 0.3176470697 0.3176470697
+		direction 0.9519067407 0.2729548812 -0.1391730905
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3372549117 0.3372549117 0.3372549117
+		direction -0.3158973455 -0.9174326062 0.2419219017
+		name "Light3"
+	}
+	ambientLight {
+		color 0.3019607961 0.3019607961 0.3019607961
+		direction -0.446036011 0.7423286438 0.5
+		name "Light5"
+	}
+	envMap "env/refinery/refinery_interior_generic"
+	indoors
+}
+
+ambientCubemap refinery_building_south_filter {
+	ambientLight {
+		color 0.2980392277 0.3098039329 0.2941176593
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2549019754 0.2549019754 0.2549019754
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3176470697 0.3176470697 0.3176470697
+		direction 0.9519067407 0.2729548812 -0.1391730905
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3372549117 0.3372549117 0.3372549117
+		direction -0.3158973455 -0.9174326062 0.2419219017
+		name "Light3"
+	}
+	ambientLight {
+		color 0.3019607961 0.3019607961 0.3019607961
+		direction -0.446036011 0.7423286438 0.5
+		name "Light5"
+	}
+	envMap "env/refinery/refinery_filter_south"
+	indoors
+}
+
+ambientCubemap refinery_building_north_filter {
+	ambientLight {
+		color 0.2980392277 0.3098039329 0.2941176593
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2549019754 0.2549019754 0.2549019754
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3176470697 0.3176470697 0.3176470697
+		direction 0.9519067407 0.2729548812 -0.1391730905
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3372549117 0.3372549117 0.3372549117
+		direction -0.3158973455 -0.9174326062 0.2419219017
+		name "Light3"
+	}
+	ambientLight {
+		color 0.3019607961 0.3019607961 0.3019607961
+		direction -0.446036011 0.7423286438 0.5
+		name "Light5"
+	}
+	envMap "env/refinery/refinery_filter_north"
+	indoors
+}
+
+ambientCubemap refinery_building_admin_area {
+	ambientLight {
+		color 0.1921568811 0.1921568811 0.1411764771
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.3803921938 0.3254902065 0.2666666806
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.392156899 0.3568627536 0.2901960909
+		direction 0.3039440513 0.8827176094 0.3583679497
+		name "Light2"
+	}
+	ambientLight {
+		color 0.250980407 0.2117647231 0.1843137294
+		direction -0.8878877163 0.2884922326 0.3583679497
+		name "Light4"
+	}
+	ambientLight {
+		color 0.250980407 0.250980407 0.250980407
+		direction 0.9323009849 0.0488598235 0.3583679497
+		name "Light5"
+	}
+	ambientLight {
+		color 0.392156899 0.3725490272 0.3411764801
+		direction -0.4808294177 -0.8002346158 0.3583679497
+		name "Light6"
+	}
+	ambientLight {
+		color 0.250980407 0.250980407 0.250980407
+		direction 0.6367003322 -0.6827774644 0.3583679497
+		name "Light6"
+	}
+	envMap "env/refinery/refinery_admin_area"
+	indoors
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+

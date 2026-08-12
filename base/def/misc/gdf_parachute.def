@@ -1,0 +1,181 @@
+
+//=========================
+// GDF Parachute cockpit ==========
+//=========================
+
+
+
+export hauser {
+options -prefix PARA_ -sourcedir models/vehicles/gdf_parachute/dev_sd -destdir models/vehicles/gdf_parachute/
+/*
+		mesh parachute_cockpit_idle_new.mb 				-dest parachute_cockpit.md5mesh -range 0 0
+		*/
+		anim parachute_cockpit_idle_new.mb 				-dest parachute_cockpit_idle.md5anim  -range 18 216
+		anim parachute_cockpit_idle_new.mb 				-dest parachute_cockpit_into_idle.md5anim -range 0 18
+		anim parachute_cockpit_idle_new.mb 				-dest parachute_cockpit_land.md5anim -range 230 243
+
+}
+
+
+//=========================
+// GDF Parachute ==========
+//=========================
+/*
+
+
+export hauser {
+
+options -prefix PARACHUTE_ -sourcedir models/vehicles/gdf_parachute/dev_sd -destdir models/vehicles/gdf_parachute/ -keep joint9 joint10 joint21 joint16 joint14 joint22 joint24 joint11 joint19 joint17 joint18 joint25 joint23 joint20 joint15 joint33 joint32 joint31 joint30 joint39 joint35 joint34 joint36 joint37 joint38 joint28 joint29 joint26 joint27
+
+		mesh gdf_new_parachute_base_file.mb 		-dest parachute.md5mesh 25 25
+		anim gdf_new_parachute_base_file.mb 		-dest parachute_deploy.md5anim -range 1 10
+		anim gdf_new_parachute_base_file.mb 		-dest parachute_compact.md5anim -range 101 105
+		anim gdf_new_parachute_base_file.mb 		-dest parachute_idle_closed.md5anim -range 1 1
+		anim gdf_new_parachute_base_file.mb 		-dest parachute_idle_open.md5anim -range 10 100
+
+}
+*/
+
+
+//============================
+//=== models =================
+//============================
+
+model gdf_parachute {
+	mesh						models/vehicles/gdf_parachute/parachute.md5mesh
+
+	anim deploy					models/vehicles/gdf_parachute/parachute_deploy.md5anim {
+	}
+
+	anim compact				models/vehicles/gdf_parachute/parachute_compact.md5anim {
+	}
+
+	anim idle_closed			models/vehicles/gdf_parachute/parachute_idle_closed.md5anim {
+	}
+
+	anim idle_open				models/vehicles/gdf_parachute/parachute_idle_open.md5anim {
+	}
+}
+
+model gdf_round_parachute {
+	mesh						models/vehicles/gdf_parachute/round_parachute.md5mesh
+
+	anim deploy					models/vehicles/gdf_parachute/round_parachute_deploy.md5anim {
+	}
+
+	anim compact				models/vehicles/gdf_parachute/round_parachute_compact.md5anim {
+	}
+
+	anim idle_closed			models/vehicles/gdf_parachute/round_parachute_idle_closed.md5anim {
+	}
+
+	anim idle_open				models/vehicles/gdf_parachute/round_parachute_idle_open.md5anim {
+	}
+}
+
+model gdf_parachute_cockpit {
+	mesh					models/vehicles/gdf_parachute/parachute_cockpit.md5mesh
+
+	anim idle				models/vehicles/gdf_parachute/parachute_cockpit_idle.md5anim {
+	}
+
+	anim raise				models/vehicles/gdf_parachute/parachute_cockpit_into_idle.md5anim {
+	}
+
+	anim putaway			models/vehicles/gdf_parachute/parachute_cockpit_land.md5anim {
+	}
+}
+
+
+//============================
+//=== Entity =================
+//============================
+
+entityDef parachute {
+	"spawnclass"				"sdParachute"
+	"scriptobject"				"parachute"
+
+	"mins"						"-8 -8 -8"
+	"maxs"						"8 8 8"
+
+	"model"						"gdf_parachute"
+
+	// Cd is dimensionless
+	"drag_coefficient_up"		"1.2"
+	"drag_coefficient_side"		"0.6"
+	"lift_coefficient_side"		"0.5"
+	"drag_side_max"				"100"
+
+	// air density in kg/m^3
+	"air_density"				"1.2"
+
+	// chute size in GAME UNITS
+	"chute_diameter"			"214"
+	"chute_height"				"60"
+	"force_height"				"170"
+
+	"collection_parachutes"		"parachutes"
+
+	"snd_start"					"sounds/misc/parachute/start"
+	"snd_stop"					"sounds/misc/parachute/stop"
+
+	"min_speed"					"7"
+}
+
+entityDef round_parachute {
+	"inherit"					"parachute"
+
+	"model"						"gdf_round_parachute"
+}
+
+entityDef strogg_parachute {
+	"inherit"					"parachute"
+
+	"scriptobject"				"strogg_parachute"
+	"model"						""
+	"fx_fly"					"effects/player/strogg_parachute_fly"
+
+	"snd_start"					"sounds/misc/airshield/start"
+	"snd_stop"					"sounds/misc/airshield/stop"
+}
+
+invItemDef inventory/tools/gdf_parachute {
+	type					"weapon"
+	slot					"tool"
+	name					"game/weapons/parachute"
+	joint					"Spine"
+
+	data {
+		"model_view" 			"gdf_parachute_cockpit"
+		"model_world" 			""
+		"joint_attach"			"RightHand"
+
+		"view_offset"			"-5 0 2"
+		"view_foreshorten"		"1.4"
+
+
+
+		"anim_prefix"			"parachute"
+		"anim_prefix_class"		"tool"
+
+		"weapon_scriptobject"	"tool_parachute"
+
+		"climate_skin_key"		"weapon_gdf"
+
+		"crosshair"				"none"
+
+		"weapon_menu_ignore"	"1"
+		"weapon_change_allowed"	"0"
+		"ignore_view_pitch"		"1"
+
+		"allow_prone"			"0"
+
+		"player_weapon_num"		"27"
+
+		"hide_distance"			"0"
+
+		"clamp_yaw_rate"		"220"
+		"clamp_pitch_min"		"-75"
+		"clamp_pitch_max"		"85"
+	}
+}

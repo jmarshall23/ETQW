@@ -1,0 +1,596 @@
+material texturesheets/valley/valley01
+{	
+	surfaceTypeMap	"texturesheets/valley/valley01"
+	diffusemap		texturesheets/valley/valley01_d.tga 
+	specularmap		texturesheets/valley/valley01_s.tga
+	bumpmap			texturesheets/valley/valley01_local.tga
+}
+
+material texturesheets/valley/valley02
+{
+	surfacetype "metal"
+	{		
+		diffusemap	picmip -1	texturesheets/valley/valley02_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley02_s.tga
+		bumpmap		picmip -1	texturesheets/valley/valley02_local.tga
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 6,6,0,0 
+	}
+}
+
+material texturesheets/valley/valley02_noshadows
+{
+	surfacetype "metal"
+	noshadows
+	{
+		diffusemap 	picmip -1	texturesheets/valley/valley02_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley02_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley02_local.tga
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 6,6,0,0 
+	}
+}
+
+material texturesheets/valley/valley03
+{
+	useTemplate templates/windowglass <
+		texturesheets/valley/valley03_d.tga,
+		texturesheets/valley/valley03_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material texturesheets/valley/valley04
+{
+	noshadows
+	DECAL_MACRO
+	nonsolid
+	translucent
+	{
+		program filterCoverage
+		blend	filter
+		map	texturesheets/valley/valley04_d.tga
+		maskAlpha
+	}
+}
+
+material texturesheets/valley/valley_objects01
+{
+surfaceTypeMap "texturesheets/valley/valley_objects01"
+	{
+		program     interaction/selfillum
+		diffusemap texturesheets/valley/valley_objects01_d.tga
+		specularmap texturesheets/valley/valley_objects01_s.tga
+		bumpmap texturesheets/valley/valley_objects01_local.tga
+		selfIllumMap	texturesheets/valley/valley_objects01_glow.tga
+	}
+}
+
+material texturesheets/valley/valley_objects02
+{
+	noshadows
+	{
+		diffusemap texturesheets/valley/valley_objects02_d.tga
+		specularmap texturesheets/valley/valley_objects02_s.tga
+		bumpmap texturesheets/valley/valley_objects02_local.tga
+		alphaTest 0.25
+	}
+}
+
+material texturesheets/valley/valley_objects03
+{
+		noshadows
+		diffusemap texturesheets/valley/valley_objects03_d.tga
+		specularmap texturesheets/valley/valley_objects03_s.tga
+		bumpmap texturesheets/valley/valley_objects03_local.tga
+}
+
+material texturesheets/valley/valley06  // buildingtesta
+{
+	noshadows
+	diffusemap texturesheets/valley/valley06_d.tga 
+	specularmap texturesheets/valley/valley06_s.tga
+	bumpmap texturesheets/valley/valley06_local.tga
+}
+
+material texturesheets/valley/valley07 // buildingtestb
+{
+	noshadows
+	diffusemap texturesheets/valley/valley07_d.tga
+	specularmap texturesheets/valley/valley07_s.tga
+	bumpmap texturesheets/valley/valley07_local.tga
+}
+
+material texturesheets/valley/valley08 // tunnel structure
+{
+	noshadows
+	surfaceTypeMap "texturesheets/valley/valley08"
+	{
+		diffusemap 	picmip -1	texturesheets/valley/valley08_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley08_s.tga
+		bumpmap  	picmip -1	texturesheets/valley/valley08_local.tga
+
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult 5,20,0,0
+	}
+}
+
+material texturesheets/valley/valley08_shadow // tunnel structure
+{
+	surfaceTypeMap "texturesheets/valley/valley08"
+	{
+		
+		diffusemap 	picmip -1	texturesheets/valley/valley08_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley08_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley08_local.tga
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult 5,20,0,0
+	}
+}
+
+material texturesheets/valley/valley09 
+{
+	noshadows
+	//surfaceTypeMap "texturesheets/valley/valley09"
+	diffusemap 	texturesheets/valley/valley09_d.tga
+	specularmap 	texturesheets/valley/valley09_s.tga
+	bumpmap 	texturesheets/valley/valley09_local.tga
+}
+
+material texturesheets/valley/valley09_shadow
+{
+	//surfaceTypeMap "texturesheets/valley/valley09"
+	diffusemap texturesheets/valley/valley09_d.tga
+	specularmap texturesheets/valley/valley09_s.tga
+	bumpmap texturesheets/valley/valley09_local.tga
+}
+
+material texturesheets/valley/valley_objective_bridge
+{
+	//surfaceTypeMap 	"texturesheets/valley/valley_objective_bridge"
+	diffusemap 		texturesheets/valley/valley_objective_bridge_d.tga
+	specularmap 		texturesheets/valley/valley_objective_bridge_s.tga
+	bumpmap 		texturesheets/valley/valley_objective_bridge_local.tga
+}
+
+material texturesheets/valley/assaultbridge
+{
+	noshadows
+	nonsolid
+	surfaceType "metal"
+	diffusemap	texturesheets/valley/assaultbridge_d.tga
+	specularmap	texturesheets/valley/assaultbridge_s.tga
+	bumpmap		texturesheets/valley/assaultbridge_local.tga
+}
+
+material texturesheets/valley/valley_wall_1
+{
+	noshadows
+	surfaceTypeMap "texturesheets/valley/valley_wall_1"
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_wall_1_ts_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_wall_1_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_wall_1_ts_local.tga
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult 3,24,0,0
+	}
+}
+
+material texturesheets/valley/valley_wall_1_shadows
+{
+	surfaceTypeMap "texturesheets/valley/valley_wall_1"
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_wall_1_ts_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_wall_1_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_wall_1_ts_local.tga
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult 3,24,0,0
+		vertexcolor
+	}
+}
+
+material texturesheets/valley/valley_wall_2
+{
+	noshadows
+	surfaceTypeMap "texturesheets/valley/valley_wall_2"
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_wall_2_ts_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_wall_2_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_wall_2_ts_local.tga
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	2.5,20,0,0
+	}
+}
+
+material texturesheets/valley/valley_wall_2_shadows
+{
+	surfaceTypeMap "texturesheets/valley/valley_wall_2"
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_wall_2_ts_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_wall_2_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_wall_2_ts_local.tga
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	2.5,20,0,0
+		vertexcolor
+	}
+}
+
+material texturesheets/valley/valley_wall_3
+{
+	noshadows
+	surfaceTypeMap "texturesheets/valley/valley_wall_3"
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_wall_3_ts_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_wall_3_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_wall_3_ts_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+        detailMult 2.5,20,0,0
+        }
+}
+
+material texturesheets/valley/valley_wall_3_shadows
+{
+	surfaceTypeMap "texturesheets/valley/valley_wall_3"
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_wall_3_ts_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_wall_3_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_wall_3_ts_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+        detailMult 2.5,20,0,0
+        vertexcolor
+	}
+}
+
+material texturesheets/valley/valley_wall_4
+{
+	noshadows
+	surfaceTypeMap "texturesheets/valley/valley_wall_4"
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_wall_4_ts_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_wall_4_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_wall_4_ts_local.tga
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	2.5,20,0,0
+	}
+}
+
+material texturesheets/valley/valley_wall_4_nonsolid
+{
+	nonsolid
+	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_wall_4_ts_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_wall_4_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_wall_4_ts_local.tga
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	2.5,20,0,0
+	}
+}
+
+material texturesheets/valley/valley_wall_4_shadows
+{
+	surfaceTypeMap "texturesheets/valley/valley_wall_4"
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_wall_4_ts_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_wall_4_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_wall_4_ts_local.tga
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	2.5,20,0,0
+		vertexcolor
+	}
+}
+
+
+material texturesheets/valley/valley_wall_5
+{
+	noshadows
+	surfaceTypeMap "texturesheets/valley/valley_wall_5"
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_wall_5_ts_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_wall_5_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_wall_5_ts_local.tga
+
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult 2.5,20,0,0
+	}
+}
+
+material texturesheets/valley/valley_wall_5_shadows
+{
+	surfaceTypeMap "texturesheets/valley/valley_wall_5"
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_wall_5_ts_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_wall_5_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_wall_5_ts_local.tga
+
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult 2.5,20,0,0
+	}
+}
+
+material texturesheets/valley/valley_wall_6
+{
+	noshadows
+	surfaceTypeMap "texturesheets/valley/valley_wall_6"
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_wall_6_ts_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_wall_6_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_wall_6_ts_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult 2.5,20,0,0
+	}
+}
+
+material texturesheets/valley/valley_wall_6_shadows
+{
+	surfaceTypeMap "texturesheets/valley/valley_wall_6"
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_wall_6_ts_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_wall_6_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_wall_6_ts_local.tga
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult 2.5,20,0,0
+		vertexcolor
+	}
+}
+
+material texturesheets/valley/valley_decals_1
+{
+	polygonOffset
+	sort decal
+	nonsolid
+ 	translucent
+ 	noshadows
+ 	{
+ 		program		filterCoverage
+ 		blend		filter
+ 		map 		texturesheets/valley/valley_decals_1.tga
+ 		maskAlpha
+ 	}
+}
+
+material texturesheets/valley/valley_wall_7
+{
+	noshadows
+	surfaceTypeMap "texturesheets/valley/valley_wall_7"
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_wall_7_ts_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_wall_7_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_wall_7_ts_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult 2.5,20,0,0
+        }
+}
+
+material texturesheets/valley/valley_wall_7_shadows
+{
+	surfaceTypeMap "texturesheets/valley/valley_wall_7"
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_wall_7_ts_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_wall_7_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_wall_7_ts_local.tga
+				
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult 2.5,20,0,0
+        }
+}
+
+material texturesheets/valley/valley_wall_7_glow
+{	
+	surfaceTypeMap "texturesheets/valley/valley_wall_7"
+	noshadows
+	diffusemap	picmip -2	texturesheets/valley/valley_wall_7_ts_d.tga
+	{
+		blend 		add
+		map	picmip -1	texturesheets/valley/valley_wall_7_ts_add.tga
+		colored
+	}       
+}
+
+material texturesheets/valley/valley_wall_8
+{
+		noshadows
+		diffusemap	texturesheets/valley/valley_wall_8_ts_d.tga
+		specularmap	texturesheets/valley/valley_wall_8_ts_s.tga
+		bumpmap		texturesheets/valley/valley_wall_8_ts_local.tga
+}
+
+material texturesheets/valley/valley_wall_8_shadows
+{
+		diffusemap	texturesheets/valley/valley_wall_8_ts_d.tga
+		specularmap     texturesheets/valley/valley_wall_8_ts_s.tga
+		bumpmap 	texturesheets/valley/valley_wall_8_ts_local.tga
+ }
+
+material texturesheets/valley/valley_wall_9
+{
+		diffusemap	texturesheets/valley/valley_wall_9_ts_d.tga
+		specularmap     texturesheets/valley/valley_wall_9_ts_s.tga
+		bumpmap 	texturesheets/valley/valley_wall_9_ts_local.tga
+}
+
+material texturesheets/valley/valley_wall_9_shadows
+{
+		noshadows
+		diffusemap	texturesheets/valley/valley_wall_9_ts_d.tga
+		specularmap     texturesheets/valley/valley_wall_9_ts_s.tga
+		bumpmap 	texturesheets/valley/valley_wall_9_ts_local.tga
+}
+
+material texturesheets/valley/valley_wall_10
+{
+		diffusemap	texturesheets/valley/valley_wall_10_ts_d.tga
+		specularmap     texturesheets/valley/valley_wall_10_ts_s.tga
+		bumpmap 	texturesheets/valley/valley_wall_10_ts_local.tga
+}
+
+material texturesheets/valley/valley_wall_10_shadows
+{
+		noshadows
+		diffusemap	texturesheets/valley/valley_wall_10_ts_d.tga
+		specularmap     texturesheets/valley/valley_wall_10_ts_s.tga
+		bumpmap 	texturesheets/valley/valley_wall_10_ts_local.tga
+}
+
+material texturesheets/valley/valley_decals_2
+{
+	sort decal
+	nonsolid
+	translucent
+ 	polygonOffset
+ 	{
+ 		program 	filterVertexColorCoverage
+ 		blend		filter
+ 		map 		picmip -1	texturesheets/valley/valley_decals_2.tga
+ 		vertexcolor
+ 		maskalpha
+ 	}
+}
+
+material texturesheets/valley/valley_jetty_shadows
+{
+	surfaceTypeMap	"texturesheets/valley/valley_jetty"
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_jetty_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_jetty_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_jetty_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult 2.5,20,0,0
+	}
+ }
+ 
+ material texturesheets/valley/valley_jetty
+ {
+ 	noshadows
+ 	surfaceTypeMap	"texturesheets/valley/valley_jetty"
+ 	{
+ 		diffusemap	picmip -1	texturesheets/valley/valley_jetty_d.tga
+ 		specularmap	picmip -2	texturesheets/valley/valley_jetty_s.tga
+ 		bumpmap 	picmip -1	texturesheets/valley/valley_jetty_local.tga
+ 				
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult 2.5,20,0,0
+	}
+ }
+
+ material texturesheets/valley/rubble02_shadows
+ {
+ 	surfacetype "stone"
+ 	{
+  		diffusemap	picmip -1	textures/rubble/desert_rubble_1_d.tga
+  		bumpmap 	picmip -1	textures/rubble/desert_rubble_1_local.tga
+  	}
+ }
+ 
+ material texturesheets/valley/valley_assault_bridge
+ {
+ 	surfaceTypeMap	"texturesheets/valley/valley_assault_bridge"
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_assault_bridge_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_assault_bridge_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_assault_bridge_local.tga
+		vertexcolor
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult 2.5,20,0,0 
+	}
+ }
+ 
+  material texturesheets/valley/valley_assault_bridge_noshadows
+ {
+ 	surfaceTypeMap	"texturesheets/valley/valley_assault_bridge"
+ 	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/valley/valley_assault_bridge_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_assault_bridge_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_assault_bridge_local.tga
+		vertexcolor
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult 2.5,20,0,0 
+	}
+ }
+ 
+ material texturesheets/valley/triangle_light
+ {
+ 	polygonOffset
+ 	sort decal
+ 	
+ 	nonsolid
+  	translucent
+ 	{
+ 		//program filterVertexColorCoverage
+  		blend add
+ 		map picmip -1	texturesheets/valley/triangle_light1.tga
+ 		maskAlpha
+ 		vertexcolor
+ 		maskDepth
+ 		depthFunc lequal
+ 	}
+}
+
+
+

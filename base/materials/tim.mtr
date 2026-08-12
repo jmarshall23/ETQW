@@ -1,0 +1,37 @@
+// =============================================================================
+//
+// Check ALIENBRAIN for the latest version of this file
+// The original file is just a mess and conflicts with alot other textures.
+// This placeholder is to stop the tree filling up with un-necessary resources.
+//
+// Sims 25/03/04
+//
+// =============================================================================
+
+// Used in Container area, really needs to be removed. :\
+//chrome texture for mals room
+material textures/sfx/chrome_mal_pipe
+{
+	qer_editorimage	textures/base_trim/asp2spec.tga
+	forceopaque
+	{
+		blend add
+		program sfx/cubemap
+	}
+}
+
+// Used in Container area, really needs to be removed. :\
+material textures/base_light/colored_strip
+{
+	qer_editorimage	textures/base_light/reactorlight1.tga
+	
+	
+	diffusemap		textures/base_light/reactorlight1b.tga
+	specularmap		textures/base_light/reactorlight1_sb.tga	
+	bumpmap		textures/base_light/reactorlight1_localb.tga
+	{
+		colored
+		blend gl_one,gl_one
+		map textures/base_light/reactorlight1_addb.tga		
+	}
+}

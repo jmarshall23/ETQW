@@ -1,0 +1,225 @@
+///////////////////////
+// GDF Player Sounds //
+///////////////////////
+
+sound sounds/players/gdf/breathe {
+
+	volume -25
+
+	no_dups
+
+	sounds/players/gdf/breathe_01.wav
+	sounds/players/gdf/breathe_02.wav
+	sounds/players/gdf/breathe_03.wav
+}
+
+sound sounds/players/gdf/breathe/heavy {
+
+	volume -22
+
+	no_dups
+
+	sounds/players/gdf/breathe_heavy_01.wav
+	sounds/players/gdf/breathe_heavy_02.wav
+	sounds/players/gdf/breathe_heavy_03.wav
+}
+
+sound sounds/players/gdf/pain/small {
+
+	volume -5
+
+	no_dups
+
+	sounds/players/gdf/pain_small_01.wav
+	sounds/players/gdf/pain_small_02.wav
+	sounds/players/gdf/pain_small_03.wav
+	sounds/players/gdf/pain_small_04.wav
+	sounds/players/gdf/pain_small_05.wav
+	sounds/players/gdf/pain_small_06.wav
+}
+
+sound sounds/players/gdf/pain/medium {
+
+	volume -5
+
+	no_dups
+
+	sounds/players/gdf/pain_medium_01.wav
+	sounds/players/gdf/pain_medium_02.wav
+	sounds/players/gdf/pain_medium_03.wav
+	sounds/players/gdf/pain_medium_04.wav
+	sounds/players/gdf/pain_medium_05.wav
+}
+
+sound sounds/players/gdf/pain/large {
+
+	volume -5
+
+	no_dups
+
+	sounds/players/gdf/pain_large_01.wav
+	sounds/players/gdf/pain_large_02.wav
+	sounds/players/gdf/pain_large_03.wav
+	sounds/players/gdf/pain_large_04.wav
+	sounds/players/gdf/pain_large_05.wav
+}
+
+sound sounds/players/gdf/death {
+
+	sounds/players/gdf/death_01.wav
+	sounds/players/gdf/death_02.wav
+	sounds/players/gdf/death_03.wav
+	sounds/players/gdf/death_04.wav
+	sounds/players/gdf/death_05.wav
+	sounds/players/gdf/death_06.wav
+}
+
+sound sounds/players/gdf/jump {
+
+	volume -5
+	no_dups
+
+	sounds/players/gdf/jump_01.wav
+	sounds/players/gdf/jump_02.wav
+	sounds/players/gdf/jump_03.wav
+	sounds/players/gdf/jump_04.wav
+}
+
+sound sounds/players/gdf/land/soft {
+
+	volume -5
+
+	sounds/players/gdf/land_soft.wav
+}
+
+sound sounds/players/gdf/body/drop {
+
+	volume -5
+
+	sounds/players/gdf/body_drop.wav
+}
+
+sound sounds/players/gdf/movement/walk {
+
+}
+
+sound sounds/players/gdf/movement/run {
+
+	volume -32
+
+	private
+
+	looping
+	sounds/players/gdf/movement/run.wav
+}
+
+sound sounds/players/gdf/movement/sprint {
+
+	volume -30
+
+	private
+
+	looping
+	sounds/players/gdf/movement/run.wav
+}
+
+sound sounds/players/gdf/movement/shuffle {
+
+	volume -33
+
+	private
+
+	looping
+	sounds/players/gdf/movement/shuffle.wav
+}
+
+sound sounds/players/gdf/movement/crawl {
+
+	volume -33
+
+	private
+
+	looping
+	sounds/players/gdf/movement/crawl.wav
+}
+
+sound sounds/players/gdf/movement/dive {
+
+	volume -30
+
+	private
+	playOnce
+
+	sounds/players/gdf/movement/dive.wav
+}
+
+sound sounds/players/gdf/movement/stand_to_crouch {
+
+	volume -30
+
+	private
+	playOnce
+
+	sounds/players/gdf/movement/stand_to_crouch.wav
+}
+
+sound sounds/players/gdf/movement/crouch_to_stand {
+
+	volume -30
+
+	private
+	playOnce
+
+	sounds/players/gdf/movement/crouch_to_stand.wav
+}
+
+sound sounds/players/gdf/movement/stand_to_prone {
+
+	volume -25
+
+	private
+	playOnce
+
+	sounds/players/gdf/movement/stand_to_prone.wav
+}
+
+sound sounds/players/gdf/movement/prone_to_stand {
+
+	volume -25
+
+	private
+	playOnce
+
+	sounds/players/gdf/movement/prone_to_stand.wav
+}
+
+sound sounds/players/gdf/movement/crouch_to_prone {
+
+	volume -25
+
+	private
+	playOnce
+
+	sounds/players/gdf/movement/crouch_to_prone.wav
+}
+
+sound sounds/players/gdf/movement/prone_to_crouch {
+
+	volume -30
+
+	private
+	playOnce
+
+	sounds/players/gdf/movement/prone_to_crouch.wav
+}
+
+sound sounds/players/gdf/friendlyfire/auto {
+
+	no_dups
+	localization/english/sounds/players/gdf/auto/16200.wav
+	localization/english/sounds/players/gdf/auto/16201.wav
+	localization/english/sounds/players/gdf/auto/16202.wav
+	localization/english/sounds/players/gdf/auto/16203.wav
+	localization/english/sounds/players/gdf/auto/16204.wav
+	localization/english/sounds/players/gdf/auto/16205.wav
+}

@@ -1,0 +1,74 @@
+
+/******************************************************************************
+
+  GENERIC SOLO ASSIGNMENTS
+
+******************************************************************************/
+
+#include "task_includes.include"
+
+//
+// Go Here!
+//
+
+templates/tasks/solo_task( all_go_here, task_dummy )
+	data {
+		"waypoint"						"1"
+		"priority"						"0"
+		"show_eligible"					"1"
+		"task"							"1"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/obj_direction"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/obj_direction"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/obj_sml"
+		"range"							"16384"
+		"min_range"						"256"
+	}
+}
+
+// Fly flyer drone through here
+
+templates/tasks/solo_task( all_flyer_drone_vent, task_dummy )
+	data {
+		"waypoint"						"1"
+		"priority"						"0"
+		"show_eligible"					"1"
+		"task"							"1"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"bracket_mins"					"-20 -20 -16"
+		"bracket_maxs"					"20 20 16"
+		"mtr_icon"						"hud/icons/missionsystem/obj_direction"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/obj_direction"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/obj_sml"
+		"range"							"2048"
+		"min_range"						"128"
+	}
+}
+
+
+
+
+entityDef deploy_mission_hint {
+	"model"			"deploy_marker"	
+	"scriptobject"		"default"
+	"spawnclass"		"sdClientAnimated"
+}
+
+entityDef deploy_mission_hint_mines_gdf {
+	"model"			"gdfmine_marker"	
+	"scriptobject"		"default"
+	"spawnclass"		"sdClientAnimated"
+}
+
+entityDef deploy_mission_hint_mines_strogg {
+	"model"			"stroggmine_marker"	
+	"scriptobject"		"default"
+	"spawnclass"		"sdClientAnimated"
+}
+

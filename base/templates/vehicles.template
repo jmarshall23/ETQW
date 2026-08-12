@@ -1,0 +1,42 @@
+// Detachables
+
+template templates/vehicles/destroyedParts {
+
+	text {
+		"spawnclass"						"sdVehicleAttachment"
+		"lifetime"							"LifeTimeParm"
+		"density"							"DensityParm"
+		"bouncyness"						"BouncynessParm"
+		"friction"							"FrictionParm"
+		"nonsolid"							"1"
+		"nodrop"							"1"
+		"buoyancy"							"0.4"
+
+		"model"								"ModelParm"
+		"cm_model"							"ModelParm"
+
+		"fx_trail"							"TrailParm"
+		"fx_trail_1"						"DecayTrailParm"
+
+		"explosion_velocity_max"			"VelocityParm"
+		"explosion_angular_velocity_max"	"AngularVelParm"
+		"trail_attenuation_speed"			"200"
+		
+		"maxVisDist"						"4096"
+
+		"snd_bounce"						"SoundBounceParm"
+	}
+
+	parameters < 	ModelParm,
+					VelocityParm 		= "500 0 0",
+					AngularVelParm 		= "2 4 10",
+					SoundBounceParm		= "vehicles/misc/debris/metal_medium",
+					BouncynessParm 		= "0.25",
+					FrictionParm 		= "0.5",
+					DensityParm			= "0.01",
+					TrailParm 			= "effects/vehicles/generic_debris",
+					LifeTimeParm 		= "10",
+					DecayTrailParm		= ""
+				>
+
+}

@@ -1,0 +1,65 @@
+
+object structure_cc : structure_base {
+	void		InitRadarValues();
+	void		ClearRadarValues();
+
+	void		OnSetTeam( object oldTeam, object newTeam );
+
+	float		OnUpdateCrosshairInfo( entity p );
+	void		OnGuiMessage( entity p );
+};
+
+void structure_cc::OnGuiMessage( entity p ) {
+	if ( sys.argv( 0 ) == "setspawn" ) {
+		if ( getEntityAllegiance( p ) == TA_FRIEND ) {
+			p.setSpawnPoint( $null_entity );
+		}
+	}
+}
+
+void structure_cc::InitRadarValues() {
+	ClearRadarValues();
+
+	float radarLayer = allocRadarLayer();
+	radarSetLayerRange( radarLayer, getFloatKey( "radar_range" ) );
+	radarSetLayerMask( radarLayer, getFloatKey( "mask" ) );
+}
+
+void structure_cc::ClearRadarValues() {
+	freeLayers();
+}
+
+float structure_cc::OnUpdateCrosshairInfo( entity p ) {
+	if ( !sys.doClientSideStuff() ) {
+		return 1.f;
+	}
+
+	float allegiance = getEntityAllegiance( p );
+	vector color = GetAllegianceColor( allegiance );
+	float distance = chGetDistance();
+	float range = InchesToMetres( distance );
+	float health = getHealth();
+
+	chSetNumLines( 0 );
+	float index;
+	
+	index = chAddLine();
+	chSetLineTextIndex( index, typeName );
+	chSetLineColor( index, color, 1.f );
+	chSetLineType( index, CI_TEXT );
+	chSetLineSize( index, 0, 0 );
+	
+	if( range <= 100 ) {
+		index = chAddLine();
+		chSetLineText( index, G_BuildRangeStr( range ) );
+		chSetLineColor( index, color, 1.f );
+		chSetLineType( index, CI_TEXT );
+		chSetLineSize( index, 0, 0 );
+	}
+
+	return 1.f;
+}
+
+void structure_cc::OnSetTeam( object oldTeam, object newTeam ) {
+	InitRadarValues();
+}

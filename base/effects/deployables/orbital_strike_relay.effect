@@ -1,0 +1,93 @@
+effect effects/deployables/osr_destroy
+{
+	size	1613
+
+	spawner "Arm"
+	{
+		count		1,1
+
+		debris
+		{
+			duration	1,1
+			entityDef	"deployable_osr_strogg_arm"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,50,270 }
+				velocity { box -2000,-2000,1000,2000,2000,2000 }
+				rotate { box 0,0,0,1,1,1 }
+			}
+
+			motion
+			{
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				rotate { point 1,0,0 relative }
+			}
+		}
+	}
+	spawner "Top"
+	{
+		count		1,1
+
+		debris
+		{
+			duration	1,1
+			entityDef	"deployable_osr_strogg_top"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,280 }
+				velocity { box -400,-400,300,400,400,400 }
+				rotate { box 0,0,0,1,1,1 }
+			}
+
+			motion
+			{
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				rotate { point 1,0.5,0 relative }
+			}
+		}
+	}
+	spawner "Base"
+	{
+		count		1,1
+
+		debris
+		{
+			duration	1,1
+			entityDef	"deployable_osr_strogg_base"
+			trailRepeat	1
+
+			motion
+			{
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				rotate { point 0,0,0 relative }
+			}
+		}
+	}
+	effect "Explosion"
+	{
+		effect	"effects/base/explosion_large"
+	}
+}
+
+
+
+
+
+
+

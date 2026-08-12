@@ -1,0 +1,166 @@
+/////////////
+// Goliath //
+/////////////
+
+sound sounds/vehicles/goliath/plasmashot {
+	compression wav
+
+	volume	-3
+	minDistance 25
+	maxDistance 100
+	shakes 0.05
+	no_dups
+	
+	sounds/vehicles/goliath/fire_01.wav
+	sounds/vehicles/goliath/fire_01a.wav
+	sounds/vehicles/goliath/fire_02.wav
+	sounds/vehicles/goliath/fire_02a.wav
+	sounds/vehicles/goliath/fire_03.wav
+	sounds/vehicles/goliath/fire_03a.wav
+}
+
+sound sounds/vehicles/goliath/turret {
+
+	volume	-14
+	minDistance	5
+	maxDistance	75
+	
+	looping
+	sounds/vehicles/goliath/torso_spin.wav
+}
+
+sound sounds/vehicles/goliath/recharge_nonsiege {
+
+	volume		-6
+	minDistance	5
+	maxDistance	35
+	
+	sounds/vehicles/goliath/local_recharge_nonseige.wav
+}
+
+sound sounds/vehicles/goliath/recharge_siege {
+
+	volume		-6
+	minDistance	5
+	maxDistance	35
+	
+	sounds/vehicles/goliath/local_recharge_seige.wav
+}
+
+
+sound sounds/vehicles/goliath/legs {
+
+	volume -10
+	maxDistance	50
+
+	antiPrivate
+
+	sounds/vehicles/goliath/xfoot_01b.wav
+	sounds/vehicles/goliath/xfoot_02b.wav
+	sounds/vehicles/goliath/xfoot_03b.wav
+	sounds/vehicles/goliath/xfoot_04b.wav
+}
+
+sound sounds/vehicles/goliath/footsteps {
+
+	maxDistance	75
+	shakes 0.2
+
+	antiPrivate
+
+	sounds/vehicles/goliath/foot_03.wav
+	sounds/vehicles/goliath/foot_04.wav
+}
+
+sound sounds/vehicles/goliath/stomp {
+
+	maxDistance 100
+	shakes 0.5
+
+	antiPrivate
+
+//	sounds/vehicles/goliath/stomp_01.wav
+	sounds/vehicles/goliath/stomp_02.wav
+}
+
+sound sounds/vehicles/goliath/leg_fail {
+
+	maxDistance	50
+	antiPrivate
+
+	sounds/vehicles/goliath/leg_left_fail.wav
+	sounds/vehicles/goliath/leg_right_fail.wav
+}
+
+sound sounds/vehicles/goliath/engine/start {
+
+	volume -5
+	antiprivate
+	maxDistance	75
+
+	sounds/vehicles/goliath/xnstart_02.wav
+}
+
+sound sounds/vehicles/goliath/engine/stop {
+
+	volume -5
+	maxDistance	75
+	antiPrivate
+
+	sounds/vehicles/goliath/xnstop_02.wav
+}
+
+sound sounds/vehicles/goliath/interior/engine/start {
+
+	volume -8
+	private
+
+	sounds/vehicles/goliath/xnstart_02_local.wav
+}
+
+sound sounds/vehicles/goliath/interior/engine/stop {
+
+	volume -8
+	private
+
+	sounds/vehicles/goliath/xnstop_02_local.wav
+}
+
+
+sound sounds/vehicles/goliath/interior/cockpit {
+
+	volume -10
+	private
+	playOnce
+
+	looping
+	sounds/vehicles/goliath/interior/int_loop.wav
+}
+
+sound sounds/vehicles/goliath/interior/legs {
+
+	volume -15
+	private
+
+	sounds/vehicles/goliath/interior/leg_01.wav
+	sounds/vehicles/goliath/interior/leg_02.wav
+	sounds/vehicles/goliath/interior/leg_03.wav
+	sounds/vehicles/goliath/interior/leg_04.wav
+}
+
+sound sounds/vehicles/goliath/interior/footsteps {
+
+	volume	-5
+	private
+
+	sounds/vehicles/goliath/interior/footstep_01.wav
+	sounds/vehicles/goliath/interior/footstep_02.wav
+}
+
+sound sounds/vehicles/goliath/interior/stomp {
+
+	volume -5
+	private
+
+	sounds/vehicles/goliath/interior/stomp.wav
+}

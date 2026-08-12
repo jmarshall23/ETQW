@@ -1,0 +1,43 @@
+// GDF High Command
+
+// Map Canyon
+
+sound sounds/vo/gdf/highcommand/maps/canyon/stroggifier/destroy/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/canyon/10301.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/canyon/stroggifier/destroy {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/canyon/10303.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/canyon/stroggifier/planted {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/canyon/10304.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/canyon/stroggifier/defendexpl {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/canyon/10305.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/canyon/stroggifier/planted/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/canyon/10306.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/canyon/stroggifier/disarmed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/canyon/10307.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/canyon/gdfwin {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/canyon/10308.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/canyon/gdflose {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/canyon/10309.wav
+}

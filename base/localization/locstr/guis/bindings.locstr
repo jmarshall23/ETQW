@@ -1,0 +1,287 @@
+locString guis/mainmenu/bindings/forward {
+	text "#str_00030000"
+}
+
+locString guis/mainmenu/bindings/back {
+	text "#str_00030001"
+}
+
+locString guis/mainmenu/bindings/move_left {
+	text "#str_00030002"
+}
+
+locString guis/mainmenu/bindings/move_right {
+	text "#str_00030003"
+}
+
+locString guis/mainmenu/bindings/jump {
+	text "#str_00030004"
+}
+
+locString guis/mainmenu/bindings/crouch {
+	text "#str_00030005"
+}
+
+locString guis/mainmenu/bindings/prone {
+	text "#str_00030006"
+}
+
+locString guis/mainmenu/bindings/sprintforward_thrust {
+	text "#str_00030007"
+}
+
+locString guis/mainmenu/bindings/walkengine_thrust {
+	text "#str_00030008"
+}
+
+locString guis/mainmenu/bindings/lean_left {
+	text "#str_00030009"
+}
+
+locString guis/mainmenu/bindings/lean_right {
+	text "#str_00030010"
+}
+
+locString guis/mainmenu/bindings/attack {
+	text "#str_00030011"
+}
+
+locString guis/mainmenu/bindings/alternate_attackironsights {
+	text "#str_00030012"
+}
+
+locString guis/mainmenu/bindings/reload {
+	text "#str_00030013"
+}
+
+locString guis/mainmenu/bindings/next_weapon {
+	text "#str_00030014"
+}
+
+locString guis/mainmenu/bindings/previous_weapon {
+	text "#str_00030015"
+}
+
+locString guis/mainmenu/bindings/select_melee {
+	text "#str_00030016"
+}
+
+locString guis/mainmenu/bindings/select_single_handed {
+	text "#str_00030017"
+}
+
+locString guis/mainmenu/bindings/select_double_handed {
+	text "#str_00030018"
+}
+
+locString guis/mainmenu/bindings/select_grenades {
+	text "#str_00030019"
+}
+
+locString guis/mainmenu/bindings/select_tools {
+	text "#str_00030020"
+}
+
+locString guis/mainmenu/bindings/select_items {
+	text "#str_00030021"
+}
+
+locString guis/mainmenu/bindings/quick_select_binoculars {
+	text "#str_00030023"
+}
+
+locString guis/mainmenu/bindings/quick_select_tool1 {
+	text "#str_00030024"
+}
+
+locString guis/mainmenu/bindings/quick_select_tool2 {
+	text "#str_00030025"
+}
+
+locString guis/mainmenu/bindings/quick_select_item1 {
+	text "#str_00030026"
+}
+
+locString guis/mainmenu/bindings/quick_select_item2 {
+	text "#str_00030027"
+}
+
+locString guis/mainmenu/bindings/activate {
+	text "#str_00030029"
+}
+
+locString guis/mainmenu/bindings/command_map {
+	text "#str_00030030"
+}
+
+locString guis/mainmenu/bindings/zoom_map_in {
+	text "#str_00030031"
+}
+
+locString guis/mainmenu/bindings/zoom_map_out {
+	text "#str_00030032"
+}
+
+locString guis/mainmenu/bindings/limbo_menu {
+	text "#str_00030033"
+}
+
+locString guis/mainmenu/bindings/fireteam_menu {
+	text "#str_00030034"
+}
+
+locString guis/mainmenu/bindings/task_menu {
+	text "#str_00030035"
+}
+
+locString guis/mainmenu/bindings/chat {
+	text "#str_00030036"
+}
+
+locString guis/mainmenu/bindings/team_chat {
+	text "#str_00030037"
+}
+
+locString guis/mainmenu/bindings/quick_chat {
+	text "#str_00030038"
+}
+
+locString guis/mainmenu/bindings/globalvoice_chat {
+	text "#str_00030039"
+}
+
+locString guis/mainmenu/bindings/stroyent_health {
+	text "#str_00030040"
+}
+
+locString guis/mainmenu/bindings/health_stroyent {
+	text "#str_00030041"
+}
+
+locString guis/mainmenu/bindings/show_scores {
+	text "#str_00030042"
+}
+
+locString guis/mainmenu/bindings/center_view {
+	text "#str_00030043"
+}
+
+locString guis/mainmenu/bindings/gdf_team {
+	text "#str_00030044"
+}
+
+locString guis/mainmenu/bindings/strogg_team {
+	text "#str_00030045"
+}
+
+locString guis/mainmenu/bindings/spectator {
+	text "#str_00030046"
+}
+
+locString guis/mainmenu/bindings/vote_yes {
+	text "#str_00030047"
+}
+
+locString guis/mainmenu/bindings/vote_no {
+	text "#str_00030048"
+}
+
+locString guis/mainmenu/bindings/screenshot {
+	text "#str_00030049"
+}
+
+locString guis/mainmenu/bindings/enter_exit_vehicle {
+	text "#str_00030050"
+}
+
+locString guis/mainmenu/bindings/change_camera {
+	text "#str_00030051"
+}
+
+locString guis/mainmenu/bindings/vehicle_free_look_aim {
+	text "#str_00030052"
+}
+
+locString guis/mainmenu/bindings/use_horn {
+	text "#str_00030053"
+}
+
+locString guis/mainmenu/bindings/toggle_noclip {
+	text "#str_00030054"
+}
+
+locString guis/mainmenu/bindings/toggle_thirdperson {
+	text "#str_00030055"
+}
+
+locString guis/mainmenu/bindings/toggle_show_lagometer {
+	text "#str_00030056"
+}
+
+locString guis/mainmenu/bindings/toggle_show_framerate {
+	text "#str_00030057"
+}
+
+locString guis/mainmenu/bindings/toggle_show_hud {
+	text "#str_00030058"
+}
+
+locString guis/mainmenu/bindings/toggle_show_first_person_weapon {
+	text "#str_00030059"
+}
+
+locString guis/mainmenu/bindings/toggle_show_texture_memory {
+	text "#str_00030060"
+}
+
+locString guis/mainmenu/bindings/toggle_show_polygons {
+	text "#str_00030061"
+}
+
+locString guis/mainmenu/bindings/toggle_show_collision {
+	text "#str_00030062"
+}
+
+locString guis/mainmenu/bindings/cycle_timescale {
+	text "#str_00030063"
+}
+
+locString guis/mainmenu/bindings/toggle_ready {
+	text "#str_00030064"
+}
+
+locString guis/mainmenu/bindings/context_menu {
+	text "#str_00030065"
+}
+
+locString guis/mainmenu/bindings/toggle_waypoints {
+	text "#str_00030066"
+}
+
+locString guis/mainmenu/bindings/fireteam_chat {
+	text "#str_00030067"
+}
+
+locString guis/mainmenu/bindings/teamvoice_chat {
+	text "#str_00030068"
+}
+
+locString guis/mainmenu/bindings/fireteamvoice_chat {
+	text "#str_00030069"
+}
+
+locString guis/mainmenu/bindings/vote_menu {
+	text "#str_00030070"
+}
+
+locString guis/mainmenu/bindings/unbound {
+	text "#str_00030071"
+}
+
+locString guis/mainmenu/bindings/show_waypoints {
+	text "#str_00030072"
+}
+
+locString guis/mainmenu/bindings/show_fireteam {
+	text "#str_00030073"
+}

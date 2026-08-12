@@ -1,0 +1,59 @@
+// Strogg Nexus
+
+// Map Outskirts
+
+sound sounds/vo/strogg/nexus/maps/outskirts/mcp/pastbarricade {
+
+	localization/english/sounds/vo/strogg/nexus/maps/outskirts/20501.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/outskirts/mcp/pastfuelstation {
+
+	localization/english/sounds/vo/strogg/nexus/maps/outskirts/20502.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/outskirts/databrain/defend/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/outskirts/20503.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/outskirts/databrain/stop {
+
+	localization/english/sounds/vo/strogg/nexus/maps/outskirts/20504.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/outskirts/databrain/defend {
+
+	localization/english/sounds/vo/strogg/nexus/maps/outskirts/20506.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/outskirts/databrain/taken {
+
+	localization/english/sounds/vo/strogg/nexus/maps/outskirts/20507.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/outskirts/databrain/dropped {
+
+	localization/english/sounds/vo/strogg/nexus/maps/outskirts/20508.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/outskirts/databrain/returned {
+
+	localization/english/sounds/vo/strogg/nexus/maps/outskirts/20509.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/outskirts/stroggwin {
+
+	localization/english/sounds/vo/strogg/nexus/maps/outskirts/20511.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/outskirts/strogglose {
+
+	localization/english/sounds/vo/strogg/nexus/maps/outskirts/20510.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/outskirts/databrain/telecombuilding {
+
+	localization/english/sounds/vo/strogg/nexus/maps/outskirts/20520.wav
+	localization/english/sounds/vo/strogg/nexus/maps/outskirts/25507.wav
+}

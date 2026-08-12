@@ -1,0 +1,146 @@
+
+object deployzone {
+	void			preinit();
+	void			OnPostMapSpawn();
+	void			destroy();
+
+	void			OnSetTeam( object oldTeam, object newTeam );
+
+	void			vOnCaptured( entity p );
+	
+	void			ClearOldTeam( object team );
+	void			DestroyDeployables( object team );
+
+	entity			spawnController;
+	entity			mcpSpawnPoint;
+	
+	float			territoryIconHandle;
+	boolean			allowMCPDeployment;
+	
+	float			objectiveIndex;
+}
+
+void deployzone::preinit() {
+	allowMCPDeployment	= getFloatKey( "no_deploy" ) == 0.f;
+
+	objectiveIndex		= getFloatKeyWithDefault( "objective_index", -1 );
+
+	territoryIconHandle = -1;
+}
+
+void deployzone::OnPostMapSpawn() {
+	if ( !sys.isClient() ) {
+		spawnController		= getEntityKey( "spawn_controller" );
+		mcpSpawnPoint		= getEntityKey( "mcp_spawn_point" );
+		
+		string startTeamName = getKey( "start_team" );
+		if ( startTeamName != "" ) {
+			setGameTeam( sys.getTeam( startTeamName ) );
+		}
+	}
+
+	territoryIconHandle	= MakeTerritoryIcon( self );
+}
+
+void deployzone::destroy() {
+	FreeTerritoryIcon( self, territoryIconHandle );
+}
+
+void deployzone::OnSetTeam( object oldTeam, object newTeam ) {
+	if ( oldTeam != $null_entity ) {
+		ClearOldTeam( oldTeam );
+		DestroyDeployables( newTeam );
+	}
+
+	if ( spawnController != $null_entity ) {
+		spawnController.setGameTeam( newTeam );
+	}
+	
+	if ( mcpSpawnPoint != $null_entity ) {
+		mcpSpawnPoint.setGameTeam( newTeam );
+	}
+
+	string teamName = newTeam.getName();
+	string lastMatch;
+	entity targetEnt;
+
+	string targetPrefix = "target_" + teamName;
+	while ( true ) {
+		lastMatch = getNextKey( targetPrefix, lastMatch );
+		if ( lastMatch == "" ) {
+			break;
+		}
+		
+		targetEnt = getEntityKey( lastMatch );
+		targetEnt.vOnDeploy();
+	}
+	
+	float count = entitiesOfCollection( "territoryflags" );
+	float i;
+	for ( i = 0; i < count; i++ ) {
+		entity ent = getBoundsCacheEntity( i );
+		
+		vector org = ent.getWorldOrigin();
+
+		entity territory = sys.getTerritoryForPoint( org, $null, 0.0f, 0.0f );
+		if ( territory != self ) {
+			continue;
+		}
+		
+		ent.setGameTeam( newTeam );
+	}
+}
+
+void deployzone::vOnCaptured( entity p ) {
+	if ( objectiveIndex != -1 ) {
+		objManager.CompleteObjective( objectiveIndex, p );
+	}
+}
+
+void deployzone::ClearOldTeam( object team ) {
+	if ( team == $null_entity ) {
+		return;
+	}
+
+	string teamName = team.getName();
+	string lastMatch;
+	entity targetEnt;
+	
+	string targetPrefix = "target_" + teamName;
+	
+	while ( true ) {
+		lastMatch = getNextKey( targetPrefix, lastMatch );
+		if ( lastMatch == "" ) {
+			break;
+		}
+		
+		targetEnt = getEntityKey( lastMatch );
+		targetEnt.vOnUnDeploy();
+	}
+}
+
+void deployzone::DestroyDeployables( object team ) {
+	entitiesOfCollection( "deployables" );
+	filterEntitiesByTouching( true );
+	float cacheIndex = saveCachedEntities();
+	
+	float count = getSavedCacheCount( cacheIndex );
+	
+	vector up;
+	up_z = 1.f;
+	
+	float i;
+	entity ent;
+	for ( i = 0; i < count; i++ ) {
+		ent = getSavedCacheEntity( cacheIndex, i );
+
+		if ( ent.getGameTeam() != team ) {
+			entity territory = sys.getTerritoryForPoint( ent.getWorldOrigin(), $null_entity, 0, 0 );			
+			if ( territory == self ) {
+				ent.applyDamage( $null_entity, self, up, GetDamage( "damage_deployable_destroy" ), 1.f, $null_entity );
+			}
+		}
+	}
+	
+	freeSavedCache( cacheIndex );
+}

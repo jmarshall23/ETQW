@@ -1,0 +1,43 @@
+/***********************************************************************
+
+weapon_assaultrifle_scope.script
+
+***********************************************************************/
+
+object weapon_assaultrifle_scope : weapon_clip {
+	void		preinit();
+	void		destroy();
+
+	void		DoFire();
+
+	float		threadId;
+}
+
+void weapon_assaultrifle_scope::preinit() {
+	hasScope		= true;
+	hasScopeSway	= true;
+	hasIronSights	= false;
+
+	maxScopeUpFrames = 2;
+	maxScopeDownFrames = 2;
+
+	threadId = -1;
+	if ( sys.getLocalPlayer() == myPlayer ) {
+		sys.setGUIFloat( GUI_GLOBALS_HANDLE, "weapons.distance", -2 );
+		threadId = thread RangeUpdateThread( myPlayer, 16384 );
+	}
+}
+
+void weapon_assaultrifle_scope::destroy() {
+	if ( threadId != -1 ) {
+		sys.terminate( threadId );
+	}
+}
+
+void weapon_assaultrifle_scope::DoFire() {
+	if ( myPlayer.IsSniperScopeUp() ) {
+		FireBurst( 3 );
+	} else {
+		FireAuto();
+	}
+}

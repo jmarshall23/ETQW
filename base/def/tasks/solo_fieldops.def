@@ -1,0 +1,58 @@
+
+/******************************************************************************
+
+  FIELDOPS SOLO ASSIGNMENTS
+
+******************************************************************************/
+
+
+#include "task_includes.include"
+
+//
+// Supply
+//
+
+templates/tasks/solo_task( fieldops_supply_player, task_supply_player_gdf )
+	data {
+		"require_eligible1"				"ability_fieldops && same_team && ( same_entity == false )"
+		"waypoint"						"1"
+		"objective"						"0"
+		"priority"						"0"
+		"task"							"1"
+		"time_limit"					"30"
+		
+		"botTaskType"					"14"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/tsk_ammo_field_ops"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/tsk_ammo_field_ops"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/tsk_sml"
+		"range"							"1536"
+		"min_range"						"128"
+		"team_colored"					"1"
+	}
+}
+
+templates/tasks/solo_task( fieldops_deploy_firesupport, task_deploy_object )
+	data {
+		"require_eligible1"				"ability_fieldops && ( has_fire_support == false )"
+		
+		"deploy_mask"					"7"
+		"deploy_require_active"			"0"
+		"deploy_team"					"gdf"
+		
+		"botTaskType"					"28"
+		
+		"def_hint"						"deploy_mission_hint"
+		"tt_task"						"fieldops_deploy_firesupport"
+		"tooltip_ability"				"fieldops"
+	}
+
+/*	waypoint {
+		"mtr_icon"						"hud/icons/missionsystem/mis_field_ops"
+		"mtr_waypoint"					"hud/icons/missionsystem/mis_field_ops"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/mis_sml"
+	}*/
+}

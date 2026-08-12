@@ -1,0 +1,86 @@
+/***********************************************************************
+
+	binoculars.def
+
+***********************************************************************/
+
+// ========================================================================
+// Entity DEFS
+//
+invItemDef inventory/tools/deploytool/engineer {
+	type									"tool"
+	slot									"tool"
+	name									"game/weapons/deploy"
+
+	data {
+		"model_view" 						"viewmodel_binoculars"
+		"model_world" 						"models/tools/binoculars/binoculars2.lwo"
+		"joint_attach"						"RightHand"
+		"view_offset"						"0 -2 -2"
+
+		"anim_prefix"						"binoculars"
+		"anim_prefix_class"					"tool"
+
+		"weapon_scriptobject"				"tool_deploytool"
+
+		"melee_distance"					"64"
+
+		"snd_raise"							"sounds/tools/binocs/raise"
+		"snd_deploy"						"sounds/vo/gdf/npc/jotun/approved"
+		"snd_deploy_idle"					"sounds/tools/deployer/idle"
+		"snd_deploy_rotate"					"sounds/tools/deployer/rotate"
+		"snd_deploy_switch"					"sounds/tools/deployer/switch"
+		"snd_deploy_confirm"				"sounds/tools/deployer/confirm"
+		"snd_deploy_cancel"					"sounds/tools/deployer/cancel"
+		"snd_deploy_error"					"sounds/tools/deployer/error"
+		"snd_need_charge"					"sounds/ui/main/cannot"
+
+		"gui_deployment"					"game/deployment/engineer"
+		"hud_sort"							"-1"
+
+		"num_deploy_objects"				"3"
+		"do_object1"						"deployobject_antipersonnel_gdf"
+		"do_object2"						"deployobject_antiarmour_gdf"
+		"do_object3"						"deployobject_amt_gdf"
+		"mtr_weaponmenu"					"guis/assets/icons/weapons/deploypda"
+
+		"climate_skin_key"					"weapon_gdf_binoc_eng"
+
+		"crosshair"							"none"
+
+		"use_hold_anims"					"1"
+
+		"crosshair_spread_min"				"0.1"
+		"crosshair_spread_max"				"0.1"
+		"crosshair_spread_scale"			"1"
+
+		"spread_min"						"0"
+		"spread_max"						"0"
+
+		"spread_crouch_min"					"0"
+		"spread_crouch_max"					"0"
+
+		"spread_prone_min"					"0"
+		"spread_prone_max"					"0"
+
+		"spread_jump_min"					"0"
+		"spread_jump_max"					"0"
+		
+		"player_weapon_num"					"21"
+
+		"timer_charge"						"energy_deployment"
+		"charge_per_use"					"100"
+		"show_charge"						"1"
+		
+		"tt_intro_1"						"generic_deploy_intro_1"
+		"tt_intro_2"						"generic_deploy_intro_2"
+		"tt_start_deployment"				"generic_deploy_start"
+		"tt_rotate_deployment"				"generic_deploy_rotate"
+		"tt_need_charge"					"deploytool_need_charge"
+
+		// used in code, referenced here for pre-caching
+		"mtr_deploymenu_decal"				"textures/decals/white_decal"
+		"mtr_deploymenu_decal_outer"		"textures/decals/white_decal_dark"
+		"mtr_deploymenu_decal_arrows"		"textures/decals/deploy_arrows"
+	}
+}

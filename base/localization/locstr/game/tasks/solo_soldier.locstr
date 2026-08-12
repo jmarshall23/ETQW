@@ -1,0 +1,13 @@
+
+locString game/tasks/soldier_destroy_objective/title {
+	text "#str_01001020"
+}
+
+locString game/tasks/soldier_destroy_objective/title_friend {
+	text "#str_01001021"
+}
+
+
+locString game/tasks/soldier_destroy_secondary/title {
+	text "#str_01001020"
+}

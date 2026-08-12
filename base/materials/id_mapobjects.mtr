@@ -1,0 +1,115 @@
+material models/mapobjects/mcity/deskcomp/deskcompbase
+{
+         noselfshadow
+
+	renderbump  -size 512 512 -trace 0.05 -aa 2  models/mapobjects/mcity/deskcomp/deskcompbase_local.tga models/mapobjects/mcity/deskcomp/deskcompbase_hi.lwo
+
+                diffusemap	models/mapobjects/mcity/deskcomp/deskcompbase_d.tga
+		bumpmap		addnormals (models/mapobjects/mcity/deskcomp/deskcompbase_local.tga, heightmap (models/mapobjects/mcity/deskcomp/deskcompbase_bmp.tga, 3) )
+                specularmap	models/mapobjects/mcity/deskcomp/deskcompbase_s.tga
+	{
+		blend 	add
+		map		models/mapobjects/mcity/deskcomp/deskcompbase_add.tga
+		colored
+	}
+}
+
+material models/mapobjects/doors/techdoor1/techdr1frame_cop
+{
+    renderbump		-size 512 512 -trace 0.1 -aa 2  models/mapobjects/doors/techdoor1/techdr1frame_local.tga models/mapobjects/doors/techdoor1/techdr1frame_hi.lwo
+		bumpmap			models/mapobjects/doors/techdoor1/techdr1frame_local.tga
+		diffusemap		models/mapobjects/doors/techdoor1/techdr1frame_cop_d.tga
+		specularmap		models/mapobjects/doors/techdoor1/techdr1frame_cop_s.tga
+}
+
+material models/mapobjects/camera/camlight
+{
+
+	noShadows
+	twosided
+	translucent
+	nonsolid
+	noimpact
+	{
+		blend add
+		map models/mapobjects/camera/camlight.tga
+		 rgb		camblinktable[ time * 0.6 ]
+	}
+
+
+}
+
+material models/mapobjects/camera/camera01
+
+{
+	//noSelfShadow
+	//ricochet
+	bumpmap	addnormals ( models/mapobjects/camera/camera01_local.tga, heightmap (models/mapobjects/camera/camera01_h.tga, 9) )
+	diffusemap	models/mapobjects/camera/camera01.tga
+	specularmap	models/mapobjects/camera/camera01_s.tga
+}
+
+material models/mapobjects/doors/techdoor1/techdr1frame
+{
+        	renderbump  -size 512 512 -trace 0.1 -aa 2  models/mapobjects/doors/techdoor1/techdr1frame_local.tga models/mapobjects/doors/techdoor1/techdr1frame_hi.lwo
+
+                diffusemap	models/mapobjects/doors/techdoor1/techdr1frame_d.tga
+		bumpmap		models/mapobjects/doors/techdoor1/techdr1frame_local.tga
+                specularmap	models/mapobjects/doors/techdoor1/techdr1frame_s.tga
+}
+
+material models/mapobjects/light/emerlight1/emerlight1
+{
+         noselfshadow
+
+	renderbump  -size 256 256 -aa 2  models/mapobjects/light/emerlight1/emerlight1_local.tga models/mapobjects/light/emerlight1/emerlight1_hi.lwo
+
+                diffusemap	models/mapobjects/light/emerlight1/emerlight1_d.tga
+		bumpmap		addnormals (models/mapobjects/light/emerlight1/emerlight1_local.tga, heightmap (models/mapobjects/light/emerlight1/emerlight1_bmp.tga, 3) )
+                specularmap	models/mapobjects/light/emerlight1/emerlight1_s.tga
+  	{
+		blend 	add
+		map		models/mapobjects/light/emerlight1/emerlight1_add.tga
+		colored
+	}
+}
+
+material models/mapobjects/light/klaxon/klaxon2
+{
+	renderbump  	-size 128 128 -aa 2 models/mapobjects/light/klaxon/klaxon2_local models/mapobjects/light/klaxon/klaxon2_hi.lwo
+	noselfshadow
+	bumpmap			models/mapobjects/light/klaxon/klaxon2_local
+	diffusemap		models/mapobjects/light/klaxon/klaxon2
+	specularmap		models/mapobjects/light/klaxon/klaxon2_s
+}
+
+material models/mapobjects/light/klaxon/klaxon_red
+{
+	translucent
+
+	{
+		bumpmap		heightmap (models/mapobjects/light/klaxon/klaxon_red_bmp, 1) 
+		diffusemap	models/mapobjects/light/klaxon/klaxon_red
+		specularmap	_white
+		specularColor  .4, .4, .4
+	}
+}
+
+material models/mapobjects/light/klaxon/klaxon
+{
+	renderbump  	-size 128 128 -aa 2 models/mapobjects/light/klaxon/klaxon_local models/mapobjects/light/klaxon/work/klaxon_hp.lwo
+	noselfshadow
+	bumpmap			models/mapobjects/light/klaxon/klaxon_local
+	diffusemap		models/mapobjects/light/klaxon/klaxon
+	specularmap		models/mapobjects/light/klaxon/klaxon_s
+}
+
+material models/mapobjects/filler/mkeyboard
+{
+	noSelfShadow
+ 	renderbump  -size 256 256 -aa 2 -colorMap  models/mapobjects/filler/mkeyboard_local.tga models/mapobjects/filler/mkeyboard_hi.lwo
+	
+	bumpmap			models/mapobjects/filler/mkeyboard_local.tga
+	diffusemap		models/mapobjects/filler/mkeyboard.tga
+	specularmap		models/mapobjects/filler/mkeyboard_s.tga
+}

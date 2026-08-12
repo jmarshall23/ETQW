@@ -1,0 +1,37 @@
+!!ARBvp1.0
+#replace normalAttrib with _normalAttrib
+TEMP _normalAttrib;
+TEMP _attribTemp;
+MUL _normalAttrib, vertex.attrib[2], 0.000030518;
+MUL _attribTemp.xy, _normalAttrib, _normalAttrib;
+ADD _attribTemp.x, _attribTemp.xxxx, _attribTemp.yyyy;
+ADD _attribTemp.x, 1, -_attribTemp.x;
+RSQ _attribTemp.x, _attribTemp.x;
+RCP _normalAttrib.z, _attribTemp.x;
+ADD _attribTemp.x, $signAttrib$.x, -1;
+MUL _normalAttrib.z, _normalAttrib.z, _attribTemp.x;
+#replace texCoordAttrib with _texCoordAttrib
+TEMP _texCoordAttrib;
+MUL _texCoordAttrib.xy, vertex.attrib[8], 0.000244141;
+MOV _texCoordAttrib.zw, 1;
+
+		TEMP R0;
+		TEMP _pos;
+		MAD _pos.xyz, _normalAttrib, program.local[0].x, vertex.position;
+		MOV _pos.w, vertex.position.w;
+		
+		PARAM  mvp[4]       = { state.matrix.mvp };
+		OUTPUT oPos         = result.position;
+		# Transform the vertex to clip coordinates. 
+		DP4   oPos.x, mvp[0], _pos;
+		DP4   oPos.y, mvp[1], _pos;
+		DP4   oPos.z, mvp[2], _pos;
+		DP4   oPos.w, mvp[3], _pos;
+
+		DP4	result.texcoord.x, _texCoordAttrib, program.local[1];
+		DP4	result.texcoord.y, _texCoordAttrib, program.local[2];
+		
+		MAD	R0, vertex.attrib[3], program.local[3], program.local[4];
+		MUL result.color, program.local[5], R0;	
+	
+END

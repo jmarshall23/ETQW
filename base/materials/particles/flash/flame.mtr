@@ -1,0 +1,97 @@
+material particles/flash/flame_ember01
+{
+	qer_editorimage textures/particles/flash/ember_mid.tga
+	sort nearest
+	{
+		blend blend
+		map clamp textures/particles/flash/ember_mid.tga
+		//alpha 0
+		maskalpha
+		vertexcolor
+	}
+	{
+		blend add
+		color 0.5, 0.5, 0.5, 0.5
+		map clamp textures/particles/flash/ember_mid.tga
+		//alpha 0
+		maskalpha
+		vertexcolor
+	}
+}
+
+//was material particles/penta/flames4
+material particles/flash/licking_flames01 {
+	{
+		blend add
+		map zeroclamp textures/particles/fire/flame5_strip.tga
+		maskalpha
+		vertexcolor
+		useTemplate templates/materials/animate<32, 2.5> 
+	}
+}
+
+material particles/flash/flame_ember_blk01
+{
+	qer_editorimage textures/particles/flash/ember_mid_blk.tga
+	sort nearest
+	{
+		blend filter
+		map clamp textures/particles/flash/ember_mid_blk.tga	
+		//alpha 0
+		maskalpha
+		vertexcolor
+	}
+}
+
+
+material particles/flash/flameball02
+{
+	qer_editorimage textures/particles/flash/flameball02.tga
+	sort nearest
+	{
+		blend add
+		map clamp textures/particles/flash/flameball02.tga
+		useTemplate templates/materials/animate< 4, 0.5 >
+		alpha 0.5
+		maskalpha
+		vertexcolor
+	}
+}
+
+
+material particles/flash/flameball01
+{
+	qer_editorimage textures/particles/flash/flameball01.tga
+	sort nearest
+	{
+		blend add
+		map clamp textures/particles/flash/flameball01.tga
+		alpha 0.5
+		maskalpha
+		vertexcolor
+	}
+}
+
+material particles/flash/spark02
+{
+	translucent
+	noShadows
+	twoSided
+	{
+		blend	add
+		map clamp textures/particles/sparks/spark02.tga
+		vertexColor
+		maskAlpha
+	}	
+}
+
+//welder flame effect
+material particles/fire/blue_pilot_flame {
+	{
+		blend add
+		map zeroclamp textures/particles/fire/blue_flame_strip.tga
+		maskalpha
+		vertexcolor
+		useTemplate templates/materials/animate<8, 0.5> 
+	}
+}

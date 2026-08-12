@@ -1,0 +1,424 @@
+
+object deployable_plasmamortar : deployable_base {
+	void	preinit();
+	void	init();
+	void	destroy();
+	void	syncFields();
+
+	void	ServerIdle();
+	void	ServerAiming();
+	void	ServerFiring();
+
+	void	ClientIdle();
+	void	ClientFiring();
+
+	void	vTargetSetTarget( vector targetPos, entity targetEnt );
+	boolean	vTargetGetValid( vector targetPos );
+	boolean	vTargetPlayerEligible( entity p );
+
+	//
+	boolean	InRange( vector targetPos );
+	boolean	InFiringRange( vector targetPos ) { return InRange( targetPos ); }
+	boolean	CalcTargetAngles( vector targetPos );
+
+	// utility funcs ( none of these should be blocking )
+	void	Launch();
+	void	FireMissile();
+	boolean	PitchValid( float pitch );
+
+	void	ReloadThread( float delay );
+	void	OnFireSupportStateChanged();
+
+	float	vGetFireSupportMode();
+
+	target_marker vCreateTargetMarker();
+	
+	void	ClearFiringDecal();	
+	void	CreateFiringDecal();
+
+	float	recycle;
+	float	fireCount;
+	float	reloadWait;
+	float	fireSyncDelay;
+	float	nextFire;
+
+	float	jointMuzzle;
+
+	float	minPitch;
+	float	maxPitch;
+
+	float	minRange;
+	float	maxRange;
+
+	float	missileSpeed;
+
+	float	spread;
+
+	float	clientState;
+
+	float	targetYaw;
+	float	targetPitch;
+	vector	targetDiff;
+
+	float	barrelPitch;
+	vector	firingVelocity;
+	boolean	hasTarget;
+	entity	targetPlayerEnemy;
+	float	projectileIndex;
+	vector	targetLocation;
+	boolean	playingPitchSound;
+	boolean	playingYawSound;
+
+	generic_target_marker		firingDecal;
+	entity						firingMarker;
+};
+
+void deployable_plasmamortar::syncFields() {
+	syncBroadcast( "nextFire" );
+	syncBroadcast( "fireSupportState" );
+
+	syncCallback( "fireSupportState", "OnFireSupportStateChanged" );
+}
+
+void deployable_plasmamortar::destroy() {
+	delete fsStatus;
+}
+
+float deployable_plasmamortar::vGetFireSupportMode() {
+	return TARGET_ROCKETS;
+}
+
+void deployable_plasmamortar::preinit() {
+	vector barrel;
+	float entityDeclIndex;
+	float i;
+	float muzzleHandle;
+	vector pitchJointPos;
+
+	recycle			= getFloatKey( "missile_recycle" );
+	fireCount		= getFloatKey( "missile_firecount" );
+	reloadWait		= getFloatKey( "missile_reload" );
+	fireSyncDelay	= getFloatKey( "sync_delay" );
+	spread			= getFloatKey( "spread" );
+
+	if ( fireCount <= 0 ) {
+		fireCount = 6;
+	}
+	if ( reloadWait <= 0 ) {
+		reloadWait = 30;
+	}
+	if ( fireSyncDelay <= 0 ) {
+		fireSyncDelay = 0.5;
+	}
+
+	jointMuzzle		= getJointHandle( getKey( "missile_barrel" ) );
+
+	entityDeclIndex	= sys.getDeclType( "entityDef" );
+	projectileIndex	= sys.getDeclIndex( entityDeclIndex, getKey( "def_projectile" ) );
+
+	minPitch		= getFloatKey( "min_pitch" );
+	maxPitch		= getFloatKey( "max_pitch" );
+
+	minRange		= getFloatKey( "range_min" );
+	maxRange		= getFloatKey( "range_max" );
+
+	missileSpeed	= getFloatKey( "missile_speed" );
+
+	hasTarget		= false;
+
+	nextFire			= 0;
+	
+	fsStatus = new fireSupportStatus;
+}
+
+void deployable_plasmamortar::init() {
+	vector angles;
+
+	angles = getAngles();
+
+	if ( sys.isClient() ) {
+		setState( "ClientIdle" );
+	} else {
+		setState( "ServerIdle" );
+	}
+}
+
+void deployable_plasmamortar::OnFireSupportStateChanged() {
+	if ( fireSupportState == MPS_FIRING ) {
+		if ( clientState != ART_CS_FIRING ) {
+			setState( "ClientFiring" );
+		}
+	} else {
+		if ( clientState != ART_CS_IDLE ) {
+			setState( "ClientIdle" );
+		}
+	}
+}
+
+
+
+// ==========================================
+// States
+// ==========================================
+
+void deployable_plasmamortar::ClientIdle() {
+	clientState = ART_CS_IDLE;
+}
+
+void deployable_plasmamortar::ServerIdle() {
+	hasTarget = false;
+
+	while( true ) {
+		if ( hasTarget ) {
+			setState( "ServerAiming" );
+		}
+
+		sys.waitFrame();
+	}
+}
+
+void deployable_plasmamortar::ReloadThread( float delay ) {
+	fireSupportState = MPS_RELOADING;
+	
+	sys.wait( delay );
+
+	fireSupportState = MPS_READY;
+}
+
+void deployable_plasmamortar::ServerAiming() {
+	setState( "ServerFiring" );
+}
+
+void deployable_plasmamortar::ClientFiring() {
+	float nextMiniFire	= 0;
+	float baseFireTime	= 0;
+
+	clientState = ART_CS_FIRING;
+
+	while( true ) {
+		if ( nextFire < sys.getTime() ) {
+			baseFireTime = sys.getTime();
+			nextFire = baseFireTime + recycle;
+
+			Launch();
+		}
+
+		sys.waitFrame();
+	}
+}
+
+void deployable_plasmamortar::ServerFiring() {
+	float count			= 0;
+	float nextMiniFire	= 0;
+	float baseFireTime	= 0;
+
+	fireSupportState = MPS_FIRING;
+
+	nextFire = sys.getTime() + 1.f;
+
+	while( true ) {
+		if ( disabledState ) {
+			break;
+		}
+
+		if ( nextFire < sys.getTime() ) {
+			baseFireTime = sys.getTime();
+			nextFire = baseFireTime + recycle;
+			count = count + 1;
+
+			Launch();
+
+			if ( count >= fireCount ) {
+				break;
+			}
+		}
+
+		sys.waitFrame();
+	}
+
+	nextFire = 0;
+
+	thread ReloadThread( reloadWait );
+
+	setState( "ServerIdle" );
+}
+
+// ==========================================
+// Utility Funcs
+// ==========================================
+
+void deployable_plasmamortar::FireMissile() {
+	vector org = getJointPos( jointMuzzle );
+	
+	launchMissileSimple( owner, self, targetPlayerEnemy, projectileIndex, -1, spread, org, firingVelocity );
+
+	playJointEffect( "fx_fire", jointMuzzle, 0 );
+}
+
+void deployable_plasmamortar::Launch() {
+	string anim;
+	float channel;
+
+	FireMissile();
+
+	anim = getKey( "launch_anim" );
+	if ( anim != "" ) {
+		channel = getIntKey( "launch_channel" );
+
+		playAnim( channel, anim );
+	}
+}
+
+// ==========================================
+// ==========================================
+
+void deployable_plasmamortar::vTargetSetTarget( vector targetPos, entity targetEnt ) {
+	float firingPitch;
+	float t;
+	vector gravity;
+	vector velocity;
+	vector temp;
+	float i;
+
+	if ( !CalcTargetAngles( targetPos ) ) {
+		return;
+	}
+	
+	gravity_x = 0;
+	gravity_y = 0;
+	gravity_z = -1066;
+
+	// make target pitch more vertical
+	targetPitch = targetPitch + ( 90 - targetPitch ) * 0.5;
+	firingPitch = targetPitch;
+
+	firingVelocity = targetDiff * ( sys.cos( targetPitch ) * missileSpeed );
+	firingVelocity_z = sys.sin( targetPitch ) * missileSpeed;
+
+	targetPlayerEnemy = owner.getEnemy();
+	hasTarget = true;
+	
+	Base_TargetSetTarget( targetPos, targetEnt );
+}
+
+boolean	deployable_plasmamortar::vTargetGetValid( vector targetPos ) {
+	if ( !InRange( targetPos ) ) {
+		return 0.f;
+	}
+
+	return CalcTargetAngles( targetPos );
+}
+
+boolean deployable_plasmamortar::CalcTargetAngles( vector targetPos ) {
+	vector barrelOrg;
+	vector temp;
+	float diffY;
+	float diffX;
+	float rootA;
+	float count;
+	float root1;
+	float root2;
+	vector modelOffset = targetPos;
+
+	barrelOrg = getJointPos( jointMuzzle );
+
+	targetDiff = modelOffset - barrelOrg;
+
+	targetYaw = sys.angleNormalize180( sys.atan2( targetDiff_y, targetDiff_x ) );
+
+	temp = targetDiff;
+
+	diffY = temp_z;
+	temp_z = 0.f;
+	targetDiff = sys.vecNormalize( temp );
+	diffX = sys.vecLength( temp );
+
+	// FIXME: Expose default gravity
+	rootA = ( 1066 * diffX * diffX ) / ( 2 * missileSpeed * missileSpeed );
+
+	count = sys.solveRoots( rootA, -diffX, rootA + diffY );
+	if ( count == 0 ) {
+		return false;
+	}
+
+	if ( count == 1 ) {
+		targetPitch = sys.atan( sys.getRoot( 0 ) );
+		return PitchValid( targetPitch );
+	}
+
+	targetPitch = sys.atan( sys.getRoot( 0 ) );
+	if ( PitchValid( targetPitch ) ) {
+		return true;
+	}
+
+	targetPitch = sys.atan( sys.getRoot( 1 ) );
+	return PitchValid( targetPitch );
+}
+
+boolean deployable_plasmamortar::PitchValid( float pitch ) {
+	return pitch < maxPitch && pitch > minPitch;
+}
+
+boolean	deployable_plasmamortar::InRange( vector targetPos ) {
+	return true;
+}
+
+boolean deployable_plasmamortar::vTargetPlayerEligible( entity p ) {
+	if ( disabledState || !finishedDeploying ) {
+		return 0.f;
+	}
+
+	return 1.f;
+}
+
+target_marker deployable_plasmamortar::vCreateTargetMarker() {
+	string entityDef = getKey( "def_marker" );
+	if ( entityDef == "" ) {
+		return $null;
+	}
+
+	generic_target_marker marker = new generic_target_marker;
+	marker.Init( self, entityDef, getKey( "mtr_marker_cm" ), getFloatKey( "cm_marker_sort" ) );
+	if ( vGetFireSupportMode() == TARGET_ROCKETS ) {
+		marker.SetLocalOnly( true );
+	}
+	return marker;
+}
+
+void deployable_plasmamortar::ClearFiringDecal() {
+	if ( firingDecal != $null_entity ) {
+		delete firingDecal;
+	}
+	
+	if ( firingMarker != $null_entity ) {
+		thread G_DelayRemoveEntity( firingMarker, 5.f );
+		firingMarker = $null_entity;
+	}
+}
+
+void deployable_plasmamortar::CreateFiringDecal() {
+	if ( !sys.isClient() ) {
+		firingMarker = G_CreateFiringMarker( self, firingMarker, targetLocation );
+	}
+
+	if ( vGetFireSupportMode() == TARGET_ROCKETS ) {
+		return;
+	}
+
+	entity p = sys.getLocalPlayer();
+	if ( p == $null_entity ) {
+		return;
+	}
+	
+	if ( getEntityAllegiance( p ) != TA_FRIEND ) {
+		return;
+	}
+
+	if ( firingDecal == $null_entity ) {
+		firingDecal = vCreateTargetMarker();
+	}
+
+	if ( firingDecal != $null_entity ) { 
+		firingDecal.SetTargetPosition( targetLocation );
+	}
+}

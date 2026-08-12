@@ -1,0 +1,31 @@
+
+#ifndef __teams__
+#define __teams__
+
+$template __precached_materials
+
+	// This is here to make sure they're precached
+	"mtr_repair_icon"			"hud/hint/global"
+	"mtr_hack_icon"				"hud/hint/global"
+	"mtr_chargearm_icon"		"hud/hint/global"
+	"mtr_arm_icon"				"hud/hint/global"
+	"mtr_construct_icon"		"hud/hint/global"
+	"mtr_spawnhost_icon"		"hud/hint/global"
+	"mtr_disarm_spawnhost_icon"	"hud/hint/global"
+	"mtr_revive_icon"			"hud/hint/global"
+	"mtr_spawncap_icon"			"hud/hint/global"
+	"mtr_orders_icon"			"hud/hint/global"
+	"mtr_stab_icon"				"hud/hint/global"
+	"mtr_use_icon"				"hud/hint/global"
+	"mtr_plant_icon"			"hud/hint/global"
+	"mtr_usevehicle_icon"		"hud/hint/vehicle"
+	"mtr_disguise_icon"			"hud/hint/global"
+	"mtr_flyerdrone_icon"		"hud/hint/global"
+
+	"mtr_pm_death"				"hud/pm_death"
+
+	"mtr_waypoint_offscreen"	"guis/assets/qet/objective_icon_directional"
+		
+$endtemplate
+
+#endif

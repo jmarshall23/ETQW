@@ -1,0 +1,7 @@
+material models/mapobjects/washroom/turn
+{
+	bumpmap		addnormals( models/mapobjects/washroom/turn_local.tga, heightmap ( models/mapobjects/washroom/turn_h.tga, 7) )
+	diffusemap		models/mapobjects/washroom/turn.tga
+	specularmap		models/mapobjects/washroom/turn_s.tga
+
+}

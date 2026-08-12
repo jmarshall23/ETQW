@@ -1,0 +1,82 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/quarry/workshops3 {
+	width	512
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1536 ) ( 512 2048 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1280 ) ( 512 1536 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 768 ) ( 512 1280 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 224 ) ( 512 256 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 256 ) ( 512 768 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 160 ) ( 512 224 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 1056 160 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1536 ) ( 512 2048 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1280 ) ( 512 1536 )
+	}
+	rect {
+		surfaceType	metal_thick
+		surfaceColor	( 1 1 1 )
+		coords ( 0 768 ) ( 512 1280 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 256 ) ( 512 768 )
+	}
+	rect {
+		surfaceType	metal_thick
+		surfaceColor	( 1 1 1 )
+		coords ( 0 224 ) ( 512 256 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 160 ) ( 512 224 )
+	}
+	rect {
+		surfaceType	metal_thick
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 512 160 )
+	}
+}

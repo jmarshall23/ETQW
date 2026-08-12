@@ -1,0 +1,348 @@
+sound sounds/xlib/valley_sounds/stagnant_01 {
+	sounds/xlib/valley_sounds/stagnant_01.wav
+}
+
+sound sounds/xlib/valley_sounds/stagnant_02 {
+	sounds/xlib/valley_sounds/stagnant_02.wav
+}
+
+sound sounds/xlib/valley_sounds/st_calm_02 {
+	sounds/xlib/valley_sounds/st_calm_02.wav
+}
+
+sound sounds/xlib/valley_sounds/st_tonal_02 {
+	sounds/xlib/valley_sounds/st_tonal_02.wav
+}
+
+sound sounds/xlib/valley_sounds/st_tunnel_02 {
+	sounds/xlib/valley_sounds/st_tunnel_02.wav
+}
+
+sound sounds/xlib/valley_sounds/tunnel_01 {
+	sounds/xlib/valley_sounds/tunnel_01.wav
+}
+
+sound sounds/xlib/valley_sounds/empty_01 {
+	sounds/xlib/valley_sounds/empty_01.wav
+}
+
+sound sounds/xlib/valley_sounds/empty_02 {
+	sounds/xlib/valley_sounds/empty_02.wav
+}
+
+sound sounds/xlib/valley_sounds/st_docile_03c {
+	sounds/xlib/valley_sounds/st_docile_03c.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/crackly/crackle_02 {
+	sounds/xlib/valley_sounds/burning/crackly/crackle_02.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/crackly/crackle_05 {
+	sounds/xlib/valley_sounds/burning/crackly/crackle_05.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/crackly/crackle_01 {
+	sounds/xlib/valley_sounds/burning/crackly/crackle_01.wav
+}
+
+sound sounds/xlib/valley_sounds/blower_02 {
+	sounds/xlib/valley_sounds/blower_02.wav
+}
+
+sound sounds/xlib/valley_sounds/st_mid_01 {
+	sounds/xlib/valley_sounds/st_mid_01.wav
+}
+
+sound sounds/xlib/valley_sounds/whistleair_02 {
+	sounds/xlib/valley_sounds/whistleair_02.wav
+}
+
+sound sounds/xlib/valley_sounds/whistleair_03 {
+	sounds/xlib/valley_sounds/whistleair_03.wav
+}
+
+sound sounds/xlib/valley_sounds/st_tonal_01 {
+	sounds/xlib/valley_sounds/st_tonal_01.wav
+}
+
+sound sounds/xlib/valley_sounds/mono_airflow_05 {
+	sounds/xlib/valley_sounds/mono_airflow_05.wav
+}
+
+sound sounds/xlib/valley_sounds/mid_wind_02 {
+	sounds/xlib/valley_sounds/mid_wind_02.wav
+}
+
+sound sounds/xlib/valley_sounds/mid_wind_01 {
+	sounds/xlib/valley_sounds/mid_wind_01.wav
+}
+
+sound sounds/xlib/valley_sounds/st_calm_03 {
+	sounds/xlib/valley_sounds/st_calm_03.wav
+}
+
+sound sounds/xlib/valley_sounds/st_empty_02 {
+	sounds/xlib/valley_sounds/st_empty_02.wav
+}
+
+sound sounds/xlib/valley_sounds/st_calm_01 {
+	sounds/xlib/valley_sounds/st_calm_01.wav
+}
+
+sound sounds/xlib/valley_sounds/st_docile_02d {
+	sounds/xlib/valley_sounds/st_docile_02d.wav
+}
+
+sound sounds/xlib/valley_sounds/st_docile_01c {
+	sounds/xlib/valley_sounds/st_docile_01c.wav
+}
+
+sound sounds/xlib/valley_sounds/st_docile_04c {
+	sounds/xlib/valley_sounds/st_docile_04c.wav
+}
+
+sound sounds/xlib/valley_sounds/st_duncer_05 {
+	sounds/xlib/valley_sounds/st_duncer_05.wav
+}
+
+sound sounds/xlib/valley_sounds/birds_02 {
+	sounds/xlib/valley_sounds/birds_02.wav
+}
+
+sound sounds/xlib/valley_sounds/birds_01 {
+	sounds/xlib/valley_sounds/birds_01.wav
+}
+
+sound sounds/xlib/valley_sounds/birds_06 {
+	sounds/xlib/valley_sounds/birds_06.wav
+}
+
+sound sounds/xlib/valley_sounds/bigempty_01 {
+	sounds/xlib/valley_sounds/bigempty_01.wav
+}
+
+sound sounds/xlib/valley_sounds/scape_19 {
+	sounds/xlib/valley_sounds/scape_19.wav
+}
+
+sound sounds/xlib/valley_sounds/st_empty_01 {
+	sounds/xlib/valley_sounds/st_empty_01.wav
+}
+
+sound sounds/xlib/valley_sounds/st_empty_03 {
+	sounds/xlib/valley_sounds/st_empty_03.wav
+}
+
+sound sounds/xlib/valley_sounds/st_strogbaseamb_01 {
+	sounds/xlib/valley_sounds/st_strogbaseamb_01.wav
+}
+
+sound sounds/xlib/valley_sounds/st_reghummer_02 {
+	sounds/xlib/valley_sounds/st_reghummer_02.wav
+}
+
+sound sounds/xlib/valley_sounds/st_probemachine_04 {
+	sounds/xlib/valley_sounds/st_probemachine_04.wav
+}
+
+sound sounds/xlib/valley_sounds/st_mid_02 {
+	sounds/xlib/valley_sounds/st_mid_02.wav
+}
+
+sound sounds/xlib/valley_sounds/st_spooky_01 {
+	sounds/xlib/valley_sounds/st_spooky_01.wav
+}
+
+sound sounds/xlib/valley_sounds/gen_02 {
+	sounds/xlib/valley_sounds/gen_02.wav
+}
+
+sound sounds/xlib/valley_sounds/gen_03 {
+	sounds/xlib/valley_sounds/gen_03.wav
+}
+
+sound sounds/xlib/valley_sounds/gen_01 {
+	sounds/xlib/valley_sounds/gen_01.wav
+}
+
+sound sounds/xlib/valley_sounds/genx_03_high1 {
+	sounds/xlib/valley_sounds/genx_03_high1.wav
+}
+
+sound sounds/xlib/valley_sounds/genx_02_high1 {
+	sounds/xlib/valley_sounds/genx_02_high1.wav
+}
+
+sound sounds/xlib/valley_sounds/computers_01 {
+	sounds/xlib/valley_sounds/computers_01.wav
+}
+
+sound sounds/xlib/valley_sounds/computers_02 {
+	sounds/xlib/valley_sounds/computers_02.wav
+}
+
+sound sounds/xlib/valley_sounds/loop_hum_01 {
+	sounds/xlib/valley_sounds/loop_hum_01.wav
+}
+
+sound sounds/xlib/valley_sounds/macheen_03_high1 {
+	sounds/xlib/valley_sounds/macheen_03_high1.wav
+}
+
+sound sounds/xlib/valley_sounds/macheen_04_high1 {
+	sounds/xlib/valley_sounds/macheen_04_high1.wav
+}
+
+sound sounds/xlib/valley_sounds/st_duncer_06 {
+	sounds/xlib/valley_sounds/st_duncer_06.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/hissy_sizzly/hissy_01 {
+	sounds/xlib/valley_sounds/burning/hissy_sizzly/hissy_01.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/hissy_sizzly/hissy_02 {
+	sounds/xlib/valley_sounds/burning/hissy_sizzly/hissy_02.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/rumbly/rumbly_01 {
+	sounds/xlib/valley_sounds/burning/rumbly/rumbly_01.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/rumbly/rumbly_03 {
+	sounds/xlib/valley_sounds/burning/rumbly/rumbly_03.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/rumbly/rumbly_05 {
+	sounds/xlib/valley_sounds/burning/rumbly/rumbly_05.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/gas/gashiss_01 {
+	sounds/xlib/valley_sounds/burning/gas/gashiss_01.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/gas/gashiss_03 {
+	sounds/xlib/valley_sounds/burning/gas/gashiss_03.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/crackly/crackle_03 {
+	sounds/xlib/valley_sounds/burning/crackly/crackle_03.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/crackly/crackle_04 {
+	sounds/xlib/valley_sounds/burning/crackly/crackle_04.wav
+}
+
+sound sounds/ambience/water/waves_onshore_01 {
+	sounds/ambience/water/waves_onshore_01.wav
+}
+
+sound sounds/ambience/water/waves_onshore_02 {
+	sounds/ambience/water/waves_onshore_02.wav
+}
+
+sound sounds/xlib/valley_sounds/calm_watercreatures_01 {
+	sounds/xlib/valley_sounds/calm_watercreatures_01.wav
+}
+
+sound sounds/xlib/valley_sounds/stagnant_insects_01 {
+	sounds/xlib/valley_sounds/stagnant_insects_01.wav
+}
+
+sound sounds/xlib/valley_sounds/airgen_03 {
+	sounds/xlib/valley_sounds/airgen_03.wav
+}
+
+sound sounds/xlib/valley_sounds/stagnant_birds_01 {
+	sounds/xlib/valley_sounds/stagnant_birds_01.wav
+}
+
+sound sounds/xlib/valley_sounds/whistleair_01 {
+	sounds/xlib/valley_sounds/whistleair_01.wav
+}
+
+sound sounds/xlib/valley_sounds/st_regimetech_02 {
+	sounds/xlib/valley_sounds/st_regimetech_02.wav
+}
+
+sound sounds/xlib/valley_sounds/machine_04 {
+	sounds/xlib/valley_sounds/machine_04.wav
+}
+
+sound sounds/xlib/valley_sounds/mono_airflow_02 {
+	sounds/xlib/valley_sounds/mono_airflow_02.wav
+}
+
+sound sounds/xlib/valley_sounds/st_machroom_01 {
+	sounds/xlib/valley_sounds/st_machroom_01.wav
+}
+
+sound sounds/xlib/valley_sounds/st_regcomp_02 {
+	sounds/xlib/valley_sounds/st_regcomp_02.wav
+}
+
+sound sounds/xlib/valley_sounds/st_techbg_02 {
+	sounds/xlib/valley_sounds/st_techbg_02.wav
+}
+
+sound sounds/xlib/valley_sounds/st_techbg_04 {
+	sounds/xlib/valley_sounds/st_techbg_04.wav
+}
+
+sound sounds/xlib/valley_sounds/blower_03 {
+	sounds/xlib/valley_sounds/blower_03.wav
+}
+
+sound sounds/xlib/valley_sounds/loop_02a {
+	sounds/xlib/valley_sounds/loop_02a.wav
+}
+
+sound sounds/xlib/valley_sounds/machine_03a {
+	sounds/xlib/valley_sounds/machine_03a.wav
+}
+
+sound sounds/xlib/valley_sounds/machine_03b {
+	sounds/xlib/valley_sounds/machine_03b.wav
+}
+
+sound sounds/xlib/valley_sounds/noisymachine_01 {
+	sounds/xlib/valley_sounds/noisymachine_01.wav
+}
+
+sound sounds/xlib/valley_sounds/noisymachine_02 {
+	sounds/xlib/valley_sounds/noisymachine_02.wav
+}
+
+sound sounds/xlib/valley_sounds/machine_01 {
+	sounds/xlib/valley_sounds/machine_01.wav
+}
+
+sound sounds/xlib/valley_sounds/machine_02 {
+	sounds/xlib/valley_sounds/machine_02.wav
+}
+
+sound sounds/xlib/valley_sounds/loop_hum_06 {
+	sounds/xlib/valley_sounds/loop_hum_06.wav
+}
+
+sound sounds/xlib/valley_sounds/st_riser_02 {
+	sounds/xlib/valley_sounds/st_riser_02.wav
+}
+
+sound sounds/xlib/valley_sounds/mono_airflow_01 {
+	sounds/xlib/valley_sounds/mono_airflow_01.wav
+}
+
+sound sounds/xlib/valley_sounds/mono_airflow_03 {
+	sounds/xlib/valley_sounds/mono_airflow_03.wav
+}
+
+sound sounds/xlib/valley_sounds/mono_airflow_04 {
+	sounds/xlib/valley_sounds/mono_airflow_04.wav
+}
+
+sound sounds/xlib/valley_sounds/loop_hum_03 {
+	sounds/xlib/valley_sounds/loop_hum_03.wav
+}
+

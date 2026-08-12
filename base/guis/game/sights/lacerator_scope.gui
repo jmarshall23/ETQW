@@ -1,0 +1,59 @@
+
+#include <guis/game/hud/hud.include>
+#include <guis/game/sights/strogg_scope.include>
+#include <guis/game/sights/sniper_lines.include>
+
+gui game/sights/lacerator_scope {	
+	
+	properties {
+		float		zoomLevel = 0.f;
+		string		range = "";
+
+		float		zoomState = 0.f;
+		float		zoomCycleTransition = 1.f;
+		float		zoomCycleTransitionLerp = 1.f;
+		float		focusFactor = 0.f;
+		float		zoomCycleFocusTransitionLerp = 0.f;
+		float		flags = immediate( flags ) | GUI_FULLSCREEN;
+	}
+	
+	_hud_materials
+	__scope_init( 0.95 )
+	
+	events {
+		onActivate {
+			globals.gameHud.showPostProcess = immediate( globals.gameHud.showPostProcess + 1 );
+			
+			zoomCycleFocusTransitionLerp = transition( "1", "0", 800 );
+		}
+		onDeactivate {
+			globals.gameHud.showPostProcess = immediate( globals.gameHud.showPostProcess - 1 );
+		}
+		onNamedEvent "onZoomCycle" {
+			zoomCycleTransitionLerp = transition( "0", "1", 200 );
+			zoomCycleFocusTransitionLerp = transition( "1", "0", 600 );
+		}
+	}	
+
+	materials {
+		"guis/assets/weapons/sniper/border"		"guis/assets/weapons/sniper/border"
+		"guis/assets/weapons/sniper/circle"		"guis/assets/weapons/sniper/circle"
+		"guis/assets/weapons/sniper/circlelines1"	"guis/assets/weapons/sniper/circlelines1"
+		"guis/assets/weapons/sniper/circlelines2"	"guis/assets/weapons/sniper/circlelines2"
+		"guis/assets/weapons/sniper/circleticks"	"guis/assets/weapons/sniper/circleticks"
+		"guis/assets/ethud/strogg/shield"			"guis/assets/ethud/strogg/shield"
+	}
+	
+	windowDef desktop {
+		properties {
+			rect rect = 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT;
+		}
+		windowDef background {
+			properties {
+				rect rect = gui.borderWidth, 0, VIRTUAL_WIDTH - gui.borderWidth, VIRTUAL_HEIGHT;
+			}
+			__underlays( "effect" )
+		}
+	}
+	//__sniper_lines( "noborder", "circles" )
+}

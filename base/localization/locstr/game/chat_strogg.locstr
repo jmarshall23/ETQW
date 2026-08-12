@@ -1,0 +1,826 @@
+
+// Global ///////////////////////////////////////////////////
+
+locString strogg/quickchat/global {
+	text "#str_0201000"
+}
+
+locString strogg/quickchat/global/yes {
+	text "#str_0201001"
+}
+
+locString strogg/quickchat/global/no {
+	text "#str_0201002"
+}
+
+locString strogg/quickchat/global/thanks {
+	text "#str_0201003"
+}
+
+locString strogg/quickchat/global/youwelcome {
+	text "#str_0201004"
+}
+
+locString strogg/quickchat/global/sorry {
+	text "#str_0201005"
+}
+
+locString strogg/quickchat/global/hi {
+	text "#str_0201006"
+}
+
+locString strogg/quickchat/global/go {
+	text "#str_0201007"
+}
+
+locString strogg/quickchat/global/quiet {
+	text "#str_0201008"
+}
+
+// Global Cheers ////////////////////////////////////////////
+
+locString strogg/quickchat/global/cheers {
+	text "#str_0201020"
+}
+
+locString strogg/quickchat/global/cheers/greatshot {
+	text "#str_0201021"
+}
+
+locString strogg/quickchat/global/cheers/forthemakron {
+	text "#str_0201022"
+}
+
+locString strogg/quickchat/global/cheers/awesome {
+	text "#str_0201023"
+}
+
+locString strogg/quickchat/global/cheers/wellplayed {
+	text "#str_0201029"
+}
+
+locString strogg/quickchat/global/cheers/goodgame {
+	text "#str_0201024"
+}
+
+locString strogg/quickchat/global/cheers/strogg {
+	text "#str_0201025"
+}
+
+locString strogg/quickchat/global/cheers/yourock {
+	text "#str_0201026"
+}
+
+locString strogg/quickchat/global/cheers/alright {
+	text "#str_0201028"
+}
+
+locString strogg/quickchat/global/cheers/accurate {
+	text "#str_0201027"
+}
+
+
+// Global Taunts ////////////////////////////////////////////
+
+locString strogg/quickchat/global/taunts {
+	text "#str_0201030"
+}
+
+locString strogg/quickchat/global/taunts/ohdear {
+	text "#str_0201031"
+}
+
+locString strogg/quickchat/global/taunts/oops {
+	text "#str_0201032"
+}
+
+locString strogg/quickchat/global/taunts/theycrumble {
+	text "#str_0201033"
+}
+
+locString strogg/quickchat/global/taunts/theyfleeterror {
+	text "#str_0201034"
+}
+
+locString strogg/quickchat/global/taunts/eatthathuman {
+	text "#str_0201035"
+}
+
+locString strogg/quickchat/global/taunts/killhumanfood {
+	text "#str_0201036"
+}
+
+locString strogg/quickchat/global/taunts/thwarted {
+	text "#str_0201037"
+}
+
+locString strogg/quickchat/global/taunts/rrr {
+	text "#str_0201038"
+}
+
+locString strogg/quickchat/global/taunts/cough {
+	text "#str_0201039"
+}
+
+locString strogg/quickchat/global/taunts/more_taunts {
+	text "#str_0201040"
+}
+
+locString strogg/quickchat/global/taunts/awkward {
+	text "#str_0201041"
+}
+
+locString strogg/quickchat/global/taunts/awyeahohno {
+	text "#str_0201042"
+}
+
+locString strogg/quickchat/global/taunts/awnoheyyeah {
+	text "#str_0201043"
+}
+
+locString strogg/quickchat/global/taunts/owned {
+	text "#str_0201044"
+}
+
+locString strogg/quickchat/global/taunts/thathurt {
+	text "#str_0201045"
+}
+
+locString strogg/quickchat/global/taunts/thathadtohurt {
+	text "#str_0201046"
+}
+
+locString strogg/quickchat/global/taunts/meh {
+	text "#str_0201047"
+}
+
+locString strogg/quickchat/global/taunts/ihadworse {
+	text "#str_0201048"
+}
+
+
+// Responses ////////////////////////////////////////////////
+
+locString strogg/quickchat/responses {
+	text "#str_0201060"
+}
+
+locString strogg/quickchat/responses/acknowledged {
+	text "#str_0201061"
+}
+
+locString strogg/quickchat/responses/declined {
+	text "#str_0201062"
+}
+
+locString strogg/quickchat/responses/onit {
+	text "#str_0201063"
+}
+
+locString strogg/quickchat/responses/onmyway {
+	text "#str_0201064"
+}
+
+locString strogg/quickchat/responses/sorry {
+	text "#str_0201065"
+}
+
+locString strogg/quickchat/responses/dontcare {
+	text "#str_0201066"
+}
+
+locString strogg/quickchat/responses/unabletoassist {
+	text "#str_0201067"
+}
+
+locString strogg/quickchat/responses/outofrange {
+	text "#str_0201068"
+}
+
+locString strogg/quickchat/responses/thanks {
+	text "#str_0201069"
+}
+
+locString strogg/quickchat/responses/youwelcome {
+	text "#str_0201070"
+}
+
+
+// Needs ////////////////////////////////////////////////////
+
+locString strogg/quickchat/need  {
+	text "#str_0201080"
+}
+
+locString strogg/quickchat/need/technician  {
+	text "#str_0201081"
+}
+
+locString strogg/quickchat/need/stroyent  {
+	text "#str_0201082"
+}
+
+locString strogg/quickchat/need/constructor  {
+	text "#str_0201083"
+}
+
+locString strogg/quickchat/need/backup  {
+	text "#str_0201084"
+}
+
+locString strogg/quickchat/need/coveringfire  {
+	text "#str_0201085"
+}
+
+locString strogg/quickchat/need/firesupport  {
+	text "#str_0201086"
+}
+
+locString strogg/quickchat/need/mines  {
+	text "#str_0201087"
+}
+
+
+// Team Needs ///////////////////////////////////////////////
+
+locString strogg/quickchat/need/team  {
+	text "#str_0201088"
+}
+
+locString strogg/quickchat/need/team/technician  {
+	text "#str_0201089"
+}
+
+locString strogg/quickchat/need/team/oppressor  {
+	text "#str_0201090"
+}
+
+locString strogg/quickchat/need/team/constructor  {
+	text "#str_0201091"
+}
+
+locString strogg/quickchat/need/team/infiltrator  {
+	text "#str_0201092"
+}
+
+locString strogg/quickchat/need/team/aggressor  {
+	text "#str_0201093"
+}
+
+locString strogg/quickchat/need/team/radar  {
+	text "#str_0201094"
+}
+
+locString strogg/quickchat/need/team/apt  {
+	text "#str_0201095"
+}
+
+locString strogg/quickchat/need/team/avt  {
+	text "#str_0201096"
+}
+
+locString strogg/quickchat/need/team/ait  {
+	text "#str_0201097"
+}
+
+locString strogg/quickchat/need/team/snipersupport  {
+	text "#str_0201098"
+}
+
+
+// Vehicles /////////////////////////////////////////////////
+
+locString strogg/quickchat/vehicles  {
+	text "#str_0201100"
+}
+
+locString strogg/quickchat/vehicles/needvehicle  {
+	text "#str_0201101"
+}
+
+locString strogg/quickchat/vehicles/needgunner  {
+	text "#str_0201102"
+}
+
+locString strogg/quickchat/vehicles/needdriver  {
+	text "#str_0201103"
+}
+
+locString strogg/quickchat/vehicles/needpilot  {
+	text "#str_0201104"
+}
+
+locString strogg/quickchat/vehicles/needrepairs  {
+	text "#str_0201105"
+}
+
+locString strogg/quickchat/vehicles/needpickup  {
+	text "#str_0201106"
+}
+
+locString strogg/quickchat/vehicles/vehicleready  {
+	text "#str_0201107"
+}
+
+locString strogg/quickchat/vehicles/holdvehicle  {
+	text "#str_0201108"
+}
+
+locString strogg/quickchat/vehicles/bailout  {
+	text "#str_0201109"
+}
+
+locString strogg/quickchat/vehicles/needpassenger  {
+	text "#str_0201110"
+}
+
+// Enemy ////////////////////////////////////////////////////
+
+locString strogg/quickchat/enemy {
+	text "#str_0201120"
+}
+
+locString strogg/quickchat/enemy/infantryspotted  {
+	text "#str_0201121"
+}
+
+locString strogg/quickchat/enemy/indisguise  {
+	text "#str_0201122"
+}
+
+locString strogg/quickchat/enemy/vehiclespotted  {
+	text "#str_0201123"
+}
+
+locString strogg/quickchat/enemy/armorspotted  {
+	text "#str_0201124"
+}
+
+locString strogg/quickchat/enemy/aircraftspotted  {
+	text "#str_0201125"
+}
+
+locString strogg/quickchat/enemy/covertopsspotted  {
+	text "#str_0201126"
+}
+
+locString strogg/quickchat/enemy/minesspotted  {
+	text "#str_0201127"
+}
+
+locString strogg/quickchat/enemy/incomingairstrike  {
+	text "#str_0201128"
+}
+
+locString strogg/quickchat/enemy/incomingbombardment  {
+	text "#str_0201129"
+}
+
+
+// Enemy Deployables ////////////////////////////////////////
+
+locString strogg/quickchat/enemy/deployables {
+	text "#str_0201130"
+}
+
+locString strogg/quickchat/enemy/deployables/aitspotted {
+	text "#str_0201131"
+}
+
+locString strogg/quickchat/enemy/deployables/firesupportspotted  {
+	text "#str_0201132"
+}
+
+locString strogg/quickchat/enemy/deployables/aptspotted  {
+	text "#str_0201133"
+}
+
+locString strogg/quickchat/enemy/deployables/avtspotted  {
+	text "#str_0201134"
+}
+
+locString strogg/quickchat/enemy/deployables/radarspotted  {
+	text "#str_0201135"
+}
+
+
+// Commands /////////////////////////////////////////////////
+
+locString strogg/quickchat/commands  {
+	text "#str_0201140"
+}
+
+locString strogg/quickchat/commands/move  {
+	text "#str_0201141"
+}
+
+locString strogg/quickchat/commands/letsgo  {
+	text "#str_0201142"
+}
+
+locString strogg/quickchat/commands/followme  {
+	text "#str_0201143"
+}
+
+locString strogg/quickchat/commands/clearmines  {
+	text "#str_0201144"
+}
+
+locString strogg/quickchat/commands/hackenemybase  {
+	text "#str_0201145"
+}
+
+locString strogg/quickchat/commands/captureforwardspawn  {
+	text "#str_0201146"
+}
+
+locString strogg/quickchat/commands/holdfire  {
+	text "#str_0201148"
+}
+
+
+// Objectives ///////////////////////////////////////////////
+
+locString strogg/quickchat/objectives {
+	text "#str_0201150"
+}
+
+locString strogg/quickchat/objectives/attack  {
+	text "#str_0201151"
+}
+
+locString strogg/quickchat/objectives/defend  {
+	text "#str_0201152"
+}
+
+locString strogg/quickchat/objectives/destroy  {
+	text "#str_0201153"
+}
+
+locString strogg/quickchat/objectives/hack  {
+	text "#str_0201154"
+}
+
+locString strogg/quickchat/objectives/construct  {
+	text "#str_0201155"
+}
+
+locString strogg/quickchat/objectives/take  {
+	text "#str_0201156"
+}
+
+locString strogg/quickchat/objectives/return  {
+	text "#str_0201157"
+}
+
+locString strogg/quickchat/objectives/disarmexplosives  {
+	text "#str_0201158"
+}
+
+locString strogg/quickchat/objectives/stopmcp  {
+	text "#str_0201159"
+}
+
+locString strogg/quickchat/objectives/disablemcp  {
+	text "#str_0201160"
+}
+
+locString strogg/quickchat/objectives/construct_tower  {
+	text "#str_0201161"
+}
+
+locString strogg/quickchat/objectives/destroy_tower  {
+	text "#str_0201162"
+}
+
+// Self /////////////////////////////////////////////////////
+
+locString strogg/quickchat/self  {
+	text "#str_0201170"
+}
+
+locString strogg/quickchat/self/imaggressor  {
+	text "#str_0201171"
+}
+
+locString strogg/quickchat/self/imtechnician  {
+	text "#str_0201172"
+}
+
+locString strogg/quickchat/self/imconstructor  {
+	text "#str_0201173"
+}
+
+locString strogg/quickchat/self/imoppressor  {
+	text "#str_0201174"
+}
+
+locString strogg/quickchat/self/iminfiltrator  {
+	text "#str_0201175"
+}
+
+locString strogg/quickchat/self/imattacking  {
+	text "#str_0201176"
+}
+
+locString strogg/quickchat/self/imdefending  {
+	text "#str_0201177"
+}
+
+locString strogg/quickchat/self/imspec {
+	text "#str_0201178"
+}
+
+
+// Self Disguise ////////////////////////////////////////////
+
+locString strogg/quickchat/self/disguise  {
+	text "#str_0201180"
+}
+
+locString strogg/quickchat/self/disguise/imindisguise  {
+	text "#str_0201181"
+}
+
+locString strogg/quickchat/self/disguise/enemydisguisedasme  {
+	text "#str_0201182"
+}
+
+
+// Self Deploying////////////////////////////////////////////
+
+locString strogg/quickchat/self/deploying  {
+	text "#str_0201190"
+}
+
+locString strogg/quickchat/self/deploying/radar  {
+	text "#str_0201191"
+}
+
+locString strogg/quickchat/self/deploying/apt  {
+	text "#str_0201192"
+}
+
+locString strogg/quickchat/self/deploying/avt  {
+	text "#str_0201193"
+}
+
+locString strogg/quickchat/self/deploying/ait  {
+	text "#str_0201194"
+}
+
+locString strogg/quickchat/self/deploying/railhowitzer  {
+	text "#str_0201195"
+}
+
+locString strogg/quickchat/self/deploying/plasmamortar  {
+	text "#str_0201196"
+}
+
+locString strogg/quickchat/self/deploying/dmc  {
+	text "#str_0201197"
+}
+
+
+// Self Deployed /////////////////////////////////////////////
+
+locString strogg/quickchat/self/deployed  {
+	text "#str_0201200"
+}
+
+locString strogg/quickchat/self/deployed/radar  {
+	text "#str_0201201"
+}
+
+locString strogg/quickchat/self/deployed/apt  {
+	text "#str_0201202"
+}
+
+locString strogg/quickchat/self/deployed/avt  {
+	text "#str_0201203"
+}
+
+locString strogg/quickchat/self/deployed/ait  {
+	text "#str_0201204"
+}
+
+locString strogg/quickchat/self/deployed/railhowitzer  {
+	text "#str_0201205"
+}
+
+locString strogg/quickchat/self/deployed/plasmamortar  {
+	text "#str_0201206"
+}
+
+locString strogg/quickchat/self/deployed/dmc  {
+	text "#str_0201207"
+}
+
+
+// Self Items ///////////////////////////////////////////////
+
+locString strogg/quickchat/self/items  {
+	text "#str_0201210"
+}
+
+locString strogg/quickchat/self/items/plantingmines  {
+	text "#str_0201211"
+}
+
+locString strogg/quickchat/self/items/disarmingmines  {
+	text "#str_0201212"
+}
+
+locString strogg/quickchat/self/items/spawnhostcreated  {
+	text "#str_0201213"
+}
+
+locString strogg/quickchat/self/items/stroyentdropped  {
+	text "#str_0201214"
+}
+
+locString strogg/quickchat/self/items/shielddeployed  {
+	text "#str_0201215"
+}
+
+
+// Self Repairing ///////////////////////////////////////////
+
+locString strogg/quickchat/self/repairing  {
+	text "#str_0201220"	
+}
+
+locString strogg/quickchat/self/repairing/radar  {
+	text "#str_0201221"	
+}
+
+locString strogg/quickchat/self/repairing/apt  {
+	text "#str_0201222"	
+}
+
+locString strogg/quickchat/self/repairing/avt  {
+	text "#str_0201223"	
+}
+
+locString strogg/quickchat/self/repairing/ait  {
+	text "#str_0201224"	
+}
+
+locString strogg/quickchat/self/repairing/railhowitzer  {
+	text "#str_0201225"	
+}
+
+locString strogg/quickchat/self/repairing/plasmamortar  {
+	text "#str_0201226"	
+}
+
+locString strogg/quickchat/self/repairing/dmc  {
+	text "#str_0201227"	
+}
+
+
+// Self Repairing ///////////////////////////////////////////
+
+locString strogg/quickchat/self/repaired  {
+	text "#str_0201230"	
+}
+
+locString strogg/quickchat/self/repaired/radar  {
+	text "#str_0201231"	
+}
+
+locString strogg/quickchat/self/repaired/apt  {
+	text "#str_0201232"	
+}
+
+locString strogg/quickchat/self/repaired/avt  {
+	text "#str_0201233"	
+}
+
+locString strogg/quickchat/self/repaired/ait  {
+	text "#str_0201234"	
+}
+
+locString strogg/quickchat/self/repaired/railhowitzer  {
+	text "#str_0201235"	
+}
+
+locString strogg/quickchat/self/repaired/plasmamortar  {
+	text "#str_0201236"	
+}
+
+locString strogg/quickchat/self/repaired/dmc  {
+	text "#str_0201237"	
+}
+
+// Context ///////////////////////////////////////////
+
+locString strogg/quickchat/context  {
+	text "#str_0201250"	
+}
+
+locString strogg/quickchat/context/order  {
+	text "#str_0201251"	
+}
+
+locString strogg/quickchat/context/vehicle  {
+	text "#str_0201252"	
+}
+
+locString strogg/quickchat/context/health  {
+	text "#str_0201253"	
+}
+
+locString strogg/quickchat/context/support  {
+	text "#str_0201254"	
+}
+
+locString strogg/quickchat/context/repair  {
+	text "#str_0201255"	
+}
+
+locString strogg/quickchat/context/waypoints  {
+	text "#str_0201270"	
+}
+
+locString strogg/quickchat/fireteam  {
+	text "#str_0201257"	
+}
+
+locString strogg/quickchat/context/ammo  {
+	text "#str_0201258"	
+}
+
+locString strogg/quickchat/context/destroy/mg_nest {
+	text "#str_0201259"
+}
+
+locString strogg/quickchat/radio {
+	text "#str_0201260"	
+}
+
+locString strogg/quickchat/need/revive {
+	text "#str_0201261"
+}
+
+locString strogg/quickchat/context/destroy {
+	text "#str_0201262"
+}
+
+locString strogg/quickchat/context/spawnhost  {
+	text "#str_0201263"
+}
+
+locString strogg/quickchat/context/pickup  {
+	text "#str_0201264"
+}
+
+locString strogg/quickchat/context/attacktarget  {
+	text "#str_0201265"
+}
+
+locString strogg/quickchat/context/repair/vehicle_other  {
+	text "#str_0201266"	
+}
+
+locString strogg/quickchat/context/repair/deployable_other  {
+	text "#str_0201267"	
+}
+
+locString strogg/quickchat/context/repair/vehicle  {
+	text "#str_0201268"	
+}
+
+locString strogg/quickchat/context/destroy_tower  {
+	text "#str_0201162"
+}
+
+locString strogg/quickchat/context/hack_gates  {
+	text "#str_0201269"
+}
+
+locString strogg/quickchat/context/defendforwardspawn  {
+	text "#str_0201283"
+}
+
+locString strogg/quickchat/context/liberateforwardspawn  {
+	text "#str_0201284"
+}
+
+locString strogg/quickchat/context/followme  {
+	text "#str_0201143"
+}
+
+// Fireteam ///////////////////////////////////////////
+
+locString strogg/quickchat/fireteam/waypoint/attack {
+	text "#str_0201270"	
+}
+
+locString strogg/quickchat/fireteam/waypoint/defend {
+	text "#str_0201271"
+}
+
+locString strogg/quickchat/fireteam/waypoint/regroup {
+	text "#str_0201272"
+}

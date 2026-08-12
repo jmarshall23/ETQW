@@ -1,0 +1,43 @@
+material textures/particles/energycell_vortex01
+{
+	NoShadows
+	translucent
+	nonSolid
+	sort far
+ 
+   	{
+   		blend blend
+   		map clamp textures/particles/energycell_vortex01.tga
+   		rotate time * -0.05
+   		vertexcolor
+  	}
+}
+
+material textures/particles/energycell_vortex02
+{
+	NoShadows
+	translucent
+	nonSolid
+    sort far
+   	{
+   		blend blend
+   		map clamp textures/particles/energycell_vortex01.tga
+		rotate time * -0.02
+   		vertexcolor
+  	}
+}
+
+material textures/particles/energycell_vortex03
+{
+	NoShadows
+	translucent
+	nonSolid
+	sort far
+
+   	{
+   		blend blend
+   		map clamp textures/particles/energycell_vortex01.tga
+		rotate time * -0.01
+   		vertexcolor
+  	}
+}

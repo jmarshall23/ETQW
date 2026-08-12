@@ -1,0 +1,121 @@
+
+object direction_marker {
+	void			destroy();
+
+	void			Create( float index, string entityDef, vector position, vector direction );
+	void			Fade( float sec, float duration, float start, float end );
+	void			Remove();
+	void			Update( float sec );
+
+	entity			marker;
+	vector			markerOrigin;
+	vector			markerNormal;
+	
+	float			arrowJoint;
+	
+	float			bobStartSec;
+	
+	// fade
+	float			fadeStartSec;
+	float			fadeDurationSec;
+	float			fadeStart;
+	float			fadeEnd;
+};
+
+void direction_marker::destroy() {
+	Remove();
+}
+
+void direction_marker::Create( float index, string entityDef, vector position, vector direction ) {
+	float fraction = sys.tracePoint( position, position + ( vec3_down * MAX_WORLD_SIZE ), CONTENTS_SOLID | CONTENTS_OPAQUE | CONTENTS_WATER, $null_entity );
+	
+	if ( fraction == 1.0f ) {
+		return;
+	}
+	
+	bobStartSec = index * 0.025f;
+	
+	fadeStartSec = 0.0f;
+	fadeDurationSec = 0.0f;
+	fadeStart = 1.0f;
+	fadeEnd = 1.0f;
+
+	marker = sys.spawnClient( entityDef );
+	marker.playCycle( ANIMCHANNEL_ALL, "locking" );
+	
+	arrowJoint = marker.getJointHandle( "arrow" );
+	
+	markerOrigin = sys.getTraceEndPos();
+	markerNormal = sys.getTraceNormal();
+
+	markerOrigin = markerOrigin + markerNormal * 4.0f;
+
+	marker.setOrigin( markerOrigin );
+
+	vector right = sys.crossProduct( markerNormal, direction );
+	right = sys.vecNormalize( right );
+	vector forward = sys.crossProduct( markerNormal, right );
+	forward = sys.vecNormalize( forward );
+	
+	marker.setWorldAxis( forward, right, markerNormal );
+}
+
+void direction_marker::Fade( float sec, float duration, float start, float end ) {
+	if ( marker == $null_entity ) {
+		return;
+	}
+
+	fadeStartSec = sec;
+	fadeDurationSec = duration;
+	fadeStart = start;
+	fadeEnd = end;
+}
+
+void direction_marker::Remove() {
+	if ( marker != $null_entity ) {
+		marker.remove();
+		marker = $null_entity;
+	}
+}
+
+void direction_marker::Update( float sec ) {
+	if ( marker == $null_entity ) {
+		return;
+	}
+	
+	// fading
+	float fade;
+	if ( sec < fadeStartSec ) {
+		fade = fadeStart;
+	} else if ( sec > fadeStartSec + fadeDurationSec ) {
+		fade = fadeEnd;
+	} else if ( fadeDurationSec > 0.0f ) {
+		fade = fadeStart + ( ( ( sec - fadeStartSec ) / fadeDurationSec ) * ( fadeEnd - fadeStart ) );
+	} else {
+		fade = fadeStart;
+	}
+	marker.setShaderParms( fade, fade, fade, 1.0f );
+
+	// bobbing
+	float secInCycle = sys.fmod( sec, 0.6f );	// was 1.0f
+	float bobDuration = 0.3f;//0.2f;
+
+	if ( secInCycle < bobStartSec ) {
+		// not starting bob yet
+		return;
+	} else if ( secInCycle > bobStartSec + bobDuration ) {
+		// finished bob
+		return;
+	}
+
+	// in bob
+	float secInBob = secInCycle - bobStartSec;
+	float fractionInBob = secInBob / bobDuration;
+	float verticalBobFraction = ( -0.5f * sys.cos( fractionInBob * 360.0f ) ) + 0.5f;
+	
+	//vector offset = verticalBobFraction * markerNormal * 36.0f;
+	vector offset = verticalBobFraction * vec3_up * 36.0f;
+
+	//marker.setOrigin( markerOrigin + offset );
+	marker.setJointPos( arrowJoint, JOINTMOD_LOCAL, offset );
+}

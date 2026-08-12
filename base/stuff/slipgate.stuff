@@ -1,0 +1,55 @@
+// --------------------------------------------
+// SLIPGATE STUFF
+// --------------------------------------------
+stuffType slipgate/slipgate_bush {
+	Model	"stuff/slipgate/slipgate_bush01.lwo"
+}
+
+stuffType slipgate/slipgate_bush_large {
+	Model	"stuff/slipgate/slipgate_bush_large01.lwo"
+}
+
+stuffType slipgate/slipgate_desert_plant {
+	Model	"stuff/slipgate/slipgate_desert_plant01_a.lwo"
+	Model	"stuff/slipgate/slipgate_desert_plant01_b.lwo"
+	Model	"stuff/slipgate/slipgate_desert_plant01_c.lwo"
+}
+
+stuffType slipgate/slipgate_grass {
+	Model	"stuff/slipgate/slipgate_grass03.lwo"
+	Model	"stuff/slipgate/slipgate_grass02.lwo"
+	Model	"stuff/slipgate/slipgate_grass01.lwo"
+}
+
+stuffType slipgate/slipgate_grass_large {
+	Model	"stuff/slipgate/slipgate_grass_large03.lwo"
+	Model	"stuff/slipgate/slipgate_grass_large02.lwo"
+	Model	"stuff/slipgate/slipgate_grass_large01.lwo"
+}
+
+stuffType slipgate/slipgate_rock {
+	Model	"stuff/slipgate/slipgate_rock01.lwo"
+	Model	"stuff/slipgate/slipgate_rock02.lwo"
+	Model	"stuff/slipgate/slipgate_rock03.lwo"
+	Model	"stuff/slipgate/slipgate_rock04.lwo"
+	Model	"stuff/slipgate/slipgate_rock05.lwo"
+	Model	"stuff/slipgate/slipgate_rock06.lwo"
+	Model	"stuff/slipgate/slipgate_rock07.lwo"
+	Model	"stuff/slipgate/slipgate_rock08.lwo"
+}
+
+stuffType slipgate/slipgate_rock_small {
+	Model	"stuff/slipgate/slipgate_rock_small01.lwo"
+	Model	"stuff/slipgate/slipgate_rock_small02.lwo"
+	Model	"stuff/slipgate/slipgate_rock_small03.lwo"
+	Model	"stuff/slipgate/slipgate_rock_small04.lwo"
+}
+
+stuffType slipgate/slipgate_rubbish {
+	Model	"stuff/slipgate/slipgate_rubbish01.lwo"
+	Model	"stuff/slipgate/slipgate_rubbish02.lwo"
+	Model	"stuff/slipgate/slipgate_rubbish03.lwo"
+	Model	"stuff/slipgate/slipgate_rubbish04.lwo"
+	Model	"stuff/slipgate/slipgate_rubbish05.lwo"
+	Model	"stuff/slipgate/slipgate_rubbish06.lwo"
+}

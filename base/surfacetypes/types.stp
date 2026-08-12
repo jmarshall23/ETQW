@@ -1,0 +1,144 @@
+surfaceType carpet {
+}
+
+surfaceType concrete {
+	properties {
+		"friction"	"1"
+		"skid"		"1.0"
+	}
+}
+
+surfaceType dirt {
+	properties {
+		"friction"	"0.9"
+		"skid"		"1.0"
+	}
+}
+
+surfaceType dusty_road {
+	properties {
+		"friction"	"0.95"
+		"skid"		"1.0"
+	}
+}
+
+surfaceType flesh {
+}
+
+surfaceType glass {
+}
+
+surfaceType grass {
+	properties {
+		"friction"	"0.95"
+		"skid"		"1.0"
+	}
+}
+
+surfaceType gravel {
+	properties {
+		"friction"	"0.95"
+		"skid"		"1.0"
+	}
+}
+
+surfaceType ice {
+	properties {
+		"friction"	"0.05"
+	}
+}
+
+surfaceType liquid {
+}
+
+surfaceType leaves {
+	properties {
+		"friction"	"1"
+		"skid"		"1.0"
+	}
+}
+
+surfaceType metal {
+}
+
+surfaceType metal_thick {
+}
+
+surfaceType moss {
+	properties {
+		"friction"	"0.95"
+	}
+}
+
+surfaceType mud {
+	properties {
+		"friction"	"0.9"
+		"skid"		"1.0"
+	}
+}
+
+surfaceType none {
+	properties {
+		"friction"	"1"
+	}
+}
+
+surfaceType paper {
+}
+
+surfaceType pavement {
+	properties {
+		"friction"	"1"
+		"skid"		"1.0"
+	}
+}
+
+surfaceType pine {
+	properties {
+		"friction"	"1"
+	}
+}
+
+surfaceType plastic {
+}
+
+surfaceType sand {
+	properties {
+		"friction"	"0.8"
+		"skid"		"0.5"
+	}
+}
+
+surfaceType snow {
+	properties {
+		"friction"	"0.9"
+		"skid"		"0.5"
+	}
+}
+
+surfaceType stone {
+	properties {
+		"friction" "0.95"
+	}
+}
+
+surfaceType wood {
+	properties {
+		"friction"	"1"
+	}
+}
+
+surfaceType wood_thick {
+}
+
+surfaceType water {
+
+}
+
+surfaceType water_interior {
+
+}
+
+surfaceType forcefield {
+
+}

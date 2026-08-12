@@ -1,0 +1,77 @@
+material models/vegetation/trees/n_trees_island/pine_01_branches
+{
+	nonsolid
+	noshadows
+	twoSided
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap	picmip -1	clamp	models/vegetation/trees/n_trees_island/pine_01_branches_d.tga
+ 		alphaTest 	0.4
+
+		useTemplate wind/animatematrix< 0.15, 0.001 >
+ 	}
+}
+
+material models/vegetation/trees/n_trees_island/pine_01_bark
+{
+	nonsolid
+	noshadows
+	{
+		diffusemap				models/vegetation/trees/n_trees_island/pine_01_bark_d.tga
+		bumpmap		picmip -1	models/vegetation/trees/n_trees_island/pine_01_bark_local.tga
+		specularmap	picmip -2	models/vegetation/trees/n_trees_island/pine_01_bark_s.tga
+		alphaTest	0.25
+		vertexcolor
+		
+		bumpDetailMap			textures/detail/bump/bark_detail01_local.tga
+		specDetailMap			textures/detail/bump/bark_detail01_d.tga
+		detailMult 8,12,0,0 
+	}
+}
+
+material models/vegetation/trees/n_trees_island/shrub_01
+
+{
+	nonsolid
+	noshadows
+	twoSided
+	{
+		alphatocoverage
+		program	interaction/foliage
+		diffusemap	models/vegetation/trees/n_trees_island/shrub_01_d.tga
+		alphaTest	0.40
+		
+		useTemplate	wind/animatematrix< 0.15, 0.001 > // Speed, strength	
+	}
+}
+
+material models/vegetation/trees/dead/dead_pine_03_branches
+{
+	nonsolid
+	noshadows
+	twoSided
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap	picmip -1	clamp	models/vegetation/trees/dead/pine_01_deada_d.tga
+ 		alphaTest 	0.33
+ 		
+		useTemplate wind/animatematrix< 0.15, 0.001 >
+ 	}
+}
+
+material models/vegetation/trees/dead/dead_pine_03_bark
+{
+	nonsolid
+	noshadows
+	{
+		diffusemap				models/vegetation/trees/dead/pine_01_deadb_d.tga
+		bumpmap		picmip -1	models/vegetation/trees/n_trees_island/pine_01_bark_local.tga
+		alphatest 0.25
+		
+		bumpDetailMap			textures/detail/bump/bark_detail01_local.tga
+		specDetailMap			textures/detail/bump/bark_detail01_d.tga
+		detailMult 8,12,0,0 
+	}
+}

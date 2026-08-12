@@ -1,0 +1,28 @@
+entityDef waypoint_info_base {
+	"spawnclass"			"sdScriptEntity"
+	"scriptobject"			"waypoint_info"
+	
+	"time_limit"			"60"
+	"mtr_cm_icon"			"hud/icons/missionsystem/tsk_waypoint"
+	
+	"collection_waypoint"	"waypoint"
+	
+	"tt_removed"			"waypoint_removed"
+}
+
+entityDef waypoint_info_gdf {
+	"inherit"				"waypoint_info_base"
+
+	"team"					"gdf"
+}
+
+entityDef waypoint_info_strogg {
+	"inherit"				"waypoint_info_base"
+
+	"team"					"strogg"
+}
+
+toolTip waypoint_removed {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/waypoint_removed"
+}

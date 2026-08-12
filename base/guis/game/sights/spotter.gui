@@ -1,0 +1,268 @@
+
+#include <guis/game/hud/hud.include>
+#include <guis/common/colors.include>
+
+gui game/sights/spotter {
+	properties {
+		float flags = immediate( flags ) | GUI_FULLSCREEN;
+		float borderWidth = ceil( SCREEN_WIDTH - VIRTUAL_WIDTH ) * 0.5f;
+	}
+	
+	materials {
+		"guis/assets/ethud/scanlines"		"guis/assets/ethud/scanlines"
+		"guis/assets/deploy/gdf/bghalf"		"guis/assets/deploy/gdf/bghalf"
+		"guis/assets/deploy/gdf/sidegrid"	"guis/assets/deploy/gdf/sidegrid"
+		"guis/assets/deploy/gdf/bgfull"		"guis/assets/deploy/gdf/bgfull"
+		"guis/assets/deploy/gdf/highlightbar"	"guis/assets/deploy/gdf/highlightbar"
+		"guis/assets/deploy/gdf/icon_aa"	"guis/assets/deploy/gdf/icon_aa"
+		"guis/assets/deploy/gdf/icon_ap"	"guis/assets/deploy/gdf/icon_ap"
+		"guis/assets/deploy/gdf/icon_radar"	"guis/assets/deploy/gdf/icon_radar"
+		"compassLines"						"guis/assets/hud/edf/comp_lines"
+
+		"textures/sfx/binoculars"			"textures/sfx/binoculars"
+		"postprocess/heatsight"				"postprocess/heatsight"			
+	}
+	
+	_hud_materials
+
+	events {
+		onActivate {
+			globals.gameHud.showDeployableState = immediate( globals.gameHud.showDeployableState - 1 );
+			globals.gameHud.showPostProcess = immediate( globals.gameHud.showPostProcess + 1 );
+		}
+		onDeactivate {
+			globals.gameHud.showDeployableState = immediate( globals.gameHud.showDeployableState + 1 );
+			globals.gameHud.showPostProcess = immediate( globals.gameHud.showPostProcess - 1 );
+		}
+	}
+
+	windowDef desktop {
+		properties {
+			rect rect = 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT;
+		}
+		events {
+			onCreate {
+				attachRenderCallback( "postProcess" );
+			}
+		}
+		windowDef scopeEffect {
+			properties {
+				color backColor = 1, 1, 1, 1;
+				string material = "textures/sfx/binoculars";
+				rect	rect = 0, -100, SCREEN_WIDTH, SCREEN_HEIGHT + 200;
+			}
+			
+			events {
+				onCreate {
+					attachRenderCallback( "postProcess" );
+					globals.gameHud.visionEnhancer = "none";
+				}		
+			
+				onPropertyChanged "globals.gameHud.visionEnhancer" {
+					if ( compare( globals.gameHud.visionEnhancer, "heatSight" ) ) {
+						material = "postprocess/heatsight";
+					} else {
+						material = "textures/sfx/binoculars";
+					}
+				}			
+			}		
+		}		
+		windowDef background {
+			properties {
+				rect	rect = ( SCREEN_WIDTH - rect.w ) * 0.5f, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT;
+			}
+	
+			timeline {
+				onTime 0 {
+					rect.y = transition( 15, 0, 100 );
+					gui.topFill.rect.h = transition( 15, 0, 100 );
+	
+					gui.FadeIn.backcolor = transition( "0.15, 0.25, 0.4, 1", "0, 0, 0, 0", 350 );
+					gui.FadeIn2.backcolor.a = transition( 0.5, 0, 250 );
+				}
+			}		
+					
+			windowDef FadeIn {
+				properties {
+					color	backColor = 1, 1, 1, 0;
+					string	material = "guis/assets/ethud/scanlines";
+					vec2 materialScale = 1, 1.5;
+		
+				}
+			}
+			windowDef FadeIn2 {
+				properties {
+					color	backColor = 0, 0, 0, 0;
+				}
+			}
+			windowDef crossbarV {
+				properties {
+					rect	rect = VIRTUAL_WIDTH / 2, 0, 1, VIRTUAL_HEIGHT;
+					color	backColor = 0, 0, 0, 0.25;
+		
+				}
+			}
+			windowDef crossbarH {
+				properties {
+					rect	rect = 0, 239, VIRTUAL_WIDTH, 1;
+					color	backColor = 0, 0, 0, 0.25;
+		
+				}
+			}
+			windowDef backbgTR {
+				properties {
+					rect	rect = VIRTUAL_WIDTH / 2, -30, VIRTUAL_WIDTH / 2, 270;
+					string	material = "guis/assets/deploy/gdf/bghalf";
+					color	backColor = 0, 0, 0, 0.65;	
+				}
+			}
+			windowDef backbgTL {
+				properties {
+					rect	rect = 0, -30, VIRTUAL_WIDTH / 2, 270;
+					string	material = "guis/assets/deploy/gdf/bghalf";
+					color	backColor = 0, 0, 0, 0.65;
+					vec2 materialScale = -1, 1;
+				}
+			}
+			windowDef backbgBR {
+				properties {
+					rect	rect = VIRTUAL_WIDTH / 2, 240, VIRTUAL_WIDTH / 2, 250;
+					string	material = "guis/assets/deploy/gdf/bghalf";
+					color	backColor = 0, 0, 0, 0.65;
+					vec2 	materialScale = 1, -1;
+				}
+			}
+			windowDef backbgBL {
+				properties {
+					rect	rect = 0, 240, VIRTUAL_WIDTH / 2, 250;
+					string	material = "guis/assets/deploy/gdf/bghalf";
+					color	backColor = 0, 0, 0, 0.65;
+					vec2	materialScale = -1, -1;
+		
+				}
+			}
+			windowDef sideGridLeft {
+				properties {
+					rect	rect = 3, 31, 32, 380;
+					string	material = "guis/assets/deploy/gdf/sidegrid";
+					color	backColor = 0.6, 0.7, 1, 0.3;
+					vec2 materialScale = 1, 2.5;
+		
+				}
+			}
+			windowDef sideGridRight {
+				properties {
+					rect	rect = VIRTUAL_WIDTH - 35, 31, 32, 380;
+					string	material = "guis/assets/deploy/gdf/sidegrid";
+					color	backColor = 0.6, 0.7, 1, 0.3;
+					vec2 materialScale = 1, 2.5;
+		
+				}
+			}
+			windowDef frontbgTR {
+				properties {
+					rect	rect = VIRTUAL_WIDTH / 2, - 30, VIRTUAL_WIDTH / 2, 270;
+					string	material = "guis/assets/deploy/gdf/bgfull";
+					color	backColor = 0, 0, 0, 1;
+		
+				}
+			}
+			windowDef frontbgTL {
+				properties {
+					rect	rect = 0, -30, VIRTUAL_WIDTH / 2, 270;
+					string	material = "guis/assets/deploy/gdf/bgfull";
+					color	backColor = 0, 0, 0, 1;
+					vec2	materialScale = -1, 1;
+		
+				}
+			}
+			windowDef frontbgBR {
+				properties {
+					rect	rect = VIRTUAL_WIDTH / 2, 240, VIRTUAL_WIDTH / 2, - 250;
+					string	material = "guis/assets/deploy/gdf/bgfull";
+					color	backColor = 0, 0, 0, 1;
+		
+				}
+			}
+			windowDef frontbgBL {
+				properties {
+					rect	rect = 0, 240, 320, - 250;
+					string	material = "guis/assets/deploy/gdf/bgfull";
+					color	backColor = 0, 0, 0, 1;
+					vec2	materialScale = -1, 1;
+		
+				}
+			}
+			windowDef bottomFill {
+				properties {
+					rect	rect = 0, 465, VIRTUAL_WIDTH, 16;
+					color	backColor = 0, 0, 0, 1;
+		
+				}
+			}
+			windowDef topFill {
+				properties {
+					rect	rect = 0, 0, VIRTUAL_WIDTH, 40;
+					color	backColor = 0, 0, 0, 1;
+		
+				}
+			}
+			windowDef highlightTR {
+				properties {
+					rect	rect = ( VIRTUAL_WIDTH / 2 ) + 64, 20, 231, 8;
+					string	material = "guis/assets/deploy/gdf/highlightbar";
+					color	backColor = 0.6, 0.7, 1, 0.5;
+		
+				}
+			}
+			windowDef highlightTL {
+				properties {
+					rect	rect = 25, 20, - 231, 8;
+					string	material = "guis/assets/deploy/gdf/highlightbar";
+					color	backColor = 0.6, 0.7, 1, 0.5;
+		
+				}
+			}
+			windowDef highlightMR {
+				properties {
+					rect	rect = ( VIRTUAL_WIDTH / 2 ) + 64, 437, 231, 7;
+					string	material = "guis/assets/deploy/gdf/highlightbar";
+					color	backColor = 0.6, 0.7, 1, 0.5;
+		
+				}
+			}
+			windowDef highlightML {
+				properties {
+					rect	rect = 25, 437, - 231, 7;
+					string	material = "guis/assets/deploy/gdf/highlightbar";
+					color	backColor = 0.6, 0.7, 1, 0.5;
+		
+				}
+			}	
+			windowDef hintIcon {		
+				properties {
+					handle	localizedText	= localize( "guis/game/spotting" ); // "Spotting Landmine";
+					rect rect = (VIRTUAL_WIDTH / 2) - 60, (VIRTUAL_HEIGHT / 2), 80, 12;
+					float fontSize = 16;
+					float visible = 0;
+					float 	flags	= immediate( flags ) | WF_DROPSHADOW;
+				}
+			}		
+		}
+		windowDef bars {
+			properties {
+				rect rect = gui.borderWidth, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT;		
+				handle 	white = gui.cacheMaterial( "_mat", "white" );
+				float 	barWidth = ( ( SCREEN_WIDTH - rect.w ) * 0.5f );
+				float 	screenHeight = SCREEN_HEIGHT;
+			}
+			events {
+				onPreDraw {
+					drawCachedMaterial( white, "0, 0, gui.borderWidth, screenHeight", COLOR_BLACK );
+					drawCachedMaterial( white, "gui.borderWidth + rect.w, 0, gui.borderWidth, screenHeight", COLOR_BLACK );
+					gui.scriptPushFloat( false );
+				}		
+			}	
+		}
+	}
+}

@@ -1,0 +1,21 @@
+
+#ifndef __pathfinder_def__
+#define __pathfinder_def__
+
+$template _pathfinder_default( MapName, Slope )
+	"def_vehicle"			"vehicle_magog_npc"
+	"map"					MapName
+	"heightmap"				"1"
+	"tris"					"0"
+	"sample_rate"			"32"
+	"ground_offset"			"2560"	
+	
+	"resolution_x"			"1280"
+	"resolution_y"			"1280"
+	
+	"mg_max_slope"			"Slope"
+	"mg_resolution_x"		"1280"
+	"mg_resolution_y"		"1280"
+$endtemplate
+
+#endif

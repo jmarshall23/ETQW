@@ -1,0 +1,1127 @@
+////ARK////
+material stuff/ark/ark_stuff_01
+{
+	twoSided
+	nonsolid
+	sort decal
+	noshadows
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, time, time, 0.005
+		diffuseMap	clamp	picmipmin -1	stuff/ark/ark_stuff.tga
+		alphatest 0.5
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+}
+
+material stuff/ark/ark_stuff_02
+{
+	twosided
+	nonsolid
+	noshadows
+ 	{
+ 		diffusemap	clamp	picmipmin -1	stuff/ark/ark_stuff.tga
+		alphaTest 	0.25
+	}
+}
+
+
+////AREA22////
+material stuff/area22/area22_stuff
+{
+	twoSided
+	nonsolid
+	sort decal
+	noshadows
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.005
+		diffuseMap	clamp	picmipmin -1	stuff/area22/area22_stuff.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+}
+
+material stuff/area22/area22_rubbish
+{
+	sort decal
+	nonsolid
+	noshadows
+	{
+		diffuseMap	clamp	picmipmin -1	stuff/area22/area22_stuff.tga
+		alphatest 0.5
+		vertexcolor
+	}
+}
+
+material stuff/area22/area22_rocks
+{
+	nonsolid
+	noshadows
+	{
+		diffuseMap				stuff/area22/area22_rocks.tga
+		bumpMap		picmip -1	stuff/area22/area22_rocks_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult	4,2,0,0
+	}
+}
+
+
+////CANYON////
+material stuff/canyon/canyon_stuff_01
+{
+	twoSided
+	nonsolid
+	sort decal
+	noshadows
+	{
+		writeDepth
+		alphatocoverage
+		program stuff/grass_alphatest
+		grass_times time * 0.15, 0.015, time, 0.0025
+		diffuseMap	clamp	picmipmin -1	stuff/canyon/canyon_stuff.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+}
+
+material stuff/canyon/canyon_rubbish
+{
+	sort decal
+	nonsolid
+	noshadows
+	{
+		diffuseMap	clamp	picmipmin -1	stuff/canyon/canyon_stuff.tga
+		alphatest 0.5
+		vertexcolor
+	}
+}
+
+material stuff/canyon/canyon_rocks
+{
+	nonsolid
+	noshadows
+	{
+		diffuseMap				stuff/canyon/canyon_rocks.tga
+		bumpMap		picmip -1	stuff/canyon/canyon_rocks_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult	4,2,0,0
+	}
+}
+
+
+////ISLAND////
+material stuff/island/island_stuff_01
+{
+	twoSided
+	nonsolid
+	sort decal
+	noshadows
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.001, 4, 0.001
+		diffuseMap	clamp	picmipmin -1	stuff/island/island_stuff.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+}
+
+material stuff/island/island_rocks
+{
+	nonsolid
+	noshadows
+	{
+		diffuseMap				stuff/island/island_rocks.tga
+		bumpMap		picmip -1	stuff/island/island_rocks_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult	4,2,0,0
+	}
+}
+
+////OUTSKIRTS////
+material stuff/outskirts/outskirts_stuff_01
+{
+	twoSided
+	nonsolid
+	sort decal
+	noshadows
+	{
+		writeDepth
+		alphatocoverage
+		program stuff/grass_alphatest
+		grass_times time * 0.4, 0.004, time, 0.0025
+		diffuseMap	clamp	picmipmin -1	stuff/outskirts/outskirts_stuff.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+}
+
+material stuff/outskirts/outskirts_stuff_02
+{
+	sort decal
+	nonsolid
+	noshadows
+ 	{
+		diffusemap	picmip -1	texturesheets/outskirts/interior1_d.tga
+		specularmap	picmip -2	texturesheets/outskirts/interior1_s.tga
+		bumpmap 	picmip -1	texturesheets/outskirts/interior1_local.tga
+		vertexcolor
+	}	
+}
+
+material stuff/outskirts/outskirts_stuff_03
+{
+	sort decal
+	nonsolid
+	noshadows
+ 	{
+		diffusemap	picmip -1	texturesheets/outskirts/industrial_detail_d.tga
+		specularmap	picmip -2	texturesheets/outskirts/industrial_detail_s.tga
+		bumpmap 	picmip -1	texturesheets/outskirts/industrial_detail_local.tga
+		vertexcolor
+	}	
+}
+
+material stuff/outskirts/outskirts_stuff_04
+{
+	sort decal
+	nonsolid
+	noshadows
+ 	{
+ 		diffusemap	clamp	picmipmin -1	stuff/outskirts/outskirts_stuff.tga
+		alphaTest 	0.25
+	}	
+}
+
+
+////QUARRY////
+material stuff/quarry/quarry_stuff_01
+{
+	twoSided
+	nonsolid
+	sort decal
+	noshadows
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.001, 4, 0.005
+		diffuseMap	clamp	picmipmin -1	stuff/quarry/quarry_stuff.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+}
+
+material stuff/quarry/quarry_stuff_02
+{
+	sort decal
+	nonsolid
+	noshadows
+ 	{
+		diffusemap	clamp	picmipmin -1	stuff/quarry/quarry_stuff.tga
+		alphaTest 	0.25
+	}	
+}
+
+material stuff/quarry/quarry_rocks
+{
+	nonsolid
+	noshadows
+	{
+		diffuseMap				stuff/quarry/quarry_rocks.tga
+		bumpMap		picmip -1	stuff/quarry/quarry_rocks_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult	4,2,0,0
+	}
+}
+
+////REFINERY////
+material stuff/refinery/refinery_stuff_01
+{
+	twoSided
+	nonsolid
+	sort decal
+	noshadows
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * -0.25, 0.015, time, 0.001
+		diffuseMap	clamp	picmipmin -1	stuff/refinery/refinery_stuff.tga
+		//maskalpha
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+}
+
+material stuff/refinery/refinery_stuff_02
+{
+	sort decal
+	nonsolid
+	noshadows
+ 	{
+		diffusemap	clamp	picmipmin -1	stuff/refinery/refinery_stuff.tga
+		alphaTest 	0.5
+		vertexcolor
+	}
+}
+
+
+////SALVAGE////
+material stuff/salvage/salvage_stuff_01
+{
+	twoSided
+	nonsolid
+	sort decal
+	noshadows
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.25, 0.001, 4, 0.01
+		diffuseMap	clamp	picmipmin -1	stuff/salvage/salvage_stuff.tga
+		alphatest 0.2
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+}
+
+material stuff/salvage/salvage_stuff_02
+{
+	twosided
+	nonsolid
+	noshadows
+ 	{
+ 		diffusemap	clamp	picmipmin -1	stuff/salvage/salvage_stuff.tga
+		alphaTest 	0.25
+	}
+}
+
+material stuff/salvage/salvage_rocks
+{
+	nonsolid
+	noshadows
+	{
+		diffuseMap				stuff/salvage/salvage_rocks.tga
+		bumpMap		picmip -1	stuff/salvage/salvage_rocks_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult	4,2,0,0
+	}
+}
+
+////SEWER////
+material stuff/sewer/sewer_stuff_01
+{
+	twoSided
+	nonsolid
+	sort decal
+	noshadows
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.5, 0.001, 4, 0.01
+		diffuseMap	clamp	picmipmin -1	stuff/sewer/sewer_stuff.tga
+		//maskalpha
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+}
+
+
+////SLIPGATE////
+material stuff/slipgate/slipgate_stuff_01
+{
+	twoSided
+	nonsolid
+	sort decal
+	noshadows
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.001
+		diffuseMap	clamp	picmipmin -1	stuff/slipgate/slipgate_stuff.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+}
+
+material stuff/slipgate/slipgate_stuff_02
+{
+	sort decal
+	nonsolid
+	noshadows
+ 	{
+		diffusemap	clamp	picmipmin -1	stuff/slipgate/slipgate_stuff.tga
+		alphaTest 	0.5
+		vertexcolor
+	}	
+}
+
+material stuff/slipgate/slipgate_rocks
+{
+	nonsolid
+	noshadows
+ 	{
+		diffusemap	stuff/slipgate/slipgate_rocks.tga
+		vertexcolor
+	}	
+}
+
+
+////VALLEY////
+material stuff/valley/valley_stuff
+{
+	twoSided
+	nonsolid
+	sort decal
+	noshadows
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap	clamp	picmipmin -1	stuff/valley/valley_stuff.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+}
+
+material stuff/valley/valley_rubbish
+{
+	sort decal
+	nonsolid
+	noshadows
+	{
+		diffuseMap	clamp	picmipmin -1	stuff/valley/valley_stuff.tga
+		alphatest 0.5
+		vertexcolor
+	}
+}
+
+material stuff/valley/valley_rocks
+{
+	nonsolid
+	noshadows
+	{
+		diffuseMap				stuff/valley/valley_rocks.tga
+		bumpMap		picmip -1	stuff/valley/valley_rocks_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult	4,2,0,0
+	}
+}
+
+
+////VOLCANO////
+material stuff/volcano/volcano_stuff_01
+{
+	nonsolid
+	noshadows
+	{
+		diffuseMap				stuff/volcano/volcano_rocks.tga
+		bumpMap		picmip -1	stuff/volcano/volcano_rocks_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult	4,2,0,0
+	}
+}
+
+
+////MISCELLANEOUS////
+material stuff/foliage/asian/asian_foliage
+{
+	twoSided
+	nonsolid
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap clamp models/vegetation/trees/asian/asiantree_01_d.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+	twoSided
+}
+
+material stuff/foliage/snow/snow_foliage_xxx
+{
+	twoSided
+	nonsolid
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap clamp stuff/foliage/snow/twigs_d.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+	twoSided
+}
+
+material stuff/foliage/snow/snow_foliage
+{
+	twoSided
+	nonsolid
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, time, time, 0.01
+		diffuseMap clamp stuff/foliage/snow/twigs_d.tga
+		alphatest 0.5
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+	twoSided
+}
+
+material stuff/foliage/valley/valley_foliage
+{
+	twoSided
+	nonsolid
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap clamp stuff/foliage/valley/valley_foliage.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+	twoSided
+}
+
+material stuff/foliage/temperate/grasses_x
+{
+	twoSided
+	nonsolid
+	noshadows
+	translucent
+	{
+		program interaction/foliage
+		diffusemap 	stuff/foliage/temperate/weeds01.tga
+		alphaTest 	0.25
+		vertexcolor
+	}
+}
+
+material stuff/foliage/temperate/weeds
+{
+	twoSided
+	nonsolid
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap clamp stuff/foliage/temperate/weeds01.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+	twoSided
+}
+
+
+
+material stuff/foliage/temperate/grasses
+{
+	twoSided
+	nonsolid
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap clamp stuff/foliage/temperate/weeds01.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+	twoSided
+}
+
+material stuff/foliage/hedgegrass
+{
+	twoSided
+	nonsolid
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap clamp stuff/foliage/hedgegrass.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+	twoSided
+}
+
+
+
+// --------------
+// canyon grasses
+// --------------
+
+material stuff/foliage/desert/bush_low
+{
+	twoSided
+	nonsolid
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap clamp stuff/foliage/desert/bush_low.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+	twoSided
+}
+
+material stuff/foliage/desert/catail_bush01
+{
+	twoSided
+	nonsolid
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap clamp stuff/foliage/desert/catail_bush01.tga
+		vertexcolor
+	}
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+	twoSided
+}
+
+/**************
+     tree
+*************/
+ 
+material models/mapobjects/tree/bark1
+{
+	noShadows
+	diffusemap	textures/foliage/bark01_d.tga
+	bumpmap		textures/foliage/bark01_local.tga
+}
+
+
+material models/mapobjects/tree/leaves2
+{
+	qer_editorimage		models/mapobjects/tree/linden_branch_d.tga
+	twoSided
+	nonsolid
+	noshadows
+	translucent
+//	noSelfShadow
+	{
+		program interaction/foliage
+		diffusemap models/mapobjects/tree/linden_branch_d.tga
+		bumpmap models/mapobjects/tree/linden_branch_local.tga
+ 		alphaTest 	0.25 		
+	} 	 	
+}
+
+material models/mapobjects/tree/branches
+{
+ 	qer_editorimage		models/mapobjects/tree/linden_branch_noleaves_local.tga
+ 	twoSided
+ 	nonsolid
+ 	noshadows
+ 	translucent
+ 	{
+ 		diffusemap models/mapobjects/tree/linden_branch_noleaves_d.tga
+ 		bumpmap models/mapobjects/tree/linden_branch_noleaves_local.tga
+ 		alphaTest 	0.25
+ 	}	
+}
+
+
+
+material stuff/foliage/grassclump001
+{
+
+	//qer_editorimage		stuff/foliage/grassclump001_d.tga
+	nonsolid
+	//noshadows
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap clamp stuff/foliage/grassclump001_d.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+}
+
+material stuff/foliage/grassclump001_dry
+{
+	twoSided
+
+	//qer_editorimage		stuff/foliage/grassclump001_dry_d.tga
+	nonsolid
+	//noshadows
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap clamp stuff/foliage/grassclump001_dry_d.tga
+		vertexcolor
+	}
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+	twoSided
+}
+
+material stuff/foliage/grassclump001_short
+{
+	twoSided
+
+	//qer_editorimage		stuff/foliage/grassclump001_short_d.tga
+	nonsolid
+	//noshadows
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap clamp stuff/foliage/grassclump001_short_d.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+}
+
+material stuff/foliage/grass_sml001_dry
+{
+	twoSided
+
+	//qer_editorimage		stuff/foliage/grassclump001_d.tga
+	nonsolid
+	//noshadows
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap clamp stuff/foliage/grass_sml001_dry_d.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!	
+	deform clusterTransform		
+}
+
+
+
+material stuff/foliage/grassclump002
+{
+	twoSided
+
+	//qer_editorimage		stuff/foliage/grassclump001_d.tga
+	nonsolid
+	//noshadows
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap clamp stuff/foliage/grassclump002_d.tga
+		vertexcolor
+	}
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!	
+	deform clusterTransform		
+}
+
+material stuff/foliage/grassclump003
+{
+	twoSided
+	nonsolid
+	noshadows
+	translucent
+	{
+		blend		diffusemap
+		map 		stuff/foliage/grassclump003_d.tga
+		alphaTest 	0.25
+	}
+}
+
+
+material stuff/foliage/agave
+{
+
+	bumpmap		stuff/foliage/agave_local.tga
+	diffusemap	stuff/foliage/agave_d.tga
+	specularmap	stuff/foliage/agave_s.tga
+}
+
+material stuff/foliage/desertplant
+{
+	twoSided
+	//qer_editorimage		stuff/foliage/grassclump001_d.tga
+	nonsolid
+	//noshadows
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap stuff/foliage/desertplant_d.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!	
+	deform clusterTransform		
+}
+/*
+material stuff/pointspritetest
+{
+	nonsolid
+	{
+		//blend		blend
+		alphaTest 	0.5
+		ignoreAlphaTest	//No this doesn't ignore the previous alpha test it only forces doom to skip some internal stuff
+		
+		vertexProgram	pointsprites.vfp
+		vertexParm		0	time * 0.25
+		vertexParmBinding	1	viewOrigin
+		vertexParm		2	sun_x, sun_y, sun_z
+		vertexParm		3	sun_r * lightscale, sun_g * lightscale, sun_b * lightscale
+		vertexParm		4	stuff_lod, 1 / ( stuff_far - stuff_lod )
+
+		//map		stuff/foliage/grassclump_ps.tga
+		//vertexColor
+		
+		fragmentProgram	pointsprites.vfp
+		fragmentMap	0	stuff/foliage/grassclump_ps.tga
+		fragmentMap 	1	_ambientCubemap	
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+}
+*/
+material stuff/leaf
+{
+	nonsolid
+	{
+		blend blend
+		map		stuff/foliage/leaf.tga
+		//vertexColor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+}
+
+material stuff/rock_sandy
+{
+	qer_editorimage textures/rock/rockface02d_sandy_d.tga
+	
+	noshadows
+//	noselfshadow
+	{
+		diffusemap	stuff/rocks/rockface02d_d.tga
+		bumpmap		textures/rock/sharprock1_local.tga
+		vertexcolor
+	}
+
+}
+
+material stuff/rock_grey
+{
+	qer_editorimage textures/rock/rock_moorland3.tga
+	
+	noshadows
+//	noselfshadow
+	{
+		diffusemap	textures/rock/rock_moorland3.tga
+		bumpmap		textures/rock/sharprock1_local.tga
+		vertexcolor
+	}
+}
+
+material stuff_rock_green
+{
+	qer_editorimage textures/rock/rocks_green.tga
+	
+	noshadows
+//	noselfshadow
+	{
+		diffusemap	textures/rock/rocks_green.tga
+		bumpmap		textures/rock/sharprock1_local.tga
+		vertexcolor
+	}
+	
+}
+
+material leaves_dist
+{
+	qer_editorimage textures/leaves/leaves_do.tga
+	
+	noshadows
+//	noselfshadow
+	{
+		diffusemap	textures/leaves/leaves_do.tga
+		bumpmap		textures/leaves/leaves_do_local.tga
+		alphaTest 	0.7
+		vertexcolor
+	}
+	
+		
+}
+
+//FOR VALLEY - OLD (TO BE REMOVED EVENTUALLY)
+
+material stuff/litter/litter01
+{
+
+	sort decal
+	twosided
+	nonsolid
+//	noselfshadow
+ 	{
+ 		diffusemap 	stuff/litter/litter01_d.tga
+ 		specularmap	stuff/litter/litter01_s.tga
+		bumpmap 	stuff/litter/litter01_local.tga
+		alphaTest 	0.25
+	}
+	
+}
+
+material stuff/grass/grass_and_weeds
+{
+	twoSided
+	nonsolid
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap clamp stuff/grass/grass_and_weeds.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+	twoSided
+}
+
+material stuff/twigs/twigs
+{
+	twosided
+	nonsolid
+//	noselfshadow
+ 	{
+ 		diffusemap 	stuff/twigs/twigs_d.tga
+		bumpmap 	stuff/twigs/twigs_local.tga
+		alphaTest 	0.25
+	}
+	
+}
+
+////////
+
+//SNOW STUFF
+
+material stuff/foliage/snow/twigs
+{
+	twosided
+	nonsolid
+//	noselfshadow
+ 	{
+ 		diffusemap 	clamp stuff/foliage/snow/twigs_d.tga
+		bumpmap 	stuff/foliage/snow/twigs_local.tga
+		alphaTest 	0.25
+	}
+	
+}
+
+
+// this diffuce may need clamp addign to it
+material stuff/foliage/snow/mudpuddle
+{
+	twosided
+	nonsolid
+	useTemplate templates/windowglass_mask < 
+		stuff/foliage/snow/twigs_d.tga, 
+		stuff/foliage/snow/twigs_local.tga,
+		stuff/foliage/snow/twigs_mask.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material stuff/foliage/snow/stones
+{
+	nonsolid
+//	noselfshadow
+ 	{
+ 		diffusemap 	clamp stuff/foliage/snow/twigs_d.tga
+		bumpmap 	stuff/foliage/snow/twigs_local.tga
+		alphaTest 	0.25
+	}
+	
+}
+
+/////////////
+
+material stuff/grass/flowers01
+{
+	nonsolid
+	noshadows
+	twoSided
+
+	{
+		useTemplate material/foliage_translucent_stage<
+			"stuff/grass/flowers01_d.tga",
+			"stuff/grass/flowers01_transluceny.tga",
+			"stuff/grass/flowers01_local.tga",
+			"stuff/grass/flowers01_s.tga",
+			"1.0",				// translucency multiplier
+			"0.7", "0.9", "0.7"	// light scattering rgb
+		>	
+		useTemplate wind/animatematrix< 0.15, 0.001 >
+	}
+}
+
+
+// FOR ISLAND
+
+///////////////////////////////////////
+//
+//	DRIFTWOOD
+//
+///////////////////////////////////////
+
+material stuff/driftwood/driftwood_tile1
+
+{
+	qer_editorimage stuff/driftwood/driftwood_tile1.tga
+	
+	noshadows
+//	noselfshadow
+	nonsolid
+	{
+		diffusemap	stuff/driftwood/driftwood_tile1.tga
+	}
+
+}
+
+
+material stuff/driftwood/driftwood_tile2
+
+{
+	qer_editorimage stuff/driftwood/driftwood_tile2.tga
+	
+	noshadows
+//	noselfshadow
+	nonsolid
+	{
+		diffusemap	stuff/driftwood/driftwood_tile2.tga
+	}
+
+}
+
+
+material stuff/driftwood/driftwood_stumpend
+
+{
+	qer_editorimage stuff/driftwood/driftwood_stumpend.tga
+	
+	noshadows
+//	noselfshadow
+	nonsolid
+	{
+		diffusemap	stuff/driftwood/driftwood_stumpend.tga
+	}
+
+}
+
+
+////////DESERT/////////
+
+material stuff/foliage/desert/desert_stuff
+{
+	twoSided
+	nonsolid
+	sort decal
+	{
+		alphatocoverage
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.14, 0.015, time, 0.01
+		diffuseMap clamp stuff/foliage/desert/desert_stuff01.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+	twoSided
+}

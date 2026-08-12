@@ -1,0 +1,122 @@
+
+/***********************************************************************
+
+	reexportModels tools\spike_tank.def
+
+***********************************************************************/
+
+// ========================================================================
+// Export
+//
+
+export hauser {
+	options -prefix INJECTOR_ -sourcedir models/tools/spike_constructor/dev_sd -destdir models/tools/spike_constructor/
+
+	mesh	stroyent_injector_base_file.mb		-dest models/tools/spike_constructor/spike_constructor_view.md5mesh
+
+	anim	stroyent_injector_idle.mb			-dest models/tools/spike_constructor/spike_constructor_idle.md5anim
+
+	anim	stroyent_injector_fire_loop.mb		-dest models/tools/spike_constructor/spike_constructor_start_fire.md5anim -range 20 26
+  	anim	stroyent_injector_fire_loop.mb		-dest models/tools/spike_constructor/spike_constructor_fire.md5anim -range 27 71
+ 	anim	stroyent_injector_fire_loop.mb		-dest models/tools/spike_constructor/spike_constructor_end_fire.md5anim -range 72 78
+ 	anim	stroyent_injector_raise.mb			-dest models/tools/spike_constructor/spike_constructor_raise.md5anim
+ 	anim	stroyent_injector_lower.mb			-dest models/tools/spike_constructor/spike_constructor_lower.md5anim
+}
+
+
+
+
+// ========================================================================
+// VIEW Models
+//
+model viewmodel_repair_tool {
+	mesh	 						models/tools/spike_constructor/spike_constructor_view.md5mesh
+	anim	idle					models/tools/spike_constructor/spike_constructor_idle.md5anim
+ 	anim raise						models/tools/spike_constructor/spike_constructor_raise.md5anim {
+ 		frame begin						sound_channel snd_weapon_raise snd_raise
+	}
+ 	anim	putaway					models/tools/spike_constructor/spike_constructor_lower.md5anim
+
+
+	anim fire_start 				models/tools/spike_constructor/spike_constructor_start_fire.md5anim {
+		frame	1						sound_channel snd_weapon_cock snd_cock
+	}
+
+
+ 	anim	fire					models/tools/spike_constructor/spike_constructor_fire.md5anim {
+ 		frame 1						effect fx_fire pasted__joint2
+	}
+
+		anim fire_end 					models/tools/spike_constructor/spike_constructor_end_fire.md5anim {
+	}
+
+
+
+}
+
+
+// ========================================================================
+// Entity DEFS
+//
+invItemDef inventory/tools/spike/charge {
+	type							"tool"
+	slot							"tool"
+	name							"game/weapons/spike_arming_tool"
+
+	data {
+		"model_view" 				"viewmodel_repair_tool"
+		"joint_attach"				"RightHand"
+
+		"view_offset"				"-3.6 -2 -2.2"
+
+		"anim_prefix"				"hands_construction_tool"
+		"anim_prefix_class"			"hands"
+
+		"weapon_scriptobject"		"tool_pliers"
+		"use_hold_anims"			"1"
+
+		"charge_per_use"			"2"
+		"repair_count"				"30"
+		"fire_rate"					"0.1"
+		"show_charge"				"1"
+
+		"has_startfire_anim"		"1"
+		"has_endfire_anim"		"1"
+
+		"snd_start"					"sounds/tools/plasmacharge/arm/start"
+		"snd_stop"					"sounds/tools/plasmacharge/arm/stop"
+		"snd_raise"					"sounds/tools/infiltrator/raise"
+
+		"fx_repair"					"effects/tools/repair"
+		"fx_sabotage"				"effects/tools/sabotage"
+
+		"melee_distance"			"88"
+
+		"can_arm_charge"			"1"
+		"activate_attack"			"1"
+
+		"mtr_weaponmenu"			"guis/assets/icons/weapons/armingtool_strogg"
+		"crosshair"					"none"
+
+		"crosshair_spread_min"			"0.1"
+		"crosshair_spread_max"			"0.1"
+		"crosshair_spread_scale"		"1"
+
+		"spread_min"					"0"
+		"spread_max"					"0"
+
+		"spread_crouch_min"				"0"
+		"spread_crouch_max"				"0"
+
+		"spread_prone_min"				"0"
+		"spread_prone_max"				"0"
+
+		"spread_jump_min"				"0"
+		"spread_jump_max"				"0"
+
+		"player_weapon_num"				"12"
+
+		"weapon_menu_ignore"		"0"
+		"fx_fire"				"effects/tools/strogg_arming_fire"
+	}
+}

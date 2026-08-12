@@ -1,0 +1,42 @@
+material models/mapobjects/rocks/rock01
+{
+	noshadows
+	nonsolid
+	{
+		diffusemap			models/mapobjects/rocks/rock01_d.tga
+		specularmap			_black
+		bumpmap				models/mapobjects/rocks/rock01_local.tga
+
+		diffuseDetailMap	textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/concrete_detail01_local.tga
+		detailMult	2,2,0,0
+	}
+}
+
+material models/mapobjects/rocks/snow_sharprock01
+{
+	noselfshadow
+	{
+		diffusemap 	picmip -1	models/mapobjects/rocks/snow_sharprock01_d.tga
+		//specularmap	picmip -2	models/mapobjects/rocks/snow_sharprock01_s.tga
+		bumpmap		picmip -1	models/mapobjects/rocks/snow_sharprock01_local.tga
+
+		diffuseDetailMap		textures/detail/rock03.tga
+		detailMult 4,4,0,0
+	}
+}
+
+// This is used in Slipgate
+material models/mapobjects/rocks/slipsnow_rock_01
+{
+	noshadows
+	{
+		diffusemap 	picmip -1	models/mapobjects/rocks/slipsnow_rock_01_d.tga
+		//specularmap	picmip -2	models/mapobjects/rocks/slipsnow_rock_01_s.tga
+		bumpmap		picmip -1	models/mapobjects/rocks/slipsnow_rock_01_local.tga
+
+		diffuseDetailMap		textures/detail/slipgate_rock.tga
+		detailMult 4,4,0,0
+	}
+}

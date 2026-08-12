@@ -1,0 +1,26 @@
+material megastamp/mesh
+{
+	noShadows
+	{
+		blend blend
+		program tools/megastamp/editmesh.vfp
+	}
+}
+
+material megastamp/editarea
+{
+	noShadows
+
+	diffusemap _megastamp_renderer_0
+	bumpmap _megastamp_renderer_1
+}
+
+material megastamp/cursor
+{
+	noShadows
+	{
+		diffuseMap _megastamp_stamp_diffuse
+		bumpMap _megastamp_stamp_local
+		alphaTest 0.5
+	}
+}

@@ -1,0 +1,53 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+atlas/outskirts/residential_detail1.atlas
+***
+*/
+
+surfaceTypeMap texturesheets/outskirts/residential_detail1 {
+	width	512
+	height	1024
+	/* areaDefs */
+
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 928 ) ( 512 992 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 896 ) ( 512 928 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 256 640 ) ( 512 896 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 128 640 ) ( 256 896 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 512 ) ( 512 640 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 640 ) ( 128 896 )
+	}
+	rect {
+		surfaceType	paper
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 512 512 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 146 656 ) ( 239 782 )
+	}
+}

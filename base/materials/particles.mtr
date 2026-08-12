@@ -1,0 +1,866 @@
+material particles/penta/spark {
+	{
+		blend		add
+		map	textures/particles/sparks/spark01.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+material textures/penta/heathaze
+{
+	nonsolid
+	translucent
+	sort postprocess
+	{
+		program heatHazeWithMaskAndVertex
+		deformScroll time * 0.2 , time * 0.1
+		deformMagnitude 3
+		bumpMap textures/sfx/vp1.tga
+		mask textures/sfx/vp1_alpha.tga
+		maskAlpha
+	}
+}
+
+material particles/dustcloud_02
+{
+	noshadows
+	translucent
+	nonsolid
+	noatmosphere
+	{
+		blend	blend
+		program sfx/cheap_litsmoke
+ 		map		textures/effects/smoke_test1.tga
+		vertexcolor
+	}
+}
+
+material particles/dustcloud_02_litsmoke
+{
+	noshadows
+	translucent
+	nonsolid
+	noatmosphere
+	{
+		blend	blend
+		program sfx/cheap_litsmoke
+ 		map		textures/effects/smoke_test1.tga
+		vertexcolor
+	}
+}
+
+
+material particles/dust_spike {
+	noshadows
+	translucent
+	nonsolid
+	noatmosphere
+	{
+		blend	blend
+//		maskalpha
+		map		 textures/particles/dust_spike.tga
+		vertexcolor
+	}
+}
+
+material particles/dust_spike2 {
+	noshadows
+	translucent
+	nonsolid
+	noatmosphere
+	{
+		blend	blend
+//		maskalpha
+		map		 textures/particles/dust_spike2.tga
+		vertexcolor
+	}
+}
+
+material particles/dust_spike3 {
+	noshadows
+	translucent
+	nonsolid
+	noatmosphere
+	{
+		blend	blend
+		map		 textures/particles/dust_spike3.tga
+		vertexcolor
+	}
+}
+
+material particles/dust_spike4 {
+	noshadows
+	translucent
+	nonsolid
+	noatmosphere
+	{
+		blend	blend
+		map		 textures/particles/dust_spike4.tga
+		vertexcolor
+	}
+}
+
+material precipitation/snowflake2 {
+	{
+		blend blend
+		map alphazeroclamp textures/particles/snowflake2.tga
+	}
+}
+
+material particles/penta/flames {
+	{
+		blend		add
+		map		zeroclamp textures/particles/fire/flame_strip.tga
+		maskalpha
+		vertexcolor
+		useTemplate templates/materials/animate<32, 1.3>
+
+	}
+}
+
+material particles/penta/flames2 {
+	{
+		blend		add
+		map		zeroclamp textures/particles/fire/flame3_strip.tga
+		maskalpha
+		vertexcolor
+		useTemplate templates/materials/animate<32, 1.3>
+
+	}
+}
+
+material particles/penta/flames2_randomstart {
+	{
+		blend		add
+		map		zeroclamp textures/particles/fire/flame3_strip.tga
+		maskalpha
+		vertexcolor
+		useTemplate templates/materials/animate_randomstart<32, 1.3>
+	}
+}
+
+material particles/penta/flames3 {
+	{
+		blend		add
+		map		zeroclamp textures/particles/fire/flame4_strip.tga
+		maskalpha
+		vertexcolor
+		useTemplate templates/materials/animate<32, 3>
+
+	}
+}
+
+material particles/penta/flames3_randomstart {
+	{
+		blend		add
+		map	clamp_x textures/particles/fire/flame4_strip.tga
+		maskalpha
+		vertexcolor
+		useTemplate templates/materials/animate_randomstart<32, 3>
+	}
+}
+
+material particles/penta/flames4 {
+	{
+		blend		add
+		map		zeroclamp textures/particles/fire/flame5_strip.tga
+		maskalpha
+		vertexcolor
+		useTemplate templates/materials/animate<32, 3>
+
+	}
+}
+
+material particles/penta/flames4_randomstart {
+	{
+		blend		add
+		map	clamp_x textures/particles/fire/flame5_strip.tga
+		//maskalpha
+		vertexcolor
+		useTemplate templates/materials/animate_randomstart<32, 4 >
+	}
+}
+
+material particles/penta/flameball {
+	{
+		blend		add
+		maskalpha
+		map	 textures/particles/fire/flameballs.tga
+		vertexcolor
+		//red 2
+		//green 2
+		//blue 2
+	}
+}
+
+material particles/fire3a  {
+	{
+		blend		add
+		maskalpha
+		map	 textures/particles/fire/fire3a.tga
+		vertexcolor
+		//red 2
+		//green 2
+		//blue 2
+	}
+}
+
+material particles/fire4a {
+	{
+		blend		add
+		maskalpha
+		map	 textures/particles/fire/fire4a.tga
+		vertexcolor
+		//red 2
+		//green 2
+		//blue 2
+	}
+}
+
+
+material particles/fire4afogged {
+	{
+		program	trivialFogged
+		blend		gl_src_alpha, gl_one
+		maskalpha
+		map	 textures/particles/fire/fire4a.tga
+		vertexcolor
+		//red 2
+		//green 2
+		//blue 2
+	}
+}
+
+material particles/fire5a {
+	{
+		blend		add
+		maskalpha
+		map	 textures/particles/fire/fire5a.tga
+		vertexcolor
+		//red 2
+		//green 2
+		//blue 2
+	}
+}
+
+material particles/penta/ember {
+	{
+		blend		add
+		maskalpha
+		map	 textures/particles/ember_small.tga
+		vertexcolor
+		//red 2
+		//green 2
+		//blue 2
+	}
+}
+
+material particles/karateka/simple_smoke_alpha {
+	qer_editorimage textures/particles/smoke/smokepuff_alpha.tga
+	sort nearest
+
+	{
+		blend		add
+		map			textures/particles/smoke/smokepuff_alpha.tga
+//		maskalpha
+		vertexcolor
+	}
+}
+
+
+material particles/karateka/simple_smoke_blur {
+ 	qer_editorimage textures/particles/smoke/smokepuff_blur.tga
+	sort nearest
+
+	{
+		blend		add
+		map			textures/particles/smoke/smokepuff_blur.tga
+	//	maskalpha
+		vertexcolor
+	}
+}
+
+material particles/penta/simple_smoke {
+	qer_editorimage textures/particles/smoke/smokepuff.tga
+	sort nearest
+
+	{
+		blend		blend
+		map			makealpha( textures/particles/smoke/smokepuff.tga )
+		maskalpha
+		vertexcolor
+	}
+}
+
+material particles/penta/strogglbaster_tracer {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		map		textures/particles/stroggblaster.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+
+material particles/mrdr/trail_test {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		map		textures/particles/lightningmask.tga
+		vertexcolor
+	}
+}
+
+
+material particles/gordon/smoke_test {
+	qer_editorimage textures/particles/smoke/smokepuff.tga
+	sort nearest
+
+	{
+		blend		add
+		map			textures/particles/smoke/smokepuff.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+
+material particles/gordon/smoke_test2 {
+	qer_editorimage textures/particles/dustcloud.tga
+	sort nearest
+
+	{
+		blend		add
+		map			textures/particles/dustcloud.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+
+material particles/gordon/smoke_test3 {
+	qer_editorimage textures/particles/dustcloud.tga
+	sort nearest
+
+	{
+		blend		add
+		map			textures/particles/dustcloud.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+material particles/penta/icarus_trail1 {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		map		textures/particles/plasmacore2.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/plasmacore {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		map		textures/particles/plasmacore_spike_old.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/penta/icarus_trail2 {
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		add
+		color	1, 0.4274, 0.003, 1
+		map		textures/particles/shockwave.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/penta/leaf
+{
+	noshadows
+	noselfshadow
+	twoSided
+	{
+		cullFace none
+		blend blend
+		map alphazeroclamp textures/particles/leaf.tga
+		rotate time * 0.1
+	}
+}
+
+
+
+
+material textures/particles/sparks/sparkflash01
+{
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	{
+		blend add
+		map clamp textures/particles/sparks/sparkflash01.tga
+		maskalpha
+
+	}
+}
+
+material textures/particles/sparks/sparkflash02
+{
+
+	{
+		blend add
+		map clamp textures/particles/sparks/sparkflash02.tga
+		maskalpha
+	}
+}
+
+material textures/particles/sparks/sparks01
+{
+	{
+		blend	add
+		map	textures/particles/sparks/sparks01.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+material textures/particles/sparks/spark03
+{
+	{
+		blend add
+		map clamp textures/particles/sparks/spark03.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+material textures/particles/sparks/sparkflash_strip01
+{
+
+	{
+		blend add
+		map clamp textures/particles/sparks/sparkflash_strip01.tga
+		maskalpha
+	}
+}
+
+material textures/particles/sparks/sparkflash_strip02
+{
+
+	{
+		blend add
+		map clamp textures/particles/sparks/sparkflash_strip02.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+material textures/particles/sparks/sparkflash_strip03
+{
+
+	{
+		blend add
+		map textures/particles/sparks/sparkflash_strip03.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+material textures/particles/sparks/sparkflash_strip03_flash
+{
+
+	{
+		blend add
+		map textures/particles/sparks/sparkflash_strip03.tga
+		maskalpha
+		vertexcolor
+		useTemplate templates/materials/animate_randomstart<4, 0.25 >
+	}
+}
+
+material textures/particles/sparks/sparkflash_strip02_flash
+{
+
+	{
+		blend add
+		map textures/particles/sparks/sparkflash_strip02.tga
+		maskalpha
+		vertexcolor
+		useTemplate templates/materials/animate_randomstart<4, 0.25 >
+	}
+}
+
+material textures/particles/sparks/sparkflash_strip04
+{
+
+	{
+		blend add
+		map textures/particles/sparks/sparkflash_strip04.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+material textures/particles/sparks/sparkflash03
+{
+	qer_editorimage textures/particles/sparks/sparkflash03.tga
+//	sort nearest
+	//deform sprite
+	polygonOffset 0.2
+	translucent
+	{
+		blend add
+		map clamp textures/particles/sparks/sparkflash03.tga
+//		alpha 1
+		vertexcolor
+		maskalpha
+	}
+}
+
+material textures/particles/sparks/sparkflash03b
+{
+	qer_editorimage textures/particles/sparks/sparkflash03.tga
+//	sort nearest
+	//deform sprite
+	polygonOffset 0.2
+	translucent
+	sort far
+	{
+		blend add
+		map clamp textures/particles/sparks/sparkflash03.tga
+//		alpha 1
+		vertexcolor
+		maskalpha
+	}
+}
+
+material textures/particles/sparks/sparkflash03c
+{
+	qer_editorimage textures/particles/sparks/sparkflash03.tga
+	sort nearest
+	//deform sprite
+	polygonOffset 0.2
+	translucent
+	{
+		blend add
+		map clamp textures/particles/sparks/sparkflash03.tga
+//		alpha 1
+		vertexcolor
+		maskalpha
+	}
+}
+
+material textures/particles/lightning/lightning_strip01
+{
+
+	{
+		blend add
+		map clamp textures/particles/lightning/lightning_strip01.tga
+		maskalpha
+	}
+}
+
+material textures/particles/lightning/lightning_strip02
+{
+
+	{
+		blend add
+		map clamp textures/particles/lightning/lightning_strip02.tga
+		maskalpha
+	}
+}
+
+material textures/particles/lightning/lightning_strip03
+{
+
+	{
+		blend add
+		map clamp textures/particles/lightning/lightning_strip03.tga
+		maskalpha
+	}
+}
+
+material textures/particles/lightning/lightning_strip04
+{
+	translucent
+	{
+		blend add
+		map clamp textures/particles/lightning/lightning_strip04.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material textures/particles/lightning/lightning_strip05
+{
+
+	{
+		blend add
+		map clamp textures/particles/lightning/lightning_strip05.tga
+		maskalpha
+	}
+}
+
+material textures/particles/lightning/lightning_strip06
+{
+
+	{
+		blend add
+		map clamp textures/particles/lightning/lightning_strip06.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material textures/particles/lightning/lightning_strip07
+{
+
+	{
+		blend add
+		map clamp textures/particles/lightning/lightning_strip07.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+material textures/particles/lightning/lightning_strip07_flash
+{
+
+	{
+		blend add
+		map textures/particles/lightning/lightning_strip07.tga
+		maskalpha
+		vertexcolor
+		useTemplate templates/materials/animate_randomstart<4, 0.25 >
+	}
+}
+
+material textures/particles/lightning/lightning01
+{
+	translucent
+	{
+		blend add
+		map clamp textures/particles/lightning/lightning01.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material textures/particles/lightning/lightning02
+{
+	
+	{
+		blend add
+		map clamp textures/particles/lightning/lightning02.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+material textures/particles/lightning/lightning03
+{
+	translucent
+	{
+		blend add
+		map clamp textures/particles/lightning/lightning03.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material textures/particles/lightning/lightning_impact_strip01
+{
+
+	{
+		blend add
+		map clamp textures/particles/lightning/lightning_impact_strip01.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+material textures/particles/lightning/lightning_spark01
+{
+	{
+		blend add
+		map clamp textures/particles/lightning/lightning_spark01.tga
+		maskalpha
+	}
+}
+
+material textures/particles/lightning/lightning_spark02
+{
+	{
+		blend add
+		map clamp textures/particles/lightning/lightning_spark02.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+material models/particles/lightningpistol/lightningpistol_bolt01 {
+	noshadows
+	translucent
+	nonsolid
+	noatmosphere
+	twosided
+	{
+		map models/particles/lightningpistol/lightningpistol_bolt01.tga
+		blend add
+		vertexcolor
+		maskalpha
+		scroll time * 2.5, 1
+	}
+	{
+		map models/particles/lightningpistol/lightningpistol_bolt01.tga
+		blend add
+		vertexcolor
+		maskalpha
+		scroll time * 4.0, 0.6
+	}
+}
+
+material textures/particles/sparks/flare
+{
+	qer_editorimage textures/particles/sparks/sparkflash_strip03.tga
+	{
+			blend		add
+			map		zeroclamp textures/particles/sparks/sparkflash_strip03.tga
+			maskalpha
+			vertexcolor
+			useTemplate templates/materials/animate< 4, 0.1 >
+	}
+}
+
+material textures/particles/debris/debris_leaves01
+{
+	{
+		blend blend
+		map clamp textures/particles/debris/debris_leaves01.tga
+		maskalpha
+	}
+}
+
+material textures/particles/debris/debris_leaves02
+{
+	noshadows
+	noselfshadow
+	twoSided
+	{
+		cullFace none
+		blend blend
+		map alphazeroclamp textures/particles/debris/debris_leaves02.tga
+		rotate time * 0.1
+	}
+}
+
+material textures/particles/debris/debris_pine01
+{
+	{
+		blend blend
+		map clamp textures/particles/debris/debris_pine01.tga
+		maskalpha
+	}
+}
+
+material textures/particles/debris/debris_pine02
+{
+	noshadows
+	noselfshadow
+	twoSided
+	{
+		cullFace none
+		blend blend
+		map alphazeroclamp textures/particles/debris/debris_pine02.tga
+		rotate time * 0.1
+	}
+}
+
+material textures/particles/weapon_heat {
+	noshadows
+	translucent
+	nonsolid
+	sort postprocess
+	{
+		program heatHazeWithVertex
+		deformScroll 0, 0
+		deformMagnitude 1
+		bumpMap textures/particles/weapon_heat.tga
+		maskAlpha
+	}
+
+}
+
+material textures/particles/weapon_heat_smoke
+{
+
+	{
+		blend add
+		map clamp textures/particles/pfiresmall2.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+material textures/particles/weapon_heat_smoke2
+{
+
+	{
+		blend add
+		map clamp textures/particles/smoke/weapon_heat_smoke2.tga
+		maskalpha
+		vertexcolor
+	}
+}
+
+material textures/particles/muzzleflash_haze {
+	noshadows
+	translucent
+	nonsolid
+	sort postprocess
+	{
+		program heatHazeWithVertex
+		deformScroll 0, 0
+		deformMagnitude 1
+		bumpMap textures/particles/muzzleflash_haze.tga
+		maskAlpha
+	}
+
+}
+
+material textures/particles/lightflare
+{
+	//translucent
+	//deform flare
+	{
+		//maskdepth
+		//maskcolor
+		maskalpha
+		blend add
+		map textures/particles/lightflare.tga
+		//program sfx/beam
+		//parameters 100, 100, 0.2, 10
+		//vertexcolor
+		colored
+	}
+}

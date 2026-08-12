@@ -1,0 +1,21 @@
+// --------------------------------------------
+// VOLCANO STUFF
+// --------------------------------------------
+
+stuffType volcano/volcano_rock {
+	Model	"stuff/volcano/volcano_rock01.lwo"
+	Model	"stuff/volcano/volcano_rock02.lwo"
+	Model	"stuff/volcano/volcano_rock03.lwo"
+	Model	"stuff/volcano/volcano_rock04.lwo"
+	Model	"stuff/volcano/volcano_rock05.lwo"
+	Model	"stuff/volcano/volcano_rock06.lwo"
+	Model	"stuff/volcano/volcano_rock07.lwo"
+	Model	"stuff/volcano/volcano_rock08.lwo"
+}
+
+stuffType volcano/volcano_rock_small {
+	Model	"stuff/volcano/volcano_rock_small01.lwo"
+	Model	"stuff/volcano/volcano_rock_small02.lwo"
+	Model	"stuff/volcano/volcano_rock_small03.lwo"
+	Model	"stuff/volcano/volcano_rock_small04.lwo"
+}

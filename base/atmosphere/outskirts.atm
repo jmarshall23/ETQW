@@ -1,0 +1,680 @@
+atmosphere outskirts {
+	sunMaterial "atmospheres/lights/scrolling_clouds01"
+	sunDir ( 0.5778065324 0.2706267834 0.7700005174 )
+	sunColor ( 0.7450980544 0.7450980544 0.7450980544 )
+	sunHaloScale 0.099999994
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.9372549653 0.9215686917 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 1 1.0199999809 0.7400000095 0.7899999619 )
+		glareBases ( 0.1400000006 0.2599999905 0 0 )
+	}
+	fogDistHalf 6046
+	fogHeightHalf 6569
+	fogHeightOffset 196
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "outskirts"
+	skyGradientImage "atmosphere/skies/day_sky03_blur2"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 11
+	windAngleDev 46
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/day_sky03_v2" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere outskirts_revised {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( 0.7338879108 -0.1773605645 0.6557070613 )
+	sunColor ( 0.5647059083 0.6156862974 0.6705882549 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 100000
+	sunFlareMaterial "atmospheres/lights/sunsprite2"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.980392158 1 0.8823529482 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.7599999905 0.6599999666 0.2899999917 0.6999999881 )
+		glareBases ( 0 0.4799999893 0 0 )
+	}
+	fogDistHalf 2507
+	fogHeightHalf 778
+	fogHeightOffset 801
+	fogColor ( 0.270588249 0.2941176593 0.3137255013 )
+	fogStart 0
+	fogEnd 6628
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "outskirts_rain"
+	skyGradientImage "atmosphere/skies/outskirts_fog2"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 200
+	windAngleDev 4
+	windStrength 20
+	windStrengthDev 4
+	cloudLayer "atmospheres/skydomes/outskirts_revised" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 1
+		maxParticles 500
+		heightMin 100
+		heightMax 70
+		weightMin 1.5
+		weightMax 2.5
+		timeMin 0
+		timeMax 500
+		windScale 20
+		gustWindScale 30
+		fallMin 500
+		fallMax 1000
+		tumbleStrength 0
+		precipitationDistance 400
+		material "precipitation/raindrop_volcano"
+		effect "effects/ambient/outskirts_local_atmospherics"
+	}
+	precipitationLayer {
+		type 3
+		maxParticles 50
+		heightMin 1
+		heightMax 2
+		weightMin 20
+		weightMax 30
+		timeMin 0
+		timeMax 300
+		windScale 0
+		gustWindScale 0
+		fallMin 20
+		fallMax 30
+		tumbleStrength 0
+		precipitationDistance 300
+		material "particles/water/spray_heavy_01"
+	}
+}
+
+
+
+
+
+
+
+
+
+ambientCubemap outskirts {
+	ambientLight {
+		color 0.3098039329 0.3333333433 0.360784322
+		direction 0 0 1
+		name "sky"
+	}
+	ambientLight {
+		color 0.2627451122 0.3019607961 0.3372549117
+		direction 0.877278626 0.319303304 0.3583679497
+		name "east"
+	}
+	ambientLight {
+		color 0.250980407 0.2666666806 0.2784313858
+		direction -1 -0.0000000874 0.0000000122
+		name "west"
+	}
+	ambientLight {
+		color 0.2666666806 0.2823529541 0.3176470697
+		direction 0.1549120694 -0.9780762196 0.1391731054
+		name "south"
+	}
+	ambientLight {
+		color 0.2901960909 0.2901960909 0.2901960909
+		direction 0.01745243 0 -0.9998477101
+		name "ground"
+	}
+	ambientLight {
+		color 0.3215686381 0.3215686381 0.3215686381
+		direction -0.0000000437 1 0.0000000122
+		name "north"
+	}
+	envMap "env/outskirts"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+
+
+
+ambientCubemap outskirts_bank_interior01 {
+	ambientLight {
+		color 0.3764706254 0.3843137622 0.4196078777
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.250980407 0.270588249 0.2823529541
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.1882353127 0.2039215863 0.2117647231
+		direction 0 -1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.1882353127 0.2039215863 0.2156862915
+		direction -1 0 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1725490242 0.180392161 0.1921568811
+		direction 0 1 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.1921568811 0.2039215863 0.2117647231
+		direction 1 0 0
+		name "Light5"
+	}
+	indoors
+	envMap "env/outskirts/bank"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}atmosphere outskirts_rainy {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( 0.603222847 0.5120942593 0.6114586592 )
+	sunColor ( 0.6000000238 0.6196078658 0.6666666865 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 14530
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.8745098114 0.8823529482 0.9137254953 )
+		saturation 1
+		contrast 1.0399999619
+		glareParms ( 0.9799999595 0.7599999905 0.5 0.5 )
+		glareBases ( 0.0599999987 0.4799999893 0 0 )
+	}
+	fogDistHalf 3890
+	fogHeightHalf 1412
+	fogHeightOffset 836
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "outskirts_rain"
+	skyGradientImage "atmosphere/skies/outskirts_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 200
+	windAngleDev 4
+	windStrength 20
+	windStrengthDev 4
+	cloudLayer "atmospheres/skydomes/outskirts_new" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 1
+		maxParticles 1600
+		heightMin 50
+		heightMax 60
+		weightMin 1.5
+		weightMax 2.5
+		timeMin 0
+		timeMax 500
+		windScale 20
+		gustWindScale 50
+		fallMin 800
+		fallMax 1000
+		tumbleStrength 0
+		precipitationDistance 1000
+		material "precipitation/raindrop01"
+		effect "effects/ambient/outskirts_local_atmospherics"
+	}
+}
+
+atmosphere outskirts_rainy_desaturated {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( 0.603222847 0.5120942593 0.6114586592 )
+	sunColor ( 0.6705882549 0.7882353067 0.78039217 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 14530
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.8313726187 0.8588235974 0.874509871 )
+		saturation 0.5500000119
+		contrast 1.1000000238
+		glareParms ( 0.969999969 0.7099999785 0.5 0.5 )
+		glareBases ( 0.0700000003 0.4799999893 0 0 )
+	}
+	fogDistHalf 2507
+	fogHeightHalf 784
+	fogHeightOffset 801
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "outskirts_rain"
+	skyGradientImage "atmosphere/skies/day_cloudy5"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 200
+	windAngleDev 4
+	windStrength 20
+	windStrengthDev 4
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.3000000119 0.5500000119 0.5600000024 0.6000000238 0.0015 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 1
+		maxParticles 1600
+		heightMin 50
+		heightMax 60
+		weightMin 1.5
+		weightMax 2.5
+		timeMin 0
+		timeMax 500
+		windScale 20
+		gustWindScale 50
+		fallMin 800
+		fallMax 1000
+		tumbleStrength 0
+		precipitationDistance 1000
+		material "precipitation/raindrop01"
+	}
+}
+
+atmosphere outskirts_rainy_new {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( 0.7915043235 0.0519435778 0.6089522243 )
+	sunColor ( 0.6705882549 0.7882353067 0.78039217 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 14530
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.8313726187 0.8588235974 0.874509871 )
+		saturation 0.5
+		contrast 1.1000000238
+		glareParms ( 0.9799999595 0.7099999785 0.5 0.5 )
+		glareBases ( 0.0700000003 0.4799999893 0 0 )
+	}
+	fogDistHalf 3758
+	fogHeightHalf 784
+	fogHeightOffset 784
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "outskirts_rain"
+	skyGradientImage "atmosphere/skies/day_cloudy5"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 246
+	windAngleDev 76
+	windStrength 1
+	windStrengthDev 6
+	cloudLayer "atmospheres/skydomes/outskirts_new" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/outskirts_lightning" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/outskirts_lightning_strike" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 1
+		maxParticles 75
+		heightMin 40
+		heightMax 150
+		weightMin 1.5
+		weightMax 2.5
+		timeMin 0
+		timeMax 500
+		windScale 70
+		gustWindScale 100
+		fallMin 1200
+		fallMax 1500
+		tumbleStrength 0
+		precipitationDistance 1000
+		material "penta/raindrop2"
+	}
+	precipitationLayer {
+		type 1
+		maxParticles 40
+		heightMin 50
+		heightMax 150
+		weightMin 1.5
+		weightMax 2.5
+		timeMin 0
+		timeMax 500
+		windScale 140
+		gustWindScale 150
+		fallMin 1400
+		fallMax 1500
+		tumbleStrength 0
+		precipitationDistance 1000
+		material "penta/raindrop2"
+		effect "effects/ambient/outskirts_local_atmospherics"
+	}
+}
+
+atmosphere outskirts_rainy_new_lightning {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( 0.7915043235 0.0519435778 0.6089522243 )
+	sunColor ( 0.9725490212 0.9843137264 1 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 58120
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 1709
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.8313726187 0.8588235974 0.874509871 )
+		saturation 0.5
+		contrast 1.1000000238
+		glareParms ( 1.5599999428 0.7099999785 0.7699999809 0.2099999934 )
+		glareBases ( 0 0 0 0 )
+	}
+	fogDistHalf 3758
+	fogHeightHalf 784
+	fogHeightOffset 784
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "outskirts_rain_lightning"
+	skyGradientImage "atmosphere/skies/day_cloudy5"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 246
+	windAngleDev 76
+	windStrength 1
+	windStrengthDev 6
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.3000000119 0.5500000119 0.5600000024 0.6000000238 0.0015 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 1
+		maxParticles 75
+		heightMin 40
+		heightMax 150
+		weightMin 1.5
+		weightMax 2.5
+		timeMin 0
+		timeMax 500
+		windScale 70
+		gustWindScale 100
+		fallMin 1200
+		fallMax 1500
+		tumbleStrength 0
+		precipitationDistance 1000
+		material "penta/raindrop2"
+	}
+	precipitationLayer {
+		type 1
+		maxParticles 40
+		heightMin 50
+		heightMax 150
+		weightMin 1.5
+		weightMax 2.5
+		timeMin 0
+		timeMax 500
+		windScale 140
+		gustWindScale 150
+		fallMin 1400
+		fallMax 1500
+		tumbleStrength 0
+		precipitationDistance 1000
+		material "penta/raindrop2"
+		effect "effects/ambient/outskirts_local_atmospherics"
+	}
+}
+
+
+
+ambientCubeMap outskirts_rain {
+	ambientLight {
+		color 0.2823529541 0.3333333433 0.4000000358
+		direction 0 0 1
+		name "Light0"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.2588235438 0.2627451122 0.2980392277
+		direction 0 0 -1
+		name "Light1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.2431372553 0.2588235438 0.2745098174
+		direction 0.1756406128 0.9035925865 0.3907311261
+		name "Light2"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1921568662 0.2039215714 0.2313725501
+		direction 0.0173223317 -0.9923949838 0.1218693554
+		name "Light3"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3333333433 0.3960784376 0.4392156899
+		direction -0.8843650818 0.4506065547 0.1218693554
+		name "Light4"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.2470588237 0.250980407 0.2745098174
+		direction 1 0 0
+		name "Light5"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.2470588237 0.2666666806 0.2745098174
+		direction -0.7036204934 -0.6794784069 0.2079117
+		name "Light6"
+		ambient 1
+		specular 1
+	}
+	envMap "env/outskirts"
+	ambientColor 0.2901960909 0.2901960909 0.2901960909
+	minSpecAmbientColor 0.7098039389 0.760784328 0.8156862855
+	minSpecShadowColor 0.5 0.5 0.5
+	highLightColor 0.8784314394 0.8980392814 0.9647059441
+	brightness 1
+}
+
+
+
+
+
+
+
+ambientCubemap outskirts_rain_lightning {
+	ambientLight {
+		color 0.2823529541 0.3333333433 0.4000000358
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2588235438 0.2627451122 0.2980392277
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3372549117 0.3568627536 0.3764706254
+		direction 0.1756406128 0.9035925865 0.3907311261
+		name "Light2"
+	}
+	ambientLight {
+		color 0.1921568811 0.2039215863 0.231372565
+		direction 0.0173223317 -0.9923949838 0.1218693554
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1764705926 0.1764705926 0.1764705926
+		direction -0.9439674616 0.3067136705 0.1218693256
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2392157018 0.2431372702 0.2627451122
+		direction 1 0 0
+		name "Light5"
+	}
+	ambientLight {
+		color 0.2901960909 0.3098039329 0.3215686381
+		direction -0.7036204934 -0.6794784069 0.2079117
+		name "Light6"
+	}
+	envMap "env/outskirts"
+	ambientColor 0.2901960909 0.2901960909 0.2901960909
+	highLightColor 0.8784314394 0.8980392814 0.9647059441
+	brightness 1
+}
+
+ambientCubemap outskirts_objective_building_interior01 {
+	ambientLight {
+		color 0.2980392277 0.3098039329 0.2941176593
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2549019754 0.2549019754 0.2549019754
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3176470697 0.3176470697 0.3176470697
+		direction 0.9519067407 0.2729548812 -0.1391730905
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3372549117 0.3372549117 0.3372549117
+		direction -0.3158973455 -0.9174326062 0.2419219017
+		name "Light3"
+	}
+	ambientLight {
+		color 0.3019607961 0.3019607961 0.3019607961
+		direction -0.446036011 0.7423286438 0.5
+		name "Light5"
+	}
+	indoors
+	envMap "env/outskirts/brain"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+
+ambientCubemap outskirts_rain2 {
+	ambientLight {
+		color 0.2823529541 0.3333333433 0.4000000358
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2588235438 0.2627451122 0.2980392277
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3372549117 0.3568627536 0.3764706254
+		direction 0.1756406128 0.9035925865 0.3907311261
+		name "Light2"
+	}
+	ambientLight {
+		color 0.1921568811 0.2039215863 0.231372565
+		direction 0.0173223317 -0.9923949838 0.1218693554
+		name "Light3"
+	}
+	ambientLight {
+		color 0.2078431398 0.2470588237 0.2745098174
+		direction -0.8843650818 0.4506065547 0.1218693554
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2392157018 0.2431372702 0.2627451122
+		direction 1 0 0
+		name "Light5"
+	}
+	ambientLight {
+		color 0.2823529541 0.3019607961 0.3137255013
+		direction -0.7036204934 -0.6794784069 0.2079117
+		name "Light6"
+	}
+	ambientColor 0.2901960909 0.2901960909 0.2901960909
+	highLightColor 0.8784314394 0.8980392814 0.9647059441
+	brightness 1
+}
+

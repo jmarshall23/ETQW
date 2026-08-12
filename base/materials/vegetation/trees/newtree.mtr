@@ -1,0 +1,70 @@
+material models/andrew/newtree/newtree01_leaves
+{
+ 
+ 		
+
+ 	nonsolid
+ 	noshadows
+    twoSided
+
+ 	{
+ 		alphatocoverage
+  		program interaction/foliage
+  		diffusemap clamp models/andrew/newtree/newtree02.tga
+ 		//bumpmap clamp models/andrew/newtree/newtree02_local.tga
+ 		alphaTest 	0.25
+ 		
+		useTemplate wind/animatematrix< 0.15, 0.005 > // Speed, strength	
+ 	}
+	
+
+}
+
+material models/andrew/newtree/newtree01_leaves2
+{
+ 
+ 		
+
+ 	nonsolid
+ 	noshadows
+    twoSided
+
+ 	{
+ 		alphatocoverage
+  		program interaction/foliage
+  		diffusemap clamp models/andrew/newtree/newtree02.tga
+ 		
+		useTemplate wind/animatematrix< 0.15, 0.004 > // Speed, strength	
+ 	}
+	
+
+}
+
+material models/andrew/newtree/newtree01_bark
+{
+
+	nonsolid
+	//twoSided
+	//noshadows
+	noselfshadow
+	{
+		diffusemap models/andrew/newtree/newtree03.tga
+		//bumpmap models/andrew/newtree/newtree03_local.tga
+		alphaTest 	0.25
+	}
+}
+
+
+material models/andrew/newtree/newtree01_branches
+{
+	nonsolid
+	twoSided
+	noshadows
+	{
+ 		alphatocoverage
+		program interaction/foliage
+		diffusemap models/andrew/newtree/newtree01.tga
+		//bumpmap		models/andrew/newtree/newtree01_local.tga
+		alphaTest 	0.25
+	}
+}

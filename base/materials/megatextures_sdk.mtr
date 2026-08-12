@@ -1,0 +1,1 @@
+material megatextures/sdk/terrain_mesh_sdk						{ useTemplate megatextures/default_ambient_spec< "sdk/terrain_mesh_sdk" > }

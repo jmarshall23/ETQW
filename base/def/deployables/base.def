@@ -1,0 +1,167 @@
+
+entityDef deployable_base {
+	"editor_skipmenu"				"1"
+
+	"maxVisDist"					"10240"
+
+	"option_task_interface"			"1"
+	"option_network_interface"		"1"
+	"option_write_bind"				"1"
+	"option_interactive_interface"	"1"
+
+	"health"						"500"
+
+	"mtr_commandmap"				"guis/assets/qet/cm_unknown"
+	"mtr_commandmap_unknown"		"guis/assets/qet/cm_unknown"
+
+	"force_decalusagelocal"			"1"
+	
+	"joint_attach"					"origin"
+
+	"fx_death"						"effects/deployables/destroy"
+	"fx_damaged"					"effects/deployables/destroy_sparks"
+	"fx_damage_hacked"				"effects/weapons/grenades/emp/explosion"
+
+	//"snd_disable"					"sounds/deployables/misc/disable"
+	"snd_drop"						"sounds/deployables/misc/drop"
+
+	"dmg_falling"					"damage_falling_deployable"
+
+	// ***
+	// The following three looping sounds are commented out until I can look into this further.
+	// It was causing the Strogg and GDF bases to play a loud turret looping sound despite the base defense
+	// turrets being idle. -Xian
+	// ***
+	
+	// Gordon: i've uncommented the brass stop sound, as it was causing the turrets to sit playing brass sounds constantly
+	
+	//"snd_turret_yaw"				"sounds/deployables/misc/turrets_yaw"
+	//"snd_turret_pitch"			"sounds/deployables/misc/turrets_pitch"
+	
+	"snd_brass_stop"				"sounds/deployables/misc/turrets_brass_stop"
+	"snd_brass"						"sounds/deployables/misc/turrets_brass"
+	
+	
+	"use_brass"						"0"
+	"use_tracers"					"1"
+
+	"collection_deployables"		"deployables"
+	"collection_hackable"			"hackable"
+	"collection_emp"				"emp"
+	"collection_spottable"			"spottable"
+
+	"collection_he"					"he"
+	"collection_arty"				"arty"
+	"collection_ss"					"ss"
+
+	"icon_sort_cm"					"-5"	// jrad - make sure these sort over most things
+
+	"def_parachute"					"round_parachute"
+	
+	"mtr_cm_icon_need_repair"		"hud/icons/missionsystem/mis_engineer"
+	"require_view_repair"			"ability_repair && same_team"
+	
+	"stat_kill_suffix"				"deployable"
+	
+	"tt_intro_use_me_1_hack"		"deployable_intro_hack_1"
+	"tt_intro_use_me_2_hack"		"deployable_intro_hack_2"
+	
+	"occlusion_query"				"1"
+	
+	"waypoint_offset"				"0 0 128"
+}
+
+entityDef deployable_gdf {
+	"editor_skipmenu"				"1"
+
+	"task_hack"						"infiltrator_hack_deployable"
+	"task_destroy"					"destroy_deployable_strogg"
+	"task_repair"					"engineer_repair_deployable"
+	
+	"prof_disable"					"pro_infiltrator_emp_deployable"
+	"prof_hack"						"pro_infiltrator_hack_deployable"
+
+	"team"							"gdf"
+}
+
+entityDef deployable_strogg {
+	"editor_skipmenu"				"1"
+
+	"task_hack"						"covertops_hack_deployable"
+	"task_destroy"					"destroy_deployable_gdf"
+	"task_repair"					"constructor_repair_deployable"
+
+	"prof_disable"					"pro_covertops_emp_deployable"
+	"prof_hack"						"pro_covertops_hack_deployable"
+
+	"team"							"strogg"
+}
+
+toolTip deployable_intro_hack_1 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/hack_me_1"
+}
+
+toolTip deployable_intro_hack_2 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/hack_me_3"
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// BASE ENTITIES /////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+
+entityDef deployzone {
+	"spawnclass"					"sdDeployZone"
+	"scriptobject"					"deployzone"
+	
+	"dont_link_clip"				"1"
+
+	"editor_color"					".3 .3 1"
+	"editor_usage"					"Zone for Deploying Object in"
+	"editor_mins"					"?"
+	"editor_maxs"					"?"
+
+	"icon_sort_cm"					"-10"	// jrad - make sure these sort over everything
+	"ti_destroy"					"target_deployables_all"
+}
+
+stringMap deployitem_resupplyport_placement_model {
+	"model"							"models/temp/deployable_resupply.lwo"
+	"skin"							"deployEffect"
+	"maxVisDist"					"2560"
+	"pushIntoOutsideAreas"			"1"
+}
+
+damageDef damage_deployable_destruct {
+	damage							"damage_deployable_destruct"
+}
+
+damageFilter damage_deployable_destruct {
+	type {
+		target						"target_deployables"
+		damage						5000
+	}
+}
+
+damageDef damage_deployable_destroy {
+	damage							"damage_deployable_destroy"
+}
+
+damageFilter damage_deployable_destroy {
+	type {
+		target						"target_deployables"
+		damage						5000
+	}
+}
+
+damageDef damage_deployable_disable {
+	damage							"damage_deployable_disable"
+}
+
+damageFilter damage_deployable_disable {
+	type {
+		target						"target_deployables"
+		damage						1
+	}
+}

@@ -1,0 +1,148 @@
+/***********************************************************************
+
+projectile_decoy.script
+
+***********************************************************************/
+
+object projectile_decoy : projectile_missile {
+	void		preinit();
+	void		destroy();
+	void		syncFields();
+
+	void		Idle();
+	void		CheckTarget();
+	void		OnKilled();
+
+	void		SetupContents();
+
+	void		OnOwnerSynced();
+	void		ExtraDecoys( float count );
+	float		OnCollide( object traceObject, vector velocity, float bodyId );
+
+	void		DecoyActiveThread();
+
+	float		range;
+	string		decoyJoint;
+	entity		owner;
+	float		decoyActiveTime;
+	float		decoyActiveThread;
+
+	boolean		isActive;
+}
+
+void projectile_decoy::syncFields() {
+	syncBroadcast( "owner" );
+	syncCallback( "owner", "OnOwnerSynced" );
+}
+
+void projectile_decoy::preinit() {
+	range = getFloatKey( "range" );
+	decoyActiveTime = getFloatKeyWithDefault( "active_time", -1 );
+	decoyActiveThread = -1;
+	isActive = true;
+
+	if ( !sys.isClient() ) {
+		if ( decoyActiveTime != -1 ) {
+			decoyActiveThread = thread DecoyActiveThread();
+		}
+	}
+}
+
+void projectile_decoy::SetupContents() {
+	setContents( 0 );
+	setClipmask( CONTENTS_SOLID );
+}
+
+void projectile_decoy::destroy() {
+	stopEffect( "fx_trail" );
+
+	if ( decoyActiveThread != -1 ) {
+		sys.terminate( decoyActiveThread );
+	}
+}
+
+void projectile_decoy::OnOwnerSynced() {
+	if ( owner == $null_entity ) {
+		return;
+	}
+	
+	decoyJoint = owner.getKey( "projectile_decoy_joint" );
+
+	float extraDecoyCount = owner.getFloatKey( "extra_decoy_count" );
+	if ( extraDecoyCount ) {
+		thread ExtraDecoys( extraDecoyCount );
+	}
+}
+
+void projectile_decoy::vSetOwner( entity o ) {
+	owner = o;
+	OnOwnerSynced();
+}
+
+void projectile_decoy::Idle() {
+	if ( !sys.isClient() ) {
+		thread CheckTarget();
+	}
+
+	playEffect( "fx_trail", "", 1 );
+	startSound( "snd_fly", SND_WEAPON_FIRE );
+}
+
+void projectile_decoy::CheckTarget() {
+	float count;
+	float i;
+	entity target;
+
+	while ( true ) {
+		if ( !isActive ) {
+			break;
+		}
+
+		entitiesOfCollection( "decoy_target" );
+		filterEntitiesByRadius( getWorldOrigin(), range, 1 );
+		count = getBoundsCacheCount();
+
+		for ( i = 0; i < count; i++ ) {
+			target = getBoundsCacheEntity( i );
+			if ( target.vGetCurrentTarget() != owner ) {
+				continue;
+			}
+			target.vSetNewTarget( self );
+			return;
+		}
+		sys.waitFrame();
+	}
+}
+
+void projectile_decoy::OnKilled() {
+}
+
+void projectile_decoy::ExtraDecoys( float count ) {
+	float i = 0;
+	float delay = owner.getFloatKey( "extra_decoy_delay" );
+	for ( ; i < count; i++ ) {
+		if ( owner != $null_entity ) {
+			// fire the extra dummy decoys (e.g. the horizontal ones of the anansi)
+			owner.playEffect( "fx_decoy_extra", decoyJoint, 0 );
+			
+			if ( i > 0 ) {
+				// fire the extra dummy ones from the same location as the real one (e.g. the extra vertical ones on the anansi)
+				// nb: we fire one less because of the effect for the real one is already playing
+				owner.playEffect( "fx_decoy", decoyJoint, 0 );
+			}
+		}
+
+		sys.wait( delay );
+	}
+}
+
+float projectile_decoy::OnCollide( object traceObject, vector velocity, float bodyId ) {
+	ScheduleRemoval( 0 );
+	return 1.0f;
+}
+
+void projectile_decoy::DecoyActiveThread() {
+	sys.wait( decoyActiveTime );
+	isActive = false;
+	decoyActiveThread = -1;
+}

@@ -1,0 +1,288 @@
+///////////////////////////
+//// HENNINGS TEXTURES ////
+///////////////////////////
+
+material textures/metal/metal_trim_beige01
+{
+	surfaceType	"metal"
+	{
+		diffusemap		picmip -1	textures/metal/metal_trim_beige01_d.tga
+		specularmap		picmip -2	textures/metal/metal_trim_beige01_s.tga
+		bumpmap			picmip -1	textures/metal/metal_trim_beige01_local.tga
+		vertexColor
+ 	}
+}
+
+material textures/doors/gate_metal01
+{
+		surfaceType	"metal"
+
+	{
+		diffusemap		picmip -1	textures/doors/gate_metal01_d.tga
+		specularmap		picmip -2	textures/doors/gate_metal01_s.tga
+		bumpmap			picmip -1	textures/doors/gate_metal01_local.tga
+		vertexColor
+ 	}
+}
+
+material textures/metal/floorpanels1
+{
+	surfaceType	"metal"
+	{
+		diffusemap		picmip -1	textures/metal/floorpanels1_d.tga
+		specularmap		picmip -2	textures/metal/floorpanels1_s.tga
+		bumpmap 		picmip -1	textures/metal/floorpanels1_local.tga
+		vertexColor
+		
+		diffuseDetailMap 			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 			textures/detail/bump/metal_detail01_d.tga
+		detailMult	5,5,0,0
+ 	}
+}
+
+material textures/concrete/concrete_stained05
+{
+	surfaceType	"concrete"
+	{
+		diffusemap		picmip -1	textures/concrete/concrete_stained05_d.tga
+		specularmap		picmip -2	textures/concrete/concrete_stained05_s.tga
+		bumpmap			picmip -1	textures/concrete/concrete_stained05_local.tga
+		vertexColor
+
+		diffuseDetailMap 			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap	 			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap	 			textures/detail/bump/concrete_detail01_d.tga
+		detailMult	4,4,0,0
+ 	}
+}
+
+material textures/concrete/concrete_stained04
+{
+	surfaceType	"concrete"
+	{
+		diffusemap		picmip -1	textures/concrete/concrete_stained04_d.tga
+		specularmap		picmip -1	textures/concrete/concrete_stained04_s.tga
+		bumpmap			picmip -1	textures/concrete/concrete_stained04_local.tga
+		vertexcolor
+		
+		diffuseDetailMap 			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap	 			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap	 			textures/detail/bump/concrete_detail01_d.tga
+		detailMult	4,4,0,0
+ 	}
+}
+
+material textures/concrete/concrete_stained03
+{
+	surfaceType	"concrete"
+	{
+		diffusemap		picmip -1	textures/concrete/concrete_stained03_d.tga
+		specularmap		picmip -1	textures/concrete/concrete_stained03_s.tga
+		bumpmap 		picmip -1	textures/concrete/concrete_stained03_local.tga
+		vertexcolor
+		
+		diffuseDetailMap 			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap	 			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap	 			textures/detail/bump/concrete_detail01_d.tga
+		detailMult	6,6,0,0
+ 	}
+}
+
+material textures/concrete/concrete_stained02
+{
+	surfaceType	"concrete"
+	{
+		diffusemap		picmip -1	textures/concrete/concrete_stained02_d.tga
+		specularmap		picmip -1	textures/concrete/concrete_stained02_s.tga
+		bumpmap			picmip -1	textures/concrete/concrete_stained02_local.tga
+		vertexcolor
+		
+		diffuseDetailMap 			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap	 			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap	 			textures/detail/bump/concrete_detail01_d.tga
+		detailMult	4,4,0,0
+ 	}
+}
+
+material textures/concrete/concrete_stained01
+{
+	surfaceType	"concrete"
+	{
+		diffusemap		picmip -1	textures/concrete/concrete_stained01_d.tga
+		specularmap		picmip -1	textures/concrete/concrete_stained01_s.tga
+		bumpmap			picmip -1	textures/concrete/concrete_stained01_local.tga
+		vertexcolor
+		
+		diffuseDetailMap 			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap	 			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap	 			textures/detail/bump/concrete_detail01_d.tga
+		detailMult	3,3,0,0
+ 	}
+}
+
+material textures/raven/terminal/tunlight2
+{
+	bumpmap			picmip -1	addnormals ( textures/raven/terminal/tunlight_local, heightmap ( textures/raven/terminal/tunlight_h, 1 ) )
+	diffusemap		picmip -1	textures/raven/terminal/tunlight_d
+	specularmap		picmip -2	textures/raven/terminal/tunlight_s
+	{
+		blend		GL_ONE, GL_ONE
+		map			textures/raven/terminal/tunlight2_g
+		red			Parm0  
+		green		Parm1  
+		blue		Parm2  
+	}
+}
+
+material textures/raven/common_lights/light1_2
+{
+	bumpMap			textures/raven/common_lights/light1_1_local.tga
+	diffuseMap		textures/raven/common_lights/light1_1_d.tga
+	specularMap		textures/raven/common_lights/light1_1_s.tga
+	{
+		blend		add
+		map			textures/raven/common_lights/light1_2_add.tga
+		red			parm0
+		green		parm1
+		blue		parm2
+	}
+}
+
+material textures/effects/logo_glow
+{
+	nonsolid
+	noshadows
+//	twoSided
+	qer_editorimage textures/effects/logo_glow.tga
+  	{
+        blend add
+        map	textures/effects/logo_glow.tga
+		vertexColor
+	}
+}
+
+material textures/concrete/concrete_clean_11
+{
+		surfaceType	"concrete"
+
+	{
+		diffusemap	picmip -1	textures2/concrete/concrete_clean_11_d.tga
+		specularmap     picmip -2	textures2/concrete/concrete_clean_11_s.tga
+		bumpmap 	picmip -1	textures2/concrete/concrete_clean_11_local.tga
+		vertexcolor
+ 	}
+}
+
+material textures/concrete/concrete_clean_11b
+{
+		surfaceType	"concrete"
+
+	{
+		diffusemap	picmip -1	textures2/concrete/concrete_clean_11_d.tga
+		specularmap     picmip -2	textures2/concrete/concrete_clean_11_s.tga
+		bumpmap 	picmip -1	addnormals(textures2/concrete/concrete_dirty_31_local.tga, heightmap(textures2/concrete/concrete_clean_11_h.tga, 4 ) )
+		vertexcolor
+ 	}
+}
+
+material textures/pipes/light_pipe01
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures/pipes/light_pipe01_d.tga
+		specularmap	picmip -2	textures/pipes/light_pipe01_s.tga
+		bumpmap 	picmip -1	textures/pipes/light_pipe01_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 1,1,0,0
+ 	}
+}
+
+table pulseTable { { 0.000000, 0.000000, 0.009709, 0.009709, 0.009709, 0.009709, 0.000000, 0.009709, 0.019417, 0.038835, 0.067961, 0.072087, 0.061379, 0.038835, 0.009709, 0.000000, -0.029126, -0.019417 , 0.009709, 0.126214, 0.485437, 0.508738, 0.407767, 0.145631, -0.184466, -0.058252, 0.000000, -0.019417, -0.009709, 0.048544, 0.067961, 0.029126, 0.009709, 0.009709, 0.000000, 0.000000, 0.009709, 0.009709, 0.009709 } }
+material textures/hell/anustubescroll
+{
+	qer_editorimage textures/hell/anustubescroll.tga
+    
+	
+	//noselfShadow
+	//noshadows
+	//deform	expand	4*pulsetable[time*0.25]
+	
+
+	{
+		parameters 10*pulsetable[time*0.1]
+		program deform/expand
+
+		bumpmap textures/hell/anustubescroll_local.tga
+		diffusemap textures/hell/anustubescroll.tga
+		specularmap textures/hell/anustubescroll_s.tga
+		/*textureMatrix diffuseMatrix {
+			translate	time*-.005,time*-.01
+		}
+		textureMatrix bumpMatrix {
+			translate	time*-.005,time*-.01
+		}
+		textureMatrix specularMatrix {
+			translate	time*-.005,time*-.01
+		}
+		*/
+	}
+}
+
+material textures/hell/anustube
+{
+	qer_editorimage textures/hell/anustubescroll.tga
+	{
+		bumpmap		picmip -1	textures/hell/anustubescroll_local.tga
+		diffusemap	picmip -2	textures/hell/anustubescroll.tga
+		specularmap	picmip -1	textures/hell/anustubescroll_s.tga
+		vertexcolor
+	}
+}
+
+//(doesn't accept decal projections from projectiles, etc)
+material textures/hell/anustube_nooverlays
+{
+	qer_editorimage textures/hell/anustubescroll.tga
+	noOverlays
+	{
+		bumpmap		picmip -1	textures/hell/anustubescroll_local.tga
+		diffusemap	picmip -2	textures/hell/anustubescroll.tga
+		specularmap	picmip -1	textures/hell/anustubescroll_s.tga
+		vertexcolor
+	}
+}
+
+material textures/hell/dh_pipehexigon
+{
+	surfaceType "metal"
+	{
+		program		interaction/strogg
+		diffusemap		picmip -1	textures/hell/dh_pipehexigon_d.tga
+		specularmap		picmip -2	textures/hell/dh_pipehexigon_s.tga
+		bumpmap			picmip -1	textures/hell/dh_pipehexigon_local.tga
+		selfIllumMap	picmip -1	textures/hell/dh_pipehexigon_glow.tga
+	
+	}
+}
+
+material textures/hell/dh_pipehexigon_b
+{
+	surfaceType "metal"
+	{
+		program		interaction/strogg
+		diffusemap		picmip -1	textures/hell/dh_pipehexigon_b_d.tga
+		specularmap		picmip -2	textures/hell/dh_pipehexigon_s.tga
+		bumpmap			picmip -1	textures/hell/dh_pipehexigon_local.tga
+		selfIllumMap	picmip -1	textures/hell/dh_pipehexigon_b_glow.tga
+	
+	}
+}
+
+
+
+

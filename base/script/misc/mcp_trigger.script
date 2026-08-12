@@ -1,0 +1,67 @@
+
+object mcp_trigger {
+	void		preinit();
+	void		init();
+	void		destroy();
+
+	void		OnTouch( entity activator, object traceObject );
+	void		OnNetworkEvent();
+	void		PlayCompletionSound();
+	
+	float		objectiveIndex;
+}
+
+void mcp_trigger::preinit() {
+	objectiveIndex = getFloatKeyWithDefault( "objective_index", -1 );
+}
+
+void mcp_trigger::init() {
+	setContents( CONTENTS_TRIGGER );
+}
+
+void mcp_trigger::destroy() {
+}
+
+void mcp_trigger::OnTouch( entity activator, object traceObject ) {
+	vehicle_mcp mcp = activator;
+	if ( mcp == $null_entity ) {
+		return;
+	}
+
+	if ( !sys.isClient() ) {
+		if ( objectiveIndex != -1 ) {
+			objManager.CompleteObjective( objectiveIndex, activator.getDriver() );
+		}
+	}
+
+	if ( sys.isServer() ) {
+		sendNetworkEvent( -1, false, "c" );
+		sendNetworkEvent( -1, true, "c" );
+	} else {
+		PlayCompletionSound();
+	}
+
+	if ( !sys.isClient() ) {
+		remove();
+	}
+}
+
+void mcp_trigger::OnNetworkEvent() {
+	string message = sys.argv( 0 );
+	
+	if ( message == "c" ) {
+		PlayCompletionSound();
+	}
+}
+
+void mcp_trigger::PlayCompletionSound() {
+	entity p = sys.getLocalPlayer();
+	if ( p == $null_entity ) {
+		return;
+	}
+	team_base team = p.getGameTeam();
+	if ( team == $null_entity ) {
+		return;
+	}
+	sys.startSoundDirect( getKey( "snd_complete_" + team.getName() ), SND_PLAYER_VO_MCP_UPDATE );
+}

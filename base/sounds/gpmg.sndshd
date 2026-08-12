@@ -1,0 +1,99 @@
+
+sound sounds/weapons/gpmg/fire {
+	compression wav
+
+	maxDistance 75
+	no_dups
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/gpmg/new_16.wav
+}
+
+sound sounds/weapons/gpmg/fire/far {
+	compression wav
+	
+	volume -12
+//	farDistance 25
+	maxDistance 150
+	occlude_once
+//	antiPrivate
+
+	sounds/weapons/gpmg/fire_far.wav
+}
+
+sound sounds/weapons/gpmg/fire/local {
+	compression wav
+
+	occlude_once
+
+	no_dups
+	private
+
+//	sounds/weapons/gpmg/new_local_01.wav
+//	sounds/weapons/gpmg/new_local_02.wav
+//	sounds/weapons/gpmg/new_local_03.wav
+//	sounds/weapons/gpmg/new_local_04.wav
+//	sounds/weapons/gpmg/new_local_05.wav
+//	sounds/weapons/gpmg/new_local_06.wav
+//	sounds/weapons/gpmg/new_local_07.wav
+//	sounds/weapons/gpmg/new_local_08.wav
+//	sounds/weapons/gpmg/new_local_09.wav
+//	sounds/weapons/gpmg/new_local_10.wav
+//	sounds/weapons/gpmg/new_local_11.wav
+//	sounds/weapons/gpmg/new_local_12.wav
+//	sounds/weapons/gpmg/new_local_13.wav
+//	sounds/weapons/gpmg/new_local_14.wav
+//	sounds/weapons/gpmg/new_local_15.wav
+//	sounds/weapons/gpmg/new_local_16.wav
+	sounds/weapons/gpmg/new_local_17.wav
+}
+
+sound sounds/weapons/gpmg/reload {
+
+	volume -3
+
+	sounds/weapons/gpmg/reload.wav
+}
+
+sound sounds/weapons/gpmg/brass/loop {
+	compression wav
+
+	volume -15
+	occlude_once
+
+	looping
+	sounds/weapons/gpmg/brass_loop.wav
+}
+
+sound sounds/weapons/gpmg/brass/stop {
+	compression wav
+
+	volume -15
+	occlude_once
+
+	sounds/weapons/gpmg/brass_stop.wav
+}
+
+sound sounds/weapons/gpmg/sights/up {
+
+	volume -20
+
+	sounds/weapons/gpmg/sights_up.wav
+}
+
+sound sounds/weapons/gpmg/sights/down {
+
+	volume -20
+
+	sounds/weapons/gpmg/sights_down.wav
+}
+
+sound sounds/weapons/gpmg/raise {
+	compression wav
+
+	volume -20
+	occlude_once
+
+	sounds/weapons/gpmg/raise.wav
+}

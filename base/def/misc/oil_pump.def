@@ -1,0 +1,62 @@
+/***********************************************************************
+***********************************************************************/
+// ===================================================================
+// Export
+//
+
+export hauser {
+	options -prefix OIL_	 -sourcedir models/mapobjects/oil_pump/dev_sd -destdir models/mapobjects/oil_pump/ -keep origin dummy
+
+
+
+	mesh	oil_pump.mb		-dest models/mapobjects/oil_pump/oil_pump.md5mesh	-range  0 0
+
+	anim	oil_pump.mb		-dest models/mapobjects/oil_pump/oil_pump.md5anim
+
+}
+
+// ========================================================================
+// Model
+//
+
+model oil_pump {
+	mesh		 					models/mapobjects/oil_pump/oil_pump.md5mesh
+	anim base						models/mapobjects/oil_pump/oil_pump.md5anim
+	anim base_b						models/mapobjects/oil_pump/oil_pump_b.md5anim
+	anim base_c						models/mapobjects/oil_pump/oil_pump_c.md5anim
+
+}
+entityDef env_oil_pump {
+	"editor_color"			"1 .5 0"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+									
+	"spawnclass"			"idAnimated"
+	"model"					"oil_pump"
+	"anim"					"base"
+	"start_anim"			"base"
+}
+
+// slower version
+entityDef env_oil_pump_b {
+	"editor_color"			"1 .5 0"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+									
+	"spawnclass"			"idAnimated"
+	"model"					"oil_pump"
+	"anim"					"base_b"
+	"start_anim"			"base_b"
+}
+
+// even slower yet
+entityDef env_oil_pump_c {
+	"editor_color"			"1 .5 0"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+									
+	"spawnclass"			"idAnimated"
+	"model"					"oil_pump"
+	"anim"					"base_c"
+	"start_anim"			"base_c"
+}

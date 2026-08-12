@@ -1,0 +1,47 @@
+/////////////////////////
+// Tools Sound Shaders //
+/////////////////////////
+
+sound sounds/tools/repairdrone/seek {
+
+	volume -10
+
+	sounds/tools/repairdrone/seek.wav
+}
+
+sound sounds/tools/repairdrone/return {
+
+	volume -10
+
+	sounds/tools/repairdrone/return.wav
+}
+
+sound sounds/tools/repairdrone/repair {
+
+	volume -10
+
+	sounds/tools/repairdrone/repair.wav
+}
+
+sound sounds/tools/repairdrone/idle {
+
+	volume -20
+
+	looping
+	sounds/tools/repairdrone/idle.wav
+}
+
+sound sounds/tools/repairdrone/beam {
+
+	volume -10
+
+	looping
+	sounds/tools/repairdrone/beam.wav
+}
+
+sound sounds/tools/repairdrone/raise {
+
+	volume -7
+
+	sounds/tools/repairdrone/raise.wav
+}

@@ -1,0 +1,12 @@
+
+campaignDef campaign_ld_playtest {
+	map "maps/area22"
+	map	"maps/ark"
+	map	"maps/outskirts"
+	map	"maps/refinery"
+	map "maps/salvage"
+	
+	data {
+		"mtr_backdrop"		"textures/lloyd/post_it6"
+	}
+}

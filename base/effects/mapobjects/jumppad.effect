@@ -1,0 +1,714 @@
+effect effects/mapobjects/jumppad_top
+{
+	size	670
+
+	sound "unnamed0"
+	{
+		soundShader	"sounds/jumppad_idle"
+	}
+	emitter "Up Rings"
+	{
+		duration	0.5,0.5
+		count		8,8
+
+		oriented
+		{
+			duration	1,2
+			material	"textures/effects/ring"
+			trailRepeat	1
+
+			start
+			{
+				position { line -15,0,0,-5,0,0 }
+				size { point 60,60 }
+				tint { line 0.0705882,0.027451,0.0196078,0.215686,0.0901961,0.0666667 }
+				rotate { box -0.00833333,-0.00833333,0,0.00833333,0.00833333,0 }
+			}
+
+			motion
+			{
+				size { envelope jrad_spawnringsup count 0.78,0.78 }
+				tint { envelope linear }
+				offset { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 50,50 }
+				offset { line 20,0,0,30,0,0 }
+			}
+		}
+	}
+	emitter "Up Rings2"
+	{
+		duration	0.5,0.5
+		count		8,8
+
+		oriented
+		{
+			duration	1,2
+			material	"textures/effects/ring"
+			trailRepeat	1
+
+			start
+			{
+				position { line -15,0,0,-5,0,0 }
+				size { point 12,12 }
+				tint { line 0.188235,0.054902,0.054902,0.309804,0.117647,0.0588235 }
+				rotate { box -0.00833333,-0.00833333,0,0.00833333,0.00833333,0 }
+			}
+
+			motion
+			{
+				size { envelope jrad_spawnringsup count 0.78,0.78 }
+				tint { envelope linear }
+				offset { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 8,8 }
+				offset { line 20,0,0,30,0,0 }
+			}
+		}
+	}
+	spawner "Sparklies"
+	{
+		start		0.2,0.2
+		count		25,25
+
+		sprite
+		{
+			duration	1,3
+			blend	add
+			material	"textures/effects/circle"
+			trailRepeat	1
+			trailType	motion
+			trailTime	0.1,0.1
+			trailCount	4,4
+			trailScale	0.500000
+			trailMaterial	"textures/effects/motionblur_nobloom"
+
+			start
+			{
+				position { spiral -100,-6,-6,-150,6,6,32 }
+				velocity { box 50,0,0,75,0,0 }
+				size { line 0.4,0.4,0.7,0.7 }
+				tint { line 0.25098,0.0823529,0.0235294,0.494118,0.0705882,0.0705882 }
+				fade { line 0.4,0.7 }
+				offset { spiral -15,-15,-15,15,15,15,360 }
+			}
+
+			motion
+			{
+				tint { envelope costable }
+				fade { envelope costable }
+			}
+		}
+	}
+	emitter "warp2"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		oriented
+		{
+			duration	0.8,0.8
+			blend	add
+			material	"textures/effects/ssm_shockwave2"
+			trailRepeat	1
+
+			start
+			{
+				position { point 8,0,0 }
+				size { point 30,30 }
+			}
+
+			motion
+			{
+				size { envelope shamus_fastinslowout count 0.6,0.6 offset 0.5,0.5 }
+				tint { envelope convexfade }
+				fade { envelope shamus_fastinslowout }
+				offset { envelope aa_testblasttable2 }
+			}
+
+			end
+			{
+				size { point 70,70 }
+				fade { point 1 }
+			}
+		}
+	}
+	emitter "unnamed6"
+	{
+		duration	0.3,0.3
+		count		1,1
+
+		oriented
+		{
+			duration	0.7,0.7
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point 5,0,0 }
+				size { point 30,30 }
+				tint { point 0.207843,0.0784314,0.0431373 }
+				rotate { point 0.5,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope shamus_fastinslowout }
+				fade { envelope senetable3 }
+			}
+
+			end
+			{
+				tint { point 0.713726,0.207843,0.196078 }
+			}
+		}
+	}
+	emitter "unnamed7"
+	{
+		duration	0.3,0.3
+		count		1,1
+
+		oriented
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point 8,0,0 }
+				size { point 80,80 }
+				tint { point 0,0,0 }
+				rotate { point 0.5,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope shamus_fastinslowout }
+				fade { envelope senetable3 }
+			}
+
+			end
+			{
+				tint { point 0.776471,0.27451,0.14902 }
+			}
+		}
+	}
+	emitter "unnamed8"
+	{
+		duration	1,1
+		count		1,1
+
+		line
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point -40,0,0 }
+				size { point 10 }
+				tint { point 0,0,0 }
+				length { box 70,0,0,100,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope shamus_fastinslowout }
+			}
+
+			end
+			{
+				tint { point 0.72549,0.290196,0.184314 }
+			}
+		}
+	}
+	emitter "unnamed9"
+	{
+		duration	1,1
+		count		1,1
+
+		line
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point -180,0,0 }
+				size { point 25 }
+				tint { point 0,0,0 }
+				length { point 300,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope shamus_fastinslowout }
+			}
+
+			end
+			{
+				tint { point 0.411765,0.168627,0.105882 }
+			}
+		}
+	}
+	emitter "unnamed10"
+	{
+		duration	1,1
+		count		1,1
+
+		line
+		{
+			duration	1.4,1.4
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point -300,0,0 }
+				size { point 70 }
+				tint { point 0,0,0 }
+				length { point 450,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope shamus_fastinslowout }
+			}
+
+			end
+			{
+				tint { point 0.188235,0.0745098,0.0470588 }
+			}
+		}
+	}
+	emitter "smokey"
+	{
+		duration	0.3,0.3
+		count		20,20
+
+		sprite
+		{
+			duration	1,1.5
+			blend	add
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				position { point -1,0,0 }
+				velocity { box -30,-1,-1,-30,1,1 }
+				size { box 10,10,20,20 }
+				tint { line 0.913726,0.529412,0.105882,0.894118,0.27451,0.121569 }
+				fade { line 0.1,0.4 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope concavefade }
+				fade { envelope rr2_concavefade_start_at_1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 40,40,50,50 }
+				rotate { box -0.25,0.25 relative }
+			}
+		}
+	}
+	light "unnamed11"
+	{
+
+		light
+		{
+			duration	1,1
+			material	"lights/round"
+			trailRepeat	1
+
+			start
+			{
+				position { point -50,0,0 }
+				size { point 200,200,200 }
+				tint { point 0.392157,0.117647,0.109804 }
+			}
+
+			motion
+			{
+				tint { envelope shamus_fastinslowout }
+			}
+
+			end
+			{
+				tint { point 0.827451,0.266667,0.203922 }
+			}
+		}
+	}
+}
+
+effect effects/mapobjects/jumppad_bottom
+{
+	size	595
+
+	sound "unnamed0"
+	{
+		soundShader	"sounds/jumppad_idle"
+	}
+	emitter "Up Rings"
+	{
+		duration	0.5,0.5
+		count		8,8
+
+		oriented
+		{
+			duration	1,2
+			material	"textures/effects/ring"
+			trailRepeat	1
+
+			start
+			{
+				position { line -5,0,0,5,0,0 }
+				size { point 50,50 }
+				tint { line 0.0705882,0.027451,0.0196078,0.215686,0.0901961,0.0666667 }
+				rotate { box -0.00833333,-0.00833333,0,0.00833333,0.00833333,0 }
+			}
+
+			motion
+			{
+				size { envelope jrad_spawnringsup count 0.78,0.78 }
+				tint { envelope linear }
+				offset { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 60,60 }
+				offset { line 20,0,0,30,0,0 }
+			}
+		}
+	}
+	emitter "Up Rings2"
+	{
+		duration	0.5,0.5
+		count		8,8
+
+		oriented
+		{
+			duration	1,2
+			material	"textures/effects/ring"
+			trailRepeat	1
+
+			start
+			{
+				position { line -5,0,0,5,0,0 }
+				size { point 8,8 }
+				tint { line 0.188235,0.054902,0.054902,0.309804,0.117647,0.0588235 }
+				rotate { box -0.00833333,-0.00833333,0,0.00833333,0.00833333,0 }
+			}
+
+			motion
+			{
+				size { envelope jrad_spawnringsup count 0.78,0.78 }
+				tint { envelope linear }
+				offset { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 12,12 }
+				offset { line 20,0,0,30,0,0 }
+			}
+		}
+	}
+	spawner "Sparklies"
+	{
+		count		25,25
+
+		sprite
+		{
+			duration	1,3
+			blend	add
+			material	"textures/effects/circle"
+			trailRepeat	1
+			trailType	motion
+			trailTime	0.1,0.1
+			trailCount	4,4
+			trailScale	0.500000
+			trailMaterial	"textures/effects/motionblur_nobloom"
+
+			start
+			{
+				position { spiral 0,-16,-16,50,16,16,32 }
+				velocity { box 50,0,0,75,0,0 }
+				size { line 0.4,0.4,0.7,0.7 }
+				tint { line 0.933333,0.435294,0.266667,0.901961,0.301961,0.301961 }
+				fade { line 0.4,1 }
+				offset { spiral -15,-15,-15,15,15,15,360 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope jrad_alphain }
+			}
+		}
+	}
+	emitter "warp2"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		oriented
+		{
+			duration	0.8,0.8
+			blend	add
+			material	"textures/effects/ssm_shockwave2"
+			trailRepeat	1
+
+			start
+			{
+				position { point -8,0,0 }
+				size { point 70,70 }
+			}
+
+			motion
+			{
+				size { envelope shamus_fastinslowout count 0.6,0.6 offset 0.5,0.5 }
+				tint { envelope convexfade }
+				fade { envelope shamus_fastinslowout }
+				offset { envelope aa_testblasttable2 }
+			}
+
+			end
+			{
+				size { point 30,30 }
+				fade { point 1 }
+			}
+		}
+	}
+	emitter "unnamed6"
+	{
+		duration	0.3,0.3
+		count		1,1
+
+		oriented
+		{
+			duration	0.7,0.7
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point -6,0,0 }
+				size { point 30,30 }
+				tint { point 0.207843,0.0784314,0.0431373 }
+			}
+
+			motion
+			{
+				tint { envelope shamus_fastinslowout }
+				fade { envelope senetable3 }
+			}
+
+			end
+			{
+				tint { point 0.713726,0.207843,0.196078 }
+			}
+		}
+	}
+	emitter "unnamed7"
+	{
+		duration	0.3,0.3
+		count		1,1
+
+		oriented
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point -9,0,0 }
+				size { point 80,80 }
+				tint { point 0,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope shamus_fastinslowout }
+				fade { envelope senetable3 }
+			}
+
+			end
+			{
+				tint { point 0.776471,0.27451,0.14902 }
+			}
+		}
+	}
+	emitter "unnamed8"
+	{
+		duration	1,1
+		count		1,1
+
+		line
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point -40,0,0 }
+				size { point 10 }
+				tint { point 0,0,0 }
+				length { box 70,0,0,100,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope shamus_fastinslowout }
+			}
+
+			end
+			{
+				tint { point 0.72549,0.290196,0.184314 }
+			}
+		}
+	}
+	emitter "unnamed9"
+	{
+		duration	1,1
+		count		1,1
+
+		line
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point -150,0,0 }
+				size { point 25 }
+				tint { point 0,0,0 }
+				length { point 300,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope shamus_fastinslowout }
+			}
+
+			end
+			{
+				tint { point 0.411765,0.168627,0.105882 }
+			}
+		}
+	}
+	emitter "unnamed10"
+	{
+		duration	1,1
+		count		1,1
+
+		line
+		{
+			duration	1.4,1.4
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point -150,0,0 }
+				size { point 70 }
+				tint { point 0,0,0 }
+				length { point 450,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope shamus_fastinslowout }
+			}
+
+			end
+			{
+				tint { point 0.188235,0.0745098,0.0470588 }
+			}
+		}
+	}
+	emitter "smokey"
+	{
+		duration	0.3,0.3
+		count		20,20
+
+		sprite
+		{
+			duration	1,1.5
+			blend	add
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 30,-1,-1,30,1,1 }
+				size { box 10,10,20,20 }
+				tint { line 0.913726,0.529412,0.105882,0.894118,0.27451,0.121569 }
+				fade { line 0.1,0.4 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope concavefade }
+				fade { envelope rr2_concavefade_start_at_1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 40,40,50,50 }
+				rotate { box -0.25,0.25 relative }
+			}
+		}
+	}
+	light "unnamed6"
+	{
+
+		light
+		{
+			duration	1,1
+			material	"lights/round"
+			trailRepeat	1
+
+			start
+			{
+				position { point 50,0,0 }
+				size { point 200,200,200 }
+				tint { point 0.392157,0.117647,0.109804 }
+			}
+
+			motion
+			{
+				tint { envelope shamus_fastinslowout }
+			}
+
+			end
+			{
+				tint { point 0.827451,0.266667,0.203922 }
+			}
+		}
+	}
+}
+

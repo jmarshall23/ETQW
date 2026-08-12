@@ -1,0 +1,112 @@
+
+sound sounds/deployables/ssg/deploy {
+
+	volume 0
+	minDistance	5
+	maxDistance 100
+
+	sounds/deployables/ssg/deployseq.wav
+}
+
+sound sounds/deployables/ssg/deploy/foot {
+
+	volume -5
+	maxDistance 50
+	no_dups
+
+	sounds/deployables/ssg/foot_01.wav
+	sounds/deployables/ssg/foot_02.wav
+	sounds/deployables/ssg/foot_03.wav
+}
+
+sound sounds/deployables/ssg/fire {
+
+	shakes		0.1
+	minDistance	75
+	maxDistance 250
+	
+	sounds/deployables/ssg/xfire_01.wav
+}
+
+sound sounds/deployables/ssg/fly {
+	volume	-5
+	minDistance	25
+	maxDistance 175
+	looping
+	no_dups
+	
+	//sounds/weapons/plasmacannon/fly_start.wav
+	//sounds/weapons/plasmacannon/fly_loop.wav
+	//sounds/deployables/ssg/balltravel_05.wav
+	//sounds/deployables/ssg/balltravel_06.wav
+	sounds/deployables/ssg/balltravel_07.wav
+	sounds/deployables/ssg/balltravel_08.wav
+}
+
+sound sounds/deployables/ssg/explode {
+	minDistance	75
+	maxDistance 200
+
+	sounds/deployables/ssg/explode_03.wav
+}
+
+sound sounds/deployables/ssg/explode01 {
+	minDistance	75
+	maxDistance 200
+
+	sounds/deployables/ssg/explode_01.wav
+}
+
+// *** New Stuff - May.3.2006 - Xian
+
+sound sounds/deployables/ssg/detonate_near {
+	minDistance	50
+	maxDistance 125
+	no_occlusion
+	shakes 0.1
+
+	sounds/deployables/ssg/detonation_01_near.wav
+}
+
+sound sounds/deployables/ssg/detonate_medium {
+	volume	1
+	farDistance 100
+	maxDistance 175
+	no_occlusion
+
+	sounds/deployables/ssg/detonation_01_medium.wav
+}
+
+sound sounds/deployables/ssg/detonate_far {
+	volume	1
+	farDistance 150
+	maxDistance 200
+	no_occlusion
+	sounds/deployables/ssg/detonation_01_far.wav
+}
+
+// *** Fire Sounds
+
+sound sounds/deployables/ssg/fire_near {
+	shakes		0.1
+	volume		1
+	minDistance	1
+	maxDistance 75
+	no_occlusion
+	
+	sounds/deployables/ssg/fire_01_near.wav
+}
+
+sound sounds/deployables/ssg/fire_medium {
+	farDistance 50
+	maxDistance 100
+	
+	sounds/deployables/ssg/fire_01_medium.wav
+}
+
+sound sounds/deployables/ssg/fire_far {
+	farDistance 75
+	maxDistance 150
+	no_occlusion
+	sounds/deployables/ssg/fire_01_far.wav
+}

@@ -1,0 +1,88 @@
+////////////
+// Icarus //
+////////////
+
+sound sounds/vehicles/icarus/bomb_fire {
+	minDistance	5
+	maxDistance	35
+	volume		0
+	
+	//sounds/vehicles/icarus/bomb_launch.wav
+	sounds/vehicles/icarus/bomb_launch_03.wav
+	sounds/vehicles/icarus/bomb_launch_04.wav
+}
+
+sound sounds/vehicles/icarus/bomb_fly {
+
+	volume -5
+
+	looping
+	sounds/vehicles/icarus/bomb_fly_01.wav
+	sounds/vehicles/icarus/bomb_fly_02.wav
+	sounds/vehicles/icarus/bomb_fly_03.wav
+}
+
+sound sounds/vehicles/icarus/bomb_detonate {
+	minDistance	25
+	maxDistance	100
+	volume		2
+	unclamped
+	
+	sounds/vehicles/icarus/detonation_01.wav
+	sounds/vehicles/icarus/detonation_02.wav
+	sounds/vehicles/icarus/detonation_03.wav
+}
+
+sound sounds/vehicles/icarus/jet {
+
+	volume -35
+	minDistance	10
+	maxDistance	80
+
+	looping
+	leadin
+	sounds/vehicles/icarus/jet_start.wav
+	sounds/vehicles/icarus/jet_loop.wav
+}
+
+sound sounds/vehicles/icarus/jet_stop {
+
+	volume -25
+	maxDistance	80
+
+	sounds/vehicles/icarus/jet_stop.wav
+}
+
+sound sounds/vehicles/icarus/idle {
+
+	minDistance	5
+	maxDistance	80
+	
+	looping
+	leadin
+	sounds/vehicles/icarus/idle_06_start.wav
+	sounds/vehicles/icarus/idle_06.wav
+}
+
+sound sounds/vehicles/icarus/stop {
+
+	minDistance	5
+	maxDistance	80
+	
+	sounds/vehicles/icarus/idle_06_stop.wav
+}
+
+sound sounds/vehicles/icarus/fall {
+
+	maxDistance	30
+
+	sounds/players/footsteps/metal_jump.wav
+}
+
+sound sounds/vehicles/icarus/jump {
+
+	volume -25
+	maxDistance	80
+
+	sounds/vehicles/icarus/jump.wav
+}

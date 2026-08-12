@@ -1,0 +1,11 @@
+
+entityDef misc_particle_trigger {
+	"editor_mins"				"-8 -8 -8"
+	"editor_maxs"				"8 8 8"
+	"editor_color"				"0 0 1"
+
+	"spawnclass"				"sdScriptEntity"
+	"scriptobject"				"particle_trigger"
+	
+	"option_network_interface"	"1"
+}

@@ -1,0 +1,658 @@
+///////////////
+// QuickChat //
+///////////////
+
+// message beep
+
+sound chat_edf_msg_send {
+
+	volume 3
+
+	sounds/chat/edf/msgsend.wav
+}
+
+// attack
+
+sound chat_edf_attack_base {
+
+	sounds/chat/edf/attack/base1.wav
+	sounds/chat/edf/attack/base2.wav
+}
+
+sound chat_edf_attack_command {
+
+	sounds/chat/edf/attack/com_center1.wav
+	sounds/chat/edf/attack/com_center2.wav
+}
+
+sound chat_edf_attack_enemy {
+
+	sounds/chat/edf/attack/enemy1.wav
+	sounds/chat/edf/attack/enemy2.wav
+}
+
+sound chat_edf_attack_engage {
+
+	sounds/chat/edf/attack/engage1.wav
+	sounds/chat/edf/attack/engage2.wav
+}
+
+sound chat_edf_attack_factory {
+
+	sounds/chat/edf/attack/factory1.wav
+	sounds/chat/edf/attack/factory2.wav
+}
+
+sound chat_edf_attack_fsb {
+
+	sounds/chat/edf/attack/fsb1.wav
+	sounds/chat/edf/attack/fsb2.wav
+
+}
+
+sound chat_edf_attack_outpost {
+
+	sounds/chat/edf/attack/outpost1.wav
+	sounds/chat/edf/attack/outpost2.wav
+}
+
+sound chat_edf_attack_vehicle {
+
+	sounds/chat/edf/attack/vehicle1.wav
+	sounds/chat/edf/attack/vehicle2.wav
+}
+
+// commands
+
+sound chat_edf_command_acknowledged {
+
+	sounds/chat/edf/command/ack1.wav
+	sounds/chat/edf/command/ack2.wav
+}
+
+sound chat_edf_command_affirmative {
+
+	sounds/chat/edf/command/aff1.wav
+	sounds/chat/edf/command/aff2.wav
+}
+
+sound chat_edf_command_confirmed {
+
+	sounds/chat/edf/command/conf1.wav
+	sounds/chat/edf/command/conf2.wav
+}
+
+
+sound chat_edf_command_commandacknowledged {
+
+	sounds/chat/edf/command/com_ack1.wav
+	sounds/chat/edf/command/com_ack2.wav
+}
+
+sound chat_edf_command_commandcompleted {
+
+	sounds/chat/edf/command/com_compl1.wav
+	sounds/chat/edf/command/com_compl2.wav
+}
+
+sound chat_edf_command_commanddeclined {
+
+	sounds/chat/edf/command/com_decl1.wav
+	sounds/chat/edf/command/com_decl2.wav
+}
+
+sound chat_edf_command_negative {
+
+	sounds/chat/edf/command/neg1.wav
+	sounds/chat/edf/command/neg2.wav
+	sounds/chat/edf/command/neg3.wav
+}
+
+sound chat_edf_command_declined {
+
+	sounds/chat/edf/command/decl1.wav
+	sounds/chat/edf/command/decl2.wav
+}
+
+
+sound chat_edf_command_unabletocomply {
+
+	sounds/chat/edf/command/un_comply1.wav
+	sounds/chat/edf/command/un_comply2.wav
+}
+
+sound chat_edf_command_evac {
+
+	sounds/chat/edf/command/evac1.wav
+	sounds/chat/edf/command/evac2.wav
+}
+
+sound chat_edf_command_moveout {
+
+	sounds/chat/edf/command/move_out1.wav
+	sounds/chat/edf/command/move_out2.wav
+}
+
+// defend
+
+sound chat_edf_defend_base {
+
+	sounds/chat/edf/defend/base1.wav
+	sounds/chat/edf/defend/base2.wav
+}
+
+sound chat_edf_defend_command {
+
+	sounds/chat/edf/defend/com_center1.wav
+	sounds/chat/edf/defend/com_center2.wav
+}
+
+sound chat_edf_defend_factory {
+
+	sounds/chat/edf/defend/factory1.wav
+	sounds/chat/edf/defend/factory2.wav
+}
+
+sound chat_edf_defend_fsb {
+
+	sounds/chat/edf/defend/fsb1.wav
+	sounds/chat/edf/defend/fsb2.wav
+
+}
+
+sound chat_edf_defend_fcp {
+
+	sounds/chat/edf/defend/fcp1.wav
+	sounds/chat/edf/defend/fcp2.wav
+}
+
+sound chat_edf_defend_outpost {
+
+	sounds/chat/edf/defend/outpost1.wav
+	sounds/chat/edf/defend/outpost2.wav
+}
+
+sound chat_edf_secure_fcp {
+
+	sounds/chat/edf/defend/sec_fcp1.wav
+	sounds/chat/edf/defend/sec_fcp2.wav
+}
+
+sound chat_edf_secure_outpost {
+
+	sounds/chat/edf/defend/sec_outpost1.wav
+	sounds/chat/edf/defend/sec_outpost2.wav
+}
+
+sound chat_edf_secure_perimeter {
+
+	sounds/chat/edf/defend/sec_perimeter1.wav
+	sounds/chat/edf/defend/sec_perimeter2.wav
+}
+
+// destroy
+
+sound chat_edf_destroy_base {
+
+	sounds/chat/edf/destroy/base1.wav
+	sounds/chat/edf/destroy/base2.wav
+}
+
+sound chat_edf_destroy_command {
+
+	sounds/chat/edf/destroy/com_center1.wav
+	sounds/chat/edf/destroy/com_center2.wav
+}
+
+sound chat_edf_destroy_factory {
+
+	sounds/chat/edf/destroy/factory1.wav
+	sounds/chat/edf/destroy/factory2.wav
+}
+
+sound chat_edf_destroy_fsb {
+
+	sounds/chat/edf/destroy/fsb1.wav
+	sounds/chat/edf/destroy/fsb2.wav
+
+}
+
+sound chat_edf_destroy_fcp {
+
+	sounds/chat/edf/destroy/outpost1.wav
+	sounds/chat/edf/destroy/outpost2.wav
+}
+
+sound chat_edf_destroy_outpost {
+
+	sounds/chat/edf/destroy/outpost1.wav
+	sounds/chat/edf/destroy/outpost2.wav
+}
+
+sound chat_edf_destroy_vehicle {
+
+	sounds/chat/edf/destroy/vehicle1.wav
+	sounds/chat/edf/destroy/vehicle2.wav
+}
+
+// disable
+
+sound chat_edf_disable_base {
+
+	sounds/chat/edf/disable/base1.wav
+	sounds/chat/edf/disable/base2.wav
+}
+
+sound chat_edf_disable_command {
+
+	sounds/chat/edf/disable/com_center1.wav
+	sounds/chat/edf/disable/com_center2.wav
+}
+
+sound chat_edf_disable_factory {
+
+	sounds/chat/edf/disable/factory1.wav
+	sounds/chat/edf/disable/factory2.wav
+}
+
+sound chat_edf_disable_fsb {
+
+	sounds/chat/edf/disable/fsb1.wav
+	sounds/chat/edf/disable/fsb2.wav
+
+}
+
+sound chat_edf_disable_fcp {
+
+	sounds/chat/edf/disable/outpost1.wav
+	sounds/chat/edf/disable/outpost2.wav
+}
+
+sound chat_edf_disable_outpost {
+
+	sounds/chat/edf/disable/outpost1.wav
+	sounds/chat/edf/disable/outpost2.wav
+}
+
+// miscellaneous
+
+sound chat_edf_misc_yes {
+
+	sounds/chat/edf/misc/yes1.wav
+	sounds/chat/edf/misc/yes2.wav
+}
+
+sound chat_edf_misc_no {
+
+	sounds/chat/edf/misc/no1.wav
+	sounds/chat/edf/misc/no2.wav
+}
+
+sound chat_edf_misc_thanks {
+
+	sounds/chat/edf/misc/thanks1.wav
+	sounds/chat/edf/misc/thanks2.wav
+}
+
+sound chat_edf_misc_welcome {
+
+	sounds/chat/edf/misc/welcome1.wav
+	sounds/chat/edf/misc/welcome2.wav
+}
+
+sound chat_edf_misc_dontmention {
+
+	sounds/chat/edf/misc/dontmention1.wav
+	sounds/chat/edf/misc/dontmention2.wav
+}
+
+sound chat_edf_misc_help {
+
+	sounds/chat/edf/misc/help1.wav
+	sounds/chat/edf/misc/help2.wav
+	sounds/chat/edf/misc/help3.wav
+}
+
+sound chat_edf_misc_fireatwill {
+
+	sounds/chat/edf/misc/fireatwill1.wav
+	sounds/chat/edf/misc/fireatwill2.wav
+	sounds/chat/edf/misc/fireatwill3.wav
+}
+
+sound chat_edf_misc_onmymark {
+
+	sounds/chat/edf/misc/onmymark1.wav
+	sounds/chat/edf/misc/onmymark2.wav
+}
+
+sound chat_edf_misc_onmyway {
+
+	sounds/chat/edf/misc/onmyway1.wav
+	sounds/chat/edf/misc/onmyway2.wav
+	sounds/chat/edf/misc/onmyway3.wav
+}
+
+sound chat_edf_misc_wait {
+
+	sounds/chat/edf/misc/wait1.wav
+	sounds/chat/edf/misc/wait2.wav
+}
+
+sound chat_edf_misc_acquired {
+
+	sounds/chat/edf/misc/acquired1.wav
+	sounds/chat/edf/misc/acquired2.wav
+}
+
+sound chat_edf_misc_affirmative {
+
+	sounds/chat/edf/command/aff1.wav
+	sounds/chat/edf/command/aff2.wav
+}
+
+sound chat_edf_misc_loudandclear {
+
+	sounds/chat/edf/misc/loudclear1.wav
+	sounds/chat/edf/misc/loudclear2.wav
+}
+
+sound chat_edf_misc_rightaway {
+
+	sounds/chat/edf/misc/rightaway1.wav
+	sounds/chat/edf/misc/rightaway2.wav
+}
+
+
+// global
+
+sound chat_edf_global_yes {
+
+	sounds/chat/edf/misc/yes1.wav
+	sounds/chat/edf/misc/yes2.wav
+}
+
+sound chat_edf_global_no {
+
+	sounds/chat/edf/misc/no1.wav
+	sounds/chat/edf/misc/no2.wav
+}
+
+sound chat_edf_global_thanks {
+
+	sounds/chat/edf/misc/thanks1.wav
+	sounds/chat/edf/misc/thanks2.wav
+}
+
+sound chat_edf_global_welcome {
+
+	sounds/chat/edf/misc/welcome1.wav
+	sounds/chat/edf/misc/welcome2.wav
+}
+
+sound chat_edf_global_dontmention {
+
+	sounds/chat/edf/misc/dontmention1.wav
+	sounds/chat/edf/misc/dontmention2.wav
+}
+sound chat_edf_global_wait {
+
+	sounds/chat/edf/misc/wait1.wav
+	sounds/chat/edf/misc/wait2.wav
+}
+
+// need
+
+sound chat_edf_need_airsupport {
+
+	sounds/chat/edf/need/air_support1.wav
+	sounds/chat/edf/need/air_support2.wav
+}
+
+sound chat_edf_need_ammo {
+
+	sounds/chat/edf/need/ammo1.wav
+	sounds/chat/edf/need/ammo2.wav
+}
+
+sound chat_edf_need_assignment {
+
+	sounds/chat/edf/need/assign1.wav
+}
+
+sound chat_edf_need_assistance {
+
+	sounds/chat/edf/need/assist1.wav
+	sounds/chat/edf/need/assist2.wav
+}
+
+sound chat_edf_need_coveringfire {
+
+	sounds/chat/edf/need/cover_fire1.wav
+	sounds/chat/edf/need/cover_fire2.wav
+}
+
+sound chat_edf_need_driver {
+
+	sounds/chat/edf/need/driver1.wav
+	sounds/chat/edf/need/driver2.wav
+}
+
+sound chat_edf_need_engineer {
+
+	sounds/chat/edf/need/engineer1.wav
+	sounds/chat/edf/need/engineer2.wav
+}
+
+sound chat_edf_need_firesupport {
+
+	sounds/chat/edf/need/fire_support1.wav
+	sounds/chat/edf/need/fire_support2.wav
+}
+
+sound chat_edf_need_groundsupport {
+
+	sounds/chat/edf/need/ground_support1.wav
+	sounds/chat/edf/need/ground_support2.wav
+}
+
+sound chat_edf_need_gunner {
+
+	sounds/chat/edf/need/gunner1.wav
+	sounds/chat/edf/need/gunner2.wav
+}
+
+sound chat_edf_need_heal {
+
+	sounds/chat/edf/need/i_medic1.wav
+	sounds/chat/edf/need/i_medic2.wav
+}
+
+sound chat_edf_need_fireteam {
+
+	sounds/chat/edf/need/look_team1.wav
+}
+
+sound chat_edf_need_medic {
+
+	sounds/chat/edf/need/medic1.wav
+	sounds/chat/edf/need/medic2.wav
+}
+
+sound chat_edf_need_orders {
+
+	sounds/chat/edf/need/orders1.wav
+	sounds/chat/edf/need/orders2.wav
+}
+
+sound chat_edf_need_pickup {
+
+	sounds/chat/edf/need/pickup1.wav
+	sounds/chat/edf/need/pickup2.wav
+}
+
+sound chat_edf_need_ride {
+
+	sounds/chat/edf/need/ride1.wav
+	sounds/chat/edf/need/ride2.wav
+}
+
+sound chat_edf_need_pilot {
+
+	sounds/chat/edf/need/pilot1.wav
+	sounds/chat/edf/need/pilot2.wav
+}
+
+sound chat_edf_need_ranger {
+
+	sounds/chat/edf/need/ranger1.wav
+	sounds/chat/edf/need/ranger2.wav
+}
+
+sound chat_edf_need_reinforcement {
+
+	sounds/chat/edf/need/reinf1.wav
+	sounds/chat/edf/need/reinf2.wav
+}
+
+sound chat_edf_need_repair {
+
+	sounds/chat/edf/need/repair1.wav
+	sounds/chat/edf/need/repair2.wav
+}
+
+sound chat_edf_need_repairme {
+
+	sounds/chat/edf/need/repair3.wav
+}
+
+sound chat_edf_need_resupply {
+
+	sounds/chat/edf/need/resupply1.wav
+	sounds/chat/edf/need/resupply2.wav
+}
+
+sound chat_edf_need_target {
+
+	sounds/chat/edf/need/target1.wav
+	sounds/chat/edf/need/target2.wav
+}
+
+sound chat_edf_need_technician {
+
+	sounds/chat/edf/need/technician1.wav
+	sounds/chat/edf/need/technician2.wav
+}
+
+sound chat_edf_need_vehicle {
+
+	sounds/chat/edf/need/vehicle1.wav
+	sounds/chat/edf/need/vehicle2.wav
+}
+
+// repair
+
+sound chat_edf_repair_command {
+
+	sounds/chat/edf/repair/com_center1.wav
+	sounds/chat/edf/repair/com_center2.wav
+}
+
+sound chat_edf_repair_factory {
+
+	sounds/chat/edf/repair/factory1.wav
+	sounds/chat/edf/repair/factory2.wav
+}
+
+sound chat_edf_repair_fsb {
+
+	sounds/chat/edf/repair/fsb1.wav
+	sounds/chat/edf/repair/fsb2.wav
+
+}
+
+sound chat_edf_repair_fcp {
+
+	sounds/chat/edf/repair/fcp1.wav
+	sounds/chat/edf/repair/fcp2.wav
+}
+
+sound chat_edf_repair_outpost {
+
+	sounds/chat/edf/repair/outpost1.wav
+	sounds/chat/edf/repair/outpost2.wav
+}
+
+// warning
+
+sound chat_edf_warning_base {
+
+	sounds/chat/edf/warning/base1.wav
+	sounds/chat/edf/warning/base2.wav
+}
+
+sound chat_edf_warning_command {
+
+	sounds/chat/edf/warning/com_center1.wav
+	sounds/chat/edf/warning/com_center2.wav
+}
+
+sound chat_edf_warning_factory {
+
+	sounds/chat/edf/warning/factory1.wav
+	sounds/chat/edf/warning/factory2.wav
+}
+
+sound chat_edf_warning_fsb {
+
+	sounds/chat/edf/warning/fsb1.wav
+	sounds/chat/edf/warning/fsb2.wav
+}
+
+sound chat_edf_warning_fcp {
+
+	sounds/chat/edf/warning/fcp1.wav
+	sounds/chat/edf/warning/fcp2.wav
+}
+
+sound chat_edf_warning_outpost {
+
+	sounds/chat/edf/warning/outpost1.wav
+	sounds/chat/edf/warning/outpost2.wav
+}
+
+sound chat_edf_warning_bomber {
+
+	sounds/chat/edf/warning/inc_bomber1.wav
+	sounds/chat/edf/warning/inc_bomber2.wav
+}
+
+sound chat_edf_warning_enemy {
+
+	sounds/chat/edf/warning/inc_enemy1.wav
+	sounds/chat/edf/warning/inc_enemy2.wav
+}
+
+sound chat_edf_warning_tank {
+
+	sounds/chat/edf/warning/inc_tank1.wav
+	sounds/chat/edf/warning/inc_tank2.wav
+}
+
+sound chat_edf_warning_vehicle {
+
+	sounds/chat/edf/warning/inc_vehicle1.wav
+	sounds/chat/edf/warning/inc_vehicle2.wav
+}
+
+sound chat_edf_warning_walker {
+
+	sounds/chat/edf/warning/inc_walker1.wav
+	sounds/chat/edf/warning/inc_walker2.wav
+}
+
+sound chat_edf_warning_attack {
+
+	sounds/chat/edf/warning/under_attack1.wav
+	sounds/chat/edf/warning/under_attack2.wav
+}

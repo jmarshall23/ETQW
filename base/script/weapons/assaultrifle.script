@@ -1,0 +1,14 @@
+/***********************************************************************
+
+weapon_assaultrifle.script
+
+***********************************************************************/
+
+object weapon_assaultrifle : weapon_clip {
+	void		preinit();
+};
+
+void weapon_assaultrifle::preinit() {
+	hasScope		= false;
+	hasIronSights	= true;
+}

@@ -1,0 +1,151 @@
+ambientCubemap strogg_cockpit01 {
+	ambientLight {
+		color 0 0 0
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.5294117928 0.1568627506 0
+		direction -1 -0.0000000243 0.0000000122
+		name "Light1"
+	}
+	ambientLight {
+		color 0.5254902244 0.0666666701 0
+		direction 1 0 0.0000000122
+		name "Light2"
+	}
+	ambientLight {
+		color 0.5686274767 0.1686274558 0
+		direction -0.0000000437 1 0.0000000122
+		name "Light3"
+	}
+	ambientLight {
+		color 0.7176470757 0.1411764771 0
+		direction -0.0000000437 -1 0.0000000122
+		name "Light4"
+	}
+	ambientLight {
+		color 0.6352941394 0.1686274558 0
+		direction 0.7071067691 0 0.7071067691
+		name "Light5"
+	}
+	ambientLight {
+		color 0.5764706135 0.1333333403 0
+		direction -0.0000000309 0.7071067691 0.7071067691
+		name "Light6"
+	}
+	ambientLight {
+		color 0.3960784674 0.0901960805 0
+		direction -0.7071067691 -0.0000000172 0.7071067691
+		name "Light7"
+	}
+	ambientLight {
+		color 0.4078431726 0.0784313753 0
+		direction -0.0000000309 -0.7071067691 0.7071067691
+		name "Light8"
+	}
+	ambientLight {
+		color 0.250980407 0.0078431377 0
+		direction 0.7071067691 0 -0.7071067691
+		name "Light9"
+	}
+	ambientLight {
+		color 0.2627451122 0.0274509825 0
+		direction -0.0000000309 0.7071067691 -0.7071067691
+		name "Light10"
+	}
+	ambientLight {
+		color 0.2431372702 0.0431372561 0
+		direction -0.0000000309 -0.7071067691 -0.7071067691
+		name "Light11"
+	}
+	ambientLight {
+		color 0.3254902065 0.0941176564 0
+		direction -0.7071067691 -0.0000000172 -0.7071067691
+		name "Light12"
+	}
+	ambientLight {
+		color 0 0.054901965 0.1529411823
+		direction 0.0000000243 0 -1
+		name "Light13"
+	}
+}ambientCubemap cockpit_mcp {
+	ambientLight {
+		color 0.4862745404 0.501960814 0.4392157197
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.0980392247 0.1176470667 0.1019607931
+		direction 1 0 0.0000000122
+		name "Light1"
+	}
+	ambientLight {
+		color 0.1215686351 0.1372549087 0.1254902035
+		direction -1 0.0000000243 0.0000000122
+		name "Light2"
+	}
+	ambientLight {
+		color 0 0 0
+		direction 0.0000000243 0 -1
+		name "Light3"
+	}
+	ambientLight {
+		color 0.270588249 0.270588249 0.270588249
+		direction -0.0000000437 -1 0.0000000122
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2823529541 0.2823529541 0.2823529541
+		direction 1 0 0.0000000122
+		name "Light5"
+	}
+	ambientLight {
+		color 0.2862745225 0.2862745225 0.2862745225
+		direction -0.0000000437 1 0.0000000122
+		name "Light6"
+	}
+	ambientLight {
+		color 0.2196078598 0.2470588386 0.2196078598
+		direction 0.7071067691 0 0.7071067691
+		name "Light7"
+	}
+	ambientLight {
+		color 0.1843137294 0.2039215863 0.1921568811
+		direction -0.0000000309 -0.7071067691 0.7071067691
+		name "Light8"
+	}
+	ambientLight {
+		color 0.1529411823 0.1725490242 0.1529411823
+		direction -0.7071067691 -0.0000000172 0.7071067691
+		name "Light9"
+	}
+	ambientLight {
+		color 0.1725490242 0.1882353127 0.1725490242
+		direction -0.0000000309 0.7071067691 0.7071067691
+		name "Light10"
+	}
+	ambientLight {
+		color 0.1372549087 0.1725490242 0.2039215863
+		direction 0.7071067691 0 -0.7071067691
+		name "Light11"
+	}
+	ambientLight {
+		color 0.1411764771 0.180392161 0.2235294282
+		direction -0.0000000309 0.7071067691 -0.7071067691
+		name "Light12"
+	}
+	ambientLight {
+		color 0.1019607931 0.1411764771 0.160784319
+		direction -0.0000000309 -0.7071067691 -0.7071067691
+		name "Light13"
+	}
+	ambientLight {
+		color 0.1098039299 0.1764705926 0.2078431547
+		direction -0.7071067691 -0.0000000172 -0.7071067691
+		name "Light14"
+	}
+}
+
+
+

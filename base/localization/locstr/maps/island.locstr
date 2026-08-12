@@ -1,0 +1,137 @@
+
+/*
+=================
+ Localization for map
+=================
+*/
+
+locString maps/island/vaultdoor {
+	text "#str_00100200"
+}
+
+locString maps/island/obj_constructed {
+	text "#str_00100201"
+	arguments 1
+}
+
+locString maps/island/obj_destroyed {
+	text "#str_00100202"
+	arguments 1
+}
+
+locString maps/island/obj_transmitted {
+	text "#str_00100203"
+	arguments 1
+}
+
+//
+// Objective texts
+//
+locString maps/island/obj_short_1_gdf {
+	text "#str_00100204"			// "Construct the Generator"
+}
+
+locString maps/island/obj_short_1_strogg {
+	text "#str_00100205"			// "Stop the GDF constructing the Generator"
+}
+
+locString maps/island/obj_short_2_gdf {
+	text "#str_00100206"			// "Destroy the Storage Room Door"
+}
+
+locString maps/island/obj_short_2_strogg {
+	text "#str_00100207"			// "Stop the GDF from destroying the Door"
+}
+
+locString maps/island/obj_short_3_gdf {
+	text "#str_00100208"			// "Take the keycard to the Dish"
+}
+
+locString maps/island/obj_short_3_strogg {
+	text "#str_00100209"			// "Prevent the GDF from reaching the Dish"
+}
+
+locString maps/island/bunker_hatch_destroy {    // "Someone destroyed the bunker hatch."
+	text "#str_00100210"
+	arguments 1
+}
+
+locString maps/island/bunker_hatch_progress {   // "Someone planted explosives at the bunker hatch."
+	text "#str_00100211"
+	arguments 1
+}
+
+locString maps/island/bunker_hatch_disarm {	// "Someone disarmed explosives at the bunker hatch."
+	text "#str_00100212"
+	arguments 1
+}
+
+//
+// Extras
+//
+locString maps/island/spawn_bunker {
+	text "#str_00100215"			// "Bunker Spawn Point"
+}
+
+locString maps/island/spawn_storage {
+	text "#str_00100216"			// "Outpost Spawn Point"
+}
+
+locString maps/island/spawn_bluff {
+	text "#str_00100217"			// "Observatory Spawn Point"
+}
+
+locString maps/island/datadisc {
+	text "#str_00100218"			// "Data Disc"
+}
+
+locString maps/island/bunker_hatch {
+	text "#str_00100219"			// "Bunker Hatch"
+}
+
+locString maps/island/spawn_outpost {
+	text "#str_00100220"			// "Forward Spawn Point"
+}
+
+locString maps/island/generator {
+	text "#str_00100221"			// "Generator"
+}
+
+locString maps/island/console {
+	text "#str_00100222"			// "the Console"
+}
+
+locString maps/island/console_task {
+	text "#str_00100236"			// "Deliver item to the Console"
+}
+
+/*
+==================
+Map info
+==================
+*/
+
+locString maps/island/briefing {
+	text "#str_00100225"
+}
+
+locString maps/island/campaign {
+	text "#str_00100226"
+}
+
+locString maps/island/location {
+	text "#str_00100227"
+}
+
+locString maps/island/obj_construct_tower_vault {
+	text "#str_00100228"
+	arguments 1
+}
+
+locString maps/island/obj_construct_tower_vault_complete {
+	text "#str_00100229"
+	arguments 1
+}
+
+// 00100230, 00100231, 00100232 and 00100233 hijacked for Slipgate secondary objectives
+// 00100234 and 00100235 'borrowed' for Refinery MG nest

@@ -1,0 +1,112 @@
+material particles/peppi/test01
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend blend
+
+		map alphazeroclamp textures/particles/peppi/test01.tga
+		//bumpmap textures/particles/peppi/test01_local.tga
+		maskalpha
+		maskdepth
+		vertexcolor
+	}
+}
+
+material particles/peppi/inky
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		blend
+		maskalpha
+		map		makealpha( textures/particles/inky01.tga )
+		maskDepth
+		vertexcolor
+	}
+}
+
+material particles/peppi/inky2
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		blend
+		maskalpha
+		map		makealpha( textures/particles/inky02.tga )
+		maskDepth
+		vertexcolor
+	}
+}
+
+material particles/peppi/inky2_underwater
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	sort refractable
+	{
+		blend		blend
+		maskalpha
+		map		makealpha( textures/particles/inky02.tga )
+		maskDepth
+		vertexcolor
+	}
+}
+
+
+material particles/peppi/inky_add
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		add
+		maskalpha
+		map		textures/particles/inky01.tga
+		maskDepth
+		vertexcolor
+	}
+}
+
+material particles/peppi/inky_heathaze
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	sort postprocess
+	{
+		program	heatHazeWithVertex
+		blend		blend
+		maskalpha
+		bumpMap		heightmap( textures/particles/inky01.tga, 4 )
+		maskDepth
+		vertexcolor
+	}
+}
+
+material particles/peppi/pooball_heathaze
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	sort postprocess
+	{
+		program	heatHazeWithVertex
+		blend		blend
+		maskalpha
+		bumpMap		heightmap( textures/particles/pooball.tga, 4 )
+		maskDepth
+		vertexcolor
+	}
+}

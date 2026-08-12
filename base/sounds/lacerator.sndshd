@@ -1,0 +1,226 @@
+sound sounds/weapons/lacerator/scope_up {
+
+	maxDistance	15
+	volume		-8
+	
+	sounds/weapons/lacerator/scopeup_03.wav
+}
+
+sound sounds/weapons/lacerator/bring_up {
+
+	maxDistance	20
+	volume		-10
+
+	sounds/weapons/lacerator/bring_up_08.wav
+}
+
+sound sounds/weapons/lacerator/slide_off {
+
+	maxDistance	15
+	volume		-8
+	
+	sounds/weapons/lacerator/mono_slideoff_03.wav
+	sounds/weapons/lacerator/mono_slideoff_04.wav
+}
+
+sound sounds/weapons/lacerator/slide_on {
+
+	maxDistance	15
+	volume		-8
+	
+	sounds/weapons/lacerator/mono_slideon_07.wav
+	sounds/weapons/lacerator/mono_slideon_08.wav
+}
+
+sound sounds/weapons/lacerator/overheat {
+
+	maxDistance	45
+	volume		-4
+	
+	sounds/weapons/lacerator/mono_overheat_01.wav
+	sounds/weapons/lacerator/mono_overheat_02.wav
+}
+
+sound sounds/weapons/lacerator/projectile_impact {
+	compression wav
+
+	// Sizzle
+	volume		-20
+	maxDistance	20
+	lowPriority
+	occlude_once
+
+	sounds/weapons/lacerator/ximpact_01.wav
+	sounds/weapons/lacerator/ximpact_02.wav
+	sounds/weapons/lacerator/ximpact_03.wav
+	sounds/weapons/lacerator/ximpact_04.wav
+	sounds/weapons/lacerator/ximpact_05.wav
+}
+
+sound sounds/weapons/lacerator/reload_hit {
+
+	unclamped
+	volume	2
+	occlude_once
+
+	sounds/weapons/lacerator/reloadhit_01a.wav
+	sounds/weapons/lacerator/reloadhit_02a.wav
+	sounds/weapons/lacerator/reloadhit_03a.wav
+}
+
+sound sounds/weapons/lacerator/chucker/fire {
+	compression wav
+
+	maxDistance 150
+	occlude_once
+	antiPrivate
+
+	sounds/weapons/lacerator/chuck_fire.wav
+}
+
+sound sounds/weapons/lacerator/chucker/fire/far {
+	compression wav
+
+	volume	-10
+	occlude_once
+	antiprivate
+//	sounds/weapons/lacerator/chuck_fire_far.wav
+}
+
+sound sounds/weapons/lacerator/chucker/fire/local {
+	compression wav
+	
+	occlude_once
+	private
+
+	sounds/weapons/lacerator/chuck_fire_local.wav
+}
+
+sound sounds/weapons/lacerator/chucker/in {
+
+	volume -10
+
+	sounds/weapons/lacerator/chuck_in.wav
+}
+
+sound sounds/weapons/lacerator/chucker/out {
+
+	volume -10
+
+	sounds/weapons/lacerator/chuck_out.wav
+}
+
+sound sounds/weapons/lacerator/chucker/reload {
+
+	volume -10
+
+	sounds/weapons/lacerator/chuck_reload.wav
+}
+
+sound sounds/weapons/lacerator/chucker/fly {
+	compression wav
+
+	maxDistance	50
+	volume		-8
+
+	looping
+	sounds/weapons/lacerator/chuck_travel_01.wav
+	sounds/weapons/lacerator/chuck_travel_02.wav
+	sounds/weapons/lacerator/chuck_travel_03.wav
+}
+
+sound sounds/weapons/lacerator/chucker/bounce {
+
+	maxDistance	35
+	volume		-3
+	occlude_once
+
+	sounds/vehicles/desecrator/spark_02.wav
+	sounds/vehicles/desecrator/spark_03.wav
+	sounds/vehicles/desecrator/spark_04.wav
+	sounds/vehicles/desecrator/spark_07.wav
+}
+
+sound sounds/weapons/lacerator/chucker/explode {
+
+	minDistance	15
+	maxDistance	150
+	shakes		0.055
+
+	sounds/weapons/lacerator/chuck_detonate_03.wav
+}
+
+sound sounds/weapons/hlacerator/fire {
+	compression wav
+
+	volume -2
+	minDistance	10
+	maxDistance 75
+	//antiPrivate
+	no_dups
+	occlude_once
+
+	sounds/weapons/lacerator/mono_hlac_fire_01a.wav
+}
+
+sound sounds/weapons/hlacerator/fire_local {
+	compression wav
+
+	volume -5
+	maxDistance 75
+	//private
+	no_dups
+	occlude_once
+
+	//sounds/weapons/lacerator/st_hlac_fire_01c.wav
+}
+
+sound sounds/weapons/lacerator/fire {
+	compression wav
+
+	maxDistance 75
+
+//	antiPrivate
+	no_dups
+	occlude_once
+
+	sounds/weapons/lacerator/mono_afire_01a.wav
+	sounds/weapons/lacerator/mono_afire_02a.wav
+	sounds/weapons/lacerator/mono_afire_03.wav
+}
+
+sound sounds/weapons/lacerator/fire/far {
+	compression wav
+
+	volume -10
+	farDistance 25
+	maxDistance 125
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/lacerator/far_afire_01a.wav
+	sounds/weapons/lacerator/far_afire_01b.wav
+	sounds/weapons/lacerator/far_afire_01c.wav
+}
+
+sound sounds/weapons/lacerator/fire/local {
+	compression wav
+
+	private
+	no_dups
+	occlude_once
+}
+
+sound sounds/weapons/lacerator/reload/grenade {
+
+	volume -10
+
+	sounds/weapons/lacerator/reload_gren.wav
+}
+
+sound sounds/weapons/lacerator/reload/arm {
+
+	volume -15
+
+	sounds/weapons/lacerator/reload_arm.wav
+}

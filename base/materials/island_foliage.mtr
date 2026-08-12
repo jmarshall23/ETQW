@@ -1,0 +1,31 @@
+material stuff/foliage/field_grass_tallb
+{
+	twoSided
+	nonsolid
+	{
+		blend blend
+		program stuff/grass
+		grass_times time * 0.01, time, time, time
+		diffuseMap clamp stuff/foliage/field_grass_02b_d.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+	twoSided
+}
+
+material stuff/foliage/island_stuff
+{
+	twoSided
+	nonsolid
+	{
+		blend blend
+		program stuff/grass
+		grass_times time * 0.01, time, time, time
+		diffuseMap clamp stuff/foliage/temperate/island_stuff.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+	twoSided
+}

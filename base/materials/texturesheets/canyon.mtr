@@ -1,0 +1,279 @@
+// DECALS
+
+material texturesheets/canyon/can_decals_1
+{
+	polygonOffset
+	sort decal
+	noShadows
+	nonsolid
+	translucent
+	{
+		program filterVertexColor
+		blend	filter
+		map	texturesheets/canyon/can_decals_1.tga
+		vertexColor
+	}
+}
+
+
+// TEXTURESHEETS
+
+material texturesheets/canyon/can_metal_wall_1
+{
+	surfaceTypeMap "texturesheets/canyon/can_metal_wall_1.stmap"
+	{
+		diffusemap	picmip -1	texturesheets/canyon/can_metal_wall_1_d.tga
+		specularmap picmip -2	texturesheets/canyon/can_metal_wall_1_s.tga
+		bumpmap 	picmip -1	texturesheets/canyon/can_metal_wall_1_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	2.5,20,0,0
+		vertexcolor
+	}
+}
+
+material texturesheets/canyon/can_metal_wall_1_glow
+{
+	surfaceTypeMap "texturesheets/canyon/can_metal_wall_1.stmap"
+	{
+		diffusemap	picmip -1	texturesheets/canyon/can_metal_wall_1_d.tga
+		specularmap 	picmip -2	texturesheets/canyon/can_metal_wall_1_s.tga
+		bumpmap 	picmip -1	texturesheets/canyon/can_metal_wall_1_local.tga
+		//selfillummap			texturesheets/canyon/can_metal_wall_1_glow.tga
+	}
+	{
+			blend 		add
+			map		texturesheets/canyon/can_metal_wall_1_glow.tga
+			colored
+	}
+}
+
+material texturesheets/canyon/can_metal_wall_1_noshadow_nonsolid
+{
+	noshadows
+	nonsolid
+	{
+		diffusemap	picmip -1	texturesheets/canyon/can_metal_wall_1_d.tga
+		specularmap	picmip -2	texturesheets/canyon/can_metal_wall_1_s.tga
+		bumpmap		picmip -1	texturesheets/canyon/can_metal_wall_1_local.tga
+	}
+}
+
+material texturesheets/canyon/can_metal_wall_2
+{
+surfaceTypeMap "texturesheets/canyon/can_metal_wall_2.stmap"
+	{
+		diffusemap	picmip -1	texturesheets/canyon/can_metal_wall_2_d.tga
+		specularmap	picmip -2	texturesheets/canyon/can_metal_wall_2_s.tga
+		bumpmap		picmip -1	texturesheets/canyon/can_metal_wall_2_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	2.5,20,0,0
+	}
+}
+
+material texturesheets/canyon/can_metal_wall_2_noshadows_nonsolid
+{
+	noshadows
+	nonsolid
+	{
+		diffusemap	picmip -1	texturesheets/canyon/can_metal_wall_2_d.tga
+		specularmap	picmip -2	texturesheets/canyon/can_metal_wall_2_s.tga
+		bumpmap		picmip -1	texturesheets/canyon/can_metal_wall_2_local.tga
+	}
+}
+
+material texturesheets/canyon/destroyed_buildings01
+{
+	surfaceTypeMap "texturesheets/canyon/destroyed_buildings01.stmap"
+	{
+		diffusemap	picmip -1	texturesheets/canyon/destroyed_buildings01_d.tga
+		specularmap	picmip -2	texturesheets/canyon/destroyed_buildings01_s.tga
+		bumpmap 	picmip -1	texturesheets/canyon/destroyed_buildings01_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		//specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailMult	2.5,20,0,0
+	}
+}
+
+material texturesheets/canyon/restaurant01
+{
+	surfaceTypeMap "texturesheets/canyon/restaurant01.stmap"	
+	{
+		diffusemap	picmip -1	texturesheets/canyon/restaurant01_d.tga
+		specularmap	picmip -2	texturesheets/canyon/restaurant01_s.tga
+		bumpmap		picmip -1	texturesheets/canyon/restaurant01_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		//specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailMult	2.5,20,0,0
+	}
+}
+
+material texturesheets/canyon/restaurant02
+{
+	surfaceTypeMap "texturesheets/canyon/restaurant02.stmap"
+	{
+		diffusemap	picmip -1	texturesheets/canyon/restaurant02_d.tga
+		specularmap	picmip -2	texturesheets/canyon/restaurant02_s.tga
+		bumpmap		picmip -1	texturesheets/canyon/restaurant02_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	2.5,20,0,0
+		vertexcolor
+	}
+	
+}
+
+material texturesheets/canyon/facility_entrance01
+{
+	{
+		diffusemap	picmip -1	texturesheets/canyon/facility_entrance01_d.tga
+		specularmap	picmip -2	texturesheets/canyon/facility_entrance01_s.tga
+		bumpmap		picmip -1	texturesheets/canyon/facility_entrance01_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	2.5,20,0,0
+	}
+}
+
+material texturesheets/canyon/storage_bunker01
+{
+	surfaceTypeMap "texturesheets/canyon/storage_bunker01.stmap"
+	{
+		diffusemap	picmip -1	texturesheets/canyon/storage_bunker01_d.tga
+		specularmap	picmip -2	texturesheets/canyon/storage_bunker01_s.tga
+		bumpmap		picmip -1	texturesheets/canyon/storage_bunker01_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		//specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailMult	2.5,20,0,0
+	}
+}
+
+
+// MAPOBJECTS
+
+material models/mapobjects/canyon/canyon_mapobjects01
+{
+	surfacetype "metal"
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	models/mapobjects/canyon/canyon_mapobjects01_d.tga
+		bumpmap		picmip -2	models/mapobjects/canyon/canyon_mapobjects01_local.tga
+		specularmap	picmip -2	models/mapobjects/canyon/canyon_mapobjects01_s.tga
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult 5,5,0,0
+		detailWeightMap			models/mapobjects/canyon/canyon_mapobjects01_detailmask.tga
+	}
+}
+
+material models/mapobjects/canyon/canyon_mapobjects01_noshadows
+{
+	surfacetype "metal"
+	noshadows
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	models/mapobjects/canyon/canyon_mapobjects01_d.tga
+		bumpmap		picmip -2	models/mapobjects/canyon/canyon_mapobjects01_local.tga
+		specularmap	picmip -2	models/mapobjects/canyon/canyon_mapobjects01_s.tga
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult 5,5,0,0
+		detailWeightMap			models/mapobjects/canyon/canyon_mapobjects01_detailmask.tga
+	}
+}
+
+
+// -------------
+// TO BE REMOVED
+// -------------
+
+material texturesheets/canyon/destroyed_tunnel
+{
+	surfaceTypeMap "texturesheets/canyon/destroyed_tunnel.stmap"
+	{
+		diffusemap 	picmip -1	texturesheets/canyon/destroyed_tunnel_d.tga
+		specularmap 	picmip -2	texturesheets/canyon/destroyed_tunnel_s.tga
+		bumpmap 	picmip -1	texturesheets/canyon/destroyed_tunnel_local.tga
+	}
+}
+
+material texturesheets/canyon/domebuilding
+{
+	surfaceTypeMap "texturesheets/canyon/domebuilding.stmap"
+	{
+		diffusemap	picmip -1	texturesheets/canyon/domebuilding_d.tga
+		specularmap	picmip -2	texturesheets/canyon/domebuilding_s.tga
+		bumpmap		picmip -1	texturesheets/canyon/domebuilding_local.tga
+	}
+}
+
+material texturesheets/canyon/domebuilding_noshadows_nonsolid
+{
+	surfaceTypeMap "texturesheets/canyon/domebuilding.stmap"
+	noshadows
+	nonsolid
+	{
+		diffusemap	picmip -1	texturesheets/canyon/domebuilding_d.tga
+		specularmap	picmip -2	texturesheets/canyon/domebuilding_s.tga
+		bumpmap		picmip -1	texturesheets/canyon/domebuilding_local.tga
+	}
+}
+
+material texturesheets/canyon/domebuilding2
+{
+	surfaceTypeMap "texturesheets/canyon/domebuilding2.stmap"
+	diffusemap	picmip -1	texturesheets/canyon/domebuilding2_d.tga
+	specularmap 	picmip -2	texturesheets/canyon/domebuilding2_s.tga
+	bumpmap		picmip -1	texturesheets/canyon/domebuilding2_local.tga
+}
+
+material texturesheets/canyon/restaurant01torestaurant02
+{
+	
+	qer_editorimage	texturesheets/canyon/restaurant01_d.tga
+	{
+		program	interaction/blended
+		diffusemap texturesheets/canyon/restaurant01_d.tga
+		bumpmap texturesheets/canyon/restaurant01_local.tga
+		specularmap texturesheets/canyon/restaurant01_s.tga
+		diffusemap2 texturesheets/canyon/restaurant02_d.tga
+		bumpmap2 texturesheets/canyon/restaurant02_local.tga
+		specularmap2 texturesheets/canyon/restaurant02_s.tga
+		vertexcolor
+	}
+}
+
+material texturesheets/canyon/restaurant01toconc_rubble
+{
+	
+	qer_editorimage	texturesheets/canyon/restaurant01_d.tga
+	{
+		program	interaction/blended
+		diffusemap texturesheets/canyon/restaurant01_d.tga
+		bumpmap texturesheets/canyon/restaurant01_local.tga
+		specularmap texturesheets/canyon/restaurant01_s.tga
+		diffusemap2 textures/concrete/concrete_rubble_2_d.tga
+		bumpmap2 textures/concrete/concrete_rubble_2_local.tga
+		inversevertexcolor
+	}
+}

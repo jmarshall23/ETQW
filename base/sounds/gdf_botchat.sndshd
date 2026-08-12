@@ -1,0 +1,513 @@
+///////////////////
+// GDF Bot Chat ///
+///////////////////
+
+// Generic //
+
+sound sounds/players/gdf/botchat/generic/areaclear {
+
+	localization/english/sounds/bots/gdf/16301.wav
+	//"Area Clear!"
+}
+
+sound sounds/players/gdf/botchat/generic/imamedic {
+
+	localization/english/sounds/bots/gdf/16302.wav
+	//"Hold on, I'm a medic!"
+}
+
+sound sounds/players/gdf/botchat/generic/medicenroute {
+
+	localization/english/sounds/bots/gdf/16303.wav
+	//"Medic en route!"
+
+}
+
+sound sounds/players/gdf/botchat/generic/onmyway {
+
+	localization/english/sounds/bots/gdf/16304.wav
+	//"On my way!"
+}
+
+sound sounds/players/gdf/botchat/generic/sniper {
+
+	localization/english/sounds/bots/gdf/16305.wav
+	//"Sniper!"
+}
+
+sound sounds/players/gdf/botchat/generic/mandown {
+
+	localization/english/sounds/bots/gdf/16306.wav
+	//"Man Down!"
+}
+
+sound sounds/players/gdf/botchat/generic/incomingfiresupport {
+
+	localization/english/sounds/bots/gdf/16307.wav
+	//"Incoming Fire Support!"
+}
+
+sound sounds/players/gdf/botchat/generic/needaride {
+
+	localization/english/sounds/bots/gdf/16308.wav
+	//"Do you need a ride?"
+}
+
+sound sounds/players/gdf/botchat/generic/needalift {
+
+	localization/english/sounds/bots/gdf/16309.wav
+	//"Need a lift?"
+}
+
+sound sounds/players/gdf/botchat/generic/heinrich {
+
+	localization/english/sounds/bots/gdf/16373.wav
+	//"You Fool! You know as well as I that I cannot be destroyed!"
+}
+
+sound sounds/players/gdf/botchat/generic/vehicle/letmerepair {
+
+	localization/english/sounds/bots/gdf/16375.wav
+	//"Hold on, let me fix your ride"
+}
+
+sound sounds/players/gdf/botchat/generic/vehicle/iwillfixride {
+
+	localization/english/sounds/bots/gdf/16376.wav
+	//"I'll fix your vehicle"
+}
+
+sound sounds/players/gdf/botchat/generic/vehicle/stopiwillfixride {
+
+	localization/english/sounds/bots/gdf/16374.wav
+	//"Stop the vehicle! I'll fix it!"
+}
+
+
+sound sounds/players/gdf/botchat/generic/youlead {
+
+	localization/english/sounds/bots/gdf/16377.wav
+	//"You lead, I'll follow!"
+}
+
+sound sounds/players/gdf/botchat/generic/gotyourback {
+
+	localization/english/sounds/bots/gdf/16378.wav
+	//"I've got your back!"
+}
+
+sound sounds/players/gdf/botchat/generic/leadway {
+
+	localization/english/sounds/bots/gdf/16379.wav
+	//"Lead the way!"
+}
+
+sound sounds/players/gdf/botchat/generic/whereto {
+
+	localization/english/sounds/bots/gdf/16380.wav
+	//"Where to, Sir?"
+}
+
+sound sounds/players/gdf/botchat/generic/gotammo {
+
+	localization/english/sounds/bots/gdf/16381.wav
+	//"I've got ammo here!"
+	localization/english/sounds/bots/gdf/16382.wav
+	//"Ammo on the way!"
+}
+
+sound sounds/players/gdf/botchat/generic/tkrevive {
+
+	localization/english/sounds/bots/gdf/16383.wav
+	//"Hold on, I'm gonna TK Revive you!"
+}
+
+sound sounds/players/gdf/botchat/generic/grenade {
+
+	localization/english/sounds/bots/gdf/16384.wav
+	//"Grenaaade!"
+}
+
+
+// Objectives //
+
+sound sounds/players/gdf/botchat/objectives/destroy {
+
+	localization/english/sounds/bots/gdf/16310.wav
+	//"I'm going to destroy the Objective"
+}
+
+sound sounds/players/gdf/botchat/objectives/defend {
+
+	localization/english/sounds/bots/gdf/16311.wav
+	//"I'm going to defend the Objective"
+}
+
+sound sounds/players/gdf/botchat/objectives/explosives/plant {
+
+	localization/english/sounds/bots/gdf/16312.wav
+	//"I'm going to plant explosives"
+}
+
+sound sounds/players/gdf/botchat/objectives/explosives/disarm {
+
+	localization/english/sounds/bots/gdf/16313.wav
+	//"I'm going to disarm the explosives!"
+}
+
+sound sounds/players/gdf/botchat/objectives/construct {
+
+	localization/english/sounds/bots/gdf/16314.wav
+	//"I'm going to construct the objective"
+}
+
+sound sounds/players/gdf/botchat/objectives/repair {
+
+	localization/english/sounds/bots/gdf/16315.wav
+	//"I'm going to repair the objective"
+}
+
+sound sounds/players/gdf/botchat/objectives/repair/stop {
+
+	localization/english/sounds/bots/gdf/16316.wav
+	//"I'm going to stop them repairing the objective!"
+}
+
+sound sounds/players/gdf/botchat/objectives/jamtower/defend {
+
+	localization/english/sounds/bots/gdf/16317.wav
+	//"I'm going to defend the Jamming Tower Generator!"
+}
+
+sound sounds/players/gdf/botchat/objectives/mininglaser/stop {
+
+	localization/english/sounds/bots/gdf/16318.wav
+	//"I'm going to stop them constructing the Mining Laser!"
+}
+
+sound sounds/players/gdf/botchat/objectives/bridge/construct {
+
+	localization/english/sounds/bots/gdf/16319.wav
+	//"I'm going to construct the bridge"
+}
+
+sound sounds/players/gdf/botchat/objectives/mcp/drive {
+
+	localization/english/sounds/bots/gdf/16320.wav
+	//"I'm going to drive the MCP to the Outpost!"
+}
+
+sound sounds/players/gdf/botchat/objectives/mcp/escort {
+
+	localization/english/sounds/bots/gdf/16321.wav
+	//"I'm going to escort the MCP!"
+}
+
+sound sounds/players/gdf/botchat/objectives/mcp/repair {
+
+	localization/english/sounds/bots/gdf/16322.wav
+	//"I'm going to repair the MCP!"
+}
+
+sound sounds/players/gdf/botchat/objectives/outpost/capture {
+
+	localization/english/sounds/bots/gdf/16323.wav
+	//"I'm going to capture the Outpost!"
+}
+
+sound sounds/players/gdf/botchat/objectives/shieldgen/hack {
+
+	localization/english/sounds/bots/gdf/16324.wav
+	//"I'm going to hack the Shield Generator!"
+}
+
+sound sounds/players/gdf/botchat/objectives/hack {
+
+	localization/english/sounds/bots/gdf/16325.wav
+	//"I'm going to hack the objective"
+}
+
+sound sounds/players/gdf/botchat/objectives/hack/stop {
+
+	localization/english/sounds/bots/gdf/16326.wav
+	//"I'm going to stop them hacking the objective!"
+}
+
+sound sounds/players/gdf/botchat/objectives/emp/construct {
+
+	localization/english/sounds/bots/gdf/16327.wav
+	//"I'm going to construct the EMP Disruptor!"
+}
+
+sound sounds/players/gdf/botchat/objectives/steal {
+
+	localization/english/sounds/bots/gdf/16328.wav
+	//"I'm going to steal the objective!"
+}
+
+sound sounds/players/gdf/botchat/objectives/take {
+
+	localization/english/sounds/bots/gdf/16329.wav
+	//"I'm going to take the objective!"
+}
+
+sound sounds/players/gdf/botchat/objectives/carrier/escort {
+
+	localization/english/sounds/bots/gdf/16330.wav
+	//"I'm going to escort the carrier!"
+}
+
+sound sounds/players/gdf/botchat/objectives/pickup {
+
+	localization/english/sounds/bots/gdf/16331.wav
+	//"I'm going to pick up the objective!"
+}
+
+sound sounds/players/gdf/botchat/objectives/steal/stop {
+
+	localization/english/sounds/bots/gdf/16332.wav
+	//"I'm going to stop them stealing the objective!"
+}
+
+sound sounds/players/gdf/botchat/objectives/guard {
+
+	localization/english/sounds/bots/gdf/16333.wav
+	//"I'm going to guard the objective!"
+}
+
+sound sounds/players/gdf/botchat/objectives/carrier/stop {
+
+	localization/english/sounds/bots/gdf/16334.wav
+	//"I'm going to stop their carrier!"
+}
+
+sound sounds/players/gdf/botchat/objectives/return {
+
+	localization/english/sounds/bots/gdf/16335.wav
+	//"I'm going to return the objective!"
+}
+
+sound sounds/players/gdf/botchat/objectives/footbridge/construct {
+
+	localization/english/sounds/bots/gdf/16336.wav
+	//"I'm going to construct the Footbridge!"
+}
+
+sound sounds/players/gdf/botchat/objectives/barricade/destroy {
+
+	localization/english/sounds/bots/gdf/16337.wav
+	//"I'm going to destroy the Barricade!"
+}
+
+sound sounds/players/gdf/botchat/objectives/forwardspwan/capture {
+
+	localization/english/sounds/bots/gdf/16338.wav
+	//"I'm going to capture the Forward Spawn!"
+}
+
+sound sounds/players/gdf/botchat/objectives/forwardspawn/capture/enemy {
+
+	localization/english/sounds/bots/gdf/16339.wav
+	//"I'm going to capture their Forward Spawn!"
+}
+
+sound sounds/players/gdf/botchat/objectives/forwardspawn/recapture {
+
+	localization/english/sounds/bots/gdf/16340.wav
+	//"I'm going to recapture our Forward Spawn!"
+}
+
+sound sounds/players/gdf/botchat/objectives/slipgate/destroy {
+
+	localization/english/sounds/bots/gdf/16341.wav
+	//"I'm going to destroy the Slipgate!"
+}
+
+sound sounds/players/gdf/botchat/objectives/slipgate/defend {
+
+	localization/english/sounds/bots/gdf/16342.wav
+	//"I'm going to defend the Slipgate!"
+}
+
+sound sounds/players/gdf/botchat/objectives/labmats/defend {
+
+	localization/english/sounds/bots/gdf/16343.wav
+	//"I'm going to defend the Lab Materials!"
+}
+
+sound sounds/players/gdf/botchat/objectives/bioscanner/defend {
+
+	localization/english/sounds/bots/gdf/16344.wav
+	//"I'm going to defend the BioScanner!"
+}
+
+sound sounds/players/gdf/botchat/objectives/stroggifier/destroy {
+
+	localization/english/sounds/bots/gdf/16345.wav
+	//"I'm going to destroy the Stroggifier!"
+}
+
+sound sounds/players/gdf/botchat/objectives/generator/repair {
+
+	localization/english/sounds/bots/gdf/16346.wav
+	//"I'm going to repair the Generator!"
+}
+
+sound sounds/players/gdf/botchat/objectives/storedoor/destroy {
+
+	localization/english/sounds/bots/gdf/16347.wav
+	//"I'm going to destroy the Store Room Door!"
+}
+
+sound sounds/players/gdf/botchat/objectives/keycard/take {
+
+	localization/english/sounds/bots/gdf/16348.wav
+	//"I'm going to take the Data Keycard!"
+}
+
+sound sounds/players/gdf/botchat/objectives/keycard/pickup {
+
+	localization/english/sounds/bots/gdf/16349.wav
+	//"I'm going to pick up the Data Keycard!"
+}
+
+sound sounds/players/gdf/botchat/objectives/datadisc/take {
+
+	localization/english/sounds/bots/gdf/16350.wav
+	//"I'm going to take the DataDisc!"
+}
+
+sound sounds/players/gdf/botchat/objectives/datadisc/pickup {
+
+	localization/english/sounds/bots/gdf/16351.wav
+	//"I'm going to pick up the DataDisc!"
+}
+
+sound sounds/players/gdf/botchat/objectives/databrain/take {
+
+	localization/english/sounds/bots/gdf/16352.wav
+	//"I'm going to take the DataBrain!"
+}
+
+sound sounds/players/gdf/botchat/objectives/databrain/pickup {
+
+	localization/english/sounds/bots/gdf/16353.wav
+	//"I'm going to pick up the DataBrain!"
+}
+
+sound sounds/players/gdf/botchat/objectives/braincore/take {
+
+	localization/english/sounds/bots/gdf/16354.wav
+	//"I'm going to take the BrainCore!"
+}
+
+sound sounds/players/gdf/botchat/objectives/braincore/pickup {
+
+	localization/english/sounds/bots/gdf/16355.wav
+	//"I'm going to pick up the BrainCore!"
+}
+
+sound sounds/players/gdf/botchat/objectives/converter/destroy {
+
+	localization/english/sounds/bots/gdf/16356.wav
+	//"I'm going to destroy the Converter"
+}
+
+sound sounds/players/gdf/botchat/objectives/filter/destroy {
+
+	localization/english/sounds/bots/gdf/16357.wav
+	//"I'm going to destroy the Filter!"
+}
+
+sound sounds/players/gdf/botchat/objectives/ramp/construct {
+
+	localization/english/sounds/bots/gdf/16358.wav
+	//"I'm going to build the Assault Ramp!"
+}
+
+sound sounds/players/gdf/botchat/objectives/salvage/defend {
+
+	localization/english/sounds/bots/gdf/16359.wav
+	//"I'm going to defend the Salvage!"
+}
+
+sound sounds/players/gdf/botchat/objectives/northsewergrate/destroy {
+
+	localization/english/sounds/bots/gdf/16360.wav
+	//"I'm going to destroy the North Sewer Grate!"
+}
+
+sound sounds/players/gdf/botchat/objectives/southsewergrate/destroy {
+
+	localization/english/sounds/bots/gdf/16361.wav
+	//"I'm going to destroy the South Sewer Grate!"
+}
+
+sound sounds/players/gdf/botchat/objectives/sewercontrols/hack {
+
+	localization/english/sounds/bots/gdf/16362.wav
+	//"I'm going to hack the Sewer Controls!"
+}
+
+sound sounds/players/gdf/botchat/objectives/slipgate/hack {
+
+	localization/english/sounds/bots/gdf/16363.wav
+	//"I'm going to hack the Slipgate"
+}
+
+sound sounds/players/gdf/botchat/objectives/nexuscore/destroy {
+
+	localization/english/sounds/bots/gdf/16364.wav
+	//"I'm going to destroy the Nexus Tower Core!"
+}
+
+sound sounds/players/gdf/botchat/objectives/contaminator/destroy {
+
+	localization/english/sounds/bots/gdf/16365.wav
+	//"I'm going to destroy the Contaminator!"
+}
+
+sound sounds/players/gdf/botchat/objectives/securitycontrols/defend {
+
+	localization/english/sounds/bots/gdf/16366.wav
+	//"I'm going to defend the Security Controls!"
+}
+
+sound sounds/players/gdf/botchat/objectives/transformer/defend {
+
+	localization/english/sounds/bots/gdf/16367.wav
+	//"I'm going to defend the Transformer!"
+}
+
+sound sounds/players/gdf/botchat/objectives/energycore/defend {
+
+	localization/english/sounds/bots/gdf/16368.wav
+	//"I'm going to defend the Energy Core!"
+}
+
+sound sounds/players/gdf/botchat/requests/vaultdoor/destroy {
+
+	localization/english/sounds/bots/gdf/16372.wav
+	//"I'm going to destroy the Vault Door!"
+}
+
+
+// Requests //
+
+sound sounds/players/gdf/botchat/requests/deployable/repair {
+
+	localization/english/sounds/bots/gdf/16369.wav
+	//"Repair my Deployable!"
+}
+
+sound sounds/players/gdf/botchat/requests/vehicle/repair {
+
+	localization/english/sounds/bots/gdf/16370.wav
+	//"Repair My Vehicle!"
+}
+
+sound sounds/players/gdf/botchat/requests/forwardspawn/liberate {
+
+	localization/english/sounds/bots/gdf/16371.wav
+	//"Liberate the Forward Spawn!"
+}

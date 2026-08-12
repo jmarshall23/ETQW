@@ -1,0 +1,74 @@
+#ifndef __MISSION_ICONS__
+#define __MISSION_ICONS__
+
+$template _missionsystemIcon( type, texture )
+	sort gui
+	{
+		vertexAlpha
+		program filterVertexColorAlpha
+		blend filter
+		$if ( #type == "task" )
+			map clamp nopicmip linear guis/assets/icons/circle_base.tga
+		$endif
+		$if ( #type == "mission" )
+			map clamp nopicmip linear guis/assets/icons/square_base.tga
+		$endif
+		$if ( #type == "objective" )
+			map clamp nopicmip linear guis/assets/icons/diamond_base.tga
+		$endif
+	}
+	{
+		vertexAlpha
+		blend blend
+		map clamp nopicmip linear "guis/assets/icons/" ## texture
+	}
+	{
+		vertexAlpha
+		blend blend
+		$if ( #type == "task" )
+			map clamp nopicmip linear guis/assets/icons/circle_frame.tga
+		$endif
+		$if ( #type == "mission" )
+			map clamp nopicmip linear guis/assets/icons/square_frame.tga
+		$endif
+		$if ( #type == "objective" )
+			map clamp nopicmip linear guis/assets/icons/diamond_frame.tga
+		$endif
+	}
+	{
+		blend blend
+		map clamp nopicmip linear guis/assets/icons/ident01.tga
+		rotate time * 0.3
+		alpha parm4
+	}	
+
+$endtemplate
+
+$template _missionsystemIconDesat( type, texture )
+	$if ( #type != "objective" )
+		/*#error*/ "Only supports desaturated objective icons"
+	$endif
+
+	sort gui
+	{
+		vertexAlpha
+		program filterVertexColorAlpha
+		blend filter
+		map clamp nopicmip linear guis/assets/icons/diamond_grey_base.tga
+		colored
+	}
+	{
+		vertexAlpha
+		blend blend
+		map clamp nopicmip linear "guis/assets/icons/" ## texture
+		color 0.7, 0.7, 0.7, 1
+	}
+	{
+		vertexAlpha
+		blend blend
+		map clamp nopicmip linear guis/assets/icons/diamond_grey_frame.tga
+		colored
+	}
+$endtemplate
+
+#endif

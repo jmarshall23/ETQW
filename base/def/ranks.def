@@ -1,0 +1,311 @@
+rankDef conscript {
+	title			"game/ranks/conscript"
+	shortTitle		"game/ranks/con"
+	cost			0
+	material		"nodraw"
+	level			0
+}
+
+rankDef private {
+	title			"game/ranks/private"
+	shortTitle		"game/ranks/pvt"
+	cost			20
+	material		"guis/assets/icons/rank01"
+	level			1
+}
+
+rankDef private_1stclass {
+	title			"game/ranks/private_1st"
+	shortTitle		"game/ranks/pfc"
+	cost			40
+	material		"guis/assets/icons/rank02"
+	level			2
+}
+
+rankDef lance_corporal {
+	title			"game/ranks/lance_corporal"
+	shortTitle		"game/ranks/lcpl"
+	cost			60
+	material		"guis/assets/icons/rank03"
+	level			3
+}
+
+rankDef corporal {
+	title			"game/ranks/corporal"
+	shortTitle		"game/ranks/cpl"
+	cost			80
+	material		"guis/assets/icons/rank04"
+	level			4
+}
+
+rankDef sergeant {
+	title			"game/ranks/sergeant"
+	shortTitle		"game/ranks/sgt"
+	cost			100
+	material		"guis/assets/icons/rank05"
+	level			5
+}
+
+rankDef staff_sergeant {
+	title			"game/ranks/staff_sergeant"
+	shortTitle		"game/ranks/ssgt"
+	cost			120
+	material		"guis/assets/icons/rank06"
+	level			6
+}
+
+rankDef gunnery_sergeant {
+	title			"game/ranks/gunnery_sergeant"
+	shortTitle		"game/ranks/gsgt"
+	cost			140
+	material		"guis/assets/icons/rank07"
+	level			7
+}
+
+rankDef master_sergeant {
+	title			"game/ranks/master_sergeant"
+	shortTitle		"game/ranks/msgt"
+	cost			160
+	material		"guis/assets/icons/rank08"
+	level			8
+}
+
+rankDef first_sergeant {
+	title			"game/ranks/first_sergeant"
+	shortTitle		"game/ranks/fsgt"
+	cost			180
+	material		"guis/assets/icons/rank09"
+	level			9
+}
+
+rankDef master_chief {
+	title			"game/ranks/master_chief"
+	shortTitle		"game/ranks/mstchf"
+	cost			200
+	material		"guis/assets/icons/rank10"
+	level			10
+}
+
+rankDef sergeant_major {
+	title			"game/ranks/sergeant_major"
+	shortTitle		"game/ranks/sgt_maj"
+	cost			220
+	material		"guis/assets/icons/rank11"
+	level			11
+}
+
+rankDef ensign {
+	title			"game/ranks/ensign"
+	shortTitle		"game/ranks/ens"
+	cost			240
+	material		"guis/assets/icons/rank12"
+	level			12
+}
+
+rankDef third_lieutenant {
+	title			"game/ranks/third_lieutenant"
+	shortTitle		"game/ranks/3rd_lt"
+	cost			260
+	material		"guis/assets/icons/rank13"
+	level			13
+}
+
+rankDef second_lieutenant {
+	title			"game/ranks/second_lieutenant"
+	shortTitle		"game/ranks/2nd_lt"
+	cost			280
+	material		"guis/assets/icons/rank14"
+	level			14
+}
+
+rankDef first_lieutenant {
+	title			"game/ranks/first_lieutenant"
+	shortTitle		"game/ranks/1st_lt"
+	cost			300
+	material		"guis/assets/icons/rank15"
+	level			15
+}
+
+rankDef captain {
+	title			"game/ranks/captain"
+	shortTitle		"game/ranks/cpt"
+	cost			320
+	material		"guis/assets/icons/rank16"
+	level			16
+}
+
+rankDef group_captain {
+	title			"game/ranks/group_captain"
+	shortTitle		"game/ranks/grpcpt"
+	cost			340
+	material		"guis/assets/icons/rank17"
+	level			17
+}
+
+rankDef senior_captain {
+	title			"game/ranks/senior_captain"
+	shortTitle		"game/ranks/snrcpt"
+	cost			360
+	material		"guis/assets/icons/rank18"
+	level			18
+}
+
+rankDef liuetenant_major {
+	title			"game/ranks/lieutenant_major"
+	shortTitle		"game/ranks/ltmaj"
+	cost			380
+	material		"guis/assets/icons/rank19"
+	level			19
+}
+
+rankDef major {
+	title			"game/ranks/major"
+	shortTitle		"game/ranks/maj"
+	cost			400
+	material		"guis/assets/icons/rank20"
+	level			20
+}
+
+rankDef group_major {
+	title			"game/ranks/group_major"
+	shortTitle		"game/ranks/grpmaj"
+	cost			420
+	material		"guis/assets/icons/rank21"
+	level			21
+}
+
+rankDef lieutenant_commander {
+	title			"game/ranks/lieutenant_commander"
+	shortTitle		"game/ranks/ltcmdr"
+	cost			440
+	material		"guis/assets/icons/rank22"
+	level			22
+}
+
+rankDef commander {
+	title			"game/ranks/commander"
+	shortTitle		"game/ranks/cdr"
+	cost			460
+	material		"guis/assets/icons/rank23"
+	level			23
+}
+
+rankDef group_commander {
+	title			"game/ranks/group_commander"
+	shortTitle		"game/ranks/grpcdr"
+	cost			480
+	material		"guis/assets/icons/rank24"
+	level			24
+}
+
+rankDef lieutenant_colonel {
+	title			"game/ranks/lieutenant_colonel"
+	shortTitle		"game/ranks/ltcol"
+	cost			500
+	material		"guis/assets/icons/rank25"
+	level			25
+}
+
+rankDef colonel {
+	title			"game/ranks/colonel"
+	shortTitle		"game/ranks/col"
+	cost			520
+	material		"guis/assets/icons/rank26"
+	level			26
+}
+
+rankDef brigadier {
+	title			"game/ranks/brigadier"
+	shortTitle		"game/ranks/brg"
+	cost			540
+	material		"guis/assets/icons/rank27"
+	level			27
+}
+
+rankDef brigadier_general {
+	title			"game/ranks/brigadier_general"
+	shortTitle		"game/ranks/brg_gen"
+	cost			560
+	material		"guis/assets/icons/rank28"
+	level			28
+}
+
+rankDef major_general {
+	title			"game/ranks/major_general"
+	shortTitle		"game/ranks/maj_gen"
+	cost			580
+	material		"guis/assets/icons/rank29"
+	level			29
+}
+
+rankDef lieutenant_general {
+	title			"game/ranks/lieutenant_general"
+	shortTitle		"game/ranks/lt_gen"
+	cost			600
+	material		"guis/assets/icons/rank30"
+	level			30
+}
+
+rankDef general {
+	title			"game/ranks/general"
+	shortTitle		"game/ranks/gen"
+	cost			620
+	material		"guis/assets/icons/rank31"
+	level			31
+}
+
+rankDef commander_general {
+	title			"game/ranks/commander_general"
+	shortTitle		"game/ranks/cdrgen"
+	cost			640
+	material		"guis/assets/icons/rank32"
+	level			32
+}
+
+rankDef field_vice_marshall {
+	title			"game/ranks/field_vice_marshall"
+	shortTitle		"game/ranks/fvmsh"
+	cost			660
+	material		"guis/assets/icons/rank33"
+	level			33
+}
+
+rankDef field_marshall {
+	title			"game/ranks/field_marshall"
+	shortTitle		"game/ranks/fm"
+	cost			680
+	material		"guis/assets/icons/rank34"
+	level			34
+}
+
+rankDef vice_commander_army {
+	title			"game/ranks/vice_commander_army"
+	shortTitle		"game/ranks/vcdra"
+	cost			700
+	material		"guis/assets/icons/rank35"
+	level			35
+}
+
+rankDef commander_army {
+	title			"game/ranks/commander_army"
+	shortTitle		"game/ranks/cdrarm"
+	cost			720
+	material		"guis/assets/icons/rank36"
+	level			36
+}
+
+rankDef high_commander {
+	title			"game/ranks/high_commander"
+	shortTitle		"game/ranks/hicom"
+	cost			740
+	material		"guis/assets/icons/rank37"
+	level			37
+}
+
+rankDef supreme_commander {
+	title			"game/ranks/supreme_commander"
+	shortTitle		"game/ranks/supcom"
+	cost			760
+	material		"guis/assets/icons/rank38"
+	level			38
+}

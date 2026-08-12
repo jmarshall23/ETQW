@@ -1,0 +1,650 @@
+
+guiTheme default {
+	materials {
+		"system/noglare"		"penta/noglare"
+		"system/cursor"			"guis/assets/cursors/arrow"
+		"system/screensaver"	"guis/assets/black"
+
+		"nodraw"		"guis/nodraw"
+		"nodraw_flash"	"guis/nodraw"
+		"spec"			"guis/nodraw"
+
+		"aggressor"		"guis/assets/icons/class_soldier"
+		"infiltrator"	"guis/assets/icons/class_covert_ops"
+		"technician"	"guis/assets/icons/class_medic"
+		"oppressor"		"guis/assets/icons/class_field_ops"
+		"constructor"	"guis/assets/icons/class_engineer"
+
+		"soldier"		"guis/assets/icons/class_soldier"
+		"covertops"		"guis/assets/icons/class_covert_ops"
+		"medic"			"guis/assets/icons/class_medic"
+		"fieldops"		"guis/assets/icons/class_field_ops"
+		"engineer"		"guis/assets/icons/class_engineer"
+
+		"voip"			"guis/assets/icons/inaudio, rect( 0, 0, 32, 32 )"
+		"voip_global"	"guis/assets/icons/icons_sheet1, rect( 142, 0, 16, 16 )"
+		"voip_team"		"guis/assets/icons/icons_sheet1, rect( 159, 0, 16, 16 )"
+		"voip_fireteam"	"guis/assets/icons/icons_sheet1, rect( 176, 0, 16, 16 )"
+
+		"<noweapon>"	"guis/nodraw"
+
+		"white"			"guis/assets/white"
+
+		"cinematic"		"_cinematicGui_YUV"
+
+		"levelshot"		"levelshots/scratch"
+		"campaignshot"	"levelshots/campaigns/scratch"
+
+		"notready"		"guis/assets/mainmenu/filters/hide"
+	}
+
+	materials {
+		"editcursor"			"guis/assets/widgets/cursor/edit"
+		"editcursor_overwrite"		"guis/assets/widgets/cursor/edit_overwrite"
+	}
+
+	colors {
+		"system/cursor"			"1 1 1 1"
+		"system/white"			"1 1 1 1"
+		"system/border"			"0 1 0 1"
+		"system/text"			"1 1 1 1"
+		"system/textDisabled"		"1 0  1"
+		"system/disabledText"		"0.4 0.4 0.4 1"
+		"system/selectionText"		"1 0.5 0 1"
+		"system/background"		"0.2 0.2 0.2 0.3"
+		"system/selectionHighlight"	"0.2 0.2 0.2 0.5"
+		"system/selectionBorder"	"0.0 1.0 0.0 0.6"
+		"system/columnHeading"		"0.1 0.1 0.1 0.4"
+		"system/columnDivider"		"0 1 0 1"
+		"system/scrollbarBack"		"0.5 0.5 0.5 1"
+		"system/scrollbarThumb"		"0.6 0.3 0 1"
+		"system/scrollbarArrow"		"0.6 0.3 0 1"
+
+		// GDF Colors
+		"gdf_COLOR_DIALOG_FILL"			"0.4 0.4 0.4 0.5"
+		"gdf_COLOR_DIALOG_LINES"		"0.62 0.62 0.62 0.3"
+		"gdf_COLOR_DIALOG_GRADIENT"		"1 1 1 0.15"
+
+		"gdf_COLOR_COMPASS_FRAME_FILL"		"0.4 0.4 0.4 0.8"
+		"gdf_COLOR_COMPASS_FRAME_LINE"		"0.62 0.62 0.62 0.3"
+
+		"gdf_COLOR_TIMER_FILL"			"0.4 0.4 0.4 0.6"
+		"gdf_COLOR_TIMER_LINE"			"0.75 0.75 0.75 0.3"
+
+		"gdf_COLOR_ICON"			"1 1 1 1"
+		"gdf_COLOR_ICON_DIM"			"0.785 0.785 0.785 1"
+
+		"gdf_COLOR_MISSION_FILL"		"0.465 0.465 0.465 0.4"
+		"gdf_COLOR_MISSION_LINE"		"0.715 0.715 0.715 0.3"
+
+		"gdf_COLOR_SCOREBOARD_FILL"		"0.22 0.22 0.22 0.90"
+		"gdf_COLOR_SCOREBOARD_SPEC_FILL"	"0.27 0.27 0.27 0.90"
+		"gdf_COLOR_SCOREBOARD_LINE"		"0.28 0.28 0.28 0.2"
+		"gdf_COLOR_SCOREBOARD_ITEM"		"0.415 0.415 0.415 0.3"
+
+		"gdf_COLOR_VEHICLE_OUTER_FILL"			"0.4 0.4 0.4 0.3"
+		"gdf_COLOR_VEHICLE_PASSENGER_LIST_FILL"    	"0.2343 0.2343 0.2343 0.3"
+		"gdf_COLOR_VEHICLE_PASSENGER_LIST_GRADIENT"  	"0 0 0 0.1"
+		"gdf_COLOR_VEHICLE_BOXES_LINE"        		"0.62 0.62 0.62 0.3"
+
+		"gdf_COLOR_VEHICLE_BAR"            		"0 0 0 0.4"
+		"gdf_COLOR_VEHICLE_BAR_LINE"       		"0 0 0 0.5"
+
+		"gdf_COLOR_HEALTH_BAR"            		"0.8 0.8 0.8 1"
+		"gdf_COLOR_HEALTH_BAR_LINE"       		"0 0 0 0.1"
+
+		"gdf_COLOR_WEAPON_LIST_ICON_LINE"		"0.1 0.1 0 0.6"
+		"gdf_COLOR_WEAPON_LIST_ITEM_FILL" 		"0.2812 0.2812 0.2812 0.4"
+		"gdf_COLOR_WEAPON_LIST_ITEM_LINE" 		"0.7695 0.7695 0.7695 0.3"
+
+		"gdf_COLOR_WEAPON_LIST_ITEM_HI_FILL"		"0.7656 0.707 0.1875 1 "
+		"gdf_COLOR_WEAPON_LIST_ITEM_HI_LINE"		"0.1 0.1 0.1 0.3"
+		"gdf_COLOR_WEAPON_LIST_ITEM_HI_GRADIENT"	"0.8438 0.8047 0.4531 1"
+
+		"gdf_COLOR_BAR_FILL"				"0.75 0.75 0.75 1"
+		"gdf_COLOR_BAR_GRADIENT"			"0 0 0 0.15"
+
+		"gdf_COLOR_CROSSHAIR_FILL"			"0.04 0.04 0.04 0.3"
+
+		"gdf_COLOR_HUD_DARK" 			"0.320 0.320 0.277 0.75"
+		"gdf_COLOR_HUD_CM_RING" 		"0.300 0.300 0.277 0.75"
+		"gdf_COLOR_HUD_DARK_NOALPHA"		"0.320 0.320 0.277 1.00"
+		"gdf_COLOR_HUD_MED" 			"0.368 0.372 0.317 1.00"
+		"gdf_COLOR_HUD_LIGHT" 			"0.453 0.453 0.410 0.75"
+		"gdf_COLOR_HUD_LIGHT_NOALPHA"		"0.453 0.453 0.410 1.00"
+		"gdf_COLOR_HUD_HIGHLIGHT"		"0.662 0.662 0.505 0.20"
+		"gdf_COLOR_HUD_PROGRESS"		"0.761 0.761 0.761 1.00"
+		"gdf_COLOR_HUD_WEAPON_HIGH"		"0.703 0.703 0.671 1.00"
+		"gdf_COLOR_HUD_TUTORIAL_HIGHLIGHT"	"0.95 0.9 0.050 0.4"
+		"gdf_COLOR_HUD_TUTORIAL_HIGHLIGHT_FULL"	"0.95 0.9 0.050 1.0"
+
+		"gdf_COLOR_TEXT"			"0.7812 0.8008 0.375 1"
+
+		"gdf_COLOR_YELLOW_TEXT"			"0.7812 0.8008 0.375 1"
+
+		"gdf_COLOR_LIST_HIGHLIGHT"		"0.457 0.4258 0 1"
+		"gdf_COLOR_LIST_GRADIENT"		"0.7305 0.5977 0 1"
+
+		// Strogg Colors
+		"strogg_COLOR_DIALOG_FILL"		"0.2 0.2 0.15 0.5"
+		"strogg_COLOR_DIALOG_LINES"		"0.3906 0.3672 0.3242 0.5"
+		"strogg_COLOR_DIALOG_GRADIENT"		"0.5781 0.5781 0.5781 0.15"
+
+		"strogg_COLOR_COMPASS_FRAME_FILL"	"0.2695 0.2461 0.1992 0.5"
+		"strogg_COLOR_COMPASS_FRAME_LINE"	"0.45 0.4 0.38 0.4"
+
+		"strogg_COLOR_TIMER_FILL"		"0.2695 0.2461 0.1992 0.6"
+		"strogg_COLOR_TIMER_LINE"		"0.4570 0.4414 0.4140 0.3"
+
+		"strogg_COLOR_ICON"			"0.8555 0.8984 0.6692 1"
+		"strogg_COLOR_ICON_DIM"			"0.785 0.785 0.785 1"
+
+		"strogg_COLOR_MISSION_FILL"		"0.2 0.18 0.15 0.3"
+		"strogg_COLOR_MISSION_LINE"		"0.4 0.38 0.35 0.3"
+
+		"strogg_COLOR_SCOREBOARD_FILL"		"0.22 0.22 0.22 0.90"
+		"strogg_COLOR_SCOREBOARD_SPEC_FILL"	"0.27 0.27 0.27 0.90"
+		"strogg_COLOR_SCOREBOARD_LINE"		"0.28 0.28 0.28 0.2"
+		"strogg_COLOR_SCOREBOARD_ITEM"		"0.415 0.415 0.415 0.3"
+
+		"strogg_COLOR_VEHICLE_OUTER_FILL"		"0.35 0.3 0.2 0.5"
+		"strogg_COLOR_VEHICLE_PASSENGER_LIST_FILL"    	"0 0 0 0.3"
+		"strogg_COLOR_VEHICLE_PASSENGER_LIST_GRADIENT"  "0 0 0 0.1"
+		"strogg_COLOR_VEHICLE_BOXES_LINE"        	"0.3 0.3 0.3 0.4"
+
+		"strogg_COLOR_VEHICLE_BAR"            		"0 0 0 0.4"
+		"strogg_COLOR_VEHICLE_BAR_LINE"       		"0 0 0 0.5"
+
+		"strogg_COLOR_HEALTH_BAR"            		"0.35 0.34 0.28 1"
+		"strogg_COLOR_HEALTH_BAR_LINE"       		"0 0 0 0.1"
+
+		"strogg_COLOR_WEAPON_LIST_ICON_LINE"		"0.1 0.1 0 0.6"
+		"strogg_COLOR_WEAPON_LIST_ITEM_FILL" 		"0.1875 0.1719 0.1406 0.4"
+		"strogg_COLOR_WEAPON_LIST_ITEM_LINE" 		"0.4648 0.4492 0.4258 0.3"
+
+		"strogg_COLOR_WEAPON_LIST_ITEM_HI_FILL"		"0.75 0.5 0 1"
+		"strogg_COLOR_WEAPON_LIST_ITEM_HI_LINE"		"1 1 1 0.3"
+		"strogg_COLOR_WEAPON_LIST_ITEM_HI_GRADIENT"	"0.85 1 0.8 0.3"
+
+		"strogg_COLOR_BAR_FILL"			"0.7 0.75 0.55 1"
+		"strogg_COLOR_BAR_GRADIENT"		"0 0 0 0.15"
+
+		"strogg_COLOR_CROSSHAIR_FILL"		"0.04 0.04 0.04 0.3"
+
+		"strogg_COLOR_HUD_DARK" 		"0.320 0.320 0.277 0.75"
+		"strogg_COLOR_HUD_CM_RING" 		"0.300 0.300 0.277 0.75"
+		"strogg_COLOR_HUD_DARK_NOALPHA"		"0.320 0.320 0.277 1.00"
+		"strogg_COLOR_HUD_MED" 			"0.368 0.372 0.317 1.00"
+		"strogg_COLOR_HUD_LIGHT" 		"0.453 0.453 0.410 0.75"
+		"strogg_COLOR_HUD_LIGHT_NOALPHA"	"0.453 0.453 0.410 1.00"
+		"strogg_COLOR_HUD_HIGHLIGHT"		"0.662 0.662 0.505 0.20"
+		"strogg_COLOR_HUD_PROGRESS"		"0.761 0.761 0.761 1.00"
+		"strogg_COLOR_HUD_WEAPON_HIGH"		"0.703 0.703 0.671 1.00"
+		"strogg_COLOR_HUD_TUTORIAL_HIGHLIGHT"	"0.95 0.9 0.050 0.4"
+		"strogg_COLOR_HUD_TUTORIAL_HIGHLIGHT_FULL" "0.95 0.9 0.050 1.0"
+
+		"strogg_COLOR_TEXT"			"0.7812 0.8008 0.375 1"
+
+		"strogg_COLOR_YELLOW_TEXT"		"0.7812 0.8008 0.375 1"
+
+		"strogg_COLOR_LIST_HIGHLIGHT"		"0.457 0.4258 0 1"
+		"strogg_COLOR_LIST_GRADIENT"		"0.7305 0.5977 0 1"
+
+		// Spectating Colors
+		"spectating_COLOR_DIALOG_FILL"		"0.4 0.4 0.4 0.5"
+		"spectating_COLOR_DIALOG_LINES"		"0.62 0.62 0.62 0.5"
+		"spectating_COLOR_DIALOG_GRADIENT"	"1 1 1 0.15"
+
+		"spectating_COLOR_COMPASS_FRAME_FILL"	"0.4 0.4 0.4 0.8"
+		"spectating_COLOR_COMPASS_FRAME_LINE"	"0.62 0.62 0.62 0.3"
+
+		"spectating_COLOR_TIMER_FILL"		"0.4 0.4 0.4 0.6"
+		"spectating_COLOR_TIMER_LINE"		"0.75 0.75 0.75 0.2"
+
+		"spectating_COLOR_ICON"			"1 1 1 1"
+		"spectating_COLOR_ICON_DIM"		"0.785 0.785 0.785 1"
+
+		"spectating_COLOR_MISSION_FILL"		"0.32 0.32 0.32 0.7"
+		"spectating_COLOR_MISSION_LINE"		"0.715 0.715 0.715 0.2"
+
+		"spectating_COLOR_SCOREBOARD_FILL"		"0.22 0.22 0.22 0.90"
+		"spectating_COLOR_SCOREBOARD_SPEC_FILL"		"0.27 0.27 0.27 0.90"
+		"spectating_COLOR_SCOREBOARD_LINE"		"0.28 0.28 0.28 0.2"
+		"spectating_COLOR_SCOREBOARD_ITEM"		"0.415 0.415 0.415 0.3"
+
+		"spectating_COLOR_VEHICLE_OUTER_FILL"			"0.4 0.4 0.4 0.3"
+		"spectating_COLOR_VEHICLE_PASSENGER_LIST_FILL"    	"0.2343 0.2343 0.2343 0.3"
+		"spectating_COLOR_VEHICLE_PASSENGER_LIST_GRADIENT"  	"0 0 0 0.1"
+		"spectating_COLOR_VEHICLE_BOXES_LINE"        		"0.62 0.62 0.62 0.3"
+		"spectating_COLOR_HEALTH_BAR"            		"0.8 0.8 0.8 1"
+		"spectating_COLOR_HEALTH_BAR_LINE"       		"0 0 0 0.1"
+
+		"spectating_COLOR_WEAPON_LIST_ICON_LINE"		"0.1 0.1 0 0.6"
+		"spectating_COLOR_WEAPON_LIST_ITEM_FILL" 		"0.2812 0.2812 0.2812 0.5"
+		"spectating_COLOR_WEAPON_LIST_ITEM_LINE" 		"1 1 1 0.1"
+
+		"spectating_COLOR_WEAPON_LIST_ITEM_HI_FILL"		"1 0.7 0 0.5"
+		"spectating_COLOR_WEAPON_LIST_ITEM_HI_LINE"		"1 1 1 0.2"
+		"spectating_COLOR_WEAPON_LIST_ITEM_HI_GRADIENT"		"1 1 0.5 0.6"
+
+		"spectating_COLOR_BAR_FILL"			"0.75 0.75 0.75 1"
+		"spectating_COLOR_BAR_GRADIENT"			"0 0 0 0.15"
+
+		"spectating_COLOR_CROSSHAIR_LINE"		"0.79 0.79 0.79 0.6"
+		"spectating_COLOR_CROSSHAIR_FILL"		"0.04 0.04 0.04 0.3"
+		"spectating_COLOR_CROSSHAIR_GRADIENT"		"0.0 0.0 0.0 0.3"
+
+		"spectating_COLOR_HUD_DARK" 			"0.320 0.320 0.277 0.75"
+		"spectating_COLOR_HUD_CM_RING" 			"0.300 0.300 0.277 0.75"
+		"spectating_COLOR_HUD_DARK_NOALPHA"		"0.320 0.320 0.277 1.00"
+		"spectating_COLOR_HUD_MED" 			"0.368 0.372 0.317 1.00"
+		"spectating_COLOR_HUD_LIGHT" 			"0.453 0.453 0.410 0.75"
+		"spectating_COLOR_HUD_LIGHT_NOALPHA"		"0.453 0.453 0.410 1.00"
+		"spectating_COLOR_HUD_HIGHLIGHT"		"0.662 0.662 0.505 0.20"
+		"spectating_COLOR_HUD_PROGRESS"			"0.761 0.761 0.761 1.00"
+		"spectating_COLOR_HUD_WEAPON_HIGH"		"0.703 0.703 0.671 1.00"
+		"spectating_COLOR_HUD_TUTORIAL_HIGHLIGHT"	"0.95 0.9 0.050 0.4"
+		"spectating_COLOR_HUD_TUTORIAL_HIGHLIGHT_FULL"	"0.95 0.9 0.050 1.0"
+
+		"spectating_COLOR_TEXT"				"0.7812 0.8008 0.375 1"
+
+		"spectating_COLOR_YELLOW_TEXT"			"0.7812 0.8008 0.375 1"
+
+		"spectating_COLOR_LIST_HIGHLIGHT"		"0.457 0.4258 0 1"
+		"spectating_COLOR_LIST_GRADIENT"		"0.7305 0.5977 0 1"
+	}
+
+	sounds {
+		"system/button/cancel" 	"sounds/ui/main/cancel"
+		"system/button/click"	"sounds/ui/main/click"
+		"system/button/hover"	"sounds/ui/main/mouseover"
+		"system/confirm"		"sounds/ui/main/click"
+		"system/open"		"sounds/ui/main/open"
+		"system/close"		"sounds/ui/main/close"
+
+		"click"		"sounds/ui/weapons/click"
+		"accept"	"sounds/ui/weapons/accept"
+		"boop"		"gui_boop"
+	}
+
+	fonts {
+		"dinpro"	"dinpro"
+		"digital"	"digital"
+	}
+
+	materials {
+		"list_sort_up"			"guis/assets/mainmenu/sheet_add, rect( 447, 132, 16, 16 ) flipY"
+		"list_sort_dn"			"guis/assets/mainmenu/sheet_add, rect( 447, 132, 16, 16 )"
+	}
+	// window frame, solid fill
+	materials {
+		"window_l"			"guis/assets/mainmenu/sheet_fill, rect( 131, 167, 8, 4 )"
+		"window_r"			"guis/assets/mainmenu/sheet_fill, rect( 131, 167, 8, 4 ) flipX"
+		"window_t"			"guis/assets/mainmenu/sheet_fill, rect( 132, 167, 4, 8 )"
+		"window_b"			"guis/assets/mainmenu/sheet_fill, rect( 132, 167, 4, 8 ) flipY"
+		"window_tl"			"guis/assets/mainmenu/sheet_fill, rect( 131, 163, 8, 8 )"
+		"window_tr"			"guis/assets/mainmenu/sheet_fill, rect( 131, 163, 8, 8 ) flipX"
+		"window_bl"			"guis/assets/mainmenu/sheet_fill, rect( 131, 163, 8, 8 ) flipY"
+		"window_br"			"guis/assets/mainmenu/sheet_fill, rect( 131, 163, 8, 8 ) flipX flipY"
+		"window_c"			"guis/assets/white"
+	}
+
+	// window frame, lines
+	materials {
+		"window_line_l"			"guis/assets/mainmenu/sheet_add, rect( 131, 185, 8, 4 )"
+		"window_line_r"			"guis/assets/mainmenu/sheet_add, rect( 131, 185, 8, 4 ) flipX"
+		"window_line_t"			"guis/assets/mainmenu/sheet_add, rect( 145, 179, 4, 8 )"
+		"window_line_b"			"guis/assets/mainmenu/sheet_add, rect( 145, 179, 4, 8 ) flipY"
+		"window_line_tl"		"guis/assets/mainmenu/sheet_add, rect( 131, 179, 8, 8 )"
+		"window_line_tr"		"guis/assets/mainmenu/sheet_add, rect( 131, 179, 8, 8 ) flipX"
+		"window_line_bl"		"guis/assets/mainmenu/sheet_add, rect( 131, 179, 8, 8 ) flipY"
+		"window_line_br"		"guis/assets/mainmenu/sheet_add, rect( 131, 179, 8, 8 ) flipX flipY"
+		"window_line_c"			"guis/nodraw"
+	}
+
+	// dialog frame, solid fill
+	materials {
+		"dialog_l"			"guis/assets/mainmenu/sheet_fill, rect( 131, 169, 28, 4 )"
+		"dialog_r"			"guis/assets/mainmenu/sheet_fill, rect( 131, 169, 28, 4 ) flipX"
+		"dialog_t"			"guis/assets/mainmenu/sheet_fill, rect( 145, 131, 14, 12 )"
+		"dialog_b"			"guis/assets/mainmenu/sheet_fill, rect( 145, 132, 14, 12 )"
+		"dialog_tl"			"guis/assets/mainmenu/sheet_fill, rect( 131, 131, 28, 12 )"
+		"dialog_tr"			"guis/assets/mainmenu/sheet_fill, rect( 131, 131, 28, 12 ) flipX"
+		"dialog_bl"			"guis/assets/mainmenu/sheet_fill, rect( 131, 131, 28, 12 ) flipY"
+		"dialog_br"			"guis/assets/mainmenu/sheet_fill, rect( 131, 131, 28, 12 ) flipX flipY"
+		"dialog_c"			"guis/assets/white"
+	}
+
+	// dialog frame, gradient
+	materials {
+		"dialog_grad_l"			"guis/assets/mainmenu/sheet_add, rect( 3, 198, 44, 2 )"
+		"dialog_grad_r"			"guis/assets/mainmenu/sheet_add, rect( 3, 198, 44, 2 ) flipX"
+		"dialog_grad_t"			"guis/assets/mainmenu/sheet_add, rect( 45, 131, 44, 68 )"
+		"dialog_grad_b"			"guis/assets/mainmenu/sheet_add, rect( 44, 224, 44, 30 )"
+		"dialog_grad_tl"		"guis/assets/mainmenu/sheet_add, rect( 3, 131, 44, 68 )"
+		"dialog_grad_tr"		"guis/assets/mainmenu/sheet_add, rect( 3, 131, 44, 68 ) flipX"
+		"dialog_grad_bl"		"guis/assets/mainmenu/sheet_add, rect( 3, 224, 50, 30 )"
+		"dialog_grad_br"		"guis/assets/mainmenu/sheet_add, rect( 3, 224, 50, 30 ) flipX"
+		"dialog_grad_c"			"guis/nodraw"
+	}
+
+	// dialog frame, lines
+	materials {
+		"dialog_line_l"			"guis/assets/mainmenu/sheet_add, rect( 131, 185, 28, 4 )"
+		"dialog_line_r"			"guis/assets/mainmenu/sheet_add, rect( 131, 185, 28, 4 ) flipX"
+		"dialog_line_t"			"guis/assets/mainmenu/sheet_add, rect( 145, 147, 14, 12 )"
+		"dialog_line_b"			"guis/assets/mainmenu/sheet_add, rect( 145, 147, 14, 12 ) flipY"
+		"dialog_line_tl"		"guis/assets/mainmenu/sheet_add, rect( 131, 147, 28, 12 )"
+		"dialog_line_tr"		"guis/assets/mainmenu/sheet_add, rect( 131, 147, 28, 12 ) flipX"
+		"dialog_line_bl"		"guis/assets/mainmenu/sheet_add, rect( 131, 147, 28, 12 ) flipY"
+		"dialog_line_br"		"guis/assets/mainmenu/sheet_add, rect( 131, 147, 28, 12 ) flipX flipY"
+		"dialog_line_c"			"guis/nodraw"
+	}
+
+	materials {
+        "button_fill_l"     "guis/assets/mainmenu/sheet_fill, rect( 167, 136, 8, 16 )"
+        "button_fill_c"     "guis/assets/mainmenu/sheet_fill, rect( 170, 136, 8, 16 )"
+        "button_fill_r"     "guis/assets/mainmenu/sheet_fill, rect( 167, 136, 8, 16 ) flipX"
+
+        "button_grad_l"     "guis/assets/mainmenu/sheet_add, rect( 167, 168, 8, 16 )"
+        "button_grad_c"     "guis/assets/mainmenu/sheet_add, rect( 170, 168, 8, 16 )"
+        "button_grad_r"     "guis/assets/mainmenu/sheet_add, rect( 167, 168, 8, 16 ) flipX"
+
+        "button_line_l"     "guis/assets/mainmenu/sheet_add, rect( 167, 200, 8, 16 )"
+        "button_line_c"     "guis/assets/mainmenu/sheet_add, rect( 170, 200, 8, 16 )"
+        "button_line_r"     "guis/assets/mainmenu/sheet_add, rect( 167, 200, 8, 16 ) flipX"
+    }
+    
+	// button arrows
+	materials {
+		"arrowleft_t"			"guis/assets/mainmenu/sheet_fill, rect( 211, 241, 51, 15 )"
+		"arrowleft_c"			"guis/nodraw"
+		"arrowleft_b"			"guis/assets/mainmenu/sheet_fill, rect( 211, 241, 51, 15 ), flipY"
+		
+		"arrowright_t"			"guis/assets/mainmenu/sheet_fill, rect( 211, 241, 51, 15 ), flipX"
+		"arrowright_c"			"guis/nodraw"
+		"arrowright_b"			"guis/assets/mainmenu/sheet_fill, rect( 211, 241, 51, 15 ), flipX flipY"	
+		
+		"arrowleft_add_t"		"guis/assets/mainmenu/sheet_add, rect( 211, 241, 51, 15 )"
+		"arrowleft_add_c"		"guis/nodraw"
+		"arrowleft_add_b"		"guis/assets/mainmenu/sheet_add, rect( 211, 241, 51, 15 ), flipY"
+		
+		"arrowright_add_t"		"guis/assets/mainmenu/sheet_add, rect( 211, 241, 51, 15 ), flipX"
+		"arrowright_add_c"		"guis/nodraw"
+		"arrowright_add_b"		"guis/assets/mainmenu/sheet_add, rect( 211, 241, 51, 15 ), flipX flipY"			
+	}    
+
+	// button highlight gradient
+	materials {
+		"button_grad_add_l"		"guis/assets/mainmenu/sheet_add, rect( 210, 212, 8, 26 )"
+		"button_grad_add_c"		"guis/assets/mainmenu/sheet_add, rect( 214, 212, 4, 26 )"
+		"button_grad_add_r"		"guis/assets/mainmenu/sheet_add, rect( 210, 212, 8, 26 ) flipX"
+	}
+
+	materials {
+        "tab_grad_l"     "guis/assets/mainmenu/sheet_fill, rect( 210, 196, 4, 16 )"
+        "tab_grad_c"     "guis/assets/mainmenu/sheet_fill, rect( 214, 196, 2, 16 )"
+        "tab_grad_r"     "guis/assets/mainmenu/sheet_fill, rect( 210, 196, 4, 16 ) flipX"
+
+        "mm_tab_grad_l"     "guis/assets/mainmenu/sheet_fill, rect( 336, 191, 9, 10 ) flipX"
+        "mm_tab_grad_c"     "guis/assets/mainmenu/sheet_fill, rect( 333, 191, 3, 10 )"
+        "mm_tab_grad_r"     "guis/assets/mainmenu/sheet_fill, rect( 336, 191, 9, 10 )"
+    }
+
+	// scrollbar
+	materials {
+		"scroll_t"			"guis/assets/mainmenu/sheet_add, rect( 149, 213, 11, 11 )"
+		"scroll_c"			"guis/assets/mainmenu/sheet_add, rect( 149, 224, 11, 11 )"
+		"scroll_b"			"guis/assets/mainmenu/sheet_add, rect( 149, 213, 11, 11 ) flipY"
+		"scroll_fill_t"     "guis/nodraw"
+		"scroll_fill_c"     "guis/nodraw"
+		"scroll_fill_b"     "guis/nodraw"
+		"scroll_arrow_up"	"guis/assets/mainmenu/sheet_add, rect( 149, 197, 11, 11 )"
+		"scroll_arrow_down"	"guis/assets/mainmenu/sheet_add, rect( 149, 197, 11, 11 ) flipY"
+		"scroll_thumb_overlay"		"guis/assets/mainmenu/sheet_add, rect( 164, 227, 11, 11 )"
+		"scroll_thumb" 		"guis/nodraw"
+	}
+
+	// slider
+	materials {
+		"hscroll_t"				"guis/assets/mainmenu/sheet_add, rect( 193, 143, 4, 10 )"
+		"hscroll_l"				"guis/assets/mainmenu/sheet_add, rect( 193, 143, 4, 10 )"
+		"hscroll_c"				"guis/assets/mainmenu/sheet_add, rect( 198, 143, 4, 10 )"
+		"hscroll_b"				"guis/assets/mainmenu/sheet_add, rect( 193, 143, 4, 10 ) flipX"
+		"hscroll_r"				"guis/assets/mainmenu/sheet_add, rect( 193, 143, 4, 10 ) flipX"
+		"hscroll_fill_t"    	 "guis/assets/mainmenu/sheet_fill, rect( 193, 151, 4, 10 )"
+		"hscroll_fill_l"    	 "guis/assets/mainmenu/sheet_fill, rect( 193, 151, 4, 10 )"
+		"hscroll_fill_c"     	"guis/assets/mainmenu/sheet_fill, rect( 198, 151, 4, 10 )"
+		"hscroll_fill_b"     	"guis/assets/mainmenu/sheet_fill, rect( 193, 151, 4, 10 )"
+		"hscroll_fill_r"     	"guis/assets/mainmenu/sheet_fill, rect( 193, 151, 4, 10 )"
+		"hscroll_arrow_up"		"guis/nodraw"
+		"hscroll_arrow_down"	"guis/nodraw"
+		"hscroll_thumb_overlay"	"guis/assets/mainmenu/sheet_add, rect( 201, 161, 5, 14 )"
+		"hscroll_thumb"			"guis/assets/mainmenu/sheet_fill, rect( 194, 161, 5, 14 )"
+	}
+	materials {
+		"checkbox"     		"guis/assets/mainmenu/sheet_fill, rect( 193, 225, 16, 16 )"
+		"checkbox_lines"    "guis/assets/mainmenu/sheet_add, rect( 193, 209, 16, 16 )"
+		"checkbox_check"    "guis/assets/mainmenu/sheet_fill, rect( 193, 241, 16, 16 )"
+	}
+	materials {
+		"radio"     		"guis/assets/mainmenu/sheet_fill, rect( 193, 192, 16, 16 )"
+		"radio_lines"   	"guis/assets/mainmenu/sheet_add, rect( 193, 176, 16, 16 )"
+		"radio_check"    	"guis/assets/mainmenu/sheet_fill, rect( 176, 240, 16, 16 )"
+	}
+
+	materials {
+        "dropdown_arrow"	"guis/assets/mainmenu/sheet_add, rect( 149, 197, 11, 11 ) flipY"
+	}
+
+	materials {
+		"menu_separator"	"guis/assets/mainmenu/sheet_add, rect( 227, 224, 2, 16 )"
+	}
+
+	// tab top, fill
+	materials {
+		"tab_l"			"guis/assets/mainmenu/sheet_fill, rect( 131, 167, 8, 4 )"
+		"tab_r"			"guis/assets/mainmenu/sheet_fill, rect( 131, 167, 8, 4 ) flipX"
+		"tab_t"			"guis/assets/mainmenu/sheet_fill, rect( 132, 167, 4, 8 )"
+		"tab_b"			"guis/nodraw"
+		"tab_tl"		"guis/assets/mainmenu/sheet_fill, rect( 131, 163, 8, 8 )"
+		"tab_tr"		"guis/assets/mainmenu/sheet_fill, rect( 131, 163, 8, 8 ) flipX"
+		"tab_bl"		"guis/nodraw"
+		"tab_br"		"guis/nodraw"
+		"tab_c"			"guis/assets/white"
+	}
+
+	// tab top, lines
+	materials {
+		"tab_line_l"		"guis/assets/mainmenu/sheet_add, rect( 131, 185, 8, 4 )"
+		"tab_line_r"		"guis/assets/mainmenu/sheet_add, rect( 131, 185, 8, 4 ) flipX"
+		"tab_line_t"		"guis/assets/mainmenu/sheet_add, rect( 145, 179, 4, 8 )"
+		"tab_line_b"		"guis/nodraw"
+		"tab_line_tl"		"guis/assets/mainmenu/sheet_add, rect( 131, 179, 8, 8 )"
+		"tab_line_tr"		"guis/assets/mainmenu/sheet_add, rect( 131, 179, 8, 8 ) flipX"
+		"tab_line_bl"		"guis/nodraw"
+		"tab_line_br"		"guis/nodraw"
+		"tab_line_c"		"guis/nodraw"
+	}
+
+	// Ranks
+	materials {
+		"guis/assets/icons/rank01"	"guis/assets/icons/gdf_ranks01, rect( 0, 	0, 64, 64 )"
+		"guis/assets/icons/rank02"	"guis/assets/icons/gdf_ranks01, rect( 64, 	0, 64, 64 )"
+		"guis/assets/icons/rank03"	"guis/assets/icons/gdf_ranks01, rect( 128, 	0, 64, 64 )"
+		"guis/assets/icons/rank04"	"guis/assets/icons/gdf_ranks01, rect( 192, 	0, 64, 64 )"
+		"guis/assets/icons/rank05"	"guis/assets/icons/gdf_ranks01, rect( 256, 	0, 64, 64 )"
+		"guis/assets/icons/rank06"	"guis/assets/icons/gdf_ranks01, rect( 320, 	0, 64, 64 )"
+		"guis/assets/icons/rank07"	"guis/assets/icons/gdf_ranks01, rect( 384, 	0, 64, 64 )"
+		"guis/assets/icons/rank08"	"guis/assets/icons/gdf_ranks01, rect( 448, 	0, 64, 64 )"
+
+		"guis/assets/icons/rank09"	"guis/assets/icons/gdf_ranks01, rect( 0, 	64, 64, 64 )"
+		"guis/assets/icons/rank10"	"guis/assets/icons/gdf_ranks01, rect( 64, 	64, 64, 64 )"
+		"guis/assets/icons/rank11"	"guis/assets/icons/gdf_ranks01, rect( 128, 	64, 64, 64 )"
+		"guis/assets/icons/rank12"	"guis/assets/icons/gdf_ranks01, rect( 192, 	64, 64, 64 )"
+		"guis/assets/icons/rank13"	"guis/assets/icons/gdf_ranks01, rect( 256, 	64, 64, 64 )"
+		"guis/assets/icons/rank14"	"guis/assets/icons/gdf_ranks01, rect( 320, 	64, 64, 64 )"
+		"guis/assets/icons/rank15"	"guis/assets/icons/gdf_ranks01, rect( 384, 	64, 64, 64 )"
+		"guis/assets/icons/rank16"	"guis/assets/icons/gdf_ranks01, rect( 448, 	64, 64, 64 )"
+
+		"guis/assets/icons/rank17"	"guis/assets/icons/gdf_ranks01, rect( 0, 	128, 64, 64 )"
+		"guis/assets/icons/rank18"	"guis/assets/icons/gdf_ranks01, rect( 64, 	128, 64, 64 )"
+		"guis/assets/icons/rank19"	"guis/assets/icons/gdf_ranks01, rect( 128, 	128, 64, 64 )"
+		"guis/assets/icons/rank20"	"guis/assets/icons/gdf_ranks01, rect( 192, 	128, 64, 64 )"
+		"guis/assets/icons/rank21"	"guis/assets/icons/gdf_ranks01, rect( 256, 	128, 64, 64 )"
+		"guis/assets/icons/rank22"	"guis/assets/icons/gdf_ranks01, rect( 320, 	128, 64, 64 )"
+		"guis/assets/icons/rank23"	"guis/assets/icons/gdf_ranks01, rect( 384, 	128, 64, 64 )"
+		"guis/assets/icons/rank24"	"guis/assets/icons/gdf_ranks01, rect( 448, 	128, 64, 64 )"
+
+		"guis/assets/icons/rank25"	"guis/assets/icons/gdf_ranks01, rect( 0, 	192, 64, 64 )"
+		"guis/assets/icons/rank26"	"guis/assets/icons/gdf_ranks01, rect( 64, 	192, 64, 64 )"
+		"guis/assets/icons/rank27"	"guis/assets/icons/gdf_ranks01, rect( 128, 	192, 64, 64 )"
+		"guis/assets/icons/rank28"	"guis/assets/icons/gdf_ranks01, rect( 192, 	192, 64, 64 )"
+		"guis/assets/icons/rank29"	"guis/assets/icons/gdf_ranks01, rect( 256, 	192, 64, 64 )"
+		"guis/assets/icons/rank30"	"guis/assets/icons/gdf_ranks01, rect( 320, 	192, 64, 64 )"
+		"guis/assets/icons/rank31"	"guis/assets/icons/gdf_ranks01, rect( 384, 	192, 64, 64 )"
+		"guis/assets/icons/rank32"	"guis/assets/icons/gdf_ranks01, rect( 448, 	192, 64, 64 )"
+
+		"guis/assets/icons/rank33"	"guis/assets/icons/gdf_ranks02, rect( 0, 	0, 64, 64 )"
+		"guis/assets/icons/rank34"	"guis/assets/icons/gdf_ranks02, rect( 64, 	0, 64, 64 )"
+		"guis/assets/icons/rank35"	"guis/assets/icons/gdf_ranks02, rect( 128, 	0, 64, 64 )"
+		"guis/assets/icons/rank36"	"guis/assets/icons/gdf_ranks02, rect( 192, 	0, 64, 64 )"
+		"guis/assets/icons/rank37"	"guis/assets/icons/gdf_ranks02, rect( 256, 	0, 64, 64 )"
+		"guis/assets/icons/rank38"	"guis/assets/icons/gdf_ranks02, rect( 320, 	0, 64, 64 )"
+	}
+
+	// Flashing ranks
+	materials {
+		"guis/assets/icons/rank01_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 0, 		0, 64, 64 )"
+		"guis/assets/icons/rank02_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 64, 	0, 64, 64 )"
+		"guis/assets/icons/rank03_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 128, 	0, 64, 64 )"
+		"guis/assets/icons/rank04_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 192, 	0, 64, 64 )"
+		"guis/assets/icons/rank05_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 256, 	0, 64, 64 )"
+		"guis/assets/icons/rank06_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 320, 	0, 64, 64 )"
+		"guis/assets/icons/rank07_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 384, 	0, 64, 64 )"
+		"guis/assets/icons/rank08_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 448, 	0, 64, 64 )"
+
+		"guis/assets/icons/rank09_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 0, 		64, 64, 64 )"
+		"guis/assets/icons/rank10_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 64, 	64, 64, 64 )"
+		"guis/assets/icons/rank11_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 128, 	64, 64, 64 )"
+		"guis/assets/icons/rank12_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 192, 	64, 64, 64 )"
+		"guis/assets/icons/rank13_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 256, 	64, 64, 64 )"
+		"guis/assets/icons/rank14_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 320, 	64, 64, 64 )"
+		"guis/assets/icons/rank15_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 384, 	64, 64, 64 )"
+		"guis/assets/icons/rank16_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 448, 	64, 64, 64 )"
+
+		"guis/assets/icons/rank17_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 0, 		128, 64, 64 )"
+		"guis/assets/icons/rank18_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 64, 	128, 64, 64 )"
+		"guis/assets/icons/rank19_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 128, 	128, 64, 64 )"
+		"guis/assets/icons/rank20_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 192, 	128, 64, 64 )"
+		"guis/assets/icons/rank21_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 256, 	128, 64, 64 )"
+		"guis/assets/icons/rank22_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 320, 	128, 64, 64 )"
+		"guis/assets/icons/rank23_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 384, 	128, 64, 64 )"
+		"guis/assets/icons/rank24_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 448, 	128, 64, 64 )"
+
+		"guis/assets/icons/rank25_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 0, 		192, 64, 64 )"
+		"guis/assets/icons/rank26_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 64, 	192, 64, 64 )"
+		"guis/assets/icons/rank27_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 128, 	192, 64, 64 )"
+		"guis/assets/icons/rank28_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 192, 	192, 64, 64 )"
+		"guis/assets/icons/rank29_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 256, 	192, 64, 64 )"
+		"guis/assets/icons/rank30_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 320, 	192, 64, 64 )"
+		"guis/assets/icons/rank31_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 384, 	192, 64, 64 )"
+		"guis/assets/icons/rank32_flash"	"guis/assets/icons/gdf_ranks01_flash, rect( 448, 	192, 64, 64 )"
+
+		"guis/assets/icons/rank33_flash"	"guis/assets/icons/gdf_ranks02_flash, rect( 0, 		0, 64, 64 )"
+		"guis/assets/icons/rank34_flash"	"guis/assets/icons/gdf_ranks02_flash, rect( 64, 	0, 64, 64 )"
+		"guis/assets/icons/rank35_flash"	"guis/assets/icons/gdf_ranks02_flash, rect( 128, 	0, 64, 64 )"
+		"guis/assets/icons/rank36_flash"	"guis/assets/icons/gdf_ranks02_flash, rect( 192, 	0, 64, 64 )"
+		"guis/assets/icons/rank37_flash"	"guis/assets/icons/gdf_ranks02_flash, rect( 256, 	0, 64, 64 )"
+		"guis/assets/icons/rank38_flash"	"guis/assets/icons/gdf_ranks02_flash, rect( 320, 	0, 64, 64 )"
+	}
+
+	// Achievements
+	materials {
+		"guis/assets/icons/achieve_soldier_rank1"			"guis/assets/icons/achievements02, rect( 64, 		128, 		64, 128 )"
+		"guis/assets/icons/achieve_soldier_rank2"			"guis/assets/icons/achievements01, rect( 320, 	128, 	64, 128 )"
+		"guis/assets/icons/achieve_soldier_rank3"			"guis/assets/icons/achievements01, rect( 320, 	0, 		64, 128 )"
+
+		"guis/assets/icons/achieve_engineer_rank1"			"guis/assets/icons/achievements02, rect( 64, 		0, 		64, 128 )"
+		"guis/assets/icons/achieve_engineer_rank2"			"guis/assets/icons/achievements01, rect( 64, 		128, 	64, 128 )"
+		"guis/assets/icons/achieve_engineer_rank3"			"guis/assets/icons/achievements01, rect( 64, 		0, 		64, 128 )"
+
+		"guis/assets/icons/achieve_medic_rank1"				"guis/assets/icons/achievements02, rect( 192, 	128, 	64, 128 )"
+		"guis/assets/icons/achieve_medic_rank2"				"guis/assets/icons/achievements01, rect( 448, 	128, 	64, 128 )"
+		"guis/assets/icons/achieve_medic_rank3"				"guis/assets/icons/achievements01, rect( 448, 	0, 		64, 128 )"
+                                                        	
+		"guis/assets/icons/achieve_covertops_rank1"			"guis/assets/icons/achievements02, rect( 128, 	0, 		64, 128 )"
+		"guis/assets/icons/achieve_covertops_rank2"			"guis/assets/icons/achievements01, rect( 128, 	128, 	64, 128 )"
+		"guis/assets/icons/achieve_covertops_rank3"			"guis/assets/icons/achievements01, rect( 128, 	0, 		64, 128 )"
+                                                        	
+		"guis/assets/icons/achieve_fieldops_rank1"			"guis/assets/icons/achievements02, rect( 0, 		0, 		64, 128 )"
+		"guis/assets/icons/achieve_fieldops_rank2"			"guis/assets/icons/achievements01, rect( 0, 		128, 	64, 128 )"
+		"guis/assets/icons/achieve_fieldops_rank3"			"guis/assets/icons/achievements01, rect( 0, 		0, 		64, 128 )"
+
+		"guis/assets/icons/achieve_lightweapons_rank1"		"guis/assets/icons/achievements02, rect( 0, 		128, 	64, 128 )"
+		"guis/assets/icons/achieve_lightweapons_rank2"		"guis/assets/icons/achievements01, rect( 256, 	128, 	64, 128 )"
+		"guis/assets/icons/achieve_lightweapons_rank3"		"guis/assets/icons/achievements01, rect( 256, 	0, 		64, 128 )"
+
+		"guis/assets/icons/achieve_battlesense_rank1"		"guis/assets/icons/achievements02, rect( 192, 	0, 		64, 128 )"
+		"guis/assets/icons/achieve_battlesense_rank2"		"guis/assets/icons/achievements01, rect( 192, 	128, 	64, 128 )"
+		"guis/assets/icons/achieve_battlesense_rank3"		"guis/assets/icons/achievements01, rect( 192, 	0, 		64, 128 )"
+
+		"guis/assets/icons/achieve_vehicles_rank1"			"guis/assets/icons/achievements02, rect( 128, 	128, 	64, 128 )"
+		"guis/assets/icons/achieve_vehicles_rank2"			"guis/assets/icons/achievements01, rect( 384, 	128, 	64, 128 )"
+		"guis/assets/icons/achieve_vehicles_rank3"			"guis/assets/icons/achievements01, rect( 384, 	0, 		64, 128 )"
+
+
+		// Desaturated Achievements
+		"guis/assets/icons/achieve_desat_soldier_rank1"			"guis/assets/icons/achievements02_desat, rect( 64, 		128, 		64, 128 )"
+		"guis/assets/icons/achieve_desat_soldier_rank2"			"guis/assets/icons/achievements01_desat, rect( 320, 	128, 	64, 128 )"
+		"guis/assets/icons/achieve_desat_soldier_rank3"			"guis/assets/icons/achievements01_desat, rect( 320, 	0, 		64, 128 )"
+
+		"guis/assets/icons/achieve_desat_engineer_rank1"		"guis/assets/icons/achievements02_desat, rect( 64, 		0, 		64, 128 )"
+		"guis/assets/icons/achieve_desat_engineer_rank2"		"guis/assets/icons/achievements01_desat, rect( 64, 		128, 	64, 128 )"
+		"guis/assets/icons/achieve_desat_engineer_rank3"		"guis/assets/icons/achievements01_desat, rect( 64, 		0, 		64, 128 )"
+
+		"guis/assets/icons/achieve_desat_medic_rank1"			"guis/assets/icons/achievements02_desat, rect( 192, 	128, 	64, 128 )"
+		"guis/assets/icons/achieve_desat_medic_rank2"			"guis/assets/icons/achievements01_desat, rect( 448, 	128, 	64, 128 )"
+		"guis/assets/icons/achieve_desat_medic_rank3"			"guis/assets/icons/achievements01_desat, rect( 448, 	0, 		64, 128 )"
+
+		"guis/assets/icons/achieve_desat_covertops_rank1"		"guis/assets/icons/achievements02_desat, rect( 128, 	0, 		64, 128 )"
+		"guis/assets/icons/achieve_desat_covertops_rank2"		"guis/assets/icons/achievements01_desat, rect( 128, 	128, 	64, 128 )"
+		"guis/assets/icons/achieve_desat_covertops_rank3"		"guis/assets/icons/achievements01_desat, rect( 128, 	0, 		64, 128 )"
+
+		"guis/assets/icons/achieve_desat_fieldops_rank1"		"guis/assets/icons/achievements02_desat, rect( 0, 		0, 		64, 128 )"
+		"guis/assets/icons/achieve_desat_fieldops_rank2"		"guis/assets/icons/achievements01_desat, rect( 0, 		128, 	64, 128 )"
+		"guis/assets/icons/achieve_desat_fieldops_rank3"		"guis/assets/icons/achievements01_desat, rect( 0, 		0, 		64, 128 )"
+
+		"guis/assets/icons/achieve_desat_lightweapons_rank1"	"guis/assets/icons/achievements02_desat, rect( 0, 		128, 	64, 128 )"
+		"guis/assets/icons/achieve_desat_lightweapons_rank2"	"guis/assets/icons/achievements01_desat, rect( 256, 	128, 	64, 128 )"
+		"guis/assets/icons/achieve_desat_lightweapons_rank3"	"guis/assets/icons/achievements01_desat, rect( 256, 	0, 		64, 128 )"
+
+		"guis/assets/icons/achieve_desat_battlesense_rank1"		"guis/assets/icons/achievements02_desat, rect( 192, 	0, 		64, 128 )"
+		"guis/assets/icons/achieve_desat_battlesense_rank2"		"guis/assets/icons/achievements01_desat, rect( 192, 	128, 	64, 128 )"
+		"guis/assets/icons/achieve_desat_battlesense_rank3"		"guis/assets/icons/achievements01_desat, rect( 192, 	0, 		64, 128 )"
+
+		"guis/assets/icons/achieve_desat_vehicles_rank1"		"guis/assets/icons/achievements02_desat, rect( 128, 	128, 	64, 128 )"
+		"guis/assets/icons/achieve_desat_vehicles_rank2"		"guis/assets/icons/achievements01_desat, rect( 384, 	128, 	64, 128 )"
+		"guis/assets/icons/achieve_desat_vehicles_rank3"		"guis/assets/icons/achievements01_desat, rect( 384, 	0, 		64, 128 )"
+	}
+
+	// team icons
+	materials {
+		"strogg"			"guis/assets/mainmenu/sheet_fill, rect( 324, 134, 54, 24 )"
+		"gdf"				"guis/assets/mainmenu/sheet_fill, rect( 381, 132, 27, 27 )"
+		"spectating"		"guis/assets/mainmenu/sheet_fill, rect( 414, 131, 32, 32 )"
+	}
+
+	materials {
+		"favorite_set"		"guis/assets/icons/icons_sheet1, rect( 32, 0, 16, 16 )"
+		"favorite_unset"	"guis/assets/icons/icons_sheet1, rect( 48, 0, 16, 16 )"
+	}
+	
+	materials {
+		"icon_information"		"guis/assets/icons/dialog_icons, rect( 0, 0, 32, 32 )"
+		"icon_question"			"guis/assets/icons/dialog_icons, rect( 32, 0, 32, 32 )"
+		"icon_error"			"guis/assets/icons/dialog_icons, rect( 64, 0, 32, 32 )"
+		"icon_respawning"		"guis/assets/icons/dialog_icons, rect( 96, 0, 32, 32 )"
+		"icon_medic"			"guis/assets/icons/dialog_icons, rect( 128, 0, 32, 32 )"			
+	}
+}

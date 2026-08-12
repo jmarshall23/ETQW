@@ -1,0 +1,11 @@
+
+sound sounds/deployables/psi/idle {
+
+	volume -15
+	maxDistance 50
+
+	looping
+	leadin
+	sounds/deployables/psi/start.wav
+	sounds/deployables/psi/loop.wav
+}

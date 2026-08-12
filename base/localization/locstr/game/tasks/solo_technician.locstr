@@ -1,0 +1,12 @@
+
+locString game/tasks/technician_create_spawnhost/title {
+	text "#str_01007000"
+}
+
+locString game/tasks/technician_supply_player/title {
+	text "#str_01007010"
+}
+
+locString game/tasks/technician_revive_player/title {
+	text "#str_01007011"
+}

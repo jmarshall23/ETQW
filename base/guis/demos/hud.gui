@@ -1,0 +1,112 @@
+gui guis/demos/hud {
+	properties {
+		float flags = immediate( flags ) | GUI_FULLSCREEN;
+	}
+	windowDef desktop {
+	}
+
+	windowDef mdffilename {
+		properties {
+			float visible = demo.writingMDF == 1;
+			rect rect = 32, ( ( ( SCREEN_HEIGHT - 32 ) - 32 ) - 2 ) - 64, 0, 0;
+			color foreColor = 1, 1, 1, 1;
+			float fontSize = 12;
+			vec2 textAlignment = TA_LEFT, TA_BOTTOM;			
+			wstring text = toWStr( "Writing to MDF: " + demo.mdfName );
+		}
+	}
+	
+	windowDef viewposition {
+		properties {
+			rect rect = 32, ( ( ( SCREEN_HEIGHT - 32 ) - 32 ) - 2 ) - 48, 0, 0;
+			color foreColor = 1, 1, 1, 1;
+			float fontSize = 12;
+			vec2 textAlignment = TA_LEFT, TA_BOTTOM;
+			wstring text = toWStr( "View position: " + toString( demo.viewOrigin.x, 0 ) + ":" + toString( demo.viewOrigin.y, 0 ) + ":" + toString( demo.viewOrigin.z, 0 ) + " p:" + toString( demo.viewAngles.x, 0 ) + " y:" + toString( demo.viewAngles.y, 0 ) );
+		}
+	}
+
+	windowDef demofilename {
+		properties {
+			rect rect = 32, ( ( ( SCREEN_HEIGHT - 32 ) - 32 ) - 2 ) - 32, 0, 0;
+			color foreColor = 1, 1, 1, 1;
+			float fontSize = 12;
+			vec2 textAlignment = TA_LEFT, TA_BOTTOM;
+			wstring text = toWStr( "Demo: " + demo.demoName );
+		}
+	}
+	
+	windowDef demotime {
+		properties {
+			rect rect = 32, ( ( ( SCREEN_HEIGHT - 32 ) - 32 ) - 2 ) - 16, 0, 0;
+			color foreColor = 1, 1, 1, 1;
+			float fontSize = 12;
+			vec2 textAlignment = TA_LEFT, TA_BOTTOM;
+			wstring text = toWStr( "Time: " + sToHMS( demo.time ) );
+		}
+	}
+	
+	windowDef demogameframe {
+		properties {
+			rect rect = 32, ( ( SCREEN_HEIGHT - 32 ) - 32 ) - 2, 0, 0;
+			color foreColor = 1, 1, 1, 1;
+			float fontSize = 12;
+			vec2 textAlignment = TA_LEFT, TA_BOTTOM;
+			wstring text = toWStr( "Frame: " + toString( demo.frame, 0 ) );
+		}
+	}
+	
+	windowDef timeline_base {
+		properties {
+			rect rect = 32, SCREEN_HEIGHT - 32, SCREEN_WIDTH - 64, 2;
+			color backColor = 1, 1, 1, 0.7;
+		}
+	}
+	
+	windowDef timeline_cutstartmarker {
+		properties {
+			float visible = demo.cutIsSet == 1;
+			rect rect = gui.timeline_base.rect.x + ( ( demo.cutStartMarker * gui.timeline_base.rect.w - 4 ) + 2 ), gui.timeline_base.rect.y - 24, 2, 24;
+			color backColor = 0, 0, 1, 0.9;
+		}
+	}
+	
+	windowDef timeline_cutendmarker {
+		properties {
+			float visible = demo.cutIsSet == 1;
+			rect rect = gui.timeline_base.rect.x + ( ( demo.cutEndMarker * gui.timeline_base.rect.w - 4 ) + 2 ), gui.timeline_base.rect.y - 24, 2, 24;
+			color backColor = 0, 0, 1, 0.9;
+		}
+	}
+
+	windowDef timeline_position {
+		properties {
+			rect rect = gui.timeline_base.rect.x + ( ( demo.position * gui.timeline_base.rect.w - 4 ) + 2 ), gui.timeline_base.rect.y - 16, 2, 16;
+			color backColor = 1, 0, 0, 1;
+		}
+	}
+
+	windowDef timeline_left {
+		properties {
+			rect rect = 32, SCREEN_HEIGHT - 64, 2, 32;
+			color backColor = 1, 1, 1, 0.7;
+		}
+	}
+	
+	windowDef timeline_right {
+		properties {
+			rect rect = ( SCREEN_WIDTH - 32 ) - 2, SCREEN_HEIGHT - 64, 2, 32;
+			color backColor = 1, 1, 1, 0.7;
+		}
+	}
+
+	windowDef timeline_position_time {
+		properties {
+			rect rect = gui.timeline_base.rect.x + ( ( demo.position * gui.timeline_base.rect.w - 4 ) + 2 ), ( gui.timeline_base.rect.y - 16 ) - 2, 0, 0;
+			color foreColor = 1, 0, 0, 1;
+			float fontSize = 12;
+			vec2 textAlignment = TA_CENTER, TA_BOTTOM;
+			wstring text = toWStr( sToHMS( demo.time ) );
+		}
+	}
+}

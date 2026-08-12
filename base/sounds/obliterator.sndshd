@@ -1,0 +1,100 @@
+sound sounds/weapons/obliterator/unzoom {
+
+	minDistance	3
+	maxDistance	15
+	volume		-13
+
+	sounds/weapons/obliterator/zoomout.wav
+}
+
+sound sounds/weapons/obliterator/zoomin {
+
+	minDistance	3
+	maxDistance	15
+	volume		-8
+
+	sounds/weapons/obliterator/zoomin.wav
+}
+
+sound sounds/weapons/obliterator/fire {
+	compression wav
+
+	maxDistance 80
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/obliterator/xfire_01.wav
+	sounds/weapons/obliterator/xfire_02.wav
+	sounds/weapons/obliterator/xfire_03.wav
+}
+
+sound sounds/weapons/obliterator/chargeup {
+	compression wav
+
+	volume		-5
+	minDistance	15
+	maxDistance	75
+
+	sounds/weapons/obliterator/xcharge_04.wav
+}
+
+sound sounds/weapons/obliterator/chargeup_local {
+	compression wav
+
+	volume		-8
+	minDistance	15
+	maxDistance	75
+
+	sounds/weapons/obliterator/xcharge_04_local.wav
+}
+
+
+sound sounds/weapons/obliterator/fire/far {
+	compression wav
+
+	farDistance 25
+	maxDistance 100
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/law/fire_far.wav
+}
+
+sound sounds/weapons/obliterator/fire/local {
+	compression wav
+
+	private
+	
+	occlude_once
+
+	sounds/weapons/obliterator/xfire_01_local.wav
+	sounds/weapons/obliterator/xfire_02_local.wav
+	sounds/weapons/obliterator/xfire_03_local.wav
+}
+
+sound sounds/weapons/obliterator/reload {
+
+	minDistance	5
+	maxDistance	35
+	volume	-5
+
+	sounds/weapons/obliterator/xreload_01.wav
+}
+
+sound sounds/weapons/obliterator/fly {
+	compression wav
+
+	volume -5
+	maxDistance 80
+	playOnce
+
+	looping
+	sounds/weapons/obliterator/fly_loop.wav
+}
+
+sound sounds/weapons/obliterator/raise {
+
+	volume -5
+
+	sounds/weapons/obliterator/raise.wav
+}

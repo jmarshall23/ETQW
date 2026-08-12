@@ -1,0 +1,686 @@
+
+#include <materials/guis/hud.include>
+
+material hud/objectives/marker_01 {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_marker_01.tga
+		vertexColor
+	}
+}
+
+material hud/objectives/marker_02 {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_marker_02.tga
+		vertexColor
+	}
+}
+
+material hud/objectives/marker_03 {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_marker_03.tga
+		vertexColor
+	}
+}
+
+material hud/objectives/marker_04 {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_marker_04.tga
+		vertexColor
+	}
+}
+
+material hud/objectives/marker_05 {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_marker_05.tga
+		vertexColor
+	}
+}
+
+material hud/objectives/marker_side {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/objective_slice.tga
+  		vertexColor
+	}
+}
+
+material hud/objectives/construction {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_build.tga  		
+  		vertexColor
+	}
+}
+
+material hud/objectives/data {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_data.tga
+  		vertexColor
+	}
+}
+
+material hud/objectives/destruction {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_destruction.tga
+		vertexColor
+	}
+}
+
+material hud/objectives/hive {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_hive.tga
+  		vertexColor
+	}
+}
+
+material hud/objectives/firesupport {
+	sort gui
+	{
+		blend blend
+		rotate		time * -0.15
+		map clamp nopicmip guis/assets/commandmap/incomming_tar01.tga
+		alpha .75
+		vertexAlpha
+	}
+	{
+		if ( parm4 != 0 )
+		blend add
+		rotate		time * -0.15
+		map clamp nopicmip guis/assets/commandmap/incomming_tar01.tga
+	}
+	{
+		blend blend
+		rotate		time * -0.25
+		map clamp nopicmip guis/assets/commandmap/incomming_tar02.tga
+		alpha .75
+		vertexAlpha
+	}
+	{
+		if ( parm4 != 0 )
+		blend add
+		rotate		time * -0.25
+		map clamp nopicmip guis/assets/commandmap/incomming_tar02.tga
+	}
+}
+
+material hud/objectives/warp_location {
+	sort gui
+	{
+		blend add
+		rotate		time * -0.25
+		map clamp nopicmip guis/assets/commandmap/warp_core.tga
+	}
+	//frame
+	{
+		blend blend
+		rotate		time * -0.05
+		map clamp nopicmip guis/assets/commandmap/warp_frame.tga
+		alpha .75
+		vertexAlpha
+	}
+	{
+		blend add
+		rotate		time * -0.05
+		map clamp nopicmip guis/assets/commandmap/warp_frame.tga
+	}
+}
+
+material hud/objectives/hack {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_hack.tga
+  		vertexColor
+	}
+}
+
+material hud/objectives/outpost {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_outpost.tga
+		vertexColor
+	}
+}
+
+material hud/objectives/spawn {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_spawn.tga
+		vertexColor
+	}
+}
+
+
+
+material hud/objectives/construction_world {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_build.tga
+		colored
+	}
+}
+
+material hud/objectives/data_world {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_data.tga
+		colored
+	}
+}
+
+material hud/objectives/destruction_world {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_destruction.tga
+		colored
+	}
+}
+
+material hud/objectives/firesupport_world {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_fsb.tga
+		colored
+	}
+}
+
+material hud/objectives/hack_world {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_hack.tga
+		colored
+	}
+}
+
+material hud/objectives/outpost_world {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_outpost.tga
+		colored
+	}
+}
+
+material hud/objectives/spawn_world {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/obj_spawn.tga
+		colored
+	}
+}
+
+material hud/objectives/progress_right_up {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/progress_arrow.tga
+		vertexAlpha
+	}
+}
+
+material hud/objectives/progress_right_down {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/progress_arrow.tga
+		vertexAlpha
+		scale 1, -1
+	}
+}
+
+material hud/objectives/progress_left_up {
+	sort gui
+	{
+		blend blend
+		map guis/assets/commandmap/progress_arrow.tga
+		vertexAlpha
+		scale -1, 1
+	}
+}
+
+material hud/objectives/progress_left_down {
+	sort gui
+	{
+		blend blend
+		map guis/assets/commandmap/progress_arrow.tga
+		vertexAlpha
+		scale -1, -1
+	}
+}
+
+material hud/commandmap/radar {
+	sort gui
+	
+	translucent
+	{
+		if ( parm11 == 0 )
+		program trivialMaskImage
+		mask clamp nopicmip textures/common/cmmask.tga
+		map zeroclamp nopicmip guis/assets/commandmap/radar_ring.tga
+		blend GL_SRC_ALPHA, GL_ONE
+		rotate time * -0.5
+		vertexAlpha
+	}
+	{
+		if ( parm11 != 0 )
+		mask _white
+		map zeroclamp nopicmip guis/assets/commandmap/radar_ring.tga
+		blend GL_SRC_ALPHA, GL_ONE
+		rotate time * -0.5
+		vertexAlpha
+	}
+}
+
+material hud/commandmap/player {
+	sort gui
+	{
+		blend blend
+		map nopicmip makeAlpha( guis/assets/commandmap/blip.tga )
+		vertexColor
+	}
+}
+
+material hud/commandmap/player_self {
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip guis/assets/commandmap/player_icon.tga
+		vertexColor
+	}
+}
+
+material hud/commandmap/player_remote {
+	sort gui
+	{
+		blend blend
+		map nopicmip makeAlpha( guis/assets/commandmap/blip.tga )
+		vertexColor
+	}
+}
+
+material hud/commandmap/player_self_spectating {
+	sort gui
+	{
+		blend blend
+		map nopicmip makeAlpha( guis/assets/commandmap/blip.tga )
+		vertexColor
+	}
+}
+
+material hud/commandmap/player_self_arc {
+	sort gui
+	{
+		if ( parm11 != 0 )
+		blend blend
+		map clamp nopicmip makealpha( guis/assets/commandmap/viewarc.tga )
+		vertexColor
+		alpha 0.35
+	}
+	{
+		if ( parm11 == 0 )
+		blend blend
+		map clamp nopicmip makealpha( guis/assets/commandmap/viewarc.tga )
+		vertexColor
+		alpha 0.35
+		depthFunc equal
+	}
+
+}
+
+material hud/commandmap/unknown {
+	sort gui
+	{
+		blend blend
+		map nopicmip makeAlpha( guis/assets/commandmap/blip.tga )
+  		vertexColor
+	}
+}
+
+
+// default spawn flag
+material hud/commandmap/spawn_edf {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/spawnpoint_base.tga
+		vertexColor
+	}
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/spawnpoint_ring.tga
+		rotate		time * -0.2
+		// centerscale	1.1 + 0.15 * sinTable[ time / 1.5 ], 1.1 + 0.15 * sinTable[ time / 1.5 ]
+		vertexColor
+		alpha .8
+	}
+	{
+		if ( parm4 != 0 )
+		blend add
+		map nopicmip guis/assets/commandmap/spawnpoint_ring.tga
+		rotate		time * -0.2
+		// centerscale	1.1 + 0.15 * sinTable[ time / 1.5 ], 1.1 + 0.15 * sinTable[ time / 1.5 ]
+		red	sinTable[ time / 3 ]-0.8
+		green	sinTable[ time / 3 ]-0.8
+		blue	sinTable[ time / 3 ]-0.8
+		vertexColor
+	}
+}
+
+material hud/commandmap/spawn_unavailable {
+	sort gui
+	{
+		blend blend
+		alpha 0.2
+		map nopicmip guis/assets/commandmap/spawnpoint_base.tga
+		vertexColor
+	}
+	{
+		blend blend
+		alpha 0.2
+		map nopicmip guis/assets/commandmap/spawnpoint_ring.tga
+		vertexColor
+	}
+}
+
+material hud/commandmap/spawn_strogg {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/spawnpoint_base.tga
+		vertexColor
+	}
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/spawnpoint_ring.tga
+		centerscale	1.1 + 0.15 * sinTable[ time / 1.5 ], 1.1 + 0.15 * sinTable[ time / 1.5 ]
+  		vertexColor
+	}
+}
+
+material hud/commandmap/spawn_host {
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip guis/assets/commandmap/spawn_host.tga
+		centerscale	1.1 + 0.15 * sinTable[ time / 2.5 ], 1.1 + 0.15 * sinTable[ time / 2.5 ]
+		vertexColor
+	}
+}
+
+material hud/commandmap/spawn_host_select {
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip guis/assets/commandmap/spawn_host_select.tga
+		centerscale	1.1 + 0.15 * sinTable[ time / 2.5 ], 1.1 + 0.15 * sinTable[ time / 2.5 ]
+		vertexColor
+	}
+}
+
+material hud/commandmap/spawn_default {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/spawnpoint_base.tga
+		vertexColor
+	}
+	{
+		blend blend
+		map clamp nopicmip guis/assets/commandmap/spawnpoint_selected.tga
+		centerscale	1.1 + 0.15 * sinTable[ time / 2.5 ], 1.1 + 0.15 * sinTable[ time / 2.5 ]
+		vertexColor
+		alpha .5
+	}
+	{
+		if ( parm4 != 0 )
+		blend add
+		map clamp nopicmip guis/assets/commandmap/spawnpoint_selected.tga
+		centerscale	1.1 + 0.15 * sinTable[ time / 2.5 ], 1.1 + 0.15 * sinTable[ time / 2.5 ]
+		red .3
+		green .3
+		blue .3
+		vertexColor
+		alpha .5
+	}
+}
+
+
+// deploy arrows
+material hud/commandmap/spawn_selected {
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip guis/assets/commandmap/spawnpoint_selected.tga
+		centerscale	1.1 + 0.15 * sinTable[ time / 2.5 ], 1.1 + 0.15 * sinTable[ time / 2.5 ]
+		vertexColor
+		alpha .5
+	}
+	{
+		if ( parm4 != 0 )
+		blend add
+		map clamp nopicmip guis/assets/commandmap/spawnpoint_selected.tga
+		centerscale	1.1 + 0.15 * sinTable[ time / 2.5 ], 1.1 + 0.15 * sinTable[ time / 2.5 ]
+		red .3
+		green .3
+		blue .3
+		vertexColor
+		alpha .5
+	}
+}
+
+material hud/commandmap/firesupport_target {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/hud/edf/target/icon_target.tga
+		colored
+		red 1
+		green 0
+		blue 0
+		vertexAlpha
+	}
+}
+
+material hud/commandmap/mortar_target {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/mort_hit.tga
+		vertexColor
+	}
+}
+
+material hud/commandmap/mine_friendly {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/mine_edf.tga
+		vertexColor
+	}
+}
+
+material hud/commandmap/mine_enemy {
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/commandmap/mine_strogg.tga
+		vertexColor
+	}
+}
+
+
+// Hint Icons:
+
+material hud/hint/vehicle {
+	bob_icon( "guis/assets/icons/hint_vehicle.tga" )
+}
+
+
+material hud/hint/global {
+	bob_icon( "guis/assets/icons/hint_global.tga" )
+}
+
+material hud/pause_icon {
+	sort gui
+	{
+		blend blend
+		map nopicmip "guis/assets/icons/dialog_icons.tga"
+		vertexColor
+	}
+}
+
+// old
+
+material hud/hint/parachute {
+	bob_icon( "guis/assets/icons/hint_parachute.tga" )
+}
+
+material hud/hint/usable {
+	bob_icon( "guis/assets/icons/hint_usable.tga" )
+}
+
+material hud/hint/light {
+	bob_icon( "guis/assets/icons/hint_light.tga" )
+}
+
+material hud/hint/build {
+	bob_icon( "guis/assets/icons/hint_build.tga" )
+}
+
+material hud/hint/spotlandmine {
+	bob_icon( "guis/assets/icons/hint_spotlandmine.tga" )
+}
+
+material hud/hint/arm {
+	bob_icon( "guis/assets/icons/hint_arm.tga" )
+}
+
+material hud/hint/switchseat {
+	bob_icon( "guis/assets/icons/hint_switchseat.tga" )
+}
+
+material hud/hint/revive {
+	bob_icon( "guis/assets/icons/hint_revive.tga" )
+}
+
+material hud/hint/hack {
+	bob_icon( "guis/assets/icons/hint_hack.tga" )
+}
+
+material hud/hint/disguisestrogg {
+	bob_icon( "guis/assets/icons/hint_disguisestrogg.tga" )
+}
+
+material hud/hint/disguisegdf {
+	bob_icon( "guis/assets/icons/hint_disguisegdf.tga" )
+}
+
+material hud/hint/deploy {
+	bob_icon( "guis/assets/icons/hint_deploy.tga" )
+}
+
+material hud/hint/spawn {
+	bob_icon( "guis/assets/icons/hint_spawn.tga" )
+}
+
+material hud/hint/orders {
+	bob_icon( "guis/assets/icons/hint_light.tga" )
+}
+
+material hud/hint/stab {
+	bob_icon( "guis/assets/icons/hint_backstab.tga" )
+}
+
+material hud/quick_chat/chevron
+{
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		map clamp nopicmip guis/assets/hud/quick_chat/chevron.tga
+		vertexColor
+	}
+}
+
+material guis/quickchat/qchat_fill
+{
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		map clamp nopicmip guis/assets/quickchat/qchat_fill.tga
+		vertexColor
+	}
+}
+
+material guis/quickchat/qchat_lines
+{
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		map clamp nopicmip guis/assets/quickchat/qchat_lines.tga
+		vertexColor
+	}
+}
+
+material guis/quickchat/qchat_highlight
+{
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		map clamp nopicmip guis/assets/quickchat/qchat_highlight.tga
+		vertexColor
+	}
+}
+
+
+material guis/quickchat/qchat_gradients
+{
+	sort gui
+	{	
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		map clamp nopicmip guis/assets/quickchat/qchat_gradients.tga
+		vertexColor
+	}
+}
+
+material guis/hud/compass/ring
+{
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		map clamp nopicmip guis/assets/hud/ring.tga
+		vertexColor
+		rotate parm4
+	}
+}

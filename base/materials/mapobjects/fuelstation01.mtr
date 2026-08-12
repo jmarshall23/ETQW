@@ -1,0 +1,55 @@
+material models/mapobjects/fuelstation/fuelstation01_main
+{
+	diffusemap	picmip -1	models/mapobjects/fuelstation/fuelstation01_d.tga
+ 	specularmap	picmip -2	models/mapobjects/fuelstation/fuelstation01_s.tga
+ 	bumpmap		picmip -2	models/mapobjects/fuelstation/fuelstation01_local.tga
+}
+
+material models/mapobjects/fuelstation/fuelstation01_main_nonsolid
+{
+	nonsolid
+	diffusemap	models/mapobjects/fuelstation/fuelstation01_d.tga
+ 	specularmap	models/mapobjects/fuelstation/fuelstation01_s.tga
+ 	bumpmap		models/mapobjects/fuelstation/fuelstation01_local.tga
+}
+
+material models/mapobjects/fuelstation/brokenglass
+{
+	twosided
+	nonsolid
+	{	
+		diffusemap	picmip -1	textures/window/window29_d.tga
+		//specularmap	models/andrew/blockout/temperate_new_trench_s.tga
+		//bumpmap	models/andrew/blockout/temperate_new_trench_local.tga
+		alphaTest 	0.55
+	}
+}
+
+material models/mapobjects/fuelstation/fuelstation01_snow
+{
+	diffusemap	picmip -1	models/mapobjects/fuelstation/fuelstation01_snow_d.tga
+ 	specularmap	picmip -2	models/mapobjects/fuelstation/fuelstation01_s.tga
+ 	bumpmap		picmip -2	models/mapobjects/fuelstation/fuelstation01_local.tga
+}
+
+material models/mapobjects/fuelstation/fuelstation_interior
+{
+	diffusemap	picmip -1	models/mapobjects/fuelstation/fuelstation_interior_d.tga
+ 	specularmap	picmip -2	models/mapobjects/fuelstation/fuelstation_interior_s.tga
+ 	bumpmap		picmip -2	models/mapobjects/fuelstation/fuelstation_interior_local.tga
+}
+
+material models/mapobjects/fuelstation/fuelstation01b
+{
+	surfacetype "metal"
+	{
+		diffusemap	picmip -1	models/mapobjects/fuelstation/fuelstation01b_d.tga
+	 	specularmap	picmip -2	models/mapobjects/fuelstation/fuelstation01b_s.tga
+	 	bumpmap		picmip -2	models/mapobjects/fuelstation/fuelstation01b_local.tga
+
+	 	diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+	 	specDetailMap			textures/detail/bump/metal_detail01_d.tga
+	 	bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+	 	detailMult	2,8,0,0
+	 }
+}

@@ -1,0 +1,962 @@
+
+#define OBJECTIVE_OUTSKIRTS_DESTROY_BARRICADE		0
+#define OBJECTIVE_OUTSKIRTS_CAPTURE_OUTPOST			1
+#define OBJECTIVE_OUTSKIRTS_HACK_OBJECTIVE			2
+#define OBJECTIVE_OUTSKIRTS_TRANSMIT_DATABRAIN		3
+
+// Bases
+#define OUT_GDF_BASE_DEPLOY						0 // turn on at start
+#define OUT_STROGG_BASE_DEPLOY					1
+
+// Objective 1 - HE Charge on Barricade
+#define OUT_OBJECTIVE_BARRICADE					2 // turn on at start
+#define OUT_GDF_ATTACK_BARRICADE				3 // turn on at start
+#define OUT_GDF_DEPLOY_BARRICADE				4 // turn on at start
+#define OUT_STROGG_DEFEND_BARRICADE				5 // turn on at start
+#define OUT_STROGG_DEPLOY_BARRICADE				6 // turn on at start
+
+// Objective 2 - Deploy MCP at Outpost
+#define OUT_OBJECTIVE_MCP_OUTPOST				7
+#define OUT_GDF_ATTACK_MCP_OUTPOST				8
+#define OUT_GDF_DEPLOY_MCP_OUTPOST				9
+#define OUT_STROGG_DEFEND_MCP_OUTPOST			10
+#define OUT_STROGG_DEPLOY_MCP_OUTPOST			11
+
+// Objective 3 - Hack the Shield Generator
+#define OUT_OBJECTIVE_HACK						12
+#define OUT_GDF_ATTACK_HACK						13
+#define OUT_GDF_DEPLOY_HACK						14
+#define OUT_STROGG_DEFEND_HACK					15
+#define OUT_STROGG_DEPLOY_HACK					16
+
+// Objective 4 - Steal the Data Brain
+#define OUT_OBJECTIVE_DATABRAIN					17
+#define OUT_GDF_ATTACK_DATABRAIN1				18 // Data Brain building
+#define OUT_GDF_ATTACK_DATABRAIN2				19 // Telecomms building
+#define OUT_GDF_DEPLOY_DATABRAIN				20
+#define OUT_STROGG_DEFEND_DATABRAIN1			21 // Data Brain building
+#define OUT_STROGG_DEFEND_DATABRAIN2			22 // Telecomms building
+#define OUT_STROGG_DEPLOY_DATABRAIN				23
+
+// Forward Spawns
+#define OUT_OBJECTIVE_GDF_SPAWN1				24
+#define OUT_GDF_ATTACK_GDF_SPAWN1				25
+#define OUT_GDF_DEFEND_GDF_SPAWN1				26
+#define OUT_STROGG_ATTACK_GDF_SPAWN1			27
+#define OUT_STROGG_DEFEND_GDF_SPAWN1			28
+
+#define OUT_OBJECTIVE_GDF_SPAWN2				29
+#define OUT_GDF_ATTACK_GDF_SPAWN2				30
+#define OUT_GDF_DEFEND_GDF_SPAWN2				31
+#define OUT_STROGG_ATTACK_GDF_SPAWN2			32
+#define OUT_STROGG_DEFEND_GDF_SPAWN2			33
+
+// ----------------------------------------------------------------------
+object mapObject_Outskirts : mapObject_Default {
+	void			destroy();
+
+	void			InitObjectives();
+
+	void			CompleteObjective( float index, entity p );
+	handle			GetObjectiveMessage( float index );
+
+	void			OnTimeLimitHit();
+	void			OnBarricadeDestroyed();
+	void			OnOutpostCaptured();
+	void			OnHackObjective();
+	void			OnDatabrainTransmitted();
+	void			OnShieldDeployed( entity obj, entity trigger );
+	void			OnHackComplete( entity obj );
+	void			OnShieldHacked();
+	//void			OnShieldDeployed( entity obj, entity trigger );
+	void			OnMCPSpawned( entity obj );
+	void			OnMCPDestroyed( entity obj, vector newLocation, vector newAngles );
+	void			OnMCPDelivered( entity obj );
+	
+	void			BarricadeDestroyThread();
+	void			BarricadeEffectsThread();
+	void			BuildingEffectsThread();
+
+	void			PostBarricadeDestroyedAudio();
+	void			PostDataBrainBuildingDestroyedAudio();
+	void			StartShieldObjective();
+	void			OnShieldDestroyedScud( entity trigger );
+	void			StartFirstObjective();
+
+	void			ClearMCPData();
+	
+	vector			GetGDFBasePosition() { return '-10980 10980 590'; }
+
+	// Bot Functions
+	void			OnSpawnCaptured( string actionName );
+	void			OnSpawnLiberated( string actionName );
+	void 			OnCarryableItemStolen( string actionName );
+	void 			OnCarryableItemReturned( string actionName );	
+	void			NeededClassFirstObjective();
+	void			CarryableItemTemp();
+	void			StroggBrainDefence();
+	void			RunBotMCPMapScript( float actionGroupOff, float actionGroupOn );
+	
+	entity			GetSpectateEntity();
+
+// ----------------------------------------------------------------------	
+	float			mainObjectiveIndex;
+	
+	entity			gdfBaseTerritory;
+	entity			barricadeTerritory;
+	entity			outpostTerritory;
+	entity			towersTerritory;
+	entity			stroggBaseTerritory;
+
+	entity			objective1Arrow1;
+	entity			objective1Arrow2;
+	entity			objective2Arrow1;
+	entity			objective2Arrow2;
+	entity			objective3Arrow1;
+	entity			objective3Arrow2;
+	entity			objective4Arrow1;
+	entity			objective4Arrow2;
+
+	entity			objective1Marker;
+	entity			objective2Marker;
+	entity			objective3Marker;
+	entity			objective4Marker;
+	
+	entity			barricade_smoke;
+	entity			barricade_rubble;
+	entity			building_smoke;
+	entity			barricadeFlare1;
+	entity			barricadeFlare2;
+	entity			barricadeFlare3;
+	entity			barricadeFlare4;
+	entity			barricadeFlare5;
+	entity			barricadeFlare6;
+	entity			barricadeLight;
+	entity			barricadeStroyent;
+
+	entity			scudTrigger;
+	
+	entity			gdfBaseSpawn;
+	entity			stroggBaseSpawn;
+	entity			gdfOutpostSpawn;
+	entity			stroggOutpostSpawn;
+	entity			stroggFactorySpawn;
+	entity			stroggMonumentSpawn;
+	entity			gdfFactoryOfficesSpawn;
+	entity			gdfSiloSpawn;
+	entity			gdfHillSpawn;
+	
+	entity			stroggForcefields;
+	entity			stroggTriggerHurts_1;
+	entity			stroggTriggerHurts_2;
+	entity			stroggTriggerHurts_3;	
+	entity			stroggBuildingWall;
+	
+	entity 			endCameraA;
+	entity			endCameraB;
+	
+	entity			barricades;
+	entity			barricade_clip;
+	entity			barricade_destroyed;
+	
+	entity			mcpRoute;
+	entity			mcpCaller;
+	entity			shieldCaller;
+	entity			dataBrain;
+	entity			dataBrainclip;
+	entity			noplant_barricade;
+	
+	entity			currentMCP;
+	
+	// Bot Obstacles;
+	entity			bot_barricade1;
+	entity			bot_brainBuilding1;
+	entity			bot_brainBuilding2;
+	entity			bot_brainBuilding3;	
+	entity			bot_brainBuilding4;
+	
+	cvar 			debug_script;
+}
+
+mapObject_Base OutSkirts_MapScript() {
+	return new mapObject_Outskirts;
+}
+
+void mapObject_Outskirts::destroy() {
+}
+
+// ----------------------------------------------------------------------
+void mapObject_Outskirts::InitObjectives() {
+	gameRules.setWinningTeam( stroggTeam );
+	gdfTeam.SetRespawnWait( 20 );
+	stroggTeam.SetRespawnWait( 30 );
+	gdfTeam.InitRespawnTimeChange();
+	stroggTeam.InitRespawnTimeChange();
+	CreateRespawnTimeThread( gdfTeam );
+
+	gdfBaseTerritory		= worldspawn.getEntityKey( "script_gdf_base_territory" );
+	barricadeTerritory		= worldspawn.getEntityKey( "script_barricade_territory" );
+	outpostTerritory		= worldspawn.getEntityKey( "script_outpost_territory" );
+	towersTerritory			= worldspawn.getEntityKey( "script_towers_territory" );
+	stroggBaseTerritory		= worldspawn.getEntityKey( "script_strogg_base_territory" );
+
+	objective1Marker		= worldspawn.getEntityKey( "script_obj1_marker" );
+	objective1Arrow1		= worldspawn.getEntityKey( "script_obj1_arrow1" );
+	objective1Arrow2		= worldspawn.getEntityKey( "script_obj1_arrow2" );
+	objective2Marker		= worldspawn.getEntityKey( "script_obj2_marker" );
+	objective2Arrow1		= worldspawn.getEntityKey( "script_obj2_arrow1" );
+	objective2Arrow2		= worldspawn.getEntityKey( "script_obj2_arrow2" );
+	objective3Marker		= worldspawn.getEntityKey( "script_obj3_marker" );
+	objective3Arrow1		= worldspawn.getEntityKey( "script_obj3_arrow1" );
+	objective3Arrow2		= worldspawn.getEntityKey( "script_obj3_arrow2" );
+	objective4Marker		= worldspawn.getEntityKey( "script_obj4_marker" );
+	objective4Arrow1		= worldspawn.getEntityKey( "script_obj4_arrow1" );
+	objective4Arrow2		= worldspawn.getEntityKey( "script_obj4_arrow2" );
+	
+	barricade_smoke			= worldspawn.getEntityKey( "script_barricade_smoke" );
+	barricade_rubble		= worldspawn.getEntityKey( "script_barricade_rubble" );
+	building_smoke			= worldspawn.getEntityKey( "script_building_smoke" );
+	barricadeFlare1			= worldspawn.getEntityKey( "script_barricade_flare1" );
+	barricadeFlare2			= worldspawn.getEntityKey( "script_barricade_flare2" );
+	barricadeFlare3			= worldspawn.getEntityKey( "script_barricade_flare3" );
+	barricadeFlare4			= worldspawn.getEntityKey( "script_barricade_flare4" );
+	barricadeFlare5			= worldspawn.getEntityKey( "script_barricade_flare5" );
+	barricadeFlare6			= worldspawn.getEntityKey( "script_barricade_flare6" );
+	barricadeLight			= worldspawn.getEntityKey( "script_barricade_light" );
+	barricadeStroyent		= worldspawn.getEntityKey( "script_barricade_stroyent" );
+	
+	endCameraA				= worldspawn.getEntityKey( "script_placement_camera_a" );
+	endCameraB				= worldspawn.getEntityKey( "script_placement_camera_b" );
+
+	gdfBaseSpawn			= worldspawn.getEntityKey( "script_gdf_base_spawn" );
+	stroggBaseSpawn			= worldspawn.getEntityKey( "script_strogg_base_spawn" );
+	gdfOutpostSpawn			= worldspawn.getEntityKey( "script_gdf_outpost_spawn" );
+	stroggFactorySpawn		= worldspawn.getEntityKey( "script_strogg_factory_spawn" );
+	stroggOutpostSpawn		= worldspawn.getEntityKey( "script_strogg_outpost_spawn" );
+	stroggMonumentSpawn		= worldspawn.getEntityKey( "script_strogg_monument_spawn" );
+	gdfFactoryOfficesSpawn  = worldspawn.getEntityKey( "script_gdf_factoryoffices_spawn" );
+	gdfSiloSpawn			= worldspawn.getEntityKey( "script_gdf_silo_spawn" );
+	gdfHillSpawn			= worldspawn.getEntityKey( "script_gdf_hill_spawn" );
+
+	stroggForcefields		= worldspawn.getEntityKey( "script_strogg_forcefields" );
+	stroggTriggerHurts_1	= worldspawn.getEntityKey( "script_strogg_trigger_hurts_1" );
+	stroggTriggerHurts_2	= worldspawn.getEntityKey( "script_strogg_trigger_hurts_2" );
+	stroggTriggerHurts_3	= worldspawn.getEntityKey( "script_strogg_trigger_hurts_3" );
+	stroggBuildingWall		= worldspawn.getEntityKey( "script_strogg_building_wall" );
+	
+	dataBrain				= worldspawn.getEntityKey( "script_databrain" );
+	dataBrainclip			= worldspawn.getEntityKey( "script_data_brain_clip" );
+	
+	barricades				= worldspawn.getEntityKey( "script_barricade" );
+	barricade_clip			= worldspawn.getEntityKey( "script_barricade_clip"); // clip added to top of barricade to keep bots from getting stuck when parachuting in to obj
+	barricade_destroyed		= worldspawn.getEntityKey( "script_barricade_destroyed" );
+	barricade_destroyed.hide();
+	barricade_destroyed.forceDisableClip();
+	
+	mcpRoute				= worldspawn.getEntityKey( "script_mcp_route" );
+	mcpCaller				= worldspawn.getEntityKey( "script_mcp_caller" );
+	
+	noplant_barricade		= worldspawn.getEntityKey( "script_noplant_barricade" );
+	
+	shieldCaller			= worldspawn.getEntityKey( "script_shieldgen_caller" );	
+	
+	// Bot Obstacles
+	bot_barricade1			= worldspawn.getEntityKey( "script_bot_barricade_1" );
+	bot_brainBuilding1		= worldspawn.getEntityKey( "script_bot_obstacle_brainbuilding_1" );
+	bot_brainBuilding2		= worldspawn.getEntityKey( "script_bot_obstacle_brainbuilding_2" );
+	bot_brainBuilding3		= worldspawn.getEntityKey( "script_bot_obstacle_brainbuilding_3" );
+	bot_brainBuilding4		= worldspawn.getEntityKey( "script_bot_obstacle_brainbuilding_4" );
+	
+	debug_script 			= sys.getCVar( "bot_debugMapScript", "1" );
+	CreateDeployTasks();
+
+// -----------------------------------------------------
+	objManager.setNextObjective( gdfTeam, OBJECTIVE_OUTSKIRTS_DESTROY_BARRICADE );
+	objManager.setNextObjective( stroggTeam, OBJECTIVE_OUTSKIRTS_DESTROY_BARRICADE );
+
+	gdfOutpostSpawn.setGameTeam( $null );
+	gdfSiloSpawn.setGameTeam( $null );
+	gdfHillSpawn.vSetActive( false );
+	gdfFactoryOfficesSpawn.vSetActive( false );
+	stroggFactorySpawn.setGameTeam( stroggTeam );
+	stroggOutpostSpawn.setGameTeam( stroggTeam );
+	stroggMonumentSpawn.setGameTeam( stroggTeam );	
+	
+	gdfBaseTerritory.setActive( true );
+	barricadeTerritory.setActive( true );
+	outpostTerritory.setActive( false );
+	towersTerritory.setActive( false );
+	stroggBaseTerritory.setActive( false );
+	
+	objective1Marker.vStartObjective();
+	objective1Arrow1.vStartObjective();
+	objective1Arrow1.setGameTeam( gdfTeam );
+	objective1Arrow2.vStartObjective();
+	objective1Arrow2.setGameTeam( gdfTeam );
+
+	objective2Marker.vStartObjective();
+	objective3Marker.vStartObjective();
+	objective4Marker.vStartObjective();
+
+	objManager.disableNode( "Barricade_Node" ); // disable node inside building, past barricade
+	
+	mainObjectiveIndex = OBJECTIVE_OUTSKIRTS_DESTROY_BARRICADE;
+	
+	gameRules.setEndGameCamera( endCameraB );
+	
+	thread StartFirstObjective();
+
+// ----------------------------------------------------------------------
+// BOT OBJECTIVE: PLANT HE CHARGE ON BARRICADE
+// ----------------------------------------------------------------------
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "***** BOTS SETUP FOR BARRICADE OBJECTIVE *****\n" );
+	}
+	objManager.setAttackingTeam( GDF );
+	objManager.setBotSightDist( 3000.0f );
+	
+	objManager.activateBotActionGroup( OUT_GDF_BASE_DEPLOY );
+	objManager.activateBotActionGroup( OUT_OBJECTIVE_BARRICADE );
+	objManager.activateBotActionGroup( OUT_GDF_ATTACK_BARRICADE );
+	objManager.activateBotActionGroup( OUT_GDF_DEPLOY_BARRICADE );
+	objManager.activateBotActionGroup( OUT_STROGG_DEFEND_BARRICADE );
+	objManager.activateBotActionGroup( OUT_STROGG_DEPLOY_BARRICADE );
+	
+	objManager.setPrimaryTeamAction( GDF, "gdf_destroy_barricade_9" );
+	objManager.setPrimaryTeamAction( STROGG, "gdf_destroy_barricade_9" );
+	objManager.setPrimaryTeamAction( STROGG, "strogg_disarm_barricade_1" );
+	objManager.setPrimaryTeamAction( STROGG, "strogg_disarm_barricade_2" );
+	//objManager.setSecondaryTeamAction( GDF, "xxx" );
+	objManager.setSecondaryTeamAction( STROGG, "strogg_fallback_mcp_deploy_1" );	
+	
+	objManager.setBotCriticalClass( GDF, SOLDIER );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+	thread NeededClassFirstObjective();
+	
+	//objManager.setTeamUseRearSpawn( GDF, false );
+	//gdfTeam.setTeamRearSpawn( gdfBaseSpawn );
+	objManager.setTeamUseRearSpawn( STROGG, true );
+	stroggTeam.setTeamRearSpawn( stroggOutpostSpawn );
+	objManager.setTeamUseRearSpawnPercentage( STROGG, 50 );
+	
+	thread CarryableItemTemp();
+	
+}
+
+void mapObject_Outskirts::NeededClassFirstObjective() {
+	sys.wait( 10 );
+
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** SET UP CLASSES NEEDED FOR FIRST OBJECTIVE **********\n" );
+	}
+	objManager.setTeamNeededClass( GDF, SOLDIER, NOCLASS, 2, true, true );
+	objManager.setTeamNeededClass( GDF, MEDIC, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 2, true, true );
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 2, false, false );		
+}
+
+void mapObject_Outskirts::CarryableItemTemp() {
+	sys.wait( 1 );
+	
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** TEMP DEACTIVATE CARRYABLE ACTION **********\n" );
+	}
+	objManager.deactivateBotActionGroup( OUT_OBJECTIVE_DATABRAIN );
+}
+
+void mapObject_Outskirts::StroggBrainDefence() {
+	sys.wait( 5 );
+	objManager.deactivateBotActionGroup( OUT_STROGG_DEFEND_DATABRAIN1 );
+}
+
+// ----------------------------------------------------------------------
+void mapObject_Outskirts::CompleteObjective( float index, entity p ) {
+	if ( index == OBJECTIVE_OUTSKIRTS_DESTROY_BARRICADE ) {
+		OnBarricadeDestroyed();
+	} else if ( index == OBJECTIVE_OUTSKIRTS_CAPTURE_OUTPOST ) {
+		OnOutpostCaptured();
+	} else if ( index == OBJECTIVE_OUTSKIRTS_HACK_OBJECTIVE ) {
+		OnHackObjective();
+	} else if ( index == OBJECTIVE_OUTSKIRTS_TRANSMIT_DATABRAIN ) {
+		OnDatabrainTransmitted();
+	}
+}
+
+void mapObject_Outskirts::ClearMCPData() {
+	if ( currentMCP != $null_entity ) {
+		currentMCP.vFreeMission();
+		currentMCP = $null_entity;
+	}
+}
+
+void mapObject_Outskirts::OnMCPSpawned( entity obj ) {
+	ClearMCPData();
+}
+
+void mapObject_Outskirts::OnMCPDestroyed( entity obj, vector newLocation, vector newAngles ) {
+	if ( currentMCP != obj ) {
+		return;
+	}
+	
+	ClearMCPData();
+	
+	mcpCaller.vCallDrop( newLocation, newAngles );
+}
+
+void mapObject_Outskirts::OnMCPDelivered( entity obj ) {
+	ClearMCPData();
+	
+	if ( mainObjectiveIndex == OBJECTIVE_OUTSKIRTS_CAPTURE_OUTPOST ) {
+		currentMCP = obj;
+		objManager.SetObjectiveEntity( currentMCP, mainObjectiveIndex );
+		currentMCP.vSetGoalMarker( objective2Marker );
+		currentMCP.vSetPathTargets( mcpCaller.getWorldOrigin(), objective2Marker.getWorldOrigin() );
+		currentMCP.setTrackerEntity( mcpRoute );
+		currentMCP.vCreateMission();
+		CreateInitialTimedMission( currentMCP );
+	}
+}
+
+void mapObject_Outskirts::OnHackComplete( entity obj ) {
+	if ( obj == scudTrigger ) {
+		OnShieldHacked();
+		objManager.deactivateBotActionGroup( 12 );//turn off hack obj bot actions immediately after hack
+	}
+}
+
+void mapObject_Outskirts::OnShieldHacked() {
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+	scudTrigger.vCompleteMission();
+	StopTimedMission();
+}
+
+handle mapObject_Outskirts::GetObjectiveMessage( float index ) {
+	if ( index == OBJECTIVE_OUTSKIRTS_DESTROY_BARRICADE ) {
+		return sys.localizeString( "maps/outskirts/obj_destroy_barricade" );
+	}
+	if ( index == OBJECTIVE_OUTSKIRTS_CAPTURE_OUTPOST ) {
+		return sys.localizeString( "maps/outskirts/obj_capture_outpost" );
+	}
+	if ( index == OBJECTIVE_OUTSKIRTS_HACK_OBJECTIVE ) {
+		return sys.localizeString( "maps/outskirts/obj_destroy_defence" );
+	}
+	if ( index == OBJECTIVE_OUTSKIRTS_TRANSMIT_DATABRAIN ) {
+		return sys.localizeString( "maps/outskirts/obj_capture_module" );
+	}
+	return g_locStr_BadObjective;
+}
+
+// ----------------------------------------------------------------------
+void mapObject_Outskirts::OnBarricadeDestroyed() {	
+	barricades.vCompleteMission();
+	noplant_barricade.remove();
+	//barricade_clip.remove();
+	barricade_clip.forceDisableClip();
+	objManager.enableNode( "Barricade_Node" ); // enable node inside building after barricade is destroyed
+	objManager.activateBotAction( "Mcp_Wait_Area" );
+	StopTimedMission();
+
+	mainObjectiveIndex = OBJECTIVE_OUTSKIRTS_CAPTURE_OUTPOST;
+
+	objManager.setNextObjective( gdfTeam, OBJECTIVE_OUTSKIRTS_CAPTURE_OUTPOST );
+	objManager.setNextObjective( stroggTeam, OBJECTIVE_OUTSKIRTS_CAPTURE_OUTPOST );
+	
+	barricadeFlare1.remove();
+	barricadeFlare2.remove();
+	barricadeFlare3.remove();
+	barricadeFlare4.remove();
+	barricadeFlare5.remove();
+	barricadeFlare6.remove();
+	barricadeLight.remove();
+	barricadeStroyent.remove();
+	
+	barricadeTerritory.setGameTeam( gdfTeam );
+	gdfSiloSpawn.setGameTeam( gdfTeam );
+	stroggFactorySpawn.setGameTeam( $null_entity );
+	gdfFactoryOfficesSpawn.vSetActive( true );
+
+	gdfBaseTerritory.setActive( false );
+	barricadeTerritory.setActive( true );
+	outpostTerritory.setActive( true );
+	
+	thread BarricadeDestroyThread();
+	thread BarricadeEffectsThread();
+	
+	objective1Marker.vFinishObjective();
+	objective1Arrow1.vFinishObjective();
+	objective1Arrow2.vFinishObjective();
+	
+	objective2Arrow1.vStartObjective();
+	objective2Arrow1.setGameTeam( gdfTeam );
+	objective2Arrow2.vStartObjective();
+	objective2Arrow2.setGameTeam( gdfTeam );
+	
+	mcpCaller.vOnDeploy();
+	
+	thread PostBarricadeDestroyedAudio();
+	
+	gdfTeam.SetRespawnWait( 20 );
+	stroggTeam.SetRespawnWait( 30 );
+	ResetRespawnTimeThread();
+
+// ----------------------------------------------------------------------
+// BOT OBJECTIVE: DEPLOY MCP AT OUTPOST
+// ----------------------------------------------------------------------	
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "***** BOTS SETUP FOR MCP OBJECTIVE *****\n" );
+	}
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+	
+	objManager.killBotActionGroup( OUT_GDF_BASE_DEPLOY );
+	objManager.killBotActionGroup( OUT_OBJECTIVE_BARRICADE );
+	objManager.killBotActionGroup( OUT_GDF_ATTACK_BARRICADE );
+	objManager.killBotActionGroup( OUT_GDF_DEPLOY_BARRICADE );
+	objManager.killBotActionGroup( OUT_STROGG_DEFEND_BARRICADE );
+	objManager.killBotActionGroup( OUT_STROGG_DEPLOY_BARRICADE );
+	
+	objManager.activateBotActionGroup( OUT_OBJECTIVE_MCP_OUTPOST );
+	objManager.activateBotActionGroup( OUT_GDF_ATTACK_MCP_OUTPOST );
+	objManager.activateBotActionGroup( OUT_GDF_DEPLOY_MCP_OUTPOST );
+	objManager.activateBotActionGroup( OUT_STROGG_DEFEND_MCP_OUTPOST );
+	objManager.activateBotActionGroup( OUT_STROGG_DEPLOY_MCP_OUTPOST );
+	objManager.activateBotActionGroup( OUT_OBJECTIVE_GDF_SPAWN1 );
+	objManager.activateBotActionGroup( OUT_GDF_ATTACK_GDF_SPAWN1 );
+	objManager.activateBotActionGroup( OUT_STROGG_DEFEND_GDF_SPAWN1 );
+	
+	objManager.setPrimaryTeamAction( GDF, "gdf_mcp_outpost_1" );
+	objManager.setPrimaryTeamAction( STROGG, "gdf_mcp_outpost_1" );
+		
+	objManager.setBotCriticalClass( GDF, ENGINEER );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+	objManager.setTeamNeededClass( GDF, MEDIC, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( GDF, SOLDIER, NOCLASS, 1, false, false );
+	objManager.setTeamNeededClass( GDF, ENGINEER, NOCLASS, 3, true, true );
+	objManager.setTeamNeededClass( STROGG, SOLDIER, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 3, true, true );
+	objManager.switchTeamWeapons( 1, 1, 2, 6, 0 );
+	
+	objManager.setMapHasMCPGoal( true );
+	
+	objManager.setBotTeamRetreatTime( GDF, 10 );
+	
+	objManager.setTeamUseRearSpawn( GDF, true );
+	gdfTeam.setTeamRearSpawn( gdfBaseSpawn );
+	objManager.setTeamUseRearSpawnPercentage( GDF, 75 );
+	//objManager.setTeamUseRearSpawn( STROGG, false );
+	//stroggTeam.setTeamRearSpawn( stroggBaseSpawn );
+
+	objManager.clearTeamBotBoundEntities( GDF );
+}
+
+void mapObject_Outskirts::BarricadeDestroyThread() {
+	barricade_destroyed.show();
+	sys.wait( 0.5f );
+	barricade_destroyed.forceEnableClip();
+
+	// Bot Obstacle
+	bot_barricade1.activate( bot_barricade1 );
+}
+
+void mapObject_Outskirts::BarricadeEffectsThread() {
+	barricade_smoke.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.4f );
+	barricade_rubble.vTriggerParticleEffect( 1 );
+}
+
+// ----------------------------------------------------------------------
+void mapObject_Outskirts::OnOutpostCaptured() {
+	mainObjectiveIndex = OBJECTIVE_OUTSKIRTS_HACK_OBJECTIVE;
+
+	objManager.setNextObjective( gdfTeam, OBJECTIVE_OUTSKIRTS_HACK_OBJECTIVE );
+	objManager.setNextObjective( stroggTeam, OBJECTIVE_OUTSKIRTS_HACK_OBJECTIVE );
+
+	outpostTerritory.setGameTeam( gdfTeam );
+	gdfHillSpawn.vSetActive( true );
+	gdfFactoryOfficesSpawn.vSetActive( false );
+	gdfFactoryOfficesSpawn.setGameTeam( gdfTeam );
+	
+	gdfOutpostSpawn.setGameTeam( gdfTeam ); 		// switch spawn controllers
+	stroggOutpostSpawn.setGameTeam( $null_entity); 	// get rid of this spawn controller as the strogg won't use it again
+	
+	barricadeTerritory.setActive( false );
+	outpostTerritory.setActive( true );
+	towersTerritory.setActive( true );
+	
+	objective2Marker.vFinishObjective();
+	objective2Arrow1.vFinishObjective();
+	objective2Arrow2.vFinishObjective();
+	
+	objective3Arrow1.vStartObjective();
+	objective3Arrow1.setGameTeam( gdfTeam );
+	objective3Arrow2.vStartObjective();
+	objective3Arrow2.setGameTeam( gdfTeam );
+
+	if ( currentMCP != $null ) {
+		currentMCP.vCompleteMission();
+	}
+	StopTimedMission();
+
+	shieldCaller.vOnDeploy();
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	G_PlayObjectiveCompletedRoll( GDF );
+	objManager.PlaySound( worldspawn.getKey( "snd_outpost_captured_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_outpost_captured_gdf" ), gdfTeam );
+	
+	gdfTeam.SetRespawnWait( 20 );	
+	stroggTeam.SetRespawnWait( 30 );
+	ResetRespawnTimeThread();
+
+// ----------------------------------------------------------------------
+// BOT OBJECTIVE: HACK SHIELD GENERATOR
+// ----------------------------------------------------------------------	
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "***** BOTS SETUP FOR HACK OBJECTIVE *****\n" );
+	}
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+	
+	objManager.killBotActionGroup( OUT_OBJECTIVE_MCP_OUTPOST );
+	objManager.killBotActionGroup( OUT_GDF_ATTACK_MCP_OUTPOST );
+	objManager.killBotActionGroup( OUT_GDF_DEPLOY_MCP_OUTPOST );
+	objManager.killBotActionGroup( OUT_STROGG_DEFEND_MCP_OUTPOST );
+	objManager.killBotActionGroup( OUT_STROGG_DEPLOY_MCP_OUTPOST );
+	objManager.killBotActionGroup( OUT_OBJECTIVE_GDF_SPAWN1 );
+	objManager.killBotActionGroup( OUT_GDF_ATTACK_GDF_SPAWN1 );
+	objManager.killBotActionGroup( OUT_GDF_DEFEND_GDF_SPAWN1 );
+	objManager.killBotActionGroup( OUT_STROGG_ATTACK_GDF_SPAWN1 );
+	objManager.killBotActionGroup( OUT_STROGG_DEFEND_GDF_SPAWN1 );
+
+	objManager.activateBotActionGroup( OUT_OBJECTIVE_HACK );
+	objManager.activateBotActionGroup( OUT_GDF_ATTACK_HACK );
+	objManager.activateBotActionGroup( OUT_GDF_DEPLOY_HACK );
+	objManager.activateBotActionGroup( OUT_STROGG_DEFEND_HACK );
+	objManager.activateBotActionGroup( OUT_STROGG_DEPLOY_HACK );
+	objManager.activateBotActionGroup( OUT_OBJECTIVE_GDF_SPAWN2 );
+	objManager.activateBotActionGroup( OUT_GDF_ATTACK_GDF_SPAWN2 );
+	objManager.activateBotActionGroup( OUT_STROGG_DEFEND_GDF_SPAWN2 );
+	
+	objManager.setPrimaryTeamAction( GDF, "gdf_hack_shield_17" );
+	objManager.setPrimaryTeamAction( STROGG, "gdf_hack_shield_17" );
+	objManager.setSecondaryTeamAction( STROGG, "strogg_fallback_mine_brain" );
+	
+	objManager.setBotCriticalClass( GDF, COVERTOPS );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+	objManager.setTeamNeededClass( GDF, MEDIC, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( GDF, COVERTOPS, NOCLASS, 3, true, true );
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 3, false, true );
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 1, false, false );
+	objManager.switchTeamWeapons( GDF, COVERTOPS, 1, 0, 100 );
+	
+	objManager.setMapHasMCPGoal( false );
+	
+	objManager.setBotTeamRetreatTime( GDF, 10 );
+	
+	//objManager.setTeamUseRearSpawn( GDF, false );
+	//gdfTeam.setTeamRearSpawn( gdfSiloSpawn );
+	objManager.setTeamUseRearSpawn( STROGG, true );
+	stroggTeam.setTeamRearSpawn( stroggBaseSpawn );
+	objManager.setTeamUseRearSpawnPercentage( STROGG, 100 );
+		
+	objManager.clearTeamBotBoundEntities( GDF );	
+}
+
+// ----------------------------------------------------------------------
+void mapObject_Outskirts::OnHackObjective() {
+	mainObjectiveIndex = OBJECTIVE_OUTSKIRTS_TRANSMIT_DATABRAIN;
+
+	objManager.setNextObjective( gdfTeam, OBJECTIVE_OUTSKIRTS_TRANSMIT_DATABRAIN );
+	objManager.setNextObjective( stroggTeam, OBJECTIVE_OUTSKIRTS_TRANSMIT_DATABRAIN );
+
+	stroggForcefields.remove();
+	stroggTriggerHurts_1.remove();
+	stroggTriggerHurts_2.remove();
+	stroggTriggerHurts_3.remove();	
+	stroggBuildingWall.remove();
+
+	gdfHillSpawn.vSetActive( false );
+	gdfHillSpawn.setGameTeam( gdfTeam );
+	
+	towersTerritory.setGameTeam( gdfTeam );
+	stroggMonumentSpawn.setGameTeam( $null_entity );
+
+	outpostTerritory.setActive( false );
+	towersTerritory.setActive( true );
+	stroggBaseTerritory.setActive( true );
+
+	thread BuildingEffectsThread();
+	
+	objective3Marker.vFinishObjective();
+	objective3Arrow1.vFinishObjective();
+	objective3Arrow2.vFinishObjective();	
+	
+	objective4Arrow1.vStartObjective();
+	objective4Arrow1.setGameTeam( gdfTeam );
+	objective4Arrow2.vStartObjective();
+	objective4Arrow2.setGameTeam( gdfTeam );
+	
+	objManager.SetObjectiveEntity( dataBrain, mainObjectiveIndex );
+	dataBrainclip.remove();
+	
+	thread PostDataBrainBuildingDestroyedAudio();
+
+	gdfTeam.SetRespawnWait( 20 );	
+	stroggTeam.SetRespawnWait( 30 );
+	ResetRespawnTimeThread();
+
+// ----------------------------------------------------------------------
+// BOT OBJECTIVE: STEAL THE DATABRAIN
+// ----------------------------------------------------------------------	
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "***** BOTS SETUP FOR DATABRAIN OBJECTIVE *****\n" );
+	}
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+	
+	objManager.killBotActionGroup( OUT_OBJECTIVE_HACK );
+	objManager.killBotActionGroup( OUT_GDF_ATTACK_HACK );
+	objManager.killBotActionGroup( OUT_GDF_DEPLOY_HACK );
+	objManager.killBotActionGroup( OUT_STROGG_DEFEND_HACK );
+	objManager.killBotActionGroup( OUT_STROGG_DEPLOY_HACK );
+	objManager.killBotActionGroup( OUT_OBJECTIVE_GDF_SPAWN2 );
+	objManager.killBotActionGroup( OUT_GDF_ATTACK_GDF_SPAWN2 );
+	objManager.killBotActionGroup( OUT_GDF_DEFEND_GDF_SPAWN2 );
+	objManager.killBotActionGroup( OUT_STROGG_ATTACK_GDF_SPAWN2 );
+	objManager.killBotActionGroup( OUT_STROGG_DEFEND_GDF_SPAWN2 );
+
+	objManager.activateBotActionGroup( OUT_OBJECTIVE_DATABRAIN );
+	objManager.activateBotActionGroup( OUT_GDF_ATTACK_DATABRAIN1 );
+	objManager.activateBotActionGroup( OUT_GDF_ATTACK_DATABRAIN2 );
+	objManager.activateBotActionGroup( OUT_GDF_DEPLOY_DATABRAIN );
+	objManager.activateBotActionGroup( OUT_STROGG_DEFEND_DATABRAIN1 );
+	objManager.activateBotActionGroup( OUT_STROGG_DEFEND_DATABRAIN2 );
+	objManager.activateBotActionGroup( OUT_STROGG_DEPLOY_DATABRAIN );
+	objManager.activateBotActionGroup( OUT_STROGG_BASE_DEPLOY );
+	
+	objManager.setPrimaryTeamAction( GDF, "gdf_steal_databrain_1" );
+	objManager.setPrimaryTeamAction( STROGG, "gdf_steal_databrain_1" );
+	//objManager.setSecondaryTeamAction( GDF, "xxx" );
+	//objManager.setSecondaryTeamAction( STROGG, "xxx" );
+	
+	objManager.setBotCriticalClass( GDF, MEDIC );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+	objManager.setTeamNeededClass( GDF, MEDIC, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( GDF, SOLDIER, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 2, false, false );
+	objManager.switchTeamWeapons( GDF, COVERTOPS, 0, 1, 50 );
+	objManager.switchTeamWeapons( GDF, SOLDIER, 0, 2, 50 );
+	
+	objManager.setTeamUseRearSpawn( GDF, true );
+	gdfTeam.setTeamRearSpawn( gdfOutpostSpawn );
+	objManager.setTeamUseRearSpawnPercentage( GDF, 20 );
+	objManager.setTeamUseRearSpawn( STROGG, true );
+	stroggTeam.setTeamRearSpawn( stroggBaseSpawn );
+	objManager.setTeamUseRearSpawnPercentage( STROGG, 100 );
+	//objManager.setTeamAttacksDeployables( GDF, false );
+	objManager.setTeamAttacksDeployables( STROGG, false );
+	objManager.clearTeamBotBoundEntities( GDF );	
+	
+	// Bot Obstacles
+	bot_brainBuilding1.activate( bot_brainBuilding1 );
+	bot_brainBuilding2.activate( bot_brainBuilding2 );
+	bot_brainBuilding3.activate( bot_brainBuilding3 );
+	bot_brainBuilding4.activate( bot_brainBuilding4 );
+}
+
+// ----------------------------------------------------------------------
+void mapObject_Outskirts::BuildingEffectsThread() {
+	sys.wait( 0.1f );
+	building_smoke.vTriggerParticleEffect( 1 );
+}
+
+void mapObject_Outskirts::OnDatabrainTransmitted() {
+	objective4Marker.vFinishObjective();
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	objManager.PlaySound( worldspawn.getKey( "snd_gdfwin_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_gdfwin_gdf" ), gdfTeam );
+	
+	gameRules.setEndGameCamera( endCameraA );
+
+	gameRules.setWinningTeam( gdfTeam );
+	gameRules.endGame();
+}
+
+void mapObject_Outskirts::PostBarricadeDestroyedAudio() {
+	sys.wait( 3.f );
+
+	objManager.PlaySound( worldspawn.getKey( "snd_mcp_intro_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_mcp_intro_gdf" ), gdfTeam );
+}
+
+void mapObject_Outskirts::PostDataBrainBuildingDestroyedAudio() {
+	objManager.PlaySound( worldspawn.getKey( "snd_transmit_databrain_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_transmit_databrain_gdf" ), gdfTeam );		
+	
+	sys.wait( 10.f );
+
+	objManager.PlaySound( worldspawn.getKey( "snd_databrain_defend_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_databrain_grab_gdf" ), gdfTeam );
+}
+
+void mapObject_Outskirts::StartShieldObjective() {
+	sys.wait( 5.f );
+
+	scudTrigger.vSetActive( 1.f );
+	objManager.SetObjectiveEntity( scudTrigger, mainObjectiveIndex );
+	scudTrigger.vCreateMission();
+	CreateInitialTimedMission( scudTrigger );
+}
+
+void mapObject_Outskirts::OnShieldDestroyedScud( entity trigger ) {
+	thread StartShieldObjective();
+}
+
+void mapObject_Outskirts::StartFirstObjective() {
+	sys.wait( 5.f );
+
+	objManager.SetObjectiveEntity( barricades, mainObjectiveIndex );
+	barricades.vCreateMission();
+	CreateInitialTimedMission( barricades );
+}
+
+void mapObject_Outskirts::OnShieldDeployed( entity obj, entity trigger ) {
+	scudTrigger = trigger;
+	scudTrigger.vStartObjective();
+}
+
+void mapObject_Outskirts::OnTimeLimitHit() {
+	FinishTimedMission();
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	objManager.PlaySound( worldspawn.getKey( "snd_gdflose_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_gdflose_gdf" ), gdfTeam );
+}
+
+// ----------------------------------------------------------------------
+// Bot Forward Spawn Actions
+// ----------------------------------------------------------------------
+void mapObject_Outskirts::OnSpawnCaptured( string actionName ) {
+	// Factory Offices Spawn Point
+	if( actionName == "gdf_forward_spawn_action_1" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "***** GDF CAPTURED GDF SPAWN 1 *****\n" );
+		}
+		objManager.activateBotActionGroup( OUT_GDF_DEFEND_GDF_SPAWN1 );
+		objManager.activateBotActionGroup( OUT_STROGG_ATTACK_GDF_SPAWN1 );
+		objManager.deactivateBotActionGroup( OUT_GDF_ATTACK_GDF_SPAWN1 );
+		objManager.deactivateBotActionGroup( OUT_STROGG_DEFEND_GDF_SPAWN1 );
+		
+		//gdfTeam.setTeamRearSpawn( gdfSiloSpawn );
+		//objManager.setTeamUseRearSpawnPercentage( GDF, 100 );
+	}
+
+	// Hilltop Building Spawn Point
+	if( actionName == "gdf_forward_spawn_action_2" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "***** GDF CAPTURED GDF SPAWN 2 *****\n" );
+		}
+		objManager.activateBotActionGroup( OUT_GDF_DEFEND_GDF_SPAWN2 );
+		objManager.activateBotActionGroup( OUT_STROGG_ATTACK_GDF_SPAWN2 );
+		objManager.deactivateBotActionGroup( OUT_GDF_ATTACK_GDF_SPAWN2 );
+		objManager.deactivateBotActionGroup( OUT_STROGG_DEFEND_GDF_SPAWN2 );
+		
+		//objManager.setTeamUseRearSpawn( GDF, true );
+		//gdfTeam.setTeamRearSpawn( gdfOutpostSpawn );
+		//objManager.setTeamUseRearSpawnPercentage( GDF, 100 );		
+	}
+}
+
+void mapObject_Outskirts::OnSpawnLiberated( string actionName ) {
+	// Factory Offices Spawn Point
+	if( actionName == "gdf_forward_spawn_action_1" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "***** STROGG LIBERATED GDF SPAWN 1 *****\n" );
+		}
+		objManager.activateBotActionGroup( OUT_GDF_ATTACK_GDF_SPAWN1 );
+		objManager.activateBotActionGroup( OUT_STROGG_DEFEND_GDF_SPAWN1 );
+		objManager.deactivateBotActionGroup( OUT_GDF_DEFEND_GDF_SPAWN1 );
+		objManager.deactivateBotActionGroup( OUT_STROGG_ATTACK_GDF_SPAWN1 );
+		
+		//gdfTeam.setTeamRearSpawn( gdfBaseSpawn );
+		//objManager.setTeamUseRearSpawnPercentage( GDF, 20 );
+	}
+
+	// Hilltop Building Spawn Point 
+	if( actionName == "gdf_forward_spawn_action_2" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "***** STROGG LIBERATED GDF SPAWN 2 *****\n" );
+		}
+		objManager.activateBotActionGroup( OUT_GDF_ATTACK_GDF_SPAWN2 );
+		objManager.activateBotActionGroup( OUT_STROGG_DEFEND_GDF_SPAWN2 );
+		objManager.deactivateBotActionGroup( OUT_GDF_DEFEND_GDF_SPAWN2 );
+		objManager.deactivateBotActionGroup( OUT_STROGG_ATTACK_GDF_SPAWN2 );
+		
+		//objManager.setTeamUseRearSpawn( GDF, false );
+	}
+}
+// ----------------------------------------------------------------------
+// Bot Carryable Item Actions
+// ----------------------------------------------------------------------
+void mapObject_Outskirts::OnCarryableItemStolen( string actionName ) {
+	if( actionName == "gdf_steal_databrain_1" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "***** DATABRAIN TAKEN *****\n" );
+		}
+		objManager.enableRoute( "bot_route_gdf_transmit" );
+		objManager.deactivateBotActionGroup( OUT_GDF_ATTACK_DATABRAIN1 );
+		thread StroggBrainDefence();
+	}
+}
+
+void mapObject_Outskirts::OnCarryableItemReturned( string actionName ) {
+	if( actionName == "gdf_steal_databrain_1" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "***** DATABRAIN RETURNED *****\n" );
+		}
+		objManager.disableRoute( "bot_route_gdf_transmit" );
+		objManager.activateBotActionGroup( OUT_GDF_ATTACK_DATABRAIN1 );
+		objManager.activateBotActionGroup( OUT_STROGG_DEFEND_DATABRAIN1 );
+	}
+}
+// ----------------------------------------------------------------------
+// MCP turret disable trigger
+// ----------------------------------------------------------------------
+
+void mapObject_Outskirts::RunBotMCPMapScript( float actionGroupOff, float actionGroupOn ) {
+	
+	if ( actionGroupOff == OUT_STROGG_DEPLOY_BARRICADE && actionGroupOn == OUT_STROGG_DEPLOY_MCP_OUTPOST ) {
+		objManager.deactivateBotAction( "nkd_bot_action_344" );
+		objManager.deactivateBotAction( "nkd_bot_action_355" );
+	}
+	
+}
+
+entity mapObject_Outskirts::GetSpectateEntity() { 
+	if ( barricades != $null_entity ) {
+		return barricades.vGetSpectateEntity();
+	}
+
+	entity deployedMCP = G_FindDeployedMCP();
+	if ( currentMCP == $null_entity && deployedMCP == $null_entity ) {
+		return $null_entity;
+	}
+	
+	if ( currentMCP != $null_entity ) {
+		if ( !currentMCP.vIsObjectiveComplete() ) {
+			return currentMCP.vGetSpectateEntity();
+		}
+	}
+	
+	if ( !scudTrigger.vIsObjectiveComplete() ) {
+		return scudTrigger.vGetSpectateEntity();
+	}
+
+	if ( dataBrain != $null_entity ) {
+		return dataBrain.vGetSpectateEntity();
+	}
+
+	return $null_entity;
+}

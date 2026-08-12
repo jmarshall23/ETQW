@@ -1,0 +1,21 @@
+material stones_rock
+{
+	diffusemap	models/rock/stones_d.tga
+	//specularmap     textures/common/black.tga
+	bumpmap 	models/rock/stones_local.tga
+}
+
+material stones_moss_rock
+{
+	diffusemap	models/rock/stones_moss_d.tga
+	//specularmap     models/rock/stones_moss_d.tga
+	bumpmap 	models/rock/stones_moss_local.tga
+}
+
+material textures/rock/terraced_rock03
+{
+	nonsolid
+	diffusemap	textures/rock/terraced_rock03_d.tga
+	bumpmap 	textures/rock/terraced_rock03_local.tga
+}
+

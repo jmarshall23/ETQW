@@ -1,0 +1,10 @@
+
+campaignDef campaign_openbeta2 {
+	map	"maps/valley"
+	map	"maps/valley"
+	map	"maps/valley"
+	
+	data {
+		"mtr_backdrop"			"levelshots/campaigns/northamerica"
+	}
+}

@@ -1,0 +1,47 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/ark/wall_ark_4_ts {
+	width	256
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 768 ) ( 256 1024 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 640 ) ( 256 768 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1024 ) ( 256 1536 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 512 ) ( 256 640 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 256 512 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1536 ) ( 256 2048 )
+	}
+	rect {
+		surfaceType	plastic
+		surfaceColor	( 1 1 1 )
+		coords ( 0 520 ) ( 256 568 )
+	}
+}

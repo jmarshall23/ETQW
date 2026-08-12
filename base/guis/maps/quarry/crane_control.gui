@@ -1,0 +1,31 @@
+
+gui maps/quarry/crane_control {
+	properties {
+		float flags = immediate( flags ) | GUI_SHOWCURSOR;
+		float disabled = 1;
+	}
+	
+	windowDef desktop {
+		properties {
+			color backColor = 0, 0, 0, 1;
+		}		
+	}
+
+	windowDef disabledText {
+		properties {
+			handle	localizedText		= localize( "guis/maps/under_enemy_control" ); // "Under Enemy Control";
+			color	foreColor	= 1, 0, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= gui.disabled == 1;
+		}	
+	}
+	
+	windowDef enabledText {
+		properties {
+			handle	localizedText		= localize( "guis/maps/enabled" ); // Enabled";
+			color	foreColor	= 0, 1, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= gui.disabled == 0;
+		}			
+	}
+}

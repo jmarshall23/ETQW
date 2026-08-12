@@ -1,0 +1,159 @@
+gui guis/tools/arm_searching {
+
+	materials {
+
+		"guis/assets/arm/background"	"guis/assets/arm/background"
+		"guis/assets/arm/connect"		"guis/assets/arm/connect"
+		"guis/assets/arm/cross"			"guis/assets/arm/cross"
+		"guis/assets/hack/spin1"		"guis/assets/hack/spin1"
+		"guis/assets/hack/spin1a"		"guis/assets/hack/spin1a"
+		"guis/assets/hack/spin2"		"guis/assets/hack/spin2"
+		"guis/assets/hack/spin2a"		"guis/assets/hack/spin2a"
+		"guis/assets/hack/bin1"			"guis/assets/hack/bin1"
+		"guis/assets/hack/bin2"			"guis/assets/hack/bin2"
+		"guis/assets/hack/bin3"			"guis/assets/hack/bin3"
+		"guis/assets/hack/bin4"			"guis/assets/hack/bin4"
+		"guis/assets/hack/bin5"			"guis/assets/hack/bin5"
+		"guis/assets/hack/bin6"			"guis/assets/hack/bin6"
+		"guis/assets/hack/bin7"			"guis/assets/hack/bin7"
+		"guis/assets/common/addhighlight"	"guis/assets/common/addhighlight"
+		"guis/assets/arm/bar"				"guis/assets/arm/bar"
+	}
+	windowDef desktop {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			string material = "guis/assets/arm/background";
+		}
+	}
+
+	windowDef mapLight {
+		properties {
+			rect rect = 10,25,620,240;
+			string	material = "guis/assets/common/addhighlight";
+			color	backColor = 0.75,0.75,0.75,1;
+		}
+	}
+
+	windowDef connect {
+		properties {
+			color	backColor	=	0.35, 0.35, 0.35, 1;
+			string material = "guis/assets/arm/connect";
+			rect rect = 357,160,82,40;
+			float visible 		= 1 - globals.armTool.isSearching;
+		}
+	}
+
+	windowDef cross {
+		properties {
+			color	backColor	=	0.16, 0.5, 0.6, 0.7;
+			string material = "guis/assets/arm/cross";
+			rect rect = 500,50,82,190;
+			float visible 		= globals.armTool.isSearching;
+		}
+		timeline {
+			ontime 0 {
+		backColor = transition( "0.3,0.3,0.3,1", "0,0,0,1", 1000 );
+			}
+			onTime 100 {
+		backColor = transition( backColor, "0,0,0,1", 1000 );
+			}
+		onTime 1000 {
+			resetTime( 0 );
+			}
+		}
+	}
+
+	windowDef spin1 {
+		properties {
+			color	backColor	=	0.5, 0.5, 0.5, 1;
+			string material = "guis/assets/hack/spin1";
+			rect rect = 91,10,166,240;
+		}
+	}
+
+	windowDef spin1a {
+		properties {
+			color	backColor	=	0.35, 0.35, 0.35, 1;
+			string material = "guis/assets/hack/spin1a";
+			rect rect = 91,10,166,240;
+		}
+	}
+	windowDef spin2 {
+		properties {
+			color	backColor	=	1, 1, 1, 1;
+			string material = "guis/assets/hack/spin2";
+			rect rect = 91,10,166,240;
+		}
+	}
+	windowDef spin2a {
+		properties {
+			color	backColor	=	0.35, 0.35, 0.35, 1;
+			string material = "guis/assets/hack/spin2a";
+			rect rect = 91,10,166,240;
+		}
+
+	}
+	windowDef chatter1 {
+		properties {
+			color	backColor	=	0.55, 0.55, 0.55, 1;
+			string material = "guis/assets/arm/bar";
+			rect rect = 17,95,46,375;
+			float rotation = 90;
+		}
+	}
+	windowDef chatter2{
+		properties {
+			color	backColor	=	0.5, 0.5, 0.5, 1;
+			string material = "guis/assets/arm/bar";
+			rect rect = 48,95,46,375;
+			float rotation = -90;
+		}
+	}
+	windowDef chatter3 {
+		properties {
+			color	backColor	=	0.45, 0.45, 0.45, 1;
+			string material = "guis/assets/arm/bar";
+			rect rect = 79,250,46,254;
+			float rotation = 90;
+		}
+	}
+	windowDef chatter4 {
+		properties {
+			color	backColor	=	0.4, 0.4, 0.4, 1;
+			string material = "guis/assets/arm/bar";
+			rect rect = 110,250,46,254;
+			float rotation = -90;
+		}
+	}
+	windowDef chatter5 {
+		properties {
+			color	backColor	=	0.3, 0.3, 0.3, 1;
+			string material = "guis/assets/arm/bar";
+			rect rect = 141,250,46,254;
+			float rotation = 90;
+		}
+	}
+	windowDef armInfo {
+		properties {
+			rect 	rect 				= 255,269,364,180;
+			color	foreColor			=	0.36, 0.7, 0.8, 1;
+		}
+		timeline {
+				ontime 0 {
+			foreColor = transition( "0.36, 0.7, 0.8, 1", "1,1,1,1", 500 );
+				}
+				onTime 500 {
+			foreColor = transition( "1,1,1,1", "0.36, 0.7, 0.8, 1", 500 );
+				}
+			onTime 1000 {
+				resetTime( 0 );
+				}
+		}
+		events {
+			onPreDraw {
+				drawLocalizedText( globals.armTool.statusTextHandle, absoluteRect, foreColor, 70, DTF_WORDWRAP | DTF_CENTER | DTF_VCENTER );
+				gui.scriptPushFloat( false );
+			}
+		}
+	}
+}

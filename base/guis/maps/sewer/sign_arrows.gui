@@ -1,0 +1,21 @@
+gui guis/maps/sewer/sign_arroww {
+	properties {
+		float flags = immediate( flags ) & ~( GUI_SCREENSAVER | GUI_INTERACTIVE );
+	}
+	
+	windowDef desktop {
+		properties {
+			color backColor = 0, 0, 0, 0;
+		}	
+	}
+	
+	windowDef enabledText {
+		properties {
+			float fontsize     = 72;
+			wstring	text		= toWStr( ">>>" );
+			color	foreColor	= 0.8117647, 0.5215687, 0.08627451, 1;
+			//rect	rect		= 0, 120, 640, 240;
+			//color	backcolor	= 0, 0, 0, 1;
+		}
+	}
+}

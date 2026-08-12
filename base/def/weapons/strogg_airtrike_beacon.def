@@ -1,0 +1,94 @@
+/***********************************************************************
+
+	reexportModels weapons/grenade_beacon.def
+
+***********************************************************************/
+
+// ========================================================================
+// Export
+//
+//Firstperson
+/*
+export hauser {
+	options -prefix BEACON_ -sourcedir models/weapons/strogg_beacon/dev_sd -destdir  models/weapons/strogg_beacon/
+
+		mesh	strogg_beacon_base_file.mb		-dest models/weapons/strogg_beacon/strogg_beacon_view.md5mesh
+		anim	strogg_beacon_idle.mb			-dest models/weapons/strogg_beacon/strogg_beacon_idle.md5anim
+	 	anim	strogg_beacon_raise.mb			-dest models/weapons/strogg_beacon/strogg_beacon_raise.md5anim
+	 	anim	strogg_beacon_lower.mb			-dest models/weapons/strogg_beacon/strogg_beacon_lower.md5anim
+	 	anim	strogg_beacon_quick_throw.mb	-dest models/weapons/strogg_beacon/strogg_beacon_fire.md5anim
+	 	anim	strogg_beacon_start_throw.mb	-dest models/weapons/strogg_beacon/strogg_beacon_throw_start.md5anim -range 1 116
+ 		anim	strogg_beacon_start_throw.mb	-dest models/weapons/strogg_beacon/strogg_beacon_throw.md5anim -range 116 140
+
+ 	}
+
+*/
+//Thirdperson
+
+ 	export hauser {
+		options -prefix BEACON_ -sourcedir models/weapons/strogg_beacon/dev_sd -destdir  models/weapons/strogg_beacon/ -keep fx
+
+
+		mesh	strogg_beacon_thirdperson.mb	-dest models/weapons/strogg_beacon/strogg_beacon_thirdperson.md5anim
+		anim	strogg_beacon_thirdperson.mb	-dest models/weapons/strogg_beacon/strogg_beacon_thirdperson.md5anim
+
+}
+
+// ========================================================================
+// view Models
+//
+
+model viewmodel_airstrike_beacon {
+	mesh	 		  			models/weapons/strogg_beacon/strogg_beacon_view.md5mesh
+	anim	idle	  			models/weapons/strogg_beacon/strogg_beacon_idle.md5anim
+ 	anim	raise	  			models/weapons/strogg_beacon/strogg_beacon_raise.md5anim
+ 	anim	putaway	  			models/weapons/strogg_beacon/strogg_beacon_lower.md5anim
+ 	anim	fire	  			models/weapons/strogg_beacon/strogg_beacon_fire.md5anim {
+
+ 	}
+ 	anim    throw_start 		models/weapons/strogg_beacon/strogg_beacon_throw_start.md5anim {
+ 		frame	6				sound_channel snd_weapon_reload snd_tabklink
+		frame	6				effect fx_fire joint1
+
+ 	}
+ 	anim    throw 				models/weapons/strogg_beacon/strogg_beacon_throw.md5anim {
+ 		frame	3				sound_channel snd_weapon_mech snd_throw
+
+	}
+ 	anim    throw_quick 		models/weapons/strogg_beacon/strogg_beacon_fire.md5anim {
+		frame	2				sound_channel snd_weapon_reload snd_tabklink
+//		frame	1				effect fx_fire joint1
+		frame	7				sound_channel snd_weapon_mech snd_throw
+	}
+}
+
+
+// ========================================================================
+// world Models
+//
+
+model worldmodel_airstrike_beacon {
+	mesh						models/weapons/grenades/frag_grenade.md5mesh
+
+	anim idle 					models/weapons/grenades/frag_grenade.md5anim
+	anim fire					models/weapons/grenades/frag_grenade.md5anim
+}
+
+
+model strogg_beacon {
+	mesh						models/weapons/strogg_beacon/strogg_beacon_thirdperson.md5mesh
+
+	anim idle 					models/weapons/strogg_beacon/strogg_beacon_thirdperson.md5anim {
+	}
+
+	anim    throw_start 		models/weapons/strogg_beacon/strogg_beacon_thirdperson.md5anim {
+		frame	1				effect fx_fire_world fx
+ 	}
+	anim fire 					models/weapons/strogg_beacon/strogg_beacon_thirdperson.md5anim {
+	}
+}
+// ========================================================================
+// Entity DEFS
+//
+// ....in airstrike_marker.def
+

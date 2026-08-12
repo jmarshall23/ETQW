@@ -1,0 +1,206 @@
+
+locString lifestat/titles/gdf 						{ text "#str_00029000" }
+locString lifestat/titles/strogg 					{ text "#str_00029001" }
+
+locString lifestat/flyerhive_kills 					{ text "#str_00009000" }
+locString lifestat/strogg_radar_enemies_spotted 	{ text "#str_00009001" }
+locString lifestat/strogg_hack_uses 				{ text "#str_00009002" }
+locString lifestat/strogg_emp_uses 					{ text "#str_00009003" }
+locString lifestat/strogg_backstab_uses 			{ text "#str_00009004" }
+locString lifestat/strogg_disguise_uses 			{ text "#str_00009005" }
+locString lifestat/railgun_kills 					{ text "#str_00009006" }
+locString lifestat/lacerator_scoped_kills 			{ text "#str_00009007" }
+locString lifestat/strogg_teleport_uses 			{ text "#str_00009008" }
+
+locString lifestat/railhowitzer_kills 				{ text "#str_00009100" }
+locString lifestat/railhowitzer_damage 				{ text "#str_00009101" }
+locString lifestat/plasma_mortar_kills 				{ text "#str_00009102" }
+locString lifestat/plasma_mortar_damage 			{ text "#str_00009103" }
+locString lifestat/ssg_kills 						{ text "#str_00009104" }
+locString lifestat/ssg_damage 						{ text "#str_00009105" }
+locString lifestat/violator_kills 					{ text "#str_00009106" }
+locString lifestat/violator_damage 					{ text "#str_00009107" }
+
+locString lifestat/landmine_strogg_kills 			{ text "#str_00009200" }
+locString lifestat/antipersonnel_strogg_kills 		{ text "#str_00009201" }
+locString lifestat/antivehicle_strogg_kills 		{ text "#str_00009202" }
+locString lifestat/antimissile_strogg_uses 			{ text "#str_00009203" }
+locString lifestat/strogg_damage_repaired 			{ text "#str_00009204" }
+
+locString lifestat/obliterator_kills 				{ text "#str_00009300" }
+locString lifestat/obliterator_damage 				{ text "#str_00009301" }
+locString lifestat/hyperblaster_kills 				{ text "#str_00009302" }
+locString lifestat/hyperblaster_damage 				{ text "#str_00009303" }
+locString lifestat/nailgun_kills 					{ text "#str_00009304" }
+locString lifestat/nailgun_damage 					{ text "#str_00009305" }
+locString lifestat/lightning_pistol_kills 			{ text "#str_00009306" }
+locString lifestat/lightning_pistol_damage 			{ text "#str_00009307" }
+
+locString lifestat/strogg_players_revived 			{ text "#str_00009401" }
+locString lifestat/strogg_healthpack_uses 			{ text "#str_00009402" }
+locString lifestat/strogg_spawnhosts_created 		{ text "#str_00009403" }
+
+locString lifestat/rocketlauncher_kills 			{ text "#str_00009500" }
+locString lifestat/rocketlauncher_damage 			{ text "#str_00009501" }
+locString lifestat/gpmg_kills 						{ text "#str_00009502" }
+locString lifestat/gpmg_damage 						{ text "#str_00009503" }
+locString lifestat/shotgun_kills 					{ text "#str_00009504" }
+locString lifestat/shotgun_damage 					{ text "#str_00009505" }
+locString lifestat/machinepistol_kills 				{ text "#str_00009506" }
+locString lifestat/machinepistol_damage 			{ text "#str_00009507" }
+locString lifestat/soldier_xp 						{ text "#str_00009508" }
+
+locString lifestat/gdf_players_revived 				{ text "#str_00009600" }
+locString lifestat/gdf_healthpack_uses 				{ text "#str_00009601" }
+locString lifestat/gdf_spawnhosts_destroyed 		{ text "#str_00009602" }
+locString lifestat/medic_xp 						{ text "#str_00009603" }
+
+locString lifestat/landmine_gdf_kills 				{ text "#str_00009700" }
+locString lifestat/antipersonnel_gdf_kills 			{ text "#str_00009701" }
+locString lifestat/antivehicle_gdf_kills 			{ text "#str_00009702" }
+locString lifestat/antimissile_gdf_uses 			{ text "#str_00009703" }
+locString lifestat/gdf_damage_repaired 				{ text "#str_00009704" }
+locString lifestat/engineer_xp 						{ text "#str_00009705" }
+
+locString lifestat/artillery_kills 					{ text "#str_00009800" }
+locString lifestat/artillery_damage 				{ text "#str_00009801" }
+locString lifestat/rockets_kills 					{ text "#str_00009802" }
+locString lifestat/rockets_damage 					{ text "#str_00009803" }
+locString lifestat/hammer_kills 					{ text "#str_00009804" }
+locString lifestat/hammer_damage 					{ text "#str_00009805" }
+locString lifestat/vampire_kills 					{ text "#str_00009806" }
+locString lifestat/vampire_damage 					{ text "#str_00009807" }
+locString lifestat/gdf_supply_uses 					{ text "#str_00009808" }
+locString lifestat/assaultrifle_scoped_kills 		{ text "#str_00009809" }
+locString lifestat/fieldops_xp 						{ text "#str_00009810" }
+
+locString lifestat/third_eye_kills 					{ text "#str_00009900" }
+locString lifestat/gdf_radar_enemies_spotted 		{ text "#str_00009901" }
+locString lifestat/gdf_hack_uses 					{ text "#str_00009902" }
+locString lifestat/gdf_emp_uses 					{ text "#str_00009903" }
+locString lifestat/gdf_backstab_uses 				{ text "#str_00009904" }
+locString lifestat/gdf_disguise_uses 				{ text "#str_00009905" }
+locString lifestat/sniperrifle_kills 				{ text "#str_00009906" }
+locString lifestat/grenade_smoke_shots_fired 		{ text "#str_00009907" }
+locString lifestat/covertops_xp 					{ text "#str_00009908" }
+
+locString lifestat/total_damage 					{ text "#str_00009950" }
+locString lifestat/total_time_alive 				{ text "#str_00009951" }
+locString lifestat/total_kills 						{ text "#str_00009952" }
+locString lifestat/battlesense_xp 					{ text "#str_00009953" }
+locString lifestat/total_kills_deployable 			{ text "#str_00009954" }
+locString lifestat/total_kills_vehicle 				{ text "#str_00009955" }
+locString lifestat/total_headshot_kills 			{ text "#str_00009956" }
+locString lifestat/total_roadkills 					{ text "#str_00009957" }
+locString lifestat/vehicle_xp 						{ text "#str_00009958" }
+
+locString lifestat/assaultrifle_kills 				{ text "#str_00009959" }
+locString lifestat/knife_kills 						{ text "#str_00009960" }
+locString lifestat/grenade_frag_kills 				{ text "#str_00009961" }
+
+locString lifestat/lacerator_kills 					{ text "#str_00009962" }
+locString lifestat/spikes_kills 					{ text "#str_00009963" }
+locString lifestat/grenade_shrap_kills 				{ text "#str_00009964" }
+
+
+
+locString lifestat/flyerhive_kills_long 					{ text "#str_00019000" arguments 2 }
+locString lifestat/strogg_radar_enemies_spotted_long 		{ text "#str_00019001" arguments 2 }
+locString lifestat/strogg_hack_uses_long 					{ text "#str_00019002" arguments 2 }
+locString lifestat/strogg_emp_uses_long 					{ text "#str_00019003" arguments 2 }
+locString lifestat/strogg_backstab_uses_long 				{ text "#str_00019004" arguments 2 }
+locString lifestat/strogg_disguise_uses_long 				{ text "#str_00019005" arguments 2 }
+locString lifestat/railgun_kills_long 						{ text "#str_00019006" arguments 2 }
+locString lifestat/lacerator_scoped_kills_long 				{ text "#str_00019007" arguments 2 }
+locString lifestat/strogg_teleport_uses_long 				{ text "#str_00019008" arguments 2 }
+
+locString lifestat/railhowitzer_kills_long 					{ text "#str_00019100" arguments 2 }
+locString lifestat/railhowitzer_damage_long 				{ text "#str_00019101" arguments 2 }
+locString lifestat/plasma_mortar_kills_long 				{ text "#str_00019102" arguments 2 }
+locString lifestat/plasma_mortar_damage_long 				{ text "#str_00019103" arguments 2 }
+locString lifestat/ssg_kills_long 							{ text "#str_00019104" arguments 2 }
+locString lifestat/ssg_damage_long 							{ text "#str_00019105" arguments 2 }
+locString lifestat/violator_kills_long 						{ text "#str_00019106" arguments 2 }
+locString lifestat/violator_damage_long 					{ text "#str_00019107" arguments 2 }
+
+locString lifestat/landmine_strogg_kills_long 				{ text "#str_00019200" arguments 2 }
+locString lifestat/antipersonnel_strogg_kills_long 			{ text "#str_00019201" arguments 2 }
+locString lifestat/antivehicle_strogg_kills_long 			{ text "#str_00019202" arguments 2 }
+locString lifestat/antimissile_strogg_uses_long 			{ text "#str_00019203" arguments 2 }
+locString lifestat/strogg_damage_repaired_long 				{ text "#str_00019204" arguments 2 }
+
+locString lifestat/obliterator_kills_long 					{ text "#str_00019300" arguments 2 }
+locString lifestat/obliterator_damage_long 					{ text "#str_00019301" arguments 2 }
+locString lifestat/hyperblaster_kills_long 					{ text "#str_00019302" arguments 2 }
+locString lifestat/hyperblaster_damage_long 				{ text "#str_00019303" arguments 2 }
+locString lifestat/nailgun_kills_long 						{ text "#str_00019304" arguments 2 }
+locString lifestat/nailgun_damage_long 						{ text "#str_00019305" arguments 2 }
+locString lifestat/lightning_pistol_kills_long 				{ text "#str_00019306" arguments 2 }
+locString lifestat/lightning_pistol_damage_long 			{ text "#str_00019307" arguments 2 }
+
+locString lifestat/strogg_players_revived_long 				{ text "#str_00019401" arguments 2 }
+locString lifestat/strogg_healthpack_uses_long 				{ text "#str_00019402" arguments 2 }
+locString lifestat/strogg_spawnhosts_created_long 			{ text "#str_00019403" arguments 2 }
+
+locString lifestat/rocketlauncher_kills_long 				{ text "#str_00019500" arguments 2 }
+locString lifestat/rocketlauncher_damage_long 				{ text "#str_00019501" arguments 2 }
+locString lifestat/gpmg_kills_long 							{ text "#str_00019502" arguments 2 }
+locString lifestat/gpmg_damage_long 						{ text "#str_00019503" arguments 2 }
+locString lifestat/shotgun_kills_long 						{ text "#str_00019504" arguments 2 }
+locString lifestat/shotgun_damage_long 						{ text "#str_00019505" arguments 2 }
+locString lifestat/machinepistol_kills_long 				{ text "#str_00019506" arguments 2 }
+locString lifestat/machinepistol_damage_long 				{ text "#str_00019507" arguments 2 }
+locString lifestat/soldier_xp_long 							{ text "#str_00019508" arguments 2 }
+
+locString lifestat/gdf_players_revived_long 				{ text "#str_00019600" arguments 2 }
+locString lifestat/gdf_healthpack_uses_long 				{ text "#str_00019601" arguments 2 }
+locString lifestat/gdf_spawnhosts_destroyed_long 			{ text "#str_00019602" arguments 2 }
+locString lifestat/medic_xp_long 							{ text "#str_00019603" arguments 2 }
+
+locString lifestat/landmine_gdf_kills_long 					{ text "#str_00019700" arguments 2 }
+locString lifestat/antipersonnel_gdf_kills_long 			{ text "#str_00019701" arguments 2 }
+locString lifestat/antivehicle_gdf_kills_long 				{ text "#str_00019702" arguments 2 }
+locString lifestat/antimissile_gdf_uses_long 				{ text "#str_00019703" arguments 2 }
+locString lifestat/gdf_damage_repaired_long 				{ text "#str_00019704" arguments 2 }
+locString lifestat/engineer_xp_long 						{ text "#str_00019705" arguments 2 }
+
+locString lifestat/artillery_kills_long 					{ text "#str_00019800" arguments 2 }
+locString lifestat/artillery_damage_long 					{ text "#str_00019801" arguments 2 }
+locString lifestat/rockets_kills_long 						{ text "#str_00019802" arguments 2 }
+locString lifestat/rockets_damage_long 						{ text "#str_00019803" arguments 2 }
+locString lifestat/hammer_kills_long 						{ text "#str_00019804" arguments 2 }
+locString lifestat/hammer_damage_long 						{ text "#str_00019805" arguments 2 }
+locString lifestat/vampire_kills_long 						{ text "#str_00019806" arguments 2 }
+locString lifestat/vampire_damage_long 						{ text "#str_00019807" arguments 2 }
+locString lifestat/gdf_supply_uses_long 					{ text "#str_00019808" arguments 2 }
+locString lifestat/assaultrifle_scoped_kills_long 			{ text "#str_00019809" arguments 2 }
+locString lifestat/fieldops_xp_long 						{ text "#str_00019810" arguments 2 }
+
+locString lifestat/third_eye_kills_long 					{ text "#str_00019900" arguments 2 }
+locString lifestat/gdf_radar_enemies_spotted_long 			{ text "#str_00019901" arguments 2 }
+locString lifestat/gdf_hack_uses_long 						{ text "#str_00019902" arguments 2 }
+locString lifestat/gdf_emp_uses_long 						{ text "#str_00019903" arguments 2 }
+locString lifestat/gdf_backstab_uses_long 					{ text "#str_00019904" arguments 2 }
+locString lifestat/gdf_disguise_uses_long 					{ text "#str_00019905" arguments 2 }
+locString lifestat/sniperrifle_kills_long 					{ text "#str_00019906" arguments 2 }
+locString lifestat/grenade_smoke_shots_fired_long 			{ text "#str_00019907" arguments 2 }
+locString lifestat/covertops_xp_long 						{ text "#str_00019908" arguments 2 }
+
+locString lifestat/total_damage_long 						{ text "#str_00019950" arguments 2 }
+locString lifestat/total_time_alive_long 					{ text "#str_00019951" arguments 2 }
+locString lifestat/total_kills_long 						{ text "#str_00019952" arguments 2 }
+locString lifestat/battlesense_xp_long 						{ text "#str_00019953" arguments 2 }
+locString lifestat/total_kills_deployable_long 				{ text "#str_00019954" arguments 2 }
+locString lifestat/total_kills_vehicle_long 				{ text "#str_00019955" arguments 2 }
+locString lifestat/total_headshot_kills_long 				{ text "#str_00019956" arguments 2 }
+locString lifestat/total_roadkills_long 					{ text "#str_00019957" arguments 2 }
+locString lifestat/vehicle_xp_long 							{ text "#str_00019958" arguments 2 }
+
+locString lifestat/assaultrifle_kills_long 					{ text "#str_00019959" arguments 2 }
+locString lifestat/knife_kills_long 						{ text "#str_00019960" arguments 2 }
+locString lifestat/grenade_frag_kills_long 					{ text "#str_00019961" arguments 2 }
+
+locString lifestat/lacerator_kills_long 					{ text "#str_00019962" arguments 2 }
+locString lifestat/spikes_kills_long 						{ text "#str_00019963" arguments 2 }
+locString lifestat/grenade_shrap_kills_long 				{ text "#str_00019964" arguments 2 }
+

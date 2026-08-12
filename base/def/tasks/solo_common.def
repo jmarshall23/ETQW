@@ -1,0 +1,120 @@
+
+/******************************************************************************
+
+  SOLO ASSIGNMENTS COMMON TO BOTH TEAMS
+
+******************************************************************************/
+
+#include "task_includes.include"
+
+//
+// A Waypoint
+//
+
+templates/tasks/solo_task( waypoint, task_dummy )
+	data {
+		"require_eligible1"				"same_fireteam == true"
+		"waypoint"						"1"
+		"priority"						"0"
+		"show_eligible"					"1"
+		"time_limit"					"99999" // Should modify the time_limit in waypoint.def and not here
+		"los_check"						"0"
+	}
+
+	waypoint {
+		"bracketed"						"0"
+		"mtr_icon"						"hud/icons/missionsystem/tsk_waypoint"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/tsk_waypoint"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/tsk_sml"
+		"range"							"65536"
+		"min_range"						"128"
+	}
+}
+
+//
+// Pickup player
+//
+
+templates/tasks/solo_task( pickup_player, task_pickup )
+	data {
+		"require_eligible1"				"same_team && ability_transport_player && vehicle_full == false"
+		"waypoint"						"1"
+		"task"							"1"
+		"time_limit"					"5"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/tsk_pickup"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/tsk_pickup"
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/tsk_sml"
+		"range"							"2048"
+		"min_range"						"128"
+	}
+}
+
+//
+// Need passanger
+//
+
+templates/tasks/solo_task( need_passenger, task_need_passenger )
+	data {
+		"require_eligible1"				"same_team && in_vehicle == false"
+		"waypoint"						"1"
+		"task"							"1"
+		"time_limit"					"10"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/tsk_passenger"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/tsk_passenger"
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/tsk_sml"
+		"range"							"2048"
+		"min_range"						"128"
+	}
+}
+
+//
+// Need pilot
+//
+
+templates/tasks/solo_task( need_pilot, task_need_passenger )
+	data {
+		"require_eligible1"				"same_team && in_vehicle == false"
+		"waypoint"						"1"
+		"task"							"1"
+		"time_limit"					"10"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/tsk_pilot"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/tsk_pilot"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/tsk_sml"
+		"range"							"2048"
+		"min_range"						"128"
+	}
+}
+
+//
+// Need gunner
+//
+
+templates/tasks/solo_task( need_gunner, task_need_passenger )
+	data {
+		"require_eligible1"				"same_team && in_vehicle == false"
+		"waypoint"						"1"
+		"task"							"1"
+		"time_limit"					"10"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/tsk_gunner"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/tsk_gunner"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/tsk_sml"
+		"range"							"2048"
+		"min_range"						"128"
+	}
+}

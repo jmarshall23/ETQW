@@ -1,0 +1,7 @@
+stringMap tireTreadDef {
+	"material"		"fx/tireTread"
+}
+
+stringMap footPrintDef {
+	"material"		"fx/footPrint"
+}

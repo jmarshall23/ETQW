@@ -1,0 +1,132 @@
+ambientCubeMap salvage_tweak {
+	ambientLight {
+		color 0.1254902035 0.1254902035 0.1254902035
+		direction 0 0 1
+		name "Light0"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1725490242 0.200000003 0.2352941185
+		direction 0 0 -1
+		name "Light1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1137254909 0.1490196139 0.1882352978
+		direction -0.6159380078 0.6840683818 0.3907311857
+		name "Light2"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.250980407 0.2470588237 0.2313725501
+		direction 0.7935880423 -0.3870587349 0.4694715738
+		name "Light3"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.2078431398 0.2392156869 0.2823529541
+		direction -0.7686702013 -0.5184747577 0.3746066391
+		name "Light4"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1960784346 0.2313725501 0.250980407
+		direction 0.570831418 0.730630815 0.3746066391
+		name "Light5"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.2156862915 0.2274509966 0.250980407
+		direction 0.3193081915 -0.8318262696 0.453990519
+		name "Light6"
+		ambient 1
+		specular 1
+	}
+	envMap "env/salvage"
+	ambientColor 0.5 0.5 0.5
+	minSpecAmbientColor 0.4666666687 0.4862745106 0.501960814
+	minSpecShadowColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}atmosphere salvage_tweak {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( 0.4950515628 -0.4087199271 0.7667281032 )
+	sunColor ( 0.3764705956 0.3294117749 0.2980392277 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 100000
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 0.9568627477 0.9137254953 )
+		saturation 1.25
+		contrast 0.9300000072
+		glareParms ( 1.1999999285 1.0199999809 1 0.4099999964 )
+		glareBases ( 0.6999999881 0.8499999642 0 0 )
+	}
+	fogDistHalf 346
+	fogHeightHalf 1124
+	fogHeightOffset 2784
+	fogColor ( 0.3921568692 0.4392156899 0.490196079 )
+	fogStart 0
+	fogEnd 10951
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "salvage_tweak"
+	skyGradientImage "atmosphere/skies/arctic"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 165
+	windAngleDev 0
+	windStrength 50
+	windStrengthDev 0
+	cloudLayer "atmospheres/skydomes/salvage_new" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 2
+		maxParticles 4000
+		heightMin 6
+		heightMax 6
+		weightMin 1.5
+		weightMax 1.7999999523
+		timeMin 0
+		timeMax 500
+		windScale 8
+		gustWindScale 12
+		fallMin 100
+		fallMax 200
+		tumbleStrength 50
+		precipitationDistance 1000
+		material "precipitation/snowflake02_slipgate_night"
+		effect "effects/ambient/salvage_blizzard"
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

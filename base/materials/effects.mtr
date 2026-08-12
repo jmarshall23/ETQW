@@ -1,0 +1,62 @@
+material textures/effects/decoyflare
+{
+//   nonsolid
+//   noshadows
+//   twoSided
+	qer_editorimage textures/effects/flare.tga
+  	{
+        blend add
+        map textures/effects/flare.tga
+		vertexColor
+	}
+}
+
+material particles/penta/icarusheathaze {
+	noshadows
+	translucent
+	nonsolid
+	sort postprocess
+	{
+		program heatHazeWithVertex
+		deformScroll 0, 0
+		deformMagnitude 1
+		bumpMap textures/particles/smoke/smokenormal.tga
+		maskAlpha
+	}
+	/*{
+		map _white
+		vertexcolor
+	}*/
+}
+
+material effects/rain {
+	noshadows
+	translucent
+	nonsolid
+	twoSided
+	{
+		program trivialWithTextureMatrixDisort
+		blend add
+		map textures/water/water_rain_alpha.tga
+		translate 0, time * -1.8
+		scale 0.005, 0.0025 //0.1
+		color 0.5, 0.5, 0.5, 1
+		//program rain
+	}
+}
+
+material effects/snow {
+	noshadows
+	translucent
+	nonsolid
+	twoSided
+	{
+		program trivial_billboard
+		blend blend
+		map textures/particles/precipitation/snowflake02.tga
+		//translate 0, time * -1.8
+		//scale 0.005, 0.0025 //0.1
+		//color 0.5, 0.5, 0.5, 1
+		//program rain
+	}
+}

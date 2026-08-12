@@ -1,0 +1,148 @@
+
+entityDef gameplay_strogg_shield_generator {
+	"editor_color"					"0 .5 .8"
+	"editor_mins"					"-128 -128 -128"
+	"editor_maxs"					"128 128 128"
+
+	"spawnclass"					"sdScriptEntity"
+	"scriptObject"					"scud_trigger_structure"
+
+	"maxVisDist"					"16384"
+
+	"model"							"structure_anti_scud"
+	"cm_model"						"models/structures/strogg/anti_scud/anti_scud_body.lwo"
+
+	"def_trigger"					"gameplay_strogg_shield_generator_trigger"
+	"fx_active"						"effects/structures/anti_scud"
+	"effect_offset"					"0 0 800"
+
+	"fx_hit"						"effects/deployables/shield_generator/impact"
+	"fx_charge"						"effects/deployables/shield_generator/in_action"
+
+	"editor_skipmenu"				"1"
+	
+	"dmg_crush"						"damage_shield_generator_crush"
+	
+	"collection_content_bounds"		"content_bounds"
+}
+
+// This is spawned by the above
+entityDef gameplay_strogg_shield_generator_trigger {
+	"editor_skipmenu"				"1"
+
+	"spawnclass"					"sdScriptEntity"
+	"scriptObject"					"scud_trigger"
+	"option_crosshair_interface"	"1"
+	"option_interactive_interface"	"1"
+	"team"							"strogg"
+
+	"task_hack"						"covertops_hack_shield"
+	"task_defend_long"				"strogg_defend_long"
+	"task_defend_medium"			"strogg_defend_medium"
+	"task_defend_short"				"strogg_defend_short"	
+
+	"model"							"models/structures/strogg/anti_scud/anti_scud.lwo"
+	"cm_model"						"models/structures/strogg/anti_scud/anti_scud.lwo"
+
+	"object_name"					"maps/valley/strogg_shield"
+	"task_name"						"maps/valley/strogg_shield"
+
+	"snd_hacking_strogg"			"sounds/vo/strogg/nexus/objectives/shieldgen/hacking"
+	"snd_hacking_gdf"				"sounds/vo/gdf/highcommand/objectives/shieldgen/hacking"
+
+	"snd_intro_strogg"				"sounds/vo/strogg/nexus/objectives/shieldgen/defend/long"
+	"snd_intro_gdf"					"sounds/vo/gdf/highcommand/objectives/shieldgen/hack/long"
+
+	"snd_stopped_strogg"			"sounds/vo/strogg/nexus/objectives/shieldgen/stoppedssm"
+	"snd_stopped_gdf"				"sounds/vo/gdf/highcommand/objectives/shieldgen/stoppedssm"
+
+	"snd_reminder_strogg"			"sounds/vo/strogg/nexus/objectives/shieldgen/defend"
+	"snd_reminder_gdf"				"sounds/vo/gdf/highcommand/objectives/shieldgen/hack"
+
+	"snd_hacked_strogg"				"sounds/vo/strogg/nexus/objectives/shieldgen/hacked"
+	"snd_hacked_gdf"				"sounds/vo/gdf/highcommand/objectives/shieldgen/hacked"
+
+	"snd_launched_strogg"			"sounds/vo/strogg/nexus/objectives/shieldgen/firessm"
+	"snd_launched_gdf"				"sounds/vo/gdf/highcommand/objectives/shieldgen/firessm"
+
+	"tt_intro_info"					"hack_crosshair_info_gdf"
+	"tt_intro_use_me_1"				"hack_objective_crosshair_info_1"
+	"tt_intro_use_me_2"				"hack_objective_crosshair_info_2"
+
+	"prof_hack"						"pro_covertops_hack_objective"
+
+	"mtr_icon_flash"				"hud/icons/missionsystem/obj_hack"
+	"mtr_icon_flash_defend"			"hud/icons/missionsystem/obj_defend"
+	"icon_sort_cm_flash_icon"		"-102"
+}
+
+entityDef gameplay_strogg_shield_generator_caller {
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"drop_caller"
+
+	"editor_preview_model"			"models/structures/strogg/anti_scud/anti_scud_body.lwo"
+
+	"def_drop_object"				"vehicle_strogg_drop"
+	"def_drop_item"					"gameplay_strogg_shield_generator"
+	"drop_team"						"strogg"
+}
+
+damageFilter damage_shield_generator_crush {
+	type {
+		target					"target_veh_all"
+		damage					50000
+	}
+
+	type {
+		target					"target_player_all"
+		damage					50000
+	}
+	type {
+		target					"target_spawn_host"
+		damage					50000
+	}
+	
+	type {
+		target	"target_supply_crate"
+		damage	50000
+	}
+}
+
+damageDef damage_shield_generator_crush {
+	damage						"damage_shield_generator_crush"
+	gib
+	noGod
+	noTeam
+	forcePassengerKill
+
+	tt_obituary_unknown			"tooltips/killmsgs/objectives/shieldgenerator/crush"
+}
+
+damageFilter damage_destroy_nuke {
+	type {
+		target	"target_nuke"
+		damage	1000
+	}
+}
+
+damageDef damage_destroy_nuke {
+	damage							"damage_destroy_nuke"
+	noTeam
+	noGod
+}
+
+
+
+#include "templates/tooltips.include"
+
+toolTip hack_objective_crosshair_info_1 {
+	text "game/tt/intro/hack_me_1"
+	sound "sounds/ui/main/neutral"
+	locationIndex TOOLTIP_POSITION_WEAPON_CHANGE
+}
+
+toolTip hack_objective_crosshair_info_2 {
+	text "game/tt/intro/hack_me_2"
+	sound "sounds/ui/main/neutral"
+	nextShowDelay 30
+}

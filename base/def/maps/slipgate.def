@@ -1,0 +1,10 @@
+
+entityDef gameplay_slipgate_effects {
+	"spawnclass"						"sdScriptEntity"
+	"scriptobject"						"slipgate_effects"
+
+	"editor_color"						"1 1 0"
+	"editor_mins"						"-8 -8 -8"
+	"editor_maxs"						"8 8 8"
+	"editor_showangle"					"0"
+}

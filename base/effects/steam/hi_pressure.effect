@@ -1,0 +1,132 @@
+effect effects/steam/hi_pressure
+{
+	size	196
+
+	emitter "steam"
+	{
+		duration	1,1
+		count		7,9
+
+		sprite
+		{
+			duration	1,2
+			material	"textures/effects/smoke1"
+			gravity		0.02,0.06
+			trailRepeat	1
+
+			start
+			{
+				position { line 10,-1,-1,10,1,1 }
+				velocity { box 5,-10,-10,110,10,10 }
+				size { box 2,2,10,10 }
+				tint { point 1,0.721569,0.443137 }
+				fade { point 0 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope inverse_linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { box 25,25,50,50 }
+				fade { point 0.5 }
+				rotate { box -0.388889,0.388889 relative }
+			}
+		}
+	}
+	sound "sound"
+	{
+		soundShader	"sounds/world/misc/steam_loop_01"
+		volume	-30,-30
+	}
+	emitter "end"
+	{
+		duration	1,1
+		count		1,3
+
+		sprite
+		{
+			duration	1,1.25
+			material	"textures/effects/smoke1"
+			gravity		-0.01,0.01
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 100,-15,-15,150,15,15 }
+				size { box 10,10,15,15 }
+				tint { point 1,0.501961,0 }
+				fade { point 0 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope lerp2table }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { box 64,64,80,80 }
+				fade { point 0.2 }
+				rotate { box -0.111111,0.111111 relative }
+			}
+		}
+	}
+	spawner "drops"
+	{
+		count		1,2
+
+		line
+		{
+			duration	2,2
+			generatedLine
+			material	"textures/effects/desecrator_spark"
+			gravity		0.25,0.5
+			trailRepeat	1
+
+			start
+			{
+				position { line 2,-1,-1,1,1,1 }
+				size { point 0.5 }
+				fade { point 0 }
+				length { box 0,0,-35,0,0,-18 }
+			}
+
+			motion
+			{
+				fade { envelope jrad_ssmexplode }
+				length { envelope fast_in_slow_out }
+			}
+
+			end
+			{
+				fade { line 0.5,0.25 }
+				length { box 0,0,3,0,0,8 }
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

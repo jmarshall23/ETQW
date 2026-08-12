@@ -1,0 +1,26 @@
+material textures/signs/shopsigns01
+{ 
+          diffusemap     picmip -1     textures/signs/shopsigns01_d.tga
+          specularmap    picmip -1     textures/signs/shopsigns01_s.tga
+          bumpmap        picmip -1     textures/signs/shopsigns01_local.tga
+}
+
+material textures/signs/shopsigns01_1024
+{ 
+          diffusemap    picmip -1      textures/signs/shopsigns01_1024_d.tga
+          specularmap   picmip -1      textures/signs/shopsigns01_1024_s.tga
+          bumpmap       picmip -1      textures/signs/shopsigns01_1024_local.tga
+}
+
+material textures/signs/neonsigns01
+{
+	diffusemap  	picmip -1	textures/signs/neonsigns01_d.tga
+	bumpmap	  	picmip -1	textures/signs/neonsigns01_local.tga
+	specularmap 	picmip -2	textures/signs/neonsigns01_s.tga
+
+	{
+		blend add
+		map picmip -1 textures/signs/neonsigns01_glow.tga
+		rgb neon_sign01[ time * 0.1 ]
+	}
+}

@@ -1,0 +1,90 @@
+// --------------------------------------------
+// OUTSKIRTS STUFF
+// --------------------------------------------
+
+stuffType outskirts/outskirts_concrete_medium {
+	Model	"stuff/outskirts/outskirts_concrete_01_a.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_01_b.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_01_c.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_01_d.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_01_e.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_01_f.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_01_g.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_01_h.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_a.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_b.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_c.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_d.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_e.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_f.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_g.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_h.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_01_group_a.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_01_group_b.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_group_a.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_group_b.lwo"
+}
+
+stuffType outskirts/outskirts_concrete_small {
+	Model	"stuff/outskirts/outskirts_concrete_01_i.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_01_j.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_01_k.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_01_l.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_01_m.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_01_n.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_01_o.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_01_p.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_i.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_j.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_k.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_l.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_m.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_n.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_o.lwo"
+	Model	"stuff/outskirts/outskirts_concrete_02_p.lwo"
+}
+
+stuffType outskirts/outskirts_metal {
+	Model	"stuff/outskirts/outskirts_metal_01_a.lwo"
+	Model	"stuff/outskirts/outskirts_metal_01_b.lwo"
+	Model	"stuff/outskirts/outskirts_metal_01_c.lwo"
+	Model	"stuff/outskirts/outskirts_metal_02_a.lwo"
+	Model	"stuff/outskirts/outskirts_metal_02_b.lwo"
+	Model	"stuff/outskirts/outskirts_metal_02_c.lwo"
+}
+
+stuffType outskirts/outskirts_newspaper {
+	Model	"stuff/outskirts/outskirts_newspaper01.lwo"
+	Model	"stuff/outskirts/outskirts_newspaper02.lwo"
+	Model	"stuff/outskirts/outskirts_newspaper03.lwo"
+	Model	"stuff/outskirts/outskirts_newspaper04.lwo"
+	Model	"stuff/outskirts/outskirts_newspaper05.lwo"
+	Model	"stuff/outskirts/outskirts_newspaper06.lwo"
+	Model	"stuff/outskirts/outskirts_newspaper07.lwo"
+}
+
+stuffType outskirts/outskirts_rubbish {
+	Model	"stuff/outskirts/outskirts_rubbish01.lwo"
+	Model	"stuff/outskirts/outskirts_rubbish02.lwo"
+	Model	"stuff/outskirts/outskirts_rubbish03.lwo"
+	Model	"stuff/outskirts/outskirts_rubbish04.lwo"
+	Model	"stuff/outskirts/outskirts_rubbish05.lwo"
+}
+
+stuffType outskirts/outskirts_straw {
+	Model	"stuff/outskirts/outskirts_straw01.lwo"
+	Model	"stuff/outskirts/outskirts_straw02.lwo"
+	Model	"stuff/outskirts/outskirts_straw03.lwo"
+}
+
+stuffType outskirts/outskirts_shrub {
+	Model	"stuff/outskirts/outskirts_shrub01.lwo"
+	Model	"stuff/outskirts/outskirts_shrub02.lwo"
+	Model	"stuff/outskirts/outskirts_shrub03.lwo"
+}
+
+stuffType outskirts/outskirts_grass {
+	Model	"stuff/outskirts/outskirts_grass03.lwo"
+	Model	"stuff/outskirts/outskirts_grass02.lwo"
+	Model	"stuff/outskirts/outskirts_grass01.lwo"
+}

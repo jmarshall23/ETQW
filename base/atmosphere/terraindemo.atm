@@ -1,0 +1,95 @@
+atmosphere terraindemo01 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.0870367214 -0.2847202718 0.9546512365 )
+	sunColor ( 0.8712012768 0.8259117603 0.7274392843 )
+	sunHaloScale 0.0299999993
+	sunHaloBias -0.3400000036
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 4900
+	fogHeightHalf 3500
+	fogHeightOffset 6300
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "terraindemo01"
+	skyGradientImage "atmosphere/g_overcast01"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere terraindemo_blank01 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.0870367214 -0.2847202718 0.9546512365 )
+	sunColor ( 0.8712012768 0.8259117603 0.7274392843 )
+	sunHaloScale 0.0299999993
+	sunHaloBias -0.3400000036
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 4900
+	fogHeightHalf 3500
+	fogHeightOffset 6300
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "terraindemo_blank01"
+	skyGradientImage "atmosphere/g_overcast01"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+ambientCubemap terraindemo01 {
+}
+
+ambientCubemap terraindemo_blank01 {
+}

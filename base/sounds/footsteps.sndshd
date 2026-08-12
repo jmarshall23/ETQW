@@ -1,0 +1,237 @@
+sound sounds/players/footsteps/strogg/cloth {
+	volume		-24
+	minDistance	2
+	maxDistance	15
+	looping
+	randomize
+	no_dups
+
+	sounds/players/footsteps_strogg/clothing/loop_01.wav
+	sounds/players/footsteps_strogg/clothing/loop_02.wav
+	sounds/players/footsteps_strogg/clothing/loop_03.wav
+	sounds/players/footsteps_strogg/clothing/loop_04.wav
+	sounds/players/footsteps_strogg/clothing/loop_05.wav
+	sounds/players/footsteps_strogg/clothing/loop_06.wav
+	sounds/players/footsteps_strogg/clothing/loop_07.wav
+
+}
+
+sound sounds/players/footsteps/strogg/metal {
+
+	volume -16
+	maxDistance 50
+	no_dups
+	
+	occlude_once
+
+	sounds/players/footsteps_strogg/metal/fs2_01.wav
+	sounds/players/footsteps_strogg/metal/fs2_02.wav
+	sounds/players/footsteps_strogg/metal/fs2_03.wav
+	sounds/players/footsteps_strogg/metal/fs2_04.wav
+	sounds/players/footsteps_strogg/metal/fs2_05.wav
+	sounds/players/footsteps_strogg/metal/fs2_06.wav
+	sounds/players/footsteps_strogg/metal/fs2_07.wav
+}
+
+
+sound sounds/players/footsteps/strogg/pavement {
+	volume	-15
+	maxDistance 50
+	no_dups
+	
+	occlude_once
+
+	sounds/players/footsteps_strogg/xpavement_01.wav
+	sounds/players/footsteps_strogg/xpavement_02.wav
+	sounds/players/footsteps_strogg/xpavement_03.wav
+}
+
+sound sounds/players/footsteps/strogg/default {
+	volume -20
+	maxDistance 50
+	no_dups
+	
+	occlude_once
+	
+	sounds/players/footsteps_strogg/dirt/dirt2_01.wav
+	sounds/players/footsteps_strogg/dirt/dirt2_02.wav
+	sounds/players/footsteps_strogg/dirt/dirt2_03.wav
+	sounds/players/footsteps_strogg/dirt/dirt2_04.wav
+	sounds/players/footsteps_strogg/dirt/dirt2_05.wav
+}
+
+sound sounds/players/footsteps/strogg/water {
+
+	maxDistance 50
+	no_dups
+	
+	occlude_once
+
+	sounds/players/footsteps_strogg/water_01.wav
+	sounds/players/footsteps_strogg/water_02.wav
+	sounds/players/footsteps_strogg/water_03.wav
+	sounds/players/footsteps_strogg/water_04.wav
+}
+
+sound sounds/players/footsteps/strogg/gravel {
+	volume -15
+	maxDistance 50
+	no_dups
+
+	occlude_once
+
+	sounds/players/footsteps_strogg/dirt/dirt2_01.wav
+	sounds/players/footsteps_strogg/dirt/dirt2_02.wav
+	sounds/players/footsteps_strogg/dirt/dirt2_03.wav
+	sounds/players/footsteps_strogg/dirt/dirt2_04.wav
+	sounds/players/footsteps_strogg/dirt/dirt2_05.wav
+}
+
+
+sound sounds/players/footsteps/strogg/wood {
+	volume -5
+	maxDistance 50
+	no_dups
+	
+	occlude_once
+
+	sounds/players/footsteps_strogg/wood_01.wav
+	sounds/players/footsteps_strogg/wood_02.wav
+	sounds/players/footsteps_strogg/wood_03.wav
+	sounds/players/footsteps_strogg/wood_04.wav
+	sounds/players/footsteps_strogg/wood_05.wav
+}
+
+// GDF Below
+
+sound sounds/players/footsteps/default {
+	volume -5
+	maxDistance 50
+	no_dups
+	
+	occlude_once
+
+	sounds/players/footsteps/stone_01.wav
+	sounds/players/footsteps/stone_02.wav
+	sounds/players/footsteps/stone_03.wav
+	sounds/players/footsteps/stone_04.wav
+	sounds/players/footsteps/stone_06.wav
+	sounds/players/footsteps/stone_08.wav
+}
+
+sound sounds/players/footsteps/grass {
+
+	maxDistance 50
+	no_dups
+	
+	occlude_once
+
+	sounds/players/footsteps/grass_01.wav
+	sounds/players/footsteps/grass_02.wav
+	sounds/players/footsteps/grass_03.wav
+	sounds/players/footsteps/grass_04.wav
+}
+
+sound sounds/players/footsteps/gravel {
+
+	maxDistance 50
+	no_dups
+	
+	occlude_once
+
+	sounds/players/footsteps/gravel_01.wav
+	sounds/players/footsteps/gravel_02.wav
+	sounds/players/footsteps/gravel_03.wav
+	sounds/players/footsteps/gravel_04.wav
+}
+
+sound sounds/players/footsteps/metal {
+
+	volume -5
+	maxDistance 50
+	no_dups
+	
+	occlude_once
+
+	sounds/players/footsteps/metal_01.wav
+	sounds/players/footsteps/metal_02.wav
+	sounds/players/footsteps/metal_03.wav
+	sounds/players/footsteps/metal_04.wav
+	sounds/players/footsteps/metal_05.wav
+	sounds/players/footsteps/metal_06.wav
+	sounds/players/footsteps/metal_07.wav
+	sounds/players/footsteps/metal_08.wav
+	sounds/players/footsteps/metal_09.wav
+	sounds/players/footsteps/metal_10.wav
+}
+
+sound sounds/players/footsteps/snow {
+
+	volume	-8
+	maxDistance 50
+	no_dups
+	
+	occlude_once
+
+	sounds/players/footsteps/snow_01.wav
+	sounds/players/footsteps/snow_02.wav
+	sounds/players/footsteps/snow_03.wav
+	sounds/players/footsteps/snow_04.wav
+}
+
+sound sounds/players/footsteps/stone {
+
+	volume -5
+	maxDistance 50
+	no_dups
+	
+	occlude_once
+
+	sounds/players/footsteps/stone_01.wav
+	sounds/players/footsteps/stone_02.wav
+	sounds/players/footsteps/stone_03.wav
+	sounds/players/footsteps/stone_04.wav
+	sounds/players/footsteps/stone_06.wav
+	sounds/players/footsteps/stone_08.wav
+}
+
+sound sounds/players/footsteps/water {
+
+	maxDistance 50
+	no_dups
+	
+	occlude_once
+
+	sounds/players/footsteps/water_01.wav
+	sounds/players/footsteps/water_02.wav
+	sounds/players/footsteps/water_03.wav
+	sounds/players/footsteps/water_04.wav
+}
+
+sound sounds/players/footsteps/wood {
+
+	maxDistance 50
+	no_dups
+	
+	occlude_once
+
+	sounds/players/footsteps/wood_01.wav
+	sounds/players/footsteps/wood_02.wav
+	sounds/players/footsteps/wood_03.wav
+	sounds/players/footsteps/wood_04.wav
+}
+
+sound sounds/players/footsteps/ladder {
+
+	volume -10
+	maxDistance 50
+	no_dups
+	
+	occlude_once
+
+	sounds/players/footsteps/ladder_01.wav
+	sounds/players/footsteps/ladder_02.wav
+	sounds/players/footsteps/ladder_03.wav
+	sounds/players/footsteps/ladder_04.wav
+	sounds/players/footsteps/ladder_05.wav
+}

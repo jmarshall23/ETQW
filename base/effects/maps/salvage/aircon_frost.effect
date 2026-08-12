@@ -1,0 +1,81 @@
+effect effects/maps/salvage/aircon_frost
+{
+	size	78
+
+	cutOffDistance	5000
+
+	emitter "drips"
+	{
+		duration	1,1
+		count		0.1,0.3
+
+		sprite
+		{
+			duration	3,3
+			material	"penta/raindrop"
+			gravity		0.3,0.3
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -10,-10,0,10,10,0 }
+				velocity { box -20,-20,-5,20,20,-5 }
+			}
+
+			motion
+			{
+				fade { envelope linear }
+			}
+
+			end
+			{
+				fade { point 0.3 }
+			}
+			lineHit
+		}
+	}
+	emitter "unnamed0"
+	{
+		duration	1,1
+		count		2,2
+
+		sprite
+		{
+			duration	12,15
+			material	"particles/dustcloud_02_litsmoke"
+			gravity		0.0005,0.0025
+			trailRepeat	1
+
+			start
+			{
+				size { point 20,20 }
+				tint { line 0.627451,0.627451,0.627451,0.803922,0.803922,0.803922 }
+				fade { point 0 }
+				offset { cylinder 0,-35,-35,0,35,35 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope concavefade }
+				fade { envelope shamus_fastinholdslowout }
+				rotate { envelope concavefade }
+			}
+
+			end
+			{
+				size { box 12,12,8,8 }
+				fade { line 0.2,0.3 }
+				rotate { box 1,-1 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+

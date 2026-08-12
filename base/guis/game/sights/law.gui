@@ -1,0 +1,54 @@
+#include <guis/game/hud/hud.include>
+#include <guis/game/sights/assaultrifle_lines.include>
+#include <guis/game/sights/generic_scope.include>
+
+gui game/sights/law {
+	
+	properties {
+		float		zoomLevel = 0.f;
+		string		range = "";
+		float		zoomState = 0.f;
+		float		zoomCycleTransition = 1.f;
+		float		zoomCycleTransitionLerp = 1.f;
+		float		flags = immediate( flags ) | GUI_FULLSCREEN;
+	}
+	events {
+		onActivate {
+			globals.gameHud.showPostProcess = immediate( globals.gameHud.showPostProcess + 1 );
+		}
+		onDeactivate {
+			globals.gameHud.showPostProcess = immediate( globals.gameHud.showPostProcess - 1 );
+		}
+		onNamedEvent "onZoomCycle" {
+			zoomCycleTransitionLerp = transition( "0", "1", 200 );
+		}
+	}
+
+	// stolen from binocs
+	materials {
+		"binocs"	"guis/assets/qet/binocs"
+		
+		"guis/assets/weapons/assaultrifle/border"	"guis/assets/weapons/assaultrifle/border"
+		"guis/assets/weapons/sniper/circle"			"guis/assets/weapons/sniper/circle"
+		"guis/assets/weapons/sniper/circlelines1"	"guis/assets/weapons/sniper/circlelines1"
+		"guis/assets/weapons/sniper/circlelines2"	"guis/assets/weapons/sniper/circlelines2"
+		"guis/assets/weapons/sniper/circleticks"	"guis/assets/weapons/sniper/circleticks"
+	}
+
+	_hud_materials
+		
+	windowDef desktop {
+		events {
+			onCreate {
+				attachRenderCallback( "postProcess" );
+			}			
+		}
+
+		properties {
+			rect rect = 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT;
+		}
+		__assaultrifle_lines( "border", "nocircles" )
+		
+		__scope_info( "nozoom", "nolongrange", "0, 0, 0, 0.8" )
+	}
+}

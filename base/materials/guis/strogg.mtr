@@ -1,0 +1,24 @@
+material guis/strogg/strogglogo {
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/etlimbo/strogg/strogglogo.tga
+	}
+}
+
+material guis/strogg/halfbody {
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/zombie/digestbody.tga
+	}
+}
+
+material guis/beating/heart {
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/zombie/str1_img1.tga
+		centerscale	1.1 + 0.15 * sinTable[ time / 2.5 ], 1.1 + 0.15 * sinTable[ time / 2.5 ]		
+	}
+}

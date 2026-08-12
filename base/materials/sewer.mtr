@@ -1,0 +1,253 @@
+material textures/sewer/concrete03wet
+{
+	surfacetype "concrete"
+	{
+		bumpmap			picmip -1	textures/concrete/concrete01_local
+		diffusemap		picmip -1	textures/sewer/concrete03wet
+		specularmap		picmip -2	textures/sewer/concrete03wet_s
+
+		bumpDetailMap				textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0
+	}
+}
+
+material textures/sewer/concrete03waterline
+{
+	surfacetype "concrete"
+	{
+		bumpmap			picmip -1	textures/sewer/concrete03waterline_local
+		diffusemap		picmip -1	textures/sewer/concrete03waterline
+		specularmap		picmip -2	textures/sewer/concrete03waterline_s
+
+		bumpDetailMap				textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0
+	}
+}
+				
+material textures/sewer/sewergrate
+{
+	//noshadows
+	twoSided
+	{
+		bumpmap 	picmip -1	textures/sewer/sewergrate1_local.tga
+		diffusemap 	picmip -1	textures/sewer/sewergrate1.tga
+		specularmap	picmip -2	textures/sewer/sewergrate1_s.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/sewer/glass_controlroom
+{
+	noshadows
+	translucent
+	surfaceType "glass"
+	forceoverlays
+	sort decal
+	qer_editorimage	textures/sewer/controlroom_glass.tga
+    {
+		blend	add
+		map		picmip -1	textures/sewer/controlroom_glass.tga
+	}
+	{
+		blend	blend
+		map					textures/sewer/controlroom_glass2_d.tga
+		scale	14,25
+	}
+}
+
+material textures/sewer/glass_controlroom_twosided
+{
+	noshadows
+	twosided
+	translucent
+	surfaceType "glass"
+	forceoverlays
+	sort decal
+	qer_editorimage	textures/sewer/controlroom_glass.tga
+    {
+		blend	add
+		map		picmip -1	textures/sewer/controlroom_glass.tga
+	}
+	{
+		blend	blend
+		map					textures/sewer/controlroom_glass2_d.tga
+		scale	14,28
+	}
+}
+
+material textures/sewer/pipecap2a_sewer
+{
+ 	noShadows
+	nonsolid
+	noimpact
+	{       
+		diffusemap	textures/sewer/pipecap2a_sewer.tga
+		specularmap	textures/sewer/pipecap2a_sewer_s.tga
+		bumpmap		addnormals (textures/decals/pipecap2a_local.tga, heightmap (textures/decals/pipecap2_bmp.tga, 1 ))      	 
+		alphaTest 0.5
+	}
+}
+
+material textures/sewer/a_reactorpipe_03_fin.tga
+{
+	qer_editorimage	textures/sewer/a_reactorpipe_03_fin.tga
+	diffusemap		textures/sewer/a_reactorpipe_d03_fin.tga    
+	specularmap		textures/sewer/a_reactorpipe_s03_fin.tga         
+	bumpmap			addnormals( textures/sewer/a_reactorpipe_local_fin, heightmap( textures/sewer/a_reactorpipe_b03_fin, 4 ) )
+}
+
+material textures/sewer/fgrill3
+{
+	noshadows
+	nonsolid
+	noimpact
+	qer_editorimage			textures/sewer/fgrill3_local.tga
+	{    
+		diffusemap			textures/sewer/fgrill3_d.tga
+		specularmap			textures/sewer/fgrill3_s.tga
+		bumpmap				addnormals (textures/sewer/fgrill3_local.tga, heightmap (textures/sewer/fgrill3_bmp.tga, 4))	
+		alphatest	.55
+		
+		diffuseDetailMap	textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	2,1,0,0
+	}
+}
+
+material textures/sewer/disposalarea
+{
+	noshadows
+	nonsolid
+	noimpact
+	{       	
+		diffusemap	textures/sewer/disposalarea.tga
+		specularmap textures/sewer/disposalarea_s.tga	
+		bumpmap		heightmap(textures/sewer/disposalarea_b.tga, 1 ) 
+		alphaTest 0.5
+	}
+}
+
+material textures/sewer/danger_atmos
+{
+ 	noshadows
+	nonsolid
+	noimpact
+	{       
+		diffusemap	textures/sewer/danger_atmos.tga
+		bumpmap 	heightmap(textures/sewer/report_all_spills_b.tga, 1 )
+		alphaTest	0.5
+	}
+}
+
+material textures/sewer/danger_author_person
+{
+ 	noShadows
+	nonsolid
+	noimpact
+	{       
+		diffusemap	textures/sewer/danger_author_person.tga
+		specularmap	textures/sewer/danger_author_person_s.tga 
+		bumpmap		heightmap(textures/sewer/danger_author_person_b.tga, 1 )
+		alphaTest 0.5
+	}       
+}
+
+material textures/sewer/biohazard
+{
+ 	noShadows
+	nonsolid
+	noimpact
+	{       
+		diffusemap	textures/sewer/biohazard.tga
+		specularmap	textures/sewer/biohazard_s.tga
+		bumpmap		heightmap(textures/sewer/biohazard_b.tga, 1 ) 
+		alphaTest 0.5
+	}    
+}
+
+material textures/sewer/no_smoking
+{
+	noShadows
+	nonsolid
+	noimpact
+	{       
+		diffusemap	textures/sewer/no_smoking.tga
+		specularmap	textures/sewer/no_smoking_s.tga
+		bumpmap 	heightmap(textures/sewer/report_all_spills_b.tga, 1 )  
+		alphaTest 0.5
+	}
+}
+
+material textures/sewer/report_injuries
+{
+ 	noShadows
+	nonsolid
+	noimpact
+	{       
+		diffusemap	textures/sewer/report_injuries.tga
+		specularmap	textures/sewer/report_injuries_s.tga
+		bumpmap 	heightmap(textures/sewer/report_all_spills_b.tga, 1 ) 
+		alphaTest 0.5
+	}
+}
+
+material textures/sewer/report_all_spills
+{
+ 	noShadows
+	nonsolid
+	noimpact
+	{       
+		diffusemap	textures/sewer/report_all_spills.tga
+		specularmap	textures/sewer/report_all_spills_s.tga
+		bumpmap 	heightmap(textures/sewer/report_all_spills_b.tga, 1 ) 
+		alphaTest 0.5
+	}
+}
+
+material textures/sewer/grate_destroyed
+{
+	surfacetype "metal"
+	{ 
+		diffusemap	picmip -1	texturesheets/valley/valley_wall_4_ts_d.tga
+		specularmap	picmip -2	texturesheets/valley/valley_wall_4_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/valley/valley_wall_4_ts_local.tga
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	2,16,0,0
+		vertexcolor
+	}
+	{
+		blend		add
+		map			textures/sfx/mining_laser_melting.tga
+		rotate		time*.0001
+		translate	time*-.0001,time*.0001
+		scale		1.5, 12
+		inverseVertexColor
+		rgb 		.5
+	}
+	{
+		blend		add
+		map			textures/sfx/mining_laser_melting.tga
+		rotate		time*-.0001
+		translate	time*.0001,0.5
+		scale		2, 16
+		inverseVertexColor
+		rgb 		.5
+	}
+}
+
+material textures/sewer/cables
+{
+	twoSided
+	nonsolid
+	noshadows
+	{
+		diffusemap	picmip -1	textures/cc/cables001_d.tga
+		bumpmap					textures/cc/cables001_local.tga		
+		specularmap	picmip -1	textures/cc/cables001_s.tga		
+		alphatest	0.25
+	}
+}

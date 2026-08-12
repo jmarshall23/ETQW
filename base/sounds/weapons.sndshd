@@ -1,0 +1,147 @@
+///////////////////////////
+// Weapons Sound Shaders //
+///////////////////////////
+
+sound sounds/weapons/misc/overheat {
+	compression wav
+
+	volume -10
+
+	sounds/weapons/misc/overheat.wav
+}
+
+sound sounds/weapons/misc/ammo_warning {
+
+	sounds/weapons/misc/low_ammo.wav
+}
+
+sound sounds/weapons/misc/dryfire {
+
+	volume -5
+
+	sounds/weapons/misc/dry_fire.wav
+}
+
+sound sounds/weapons/misc/nostroy {
+
+	sounds/weapons/misc/nostroy.wav
+}
+
+sound sounds/weapons/misc/mode_switch {
+
+	volume -10
+	no_dups
+
+	sounds/weapons/misc/mode_switch_01.wav
+	sounds/weapons/misc/mode_switch_02.wav
+	sounds/weapons/misc/mode_switch_03.wav
+}
+
+sound sounds/weapons/misc/sniper {
+
+	volume -5
+
+	sounds/weapons/misc/sniper_by.wav
+}
+
+sound sounds/weapons/misc/target_track_long {
+
+	volume -20
+
+	sounds/weapons/misc/target_track_long.wav
+}
+
+sound sounds/weapons/misc/target_track_short {
+
+	volume -20
+
+	sounds/weapons/misc/target_track_short.wav
+}
+
+sound sounds/weapons/misc/target_lock {
+
+	volume -20
+
+	sounds/weapons/misc/target_lock.wav
+}
+
+sound sounds/weapons/misc/target_lock_alarm {
+
+	volume -10
+
+	sounds/weapons/misc/target_lock_alarm.wav
+}
+
+sound sounds/weapons/misc/brass {
+	compression wav
+
+	maxDistance 25
+
+	sounds/deployable_brass_loop_01.wav
+}
+
+sound sounds/weapons/misc/brass_stop {
+	compression wav
+
+	maxDistance 25
+
+	sounds/deployable_brass_stop_01.wav
+}
+
+sound sounds/weapons/misc/tracer {
+	compression wav
+
+	volume -10
+	maxDistance 20
+	no_dups
+
+	sounds/weapons/misc/tracer_01.wav
+	sounds/weapons/misc/tracer_02.wav
+	sounds/weapons/misc/tracer_03.wav
+	sounds/weapons/misc/tracer_04.wav
+	sounds/weapons/misc/tracer_05.wav
+	sounds/weapons/misc/tracer_06.wav
+	sounds/weapons/misc/tracer_07.wav
+	sounds/weapons/misc/tracer_08.wav
+	sounds/weapons/misc/tracer_09.wav
+}
+
+sound sounds/weapons/misc/shrapnel {
+	compression wav
+
+	volume -5
+	farDistance 10
+	maxDistance 50
+	no_dups
+
+	sounds/weapons/misc/shrapnel_01.wav
+	sounds/weapons/misc/shrapnel_02.wav
+	sounds/weapons/misc/shrapnel_03.wav
+	sounds/weapons/misc/shrapnel_04.wav
+	sounds/weapons/misc/shrapnel_05.wav
+	sounds/weapons/misc/shrapnel_06.wav
+	sounds/weapons/misc/shrapnel_07.wav
+	sounds/weapons/misc/shrapnel_08.wav
+	sounds/weapons/misc/shrapnel_09.wav
+}
+
+sound sounds/weapons/misc/casing {
+	compression wav
+
+	volume -15
+	maxDistance 25
+	lowPriority
+	occlude_once
+	no_dups
+
+	sounds/weapons/misc/casing_01.wav
+	sounds/weapons/misc/casing_02.wav
+	sounds/weapons/misc/casing_03.wav
+	sounds/weapons/misc/casing_04.wav
+	sounds/weapons/misc/casing_05.wav
+	sounds/weapons/misc/casing_06.wav
+	sounds/weapons/misc/casing_07.wav
+	sounds/weapons/misc/casing_08.wav
+	sounds/weapons/misc/casing_09.wav
+	sounds/weapons/misc/casing_10.wav
+}

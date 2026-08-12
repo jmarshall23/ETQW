@@ -1,0 +1,32 @@
+
+sound sounds/tools/flyerhive/fire {
+
+	volume -5
+
+	sounds/tools/flyerhive/fire.wav
+}
+
+sound sounds/tools/flyerhive/fly {
+
+	volume -10
+	maxDistance 75
+
+	looping
+	leadin
+	sounds/tools/flyerhive/start.wav
+	sounds/tools/flyerhive/loop.wav
+}
+
+sound sounds/tools/flyerhive/raise {
+	
+	volume	-10
+
+	sounds/tools/flyerhive/raise.wav
+}
+
+sound sounds/tools/flyerhive/cancel {
+
+	volume -10
+
+	sounds/tools/flyerhive/cancel.wav
+}

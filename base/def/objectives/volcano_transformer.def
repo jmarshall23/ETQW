@@ -1,0 +1,24 @@
+entityDef volcano_transformer {
+	"model" "models/mapobjects/volcano/transformer_objective.lwo"
+
+	"gui"				"guis/maps/volcano/transformer1"
+	"gui2"				"guis/maps/volcano/transformer2"	
+}
+	
+	
+entityDef volcano_console {
+	"model" "models/mapobjects/volcano/console_1.lwo"
+
+	"gui"				"guis/maps/volcano/security_off"
+}
+
+entityDef hint_flyerdrone {
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"hint_flyerdrone"
+
+	"editor_mins"					"?"
+	"editor_maxs"					"?"
+	
+	"option_crosshair_interface"	"1"
+	"option_interactive_interface"	"1"
+}

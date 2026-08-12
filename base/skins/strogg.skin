@@ -1,0 +1,15 @@
+// =============================
+// Modular to Snow
+// =============================
+skin skins/models/mapobjects/strogg/modular_to_snow {
+	models/mapobjects/strogg/modular		models/mapobjects/strogg/modular_snow
+	models/mapobjects/strogg/modular2		models/mapobjects/strogg/modular2_snow
+}
+
+// =============================
+// Snow to Modular
+// =============================
+skin skins/models/mapobjects/strogg/snow_to_modular {
+	models/mapobjects/strogg/modular2_snow		models/mapobjects/strogg/modular2
+	models/mapobjects/strogg/modular_snow		models/mapobjects/strogg/modular
+}

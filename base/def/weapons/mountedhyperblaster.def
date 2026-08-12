@@ -1,0 +1,31 @@
+/***********************************************************************
+
+MOUNTED hyperblaster
+
+***********************************************************************/
+
+// ========================================================================
+// Export
+//
+
+export hauser {
+	options -prefix HYPER_ -sourcedir models/weapons/strogg_mounted_hyperblaster/dev_sd -destdir models/weapons/strogg_mounted_hyperblaster/ -keep muzzle mount1eanda mount_1 origin
+
+
+
+	mesh	strogg_mounted_hyperblaster.mb				-dest strogg_mounted_hyperblaster.md5mesh
+	anim	strogg_mounted_hyperblaster.mb				-dest strogg_mounted_hyperblaster.md5anim
+
+}
+
+
+
+
+
+
+model deployable_basedefence_hyperblaster {
+	mesh 					models/weapons/strogg_mounted_hyperblaster/strogg_mounted_hyperblaster.md5mesh
+
+	anim base 				models/weapons/strogg_mounted_hyperblaster/strogg_mounted_hyperblaster.md5anim {
+	}
+}

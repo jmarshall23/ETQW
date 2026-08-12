@@ -1,0 +1,38 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+atlas/valley/valley08.atlas
+***
+*/
+
+surfaceTypeMap texturesheets/valley/valley08 {
+	width	512
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 512 2048 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1876 ) ( 298 1956 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 330 1908 ) ( 482 2016 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 436 1592 ) ( 512 1732 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1416 ) ( 512 1496 )
+	}
+}

@@ -1,0 +1,82 @@
+
+#include <guis/common/utility.include>
+
+#include <guis/mainmenu/defines.include>
+#include <guis/mainmenu/colors.include>
+#include <guis/mainmenu/effects.include>
+#include <guis/mainmenu/effects.include>
+#include <guis/mainmenu/materials.include>
+#include <guis/mainmenu/utility.include>
+
+#include <guis/mainmenu/components/window.include>
+
+#include <guis/common/colors.include>
+#include <guis/common/materials.include>
+
+#include <guis/mainmenu/components/dialog.include>
+
+gui system {
+	properties {
+		float flags = immediate( flags ) | GUI_FRONTEND | GUI_FULLSCREEN & ~GUI_INTERACTIVE;
+	}
+	
+	// init window classes	
+	_wnd_init
+	
+	windowDef desktop {
+		properties {
+			rect rect = 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT;			
+		}
+	}
+	
+	windowDef notifier {
+		properties {
+			rect 	rect				= _center( desktop, width ), _bottom( desktop ) - 16, 200, 32;
+			rect	measureRect			= 0, 0, 168, 32;
+			rect	iconRect			= absoluteRect.x + 2, absoluteRect.y + 2, 16, 16;
+
+			float 	expired 			= gui.time >= sdnet.notifyExpireTime;
+			float	fontSize			= 14;
+			vec2 	measure;
+			color	colorMultiplier		= 0,0,0,0;
+			handle	infoIcon 			= gui.cacheMaterial( "infoIcon", 		"_st icon_information" );
+			float	needMeasure			= true;
+			
+			color	fillColor 			= COLOR_BOX_FILL;
+			color	lineColor			= COLOR_BOX_LINES;			
+		}
+		events {	
+			onCreate {
+				fillColor.a = 0.9f;
+				needMeasure = true;
+			}	
+			onPropertyChanged "sdnet.notificationText" {
+				needMeasure = true;
+			}
+			onPropertyChanged "expired" {
+				if( expired ) {
+					colorMultiplier = transition( colorMultiplier, COLOR_INVISIBLE, ACTIVATE_TRANSITION_TIME );
+				} else {
+					colorMultiplier = transition( colorMultiplier, COLOR_WHITE, ACTIVATE_TRANSITION_TIME );
+					needMeasure = true;
+				}
+			}
+			onPreDraw {
+				drawCachedMaterial( gui.wndFillMaterial, absoluteRect, fillColor );
+				drawCachedMaterial( gui.wndLineMaterial, absoluteRect, lineColor );
+				
+				if( needMeasure ) {
+					measure = measureText( sdnet.notificationText, measureRect, fontSize, DTF_WORDWRAP | DTF_LEFT | DTF_VCENTER );
+					rect.w = min( measure.x + $evalfloat( ( 2 * PADDING ) + 16 ), 200 );
+					rect.h = max( 20, measure.y + 8 );
+
+					needMeasure = false;
+				}
+				
+				drawText( sdnet.notificationText, "absoluteRect.x + 20, absoluteRect.y + 2, absoluteRect.w - 20, absoluteRect.h", foreColor, fontSize, DTF_WORDWRAP | DTF_LEFT | DTF_VCENTER );
+				drawCachedMaterial( infoIcon, iconRect, COLOR_WHITE );				
+				gui.scriptPushFloat( false );
+			}
+		}
+	}
+}

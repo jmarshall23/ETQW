@@ -1,0 +1,244 @@
+
+#ifndef __assaultrifle_lines__
+#define __assaultrifle_lines__
+
+$template __assaultrifle_lines( ShowBorder, ShowCircles )
+	windowDef Bar_ThinLeft1 {
+		properties {
+			rect rect = 	gui.screenCenter.x - 172,237,1,5;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+	}
+	windowDef Bar_ThinLeft2 {
+		properties {
+			rect rect = 	gui.screenCenter.x - 120,236,1,7;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+	}
+	windowDef Bar_ThinLeft3 {
+		properties {
+			rect rect = 	gui.screenCenter.x - 72,235,1,9;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+	}
+	windowDef Bar_ThinLongLeft {
+		properties {
+			rect rect = 	0,239,gui.screenCenter.x - 10,1;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+
+	}
+	windowDef Bar_ThinLeft {
+		properties {
+			rect rect = 	gui.screenCenter.x - 20,234,1,11;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+	}
+	windowDef Bar_ThinRight {
+		properties {
+			rect rect = 	gui.screenCenter.x + 19,234,1,11;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+	}
+	windowDef Bar_ThinLongRight {
+		properties {
+			rect rect = 	gui.screenCenter.x + 10, gui.screenCenter.y, SCREEN_WIDTH - rect.x, 1;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+
+	}
+	windowDef Bar_ThinRight3 {
+		properties {
+			rect rect = 	gui.screenCenter.x + 72,235,1,9;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+	}
+	windowDef Bar_ThinRight2 {
+		properties {
+			rect rect = 	gui.screenCenter.x + 120,236,1,7;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+	}
+	windowDef Bar_ThinRight1 {
+		properties {
+			rect rect = 	gui.screenCenter.x + 172,237,1,5;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+	}
+	windowDef Bar_ThinTop {
+		properties {
+			rect rect = 	gui.screenCenter.x - 6, 220, 11, 1;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+	}
+	windowDef Bar_ThinTop3 {
+		properties {
+			rect rect = 	gui.screenCenter.x - 5,168,9,1;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+	}
+	windowDef Bar_ThinTop2 {
+		properties{
+			rect rect = 	gui.screenCenter.x - 4,120,7,1;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+	}
+	windowDef Bar_ThinTop1 {
+		properties {
+			rect rect = 	gui.screenCenter.x - 3,70,5,1;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+	}
+	windowDef Bar_ThinLongTop {
+		properties {
+			rect rect = 	gui.screenCenter.x - 1,0,1,230;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+
+	}
+	windowDef Bar_ThinLongBtm {
+		properties {
+			rect rect = 	gui.screenCenter.x - 1,250,1,230;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+
+	}
+
+	windowDef Bar_ThinBottom {
+		properties {
+			rect rect = 	gui.screenCenter.x - 6,259,11,1;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+	}
+	windowDef Bar_ThinBottom3 {
+		properties {
+			rect rect = 	gui.screenCenter.x - 5,308,9,1;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+	}
+	windowDef Bar_ThinBottom2 {
+		properties {
+			rect rect = 	gui.screenCenter.x - 4,358,7,1;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+	}
+	windowDef Bar_ThinBottom1 {
+		properties {
+			rect rect = 	gui.screenCenter.x - 3,408,5,1;
+			color backColor = 	0.3,1,0.2,0.4;
+		}
+		
+
+	}
+
+	$if( ShowCircles == "circles" )
+	windowDef binobgCirc1 {
+		properties {
+			rect rect = 	gui.screenCenter.x - 220,20,440,440;
+			color backColor = 0.1,0,0,0.8;
+			string material = "guis/assets/weapons/sniper/circlelines1";
+			float rotation = ( ( gui.zoomState - ( ( 1 - gui.zoomCycleTransitionLerp ) * gui.zoomCycleTransition ) ) * 48 );
+		}
+		timeline {
+			onTime 50 {
+				backColor = transition( "0.1,0,0,0.8", "0.08,0,0,0.8", 50 );
+			}
+			onTime 100 {
+				backColor = transition( "0.08,0,0,0.8", "0.1,0,0,0.8", 50 );
+				timeline.default.resetTime( 0 );
+			}
+		}
+	}
+	
+	windowDef binobgCirc2 {
+		properties {
+			rect rect = gui.screenCenter.x - 220,20,440,440;
+			color backColor =  0.2, 0, 0, 0.8;
+			string material = "guis/assets/weapons/sniper/circlelines2";
+			float rotation = ( ( gui.zoomState - ( ( 1 - gui.zoomCycleTransitionLerp ) * gui.zoomCycleTransition ) ) * 48 );
+		}
+		timeline {
+			onTime 50 {
+				backColor = transition( "0.2,0,0,0.8", "0.18,0,0,0.8", 50 );
+			}
+			onTime 100 {
+				backColor = transition( "0.18,0,0,0.8", "0.2,0,0,0.8", 50 );
+				timeline.default.resetTime( 0 );
+			}
+		}
+	}
+	
+	windowDef binobgTicks {
+		properties {
+			rect rect = gui.screenCenter.x - 230,15,460,450;
+			color backColor = 1,0,0,0.8;
+			string material = "guis/assets/weapons/sniper/circleticks";
+			float rotation = 170 + ( ( gui.zoomState - ( ( 1 - gui.zoomCycleTransitionLerp ) * gui.zoomCycleTransition ) ) * 48 );
+		}
+		timeline {
+			onTime 50 {
+				backColor = transition( "1,0,0,0.8", "0.75,0,0,0.8", 50 );
+			}
+			onTime 100 {
+				backColor = transition( "0.75,0,0,0.8", "1,0,0,0.8", 50 );
+				timeline.default.resetTime( 0 );
+			}
+		}
+	}
+	$endif
+	$if( ShowBorder == "border" )
+	windowDef binobgTL {
+		properties {
+			rect rect = 	gui.screenCenter.x - rect.w,-100,360,340;
+			color backColor = 0, 0, 0, 0;
+			string material = "guis/assets/weapons/sniper/circle";
+		}
+		timeline {
+			onTime 0 {
+				backColor.a = transition( 0, 1, 350 );
+			}
+		}
+	}
+	windowDef binobgTR {
+		properties {
+			rect rect = 	gui.screenCenter.x,-100,360,340;
+			color backColor = 0,0,0,1;
+			string material = "guis/assets/weapons/sniper/circle";
+			vec2 materialScale = -1, 1;
+		}
+		timeline {
+			onTime 0 {
+				backColor.a = transition( 0, 1, 350 );
+			}
+		}
+	}
+	windowDef binobgBL {
+		properties {
+			rect rect = gui.screenCenter.x - rect.w,gui.screenCenter.y, 360, 340;
+			color backColor = 0,0,0,1;
+			string material = "guis/assets/weapons/sniper/circle";
+			vec2 materialScale = 1, -1;
+		}
+		timeline {
+			onTime 0 {
+				backColor.a = transition( 0, 1, 350 );
+			}
+		}
+	}
+	windowDef binobgBR {
+		properties {
+			rect rect = gui.screenCenter.x, gui.screenCenter.y, 360, 340;
+			color backColor = 0,0,0,1;
+			string material = "guis/assets/weapons/sniper/circle";
+			vec2 materialScale = -1, -1;
+		}
+		timeline {
+			onTime 0 {
+				backColor.a = transition( 0, 1, 350 );
+			}
+		}
+	}
+	$endif
+$endtemplate
+
+#endif // !__assaultrifle_lines__

@@ -1,0 +1,66 @@
+// ====================================================
+// ====================================================
+
+entityDef structure_base {
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"?"
+	"editor_maxs"					"?"
+	"editor_usage"					"Structure"
+	"editor_skipmenu"				"1"
+
+	"spawnclass"					"sdScriptEntity"
+
+	"scriptobject"					"structure_base"
+
+	"health"						"10000"
+
+	//"snd_hack_success"				"tool_hacker_success"
+
+	"action_time"					"30"
+
+	"option_combat_model"			"1"
+	"option_crosshair_interface"	"1"
+	"option_commandmap_interface"	"1"
+	"option_network_interface"		"1"
+	"option_interactive_interface"	"1"
+	"mtr_commandmap_unknown"		"guis/assets/qet/cm_unknown"
+
+	"icon_sort_cm"					"10"	// jrad - structures should be drawn underneath most things
+
+	"collection_hackable"			"hackable"
+	"collection_spottable"			"spottable"
+
+	"maxVisDist"					"16384"
+}
+
+entityDef structure_gdf {
+	"inherit"					"structure_base"
+
+	"team"						"gdf"
+}
+
+entityDef structure_strogg {
+	"inherit"					"structure_base"
+
+	"team"						"strogg"
+}
+
+// ====================================================
+// ====================================================
+
+entityDef structure_module_construction {
+	"editor_color"				".5 .5 .5"
+	"editor_mins"				"-8 -8 -8"
+	"editor_maxs"				"8 8 8"
+	"editor_usage"				"Structure Construction Module"
+	"editor_skipmenu"			"0"
+
+	"spawnclass"				"sdScriptEntity"
+
+	"scriptObject"				"auto_respawn"
+	
+	"option_no_sync"			"1"
+
+	"wait_time_initial"			"15"
+	"use_construction_state"	"1"
+}

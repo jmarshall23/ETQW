@@ -1,0 +1,182 @@
+sound objects/strogg/quarrycell {
+	minDistance	5
+	maxDistance	50
+	looping
+	sounds/soundscape/tonal/04b.wav
+}
+
+sound objects/strogg/goopgen_01 {
+	looping
+	sounds/object_ambience/generators/genloop_03.wav
+}
+
+sound objects/gdf/baseloop_01 {
+	looping
+	sounds/machines/gdfbase_01.wav
+}
+
+sound objects/gdf/baseloop_02 {
+	looping
+	sounds/machines/gdfbase_03.wav
+}
+
+sound objects/gdf/comm_post {
+	looping
+	sounds/object_ambience/generators/gdf_commpost_01.wav
+}
+
+sound objects/gdf/comm_post_encryption {
+	looping
+	sounds/object_ambience/generators/gdf_commencryption_01.wav
+}
+
+
+sound objects/strogg/comm_post {
+	looping
+	sounds/object_ambience/tech/probepost_01.wav
+}
+
+sound objects/strogg/small_battery {
+	looping
+	sounds/soundscape/plain/01c.wav
+}
+
+sound objects/strogg/stroygoop_pipe_01 {
+	looping
+	sounds/object_ambience/water_goop/goop_06_nosub.wav
+}
+
+sound objects/strogg/stroygoop_pipe_02 {
+	looping
+	sounds/object_ambience/water_goop/goop_05_nosub.wav
+}
+
+
+sound objects/strogg/fuelpod_01 {
+	looping
+	sounds/object_ambience/generators/fuelpod_01.wav
+}
+
+sound objects/strogg/fuelpod_01_hi {
+	looping
+	sounds/object_ambience/generators/fuelpod_02.wav
+}
+
+sound objects/strogg/fuelpod_01_lo {
+	looping
+	sounds/object_ambience/generators/fuelpod_03.wav
+}
+
+sound objects/strogg/baseshield_01 {
+	looping
+	sounds/object_ambience/shields/ff_01.wav
+}
+
+sound objects/strogg/baseshield_02 {
+	looping
+	sounds/object_ambience/shields/ff_02.wav
+}
+
+sound objects/strogg/baseshield_03 {
+	looping
+	sounds/object_ambience/shields/ff_03.wav
+}
+
+sound objects/strogg/baseshield_sub_01 {
+	looping
+	sounds/soundscape/lowfreq/06.wav
+}
+
+sound objects/strogg/baseshield_sub_02 {
+	looping
+	sounds/soundscape/lowfreq/06a.wav
+}
+
+sound objects/strogg/baseshield_sub_03 {
+	looping
+	sounds/soundscape/lowfreq/06b.wav
+}
+
+sound objects/strogg/smallshield {
+	looping
+	sounds/object_ambience/shields/nff_01.wav
+}
+
+sound objects/strogg/supportgen_01 {
+	looping
+	sounds/soundscape/tech/07a.wav	
+}
+
+sound objects/strogg/supportgen_02 {
+	looping
+	sounds/soundscape/tech/07.wav
+}
+
+sound objects/strogg/slipgate_bass {
+	looping
+	sounds/soundscape/lowfreq/02a.wav
+}
+
+sound objects/strogg/lightpost_harmonics {
+	looping
+	sounds/soundscape/grinders/11b.wav
+}
+
+sound objects/strogg/lightpost_generator {
+	looping
+	sounds/object_ambience/generators/loop_01.wav
+}
+
+sound objects/strogg/bridgehum {
+	looping
+	sounds/object_ambience/electrical/hums/hum_10.wav
+
+}
+
+sound objects/commdish/hum_01 {
+	looping
+	sounds/object_ambience/generators/sgen_16.wav
+}
+
+sound objects/spawnpoint/strogg_01 {
+	looping
+	sounds/object_ambience/shields/nff_02.wav
+}
+
+sound objects/spawnpoint/radio_01 {
+	looping
+	sounds/ambience/comm_chatter/loop_shortwave_01.wav
+}
+
+sound objects/spawnpoint/radio_02 {
+	looping
+	sounds/ambience/comm_chatter/loop_08.wav
+	sounds/ambience/comm_chatter/loop_09.wav
+	sounds/ambience/comm_chatter/loop_10.wav	
+}
+
+sound objects/lightpost/electro_01 {
+	looping
+	sounds/object_ambience/electrical/hums/hum_14.wav
+}
+
+sound objects/airconditioner/compressor_01 {
+	looping
+	sounds/object_ambience/compressors/comp_05.wav
+}
+
+sound objects/jamminggenerator/generator_01 {
+	looping
+	sounds/object_ambience/generators/genloop_07.wav
+}
+
+sound objects/powerlines/hum_01 {
+	looping
+	sounds/object_ambience/electrical/hums/hum_02.wav
+
+}
+
+sound objects/strogg/slime_object1 {
+	maxDistance 60
+	sounds/object_ambience/slime/loop_slime_03.wav
+}

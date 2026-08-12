@@ -1,0 +1,222 @@
+
+/*
+=================
+ Localization for map
+=================
+*/
+
+locString maps/outskirts/gdf_gate {
+	text "#str_00100150"
+}
+
+locString maps/outskirts/strogg_defence {
+	text "#str_00100151"
+}
+
+locString maps/outskirts/barricade {
+	text "#str_00100152"
+}
+
+/*
+=================
+ Objectives
+=================
+*/
+
+
+locString maps/outskirts/obj_destroy_barricade {
+	text "#str_00100153"
+	arguments 1
+}
+
+locString maps/outskirts/obj_capture_outpost {
+	text "#str_00100154"
+	arguments 1
+}
+
+locString maps/outskirts/obj_destroy_defence {
+	text "#str_00100155"
+	arguments 1
+}
+
+locString maps/outskirts/obj_capture_module {
+	text "#str_00100156"
+	arguments 1
+}
+
+/*
+===================
+ capturable spawns
+===================
+*/
+
+locString maps/outskirts/csp_factory_offices {
+	text "#str_00100157"
+}
+
+locString maps/outskirts/csp_hill {
+	text "#str_00100158"
+}
+
+/*
+====================
+Strogg Base gates
+====================
+*/
+
+locString maps/outskirts/strogg_north_gates {
+	text "#str_00100159"
+}
+
+locString maps/outskirts/strogg_east_gates {
+	text "#str_00100160"
+}
+
+locString maps/outskirts/strogg_south_gates {
+	text "#str_00100161"
+}
+
+/*
+========================
+Objective descriptions
+========================
+*/
+
+//barricades
+
+locString maps/outskirts/gdf_barricade {
+	text "#str_00100162"
+}
+
+locString maps/outskirts/strogg_barricade {
+	text "#str_00100163"
+}
+
+locString maps/outskirts/gdf_barricade_short {
+	text "#str_00100164"
+}
+
+locString maps/outskirts/strogg_barricade_short {
+	text "#str_00100165"
+}
+/*
+====================
+deploy mcp
+====================
+*/
+locString maps/outskirts/gdf_mcp {
+	text "#str_00100166"
+}
+
+locString maps/outskirts/strogg_mcp {
+	text "#str_00100167"
+}
+
+locString maps/outskirts/gdf_mcp_short {
+	text "#str_00100168"
+}
+
+locString maps/outskirts/strogg_mcp_short {
+	text "#str_00100169"
+}
+/*
+====================
+ssm building
+====================
+*/
+locString maps/outskirts/gdf_ssm {
+	text "#str_00100170"
+}
+
+locString maps/outskirts/strogg_ssm {
+	text "#str_00100171"
+}
+
+locString maps/outskirts/gdf_ssm_short {
+	text "#str_00100172"
+}
+
+locString maps/outskirts/strogg_ssm_short {
+	text "#str_00100173"
+}
+/*
+====================
+return nav module
+====================
+*/
+locString maps/outskirts/gdf_navmodule {
+	text "#str_00100174"
+}
+
+locString maps/outskirts/strogg_navmodule {
+	text "#str_00100175"
+}
+
+locString maps/outskirts/gdf_navmodule_short {
+	text "#str_00100176"
+}
+
+locString maps/outskirts/strogg_navmodule_short {
+	text "#str_00100177"
+}
+
+/*
+====================
+map info
+====================
+*/
+
+locString maps/outskirts/map_briefing {
+	text "#str_00100178"
+}
+
+locString maps/outskirts/map_location {
+	text "#str_00100179"
+}
+
+locString maps/outskirts/campaign_description {
+	text "#str_00100180"
+}
+
+locString maps/outskirts/gdf_gate02 {
+	text "#str_00100181"
+}
+
+/*
+====================
+barricade
+====================
+*/
+
+locString maps/outskirts/barricade_destroy {
+	text "#str_00100182"
+	arguments 1
+}
+
+locString maps/outskirts/barricade_progress {
+	text "#str_00100183"
+	arguments 1
+}
+
+locString maps/outskirts/barricade_disarm {
+	text "#str_00100184"
+	arguments 1
+}
+
+/*
+====================
+data node
+====================
+*/
+
+locString maps/outskirts/data_node {
+	text "#str_00100185"
+}
+
+locString maps/outskirts/console {
+	text "#str_00100186"
+}
+
+locString maps/outskirts/console_task {
+	text "#str_00100187"
+}

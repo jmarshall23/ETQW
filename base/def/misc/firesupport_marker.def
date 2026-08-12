@@ -1,0 +1,90 @@
+
+entityDef firesupport_marker_artillery {
+	"spawnclass"					"sdScriptEntity"	
+	"scriptobject"					"firesupport_marker"
+	
+	"collection_fs_block"			"fs_block"
+	
+	"range"							"1024"
+
+	"warning_range"					"2048"
+	"warning_time"					"15"
+	"next_play_time"				"60"
+	"snd_ff_warning"				"sounds/vo/gdf/npc/firesupport/friendlyfire"
+	"snd_ff_warning_enemy"			"sounds/vo/strogg/npc/enemyfiresupport"
+}
+
+entityDef firesupport_marker_vampire {
+	"spawnclass"					"sdScriptEntity"	
+	"scriptobject"					"firesupport_marker"
+	
+	"collection_fs_block"			"fs_block"
+	
+	"range"							"0"
+
+	"warning_range"					"1536"
+	"warning_time"					"5"
+	"next_play_time"				"60"
+	"snd_ff_warning"				"sounds/vo/gdf/npc/vampire/friendlyfire"
+	"snd_ff_warning_enemy"			"sounds/vo/strogg/npc/enemyfiresupport"
+}
+
+entityDef firesupport_marker_ssm {
+	"spawnclass"					"sdScriptEntity"	
+	"scriptobject"					"firesupport_marker"
+	
+	"collection_fs_block"			"fs_block"
+	
+	"range"							"2048"
+
+	"warning_range"					"2056"
+	"warning_time"					"10"
+	"next_play_time"				"60"
+	"snd_ff_warning"				"sounds/vo/gdf/npc/firesupport/friendlyfire"
+	"snd_ff_warning_enemy"			"sounds/vo/strogg/npc/enemyfiresupport"
+}
+
+entityDef firesupport_marker_railhowitzer {
+	"spawnclass"					"sdScriptEntity"	
+	"scriptobject"					"firesupport_marker"
+	
+	"collection_fs_block"			"fs_block"
+	
+	"range"							"1024"
+
+	"warning_range"					"2048"
+	"warning_time"					"15"
+	"next_play_time"				"60"
+	"snd_ff_warning"				"sounds/vo/strogg/npc/bombardment/friendlyfire"
+	"snd_ff_warning_enemy"			"sounds/vo/gdf/npc/enemyfiresupport"
+}
+
+entityDef firesupport_marker_violator {
+	"spawnclass"					"sdScriptEntity"	
+	"scriptobject"					"firesupport_marker"
+	
+	"collection_fs_block"			"fs_block"
+	
+	"range"							"0"
+
+	"warning_range"					"960"
+	"warning_time"					"3"
+	"next_play_time"				"60"
+	"snd_ff_warning"				"sounds/vo/strogg/npc/violator/friendlyfire"
+	"snd_ff_warning_enemy"			"sounds/vo/gdf/npc/enemyfiresupport"
+}
+
+entityDef firesupport_marker_ssg {
+	"spawnclass"					"sdScriptEntity"	
+	"scriptobject"					"firesupport_marker"
+	
+	"collection_fs_block"			"fs_block"
+	
+	"range"							"2048"
+
+	"warning_range"					"2056"
+	"warning_time"					"10"
+	"next_play_time"				"60"
+	"snd_ff_warning"				"sounds/vo/strogg/npc/bombardment/friendlyfire"
+	"snd_ff_warning_enemy"			"sounds/vo/gdf/npc/enemyfiresupport"
+}

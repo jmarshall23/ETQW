@@ -1,0 +1,1186 @@
+
+skin deployEffect {
+	* textures/effects/deployEffect
+}
+
+material textures/effects/deployEffect {
+	noshadows
+	sort nearest
+	twoSided
+	{
+		program sfx/deploy
+		map	    "_gray"
+		maskcolor
+		maskalpha
+		writeDepth	
+	}
+	{
+		program	sfx/deploy
+		map	    "_white"
+		
+		//"textures/effects/gridlines.tga"
+		color   parm0, parm1, parm2, 0
+		blend add
+		writeDepth
+	}
+	{
+		//if cvar ( r_glDriverVendor != "ATI" )
+		program		sfx/displace
+		parameters  0.5, 0 , 0, 0
+		blend		add
+		cullFace	front
+		fillMode	lines	1
+		map 		_white
+		red			parm0
+		green		parm1
+		blue		parm2
+		maskAlpha
+	}
+	translucent
+}
+
+
+material textures/effects/mininglaser_core
+{
+	twoSided
+	{
+		map clamp textures/effects/mininglaser_core.tga
+		blend add
+		vertexColor
+		colored
+	}
+}
+
+material textures/effects/mininglaser_spark
+{
+	twoSided
+	{
+		blend add
+		map  textures/effects/mininglaser_spark.tga
+		vertexColor
+		maskAlpha
+	}
+	translucent
+}
+
+
+material textures/effects/desecrator_spark
+{
+	twoSided
+	{
+		blend add
+		map  textures/effects/desecrator_spark.tga
+		vertexColor
+		maskAlpha
+	}
+	translucent
+}
+
+material textures/effects/desecrator_bolt
+{
+	twoSided
+	{
+		blend add
+		map  textures/effects/desecrator_bolts.tga
+		scale 1, 0.125
+		translate time, 0
+		vertexColor
+		maskAlpha
+	}
+	translucent
+}
+
+material textures/effects/repairdrone_bolt
+{
+	twoSided
+	{
+		blend add
+		map  textures/effects/desecrator_bolts.tga
+		scale 1, 0.125
+		translate time * -1, 0
+		vertexColor
+		maskAlpha
+	}
+	translucent
+}
+
+material textures/effects/weapons/lgun
+{
+	translucent
+	twoSided
+	{
+		blend add
+		map textures/effects/weapons/lgun.tga
+		vertexColor
+		rgb 0.5
+		scroll -5 * time, 0
+		scale	1,1
+	}
+
+	{
+		blend add
+		map textures/effects/weapons/lgun.tga
+		vertexColor
+		rgb 0.5
+		scroll -7.2 * time, 0
+		scale -1,1
+	}
+
+}
+
+
+material textures/effects/weapons/lgun2
+{
+	translucent
+	twoSided
+	{
+		blend add
+		map textures/effects/weapons/lgun.tga
+		vertexColor
+	}
+}
+
+
+material textures/effects/weapons/lgun_smallbolt
+{
+	translucent
+	twoSided
+	{
+		blend add
+		map textures/effects/weapons/lgun_smallbolt.tga
+		vertexColor
+	}
+}
+
+material textures/effects/vehicleDust
+{
+	noSelfShadow
+	noshadows
+	translucent
+	discrete
+	twosided
+	nonsolid
+	noimpact
+
+	sort		10
+	{
+		blend blend
+		map makealpha(textures/particles/barrelpoof.tga)
+		vertexColor
+		red desat_sun_r * lightscale * 0.4
+		green desat_sun_g * lightscale * 0.4
+		blue desat_sun_b * lightscale * 0.4
+//		red 0.5 + sun_r * lightscale * 0.1
+//		green 0.5 + sun_g * lightscale * 0.1
+//		blue 0.5 + sun_b * lightscale * 0.1
+//		green sun_g * lightscale
+//		blue sun_b * lightscale
+	}
+}
+
+material textures/sfx/binoculars
+{
+	sort postprocess
+	translucent
+
+	useTemplate postprocess/blur<>
+
+	// sniper scope
+	{
+		program game/scope
+		parameters -0.1, 0.76, 1.08, 14
+
+		red 0.81
+		green 0.98
+		blue 1
+
+		map _postProcessBuffer_1
+		// depthFunc always // ATI workaround
+
+		maskdepth
+	}
+}
+
+material textures/sfx/binoculars_old
+{
+	/*{
+		program	tiles_binoculars.vfp
+		//vertexParm		0		48, 400
+		vertexParm		0		8, 40, 48, 400
+		vertexParm		1		0.65
+		fragmentMap		0		_currentRender
+	}*/
+	{
+		map guis/assets/common/gui_scanlines
+		blend add
+		translate		0, time * -0.1
+	}
+}
+
+material textures/sfx/sniperScope
+{
+	sort postprocess
+	translucent
+
+	useTemplate postprocess/blur<>
+
+	// sniper scope
+	{
+		program game/scope
+		parameters -0.15, 1, 1, 0
+
+		/*red 1
+		green 0.75
+		blue 0.55*/
+		red 0.81
+		green 0.98
+		blue 1
+
+		map _postProcessBuffer_1
+		// depthFunc always // ATI workaround
+
+		maskdepth
+	}
+}
+
+table signalStrength { clamp { 1.5, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1  } }
+material textures/sfx/sniperScopeThirdEye
+{
+	sort postprocess
+	translucent
+
+	useTemplate postprocess/blur<>
+
+	// sniper scope
+	{
+		program game/scopeStatix
+		parameters -0.15, 1, 1, 0
+		parameters2 time, signalStrength[parm5]
+		/*red 1
+		green 0.75
+		blue 0.55*/
+		red 0.81
+		green 0.98
+		blue 1
+
+		mask textures/sfx/statix.tga
+		map _postProcessBuffer_1
+		// depthFunc always // ATI workaround
+		maskdepth
+	}
+}
+
+
+material textures/sfx/railgunScope
+{
+	sort postprocess
+	translucent
+
+	useTemplate postprocess/blur<>
+
+	// scope
+	{
+		program	game/railgunScope
+		parameters 8, 40, 48, 400
+		parameters2 0.65
+
+		red 1
+		green 0.9
+		blue 0.8
+
+		map _postProcessBuffer_1
+		// depthFunc always // ATI workaround
+		maskdepth
+	}
+	{
+		map guis/assets/common/gui_scanlines
+		blend add
+		translate 0, time * -0.1
+	}
+}
+
+material textures/effects/dust2bits_heavy
+{
+	noSelfShadow
+	noshadows
+	translucent
+	discrete
+	twosided
+	nonsolid
+	noimpact
+
+	qer_editorimage		textures/effects/dustbits_heavy.tga
+
+	{
+		blend  blend
+		map    textures/effects/dustbits_heavy.tga
+		vertexcolor
+		colored
+	}
+}
+
+material textures/particles/smokecloud01
+{
+	qer_editorimage		textures/particles/smokecloud01
+	nonsolid
+	noshadows
+	{
+		blend			blend
+		map				textures/particles/smokecloud01
+		vertexColor
+	}
+}
+
+material textures/particles/sand_heavy
+{
+	noshadows
+	nonsolid
+
+	{
+		blend blend
+		map clamp textures/particles/sand_heavy
+		vertexColor
+		maskAlpha
+	}
+}
+
+material textures/particles/sand_heavy2
+{
+	noshadows
+	nonsolid
+
+	{
+		blend blend
+		map clamp textures/particles/sand_heavy2
+		vertexColor
+		maskAlpha
+	}
+}
+
+
+material textures/effects/motionblur
+{
+	translucent
+	noShadows
+	twoSided
+	{
+		blend	add
+		map clamp textures/effects/motionblur.tga
+		vertexColor
+	}
+}
+
+material textures/effects/motionblur_nobloom
+{
+	translucent
+	noShadows
+	twoSided
+	{
+		blend	add
+		map clamp textures/effects/motionblur.tga
+		vertexColor
+		maskAlpha
+	}
+}
+
+material textures/effects/spark
+{
+	translucent
+	noShadows
+	twoSided
+	{
+		blend	add
+		map clamp textures/effects/spark.tga
+	vertexColor
+	}
+}
+
+material textures/effects/spark_nobloom
+{
+	translucent
+	noShadows
+	twoSided
+	{
+		blend	add
+		map clamp textures/effects/spark.tga
+		vertexColor
+		maskAlpha
+	}
+}
+
+material textures/effects/beam
+{
+	translucent
+	noShadows
+	twoSided
+	{
+		blend add
+		map clamp textures/particles/beam.tga
+		vertexColor
+	}
+}
+
+material textures/effects/beam_nobloom
+{
+	translucent
+	noShadows
+	twoSided
+	{
+		blend add
+		map clamp textures/particles/beam.tga
+		vertexColor
+		maskAlpha
+	}
+}
+
+material textures/effects/fire_cannon
+{
+	translucent
+	noShadows
+	twoSided
+	{
+		blend	add
+		map clamp textures/effects/fire_cannon.tga
+		vertexColor
+		maskAlpha
+	}
+}
+
+material textures/effects/rocket_trail_opaque
+{
+	nonsolid
+	twoSided
+	translucent
+
+	noshadows
+	{
+		blend blend
+		map textures/particles/dustcloud_opaque
+		vertexColor
+		maskAlpha
+	}
+}
+
+material textures/effects/circle
+{
+   nonsolid
+   {
+       blend add
+       map clamp textures/effects/circle.tga
+       vertexColor
+       maskAlpha
+   }
+}
+
+material textures/effects/ground_bullet_impact
+{
+   nonsolid
+   DECAL_MACRO
+   decalInfo 3 0.5 ( 1 1 1 1 ) ( 1 1 1 0 )
+   {
+       blend blend
+       map clamp textures/effects/ground_impact.tga
+       vertexColor
+       maskAlpha
+   }
+}
+
+material textures/effects/explosion_decal
+{
+   nonsolid
+   DECAL_MACRO
+   decalInfo 4 0.5 ( 1 1 1 1 ) ( 1 1 1 0 )
+   {
+       blend        blend
+       map clamp textures/decals/expmark1.tga
+       rgb decalFade[(time - Parm3)/(parm4 - parm3)]
+       vertexColor  // oblique projections will be slightly faded down
+       maskAlpha
+   }
+
+}
+
+material textures/effects/dirtchunk
+{
+   translucent
+   noShadows
+   {
+       blend blend
+       map clamp textures/effects/dirtchunk
+       vertexColor
+   }
+}
+
+material textures/effects/ninja
+{
+   translucent
+   noShadows
+   {
+       blend add
+       map clamp textures/effects/ninja.tga
+       rotate time * 2
+       vertexColor
+   }
+}
+
+material textures/particles/rocketflame
+{
+   nonsolid
+   noshadows
+   {
+       blend add
+       map textures/particles/barrelexpsmall
+       vertexColor
+       maskAlpha
+   }
+}
+
+material textures/particles/explosion_test1
+{
+   nonsolid
+   noshadows
+   {
+       blend        add
+       map          textures/effects/explosion_test1
+       vertexColor
+       maskAlpha
+   }
+}
+
+material textures/particles/smoke_test1
+{
+	noshadows
+	translucent
+	nonsolid
+	noatmosphere
+	{
+		blend	blend
+		program sfx/cheap_litsmoke
+ 		map		textures/effects/smoke_test1
+		vertexcolor
+	}
+}
+
+material textures/particles/smoke_test2
+{
+	noshadows
+	translucent
+	nonsolid
+	noatmosphere
+	{
+		blend	blend
+		program sfx/cheap_litsmoke
+ 		map		textures/effects/smoke_test2
+		vertexcolor
+	}
+}
+
+material textures/particles/smoke_test1x
+{
+   nonsolid
+   noshadows
+   {
+       //color			sun_r, sun_g, sun_b, 1	// adds a sun colour tint to the smoke
+       blend blend
+       map textures/effects/smoke_test1
+       vertexColor
+       //maskAlpha
+   }
+}
+
+material textures/particles/trail_test
+{
+   nonsolid
+   noshadows
+   twoSided
+   {
+       blend blend
+       map textures/effects/smoke_test1
+       vertexColor
+       maskAlpha
+       useTemplate templates/materials/outdoor_light<>
+   }
+}
+
+material textures/particles/emp_test
+{
+   nonsolid
+   noshadows
+   {
+       blend add
+       map textures/effects/emp.tga
+       vertexColor
+       maskAlpha
+   }
+}
+
+material textures/effects/anansi_thruster_glow
+{
+   nonsolid
+   noshadows
+   {
+       blend add
+       map textures/effects/anansi_thruster_glow
+       vertexColor
+       maskAlpha
+   }
+}
+
+material textures/effects/square {
+   nonsolid
+   noshadows
+   twoSided
+   {
+       blend add
+       map textures/effects/square.tga
+       vertexColor
+       maskAlpha
+   }
+}
+
+material textures/effects/square_blend {
+   nonsolid
+   noshadows
+   twoSided
+   {
+       blend blend
+       map textures/effects/square.tga
+       vertexColor
+       maskAlpha
+   }
+}
+
+
+material textures/effects/thruster_glow {
+   nonsolid
+   noshadows
+   twoSided
+   {
+       blend add
+       map textures/effects/anansi_thruster_glow.tga
+       vertexColor
+       maskAlpha
+   }
+}
+
+
+material textures/effects/weapons/smoke_trail {
+   nonsolid
+   noshadows
+   twoSided
+   {
+       blend blend
+       map textures/effects/weapons/smoke_trail.tga
+       vertexColor
+       maskAlpha
+   }
+}
+
+material textures/effects/weapons/tracer_trail {
+   nonsolid
+   noshadows
+   twoSided
+   {
+       blend blend
+       map textures/effects/weapons/tracer_trail.tga
+       vertexColor
+       maskAlpha
+   }
+}
+
+
+
+material textures/effects/smoke1 {
+   nonsolid
+   noshadows
+   twoSided
+   {
+       blend blend
+       map textures/effects/smoke1.tga
+       vertexColor
+       maskAlpha
+   }
+}
+
+material textures/effects/bloodsplat {
+   nonsolid
+   noshadows
+   twoSided
+   {
+       blend blend
+       map textures/effects/bloodsplat.tga
+       vertexColor
+       maskAlpha
+   }
+}
+
+material textures/effects/ssm_shockwave
+{
+	qer_editorimage textures/particles/vpring2.tga
+	sort postprocess
+	nonsolid
+	translucent
+
+	{
+		program heatHazeWithMask
+		deformScroll 0
+		deformMagnitude 600
+		bumpMap textures/particles/vpring2
+		mask textures/particles/vpring1_alpha.tga
+	}
+
+}
+
+material textures/effects/ssm_shockwave2
+{
+	qer_editorimage textures/particles/vpring2.tga
+	sort postprocess
+	nonsolid
+	translucent
+	twosided
+
+	{
+		vertexcolor
+		program heatHazeWithMaskAndVertex
+		deformScroll 0
+		deformMagnitude 15
+		bumpMap textures/particles/vpring1.tga
+		mask textures/particles/vpring1_alpha.tga
+	}
+
+}
+
+material textures/effects/ssm_shockwave3
+{
+	qer_editorimage textures/particles/vpring2.tga
+	sort postprocess
+	nonsolid
+	translucent
+	twosided
+
+	{
+		vertexcolor
+		program heatHazeWithMaskAndVertex
+		deformScroll 0
+		deformMagnitude 50
+		bumpMap textures/particles/vpring2.tga
+		mask textures/particles/vpring1_alpha.tga
+	}
+
+}
+
+material textures/effects/spawn_base
+{
+	qer_editorimage textures/particles/vpring2.tga
+	sort postprocess
+	nonsolid
+	translucent
+
+	{
+		program heatHazeWithMask
+		deformScroll 0
+		deformMagnitude 6
+		bumpMap textures/particles/vpring2
+		mask textures/particles/vpring1_alpha.tga
+		maskAlpha
+	}
+}
+
+
+material textures/effects/ring {
+   nonsolid
+   noshadows
+   twoSided
+   {
+       blend        add
+       map          textures/effects/ring.tga
+       vertexColor
+       maskAlpha
+   }
+}
+
+material textures/effects/large_explosion_shockwave
+{
+	qer_editorimage textures/particles/vpring2.tga
+	sort postprocess
+	nonsolid
+	translucent
+
+	{
+		program heatHazeWithMask
+		deformScroll 0
+		deformMagnitude 18
+		bumpMap textures/particles/vpring2
+		mask textures/particles/vpring1_alpha.tga
+		maskAlpha
+	}
+}
+
+material textures/sfx/forceshield
+{
+	qer_editorimage "textures/editor/flare.tga" //This needs to be a square texture for the normalize coords feature to work properly
+	surfacetype "forcefield"
+	forcefieldclip
+	noplant
+	
+	
+	translucent
+	{
+		blend add
+		program	sfx/stroggForceField
+		map		textures/sfx/forcefield.tga
+		mask		clamp textures/sfx/shieldmask.tga
+		diffuseMap	clamp textures/sfx/forcegradient.tga
+		alpha 16 - parm4 * 16
+
+
+		parameters	time * 0.05
+		parameters2	0.03, 0.03
+		
+		red 	parm5 / 4 + 0.75 - 0.125 * parm4
+		green 	parm5 / 4 + 0.75 - 0.125 * parm4
+		blue 	parm5 / 4 + 0.75 - 0.125 * parm4
+
+		textureMatrix diffuseMatrix {
+			scale 1, 1
+		}
+
+		textureMatrix maskMatrix {
+			translate -0.0075, -0.0075
+		}
+	}
+}
+
+skin sfx/forceshield_mega {
+	textures/sfx/forceshield	textures/sfx/forceshield_mega
+}
+
+material textures/sfx/forceshield_mega
+{
+	qer_editorimage "textures/editor/flare.tga" //This needs to be a square texture for the normalize coords feature to work properly
+	surfacetype "forcefield"
+	forcefieldclip
+	noplant
+	
+	
+	translucent
+	{
+		blend add
+		program	sfx/stroggForceField
+		map		textures/sfx/forcefield.tga
+		mask		clamp textures/sfx/shieldmask.tga
+		diffuseMap	clamp textures/sfx/forcegradient3.tga
+		alpha 16 - parm4 * 16
+
+
+		parameters	time * 0.05
+		parameters2	0.03, 0.03
+		
+		red 	parm5 / 4 + 0.75 - 0.125 * parm4
+		green 	parm5 / 4 + 0.75 - 0.125 * parm4
+		blue 	parm5 / 4 + 0.75 - 0.125 * parm4
+
+		textureMatrix diffuseMatrix {
+			scale 1, 1
+		}
+
+		textureMatrix maskMatrix {
+			translate -0.0075, -0.0075
+		}
+	}
+}
+
+material textures/sfx/forceshield_view
+{
+	qer_editorimage "textures/editor/flare.tga" //This needs to be a square texture for the normalize coords feature to work properly
+	surfacetype "forcefield"
+	forcefieldclip
+	noplant
+	{
+		blend add
+		program	sfx/stroggForceField
+		map			textures/sfx/forcefield.tga
+		mask		clamp textures/sfx/shieldmask.tga
+		diffuseMap	clamp textures/sfx/forcegradient.tga
+
+
+		parameters	time * 0.05
+		parameters2	0.03, 0.03
+
+		textureMatrix diffuseMatrix {
+			scale 1, 1
+		}
+
+		textureMatrix maskMatrix {
+			translate -0.0075, -0.0075
+		}
+
+		//maskAlpha
+	}
+}
+
+material textures/sfx/forceshield_TEST
+{
+	qer_editorimage textures/sfx/forcefield.tga
+	nonsolid
+	twosided
+	water
+	surfaceType "forcefield"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide textures/sfx/forceshield
+
+	{
+		program	water/simple_cube_alpha
+		diffuseMap textures/sfx/forceshield_d.tga
+		bumpMap textures/sfx/forceshield_local.tga
+		map clamp highquality textures/sfx/forceshield_s.tga
+		//map clamp highquality textures/penta/specular.tga
+		environmentCubeMap cubemap env/valley
+		water_tint	  1, 1, 1
+		water_distortion  2, 3, 1, 0	
+		water_fresnel	  2
+		water_glare	  2
+		water_offset 0, 0, 0, 0 
+		water_desat 0
+	}
+}
+
+material textures/sfx/jumppad_forcefield
+{
+	qer_editorimage "textures/editor/flare.tga" //This needs to be a square texture for the normalize coords feature to work properly
+	surfacetype "forcefield"
+	{
+		blend add
+		program	sfx/stroggForceField
+		map			textures/sfx/forcefield.tga
+		mask		textures/sfx/refresh.tga
+		diffuseMap	clamp textures/sfx/forcegradient.tga
+
+
+		parameters	time * 0.05
+		//parameters2	sinTable[ time * 0.5 ] * 0.1, cosTable[ time * 0.25 ] * 0.1
+		parameters2 0, 0
+
+		textureMatrix diffuseMatrix {
+			translate time * -0.1, 0
+			scale 0.3, 0.3
+
+			rotate 0.25
+		}
+
+		textureMatrix maskMatrix {
+
+			translate time * -0.3, 0
+			scale 0.3, 0.3
+
+			rotate 0.25
+		}
+
+		//maskAlpha
+	}
+}
+
+material textures/sfx/basewallshield
+{
+	qer_editorimage "textures/sfx/basewallmask.tga" //This needs to be a square texture for the normalize coords feature to work properly
+	surfacetype "forcefield"
+	nonsolid
+	twosided
+	explosionclip
+	forcefieldclip
+	noplant
+	{
+		blend add
+		program	sfx/stroggForceField
+		map			textures/sfx/forcefield.tga
+		mask		clamp textures/sfx/basewallmask.tga
+		diffuseMap	clamp textures/sfx/forcegradient.tga
+
+
+		parameters	time * 0.05
+		parameters2	0.2, 0.2
+
+		textureMatrix diffuseMatrix {
+			scale 0.5, 0.5
+		}
+
+		textureMatrix maskMatrix {
+			translate 0, 0
+		}
+
+		//maskAlpha
+	}
+}
+
+material textures/sfx/basewallshield2
+{
+	qer_editorimage "textures/sfx/basewallmask.tga" //This needs to be a square texture for the normalize coords feature to work properly
+	surfacetype "forcefield"
+	nonsolid
+	twosided
+	explosionclip
+	forcefieldclip
+	noplant
+	{
+		blend add
+		program	sfx/stroggForceField
+		map			textures/sfx/forcefield.tga
+		mask		clamp textures/sfx/basewallmask.tga
+		diffuseMap	clamp textures/sfx/forcegradient2.tga
+
+
+		parameters	time * 0.05
+		parameters2	0.2, 0.2
+
+		textureMatrix diffuseMatrix {
+			scale 0.5, 0.5
+		}
+
+		textureMatrix maskMatrix {
+			translate 0, 0
+		}
+
+		//maskAlpha
+	}
+}
+
+material textures/sfx/forceripple
+{
+	qer_editorimage "textures/editor/flare.tga"
+
+	twosided
+	{
+		blend add
+
+		vertexcolor
+		program	sfx/stroggForceField
+		map			highquality textures/sfx/forcefield.tga
+		mask		highquality clamp textures/sfx/forceripple.tga
+		diffuseMap	clamp textures/sfx/forcegradient.tga
+
+
+		parameters	time * 0.02
+		parameters2	0.2, 0.2
+
+		textureMatrix diffuseMatrix {
+			scale 0.1, 0.1
+		}
+
+		textureMatrix maskMatrix {
+			translate 0, 0
+		}
+
+		colorModulate 1,1,1,1
+		colorAdd 0,0,0,0
+
+		maskAlpha
+	}
+}
+
+material textures/sfx/forcebolt
+{
+	qer_editorimage "textures/editor/flare.tga"
+
+	twosided
+	{
+		blend add
+		map textures/sfx/forcebolt.tga
+	}
+}
+
+material textures/sfx/forcebolt_sparktrail
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		add
+		maskalpha
+		map		textures/sfx/forcegradient.tga
+		vertexcolor
+		rotate 0.25
+	}
+}
+
+material textures/sfx/teleportcloud
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend filter
+		program sfx/blendFilterFade
+		maskDepth
+		maskalpha
+		map		textures/particles/teleportcloud.tga
+		vertexcolor
+	}
+}
+
+material textures/sfx/teleportmodel
+{
+	qer_editorimage "textures/editor/flare.tga" //This needs to be a square texture for the normalize coords feature to work properly
+	surfacetype "forcefield"
+	{
+		blend add
+		program	sfx/stroggForceField
+		map			textures/sfx/forcefield.tga
+		mask		textures/common/gray.tga
+		diffuseMap	clamp textures/sfx/forcegradient.tga
+
+
+		parameters	time * 0.05
+		//parameters2	sinTable[ time * 0.5 ] * 0.1, cosTable[ time * 0.25 ] * 0.1
+		parameters2 0, 0
+
+		/*textureMatrix diffuseMatrix {
+			translate time * -0.1, 0
+			scale 0.3, 0.3
+
+			rotate 0.25
+		}
+
+		textureMatrix maskMatrix {
+
+			translate time * -0.3, 0
+			scale 0.3, 0.3
+
+			rotate 0.25
+		}	*/
+
+		vertexcolor
+	}
+}
+
+material textures/sfx/forceshield_spawn
+{
+	nonsolid
+	noshadows
+	twoSided
+	{
+		blend	add
+		program	sfx/stroggForceField
+		map			textures/sfx/forcefield_spawn.tga
+		mask		textures/sfx/shieldmask_spawn.tga
+		diffuseMap	clamp textures/sfx/forcegradient_spawn.tga
+
+		parameters	time * 0.05
+		parameters2	0.2, 0.2
+
+		textureMatrix diffuseMatrix
+		{
+			translate 0, time * -0.5
+			scale	1, 2.5
+		}
+		textureMatrix maskMatrix
+		{
+			translate wavtable[ time * 0.025 ], time * -0.25
+			scale		0.75, 0.75
+		}
+		vertexcolor
+	}
+}

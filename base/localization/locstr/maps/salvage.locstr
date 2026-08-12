@@ -1,0 +1,229 @@
+
+/*
+=================
+ Localization for map
+=================
+*/
+
+locString maps/salvage/gdf_main_gate {
+	text "#str_00100350" 
+}
+
+locString maps/salvage/gdf_side_gate {
+	text "#str_00100351" 
+}
+
+locString maps/salvage/west_bunker_breach {
+	text "#str_00100352" 
+}
+
+locString maps/salvage/east_pillbox_breach {
+	text "#str_00100353" 
+}
+
+locString maps/salvage/jamming_array_generator {
+	text "#str_00100354"
+}
+
+locString maps/salvage/strogg_mining_laser {
+	text "#str_00100355"
+}
+
+locString maps/salvage/railnetwork_entrance {
+	text "#str_00100356"
+}
+
+locString maps/salvage/salvage {
+	text "#str_00100357" 
+}
+
+locString maps/salvage/strogg_forward_spawn_gdf_base {
+	text "#str_00100358"
+}
+
+locString maps/salvage/briefing {
+	text "#str_00100359"
+}
+
+locString maps/salvage/location {
+	text "#str_00100360"
+}
+
+locString maps/salvage/campaign {
+	text "#str_00100361"
+}
+
+
+
+
+/*
+=================
+ Objectives to do
+=================
+*/
+
+locString maps/salvage/obj01_gdf {
+	text "#str_00100362"	
+}
+
+locString maps/salvage/obj01_strogg {
+	text "#str_00100363"	
+}
+
+locString maps/salvage/obj01_gdf_short {
+	text "#str_00100364"	
+}
+
+locString maps/salvage/obj01_strogg_short {
+	text "#str_00100365"	
+}
+
+locString maps/salvage/obj02_gdf {
+	text "#str_00100366"	
+}
+
+locString maps/salvage/obj02_strogg {
+	text "#str_00100367"	
+}
+
+locString maps/salvage/obj02_gdf_short {
+	text "#str_00100368"	
+}
+
+locString maps/salvage/obj02_strogg_short {
+	text "#str_00100369"	
+}
+
+locString maps/salvage/obj03_gdf {
+	text "#str_00100370"	
+}
+
+locString maps/salvage/obj03_strogg {
+	text "#str_00100371"	
+}
+
+locString maps/salvage/obj03_gdf_short {
+	text "#str_00100372"	
+}
+
+locString maps/salvage/obj03_strogg_short {
+	text "#str_00100373"	
+}
+
+/*
+=================
+ Announcements
+=================
+*/
+
+locString maps/salvage/destroyed_generator {
+	text "#str_00100374"	
+	arguments 1
+}
+
+locString maps/salvage/destroyed_entrance {
+	text "#str_00100375"	
+	arguments 1
+}
+
+locString maps/salvage/destroyed_salvage {
+	text "#str_00100376"	
+	arguments 1
+}
+
+/// late additions
+
+locString maps/salvage/strogg_forward_spawn_compound {
+	text "#str_00100377"
+}
+
+locString maps/salvage/service_door {
+	text "#str_00100378"
+}
+
+
+
+// Gordon: Quick fix stuff
+
+locString maps/salvage/final_objective/progress {
+	text "#str_00100379"
+	arguments 1
+}
+
+locString maps/salvage/final_objective/disarm {
+	text "#str_00100380"
+	arguments 1
+}
+
+locString maps/salvage/generator/progress {
+	text "#str_00100381"
+	arguments 1
+}
+
+locString maps/salvage/generator/disarm {
+	text "#str_00100382"
+	arguments 1
+}
+
+locString maps/salvage/west_bunker/progress {
+	text "#str_00100383"
+	arguments 1
+}
+
+locString maps/salvage/west_bunker/disarm {
+	text "#str_00100384"
+	arguments 1
+}
+
+locString maps/salvage/west_bunker/destroy {
+	text "#str_00100385"
+	arguments 1
+}
+
+locString maps/salvage/east_pillbox/progress {
+	text "#str_00100386"
+	arguments 1
+}
+
+locString maps/salvage/east_pillbox/disarm {
+	text "#str_00100387"
+	arguments 1
+}
+
+locString maps/salvage/east_pillbox/destroy {
+	text "#str_00100388"
+	arguments 1
+}
+
+locString maps/salvage/depot_gates/progress {
+	text "#str_00100389"
+	arguments 1
+}
+
+locString maps/salvage/depot_gates/disarm {
+	text "#str_00100390"
+	arguments 1
+}
+
+locString maps/salvage/depot_gates/destroy {
+	text "#str_00100391"
+	arguments 1
+}
+
+// Wils: 00100392 used for Refinery
+
+locString maps/salvage/obj_construct_tower_depot {
+	text "#str_00100393"
+	arguments 1
+}
+
+locString maps/salvage/obj_construct_tower_depot_complete {
+	text "#str_00100394"
+	arguments 1
+}
+
+// Wils: 00100395 used for Slipgate
+// Wils: 00100396 used for Slipgate
+
+// Wils: 00100397 used for Refinery
+// Wils: 00100398 used for Refinery

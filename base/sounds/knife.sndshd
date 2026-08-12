@@ -1,0 +1,38 @@
+
+sound sounds/weapons/knife/fire {
+	compression wav
+
+	volume -10
+	maxDistance 25
+	no_dups
+	
+	occlude_once
+
+	sounds/weapons/knife/fire_01.wav
+	sounds/weapons/knife/fire_02.wav
+	sounds/weapons/knife/fire_03.wav
+	sounds/weapons/knife/fire_04.wav
+	sounds/weapons/knife/fire_05.wav
+}
+
+sound sounds/weapons/knife/fire/local {
+	compression wav
+
+	maxDistance 20
+	
+	occlude_once
+
+	sounds/weapons/knife/fire_local.wav
+}
+
+sound sounds/weapons/knife/raise {
+	volume -5
+
+	sounds/weapons/knife/raise.wav
+}
+
+sound sounds/weapons/knife/lower {
+	volume -6
+
+	sounds/weapons/knife/lower.wav
+}

@@ -1,0 +1,233 @@
+material textures/pipes/interiorpipe_thin01
+{
+	surfaceType "metal"
+	{
+		diffusemap	picmip -1	textures/pipes/interiorpipe_thin01_d.tga
+		specularmap	picmip -2	textures/pipes/interiorpipe_thin01_s.tga.tga
+		bumpmap 	picmip -1	textures/pipes/interiorpipe_thin01_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+        detailMult 5,2.5,0,0
+        }
+ }
+ 
+material textures/pipes/interiorpipe_thin02
+ {
+ 	surfaceType "metal"
+ 	{
+ 		diffusemap	picmip -1	textures/pipes/interiorpipe_thin02_d.tga
+ 		specularmap   	picmip -2	textures/pipes/interiorpipe_thin02_s.tga.tga
+ 		bumpmap 	picmip -1	textures/pipes/interiorpipe_thin01_local.tga
+ 				
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+        	detailMult 2,2,0,0
+        }
+ }
+ 
+ material textures/pipes/interiorpipe_thin02_noshadows
+  {
+  	surfaceType "metal"
+  	noshadows
+  	{
+  		diffusemap	picmip -1	textures/pipes/interiorpipe_thin02_d.tga
+  		specularmap   	picmip -2	textures/pipes/interiorpipe_thin02_s.tga.tga
+  		bumpmap 	picmip -1	textures/pipes/interiorpipe_thin01_local.tga
+  				
+ 		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+         	detailMult 2,2,0,0
+         }
+ }
+ 
+material textures/pipes/interiorpipe_thin03
+  {
+  		surfaceType "metal"
+  		diffusemap	textures/pipes/interiorpipe_thin03_d.tga
+  		specularmap   	textures/pipes/interiorpipe_thin03_s.tga.tga
+  		bumpmap 	_flat
+ }
+ 
+material textures/pipes/pipe_strogg01
+{
+	surfaceType "metal"
+  	{
+  		diffusemap	picmip -1	textures/pipes/pipe_strogg01_d.tga
+  		specularmap	picmip -2	textures/pipes/pipe_strogg01_s.tga
+  		bumpmap		picmip -1	textures/pipes/pipe_strogg01_local.tga
+  		vertexcolor
+  			
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,6,0,0
+	}
+ }
+ 
+material models/mapobjects/pipe/pipes_refinery1
+ {
+    	noselfshadow
+    	surfaceType "metal"
+    	{	
+    		
+    		diffusemap	models/mapobjects/pipe/pipes_refinery_d.tga
+    		specularmap   	models/mapobjects/pipe/pipes_refinery_s.tga
+    		bumpmap 	models/mapobjects/pipe/pipes_refinery_local.tga
+ 	}
+ }
+ 
+material textures/pipes/pipe_metal_1
+ {
+ 		surfaceType "metal"
+ 		diffusemap	picmip -1	textures/pipes/pipe_metal_1_d.tga
+ 		specularmap   	picmip -1	textures/pipes/pipe_metal_1_s.tga
+ 		bumpmap 	picmip -1	textures/pipes/pipe_metal_1_local.tga
+ }
+ 
+material textures/pipes/pipe_metal_2
+  {
+  	surfaceType "metal"
+  		{
+  			diffusemap	picmip -1	textures/pipes/pipe_metal_2_d.tga
+  			specularmap   	picmip -1	textures/pipes/pipe_metal_2_s.tga
+  			bumpmap 	picmip -1	textures/pipes/pipe_metal_2_local.tga
+  			vertexcolor
+  		}
+ }
+ 
+material textures/pipes/pipe_metal_3
+   {
+   	surfaceType "metal"
+   	{
+   		diffusemap	picmip -1	textures/pipes/pipe_metal_3_d.tga
+   		specularmap   	picmip -1	textures/pipes/pipe_metal_3_s.tga
+   		bumpmap 	picmip -1	textures/pipes/pipe_metal_3_local.tga
+   		vertexcolor
+   	}
+ }
+ 
+material textures/pipes/pipe_metal_4
+   {
+   		surfaceType "metal"
+   		diffusemap	picmip -1	textures/pipes/pipe_metal_4_d.tga
+   		specularmap   	picmip -1	textures/pipes/pipe_metal_4_s.tga
+   		bumpmap 	picmip -1	textures/pipes/pipe_metal_4_local.tga
+ }
+
+material textures/pipes/pipe_metal_4_noshadows
+   {
+   		surfaceType "metal"
+		noshadows
+	{
+   		diffusemap	picmip -1	textures/pipes/pipe_metal_4_d.tga
+   		specularmap   	picmip -1	textures/pipes/pipe_metal_4_s.tga
+   		bumpmap 	picmip -1	textures/pipes/pipe_metal_4_local.tga
+	}
+ }
+ 
+material textures/pipes/pipe_metal_5
+   {
+   		surfaceType "metal"
+   		diffusemap	picmip -1	textures/pipes/pipe_metal_5_d.tga
+   		specularmap   	picmip -1	textures/pipes/pipe_metal_5_s.tga
+   		bumpmap 	picmip -1	textures/pipes/pipe_metal_5_local.tga
+ }
+ 
+material textures/pipes/pipe_metal_6
+{
+	qer_editorimage	textures/pipes/pipe_metal_6_d.tga
+	nonsolid
+	noshadows
+	{       
+		diffusemap 	picmip -1	textures/pipes/pipe_metal_6_d.tga
+		specularmap	picmip -1	textures/pipes/pipe_metal_6_s.tga
+    		bumpmap		picmip -1	textures/pipes/pipe_metal_6_local.tga
+		alphaTest	0.5
+		vertexColor
+	} 
+}
+
+material textures/pipes/light_pipe01_noseam
+	{
+		qer_editorimage textures/pipes/light_pipe01_noseam_d.tga
+   		surfaceType 	"metal"
+   		diffusemap	picmip -1	textures/pipes/light_pipe01_noseam_d.tga
+   		specularmap   	picmip -1	textures/pipes/light_pipe01_noseam_s.tga
+   		bumpmap 	picmip -1	textures/pipes/light_pipe01_noseam_local.tga
+ 	}
+
+material textures/pipes/light_pipe01_noseam_noshadows
+	{
+		qer_editorimage textures/pipes/light_pipe01_noseam_d.tga
+		noshadows
+		surfaceType 	"metal"
+		{
+   		diffusemap	picmip -1	textures/pipes/light_pipe01_noseam_d.tga
+   		specularmap   	picmip -1	textures/pipes/light_pipe01_noseam_s.tga
+   		bumpmap 	picmip -1	textures/pipes/light_pipe01_noseam_local.tga
+		}
+ 	}
+
+material textures/pipes/light_pipe01_noseam_yellow
+	{
+		qer_editorimage textures/pipes/light_pipe01_noseam_yellow_d.tga
+		surfaceType 	"metal"
+		{
+   		
+   		diffusemap	picmip -1	textures/pipes/light_pipe01_noseam_yellow_d.tga
+   		specularmap   	picmip -1	textures/pipes/light_pipe01_noseam_s.tga
+   		bumpmap 	picmip -1	textures/pipes/light_pipe01_noseam_local.tga
+		vertexColor
+		}
+ 	}
+ 	
+material textures/pipes/light_pipe01_noseam_yellow_nospec
+	{
+		qer_editorimage textures/pipes/light_pipe01_noseam_yellow_d.tga
+		surfaceType 	"metal"
+		{
+   		
+   		diffusemap	picmip -1	textures/pipes/light_pipe01_noseam_yellow_d.tga
+   		bumpmap 	picmip -1	textures/pipes/light_pipe01_noseam_local.tga
+		vertexColor
+		}
+ 	}
+
+material textures/pipes/light_pipe01_noseam_yellow_nonsolid
+	{
+		qer_editorimage textures/pipes/light_pipe01_noseam_yellow_d.tga
+		surfaceType 	"metal"
+		nonsolid
+		{
+   		
+   		diffusemap	picmip -1	textures/pipes/light_pipe01_noseam_yellow_d.tga
+   		specularmap   	picmip -1	textures/pipes/light_pipe01_noseam_s.tga
+   		bumpmap 	picmip -1	textures/pipes/light_pipe01_noseam_local.tga
+		vertexColor
+		}
+ 	}
+
+material textures/pipes/outdoor_pipe_128
+	{
+			qer_editorimage textures/pipes/outdoor_pipe_128_d.tga
+	   		surfaceType 	"metal"
+		{
+	   		diffusemap	picmip -1	textures/pipes/outdoor_pipe_128_d.tga
+	   		specularmap   	picmip -1	textures/pipes/outdoor_pipe_128_s.tga
+	   		bumpmap 	picmip -1	textures/pipes/outdoor_pipe_128_local.tga
+			vertexColor
+		}
+ 	}
+
+material textures/pipes/outdoor_pipe_128_noshadows
+	{
+			qer_editorimage textures/pipes/outdoor_pipe_128_d.tga
+	   		surfaceType 	"metal"
+			noshadows
+		{
+	   		diffusemap	picmip -1	textures/pipes/outdoor_pipe_128_d.tga
+	   		specularmap   	picmip -1	textures/pipes/outdoor_pipe_128_s.tga
+	   		bumpmap 	picmip -1	textures/pipes/outdoor_pipe_128_local.tga
+			vertexColor
+		}
+ 	}

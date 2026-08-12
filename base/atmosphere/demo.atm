@@ -1,0 +1,81 @@
+atmosphere demo_bluesky {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.2074612379 -0.347402662 0.9144787788 )
+	sunColor ( 0.5960784554 0.5803921819 0.5372549295 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 12600
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 8170
+	fogHeightHalf 1960
+	fogHeightOffset 4510
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "demo_bluesky"
+	skyGradientImage "atmosphere/skies/ph_day4"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_01" {
+		style old
+		parms 12 ( 0.7699999809 1 1 1 0.0015 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+ambientCubemap demo_bluesky {
+	AmbientLight {
+		Color 0.2823529541 0.3333333433 0.4000000358
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.2588235438 0.2627451122 0.2980392277
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.3372549117 0.3568627536 0.3764706254
+		Direction 0.1756406128 0.9035925865 0.3907311261
+	}
+	AmbientLight {
+		Color 0.3803921938 0.4039216042 0.4392157197
+		Direction 0.0173223317 -0.9923949838 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3568627536 0.3960784674
+		Direction -0.8843650818 0.4506065547 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3764706254 0.4117647409
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3764706254 0.4039216042 0.4156863093
+		Direction -0.7036204934 -0.6794784069 0.2079117
+	}
+}

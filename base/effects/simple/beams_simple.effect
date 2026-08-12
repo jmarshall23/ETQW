@@ -1,0 +1,148 @@
+effect effects/beams/generic_simple
+{
+	size	179
+
+	emitter "unnamed0"
+	{
+		duration	20,20
+		count		0.5,0.5
+
+		sprite
+		{
+			duration	30,30
+			material	"beams/generic"
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 5,0,0 }
+				size { point 10,10 }
+				tint { point 0.0666667,0.0666667,0.0666667 }
+			}
+
+			motion
+			{
+				size { envelope convexfade }
+				tint { envelope rr2_concavefade_start_at_1 }
+			}
+
+			end
+			{
+				size { point 80,80 }
+			}
+		}
+	}
+}
+
+
+
+effect effects/beams/smokey_simple
+{
+	size	179
+
+	emitter "unnamed1"
+	{
+		duration	20,20
+		count		0.5,0.5
+
+		sprite
+		{
+			duration	30,30
+			material	"beams/smoke"
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 5,0,0 }
+				size { point 10,10 }
+				tint { point 0.160784,0.160784,0.160784 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope convexfade }
+				tint { envelope rr2_concavefade_start_at_1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 80,80 }
+				rotate { point 1 relative }
+			}
+		}
+	}
+}effect effects/beams/faint_simple
+{
+	size	298
+
+	emitter "unnamed0"
+	{
+		duration	20,20
+		count		0.5,0.5
+
+		sprite
+		{
+			duration	30,30
+			material	"beams/generic"
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,-100,0,0,100,0 }
+				velocity { point 5,0,0 }
+				size { point 170,80 }
+				tint { point 0.0392157,0.0392157,0.027451 }
+			}
+
+			motion
+			{
+				size { envelope convexfade }
+				tint { envelope rr2_concavefade_start_at_1 }
+			}
+
+			end
+			{
+				size { point 200,80 }
+			}
+		}
+	}
+}effect effects/beams/generic_large_simple
+{
+	size	1182
+
+	emitter "unnamed0"
+	{
+		duration	20,20
+		count		0.5,0.5
+
+		sprite
+		{
+			duration	30,30
+			material	"beams/generic"
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 20,0,0 }
+				size { point 650,650 }
+				tint { point 0.0666667,0.0666667,0.0666667 }
+			}
+
+			motion
+			{
+				size { envelope convexfade }
+				tint { envelope rr2_concavefade_start_at_1 }
+			}
+
+			end
+			{
+				size { point 80,80 }
+			}
+		}
+	}
+}
+
+
+

@@ -1,0 +1,109 @@
+
+/******************************************************************************
+
+  MEDIC SOLO ASSIGNMENTS
+
+******************************************************************************/
+
+
+#include "task_includes.include"
+
+//
+// Revive
+//
+
+templates/tasks/solo_task( medic_revive_player, task_revive_player_gdf )
+	data {
+		"require_eligible1"				"ability_medic && same_team && ( same_entity == false )"
+		"waypoint"						"1"
+		"priority"						"0"
+		"task"							"1"
+		"show_eligible"					"1"
+		"tt_task"						"revive_player_gdf"
+
+		"botTaskType"					"0"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/mis_revive"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/mis_revive"
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/mis_sml"
+		"range"							"2048"
+		"min_range"						"64"
+		"team_colored"					"1"
+	}
+}
+
+//
+// Heal
+//
+
+templates/tasks/solo_task( medic_heal_player, task_heal_player )
+	data {
+		"require_eligible1"				"ability_medic && same_team && ( same_entity == false )"
+		"waypoint"						"1"
+		"priority"						"0"
+		"task"							"1"
+		"time_limit"					"30"
+		"tt_task"						"heal_player_gdf"
+		
+		"botTaskType"					"1"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/tsk_medic"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/tsk_medic"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/tsk_sml"
+		"range"							"2048"
+		"min_range"						"64"
+		"team_colored"					"1"
+	}
+}
+
+//
+// Deploy Supplies
+//
+
+templates/tasks/solo_task( medic_deploy_supplies, task_dummy )
+	data {
+		"require_eligible1"				"ability_medic && ( has_supplies == false )"
+	}
+
+/*	waypoint {
+		"mtr_icon"						"hud/icons/missionsystem/mis_medic"
+		"mtr_waypoint"					"hud/icons/missionsystem/mis_medic"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/mis_sml"
+	}*/
+}
+
+//
+// Destroy Spawnhost
+//
+
+templates/tasks/solo_task( medic_destroy_spawnhost, task_dummy )
+	data {
+		"require_eligible1"				"ability_revive && team_gdf"
+		"waypoint"						"1"
+		"priority"						"0"
+		"time_limit"					"0"
+		
+		"mtr_cm_icon"					"hud/icons/missionsystem/medic_destroy_spawnhost"
+		"icon_sort_cm_request"			"-103"
+		
+		"botTaskType"					"24"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/mis_destroy_spawnhost"
+		"mtr_waypoint"					"hud/icons/missionsystem/mis_destroy_spawnhost"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/mis_sml"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/tsk_destroy_spawnhost"
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/tsk_sml"
+		"range"							"1024"
+		"min_range"						"64"
+		"team_colored"					"1"
+	}
+}

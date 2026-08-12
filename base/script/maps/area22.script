@@ -1,0 +1,903 @@
+#define OBJECTIVE_AREA22_DESTROY_JAMMER			0
+#define OBJECTIVE_AREA22_DESTROY_ENTRANCE		1
+#define OBJECTIVE_AREA22_DESTROY_CORE			2
+
+#define A22_STROGG_DEPLOY_BASE					0 // turn on at start
+#define A22_GDF_DEPLOY_BASE						1 // turn on at start
+
+#define A22_OBJECTIVE_STROGG_SPAWN1				2 // turn on at start
+#define A22_STROGG_ATTACK_STROGG_SPAWN1			3
+#define A22_STROGG_DEFEND_STROGG_SPAWN1			4
+#define A22_GDF_ATTACK_STROGG_SPAWN1			5
+#define A22_GDF_DEFEND_STROGG_SPAWN1			6 // turn on at start
+
+#define A22_OBJECTIVE_GDF_SPAWN1				7 // turn on at start
+#define A22_STROGG_ATTACK_GDF_SPAWN1			8
+#define A22_STROGG_DEFEND_GDF_SPAWN1			9
+#define A22_GDF_DEFEND_GDF_SPAWN1				10
+#define A22_GDF_ATTACK_GDF_SPAWN1				11
+
+#define A22_OBJECTIVE_GENERATOR					12 // turn on at start
+#define A22_STROGG_ATTACK_GENERATOR				13 // turn on at start
+#define A22_GDF_DEFEND_GENERATOR				14 // turn on at start
+#define A22_GDF_DEPLOY_GENERATOR				15
+
+#define A22_OBJECTIVE_STROGG_SPAWN2				16
+#define A22_STROGG_DEPLOY_GENERATOR				17
+#define A22_STROGG_ATTACK_STROGG_SPAWN2			18
+#define A22_STROGG_DEFEND_STROGG_SPAWN2			19
+#define A22_GDF_ATTACK_STROGG_SPAWN2			20 // turn on at mining laser obj
+#define A22_GDF_DEFEND_STROGG_SPAWN2			21
+
+#define A22_OBJECTIVE_LASER						22
+#define A22_STROGG_ATTACK_LASER					23
+#define A22_GDF_DEFEND_LASER					24
+#define A22_GDF_DEPLOY_LASER					25
+
+#define A22_OBJECTIVE_STROGG_SPAWN3				26
+#define A22_STROGG_DEPLOY_LASER					27
+#define A22_STROGG_ATTACK_STROGG_SPAWN3			28
+#define A22_STROGG_DEFEND_STROGG_SPAWN3			29
+#define A22_GDF_ATTACK_STROGG_SPAWN3			30 // turn on at slipgate
+#define A22_GDF_DEFEND_STROGG_SPAWN3			31
+
+#define A22_OBJECTIVE_SLIPGATE					32
+#define A22_STROGG_ATTACK_SLIPGATE				33
+#define A22_GDF_DEFEND_SLIPGATE					34
+#define A22_STROGG_OBJECTIVE_DOOR				35
+
+#define A22_STROGG_REPAIR_LASER					40
+#define A22_GDF_LANDMINE_LASER					41
+#define A22_MINING_LASER_CONSTRUCTED			43 // bots move toward slipgate bunker after laser is built and before door is destroyed
+#define A22_GDF_GUN3_NOT_CONSTRUCTED			44
+#define A22_GDF_GUN3_CONSTRUCTED				45
+/* targetRouteID's
+
+1 == EMP Generator
+2 == mining laser
+3 == slipgate
+*/
+
+object mapObject_Area22 : mapObject_Default {
+	void			destroy();
+
+	void			InitObjectives();
+
+	void			CompleteObjective( float index, entity p );
+	handle			GetObjectiveMessage( float index );
+
+	void			OnTimeLimitHit();
+	void			OnDestroyJammer();
+	void			OnEntranceDestroyed();
+	void			OnCoreDestroyed();
+
+	void			OnMiningLaserDeployed( entity other );
+	void			OnMiningLaserConstructed( entity other );
+
+	void			OnConstructionComplete( entity obj );
+	void			OnDestructionComplete( entity obj );
+
+	void			OnGun1Built();
+	void			OnGun1Destroyed();
+	void			OnGun2Built();
+	void			OnGun2Destroyed();
+	void			OnGun3Built();
+	void			OnGun3Destroyed();
+
+	void			OnServiceDoorDestroyed();
+
+	vector			GetGDFBasePosition() { return '11150 -980 1050'; }
+
+	void			ZapporCallThread();
+
+	void			JammerDestroyThread();
+
+	void			JammerEffectsThread();
+	void			EntranceEffectsThread();
+
+	void			StartFirstObjective();
+
+	void			OnSpawnCaptured( string actionName );
+	void			OnSpawnLiberated( string actionName );
+	
+	void			NeededClassFirstObjective();
+
+	entity			GetSpectateEntity();
+
+	float			mainObjectiveIndex;
+	float			botObstacles;
+
+// ----------------------------
+
+	entity			gdfBaseTerritory;
+	entity			jammerTerritory;
+	entity			middleTerritory;
+	entity			stroggBaseTerritory;
+
+	entity			gdfBaseSpawn;
+	entity			gdfCommsSpawn;
+	entity			stroggBaseSpawn;
+	entity			stroggWarehouseSpawn;
+	entity			stroggJammerSpawn;
+	entity			gdfJammerSpawn;
+	entity			stroggMiddleSpawn;
+	entity			gdfBunkerSpawn;
+	entity			stroggBunkerSpawn;
+	entity			stroggZapporSpawn;
+	entity			main_strogg_base;
+	entity			main_gdf_base;
+
+	entity			objective1Marker;
+	entity			objective2Marker;
+	entity			objective3Marker;
+
+	entity			objective1Arrow1;
+	entity			objective1Arrow2;
+	entity			objective2Arrow1;
+	entity			objective2Arrow2;
+	entity			objective2Arrow3;
+	entity			objective3Arrow1;
+	entity			objective3Arrow2;
+
+	entity			tunnelMainEntrance;
+	entity			slipgateCore;
+
+	entity			generator_sparks_1;
+	entity			generator_sparks_2;
+	entity			generator_sparks_3;
+	entity			generator_sparks_4;
+	entity			generator_sparks_5;
+
+	entity			generator_blowout_1;
+	entity			generator_blowout_2;
+
+	entity			boardroom_glass;
+	entity			boardroom_glass_broken;
+
+	entity			generator_windowsmash;
+
+	entity			entrance_sparks_1;
+	entity			entrance_sparks_2;
+	entity			entrance_sparks_3;
+	entity			entrance_sparks_4;
+
+	entity			entrance_smoke;
+	entity			entrance_smoke_2;
+	entity			entrance_side_explosion;
+
+	entity			zapporCaller;
+
+	entity			jammer;
+	entity			jammerEffectsIdle;
+	entity			jammerEffectsShutdown;
+	entity			generatorDestroyed;
+	entity			tunnelMelteddoor;
+
+	entity			serviceDoor;
+
+	entity			gun1Construction;
+	entity			gun2Construction;
+	entity			gun3Construction;
+
+	entity			noplant_generator;
+	entity			noplant_service_door;
+	entity			noplant_slipgate_core;
+
+	entity 			endCameraA;
+	entity			endCameraB;
+
+	// bot obstacles
+
+	entity			slipgateObstacle1;
+	entity			slipgateObstacle2;
+	entity			accessdoorObstacle;
+	entity			glasswindowObstacle;
+	
+	cvar 			debug_script;
+}
+
+mapObject_Base Area22_MapScript() {
+	return new mapObject_Area22;
+}
+
+void mapObject_Area22::destroy() {
+}
+
+void mapObject_Area22::InitObjectives() {
+	gameRules.setWinningTeam( gdfTeam );
+	gdfTeam.SetRespawnWait( 20 );
+	stroggTeam.SetRespawnWait( 20 );
+	gdfTeam.InitRespawnTimeChange();
+	stroggTeam.InitRespawnTimeChange();
+	CreateRespawnTimeThread( stroggTeam );
+
+// ----------------------------
+
+	gdfBaseTerritory		= worldspawn.getEntityKey( "script_territory_gdf_base" );
+	jammerTerritory			= worldspawn.getEntityKey( "script_territory_jammer" );
+	middleTerritory			= worldspawn.getEntityKey( "script_territory_middle" );
+	stroggBaseTerritory		= worldspawn.getEntityKey( "script_territory_strogg_base" );
+
+	gdfBaseSpawn			= worldspawn.getEntityKey( "script_spawnmaster_gdf_base" );
+	gdfCommsSpawn			= worldspawn.getEntityKey( "script_spawnmaster_comms_gdf" );
+	stroggWarehouseSpawn	= worldspawn.getEntityKey( "script_spawnmaster_warehouse_strogg" );
+	stroggBaseSpawn			= worldspawn.getEntityKey( "script_spawnmaster_strogg_base" );
+	stroggJammerSpawn		= worldspawn.getEntityKey( "script_spawnmaster_jammer_strogg" );
+	gdfJammerSpawn			= worldspawn.getEntityKey( "script_spawnmaster_jammer_gdf" );
+	stroggMiddleSpawn		= worldspawn.getEntityKey( "script_spawnmaster_middle_strogg" );
+	gdfBunkerSpawn			= worldspawn.getEntityKey( "script_spawnmaster_bunker_gdf" );
+	stroggZapporSpawn		= worldspawn.getEntityKey( "script_spawnmaster_zappor_strogg" );
+	stroggBunkerSpawn		= worldspawn.getEntityKey( "script_spawnmaster_bunker_strogg" );
+	main_strogg_base		= worldspawn.getEntityKey( "script_spawnmaster_strogg_base" );
+	main_gdf_base			= worldspawn.getEntityKey( "script_spawnmaster_gdf_base" );
+
+
+	objective1Arrow1		= worldspawn.getEntityKey( "script_obj1_arrow1" );
+	objective1Arrow2		= worldspawn.getEntityKey( "script_obj1_arrow2" );
+	objective2Arrow1		= worldspawn.getEntityKey( "script_obj2_arrow1" );
+	objective2Arrow2		= worldspawn.getEntityKey( "script_obj2_arrow2" );
+	objective3Arrow1		= worldspawn.getEntityKey( "script_obj3_arrow1" );
+	objective3Arrow2		= worldspawn.getEntityKey( "script_obj3_arrow2" );
+
+	objective1Marker		= worldspawn.getEntityKey( "script_obj1_marker" );
+	objective2Marker		= worldspawn.getEntityKey( "script_obj2_marker" );
+	objective3Marker		= worldspawn.getEntityKey( "script_obj3_marker" );
+
+	generator_sparks_1		= worldspawn.getEntityKey( "script_generator_sparks_1" );
+	generator_sparks_2		= worldspawn.getEntityKey( "script_generator_sparks_2" );
+	generator_sparks_3		= worldspawn.getEntityKey( "script_generator_sparks_3" );
+	generator_sparks_4		= worldspawn.getEntityKey( "script_generator_sparks_4" );
+	generator_sparks_5		= worldspawn.getEntityKey( "script_generator_sparks_5" );
+
+	generator_blowout_1		= worldspawn.getEntityKey( "script_generator_blowout_1" );
+	generator_blowout_2		= worldspawn.getEntityKey( "script_generator_blowout_2" );
+
+	generator_windowsmash		= worldspawn.getEntityKey( "script_generator_windowsmash" );
+
+	boardroom_glass			= worldspawn.getEntityKey( "script_boardroom_glass" );
+	boardroom_glass_broken	= worldspawn.getEntityKey( "script_boardroom_glass_broken" );
+
+	entrance_sparks_1		= worldspawn.getEntityKey( "script_entrance_sparks_1" );
+	entrance_sparks_2		= worldspawn.getEntityKey( "script_entrance_sparks_2" );
+	entrance_sparks_3		= worldspawn.getEntityKey( "script_entrance_sparks_3" );
+	entrance_sparks_4		= worldspawn.getEntityKey( "script_entrance_sparks_4" );
+
+	entrance_smoke			= worldspawn.getEntityKey( "script_entrance_smoke" );
+	entrance_smoke_2		= worldspawn.getEntityKey( "script_entrance_smoke_2" );
+	entrance_side_explosion = worldspawn.getEntityKey( "script_entrance_side_explosion" );
+
+	tunnelMainEntrance		= worldspawn.getEntityKey( "script_tunnel_entrance" );
+	slipgateCore			= worldspawn.getEntityKey( "script_slipgate_core" );
+	zapporCaller			= worldspawn.getEntityKey( "script_zappor_caller" );
+	tunnelMelteddoor		= worldspawn.getEntityKey( "script_tunnel_melted_door" );
+
+	jammer					= worldspawn.getEntityKey( "script_jammer" );
+	jammerEffectsIdle		= worldspawn.getEntityKey( "script_jammer_effects_idle" );
+	jammerEffectsShutdown	= worldspawn.getEntityKey( "script_jammer_effects_shutdown" );
+
+	endCameraA				= worldspawn.getEntityKey( "script_placement_camera_a" );
+	endCameraB				= worldspawn.getEntityKey( "script_placement_camera_b" );
+
+	generatorDestroyed		= worldspawn.getEntityKey( "script_generator_destroyed" );	
+
+	serviceDoor				= worldspawn.getEntityKey( "script_service_door" );
+
+	gun1Construction		= worldspawn.getEntityKey( "script_gun_1" );
+	gun2Construction		= worldspawn.getEntityKey( "script_gun_2" );
+	gun3Construction		= worldspawn.getEntityKey( "script_gun_3" );
+
+	noplant_generator		= worldspawn.getEntityKey( "script_noplant_generator" );
+	noplant_service_door	= worldspawn.getEntityKey( "script_noplant_service_door" );
+	noplant_slipgate_core	= worldspawn.getEntityKey( "script_noplant_slipgate_core" );
+
+	// bot obstacles
+
+	slipgateObstacle1		= worldspawn.getEntityKey( "script_slipgate_obstacle1" );
+	slipgateObstacle2		= worldspawn.getEntityKey( "script_slipgate_obstacle2" );
+	accessdoorObstacle		= worldspawn.getEntityKey( "script_accessdoor_obstacle" );
+	glasswindowObstacle		= worldspawn.getEntityKey( "script_glass_window_obstacle" );
+	
+	debug_script			=	sys.getCVar( "bot_debugMapScript", "1" );
+	
+	CreateDeployTasks();	
+
+// ----------------------------
+
+	stroggBaseTerritory.setActive( true );
+	jammerTerritory.setActive( true );
+	middleTerritory.setActive( false );
+	gdfBaseTerritory.setActive( false );
+
+	gdfCommsSpawn.setGameTeam( gdfTeam );
+	gdfJammerSpawn.setGameTeam( gdfTeam );
+	stroggJammerSpawn.setGameTeam( $null_entity );
+	stroggZapporSpawn.vSetActive( false );
+	stroggMiddleSpawn.setGameTeam( $null_entity );
+	stroggBunkerSpawn.vSetActive( false );
+	gdfBunkerSpawn.setGameTeam( $null_entity );
+
+	objective1Arrow1.setGameTeam( stroggTeam );
+	objective1Arrow2.setGameTeam( stroggTeam );
+	objective2Arrow1.setGameTeam( stroggTeam );
+	objective2Arrow2.setGameTeam( stroggTeam );
+	objective3Arrow1.setGameTeam( stroggTeam );
+	objective3Arrow2.setGameTeam( stroggTeam );
+
+	objective1Arrow1.vStartObjective();
+	objective1Arrow2.vStartObjective();
+
+	objective1Marker.vStartObjective();
+	objective2Marker.vStartObjective();
+	objective3Marker.vStartObjective();
+
+	tunnelMainEntrance.setTakesDamage( 0 );
+	slipgateCore.setTakesDamage( 0 );
+
+	mainObjectiveIndex = OBJECTIVE_AREA22_DESTROY_JAMMER;
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	gameRules.setEndGameCamera( endCameraB );
+
+	gun2Construction.vCreateMission();
+	
+	generatorDestroyed.hide();
+	generatorDestroyed.forceDisableClip();
+
+	boardroom_glass_broken.hide();
+	boardroom_glass_broken.forceDisableClip();
+
+	tunnelMelteddoor.hide();	
+
+	thread StartFirstObjective();
+
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BOTS SETUP FOR GENERATOR OBJECTIVE **********\n" );
+	}	
+	objManager.setAttackingTeam( STROGG );
+	objManager.setBotSightDist( 3000.0f );
+	objManager.setPrimaryTeamAction( STROGG, "strogg_generator_1" );
+	objManager.setPrimaryTeamAction( GDF, "strogg_generator_1" );
+	
+	objManager.activateBotActionGroup( A22_STROGG_DEPLOY_BASE );
+	objManager.activateBotActionGroup( A22_GDF_DEPLOY_BASE );
+	objManager.activateBotActionGroup( A22_OBJECTIVE_STROGG_SPAWN1 );
+	objManager.activateBotActionGroup( A22_STROGG_ATTACK_STROGG_SPAWN1 );
+	objManager.activateBotActionGroup( A22_GDF_DEFEND_STROGG_SPAWN1 );
+	objManager.activateBotActionGroup( A22_STROGG_ATTACK_GDF_SPAWN1 );
+	objManager.activateBotActionGroup( A22_GDF_DEFEND_GDF_SPAWN1 );
+	objManager.activateBotActionGroup( A22_OBJECTIVE_GDF_SPAWN1 );
+	objManager.activateBotActionGroup( A22_OBJECTIVE_GENERATOR );
+	objManager.activateBotActionGroup( A22_STROGG_ATTACK_GENERATOR );
+	objManager.activateBotActionGroup( A22_GDF_DEFEND_GENERATOR );
+	objManager.setBotCriticalClass( GDF, ENGINEER );
+	objManager.setBotCriticalClass( STROGG, SOLDIER );
+	// setup strogg rear spawn
+	objManager.setTeamUseRearSpawn( STROGG, true );
+	objManager.setTeamUseRearSpawnPercentage( STROGG, 100 );
+	stroggTeam.setTeamRearSpawn( stroggBaseSpawn );
+	// setup gdf rear spawn
+	objManager.setTeamUseRearSpawn( GDF, true );
+	gdfTeam.setTeamRearSpawn( gdfBaseSpawn );
+	objManager.setTeamUseRearSpawnPercentage( STROGG, 50 );	
+	
+	thread NeededClassFirstObjective();
+}
+
+void mapObject_Area22::NeededClassFirstObjective() {
+	sys.wait( 10 );			
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** SET UP CLASSES NEEDED FOR FIRST OBJECTIVE **********\n" );
+	}
+	objManager.setTeamNeededClass( GDF, MEDIC, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( GDF, ENGINEER, NOCLASS, 3, true, false );
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( STROGG, FIELDOPS, NOCLASS, 1, false, false );
+	objManager.setTeamNeededClass( STROGG, SOLDIER, NOCLASS, 3, true, false );
+}
+
+// ==========================================
+
+void mapObject_Area22::CompleteObjective( float index, entity p ) {
+	if ( index == OBJECTIVE_AREA22_DESTROY_JAMMER ) {
+		OnDestroyJammer();
+	} else if ( index == OBJECTIVE_AREA22_DESTROY_ENTRANCE ) {
+		OnEntranceDestroyed();
+	} else if ( index == OBJECTIVE_AREA22_DESTROY_CORE ) {
+		OnCoreDestroyed();
+	}
+}
+
+handle mapObject_Area22::GetObjectiveMessage( float index ) {
+	if ( index == OBJECTIVE_AREA22_DESTROY_JAMMER ) {
+		return sys.localizeString( "maps/area22/obj_destroy_jammer" );
+	}
+	if ( index == OBJECTIVE_AREA22_DESTROY_ENTRANCE ) {
+		return sys.localizeString( "maps/area22/obj_destroy_ent" );
+	}
+	if ( index == OBJECTIVE_AREA22_DESTROY_CORE ) {
+		return sys.localizeString( "maps/area22/obj_destroy_core" );
+	}
+
+	return g_locStr_BadObjective;
+}
+
+// ==========================================
+
+void mapObject_Area22::OnConstructionComplete( entity obj ) {
+	if ( obj == gun1Construction ) {
+		OnGun1Built();
+	} else if ( obj == gun2Construction ) {
+		OnGun2Built();
+	} else if ( obj == gun3Construction ) {
+		OnGun3Built();
+	}
+}
+
+void mapObject_Area22::OnDestructionComplete( entity obj ) {
+	if ( obj == serviceDoor ) {
+		OnServiceDoorDestroyed();
+	}  else if ( obj == gun1Construction ) {
+		OnGun1Destroyed();
+	} else if ( obj == gun2Construction ) {
+		OnGun2Destroyed();
+	} else if ( obj == gun3Construction ) {
+		OnGun3Destroyed();
+	}
+}
+
+void mapObject_Area22::OnGun1Built() {
+	gun1Construction.vCompleteMission();
+}
+
+void mapObject_Area22::OnGun1Destroyed() {
+	gun1Construction.vCreateMission();
+}
+
+void mapObject_Area22::OnGun2Built() {
+	gun2Construction.vCompleteMission();
+}
+
+void mapObject_Area22::OnGun2Destroyed() {
+	if ( mainObjectiveIndex < OBJECTIVE_AREA22_DESTROY_CORE ) {
+		gun2Construction.vCreateMission();
+	}
+}
+
+void mapObject_Area22::OnGun3Built() {
+	gun3Construction.vCompleteMission();
+	objManager.deactivateBotActionGroup( A22_GDF_GUN3_NOT_CONSTRUCTED );
+	objManager.activateBotActionGroup( A22_GDF_GUN3_CONSTRUCTED );
+}
+
+void mapObject_Area22::OnGun3Destroyed() {
+	gun3Construction.vCreateMission();
+	objManager.deactivateBotActionGroup( A22_GDF_GUN3_CONSTRUCTED );
+	objManager.activateBotActionGroup( A22_GDF_GUN3_NOT_CONSTRUCTED );
+}
+
+void mapObject_Area22::OnServiceDoorDestroyed() {
+	accessdoorObstacle.activate( accessdoorObstacle );
+	objManager.killBotActionGroup( A22_STROGG_OBJECTIVE_DOOR );
+	noplant_service_door.remove();
+	serviceDoor.vCompleteMission();
+}
+
+void mapObject_Area22::ZapporCallThread() {
+	sys.wait( 15.f );
+	zapporCaller.vOnDeploy();
+}
+
+void mapObject_Area22::JammerDestroyThread() {
+	generatorDestroyed.show();
+	sys.wait( 0.5f );
+	generatorDestroyed.forceEnableClip();
+	glasswindowObstacle.activate( glasswindowObstacle );
+}
+
+void mapObject_Area22::JammerEffectsThread() {
+// ==========================================
+// DAVE THE BROKEN WINDOWS NEED TO HAPPEN HERE
+// CAPS LOCKS MAKES SHOUTY!
+// ==========================================
+	boardroom_glass.hide();
+	boardroom_glass.forceDisableClip();
+
+	boardroom_glass_broken.show();
+	boardroom_glass_broken.forceEnableClip();
+
+	generator_blowout_1.vTriggerParticleEffect( 1 );
+	generator_blowout_2.vTriggerParticleEffect( 1 );
+	generator_windowsmash.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.7f );
+	generator_sparks_1.vTriggerParticleEffect( 1 );
+
+	sys.wait( 1.0f );
+	generator_sparks_2.vTriggerParticleEffect( 1 );
+
+	sys.wait( 1.2f );
+	generator_sparks_3.vTriggerParticleEffect( 1 );
+	generator_sparks_4.vTriggerParticleEffect( 1 );
+
+	sys.wait( 1.4f );
+	generator_sparks_5.vTriggerParticleEffect( 1 );
+}
+
+void mapObject_Area22::OnDestroyJammer() {
+	
+	mainObjectiveIndex = OBJECTIVE_AREA22_DESTROY_ENTRANCE;
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	thread JammerDestroyThread();
+
+	jammerEffectsIdle.remove();
+	jammerEffectsShutdown.vTriggerParticleEffect( 1 );
+
+	thread ZapporCallThread();
+
+	thread JammerEffectsThread();
+
+	jammer.vCompleteMission();
+	StopTimedMission();
+	jammerTerritory.setGameTeam( stroggTeam );
+	stroggJammerSpawn.setGameTeam( stroggTeam );
+	gdfJammerSpawn.setGameTeam( $null_entity );
+	gdfCommsSpawn.vSetActive( false );
+	stroggZapporSpawn.vSetActive( true );
+
+	stroggWarehouseSpawn.vSetActive( false );
+	stroggWarehouseSpawn.setGameTeam( stroggTeam );
+
+	stroggBaseTerritory.setActive( false );
+	jammerTerritory.setActive( true );
+	middleTerritory.setActive( true );
+
+	objective1Arrow1.vFinishObjective();
+	objective1Arrow2.vFinishObjective();
+	objective2Arrow1.vStartObjective();
+	objective2Arrow2.vStartObjective();
+
+	objective1Marker.vFinishObjective();
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	noplant_generator.remove();
+
+	gun1Construction.vCreateMission();
+	tunnelMainEntrance.setTakesDamage( 1 );
+
+	stroggTeam.SetRespawnWait( 20 );
+	ResetRespawnTimeThread();
+
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BOTS SETUP FOR LASER OBJECTIVE **********\n" );
+	}
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+	objManager.killBotActionGroup( A22_STROGG_DEPLOY_BASE );
+	objManager.killBotActionGroup( A22_GDF_DEPLOY_BASE );	
+	objManager.killBotActionGroup( A22_OBJECTIVE_STROGG_SPAWN1 );
+	objManager.killBotActionGroup( A22_STROGG_ATTACK_STROGG_SPAWN1 );
+	objManager.killBotActionGroup( A22_STROGG_DEFEND_STROGG_SPAWN1 );
+	objManager.killBotActionGroup( A22_GDF_ATTACK_STROGG_SPAWN1 );
+	objManager.killBotActionGroup( A22_GDF_DEFEND_STROGG_SPAWN1 );	
+	objManager.killBotActionGroup( A22_OBJECTIVE_GDF_SPAWN1 );
+	objManager.killBotActionGroup( A22_STROGG_ATTACK_GDF_SPAWN1 );
+	objManager.killBotActionGroup( A22_STROGG_DEFEND_GDF_SPAWN1 );
+	objManager.killBotActionGroup( A22_GDF_DEFEND_GDF_SPAWN1 );
+	objManager.killBotActionGroup( A22_GDF_ATTACK_GDF_SPAWN1 );
+	objManager.killBotActionGroup( A22_OBJECTIVE_GENERATOR );
+	objManager.killBotActionGroup( A22_STROGG_ATTACK_GENERATOR );
+	objManager.killBotActionGroup( A22_GDF_DEFEND_GENERATOR );
+
+	objManager.activateBotActionGroup( A22_GDF_DEPLOY_GENERATOR );
+	objManager.activateBotActionGroup( A22_OBJECTIVE_STROGG_SPAWN2 );
+	objManager.activateBotActionGroup( A22_STROGG_DEPLOY_GENERATOR );
+	objManager.activateBotActionGroup( A22_STROGG_ATTACK_STROGG_SPAWN2 );
+	objManager.activateBotActionGroup( A22_GDF_DEFEND_STROGG_SPAWN2 );
+	objManager.activateBotActionGroup( A22_OBJECTIVE_LASER );
+	objManager.activateBotActionGroup( A22_STROGG_ATTACK_LASER );
+	objManager.activateBotActionGroup( A22_GDF_DEFEND_LASER );
+	
+	objManager.setPrimaryTeamAction( STROGG, "strogg_construct_laser_1" );
+	objManager.setPrimaryTeamAction( GDF, "strogg_construct_laser_1" );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+	objManager.setBotCriticalClass( GDF, ENGINEER );
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( STROGG, FIELDOPS, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( STROGG, SOLDIER, NOCLASS, 1, false, false );
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 3, true, false );
+	objManager.setTeamNeededClass( GDF, ENGINEER, NOCLASS, 2, false, false );
+	objManager.setBotTeamRetreatTime( GDF, 10 );
+	
+	objManager.clearTeamBotBoundEntities( STROGG );
+	
+	// setup strogg rear spawn
+	objManager.setTeamUseRearSpawn( STROGG, true );
+	objManager.setTeamUseRearSpawnPercentage( STROGG, 100 );
+	stroggTeam.setTeamRearSpawn( stroggBaseSpawn );
+}
+
+// ----------------------------
+
+void mapObject_Area22::EntranceEffectsThread() {
+
+// DAVE THE LARGE BROKEN DOOR STATE CHANGE NEEDS TO HAPPEN HERE
+// DAVE ISN'T A LARGE BROKEN DOOR, WHO WROTE THIS
+
+	entrance_smoke.vTriggerParticleEffect( 1 );
+	entrance_smoke_2.vTriggerParticleEffect( 1 );
+	entrance_side_explosion.vTriggerParticleEffect( 1 );
+	sys.wait( 0.6f );
+	entrance_sparks_1.vTriggerParticleEffect( 1 );
+	sys.wait( 1.2f );
+	entrance_sparks_2.vTriggerParticleEffect( 1 );
+	sys.wait( 2.5f );
+	entrance_sparks_3.vTriggerParticleEffect( 1 );
+	sys.wait( 2.4f );
+	entrance_sparks_4.vTriggerParticleEffect( 1 );
+}
+
+void mapObject_Area22::OnEntranceDestroyed() {
+	mainObjectiveIndex = OBJECTIVE_AREA22_DESTROY_CORE;
+
+	if( botObstacles == 0 ) {
+		slipgateObstacle1.activate( slipgateObstacle1 );
+		slipgateObstacle2.activate( slipgateObstacle2 );
+		botObstacles = 1;
+	}
+
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	middleTerritory.setGameTeam( stroggTeam );
+
+	stroggMiddleSpawn.setGameTeam( stroggTeam );
+	stroggBunkerSpawn.vSetActive( true );
+	gdfBunkerSpawn.setGameTeam( gdfTeam );
+
+	stroggZapporSpawn.vSetActive( false );
+	stroggZapporSpawn.setGameTeam( stroggTeam );
+
+	jammerTerritory.setActive( false );
+	middleTerritory.setActive( true );
+	gdfBaseTerritory.setActive( true );
+
+	objective3Arrow1.vStartObjective();
+	objective3Arrow2.vStartObjective();
+
+	objective2Marker.vFinishObjective();
+
+	slipgateCore.setTakesDamage( 1 );
+
+	objManager.SetObjectiveEntity( slipgateCore, mainObjectiveIndex );
+	slipgateCore.vCreateMission();
+	CreateInitialTimedMission( slipgateCore );
+
+	serviceDoor.vCreateMission();
+	gun3Construction.vCreateMission();
+
+	thread EntranceEffectsThread();
+
+	tunnelMelteddoor.show();
+	
+	FreeWorldTask( fieldopsDeployTask );
+	FreeWorldTask( medicDeployTask );
+
+	stroggTeam.SetRespawnWait( 20 );
+	ResetRespawnTimeThread();
+
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BOTS SETUP FOR SLIPGATE OBJECTIVE **********\n" );
+	}
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+	objManager.killBotActionGroup( A22_OBJECTIVE_STROGG_SPAWN2 );
+	objManager.killBotActionGroup( A22_STROGG_ATTACK_STROGG_SPAWN2 );
+	objManager.killBotActionGroup( A22_STROGG_DEFEND_STROGG_SPAWN2 );
+	objManager.killBotActionGroup( A22_GDF_ATTACK_STROGG_SPAWN2 );
+	objManager.killBotActionGroup( A22_GDF_DEFEND_STROGG_SPAWN2 );
+	objManager.killBotActionGroup( A22_OBJECTIVE_LASER );
+	objManager.killBotActionGroup( A22_STROGG_ATTACK_LASER );
+	objManager.killBotActionGroup( A22_GDF_DEFEND_LASER );
+	objManager.killBotActionGroup( A22_GDF_DEPLOY_GENERATOR );
+	objManager.killBotActionGroup( A22_STROGG_DEPLOY_GENERATOR );
+	objManager.killBotActionGroup( A22_STROGG_REPAIR_LASER );
+	objManager.killBotActionGroup( A22_GDF_LANDMINE_LASER );
+	objManager.killBotActionGroup( A22_MINING_LASER_CONSTRUCTED );
+	
+	objManager.activateBotActionGroup( A22_GDF_DEPLOY_LASER );
+	objManager.activateBotActionGroup( A22_OBJECTIVE_STROGG_SPAWN3 );
+	objManager.activateBotActionGroup( A22_STROGG_DEPLOY_LASER );
+	objManager.activateBotActionGroup( A22_STROGG_ATTACK_STROGG_SPAWN3 );
+	objManager.activateBotActionGroup( A22_GDF_ATTACK_STROGG_SPAWN3 );
+	objManager.activateBotActionGroup( A22_GDF_DEFEND_STROGG_SPAWN3 );
+	objManager.activateBotActionGroup( A22_OBJECTIVE_SLIPGATE );
+	objManager.activateBotActionGroup( A22_STROGG_ATTACK_SLIPGATE );
+	objManager.activateBotActionGroup( A22_GDF_DEFEND_SLIPGATE );
+	objManager.activateBotActionGroup( A22_STROGG_OBJECTIVE_DOOR );
+	objManager.activateBotActionGroup( A22_GDF_GUN3_NOT_CONSTRUCTED ); // Jer - added MG nest inside bunker
+	
+	objManager.setPrimaryTeamAction( STROGG, "strogg_destroy_slipgate_1" );
+	objManager.setPrimaryTeamAction( GDF, "strogg_destroy_slipgate_1" );
+	objManager.setSecondaryTeamAction( STROGG, "strogg_accessdoor_1" );
+	objManager.setSecondaryTeamAction( GDF, "strogg_accessdoor_1" );
+		
+	objManager.setTeamUseRearSpawn( GDF, true );
+	objManager.setTeamUseRearSpawnPercentage( GDF, 50 );
+	gdfTeam.setTeamRearSpawn( gdfBaseSpawn );
+	objManager.setTeamUseRearSpawn( STROGG, false );
+	gdfTeam.setTeamRearSpawn( stroggMiddleSpawn );
+		
+	objManager.setBotCriticalClass( STROGG, SOLDIER );
+	objManager.setBotCriticalClass( GDF, ENGINEER );
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( STROGG, SOLDIER, NOCLASS, 2, true, false );
+	objManager.setTeamNeededClass( GDF, ENGINEER, NOCLASS, 2, false, true );
+	objManager.setTeamNeededClass( GDF, MEDIC, NOCLASS, 2, false, false );
+	
+	objManager.setBotTeamRetreatTime( GDF, 10 );
+	objManager.clearTeamBotBoundEntities( STROGG );
+	
+	objManager.setTeamAttacksDeployables( STROGG, false );
+	objManager.setTeamAttacksDeployables( GDF, false );
+	objManager.gameIsOnFinalObjective();
+}
+
+void mapObject_Area22::OnCoreDestroyed() {
+	objective3Marker.vFinishObjective();
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	slipgateCore.vCompleteMission();
+	StopTimedMission();
+
+	gameRules.setEndGameCamera( endCameraA );
+
+	gameRules.setWinningTeam( stroggTeam );
+	gameRules.endGame();
+}
+
+void mapObject_Area22::StartFirstObjective() {
+	sys.wait( 5.f );
+
+	objManager.SetObjectiveEntity( jammer, mainObjectiveIndex );
+	jammer.vCreateMission();
+	CreateInitialTimedMission( jammer );
+}
+
+void mapObject_Area22::OnMiningLaserDeployed( entity other ) {
+	other.vCreateMission();
+	CreateInitialTimedMission( other );
+	objManager.SetObjectiveEntity( other, mainObjectiveIndex );
+	
+	//turn on mine and repair objectives after laser is on the ground
+	objManager.activateBotActionGroup( A22_STROGG_REPAIR_LASER );
+	objManager.activateBotActionGroup( A22_GDF_LANDMINE_LASER );
+}
+
+void mapObject_Area22::OnMiningLaserConstructed( entity other ) {
+	other.vCompleteMission();
+	StopTimedMission();
+	gun2Construction.vFreeMission();
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	//disable the bot action when laser is constructed
+	objManager.killBotAction( "strogg_construct_laser_1" );
+	objManager.killBotAction( "strogg_construct_laser_2" );
+	//turn on some roams immediately after the laser is built to get bots moving toward slipgate bunker
+	objManager.activateBotActionGroup( A22_MINING_LASER_CONSTRUCTED );
+}
+
+void mapObject_Area22::OnTimeLimitHit() {
+	FinishTimedMission();
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	objManager.PlaySound( worldspawn.getKey( "snd_strogglose_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_strogglose_gdf" ), gdfTeam );
+}
+
+void mapObject_Area22::OnSpawnCaptured( string actionName ) {
+	if( actionName == "gdf_forward_spawn1" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** GDF CAPTURED GDF SPAWN 1 **********\n" );
+		}
+		objManager.deactivateBotActionGroup( A22_GDF_ATTACK_GDF_SPAWN1 );
+		objManager.activateBotActionGroup( A22_GDF_DEFEND_GDF_SPAWN1 );
+		objManager.deactivateBotActionGroup( A22_STROGG_DEFEND_GDF_SPAWN1 );
+		objManager.activateBotActionGroup( A22_STROGG_ATTACK_GDF_SPAWN1 );
+	}
+	if( actionName == "strogg_forward_spawn1" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** STROGG CAPTURED STROGG SPAWN 1 **********\n" );
+		}
+		objManager.deactivateBotActionGroup( A22_STROGG_ATTACK_STROGG_SPAWN1 );
+		objManager.activateBotActionGroup( A22_STROGG_DEFEND_STROGG_SPAWN1 );
+		objManager.deactivateBotActionGroup( A22_GDF_DEFEND_STROGG_SPAWN1 );
+		objManager.activateBotActionGroup( A22_GDF_ATTACK_STROGG_SPAWN1 );
+		//objManager.setTeamUseRearSpawn( STROGG, true );
+		//stroggTeam.setTeamRearSpawn( main_strogg_base );
+	}
+	if( actionName == "strogg_forward_spawn2" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** GDF CAPTURED STROGG SPAWN 2 **********\n" );
+		}
+		objManager.activateBotActionGroup( A22_GDF_ATTACK_STROGG_SPAWN2 );
+		objManager.deactivateBotActionGroup( A22_GDF_DEFEND_STROGG_SPAWN2 );
+		objManager.activateBotActionGroup( A22_STROGG_DEFEND_STROGG_SPAWN2 );
+		objManager.deactivateBotActionGroup( A22_STROGG_ATTACK_STROGG_SPAWN2 );
+	}
+	if( actionName == "strogg_forward_spawn3" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** GDF CAPTURED STROGG SPAWN 3 **********\n" );
+		}
+		objManager.activateBotActionGroup( A22_GDF_ATTACK_STROGG_SPAWN3 );
+		objManager.deactivateBotActionGroup( A22_GDF_DEFEND_STROGG_SPAWN3 );
+		objManager.activateBotActionGroup( A22_STROGG_DEFEND_STROGG_SPAWN3 );
+		objManager.deactivateBotActionGroup( A22_STROGG_ATTACK_STROGG_SPAWN3 );
+	}
+}
+
+void mapObject_Area22::OnSpawnLiberated( string actionName ) {
+	if( actionName == "gdf_forward_spawn1" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** GDF LOST GDF SPAWN 1 **********\n" );
+		}
+		objManager.deactivateBotActionGroup( A22_GDF_DEFEND_GDF_SPAWN1 );
+		objManager.activateBotActionGroup( A22_GDF_ATTACK_GDF_SPAWN1 );
+		objManager.deactivateBotActionGroup( A22_STROGG_ATTACK_GDF_SPAWN1 );
+		objManager.activateBotActionGroup( A22_STROGG_DEFEND_GDF_SPAWN1 );
+	}
+	if( actionName == "strogg_forward_spawn1" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** STROGG LOST STROGG SPAWN 1 **********\n" );
+		}		
+		objManager.deactivateBotActionGroup( A22_STROGG_DEFEND_STROGG_SPAWN1 );
+		objManager.activateBotActionGroup( A22_STROGG_ATTACK_STROGG_SPAWN1 );
+		objManager.deactivateBotActionGroup( A22_GDF_ATTACK_STROGG_SPAWN1 );
+		objManager.activateBotActionGroup( A22_GDF_DEFEND_STROGG_SPAWN1 );
+		//objManager.setTeamUseRearSpawn( STROGG, false );
+	}
+
+	if( actionName == "strogg_forward_spawn2" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** STROGG LOST STROGG SPAWN 2 **********\n" );
+		}
+		objManager.activateBotActionGroup( A22_GDF_DEFEND_STROGG_SPAWN2 );
+		objManager.deactivateBotActionGroup( A22_GDF_ATTACK_STROGG_SPAWN2 );
+		objManager.activateBotActionGroup( A22_STROGG_ATTACK_STROGG_SPAWN2 );
+		objManager.deactivateBotActionGroup( A22_STROGG_DEFEND_STROGG_SPAWN2 );
+	}
+	if( actionName == "strogg_forward_spawn3" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** STROGG LOST STROGG SPAWN 3 **********\n" );
+		}
+		objManager.activateBotActionGroup( A22_GDF_DEFEND_STROGG_SPAWN3 );
+		objManager.deactivateBotActionGroup( A22_GDF_ATTACK_STROGG_SPAWN3 );
+		objManager.activateBotActionGroup( A22_STROGG_ATTACK_STROGG_SPAWN3 );
+		objManager.deactivateBotActionGroup( A22_STROGG_DEFEND_STROGG_SPAWN3 );
+	}
+}
+
+entity mapObject_Area22::GetSpectateEntity() { 
+	if ( jammer != $null_entity ) {
+		return jammer.vGetSpectateEntity();
+	}
+
+	entity miningLaserMaterials = G_FindMiningLaserMaterials();
+	if ( miningLaserMaterials == $null_entity ) {
+		return $null_entity;
+	}
+	
+	if ( !miningLaserMaterials.vIsObjectiveComplete() ) {
+		return miningLaserMaterials.vGetSpectateEntity();
+	}
+
+	if ( slipgateCore != $null_entity ) {
+		return slipgateCore.vGetSpectateEntity();
+	}
+
+	return $null_entity;
+}

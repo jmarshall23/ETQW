@@ -1,0 +1,78 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+atlas/valley/valley_mapobjects01.atlas
+***
+*/
+
+surfaceTypeMap models/mapobjects/valley/valley_mapobjects01 {
+	width	512
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 512 2048 )
+	}
+	rect {
+		surfaceType	paper
+		surfaceColor	( 1 1 1 )
+		coords ( 198 84 ) ( 280 100 )
+	}
+	rect {
+		surfaceType	paper
+		surfaceColor	( 1 1 1 )
+		coords ( 280 100 ) ( 466 206 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 180 100 ) ( 280 206 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 544 ) ( 98 632 )
+	}
+	rect {
+		surfaceType	glass
+		surfaceColor	( 1 1 1 )
+		coords ( 352 486 ) ( 502 596 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 418 624 ) ( 512 720 )
+	}
+	winding {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords 4 {
+			( 410 702 )
+			( 410 656 )
+			( 400 644 )
+			( 400 714 )
+		}
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 388 644 ) ( 400 714 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 134 636 ) ( 388 724 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1736 ) ( 362 1844 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1372 ) ( 462 1736 )
+	}
+}

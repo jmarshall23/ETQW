@@ -1,0 +1,64 @@
+// GDF High Command
+
+// Map Outskirts
+
+sound sounds/vo/gdf/highcommand/maps/outskirts/mcp/pastbarricade {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/outskirts/10501.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/outskirts/mcp/pastfuelstation {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/outskirts/10502.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/outskirts/databrain/steal/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/outskirts/10503.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/outskirts/databrain/grab {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/outskirts/10504.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/outskirts/databrain/take {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/outskirts/10505.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/outskirts/databrain/steal {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/outskirts/10506.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/outskirts/databrain/taken {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/outskirts/10507.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/outskirts/databrain/dropped {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/outskirts/10508.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/outskirts/databrain/returned {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/outskirts/10509.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/outskirts/gdfwin {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/outskirts/10510.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/outskirts/gdflose {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/outskirts/10511.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/outskirts/databrain/telecombuilding {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/outskirts/10520.wav
+	localization/english/sounds/vo/gdf/highcommand/maps/outskirts/15507.wav
+}

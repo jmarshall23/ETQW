@@ -1,0 +1,1509 @@
+effect effects/weapons/blaster_muzzleflash_view
+{
+	size	235
+
+	spawner "eject puff"
+	{
+		count		1,1
+
+		sprite
+		{
+			duration	2,2
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,0,4 }
+				tint { line 0.192157,0.0666667,0.0431373,0.168627,0.0941177,0.00392157 }
+				fade { point 0.6 }
+				offset { point -26,3,-1 }
+				rotate { box 0.5,-0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 7,7 }
+				rotate { box -0.5,0.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "eject glow"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.08,0.08
+			blend	add
+			persist
+			material	"textures/particles/weapon_heat_smoke2"
+			numFrames 1
+			trailRepeat	1
+
+			start
+			{
+				tint { point 0.658824,0.164706,0 }
+				fade { line 0.4,0.9 }
+				offset { point -17,3,0 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+			}
+			lineHit
+		}
+	}
+	spawner "fire"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.13,0.13
+			material	"particles/explosion/explode07"
+			trailRepeat	1
+
+			start
+			{
+				position { point 5,-3,0 }
+				size { line 2,2,4,4 }
+				tint { line 0.756863,0.654902,0.458824,0.211765,0.219608,0.164706 }
+				offset { point 5,1,3 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 5,5,6,6 }
+				rotate { box 0.5,-0.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "sparks"
+	{
+		count		1,1
+		locked
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.05,0.05
+			material	"textures/particles/sparks/sparkflash_strip02"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 2,2 }
+				tint { line 0.501961,0.501961,0.501961,0.74902,0.74902,0.74902 }
+				fade { line 0.1,0.3 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { box 4,4,6,6 }
+			}
+			lineHit
+		}
+	}
+	light "light2"
+	{
+		locked
+
+		light
+		{
+			duration	0.1,0.4
+			blend	add
+			material	"lights/round"
+			trailRepeat	1
+
+			start
+			{
+				position { point 25,0,-20 }
+				size { line 90,90,90,128,128,128 }
+				tint { line 0.686275,0,0,0.647059,0.329412,0.0156863 }
+			}
+
+			motion
+			{
+				tint { envelope concavefade count 1.5,1.5,1.5 offset -0.5,-0.5,-0.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "heat"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.15
+			material	"textures/particles/muzzleflash_haze"
+			trailRepeat	1
+
+			start
+			{
+				position { point 10,0,0 }
+				size { point 2,2 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_cmzoom }
+				tint { envelope jrad_smokefade }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 4,4 }
+				rotate { point 0 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "violent flash"
+	{
+		duration	0.1,0.1
+		count		1,1
+		locked
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.06,0.06
+			blend	add
+			material	"particles/flash/strogg_muzzleflash02"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { line 10,-1,0,14,-1,0 }
+				size { point 2,2 }
+				rotate { box 0.0416667,0.0833333 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 8,8 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+effect effects/weapons/blaster_muzzleflash_world
+{
+	size	73
+
+	cutOffDistance	15000
+
+	spawner "flame2"
+	{
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	300,300
+
+		line
+		{
+			duration	0.0051,0.0051
+			generatedLine
+			material	"textures/effects/weapons/blaster_fly_yellow"
+			trailRepeat	1
+
+			start
+			{
+				position { point -6,0,0 }
+				velocity { box 2,-0.025,-0.025,4,0.075,0 }
+				size { point 7 }
+				tint { line 0.921569,0.0784314,0.0392157,0.976471,0,0 }
+				fade { line 0.75,1 }
+				length { box 15,0,0,20,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1_fast count 0.9,0.9,0.9 offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+
+			end
+			{
+				tint { point 1,0.247059,0.247059 }
+			}
+			lineHit
+		}
+	}
+	spawner "flame3"
+	{
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	300,300
+
+		line
+		{
+			duration	0.03,0.08
+			generatedLine
+			material	"textures/effects/weapons/muzzle_flash_side2"
+			trailRepeat	1
+
+			start
+			{
+				position { point -2,0.25,0 }
+				velocity { box 2,-0.025,-0.25,4,0.075,-0.0125 }
+				size { box 5,8 }
+				tint { line 0.921569,0.286275,0.0784314,0.909804,0.109804,0.0901961 }
+				fade { line 0.75,1 }
+				length { box 15,0,0,20,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1_fast count 0.9,0.9,0.9 offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+			lineHit
+		}
+	}
+	spawner "large flash2"
+	{
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	400,400
+
+		sprite
+		{
+			duration	0.08,0.08
+			material	"textures/effects/weapons/muzzle_flash2"
+			trailRepeat	1
+
+			start
+			{
+				position { point 6,0,0 }
+				size { line 10,10,13,13 }
+				tint { line 0.164706,0.00784314,0,0.658824,0.192157,0 }
+				fade { point 0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 15,15,25,25 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+	spawner "flame4"
+	{
+		count		1,1
+		locked
+
+		line
+		{
+			duration	0.002,0.06
+			generatedLine
+			material	"particles/flash/strogg_muzzleflash01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0.25,0,2,0.25,0 }
+				velocity { box 2,-0.025,-0.25,4,0.075,-0.0125 }
+				size { box 5,9 }
+				fade { line 0.75,1 }
+				length { box 10,0,0,14,0,0 }
+			}
+
+			motion
+			{
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+			lineHit
+		}
+	}
+	spawner "flash"
+	{
+		count		1,1
+		locked
+
+		oriented
+		{
+			duration	0.03,0.08
+			material	"textures/effects/weapons/muzzle_flash2"
+			trailRepeat	1
+
+			start
+			{
+				position { point 1.5,0,0 }
+				size { line 5,5,8,8 }
+				tint { line 0.933333,0.211765,0.176471,0.909804,0.427451,0.223529 }
+				fade { line 0.75,1 }
+				rotate { box 0,0,0.338889,0,0,0.394444 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+
+			end
+			{
+				size { line 12,12,16,16 }
+			}
+			lineHit
+		}
+	}
+	spawner "edge2"
+	{
+		count		1,1
+		locked
+		inverseAttenuateEmitter
+		attenuation	400,400
+
+		sprite
+		{
+			duration	0.08,0.08
+			material	"textures/effects/weapons/muzzle_flash2"
+			trailRepeat	1
+
+			start
+			{
+				position { point 3,0,0 }
+				size { line 10,10,12,12 }
+				tint { point 0.713726,0.0941177,0.0627451 }
+				fade { point 0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 30,30,50,50 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+effect effects/weapons/blaster_impact_generic
+{
+	size	84
+
+	effect "Base Effect"
+	{
+		effect	"effects/impacts/bullets_small/impact_default"
+	}
+	spawner "Trail"
+	{
+		count		6,6
+
+		sprite
+		{
+			duration	0.4,0.4
+			persist
+			material	"penta/flame_ember01_burn"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,0 linearSpacing }
+				velocity { box 100,-30,-30,150,30,30 }
+				size { point 5,5 }
+				tint { point 0.752941,0.752941,0.752941 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 40,40 }
+				rotate { box -0.277778,0.277778 relative }
+			}
+		}
+	}
+	spawner "Glow Core"
+	{
+		count		4,4
+		locked
+		constant
+
+		sprite
+		{
+			duration	1,1
+			material	"penta/flame_ember01"
+			gravity		0.1,0.1
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,0,10,0,0 linearSpacing }
+				velocity { box 100,-60,-60,100,60,60 }
+				size { point 0.5,0.5 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				rotate { box -0.277778,0.277778 relative }
+			}
+		}
+	}
+}effect effects/weapons/blaster_steam
+{
+	size	28
+
+	cutOffDistance	100
+
+	emitter "fire"
+	{
+		duration	0.7,1.5
+		count		10,10
+
+		sprite
+		{
+			duration	2,2
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 4,0,-2,7,5,-5 }
+				acceleration { box 0,0,4,0,5,4 }
+				friction { box 0,0,-2,0,0,-5 }
+				size { line 2,2,4,4 }
+				tint { line 0.160784,0.109804,0.0392157,0.286275,0.109804,0.101961 }
+				fade { point 0 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_cmzoom }
+				tint { envelope prone }
+				fade { envelope shamus_fastinholdslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 8,8,12,12 }
+				fade { point 1 }
+				rotate { box 1,-1 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "heat_haze3"
+	{
+		duration	1.5,1.5
+		count		8,8
+		locked
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/muzzleflash_haze"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 4,0,4,7,5,5 }
+				acceleration { box 0,0,4,0,5,4 }
+				friction { box 0,0,-2,0,0,-5 }
+				size { point 4,4 }
+				tint { line 0.65098,0.65098,0.65098,0.811765,0.811765,0.811765 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_cmzoom }
+				tint { envelope jrad_smokefade }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 7,7 }
+				rotate { box 1,-1 relative }
+			}
+			lineHit
+		}
+	}
+	spawner "smoke puff5"
+	{
+		count		1,1
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/weapon_heat_smoke2"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,2,-2 }
+				velocity { point 0,0,0.1 }
+				acceleration { point 0,0,5 }
+				size { point 2,2 }
+				tint { point 0,0,0 }
+				fade { point 0.1 }
+				offset { point 0,1,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope shamus_fastinslowout count 1.2,1.2,1.2 }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 7,7 }
+				tint { point 0.278431,0.0588235,0.00392157 }
+				rotate { point 0.111111 }
+			}
+			lineHit
+		}
+	}
+	spawner "vent glow2"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	4,4
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip07"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 8,8 }
+				tint { point 0.941177,0.333333,0.156863 }
+				fade { line 0.3,0.45 }
+				offset { point 4,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope bathroomtable }
+			}
+			lineHit
+		}
+	}
+	spawner "small sparks4"
+	{
+		count		1,1
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.05,0.05
+			material	"textures/particles/sparks/sparkflash_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point -5,-3,-4 }
+				velocity { point 5,0,0 }
+				size { point 2,2 }
+				tint { point 0.890196,0.192157,0.176471 }
+				offset { point 0,3,3 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 4,4 }
+			}
+			lineHit
+		}
+	}
+	spawner "small sparks5"
+	{
+		start		1.4,1.4
+		count		1,1
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.05,0.05
+			material	"textures/particles/sparks/sparkflash_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point -4,-1,-4 }
+				size { point 2,2 }
+				tint { point 0.909804,0.317647,0.235294 }
+				offset { point 0,3,3 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 4,4 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+effect effects/weapons/blaster_trail
+{
+	size	15
+
+	emitter "Trail"
+	{
+		duration	0.5,0.5
+		count		64,64
+
+		sprite
+		{
+			duration	0.3,0.3
+			persist
+			material	"penta/flame_ember01_burn"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,0 linearSpacing }
+				size { point 5,5 }
+				tint { point 0.752941,0.752941,0.752941 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 10,10 }
+				rotate { box -0.277778,0.277778 relative }
+			}
+		}
+	}
+	spawner "Glow Core"
+	{
+		count		4,4
+		locked
+		constant
+
+		sprite
+		{
+			duration	1,1
+			material	"penta/flame_ember01"
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,0,10,0,0 linearSpacing }
+				size { point 2,2 }
+			}
+		}
+	}
+	emitter "Trail2"
+	{
+		duration	0.5,0.5
+		count		64,64
+
+		sprite
+		{
+			duration	0.3,0.3
+			persist
+			material	"particles/penta/hornetheathaze"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,0 linearSpacing }
+				size { point 5,5 }
+				tint { point 0.752941,0.752941,0.752941 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 10,10 }
+				rotate { box -0.277778,0.277778 relative }
+			}
+		}
+	}
+}effect effects/weapons/blaster_chargedshot_chargeup_view
+{
+	size	89
+
+	light "light2"
+	{
+		locked
+
+		light
+		{
+			duration	0.2,0.2
+			blend	add
+			material	"lights/round"
+			trailRepeat	1
+
+			start
+			{
+				position { point 20,5,-20 }
+				size { point 45,45,45 }
+				tint { line 0.992157,0.239216,0.129412,0.992157,0.584314,0.168627 }
+			}
+
+			motion
+			{
+				tint { envelope blasttable count 4,4,4 }
+			}
+			lineHit
+		}
+	}
+	emitter "core"
+	{
+		duration	1,1
+		count		2,3
+		locked
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 8,0,0 }
+				size { point 3,3 }
+				tint { point 0.682353,0.184314,0.0745098 }
+				fade { point 0.5 }
+			}
+
+			motion
+			{
+				size { envelope flare01 count 0.95,0.95 }
+				tint { envelope bathroomtable }
+			}
+
+			end
+			{
+				size { point 0,0 }
+				tint { point 0.596078,0.305882,0.0862745 }
+			}
+			lineHit
+		}
+	}
+	emitter "weapon_heat"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/muzzleflash_haze"
+			trailRepeat	1
+
+			start
+			{
+				position { point 8,0,0 }
+				size { point 0,0 }
+				fade { point 0 }
+				rotate { point -1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope linear }
+				rotate { envelope senetable3 }
+			}
+
+			end
+			{
+				size { point 3,3 }
+				fade { point 0.2 }
+				rotate { point 1 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "core2"
+	{
+		duration	1,1
+		count		3,3
+		locked
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 8,0,0 }
+				size { point 2,2 }
+				tint { point 0.584314,0.137255,0.0588235 }
+				fade { point 0.2 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope bathroomtable }
+				rotate { envelope bfgguy_vtable }
+			}
+
+			end
+			{
+				size { point 6,6 }
+				tint { point 0.478431,0.243137,0.0627451 }
+				rotate { box 0.5,-0.5 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/weapons/blaster_chargedshot_idle_view
+{
+	size	15
+
+	emitter "FLASH!"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	1,1
+			blend	add
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,-1,0 }
+				size { point 10,10 }
+				tint { line 0.992157,0.254902,0.00784314,0.976471,0.258824,0.0156863 }
+				fade { point 0.4 }
+				rotate { point -2 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope senetable3 count 0.2 }
+				rotate { envelope senetable3 }
+			}
+
+			end
+			{
+				size { point 10,10 }
+				rotate { point 2 }
+			}
+			lineHit
+		}
+	}
+	emitter "core"
+	{
+		duration	1,1
+		count		2,3
+		locked
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 8,0,0 }
+				size { point 2,2 }
+				tint { point 0.682353,0.184314,0.0745098 }
+				fade { point 0.5 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 4,4 }
+				tint { envelope bathroomtable }
+			}
+
+			end
+			{
+				size { point 3,3 }
+				tint { point 0.596078,0.305882,0.0862745 }
+			}
+			lineHit
+		}
+	}
+	emitter "core2"
+	{
+		duration	1,1
+		count		3,3
+		locked
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 8,0,0 }
+				size { point 6,6 }
+				tint { point 0.584314,0.137255,0.0588235 }
+				fade { point 0.2 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope bathroomtable }
+				rotate { envelope bfgguy_vtable }
+			}
+
+			end
+			{
+				size { point 6,6 }
+				tint { point 0.478431,0.243137,0.0627451 }
+				rotate { box 0.5,-0.5 }
+			}
+			lineHit
+		}
+	}
+	emitter "weapon_heat"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/muzzleflash_haze"
+			trailRepeat	1
+
+			start
+			{
+				position { point 8,0,0 }
+				size { point 3,3 }
+				fade { point 0 }
+				rotate { point -1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope linear }
+				rotate { envelope senetable3 }
+			}
+
+			end
+			{
+				size { point 3,3 }
+				fade { point 0.2 }
+				rotate { point 1 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+effect effects/weapons/blaster_chargedshot_steam_view
+{
+	size	16
+
+	emitter "fire"
+	{
+		duration	0.7,1.5
+		count		10,10
+
+		sprite
+		{
+			duration	2,2
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 4,0,-2,7,5,-5 }
+				acceleration { box 0,0,4,0,5,4 }
+				friction { box 0,0,-2,0,0,-5 }
+				size { line 0,0,2,2 }
+				tint { line 0.160784,0.109804,0.0392157,0.286275,0.109804,0.101961 }
+				fade { point 0 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_cmzoom }
+				tint { envelope prone }
+				fade { envelope shamus_fastinholdslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 2,2,4,4 }
+				fade { point 1 }
+				rotate { box 1,-1 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "heat_haze3"
+	{
+		duration	1,1
+		count		8,8
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/muzzleflash_haze"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 4,0,-2,7,5,-5 }
+				acceleration { box 0,0,4,0,5,4 }
+				friction { box 0,0,-2,0,0,-5 }
+				size { point 2,2 }
+				tint { line 0.65098,0.65098,0.65098,0.811765,0.811765,0.811765 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_cmzoom }
+				tint { envelope jrad_smokefade }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 5,5 }
+				rotate { box 1,-1 relative }
+			}
+			lineHit
+		}
+	}
+	spawner "smoke puff5"
+	{
+		count		1,1
+
+		sprite
+		{
+			duration	1.5,1.5
+			material	"textures/particles/weapon_heat_smoke2"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,2,-2 }
+				velocity { point 0,0,0.1 }
+				acceleration { point 0,0,5 }
+				tint { point 0,0,0 }
+				fade { point 0.1 }
+				offset { point 0,1,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope shamus_fastinslowout count 1.2,1.2,1.2 }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 4,4 }
+				tint { point 0.278431,0.0588235,0.00392157 }
+				rotate { point 0.111111 }
+			}
+			lineHit
+		}
+	}
+	spawner "vent glow2"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	4,4
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip07"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 4,4 }
+				tint { point 0.941177,0.333333,0.156863 }
+				fade { line 0.3,0.45 }
+				offset { point 4,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope bathroomtable }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/weapons/blaster_chargedshot_chargeup_world
+{
+	size	80
+
+	light "light2"
+	{
+		locked
+
+		light
+		{
+			duration	0.2,0.2
+			blend	add
+			material	"lights/round"
+			trailRepeat	1
+
+			start
+			{
+				position { point 2,0,1 }
+				size { point 45,45,45 }
+				tint { line 0.992157,0.239216,0.129412,0.992157,0.584314,0.168627 }
+			}
+
+			motion
+			{
+				tint { envelope blasttable count 4,4,4 }
+			}
+			lineHit
+		}
+	}
+	emitter "core"
+	{
+		duration	1,1
+		count		2,3
+		locked
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 2,0,1 }
+				size { point 3,3 }
+				tint { point 0.682353,0.184314,0.0745098 }
+				fade { point 0.5 }
+			}
+
+			motion
+			{
+				size { envelope flare01 count 0.95,0.95 }
+				tint { envelope bathroomtable }
+			}
+
+			end
+			{
+				size { point 0,0 }
+				tint { point 0.596078,0.305882,0.0862745 }
+			}
+			lineHit
+		}
+	}
+	emitter "core2"
+	{
+		duration	1,1
+		count		3,3
+		locked
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 2,0,1 }
+				size { point 2,2 }
+				tint { point 0.584314,0.137255,0.0588235 }
+				fade { point 0.2 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope bathroomtable }
+				rotate { envelope bfgguy_vtable }
+			}
+
+			end
+			{
+				size { point 6,6 }
+				tint { point 0.478431,0.243137,0.0627451 }
+				rotate { box 0.5,-0.5 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/weapons/blaster_chargedshot_idle_world
+{
+	size	16
+
+	emitter "FLASH!"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	1,1
+			blend	add
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 2,0,0 }
+				size { point 10,10 }
+				tint { line 0.992157,0.254902,0.00784314,0.976471,0.258824,0.0156863 }
+				fade { point 0.4 }
+				rotate { point -2 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope senetable3 count 0.2 }
+				rotate { envelope senetable3 }
+			}
+
+			end
+			{
+				size { point 10,10 }
+				rotate { point 2 }
+			}
+			lineHit
+		}
+	}
+	emitter "core"
+	{
+		duration	1,1
+		count		2,3
+		locked
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 2,0,0 }
+				size { point 2,2 }
+				tint { point 0.682353,0.184314,0.0745098 }
+				fade { point 0.5 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 4,4 }
+				tint { envelope bathroomtable }
+			}
+
+			end
+			{
+				size { point 3,3 }
+				tint { point 0.596078,0.305882,0.0862745 }
+			}
+			lineHit
+		}
+	}
+	emitter "core2"
+	{
+		duration	1,1
+		count		3,3
+		locked
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 2,0,0 }
+				size { point 6,6 }
+				tint { point 0.584314,0.137255,0.0588235 }
+				fade { point 0.2 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope bathroomtable }
+				rotate { envelope bfgguy_vtable }
+			}
+
+			end
+			{
+				size { point 6,6 }
+				tint { point 0.478431,0.243137,0.0627451 }
+				rotate { box 0.5,-0.5 }
+			}
+			lineHit
+		}
+	}
+}
+

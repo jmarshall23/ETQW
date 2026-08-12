@@ -1,0 +1,131 @@
+
+#define FS_GUI_NONE				0
+#define FS_GUI_RELOADING		1
+#define FS_GUI_INVALID			2
+#define FS_GUI_LOCKING			3
+#define FS_GUI_LOCKED			4
+#define FS_GUI_CHARGING			5
+#define FS_GUI_ENROUTE			6
+#define FS_GUI_OUT_OF_RANGE		7
+
+object fireSupportStatus {
+	void				Update( player myPlayer, object artyTrace, float lockStatus, float lockFraction );
+	
+	boolean				locationValid;
+	
+	float				status;
+	float				timerStatus;
+	float				lockState;
+	float				keepLock;
+	float				guiStatus;
+	handle				statusString;
+}
+
+void fireSupportStatus::Update( player myPlayer, object artyTrace, float lockStatus, float lockFraction ) {
+	deployable_base targetItem = myPlayer.targetingItem;
+	
+	status = -1;
+	timerStatus = 0;
+
+	vector end;
+	
+	lockState = TARGET_LOCK_NOT_LOCKED;
+	locationValid = true;
+
+	if ( targetItem != $null_entity ) {
+		keepLock = ( targetItem.vGetFireSupportMode() == TARGET_ROCKETS ) && ( targetItem.vGetTimerState() > 0.75f );
+		if ( keepLock && !myPlayer.getButton( PK_ATTACK ) ) {
+			keepLock = 2;
+		}
+		
+		if ( !targetItem.vIsDeployed() ) {
+			status = MPS_NONE_ACTIVE;
+		} else if ( !targetItem.vTargetPlayerEligible( myPlayer ) && artyTrace != $null ) {
+			status = MPS_DISABLED;
+		} else {
+			status = targetItem.vGetFiringStatus( artyTrace );
+			if ( status == MPS_READY && artyTrace != $null ) {
+			 	end = artyTrace.getTraceEndPos();
+				end_z = end_z + 65536.f;
+				
+				if ( artyTrace.getTraceFraction() == 1.f || artyTrace.getTraceSurfaceFlags() & SURF_NOIMPACT ) {
+					status = MPS_OUT_OF_RANGE;
+				}
+			
+				if ( status != MPS_INVALID ) {
+					float targetWorldZone = sys.getWorldPlayZoneIndex( artyTrace.getTraceEndPos() );
+					float itemWorldZone = sys.getWorldPlayZoneIndex( targetItem.getWorldOrigin() );
+					if ( targetWorldZone != itemWorldZone ) {
+						status = MPS_INVALID;
+					}
+				}
+				
+				if ( status != MPS_INVALID && status != MPS_OUT_OF_RANGE ) {
+					sys.tracePoint( artyTrace.getTraceEndPos(), end, CONTENTS_SOLID, $null_entity );
+					if ( sys.getTraceFraction() == 1.f ) {
+						status = MPS_INVALID;
+					} else if ( !( sys.getTraceSurfaceFlags() & SURF_NOIMPACT ) ) {
+						status = MPS_INVALID;
+					}
+				}
+
+				if ( !G_CheckFireSupportBlock( artyTrace.getTraceEndPos(), myPlayer ) ) {
+					status = MPS_INVALID;
+				}
+				
+				if ( status == MPS_READY ) {				
+					lockState = lockStatus;
+					timerStatus = lockFraction;
+					
+					if ( lockState == TARGET_LOCK_LOCKING ) {
+						status = MPS_LOCKING;
+					} else if ( lockState == TARGET_LOCK_LOCKED ) {
+						status = MPS_LOCKED;
+					}
+				}
+			} else if ( status == MPS_RELOADING || artyTrace == $null ) {
+				timerStatus = targetItem.vGetTimerState();
+			}
+		}
+	} else {
+		status = MPS_DISABLED;
+	}
+
+	if ( status == MPS_INVALID || status == MPS_OUT_OF_RANGE ) {
+		locationValid = false;
+	}
+
+	if ( lockStatus == TARGET_LOCK_LOCKED ) {
+		if ( targetItem.vGetFireSupportMode() == TARGET_ROCKETS ) {
+			guiStatus = MPS_LOCKED_ROCKETS;
+		} else {
+			guiStatus = MPS_LOCKED;
+		}
+	} else if ( targetItem != $null ) {
+		guiStatus = status;
+		if ( guiStatus == MPS_FIRING && targetItem.vGetFireSupportMode() == TARGET_ROCKETS ) {
+			guiStatus = MPS_LOCKED_ROCKETS;
+		} else if ( guiStatus == MPS_FIRING ) {
+			guiStatus = MPS_LOCKED;
+		}
+	} else if ( status == MPS_DISABLED ) {
+		guiStatus = MPS_INVALID;
+	} else {
+		guiStatus = status;
+	}
+
+	G_StringForFireSupportState( guiStatus );
+	statusString = g_fireSupportStateStr;
+
+	if ( guiStatus == MPS_LOCKING ) {				guiStatus = FS_GUI_LOCKING;
+	} else if ( guiStatus == MPS_LOCKED ) {			guiStatus = FS_GUI_LOCKED;
+	} else if ( guiStatus == MPS_INVALID ) {		guiStatus = FS_GUI_INVALID;
+	} else if ( guiStatus == MPS_RELOADING ) {		guiStatus = FS_GUI_RELOADING;
+	} else if ( guiStatus == MPS_WAITING ) {		guiStatus = FS_GUI_CHARGING;
+	} else if ( guiStatus == MPS_DISABLED ) {		guiStatus = FS_GUI_INVALID;
+	} else if ( guiStatus == MPS_OUT_OF_RANGE ) {	guiStatus = FS_GUI_OUT_OF_RANGE;
+	} else if ( guiStatus == MPS_LOCKED_ROCKETS ) { guiStatus = FS_GUI_LOCKED;
+	} else if ( guiStatus == MPS_NONE_ACTIVE ) {	guiStatus = FS_GUI_ENROUTE;
+	} else {										guiStatus = FS_GUI_NONE;			
+	}
+}

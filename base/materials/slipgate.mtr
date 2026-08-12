@@ -1,0 +1,82 @@
+material models/mapobjects/slipgate/cupboard_01
+{
+	diffusemap	models/mapobjects/slipgate/cupboard_01_d.tga
+	specularmap	models/mapobjects/slipgate/cupboard_01_s.tga
+	bumpmap		models/mapobjects/slipgate/cupboard_01_local.tga
+}
+
+material models/mapobjects/slipgate/barrel_01
+{
+	noshadows
+	{
+		diffusemap			models/mapobjects/slipgate/barrel_01_d.tga
+		specularmap			models/mapobjects/slipgate/barrel_01_s.tga
+		bumpmap				models/mapobjects/slipgate/barrel_01_local.tga
+	
+		diffuseDetailMap	textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 3,3,0,0
+	}
+}
+
+material models/mapobjects/slipgate/palette_01
+{
+	diffusemap	models/mapobjects/slipgate/palette_01_d.tga
+	specularmap	models/mapobjects/slipgate/palette_01_s.tga
+	bumpmap		models/mapobjects/slipgate/palette_01_local.tga
+}
+
+material textures/dirt/dry_earth_rubble
+{
+	
+	qer_editorimage	textures/dirt/dry_earth_editor.tga
+	{
+		diffusemap	textures/dirt/dry_earth_d.tga
+		specularmap 	textures/rock/sharprock2_s.tga
+		bumpmap		addnormals( textures/rock/sharprock2_local.tga  , heightmap( textures/rock/skyrock3_b.tga, 4 ) )
+		 	
+		vertexcolor
+	}
+}
+
+material textures/dirt/dry_earth_rubble_noshadows
+{
+	
+	qer_editorimage	textures/dirt/dry_earth_editor.tga
+	noshadows
+	{
+		diffusemap	textures/dirt/dry_earth_d.tga
+		specularmap 	textures/rock/sharprock2_s.tga
+		bumpmap		addnormals( textures/rock/sharprock2_local.tga  , heightmap( textures/rock/skyrock3_b.tga, 4 ) )
+		 	
+		vertexcolor
+	}
+}
+
+material textures/rubble/concrete_rubble_broken
+{
+	
+	qer_editorimage	textures/rubble/brick_rubble_01_d.tga
+	{
+		diffusemap	picmip -1	textures/rubble/brick_rubble_01_d.tga
+		specularmap	picmip -2	textures/rock/sharprock2_s.tga
+		bumpmap		picmip -1	addnormals( textures/rock/sharprock2_local.tga  , heightmap( textures/rock/skyrock3_b.tga, 4 ) )
+		 	
+		vertexcolor
+	}
+}
+
+material textures/rubble/concrete_rubble_broken_noshadows
+{
+	
+	qer_editorimage	textures/rubble/brick_rubble_01_d.tga
+	noshadows
+	{
+		diffusemap	picmip -1	textures/rubble/brick_rubble_01_d.tga
+		specularmap	picmip -2	textures/rock/sharprock2_s.tga
+		bumpmap		picmip -1	addnormals( textures/rock/sharprock2_local.tga  , heightmap( textures/rock/skyrock3_b.tga, 4 ) )
+		 	
+		vertexcolor
+	}
+}

@@ -1,0 +1,78 @@
+/*
+=================
+ Localization for SDNet
+=================
+*/
+
+// Error codes, match up with SDNetErrorCode.h
+
+locString sdnet/error/0		{ text "#str_0005000" }	// SDNET_NO_ERROR = 0
+locString sdnet/error/1		{ text "#str_0005001" }	// SDNET_UNKNOWN_ERROR = 1
+locString sdnet/error/2		{ text "#str_0005002" }	// SDNET_BAD_PARAMETERS = 2
+locString sdnet/error/3		{ text "#str_0005003" }	// SDNET_CANCELLED = 3
+locString sdnet/error/4		{ text "#str_0005004" }	// SDNET_NOT_INITIALIZED = 4
+locString sdnet/error/5		{ text "#str_0005005" }	// SDNET_BUSY = 5
+locString sdnet/error/6		{ text "#str_0005006" }	// SDNET_INVALID_USER_ID = 6
+locString sdnet/error/7		{ text "#str_0005007" }	// SDNET_PERMISSION_DENIED = 7
+locString sdnet/error/8		{ text "#str_0005008" }	// SDNET_THROTTLED = 8
+locString sdnet/error/9		{ text "#str_0005009" }	// SDNET_BAD_TITLE_ID = 9
+locString sdnet/error/10	{ text "#str_0005010" }	// SDNET_DISABLED_TITLE_ID = 10
+
+// Connection
+locString sdnet/error/100	{ text "#str_0005100" }	// SDNET_NOT_CONNECTED = 100
+locString sdnet/error/101	{ text "#str_0005101" }	// SDNET_PORT_OPEN_FAILED
+locString sdnet/error/102	{ text "#str_0005102" }	// SDNET_RESOLVE_FAILED
+locString sdnet/error/103	{ text "#str_0005103" }	// SDNET_CONNECTION_RESET
+locString sdnet/error/104	{ text "#str_0005104" }	// SDNET_SERVICE_UNAVAILABLE
+locString sdnet/error/105	{ text "#str_0005105" }	// SDNET_SESSION_UNAVAILABLE
+locString sdnet/error/106	{ text "#str_0005106" }	// SDNET_ACCESS_DENIED
+
+// User management
+locString sdnet/error/200	{ text "#str_0005200" }	// SDNET_USER_USERNAME_EXISTS = 200
+locString sdnet/error/201	{ text "#str_0005201" }	// SDNET_USER_NONE_ACTIVE
+locString sdnet/error/202	{ text "#str_0005202" }	// SDNET_USER_MISSING_PROFILE
+
+// Online accounts
+locString sdnet/error/300	{ text "#str_0005300" }	// SDNET_AUTH_BAD_ACCOUNT = 300
+locString sdnet/error/301	{ text "#str_0005301" }	// SDNET_AUTH_USERNAME_EXISTS
+locString sdnet/error/302	{ text "#str_0005302" }	// SDNET_AUTH_USERNAME_ILLEGAL
+locString sdnet/error/303	{ text "#str_0005303" }	// SDNET_AUTH_USERNAME_VULGAR
+locString sdnet/error/304	{ text "#str_0005304" }	// SDNET_AUTH_MAX_ACC_EXCEEDED
+locString sdnet/error/305	{ text "#str_0005305" }	// SDNET_AUTH_ACCOUNT_EXPIRED
+locString sdnet/error/306	{ text "#str_0005306" }	// SDNET_AUTH_ACCOUNT_LOCKED
+locString sdnet/error/307	{ text "#str_0005307" }	// SDNET_AUTH_INCORRECT_PASSWORD
+locString sdnet/error/308	{ text "#str_0005308" }	// SDNET_AUTH_BAD_REQUEST
+locString sdnet/error/309	{ text "#str_0005309" }	// SDNET_AUTH_IP_NOT_ALLOWED
+
+// CD-key auth
+locString sdnet/error/400	{ text "#str_0005400" }	// SDNET_AUTHKEY_INVALID = 400
+locString sdnet/error/401	{ text "#str_0005401" }	// SDNET_AUTHKEY_BANNED
+locString sdnet/error/402	{ text "#str_0005402" }	// SDNET_AUTHKEY_INUSE
+
+// Friendship management
+locString sdnet/error/500	{ text "#str_0005500" }	// SDNET_FRIEND_SELF_FRIENDSHIP_NOT_ALLOWED = 500
+locString sdnet/error/501	{ text "#str_0005501" }	// SDNET_FRIEND_ALREADY_FRIENDS
+locString sdnet/error/502	{ text "#str_0005502" }	// SDNET_FRIEND_FRIENSHIP_ALREADY_PROPOSED
+locString sdnet/error/503	{ text "#str_0005503" }	// SDNET_FRIEND_FRIENDSHIP_NOT_REQUESTED
+locString sdnet/error/504	{ text "#str_0005504" }	// SDNET_FRIEND_SELF_BLOCK_NOT_ALLOWED
+locString sdnet/error/505	{ text "#str_0005505" }	// SDNET_FRIEND_FRIENDS_FULL
+locString sdnet/error/506	{ text "#str_0005506" }	// SDNET_FRIEND_NOT_A_FRIEND
+locString sdnet/error/507	{ text "#str_0005507" }	// SDNET_FRIEND_NOT_INVITED
+locString sdnet/error/508	{ text "#str_0005508" }	// SDNET_FRIEND_OPERATION_BLOCKED
+locString sdnet/error/509	{ text "#str_0005509" }	// SDNET_FRIEND_MISSING_PROFILE
+
+// Team management
+locString sdnet/error/600	{ text "#str_0005600" }	// SDNET_TEAM_MEMBERSHIP_NOT_REQUESTED = 600
+locString sdnet/error/601	{ text "#str_0005601" }	// SDNET_TEAM_ALREADY_EXISTS
+locString sdnet/error/602	{ text "#str_0005602" }	// SDNET_TEAM_NO_MULTIPLE_MEMBERSHIP
+locString sdnet/error/603	{ text "#str_0005603" }	// SDNET_TEAM_NO_MULTIPLE_OWNERSHIP
+locString sdnet/error/604	{ text "#str_0005604" }	// SDNET_TEAM_NOT_A_MEMBER
+locString sdnet/error/605	{ text "#str_0005605" }	// SDNET_TEAM_INVALID
+locString sdnet/error/606	{ text "#str_0005606" }	// SDNET_TEAM_INVALID_NAME
+locString sdnet/error/607	{ text "#str_0005607" }	// SDNET_TEAM_NOT_INVITED
+locString sdnet/error/608	{ text "#str_0005608" }	// SDNET_TEAM_NOT_A_OWNER
+locString sdnet/error/609	{ text "#str_0005609" }	// SDNET_TEAM_NOT_AN_ADMIN_OR_OWNER
+locString sdnet/error/610	{ text "#str_0005610" }	// SDNET_TEAM_MEMBERSHIP_ALREADY_PROPOSED
+locString sdnet/error/611	{ text "#str_0005611" }	// SDNET_TEAM_MEMBER_ALREADY_EXISTS
+locString sdnet/error/612	{ text "#str_0005612" }	// SDNET_TEAM_FULL
+locString sdnet/error/613	{ text "#str_0005613" }	// SDNET_TEAM_NAME_VULGAR

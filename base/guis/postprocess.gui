@@ -1,0 +1,92 @@
+gui guis/postprocess {
+	materials {
+		"postprocess/glow"			"postprocess/glow"
+		"postprocess/glowStrogg"	"postprocess/glowStrogg"
+		"postprocess/heatsight"		"postprocess/heatsight"
+	}
+
+	properties {
+		float flags = GUI_FULLSCREEN;
+	}
+
+	windowDef desktop {
+		properties {
+			color backcolor = 0, 0, 0, 1;
+			float visible = globals.gameHud.showPostProcess == 0;
+			string material = "postprocess/glow";
+			float staticFactor = 0;
+			float damageScale = 0;
+			float damageEffect = 0;
+			rect rect = 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT;
+			
+			float damageStartTime = 0;
+			float staticDuration = 0;
+		}
+
+		timeLine {
+			properties {
+				float active = 0;	
+			}
+			onTime 0 {
+				if ( player.lastDamageIntensity != 0 ) {
+					staticDuration = immediate( ( 300 + 500 * damageScale ) - ( player.gameTime - damageStartTime + 33 ) );
+					if ( staticDuration > 0 ) {
+						staticFactor = transition( 1.0f, 0.0f, staticDuration, "table://rr2_concaveFade_start_at_1_fast" );
+					} else {
+						// deactivate the timeline
+						active = 0;
+						staticFactor = 0;
+					}
+				} else {
+					active = 0;
+					staticFactor = 0;
+				}
+			}
+		}
+
+		events {
+			onCreate {
+				attachRenderCallback( "postProcess" );
+				globals.gameHud.visionEnhancer = "none";
+			}
+			onPropertyChanged "damageEffect" {
+				gui.setShaderParm( 4, damageEffect );
+			}
+			onPropertyChanged "player.teamName" {
+				if ( icompare( player.teamName, "strogg" ) ) {
+					material = "postprocess/glowStrogg";
+					damageEffect = staticFactor * damageScale;
+				} else {
+					material = "postprocess/glow";
+					damageEffect = 0;
+				}
+			}
+			onPropertyChanged "player.lastDamageTime" {
+				if ( player.lastDamageIntensity > 15 ) {
+					damageScale = immediate( min( max( player.lastDamageIntensity - 15, 15 ) / 60.0f, 1.0f ) );
+					damageStartTime = immediate( player.gameTime );
+					
+					timeline.default.active = 1;
+					timeline.default.resetTime( 0 );
+				} else {
+					damageScale = 0;
+				}
+			}
+			onPropertyChanged "globals.gameHud.visionEnhancer" {
+			
+				// gui.print( "postprocess: " + globals.gameHud.visionEnhancer + _newline );
+				if ( icompare( globals.gameHud.visionEnhancer, "heatSight" ) ) {
+					material = "postprocess/heatsight";
+				} else {
+					if ( icompare( player.teamName, "strogg" ) ) {
+						material = "postprocess/glowStrogg";
+						damageEffect = staticFactor * damageScale;
+					} else {
+						material = "postprocess/glow";
+						damageEffect = 0;
+					}
+				}
+			}			
+		}
+	}
+}

@@ -1,0 +1,49 @@
+material textures/object/bluetex4c_ed
+{
+	qer_editorimage	textures/object/bluetex4c_ed.tga
+	bumpmap		textures/object/bluetex4c_local.tga
+	diffusemap		textures/object/bluetex4cdif.tga
+	specularmap		textures/object/bluetex4cspec.tga
+}
+
+material textures/object/bluetex2_ed
+{
+		surfaceType "metal"
+	qer_editorimage	textures/object/bluetex2_ed.tga
+	bumpmap		textures/object/bluetex2_local.tga
+	diffusemap		textures/object/bluetex2dif.tga
+	specularmap		textures/object/bluetex2spec.tga
+	{
+		blend	gl_one,gl_one
+		map		textures/object/bluetex2x.tga
+		red		parm0 * 2
+		green		parm1 * 2
+		blue		parm2 * 2
+	}
+}
+
+material textures/object/a_conpanel4blk
+{
+	qer_editorimage		textures/object/a_conpanel4blk.tga
+	bumpmap			textures/object/a_conpanel4_local.tga
+	diffusemap		textures/object/a_conpanel4blk_d.tga
+	specularmap		textures/object/a_conpanel4_s.tga
+	{
+	blend 	add
+	map	textures/object/a_conpanel4_add.tga
+	rgb	5
+	}
+
+{
+	blend 	add
+	map	textures/object/a_conpanel4_add2.tga
+	rgb 	(9 * sintable [.2 + time ]) +.2
+
+	}
+{
+	blend 	add
+	map	textures/object/a_conpanel4_add3.tga
+	rgb 	(3 * sintable [3 - time ]) + 1
+
+	}
+}

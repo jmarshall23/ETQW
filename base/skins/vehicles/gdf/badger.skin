@@ -1,0 +1,20 @@
+
+skin skins/vehicles/gdf/badger/temperate {
+	dummy/metal/shader1		models/vehicles/edf_badger/badger
+}
+
+skin skins/vehicles/gdf/badger/arctic {
+	dummy/metal/shader1		models/vehicles/edf_badger/badger_arctic
+}
+
+
+
+skin skins/vehicles/gdf/badger_cockpit/temperate {
+	dummy/metal/shader1		models/vehicles/edf_badger/badger
+	dummy/flesh/shader1		models/characters/edf_player/gdf_arm
+}
+
+skin skins/vehicles/gdf/badger_cockpit/arctic {
+	dummy/metal/shader1		models/vehicles/edf_badger/badger_arctic
+	dummy/flesh/shader1		models/characters/edf_player/gdf_arm_arctic
+}

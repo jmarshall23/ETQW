@@ -1,0 +1,196 @@
+
+entityDef carryable_item_base {
+	"spawnclass"					"sdScriptEntity"
+	"scriptObject"					"carryable_item"
+
+	"mins"							"-26 -8 0"
+	"maxs"							"26 8 34"
+
+	"angular_friction"				"1"
+	"linear_friction"				"1"
+	"contact_friction"				"1"
+
+	"mass"							"1000000"
+	"buoyancy"						"1"
+
+	"option_network_interface"		"1"
+	"option_wants_touch"			"1"
+	"option_crosshair_interface"	"1"
+	"option_simple_rigid_body_physics"		"1"
+	"option_combat_model"			"1"
+
+	"apply_collision_impulse"		"0"
+
+	"wait_time"						"35"
+
+	"editor_mins"					"-26 -8 0"
+	"editor_maxs"					"26 8 34"
+
+	"mtr_crosshair_icon"			"hud/objectives/data"
+	"mtr_icon"						"hud/icons/missionsystem/obj_document"
+
+	"hover_height"					"0"
+	"hover_bounce"					"0"
+	"hover_spin_speed"				"0"
+
+	"collection_carryables"			"carryables"
+	"collection_playerkilledwatch"	"playerkilledwatch"
+	
+	"tt_pickup"						"carryable_deliver"
+}
+
+entityDef carryable_item_base/strogg {
+	"inherit"						"carryable_item_base"
+	"team"							"strogg"
+
+	"task_pickup"					"item_pickup_gdf"
+	"task_return"					"item_return_strogg"
+	"task_deliver"					"item_deliver_gdf"
+	"task_stop"						"item_stop_strogg"
+	"task_defend"					"item_defend_carryable_strogg"
+	"task_defend_deliver_point"		"item_defend_strogg"
+}
+
+entityDef carryable_item_base/strogg_island {
+	"inherit"						"carryable_item_base"
+	"team"							"strogg"
+
+	"task_pickup"					"item_pickup_gdf"
+	"task_return"					"item_return_strogg"
+	"task_deliver"					"item_deliver_island_gdf"
+	"task_stop"						"item_stop_carryable_strogg"
+	"task_defend"					"item_defend_carryable_strogg"
+	"task_defend_deliver_point"		"item_defend_console_strogg"
+}
+
+entityDef carryable_item_base/strogg_outskirts {
+	"inherit"						"carryable_item_base"
+	"team"							"strogg"
+
+	"task_pickup"					"item_pickup_gdf_outskirts"
+	"task_return"					"item_return_strogg"
+	"task_deliver"					"item_deliver_outskirts_gdf"
+	"task_stop"						"item_stop_carryable_strogg"
+	"task_defend"					"item_defend_carryable_strogg"
+	"task_defend_deliver_point"		"item_defend_console_strogg"
+	
+	"tt_pickup"						""
+}
+
+entityDef carryable_item_base/gdf {
+	"inherit"						"carryable_item_base"
+	"team"							"gdf"
+
+	"task_pickup"					"item_pickup_strogg"
+	"task_return"					"item_return_gdf"
+	"task_deliver"					"item_deliver_strogg"
+	"task_stop"						"item_stop_gdf"
+	"task_defend"					"item_defend_gdf"
+	"task_defend_deliver_point"		"item_defend_gdf"
+}
+
+
+
+
+entityDef carryable_item_dropped {
+	"inherit"						"carryable_item_base"
+	"team"							"gdf"
+}
+
+
+entityDef item_drop_pod {
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"item_drop_pod"
+
+	"def_item"						"carryable_item_enercell"
+
+	"fx_smash"						"effects/maps/quarry/building_smash"
+	"fx_hitground"					"effects/deployables/landfall_hitground_decal"
+
+	// FIXME: Use something thats not placeholder!!
+	"model"							"strogg_cellpod"
+	"anim_idle_closed"				"idle_closed"
+	"anim_idle_open"				"idle_open"
+	"anim_open"						"deploy"
+
+	"dmg_landing"					"damage_pod_landing_splash"
+
+	"option_simple_physics"			"1"
+	"mass"							"10000"
+	"gravity"						"0"
+
+	"cm_model"						"models/mapobjects/quarry/cellpod/cellpod_clip.lwo"
+}
+
+entityDef carryable_item_caller {
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"drop_caller"
+
+	"editor_preview_model"			"models/mapobjects/quarry/cellpod/cellpod_editor.lwo"
+
+	"def_drop_object"				"vehicle_strogg_drop"
+	"def_drop_item"					"item_drop_pod"
+	"drop_team"						"strogg"
+
+	"fx_hitground"					"effects/deployables/landfall_hitground_decal"
+	"fx_pad"						"effects/items/enercell"
+	"fx_dropped"					"effects/items/enercell_dropped"
+}
+
+entityDef carryable_item_enercell {
+	"inherit"						"carryable_item_base"
+	"team"							"gdf"
+
+	"mins"							"-48 -48 0"
+	"maxs"							"48 48 48"
+
+	"editor_mins"					"-48 -48 0"
+	"editor_maxs"					"48 48 48"
+
+	"model"							"strogg_enercell"
+
+//	"model"							"strogg_enercell"
+
+	"fx_hitground"					"effects/deployables/landfall_hitground_decal"
+
+	"hover_height"					"32"
+	"hover_bounce"					"8"
+	"hover_bounce_period"			"1.0"
+	"hover_spin_speed"				"90"
+
+	"fx_pad"						"effects/items/enercell"
+	"fx_dropped"					"effects/items/enercell_dropped"
+	
+	"snd_idle"						"objects/strogg/quarrycell"
+}
+
+damageDef damage_pod_landing_splash {
+	damage						"damage_pod_landing_splash"
+	radius						512
+	push						10000000
+
+	tt_obituary_unknown			"tooltips/killmsgs/self/drop_pod"
+}
+
+damageFilter damage_pod_landing_splash {
+
+	type {
+		target	"target_all"
+		damage	4000
+	}
+
+	type {
+		target	"target_deployables_all"
+		damage	5000
+	}
+
+	type {
+		target	"target_objectives_he"
+		damage 	5000
+	}
+
+	type {
+		target	"target_explodable"
+		damage	5000
+	}
+}

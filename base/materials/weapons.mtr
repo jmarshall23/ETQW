@@ -1,0 +1,85 @@
+
+/**************************************************************
+	Landmine
+**************************************************************/
+
+material models/weapons/gdf_landmine/landmine
+{
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/weapons/gdf_landmine/landmine_local.tga models/weapons/gdf_landmine/landmine_hi.lwo
+	diffusemap	picmip -1 partialLoad models/weapons/gdf_landmine/landmine_d.tga
+	specularmap	picmip -2 partialLoad models/weapons/gdf_landmine/landmine_s.tga
+	bumpmap 	picmip -1 partialLoad addnormals(models/weapons/gdf_landmine/landmine_local.tga, heightmap(models/weapons/gdf_landmine/landmine_h.tga, 5 ) )
+}
+
+material models/weapons/landmine/landmine_world
+{
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/weapons/gdf_landmine/landmine_local.tga models/weapons/gdf_landmine/landmine_hi.lwo
+	diffusemap	picmip -1 partialLoad models/weapons/gdf_landmine/landmine_world_d.tga
+	specularmap	picmip -2 partialLoad models/weapons/lgdf_andmine/landmine_world_s.tga
+	bumpmap 	picmip -1 partialLoad addnormals(models/weapons/gdf_landmine/landmine_world_local.tga, heightmap(models/weapons/gdf_landmine/landmine_world_h.tga, 5 ) )
+}
+
+
+/**************************************************************
+	strategic strike missile
+**************************************************************/
+
+material models/weapons/missiles/strike_missile/strike
+{
+	renderbump -size 512 256 -aa 2 models/weapons/missiles/strike_missile/strike_local.tga models/peppi/ssm/ssm_hi.lwo
+
+	diffusemap	picmip -1	models/weapons/missiles/strike_missile/strike_d.tga
+	specularmap	picmip -2	models/weapons/missiles/strike_missile/strike_s.tga
+	bumpmap	picmip -1		models/weapons/missiles/strike_missile/strike_local.tga
+}
+
+
+/**************************************************************
+ strogg_beacon
+**************************************************************/
+material models/weapons/strogg_beacon/strogg_beacon
+{
+	renderbump -size 2048 2048 -colorMap -trace 0.1 -clampTextureSpace -overdrawMap models/weapons/strogg_beacon/strogg_beacon_local.tga models/weapons/strogg_beacon/strogg_beacon_h.lwo
+	{ 
+	program	interaction/strogg
+	diffusemap		picmip -1 partialLoad models/weapons/strogg_beacon/strogg_beacon_d.tga
+	specularmap		picmip -2 partialLoad models/weapons/strogg_beacon/strogg_beacon_s.tga
+	bumpmap			picmip -1 partialLoad addnormals (models/weapons/strogg_beacon/strogg_beacon_local.tga, heightmap (models/weapons/strogg_beacon/strogg_beacon_h.tga, 1 ) )
+	selfIllumMap	picmip -2 partialLoad models/weapons/strogg_beacon/strogg_beacon_glow.tga 
+	}
+}
+
+material models/weapons/strogg_beacon/strogg_beacon_thirdperson
+{
+	renderbump -size 2048 2048 -colorMap -trace 0.1 -clampTextureSpace -overdrawMap models/weapons/strogg_beacon/strogg_beacon_local.tga models/weapons/strogg_beacon/strogg_beacon_h.lwo
+	{ 
+	program	interaction/strogg
+	diffusemap		picmip -1 models/weapons/strogg_beacon/strogg_beacon_thirdperson_d.tga
+	specularmap		picmip -2 models/weapons/strogg_beacon/strogg_beacon_thirdperson_s.tga
+	bumpmap			picmip -1 addnormals (models/weapons/strogg_beacon/strogg_beacon_thirdperson_local.tga, heightmap (models/weapons/strogg_beacon/strogg_beacon_thirdperson_h.tga, 1 ) )
+	//selfIllumMap	picmip -2 models/weapons/strogg_beacon/strogg_beacon_glow.tga 
+	}
+}
+
+/**************************************************************
+	Strogg First-Person Hands
+**************************************************************/
+
+material models/weapons/strogg_hands/strogg_hands
+{
+	renderbump -trace 0.04 -size 1024 512 models/weapons/strogg_hands/hands_local.tga models/weapons/strogg_hands/hands_hi.lwo
+
+	diffusemap	picmip -1	models/weapons/strogg_hands/hands_d.tga
+	specularmap	picmip -2	models/weapons/strogg_hands/hands_s.tga
+	bumpmap	picmip -1		addnormals(models/weapons/strogg_hands/hands_local.tga, heightmap(models/weapons/strogg_hands/hands_h.tga, 4 ) )
+}
+
+
+material models/weapons/strogg_hands/strogg_arm1
+{
+	renderbump -trace 0.04 -size 1024 512 models/weapons/strogg_hands/hands_local.tga models/weapons/strogg_hands/hands_hi.lwo
+
+	diffusemap	picmip -1	models/weapons/strogg_hands/strogg_arm_d.tga
+	specularmap	picmip -2	models/weapons/strogg_hands/strogg_arm_s.tga
+	bumpmap	picmip -1		addnormals(models/weapons/strogg_hands/strogg_arm_local.tga, heightmap(models/weapons/strogg_hands/strogg_arm_h.tga, 4 ) )
+}

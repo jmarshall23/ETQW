@@ -1,0 +1,158 @@
+///CARGO PALETTES///
+
+material models/mapobjects/valley/valley_cargopalette01_a
+{
+	renderbump  -size 512 512 -aa 2 -trace .15  models/cloth_local.tga models/cloth_hp.lwo
+	
+	diffusemap	models/mapobjects/valley/valley_cargopalette01_d.tga
+	bumpmap		models/mapobjects/valley/valley_cargopalette01_local.tga
+	specularmap	models/mapobjects/valley/valley_cargopalette01_s.tga
+}
+
+material models/mapobjects/valley/valley_cargopalette01_b
+{
+	noshadows
+	noselfshadow
+	twosided
+		models/mapobjects/valley/valley_cargopalette01_d.tga,
+		models/mapobjects/valley/valley_cargopalette01_s.tga,
+		models/mapobjects/valley/valley_cargopalette01_local.tga,
+
+}
+
+material models/mapobjects/valley/valley_container_dirty01
+{
+	renderbump
+	surfaceType "metal"
+	{	
+		diffusemap	picmip -1	models/mapobjects/valley/valley_container_dirty01_d.tga
+		specularmap	picmip -2	models/mapobjects/valley/valley_container_dirty01_s.tga
+		bumpmap 	picmip -1	models/mapobjects/valley/valley_container_dirty01_local.tga
+		vertexcolor
+		 	
+		diffuseDetailMap          textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap          textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap          textures/detail/bump/vehicle_detail01_d.tga
+        detailMult 4,16,0,0
+        blend  add  
+		
+		map    lights/spot01.tga  
+		
+		red
+		
+		Parm0 
+		
+		
+		green
+		
+		Parm1 
+		
+		
+		blue
+		
+	Parm2 
+}
+}
+
+material models/mapobjects/valley/valley_container01
+{
+	renderbump
+	surfaceType "metal"
+	{	
+		diffusemap	picmip -1	models/mapobjects/valley/valley_container01_d.tga
+		specularmap	picmip -2	models/mapobjects/valley/valley_container01_s.tga
+		bumpmap 	picmip -1	models/mapobjects/valley/valley_container01_local.tga
+		vertexcolor
+				 	
+		diffuseDetailMap          textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap          textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap          textures/detail/bump/vehicle_detail01_d.tga
+        detailMult 4.5,4.5,4.5,4.5 
+	}
+}
+
+material models/mapobjects/valley/valley_container01_pallet
+{
+	surfaceType "metal"
+	{	
+		diffusemap	models/mapobjects/valley/valley_container01_pallet_d.tga
+		specularmap	models/mapobjects/valley/valley_container01_pallet_s.tga
+		bumpmap 	models/mapobjects/valley/valley_container01_pallet_local.tga
+	}
+}
+
+///VALLEY MAP OBJECTS
+
+material models/mapobjects/valley/valley_mapobjects01
+{
+	surfaceTypeMap	"models/mapobjects/valley/valley_mapobjects01"
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	models/mapobjects/valley/valley_mapobjects01_d.tga
+		bumpmap		picmip -2	models/mapobjects/valley/valley_mapobjects01_local.tga
+		specularmap	picmip -2	models/mapobjects/valley/valley_mapobjects01_s.tga
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		detailMult 5,20,0.3,0
+		detailWeightMap			models/mapobjects/area22/office/area22_mapobjects01_detailmask.tga
+	}
+}
+
+material models/mapobjects/valley/valley_mapobjects01_noshadow
+{
+	noshadows
+	surfaceTypeMap	"models/mapobjects/valley/valley_mapobjects01"
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	models/mapobjects/valley/valley_mapobjects01_d.tga
+		bumpmap		picmip -2	models/mapobjects/valley/valley_mapobjects01_local.tga
+		specularmap	picmip -2	models/mapobjects/valley/valley_mapobjects01_s.tga
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		detailMult 5,20,0,0
+		detailWeightMap			models/mapobjects/area22/office/area22_mapobjects01_detailmask.tga
+	}
+}
+
+material models/mapobjects/valley/valley_mapobjects02
+{
+	{
+		diffusemap	picmip -1	models/mapobjects/valley/valley_mapobjects02_d.tga
+		bumpmap		picmip -1	models/mapobjects/valley/valley_mapobjects02_local.tga
+		specularmap	picmip -2	models/mapobjects/valley/valley_mapobjects02_s.tga
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		detailMult 5,20,0,0
+	}
+}
+
+material models/mapobjects/valley/valley_mapobjects02_noshadows
+{
+	noshadows
+	{
+		diffusemap	picmip -1	models/mapobjects/valley/valley_mapobjects02_d.tga
+		bumpmap		picmip -1	models/mapobjects/valley/valley_mapobjects02_local.tga
+		specularmap	picmip -2	models/mapobjects/valley/valley_mapobjects02_s.tga
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		detailMult 5,20,0,0
+	}
+}
+
+material models/mapobjects/valley/valley_powerline
+{
+	twosided
+	{
+		blend	blend
+		map	models/mapobjects/valley/valley_powerline.tga
+	}
+	translucent
+}

@@ -1,0 +1,297 @@
+// Export
+// ========================================================================
+
+export hauser {
+
+	options -prefix MORT_ -scale 0.7 -sourcedir models/structures/strogg/deployables/weapons/plasma_mortar/dev_sd -destdir models/structures/strogg/deployables/weapons/plasma_mortar -keep barrel1
+
+	mesh	mortar.mb		-dest mortar.md5mesh
+
+	anim	mortar.mb		-dest mortar_undeployed.md5anim			-range 1 1
+	anim	mortar.mb	 	-dest mortar_idle.md5anim			-range 58 58
+	anim 	mortar.mb		-dest mortar_deploy.md5anim			-range 1 58
+	anim	mortar.mb	 	-dest mortar_fire.md5anim			-range 58 75
+
+	anim	mortar.mb	 	-dest mortar_damaged.md5anim			-range 75 95
+	anim 	mortar.mb		-dest mortar_disabled.md5anim			-range 95 135
+
+	anim	mortar.mb		-dest mortar_disabled_to_damaged.md5anim	-range 95 95
+	anim	mortar.mb		-dest mortar_damaged_to_idle.md5anim		-range 58 58
+}
+
+// Models
+// ========================================================================
+
+model deployable_plasmamortar {
+	mesh							models/structures/strogg/deployables/weapons/plasma_mortar/mortar.md5mesh
+
+	anim undeployed					models/structures/strogg/deployables/weapons/plasma_mortar/mortar_undeployed.md5anim {
+	}
+
+	anim deploy						models/structures/strogg/deployables/weapons/plasma_mortar/mortar_deploy.md5anim {
+		frame 1							sound_channel snd_deployable_deploy snd_deploy
+	}
+
+	anim base						models/structures/strogg/deployables/weapons/plasma_mortar/mortar_idle.md5anim {
+	}
+
+	anim damaged					models/structures/strogg/deployables/weapons/plasma_mortar/mortar_damaged.md5anim {
+	}
+
+	anim destroyed					models/structures/strogg/deployables/weapons/plasma_mortar/mortar_disabled.md5anim {
+	}
+
+	anim fire						models/structures/strogg/deployables/weapons/plasma_mortar/mortar_fire.md5anim {
+	}
+
+	anim reload						models/structures/strogg/deployables/weapons/plasma_mortar/mortar_idle.md5anim {
+	}
+
+	anim disabled_to_damaged		models/structures/strogg/deployables/weapons/plasma_mortar/mortar_disabled_to_damaged.md5anim {
+	}
+
+	anim damaged_to_idle			models/structures/strogg/deployables/weapons/plasma_mortar/mortar_damaged_to_idle.md5anim {
+	}
+}
+
+// Entity Def
+// ========================================================================
+
+deployObject deployobject_plasmamortar {
+	"name"							"plasmamortar"
+	"title"							"game/deploy/plasma_mortar"
+	"wait_time"						"10000"
+	"def_deployable"				"deployable_plasmamortar"
+	"def_deployable_carrier"		"vehicle_strogg_drop"
+	"str_placement"					"deployitem_plasmamortar_placement_model"
+	"mask"							"dm_default"
+	"max_height_diff"				"512"
+	"object_radius"					"2048"
+	"ti_kill_filter"				"target_deploy_kill"
+	"mdl_scale_factor"				"0.7"
+	"category"						"firesupport"
+}
+
+stringMap deployitem_plasmamortar_placement_model {
+	"model"							"models/structures/strogg/deployables/weapons/plasma_mortar/plasma_mortar.lwo"
+	"skin"							"deployEffect"
+	"maxVisDist"					"2560"
+	"pushIntoOutsideAreas"			"1"
+}
+
+entityDef deployable_plasmamortar {
+	"inherit"						"deployable_base"
+	"inherit1"						"deployable_strogg"
+
+	"title"							"game/deploy/plasma_mortar"
+
+	"collection_gui_count"			"deployable_plasmamortar"
+
+	"editor_color"					".3 .3 1"
+	"editor_usage"					"The Strogg Plasma Mortar"
+
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"deployable_plasmamortar"
+
+	"model"							"deployable_plasmamortar"
+	"cm_model"						"models/structures/strogg/deployables/weapons/plasma_mortar/plasma_mortar_clip.lwo"
+	
+	"stat_name"						"plasma_mortar"
+
+	"task_name"						"game/deploy/plasma_mortar"
+
+	"ch_name"						"game/deploy/plasma_mortar"
+	"option_combat_model"			"1"
+	"option_crosshair_interface"	"1"
+	"option_commandmap_interface"	"1"
+	"option_crosshair_offset"		"0 0 64"
+
+	"option_allow_abilities"		"1"
+	"ability_1"						"fire_support"
+
+	"player_wait_time"				"60"
+
+	"mtr_commandmap"				"guis/assets/commandmap/icon_atk_deploy"
+	"mtr_commandmap_unknown"		"guis/assets/commandmap/icon_atk_deploy"
+	"icon_size_cm"					"10"
+
+	"health"						"3000"
+	"repair_multiplier"				"1.5"
+	
+	"action_time"					"20"
+
+	"num_missiles"					"1"
+
+	"spread"						"0"
+
+	"range_min"						"50"
+	"range_max"						"1000"
+
+	"missile_speed"					"5000"
+	"missile_recycle"				"5"
+	"missile_reload"				"10"
+	"missile_firecount"				"6"
+	"missile_barrel"				"muzzle"
+
+	"joint_yaw"						"barrel1"
+	"joint_pitch"					"barrel2"
+	"joint_barrel"					"muzzle"
+
+	"low_arc"						"0"
+
+	"min_yaw_turn"					"30"
+	"max_yaw_turn"					"90"
+
+	"min_pitch_turn"				"30"
+	"max_pitch_turn"				"90"
+
+	"min_pitch"						"0"
+	"max_pitch"						"90"
+
+	"min_turn"						"0"
+	"max_turn"						"90"
+
+	"def_projectile"				"projectile_deployable_plasmamortar"
+
+	"launch_anim"					"fire"
+	"launch_channel"				"0"
+
+	"snd_deploy"					"sounds/deployables/plasmamortar/deploy"
+	"snd_turret_start"				"deployable_turret_aim"
+	"snd_turret_stop"				"deployable_turret_stop"
+	"snd_barrel_start"				"deployable_barrel_aim"
+	"snd_barrel_stop"				"deployable_barrel_stop"
+
+	"mtr_color"						"guis/binoculars/target_plasma_color"
+	"mtr_desat"						"guis/binoculars/target_plasma_desat"
+	"mtr_half_desat"				"guis/binoculars/target_plasma_half_desat"
+	"mtr_full_desat"				"guis/binoculars/target_plasma_bright_desat"
+
+	"target_timer"					"timer_railhowitzer"
+	"target_locktime"				"4"
+	"target_lostgraceperiod"		"1"
+	"target_length"					"45"
+
+	"fx_fire"						"effects/deployables/plasmamortar_fire"
+	"fx_death"						"effects/deployables/plasmamortar_destroy"
+	"fx_emped"						"effects/generic_smoke/emp"
+	
+	"emp_effect_joint"				"barrel1"
+
+	"timer_name"					"timer_plasma"
+	"collection_firesupport_plasma"	"firesupport_plasma"
+
+	"do_object"						"deployobject_plasmamortar"
+
+	"deployable_type"				"2"
+	
+	"contextmenu_quickchat_enemy"	"quickchat/context/attack/firesupportspotted"
+
+	"deploybonus_requireactive"		"0"
+	"prof_deploybonus"				"pro_oppressor_deploy_bonus"
+	
+	"def_marker"					"target_marker"
+}
+
+entityDef projectile_deployable_plasmamortar {
+	"spawnclass"					"idProjectile_RigidBody"
+	"scriptObject"					"projectile_targetedmissile"
+
+	"aor_layout"					"missile"
+	
+	"mins"							"-3 -3 -6"
+	"maxs"							"3 3 6"
+	"cone"							"3"
+	"model"							""
+
+	"dmg_damage"					"damage_deployable_plasmamortar"
+	"dmg_splash_damage"				"damage_deployable_plasmamortar_splash"
+
+	"health"						"1"
+	"angular_velocity"				"0 0 15"
+	"face_velocity"					"1"
+	"bounce"						"0"
+	"mass"							"5"
+	"gravity"						"533"
+	"fuse"							"10"
+	"thrust_power"					"20000"
+	"has_thrust"					"1"
+
+	"detonate_on_fuse"				"0"
+	"detonate_on_death"				"1"
+	"detonate_on_world"				"1"
+	"detonate_on_actor"				"0"
+	
+	"use_air_burst"					"1"
+	"fx_airburst"					"effects/deployables/plasmamortar_explode_air"
+
+	"collection_antiair"			"antiair"
+	"collection_mdfExport"			"mdfExport"
+
+	"target_forget"					"15"
+	//"snd_fly"						"sounds/deployables/plasmamortar/fly"
+	"snd_fly"						"sounds/deployables/ssg/fly"
+	"fx_trail"						"effects/deployables/plasmamortar_trail"
+	"fx_explode"					"effects/deployables/plasmamortar_explode"
+	"fx_explode_water"				"effects/water/explosion"
+	"fx_explode_water_interior"		"effects/water/explosion_interior"
+
+	"prof_destroy"					"pro_engineer_antimissile_plasmamortar"
+}
+
+damageDef damage_deployable_plasmamortar {
+	damage							"damage_deployable_plasmamortar"
+
+	prof_damage						"pro_oppressor_damage"
+	
+	stat_name						"plasma_mortar"
+
+	team_kill_cvar					"g_allowComplaint_firesupport"
+
+	tt_obituary						"tooltips/killmsgs/weapons/plasmamortar"
+	tt_obituary_team_kill			"tooltips/killmsgs/weapons/plasmamortar/teamkill"
+	tt_obituary_self				"tooltips/killmsgs/weapons/plasmamortar/self"
+	tt_obituary_unknown				"tooltips/killmsgs/weapons/plasmamortar/unknown"
+}
+
+damageDef damage_deployable_plasmamortar_splash {
+	damage							"damage_deployable_plasmamortar_splash"
+	radius							512
+	knockback						80
+	push							10000000
+
+	prof_damage						"pro_oppressor_damage"
+
+	stat_name						"plasma_mortar"
+
+	team_kill_cvar					"g_allowComplaint_firesupport"
+
+	tt_obituary						"tooltips/killmsgs/weapons/plasmamortar"
+	tt_obituary_team_kill			"tooltips/killmsgs/weapons/plasmamortar/teamkill"
+	tt_obituary_self				"tooltips/killmsgs/weapons/plasmamortar/self"
+	tt_obituary_unknown				"tooltips/killmsgs/weapons/plasmamortar/unknown"
+}
+
+damageFilter damage_deployable_plasmamortar {
+	type {
+		target	"target_all"
+		damage	1000
+	}
+
+	type {
+		target	"target_explodable"
+		damage	400
+	}
+}
+
+damageFilter damage_deployable_plasmamortar_splash {
+	type {
+		target	"target_all"
+		damage	1000
+	}
+
+	type {
+		target	"target_explodable"
+		damage	400
+	}
+}

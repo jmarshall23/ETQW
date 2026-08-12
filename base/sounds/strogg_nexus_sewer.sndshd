@@ -1,0 +1,103 @@
+// Strogg Nexus
+
+// Map Sewer
+
+sound sounds/vo/strogg/nexus/maps/sewer/emp/fail {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20901.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/grates/defend/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20902.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/grates/defend {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20903.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/northgrate/planted {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20904.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/northgrate/disarm {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20905.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/northgrate/planted/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20906.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/northgrate/disarmed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20907.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/northgrate/destroyed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20908.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/southgrate/planted {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20909.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/southgrate/disarm {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20910.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/southgrate/planted/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20911.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/southgrate/disarmed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20912.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/southgrate/destroyed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20913.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/grates/fail {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20914.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/controls/defend {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20915.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/controls/hacking {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20916.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/controls/hacking/half {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20917.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/controls/hacked {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20918.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/stroggwin {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20920.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/sewer/strogglose {
+
+	localization/english/sounds/vo/strogg/nexus/maps/sewer/20919.wav
+}

@@ -1,0 +1,22 @@
+/***********************************************************************
+
+ camera man
+
+***********************************************************************/
+
+model model_cameraman {
+	inherit							model_mp_marine
+}
+
+entityDef cameraman {
+
+	"inherit"							"player_base"
+
+	"camera_zoom"						"36"
+	"camera_zoom1"						"18"
+	"camera_zoom2"						"9"
+	"camera_zoom3"						"4.5"
+	"camera_zoom4"						"3"
+	"camera_zoom5"						"2.25"
+	"camera_zoom6"						"1.8"
+}

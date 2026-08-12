@@ -1,0 +1,19 @@
+
+
+material beams/generic {
+	{
+		blend add
+		vertexcolor
+		map textures/particles/vpring1_alpha.tga
+		alpha 0.01	// This controlls how much it blooms set it to someth lowish
+	}
+}
+
+material beams/smoke {
+	{
+		blend add
+		vertexcolor
+		map textures/particles/dustcloud.tga
+		alpha 0.01	// This controlls how much it blooms set it to someth lowish
+	}
+}

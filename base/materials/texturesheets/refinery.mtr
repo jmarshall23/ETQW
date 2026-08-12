@@ -1,0 +1,383 @@
+// DECALS
+
+material texturesheets/refinery/refinery_decals
+{
+	polygonOffset
+	sort decal
+	nonsolid
+ 	translucent
+	{
+		program	filterVertexColorCoverage
+ 		blend	filter
+		map	texturesheets/refinery/refinery_decals_d.tga
+		maskAlpha
+		vertexcolor
+		maskDepth
+		depthFunc	lequal
+	}
+}
+
+material texturesheets/refinery/building02b
+{
+	surfaceTypeMap	"texturesheets/refinery/building02b"
+	{
+		program	interaction/basic_detailwm	
+		diffusemap	picmip -1	texturesheets/refinery/building02b_d.tga
+		specularmap	picmip -2	texturesheets/refinery/building02b_s.tga
+		bumpmap		picmip -1	texturesheets/refinery/building02b_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailWeightMap			texturesheets/refinery/building02b_detailmask.tga
+		detailMult	2.5,20,0,0
+		
+		vertexcolor
+	}
+}
+
+material texturesheets/refinery/building02b_noshadows
+{
+	surfaceTypeMap	"texturesheets/refinery/building02b"
+	noshadows
+	{
+		program	interaction/basic_detailwm	
+		diffusemap	picmip -1	texturesheets/refinery/building02b_d.tga
+		specularmap	picmip -2	texturesheets/refinery/building02b_s.tga
+		bumpmap		picmip -1	texturesheets/refinery/building02b_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailWeightMap			texturesheets/refinery/building02b_detailmask.tga
+		detailMult	2.5,20,0,0
+		
+		vertexcolor
+	}
+}
+
+
+material texturesheets/refinery/building05c
+{
+	surfaceTypeMap	"texturesheets/refinery/building05c"
+	{
+		diffusemap	picmip -1	texturesheets/refinery/building05c_d.tga
+		specularmap	picmip -2	texturesheets/refinery/building05c_s.tga
+		bumpmap		picmip -1	texturesheets/refinery/building05c_local.tga	
+		vertexcolor
+		
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailMult	2.5,20,0,0
+	}
+}
+
+material texturesheets/refinery/building10
+{
+	surfaceTypeMap "texturesheets/refinery/building10"
+	{
+		diffusemap	picmip -1	texturesheets/refinery/building10_d.tga
+		specularmap	picmip -2	texturesheets/refinery/building10_s.tga
+		bumpmap 	picmip -1	texturesheets/refinery/building10_local.tga
+		vertexcolor
+		
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	2.5,20,0,0
+	}
+}
+
+material texturesheets/refinery/warehouse_detail
+{
+	surfaceTypeMap "texturesheets/refinery/warehouse_detail"
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	texturesheets/refinery/warehouse_detail_d.tga
+		specularmap	picmip -2	texturesheets/refinery/warehouse_detail_s.tga
+		bumpmap 	picmip -1	texturesheets/refinery/warehouse_detail_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailWeightMap			texturesheets/refinery/warehouse_detail_detailmask.tga
+		detailMult	2,16,0,0
+				
+		vertexcolor
+	}
+}
+
+material texturesheets/refinery/shanty_buildings1
+{
+	{
+		diffusemap	picmip -1	texturesheets/refinery/shanty_buildings1_d.tga
+		specularmap	picmip -2	texturesheets/refinery/shanty_buildings1_s.tga
+		bumpmap 	picmip -1	texturesheets/refinery/shanty_buildings1_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	2.5,20,0,0
+		
+		vertexcolor
+	}
+}
+
+material texturesheets/refinery/shanty_buildings1_noshadows
+{
+	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/refinery/shanty_buildings1_d.tga
+		specularmap	picmip -2	texturesheets/refinery/shanty_buildings1_s.tga
+		bumpmap 	picmip -1	texturesheets/refinery/shanty_buildings1_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	2.5,20,0,0
+		
+		vertexcolor
+	}
+}
+
+material texturesheets/refinery/refinery_building
+{
+	surfaceTypeMap "texturesheets/refinery/refinery_building"
+	{
+		diffusemap	picmip -1	texturesheets/refinery/refinery_building_d.tga
+		specularmap	picmip -2	texturesheets/refinery/refinery_building_s.tga
+		bumpmap		picmip -1	texturesheets/refinery/refinery_building_local.tga		
+		vertexcolor
+		
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	2.5,20,0,0
+	}
+}
+
+material texturesheets/refinery/refinery_building_noshadows
+{
+	surfaceTypeMap "texturesheets/refinery/refinery_building"
+	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/refinery/refinery_building_d.tga
+		specularmap	picmip -2	texturesheets/refinery/refinery_building_s.tga
+		bumpmap		picmip -1	texturesheets/refinery/refinery_building_local.tga
+		vertexcolor
+
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	2.5,20,0,0
+	}
+}
+
+material texturesheets/refinery/embankment
+{
+	surfacetype "stone"
+	{
+ 		diffusemap		picmip -1	texturesheets/refinery/embankment_d.tga
+ 		specularmap		_black
+		bumpmap			picmip -1	texturesheets/refinery/embankment_local.tga
+		
+		diffuseDetailMap 		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/concrete_detail01_d.tga
+		detailMult	8,8,0,0
+	}
+}
+
+
+// SIGNS AND DOORS
+
+material texturesheets/refinery/refinery_signsdoors01b
+{
+	surfaceTypeMap "texturesheets/refinery/refinery_signsdoors01b"
+	{
+		program interaction/basic_detailwm
+		diffusemap	picmip -1	texturesheets/refinery/refinery_signsdoors01b_d.tga
+		specularmap	picmip -2	texturesheets/refinery/refinery_signsdoors01b_s.tga
+		bumpmap 	picmip -1	texturesheets/refinery/refinery_signsdoors01b_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailMult	5,20,0,0
+		detailWeightMap			texturesheets/refinery/refinery_signsdoors01b_detailmask.tga
+		
+		vertexcolor
+	}
+}
+
+
+// WINDOWS
+
+material texturesheets/refinery/refinery_windows02
+{
+	diffusemap	picmip -1	texturesheets/refinery/refinery_windows02_d.tga
+	bumpmap		picmip -1	texturesheets/refinery/refinery_windows02_local.tga
+	surfacetype glass
+	{
+		blend blend
+		program sfx/windowglass 
+		diffusemap	picmip -1	texturesheets/refinery/refinery_windows02_d.tga
+		bumpmap		picmip -1	texturesheets/refinery/refinery_windows02_local.tga
+		parameters 2, 1.0, 0.3
+	}
+}
+
+material texturesheets/refinery/refinery_windows02_noshadows
+{	
+	surfacetype glass
+	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/refinery/refinery_windows02_d.tga
+		bumpmap		picmip -1	texturesheets/refinery/refinery_windows02_local.tga
+	}
+	{
+		blend blend
+		program sfx/windowglass 
+		diffusemap	picmip -1	texturesheets/refinery/refinery_windows02_d.tga
+		bumpmap		picmip -1	texturesheets/refinery/refinery_windows02_local.tga
+		parameters 2, 1.0, 0.3
+	}
+}
+
+material texturesheets/refinery/refinery_windows02_nonsolid_noshadows
+{	
+	surfacetype glass
+	noshadows
+	nonsolid
+	{
+		diffusemap	picmip -1	texturesheets/refinery/refinery_windows02_d.tga
+		bumpmap		picmip -1	texturesheets/refinery/refinery_windows02_local.tga
+	}
+	{
+		blend blend
+		program sfx/windowglass 
+		diffusemap	picmip -1	texturesheets/refinery/refinery_windows02_d.tga
+		bumpmap		picmip -1	texturesheets/refinery/refinery_windows02_local.tga
+		parameters 2, 1.0, 0.3
+	}
+}
+
+
+// MIN DIST - No shadows / no collision variants for min dist buildings 
+
+
+material texturesheets/refinery/building03b_nonsolid_noshadows
+{
+	nonsolid
+	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/refinery/building03b_d.tga
+		specularmap	picmip -2	texturesheets/refinery/building03b_s.tga
+		bumpmap 	picmip -1	texturesheets/refinery/building03b_local.tga
+		vertexcolor
+	}
+}
+
+material texturesheets/refinery/building05b_nonsolid_noshadows
+{
+	nonsolid
+	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/refinery/building05b_d.tga
+		specularmap	picmip -2	texturesheets/refinery/building05b_s.tga
+		bumpmap		picmip -1	texturesheets/refinery/building05b_local.tga
+		vertexcolor		
+	}
+}
+
+material texturesheets/refinery/building10_nonsolid_noshadows
+{
+	nonsolid
+	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/refinery/building10_d.tga
+		specularmap	picmip -2	texturesheets/refinery/building10_s.tga
+		bumpmap 	picmip -1	texturesheets/refinery/building10_local.tga
+		vertexcolor
+	}
+}
+
+material texturesheets/refinery/building10_noshadows
+{
+	surfaceTypeMap "texturesheets/refinery/building10"
+	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/refinery/building10_d.tga
+		specularmap	picmip -2	texturesheets/refinery/building10_s.tga
+		bumpmap 	picmip -1	texturesheets/refinery/building10_local.tga
+		vertexcolor
+	}
+}
+
+material texturesheets/refinery/warehouse_detail_noshadows
+{
+	surfaceTypeMap "texturesheets/refinery/warehouse_detail"
+	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/refinery/warehouse_detail_d.tga
+		specularmap	picmip -2	texturesheets/refinery/warehouse_detail_s.tga
+		bumpmap 	picmip -1	texturesheets/refinery/warehouse_detail_local.tga
+	}
+}
+
+material texturesheets/refinery/warehouse_detail_nonsolid_noshadows
+{
+	nonsolid
+	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/refinery/warehouse_detail_d.tga
+		specularmap	picmip -2	texturesheets/refinery/warehouse_detail_s.tga
+		bumpmap 	picmip -1	texturesheets/refinery/warehouse_detail_local.tga
+	}
+}
+
+material texturesheets/refinery/shanty_buildings1_nonsolid_noshadows
+{
+	nonsolid
+	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/refinery/shanty_buildings1_d.tga
+		specularmap	picmip -2	texturesheets/refinery/shanty_buildings1_s.tga
+		bumpmap 	picmip -1	texturesheets/refinery/shanty_buildings1_local.tga
+		vertexcolor
+	}
+}
+
+material texturesheets/refinery/auto_garage_01_nonsolid_noshadows
+{
+	nonsolid
+	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/refinery/auto_garage_01_d.tga
+		specularmap	picmip -2	texturesheets/refinery/auto_garage_01_s.tga
+		bumpmap 	picmip -1	texturesheets/refinery/auto_garage_01_local.tga
+		vertexColor
+	}
+}
+
+material texturesheets/refinery/refinery_signsdoors01b_noshadows
+{
+	surfaceTypeMap texturesheets/refinery/refinery_signsdoors01b
+	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/refinery/refinery_signsdoors01b_d.tga
+		specularmap	picmip -2	texturesheets/refinery/refinery_signsdoors01b_s.tga
+		bumpmap 	picmip -1	texturesheets/refinery/refinery_signsdoors01b_local.tga
+		vertexcolor
+	}
+}
+
+
+material texturesheets/refinery/refinery_signsdoors01b_nonsolid_noshadows
+{
+	nonsolid
+	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/refinery/refinery_signsdoors01b_d.tga
+		specularmap	picmip -2	texturesheets/refinery/refinery_signsdoors01b_s.tga
+		bumpmap 	picmip -1	texturesheets/refinery/refinery_signsdoors01b_local.tga
+		vertexcolor
+	}
+}

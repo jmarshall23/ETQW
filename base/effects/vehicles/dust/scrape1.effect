@@ -1,0 +1,156 @@
+effect effects/vehicles/scrape1
+{
+	size	307
+
+	cutOffDistance	500
+
+	sound "Scrape Sound"
+	{
+		soundShader	"sounds/vehicles/misc/scrape"
+		freqshift	0,2
+	}
+	spawner "core"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.125,0.25
+			persist
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -5,-5,-5,5,5,5 }
+				velocity { box 0,-5,-5,5,5,5 }
+				size { line 20,20,50,50 }
+				tint { line 0.290196,0.290196,0.290196,0.0784314,0.0431373,0 }
+				fade { line 1,0.5 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1 offset 0.1,0.1,0.1 }
+			}
+			lineHit
+		}
+	}
+	emitter "spark flash"
+	{
+		duration	0.1,0.1
+		count		2,2
+		locked
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.08,0.08
+			material	"textures/particles/sparks/sparkflash_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 5,5 }
+				fade { line 0.3,1 }
+				rotate { box 0,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { line 25,25,40,40 }
+			}
+			lineHit
+		}
+	}
+	spawner "unnamed11"
+	{
+		count		15,20
+		locked
+		attenuateEmitter
+		attenuation	250,350
+
+		line
+		{
+			duration	0.1,1.3
+			generatedLine
+			material	"textures/particles/sparks/spark03"
+			gravity		0.5,1.5
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -5,-5,-5,5,5,5 }
+				velocity { box 50,0,-15,300,100,400 }
+				size { box 1,3 }
+				length { box 12,0,0,10,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+				length { envelope linear }
+			}
+
+			end
+			{
+				length { box 2,0,0,4,0,0 }
+			}
+			lineHit
+		}
+	}
+	spawner "Chips"
+	{
+		count		0.1,2
+		useMaterialColor
+		attenuateEmitter
+		attenuation	250,350
+
+		sprite
+		{
+			duration	0.75,1
+			persist
+			material	"particles/debris/debris_metal01"
+			gravity		0.5,0.8
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 150,-145,-145,400,145,145 }
+				size { box 0.5,0.5,3,3 }
+				tint { line 1,1,1,0.639216,0.639216,0.639216 }
+				offset { sphere -5,-5,-5,5,5,5 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shattertable2 offset 0.1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 0.3,0.3 }
+				rotate { box 1,-1 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+

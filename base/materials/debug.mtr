@@ -1,0 +1,17 @@
+material debugMaterials/show_intensity
+{
+	{
+		program	debug_show_intensity.vfp
+		fragmentMap		0		_currentRender
+	}
+}
+
+material debugMaterials/draw_damage
+{
+	sort nearest
+	{
+		blend blend
+		colored
+		map fonts/english/bank/48
+	}
+}

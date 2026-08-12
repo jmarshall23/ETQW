@@ -1,0 +1,48 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+atlas/slipgate/slipgatedetail.atlas
+***
+*/
+
+surfaceTypeMap models/mapobjects/slipgate/slipgatedetail_ts {
+	width	256
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1920 ) ( 256 2048 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1408 ) ( 256 1920 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1024 ) ( 256 1152 )
+	}
+	rect {
+		surfaceType	carpet
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1152 ) ( 256 1408 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 512 ) ( 256 1024 )
+	}
+	rect {
+		surfaceType	carpet
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 256 256 )
+	}
+	rect {
+		surfaceType	carpet
+		surfaceColor	( 1 1 1 )
+		coords ( 0 256 ) ( 256 512 )
+	}
+}

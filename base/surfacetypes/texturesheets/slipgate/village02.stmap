@@ -1,0 +1,22 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/slipgate/village02 {
+	width	512
+	height	1024
+	/* areaDefs */
+
+	rect {
+		surfaceType	wood_thick
+		surfaceColor	( 1 1 1 )
+		coords ( 0 512 ) ( 512 1024 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 512 512 )
+	}
+}

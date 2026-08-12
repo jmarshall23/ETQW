@@ -1,0 +1,106 @@
+/***********************************************************************
+
+weapon_gpmg.script
+
+***********************************************************************/
+
+object weapon_gpmg : weapon_clip {
+	void		preinit();
+
+	void		FireCommon();
+	void		UpdateBullets( float total );
+	float		DoReload( boolean wasScoped );
+	
+	float		numFinalBullets;
+	float		currentBulletCount;
+}
+
+void weapon_gpmg::preinit() {
+	hasScope		= false;
+	hasIronSights	= true;
+	hasEndFireAnim	= false;
+	
+	numFinalBullets = getFloatKey( "num_final_bullets" );
+	currentBulletCount = numFinalBullets;
+
+	UpdateBullets( ammoInClip( 0 ) );
+}
+
+void weapon_gpmg::FireCommon() {
+	PlayFireEffect();
+	PlayFireSound();
+	PlayBrassSound();
+	PlayFireAnim();
+	
+	playingFireAnim = true;
+	launchProjectiles( numProjectiles, 0, getCurrentSpread(), 0, 1, 1 );
+	increaseSpread();
+	
+	UseAmmo( 0 );
+	AmmoCheckClip( 0 );
+	
+	UpdateBullets( ammoInClip( 0 ) );
+}
+
+void weapon_gpmg::UpdateBullets( float total ) {
+	if ( total > numFinalBullets ) {
+		total = numFinalBullets;
+	}
+	
+	if ( total == currentBulletCount ) {
+		return;
+	}
+	
+	float index;
+	string surfaceName;
+	float surfaceId;
+	if ( total > currentBulletCount ) {	
+		for ( index = currentBulletCount; index < total; index++ ) {
+			surfaceName = getKey( "surface_bullet_" + index );
+			surfaceId = getSurfaceId( surfaceName );
+			if ( surfaceId != -1 ) {
+				showSurface( surfaceId );
+			} else {
+			}
+		}
+	} else {
+		for ( index = total; index < currentBulletCount; index++ ) {
+			surfaceName = getKey( "surface_bullet_" + index );
+			surfaceId = getSurfaceId( surfaceName );
+			if ( surfaceId != -1 ) {
+				hideSurface( surfaceId );
+			} else {
+			}
+		}
+	}
+
+	currentBulletCount = total;
+}
+
+float weapon_gpmg::DoReload( boolean wasScoped ) {
+	weaponReloading();
+	playAnim( ANIMCHANNEL_ALL, "reload" );
+	
+	// Gordon: a small wait to get the bullets off screen
+	sys.wait( 0.3f );
+
+	UpdateBullets( ammoAvailable( 0 ) );
+
+	while ( !animDone( ANIMCHANNEL_ALL, 4 ) ) {
+		sys.waitFrame();
+
+		if ( WEAPON_HIDE ) {
+			Base_EndReload();
+			weaponState( "Idle", 4 );
+		}
+
+		if ( WEAPON_LOWERWEAPON ) {
+			Base_EndReload();
+			weaponState( "Lower", 4 );
+		}
+	}
+
+	addToClip( 0, clipSize( 0 ) );
+	
+	return 0.0f;
+}

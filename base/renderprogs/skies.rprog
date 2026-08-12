@@ -1,0 +1,484 @@
+
+renderProgram skies/skycolor {
+
+	program vertex cg { <%
+	
+		struct VsInputs {
+			float3 pos	: $positionAttrib;
+			float2 tex	: $texCoordAttrib;
+		};
+
+		struct VsOutputs {
+			float3 tex	: TEXCOORD0;
+			float3 pos	: TEXCOORD1;
+			float3 sunDir	: TEXCOORD2;
+		};
+
+		float4 params : C0;
+		float3 sunDir : $sunDirection;
+		float3 mat1 : $fogRotation_x;
+		float3 mat2 : $fogRotation_y;
+
+		VsOutputs vertex(VsInputs indata) {
+			VsOutputs outdata;
+
+			float3 p = normalize(indata.pos);
+			//outdata.tex.y  = abs(1-p.z);
+			//outdata.tex.x  = (atan2(p.y, p.x)/3.14159265)*0.5+0.5;
+			outdata.tex.x = dot(mat1, indata.pos);
+			outdata.tex.y = dot(mat2, indata.pos);
+			outdata.tex.z = indata.pos.z;
+			outdata.pos = indata.pos;
+			outdata.sunDir = sunDir;
+			return outdata;
+		}		
+	%> }
+
+	program fragment cg { <%
+	
+		struct VsOutputs {
+			float3 tex	: TEXCOORD0;
+			float3 pos	: TEXCOORD1;
+			float3 sunDir	: TEXCOORD2;
+		};
+		
+		samplerCUBE image : $skyGradientCubeMap;		
+		float2 haloParameters : $sunHaloParameters;
+		
+		float4 fragment(VsOutputs indata) : COLOR {
+
+			float3 dir = normalize(indata.pos);
+			float scale = dot(dir,indata.sunDir);
+			float halo = max(scale*haloParameters.x+haloParameters.y,0);
+			float sunDisc = min( pow(max(scale,0), 400), 1);
+			//float4 look = tex2D(image, /*float2((atan2(dir.y, dir.x)/3.14159265)*0.5+0.5,indata.tex.y)*/indata.tex)+halo+sunDisc;
+			float4 look = texCUBE(image, indata.tex);
+			float3 col = look.rgb + halo /*+ sunDisc * 0.25*/;
+			//sunDisc = pow(max(scale,0), 200);
+			return float4(col, look.a + halo /*+ sunDisc*/);
+		}
+	%> }
+	
+}
+
+renderBinding skies_cloudColor { vector { 0 } }
+renderBinding skies_cloudCube { texture { _normalCubeMap } }
+
+renderProgram skies/cloud_cube {
+	
+	program vertex cg { <%
+	
+		struct VsInputs {
+			float3 pos	: $positionAttrib;
+			float2 tex	: $texCoordAttrib;
+		};
+
+		struct VsOutputs {
+			float3 extinction   : COLOR0;
+			float3 tex	: TEXCOORD0;
+			float3 pos	: TEXCOORD1;
+		};
+
+
+		uniform float3 eyePos 		: $viewOrigin;
+		uniform float3 rotMat1		: $diffuseMatrix_s;
+		uniform float3 rotMat2 		: $diffuseMatrix_t;
+
+
+		VsOutputs vertex(VsInputs indata) {
+			VsOutputs outdata;
+
+			float3 dir = indata.pos - eyePos;
+			outdata.tex.x = dot(rotMat1, indata.pos);
+			outdata.tex.y = dot(rotMat2, indata.pos);
+			outdata.tex.z = indata.pos.z;
+
+			return outdata;
+		}
+
+
+		
+	%> }
+	
+	program fragment cg { <%
+	
+		struct VsOutputs {
+			float3 extinction   : COLOR0;
+			float3 tex	: TEXCOORD0;
+			float3 pos	: TEXCOORD1;
+
+		};
+
+		samplerCUBE image : $skies_cloudCube;
+		uniform float4 color : $skies_cloudColor;
+
+		float4 fragment(VsOutputs indata) : COLOR {
+			return texCUBE(image, indata.tex) * color;
+		}
+	
+	%> }
+	
+}
+
+renderProgram skies/cloud_bump {
+	
+	program vertex cg { <%
+	
+		struct VsInputs {
+			float3 pos	: $positionAttrib;
+			float4 tex	: $texCoordAttrib;
+			float4 col	: $colorAttrib;
+			float3 normal	: $normalAttrib;
+			float4 tang	: $tangentAttrib;
+			$if r_32ByteVtx
+			float4 signs : $signAttrib;
+			$endif
+		};
+
+		struct VsOutputs {
+			float4 col	: COLOR0;
+			float2 tex	: TEXCOORD0;
+			float3 pos	: TEXCOORD1;
+			float3 tang	: TEXCOORD2;
+			float3 bino	: TEXCOORD3;
+			float3 norm	: TEXCOORD4;
+			float3 toEye	: TEXCOORD5;
+		};
+
+		uniform float3 eyePos : $viewOrigin;
+		uniform float4 matrixS : $diffuseMatrix_s;
+		uniform float4 matrixT : $diffuseMatrix_t;
+		uniform float3 transModel_0 : $transposedModelMatrix_x;
+		uniform float3 transModel_1 : $transposedModelMatrix_y;
+		uniform float3 transModel_2 : $transposedModelMatrix_z;		
+
+		float GetZ( float2 value, float sign ) {
+			return ( sqrt( 1.0f - ( dot( value.xy, value.xy ) ) ) * ( sign - 1.f ) );
+		}
+
+		VsOutputs vertex(VsInputs indata) {
+			VsOutputs outdata;
+
+			$if r_32ByteVtx
+			indata.normal.xy *= 1.f / 32767.f;
+			indata.tang.xy *= 1.f / 32767.f;
+			indata.normal.z = GetZ( indata.normal.xy, indata.signs.x );
+			indata.tang.z = GetZ( indata.tang.xy, indata.signs.y );
+			indata.tang.w = ( indata. signs.z - 1.f );
+			$endif
+
+			float3 tangent = indata.tang.xyz;
+			float3 biTangent = cross( indata.normal, tangent ) * indata.tang.w;
+			outdata.tex.x = dot( indata.tex, matrixS );
+			outdata.tex.y = dot( indata.tex, matrixT );
+			outdata.pos =  indata.pos - eyePos;
+
+			outdata.tang.x = dot( tangent, transModel_0.xyz );
+			outdata.tang.y = dot( biTangent, transModel_0.xyz );
+			outdata.tang.z = dot( indata.normal, transModel_0.xyz );
+
+			outdata.bino.x = dot( tangent, transModel_1.xyz );
+			outdata.bino.y = dot( biTangent, transModel_1.xyz );
+			outdata.bino.z = dot( indata.normal, transModel_1.xyz );
+
+			outdata.norm.x = dot( tangent, transModel_2.xyz );
+			outdata.norm.y = dot( biTangent, transModel_2.xyz );
+			outdata.norm.z = dot( indata.normal, transModel_2.xyz );
+
+			outdata.toEye.x = -dot( outdata.pos, tangent );
+			outdata.toEye.y = -dot( outdata.pos, biTangent );
+			outdata.toEye.z = -dot( outdata.pos, indata.normal );
+		/*
+			float3 dir = normalize( outdata.pos );
+			outdata.tex = dir.xy * ( -0.2 / dir.z);
+
+		*/
+			outdata.col = 1.0f - length( indata.pos.xy )/300000;//Fade out at horizon (fixme this is dependent on skybox model size)
+			return outdata;
+		}
+		
+	%> }
+	
+	program fragment cg { <%
+	
+		struct VsOutputs {
+			float4 col	: COLOR0;
+			float2 tex	: TEXCOORD0;
+			float3 pos	: TEXCOORD1;
+			float3 tang	: TEXCOORD2;
+			float3 bino	: TEXCOORD3;
+			float3 norm	: TEXCOORD4;
+			float3 toEye	: TEXCOORD5;
+		};	
+
+		uniform float3 sunDir		: $sunDirectionWorld;
+		uniform float3 sunColor		: $sunColor;
+		uniform float4 parms		: $parameters;
+		
+		sampler2D diffuseMap : $diffuseMap;
+		sampler2D bumpMap : $bumpMap;
+		samplerCUBE ambientCube : $ambientCubeMap;	
+		uniform float ambientBrightness : $ambientBrightness;
+		
+		float4 fragment(VsOutputs indata) : COLOR {
+
+			float2 texCoord = indata.tex.xy;
+			float3 gray = float3( 0.333, 0.3333, 0.3333 );
+
+			float4 diffuse = tex2D( diffuseMap, texCoord );
+			float4 normal = tex2D( bumpMap, texCoord );
+			$if !r_dxnNormalMaps
+			normal.r = normal.a;
+			$endif
+			normal.rgb = (normal.rgb * 2) - 1;
+			
+			normal.b = sqrt( 1.f - dot( normal.xy, normal.xy ) );
+
+			float3 wNormal;
+			wNormal.x = dot( indata.tang, normal.rgb );
+			wNormal.y = dot( indata.bino, normal.rgb );
+			wNormal.z = dot( indata.norm, normal.rgb );
+
+			// Ambient light lookup
+			float3 amb = texCUBE( ambientCube, wNormal ).rgb * parms.x * ambientBrightness;
+			gray = dot( amb, gray );
+			amb = amb + parms.y * (gray-amb);
+
+			// Sun light lookup
+			wNormal.z -= wNormal.z;
+			float sun = max( dot( wNormal, sunDir ), 0);
+			float halo = 1.0;//dot(normalize(indata.pos), sunDir) * 0.7 + 0.5;
+
+			// Final color
+			float3 light = amb + sun * halo * sunColor * parms.z;
+
+			//float3 test = texCUBE( ambientCube,indata.pos ).rgb;
+		    return float4( light, diffuse.r * parms.w * indata.col.r );
+		}		
+	
+	%> }
+	
+}
+
+
+renderProgram skies/cloud_mediumalt {
+
+	program vertex cg { <%
+		struct VsInputs {
+			float3 pos	: $positionAttrib;
+			float4 tex	: $texCoordAttrib;
+			float4 col	: $colorAttrib;
+		};
+
+		struct VsOutputs {
+			float4 col	: COLOR0;
+			float2 tex	: TEXCOORD0;
+		};
+
+		uniform float4 matrixX : $diffuseMatrix_s;
+		uniform float4 matrixY : $diffuseMatrix_t;
+
+		// Hmmz this asumes the shader red, green, blue params end up in the vertex color if vertexcolor is not specified in the shader, is this still the case??		
+		VsOutputs vertex(VsInputs indata) {
+			VsOutputs outdata;
+
+			$if r_32ByteVtx
+			indata.tex.xy *= 1.f/4096.f;
+			indata.tex.zw = 1.f;
+			$endif
+
+			outdata.tex.x = dot( indata.tex, matrixX );
+			outdata.tex.y = dot( indata.tex, matrixY );
+
+			outdata.col = indata.col;
+			return outdata;
+		}	
+	%> }
+
+	program fragment cg { <%
+
+		struct VsOutputs {
+			float4 col	: COLOR0;
+			float2 tex	: TEXCOORD0;
+		};
+		
+		sampler2D image : $map;
+
+		float4 fragment(VsOutputs indata) : COLOR {
+		    return tex2D( image, indata.tex );
+		}
+
+	%> }
+	
+}
+
+renderProgram skies/cloud_tiled {
+	
+	program vertex cg { <%
+	
+		struct VsInputs {
+			float3 pos	: $positionAttrib;
+			float2 tex	: $texCoordAttrib;
+			float4 col	: $colorAttrib;
+		};
+
+		struct VsOutputs {
+			float2 tex	: TEXCOORD0;
+			float3 pos	: TEXCOORD1;
+			float4 col  : COLOR0;			
+		};
+
+
+		uniform float3 eyePos 		: $viewOrigin;
+		uniform float4 rotMat1		: $diffuseMatrix_s;
+		uniform float4 rotMat2 		: $diffuseMatrix_t;
+		uniform float4 diffuseColor : $diffuseColor;
+
+
+		VsOutputs vertex(VsInputs indata) {
+			VsOutputs outdata;
+
+			
+			outdata.pos = indata.pos;
+			float3 dir = normalize( indata.pos );
+			float4 tex;
+			
+			tex.x = 1.0f - indata.col.x;
+			tex.y = 1.0f - dir.z;
+			tex.z = 0.0f;
+			tex.w = 1.0f;
+			
+			outdata.tex.x = dot( tex, rotMat1 ); 
+			outdata.tex.y = dot( tex, rotMat2 ); 
+			outdata.col = diffuseColor;
+			
+			return outdata;
+		}
+
+
+		
+	%> }
+	
+	program fragment cg { <%
+	
+		struct VsOutputs {
+			float3 tex	: TEXCOORD0;
+			float3 pos	: TEXCOORD1;
+			float4 col  : COLOR0;			
+		};
+
+		sampler2D image : $map;
+		uniform float4 color : $diffuseColor;
+
+		float4 fragment(VsOutputs indata) : COLOR {
+		
+			//float2 tex;
+			//float3 dir = normalize( indata.pos );
+			//tex.y = 1.0f - dir.z;
+			//dir.z = 0.0f;
+			//dir = normalize( dir );
+			//tex.x = ( atan2( dir.y, dir.x ) / 3.1415926535 ) * -0.5 + 0.5;
+			
+			float3 dir = normalize( indata.pos );
+			indata.tex.y = 1.0f - dir.z;
+			
+			return tex2D(image, indata.tex.xy) * indata.col; /** color*/;
+		}
+	
+	%> }
+	
+}
+
+renderProgram skies/fog_overlay {
+	
+	program vertex cg { <%
+	
+		struct VsInputs {
+			float3 pos	: $positionAttrib;
+			float2 tex	: $texCoordAttrib;
+		};
+
+		struct VsOutputs {
+			float3 extinction   : COLOR0;
+			float3 tex	: TEXCOORD0;
+			float3 pos	: TEXCOORD1;
+		};
+
+
+		uniform float3 eyePos 		: $viewOrigin;
+		uniform float3 rotMat1		: $diffuseMatrix_s;
+		uniform float3 rotMat2 		: $diffuseMatrix_t;
+
+
+		VsOutputs vertex(VsInputs indata) {
+			VsOutputs outdata;
+
+			float3 dir = indata.pos - eyePos;
+			outdata.tex.x = dot(rotMat1, indata.pos);
+			outdata.tex.y = dot(rotMat2, indata.pos);
+			outdata.tex.z = indata.pos.z;
+
+			return outdata;
+		}
+
+
+		
+	%> }
+	
+	program fragment cg { <%
+	
+		struct VsOutputs {
+			float3 extinction   : COLOR0;
+			float3 tex	: TEXCOORD0;
+			float3 pos	: TEXCOORD1;
+
+		};
+
+		samplerCUBE image : $skyGradientCubeMap;
+
+		float4 fragment(VsOutputs indata) : COLOR {
+			return texCUBE(image, indata.tex);
+		}
+	
+	%> }
+	
+}
+
+renderProgram skies/skybox {
+
+	program vertex arb { <%
+		PARAM	mvp[4] = { state.matrix.mvp };	
+		TEMP	R0;
+		
+		DP3		R0.x, $positionAttrib, $diffuseMatrix_s;
+		DP3		R0.y, $positionAttrib, $diffuseMatrix_t;
+		MOV		R0.zw, $positionAttrib;	
+		
+		DP4		result.position.x, mvp[0], R0;
+		DP4		result.position.y, mvp[1], R0;
+		DP4		result.position.z, mvp[2], R0;
+		DP4		result.position.w, mvp[3], R0;		
+		
+		MOV		result.color, $colorAttrib;
+		MOV		result.texcoord, $texCoordAttrib;
+	%> }
+	
+	program fragment cg { <%
+	
+		struct VsOutputs {
+			float3 color   : COLOR0;
+			float2 tex	: TEXCOORD0;
+		};
+
+		sampler2D image : $map;
+		sampler2D image2 : $mask;
+		uniform float4 color : $skies_cloudColor;
+
+		float4 fragment(VsOutputs indata) : COLOR {
+			float4 top = tex2D( image2, indata.tex );
+			float4 side = tex2D( image, indata.tex + float2( 0.75, 1.0 ) );
+			return lerp( top, side, indata.color.x ) * color;
+		}
+	
+	%> }		
+}

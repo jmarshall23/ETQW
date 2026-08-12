@@ -1,0 +1,255 @@
+
+object deployable_intelligence : deployable_base {
+	void			preinit();
+	void			destroy();
+
+	void			OnStateNormal();
+	void			OnStateDamaged();
+	void			OnStateDisabled();
+	
+	void			UpdateRadarState( boolean force );
+	void			OnDisabled();
+	void			OnReEnabled();
+
+	void			SetLayersActive( boolean state, boolean force );
+
+	void			SetupCommandMapRadarIcon();
+
+	void			vDoneDeploy();
+	void			vCheckProficiency();
+	void			vGiveSpotProficiency();
+
+	float			GetRange();
+
+	void			SpinDish();
+
+	float			commandMapRadarHandle;
+
+	float			baseRange;
+
+	boolean			layersActive;
+	boolean			enableSounds;
+}
+
+void deployable_intelligence::preinit() {
+	SetupCommandMapRadarIcon();
+
+	baseRange = getFloatKey( "range" );
+}
+
+float deployable_intelligence::GetRange() {
+	if ( owner != $null_entity ) {
+		team_base team = owner.getGameTeam();
+		if ( team != $null ) {
+			if ( team.HasEnhancedRadar( owner ) ) {
+				return baseRange * 1.5f;
+			}
+		}
+	}
+	return baseRange;
+}
+
+void deployable_intelligence::SetupCommandMapRadarIcon() {
+	commandMapRadarHandle = sys.allocCMIcon( self, 100 );
+
+	sys.setCMIconSizeMode( commandMapRadarHandle, SM_WORLD );
+	sys.setCMIconMaterial( commandMapRadarHandle, GetMaterial( getKey( "mtr_radar" ) ) );
+	sys.setCMIconUnknownMaterial( commandMapRadarHandle, GetMaterial( getKey( "mtr_radar" ) ) );
+	sys.setCMIconFlag( commandMapRadarHandle, CMF_TEAMONLY );
+	sys.hideCMIcon( commandMapRadarHandle );
+}
+
+void deployable_intelligence::SetLayersActive( boolean state, boolean force ) {
+	if ( !force ) {
+		if ( state == layersActive ) {
+			return;
+		}
+	}
+	
+	team_base team;
+
+	if ( enableSounds ) {
+		if ( layersActive != state ) {
+			if ( !state ) {
+				if ( owner != $null_entity ) {
+					team = getGameTeam();
+					if ( team != $null ) {
+						team.PlayIntelDamagedMessage();
+					}
+				}
+			} else {
+				team = getGameTeam();
+				if ( team != $null ) {
+					team.PlayIntelRepairedMessage();
+				}
+			}
+		}
+	}
+
+	layersActive = state;
+
+	freeLayers();
+
+	if ( layersActive ) {
+		float range = GetRange();
+
+		float radarLayer = allocRadarLayer();
+		radarSetLayerRange( radarLayer, GetRange() );
+		radarSetLayerMask( radarLayer, getFloatKey( "mask" ) );
+
+		sys.setCMIconSize( commandMapRadarHandle, range * 2.f );
+		sys.setCMIconUnknownSize( commandMapRadarHandle, range * 2.f );
+		sys.showCMIcon( commandMapRadarHandle );
+	} else {
+		sys.hideCMIcon( commandMapRadarHandle );
+	}
+}
+
+void deployable_intelligence::vDoneDeploy() {
+	SetDeployingFinished();
+
+	thread SpinDish();
+
+	UpdateRadarState( false );
+	enableSounds = true;
+
+	player p = sys.getLocalPlayer();
+	if ( p != $null_entity ) {
+		if ( getEntityAllegiance( p ) == TA_FRIEND ) {
+			float toolTip = GetToolTip( getKey( "tt_deployed" ) );
+			p.sendToolTip( toolTip );
+		}
+	}
+}
+
+// Gordon: this makes per-poly collision horribly broken for clients
+void deployable_intelligence::SpinDish() {
+	float joint1 = getJointHandle( getKeyWithDefault( "dish_joint1", "radar_dish" ) );
+	float joint2 = getJointHandle( getKey( "dish_joint2" ) );
+	float axisNum1 = getFloatKey( "dish_axis1" );
+	float axisNum2 = getFloatKey( "dish_axis2" );
+	float scale1 = getFloatKeyWithDefault( "dish_scale1", -1.0f );
+	float scale2 = getFloatKey( "dish_scale2" );
+
+	float rotation1 = 0.0f;
+	float rotation2 = 0.0f;
+	vector axis1 = '1 0 0';
+	vector axis2 = '1 0 0';
+
+	// formatting here is funny to make this short
+	if ( axisNum1 == 0 ) {				axis1 = '1 0 0';
+	} else if ( axisNum1 == 1 ) {		axis1 = '0 1 0';
+	} else if ( axisNum1 == 2 ) {		axis1 = '0 0 1';
+	}
+	if ( axisNum2 == 0 ) {				axis2 = '1 0 0';
+	} else if ( axisNum2 == 1 ) {		axis2 = '0 1 0';
+	} else if ( axisNum2 == 2 ) {		axis2 = '0 0 1';
+	}
+
+	float spinIdle = 180.f;
+	float spinEnabled = 5.f;
+	float spinDisabled = 0.5f;
+	float spinSpeed;
+
+	sys.wait( 1.f );
+
+	startSound( "snd_idle", SND_DEPLOYABLE_IDLE );
+
+	while( true ) {
+		sys.waitFrame();
+
+		fadeSound( SND_DEPLOYABLE_IDLE, ( spinSpeed * 0.25f ) - 45.f, 0.01f );
+
+		if( !disabledState ) {
+			if ( spinSpeed < spinIdle ) {
+				if ( spinSpeed < spinEnabled ) {
+					spinSpeed = spinEnabled;
+				}
+				spinSpeed = spinSpeed * 1.05f;
+			} else {
+				spinSpeed = spinIdle;
+			}
+		} else {
+			if ( spinSpeed > spinDisabled ) {
+				spinSpeed = spinSpeed * 0.95f;
+			}
+			if ( spinSpeed <= spinDisabled ) {
+				spinSpeed = 0.f;
+			}
+		}
+
+		float step = spinSpeed * sys.getFrameTime();
+		rotation1 += step * scale1;
+		rotation2 += step * scale2;
+
+		if ( joint1 != INVALID_JOINT ) {
+			setJointAngle( joint1, JOINTMOD_LOCAL, rotation1 * axis1 );
+		}
+		if ( joint2 != INVALID_JOINT ) {
+			setJointAngle( joint2, JOINTMOD_LOCAL, rotation2 * axis2 );
+		}
+	}
+}
+
+void deployable_intelligence::destroy() {
+	sys.freeCMIcon( self, commandMapRadarHandle );
+}
+
+void deployable_intelligence::OnStateNormal() {
+	DeployableBase_OnStateNormal();
+
+	UpdateRadarState( false );
+}
+
+void deployable_intelligence::OnStateDamaged() {
+	DeployableBase_OnStateDamaged();
+
+	UpdateRadarState( false );
+}
+
+void deployable_intelligence::OnStateDisabled() {
+	DeployableBase_OnStateDisabled();
+
+	UpdateRadarState( false );
+}
+
+void deployable_intelligence::OnDisabled() {
+	UpdateRadarState( false );
+	if ( owner != $null_entity ) {
+		if ( owner.isLocalPlayer() ) {
+			sys.setGUIFloat( GUI_GLOBALS_HANDLE, "deployables.state", DS_DISABLED );
+		}
+	}
+}
+
+void deployable_intelligence::OnReEnabled() {
+	UpdateRadarState( false );
+	if ( owner != $null_entity ) {
+		if ( owner.isLocalPlayer() ) {
+			sys.setGUIFloat( GUI_GLOBALS_HANDLE, "deployables.state", DS_NORMAL );
+		}
+	}
+}
+
+void deployable_intelligence::vCheckProficiency() {
+	DeployableBase_CheckProficiency();
+	UpdateRadarState( true );
+}
+
+void deployable_intelligence::UpdateRadarState( boolean force ) {
+	SetLayersActive( currentState == DS_NORMAL && sys.getTime() >= disableEndTime && finishedDeploying && getGameTeam() != $null, force );
+}
+
+void deployable_intelligence::vGiveSpotProficiency() {
+	if ( owner == $null_entity ) {
+		return;
+	}
+
+	team_base team = getGameTeam();
+	if ( team != $null ) {
+		team.GiveRadarSpottingProficiency( owner );
+
+		string statName = team.getName() + "_radar_enemies_spotted";
+		sys.increaseStatInt( sys.allocStatInt( statName ), owner.getEntityNumber(), 1 );
+	}
+}

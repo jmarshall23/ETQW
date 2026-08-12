@@ -1,0 +1,199 @@
+
+gui guis/tools/hacker_old {
+
+	properties {
+		//string	postProcessMaterial = "system/noglare";
+		string	actionMessage		= "";
+		float	showBar				= 0;
+		float	barFraction			= 0;
+		float 	mode 				= -1;
+
+	}
+
+	events {
+		onPropertyChanged "mode" {
+			list.currentSelection = mode;
+		}
+	}
+
+	windowDef desktop {
+		properties {
+			color	backColor	= 0.5, 0.5, 0.5, 1;
+		}
+	}
+
+	windowDef message {
+		properties {
+			color	foreColor		= 1, 1, 1, 1;
+			wstring	text			= toWStr( gui.actionMessage );
+			rect	rect			= 0, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT / 2;
+			float	fontSize		= 48;
+		}
+	}
+
+	windowDef barOuter {
+		properties {
+			rect	rect			= 40, 400, 560, 40;
+			color	foreColor		= 1, 1, 1, 1;
+			float	visible			= gui.showBar;
+			float	borderWidth		= 4;
+		}
+	}
+
+	windowDef barInner {
+		properties {
+			rect	rect			= 44, 404, 552 * gui.barFraction, 32;
+			color	backColor		= 0.4, 0, 0, 1;
+			float	visible			= gui.showBar;
+		}
+	}
+
+	windowDef list {
+		type list;
+
+		properties {
+			float 	fontSize = 48;
+			float	rowSpacing = 10;
+			rect	rect = 0, 20, SCREEN_WIDTH, 240;
+			color	backColor	= 0.5, 0.5, 0.5, 1;
+		}
+
+		events {
+			onCreate {
+				self.insertColumn( gui.blankWStr, SCREEN_WIDTH, 0 );				// Tool
+				self.insertItem( toWStr( "<loc = 'guis/game/hacker'>" ), 0, 0 );
+				self.insertItem( toWStr( "<loc = 'guis/game/camo'>" ), 1, 0 );
+				self.insertItem( toWStr( "<loc = 'guis/game/viewer'>"), 2, 0 );
+				self.currentSelection = 0;
+			}
+		}
+	}
+}
+
+gui guis/tools/hacker {
+
+	materials {
+
+		"guis/assets/hack/covertbg"		"guis/assets/hack/covertbg"
+		"guis/assets/hack/spin1"		"guis/assets/hack/spin1"
+		"guis/assets/hack/spin1a"		"guis/assets/hack/spin1a"
+		"guis/assets/hack/spin2"		"guis/assets/hack/spin2"
+		"guis/assets/hack/spin2a"		"guis/assets/hack/spin2a"
+		"guis/assets/hack/bin1"			"guis/assets/hack/bin1"
+		"guis/assets/hack/bin2"			"guis/assets/hack/bin2"
+		"guis/assets/hack/bin3"			"guis/assets/hack/bin3"
+		"guis/assets/hack/bin4"			"guis/assets/hack/bin4"
+		"guis/assets/hack/bin5"			"guis/assets/hack/bin5"
+		"guis/assets/hack/bin6"			"guis/assets/hack/bin6"
+		"guis/assets/hack/bin7"			"guis/assets/hack/bin7"
+		"guis/assets/common/addhighlight"	"guis/assets/common/addhighlight"
+	}
+	windowDef desktop {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			string material = "guis/assets/hack/covertbg";
+		}		
+	}
+	windowDef mapLight {
+		properties {
+			rect rect = 10,25,620,240;
+			string	material = "guis/assets/common/addhighlight";
+			color	backColor = 0.75,0.75,0.75,1;
+		}
+	}
+	windowDef spin1 {
+		properties {
+			color	backColor	=	0.5, 0.5, 0.5, 1;
+			string material = "guis/assets/hack/spin1";
+			rect rect = 280,105,260,260;
+		}		
+	}
+	windowDef spin1a {
+		properties {
+			color	backColor	=	0.35, 0.35, 0.35, 1;
+			string material = "guis/assets/hack/spin1a";
+			rect rect = 305,130,210,210;
+		}		
+	}
+	windowDef spin2 {
+		properties {
+			color	backColor	=	1, 1, 1, 1;
+			string material = "guis/assets/hack/spin2";
+			rect rect = 280,105,260,260;
+		}		
+	}
+	windowDef spin2a {
+		properties {
+			color	backColor	=	0.35, 0.35, 0.35, 1;
+			string material = "guis/assets/hack/spin2a";
+			rect rect = 305,130,220,220;
+		}
+
+	}
+	windowDef chatter1 {
+		properties {
+			color	backColor	=	0.3, 0.3, 0.3, 1;
+			string material = "guis/assets/hack/bin1";
+			rect rect = 30,127,230,32;
+		}		
+	}
+	windowDef chatter2 {
+		properties {
+			color	backColor	=	0.35, 0.35, 0.35, 1;
+			string material = "guis/assets/hack/bin2";
+			rect rect = 30,152,230,32;
+		}		
+	}
+	windowDef chatter3 {
+		properties {
+			color	backColor	=	0.4, 0.4, 0.4, 1;
+			string material = "guis/assets/hack/bin3";
+			rect rect = 30,177,230,32;
+		}		
+	}
+	windowDef chatter4 {
+		properties {
+			color	backColor	=	0.45, 0.45, 0.45, 1;
+			string material = "guis/assets/hack/bin4";
+			rect rect = 30,202,230,32;
+		}		
+	}
+	windowDef chatter5 {
+		properties {
+			color	backColor	=	0.5, 0.5, 0.5, 1;
+			string material = "guis/assets/hack/bin5";
+			rect rect = 30,227,230,32;
+		}		
+	}
+	windowDef chatter6 {
+		properties {
+			color	backColor	=	0.55, 0.55, 0.55, 1;
+			string material = "guis/assets/hack/bin6";
+			rect rect = 30,252,230,32;
+		}		
+	}
+	windowDef chatter7 {
+		properties {
+			color	backColor	=	0.6, 0.6, 0.6, 1;
+			string material = "guis/assets/hack/bin7";
+			rect rect = 30,277,230,32;
+		}		
+	}	
+	windowDef Text3 {
+		properties {
+			handle localizedText = localize( "guis/game/hacker/decrypting" ); // "DECRYPTING";
+			float	fontSize	= 36;
+			color	foreColor	=	1, 1, 1, 1;
+			rect rect = 225,361,400,100;
+		}		
+	}
+	windowDef Text5 {
+		properties {
+			handle localizedText = localize( "guis/game/hacker/hack" ); // "PRESS FIRE TO HACK";
+			float flags = immediate( flags ) | WF_WRAP_TEXT;
+			float	fontSize = 36;
+			color	foreColor	=	1, 1, 1, 1;
+			rect rect = 42,326,210,230;
+		}		
+	}
+}

@@ -1,0 +1,317 @@
+// Export
+// ========================================================================
+export hauser {
+options -prefix RH_ -rotate 180 -scale 0.7 -sourcedir models/structures/strogg/deployables/weapons/rail_howitzer/dev_sd -destdir models/structures/strogg/deployables/weapons/rail_howitzer/ -keepmesh lod0_base_mesh lod0_h_rotator_mesh lod0_gun_rail_mesh lod0_gun_main_mesh lod0_gun_back_mesh lod0_gun_end_mesh lod0_leg1_upper_mesh lod0_leg1_rail_mesh lod0_leg1_end_mesh lod0_leg2_upper_mesh lod0_leg2_rail_mesh lod0_leg2_end_mesh lod0_leg3_upper_mesh lod0_leg3_rail_mesh lod0_leg3_end_mesh lod0_leg4_upper_mesh lod0_leg4_rail_mesh lod0_leg4_end_mesh lod0_shadow_base lod0_shadow_h_rotator lod0_shadow_gun_rail lod0_shadow_gun_main lod0_shadow_gun_back lod0_shadow_gun_end lod0_shadow_leg1_upper lod0_shadow_leg1_rail lod0_shadow_leg1_end lod0_shadow_leg2_upper lod0_shadow_leg2_rail lod0_shadow_leg2_end lod0_shadow_leg3_upper lod0_shadow_leg3_rail lod0_shadow_leg3_end lod0_shadow_leg4_upper lod0_shadow_leg4_rail lod0_shadow_leg4_end
+
+
+	mesh	railhowitzer_rework_anims.mb	-dest railhowitzer_base.md5mesh
+	/*
+	anim	railhowitzer_rework_anims.mb	-dest railhowitzer_undeployed.md5anim -range 1 1
+	anim	railhowitzer_rework_anims.mb	-dest railhowitzer_deploy.md5anim -range 1 194
+	anim	railhowitzer_rework_anims.mb	-dest railhowitzer_idle.md5anim -range 194 195
+
+	anim	railhowitzer_rework_anims.mb	-dest railhowitzer_fire.md5anim -range 205 237
+
+	anim	railhowitzer_rework_anims.mb	-dest railhowitzer_damaged.md5anim -range 250 280
+	anim	railhowitzer_rework_anims.mb	-dest railhowitzer_disabled.md5anim -range 300 340
+
+	anim	railhowitzer_rework_anims.mb	-dest railhowitzer_disabled_to_damaged.md5anim -range 280 281
+	anim	railhowitzer_rework_anims.mb	-dest railhowitzer_damaged_to_idle.md5anim -range 194 195
+*/
+
+}
+
+export frankie {
+options -prefix RH_ -rotate 180 -scale 0.7 -sourcedir models/structures/strogg/deployables/weapons/rail_howitzer/dev_sd -destdir models/structures/strogg/deployables/weapons/rail_howitzer/ -nojoints -keepmesh lod01 lod02 lod03 lod04 lod05 lod06 lod07 lod08 lod09 lod10 lod11 lod12 lod13 lod14 lod15 lod16 lod17 lod18 lodshadow lodshadow01 lodshadow02 lodshadow03 lodshadow04 lodshadow05 lodshadow06 lodshadow07 lodshadow08 lodshadow09 lodshadow10 lodshadow11 lodshadow12 lodshadow13 lodshadow14
+
+	mesh	railhowitzer_rework_anims.mb	-dest railhowitzer_base_lod1.md5mesh
+}
+
+export frankie {
+options -prefix RH_ -rotate 180 -scale 0.7 -sourcedir models/structures/strogg/deployables/weapons/rail_howitzer/dev_sd -destdir models/structures/strogg/deployables/weapons/rail_howitzer/ -nojoints -keepmesh lod01 lod02 lod03 lod04 lod05 lod06 lod07 lod08 lod09 lod10 lod11 lod12 lod13 lod14 lod15 lod16 lod17 lod18 lodshadow lodshadow01 lodshadow02 lodshadow03 lodshadow04 lodshadow05 lodshadow06 lodshadow07 lodshadow08 lodshadow09 lodshadow10 lodshadow11 lodshadow12 lodshadow13 lodshadow14
+
+
+	mesh	railhowitzer_rework_anims.mb	-dest railhowitzer_base_lod2.md5mesh
+}
+// Models
+// ========================================================================
+
+model deployable_railhowitzer {
+	mesh							models/structures/strogg/deployables/weapons/rail_howitzer/railhowitzer_base.md5mesh
+
+	anim base						models/structures/strogg/deployables/weapons/rail_howitzer/railhowitzer_idle.md5anim {
+	}
+
+	anim undeployed					models/structures/strogg/deployables/weapons/rail_howitzer/railhowitzer_undeployed.md5anim {
+	}
+
+	anim deploy						models/structures/strogg/deployables/weapons/rail_howitzer/railhowitzer_deploy.md5anim {
+		frame begin						sound_channel snd_deployable_deploy snd_deploy
+	}
+
+	anim damaged					models/structures/strogg/deployables/weapons/rail_howitzer/railhowitzer_damaged.md5anim {
+	}
+
+	anim destroyed					models/structures/strogg/deployables/weapons/rail_howitzer/railhowitzer_disabled.md5anim {
+	}
+
+	anim fire						models/structures/strogg/deployables/weapons/rail_howitzer/railhowitzer_fire.md5anim {
+	}
+
+	anim disabled_to_damaged		models/structures/strogg/deployables/weapons/rail_howitzer/railhowitzer_disabled_to_damaged.md5anim {
+	}
+
+	anim damaged_to_idle			models/structures/strogg/deployables/weapons/rail_howitzer/railhowitzer_damaged_to_idle.md5anim {
+	}
+}
+
+// Entity Def
+// ========================================================================
+
+deployObject deployobject_railhowitzer {
+	"name"							"railhowitzer"
+	"title"							"game/deploy/railhow"
+	"wait_time"						"10000"
+	"def_deployable"				"deployable_railhowitzer"
+	"def_deployable_carrier"		"vehicle_strogg_drop"
+	"str_placement"					"deployitem_railhowitzer_placement_model"
+	"mask"							"dm_default"
+	"max_height_diff"				"512"
+	"object_radius"					"2048"
+	"ti_kill_filter"				"target_deploy_kill"
+	"mdl_scale_factor"				"0.5"
+	"category"						"firesupport"
+}
+
+stringMap deployitem_railhowitzer_placement_model {
+	"model"							"models/structures/strogg/deployables/weapons/rail_howitzer/rail_howitzer.lwo"
+	"skin"							"deployEffect"
+	"maxVisDist"					"2560"
+	"pushIntoOutsideAreas"			"1"
+}
+
+entityDef deployable_railhowitzer {
+	"inherit"						"deployable_base"
+	"inherit1"						"deployable_strogg"
+
+	"title"							"game/deploy/railhow"
+
+	"collection_gui_count"			"deployable_railhowitzer"
+
+	"editor_color"					".3 .3 1"
+	"editor_usage"					"The Strogg Rail Howitzer"
+	"editor_mins"					"-128 -144 0"
+	"editor_maxs"					"168 144 512"
+
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"deployable_artillery"
+
+	"model"							"deployable_railhowitzer"
+	"cm_model"						"models/structures/strogg/deployables/weapons/rail_howitzer/rail_howitzer_clip.lwo"
+
+	"stat_name"						"railhowitzer"
+
+	"task_name"						"game/deploy/railhow"
+
+	"ch_name"						"game/deploy/railhow"
+	"option_combat_model"			"1"
+	"option_crosshair_interface"	"1"
+	"option_commandmap_interface"	"1"
+	"option_crosshair_offset"		"0 0 64"
+
+	"option_allow_abilities"		"1"
+	"ability_1"						"fire_support"
+
+	"mtr_commandmap"				"guis/assets/commandmap/icon_atk_deploy"
+	"mtr_commandmap_unknown"		"guis/assets/commandmap/icon_atk_deploy"
+	"icon_size_cm"					"10"
+
+	"player_wait_time"				"30"
+
+	"health"						"3000"
+	"repair_multiplier"				"1.5"
+
+	"action_time"					"10"
+
+	"num_missiles"					"1"
+
+	"spread"						"1.5"
+
+	"range_min"						"50"
+	"range_max"						"1000"
+
+	"missile_speed"					"5000"
+	"missile_recycle"				"1.5"
+	"missile_reload"				"10"
+	"missile_firecount"				"10"
+
+	"low_arc"						"0"
+
+	"joint_yaw"						"gun_h_rotate"
+	"joint_pitch"					"gun_v_rotate"
+	"joint_barrel"					"gun_end"
+
+	"min_yaw_turn"					"30"
+	"max_yaw_turn"					"60"
+
+	"min_pitch_turn"				"30"
+	"max_pitch_turn"				"60"
+
+	"min_pitch"						"0"
+	"max_pitch"						"90"
+
+	"def_projectile"				"projectile_deployable_railhowitzer"
+
+	"missile1_delay"				"1"
+	"missile1_anim"					"fire"
+	"missile1_channel"				"0"
+	"missile1_barrel"				"gun_end"
+
+	"def_firesupport_marker"		"firesupport_marker_railhowitzer"
+
+	"snd_deploy"					"sounds/deployables/railhowitzer/deployseq"
+	"snd_turret_yaw"				"sounds/deployables/misc/yaw"
+	"snd_turret_pitch"				"sounds/deployables/misc/pitch"
+
+	"mtr_color"						"guis/binoculars/target_howitzer_color"
+	"mtr_desat"						"guis/binoculars/target_howitzer_desat"
+	"mtr_half_desat"				"guis/binoculars/target_howitzer_half_desat"
+	"mtr_full_desat"				"guis/binoculars/target_howitzer_bright_desat"
+
+	"target_timer"					"timer_railhowitzer"
+	"target_locktime"				"4"
+	"target_lostgraceperiod"		"1"
+	"target_length"					"45"
+
+	"fx_fire"						"effects/deployables/railhowitzer_fire"
+	"fx_death"						"effects/deployables/railhowitzer_destroy"
+	"fx_emped"						"effects/generic_smoke/emp"
+	
+	"emp_effect_joint"				"gun_h_rotate"
+
+	"timer_name"					"timer_rail"
+	"collection_firesupport_rail"	"firesupport_rail"
+
+	"do_object"						"deployobject_railhowitzer"
+
+	"snd_firing"					""
+	"snd_effect"					""
+
+	"def_marker"					"target_marker"
+	"mtr_marker_cm"					"hud/objectives/firesupport"
+	"cm_marker_sort"				"0"
+
+	"deployable_type"				"1"
+
+	"contextmenu_quickchat_enemy"	"quickchat/context/attack/firesupportspotted"
+
+	"deploybonus_requireactive"		"0"
+	"prof_deploybonus"				"pro_oppressor_deploy_bonus"
+}
+
+// Projectile
+// ========================================================================
+
+entityDef projectile_deployable_railhowitzer {
+	"spawnclass"					"sdProjectile_Parabolic"
+	"scriptObject"					"projectile_missile"
+
+	"aor_layout"					"missile"
+	
+	"mins"							"-3 -3 -6"
+	"maxs"							"3 3 6"
+	"cone"							"3"
+	"model"							""
+
+	"dmg_damage"					"damage_deployable_railhowitzer"
+	"dmg_splash_damage"				"damage_deployable_railhowitzer_splash"
+
+	"health"						"1"
+	"velocity"						"1 0 0"
+	"face_velocity"					"1"
+	"gravity"						"1066"
+	"fuse"							"-1"
+	"mass"							"5"
+
+	"detonate_on_death"				"1"
+	"detonate_on_world"				"1"
+	"detonate_on_actor"				"1"
+
+	"use_air_burst"					"1"
+	"fx_airburst"					"effects/deployables/plasmamortar_explode_air"
+
+	"collection_antiair"			"antiair"
+	"collection_mdfExport"			"mdfExport"
+
+	//"snd_fly"						"sounds/deployables/railhowitzer/fly"
+	"snd_fly"						"sounds/deployables/ssg/fly"
+	"fx_trail"						"effects/deployables/railhowitzer_trail"
+	"fx_explode"					"effects/deployables/railhowitzer_shell_explode"
+	"fx_explode_snow" 				"effects/railhowitzer_snow"
+	"fx_explode_water"				"effects/water/explosion"
+	"fx_explode_water_interior"		"effects/water/explosion_interior"
+
+	"prof_destroy"					"pro_engineer_antimissile_railhowitzer"
+}
+
+// ========================================================================
+
+damageDef damage_deployable_railhowitzer {
+	damage							"damage_deployable_railhowitzer"
+
+	prof_damage						"pro_oppressor_damage"
+
+	stat_name						"railhowitzer"
+
+	team_kill_cvar					"g_allowComplaint_firesupport"
+
+	tt_obituary						"tooltips/killmsgs/weapons/railhowitzer"
+	tt_obituary_team_kill			"tooltips/killmsgs/weapons/railhowitzer/teamkill"
+	tt_obituary_self				"tooltips/killmsgs/weapons/railhowitzer/self"
+	tt_obituary_unknown				"tooltips/killmsgs/weapons/railhowitzer/unknown"
+}
+
+// ========================================================================
+
+damageDef damage_deployable_railhowitzer_splash {
+	damage							"damage_deployable_railhowitzer_splash"
+	radius							768
+	push							10000000
+
+	prof_damage						"pro_oppressor_damage"
+
+	stat_name						"railhowitzer"
+
+	team_kill_cvar					"g_allowComplaint_firesupport"
+
+	tt_obituary						"tooltips/killmsgs/weapons/railhowitzer"
+	tt_obituary_team_kill			"tooltips/killmsgs/weapons/railhowitzer/teamkill"
+	tt_obituary_self				"tooltips/killmsgs/weapons/railhowitzer/self"
+	tt_obituary_unknown				"tooltips/killmsgs/weapons/railhowitzer/unknown"
+}
+
+// ========================================================================
+
+damageFilter damage_deployable_railhowitzer {
+	type {
+		target	"target_all"
+		damage	1000
+	}
+
+	type {
+		target	"target_explodable"
+		damage	400
+	}
+}
+
+damageFilter damage_deployable_railhowitzer_splash {
+	type {
+		target	"target_all"
+		damage	1000
+	}
+
+	type {
+		target	"target_explodable"
+		damage	400
+	}
+}

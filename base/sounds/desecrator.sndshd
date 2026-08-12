@@ -1,0 +1,143 @@
+////////////////
+// Desecrator //
+////////////////
+
+sound sounds/vehicles/desecrator/recharge_2s {
+	//private
+	//no_occlusion
+	volume		-9
+	sounds/vehicles/desecrator/local_fire_recharge_2s.wav
+}
+
+sound sounds/vehicles/desecrator/recharge_4s {
+	//private
+	//no_occlusion
+	volume		-9
+	sounds/vehicles/desecrator/local_fire_recharge_4s.wav
+}
+
+
+sound sounds/vehicles/desecrator/turbo_start {
+	volume		-5
+	minDistance	10
+	maxDistance 90
+	looping
+	leadin
+	sounds/vehicles/desecrator/turbo_start.wav
+	sounds/vehicles/desecrator/turbo_loop.wav
+}
+
+sound sounds/vehicles/desecrator/turbo_stop {
+	volume		-5
+	minDistance	10
+	maxDistance 90
+
+	sounds/vehicles/desecrator/turbo_stop.wav
+}
+
+
+sound sounds/vehicles/desecrator/engine_start {
+
+	volume		-7
+	maxDistance 75
+
+	sounds/vehicles/desecrator/xdesecrator_start.wav
+}
+
+sound sounds/vehicles/desecrator/engine_stop {
+
+	maxDistance 75
+	
+	sounds/vehicles/desecrator/xdesecrator_stop_02a.wav
+}
+
+sound sounds/vehicles/desecrator/engine_idle {
+	minDistance	25
+	maxDistance 60
+	looping
+	// Synth harmonics
+	sounds/vehicles/desecrator/xdesecrator_hover_02.wav	
+}
+
+sound sounds/vehicles/desecrator/engine_hover {
+	minDistance	25
+	maxDistance	75
+	// Main Engine hum with electro layer
+	looping
+	sounds/vehicles/desecrator/xdesecrator_engine_02a.wav
+}
+
+sound sounds/vehicles/desecrator/arcs {
+
+	volume -15
+	minDistance	5
+	maxDistance	30
+	no_dups
+
+	sounds/vehicles/desecrator/spark_01.wav
+	sounds/vehicles/desecrator/spark_02.wav
+	sounds/vehicles/desecrator/spark_03.wav
+	sounds/vehicles/desecrator/spark_04.wav
+	sounds/vehicles/desecrator/spark_05.wav
+	sounds/vehicles/desecrator/spark_06.wav
+	sounds/vehicles/desecrator/spark_07.wav
+}
+
+sound sounds/vehicles/desecrator/fire_near {
+	compression wav
+
+	minDistance 25
+	maxDistance 100
+	shakes 0.05
+	no_dups
+	
+	sounds/vehicles/desecrator/p2fire_02.wav
+	sounds/vehicles/desecrator/p2fire_01.wav
+	sounds/vehicles/desecrator/p2fire_03.wav
+	sounds/vehicles/desecrator/p2fire_04.wav
+	sounds/vehicles/desecrator/p2fire_05.wav
+	sounds/vehicles/desecrator/p2fire_06.wav
+}
+
+sound sounds/vehicles/desecrator/fire_far {
+
+	volume -10
+	minDistance 100
+	maxDistance 250
+	no_dups
+	
+	sounds/vehicles/desecrator/p2fire_far_02.wav
+	sounds/vehicles/desecrator/p2fire_far_01.wav
+	sounds/vehicles/desecrator/p2fire_far_03.wav
+	sounds/vehicles/desecrator/p2fire_far_04.wav
+	sounds/vehicles/desecrator/p2fire_far_05.wav
+	sounds/vehicles/desecrator/p2fire_far_06.wav
+}
+
+sound sounds/vehicles/desecrator/fire_local {
+
+	no_dups
+	
+	sounds/vehicles/desecrator/p2fire_local_02.wav
+	sounds/vehicles/desecrator/p2fire_local_01.wav
+	sounds/vehicles/desecrator/p2fire_local_03.wav
+	sounds/vehicles/desecrator/p2fire_local_04.wav
+	sounds/vehicles/desecrator/p2fire_local_05.wav
+	sounds/vehicles/desecrator/p2fire_local_06.wav
+}
+
+sound sounds/vehicles/desecrator/siege/start {
+
+	volume -10
+	maxDistance 75
+
+	sounds/vehicles/desecrator/siege_start.wav
+}
+
+sound sounds/vehicles/desecrator/siege/stop {
+
+	volume -10
+	maxDistance 75
+
+	sounds/vehicles/desecrator/siege_stop.wav
+}

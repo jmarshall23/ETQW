@@ -1,0 +1,99 @@
+material models/vegetation/trees/pine/pine01a
+{
+ 	nonsolid
+ 	noshadows
+        twoSided
+
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap 	clamp models/vegetation/trees/pine/pine01a_d.tga
+ 		alphaTest 	0.25
+ 		//bumpmap	models/andrew/tree02/tree02a_local.tga
+ 		
+		useTemplate wind/animatematrix< 0.15, 0.001 >
+ 	}
+}
+
+
+
+material models/vegetation/trees/pine/pine01b
+{
+ 	nonsolid
+ 	noshadows
+        twoSided
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap 	clamp models/vegetation/trees/pine/pine01b_d.tga
+		//bumpmap	models/andrew/tree02/tree02a_local.tga  		
+ 		alphaTest 	0.25
+ 		 		
+ 		useTemplate wind/animatematrix_centre< 0.15, 0.01 >
+ 	}
+}
+
+
+
+material models/vegetation/trees/pine/pine01c
+{
+	nonsolid
+ 	twoSided
+	noshadows
+	{
+		diffusemap	models/vegetation/trees/pine/pine01c_d.tga
+		bumpmap		models/vegetation/trees/pine/pine01c_local.tga
+		alphaTest 	0.25
+	}
+}
+
+///// snow vers
+
+material models/vegetation/trees/pine/pine_snow01a
+{
+ 	nonsolid
+ 	noshadows
+        twoSided
+
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap 	clamp models/vegetation/trees/pine/pine_snow01a_d.tga
+ 		alphaTest 	0.25
+ 		//bumpmap	models/andrew/tree02/tree02a_local.tga
+ 		
+		useTemplate wind/animatematrix< 0.15, 0.001 >
+ 	}
+}
+
+
+
+material models/vegetation/trees/pine/pine_snow01b
+{
+ 	nonsolid
+ 	noshadows
+        twoSided
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap 	clamp models/vegetation/trees/pine/pine_snow01b_d.tga
+		//bumpmap	models/andrew/tree02/tree02a_local.tga  		
+ 		alphaTest 	0.25
+ 		 		
+ 		useTemplate wind/animatematrix_centre< 0.15, 0.01 >
+ 	}
+}
+
+
+
+material models/vegetation/trees/pine/pine_snow01c
+{
+	nonsolid
+ 	twoSided
+	noshadows
+	{
+		diffusemap	models/vegetation/trees/pine/pine_snow01c_d.tga
+		bumpmap		models/vegetation/trees/pine/pine01c_local.tga
+		alphaTest 	0.25
+	}
+}

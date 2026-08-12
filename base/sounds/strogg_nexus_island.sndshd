@@ -1,0 +1,93 @@
+// Strogg Nexus
+
+// Map Island
+
+sound sounds/vo/strogg/nexus/maps/island/generator/defend/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20401.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/generator/defend {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20402.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/generator/repairing {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20403.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/generator/repairing/half {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20404.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/generator/fail {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20406.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/vaultdoor/defend {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20407.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/vaultdoor/planted {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20408.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/vaultdoor/disarm {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20409.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/vaultdoor/planted/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20410.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/vaultdoor/disarmed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20411.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/vaultdoor/fail {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20412.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/datadisc/defend/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20413.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/datadisc/defend {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20414.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/datadisc/taken {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20415.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/datadisc/dropped {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20416.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/datadisc/returned {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20417.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/stroggwin {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20425.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/island/strogglose {
+
+	localization/english/sounds/vo/strogg/nexus/maps/island/20424.wav
+}

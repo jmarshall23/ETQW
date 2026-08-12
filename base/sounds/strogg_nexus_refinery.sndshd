@@ -1,0 +1,103 @@
+// Strogg Nexus
+
+// Map Refinery
+
+sound sounds/vo/strogg/nexus/maps/refinery/mcp/leftbase {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20701.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/defend/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20702.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/defend {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20704.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/converter/defend {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20705.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/filter/defend {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20706.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/assaultramp/fail {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20707.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/barricade/fail {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20708.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/converter/planted {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20709.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/converter/disarm {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20710.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/converter/planted/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20711.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/converter/disarmed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20712.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/converter/destroyed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20713.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/filter/planted {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20714.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/filter/disarm {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20715.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/filter/planted/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20716.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/filter/disarmed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20717.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/filter/destroyed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20718.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/stroggwin {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20721.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/stroggwin/half {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20720.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/refinery/strogglose {
+
+	localization/english/sounds/vo/strogg/nexus/maps/refinery/20719.wav
+}

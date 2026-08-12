@@ -1,0 +1,560 @@
+// ====================================================
+// New *(19.04.07) Simplified Command Map Icons
+// ====================================================
+
+material guis/assets/commandmap/icon_player
+{
+	sort gui
+	{
+		blend blend
+		map nopicmip clamp guis/assets/commandmap/icon_player.tga
+		vertexColor
+	}
+}
+
+material guis/assets/commandmap/icon_player_flash
+{
+	sort gui
+	{
+		blend blend
+		alpha ( cosTable[ time * 3 ] ) + 1.2
+		map nopicmip clamp guis/assets/commandmap/icon_player.tga
+		vertexColor
+	}
+}
+
+material guis/assets/commandmap/icon_vehicle
+{
+	sort gui
+	{
+		blend blend
+		map nopicmip clamp guis/assets/commandmap/icon_vehicle.tga
+		vertexColor
+	}
+}
+
+material guis/assets/commandmap/icon_vehicle_flash
+{
+	sort gui
+	{
+		blend blend
+		alpha ( cosTable[ time * 3 ] ) + 1.2
+		map nopicmip clamp guis/assets/commandmap/icon_vehicle.tga
+		vertexColor
+	}
+}
+
+material guis/assets/commandmap/icon_atk_deploy
+{
+	sort gui
+	{
+		blend blend
+		map nopicmip clamp guis/assets/commandmap/icon_atk_deploy.tga
+		vertexColor
+	}
+}
+
+material guis/assets/commandmap/icon_atk_deploy_flash
+{
+	sort gui
+	{
+		blend blend
+		alpha ( cosTable[ time * 3 ] ) + 1.2
+		map nopicmip clamp guis/assets/commandmap/icon_atk_deploy.tga
+		vertexColor
+	}
+}
+
+
+material guis/assets/commandmap/icon_def_deploy
+{
+	sort gui
+	{
+		blend blend
+		map nopicmip clamp guis/assets/commandmap/icon_def_deploy.tga
+		vertexColor
+	}
+}
+
+material guis/assets/commandmap/icon_def_deploy_flash
+{
+	sort gui
+	{
+		blend blend
+		alpha ( cosTable[ time * 3 ] ) + 1.2
+		map nopicmip clamp guis/assets/commandmap/icon_def_deploy.tga
+		vertexColor
+	}
+}
+
+material guis/assets/commandmap/icon_radar
+{
+	sort gui
+	{
+		blend blend
+		map nopicmip clamp guis/assets/commandmap/icon_radar.tga
+		vertexColor
+	}
+}
+
+material guis/assets/commandmap/icon_radar_flash
+{
+	sort gui
+	{
+		blend blend
+		alpha ( cosTable[ time * 3 ] ) + 1.2
+		map nopicmip clamp guis/assets/commandmap/icon_radar.tga
+		vertexColor
+	}
+}
+
+material guis/assets/commandmap/icon_supplies
+{
+	sort gui
+	{
+		blend blend
+		map nopicmip clamp guis/assets/commandmap/icon_supplies.tga
+		vertexAlpha
+	}
+	{
+		blend blend
+		map nopicmip clamp guis/assets/commandmap/icon_supplies_arrows.tga
+		centerscale	0.72 + 0.05 * sinTable[ time ], 0.72 + 0.05 * sinTable[ time ]
+		vertexColor
+	}
+	
+}
+
+// ====================================================
+// Structure Icons for Command Map
+// ====================================================
+
+material guis/assets/qet/cm_spawn
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_spawn.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_capturezone
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_capturezone.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_cc
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_cc.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_cc_damaged
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_cc_damaged.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_cc_disabled
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_cc_disabled.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_domihub
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_domihub.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_domihub_damaged
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_domihub_damaged.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_domihub_disabled
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_domihub_disabled.tga
+		vertexColor
+	}
+}
+
+
+material guis/assets/qet/cm_supply_cabinet
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_paratech.tga
+		vertexColor
+	}
+}
+
+
+// ====================================================
+// Player Icons for Command Map
+// ====================================================
+
+material guis/assets/qet/cm_arrow
+{
+	sort gui
+	{
+		blend blend
+		map nopicmip clamp guis/assets/qet/cm_arrow.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_player_self
+{
+	sort gui
+	{
+		blend blend
+		map nopicmip clamp guis/assets/qet/cm_player_self.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_player
+{
+	sort gui
+	{
+		blend blend
+		map nopicmip clamp guis/assets/qet/cm_player.tga
+		vertexColor
+	}
+}
+
+// ====================================================
+// Vehicle Icons for Command Map
+// ====================================================
+
+material guis/assets/qet/cm_platypus
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_platypus.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_anansi
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_anansi.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_badger
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_badger.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_desecrator
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_desecrator.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_goliath
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_goliath.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_hog
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_hog.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_hornet
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_hornet.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_husky
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_husky.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_icarus
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_icarus.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_magog
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_magog.tga
+		vertexColor
+		alpha 0.5
+	}
+}
+
+material guis/assets/qet/cm_vampire
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_vampire.tga
+		vertexColor
+		alpha 0.5
+	}
+}
+
+material guis/assets/qet/cm_mcp
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_mcp.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_mcp_undeployed
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_mcp_undeployed.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_titan
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_titan.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_trojan
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_trojan.tga
+		vertexColor
+	}
+}
+
+material guis/assets/qet/cm_buffalo
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/cm_buffalo.tga
+		vertexColor
+	}
+}
+
+// ====================================================
+// Deployable Icons for Command Map
+// ====================================================
+
+template templates/materials/cm/deployable_state {
+	parameters< ImageParm >
+	text {
+		sort gui
+		{
+			blend blend
+			map clamp "ImageParm"
+			vertexColor
+		}
+		{
+			if parm5 < 0.66
+			blend blend
+			red ( 0.3 * sinTable[ time ] ) + 0.7
+			green 0
+			blue 0
+			map clamp "guis/assets/qet/cm_damaged.tga"
+		}
+	}
+}
+
+template templates/materials/cm/deployable_state_active {
+	text {
+		{
+			if parm6 == 1 && parm5 >= 0.33 && parm5 == 0
+			blend blend
+			red 0
+			blue ( ( 0.3 * sinTable[ time ] ) + 0.7 )
+			green ( ( 0.3 * sinTable[ time ] ) + 0.7 )
+			map clamp "guis/assets/qet/cm_active.tga"
+		}
+	}
+}
+
+material guis/assets/qet/cm_artillery
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_artillery.tga" >
+}
+
+material guis/assets/qet/cm_rockets
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_rockets.tga" >
+}
+
+material guis/assets/qet/cm_ssm
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_ssm.tga" >
+}
+
+material guis/assets/qet/cm_antiarmour_edf
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_antiarmour_edf.tga" >
+	useTemplate templates/materials/cm/deployable_state_active<>
+}
+
+material guis/assets/qet/cm_antiarmour_strogg
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_antiarmour_strogg.tga" >
+	useTemplate templates/materials/cm/deployable_state_active<>
+}
+
+material guis/assets/qet/cm_antipersonnel_edf
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_antipersonnel_edf.tga" >
+	useTemplate templates/materials/cm/deployable_state_active<>
+}
+
+material guis/assets/qet/cm_antipersonnel_strogg
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_antipersonnel_strogg.tga" >
+	useTemplate templates/materials/cm/deployable_state_active<>
+}
+
+material guis/assets/qet/cm_antimissile_strogg
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_unknown.tga" >
+	useTemplate templates/materials/cm/deployable_state_active<>
+}
+
+material guis/assets/qet/cm_antimissile_gdf
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_unknown.tga" >
+	useTemplate templates/materials/cm/deployable_state_active<>
+}
+
+material guis/assets/qet/cm_radar
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_radar.tga" >
+}
+
+material guis/assets/qet/cm_awacs
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_antipersonnel_awacs.tga" >
+}
+
+material guis/assets/qet/cm_satellite
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_satellite.tga" >
+}
+
+material guis/assets/qet/cm_repairbay
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_repairbay.tga" >
+}
+
+material guis/assets/qet/cm_stroggket
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_stroggket.tga" >
+}
+
+material guis/assets/qet/cm_plasmamortar
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_plasmamortar.tga" >
+}
+
+material guis/assets/qet/cm_railhowitzer
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_railhowitzer.tga" >
+}
+
+material guis/assets/qet/cm_ssg
+{
+	useTemplate templates/materials/cm/deployable_state< "guis/assets/qet/cm_ssg.tga" >
+}
+
+material guis/assets/qet/cm_unknown
+{
+	sort gui
+	{
+		blend blend
+		map nopicmip clamp guis/assets/qet/cm_unknown.tga
+		vertexColor
+}
+	}

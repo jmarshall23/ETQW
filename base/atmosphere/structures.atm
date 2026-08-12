@@ -1,0 +1,28 @@
+ambientCubemap cc_interior {
+	ambientLight {
+		color 0.2980392277 0.3098039329 0.2941176593
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2549019754 0.2549019754 0.2549019754
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3176470697 0.3176470697 0.3176470697
+		direction 0.9519067407 0.2729548812 -0.1391730905
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3372549117 0.3372549117 0.3372549117
+		direction -0.3158973455 -0.9174326062 0.2419219017
+		name "Light3"
+	}
+	ambientLight {
+		color 0.3019607961 0.3019607961 0.3019607961
+		direction -0.446036011 0.7423286438 0.5
+		name "Light5"
+	}
+}
+

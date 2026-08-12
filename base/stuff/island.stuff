@@ -1,0 +1,40 @@
+
+// --------------------------------------------
+// ISLAND STUFF
+// --------------------------------------------
+
+stuffType island/island_grass {
+	Model	"stuff/island/island_grass01.lwo"
+	Model	"stuff/island/island_grass02.lwo"
+	Model	"stuff/island/island_grass03.lwo"
+}
+
+stuffType island/island_plants {
+	Model	"stuff/island/island_plants01.lwo"
+	Model	"stuff/island/island_plants02.lwo"
+	Model	"stuff/island/island_plants03.lwo"
+}
+
+stuffType island/island_shrubs {
+	Model	"stuff/island/island_shrub01.lwo"
+	Model	"stuff/island/island_shrub02.lwo"
+	Model	"stuff/island/island_shrub03.lwo"
+}
+
+stuffType island/island_rocks {
+	Model	"stuff/island/island_rock01.lwo"
+	Model	"stuff/island/island_rock02.lwo"
+	Model	"stuff/island/island_rock03.lwo"
+	Model	"stuff/island/island_rock04.lwo"
+	Model	"stuff/island/island_rock05.lwo"
+	Model	"stuff/island/island_rock06.lwo"
+	Model	"stuff/island/island_rock07.lwo"
+	Model	"stuff/island/island_rock08.lwo"
+}
+
+stuffType island/island_rocks_small {
+	Model	"stuff/island/island_rock_small01.lwo"
+	Model	"stuff/island/island_rock_small02.lwo"
+	Model	"stuff/island/island_rock_small03.lwo"
+	Model	"stuff/island/island_rock_small04.lwo"
+}

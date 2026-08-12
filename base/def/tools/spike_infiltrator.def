@@ -1,0 +1,61 @@
+
+// ========================================================================
+// Entity DEFS
+//
+invItemDef inventory/tools/spike_infiltrator {
+	type						"tool"
+	slot						"tool"
+	name						"game/weapons/spike_hacking_tool"
+
+	data {
+		"model_view" 				"viewmodel_repair_tool"
+		"joint_attach"				"RightHand"
+
+		"view_offset"				"-3.6 -2 -2.2"
+
+		"anim_prefix"				"hands_construction_tool"
+		"anim_prefix_class"			"hands"
+
+		"has_startfire_anim"		"1"
+		"has_endfire_anim"		"1"
+
+		"weapon_scriptobject"		"tool_pliers"
+		"use_hold_anims"			"1"
+
+		"melee_distance"			"88"
+
+		"snd_raise"					"sounds/tools/infiltrator/raise"
+		"snd_start"					"sounds/tools/infiltrator/start"
+		"snd_stop"					"sounds/tools/infiltrator/stop"
+
+		"show_charge"				"0"
+
+		"can_hack"					"1"
+		"can_disguise"				"1"
+
+		"mtr_weaponmenu"			"guis/assets/icons/weapons/hackingdevice"
+
+		"activate_attack"			"1"
+
+		"player_weapon_num"			"18"
+
+		"tt_intro_1"				"spike_infiltrator_intro_1"
+		"tt_intro_2"				"spike_infiltrator_intro_2"
+		"tt_action_failed"			"spike_infiltrator_action_failed"
+	}
+}
+
+toolTip spike_infiltrator_intro_1 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/spike_infiltrator_1"
+}
+
+toolTip spike_infiltrator_intro_2 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/generic/fire_activate_use_item"
+}
+
+toolTip spike_infiltrator_action_failed {
+	sound "sounds/ui/main/cannot"
+	text "game/tt/intro/spike_infiltrator_action_failed"
+}

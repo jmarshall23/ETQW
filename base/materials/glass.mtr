@@ -1,0 +1,166 @@
+material textures/glass/dirty_window
+{
+	noSelfShadow
+	noshadows
+	twosided
+	translucent
+	surfaceType "glass"
+	forceoverlays
+	sort decal
+
+	{
+		maskcolor
+		map		makealpha(textures/glass/dirty_window_mask1.tga)
+	}
+
+	{
+		blend		gl_dst_alpha, gl_one
+		maskalpha
+		program sfx/cubemap
+		red		Parm0
+		green   Parm1
+		blue	Parm2
+	}
+
+	{
+     	blend	filter
+		map		textures/glass/dirty_window2.tga
+	}
+}
+
+material textures/glass/dirty_window_cockpit
+{
+	noSelfShadow
+	noshadows
+	twosided
+	translucent
+	surfaceType "glass"
+	forceoverlays
+	sort 99
+
+	{
+		maskcolor
+		map		makealpha(textures/glass/dirty_window_mask1.tga)
+	}
+
+	{
+		blend		gl_dst_alpha, gl_one
+		maskalpha
+		program sfx/cubemap
+		red		Parm0
+		green   Parm1
+		blue	Parm2
+	}
+
+	{
+     	blend	filter
+		map		textures/glass/dirty_window2.tga
+	}
+}
+
+material window01
+{
+	noSelfShadow
+	noshadows
+	//twosided
+	translucent
+	surfaceType "glass"
+	forceoverlays
+	sort decal
+
+	{
+		maskcolor
+		map		makealpha(textures/glass/dirty_window_mask.tga)
+	}
+
+	{
+		blend		gl_dst_alpha, gl_one
+		maskalpha
+		program sfx/cubemap
+		red		Parm0
+		green   	Parm1
+		blue		Parm2
+	}
+
+	{
+     		blend		filter
+		map		textures/glass/dirty_window.tga
+	}
+}
+
+material window02
+{
+	noSelfShadow
+	noshadows
+	//twosided
+	translucent
+	surfaceType "glass"
+	forceoverlays
+	sort decal
+
+	{
+		maskcolor
+		map		makealpha(textures/glass/dirty_window_mask.tga)
+	}
+
+	{
+		blend		gl_dst_alpha, gl_one
+		maskalpha
+		program sfx/cubemap
+		red		Parm0
+		green   	Parm1
+		blue		Parm2
+	}
+
+	{
+     		blend		filter
+		map		textures/glass/dirty_window.tga
+	}
+}
+
+material window_cabinet
+{
+	noSelfShadow
+	noshadows
+	//twosided
+	translucent
+	surfaceType "glass"
+	forceoverlays
+	sort decal
+
+	{
+		maskcolor
+		map		makealpha(textures/glass/dirty_window_mask1.tga)
+	}
+
+	{
+		blend		gl_dst_alpha, gl_one
+		maskalpha
+		program sfx/cubemap
+		red		Parm0
+		green   	Parm1
+		blue		Parm2
+	}
+
+	{
+     		blend		filter
+		map		textures/glass/dirty_window1.tga
+	}
+}
+
+material textures/glass/glass_floor_strogg
+{
+	twosided
+	useTemplate templates/windowglass_mask <
+		textures/glass/glass_floor_strogg_d.tga,
+		_flat,
+		_white,
+		2, 1, 0.2
+	>
+	{
+		blend blend
+		depthfunc less
+		map textures/glass/glass_floor_strogg_dirt.tga
+			
+	}
+}

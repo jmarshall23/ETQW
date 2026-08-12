@@ -1,0 +1,72 @@
+!!ARBvp1.0
+#replace normalAttrib with _normalAttrib
+TEMP _normalAttrib;
+TEMP _attribTemp;
+MUL _normalAttrib, vertex.attrib[2], 0.000030518;
+MUL _attribTemp.xy, _normalAttrib, _normalAttrib;
+ADD _attribTemp.x, _attribTemp.xxxx, _attribTemp.yyyy;
+ADD _attribTemp.x, 1, -_attribTemp.x;
+RSQ _attribTemp.x, _attribTemp.x;
+RCP _normalAttrib.z, _attribTemp.x;
+ADD _attribTemp.x, $signAttrib$.x, -1;
+MUL _normalAttrib.z, _normalAttrib.z, _attribTemp.x;
+#replace texCoordAttrib with _texCoordAttrib
+TEMP _texCoordAttrib;
+MUL _texCoordAttrib.xy, vertex.attrib[8], 0.000244141;
+MOV _texCoordAttrib.zw, 1;
+
+		
+		
+
+
+TEMP	bitangent;
+TEMP	R0, R1, R2;
+
+
+	TEMP _pos;
+	TEMP _nrm;
+	TEMP _tan;
+	DP4 _pos.x, vertex.texcoord[5], vertex.position;
+	DP4 _pos.y, vertex.texcoord[6], vertex.position;
+	DP4 _pos.z, vertex.texcoord[7], vertex.position;
+	MOV _pos.w, vertex.position.w;
+
+	DP3 _nrm.x, vertex.texcoord[5], _normalAttrib;
+	DP3 _nrm.y, vertex.texcoord[6], _normalAttrib;
+	DP3 _nrm.z, vertex.texcoord[7], _normalAttrib;
+
+	MOV result.texcoord[6].w, vertex.texcoord[2];
+	
+	PARAM  mvp[4]       = { state.matrix.mvp };
+	OUTPUT oPos         = result.position;
+	# Transform the vertex to clip coordinates. 
+	DP4   oPos.x, mvp[0], _pos;
+	DP4   oPos.y, mvp[1], _pos;
+	DP4   oPos.z, mvp[2], _pos;
+	DP4   oPos.w, mvp[3], _pos;
+
+
+PARAM	defaultTexCoord = { 0, 0.5, 0, 1 };
+
+# textures 4 takes the base coordinates by the texture matrix
+MOV		result.texcoord[4], defaultTexCoord;
+DP4		result.texcoord[4].x, _texCoordAttrib, program.local[0];
+DP4		result.texcoord[4].y, _texCoordAttrib, program.local[1];
+
+# generate the vertex color, which can be 1.0, color, or 1.0 - color
+MAD		result.color, vertex.attrib[3], program.local[2], program.local[3];
+
+DP3		result.texcoord[5].x, program.local[4], _nrm;
+DP3		result.texcoord[5].y, program.local[5], _nrm;
+DP3		result.texcoord[5].z, program.local[6], _nrm;
+
+
+SUB		R2, _pos, program.local[7];
+DP3		R1.x, R2, R2;
+RSQ		R1.y, R1.x;
+MUL		R1.x, R1.y, R1.x;
+MAD		result.color.secondary, R1.x, program.local[8].z, program.local[8].w; 
+
+
+	
+END

@@ -1,0 +1,13 @@
+
+locString guis/yes {
+	text "#str_00012000"
+}
+
+locString guis/no {
+	text "#str_00012001"
+}
+
+locString guis/today {
+	text "#str_00012014"
+	arguments 1
+}

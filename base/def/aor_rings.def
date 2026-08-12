@@ -1,0 +1,82 @@
+areaOfRelevance default {
+
+	spreadStart				0
+	spreadEnd				32000
+	spreadScale				0.75
+
+	userCommandCutoff		5000
+	animationCutoff			7000
+	ikCutoff				3500
+	physicsCutoff			3500
+
+	boxDecayClipStart		3500
+	pointDecayClipStart		5000
+	heightMapDecayClipStart	7000
+	decayClipEnd			10000
+
+	physicsLOD1Start		800
+	physicsLOD2Start		1200
+}
+
+areaOfRelevance player {
+
+	spreadStart				0
+	spreadEnd				32000
+	spreadScale				0.75
+	
+	userCommandCutoff		6000
+	animationCutoff			10000
+	ikCutoff				6000
+	physicsCutoff			6000
+
+	pointDecayClipStart		6000
+	heightMapDecayClipStart	7000
+	decayClipEnd			10000
+
+	physicsLOD1Start		800
+	physicsLOD2Start		1200
+	physicsLOD3Start		2400
+}
+
+// for showing things like the titan turret turning
+areaOfRelevance keep_anims {
+	spreadStart				0
+	spreadEnd				32000
+	spreadScale				0.75
+	
+	userCommandCutoff		10240
+	animationCutoff			10240
+	ikCutoff				10240
+	physicsCutoff			10240
+
+	physicsLOD1Start		7999
+	physicsLOD2Start		8000
+}
+
+// for anansi/hornet/buffalo
+// cuts off collision detection fairly early, but keeps running rest of physics for a long distance
+areaOfRelevance air_vehicles {
+	spreadStart	0
+	spreadEnd	32000
+	spreadScale				0.75
+
+	userCommandCutoff		10000
+	animationCutoff			4500
+	ikCutoff				4500
+	physicsCutoff			10000
+
+	boxDecayClipStart		11000
+	pointDecayClipStart		13000
+	heightMapDecayClipStart	14000
+	decayClipEnd			16000
+
+	physicsLOD2Start		1500
+	physicsLOD3Start		4500
+}
+
+// for large missiles, these predict very easily, and are pretty cheap physics-wise
+areaOfRelevance missile {
+	spreadScale 0.2
+	spreadStart	0
+	spreadEnd	8000
+}

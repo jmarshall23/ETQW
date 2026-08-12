@@ -1,0 +1,981 @@
+/////////////////////////////////////////////////////////////
+// Strogg Quick Chat ////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+
+// Global ///////////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/global/yes {
+
+	localization/english/sounds/players/strogg/global/26001.wav
+	localization/english/sounds/players/strogg/global/26002.wav
+	localization/english/sounds/players/strogg/global/26003.wav
+}
+
+sound sounds/players/strogg/quickchat/global/no {
+
+	localization/english/sounds/players/strogg/global/26004.wav
+	localization/english/sounds/players/strogg/global/26005.wav
+	localization/english/sounds/players/strogg/global/26006.wav
+}
+
+sound sounds/players/strogg/quickchat/global/thanks {
+
+	localization/english/sounds/players/strogg/global/26007.wav
+	localization/english/sounds/players/strogg/global/26008.wav
+	localization/english/sounds/players/strogg/global/26009.wav
+	localization/english/sounds/players/strogg/global/26010.wav
+	localization/english/sounds/players/strogg/global/26199.wav
+}
+
+sound sounds/players/strogg/quickchat/global/youwelcome {
+
+	localization/english/sounds/players/strogg/global/26011.wav
+	localization/english/sounds/players/strogg/global/26012.wav
+}
+
+sound sounds/players/strogg/quickchat/global/sorry {
+
+	localization/english/sounds/players/strogg/global/26013.wav
+	localization/english/sounds/players/strogg/global/26014.wav
+}
+
+sound sounds/players/strogg/quickchat/global/hi {
+
+	localization/english/sounds/players/strogg/global/26015.wav
+	localization/english/sounds/players/strogg/global/26016.wav
+}
+
+sound sounds/players/strogg/quickchat/global/go {
+
+	localization/english/sounds/players/strogg/global/26017.wav
+	localization/english/sounds/players/strogg/global/26018.wav
+}
+
+sound sounds/players/strogg/quickchat/global/quiet {
+
+	localization/english/sounds/players/strogg/global/26019.wav
+	localization/english/sounds/players/strogg/global/26020.wav
+}
+
+
+// Global Cheers ////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/global/cheers/awesome {
+
+	localization/english/sounds/players/strogg/global/26021.wav
+}
+
+sound sounds/players/strogg/quickchat/global/cheers/greatshot {
+
+	localization/english/sounds/players/strogg/global/26022.wav
+}
+
+sound sounds/players/strogg/quickchat/global/cheers/accurate {
+
+	localization/english/sounds/players/strogg/global/26023.wav
+}
+
+sound sounds/players/strogg/quickchat/global/cheers/forthemakron {
+
+	localization/english/sounds/players/strogg/global/26024.wav
+}
+
+sound sounds/players/strogg/quickchat/global/cheers/wellplayed {
+
+	localization/english/sounds/players/strogg/global/26025.wav
+}
+
+sound sounds/players/strogg/quickchat/global/cheers/inspiring {
+
+	localization/english/sounds/players/strogg/global/26026.wav
+}
+
+sound sounds/players/strogg/quickchat/global/cheers/goodgame {
+
+	localization/english/sounds/players/strogg/global/26027.wav
+	localization/english/sounds/players/strogg/global/26028.wav
+}
+
+sound sounds/players/strogg/quickchat/global/cheers/strogg {
+
+	localization/english/sounds/players/strogg/global/26029.wav
+	localization/english/sounds/players/strogg/global/26030.wav
+}
+
+sound sounds/players/strogg/quickchat/global/cheers/excellent {
+
+	localization/english/sounds/players/strogg/global/26031.wav
+	localization/english/sounds/players/strogg/global/26032.wav
+	localization/english/sounds/players/strogg/global/26033.wav
+}
+
+sound sounds/players/strogg/quickchat/global/cheers/whoa {
+
+	localization/english/sounds/players/strogg/global/26034.wav
+}
+
+sound sounds/players/strogg/quickchat/global/cheers/alright {
+
+	localization/english/sounds/players/strogg/global/26035.wav
+	localization/english/sounds/players/strogg/global/26036.wav
+	localization/english/sounds/players/strogg/global/26037.wav
+}
+
+sound sounds/players/strogg/quickchat/global/cheers/glory {
+
+	localization/english/sounds/players/strogg/global/26038.wav
+}
+
+sound sounds/players/strogg/quickchat/global/cheers/yourock {
+
+	localization/english/sounds/players/strogg/global/26197.wav
+	localization/english/sounds/players/strogg/global/26198.wav
+}
+
+
+// Global Taunts ////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/global/taunts/ohdear {
+
+	localization/english/sounds/players/strogg/global/26039.wav
+	localization/english/sounds/players/strogg/global/26040.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/oops {
+
+	localization/english/sounds/players/strogg/global/26041.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/theycrumble {
+
+	localization/english/sounds/players/strogg/global/26042.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/theyfleeterror {
+
+	localization/english/sounds/players/strogg/global/26043.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/eatthathuman {
+
+	localization/english/sounds/players/strogg/global/26044.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/killhumanfood {
+
+	localization/english/sounds/players/strogg/global/26045.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/thwarted {
+
+	localization/english/sounds/players/strogg/global/26046.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/rrr {
+
+	localization/english/sounds/players/strogg/global/26047.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/cough {
+
+	localization/english/sounds/players/strogg/global/26048.wav
+	localization/english/sounds/players/strogg/global/26049.wav
+	localization/english/sounds/players/strogg/global/26050.wav
+	localization/english/sounds/players/strogg/global/26051.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/awkward {
+
+	localization/english/sounds/players/strogg/global/26052.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/awyeahohno {
+
+	localization/english/sounds/players/strogg/global/26053.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/awnoheyyeah {
+
+	localization/english/sounds/players/strogg/global/26054.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/owned {
+
+	localization/english/sounds/players/strogg/global/26055.wav
+	localization/english/sounds/players/strogg/global/26056.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/pain {
+
+	localization/english/sounds/players/strogg/global/26057.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/thathurt {
+
+	localization/english/sounds/players/strogg/global/26058.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/thathadtohurt {
+
+	localization/english/sounds/players/strogg/global/26059.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/meh {
+
+	localization/english/sounds/players/strogg/global/26060.wav
+	localization/english/sounds/players/strogg/global/26061.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/ihadworse {
+
+	localization/english/sounds/players/strogg/global/26062.wav
+}
+
+sound sounds/players/strogg/quickchat/global/taunts/stroggy {
+
+	localization/english/sounds/players/strogg/global/26206.wav
+}
+
+
+// Responses ////////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/responses/acknowledged {
+
+	localization/english/sounds/players/strogg/responses/26063.wav
+}
+
+sound sounds/players/strogg/quickchat/responses/declined {
+
+	localization/english/sounds/players/strogg/responses/26064.wav
+}
+
+sound sounds/players/strogg/quickchat/responses/onit {
+
+	localization/english/sounds/players/strogg/responses/26065.wav
+}
+
+sound sounds/players/strogg/quickchat/responses/onmyway {
+
+	localization/english/sounds/players/strogg/responses/26066.wav
+}
+
+sound sounds/players/strogg/quickchat/responses/sorry {
+
+	localization/english/sounds/players/strogg/responses/26067.wav
+	localization/english/sounds/players/strogg/responses/26068.wav
+}
+
+sound sounds/players/strogg/quickchat/responses/dontcare {
+
+	localization/english/sounds/players/strogg/responses/26069.wav
+}
+
+sound sounds/players/strogg/quickchat/responses/unabletoassist {
+
+	localization/english/sounds/players/strogg/responses/26070.wav
+}
+
+sound sounds/players/strogg/quickchat/responses/outofrange {
+
+	localization/english/sounds/players/strogg/responses/26071.wav
+}
+
+sound sounds/players/strogg/quickchat/responses/thanks {
+
+	localization/english/sounds/players/strogg/responses/26072.wav
+	localization/english/sounds/players/strogg/responses/26073.wav
+	localization/english/sounds/players/strogg/responses/26074.wav
+}
+
+sound sounds/players/strogg/quickchat/responses/youwelcome {
+
+	localization/english/sounds/players/strogg/responses/26075.wav
+	localization/english/sounds/players/strogg/responses/26076.wav
+}
+
+sound sounds/players/strogg/quickchat/commands/affirmative {
+
+	localization/english/sounds/players/strogg/responses/26808.wav
+}
+
+sound sounds/players/strogg/quickchat/commands/negative {
+
+	localization/english/sounds/players/strogg/responses/26809.wav
+}
+
+
+// Needs ////////////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/need/technician {
+
+	localization/english/sounds/players/strogg/need/26077.wav
+	localization/english/sounds/players/strogg/need/26806.wav
+	localization/english/sounds/players/strogg/need/26807.wav
+}
+
+sound sounds/players/strogg/quickchat/need/stroyent {
+
+	localization/english/sounds/players/strogg/need/26078.wav
+}
+
+sound sounds/players/strogg/quickchat/need/constructor {
+
+	localization/english/sounds/players/strogg/need/26079.wav
+}
+
+sound sounds/players/strogg/quickchat/need/backup {
+
+	localization/english/sounds/players/strogg/need/26080.wav
+}
+
+sound sounds/players/strogg/quickchat/need/coveringfire {
+
+	localization/english/sounds/players/strogg/need/26081.wav
+}
+
+sound sounds/players/strogg/quickchat/need/firesupport {
+
+	localization/english/sounds/players/strogg/need/26082.wav
+}
+
+sound sounds/players/strogg/quickchat/need/mines {
+
+	localization/english/sounds/players/strogg/need/26083.wav
+}
+
+sound sounds/players/strogg/quickchat/need/stroyentdump {
+
+	localization/english/sounds/players/strogg/need/26084.wav
+}
+
+sound sounds/players/strogg/quickchat/need/health {
+
+	localization/english/sounds/players/strogg/need/26810.wav
+}
+
+sound sounds/players/strogg/quickchat/need/revive {
+
+	localization/english/sounds/players/strogg/need/26811.wav
+}
+
+sound sounds/players/strogg/quickchat/need/spawnhost {
+
+	localization/english/sounds/players/strogg/need/26207.wav
+}
+
+
+// Team Needs ///////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/need/team/technician {
+
+	localization/english/sounds/players/strogg/need/26085.wav
+}
+
+sound sounds/players/strogg/quickchat/need/team/oppressor {
+
+	localization/english/sounds/players/strogg/need/26086.wav
+}
+
+sound sounds/players/strogg/quickchat/need/team/constructor {
+
+	localization/english/sounds/players/strogg/need/26087.wav
+}
+
+sound sounds/players/strogg/quickchat/need/team/infiltrator {
+
+	localization/english/sounds/players/strogg/need/26088.wav
+}
+
+sound sounds/players/strogg/quickchat/need/team/aggressor {
+
+	localization/english/sounds/players/strogg/need/26089.wav
+}
+
+sound sounds/players/strogg/quickchat/need/team/radar {
+
+	localization/english/sounds/players/strogg/need/26090.wav
+	localization/english/sounds/players/strogg/need/26091.wav
+	localization/english/sounds/players/strogg/need/26092.wav
+}
+
+sound sounds/players/strogg/quickchat/need/team/apt {
+
+	localization/english/sounds/players/strogg/need/26093.wav
+}
+
+sound sounds/players/strogg/quickchat/need/team/avt {
+
+	localization/english/sounds/players/strogg/need/26094.wav
+}
+
+sound sounds/players/strogg/quickchat/need/team/ait {
+
+	localization/english/sounds/players/strogg/need/26095.wav
+}
+
+sound sounds/players/strogg/quickchat/need/team/snipersupport {
+
+	localization/english/sounds/players/strogg/need/26096.wav
+}
+
+
+// Vehicles /////////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/vehicles/needvehicle {
+
+	localization/english/sounds/players/strogg/vehicles/26097.wav
+}
+
+sound sounds/players/strogg/quickchat/vehicles/needgunner {
+
+	localization/english/sounds/players/strogg/vehicles/26098.wav
+}
+
+sound sounds/players/strogg/quickchat/vehicles/needdriver {
+
+	localization/english/sounds/players/strogg/vehicles/26099.wav
+}
+
+sound sounds/players/strogg/quickchat/vehicles/needpilot {
+
+	localization/english/sounds/players/strogg/vehicles/26100.wav
+}
+
+sound sounds/players/strogg/quickchat/vehicles/needpassenger {
+
+	localization/english/sounds/players/strogg/vehicles/26101.wav
+}
+
+sound sounds/players/strogg/quickchat/vehicles/needrepairs {
+
+	localization/english/sounds/players/strogg/vehicles/26102.wav
+}
+
+sound sounds/players/strogg/quickchat/vehicles/needpickup {
+
+	localization/english/sounds/players/strogg/vehicles/26103.wav
+}
+
+sound sounds/players/strogg/quickchat/vehicles/vehicleready {
+
+	localization/english/sounds/players/strogg/vehicles/26104.wav
+}
+
+sound sounds/players/strogg/quickchat/vehicles/holdvehicle {
+
+	localization/english/sounds/players/strogg/vehicles/26105.wav
+}
+
+sound sounds/players/strogg/quickchat/vehicles/bailout {
+
+	localization/english/sounds/players/strogg/vehicles/26106.wav
+}
+
+
+// Enemy ////////////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/enemy/infantryspotted {
+
+	localization/english/sounds/players/strogg/enemy/26107.wav
+}
+
+sound sounds/players/strogg/quickchat/enemy/indisguise {
+
+	localization/english/sounds/players/strogg/enemy/26108.wav
+}
+
+sound sounds/players/strogg/quickchat/enemy/vehiclespotted {
+
+	localization/english/sounds/players/strogg/enemy/26109.wav
+}
+
+sound sounds/players/strogg/quickchat/enemy/armorspotted {
+
+	localization/english/sounds/players/strogg/enemy/26110.wav
+}
+
+sound sounds/players/strogg/quickchat/enemy/aircraftspotted {
+
+	localization/english/sounds/players/strogg/enemy/26111.wav
+}
+
+sound sounds/players/strogg/quickchat/enemy/covertopsspotted {
+
+	localization/english/sounds/players/strogg/enemy/26112.wav
+}
+
+sound sounds/players/strogg/quickchat/enemy/minesspotted {
+
+	localization/english/sounds/players/strogg/enemy/26114.wav
+}
+
+sound sounds/players/strogg/quickchat/enemy/incomingairstrike {
+
+	localization/english/sounds/players/strogg/enemy/26115.wav
+}
+
+sound sounds/players/strogg/quickchat/enemy/incomingbombardment {
+
+	localization/english/sounds/players/strogg/enemy/26116.wav
+}
+
+sound sounds/players/strogg/quickchat/enemy/incomingfiresupport {
+
+	localization/english/sounds/players/strogg/enemy/26117.wav
+}
+
+
+// Enemy Deployables ////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/enemy/deployables/aitspotted {
+
+	localization/english/sounds/players/strogg/enemy/26118.wav
+}
+
+sound sounds/players/strogg/quickchat/enemy/deployables/firesupportspotted {
+
+	localization/english/sounds/players/strogg/enemy/26119.wav
+}
+
+sound sounds/players/strogg/quickchat/enemy/deployables/aptspotted {
+
+	localization/english/sounds/players/strogg/enemy/26120.wav
+}
+
+sound sounds/players/strogg/quickchat/enemy/deployables/avtspotted {
+
+	localization/english/sounds/players/strogg/enemy/26121.wav
+}
+
+sound sounds/players/strogg/quickchat/enemy/deployables/radarspotted {
+
+	localization/english/sounds/players/strogg/enemy/26122.wav
+}
+
+
+// Commands /////////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/commands/move {
+
+	localization/english/sounds/players/strogg/commands/26123.wav
+	localization/english/sounds/players/strogg/commands/26124.wav
+}
+
+sound sounds/players/strogg/quickchat/commands/letsgo {
+
+	localization/english/sounds/players/strogg/commands/26125.wav
+}
+
+sound sounds/players/strogg/quickchat/commands/followme {
+
+	localization/english/sounds/players/strogg/commands/26126.wav
+}
+
+sound sounds/players/strogg/quickchat/commands/clearmines {
+
+	localization/english/sounds/players/strogg/commands/26127.wav
+}
+
+sound sounds/players/strogg/quickchat/commands/hackenemybase {
+
+	localization/english/sounds/players/strogg/commands/26128.wav
+}
+
+sound sounds/players/strogg/quickchat/commands/captureforwardspawn {
+
+	localization/english/sounds/players/strogg/commands/26129.wav
+}
+
+sound sounds/players/strogg/quickchat/commands/holdfire {
+
+	localization/english/sounds/players/strogg/commands/26131.wav
+	localization/english/sounds/players/strogg/commands/26132.wav
+}
+
+
+// Objectives ///////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/objectives/attack {
+
+	localization/english/sounds/players/strogg/objectives/26133.wav
+	localization/english/sounds/players/strogg/objectives/26134.wav
+}
+
+sound sounds/players/strogg/quickchat/objectives/defend {
+
+	localization/english/sounds/players/strogg/objectives/26135.wav
+	localization/english/sounds/players/strogg/objectives/26136.wav
+}
+
+sound sounds/players/strogg/quickchat/objectives/destroy {
+
+	localization/english/sounds/players/strogg/objectives/26137.wav
+}
+
+sound sounds/players/strogg/quickchat/objectives/hack {
+
+	localization/english/sounds/players/strogg/objectives/26138.wav
+}
+
+sound sounds/players/strogg/quickchat/objectives/construct {
+
+	localization/english/sounds/players/strogg/objectives/26139.wav
+}
+
+sound sounds/players/strogg/quickchat/objectives/construct_tower {
+
+	localization/english/sounds/players/strogg/commands/26139.wav
+}
+
+sound sounds/players/strogg/quickchat/objectives/destroy_tower {
+
+	localization/english/sounds/players/strogg/objectives/26137.wav
+}
+
+sound sounds/players/strogg/quickchat/objectives/take {
+
+	localization/english/sounds/players/strogg/objectives/26140.wav
+}
+
+sound sounds/players/strogg/quickchat/objectives/return {
+
+	localization/english/sounds/players/strogg/objectives/26141.wav
+}
+
+sound sounds/players/strogg/quickchat/objectives/disarmexplosives {
+
+	localization/english/sounds/players/strogg/objectives/26142.wav
+}
+
+sound sounds/players/strogg/quickchat/objectives/stopmcp {
+
+	localization/english/sounds/players/strogg/objectives/26143.wav
+}
+
+sound sounds/players/strogg/quickchat/objectives/disablemcp {
+
+	localization/english/sounds/players/strogg/objectives/26144.wav
+}
+
+
+// Self /////////////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/self/imaggressor {
+
+	localization/english/sounds/players/strogg/self/26145.wav
+}
+
+sound sounds/players/strogg/quickchat/self/imtechnician {
+
+	localization/english/sounds/players/strogg/self/26146.wav
+}
+
+sound sounds/players/strogg/quickchat/self/imconstructor {
+
+	localization/english/sounds/players/strogg/self/26147.wav
+}
+
+sound sounds/players/strogg/quickchat/self/imoppressor {
+
+	localization/english/sounds/players/strogg/self/26148.wav
+}
+
+sound sounds/players/strogg/quickchat/self/iminfiltrator {
+
+	localization/english/sounds/players/strogg/self/26149.wav
+}
+
+sound sounds/players/strogg/quickchat/self/imattacking {
+
+	localization/english/sounds/players/strogg/self/26150.wav
+}
+
+sound sounds/players/strogg/quickchat/self/imdefending {
+
+	localization/english/sounds/players/strogg/self/26151.wav
+}
+
+sound sounds/players/strogg/quickchat/self/attackingmcp {
+
+	localization/english/sounds/players/strogg/self/26182.wav
+}
+
+sound sounds/players/strogg/quickchat/self/disablingmcp {
+
+	localization/english/sounds/players/strogg/self/26183.wav
+}
+
+
+// Self Disguise ////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/self/disguise/imindisguise {
+
+	localization/english/sounds/players/strogg/self/26152.wav
+}
+
+sound sounds/players/strogg/quickchat/self/disguise/enemydisguisedasme {
+
+	localization/english/sounds/players/strogg/self/26153.wav
+}
+
+
+// Self Deploying////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/self/deploying/radar {
+
+	localization/english/sounds/players/strogg/self/26154.wav
+}
+
+sound sounds/players/strogg/quickchat/self/deploying/apt {
+
+	localization/english/sounds/players/strogg/self/26155.wav
+}
+
+sound sounds/players/strogg/quickchat/self/deploying/avt {
+
+	localization/english/sounds/players/strogg/self/26156.wav
+}
+
+sound sounds/players/strogg/quickchat/self/deploying/ait {
+
+	localization/english/sounds/players/strogg/self/26157.wav
+}
+
+sound sounds/players/strogg/quickchat/self/deploying/railhowitzer {
+
+	localization/english/sounds/players/strogg/self/26158.wav
+}
+
+sound sounds/players/strogg/quickchat/self/deploying/plasmamortar {
+
+	localization/english/sounds/players/strogg/self/26159.wav
+}
+
+sound sounds/players/strogg/quickchat/self/deploying/dmc {
+
+	localization/english/sounds/players/strogg/self/26160.wav
+}
+
+sound sounds/players/strogg/quickchat/self/deploying/stroyentdump {
+
+	localization/english/sounds/players/strogg/self/26161.wav
+}
+
+
+// Self Deployed /////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/self/deployed/radar {
+
+	localization/english/sounds/players/strogg/self/26162.wav
+}
+
+sound sounds/players/strogg/quickchat/self/deployed/apt {
+
+	localization/english/sounds/players/strogg/self/26163.wav
+}
+
+sound sounds/players/strogg/quickchat/self/deployed/avt {
+
+	localization/english/sounds/players/strogg/self/26164.wav
+}
+
+sound sounds/players/strogg/quickchat/self/deployed/ait {
+
+	localization/english/sounds/players/strogg/self/26165.wav
+}
+
+sound sounds/players/strogg/quickchat/self/deployed/railhowitzer {
+
+	localization/english/sounds/players/strogg/self/26166.wav
+}
+
+sound sounds/players/strogg/quickchat/self/deployed/plasmamortar {
+
+	localization/english/sounds/players/strogg/self/26167.wav
+}
+
+sound sounds/players/strogg/quickchat/self/deployed/dmc {
+
+	localization/english/sounds/players/strogg/self/26168.wav
+}
+
+sound sounds/players/strogg/quickchat/self/deployed/stroyentdump {
+
+	localization/english/sounds/players/strogg/self/26169.wav
+}
+
+
+// Self Items ///////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/self/items/plantingmines {
+
+	localization/english/sounds/players/strogg/self/26170.wav
+}
+
+sound sounds/players/strogg/quickchat/self/items/disarmingmines {
+
+	localization/english/sounds/players/strogg/self/26171.wav
+}
+
+sound sounds/players/strogg/quickchat/self/items/spawnhostcreated {
+
+	localization/english/sounds/players/strogg/self/26172.wav
+}
+
+sound sounds/players/strogg/quickchat/self/items/stroyentdropped {
+
+	localization/english/sounds/players/strogg/self/26173.wav
+}
+
+sound sounds/players/strogg/quickchat/self/items/shielddeployed {
+
+	localization/english/sounds/players/strogg/self/26174.wav
+}
+
+
+// Self Repairing ///////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/self/repairing/radar {
+
+	localization/english/sounds/players/strogg/self/26175.wav
+}
+
+sound sounds/players/strogg/quickchat/self/repairing/apt {
+
+	localization/english/sounds/players/strogg/self/26176.wav
+}
+
+sound sounds/players/strogg/quickchat/self/repairing/avt {
+
+	localization/english/sounds/players/strogg/self/26177.wav
+}
+
+sound sounds/players/strogg/quickchat/self/repairing/ait {
+
+	localization/english/sounds/players/strogg/self/26178.wav
+}
+
+sound sounds/players/strogg/quickchat/self/repairing/railhowitzer {
+
+	localization/english/sounds/players/strogg/self/26179.wav
+}
+
+sound sounds/players/strogg/quickchat/self/repairing/plasmamortar {
+
+	localization/english/sounds/players/strogg/self/26180.wav
+}
+
+sound sounds/players/strogg/quickchat/self/repairing/dmc {
+
+	localization/english/sounds/players/strogg/self/26181.wav
+}
+
+
+// Self Repaired ////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/self/repaired/radar {
+
+	localization/english/sounds/players/strogg/self/26184.wav
+}
+
+sound sounds/players/strogg/quickchat/self/repaired/apt {
+
+	localization/english/sounds/players/strogg/self/26185.wav
+}
+
+sound sounds/players/strogg/quickchat/self/repaired/avt {
+
+	localization/english/sounds/players/strogg/self/26186.wav
+}
+
+sound sounds/players/strogg/quickchat/self/repaired/ait {
+
+	localization/english/sounds/players/strogg/self/26187.wav
+}
+
+sound sounds/players/strogg/quickchat/self/repaired/railhowitzer {
+
+	localization/english/sounds/players/strogg/self/26188.wav
+}
+
+sound sounds/players/strogg/quickchat/self/repaired/plasmamortar {
+
+	localization/english/sounds/players/strogg/self/26189.wav
+}
+
+sound sounds/players/strogg/quickchat/self/repaired/dmc {
+
+	localization/english/sounds/players/strogg/self/26190.wav
+}
+
+// Fireteams ////////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/fireteam/waypoint/attack {
+
+	localization/english/sounds/players/strogg/fireteam/26191.wav
+}
+
+sound sounds/players/strogg/quickchat/fireteam/waypoint/defend {
+
+	localization/english/sounds/players/strogg/fireteam/26192.wav
+}
+
+sound sounds/players/strogg/quickchat/fireteam/waypoint/regroup {
+
+	localization/english/sounds/players/strogg/fireteam/26193.wav
+}
+
+// Context ////////////////////////////////////////////////
+
+sound sounds/players/strogg/quickchat/context/waypoints {
+
+	localization/english/sounds/players/strogg/fireteam/26191.wav
+}
+
+sound sounds/players/strogg/quickchat/context/repair/vehicle {
+
+	localization/english/sounds/players/strogg/vehicles/26102.wav
+}
+
+sound sounds/players/strogg/quickchat/context/repair/vehicle_other {
+
+	localization/english/sounds/players/strogg/vehicles/26102.wav
+}
+
+sound sounds/players/strogg/quickchat/context/repair/deployable_other {
+
+	localization/english/sounds/players/strogg/vehicles/26102.wav
+}
+
+sound sounds/players/strogg/quickchat/context/spawnhost {
+
+	localization/english/sounds/players/strogg/need/26077.wav
+	localization/english/sounds/players/strogg/need/26806.wav
+	localization/english/sounds/players/strogg/need/26807.wav
+}
+
+sound sounds/players/strogg/quickchat/context/hack_gates {
+
+	localization/english/sounds/players/strogg/need/26088.wav
+}
+
+sound sounds/players/strogg/quickchat/context/destroy/mg_nest {
+
+	localization/english/sounds/players/strogg/need/26089.wav
+}
+
+sound sounds/players/strogg/quickchat/context/defendforwardspawn {
+
+	localization/english/sounds/players/strogg/objectives/26135.wav
+	localization/english/sounds/players/strogg/objectives/26136.wav
+}
+
+sound sounds/players/strogg/quickchat/context/liberateforwardspawn {
+
+	localization/english/sounds/players/strogg/commands/26129.wav
+}
+
+sound sounds/players/strogg/quickchat/context/followme {
+
+	localization/english/sounds/players/strogg/commands/26126.wav
+}

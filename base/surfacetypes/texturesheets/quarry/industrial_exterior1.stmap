@@ -1,0 +1,83 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+atlas/quarry/industrial_exterior1.atlas
+***
+*/
+
+surfaceTypeMap texturesheets/quarry/industrial_exterior1 {
+	width	256
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1760 ) ( 256 1792 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 144 1080 ) ( 160 1096 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 928 ) ( 256 1184 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 384 ) ( 256 480 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1792 ) ( 256 2048 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 608 ) ( 256 928 )
+	}
+	rect {
+		surfaceType	metal_thick
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1184 ) ( 256 1248 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1248 ) ( 256 1760 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 256 ) ( 256 384 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 480 ) ( 256 608 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 128 0 ) ( 256 256 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 128 256 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 138 106 ) ( 146 134 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 146 16 ) ( 240 142 )
+	}
+}

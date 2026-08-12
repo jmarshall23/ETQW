@@ -1,0 +1,72 @@
+
+material blendlights/treeshadow
+{
+	blendLight
+	noShadows
+	lightFalloffImage lights/treeshadowfalloff
+	{
+		program blendLightTreeShadowFixedFallOff
+
+		lightProjectionMap zeroclamp lights/treeshadowproject
+
+		textureMatrix maskMatrix {
+			useTemplate wind/blendlight_windmatrix< 0.12, 0.02, 0.01 >
+		}
+
+		textureMatrix maskMatrix2 {
+			// Flip the texture in the X-axis
+			scale -1, 1
+			translate -1, 0
+			// To some wind warping
+			useTemplate wind/blendlight_windmatrix< 0.08, 0.02, 0.01 >
+		}
+	}
+}
+
+material blendlights/treeshadow_faint
+{
+	blendLight
+	noShadows
+	lightFalloffImage lights/treeshadowfalloff
+	{
+		program blendLightTreeShadowFixedFallOff
+
+		lightProjectionMap zeroclamp lights/treeshadowproject_faint
+
+		textureMatrix maskMatrix {
+			useTemplate wind/blendlight_windmatrix< 0.12, 0.01, 0.01 >
+		}
+
+		textureMatrix maskMatrix2 {
+			// Flip the texture in the X-axis
+			scale -1, 1
+			translate -1, 0
+			// To some wind warping
+			useTemplate wind/blendlight_windmatrix< 0.08, 0.01, 0.005 >
+		}
+	}
+}
+
+/*
+material blendlights/treeshadow_grouptest
+{
+	blendLight
+	noShadows
+	lightFalloffImage lights/treeshadowfalloff
+	{
+		program blendLightTreeShadowMask
+
+		//lightProjectionMap lights/treeshadowtile.tga
+		//lightFalloffMap lights/treeshadowfalloff
+		
+		
+		mask zeroclamp lights/treegroup_test.tga
+
+		textureMatrix maskMatrix {
+			
+			useTemplate wind/blendlight_windmatrix< 0.12, 0.02, 0.01 >
+			//scale 0.005, 0.005
+		}
+	}
+}
+*/

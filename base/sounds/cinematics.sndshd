@@ -1,0 +1,4 @@
+sound video/intro {
+	compression bink
+	video/intro_1024x512.bik
+}

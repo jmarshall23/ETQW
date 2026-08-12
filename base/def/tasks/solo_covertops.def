@@ -1,0 +1,105 @@
+
+/******************************************************************************
+
+  COVERT OPS SOLO ASSIGNMENTS
+
+******************************************************************************/
+
+
+#include "task_includes.include"
+
+
+//
+// Hacking
+//
+
+templates/tasks/solo_task( covertops_hack_deployable, task_deployable_disable )
+	data {
+		"require_eligible1"				"ability_covertops"
+		"waypoint"						"1"
+		
+		"mtr_cm_icon"					"hud/icons/missionsystem/covertops_hack_deployable"
+		"icon_sort_cm_request"			"-103"
+		
+		"tt_task"						"covertops_hack_deployable"
+		"tooltip_ability"				"covertops"
+
+		"botTaskType"					"12"
+		
+		templates/tasks/solo_task/xp_bonus_mission
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/mis_covert_ops"
+		"mtr_waypoint"					"hud/icons/missionsystem/mis_covert_ops"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/tsk_covert_ops"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/mis_sml"
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/tsk_sml"
+		"range"							"2048"
+		"team_colored"					"1"
+	}
+}
+
+
+
+templates/tasks/solo_task_objective( covertops_hack_shield, task_hack_objective_gdf )
+	data {
+		"require_eligible1"				"ability_covertops"
+		"waypoint"						"1"
+		"team"							"gdf"
+		
+		"tt_task"						"tooltip_lookat_objective"
+		
+		"botTaskType"					"27"
+		
+		templates/tasks/solo_objective/locstr/up_to_xp
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/obj_hack"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_hack"	
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+	}
+}
+
+templates/tasks/solo_task( covertops_hack_door, task_dummy )
+	data {
+		"require_eligible1"				"ability_covertops"
+		"waypoint"						"1"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/mis_covert_ops"
+		"mtr_waypoint"					"hud/icons/missionsystem/mis_covert_ops"	
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/mis_sml"
+		"range"							"2048"
+	}
+}
+
+
+
+
+templates/tasks/solo_task( covertops_deploy_radar, task_deploy_object )
+	data {
+		"require_eligible1"				"ability_covertops && ( has_radar == false )"
+
+		"deploy_mask"					"32"
+		"deploy_require_active"			"1"
+		"deploy_team"					"gdf"
+		"tt_task"						"covertops_deploy_radar"
+		"tooltip_ability"				"covertops"
+
+		"botTaskType"					"26"
+
+		"def_hint"						"deploy_mission_hint"
+	}
+
+/*	waypoint {
+		"mtr_icon"						"hud/icons/missionsystem/mis_covert_ops"
+		"mtr_waypoint"					"hud/icons/missionsystem/mis_covert_ops"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/mis_sml"
+	}*/
+}

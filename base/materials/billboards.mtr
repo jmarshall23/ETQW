@@ -1,0 +1,110 @@
+material textures/billboards/banner_1
+{
+	{
+		diffusemap	textures/billboards/banner_1_d.tga
+		specularmap     textures/billboards/banner_1_s.tga
+		bumpmap 	textures/billboards/banner_1_local.tga
+ 	}
+}
+
+material textures/billboards/banner_2
+{
+	{
+		diffusemap	textures/billboards/banner_2_d.tga
+		specularmap     textures/billboards/banner_2_s.tga
+		bumpmap 	textures/billboards/banner_2_local.tga
+ 	}
+}
+
+material textures/billboards/banner_3
+{
+	{
+		diffusemap	textures/billboards/banner_3_d.tga
+		specularmap     textures/billboards/banner_3_s.tga
+		bumpmap 	textures/billboards/banner_3_local.tga
+ 	}
+}
+
+material textures/billboards/banner_4
+{
+	{
+		diffusemap	textures/billboards/banner_4_d.tga
+		specularmap     textures/billboards/banner_4_s.tga
+		bumpmap 	textures/billboards/banner_4_local.tga
+ 	}
+}
+
+material textures/billboards/banner_5
+{
+	{
+		diffusemap	textures/billboards/banner_5_d.tga
+		specularmap     textures/billboards/banner_5_s.tga
+		bumpmap 	textures/billboards/banner_5_local.tga
+ 	}
+}
+
+material textures/billboards/banner_6
+{
+	{
+		diffusemap	textures/billboards/banner_6_d.tga
+		specularmap     textures/billboards/banner_6_s.tga
+		bumpmap 	textures/billboards/banner_6_local.tga
+ 	}
+}
+
+material textures/billboards/banner_7
+{
+	{
+		diffusemap	textures/billboards/banner_7_d.tga
+		specularmap     textures/billboards/banner_7_s.tga
+		bumpmap 	textures/billboards/banner_7_local.tga
+ 	}
+}
+
+material textures/billboards/banner_8
+{
+	{
+		diffusemap	textures/billboards/banner_8_d.tga
+		specularmap     textures/billboards/banner_8_s.tga
+		bumpmap 	textures/billboards/banner_8_local.tga
+ 	}
+}
+
+////MASSIVE BILLBOARD PLACEHOLDERS////
+
+material textures/billboards/banner_9
+{
+	{
+		diffusemap	textures/billboards/etqw_poster1_d.tga
+		specularmap     textures/common/dark_gray.tga
+		bumpmap 	_flat
+ 	}
+}
+
+material textures/billboards/banner_10
+{
+	{
+		diffusemap	textures/billboards/etqw_poster2_d.tga
+		specularmap     textures/common/dark_gray.tga
+		bumpmap 	_flat
+ 	}
+}
+
+
+material textures/billboards/banner_11
+{
+	{
+		diffusemap	textures/billboards/etqw_poster3_d.tga
+		specularmap     textures/common/dark_gray.tga
+		bumpmap 	_flat
+ 	}
+}
+
+material textures/billboards/banner_12
+{
+	{
+		diffusemap	textures/billboards/etqw_poster4_d.tga
+		specularmap     textures/common/dark_gray.tga
+		bumpmap 	_flat
+ 	}
+}

@@ -1,0 +1,208 @@
+sound sounds/weapons/hyperblaster/overheat {
+
+	minDistance	5
+	maxDistance	25
+	
+	sounds/weapons/hyperblaster/overheat_01.wav
+	sounds/weapons/hyperblaster/overheat_02.wav
+
+}
+
+sound sounds/weapons/hyperblaster/reload {
+
+	minDistance	5
+	maxDistance	25
+	volume		-5
+	
+	sounds/weapons/hyperblaster/reload_06.wav
+}
+
+sound sounds/weapons/hyperblaster/raise {
+
+	volume -5
+
+	sounds/weapons/hyperblaster/raise.wav
+}
+
+sound sounds/weapons/hyperblaster/xfire_01_local {
+	compression wav
+
+	volume	-3
+	private
+	occlude_once
+
+	sounds/weapons/lacerator/fire_local_02.wav
+}
+
+sound sounds/weapons/hyperblaster/xfire_01 {
+	compression wav
+
+	volume	-3
+	maxDistance	75
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/lacerator/fire_02.wav
+}
+
+sound sounds/weapons/hyperblaster/xfire_01_dist {
+	compression wav
+
+	volume	-5
+	farDistance 25
+	maxDistance 125
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/lacerator/fire_02_dist.wav
+}
+
+
+sound sounds/weapons/goliath/hyperblaster {
+	compression wav
+
+	volume	-5
+	maxDistance	100
+	occlude_once
+
+	sounds/vehicles/goliath/laser_08a.wav
+}
+
+sound sounds/weapons/hyperblaster/fire_near_01 {
+	compression wav
+
+	volume		-5
+	maxDistance 75
+
+	occlude_once
+
+	sounds/weapons/hyperblaster/fire_near_01.wav
+}
+
+sound sounds/weapons/hyperblaster/fire_near_02 {
+	compression wav
+
+	volume		-5
+	maxDistance 75
+
+	occlude_once
+
+	sounds/weapons/hyperblaster/fire_near_02.wav
+}
+
+sound sounds/weapons/hyperblaster/fire_near_03 {
+	compression wav
+
+	volume		-5
+	maxDistance 75
+	
+	occlude_once
+
+	sounds/weapons/hyperblaster/fire_near_03.wav
+}
+
+sound sounds/weapons/hyperblaster/fire_near_04 {
+	compression wav
+
+	volume		-5
+	maxDistance 75
+
+	occlude_once
+
+	sounds/weapons/hyperblaster/fire_near_04.wav
+}
+
+sound sounds/weapons/hyperblaster/fire {
+	compression wav
+
+	volume		-10
+	maxDistance 75
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/hyperblaster/xfire_13.wav
+}
+
+sound sounds/weapons/hyperblaster/fire/far {
+	compression wav
+
+	volume -20
+	farDistance 25
+	maxDistance 125
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/hyperblaster/fire_far.wav
+}
+
+sound sounds/weapons/hyperblaster/fire/local {
+	compression wav
+
+	private
+	
+	sounds/weapons/hyperblaster/fire_local_01.wav
+}
+
+sound sounds/weapons/hyperblaster/spinup {
+	compression wav
+
+	volume -18
+
+	looping
+	leadin
+	sounds/weapons/hyperblaster/mono_mechstart_02.wav
+	sounds/weapons/hyperblaster/mono_mechloop_02.wav
+}
+
+sound sounds/weapons/hyperblaster/spinloop {
+	compression wav
+
+	volume	-18
+	playOnce
+
+	looping
+	sounds/weapons/hyperblaster/mono_mechloop_01.wav
+}
+
+sound sounds/weapons/hyperblaster/spindown {
+	volume -18
+
+	sounds/weapons/hyperblaster/mono_mechstop_02.wav
+}
+
+sound sounds/weapons/hyperblaster/barrel/start {
+
+	volume -5
+	playOnce
+
+	looping
+	leadin
+	sounds/weapons/hyperblaster/spin_start.wav
+	sounds/weapons/hyperblaster/spin_loop.wav
+}
+
+sound sounds/weapons/hyperblaster/barrel/stop {
+
+	volume -5
+	playOnce
+
+	sounds/weapons/hyperblaster/spin_stop.wav
+}
+
+sound sounds/weapons/hyperblaster/barrel/loop {
+
+	volume 0
+	playOnce
+
+	looping
+	sounds/weapons/hyperblaster/spin_loop.wav
+}
+
+sound sounds/weapons/hyperblaster/barrel/loop_low {
+
+	volume 0
+	playOnce
+
+	looping
+	sounds/weapons/hyperblaster/spin_loop_low.wav
+}

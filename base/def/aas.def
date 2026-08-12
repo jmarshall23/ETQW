@@ -1,0 +1,79 @@
+
+/*
+	AAS types
+*/
+
+stringMap aas_types {
+	"type1"						"aas_player"
+	"type2"						"aas_vehicle"
+}
+
+/*
+	AAS for the player on foot
+*/
+
+stringMap aas_player {
+	"type"						"player"
+	"fileExtensionAAS"			"aas_player"
+
+	"bbox"						"( -16 -16 0 ) - ( 16 16 79 )"
+	"primitiveModeBrush"		"default"
+	"primitiveModePatch"		"explicit"
+	"primitiveModeModel"		"never"
+	"primitiveModeTerrain"		"always"
+
+	"gravity"					"0 0 -1066"
+	"maxStepHeight"				"16"
+	"maxBarrierHeight"			"64"
+	"maxWaterJumpHeight"		"0"
+	"maxFallHeight"				"900"
+	"minFloorCos"				"0.7"
+	"minHighCeiling"			"80"
+	"groundSpeed"				"256"
+	"waterSpeed"				"150"
+	"ladderSpeed"				"50"
+
+	"wallCornerEdgeRadius"		"0"
+	"ledgeCornerEdgeRadius"		"0"
+	"obstaclePVSRadius"			"1024"
+
+	"tt_barrierJump"			"100"
+	"tt_waterJump"				"100"
+	"tt_startWalkOffLedge"		"100"	
+	"tt_startLadderClimb"		"200"
+}
+
+/*
+	AAS for vehicles
+*/
+
+stringMap aas_vehicle {
+	"type"						"vehicle"
+	"fileExtensionAAS"			"aas_vehicle"
+
+	"bbox"						"( -82 -82 0 ) - ( 82 82 128 )"	//"( -72 -72 0 ) - ( 72 72 96 )"
+	"primitiveModeBrush"		"default"
+	"primitiveModePatch"		"explicit"
+	"primitiveModeModel"		"never"
+	"primitiveModeTerrain"		"always"
+
+	"gravity"					"0 0 -1066"
+	"maxStepHeight"				"16"
+	"maxBarrierHeight"			"0"
+	"maxWaterJumpHeight"		"0"
+	"maxFallHeight"				"32"
+	"minFloorCos"				"0.8"
+	"minHighCeiling"			"80"
+	"groundSpeed"				"512"
+	"waterSpeed"				"256"
+	"ladderSpeed"				"1"
+
+	"wallCornerEdgeRadius"		"0"
+	"ledgeCornerEdgeRadius"		"0"
+	"obstaclePVSRadius"			"1024"
+
+	"tt_barrierJump"			"100"
+	"tt_waterJump"				"100"
+	"tt_startWalkOffLedge"		"100"	
+	"tt_startLadderClimb"		"200"	
+}

@@ -1,0 +1,182 @@
+/********************************************
+		Strogg targeting tool
+********************************************/
+
+material models/tools/strogg_targeting_tool/strogg_targeting_tool
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -colormap -clampoutput 0 0 1 1 models/items/strogg_tools/targeting_device/target_local.tga models/items/strogg_tools/targeting_device/dev_sd/target_high.lwo
+	diffusemap	picmip -1 partialLoad models/tools/strogg_targeting_tool/target_d.tga
+	specularmap	picmip -2 partialLoad models/tools/strogg_targeting_tool/target_s.tga
+	bumpmap 	picmip -1 partialLoad addnormals (models/tools/strogg_targeting_tool/target_local.tga, heightmap (models/tools/strogg_targeting_tool/target_h.tga, 5 ) )
+}
+
+
+material models/tools/strogg_targeting_tool/strogg_targeting_tool_world
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -colormap -clampoutput 0 0 1 1 models/items/strogg_tools/targeting_device/target_world_local.tga models/items/strogg_tools/targeting_device/dev_sd/target_high.lwo
+	diffusemap	picmip -1 models/tools/strogg_targeting_tool/target_world_d.tga
+	specularmap	picmip -2 models/tools/strogg_targeting_tool/target_world_s.tga
+	bumpmap 	picmip -1 addnormals (models/tools/strogg_targeting_tool/target_world_local.tga, heightmap (models/tools/strogg_targeting_tool/target_world_h.tga, 5 ) )
+}
+
+material models/tools/strogg_targeting_tool/target_world_glow
+{
+	{
+		blend add
+		Map	picmip -1  partialLoad 	models/tools/strogg_targeting_tool/target_world_glow.tga
+	}
+}
+
+
+
+/**************************************************************
+	Strogg teleporter
+**************************************************************/
+material models/items/teleporter/teleporter
+{
+	renderbump -size 1024 1024 -colorMap -trace 0.1 -clampTextureSpace -overdrawMap models/weapons/strogg_teleport/strogg_teleport_local.tga models/weapons/strogg_teleport/strogg_teleport_h.lwo
+	noshadows
+	{
+		program	interaction/strogg
+		diffusemap		picmip -1 partialLoad models/items/teleporter/teleporter_d.tga
+		specularmap		picmip -2 partialLoad models/items/teleporter/teleporter_s.tga
+		bumpmap			picmip -1 partialLoad addnormals (models/items/teleporter/teleporter_local.tga, heightmap (models/items/teleporter/teleporter_h.tga, 5 ) )
+		selfIllumMap	picmip -2 partialLoad models/items/teleporter/teleporter_glow.tga
+	}
+}
+
+material models/items/teleporter/teleporter_world
+{
+	renderbump -size 1024 1024 -colorMap -trace 0.1 -clampTextureSpace -overdrawMap models/weapons/strogg_teleport/strogg_teleport_local.tga models/weapons/strogg_teleport/strogg_teleport_h.lwo
+	noshadows
+	{
+		program	interaction/strogg
+		diffusemap 		models/items/teleporter/teleporter_world_d.tga
+		specularmap		models/items/teleporter/teleporter_world_s.tga
+		bumpmap			addnormals (models/items/teleporter/teleporter_world_local.tga, heightmap (models/items/teleporter/teleporter_world_h.tga, 5 ) )
+		selfIllumMap 	models/items/teleporter/teleporter_world_glow.tga
+	}
+}
+
+
+/**************************************************************
+	Strogg teleporter NEW
+**************************************************************/
+material models/items/teleporter/teleporter2
+{
+	renderbump -size 1024 1024 -colorMap -trace 0.1 -clampTextureSpace -overdrawMap models/weapons/strogg_teleport/strogg_teleport_local.tga models/weapons/strogg_teleport/strogg_teleport_h.lwo
+	noshadows
+	{
+	program	interaction/strogg
+	diffusemap	picmip -1 partialLoad models/items/teleporter/teleporter2_d.tga
+	specularmap	picmip -2 partialLoad models/items/teleporter/teleporter2_s.tga
+	bumpmap		picmip -1 partialLoad addnormals(models/items/teleporter/teleporter2_local.tga, heightmap(models/items/teleporter/teleporter2_h.tga, 5 ) )
+	selfIllumMap	picmip -2 partialLoad models/items/teleporter/teleporter2_glow.tga
+	}
+	
+}
+material models/items/teleporter/teleporter2_world
+{
+	renderbump -size 1024 1024 -colorMap -trace 0.1 -clampTextureSpace -overdrawMap models/weapons/strogg_teleport/strogg_teleport_local.tga models/weapons/strogg_teleport/strogg_teleport_h.lwo
+	noshadows
+	{
+		program	interaction/strogg
+		diffusemap 		models/items/teleporter/teleporter2_world_d.tga
+		specularmap		models/items/teleporter/teleporter2_world_s.tga
+		bumpmap			addnormals (models/items/teleporter/teleporter2_world_local.tga, heightmap (models/items/teleporter/teleporter2_world_h.tga, 5 ) )
+		selfIllumMap 	models/items/teleporter/teleporter2_world_glow.tga
+	}
+}
+/**************************************************************
+	Ammo Pack 
+**************************************************************/
+material models/items/ammopack/ammopack
+{
+	noshadows
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/items/ammopack/ammopack_local.tga models/items/ammopack/ammopack_hi.lwo
+	diffusemap	picmip -1 partialLoad models/items/ammopack/ammopack_d.tga
+	specularmap	picmip -2 partialLoad models/items/ammopack/ammopack_s.tga
+	bumpmap 	picmip -1 partialLoad addnormals(models/items/ammopack/ammopack_local.tga, heightmap(models/items/ammopack/ammopack_h.tga, 5 ) )
+}
+
+material models/items/ammopack/ammopack_world
+{
+	renderbump -size 1024 512 -clampOutput 0 0 1 1 -colormap models/techkits/supply_pack_local.tga models/techkits/supply_pack_hi.lwo
+	diffusemap	picmip -1 models/items/ammopack/ammopack_world_d.tga
+	specularmap	picmip -2 models/items/ammopack/ammopack_world_s.tga
+	bumpmap 	picmip -1 models/items/ammopack/ammopack_world_local.tga
+}
+
+material models/items/ammopack/ammopack_thirdperson_glow
+{
+	renderbump -size 1024 256 -clampOutput 0 0 1 1 -colormap models/items/ammopack/ammopack_thirdperson_local.tga models/items/ammopack/ammopack_thirdperson_hi.lwo
+	diffusemap	picmip -1 models/items/ammopack/ammopack_world_d.tga
+	specularmap	picmip -2 models/items/ammopack/ammopack_world_s.tga
+	bumpmap 	picmip -1 models/items/ammopack/ammopack_world_local.tga
+	{
+		blend		add
+		map			models/items/ammopack/ammopack_world_d.tga
+		red			1 * blinktable[time * 1]
+		green		1 * blinktable[time * 1]
+		blue		1 * blinktable[time * 1]
+	}
+}
+
+/**************************************************************
+	Heavy Explosive
+**************************************************************/
+
+material models/items/hecharge/hecharge
+{
+	renderbump -size 1024 512 -clampOutput 0 0 1 1 models/weapons/heavy_explosive/heavy_explosive_local.tga models/weapons/heavy_explosive/heavy_explosive_hi.lwo
+	noshadows
+ 	{
+		//program	interaction/selfillum
+		diffusemap		partialLoad models/items/hecharge/hecharge_d.tga
+		specularmap		picmip -1 partialLoad models/items/hecharge/hecharge_s.tga
+		bumpmap			partialLoad addnormals(models/items/hecharge/hecharge_local.tga, heightmap(models/items/hecharge/hecharge_h.tga, 1 ) )
+	}  	  	
+}
+
+
+// removed picmap from world model as is seen upclose a lot
+material models/items/hecharge/hecharge_world
+{
+	renderbump -size 1024 512 -clampOutput 0 0 1 1 models/weapons/heavy_explosive/heavy_explosive_local.tga models/weapons/heavy_explosive/heavy_explosive_hi.lwo
+	noshadows
+	surfaceType "sand"
+ 	{
+		//program	interaction/selfillum
+		diffusemap		models/items/hecharge/he_charge_world_d.tga
+		specularmap		models/items/hecharge/he_charge_world_s.tga
+		bumpmap			models/items/hecharge/he_charge_world_local.tga
+	}  	  	
+}
+
+/**************************************************************
+	Strogg Heavy Explosive
+**************************************************************/
+
+material models/items/plasmacharge/plasmacharge
+{
+	renderbump -size 512 512 -clampOutput 0 0 1 1 -colormap models/weapons/heavy_explosive/strogg_heavy_explosive_local.tga models/weapons/heavy_explosive/strogg_heavy_explosive_hi.lwo
+	noshadows
+	
+	diffusemap	picmip -1	models/items/plasmacharge/plasmacharge_d.tga
+	specularmap	picmip -2	models/items/plasmacharge/plasmacharge_s.tga
+	bumpmap	picmip -1 	addnormals(models/items/plasmacharge/plasmacharge_local.tga, heightmap(models/items/plasmacharge/plasmacharge_h.tga, 4 ) )
+}
+
+material models/items/plasmacharge/plasmacharge_world
+{
+	renderbump -size 512 512 -clampOutput 0 0 1 1 -colormap models/weapons/heavy_explosive/strogg_heavy_explosive_local.tga models/weapons/heavy_explosive/strogg_heavy_explosive_hi.lwo
+	noshadows
+	nooverlays
+	surfaceType	"sand"
+
+	diffusemap	picmip -1	models/items/plasmacharge/plasmacharge_world_d.tga
+	specularmap	picmip -2	models/items/plasmacharge/plasmacharge_world_s.tga
+	bumpmap	picmip -1 	addnormals(models/items/plasmacharge/plasmacharge_world_local.tga, heightmap(models/items/plasmacharge/plasmacharge_world_h.tga, 4 ) )
+}

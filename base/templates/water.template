@@ -1,0 +1,567 @@
+
+template material/water_simple {
+	parameters < 
+		BumpMapImage,			// The bumpmap to use for the water surface
+		CubeMapImage,			// The enviroment cubemap to use for the reflections
+		TranslateX="time * 0.05",	// X-translation of the water bumpmap
+		TranslateY="0",			// Y-translation of the water bumpmap
+		RefractionR="1",		// Color of the refraction ( basically the "water color")
+		RefractionG="1",		// Color of the refraction ( basically the "water color")
+		RefractionB="1",		// Color of the refraction ( basically the "water color")
+		DistortStrength="0.05",		// How much the bumpmap distorts the reflection/refraction    	
+		ReflectionPower="8",		// Power of the reflection function (lower is more reflections, higher is more refractions)
+		GlareParam="1",
+		BumpScale="1" >			// How much the glare is affected by the water (murky water wants to stop glaring so make it lower)
+	text {
+	program	water/simple_cube
+	bumpMap BumpMapImage
+	map clamp highquality textures/penta/specular.tga
+	environmentCubeMap cubemap CubeMapImage
+	water_tint	  RefractionR, RefractionG, RefractionB
+	water_distortion  DistortStrength, DistortStrength, BumpScale, 0	
+	water_fresnel	  ReflectionPower		
+	water_glare	  GlareParam	
+	water_offset 0, 0, 0, 0 
+	water_desat 0
+	translate TranslateX, TranslateY
+	}
+}
+
+template material/water_wake {
+	parameters < 
+		BumpMapImage,			// The bumpmap to use for the water surface
+		MaskImage,				// alpha channel to use
+		CubeMapImage,			// The enviroment cubemap to use for the reflections
+		TranslateX="time * 0.05",	// X-translation of the water bumpmap
+		TranslateY="0",			// Y-translation of the water bumpmap
+		RefractionR="1",		// Color of the refraction ( basically the "water color")
+		RefractionG="1",		// Color of the refraction ( basically the "water color")
+		RefractionB="1",		// Color of the refraction ( basically the "water color")
+		DistortStrength="0.05",		// How much the bumpmap distorts the reflection/refraction    	
+		ReflectionPower="8",		// Power of the reflection function (lower is more reflections, higher is more refractions)
+		GlareParam="1",
+		BumpScale="1" >			// How much the glare is affected by the water (murky water wants to stop glaring so make it lower)
+	text {
+	blend blend
+	//writeDepth
+	program water/wake_cube
+	bumpMap BumpMapImage
+	mask MaskImage
+	map clamp highquality textures/penta/specular.tga
+	environmentCubeMap cubemap CubeMapImage
+	water_tint RefractionR, RefractionG, RefractionB
+	water_distortion DistortStrength, DistortStrength, BumpScale, 0	
+	water_fresnel ReflectionPower
+	water_glare GlareParam	
+	translate TranslateX, TranslateY
+	}
+}
+
+template material/water_simple_interpolate {
+	parameters < 
+		BumpMapOne,			// The bumpmap to use for the water surface
+		BumpMapTwo,			// The bumpmap to interpolate towards
+		Lerp,				// Lerp factor ( 0.0 - 1.0 range )
+		CubeMapImage,			// The enviroment cubemap to use for the reflections
+		TranslateX="time * 0.05",	// X-translation of the water bumpmap
+		TranslateY="0",			// Y-translation of the water bumpmap
+		RefractionR="1",		// Color of the refraction ( basically the "water color")
+		RefractionG="1",		// Color of the refraction ( basically the "water color")
+		RefractionB="1",		// Color of the refraction ( basically the "water color")
+		DistortStrength="0.05",		// How much the bumpmap distorts the reflection/refraction    	
+		ReflectionPower="8",		// Power of the reflection function (lower is more reflections, higher is more refractions)
+		GlareParam="1",
+		BumpScale="1" >			// How much the glare is affected by the water (murky water wants to stop glaring so make it lower)
+	text {
+	writeDepth
+	program	water/simple_cube_interpolate
+	bumpMap BumpMapOne
+	bumpMap2 BumpMapTwo
+	map clamp highquality textures/penta/specular.tga
+	environmentCubeMap cubemap CubeMapImage
+	water_tint RefractionR, RefractionG, RefractionB
+	water_distortion DistortStrength, DistortStrength, BumpScale, 0	
+	water_fresnel ReflectionPower
+	water_glare GlareParam
+	water_lerp Lerp
+	translate TranslateX, TranslateY
+	}
+}
+
+template material/water_reflect {
+	parameters < 
+		BumpMap,			// The bumpmap to use for the water surface
+		TranslateX="time * 0.05",	// X-translation of the water bumpmap
+		TranslateY="0",			// Y-translation of the water bumpmap
+		RefractionR="1",		// Color of the refraction ( basically the "water color")
+		RefractionG="1",		// Color of the refraction ( basically the "water color")
+		RefractionB="1",		// Color of the refraction ( basically the "water color")
+		DistortStrength="0.05",		// How much the bumpmap distorts the reflection/refraction
+		ReflectionPower="8",		// Power of the reflection function (lower is more reflections, higher is more refractions)
+		Glare="1",
+		BumpScale="1" >			// How much the glare is affected by the water (murky water wants to stop glaring so make it lower)
+	text {
+	vertexProgram	water/simple_reflect.vfp
+	fragmentProgram	water/simple_reflect.vfp
+	
+	vertexParmBinding	0	mvptMatrix_0
+	vertexParmBinding	1	mvptMatrix_1
+	vertexParmBinding	2	mvptMatrix_2
+	vertexParmBinding	3	mvptMatrix_3
+	vertexParmBinding	4	viewOrigin
+	vertexParmBinding	5	currentRenderPow2Correction
+	vertexParm		6	TranslateX, TranslateY, 0, 0
+	vertexParmBinding	7	transposedModelMatrix_0
+	vertexParmBinding	8	transposedModelMatrix_1
+	vertexParmBinding	9	transposedModelMatrix_2
+	vertexParmBinding	10	sunDirection
+	
+	fragmentMap	0	mirrorRender	
+	fragmentMap	4	highquality waternormal BumpMap
+	fragmentMap	2	_currentRender	
+	//fragmentMap	3	_normalCubeMap
+	fragmentMap	5	clamp highquality textures/penta/specular.tga
+	fragmentParm	0	ReflectionPower
+	fragmentParm	1	RefractionR, RefractionG, RefractionB, Glare
+	fragmentParm	2	DistortStrength, DistortStrength, BumpScale, 0
+	fragmentParm	3	sun_r, sun_g, sun_b
+	}
+}
+
+template material/water_murky_reflect {
+	parameters < 
+		BumpMap,			// The bumpmap to use for the water surface
+		WaterColorMap,			// Gradient map to use for the water color
+		TranslateX="time * 0.05",	// X-translation of the water bumpmap
+		TranslateY="0",			// Y-translation of the water bumpmap
+		RefractionR="1",		// Color of the refraction ( basically the "water color")
+		RefractionG="1",		// Color of the refraction ( basically the "water color")
+		RefractionB="1",		// Color of the refraction ( basically the "water color")
+		DistortStrength="0.05",		// How much the bumpmap distorts the reflection/refraction
+		ReflectionPower="8",		// Power of the reflection function (lower is more reflections, higher is more refractions)
+		Glare="1",
+		BumpScale="1" >			// How much the glare is affected by the water (murky water wants to stop glaring so make it lower)
+	text {
+	vertexProgram	water/murky_reflect.vfp
+	fragmentProgram	water/murky_reflect.vfp
+	
+	vertexParmBinding	0	mvptMatrix_0
+	vertexParmBinding	1	mvptMatrix_1
+	vertexParmBinding	2	mvptMatrix_2
+	vertexParmBinding	3	mvptMatrix_3
+	vertexParmBinding	4	viewOrigin
+	vertexParmBinding	5	currentRenderPow2Correction
+	vertexParm		6	TranslateX, TranslateY, 0, 0
+	vertexParmBinding	7	transposedModelMatrix_0
+	vertexParmBinding	8	transposedModelMatrix_1
+	vertexParmBinding	9	transposedModelMatrix_2
+
+	fragmentMap	0	mirrorRender	
+	fragmentMap	1	linearNearest BumpMap
+	fragmentMap	2	clamp WaterColorMap	
+	fragmentParm	0	ReflectionPower
+	fragmentParm	1	RefractionR, RefractionG, RefractionB, Glare
+	fragmentParm	2	DistortStrength, DistortStrength, BumpScale, 0
+	}
+}
+
+template material/water_wave_reflect {
+	parameters < 
+		BumpMap,			// The bumpmap to use for the water surface
+		TranslateX="time * 0.05",	// X-translation of the water bumpmap
+		TranslateY="0",			// Y-translation of the water bumpmap
+		RefractionR="1",		// Color of the refraction ( basically the "water color")
+		RefractionG="1",		// Color of the refraction ( basically the "water color")
+		RefractionB="1",		// Color of the refraction ( basically the "water color")
+		DistortStrength="0.05",		// How much the bumpmap distorts the reflection/refraction
+		ReflectionPower="8",		// Power of the reflection function (lower is more reflections, higher is more refractions)
+		Glare="1",
+		BumpScale="1" >			// How much the glare is affected by the water (murky water wants to stop glaring so make it lower)
+	text {
+		//blend blend
+		vertexProgram	water/gerstner_reflect.vfp
+		fragmentProgram	water/gerstner_reflect.vfp
+		
+		vertexParmBinding	0	mvptMatrix_0
+		vertexParmBinding	1	mvptMatrix_1
+		vertexParmBinding	2	mvptMatrix_2
+		vertexParmBinding	3	mvptMatrix_3
+		vertexParmBinding	4	viewOrigin
+		vertexParmBinding	5	currentRenderPow2Correction
+		vertexParm		6	TranslateX, TranslateY, 0, 0
+		
+		vertexParmBinding	7	waveDirX
+		vertexParmBinding	8	waveDirY
+		vertexParmBinding	9	wavePhase
+		vertexParmBinding	10	waveFrequency
+		vertexParmBinding	11	waveAmplitude
+		vertexParmBinding	12	waveDirXQ
+		vertexParmBinding	13	waveDirYQ	
+		vertexParmBinding	14	waveDirXXQW
+		vertexParmBinding	15	waveDirYYQW
+		vertexParmBinding	16	waveDirXYQW
+		vertexParmBinding	17	waveDirXW
+		vertexParmBinding	18	waveDirYW
+		vertexParmBinding	19	waveQW
+
+
+		fragmentParm	0	ReflectionPower
+		fragmentParm	1	RefractionR, RefractionG, RefractionB, Glare
+		fragmentParm	2	DistortStrength, DistortStrength, BumpScale, 0
+
+		fragmentMap	0	mirrorRender
+		fragmentMap	1	BumpMap
+		fragmentMap	2	_currentRender
+	}
+}
+	
+template material/water_optimize_reflections {
+	parameters < 
+		CubeMap,			// The cubemap to use for far away reflections
+		BoxExpand="1024",		// Expand the box around the surface by this amount and only draw objects in this box
+		CameraFar="5000" >		// Give the reflection camera a far plane at the given distance
+	text {
+		subviewInfo CubeMap BoxExpand CameraFar
+	}
+}
+
+//
+// An abstract template that creates 32 stages for an animated texture effect
+// The StageTemplate argument is a template name, this template needs the folowing rules
+//	The first argument of this template will be the frame number (others will be defualts)
+//	The text produces valid stage text (WITHOUT THE {} around the stage)
+template animations/frames32 {
+	parameters <
+		StageTemplate,
+		TimeScale="32",
+		NumFrames="32"
+	>
+	text {
+		{
+			if ( ( time * TimeScale ) % NumFrames == 0 )
+			useTemplate StageTemplate<0>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 1 )
+			useTemplate StageTemplate<1>
+		}		
+		{
+			if ( ( time * TimeScale ) % NumFrames == 2 )
+			useTemplate StageTemplate<2>
+		}		
+		{
+			if ( ( time * TimeScale ) % NumFrames == 3 )
+			useTemplate StageTemplate<3>
+		}	
+		{
+			if ( ( time * TimeScale ) % NumFrames == 4 )
+			useTemplate StageTemplate<4>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 5 )
+			useTemplate StageTemplate<5>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 6 )
+			useTemplate StageTemplate<6>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 7 )
+			useTemplate StageTemplate<7>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 8 )
+			useTemplate StageTemplate<8>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 9 )
+			useTemplate StageTemplate<9>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 10 )
+			useTemplate StageTemplate<10>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 11 )
+			useTemplate StageTemplate<11>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 12 )
+			useTemplate StageTemplate<12>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 13 )
+			useTemplate StageTemplate<13>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 14 )
+			useTemplate StageTemplate<14>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 15 )
+			useTemplate StageTemplate<15>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 16 )
+			useTemplate StageTemplate<16>
+		}	
+		{
+			if ( ( time * TimeScale ) % NumFrames == 17 )
+			useTemplate StageTemplate<17>
+		}			
+		{
+			if ( ( time * TimeScale ) % NumFrames == 18 )
+			useTemplate StageTemplate<18>
+		}			
+		{
+			if ( ( time * TimeScale ) % NumFrames == 19 )
+			useTemplate StageTemplate<19>
+		}	
+		{
+			if ( ( time * TimeScale ) % NumFrames == 20 )
+			useTemplate StageTemplate<20>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 21 )
+			useTemplate StageTemplate<21>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 22 )
+			useTemplate StageTemplate<22>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 23 )
+			useTemplate StageTemplate<23>
+		}		
+		{
+			if ( ( time * TimeScale ) % NumFrames == 24 )
+			useTemplate StageTemplate<24>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 25 )
+			useTemplate StageTemplate<25>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 26 )
+			useTemplate StageTemplate<26>
+		}		
+		{
+			if ( ( time * TimeScale ) % NumFrames == 27 )
+			useTemplate StageTemplate<27>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 28 )
+			useTemplate StageTemplate<28>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 29 )
+			useTemplate StageTemplate<29>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 30 )
+			useTemplate StageTemplate<30>
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 31 )
+			useTemplate StageTemplate<31>
+		}		
+	}
+}
+
+template animations/frames16 {
+	parameters <
+		StageTemplate,
+		TimeScale="16",
+		NumFrames="16"
+	>
+	text {
+		{
+			if ( ( time * TimeScale ) % NumFrames == 0 )
+			useTemplate StageTemplate<"00">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 1 )
+			useTemplate StageTemplate<"01">
+		}		
+		{
+			if ( ( time * TimeScale ) % NumFrames == 2 )
+			useTemplate StageTemplate<"02">
+		}		
+		{
+			if ( ( time * TimeScale ) % NumFrames == 3 )
+			useTemplate StageTemplate<"03">
+		}	
+		{
+			if ( ( time * TimeScale ) % NumFrames == 4 )
+			useTemplate StageTemplate<"04">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 5 )
+			useTemplate StageTemplate<"05">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 6 )
+			useTemplate StageTemplate<"06">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 7 )
+			useTemplate StageTemplate<"07">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 8 )
+			useTemplate StageTemplate<"08">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 9 )
+			useTemplate StageTemplate<"09">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 10 )
+			useTemplate StageTemplate<"10">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 11 )
+			useTemplate StageTemplate<"11">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 12 )
+			useTemplate StageTemplate<"12">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 13 )
+			useTemplate StageTemplate<"13">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 14 )
+			useTemplate StageTemplate<"14">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 15 )
+			useTemplate StageTemplate<"15">
+		}	
+	}
+}
+
+template animations/frames16_interpolate {
+	parameters <
+		StageTemplate,
+		TimeScale="16",
+		NumFrames="16"
+	>
+	text {
+		{
+			if ( ( time * TimeScale ) % NumFrames == 0 )
+			useTemplate StageTemplate<"00","01","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 0 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 1 )
+			useTemplate StageTemplate<"01","02","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 1 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}		
+		{
+			if ( ( time * TimeScale ) % NumFrames == 2 )
+			useTemplate StageTemplate<"02","03","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 2 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}		
+		{
+			if ( ( time * TimeScale ) % NumFrames == 3 )
+			useTemplate StageTemplate<"03","04","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 3 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}	
+		{
+			if ( ( time * TimeScale ) % NumFrames == 4 )
+			useTemplate StageTemplate<"04","05","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 4 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 5 )
+			useTemplate StageTemplate<"05","06","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 5 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 6 )
+			useTemplate StageTemplate<"06","07","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 6 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 7 )
+			useTemplate StageTemplate<"07","08","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 7 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 8 )
+			useTemplate StageTemplate<"08","09","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 8 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 9 )
+			useTemplate StageTemplate<"09","10","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 9 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 10 )
+			useTemplate StageTemplate<"10","11","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 10 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 11 )
+			useTemplate StageTemplate<"11","12","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 11 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 12 )
+			useTemplate StageTemplate<"12","13","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 12 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 13 )
+			useTemplate StageTemplate<"13","14","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 13 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 14 )
+			useTemplate StageTemplate<"14","15","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 14 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 15 )
+			useTemplate StageTemplate<"15","00","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 15 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}	
+	}
+}
+
+template animations/frames10_interpolate {
+	parameters <
+		StageTemplate,
+		TimeScale="10",
+		NumFrames="10"
+	>
+	text {
+		{
+			if ( ( time * TimeScale ) % NumFrames == 0 )
+			useTemplate StageTemplate<"00","01","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 0 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 1 )
+			useTemplate StageTemplate<"01","02","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 1 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}		
+		{
+			if ( ( time * TimeScale ) % NumFrames == 2 )
+			useTemplate StageTemplate<"02","03","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 2 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}		
+		{
+			if ( ( time * TimeScale ) % NumFrames == 3 )
+			useTemplate StageTemplate<"03","04","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 3 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}	
+		{
+			if ( ( time * TimeScale ) % NumFrames == 4 )
+			useTemplate StageTemplate<"04","05","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 4 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 5 )
+			useTemplate StageTemplate<"05","06","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 5 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 6 )
+			useTemplate StageTemplate<"06","07","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 6 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 7 )
+			useTemplate StageTemplate<"07","08","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 7 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 8 )
+			useTemplate StageTemplate<"08","09","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 8 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+		{
+			if ( ( time * TimeScale ) % NumFrames == 9 )
+			useTemplate StageTemplate<"09","00","( time - ( ( ( ( ( time * TimeScale ) / NumFrames ) % 100000000 ) * ( ( 1 / TimeScale ) * NumFrames ) ) + ( 9 * ( 1 / TimeScale ) ) ) ) * TimeScale">
+		}
+	}
+}

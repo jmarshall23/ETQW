@@ -1,0 +1,35 @@
+
+/*******************************
+Strogg Video Screen
+*******************************/
+
+material models/vehicles/strogg_video_screen
+{
+	qer_editorimage textures/sfx/windowmask.tga
+	noshadows
+	//vertexPositionOnly
+	/*sort 100.5 //Hack so it draws over postprocess stuff as well
+	translucent
+	
+
+	{
+		program sfx/stroggWindow
+		
+		map textures/sfx/scanline.tga
+		selfIllumMap textures/sfx/windowmask.tga	
+		mask textures/sfx/dsdt_noise.tga
+		environmentCubeMap env/cockpit
+		
+		scale 1, 2
+		translate time * 100, time * 10
+		red 1
+		green 0.8
+		blue 0.6		
+		parameters parm5 + 4, parm5 + 4
+
+	}
+	*/
+}
+
+
+

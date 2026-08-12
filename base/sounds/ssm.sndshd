@@ -1,0 +1,72 @@
+
+sound sounds/deployables/ssm/deploy {
+
+	volume -10
+	maxDistance 50
+
+	sounds/deployables/ssm/deploy.wav
+}
+
+sound sounds/deployables/ssm/deploy_feet {
+
+	volume -15
+	maxDistance 50
+
+	sounds/deployables/ssm/deploy_feet.wav
+}
+
+sound sounds/deployables/ssm/raise {
+
+	volume -10
+	maxDistance 50
+
+	sounds/deployables/ssm/raise.wav
+}
+
+sound sounds/deployables/ssm/lower {
+
+	volume -10
+	maxDistance 50
+	no_occlusion
+	omnidirectional
+
+	sounds/deployables/ssm/raise.wav
+}
+
+sound sounds/deployables/ssm/launch {
+
+	volume		5
+	minDistance 50
+	maxDistance 	250
+	
+	looping
+	leadin
+	sounds/deployables/ssm/missile_launch.wav
+	sounds/deployables/ssm/missile_fly.wav
+}
+
+sound sounds/deployables/ssm/explode {
+
+	volume 5
+	minDistance 100
+	maxDistance 200
+	shakes 0.1
+
+	sounds/deployables/ssm/missile_impact.wav
+}
+
+sound sounds/deployables/ssm/explode/med {
+
+	minDistance 150
+	maxDistance 300
+
+	sounds/deployables/ssm/missile_impact_med_01.wav
+}
+
+sound sounds/deployables/ssm/explode/far {
+
+	minDistance 200
+	maxDistance 400
+
+	sounds/deployables/ssm/missile_impact_far_01.wav
+}

@@ -1,0 +1,210 @@
+effect effects/weapons/gatling_muzzleflash
+{
+	size	184
+
+	cutOffDistance	15000
+
+	spawner "shell"
+	{
+		count		1,1
+		attenuateEmitter
+		attenuation	200,200
+
+		model
+		{
+			duration	0.8,0.8
+			material	"models/weapons/shells/mg_shell"
+			model		"models/weapons/shells/mg_shell.lwo"
+			gravity		0.3,0.3
+			trailRepeat	1
+
+			start
+			{
+				position { point -25,0,-4 }
+				velocity { box 0,-40,70,0,-100,100 }
+				size { point 2,0.8,0.8 }
+				rotate { box 0.777778,0.777778,0.777778,-0.777778,-0.777778,-0.777778 }
+			}
+
+			motion
+			{
+				rotate { envelope exp_1minusx/x2 count 0.5,0.5,0.5 }
+			}
+
+			end
+			{
+				rotate { box -0.777778,-0.777778,-0.777778,0.777778,0.777778,0.777778 }
+			}
+			lineHit
+		}
+	}
+	spawner "unnamed10"
+	{
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	300,300
+
+		sprite
+		{
+			duration	0.05,0.05
+			material	"particles/explosion/explode07"
+			trailRepeat	1
+
+			start
+			{
+				position { point 10,0,-2 }
+				size { line 7,7,9,9 }
+				tint { line 0.756863,0.654902,0.458824,0.564706,0.576471,0.447059 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 18,18,20,20 }
+				rotate { box 0.5,-0.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "flash"
+	{
+		count		1,1
+		locked
+
+		oriented
+		{
+			duration	0.1,0.1
+			material	"textures/effects/weapons/muzzle_flash3"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0.5,0 }
+				size { line 15,15,25,25 }
+				tint { line 0.854902,0.803922,0.686275,1,1,1 }
+				rotate { box 0,0,-1,0,0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_convexfade_start_at_1 offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+
+			end
+			{
+				size { line 10,10,25,25 }
+			}
+			lineHit
+		}
+	}
+	spawner "edge2"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.05,0.05
+			material	"textures/effects/weapons/muzzle_flash2"
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,0,5,0,0 }
+				size { line 35,35,40,40 }
+				tint { line 0.0313726,0.0313726,0.0313726,0.137255,0.137255,0.137255 }
+				fade { point 0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 10,10,40,40 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+	light "unnamed4"
+	{
+		locked
+
+		light
+		{
+			duration	0.005,0.005
+			material	"lights/round"
+			trailRepeat	1
+
+			start
+			{
+				position { point -20,0,15 }
+				size { point 100,100,100 }
+				tint { line 1,0.976471,0.682353,0.996078,0.788235,0.580392 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+effect effects/weapons/gatling_muzzleflash_large
+{
+	size	66
+
+	spawner "Flame"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.45,0.45
+			persist
+			material	"textures/effects/weapons/muzzle_flash2"
+			trailRepeat	1
+
+			start
+			{
+				position { line 1,0,0,2,0,0 }
+				velocity { point 100,0,0 }
+				size { box 24,24,32,32 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { box 10,10,14,14 }
+			}
+		}
+	}
+}

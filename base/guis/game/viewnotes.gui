@@ -1,0 +1,93 @@
+
+#include <guis/common/utility.include>
+
+gui takeViewNote {
+
+$template _hidehudelement( ELEMENT )
+	globals.gameHud.ELEMENT		= immediate( globals.gameHud.ELEMENT - 1 );
+$endtemplate
+
+$template _showhudelement( ELEMENT )
+	globals.gameHud.ELEMENT		= immediate( globals.gameHud.ELEMENT + 1 );
+$endtemplate
+	
+	properties {
+		float flags = immediate( flags ) | GUI_CATCH_ALL_EVENTS;
+		string bindContext = "menu";
+	}
+	
+	events {
+		onActivate {
+			gui.consoleCommand( "set con_noPrint 0" + _newline );
+					
+			focusedWindow = "chatEdit";		
+		}
+	}
+	
+	windowDef desktop {		
+	}
+	
+	windowDef background {
+		properties {
+			rect rect = 140,450,365,18;			
+		}
+		windowDef chatLabel {
+			properties {
+				rect 	rect 			= 0,0,0,gui.background.rect.h;
+				vec2 	textAlignment 	= TA_RIGHT, TA_VCENTER;
+				float	fontSize 		= 12;
+				float	flags			= immediate( flags) | WF_AUTO_SIZE_WIDTH | WF_DROPSHADOW;
+			}
+		}		
+		windowDef chatEdit {
+			type edit;
+			
+			properties {
+				rect 	rect = _to_right_of( chatLabel ), 0, gui.background.rect.w - gui.chatLabel.rect.w ,gui.background.rect.h;
+				float 	fontSize = 12;
+				float	maxTextLength = 100;
+				color 	backColor = 0.235, 0.255, 0.230, 0.6;
+			}
+			events {
+				onAccept {
+					if( compare( editText, "" ) == 0 ) {
+						timeline.screenshot.active = 1;
+						gui.playGameSound( "system/button/click" );
+					}
+				}
+				onCancel {
+					self.clearText();
+					gui.deactivate();
+				}
+			}
+			timeLine {
+				onTime 0 {
+					self.clearText();
+					active = 0;
+				}
+			}
+
+			timeLine screenshot {
+				properties {
+					float active = 0;
+				}
+
+				onTime 0 {
+					_hidehudelement( showHud )
+
+					gui.consoleCommand( "getViewPos" + _newline );
+					gui.consoleCommand( "echo " + _quote + editText + _quote + _newline );
+					gui.consoleCommand( "screenshot" + _newline );
+				}
+
+				onTime 1000 {
+					_showhudelement( showHud )
+
+					self.clearText();
+					gui.deactivate();
+					active = 0;
+				}
+			}
+		}		
+	}
+}

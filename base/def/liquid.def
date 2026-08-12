@@ -1,0 +1,11 @@
+
+entityDef liquid_water {
+	"editor_mins"			"?"
+	"editor_maxs"			"?"
+
+	"spawnclass"			"sdLiquid"
+	
+	"current"				"0 0 0"
+
+	"expandAAS"				"1"
+}

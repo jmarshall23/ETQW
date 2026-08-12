@@ -1,0 +1,50 @@
+
+locString engine/demos/start_record		{ text "#str_00000601" }
+locString engine/demos/stop_record 		{ text "#str_00000602" }
+
+
+locString engine/disconnect/shutdown			{ text "#str_00000603" }
+locString engine/disconnect/reliableoverflow	{ text "#str_00000604" }
+locString engine/disconnect/timedout			{ text "#str_00000605" }
+locString engine/disconnect/invalidimagedata	{ text "#str_00000606" }
+locString engine/disconnect/disconnected		{ text "#str_00000607" }
+locString engine/disconnect/toomanycomplaints	{ text "#str_00000608" }
+locString engine/disconnect/kicked				{ text "#str_00000609" }
+locString engine/disconnect/banned				{ text "#str_00000610" }
+locString engine/disconnect/toomanywarnings		{ text "#str_00000611" }
+locString engine/disconnect/onlineserviceslost	{ text "#str_00000612" }
+locString engine/disconnect/etqwtv/noslots		{ text "#str_00000613" }
+locString engine/disconnect/etqwtv/sentusercmd	{ text "#str_00000614" }
+locString engine/disconnect/etqwtv/sentuserorigin	{ text "#str_00000615" }
+
+locString engine/errors/missingpaks/web {
+	text "#str_00000650"
+	arguments 1
+}
+
+locString engine/errors/missingpaks/nodownload {
+	text "#str_00000651"
+}
+
+locString engine/errors/missingpaks/needgamecode {
+	text "#str_00000652"
+}
+
+locString engine/errors/missingpaks/notallavailable {
+	text "#str_00000653"
+	arguments 1
+}
+
+locString engine/errors/missingpaks/downloadall {
+	text "#str_00000654"
+	arguments 1
+}
+
+locString engine/errors/missingpaks/downloadfailed {
+	text "#str_00000655"
+}
+
+locString engine/errors/missingpaks/downloading {
+	text "#str_00000656"
+	arguments 2
+}

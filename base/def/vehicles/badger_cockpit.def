@@ -1,0 +1,99 @@
+//
+// Badger
+//
+
+export frankie {
+		options -prefix FBV_ -nomerge -sourcedir models/vehicles/edf_badger/dev_sd -destdir models/vehicles/edf_badger/
+
+		mesh cockpit2.mb 	-dest cockpit.md5mesh
+		//NB. for noarms version copy cockpit.md5mesh and set arm materials to textures/common/invisible
+
+		anim cockpit2.mb 	-dest center.md5anim -range 0 0
+		anim cockpit2.mb 	-dest turning_right.md5anim -range 0 30 -xyzprecision 0.01
+		anim cockpit2.mb 	-dest turning_left.md5anim  -range 60 90 -xyzprecision 0.01
+		anim cockpit2.mb 	-dest into.md5anim -range 130 143
+
+}
+
+model vehicle_badger_cockpit {
+	mesh								models/vehicles/edf_badger/cockpit.md5mesh
+
+	anim center							models/vehicles/edf_badger/center.md5anim {
+	}
+
+	anim turning_left					models/vehicles/edf_badger/turning_left.md5anim {
+	}
+
+	anim turning_right					models/vehicles/edf_badger/turning_right.md5anim {
+	}
+	anim into							models/vehicles/edf_badger/into.md5anim {
+	}
+}
+
+model vehicle_badger_cockpit_noarms {
+	mesh								models/vehicles/edf_badger/cockpit_noarms.md5mesh
+
+	anim center							models/vehicles/edf_badger/center.md5anim {
+	}
+
+	anim turning_left					models/vehicles/edf_badger/turning_left.md5anim {
+	}
+
+	anim turning_right					models/vehicles/edf_badger/turning_right.md5anim {
+	}
+	anim into							models/vehicles/edf_badger/into.md5anim {
+	}
+}
+
+entityDef vehicle_badger_cockpit {
+	"model"						"vehicle_badger_cockpit"
+
+	"turn_left_anim"			"turning_left"
+	"turn_right_anim"			"turning_right"
+	"base_anim"					"center"
+	"passenger_id"				"0"
+	"offset"					"1.5 1 14"
+	"largeFov"					"-5 0 0"
+
+	"climate_skin_key"			"badger_cockpit"
+
+	"gui"						"guis/models/vehicles/badger/cockpit"
+	"gui2"						"guis/models/vehicles/gdf/cockpit_cm"
+	"gui3"						"guis/models/vehicles/badger/cockpit_info"
+	
+	"weaponDepthHack"			"1"
+
+//	"fx_emped"					"effects/weapons/grenades/emp/explosion"
+//	"joint_fx_emped"			"wheel"
+}
+
+entityDef vehicle_badger_cockpit_noarms {
+	"model"						"vehicle_badger_cockpit_noarms"
+
+	"turn_left_anim"			"turning_left"
+	"turn_right_anim"			"turning_right"
+	"base_anim"					"center"
+
+	"offset"					"1.5 1 14"
+
+	"climate_skin_key"			"badger_cockpit"
+
+	"gui"						"guis/models/vehicles/badger/cockpit"
+	"gui2"						"guis/models/vehicles/gdf/cockpit_cm"
+	"gui3"						"guis/models/vehicles/badger/cockpit_info"
+}
+
+entityDef vehicle_badger_gpmg_cockpit {
+	"model"						"viewmodel_mounted_gpmg_1stperson"
+
+	"passenger_id"				"2"
+
+	"fx_muzzle"					"effects/weapons/gpmg_muzzleflash_vehicle2"
+	"joint_muzzle"				"muzzle"
+
+	"offset"					"-5.3 5.31 1.57"
+
+	"climate_skin_key"			"weapon_gdf"
+
+	"surface_name"				"m_gpmg"
+}

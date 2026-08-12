@@ -1,0 +1,215 @@
+sound sounds/weapons/assaultrifle/bringup {
+
+	maxDistance	15
+	volume	-15
+
+	sounds/weapons/assaultrifle/bringup_02.wav
+}
+
+sound sounds/weapons/assaultrifle/greneject_01 {
+
+	maxDistance	25
+	volume		-5
+
+	sounds/weapons/smg/greneject_01.wav
+}
+
+sound sounds/weapons/assaultrifle/greneject_02 {
+
+	maxDistance	25
+	volume		-9
+
+	sounds/weapons/smg/greneject_02.wav
+}
+
+sound sounds/weapons/assaultrifle/grenload_01 {
+
+	maxDistance	25
+	volume		-5
+
+	sounds/weapons/shotgun/shell_06.wav
+}
+
+sound sounds/weapons/assaultrifle/movement_01 {
+
+	maxDistance	25
+	volume		-5
+
+	sounds/weapons/smg/rmovement_01.wav
+}
+
+sound sounds/weapons/assaultrifle/movement_02 {
+
+	maxDistance	25
+	volume		-5
+
+	sounds/weapons/smg/rmovement_02.wav
+}
+
+sound sounds/weapons/assaultrifle/zoomin_01 {
+
+	maxDistance	25
+	volume		-18
+
+	sounds/weapons/smg/cmovement_03.wav
+}
+
+sound sounds/weapons/assaultrifle/zoomout_01 {
+
+	maxDistance	25
+	volume		-18
+
+	sounds/weapons/smg/cmovement_01.wav
+}
+
+sound sounds/weapons/assaultrifle/movement_03 {
+
+	maxDistance	25
+
+	sounds/weapons/smg/rmovement_03.wav
+}
+
+sound sounds/weapons/assaultrifle/fire {
+	compression wav
+
+	volume -3
+	maxDistance 75
+	antiPrivate
+	occlude_once
+
+//	sounds/weapons/assaultrifle/new_01.wav
+//	sounds/weapons/assaultrifle/new_03.wav
+	sounds/weapons/assaultrifle/new_05.wav
+}
+
+sound sounds/weapons/assaultrifle/fire/far {
+	compression wav
+
+	volume -10
+	maxDistance 150
+	occlude_once
+
+	sounds/weapons/assaultrifle/fire_far.wav
+}
+
+sound sounds/weapons/assaultrifle/fire/local {
+	compression wav
+
+	private
+	no_dups
+	occlude_once
+
+//	sounds/weapons/assaultrifle/new_local_01.wav
+//	sounds/weapons/assaultrifle/new_local_02.wav
+//	sounds/weapons/assaultrifle/new_local_03.wav
+//	sounds/weapons/assaultrifle/new_local_04.wav
+//	sounds/weapons/assaultrifle/new_local_05.wav
+//	sounds/weapons/assaultrifle/new_local_06.wav
+//	sounds/weapons/assaultrifle/new_local_07.wav
+//	sounds/weapons/assaultrifle/new_local_08.wav
+//	sounds/weapons/assaultrifle/new_local_09.wav
+	sounds/weapons/assaultrifle/new_local_10.wav
+//	sounds/weapons/assaultrifle/new_local_11.wav
+	sounds/weapons/assaultrifle/new_local_12.wav
+	sounds/weapons/assaultrifle/new_local_13.wav
+//	sounds/weapons/assaultrifle/new_local_14.wav
+}
+
+sound sounds/weapons/assaultrifle/gren/fire {
+	compression wav
+
+	maxDistance 75
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/assaultrifle/fire_gren.wav
+}
+
+sound sounds/weapons/assaultrifle/gren/fire/far {
+	compression wav
+
+	volume -10
+	maxDistance 150
+	occlude_once
+
+	sounds/weapons/assaultrifle/fire_gren_far.wav
+}
+
+sound sounds/weapons/assaultrifle/gren/fire/local {
+	compression wav
+
+	private
+	occlude_once
+
+	sounds/weapons/assaultrifle/fire_gren_local.wav
+}
+
+sound sounds/weapons/assaultrifle/gren/eject {
+
+	volume -17
+	maxDistance 20
+
+	sounds/weapons/assaultrifle/casing_01.wav
+	sounds/weapons/assaultrifle/casing_02.wav
+	sounds/weapons/assaultrifle/casing_03.wav
+}
+
+sound sounds/weapons/assaultrifle/gren/reload {
+
+	volume -10
+	maxDistance 20
+
+	sounds/weapons/assaultrifle/reload_gren.wav
+}
+
+sound sounds/weapons/assaultrifle/reload {
+
+	volume -10
+	maxDistance 20
+
+	sounds/weapons/assaultrifle/reload.wav
+}
+
+sound sounds/weapons/assaultrifle/cock {
+
+	volume -10
+	maxDistance 20
+
+	sounds/weapons/assaultrifle/cock.wav
+}
+
+sound sounds/weapons/assaultrifle/safe {
+
+	volume -10
+
+	sounds/weapons/assaultrifle/safe.wav
+}
+
+sound sounds/weapons/assaultrifle/mech {
+
+	volume -20
+	maxDistance 20
+
+	sounds/weapons/assaultrifle/mech.wav
+}
+
+sound sounds/weapons/assaultrifle/sights/up {
+
+	volume -20
+
+	sounds/weapons/assaultrifle/sights_up.wav
+}
+
+sound sounds/weapons/assaultrifle/sights/down {
+
+	volume -20
+
+	sounds/weapons/assaultrifle/sights_down.wav
+}
+
+sound sounds/weapons/assaultrifle/raise {
+
+	volume -15
+
+	sounds/weapons/assaultrifle/raise.wav
+}

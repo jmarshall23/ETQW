@@ -1,0 +1,255 @@
+/***********************************************************************
+
+item_he_charge.script
+
+***********************************************************************/
+
+object item_he_charge : weapon_base {
+	void		preinit();
+	void		init();
+	void		destroy();
+
+	void		Raise();
+	void		Idle();
+	void		Fire();
+
+	boolean		CanAttack();
+	boolean		DoTrace();
+	boolean		CheckNoPlant();
+
+	float		meleeDistance;
+
+	boolean		cancelFire;
+	
+	void		ToolTipThread_Raise();
+	
+	float		nextInvalidPositionToolTipTime;	
+	float		nextChargeToolTipTime;
+	
+	void		vCancelFire() { cancelFire = true; }
+
+	handle		statNumUsed;
+	
+	boolean		clientWait;
+
+	// cached trace information
+	entity		meleeEntity;
+	vector		meleeNormal;
+	vector		meleeEndPos;
+	string		meleeJoint;
+	float		meleeSurfaceFlags;
+	boolean		meleeInfoValid;
+}
+
+void item_he_charge::preinit() {
+	meleeDistance		= getFloatKey( "melee_distance" );
+
+	string statName = getKey( "stat_name" );
+	if ( statName != "" ) {
+		statNumUsed			= sys.allocStatInt( statName + "_uses" );
+	}
+}
+
+void item_he_charge::init() {
+	if ( myPlayer.isLocalPlayer() ) {
+		thread ToolTipThread_Raise();
+	}
+
+	weaponState( "Raise", 0 );
+}
+
+void item_he_charge::destroy() {
+	entity myPlayer = getOwner();
+	if ( myPlayer != $null_entity ) {
+		myPlayer.freeze( 0 );
+		myPlayer.freezeTurning( 0 );
+	}
+}
+
+void item_he_charge::Raise() {
+	UpdateCharge();
+
+	Base_Raise();
+}
+
+boolean item_he_charge::CheckNoPlant() {
+	float count = entitiesInRadius( g_vectorZero, 0.f, CONTENTS_TRIGGER, 0 );
+	float index = 0;
+	for ( index = 0; index < count; index++ ) {
+		entity ent = getBoundsCacheEntity( index );
+		if ( ent.getGameTeam() == getGameTeam() ) {
+			if ( ent.vDisablePlant() ) {
+				return false;
+			}
+		}
+	}
+	
+	return true;
+}
+
+boolean item_he_charge::CanAttack() {
+	if ( !CanRemove( chargePerUse ) ) {
+		if ( myPlayer.isLocalPlayer() && !mainFireDown ) {
+			if ( !myPlayer.isToolTipPlaying() ) {
+				myPlayer.sendToolTip( GetToolTip( getKey( "tt_need_charge" ) ) );
+			}
+			sys.startSoundDirect( getKey( "snd_need_charge" ), SND_ANY );
+			G_NotifyNoCharge( myPlayer );
+		}
+		return false;
+	}
+	
+	if ( !CheckNoPlant() ) {
+		if ( !myPlayer.isToolTipPlaying() ) {
+			if ( sys.getTime() > nextChargeToolTipTime ) {
+				nextChargeToolTipTime = sys.getTime() + 5.f;
+				myPlayer.sendToolTip( GetToolTip( getKey( "tt_action_failed" ) ) );
+			}
+		}
+		return false;
+	}
+
+	boolean valid = true;
+	if ( !DoTrace() ) {
+		valid = false;
+	} else {
+		entity other = meleeEntity;
+		float shaderFlags = meleeSurfaceFlags;
+
+		if ( other == $null_entity || shaderFlags & SURF_NOPLANT ) {
+			valid = false;
+		} else {
+			valid = !other.vDisablePlantCharge();
+		}
+	}
+
+	if ( !valid ) {
+		if ( !myPlayer.isToolTipPlaying() ) {
+			if ( sys.getTime() > nextInvalidPositionToolTipTime ) {
+				nextInvalidPositionToolTipTime = sys.getTime() + 5.f;
+				myPlayer.sendToolTip( GetToolTip( getKey( "tt_action_failed" ) ) );
+			}
+		}
+	}
+
+	return valid;
+}
+
+void item_he_charge::Idle() {
+	entity other;
+	weaponReady();
+	playCycle( ANIMCHANNEL_ALL, "idle" );
+
+	if ( clientWait ) {
+		sys.wait( 0.2 );
+		clientWait = false;
+	}
+
+	while ( true ) {
+		if ( WEAPON_LOWERWEAPON ) {
+			weaponState( "Lower", 0 );
+		}
+
+		if ( WEAPON_ATTACK || myPlayer.getButton( PK_ACTIVATE ) ) {
+			if( !mainFireDown ) {
+				if ( CanAttack() ) {
+					mainFireDown = true;
+					weaponState( "Fire", 0 );
+				}
+				mainFireDown = true;
+			}
+		} else {
+			mainFireDown = false;
+		}
+
+		UpdateCharge();
+
+		sys.waitFrame();
+	}
+}
+
+boolean item_he_charge::DoTrace() {
+	if ( !melee( MASK_SHOT_BOUNDINGBOX | MASK_PROJECTILE, meleeDistance, true, false ) ) {
+		meleeInfoValid = false;
+		return false;
+	}
+	
+	meleeEntity = getMeleeEntity();
+	meleeNormal = getMeleeNormal();
+	meleeEndPos = getMeleeEndPos();
+	meleeSurfaceFlags = getMeleeSurfaceFlags();
+	meleeInfoValid = true;
+	meleeJoint = getMeleeJoint();
+	return true;
+}
+
+void item_he_charge::Fire() {
+	cancelFire = false;
+
+	myPlayer.freeze( 1 );
+	myPlayer.freezeTurning( 1 );
+	
+	fired();
+
+	playAnim( ANIMCHANNEL_ALL, "fire" );
+	waitUntil( animDone( ANIMCHANNEL_ALL, 0 ) );
+
+	myPlayer.freeze( 0 );
+	myPlayer.freezeTurning( 0 );
+
+	if ( cancelFire ) {
+		weaponState( "Idle", 0 );
+	}
+	
+	if( !sys.isClient() ) {
+		if ( CanAttack() ) {	
+			entity charge = sys.spawn( getKey( "def_charge" ) );
+			
+			// we don't want to get the message just after we have planted, as we'll switch to the arming tool anyway
+			nextChargeToolTipTime = sys.getTime() + 2.f;
+
+			entity other = meleeEntity;
+			charge.setOrigin( meleeEndPos - ( meleeNormal * 0.5f ) );
+			charge.alignToAxis( meleeNormal, 0 );
+			charge.vSetOwner( myPlayer );
+			charge.setGameTeam( myPlayer.getGameTeam() );
+			charge.vSetNewTarget( other );
+			if ( other != $null_entity ) {
+				float jointHandle = other.getJointHandle( meleeJoint );
+				if ( jointHandle != INVALID_JOINT ) {
+					charge.bindToJoint( other, meleeJoint, 1 );
+				} else {
+					charge.bind( other );
+				}
+			}
+					
+			Remove( chargePerUse );
+
+			team_base team = myPlayer.getGameTeam();
+			team.SelectActionItem( myPlayer, AK_CHARGEARM );
+
+			myPlayer.setPlayerChargeOrigin( charge ); //mal: set the origin of the placed charge, so the bots know where to go to arm/disarm it.
+
+			sys.increaseStatInt( statNumUsed, myPlayer.getEntityNumber(), 1 );
+		}
+	} else {
+		// wait for server to select weapon
+		clientWait = true;
+	}
+
+	weaponState( "Idle", 0 );
+}
+
+void item_he_charge::ToolTipThread_Raise() {
+	sys.wait( myPlayer.CalcTooltipWait() );
+	while ( myPlayer.isSinglePlayerToolTipPlaying() ) {
+		sys.wait( 1.0f );
+	}
+	myPlayer.cancelToolTips();
+
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_1" ) ) );
+	
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_2" ) ) );
+}

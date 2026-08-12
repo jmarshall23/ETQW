@@ -1,0 +1,120 @@
+//Temp Strogg Mat
+
+material models/vehicles/edf_mcp/strogg_mcp {
+	surfaceType "metal"
+	occlusionQuery
+	unsmoothedtangents
+	renderbump -size 2048 2048 -aa 1 models/vehicles/edf_mcp/dev_sd/parts1_local.tga models/vehicles/edf_mcp/dev_sd/parts_hp.lwo
+	//noselfshadow
+
+	diffusemap	models/vehicles/edf_mcp/strogg_mcp_d.tga
+	specularmap	picmip -2	models/vehicles/edf_mcp/mcp_s.tga
+	bumpmap	picmip -1		addnormals (models/vehicles/edf_mcp/mcp_local.tga, heightmap (models/vehicles/edf_mcp/mcp_bmp.tga, 5) )
+}
+
+material models/vehicles/edf_mcp/mcp_tmp_cockpit {
+	surfaceType "metal"
+	occlusionQuery
+	unsmoothedtangents
+	renderbump -size 2048 2048 -aa 1 models/vehicles/edf_mcp/dev_sd/parts1_local.tga models/vehicles/edf_mcp/dev_sd/parts_hp.lwo
+	//noselfshadow
+
+	diffusemap	picmip -1	textures/common/dark_gray.tga
+	specularmap	picmip -1	textures/common/dark_gray.tga
+}
+
+material models/vehicles/edf_mcp/mcp {
+	surfaceType "metal"
+	occlusionQuery
+	unsmoothedtangents
+	renderbump -size 2048 2048 -aa 1 models/vehicles/edf_mcp/dev_sd/parts1_local.tga models/vehicles/edf_mcp/dev_sd/parts_hp.lwo
+	//noselfshadow
+
+	diffusemap	picmip -1 models/vehicles/edf_mcp/mcp_d.tga
+	specularmap	picmip -2	models/vehicles/edf_mcp/mcp_s.tga
+	bumpmap	picmip -1		addnormals (models/vehicles/edf_mcp/mcp_local.tga, heightmap (models/vehicles/edf_mcp/mcp_bmp.tga, 5) )
+}
+
+//Temp Strogg Mat
+
+material models/vehicles/edf_mcp/strogg_mcp_wheel {
+	unsmoothedtangents
+	renderbump -size 2048 2048 -aa 1 models/vehicles/edf_mcp/dev_sd/parts1_local.tga models/vehicles/edf_mcp/dev_sd/parts_hp.lwo
+	//noselfshadow
+
+	diffusemap	models/vehicles/edf_mcp/strogg_mcp_d.tga
+	specularmap	picmip -2	models/vehicles/edf_mcp/mcp_s.tga
+	bumpmap	picmip -1		addnormals (models/vehicles/edf_mcp/mcp_local.tga, heightmap (models/vehicles/edf_mcp/mcp_bmp.tga, 5) )
+}
+
+
+material models/vehicles/edf_mcp/mcp_wheel {
+	unsmoothedtangents
+ 	renderbump -size 2048 2048 -aa 1 models/vehicles/edf_mcp/dev_sd/parts1_local.tga models/vehicles/edf_mcp/dev_sd/parts_hp.lwo
+	 //noselfshadow
+
+	diffusemap	picmip -1 models/vehicles/edf_mcp/mcp_d.tga
+	specularmap	picmip -2	models/vehicles/edf_mcp/mcp_s.tga
+	bumpmap	picmip -1		addnormals (models/vehicles/edf_mcp/mcp_local.tga, heightmap (models/vehicles/edf_mcp/mcp_bmp.tga, 5) )
+}
+
+material models/vehicles/edf_mcp/mcp_windows
+{
+	noSelfShadow
+	noshadows
+	twosided
+	translucent
+	surfaceType "glass"
+	forceoverlays
+	sort decal
+/*
+	{
+		maskcolor
+		map		makealpha(models/vehicles/edf_mcp/mcp_windows_mask.tga)
+	}
+
+	{
+		blend		gl_dst_alpha, gl_one
+		maskalpha
+      	program sfx/cubemap
+		red		Parm0
+		green   	Parm1
+		blue		Parm2
+	}
+
+	{
+     		blend		filter
+		map		models/vehicles/edf_mcp/mcp_windows.tga
+	}
+	*/
+	{
+		blend blend
+		program sfx/windowglass
+		diffusemap	_white
+		bumpmap		_flat
+		parameters 3, 1.0, 0.3
+	}
+	{
+		blend blend
+		map	models/vehicles/edf_mcp/mcp_windows.tga
+		// Mix in sun color so it looks all right with diff atms
+		//color sun_r, sun_g, sun_b, 1
+		red desat_sun_r * lightscale * 0.4
+		green desat_sun_g * lightscale * 0.4
+		blue desat_sun_b * lightscale * 0.4		
+	}
+}
+
+material models/vehicles/edf_mcp/mcp_decals
+{
+	noShadows
+	nonsolid
+	noimpact
+	translucent
+
+	{
+		blend		blend
+       	map		models/vehicles/edf_mcp/mcp_decals.tga
+       	rgb		( 1 - nighttime ) + 0.2
+	}
+}

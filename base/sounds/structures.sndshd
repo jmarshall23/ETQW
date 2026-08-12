@@ -1,0 +1,275 @@
+//////////////////////////
+// Structure Explosions //
+//////////////////////////
+
+sound strogg_base {
+	minDistance	35
+	maxDistance	150
+	volume		-3
+	looping
+	
+	sounds/structures/domihub/ambience.wav
+}
+
+sound structure_explode {
+
+	volume 5
+	maxDistance 250
+	no_occlusion
+	omnidirectional
+	shakes 0.1
+
+	sounds/structures/structure_explode.wav
+}
+
+
+/////////////////////
+// Strategic Alarm //
+/////////////////////
+
+sound strategic_alarm_edf {
+
+	volume 5
+
+	maxDistance 150
+
+	sounds/structures/edf/alarm_01.wav
+}
+
+sound strategic_alarm_strogg {
+
+	volume 0
+
+	maxDistance 150
+
+	sounds/structures/strogg/alarm_01.wav
+}
+
+
+/////////////////////////////
+// Strogg Atmosphere Entry //
+/////////////////////////////
+
+sound structure_enter_atmosphere {
+
+	volume 0
+
+	maxDistance 500
+
+	sounds/structures/strogg/enter_atmosphere.wav
+}
+
+////////////////////
+// Command Center //
+////////////////////
+
+sound cc_door_open {
+
+	volume 0
+	maxDistance 6
+
+	sounds/doors/open_01.wav
+}
+
+sound cc_door_close {
+
+	volume 0
+	maxDistance 6
+
+	sounds/doors/close_01.wav
+}
+
+sound cc_deploy_body {
+
+	volume 5
+	maxDistance 100
+
+	sounds/structures/cc/body_deploy_01.wav
+}
+
+sound cc_deploy_feet {
+
+	volume 0
+	maxDistance 100
+
+	sounds/structures/cc/feet_deploy_01.wav
+}
+
+sound cc_deploy_back {
+
+	volume 0
+	maxDistance 100
+
+	sounds/structures/cc/back_deploy_01.wav
+}
+
+sound cc_deploy_steps {
+
+	volume -10
+	maxDistance 100
+
+	sounds/structures/cc/steps_deploy_01.wav
+}
+
+sound cc_deploy_alarm {
+
+	volume -10
+	maxDistance 100
+
+	sounds/structures/cc/alarm_01.wav
+}
+
+sound cc_exterior {
+
+	volume -5
+	minDistance 15
+	maxDistance 50
+	no_occlusion
+
+	looping
+	sounds/structures/cc/exterior_loop_01.wav
+}
+
+
+/////////////
+// Factory //
+/////////////
+
+sound factory_deploy {
+
+	volume 0
+	minDistance 20
+	maxDistance 100
+
+	sounds/structures/factory/deploy.ogg
+}
+
+sound factory_deploy_alarm {
+
+	volume -10
+	maxDistance 100
+
+	sounds/structures/factory/deploy_alarm.wav
+}
+
+sound factory_main_engine {
+
+	volume 0
+	maxDistance 100
+
+	sounds/structures/factory/main_engine.wav
+}
+
+sound factory_exterior {
+
+	volume -15
+	minDistance 20
+	maxDistance 75
+	no_occlusion
+
+	looping
+	sounds/structures/factory/exterior_loop_01.wav
+}
+
+
+////////////////////
+// Domination Hub //
+////////////////////
+
+sound domihub_exterior {
+
+	volume -15
+	minDistance 40
+	maxDistance 175
+
+	looping
+//	sounds/structures/domihub/interior_loop_01.wav
+//	sounds/structures/domihub/interior_loop_02.wav
+//	sounds/structures/domihub/interior_loop_03.wav
+//	sounds/structures/domihub/interior_loop_04.wav
+	sounds/structures/domihub/interior_loop_05.wav
+//	sounds/structures/domihub/interior_loop_06.wav
+//	sounds/structures/domihub/interior_loop_07.wav
+//	sounds/structures/domihub/interior_loop_08.wav
+}
+
+
+////////////////
+// Replicator //
+////////////////
+
+sound replicator_exterior {
+
+	volume -15
+	minDistance 25
+	maxDistance 75
+
+	looping
+	sounds/structures/replicator/exterior.ogg
+//	sounds/structures/replicator/interior_loop_01.wav
+//	sounds/structures/replicator/interior_loop_02.wav
+//	sounds/structures/replicator/interior_loop_03.wav
+//	sounds/structures/replicator/interior_loop_04.wav
+}
+
+
+sound sounds/structures/domihub/interior_loop_04 {
+	sounds/structures/domihub/interior_loop_04.wav
+}
+
+sound sounds/structures/domihub/interior_loop_05 {
+	sounds/structures/domihub/interior_loop_05.wav
+}
+
+sound sounds/structures/domihub/interior_loop_01 {
+	sounds/structures/domihub/interior_loop_01.wav
+}
+
+sound sounds/structures/domihub/interior_loop_02 {
+	sounds/structures/domihub/interior_loop_02.wav
+}
+
+sound sounds/structures/domihub/interior_loop_03 {
+	sounds/structures/domihub/interior_loop_03.wav
+}
+
+sound sounds/structures/domihub/interior_loop_06 {
+	sounds/structures/domihub/interior_loop_06.wav
+}
+
+sound sounds/structures/domihub/interior_loop_07 {
+	sounds/structures/domihub/interior_loop_07.wav
+}
+
+sound sounds/structures/domihub/interior_loop_08 {
+	sounds/structures/domihub/interior_loop_08.wav
+}
+
+sound sounds/structures/replicator/interior_loop_01 {
+	sounds/structures/replicator/interior_loop_01.wav
+}
+
+sound sounds/structures/replicator/interior_loop_02 {
+	sounds/structures/replicator/interior_loop_02.wav
+}
+
+sound sounds/structures/replicator/interior_loop_03 {
+	sounds/structures/replicator/interior_loop_03.wav
+}
+
+sound sounds/structures/replicator/interior_loop_04 {
+	sounds/structures/replicator/interior_loop_04.wav
+}
+
+sound sounds/structures/replicator/exterior {
+	sounds/structures/replicator/exterior.wav
+}
+
+sound sounds/soundscape/lowfreq/alow_01 {
+	looping
+	minDistance	15
+	maxDistance	50
+
+	sounds/soundscape/lowfreq/bmover_04.wav
+
+}

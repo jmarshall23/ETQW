@@ -1,0 +1,970 @@
+///////////////////////////////////////
+//
+//	ISLAND BUNKER
+//
+///////////////////////////////////////
+
+
+material models/nerve/island_bunker/islandbunkerbase
+	{
+	diffusemap	picmip -1	models/nerve/island_bunker/islandbunkerbase_d.tga
+	specularmap     picmip -2	models/nerve/island_bunker/islandbunkerbase_s.tga
+	bumpmap 	picmip -1	models/nerve/island_bunker/islandbunkerbase_local.tga
+ 	}
+
+material textures/decals/islandbunkerdecal01
+{
+	sort decal
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		models/nerve/island_bunker/bunker_marking01.tga
+ 	}
+}
+
+material models/nerve/island_bunker/islandbunkerbroken
+{
+	diffusemap	picmip -1	models/nerve/island_bunker/islandbunkerbroken_d.tga
+	specularmap     picmip -2	models/nerve/island_bunker/islandbunkerbroken_s.tga
+	bumpmap 	picmip -1	models/nerve/island_bunker/islandbunkerbroken_local.tga
+ }
+
+ material models/nerve/island_bunker/islandbunker_pipe
+ {
+ 	diffusemap	picmip -1	models/nerve/island_bunker/islandbunker_pipe_d.tga
+ 	specularmap     picmip -2	models/nerve/island_bunker/islandbunker_pipe_s.tga
+ 	bumpmap 	picmip -1	models/nerve/island_bunker/islandbunker_pipe_local.tga
+ }
+
+ material textures/concrete/islandbunkerwall01
+ {
+ 	qer_editorimage	textures/concrete/island_bunkerwall01_ed.tga
+  	diffusemap	picmip -1	textures/concrete/island_bunkerwall01_d.tga
+  	specularmap     picmip -2	textures/concrete/island_bunkerwall01_s.tga
+  	bumpmap 	picmip -1	textures/concrete/island_bunkerwall01_local.tga
+ }
+
+
+
+///////////////////////////////////////
+//
+//	ISLAND OBSERVATORY
+//
+///////////////////////////////////////
+
+
+material models/mapobjects/observatory/observatory
+{
+	bumpmap		picmip -1	models/nerve/observatory/observatory_local.tga
+	diffusemap	picmip -1	models/nerve/observatory/observatory_d.tga
+	specularmap   	picmip -2	models/nerve/observatory/observatory_s.tga
+}
+
+material models/mapobjects/observatory/satellite_dish
+
+{
+	twosided
+        {
+                    diffusemap	models/nerve/observatory/dish_d.tga
+                    specularmap	models/nerve/observatory/dish_s.tga
+                    bumpmap	addnormals( models/nerve/observatory/dish_local.tga, heightmap( models/nerve/observatory/dish_h.tga, 2 ) )
+                    alphaTest	0.1
+        }
+}
+
+material models/nerve/observatory/dishv03
+{
+	bumpmap		picmip -1	addnormals( models/nerve/observatory/dishv03_local.tga, heightmap( models/nerve/observatory/dishv03_h.tga, 2 ) )
+	diffusemap	picmip -1	models/nerve/observatory/dishv03_d.tga
+	specularmap   	picmip -2	models/nerve/observatory/dishv03_s.tga
+}
+
+material models/nerve/observatory/dishv03b
+
+{
+	twosided
+        {
+                    diffusemap	models/nerve/observatory/dishv03b_d.tga
+                    specularmap	models/nerve/observatory/dishv03b_s.tga
+                    bumpmap	addnormals( models/nerve/observatory/dishv03b_local.tga, heightmap( models/nerve/observatory/dishv03b_h.tga, 2 ) )
+                    alphaTest	0.1
+        }
+}
+
+material models/mapobjects/observatory/satellite_base
+{
+	bumpmap		picmip -1	addnormals( models/nerve/observatory/satellite_base_local.tga, heightmap( models/nerve/observatory/satellite_base_h.tga, 2 ) )
+	diffusemap	picmip -1	models/nerve/observatory/satellite_base.tga
+	specularmap   	picmip -2	models/nerve/observatory/satellite_base_s.tga
+}
+
+///////////////////////////////////////
+//
+//	ISLAND SHIP
+//
+///////////////////////////////////////
+
+
+material models/mapobjects/ship/barge_outter_tile
+{
+	surfacetype "metal"
+	{
+	bumpmap		picmip -1	models/nerve/ship/barge_outter_tile_local.tga
+	diffusemap	picmip -1	models/nerve/ship/barge_outter_tile_d.tga
+	specularmap   	picmip -2	models/nerve/ship/barge_outter_tile_s.tga
+	}
+}
+
+material models/mapobjects/ship/barge_floor_tile
+{
+	surfacetype "metal"
+	{
+	bumpmap		picmip -1	models/nerve/ship/barge_floor_tile_local.tga
+	diffusemap	picmip -1	models/nerve/ship/barge_floor_tile_d.tga
+	specularmap   	picmip -2	models/nerve/ship/barge_floor_tile_s.tga
+	}
+}
+
+material models/mapobjects/ship/barge_dark_tile
+{
+	surfacetype "metal"
+	{
+	bumpmap		picmip -1	models/nerve/ship/barge_floor_tile_local.tga
+	diffusemap	picmip -1	models/nerve/ship/barge_dark_tile_d.tga
+	specularmap   	picmip -2	models/nerve/ship/barge_floor_tile_s.tga
+	}
+}
+
+material models/mapobjects/ship/barge_dredge1
+{
+	surfacetype "metal"
+	{
+	bumpmap		picmip -1	models/nerve/ship/barge_dredge1_local.tga
+	diffusemap	picmip -1	models/nerve/ship/barge_dredge1_d.tga
+	specularmap   	picmip -2	models/nerve/ship/barge_dredge1_s.tga
+	}
+}
+
+material models/mapobjects/ship/barge_doors
+{
+	surfacetype "metal"
+	{
+	bumpmap		picmip -1	models/nerve/ship/barge_doors_local.tga
+	diffusemap	picmip -1	models/nerve/ship/barge_doors_d.tga
+	specularmap   	picmip -2	models/nerve/ship/barge_doors_s.tga
+	}
+}
+
+material models/mapobjects/ship/barge
+{
+	surfacetype "metal"
+	{
+	bumpmap		picmip -1	models/nerve/ship/barge_local.tga
+	diffusemap	picmip -1	models/nerve/ship/barge_d.tga
+	specularmap   	picmip -2	models/nerve/ship/barge_s.tga
+	}
+}
+
+///////////////////////////////////////
+//
+//	ISLAND ROCKS
+//
+///////////////////////////////////////
+
+
+
+material models/mapobjects/island/rock1
+{
+	bumpmap		picmip -1	textures/megagen/quarry/cracked_rock_big_local.tga
+	diffusemap	picmip -1	textures/megagen/island_nerve/rock1_d.tga
+
+}
+
+///////////////////////////////////////
+//
+//	DRIFTWOOD
+//
+///////////////////////////////////////
+
+material models/nerve/driftwood/driftwood_tile1
+
+{
+	qer_editorimage models/nerve/driftwood/driftwood_tile1.tga
+
+	noshadows
+	noselfshadow
+	nonsolid
+	{
+		diffusemap	picmip -1	models/nerve/driftwood/driftwood_tile1.tga
+	}
+
+}
+
+
+material models/nerve/driftwood/driftwood_tile2
+
+{
+	qer_editorimage models/nerve/driftwood/driftwood_tile2.tga
+
+	noshadows
+	noselfshadow
+	nonsolid
+	{
+		diffusemap	picmip -1	models/nerve/driftwood/driftwood_tile2.tga
+	}
+
+}
+
+
+material models/nerve/driftwood/driftwood_stumpend
+
+{
+	qer_editorimage models/nerve/driftwood/driftwood_stumpend.tga
+
+	noshadows
+	noselfshadow
+	nonsolid
+	{
+		diffusemap	picmip -1	models/nerve/driftwood/driftwood_stumpend.tga
+	}
+
+}
+
+
+///////////////////////////////////////
+//
+//	ISLAND TEXTURES
+//
+///////////////////////////////////////
+
+
+ material textures/nerve/island_reataining_wall01
+ {
+ 	qer_editorimage	textures/nerve/island_retaining_wall01_d.tga
+  	diffusemap	picmip -1	textures/nerve/island_retaining_wall01_d.tga
+  	specularmap     picmip -2	textures/nerve/island_retaining_wall01_s.tga
+  	bumpmap 	picmip -1	textures/nerve/island_retaining_wall01_local.tga
+ }
+
+ material textures/nerve/island_wall01
+ {
+  	qer_editorimage	textures/nerve/island_wall01_d.tga
+   	diffusemap	picmip -1	textures/nerve/island_wall01_d.tga
+   	specularmap     picmip -2	textures/nerve/island_wall01_s.tga
+   	bumpmap 	picmip -1	textures/nerve/island_wall01_local.tga
+ }
+
+ material textures/nerve/island_wall02
+ {
+   	qer_editorimage	textures/nerve/island_wall02_d.tga
+	diffusemap	picmip -1	textures/nerve/island_wall02_d.tga
+	specularmap     picmip -2	textures/nerve/island_wall02_s.tga
+	bumpmap 	picmip -1	textures/nerve/island_wall02_local.tga
+ }
+
+ material textures/nerve/island_wall03
+ {
+	qer_editorimage	textures/nerve/island_wall03_d.tga
+	diffusemap	picmip -1	textures/nerve/island_wall03_d.tga
+	specularmap     picmip -2	textures/nerve/island_wall03_s.tga
+	bumpmap 	picmip -1	textures/nerve/island_wall03_local.tga
+ }
+
+ material textures/nerve/island_wall04
+ {
+ 	qer_editorimage	textures/nerve/island_wall04_d.tga
+	diffusemap	picmip -1	textures/nerve/island_wall04_d.tga
+	specularmap     picmip -2	textures/nerve/island_wall04_s.tga
+	bumpmap 	picmip -1	textures/nerve/island_wall04_local.tga
+ }
+
+ material textures/nerve/island_wall05
+ {
+  	qer_editorimage	textures/nerve/island_wall05_d.tga
+  	diffusemap	picmip -1	textures/nerve/island_wall05_d.tga
+  	specularmap     picmip -2	textures/nerve/island_wall05_s.tga
+  	bumpmap 	picmip -1	textures/nerve/island_wall05_local.tga
+ }
+
+ material textures/nerve/island_wall06
+ {
+   	qer_editorimage	textures/nerve/island_wall06_d.tga
+   	{
+   	diffusemap	picmip -1	textures/nerve/island_wall06_d.tga
+   	specularmap     picmip -2	textures/nerve/island_wall06_s.tga
+   	bumpmap 	picmip -1	textures/nerve/island_wall06_local.tga
+ 	vertexcolor
+ 	}
+ }
+
+ material textures/nerve/island_wall07
+ {
+  	qer_editorimage	textures/nerve/island_wall07_d.tga
+  	diffusemap	picmip -1	textures/nerve/island_wall07_d.tga
+  	specularmap     picmip -2	textures/nerve/island_wall07_s.tga
+  	bumpmap 	picmip -1	textures/nerve/island_wall07_local.tga
+ }
+
+ material textures/nerve/island_rail01
+ {
+  	qer_editorimage	textures/nerve/island_rail01_d.tga
+  	{
+  	diffusemap	textures/nerve/island_rail01_d.tga
+  	specularmap     textures/nerve/island_rail01_s.tga
+  	bumpmap 	textures/nerve/island_rail01_local.tga
+  	alphatest 0.5
+  	}
+ }
+
+ material textures/nerve/island_window01
+ {
+   	qer_editorimage	textures/nerve/island_window01_d.tga
+   	diffusemap	picmip -1	textures/nerve/island_window01_d.tga
+   	specularmap     picmip -2	textures/nerve/island_window01_s.tga
+   	bumpmap 	picmip -1	textures/nerve/island_window01_local.tga
+   	//vertexcolor
+ }
+
+ material textures/nerve/fence01
+ {
+	qer_editorimage	textures/nerve/fence01_d.tga
+	noShadows
+	twosided
+	
+	surfacetype "metal"
+	
+	{
+      		diffusemap	textures/nerve/fence01_d.tga
+		bumpmap		addnormals( textures/nerve/fence01_local.tga, heightmap  (textures/nerve/fence01_h.tga ,4 ) )
+		//specularmap	textures/nerve/fence01_s.tga
+		alphaTest 0.5
+	}
+ }
+ 
+  material textures/nerve/ret_wall
+ {
+ 	qer_editorimage	textures/nerve/ret_wall_d.tga
+ 	diffusemap	picmip -1	textures/nerve/ret_wall_d.tga
+ 	specularmap     picmip -2	textures/nerve/ret_wall_s.tga
+ 	bumpmap 	picmip -1	textures/nerve/ret_wall_local.tga
+ }
+
+///////////////////////////////////////
+//
+//	ISLAND transformer_substation
+//
+///////////////////////////////////////
+
+
+material models/mapobjects/island/transformer_substation
+{
+//noselfshadow
+
+bumpmap		picmip -1	models/mapobjects/island/transformer_substation/transformer_sub_local.tga
+diffusemap	picmip -1	models/mapobjects/island/transformer_substation/transformer_sub_d.tga
+specularmap   	picmip -2	models/mapobjects/island/transformer_substation/transformer_sub_s.tga
+}
+
+///////////////////////////////////////
+//
+//	ISLAND sign_ramp
+//
+///////////////////////////////////////
+
+
+material models/mapobjects/island/sign_ramp
+{
+//noselfshadow
+
+bumpmap		picmip -1	models/nerve/sign/ramp_sign_local.tga
+diffusemap	picmip -1	models/nerve/sign/ramp_sign.tga
+specularmap   	picmip -2	models/nerve/sign/ramp_sign_s.tga
+}
+
+///////////////////////////////////////
+//
+//	ISLAND BUOY
+//
+///////////////////////////////////////
+
+
+material models/mapobjects/island/buoy/buoy
+{
+	twoSided
+	{
+		bumpmap		picmip -1	addnormals( models/nerve/buoy/buoy_local.tga, heightmap( models/nerve/buoy/buoy_h.tga, 4 ) )
+		diffusemap	picmip -1	models/nerve/buoy/buoy_d.tga
+		specularmap   	picmip -2	models/nerve/buoy/buoy_s.tga
+	}
+	twoSided
+}
+
+
+
+///////////////////////////////////////
+//
+//	ISLAND OBJECTIVE GENERATOR
+//
+///////////////////////////////////////
+
+
+material models/mapobjects/island/objective_generator
+{
+surfaceType	"metal"
+	
+//noselfshadow
+
+bumpmap		picmip -1	models/mapobjects/island/objective_generator_local.tga
+diffusemap	picmip -1	models/mapobjects/island/objective_generator_d.tga
+specularmap   	picmip -2	models/mapobjects/island/objective_generator_s.tga
+}
+
+///////////////////////////////////////
+//
+//	ISLAND DOCK TIRES
+//
+///////////////////////////////////////
+
+material models/mapobjects/island/island_dock_tire
+{
+surfaceType	"concrete"
+
+bumpmap		picmip -1	models/mapobjects/island/island_dock_tire_local.tga
+diffusemap	picmip -1	models/mapobjects/island/island_dock_tire_d.tga
+specularmap   	picmip -2	models/mapobjects/island/island_dock_tire_s.tga
+}
+
+///////////////////////////////////////
+//
+//	CARRY CASE
+//
+///////////////////////////////////////
+
+material models/nerve/carry_case
+{
+	noshadows
+	noselfshadow
+	renderbump -size 1024 1024 -aa 2 -trace 1.0 -clampOutput 0 0 1 1 -colormap models/nerve/carry_case_local.tga models/nerve/carry_case_hi.lwo
+
+
+		diffusemap	picmip -1	models/nerve/carry_case_d.tga
+		specularmap	picmip -2	models/nerve/carry_case_s.tga
+//		bumpmap 	picmip -1	models/nerve/carry_case_local.tga
+		bumpmap		picmip -1	addnormals( models/nerve/carry_case_local.tga, heightmap( models/nerve/carry_case_h.tga, 2 ) )
+
+}
+
+///////////////////////////////////////
+//
+//	LESS SHINY GUARD RAILS
+//
+///////////////////////////////////////
+
+material models/nerve/n_crashbarrier/n_crash_barriers
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	models/nerve/n_crashbarrier/n_crash_barriers_d.tga
+		specularmap	picmip -2	models/nerve/n_crashbarrier/n_crash_barriers_s.tga
+		bumpmap 	picmip -1	models/mapobjects/crash_barriers/crash_barriers_local.tga
+		
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 5,2.5,0,0 
+	}
+}
+
+///////////////////////////////////////
+//
+//	PYLON LIGHT TOWER
+//
+///////////////////////////////////////
+
+material models/nerve/light_tower/light_tower
+ {
+	twosided
+	{
+      		diffusemap	models/nerve/light_tower/light_tower_d.tga
+		bumpmap		models/nerve/light_tower/light_tower_local.tga
+		specularmap	models/nerve/light_tower/light_tower_s.tga
+		alphaTest 0.5
+	}
+ }
+
+///////////////////////////////////////
+//
+//	BROKEN ROAD
+//
+///////////////////////////////////////
+
+material models/nerve/broken_road
+{
+
+
+	diffusemap	picmip -1	models/nerve/broken_road_d.tga
+	bumpmap		picmip -1	models/nerve/broken_road_local.tga
+
+}
+
+///////////////////////////////////////
+//
+//	HELIPAD DECAL
+//
+///////////////////////////////////////
+
+material textures/decals/helipad_decal
+{
+	qer_editorimage		textures/decals/helipad_decal.tga
+	noShadows
+	twosided
+	nonsolid
+	noimpact
+	translucent
+		{
+			diffuseMap textures/decals/helipad_decal.tga
+			alphaTest 0.5
+		}
+ }
+
+material textures/island/tarmac
+{
+ 	diffusemap	picmip -1	textures/megagen/outskirts/tarmac_cracked_d.tga
+ 	specularmap     picmip -2	textures/megagen/outskirts/tarmac_cracked_s.tga
+ 	bumpmap 	picmip -1	textures/megagen/outskirts/tarmac_cracked_local.tga
+}
+
+///////////////////////////////////////
+//
+//	CURB
+//
+///////////////////////////////////////
+
+material textures/concrete/concrete11curb
+{
+ 	diffusemap	picmip -1	textures/nerve/concrete11curb_d.tga
+ 	specularmap     picmip -2	textures/nerve/concrete11curb_s.tga
+ 	bumpmap 	picmip -1	textures/nerve/concrete11curb_local.tga
+}
+
+
+///////////////////////////////////////
+//
+//	PATTY BUNKER
+//
+///////////////////////////////////////
+
+
+material models/nerve/island_bunker/islandbunkerbase_p
+{
+	diffusemap	picmip -1	models/nerve/island_bunker/bunker_con3v2.tga
+//	specularmap     picmip -2	models/nerve/island_bunker/islandbunkerbase_s.tga
+	bumpmap 	picmip -1	models/nerve/island_bunker/bunker_con3_local.tga
+}
+
+///////////////////////////////////////
+//
+//	GATES OF STEEL
+//
+///////////////////////////////////////
+
+
+material models/nerve/vault_door
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	models/nerve/vaultdoor_d.tga
+		specularmap	picmip -2	models/nerve/vaultdoor_s.tga
+		bumpmap		picmip -1	models/nerve/vaultdoor_local.tga
+	}
+}
+
+material models/nerve/v_parts
+{
+	surfacetype "metal"
+	{
+		diffusemap	picmip -1	models/nerve/v_parts_d.tga
+		specularmap	picmip -2	models/nerve/v_parts_s.tga
+		bumpmap 	picmip -1	models/nerve/v_parts_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		//bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	8,8,0,0
+	}
+}
+
+material models/nerve/v_door
+{
+	surfacetype "metal"
+	{
+		diffusemap	picmip -1	models/nerve/v_door_d.tga
+		specularmap	picmip -2	models/nerve/v_door_s.tga
+		bumpmap		picmip -1	models/nerve/v_door_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	7,7,0,0
+	}
+}
+
+material models/nerve/vault_blinker
+{
+	{
+		program		interaction/selfillum
+		diffusemap		picmip -1	models/nerve/vault_blinker_d.tga
+		selfIllumMap				models/nerve/vault_blinker_l.tga
+	}
+}
+
+material models/nerve/vault_door_busted
+{
+	  surfaceType	"metal"
+       {
+		diffusemap	picmip -1	models/nerve/vaultdoor_busted_d.tga
+		specularmap     picmip -2	models/nerve/vaultdoor_busted_s.tga
+		bumpmap 	picmip -1	models/nerve/vaultdoor_local.tga
+	}
+}
+
+///////////////////////////////////////
+//
+//	GATES OF STEEL  II: WITH A VENGEANCE
+//
+///////////////////////////////////////
+
+
+material models/nerve/vault_frame
+{
+	  surfaceType	"metal"
+	{
+		diffusemap		picmip -1	models/nerve/vaultframe_d.tga
+		specularmap     picmip -2	models/nerve/vaultframe_s.tga
+		bumpmap 		picmip -1	models/nerve/vaultframe_local.tga
+	}
+}
+
+///////////////////////////////////////
+//
+//	GATES OF STEEL  III: TAKE NO PRISONERS
+//
+///////////////////////////////////////
+
+
+material models/nerve/vault_frame_busted
+{
+	  surfaceType	"metal"
+	{
+		bumpmap			picmip -1	models/nerve/vaultframe_busted_local.tga
+		diffusemap		picmip -1	models/nerve/vaultframe_busted_d.tga
+		specularmap 	picmip -2	models/nerve/vaultframe_busted_s.tga
+	}
+}
+///////////////////////////////////////
+//
+//	BUNKER PUDDLES
+//
+///////////////////////////////////////
+
+
+material textures/nerve/bunkerpuddles
+{
+	qer_editorimage textures/nerve/bunkerpuddles_d.tga
+	DECAL_MACRO
+	noShadows
+	noimpact
+	translucent
+
+	{
+	bumpmap		textures/nerve/bunkerpuddles_local.tga
+	}
+
+	{
+		maskcolor
+		map		makealpha(textures/nerve/bunkerpuddles_d.tga)
+	}
+	{
+		specularmap     textures/nerve/bunkerpuddles_s.tga
+	}
+	{
+     		blend add
+		map		textures/nerve/bunkerpuddles_d.tga
+
+	}
+	{
+		//blend		gl_dst_alpha, gl_one
+		//maskalpha
+		//bumpmap		textures/nerve/bunkerpuddles_local.tga
+		//bumpmap		textures/rock/sharprock2b_local.tga
+		//program sfx/cubemap
+		//environmentCubeMap cubemap env/island_bunker
+	}
+}
+
+///////////////////////////////////////
+//
+//	QUARRY GATE
+//
+///////////////////////////////////////
+
+
+material models/nerve/quarry_gate
+{
+	{
+		diffusemap	models/nerve/quarry_gate_d.tga
+		alphaTest 0.5
+	}
+	specularmap     picmip -2	models/nerve/quarry_gate_s.tga
+	bumpmap 	picmip -1	models/nerve/quarry_gate_local.tga
+}
+
+///////////////////////////////////////
+//
+//	QUARRY GATE PARTS (sign)
+//
+///////////////////////////////////////
+
+
+material models/nerve/q_gate_sign
+{
+	{
+		diffusemap	models/nerve/q_gate_sign_d.tga
+		alphaTest 0.5
+	}
+	specularmap     models/nerve/q_gate_sign_s.tga
+	bumpmap 	models/nerve/q_gate_sign_local.tga
+}
+
+material models/nerve/q_gate_metal
+{
+	diffusemap	picmip -1	models/nerve/q_gate_metal_d.tga
+	specularmap     picmip -2	models/nerve/q_gate_metal_s.tga
+	bumpmap 	picmip -1	models/nerve/q_gate_metal_local.tga
+}
+
+///////////////////////////////////////
+//
+//	SERVER_02 ISLAND
+//
+///////////////////////////////////////
+
+
+material models/nerve/island_server02
+{
+	bumpmap		picmip -1	models/mapobjects/ark/server_local.tga
+	diffusemap	picmip -1	models/nerve/island_server_d.tga
+	specularmap 	picmip -2	models/nerve/island_server_s.tga
+}
+
+///////////////////////////////////////
+//
+//	BUNKER FLOOR
+//
+///////////////////////////////////////
+
+
+material textures/nerve/nerve_bunker_floor
+{
+	bumpmap		picmip -1	textures/nerve/nerve_bunker_floor_local.tga
+	diffusemap	picmip -1	textures/nerve/nerve_bunker_floor_d.tga
+	specularmap 	picmip -2	textures/nerve/nerve_bunker_floor_s.tga
+}
+
+material textures/nerve/bunker_arrow1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/nerve/bunker_arrow1_d.tga
+ 	}
+}
+
+///////////////////////////////////////
+//
+//	SHIP TEXTURE SHEET
+//
+///////////////////////////////////////
+
+
+material models/nerve/ship_sheet
+{
+	surfacetype "metal"
+	{
+		bumpmap		picmip -1	models/nerve/ship_sheet_local.tga
+		diffusemap	picmip -1	models/nerve/ship_sheet_d.tga
+		specularmap 	picmip -2	models/nerve/ship_sheet_s.tga
+		vertexcolor
+	}
+}
+
+///////////////////////////////////////
+//
+//	ISLAND TEXTURE SHEETS (EXTERIOR)
+//
+///////////////////////////////////////
+
+
+material models/mapobjects/island/island_objects/island_ts_exterior1
+{
+	noshadows
+	{
+		bumpmap		picmip -1	models/mapobjects/island/island_objects/island_ts_exterior1_local.tga
+		diffusemap	picmip -1	models/mapobjects/island/island_objects/island_ts_exterior1_d.tga
+		specularmap 	picmip -2	models/mapobjects/island/island_objects/island_ts_exterior1_s.tga
+		vertexcolor
+	}
+}
+
+material models/mapobjects/island/island_objects/island_ts_exterior2
+{
+	noshadows
+	{
+		bumpmap		picmip -1	models/mapobjects/island/island_objects/island_ts_exterior2_local.tga
+		diffusemap	picmip -1	models/mapobjects/island/island_objects/island_ts_exterior2_d.tga
+		specularmap 	picmip -2	models/mapobjects/island/island_objects/island_ts_exterior2_s.tga
+		vertexcolor
+	}
+}
+
+material models/mapobjects/island/island_objects/island_ts_exterior3
+{
+	noshadows
+	{
+		bumpmap		picmip -1	models/mapobjects/island/island_objects/island_ts_exterior3_local.tga
+		diffusemap	picmip -1	models/mapobjects/island/island_objects/island_ts_exterior3_d.tga
+		specularmap 	picmip -2	models/mapobjects/island/island_objects/island_ts_exterior3_s.tga
+		vertexcolor
+	}
+}
+
+material models/mapobjects/island/island_objects/island_ts_exterior1_s
+{
+	{
+		bumpmap		picmip -1	models/mapobjects/island/island_objects/island_ts_exterior1_local.tga
+		diffusemap	picmip -1	models/mapobjects/island/island_objects/island_ts_exterior1_d.tga
+		specularmap 	picmip -2	models/mapobjects/island/island_objects/island_ts_exterior1_s.tga
+		vertexcolor
+	}
+}
+
+material models/mapobjects/island/island_objects/island_ts_exterior2_s
+{
+	{
+		bumpmap		picmip -1	models/mapobjects/island/island_objects/island_ts_exterior2_local.tga
+		diffusemap	picmip -1	models/mapobjects/island/island_objects/island_ts_exterior2_d.tga
+		specularmap 	picmip -2	models/mapobjects/island/island_objects/island_ts_exterior2_s.tga
+		vertexcolor
+	}
+}
+
+material models/mapobjects/island/island_objects/island_ts_exterior3_s
+{
+	{
+		bumpmap		picmip -1	models/mapobjects/island/island_objects/island_ts_exterior3_local.tga
+		diffusemap	picmip -1	models/mapobjects/island/island_objects/island_ts_exterior3_d.tga
+		specularmap 	picmip -2	models/mapobjects/island/island_objects/island_ts_exterior3_s.tga
+		vertexcolor
+	}
+}
+
+
+///////////////////////////////////////
+//
+//	ISLAND OBJECT SHEETS (INTERIOR)
+//
+///////////////////////////////////////
+
+
+material models/mapobjects/island/island_objects/island_objects01
+{
+	noshadows
+	{
+		diffusemap		picmip -1	models/mapobjects/island/island_objects/island_objects01_d.tga
+		bumpmap			picmip -1	models/mapobjects/island/island_objects/island_objects01_local.tga
+		specularmap 	picmip -2	models/mapobjects/island/island_objects/island_objects01_s.tga
+		vertexcolor
+	}
+}
+
+material models/mapobjects/island/island_objects/island_objects02
+{
+	noshadows
+	{
+		diffusemap		picmip -1	models/mapobjects/island/island_objects/island_objects02_d.tga
+		bumpmap			picmip -1	models/mapobjects/island/island_objects/island_objects02_local.tga
+		specularmap 	picmip -2	models/mapobjects/island/island_objects/island_objects02_s.tga
+		vertexcolor
+	}
+}
+
+material models/mapobjects/island/island_objects/island_objects03
+{
+	noshadows
+	{
+		program interaction/basic_detailwm_alphatest
+		diffusemap		picmip -2	models/mapobjects/island/island_objects/island_objects03_d.tga
+		bumpmap			picmip -2	models/mapobjects/island/island_objects/island_objects03_local.tga
+		specularmap		picmip -2	models/mapobjects/island/island_objects/island_objects03_s.tga
+		vertexcolor
+		alphaTest 0.5	
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	6,24,0,0
+		detailWeightMap				models/mapobjects/island/island_objects/island_objects03_detailmask.tga
+	}
+}
+
+material models/mapobjects/island/island_objects/island_objects01_s
+{
+	{
+		diffusemap		picmip -1	models/mapobjects/island/island_objects/island_objects01_d.tga
+		bumpmap			picmip -1	models/mapobjects/island/island_objects/island_objects01_local.tga
+		specularmap 	picmip -2	models/mapobjects/island/island_objects/island_objects01_s.tga
+		vertexcolor
+	}
+}
+
+material models/mapobjects/island/island_objects/island_objects02_s
+{
+	{
+		diffusemap		picmip -1	models/mapobjects/island/island_objects/island_objects02_d.tga
+		bumpmap			picmip -1	models/mapobjects/island/island_objects/island_objects02_local.tga
+		specularmap 	picmip -2	models/mapobjects/island/island_objects/island_objects02_s.tga
+		vertexcolor
+	}
+}
+
+material models/mapobjects/island/island_objects/island_objects03_s
+{
+	{
+		program interaction/basic_detailwm_alphatest
+		diffusemap		picmip -2	models/mapobjects/island/island_objects/island_objects03_d.tga
+		bumpmap			picmip -2	models/mapobjects/island/island_objects/island_objects03_local.tga
+		specularmap		picmip -2	models/mapobjects/island/island_objects/island_objects03_s.tga
+		vertexcolor
+		alphaTest 0.5	
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	6,24,0,0
+		detailWeightMap				models/mapobjects/island/island_objects/island_objects03_detailmask.tga
+	}
+}
+
+material models/mapobjects/island/island_objects/container_dirty01nv
+{
+	{
+		diffusemap		picmip -1 models/mapobjects/island/island_objects/container_dirty01nv_d.tga
+		bumpmap			picmip -1 models/mapobjects/island/island_objects/container_dirty01nv_local.tga
+		specularmap 	picmip -2 models/mapobjects/island/island_objects/container_dirty01nv_s.tga
+		vertexcolor
+	}
+}

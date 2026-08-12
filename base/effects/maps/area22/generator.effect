@@ -1,0 +1,269 @@
+effect effects/maps/area22/generator_sparks
+{
+	size	171
+
+	spawner "sparks"
+	{
+		count		25,30
+		useMaterialColor
+		attenuation	0,2048
+
+		line
+		{
+			duration	0.5,2
+			blend	add
+			generatedLine
+			persist
+			material	"textures/particles/sparks/spark03"
+			gravity		0.2,1.1
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -1,-1,-1,1,1,1 cone }
+				velocity { box -100,-100,-100,100,100,100 }
+				size { point 0.5 }
+				fade { point 1 attenuate }
+				length { point 1,0,0 }
+			}
+
+			motion
+			{
+				size { envelope shamus_fastinslowout offset -0.1 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+				length { envelope shamus_fastinslowout offset -0.07,-0.07,-0.07 }
+			}
+
+			end
+			{
+				size { box 2,3 }
+				fade { point 0 attenuate }
+				length { box 10,0,0,15,0,0 }
+			}
+			lineHit
+		}
+	}
+	sound "Zaps"
+	{
+		soundShader	"sounds/deployables/shieldgenerator/zaps"
+		volume	2,4
+		freqshift	0.4,1
+	}
+	sound "unnamed3"
+	{
+		soundShader	"vehicles/misc/debris/glass_small"
+		volume	10,12
+		freqshift	0.5,1
+	}
+}
+
+effect effects/maps/area22/generator_windowsmash
+{
+	size	564
+
+	spawner "unnamed1"
+	{
+		count		30,30
+
+		sprite
+		{
+			duration	0.1,0.5
+			material	"particles/debris/dustcloud_4"
+			trailRepeat	1
+
+			start
+			{
+				position { box -150,-70,0,150,70,0 }
+				velocity { point 0,0,50 }
+				size { point 15,15 }
+				fade { point 0 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shamus_fastinslowout }
+			}
+
+			end
+			{
+				size { box 30,30,50,50 }
+				fade { line 0.5,1 }
+			}
+			lineHit
+		}
+	}
+	spawner "unnamed2"
+	{
+		count		20,20
+
+		sprite
+		{
+			duration	0.5,0.8
+			material	"particles/debris/dustcloud_4"
+			trailRepeat	1
+
+			start
+			{
+				position { box -150,-70,0,150,70,0 }
+				velocity { point 0,0,50 }
+				size { point 35,35 }
+				fade { point 0 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shamus_fastinslowout }
+			}
+
+			end
+			{
+				size { box 60,60,90,90 }
+				fade { line 0.1,0.5 }
+			}
+			lineHit
+		}
+	}
+	sound "unnamed3"
+	{
+		soundShader	"vehicles/misc/debris/glass_med"
+		volume	16,16
+		freqshift	0.8,0.8
+	}
+	spawner "Chips3"
+	{
+		count		100,100
+		useMaterialColor
+		attenuateEmitter
+		attenuation	0,1024
+
+		sprite
+		{
+			duration	1,1.2
+			persist
+			material	"particles/debris/debris_glass01"
+			numFrames 4
+			gravity		0.3,0.8
+			trailRepeat	1
+
+			start
+			{
+				velocity { box -145,0,50,145,150,700 }
+				size { box 0.5,0.5,10,10 }
+				offset { box -150,-70,0,150,70,0 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shattertable2 offset 0.1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 0.3,0.3 }
+				rotate { box 1,-1 }
+			}
+			lineHit
+		}
+	}
+}effect effects/maps/area22/generator_blowout_1
+{
+	size	478
+
+	spawner "unnamed1"
+	{
+		count		15,15
+
+		sprite
+		{
+			duration	4,6
+			material	"textures/particles/smoke_test1"
+			trailRepeat	1
+
+			start
+			{
+				position { box -50,-50,0,50,30,0 }
+				velocity { box 0,0,5,0,0,50 }
+				size { point 30,30 }
+				tint { line 0.713726,0.713726,0.713726,0.454902,0.454902,0.454902 }
+				fade { point 0 }
+				windStrength { line -0.01,-0.1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shamus_fastinslowout }
+				offset { envelope convexfade count 7,7,7 }
+			}
+
+			end
+			{
+				size { box 60,60,80,80 }
+				fade { line 0.5,1 }
+				offset { line 0,0,5,0,0,230 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/maps/area22/generator_blowout_2
+{
+	size	833
+
+	sound "unnamed4"
+	{
+		start		0.4,0.4
+		soundShader	"metal_stress"
+		volume	4,4
+	}
+	spawner "unnamed1"
+	{
+		count		30,30
+
+		sprite
+		{
+			duration	5,8
+			material	"textures/particles/smoke_test1"
+			trailRepeat	1
+
+			start
+			{
+				position { box -50,-70,0,250,50,0 }
+				velocity { box 0,0,5,0,0,50 }
+				size { point 50,50 }
+				tint { line 0.67451,0.67451,0.67451,0.301961,0.301961,0.301961 }
+				fade { point 0 }
+				windStrength { line -0.01,-0.1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shamus_fastinslowout }
+				offset { envelope convexfade count 7,7,7 }
+			}
+
+			end
+			{
+				size { box 100,100,150,150 }
+				fade { point 1 }
+				offset { box -50,-15,5,50,15,400 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+

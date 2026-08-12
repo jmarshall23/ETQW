@@ -1,0 +1,1377 @@
+/*******************************
+Strogg_infected_building
+*******************************/
+
+material models/mapobjects/outskirts/infected_building
+
+{
+ 	renderbump -size 512 512 -trace 4 -colormap -aa 2 models/testbuilding_local2.tga models/building_high.lwo /*-clampOutput 0 0 1 1*/
+
+	{
+		detailMult	25, 25,-0.5,0.25 // tiling mult u, mult v, offset u, offset v
+
+
+		diffusemap		models/mapobjects/outskirts/infected_building_d.tga
+		specularmap		models/mapobjects/outskirts/infected_building_s.tga
+
+		bumpmap 	addnormals (models/mapobjects/outskirts/infected_building_local.tga, heightmap (models/mapobjects/outskirts/infected_building_h.tga, 5 ) )
+
+		bumpDetailMap 	heightmap (models/mapobjects/outskirts/infected_building_detail.tga, 15)
+	}
+}
+
+
+
+/*******************************
+Strogg_mining_laser
+*******************************/
+material models/structures/strogg/mining_laser/mining_laser
+{
+	renderbump -size 2048 2048 -colorMap -trace 0.1 -clampTextureSpace -overdrawMap models/structures/strogg/mining_laser_local.tga models/structures/strogg/mining_laser_h.lwo
+	noshadows
+	nonsolid
+
+	{
+		program	interaction/strogg_detail_glow
+		diffusemap 	picmip -1	models/structures/strogg/mining_laser/mining_laser_d.tga
+		specularmap	picmip -2	models/structures/strogg/mining_laser/mining_laser_s.tga
+		bumpmap		picmip -1	addnormals (models/structures/strogg/mining_laser/mining_laser_local.tga, heightmap (models/structures/strogg/mining_laser/mining_laser_h.tga, 4 ) )
+		selfIllumMap 	picmip -2	models/structures/strogg/mining_laser/mining_laser_glow.tga
+
+		bumpdetailmap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 4,4,0,0
+		parameters2	0.96*sintable [time * 0.3], 0.49*sintable [time * 0.3], 0.1*sintable [time * 0.3]
+	}
+
+/*	{
+	//if parm7
+	blend	add
+	map	clamp models/structures/strogg/mining_laser/glow2.tga
+	scale	4.6, 18
+	translate -0.41, -0.15
+	rgb	sintable [time * 0.3]
+	}
+
+	{
+	//if parm7
+	blend	add
+	map	clamp models/structures/strogg/mining_laser/glow2.tga
+	scale	4.4, 12
+	translate -0.035, -0.513
+	rgb	sintable [time * 0.3]
+	}
+
+	{
+	//if parm7
+	blend	add
+	map	clamp models/structures/strogg/mining_laser/glow2.tga
+	scale	12, 34
+	translate -0.552, -0.9
+	rgb	0.7 * sintable [time * 0.3]
+	}*/
+}
+
+// ********************************************
+// GDF GPMG emplacement
+// ********************************************
+
+material models/mapobjects/emplacement/emplacement
+{
+	surfaceTypeMap "models/mapobjects/emplacement"
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/mapobjects/bunkers/bunker_pieces_local.tga models/mapobjects/bunkers/bunker_pieces_hi.ase
+//	noshadows
+	{
+		diffusemap	picmip -1	models/mapobjects/emplacement/emplacement_d.tga
+		specularmap	picmip -2	models/mapobjects/emplacement/emplacement_s.tga
+		bumpmap 	picmip -1	addnormals (models/mapobjects/emplacement/emplacement_local.tga, heightmap (models/mapobjects/emplacement/emplacement_h.tga, 10))
+		vertexColor
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 5,5,0,0 
+	}
+}
+
+material models/mapobjects/emplacement/emplacement_mini
+{
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/mapobjects/bunkers/bunker_piece_mini_local.tga models/mapobjects/bunkers/bunker_piece_mini_hi.ase
+//	noshadows
+	diffusemap	models/mapobjects/emplacement/emplacement_mini_d.tga
+	specularmap	models/mapobjects/emplacement/emplacement_mini_s.tga
+	bumpmap 	addnormals (models/mapobjects/emplacement/emplacement_mini_local.tga, 	heightmap (models/mapobjects/emplacement/emplacement_mini_h.tga, 10))
+}
+
+
+
+/********************************************
+		Strogg Slipgate
+		renderbump models/structures/strogg/slipgate/dev_sd/slipgate_low2.lwo
+********************************************/
+
+material models/structures/strogg/slipgate/slipgate
+{
+	noshadows
+	renderbump -size 2048 1024 -aa 2 -colormap -clampoutput 0 0 1 1 models/structures/strogg/slipgate/slipgate_local.tga models/structures/strogg/slipgate/dev_sd/slipgate_high2.lwo
+
+	{
+		program		interaction/strogg_detailwm
+		diffusemap	picmip -1	models/structures/strogg/slipgate/slipgate_d.tga
+		specularmap	picmip -2	models/structures/strogg/slipgate/slipgate_s.tga
+		bumpmap 	picmip -1	addnormals(models/structures/strogg/slipgate/slipgate_local.tga, heightmap(models/structures/strogg/slipgate/slipgate_h.tga, 4 ) )
+		selfillummap	picmip -1	models/structures/strogg/slipgate/slipgate_glow.tga
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailWeightMap			models/structures/strogg/slipgate/slipgate_detailmask.tga
+		detailMult 32,16,0.4,0.1
+	}
+}
+
+/*******************************
+PLACEHOLDER Strogg dominode
+*******************************/
+
+material models/structures/strogg/domination_node/domination_node
+{
+renderbump -trace 0.02 -size 1024 1024 -clampOutput 0 0 1 1 -aa 2 models/structures/strogg/anti_scud/antiscud_local.tga models/structures/strogg/anti_scud/hi.obj
+noshadows
+
+	{
+	program	interaction/selfillum
+	diffusemap		 models/structures/strogg/domination_node/domination_node_d.tga
+	specularmap		 models/structures/strogg/domination_node/domination_node_s.tga
+	bumpmap 		 models/structures/strogg/domination_node/domination_node_local.tga
+	}
+}
+
+/*******************************
+Strogg Anti-SCUD
+*******************************/
+
+material models/structures/strogg/anti_scud/anti_scud
+{
+renderbump -trace 0.02 -size 1024 1024 -clampOutput 0 0 1 1 -aa 2 models/structures/strogg/anti_scud/antiscud_local.tga models/structures/strogg/anti_scud/hi.obj
+noshadows
+
+	{
+		program	interaction/selfillum_detail
+		diffusemap	picmip -1	models/structures/strogg/anti_scud/antiscud_d.tga
+		specularmap	picmip -2	models/structures/strogg/anti_scud/antiscud_s.tga
+		bumpmap 	picmip -1	models/structures/strogg/anti_scud/antiscud_local.tga
+		selfillummap	picmip -1	models/structures/strogg/anti_scud/antiscud_glow.tga
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 4,4,0,0
+	}
+}
+
+material models/structures/strogg/anti_scud/interface
+{
+	specularmap	models/structures/strogg/anti_scud/interface_s.tga
+	bumpmap		_flat
+
+	{
+	if parm7
+	blend	add
+	map	clamp linear models/structures/strogg/anti_scud/interface_block.tga
+	scale	50, -8 - sintable [time * 0.8] + sintable [time * 0.3]
+	translate -0.638, -0.8
+	}
+
+	{
+	if parm7
+	blend	add
+	map	clamp linear models/structures/strogg/anti_scud/interface_block.tga
+	scale	50, -6 - sintable [time * 0.2] + sintable [time * 1]
+	translate -0.658, -0.8
+	}
+
+	{
+	if parm7
+	blend	add
+	map	clamp linear models/structures/strogg/anti_scud/interface_block.tga
+	scale	50, -9 - sintable [time * -0.1] + sintable [time * 0.5] - 2
+	translate -0.678, -0.8
+	}
+
+	{
+	if parm7
+	blend	add
+	map	clamp linear models/structures/strogg/anti_scud/interface_block.tga
+	scale	50, -7 - sintable [time * 1] + sintable [time * -0.4]
+	translate -0.698, -0.8
+	}
+
+	{
+	if parm7
+	blend	add
+	map	clamp linear models/structures/strogg/anti_scud/interface_block.tga
+	scale	50, -6 - sintable [time * -0.5] + 0.4
+	translate -0.718, -0.8
+	}
+
+	{
+	if parm7
+	blend	add
+	map	models/structures/strogg/anti_scud/interface
+	}
+
+	{
+	if parm7
+	blend	add
+	map	models/structures/strogg/anti_scud/interface_baseglow.tga
+	rgb	sintable [time * 0.3]
+	}
+
+	{
+	if parm7
+	blend	add
+	map	models/structures/strogg/anti_scud/interface_scanline.tga
+	scroll	sintable [time * 0.3] * sintable [time * 2], time * 0.3
+	scale	16, 0.8
+	rgb	sintable [time * 0.2] + 1.4
+	}
+
+	{
+	if parm7
+	blend	add
+	map	clamp linear models/structures/strogg/anti_scud/interface_cursor.tga
+	scale	64, 16
+	translate -0.071, -0.304
+	rgb	sintable [time * 1.6]
+	}
+
+	{
+	if parm7
+	blend	add
+	map	clamp linear models/structures/strogg/anti_scud/interface_arrow.tga
+	scale	64, 16
+	translate -0.433 + sintable [time * 0.3] *0.05 , -0.33
+	rgb	0.8
+	}
+
+	{
+	if parm7
+	blend	add
+	map	clamp linear models/structures/strogg/anti_scud/interface_text.tga
+	scale	16, 4
+	translate -0.8135, -0.37
+	rgb	0.666 + sintable [time * 0.5] * sintable [time * 3] + 0.6
+	}
+}
+
+/**** Strogg Command Post ****/
+material models/structures/strogg/command_post/command_post_3
+{
+renderbump -size 1024 1024 -aa 2 -colormap models/mapobjects/command_post/crates_local.tga models/mapobjects/command_post/dev_sd/crates_renderbump_high.lwo
+
+	{
+		program	interaction/strogg_detail
+		diffusemap		picmip -1	models/structures/strogg/command_post/stroggcp_d.tga
+		specularmap		picmip -2	models/structures/strogg/command_post/stroggcp_s.tga
+		bumpmap 		picmip -1	addnormals(models/structures/strogg/command_post/stroggcp_local.tga, heightmap(models/structures/strogg/command_post/stroggcp_h.tga, 3 ) )
+		selfillummap	picmip -2	models/structures/strogg/command_post/stroggcp_glow.tga
+
+		diffuseDetailMap			textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/strogg_detail01_local.tga
+		detailMult 12,12,0,0
+	}
+}
+
+material models/structures/strogg/command_post/command_post_3_neutral
+{
+renderbump -size 1024 1024 -aa 2 -colormap models/mapobjects/command_post/crates_local.tga models/mapobjects/command_post/dev_sd/crates_renderbump_high.lwo
+
+	{
+		program	interaction/strogg_detail
+		diffusemap		picmip -1	models/structures/strogg/command_post/stroggcp_d.tga
+		specularmap		picmip -2	models/structures/strogg/command_post/stroggcp_s.tga
+		bumpmap 		picmip -1	addnormals(models/structures/strogg/command_post/stroggcp_local.tga, heightmap(models/structures/strogg/command_post/stroggcp_h.tga, 3 ) )
+		selfillummap				_black
+
+		diffuseDetailMap			textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/strogg_detail01_local.tga
+		detailMult 12,12,0,0
+	}
+}
+
+
+/**** Strogg Command Post - old/placeholder material ****/
+
+material models/structures/strogg/command_post/command_post
+
+{
+renderbump -size 1024 1024 -aa 2 -colormap models/mapobjects/command_post/crates_local.tga models/mapobjects/command_post/dev_sd/crates_renderbump_high.lwo
+
+	{
+	program	interaction/selfillum
+	diffusemap	picmip -1	models/structures/strogg/command_post/newslipgate_d.tga
+	specularmap	models/structures/strogg/command_post/newslipgate_s.tga
+	bumpmap 	addnormals(models/structures/strogg/command_post/newslipgate_local.tga, heightmap(models/structures/strogg/command_post/newslipgate_h.tga, 4 ) )
+	selfillummap	models/structures/strogg/command_post/newslipgate_glow.tga
+	}
+}
+
+material models/structures/strogg/command_post/command_post_neutral
+
+{
+renderbump -size 1024 1024 -aa 2 -colormap models/mapobjects/command_post/crates_local.tga models/mapobjects/command_post/dev_sd/crates_renderbump_high.lwo
+
+	{
+//	program	interaction/selfillum
+	diffusemap	models/structures/strogg/command_post/newslipgate_d.tga
+	specularmap	models/structures/strogg/command_post/newslipgate_s.tga
+	bumpmap 	addnormals(models/structures/strogg/command_post/newslipgate_local.tga, heightmap(models/structures/strogg/command_post/newslipgate_h.tga, 4 ) )
+//	selfillummap	models/structures/strogg/command_post/newslipgate_glow.tga
+	}
+}
+
+material models/structures/strogg/command_post/command_post_fx
+
+{
+	twosided
+	{
+
+		blend	add
+		map	textures/effects/desecrator_fx.tga
+
+		translate	time * 2, lightningOfsTable[ time * 0.05 ] * 0.5 - 0.25
+		rotate		lightningRotTable[ time * 0.05 ] * 0.2 - 0.1
+		maskAlpha
+	}
+	{
+
+
+		blend	add
+		map	textures/effects/desecrator_fx.tga
+
+		translate	time * 2, lightningOfsTable[ time * 0.04 ] * 0.5 - 0.25
+		rotate		lightningRotTable[ time * 0.04 ] * 0.2 - 0.1
+		maskAlpha
+	}
+	{
+
+
+		blend	add
+		map	textures/effects/desecrator_fx.tga
+
+		translate	time * 2, lightningOfsTable[ time * 0.06 ] * 0.5 - 0.25
+		rotate		lightningRotTable[ time * 0.06 ] * 0.2 - 0.1
+		maskAlpha
+	}
+}
+
+/********************************************
+GDF Command Post Objects
+renderbump models/mapobjects/command_post/dev_sd/crates_renderbump_low.lwo
+********************************************/
+
+material models/mapobjects/command_post/crates
+{
+	renderbump -size 1024 1024 -aa 2 -colormap models/mapobjects/command_post/crates_local.tga models/mapobjects/command_post/dev_sd/crates_renderbump_high.lwo
+	noshadows
+	noOverlays
+	surfaceType "metal"
+
+		{
+			program	interaction/selfillum_detail
+			diffusemap		picmip -1	models/structures/edf/command_post/crates_d.tga
+			specularmap		picmip -2	models/structures/edf/command_post/crates_s.tga
+			bumpmap 		picmip -1	models/structures/edf/command_post/crates_local.tga
+			selfillummap	picmip -1	models/structures/edf/command_post/crates_glow.tga
+			vertexColor
+
+			diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+			specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+			bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+			detailMult 10,10,0,0
+		}
+}
+
+material models/mapobjects/command_post/screen
+{
+	noshadows
+	surfaceType "metal"
+	noOverlays
+
+		{
+		program	interaction/selfillum
+		diffusemap	nopicmip models/structures/edf/command_post/command_post_screen_d.tga
+		specularmap	picmip -1	models/structures/edf/command_post/command_post_screen_s.tga
+		bumpmap 	_flat //models/structures/edf/command_post/command_post_screen_local.tga
+		selfillummap	models/structures/edf/command_post/command_post_screen_glow.tga
+		}
+}
+
+
+
+/*******************************
+Strogg Orbital Strike Relay
+*******************************/
+
+material models/structures/strogg/deployables/intel/orbital_strike_relay/orbital_strike_relay
+{
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -aa 2 models/structures/strogg/deployables/intel/orbital_strike_relay/orbital_strike_relay_local.tga models/structures/strogg/deployables/intel/orbital_strike_relay/orbital_strike_relay_hi.lwo
+	noshadows
+	surfaceType "metal"
+	{
+		program	interaction/strogg_detail
+		diffusemap	picmip -1	models/structures/strogg/deployables/intel/orbital_strike_relay/orbital_strike_relay_d.tga
+		specularmap	picmip -2	models/structures/strogg/deployables/intel/orbital_strike_relay/orbital_strike_relay_s.tga
+		bumpmap		picmip -1 	addnormals(models/structures/strogg/deployables/intel/orbital_strike_relay/orbital_strike_relay_local.tga, heightmap(models/structures/strogg/deployables/intel/orbital_strike_relay/orbital_strike_relay_h.tga, 4 ) )
+		selfIllumMap	picmip -2 	models/structures/strogg/deployables/intel/orbital_strike_relay/orbital_strike_relay_glow.tga
+
+		bumpdetailmap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 4,4,0,0
+	}
+}
+
+/*******************************
+Strogg Shield Generator
+*******************************/
+
+material models/structures/strogg/deployables/passive_defences/shieldgenerator/shieldgenerator
+{
+renderbump -size 1024 1024 -trace 0.02 -aa 2 models/structures/strogg/deployables/passive_defences/shieldgenerator/generator_local.tga models/structures/strogg/deployables/passive_defences/shieldgenerator/shieldgenerator2.ase
+noshadows
+surfaceType "metal"
+	{
+		program		interaction/selfillum_detail
+		diffusemap	picmip -1	models/structures/strogg/deployables/passive_defences/shieldgenerator/generator_d.tga
+		specularmap	picmip -2	models/structures/strogg/deployables/passive_defences/shieldgenerator/generator_s.tga
+		bumpmap		picmip -1	models/structures/strogg/deployables/passive_defences/shieldgenerator/generator_local.tga
+		selfIllumMap	picmip -2	models/structures/strogg/deployables/passive_defences/shieldgenerator/generator_glow.tga
+
+		bumpdetailmap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 4,4,0,0
+	}
+}
+/*******************************
+Strogg Plinth
+*******************************/
+
+material models/mapobjects/strogg/plinth/plinth
+{
+	renderbump -size 1024 1024 -aa 2 -colorMap models/structures/strogg/deployables/weapons/rail_howitzer/rail_howitzer_local.tga models/structures/strogg/deployables/weapons/rail_howitzer/dev_sd/hi.lwo
+	{
+		diffusemap  	picmip -1	models/mapobjects/strogg/plinth/plinth_d.tga
+		specularmap	picmip -2	models/mapobjects/strogg/plinth/plinth_s.tga
+		bumpmap 	picmip -1	addnormals ( models/mapobjects/strogg/plinth/plinth_local.tga, heightmap ( models/mapobjects/strogg/plinth/plinth_h.tga, 4 ) )
+
+		bumpdetailmap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 4,4,0,0
+	}
+}
+
+/*******************************
+Strogg Rail Howitzer
+*******************************/
+
+material models/structures/strogg/deployables/weapons/rail_howitzer/rail_howitzer_roler
+{
+	renderbump -size 1024 1024 -aa 2 -colormap -clampoutput 0 0 1 1 models/structures/strogg/deployables/weapons/rail_howitzer/rail_howitzer_local.tga models/structures/strogg/deployables/weapons/rail_howitzer/dev_sd/rail_howitzer_high.lwo
+
+	noshadows
+	surfaceType "metal"
+
+	{
+		program		interaction/strogg_detail
+		diffusemap	picmip -1	models/structures/strogg/deployables/weapons/rail_howitzer/rail_howitzer_d.tga
+		specularmap	picmip -2	models/structures/strogg/deployables/weapons/rail_howitzer/rail_howitzer_s.tga
+		bumpmap		picmip -1 	addnormals(models/structures/strogg/deployables/weapons/rail_howitzer/rail_howitzer_local.tga, heightmap(models/structures/strogg/deployables/weapons/rail_howitzer/rail_howitzer_h.tga, 3 ) )
+		selfillummap	picmip -2	models/structures/strogg/deployables/weapons/rail_howitzer/rail_howitzer_glow.tga
+
+		bumpdetailmap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 4,4,0,0
+	}
+}
+
+
+/**************
+Intelligence Deployables
+**************/
+
+material models/structures/edf/deployables/intel
+{
+//      unsmoothedtangents
+	renderbump -size 1024 1024 -colormap -aa 2 models/structures/edf/deployables/intel/intel_local.tga models/structures/edf/deployables/intel/dev_sd/intel_high.lwo
+	surfaceType "metal"
+	{
+		diffusemap	picmip -1	models/structures/edf/deployables/intel/intel_d.tga
+		specularmap	picmip -2	models/structures/edf/deployables/intel/intel_s.tga
+		bumpmap		picmip -1 	addnormals ( models/structures/edf/deployables/intel/intel_local.tga, heightmap ( models/structures/edf/deployables/intel/intel_h.tga, 4 ) )
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	9,9,0,0
+	}
+}
+
+material models/structures/edf/deployables/intel_arctic
+{
+//      unsmoothedtangents
+	renderbump -size 1024 1024 -colormap -aa 2 models/structures/edf/deployables/intel/intel_local.tga models/structures/edf/deployables/intel/dev_sd/intel_high.lwo
+	surfaceType "metal"
+	{
+		diffusemap	picmip -1	models/structures/edf/deployables/intel/intel_arctic_d.tga
+		specularmap	picmip -2	models/structures/edf/deployables/intel/intel_s.tga
+		bumpmap		picmip -1 	addnormals ( models/structures/edf/deployables/intel/intel_local.tga, heightmap ( models/structures/edf/deployables/intel/intel_h.tga, 4 ) )
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	9,9,0,0
+	}
+}
+
+material models/structures/strogg/deployables/intel/psi_radar/psi_radar
+{
+	unsmoothedtangents
+	surfaceType "metal"
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 models/structures/strogg/deployables/intel/psi_radar/psi_radar_local.tga models/structures/strogg/deployables/intel/psi_radar/dev_sd/psi_radar_hp.lwo
+	{
+		diffusemap	picmip -1	models/structures/strogg/deployables/intel/psi_radar/psi_radar_d.tga
+		specularmap	picmip -2	models/structures/strogg/deployables/intel/psi_radar/psi_radar_s.tga
+		bumpmap		picmip -1 	models/structures/strogg/deployables/intel/psi_radar/psi_radar_local.tga
+
+		bumpdetailmap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 4,4,0,0
+	}
+}
+
+
+/**************
+ Strogg Anti-Personnel Turret Shield
+ renderbump models/structures/strogg/deployables/weapons/antipersonnel_turret/antipersonnel_turret_shield.lwo
+ **************/
+
+
+material models/structures/strogg/deployables/weapons/antipersonnel_turret/antipersonnel_turret_shield {
+	//unsmoothedtangents
+	renderbump -size 128 32 -aa 1 models/structures/strogg/deployables/weapons/antipersonnel_turret/antipersonnel_turret_shield_local.tga models/structures/strogg/deployables/weapons/antipersonnel_turret/antipersonnel_turret_shield_hi.lwo
+	noselfshadow
+	forceshadows
+	twosided
+
+	//diffusemap	models/structures/strogg/deployables/weapons/antipersonnel_turret/antipersonnel_turret_shield_d.tga
+	//specularmap	models/structures/strogg/deployables/weapons/antipersonnel_turret/antipersonnel_turret_shield_s.tga
+	//bumpmap	picmip -1 	models/structures/strogg/deployables/weapons/antipersonnel_turret/antipersonnel_turret_shield_local.tga
+
+
+	{
+		blend blend
+		program sfx/visor
+		bumpMap	picmip -1 models/structures/strogg/deployables/weapons/antipersonnel_turret/antipersonnel_turret_shield_local.tga
+		parameters 1, 0.7, 1
+	}
+	{
+		blend filter
+		map _white
+		red	0.9
+		green	0.4
+		blue	0
+		vertexcolor
+	}
+
+}
+
+/*******************************
+Strogg Anti-Personnel Turret
+*******************************/
+
+material models/structures/strogg/deployables/weapons/antipersonnel_turret/antipersonnel_turret
+{
+	noshadows
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -aa 1 models/structures/strogg/deployables/weapons/antipersonnel_turret/antipersonnel_turret_local.tga models/structures/strogg/deployables/weapons/antipersonnel_turret/antipersonnel_turret_hi.lwo
+	surfaceType "metal"
+	{
+		program		interaction/selfillum_detail
+		diffusemap	picmip -1	models/structures/strogg/deployables/weapons/antipersonnel_turret/antipersonnel_turret_d.tga
+		specularmap	picmip -2	models/structures/strogg/deployables/weapons/antipersonnel_turret/antipersonnel_turret_s.tga
+		bumpmap		picmip -1 	addnormals(models/structures/strogg/deployables/weapons/antipersonnel_turret/antipersonnel_turret_local.tga, heightmap(models/structures/strogg/deployables/weapons/antipersonnel_turret/antipersonnel_turret_h.tga, 5 ) )
+		selfIllumMap	picmip -2	models/structures/strogg/deployables/weapons/antipersonnel_turret/antipersonnel_turret_glow.tga
+
+		bumpdetailmap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 4,4,0,0
+	}
+}
+
+/*******************************
+Strogg Anti-Vehicle Turret
+*******************************/
+
+material models/structures/strogg/deployables/weapons/antivehicle_turret/antivehicle_turret
+{
+noshadows
+renderbump -size 2048 2048 -trace 0.0266w -clampOutput 0 0 1 1 models/structures/strogg/deployables/weapons/antivehicle_turret/dev_sd/antivehicle_turret_local.tga models/structures/strogg/deployables/weapons/antivehicle_turret/dev_sd/antivehicle_turret_hp2.lwo
+surfaceType "metal"
+	{
+		program		interaction/selfillum_detail
+		diffusemap	picmip -1	models/structures/strogg/deployables/weapons/antivehicle_turret/antivehicle_turret_d.tga
+		specularmap	picmip -2	models/structures/strogg/deployables/weapons/antivehicle_turret/antivehicle_turret_s.tga
+		bumpmap		picmip -1 	models/structures/strogg/deployables/weapons/antivehicle_turret/antivehicle_turret_local.tga
+		selfillummap	picmip -2	models/structures/strogg/deployables/weapons/antivehicle_turret/antivehicle_turret_glow.tga
+
+		bumpdetailmap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 5,5,0,0
+	}
+}
+
+/*******************************
+Strogg Dragon's Teeth
+*******************************/
+
+material models/structures/strogg/deployables/dragonsteeth
+{
+	unsmoothedtangents
+	renderbump -size 256 512 -aa 1 models/structures/strogg/deployables/passive_defences/dragonsteeth_local.tga models/peppi/stroggdteeth_hi.lwo
+	noshadows
+	nonsolid
+	rendermodelclip
+
+
+	diffusemap	models/structures/strogg/deployables/passive_defences/dragonsteeth_d.tga
+	specularmap	models/structures/strogg/deployables/passive_defences/dragonsteeth_s.tga
+	bumpmap 	models/structures/strogg/deployables/passive_defences/dragonsteeth_local.tga
+	//bumpmap 	addnormals(models/structures/strogg/deployables/passive_defences/dragonsteeth_local.tga, heightmap(models/structures/strogg/deployables/passive_defences/dragonsteeth_h.tga, 3 ) )
+}
+
+/*******************************
+Strogg Plasma Mortar
+*******************************/
+
+material models/structures/strogg/deployables/weapons/plasma_mortar/plasma_mortar
+{
+//	unsmoothedtangents
+	surfaceType	"metal"
+	renderbump -size 1024 1024 models/structures/strogg/deployables/weapons/plasma_mortar/plasma_mortar_local.tga models/structures/strogg/deployables/weapons/plasma_mortar/plasma_mortar_hi.lwo
+		noshadows
+	{
+		program	interaction/strogg_detail
+		diffusemap	picmip -1	models/structures/strogg/deployables/weapons/plasma_mortar/plasma_mortar_d.tga
+		specularmap	picmip -2	models/structures/strogg/deployables/weapons/plasma_mortar/plasma_mortar_s.tga
+		bumpmap		picmip -1 	addnormals(models/structures/strogg/deployables/weapons/plasma_mortar/plasma_mortar_local.tga, heightmap(models/structures/strogg/deployables/weapons/plasma_mortar/plasma_mortar_h.tga, 5 ) )
+		selfIllumMap	picmip -2 	models/structures/strogg/deployables/weapons/plasma_mortar/plasma_mortar_glow.tga
+
+		bumpdetailmap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 5,5,0,0
+	}
+}
+
+/*******************************
+Strogg Strategic Strike Gun
+*******************************/
+
+material models/structures/strogg/deployables/weapons/ssg/ssg
+{
+//	 unsmoothedtangents
+	 surfaceType	"metal"
+	 noshadows
+	 renderbump -size 1024 1024 models/structures/strogg/deployables/weapons/ssg/ssg_local.tga models/structures/strogg/deployables/weapons/ssg/ssg_hi.lwo
+	{
+		diffusemap	picmip -1	models/structures/strogg/deployables/weapons/ssg/ssg_d.tga
+		specularmap	picmip -2	models/structures/strogg/deployables/weapons/ssg/ssg_s.tga
+		bumpmap		picmip -1 	addnormals(models/structures/strogg/deployables/weapons/ssg/ssg_local.tga, heightmap(models/structures/strogg/deployables/weapons/ssg/ssg_h.tga, 5 ) )
+
+		bumpdetailmap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 4,4,0,0
+	}
+}
+
+/**************
+	crate test
+**************/
+
+material models/structures/crate/crate
+{
+
+	unsmoothedtangents
+	renderbump  -size 512 512 models/structures/crate/crate_local.tga models/structures/crate/dev_sd/hi.lwo
+
+	diffusemap	picmip -1		textures/common/dark_gray.tga
+	//specularmap		models/structures/crate/crate_local.tga
+ 	bumpmap			models/structures/crate/crate_local.tga
+}
+
+/**************
+ replicator
+**************/
+
+material models/structures/strogg/replicator/pipe
+{
+	//renderbump  -size 512 512 models/structures/strogg/replicator/pipe_local.tga models/structures/strogg/replicator/dev_sd/pipe_hi.lwo
+	noshadows
+	{
+		program	interaction/strogg
+		diffusemap	picmip -1	 textures/common/dark_gray.tga
+		specularmap	picmip -1  textures/common/dark_gray.tga
+ 		bumpmap 	 models/structures/strogg/replicator/pipe_local.tga
+ 		selfIllumMap 	models/structures/strogg/replicator/pipe_glow.tga
+	}
+}
+
+material models/structures/strogg/replicator/replicator
+{
+	surfaceType "metal"
+	noshadows
+	unsmoothedtangents
+	renderbump  -size 2048 2048 models/structures/strogg/replicator/replicator_local.tga models/structures/strogg/replicator/dev_sd/replicator_hi.lwo
+
+	{
+		program	interaction/strogg
+		diffusemap		models/structures/strogg/replicator/replicator_d.tga
+		specularmap		models/structures/strogg/replicator/replicator_s.tga
+ 		bumpmap			addnormals(models/structures/strogg/replicator/replicator_local.tga, heightmap(models/structures/strogg/replicator/replicator_h.tga, 8 ) )
+ 		selfIllumMap 	models/structures/strogg/replicator/replicator_glow.tga
+	}
+}
+
+material models/structures/strogg/replicator/pipe_t
+{
+	//renderbump  -size 512 512 models/structures/strogg/replicator/pipe_local.tga models/structures/strogg/replicator/dev_sd/pipe_hi.lwo
+	noatmosphere
+	diffusemap	picmip -1	 textures/common/dark_gray.tga
+	specularmap	picmip -1  textures/common/dark_gray.tga
+ 	bumpmap 	 models/structures/strogg/replicator/pipe_local.tga
+}
+
+material models/structures/strogg/replicator/replicator_t
+{
+	unsmoothedtangents
+	renderbump  -size 2048 2048 models/structures/strogg/replicator/replicator_local.tga models/structures/strogg/replicator/dev_sd/replicator_hi.lwo
+
+	diffusemap		models/structures/strogg/replicator/replicator_d.tga
+	specularmap		models/structures/strogg/replicator/replicator_s.tga
+ 	bumpmap			addnormals(models/structures/strogg/replicator/replicator_local.tga, heightmap(models/structures/strogg/replicator/replicator_h.tga, 8 ) )
+ 	noatmosphere
+ 	/*{
+			blend add
+			program	desecratorEffect.cg
+			vertexParmBinding	0		viewOrigin
+			vertexParm		1		sun_x, sun_y, sun_z, 0
+			fragmentMap		0		"textures/effects/stroggshell.tga"
+			fragmentMap		1		addnormals(models/structures/strogg/replicator/replicator_local.tga, heightmap(models/structures/strogg/replicator/replicator_h.tga, 5 ) )
+			fragmentMap		2		models/structures/strogg/replicator/replicator_d.tga
+			fragmentMap		4		_skyGradient
+	}*/
+}
+
+material models/structures/strogg/replicator/heat
+  {
+	qer_editorimage    models/monsters/bruiser/greenfireball.tga
+			 noShadows
+	//deform sprite
+	noselfShadow
+	translucent
+	twosided
+	noatmosphere
+	sort nearest
+	{
+		blend add
+		map clamp textures/particles/barrelexpsmall.tga
+		rotate firetable2[ time ] * 360
+		color 0.5, 0.5, 0.5, 1
+		maskalpha
+	}
+	{
+		blend add
+		map clamp textures/particles/barrelexpsmall.tga
+		rotate firetable2[ time ] * 360
+		color 0.3, 0.3, 0.3, 1
+		maskalpha
+	}
+	{
+		blend add
+		map clamp textures/particles/barrelexpsmall.tga
+		rotate flickerblink[ time ] * 360
+		color 0.5, 0.5, 0.5, 1
+		maskalpha
+	}
+
+}
+
+
+/*******************************
+Domination Hub
+*******************************/
+
+material models/structures/strogg/domination_hub/domination_hub_base
+{
+	renderbump -size 2048 2048 models/structures/strogg/domination_hub/domination_hub_base_local.tga models/structures/strogg/domination_hub/domination_hub_hi.lwo
+	noshadows
+	diffusemap	models/structures/strogg/domination_hub/domhubbase_d.tga
+	specularmap	models/structures/strogg/domination_hub/domhubbase_s.tga
+	bumpmap 	addnormals ( models/structures/strogg/domination_hub/domhubbase_local.tga, heightmap ( models/structures/strogg/domination_hub/domhubbase_h.tga, 4 ) )
+}
+
+
+material models/structures/strogg/domination_hub/domination_hub
+{
+	surfaceType "metal"
+	noshadows
+	renderbump -size 2048 2048 models/structures/strogg/domination_hub/domination_hub_local_part.tga models/structures/strogg/domination_hub/domination_hub_hi.lwo
+
+	diffusemap	models/structures/strogg/domination_hub/domhub_d.tga
+	specularmap	models/structures/strogg/domination_hub/domhub_s.tga
+	bumpmap 	addnormals ( models/structures/strogg/domination_hub/domhub_local.tga, heightmap ( models/structures/strogg/domination_hub/domhub_h.tga, 4 ) )
+}
+
+
+/**************
+Radar Truck
+**************/
+
+material models/structures/edf/radartruck/radartruck
+{
+	diffusemap	models/structures/edf/radartruck/radartruck.tga
+	bumpmap		addnormals ( models/structures/edf/radartruck/radartruck_local.tga, heightmap (models/structures/edf/radartruck/radartruck_bmp.tga, 5) )
+	specularmap	models/structures/edf/radartruck/radartruck_s.tga
+}
+
+material models/structures/edf/radartruck/truck_windows
+{
+	noSelfShadow
+	noshadows
+	twosided
+	translucent
+	surfaceType "glass"
+	forceoverlays
+	sort decal
+
+
+	{
+		maskcolor
+		map	makealpha(models/structures/edf/radartruck/truck_windows_mask.tga)
+	}
+	{
+		blend		gl_dst_alpha, gl_one
+		maskalpha
+		program sfx/cubemap
+		red		Parm0
+		green   Parm1
+		blue	Parm2
+	}
+	{
+		blend	filter
+		map		models/structures/edf/radartruck/truck_windows.tga
+	}
+}
+
+material models/structures/edf/radartruck/truck_decals
+{
+	noShadows
+	nonsolid
+	noimpact
+	translucent
+
+	{
+		blend		blend
+		map		models/structures/edf/radartruck/truck_decals.tga
+	}
+}
+
+
+ //anti_ssm turret - new textures, not used yet
+
+material models/vehicles/edf_mcp/turret
+{
+	surfaceType "metal"
+	//unsmoothedtangents
+	renderbump -size 1024 1024 -aa 2 -trace 0.01 models/structures/edf/deployables/weapons/anti_ssm_turret/dev_sd/turret_local2.tga models/structures/edf/deployables/weapons/anti_ssm_turret/dev_sd/turret_renderbump_high.lwo
+	noselfshadow
+	{
+		diffusemap	picmip -1	models/structures/edf/deployables/weapons/anti_ssm_turret/turret_d.tga
+		specularmap	picmip -2	models/structures/edf/deployables/weapons/anti_ssm_turret/turret_s.tga
+		bumpmap		picmip -1 	addnormals (models/structures/edf/deployables/weapons/anti_ssm_turret/turret_local.tga, heightmap (models/structures/edf/deployables/weapons/anti_ssm_turret/turret_h.tga, 5 ) )
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	10,10,0,0
+	}
+}
+
+/**************
+GDF Anti Personnel and Armour Turrets
+**************/
+
+material models/structures/edf/deployables/weapons/anti_personnel_turret/turret
+
+ {
+ 	renderbump -size 1024 1024 -colormap -aa 2-clampOutput 0 0 1 1 models/structures/edf/deployables/weapons/anti_personnel_turret/turret_local.tga models/structures/edf/deployables/weapons/anti_personnel_turret/dev_sd/high.lwo
+ 	noshadows
+ 	surfaceType "metal"
+ 	{
+		diffusemap	picmip -1	models/structures/edf/deployables/weapons/anti_personnel_turret/turret_d.tga
+		specularmap	picmip -2	models/structures/edf/deployables/weapons/anti_personnel_turret/turret_s.tga
+		bumpmap		picmip -1 	addnormals(models/structures/edf/deployables/weapons/anti_personnel_turret/turret_local.tga, heightmap(models/structures/edf/deployables/weapons/anti_personnel_turret/turret_h.tga, 4 ) )
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	6,6,0,0
+	}
+ }
+
+ material models/structures/edf/deployables/weapons/anti_personnel_turret/turret_arctic
+
+  {
+  	renderbump -size 1024 1024 -colormap -aa 2-clampOutput 0 0 1 1 models/structures/edf/deployables/weapons/anti_personnel_turret/turret_local.tga models/structures/edf/deployables/weapons/anti_personnel_turret/dev_sd/high.lwo
+  	noshadows
+  	surfaceType "metal"
+  	{
+ 		diffusemap	picmip -1	models/structures/edf/deployables/weapons/anti_personnel_turret/turret_arctic_d.tga
+ 		specularmap	picmip -2	models/structures/edf/deployables/weapons/anti_personnel_turret/turret_s.tga
+ 		bumpmap		picmip -1 	addnormals(models/structures/edf/deployables/weapons/anti_personnel_turret/turret_local.tga, heightmap(models/structures/edf/deployables/weapons/anti_personnel_turret/turret_h.tga, 4 ) )
+
+ 		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+ 		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+ 		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+ 		detailMult	6,6,0,0
+ 	}
+  }
+
+
+
+/**************
+EDF Anti SSM Turrets
+**************/
+
+material models/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm
+{
+	surfaceType "metal"
+	//unsmoothedtangents
+	renderbump -size 1024 1024 -aa 2 -trace 0.01 models/structures/edf/deployables/weapons/anti_ssm_turret/dev_sd/turret_local2.tga models/structures/edf/deployables/weapons/anti_ssm_turret/dev_sd/turret_renderbump_high.lwo
+	noselfshadow
+	{
+		diffusemap	picmip -1	models/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm_d.tga
+		specularmap	picmip -2	models/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm_s.tga
+		bumpmap		picmip -1	addnormals(models/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm_local.tga, heightmap(models/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm_h.tga, 4 ) )
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	8,8,0,0
+	}
+}
+
+material models/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm_arctic
+{
+	surfaceType "metal"
+	//unsmoothedtangents
+	renderbump -size 1024 1024 -aa 2 -trace 0.01 models/structures/edf/deployables/weapons/anti_ssm_turret/dev_sd/turret_local2.tga models/structures/edf/deployables/weapons/anti_ssm_turret/dev_sd/turret_renderbump_high.lwo
+	noselfshadow
+	{
+		diffusemap	picmip -1	models/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm_d_arctic.tga
+		specularmap	picmip -2	models/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm_s.tga
+		bumpmap		picmip -1	addnormals(models/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm_local.tga, heightmap(models/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm_h.tga, 4 ) )
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	8,8,0,0
+	}
+}
+
+/**************
+  OLD
+**************/
+
+material models/structures/edf/deployables/weapons/anti_armour_turret/anti_armour_turret
+{
+	renderbump -size 1024 1024 models/structures/edf/deployables/weapons/anti_armour_turret/anti_armour_turret_local.tga models/structures/edf/deployables/weapons/anti_armour_turret/dev_sd/hi.lwo
+	//																													 models/structures/edf/deployables/weapons/anti_armour_turret/dev_sd
+
+	diffusemap	models/structures/edf/deployables/weapons/anti_armour_turret/anti_armour_turret_d.tga
+ 	specularmap     models/structures/edf/deployables/weapons/anti_armour_turret/anti_armour_turret_s.tga
+ 	bumpmap 	models/structures/edf/deployables/weapons/anti_armour_turret/anti_armour_turret_local.tga
+}
+
+
+/**************
+   OLD
+**************/
+
+material models/structures/edf/deployables/weapons/anti_personnel_turret/anti_personnel_turret
+{
+	surfaceType "metal"
+	renderbump -size 1024 1024 models/test/APG.tga models/test/hi.lwo
+
+	diffusemap	models/structures/edf/deployables/weapons/anti_personnel_turret/anti_personnel_turret_d.tga
+	specularmap	models/structures/edf/deployables/weapons/anti_personnel_turret/anti_personnel_turret_s.tga
+ 	bumpmap 	models/structures/edf/deployables/weapons/anti_personnel_turret/anti_personnel_turret_local.tga
+}
+
+
+/*******************************
+Factory & CC moved to their own mats in edf\structures
+*******************************/
+
+
+/*******************************
+FSB - Artillery
+*******************************/
+
+material models/structures/edf/fsb/artillery/artillery
+{
+	renderbump -size 1024 1024 models/structures/edf/fsb/artillery/artillery_local.tga models/structures/edf/fsb/artillery/artillery_hi.lwo
+	noshadows
+	surfaceType "metal"
+	{
+		diffusemap	picmip -1	models/structures/edf/fsb/artillery/artillery_d.tga
+		specularmap	picmip -2	models/structures/edf/fsb/artillery/artillery_s.tga
+		bumpmap		picmip -1 	addnormals(models/structures/edf/fsb/artillery/artillery_local.tga, heightmap(models/structures/edf/fsb/artillery/artillery_h.tga, 4 ) )
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	8,8,0,0
+	}
+}
+
+material models/structures/edf/fsb/artillery/artillery_arctic
+{
+	renderbump -size 1024 1024 models/structures/edf/fsb/artillery/artillery_local.tga models/structures/edf/fsb/artillery/artillery_hi.lwo
+	noshadows
+	surfaceType "metal"
+	{
+		diffusemap	picmip -1	models/structures/edf/fsb/artillery/artillery_arctic_d.tga
+		specularmap	picmip -2	models/structures/edf/fsb/artillery/artillery_s.tga
+		bumpmap		picmip -1 	addnormals(models/structures/edf/fsb/artillery/artillery_local.tga, heightmap(models/structures/edf/fsb/artillery/artillery_h.tga, 4 ) )
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	8,8,0,0
+	}
+}
+
+
+material models/structures/edf/fsb/artillery/artillery_damaged
+{
+	diffusemap	models/md5/vehicles/destroyed.tga
+	specularmap	picmip -2	models/structures/edf/fsb/artillery/artillery_s.tga
+	bumpmap	picmip -1 	models/structures/edf/fsb/artillery/artillery_local.tga
+}
+
+/*******************************
+FSB - Rockets
+*******************************/
+
+material models/structures/edf/fsb/rockets/rockets
+{
+//		renderbump -size 1024 1024 models/structures/edf/fsb/rockets/rockets_local.tga models/structures/edf/fsb/rockets/rockets_hi.lwo
+	surfaceType "metal"
+	{
+		diffusemap	picmip -1	models/structures/edf/fsb/rockets/rockets_d.tga
+		specularmap	picmip -2	models/structures/edf/fsb/rockets/rockets_s.tga
+		bumpmap		picmip -1 	models/structures/edf/fsb/rockets/rockets_local.tga
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	8,8,0,0
+	}
+
+}
+
+material models/structures/edf/fsb/rockets/rockets_arctic
+{
+//		renderbump -size 1024 1024 models/structures/edf/fsb/rockets/rockets_local.tga models/structures/edf/fsb/rockets/rockets_hi.lwo
+	surfaceType "metal"
+	{
+		diffusemap	picmip -1	models/structures/edf/fsb/rockets/rockets_arctic_d.tga
+		specularmap	picmip -2	models/structures/edf/fsb/rockets/rockets_s.tga
+		bumpmap		picmip -1 	models/structures/edf/fsb/rockets/rockets_local.tga
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	8,8,0,0
+	}
+
+}
+
+material models/structures/edf/fsb/rockets/rockets_damaged
+{
+	diffusemap	models/md5/vehicles/destroyed.tga
+	specularmap	picmip -2	models/structures/edf/fsb/rockets/rockets_s.tga
+	bumpmap		picmip -1 	models/structures/edf/fsb/rockets/rockets_local.tga
+}
+
+/*******************************
+FSB - Strategic Strike Missle
+*******************************/
+
+material models/structures/edf/fsb/ssm/ssm
+{
+	 renderbump -size 1024 1024 models/structures/edf/fsb/ssm/ssm_local.tga models/structures/edf/fsb/ssm/ssm_hi.lwo
+	 noshadows
+	 surfaceType "metal"
+	{
+		 diffusemap	picmip -1	models/structures/edf/fsb/ssm/ssm_d.tga
+		 specularmap	picmip -2	models/structures/edf/fsb/ssm/ssm_s.tga
+		 bumpmap	picmip -1 	addnormals(models/structures/edf/fsb/ssm/ssm_local.tga, heightmap(models/structures/edf/fsb/ssm/ssm_h.tga, 4 ) )
+
+		 diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		 bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		 specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	10,10,0,0
+	}
+}
+
+material models/structures/edf/fsb/ssm/ssm_arctic
+{
+	 renderbump -size 1024 1024 models/structures/edf/fsb/ssm/ssm_local.tga models/structures/edf/fsb/ssm/ssm_hi.lwo
+	 noshadows
+	 surfaceType "metal"
+	{
+		 diffusemap	picmip -1	models/structures/edf/fsb/ssm/ssm_arctic_d.tga
+		 specularmap	picmip -2	models/structures/edf/fsb/ssm/ssm_s.tga
+		 bumpmap	picmip -1 	addnormals(models/structures/edf/fsb/ssm/ssm_local.tga, heightmap(models/structures/edf/fsb/ssm/ssm_h.tga, 4 ) )
+
+		 diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		 bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		 specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	10,10,0,0
+	}
+}
+
+material models/structures/edf/fsb/ssm/ssm_damaged
+{
+	diffusemap	models/md5/vehicles/destroyed.tga
+	//specularmap	picmip -2	models/structures/edf/fsb/ssm/ssm_s.tga
+	bumpmap	picmip -1 	models/structures/edf/fsb/ssm/ssm_local.tga
+}
+
+/*******************************
+Supply Crate
+*******************************/
+
+material models/structures/edf/deployables/supply_drop/crate
+{
+	renderbump -size 512 512 -aa 2 -colormap -clampoutput 0 0 1 1 models/structures/edf/deployables/supply_drop/crate_local.tga models/structures/edf/deployables/supply_drop/dev_sd/crate_high.lwo
+	surfaceType "metal"
+	{
+		diffusemap	picmip -1	models/structures/edf/deployables/supply_drop/supplycrate_d.tga
+		specularmap	picmip -2	models/structures/edf/deployables/supply_drop/supplycrate_s.tga
+		bumpmap		picmip -1	addnormals(models/structures/edf/deployables/supply_drop/supplycrate_local.tga, heightmap(models/structures/edf/deployables/supply_drop/supplycrate_h.tga, 4 ) )
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 4,4,0,0
+	}
+}
+
+/*******************************
+gdf_guardtower
+*******************************/
+material models/structures/edf/guard_tower/gdf_guardtower
+{
+//	renderbump -size 1024 2048 -colorMap -trace 0.1 -clampTextureSpace -overdrawMap models/structures/edf/guard_tower/gdf_guardtower_local.tga models/structures/edf/guard_tower/gdf_guardtower_h.lwo
+	noshadows
+	nonsolid
+	{
+		diffusemap 	picmip -1	models/structures/edf/guard_tower/gdf_guardtower_d.tga
+		specularmap	picmip -2	models/structures/edf/guard_tower/gdf_guardtower_s.tga
+		bumpmap		picmip -1	addnormals (models/structures/edf/guard_tower/gdf_guardtower_local.tga, heightmap (models/structures/edf/guard_tower/gdf_guardtower_h.tga, 5 ) )
+
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,8,0,0
+	}
+}
+/*******************************
+gdf_generator
+*******************************/
+material models/structures/edf/jamming_tower/generator
+{
+	renderbump -size 2048 2048 -colorMap -trace 0.1 -clampTextureSpace -overdrawMap models/structures/edf/jamming_tower/generator_local.tga models/structures/edf/jamming_tower/generator_h.lwo
+	noshadows
+	surfaceType "metal"
+	{
+	program	interaction/basic_detailwm
+	diffusemap 	picmip -1	models/structures/edf/jamming_tower/generator_d.tga
+	specularmap	picmip -2	models/structures/edf/jamming_tower/generator_s.tga
+	bumpmap		picmip -1	addnormals (models/structures/edf/jamming_tower/generator_local.tga, heightmap (models/structures/edf/jamming_tower/generator_h.tga, 5 ) )
+
+	diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+	bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+	specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+	detailMult	9,9,0,0
+//	detailWeightMap				models/structures/edf/jamming_tower/generator_detailmask.tga
+	}
+}
+/*******************************
+gdf_generator snow
+*******************************/
+material models/structures/edf/jamming_tower/generator_snow
+{
+	renderbump -size 2048 2048 -colorMap -trace 0.1 -clampTextureSpace -overdrawMap models/structures/edf/jamming_tower/generator_local.tga models/structures/edf/jamming_tower/generator_snow_h.lwo
+	noshadows
+	{
+	program	interaction/basic_detailwm
+	diffusemap 	picmip -1	models/structures/edf/jamming_tower/generator_snow_d.tga
+	specularmap	picmip -2	models/structures/edf/jamming_tower/generator_snow_s.tga
+	bumpmap		picmip -1	addnormals (models/structures/edf/jamming_tower/generator_snow_local.tga, heightmap (models/structures/edf/jamming_tower/generator_snow_h.tga, 5 ) )
+
+	diffuseDetailMap			textures/detail/bump/metal_detail01_d.tga
+	bumpDetailMap				textures/detail/bump/metal_detail01_local.tga
+	specDetailMap				textures/detail/bump/metal_detail01_d.tga
+	detailMult	9,9,0,0
+	}
+}
+/*******************************
+gdf_jamming_tower
+*******************************/
+material models/structures/edf/jamming_tower/jamming_tower
+{
+//	renderbump -size 2048 2048 -colorMap -trace 0.1 -clampTextureSpace -overdrawMap models/structures/edf/jamming_tower/jamming_tower_local.tga models/structures/edf/jamming_tower/jamming_tower_h.lwo
+	noshadows
+	{
+//	program	interaction/basic_detailwm
+	diffusemap 	picmip -1	models/structures/edf/jamming_tower/jamming_tower_d.tga
+	specularmap	picmip -2	models/structures/edf/jamming_tower/jamming_tower_s.tga
+	bumpmap		picmip -1	addnormals (models/structures/edf/jamming_tower/jamming_tower_local.tga, heightmap (models/structures/edf/jamming_tower/jamming_tower_h.tga, 4 ) )
+
+	diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+	bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+	specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+	detailMult	5,17,0,0
+
+	}
+}
+/*******************************
+gdf_jamming_tower snow
+*******************************/
+material models/structures/edf/jamming_tower/jamming_tower_snow
+{
+//	renderbump -size 2048 2048 -colorMap -trace 0.1 -clampTextureSpace -overdrawMap models/structures/edf/jamming_tower/jamming_tower_local.tga models/structures/edf/jamming_tower/jamming_tower_h.lwo
+	noshadows
+	{
+	program	interaction/basic_detailwm
+	diffusemap 	picmip -1	models/structures/edf/jamming_tower/jamming_tower_snow_d.tga
+	specularmap	picmip -2	models/structures/edf/jamming_tower/jamming_tower_snow_s.tga
+	bumpmap		picmip -1	addnormals (models/structures/edf/jamming_tower/jamming_tower_snow_local.tga, heightmap (models/structures/edf/jamming_tower/jamming_tower_snow_h.tga, 4 ) )
+
+	diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+	bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+	specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+	detailMult	5,17,0,0
+	}
+}
+/*******************************
+gdf_jamming_tower desert
+*******************************/
+material models/structures/edf/jamming_tower/jamming_tower_desert
+{
+//	renderbump -size 2048 2048 -colorMap -trace 0.1 -clampTextureSpace -overdrawMap models/structures/edf/jamming_tower/jamming_tower_local.tga models/structures/edf/jamming_tower/jamming_tower_h.lwo
+	noshadows
+	{
+	program	interaction/basic_detailwm
+	diffusemap 	picmip -1	models/structures/edf/jamming_tower/jamming_tower_desert_d.tga
+	specularmap	picmip -2	models/structures/edf/jamming_tower/jamming_tower_desert_s.tga
+	bumpmap		picmip -1	addnormals (models/structures/edf/jamming_tower/jamming_tower_local.tga, heightmap (models/structures/edf/jamming_tower/jamming_tower_h.tga, 4 ) )
+
+	diffuseDetailMap			textures/detail/bump/metal_detail01_d.tga
+	bumpDetailMap				textures/detail/bump/metal_detail01_local.tga
+	specDetailMap				textures/detail/bump/metal_detail01_d.tga
+	detailMult	4,16,0,0
+	}
+}
+/*******************************
+gdf_jamming_tower sand
+*******************************/
+material models/structures/edf/jamming_tower/jamming_towerb
+{
+	renderbump -size 2048 2048 -colorMap -trace 0.1 -clampTextureSpace -overdrawMap models/structures/edf/jamming_tower/jamming_tower_local.tga models/structures/edf/jamming_tower/jamming_tower_h.lwo
+	noshadows
+	{
+	diffusemap 	picmip -1	models/structures/edf/jamming_tower/jamming_towerb_d.tga
+	specularmap	picmip -2	models/structures/edf/jamming_tower/jamming_towerb_s.tga
+	bumpmap		picmip -1	addnormals (models/structures/edf/jamming_tower/jamming_tower_local.tga, heightmap (models/structures/edf/jamming_tower/jamming_towerb_h.tga, 4 ) )
+	}
+}
+
+/*******************************
+gdf_emp_disruptor
+*******************************/
+material models/structures/edf/emp_disruptor/emp_disruptor
+{
+	renderbump -size 2048 2048 -colorMap -trace 0.1 -clampTextureSpace -overdrawMap models/structures/edf/jamming_tower/generator_local.tga models/structures/edf/jamming_tower/generator_h.lwo
+	noshadows
+	nonsolid
+	{
+	diffusemap			models/structures/edf/emp_disruptor/emp_disruptor_d.tga
+	specularmap			models/structures/edf/emp_disruptor/emp_disruptor_s.tga
+	bumpmap				addnormals(models/structures/edf/emp_disruptor/emp_disruptor_local.tga, heightmap(models/structures/edf/emp_disruptor/emp_disruptor_h.tga, 2 ) )
+
+	diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+	bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+	specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+	detailMult	8,8,0,0
+	}
+}
+
+
+ /**************
+ EDF Anti SSM Turrets
+ **************/
+
+material models/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm_turret
+{
+	surfaceType "metal"
+	//unsmoothedtangents
+	renderbump -size 1024 1024 -aa 2 -trace 0.01 models/structures/edf/deployables/weapons/anti_ssm_turret/dev_sd/turret_local2.tga models/structures/edf/deployables/weapons/anti_ssm_turret/dev_sd/turret_renderbump_high.lwo
+	noselfshadow
+	{
+		diffusemap	picmip -1	models/structures/edf/deployables/weapons/anti_ssm_turret/turret_d.tga
+		specularmap	picmip -2	models/structures/edf/deployables/weapons/anti_ssm_turret/turret_s.tga
+		bumpmap		picmip -1 	models/structures/edf/deployables/weapons/anti_ssm_turret/turret_local.tga
+
+		bumpdetailmap          textures/detail/bump/vehicle_detail01_local.tga
+		detailMult 2,2,0,0
+	}
+}
+
+material models/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm_turret_arctic
+{
+	surfaceType "metal"
+	//unsmoothedtangents
+	renderbump -size 1024 1024 -aa 2 -trace 0.01 models/structures/edf/deployables/weapons/anti_ssm_turret/dev_sd/turret_local2.tga models/structures/edf/deployables/weapons/anti_ssm_turret/dev_sd/turret_renderbump_high.lwo
+	noselfshadow
+	{
+		diffusemap	picmip -1	models/structures/edf/deployables/weapons/anti_ssm_turret/turret_d_arctic.tga
+		specularmap	picmip -2	models/structures/edf/deployables/weapons/anti_ssm_turret/turret_s.tga
+		bumpmap		picmip -1 	models/structures/edf/deployables/weapons/anti_ssm_turret/turret_local.tga
+
+		bumpdetailmap          textures/detail/bump/vehicle_detail01_local.tga
+		detailMult 2,2,0,0
+	}
+}
+
+ /**************
+ strogg team door
+ **************/
+
+material models/structures/strogg/team_door
+{
+	renderbump -size 1024 1024 -colorMap -trace 0.08 -clampTextureSpace -overdrawMap models/structures/strogg/team_door2_local.tga models/structures/strogg/team_door/team_door_h.lwo
+	noshadows
+	{
+	program	interaction/strogg_detailwm
+	diffusemap 	picmip -1	models/structures/strogg/team_door/team_door_d.tga
+	specularmap	picmip -2	models/structures/strogg/team_door/team_door_s.tga
+	bumpmap		picmip -1	addnormals (models/structures/strogg/team_door/team_door_local.tga, heightmap (models/structures/strogg/team_door/team_door_h.tga, 4 ) )
+	selfIllumMap 	picmip -2	models/structures/strogg/team_door/team_door_glow.tga
+
+	diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+	bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+	specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+	detailMult 8,8,0,0
+	//detailWeightMap		models/pelle/salvage_fo/salvage_fo_detailmask.tga
+	}
+}

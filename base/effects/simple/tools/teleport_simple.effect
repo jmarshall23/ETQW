@@ -1,0 +1,473 @@
+effect effects/tools/teleporter/start_simple
+{
+	size	148
+
+	cutOffDistance	1200
+
+	sound "Teleport Sound2"
+	{
+		soundShader	"sounds/items/slipbeacon/arrive"
+	}
+	emitter "fire"
+	{
+		duration	1,1
+		count		20,20
+		attenuateEmitter
+		attenuation	1000,2000
+
+		sprite
+		{
+			duration	3,3
+			persist
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box -20,-20,5,20,20,10 }
+				size { point 15,15 }
+				tint { line 0.266667,0.105882,0.00784314,0.490196,0.196078,0.0156863 }
+				offset { box -15,-15,0,15,15,70 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope jrad_cmzoom }
+				fade { envelope jrad_smokefade }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 25,25 }
+				rotate { box 0.25,0.277778 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "player"
+	{
+		duration	1,1
+		count		1,1
+
+		model
+		{
+			duration	0.7,0.7
+			material	"models/characters/strogg/techpacks"
+			model		"models/characters/strogg_player/infiltratorstand.lwo"
+			trailRepeat	1
+
+			start
+			{
+				size { point 0.9,0.9,0.9 }
+				offset { point -8,-2,0 }
+				rotate { point 0,1,0 }
+			}
+
+			motion
+			{
+				size { envelope blasttable count 3,3,3 }
+				tint { envelope jrad_linear }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/tools/teleporter/end_simple
+{
+	size	154
+
+	cutOffDistance	1200
+
+	sound "Teleport Sound"
+	{
+		soundShader	"sounds/items/slipbeacon/arrive"
+	}
+	emitter "fire"
+	{
+		duration	1,1
+		count		20,20
+		attenuateEmitter
+		attenuation	1000,2000
+
+		sprite
+		{
+			duration	3,3
+			persist
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box -20,-20,5,20,20,10 }
+				size { point 15,15 }
+				tint { line 0.266667,0.105882,0.00784314,0.490196,0.196078,0.0156863 }
+				offset { box -25,-25,0,25,25,70 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope jrad_cmzoom }
+				fade { envelope jrad_smokefade }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 25,25 }
+				rotate { box 0.25,0.277778 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "player"
+	{
+		duration	1,1
+		count		1,1
+
+		model
+		{
+			duration	0.7,0.7
+			material	"models/characters/strogg/techpacks"
+			model		"models/characters/strogg_player/infiltratorstand.lwo"
+			trailRepeat	1
+
+			start
+			{
+				size { point 0.9,0.9,0.9 }
+				offset { point -8,0,0 }
+				rotate { point 0,1,0 }
+			}
+
+			motion
+			{
+				size { envelope blasttable count 3,3,3 }
+				tint { envelope jrad_linear }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/tools/teleporter/start_crouch_simple
+{
+	size	148
+
+	cutOffDistance	1200
+
+	sound "Teleport Sound2"
+	{
+		soundShader	"sounds/items/slipbeacon/arrive"
+	}
+	emitter "fire"
+	{
+		duration	1,1
+		count		20,20
+		attenuateEmitter
+		attenuation	1000,2000
+
+		sprite
+		{
+			duration	3,3
+			persist
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box -20,-20,5,20,20,10 }
+				size { point 15,15 }
+				tint { line 0.266667,0.105882,0.00784314,0.490196,0.196078,0.0156863 }
+				offset { box -15,-15,0,15,15,70 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope jrad_cmzoom }
+				fade { envelope jrad_smokefade }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 25,25 }
+				rotate { box 0.25,0.277778 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "player"
+	{
+		duration	1,1
+		count		1,1
+
+		model
+		{
+			duration	0.7,0.7
+			material	"models/characters/strogg/techpacks"
+			model		"models/characters/strogg_player/infiltratorcrouch.lwo"
+			trailRepeat	1
+
+			start
+			{
+				size { point 0.9,0.9,0.9 }
+				offset { point -8,-2,0 }
+				rotate { point 0,1,0 }
+			}
+
+			motion
+			{
+				size { envelope blasttable count 3,3,3 }
+				tint { envelope jrad_linear }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/tools/teleporter/end_crouch_simple
+{
+	size	154
+
+	cutOffDistance	1200
+
+	sound "Teleport Sound"
+	{
+		soundShader	"sounds/items/slipbeacon/arrive"
+	}
+	emitter "fire"
+	{
+		duration	1,1
+		count		20,20
+		attenuateEmitter
+		attenuation	1000,2000
+
+		sprite
+		{
+			duration	3,3
+			persist
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box -20,-20,5,20,20,10 }
+				size { point 15,15 }
+				tint { line 0.266667,0.105882,0.00784314,0.490196,0.196078,0.0156863 }
+				offset { box -25,-25,0,25,25,70 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope jrad_cmzoom }
+				fade { envelope jrad_smokefade }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 25,25 }
+				rotate { box 0.25,0.277778 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "player"
+	{
+		duration	1,1
+		count		1,1
+
+		model
+		{
+			duration	0.7,0.7
+			material	"models/characters/strogg/techpacks"
+			model		"models/characters/strogg_player/infiltratorcrouch.lwo"
+			trailRepeat	1
+
+			start
+			{
+				size { point 0.9,0.9,0.9 }
+				offset { point -8,0,0 }
+				rotate { point 0,1,0 }
+			}
+
+			motion
+			{
+				size { envelope blasttable count 3,3,3 }
+				tint { envelope jrad_linear }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/tools/teleporter/start_prone_simple
+{
+	size	148
+
+	cutOffDistance	1200
+
+	sound "Teleport Sound2"
+	{
+		soundShader	"sounds/items/slipbeacon/arrive"
+	}
+	emitter "fire"
+	{
+		duration	1,1
+		count		20,20
+		attenuateEmitter
+		attenuation	1000,2000
+
+		sprite
+		{
+			duration	3,3
+			persist
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box -20,-20,5,20,20,10 }
+				size { point 15,15 }
+				tint { line 0.266667,0.105882,0.00784314,0.490196,0.196078,0.0156863 }
+				offset { box -15,-15,0,15,15,70 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope jrad_cmzoom }
+				fade { envelope jrad_smokefade }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 25,25 }
+				rotate { box 0.25,0.277778 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "player"
+	{
+		duration	1,1
+		count		1,1
+
+		model
+		{
+			duration	0.7,0.7
+			material	"models/characters/strogg/techpacks"
+			model		"models/characters/strogg_player/infiltratorprone.lwo"
+			trailRepeat	1
+
+			start
+			{
+				size { point 0.9,0.9,0.9 }
+				offset { point -8,-2,0 }
+				rotate { point 0,1,0 }
+			}
+
+			motion
+			{
+				size { envelope blasttable count 3,3,3 }
+				tint { envelope jrad_linear }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/tools/teleporter/end_prone_simple
+{
+	size	154
+
+	cutOffDistance	1200
+
+	sound "Teleport Sound"
+	{
+		soundShader	"sounds/items/slipbeacon/arrive"
+	}
+	emitter "fire"
+	{
+		duration	1,1
+		count		20,20
+		attenuateEmitter
+		attenuation	1000,2000
+
+		sprite
+		{
+			duration	3,3
+			persist
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box -20,-20,5,20,20,10 }
+				size { point 15,15 }
+				tint { line 0.266667,0.105882,0.00784314,0.490196,0.196078,0.0156863 }
+				offset { box -25,-25,0,25,25,70 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope jrad_cmzoom }
+				fade { envelope jrad_smokefade }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 25,25 }
+				rotate { box 0.25,0.277778 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "player"
+	{
+		duration	1,1
+		count		1,1
+
+		model
+		{
+			duration	0.7,0.7
+			material	"models/characters/strogg/techpacks"
+			model		"models/characters/strogg_player/infiltratorprone.lwo"
+			trailRepeat	1
+
+			start
+			{
+				size { point 0.9,0.9,0.9 }
+				offset { point -8,0,0 }
+				rotate { point 0,1,0 }
+			}
+
+			motion
+			{
+				size { envelope blasttable count 3,3,3 }
+				tint { envelope jrad_linear }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+

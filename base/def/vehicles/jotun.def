@@ -1,0 +1,52 @@
+
+model vehicle_jotun {
+	mesh		models/md5/vehicles/vampire/vampire.md5mesh
+	anim base	models/md5/vehicles/vampire/vampire.md5anim
+}
+
+entityDef vehicle_cargoplane {
+	"editor_skipmenu"				"1"
+	"mtr_commandmap_unknown"		"guis/assets/qet/cm_unknown"
+
+	"editor_color"					"1 .5 0"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					""
+
+	"spawnclass"					"sdDeliveryVehicle"
+	"scriptObject"					"vehicle_jotun"
+
+	"aor_layout"					"missile"
+
+	"path_type"						"vehicle_magog_npc"
+
+	"info_name"						"game/vec/jotun"
+
+	"icon_size_cm"					"40"
+	"mtr_commandmap"				"guis/assets/qet/cm_vampire"
+
+	"model"							"models/vehicles/edf_jotun/jotun.lwo"
+
+	"health"						"5000"
+
+	"path_speed"					"3500"
+
+	"snd_flyby"						"sounds/vehicles/jotun/flyby"
+	"snd_flyby_far"					"sounds/vehicles/jotun/flyby_far"
+	"snd_cancel_deploy"				"sounds/vo/gdf/npc/jotun/invalid"
+
+	"flyover_sndrange"				"16384"
+
+	"option_network_interface"		"1"
+	"option_combat_model"			"1"
+	"option_simple_physics"			"1"
+	"gravity"						"0"
+	"mass"							"10000"
+
+	"maxVisDist"					"65536"
+	
+	"collection_deliver"			"deliver"
+	
+	"occlusion_query"				"1"
+	"overridenCoverage"				"1"
+}

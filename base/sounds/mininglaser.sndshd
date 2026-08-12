@@ -1,0 +1,38 @@
+
+sound sounds/deployables/mininglaser/laser/start {
+
+	volume 5
+	maxDistance 300
+	playOnce
+
+	looping
+	leadin
+	sounds/deployables/mininglaser/laser_start.wav
+	sounds/deployables/mininglaser/laser_loop.wav
+}
+
+sound sounds/deployables/mininglaser/laser/stop {
+
+	volume 5
+	maxDistance 300
+
+	sounds/deployables/mininglaser/laser_stop.wav
+}
+
+sound sounds/deployables/mininglaser/burn/start {
+
+	maxDistance 150
+	playOnce
+
+	looping
+	leadin
+	sounds/deployables/mininglaser/burn_start.wav
+	sounds/deployables/mininglaser/burn_loop.wav
+}
+
+sound sounds/deployables/mininglaser/burn/stop {
+
+	maxDistance 150
+
+	sounds/deployables/mininglaser/burn_stop.wav
+}

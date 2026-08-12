@@ -1,0 +1,15 @@
+material models\weapons\rocketlauncher\zoom
+{
+	noselfShadow
+        noshadows
+	translucent
+	//nodraw
+//	deform particle2 rocketblast
+
+	{
+			blend	 add
+			map models\weapons\rocketlauncher\zoom
+
+	   }
+
+}

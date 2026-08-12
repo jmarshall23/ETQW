@@ -1,0 +1,559 @@
+//////////////////////////////
+// modified base_door textures
+//////////////////////////////
+
+material textures/base_door_desert/stedoor1
+{
+	qer_editorimage	textures/base_door_desert/stedoor1_d.tga
+	bumpmap		textures/base_door/stedoor1_local.tga
+	diffusemap		textures/base_door_desert/stedoor1_d.tga
+	specularmap		textures/base_door/stedoor1_s.tga
+}
+
+///////////////////////////////
+// modified base_floor textures
+///////////////////////////////
+
+material textures/base_floor_desert/a_sofloor1decal_d02c
+{
+	qer_editorimage		textures/base_floor_desert/a_sofloor1decal_d02c.tga
+	{
+		blend		bumpmap
+		map		textures/base_floor/sofloor1_local.tga
+		scale		2 , 2
+	}
+	diffusemap		textures/base_floor_desert/a_sofloor1decal_d02c.tga	
+	specularmap		textures/base_floor/a_sofloor1decal_s02c.tga	
+}
+
+material textures/base_floor_desert/a_sofloor3_d01d
+{
+	qer_editorimage textures/base_floor_desert/a_sofloor3_d01d.tga
+
+	diffusemap	textures/base_floor_desert/a_sofloor3_d01d.tga
+	specularmap	textures/base_floor/a_sofloor3_s01d.tga
+        bumpmap	        textures/base_floor/a_sofloor3_local.tga  
+       
+}
+
+
+material textures/base_floor_desert/bluetex1a_ed
+{
+	qer_editorimage	textures/base_floor_desert/bluetex1adif.tga
+	bumpmap		addnormals( textures/base_floor/bluetex1a_local.tga, heightmap( textures/base_floor/bluetex1abmp.tga, 6 ) )
+	diffusemap		textures/base_floor_desert/bluetex1adif.tga
+	specularmap	picmip -2		textures/base_floor/bluetex1aspec.tga
+}
+
+material textures/base_floor_desert/ghofloor1c
+{
+	qer_editorimage		textures/base_floor/ghofloor1c.tga
+	bumpmap			addnormals (textures/base_floor/ghofloor1c_local.tga, heightmap (textures/base_floor/ghofloor1c_bmp.tga, 4))
+	diffusemap		textures/base_floor_desert/ghofloor1c_d.tga
+	specularmap		textures/base_floor/ghofloor1c_s.tga
+}
+
+material textures/base_floor_desert/diamond05
+{
+	qer_editorimage textures/base_floor_desert/diamond05_d.tga
+
+	{
+        blend bumpmap
+	map 			textures/base_floor/diamond05_local.tga
+	scale	 4, 4
+	}
+
+	diffusemap	textures/base_floor_desert/diamond05_d.tga
+	{
+        blend specularmap
+	map 			textures/base_floor/diamond05_s.tga
+	scale	 4, 4
+	}
+       
+}
+
+material textures/base_floor_desert/a_stairs_d02
+{
+	qer_editorimage	        textures/base_floor_desert/a_stairs_d02.tga
+	bumpmap		        textures/base_floor/a_stairs_local.tga
+	diffusemap		textures/base_floor_desert/a_stairs_d02.tga
+	specularmap		textures/base_floor/a_stairs_s02.tga
+}
+
+material textures/base_floor_desert/conc_panel02
+{
+	 qer_editorimage 	textures/base_floor/conc_panel02.tga
+      	 bumpmap 		heightmap (textures/base_floor/conc_panel02_h.tga, 4)
+	 specularmap		textures/base_floor/conc_panel02_s.tga
+	 diffusemap		textures/base_floor_desert/conc_panel02_d.tga
+
+
+       
+}
+material textures/base_floor_desert/sflpanel1
+{
+	qer_editorimage		textures/base_floor_desert/sflpanel1.tga
+	bumpmap			textures/base_floor/sflpanel1_local.tga
+	diffusemap		textures/base_floor_desert/sflpanel1_d.tga
+	specularmap		textures/base_floor/sflpanel1_s.tga
+}
+
+material textures/base_floor_desert/sflpanel4
+{
+	qer_editorimage		textures/base_floor/sflpanel4.tga
+	bumpmap			textures/base_floor/sflpanel4_local.tga
+	diffusemap		textures/base_floor_desert/sflpanel4_d.tga
+	specularmap		textures/base_floor/sflpanel4_s.tga
+}
+
+material textures/base_floor_desert/concrete01
+{
+	qer_editorimage		textures/base_floor/concrete01.tga
+	diffusemap		textures/base_floor_desert/concrete01d.tga
+	specularmap		textures/base_floor/concrete01s.tga
+	bumpmap			heightmap (textures/base_floor/concrete01.tga, 3)
+        
+}
+
+material textures/base_floor_desert/steceilingplank1
+{
+	qer_editorimage		textures/base_floor/steceilingplank1.tga
+	bumpmap			textures/base_floor/steceilingplank1_local.tga
+	diffusemap		textures/base_floor_desert/steceilingplank1_d.tga
+	specularmap		textures/base_floor/steceilingplank1_s.tga
+}
+
+material textures/base_floor_desert/textest
+{
+	qer_editorimage		textures/base_floor/textest.tga
+	bumpmap			heightmap (textures/base_floor/textestbmp.tga, 6)
+	diffusemap		textures/base_floor_desert/textestdif.tga
+}
+
+//////////////////////////////
+// modified base_trim textures
+//////////////////////////////
+
+material textures/base_trim_desert/a_bluetex3k2_01
+{
+	qer_editorimage	textures/base_trim_desert/a_bluetex3k2_d01.tga
+	bumpmap		addnormals (textures/base_trim/a_bluetex3k2_local.tga, heightmap (textures/base_trim/a_bluetex3k2_b01.tga, 3 )) 
+	diffusemap		textures/base_trim_desert/a_bluetex3k2_d01.tga
+	specularmap		textures/base_trim/a_bluetex3k2_s01.tga
+}
+
+material textures/base_trim_desert/a_bluetex3k2_06
+{
+	qer_editorimage	textures/base_trim_desert/a_bluetex3k2_d06.tga
+	bumpmap		addnormals (textures/base_trim/a_bluetex3k2_local.tga, heightmap (textures/base_trim/a_bluetex3k2_b06.tga, 3 )) 
+	diffusemap		textures/base_trim_desert/a_bluetex3k2_d06.tga
+	specularmap		textures/base_trim/a_bluetex3k2_s06.tga
+}
+
+material textures/base_trim_desert/a_bluetex4j_06
+{
+	qer_editorimage	textures/base_trim_desert/a_bluetex4j_d06.tga
+	bumpmap		addnormals( textures/base_trim/a_bluetex4j_local.tga, heightmap( textures/base_trim/a_bluetex4j_b06.tga, 3 ) )
+	diffusemap		textures/base_trim_desert/a_bluetex4j_d06.tga
+	specularmap		textures/base_trim/a_bluetex4j_s06.tga
+}
+
+material textures/base_trim_desert/a_sfltrim3yel_d02b
+{
+	qer_editorimage textures/base_trim_desert/a_sfltrim3yel_d02b.tga
+	diffusemap	textures/base_trim_desert/a_sfltrim3yel_d02b.tga    
+	specularmap	textures/base_trim/a_sfltrim3yel_s02b.tga         
+	bumpmap heightmap (textures/base_trim/a_sfltrim3yel_b02b.tga, 2) 
+}
+
+material textures/base_trim_desert/a_sfltrim3yel_d03e
+{
+	qer_editorimage textures/base_trim_desert/a_sfltrim3yel_d03e.tga
+        diffusemap	textures/base_trim_desert/a_sfltrim3yel_d03e.tga    
+	specularmap	textures/base_trim/a_sfltrim3yel_s03e.tga         
+        bumpmap 	heightmap (textures/base_trim/a_sfltrim3yel_b03e.tga, 2) 
+
+       
+}
+
+material textures/base_trim_desert/a_sfltrim5_d05a
+{
+	qer_editorimage textures/base_trim_desert/a_sfltrim5_d05a.tga
+        diffusemap	textures/base_trim_desert/a_sfltrim5_d05a.tga    
+	specularmap	textures/base_trim/a_sfltrim5_s05a.tga         
+        bumpmap 	addnormals (textures/base_trim/a_sfltrim5_local02.tga, heightmap (textures/base_trim/a_sfltrim5_b05a.tga, 2 )) 
+
+       
+}
+
+material textures/base_trim_desert/a_sfltrim7_d01
+{
+	qer_editorimage textures/base_trim_desert/a_sfltrim7_d01.tga
+        diffusemap	textures/base_trim_desert/a_sfltrim7_d01.tga    
+	specularmap	textures/base_trim/a_sfltrim7_s01.tga         
+        bumpmap 	addnormals (textures/base_trim/a_sfltrim7_local.tga, heightmap (textures/base_trim/a_sfltrim7_b01.tga, 2 )) 
+
+       
+}
+
+material textures/base_trim_desert/asp2
+{
+	qer_editorimage	textures/base_trim_desert/asp2dif.tga
+	bumpmap	addnormals( textures/base_trim/adriansketchp2_local.tga, heightmap( textures/base_trim/asp2add.tga, 6 ) )
+	diffusemap	textures/base_trim_desert/asp2dif.tga
+	specularmap	textures/base_trim/asp2spec.tga
+}
+
+material textures/base_trim_desert/asp3
+{
+	qer_editorimage	textures/base_trim_desert/asp3dif.tga
+	bumpmap	addnormals( textures/base_trim/adriansketchp3_local.tga, heightmap( textures/base_trim/asp3bumpadd.tga, 6 ) )
+	diffusemap	textures/base_trim_desert/asp3dif.tga
+	specularmap	textures/base_trim/asp3spec.tga
+}
+
+material textures/base_trim_desert/bluetex4f_ed
+{
+	qer_editorimage	textures/base_trim_desert/bluetex4fdif.tga
+	bumpmap		textures/base_trim/bluetex4f_local.tga
+	diffusemap		textures/base_trim_desert/bluetex4fdif.tga
+	specularmap		textures/base_trim/bluetex4fspec.tga
+}
+
+material textures/base_trim_desert/bluetex4h_ed
+{
+	qer_editorimage	textures/base_trim_desert/bluetex4hdif.tga
+	bumpmap		textures/base_trim/bluetex4h_local.tga
+	diffusemap		textures/base_trim_desert/bluetex4hdif.tga
+	specularmap		textures/base_trim/bluetex4hspec.tga
+}
+material textures/base_trim_desert/bluetex4j_ed
+{
+	qer_editorimage	textures/base_trim_desert/bluetex4jdif.tga
+	bumpmap		textures/base_trim/bluetex4j_local.tga
+	diffusemap		textures/base_trim_desert/bluetex4jdif.tga
+	specularmap		textures/base_trim/bluetex4jspec.tga
+}
+
+material textures/base_trim_desert/bluetex4k_ed
+{
+	qer_editorimage	textures/base_trim_desert/bluetex4kdif.tga
+	bumpmap		textures/base_trim/bluetex4k_local.tga
+	diffusemap		textures/base_trim_desert/bluetex4kdif.tga
+	specularmap		textures/base_trim/bluetex4kspec.tga
+}
+
+material textures/base_trim_desert/bluetex4r_danger_d
+{
+	qer_editorimage	textures/base_trim_desert/bluetex4r_danger_d.tga
+	diffusemap		textures/base_trim_desert/bluetex4r_danger_d.tga
+	specularmap		textures/base_trim/bluetex4rspec.tga
+}
+
+material textures/base_trim_desert/bluetex4r_ed
+{
+	qer_editorimage	textures/base_trim_desert/bluetex4rdif.tga
+	diffusemap		textures/base_trim_desert/bluetex4rdif.tga
+	specularmap		textures/base_trim/bluetex4rspec.tga
+}
+material textures/base_trim_desert/brail_2sided
+
+{
+ 	noShadows
+	twosided
+	qer_editorimage textures/base_trim_desert/brail_d.tga
+
+	{       
+      	 blend	diffusemap
+	 map	textures/base_trim_desert/brail_d.tga
+	 alphaTest 0.5
+	}
+	specularmap	textures/base_trim/brail_s.tga	
+	bumpmap 	textures/base_trim/brail_local.tga
+       
+
+}
+
+material textures/base_trim_desert/btrim01
+{
+	qer_editorimage textures/base_trim_desert/btrim_d.tga
+
+	diffusemap	textures/base_trim_desert/btrim_d.tga
+	specularmap	textures/base_trim/btrim_s.tga
+        bumpmap	        heightmap (textures/base_trim/ytrim_b.tga, 5)
+       
+}
+
+material textures/base_trim_desert/comptrim2
+{
+	qer_editorimage		textures/base_trim_desert/comptrim2_d.tga
+	bumpmap			textures/base_trim/comptrim2_local.tga
+	diffusemap		textures/base_trim_desert/comptrim2_d.tga
+	specularmap		textures/base_trim/comptrim2_s.tga
+}
+
+material textures/base_trim_desert/fitpanel
+{
+	noshadows
+	qer_editorimage		textures/base_trim_desert/fitpanel_d.tga
+	diffusemap		textures/base_trim_desert/fitpanel_d.tga
+	bumpmap			textures/base_trim/fitpanel_local.tga
+	specularmap		textures/base_trim/fitpanel_s.tga
+}
+
+material textures/base_trim_desert/ghopaneltrim1
+{
+	qer_editorimage		textures/base_trim_desert/ghopaneltrim1_d.tga
+	bumpmap			textures/base_trim/ghopaneltrim1_local.tga
+	diffusemap		textures/base_trim_desert/ghopaneltrim1_d.tga
+	specularmap		textures/base_trim/ghopaneltrim1_s.tga
+}
+
+material textures/base_trim_desert/gotsilvercol1
+{
+	qer_editorimage		textures/base_trim_desert/gotsilvercol1_d.tga
+	bumpmap			textures/base_trim/gotsilvercol1_local.tga
+	diffusemap		textures/base_trim_desert/gotsilvercol1_d.tga
+	specularmap		textures/base_trim/gotsilvercol1_s.tga
+}
+
+
+material textures/base_trim_desert/reactorpipe2
+{
+	qer_editorimage		textures/base_trim_desert/reactorpipe2.tga
+	bumpmap			textures/base_trim/reactorpipe2_local.tga
+	diffusemap		textures/base_trim_desert/reactorpipe2.tga
+	specularmap		textures/base_trim/reactorpipe2_s.tga
+}
+
+material textures/base_trim_desert/redhaz3
+{
+	qer_editorimage 	textures/base_trim_desert/redhaz3.tga
+	bumpmap			heightmap (textures/base_trim/redhaz3_bmp.tga, 4)
+	diffusemap		textures/base_trim_desert/redhaz3.tga
+}
+
+material textures/base_trim_desert/stesilverswatch
+{
+	qer_editorimage	textures/base_trim_desert/stesilverswatch_d.tga
+	bumpmap		textures/base_trim/stesilverswatch_local.tga
+	diffusemap		textures/base_trim_desert/stesilverswatch_d.tga
+	specularmap		textures/base_trim/stesilverswatch_s.tga
+}
+
+material textures/base_trim_desert/stesilvertrim3
+{
+	qer_editorimage	textures/base_trim_desert/stesilvertrim3_d.tga
+	bumpmap		textures/base_trim/stesilvertrim3_local.tga
+	diffusemap		textures/base_trim_desert/stesilvertrim3_d.tga
+	specularmap		textures/base_trim/stesilvertrim3_s.tga
+}
+
+material textures/base_trim_desert/yelhaz1
+{
+	qer_editorimage	textures/base_trim/yelhaz1dif.tga
+	diffusemap 		textures/base_trim_desert/yelhaz1dif.tga
+	bumpmap		heightmap (textures/base_trim/yelhaz1bmp, 6)
+}
+
+//////////////////////////////
+// modified base_wall textures
+//////////////////////////////
+
+
+material textures/base_wall_desert/a_lfwall9_d07
+{
+		qer_editorimage	        textures/base_wall_desert/a_lfwall9_d07.tga
+		bumpmap			textures/base_wall/a_lfwall9_local.tga
+		diffusemap		textures/base_wall_desert/a_lfwall9_d07.tga
+                specularmap	        textures/base_wall/a_lfwall9_s07.tga
+}
+
+material textures/base_wall_desert/a_rib_panel_04_fin
+{
+
+	qer_editorimage textures/base_wall_desert/a_rib_panel_04_fin.tga
+
+	diffusemap	textures/base_wall_desert/a_rib_panel_04_fin.tga
+	specularmap	textures/base_wall/a_rib_panel_s04_fin.tga
+        bumpmap		addnormals( textures/base_wall/a_rib_panel_local_fin.tga  , heightmap( textures/base_wall/a_rib_panel_b04_fin.tga, 2 ) )
+        description     "gray with rust spots"
+}
+
+material textures/base_wall_desert/a_snpanel15_d03
+{
+	qer_editorimage		textures/base_wall_desert/a_snpanel15_d03.tga
+	bumpmap			textures/base_wall/a_snpanel15_local02.tga
+	diffusemap		textures/base_wall_desert/a_snpanel15_d03.tga
+	specularmap		textures/base_wall/a_snpanel15_s03.tga
+}
+
+material textures/base_wall_desert/bluetex1d_ed
+{
+	qer_editorimage	textures/base_wall/bluetex1d_ed.tga
+	bumpmap		addnormals( textures/base_wall/bluetex1d_local.tga, heightmap( textures/base_wall/bluetex1dbmp.tga, 6 ) )
+	diffusemap		textures/base_wall_desert/bluetex1ddif.tga
+	specularmap		textures/base_wall/bluetex1dspec.tga
+}
+
+material textures/base_wall_desert/collectorlid
+{
+	qer_editorimage		textures/base_wall/collectorlid_local.tga
+	bumpmap			textures/base_wall/collectorlid_local.tga
+	diffusemap		textures/base_wall_desert/collectorlid_d.tga
+	specularmap		textures/base_wall/collectorlid_s.tga
+}
+
+material textures/base_wall_desert/darkconcrete
+{
+	qer_editorimage textures/base_wall_desert/darkconcrete_d.tga
+        diffusemap	textures/base_wall_desert/darkconcrete_d.tga	
+        bumpmap	        heightmap (textures/base_wall/darkconcrete_b.tga, 12)
+	{
+
+	blend specularmap	
+	map 			textures/base_wall/darkconcrete_s.tga
+	scale	 2, 2
+	}     
+} 
+
+material textures/base_wall_desert/flwall1
+{
+	qer_editorimage	textures/base_wall_desert/flwall1dif.tga
+	diffusemap 		textures/base_wall_desert/flwall1dif.tga
+	bumpmap		heightmap (textures/base_wall/flwall1bmp, 6)
+}
+
+material textures/base_wall_desert/gotbluswatch
+{
+	qer_editorimage		textures/base_wall/gotbluswatch.tga
+	bumpmap			textures/base_wall/64swatch_local.tga
+	diffusemap		textures/base_wall_desert/gotbluswatch_d.tga
+	specularmap		textures/base_wall/gotbluswatch_s.tga
+}
+
+material textures/base_wall_desert/silverswatch
+{
+	qer_editorimage		textures/base_wall_desert/silverswatch_d.tga
+	bumpmap			textures/base_wall/silverswatch_local.tga
+	diffusemap		textures/base_wall_desert/silverswatch_d.tga
+	//specularmap		textures/base_wall/silverswatch_s.tga
+	specularmap		textures/base_wall/darkconcrete_s.tga
+}
+
+material textures/base_wall_desert/snpanelplain1
+{
+	qer_editorimage		textures/base_wall_desert/snpanelplain1.tga
+	diffusemap		textures/base_wall_desert/snpanelplain1.tga
+}
+
+material textures/base_wall_desert/steel
+{
+	qer_editorimage textures/base_wall/steel.tga
+
+	diffusemap	textures/base_wall_desert/steel_d.tga
+	specularmap	textures/base_wall/steel_s.tga
+        bumpmap	        heightmap (textures/base_wall/steel_bmp.tga, 3)
+        
+}
+
+///////////
+// lab ////
+///////////
+
+material textures/lab_desert/green_plain
+{
+	qer_editorimage 	textures/lab_desert/green_plain_d.tga
+	bumpmap 		heightmap	(textures/lab/white_plain_b.tga, 5)
+	diffusemap		textures/lab_desert/green_plain_d.tga
+	specularmap		textures/lab/white_plain_s.tga
+}
+
+material textures/lab_desert/white_plain
+{
+	qer_editorimage 	textures/lab_desert/white_plain_d.tga
+	bumpmap 		heightmap	(textures/lab/white_plain_b.tga, 5)
+	diffusemap		textures/lab_desert/white_plain_d.tga
+	specularmap		textures/lab/white_plain_s.tga
+}	
+
+/////////////
+// enpro ////
+/////////////
+
+material textures/enpro_desert/enwall16d
+{
+	qer_editorimage		textures/enpro_desert/enwall16d
+	{
+		blend			bumpmap				
+		map				addnormals (textures/enpro/enwall16_local, heightmap (textures/enpro/enwall16_bmp.tga, 4) ) 
+	}
+	diffusemap			textures/enpro_desert/enwall16d
+	specularmap			textures/enpro/enwall16_s
+}
+
+material textures/enpro_desert/enwall3a
+{
+	qer_editorimage		textures/enpro_desert/enwall3a
+	bumpmap				textures/enpro/enwall3a_local
+	diffusemap			textures/enpro_desert/enwall3a
+	specularmap			textures/enpro/enwall3a_s
+}
+
+////////////
+//// mcity /
+////////////
+
+material textures/mcity_desert/mcitya13a_nolit
+{
+		qer_editorimage		textures/mcity_desert/mcitya13a
+		bumpmap			textures/mcity/mcitya13_local
+		diffusemap		textures/mcity_desert/mcitya13a
+		specularmap		textures/mcity/mcitya13a_s
+}
+
+material textures/mcity_desert/mcityc18d
+{
+		qer_editorimage		textures/mcity_desert/mcityc18d
+		bumpmap			textures/mcity/mcityc18d_local
+		diffusemap		textures/mcity_desert/mcityc18d
+		specularmap		textures/mcity/mcityc18d_s
+}
+
+material textures/mcity_desert/mcitycplain1
+{
+		qer_editorimage		textures/mcity_desert/mcitycplain1
+		diffusemap		textures/mcity_desert/mcitycplain1
+		specularmap		textures/mcity/mcityc1_s
+}
+
+material textures/mcity_desert/mcitypipe2
+{
+	qer_editorimage			textures/mcity_desert/mcitypipe2.tga
+	bumpmap				addnormals (textures/mcity/mcitypipe1_local.tga, heightmap (textures/mcity/mcitypipe1_bmp.tga, 4 ) )
+	diffusemap			textures/mcity_desert/mcitypipe2.tga
+	specularmap			textures/mcity/mcitypipe2_s.tga
+}
+
+material textures/mcity_desert/mcityplain4
+{	
+	qer_editorimage			textures/mcity_desert/mcityplain4
+	bumpmap				heightmap (textures/mcity/mcityplain4.tga, 1)
+	diffusemap			textures/mcity_desert/mcityplain4
+}
+
+material textures/mcity_desert/mcityplain5
+{	
+	qer_editorimage			textures/mcity_desert/mcityplain5
+	bumpmap				heightmap (textures/mcity/mcityplain5.tga, 1)
+	diffusemap			textures/mcity_desert/mcityplain5
+}
+
+material textures/morgue_desert/floorvent01
+{
+	qer_editorimage textures/morgue_desert/floorvent01_d.tga
+
+	diffusemap	textures/morgue_desert/floorvent01_d.tga
+	specularmap	textures/morgue/floorvent01_s.tga
+       	bumpmap		addnormals (textures/morgue/floorvent01_local.tga, heightmap (textures/morgue/floorvent01_h.tga, 3 ))      
+}

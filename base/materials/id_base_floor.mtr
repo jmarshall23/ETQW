@@ -1,0 +1,131 @@
+material textures/base_floor/a_coldstairs_04_fin
+{
+	surfaceType "metal"
+	qer_editorimage textures/base_floor/a_coldstairs_04_fin.tga
+
+	diffusemap	textures/base_floor/a_coldstairs_d04_fin.tga
+	specularmap	textures/base_floor/a_coldstairs_s04_fin.tga
+       	bumpmap	        addnormals( textures/base_floor/a_coldstairs_local01.tga  , heightmap( textures/base_floor/a_coldstairs_b04_fin.tga, 3 ) )
+        description  "blue gray, very slight rust"
+}
+material textures/base_floor/bluetex1a2_ed
+{
+	qer_editorimage	textures/base_floor/bluetex1a2_ed.tga
+	bumpmap		addnormals( textures/base_floor/bluetex1a_local.tga, heightmap( textures/base_floor/bluetex1abmp.tga, 6 ) )
+	diffusemap	picmip -1		textures/base_floor/bluetex1a2dif.tga
+	specularmap	picmip -2		textures/base_floor/bluetex1aspec.tga
+}
+
+material textures/base_floor/bluetex1a_ed
+{
+	surfaceType "metal"
+	qer_editorimage	textures/base_floor/bluetex1a_ed.tga
+	bumpmap		addnormals( textures/base_floor/bluetex1a_local.tga, heightmap( textures/base_floor/bluetex1abmp.tga, 6 ) )
+	diffusemap		textures/base_floor/bluetex1adif.tga
+	specularmap	picmip -2		textures/base_floor/bluetex1aspec.tga
+}
+
+material textures/base_floor/diafloor
+{
+	surfaceType "metal"
+	qer_editorimage	textures/base_floor/diafloor.tga
+     	bumpmap		textures/base_floor/diafloor_local.tga
+	diffusemap		textures/base_floor/diafloor_d.tga
+	specularmap		textures/base_floor/diafloor_s.tga
+}
+
+material textures/base_floor/diamond05
+{
+	surfaceType "metal"
+	qer_editorimage textures/base_floor/diamond05.tga
+
+	{
+		diffusemap	textures/base_floor/diamond05_d.tga
+        bumpmap textures/base_floor/diamond05_local.tga
+        specularmap textures/base_floor/diamond05_s.tga
+        textureMatrix bumpMatrix {
+			scale	 4, 4
+		}
+		textureMatrix specularMatrix {
+			scale	 4, 4
+		}
+	}
+}
+
+material textures/base_floor/a_insettrim_d01e
+{
+	surfaceType "metal"
+	qer_editorimage	        textures/base_floor/a_insettrim_d01e.tga
+	bumpmap		        textures/base_floor/a_insettrim_local.tga
+	diffusemap		textures/base_floor/a_insettrim_d01e.tga
+	specularmap		textures/base_floor/a_insettrim_s01e.tga
+}
+
+material textures/base_floor/road_test
+{
+	surfacetype "pavement"
+	qer_editorimage		textures/road/a_road2_d.tga
+	bumpmap			textures/road/a_road2_local.tga
+	diffusemap		textures/road/a_road2_d.tga
+}
+material textures/base_floor/sand_test
+{
+	surfacetype "sand"
+	qer_editorimage		textures/sand/sand_wave_lines02_d.tga
+	bumpmap			textures/sand/sand_wave_lines02_local.tga
+	diffusemap		textures/sand/sand_wave_lines02_d.tga
+}
+
+material textures/base_floor/stone_test
+{
+	surfacetype "stone"
+	qer_editorimage		textures/stone/rubble_d.tga
+	bumpmap			textures/stone/rubble_local.tga
+	diffusemap		textures/stone/rubble_d.tga
+}
+
+material textures/base_floor/grass_test
+{
+	surfacetype "grass"
+	qer_editorimage		textures/grass/grass01_d.tga
+	bumpmap			textures/grass/grass01_d.tga
+	diffusemap		textures/grass/grass01_d.tga
+}
+
+material textures/base_floor/concrete01
+{
+	qer_editorimage	textures/base_floor/concrete01.tga
+	diffusemap		textures/base_floor/concrete01d.tga
+	specularmap		textures/base_floor/concrete01s.tga
+	bumpmap		heightmap (textures/base_floor/concrete01.tga, 3)
+
+}
+
+material textures/base_floor/stectile1quad
+{
+	qer_editorimage textures/base_floor/stectile1quad_d.tga
+	diffusemap	textures/base_floor/stectile1quad_d.tga
+	bumpmap		textures/base_floor/stectile1quad_local.tga
+	specularmap	textures/base_floor/stectile1quad_s.tga
+}
+
+material textures/base_floor/stectile1quad_blue
+{
+	qer_editorimage textures/base_floor/stectile1quad_blue_d.tga
+	{
+		diffusemap	textures/base_floor/stectile1quad_blue_d.tga
+		bumpmap		textures/base_floor/stectile1quad_local.tga
+		specularmap	textures/base_floor/stectile1quad_s.tga
+		vertexcolor
+	}
+}
+
+material textures/base_floor/hospital_tile01
+{
+	useTemplate templates/lab_walls <
+		textures/base_floor/hospital_tile01_d.tga,
+		textures/base_floor/hospital_tile01_local.tga,
+		textures/base_floor/hospital_tile01_s.tga,
+		3, 1.0, 0.3
+	>
+}

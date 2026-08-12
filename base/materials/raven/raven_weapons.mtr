@@ -1,0 +1,1019 @@
+material inview_arms
+{
+	noselfShadow
+	unsmoothedTangents
+
+	renderbump  -size 1024 1024 -trace 0.07 -aa 2  models/characters/inview_arms/inview_arms_local.tga final/models/characters/inview_arms/marine_commscreen_hi.lwo
+
+	diffusemap	models/characters/inview_arms/inview_arms_d.tga
+	bumpmap	addnormals ( models/characters/inview_arms/inview_arms_local.tga, heightmap ( models/characters/inview_arms/inview_arms_h.tga, 2 ))
+	specularmap	models/characters/inview_arms/inview_arms_s.tga
+}
+
+
+// new inview arms -----------------------------------------------------------------------------------------------
+
+material models/characters/marine/inview_arms
+{
+	noSelfShadow
+      unSmoothedTangents
+
+	renderbump  -size 512 512 -trace 0.05 -aa 2 -MergeHigh models/characters/marine/inview_arms_local.tga work/models/characters/inview_arms/armgloved_hi.lwo
+
+		diffusemap	models/characters/marine/inview_arms_d.tga
+		bumpmap	addnormals ( models/characters/marine/inview_arms_local.tga, heightmap ( models/characters/marine/inview_arms_h.tga, 2 ))
+		specularmap	models/characters/marine/inview_arms_s.tga
+	
+}
+
+
+
+//--------------------------------------------------------------------------------------------------------------------
+// inview machinegun
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/machinegun/world
+{
+	bumpmap			models/test/maya_texture/mtexture_local.tga
+	diffusemap		models/test/maya_texture/mtexture_d.tga
+	specularmap		models/test/maya_texture/mtexture_s.tga
+}
+
+//brass-----------------------------------------
+
+
+material models/weapons/machinegun/brass
+{
+	noselfshadow
+	noshadows
+	unsmoothedtangents
+
+	renderbump -size 128 128 -aa 2 -mergehigh models/weapons/raven/machinegun/brass_local.tga work/models/weapons/raven/brass_hi.lwo
+
+	diffusemap	models/weapons/raven/machinegun/brass_d.tga
+	bumpmap		models/weapons/raven/machinegun/brass_local.tga
+	specularmap	models/weapons/raven/machinegun/brass_s.tga
+}
+
+
+
+//--------------------------------------------------------------------------------------------------------------------
+// nailgun
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/nailgun_body
+{
+	noselfshadow
+	unsmoothedtangents
+
+	diffusemap	 models/weapons/raven/nailgun/nailgun_d.tga
+	bumpmap addnormals(models/weapons/raven/nailgun/nailgun_local.tga, heightmap(models/weapons/raven/nailgun/nailgun_h.tga, 3 ))
+	specularmap	 models/weapons/raven/nailgun/nailgun_s.tga
+}
+
+material models/weapons/nailgun_clip
+{
+	noselfshadow
+	unsmoothedtangents
+
+	diffusemap	 models/weapons/raven/nailgun/nailgun_d.tga
+	bumpmap addnormals(models/weapons/raven/nailgun/nailgun_local.tga, heightmap(models/weapons/raven/nailgun/nailgun_h.tga, 3 ))
+	specularmap	 models/weapons/raven/nailgun/nailgun_s.tga
+}
+
+material models/weapons/nailgun_mod_ammo
+{
+	noselfshadow
+        unsmoothedtangents
+
+	diffusemap	 models/weapons/raven/nailgun/nailgun_d.tga
+	bumpmap addnormals(models/weapons/raven/nailgun/nailgun_local.tga, heightmap(models/weapons/raven/nailgun/nailgun_h.tga, 2 ))
+	specularmap	 models/weapons/raven/nailgun/nailgun_s.tga
+}
+
+material models/weapons/nailgun_mod_accuracy
+{
+	noselfshadow
+        unsmoothedtangents
+
+	diffusemap	 models/weapons/raven/nailgun/nailgun_d.tga
+	bumpmap addnormals(models/weapons/raven/nailgun/nailgun_local.tga, heightmap(models/weapons/raven/nailgun/nailgun_h.tga, 3 ))
+	specularmap	 models/weapons/raven/nailgun/nailgun_s.tga
+}
+
+material models/weapons/nailgun_drum
+{
+	noselfshadow
+        unsmoothedtangents
+
+	diffusemap	 models/weapons/raven/nailgun/nailgun_barrelb_d.tga
+	bumpmap addnormals(models/weapons/raven/nailgun/nailgun_barrelb_local.tga, heightmap(models/weapons/raven/nailgun/nailgun_barrelb_h.tga, 3 ))
+	specularmap	 models/weapons/raven/nailgun/nailgun_barrelb_s.tga
+}
+
+material models/weapons/nailgun_mod_rof
+{
+	noselfshadow
+        unsmoothedtangents
+
+	diffusemap	 models/weapons/raven/nailgun/nailgun_d.tga
+	bumpmap addnormals(models/weapons/raven/nailgun/nailgun_local.tga, heightmap(models/weapons/raven/nailgun/nailgun_h.tga, 2 ))
+	specularmap	 models/weapons/raven/nailgun/nailgun_s.tga
+}
+
+material models/weapons/nailgun_mod_damage
+{
+	noselfshadow
+        unsmoothedtangents
+
+	diffusemap	 models/weapons/raven/nailgun/nailgun_barrela_d.tga
+	bumpmap addnormals(models/weapons/raven/nailgun/nailgun_barrela_local.tga, heightmap(models/weapons/raven/nailgun/nailgun_barrela_h.tga, 2 ))
+	specularmap	 models/weapons/raven/nailgun/nailgun_barrela_s.tga
+
+}
+
+material models/weapons/nailgun/nail_new
+{
+	noselfshadow
+	unsmoothedtangents
+
+	diffusemap	textures/terminal/t1_metal1light_d.tga
+	bumpmap		textures/terminal/t1_metal_local.tga
+	specularmap	textures/terminal/t1_metal1light_h.tga
+
+	{
+		blend	add
+		map		models/weapons/raven/nailgun/nail_g.tga
+//		rgb		modtable[ time * 1.5 ]
+	}
+
+/*
+	diffusemap	models/weapons/raven/nailgun/nail_new_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/nailgun/nail_new_local.tga, heightmap(models/weapons/raven/nailgun/nail_new_h.tga, 2 ))
+    specularmap	models/weapons/raven/nailgun/nail_new_s.tga
+*/
+}
+
+material models/weapons/nailgun/nailgun_low_culled
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 1024 1024 -aa 2 -trace .05 models/weapons/raven/nailgun/nailgun_local.tga work/models/weapons/raven/nailgun/ngs2_hi.lwo
+
+	diffusemap	models/weapons/raven/nailgun/nailgun_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/nailgun/nailgun_local.tga, heightmap(models/weapons/raven/nailgun/nailgun_h.tga, 2 ))
+    specularmap	models/weapons/raven/nailgun/nailgun_s.tga
+
+
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// blaster final
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/blaster/bp_lo
+{
+	unsmoothedtangents
+	noselfshadow
+	noshadows
+
+	renderbump  -size 1024 1024 -aa 2 -trace .05 models/weapons/raven/blaster/bp_lo_local.tga work/models/weapons/raven/marine_blaster_pistol/body_hi.lwo
+
+	diffusemap	models/weapons/raven/blaster/bp_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/blaster/bp_lo_local.tga, heightmap(models/weapons/raven/blaster/bp_lo_h.tga, 4 ))
+	specularmap	models/weapons/raven/blaster/bp_lo_s.tga
+ 
+ 	{ 
+		blend add
+		map models/weapons/raven/blaster/bp_lo_glow.tga
+	}       
+        
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// railgun
+//-------------------------------------------------------------------------------------------------------------------0
+
+
+material models/weapons/railgun/rg
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 1024 1024 -aa 2 -trace .07 -mergehigh models/weapons/raven/railgun/rg_local.tga work/models/weapons/raven/railgun/rg_10.lwo
+
+	diffusemap	models/weapons/raven/railgun/rg_d.tga
+	bumpmap		addnormals(models/weapons/raven/railgun/rg_local.tga, heightmap(models/weapons/raven/railgun/rg_h.tga, 2 ))
+	specularmap	models/weapons/raven/railgun/rg_s.tga
+	
+	{ 
+		blend add
+		map models/weapons/raven/railgun/rg_g.tga
+	}       
+        
+}
+
+
+material models/weapons/railgun/rg_mod
+{
+	noselfshadow
+	unsmoothedtangents
+
+	diffusemap	models/weapons/raven/railgun/rg_d.tga
+	bumpmap		addnormals(models/weapons/raven/railgun/rg_local.tga, heightmap(models/weapons/raven/railgun/rg_h.tga, 2 ))
+	specularmap	models/weapons/raven/railgun/rg_s.tga        
+}
+
+
+material models/weapons/railgun/rg_slug
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 128 128 -aa 2 -trace .07 -mergehigh models/weapons/raven/railgun/rg_slug_local.tga work/models/weapons/raven/railgun/rg_06.lwo
+
+	diffusemap	models/weapons/raven/railgun/rg_slug_d.tga
+	bumpmap		addnormals(models/weapons/raven/railgun/rg_slug_local.tga, heightmap(models/weapons/raven/railgun/rg_slug_h.tga, 2 ))
+	specularmap	models/weapons/raven/railgun/rg_slug_s.tga     
+        
+}
+
+material models/weapons/railgun_body
+{
+	noselfshadow
+        unsmoothedtangents
+
+	diffusemap	models/weapons/raven/railgun/rail_body_d.tga
+	bumpmap		addnormals(models/weapons/raven/railgun/rail_body_local.tga, heightmap(models/weapons/raven/railgun/rail_body_h.tga, 2 ))
+	specularmap	models/weapons/raven/railgun/rail_body_s.tga
+}
+
+material models/weapons/railgun_mod_rof
+{
+	noselfshadow
+	unsmoothedtangents
+
+	diffusemap	models/weapons/raven/railgun/rail_body_d.tga
+	bumpmap		addnormals(models/weapons/raven/railgun/rail_body_local.tga, heightmap(models/weapons/raven/railgun/rail_body_h.tga, 2 ))
+	specularmap	models/weapons/raven/railgun/rail_body_s.tga
+}
+
+material models/weapons/railgun_mod_damage
+{
+	noselfshadow
+        unsmoothedtangents
+
+	diffusemap	models/weapons/raven/railgun/rail_body_d.tga
+	bumpmap		addnormals(models/weapons/raven/railgun/rail_body_local.tga, heightmap(models/weapons/raven/railgun/rail_body_h.tga, 2 ))
+	specularmap	models/weapons/raven/railgun/rail_body_s.tga
+
+}
+
+material models/weapons/railgun_mod_ammo
+{
+	noselfshadow
+	unsmoothedtangents
+
+	diffusemap	models/weapons/raven/railgun/rail_body_d.tga
+	bumpmap		addnormals(models/weapons/raven/railgun/rail_body_local.tga, heightmap(models/weapons/raven/railgun/rail_body_h.tga, 2 ))
+	specularmap	models/weapons/raven/railgun/rail_body_s.tga
+
+}
+
+material models/weapons/railgun_mod_accuracy
+{
+	noselfshadow
+	unsmoothedtangents
+
+	diffusemap	models/weapons/raven/railgun/rail_body_d.tga
+	bumpmap		addnormals(models/weapons/raven/railgun/rail_body_local.tga, heightmap(models/weapons/raven/railgun/rail_body_h.tga, 2 ))
+	specularmap	models/weapons/raven/railgun/rail_body_s.tga
+
+}
+
+material gfx/guis/weapons/railgun_gui_fade
+{	
+	noshadows
+	
+	{ 
+		if ( parm6 < parm7 && time < parm7 )
+		blend		blend
+		map			gfx/guis/weapons/railgun/bg
+		rgb			0
+		alpha		.9 * (1 - ((time-parm6)/(parm7-parm6)))
+	}
+
+	{ 
+		if ( parm6 < parm7 && time >= parm7 )
+		blend		blend
+		map			gfx/guis/weapons/railgun/bg
+		rgb			0
+		alpha		0
+	}
+	{ 
+		if ( parm6 >= parm7 )
+		blend		blend
+		map			gfx/guis/weapons/railgun/bg
+		rgb			0
+		alpha		.8
+	}
+}
+
+material models/weapons/blaster/flare
+{
+	translucent
+	deform sprite
+	{
+		blend			add
+		map			highquality models/weapons/raven/blaster/flare.tga
+		
+	}
+}
+/*
+material gfx/lights/flashlight
+{
+	lightfalloffimage	makeintensity( gfx/lights/flashoff.tga )
+	{
+		map	highquality zeroclamp gfx/lights/flashlight5.tga
+		colored
+//		rgb		bathroomtable[ time * .05 ] 
+	}
+}
+*/
+/*
+material gfx/lights/rocketlauncher/guide
+{
+	lightfalloffimage	_nofalloff
+
+	noshadows
+	
+	{
+		map	zeroclamp highquality gfx/lights/rocketguide.tga
+//		map	gfx/lights/flashlight5.tga
+		
+		
+		colored
+//		red 	bathroomtable[ time * 3.33 ] * parm0
+//		green 	bathroomtable[ time * 3.33 ] * parm1
+//		blue 	bathroomtable[ time * 3.33 ] * parm2
+	}
+}
+*/
+/*
+material gfx/lights/flashlight_spectrum
+{
+	lightfalloffimage	makeintensity( gfx/lights/flashoff.tga )
+	spectrum 1	
+
+	{
+		map	highquality zeroclamp gfx/lights/flashlight5.tga
+		
+		
+//		rgb		bathroomtable[ time * .05 ] 
+	}
+}
+*/
+
+
+//--------------------------------------------------------------------------------------------------------------------
+// shotgun
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/shotgun/sgv2_lo
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 1024 1024 -aa 2 -trace .07 -mergehigh models/weapons/raven/shotgun/sgv2_lo_local.tga work/models/weapons/raven/marine_shotgun/sgv2_a_hi.lwo
+
+	diffusemap	models/weapons/raven/shotgun/sgv2_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/shotgun/sgv2_lo_local.tga, heightmap(models/weapons/raven/shotgun/sgv2_lo_h.tga, 4 ))
+    specularmap	models/weapons/raven/shotgun/sgv2_lo_s.tga
+}
+
+
+material models/weapons/shotgun/clip
+{
+	noselfshadow
+	unsmoothedtangents
+
+	diffusemap	models/weapons/raven/shotgun/sgv2_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/shotgun/sgv2_lo_local.tga, heightmap(models/weapons/raven/shotgun/sgv2_lo_h.tga, 4 ))
+    specularmap	models/weapons/raven/shotgun/sgv2_lo_s.tga
+}
+
+material models/weapons/itemhighlightshell
+{
+	nonsolid
+	{
+     	blend		add
+		program sfx/cubemap
+		rgb			parm4
+		
+	}
+}
+
+material models/quaddamage
+{
+	noselfshadow
+	unsmoothedtangents
+	translucent
+	
+	deform expand .2 // ember1[time * 0.2] * 10
+	
+	{
+		blend		add
+		map			models/quaddamage_d.tga
+		translate	time * 0.2 , time * 0.3
+	}
+}
+
+
+//--------------------------------------------------------------------------------------------------------------------
+// marine machinegun
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/machinegun/mmg_culled_lo
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 1024 1024 -aa 2 -trace .08 -colormap models/weapons/raven/machinegun/mmg_culled_lo_local.tga work/models/weapons/raven/marine_machine_gun/mmg_1_hi.lwo
+
+	diffusemap	models/weapons/raven/machinegun/mmg_culled_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/machinegun/mmg_culled_lo_local.tga, heightmap(models/weapons/raven/machinegun/mmg_culled_lo_h.tga, 3 ))
+    specularmap	models/weapons/raven/machinegun/mmg_culled_lo_s.tga
+}
+
+material models/weapons/machinegun/body
+{
+	noselfshadow
+	unsmoothedtangents
+
+	diffusemap	models/weapons/raven/machinegun/mmg_culled_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/machinegun/mmg_culled_lo_local.tga, heightmap(models/weapons/raven/machinegun/mmg_culled_lo_h.tga, 3 ))
+    specularmap	models/weapons/raven/machinegun/mmg_culled_lo_s.tga
+}
+
+material models/weapons/machinegun/clip_small
+{
+	noselfshadow
+	unsmoothedtangents	
+
+	diffusemap	models/weapons/raven/machinegun/mmg_culled_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/machinegun/mmg_culled_lo_local.tga, heightmap(models/weapons/raven/machinegun/mmg_culled_lo_h.tga, 3 ))
+    specularmap	models/weapons/raven/machinegun/mmg_culled_lo_s.tga
+}
+
+material models/weapons/machinegun/clip_large
+{
+	noselfshadow
+	unsmoothedtangents
+
+	diffusemap	models/weapons/raven/machinegun/mmg_culled_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/machinegun/mmg_culled_lo_local.tga, heightmap(models/weapons/raven/machinegun/mmg_culled_lo_h.tga, 3 ))
+    specularmap	models/weapons/raven/machinegun/mmg_culled_lo_s.tga
+}
+
+material models/weapons/machinegun/scope
+{
+	noselfshadow
+	unsmoothedtangents
+
+	diffusemap	models/weapons/raven/machinegun/mmg_culled_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/machinegun/mmg_culled_lo_local.tga, heightmap(models/weapons/raven/machinegun/mmg_culled_lo_h.tga, 3 ))
+    specularmap	models/weapons/raven/machinegun/mmg_culled_lo_s.tga
+        
+	{	
+		maskcolor				
+	    map	makealpha(models/weapons/raven/machinegun/mmg_culled_lo_mask.tga)
+	}
+
+//	{
+//	    blend gl_dst_alpha, gl_one
+//	    maskalpha
+//      cubemap		gfx/env/marhelmet
+//      texgen		reflect
+//		colored
+//	}
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// marine hyperblaster
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/hyperblaster/mhb_lo
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 1024 1024 -aa 2 -trace .08  models/weapons/raven/hyperblaster/mhb_lo_local.tga work/models/weapons/raven/marine_hyper_blaster/mhb_back_hi.lwo
+
+	diffusemap	models/weapons/raven/hyperblaster/mhb_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/hyperblaster/mhb_lo_local.tga, heightmap(models/weapons/raven/hyperblaster/mhb_lo_h.tga, 3 ))
+    specularmap	models/weapons/raven/hyperblaster/mhb_lo_s.tga
+
+}
+
+material models/weapons/raven/hyperblaster\battery1
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 1024 1024 -aa 2 -trace .08  models/weapons/raven/hyperblaster/mhb_lo_local.tga work/models/weapons/raven/marine_hyper_blaster/mhb_hi_01.lwo
+
+	diffusemap	models/weapons/raven/hyperblaster/mhb_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/hyperblaster/mhb_lo_local.tga, heightmap(models/weapons/raven/hyperblaster/mhb_lo_h.tga, 3 ))
+    specularmap	models/weapons/raven/hyperblaster/mhb_lo_s.tga
+	
+}
+
+material models/weapons/raven/hyperblaster\battery2
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 1024 1024 -aa 2 -trace .08  models/weapons/raven/hyperblaster/mhb_lo_local.tga work/models/weapons/raven/marine_hyper_blaster/mhb_hi_01.lwo
+
+	diffusemap	models/weapons/raven/hyperblaster/mhb_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/hyperblaster/mhb_lo_local.tga, heightmap(models/weapons/raven/hyperblaster/mhb_lo_h.tga, 3 ))
+    specularmap	models/weapons/raven/hyperblaster/mhb_lo_s.tga
+
+}
+
+material models/weapons/raven/hyperblaster\battery3
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 1024 1024 -aa 2 -trace .08  models/weapons/raven/hyperblaster/mhb_lo_local.tga work/models/weapons/raven/marine_hyper_blaster/mhb_hi_01.lwo
+
+	diffusemap	models/weapons/raven/hyperblaster/mhb_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/hyperblaster/mhb_lo_local.tga, heightmap(models/weapons/raven/hyperblaster/mhb_lo_h.tga, 3 ))
+    specularmap	models/weapons/raven/hyperblaster/mhb_lo_s.tga
+
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// multi-player world model marine hyperblaster
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/mp_guns/w_hb
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .15  models/weapons/raven/hyperblaster/w_hb_local.tga work/models/weapons/raven/marine_hyper_blaster/mhb_hi_15.lwo
+
+	diffusemap	models/weapons/raven/hyperblaster/w_hb_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/hyperblaster/w_hb_local.tga, heightmap(models/weapons/raven/hyperblaster/w_hb_h.tga, 3 ))
+    specularmap	models/weapons/raven/hyperblaster/w_hb_s.tga
+}
+
+material models/weapons/mp_guns/w_hb_battery
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .15  models/weapons/raven/hyperblaster/w_hb_local.tga work/models/weapons/raven/marine_hyper_blaster/mhb_hi_15.lwo
+
+	diffusemap	models/weapons/raven/hyperblaster/w_hb_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/hyperblaster/w_hb_local.tga, heightmap(models/weapons/raven/hyperblaster/w_hb_h.tga, 3 ))
+    specularmap	models/weapons/raven/hyperblaster/w_hb_s.tga
+}
+
+material models/weapons/hyperblaster/battery1
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .15  models/weapons/raven/hyperblaster/w_hb_local.tga work/models/weapons/raven/marine_hyper_blaster/mhb_hi_15.lwo
+
+	diffusemap	models/weapons/raven/hyperblaster/w_hb_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/hyperblaster/w_hb_local.tga, heightmap(models/weapons/raven/hyperblaster/w_hb_h.tga, 3 ))
+    specularmap	models/weapons/raven/hyperblaster/w_hb_s.tga
+}
+
+material models/weapons/hyperblaster/battery2
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .15  models/weapons/raven/hyperblaster/w_hb_local.tga work/models/weapons/raven/marine_hyper_blaster/mhb_hi_15.lwo
+
+	diffusemap	models/weapons/raven/hyperblaster/w_hb_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/hyperblaster/w_hb_local.tga, heightmap(models/weapons/raven/hyperblaster/w_hb_h.tga, 3 ))
+    specularmap	models/weapons/raven/hyperblaster/w_hb_s.tga
+}
+
+material models/weapons/hyperblaster/battery3
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .15  models/weapons/raven/hyperblaster/w_hb_local.tga work/models/weapons/raven/marine_hyper_blaster/mhb_hi_15.lwo
+
+	diffusemap	models/weapons/raven/hyperblaster/w_hb_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/hyperblaster/w_hb_local.tga, heightmap(models/weapons/raven/hyperblaster/w_hb_h.tga, 3 ))
+    specularmap	models/weapons/raven/hyperblaster/w_hb_s.tga
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// multi-player world model marine machinegun
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/mp_guns/w_mg_lo
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 256 256 -aa 2 -trace .05  models/weapons/raven/machinegun/w_mg_lo_local.tga work/models/weapons/raven/marine_machine_gun/mmg_fullbody_hi.lwo
+
+	diffusemap	models/weapons/raven/machinegun/w_mg_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/machinegun/w_mg_lo_local.tga, heightmap(models/weapons/raven/machinegun/w_mg_lo_h.tga, 3 ))
+    specularmap	models/weapons/raven/machinegun/w_mg_lo_s.tga
+}
+
+material models/weapons/mp_guns/w_mg_lo_mod_scope
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 256 256 -aa 2 -trace .05  models/weapons/raven/machinegun/w_mg_lo_local.tga work/models/weapons/raven/marine_machine_gun/mmg_fullbody_hi.lwo
+
+	diffusemap	models/weapons/raven/machinegun/w_mg_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/machinegun/w_mg_lo_local.tga, heightmap(models/weapons/raven/machinegun/w_mg_lo_h.tga, 3 ))
+    specularmap	models/weapons/raven/machinegun/w_mg_lo_s.tga
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// multi-player world model blaster pistol
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/mp_guns/w_bp
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .15  models/weapons/raven/blaster/w_bp_local.tga work/models/weapons/raven/marine_blaster_pistol/fullmodel_hi.lwo
+
+	diffusemap	models/weapons/raven/blaster/w_bp_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/blaster/w_bp_local.tga, heightmap(models/weapons/raven/blaster/w_bp_h.tga, 3 ))
+    specularmap	models/weapons/raven/blaster\w_bp_s.tga
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// multi-player world model dark matter generator
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/darkmatter/w_dmg
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .08  models/weapons/raven/darkmatter/w_dmg_local.tga work/models/weapons/raven/strogg_dark_matter/dmg_06.lwo
+
+	diffusemap	models/weapons/raven/darkmatter/w_dmg_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/darkmatter/w_dmg_local.tga, heightmap(models/weapons/raven/darkmatter/w_dmg_h.tga, 3 ))
+    specularmap	models/weapons/raven/darkmatter/w_dmg_s.tga
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// multi-player world model shotgun
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/mp_guns/w_sg
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .07  models/weapons/raven/shotgun/w_sg_local.tga work/models/weapons/raven/marine_shotgun/sgv2_b_hi.lwo
+
+	diffusemap	models/weapons/raven/shotgun/w_sg_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/shotgun/w_sg_local.tga, heightmap(models/weapons/raven/shotgun/w_sg_h.tga, 3 ))
+    specularmap	models/weapons/raven/shotgun/w_sg_s.tga
+}
+
+material models/weapons/mp_guns/w_sg_mod_ammo
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .07  models/weapons/raven/shotgun/w_sg_local.tga work/models/weapons/raven/marine_shotgun/sgv2_b_hi.lwo
+
+	diffusemap	models/weapons/raven/shotgun/w_sg_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/shotgun/w_sg_local.tga, heightmap(models/weapons/raven/shotgun/w_sg_h.tga, 3 ))
+    specularmap	models/weapons/raven/shotgun/w_sg_s.tga
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// multi-player world model rail gun
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/railgun/world/w_rg
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .08  models/weapons/raven/railgun/world/w_rg_local.tga work/models/weapons/raven/railgun/rg_08.lwo
+
+	diffusemap	models/weapons/raven/railgun/world/w_rg_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/railgun/world/w_rg_local.tga, heightmap(models/weapons/raven/railgun/world/w_rg_h.tga, 3 ))
+    specularmap	models/weapons/raven/railgun/world/w_rg_s.tga
+}
+
+
+//--------------------------------------------------------------------------------------------------------------------
+// multi-player world model rocketlauncher
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/mp_guns/w_rl
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .12  models/weapons/raven/rocketlauncher/w_rl_local.tga work/models/weapons/raven/strogg_rocket_launcher_new/rl_hi_11.lwo
+
+	diffusemap	models/weapons/raven/rocketlauncher/w_rl_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/rocketlauncher/w_rl_local.tga, heightmap(models/weapons/raven/rocketlauncher/w_rl_h.tga, 3 ))
+    specularmap	models/weapons/raven/rocketlauncher/w_rl_s.tga
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// multi-player world model grenade launcher
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/mp_guns/w_gl
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .12  models/weapons/raven/grenadelauncher/w_gl_local.tga work/models/weapons/raven/strogg_grenade_launcher/mgl_hi_03.lwo
+
+	diffusemap	models/weapons/raven/grenadelauncher/w_gl_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/grenadelauncher/w_gl_local.tga, heightmap(models/weapons/raven/grenadelauncher/w_gl_h.tga, 3 ))
+    specularmap	models/weapons/raven/grenadelauncher/w_gl_s.tga
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// multi-player world model lightning gun
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/lightning_gun/w_lg
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .12  models/weapons/raven/lightning_gun/w_lg_local.tga work/models/weapons/raven/strogg_lightning_gun/lg_hi_03.lwo
+
+	diffusemap	models/weapons/raven/lightning_gun/w_lg_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/lightning_gun/w_lg_local.tga, heightmap(models/weapons/raven/lightning_gun/w_lg_h.tga, 3 ))
+    specularmap	models/weapons/raven/lightning_gun/w_lg_s.tga
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// multi-player world model nail gun
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/nailgun/w_ng
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .2  models/weapons/raven/nailgun/w_ng_local.tga work/models/weapons/raven/nailgun/nailgun_hi_07.lwo
+
+	diffusemap	models/weapons/raven/nailgun/w_ng_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/nailgun/w_ng_local.tga, heightmap(models/weapons/raven/nailgun/w_ng_h.tga, 3 ))
+    specularmap	models/weapons/raven/nailgun/w_ng_s.tga
+}
+
+material models/weapons/nailgun/w_ng_mod_ammo
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .2  models/weapons/raven/nailgun/w_ng_local.tga work/models/weapons/raven/nailgun/nailgun_hi_07.lwo
+
+	diffusemap	models/weapons/raven/nailgun/w_ng_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/nailgun/w_ng_local.tga, heightmap(models/weapons/raven/nailgun/w_ng_h.tga, 3 ))
+    specularmap	models/weapons/raven/nailgun/w_ng_s.tga
+}
+
+material models/weapons/nailgun/w_ng_mod_scope
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .2  models/weapons/raven/nailgun/w_ng_local.tga work/models/weapons/raven/nailgun/nailgun_hi_07.lwo
+
+	diffusemap	models/weapons/raven/nailgun/w_ng_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/nailgun/w_ng_local.tga, heightmap(models/weapons/raven/nailgun/w_ng_h.tga, 3 ))
+    specularmap	models/weapons/raven/nailgun/w_ng_s.tga
+}
+
+material models/weapons/nailgun/w_ng_mod_rof
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .2  models/weapons/raven/nailgun/w_ng_local.tga work/models/weapons/raven/nailgun/nailgun_hi_07.lwo
+
+	diffusemap	models/weapons/raven/nailgun/w_ng_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/nailgun/w_ng_local.tga, heightmap(models/weapons/raven/nailgun/w_ng_h.tga, 3 ))
+    specularmap	models/weapons/raven/nailgun/w_ng_s.tga
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// rocket launcher
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/rocketlauncher/rl_lo
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 1024 1024 -aa 2 -trace .08 -mergehigh models/weapons/raven/rocketlauncher/rl_lo_local.tga work/models/weapons/raven/strogg_rocket_launcher_new/rl_hi_15.lwo
+
+	diffusemap	models/weapons/raven/rocketlauncher/rl_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/rocketlauncher/rl_lo_local.tga, heightmap(models/weapons/raven/rocketlauncher/rl_lo_h.tga, 4 ))
+    specularmap	models/weapons/raven/rocketlauncher/rl_lo_s.tga
+
+	{ 
+		blend add
+		map models/weapons/raven/rocketlauncher/rl_lo_g.tga
+	}    
+
+}
+
+material models/weapons/rocketlauncher/wm_rocket_lo
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 256 128 -aa 2 -trace .05 -mergehigh models/weapons/raven/rocketlauncher/wm_rocket_lo_local.tga work/models/weapons/raven/strogg_rocket_launcher_new/wm_rocket_hi.lwo
+
+	diffusemap	models/weapons/raven/rocketlauncher/wm_rocket_lo_d.tga
+ 	bumpmap		models/weapons/raven/rocketlauncher/wm_rocket_lo_local.tga
+    specularmap	models/weapons/raven/rocketlauncher/wm_rocket_lo_s.tga
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// grenade launcher
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/grenadelauncher/mgl_lo
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 1024 1024 -aa 2 -trace .08 -mergehigh models/weapons/raven/grenadelauncher/mgl_lo_local.tga 	work/models/weapons/raven/strogg_grenade_launcher/mgl_hi_01.lwo 
+
+	diffusemap	models/weapons/raven/grenadelauncher/mgl_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/grenadelauncher/mgl_lo_local.tga, heightmap(models/weapons/raven/grenadelauncher/mgl_lo_h.tga, 4 ))
+    specularmap	models/weapons/raven/grenadelauncher/mgl_lo_s.tga
+}
+
+material models/weapons/grenadelauncher/w_grenade
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 128 128 -aa 2 -trace .05 -mergehigh models/weapons/raven/grenadelauncher/w_grenade_local.tga work/models/weapons/raven/strogg_grenade_launcher/mgl_hi_04.lwo
+
+	diffusemap	models/weapons/raven/grenadelauncher/w_grenade_d.tga
+ 	bumpmap		models/weapons/raven/grenadelauncher/w_grenade_local.tga
+    specularmap	models/weapons/raven/grenadelauncher/w_grenade_s.tga
+
+	{ 	blend add
+		map models/weapons/raven/grenadelauncher/w_grenade_glow.tga
+	}
+
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// strogg lightning gun
+//-------------------------------------------------------------------------------------------------------------------0
+
+material models/weapons/lightning_gun/lg_lo
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 1024 1024 -aa 2 -trace .15 -mergehigh models/weapons/raven/lightning_gun/lg_lo_local.tga 	work/models/weapons/raven/strogg_lightning_gun/lg_hi_03.lwo 
+
+	diffusemap	models/weapons/raven/lightning_gun/lg_lo_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/lightning_gun/lg_lo_local.tga, heightmap(models/weapons/raven/lightning_gun/lg_lo_h.tga, 4 ))
+    specularmap	models/weapons/raven/lightning_gun/lg_lo_s.tga
+	
+}
+
+material models/weapons/lightning_gun/tubes_lo
+{
+	noshadows
+	noselfshadow
+	translucent
+//	twosided
+	unsmoothedtangents
+	
+
+	renderbump  -size 128 128 -aa 2 -trace .05 -mergehigh models/weapons/raven/lightning_gun/tubes_lo_local.tga work/models/weapons/raven/strogg_lightning_gun/lg_hi_07.lwo
+
+	{
+		blend gl_src_alpha, gl_one_minus_src_alpha //blend blend
+		map models/weapons/raven/lightning_gun/tubes_lo_d.tga	
+	}
+	{
+		specularmap models/weapons/raven/lightning_gun/tubes_lo_s.tga
+	}
+	{
+		blend add
+		program sfx/cubemap	
+	}	
+}
+
+
+material models/weapons/marine_emp/marine_emp_lo
+{
+      	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 512 512 -aa 2 -trace .09 -mergehigh models/weapons/raven/marine_emp/marine_emp_lo_local.tga work/models/weapons/raven/marine_emp/marine_emp_hi.lwo
+
+
+	diffusemap models/weapons/raven/marine_emp/emp_lo_d.tga 
+	bumpmap addnormals (models/weapons/raven/marine_emp/emp_lo_local.tga, heightmap (models/weapons/raven/marine_emp/emp_lo_h.tga, 2 ))
+	specularmap	models/weapons/raven/marine_emp/emp_lo_s.tga
+}
+//------------------------------------------------------------------------------------------------------------
+
+material models/mapobjects/marine/weapons/sandbags
+{
+      	noselfshadow
+		unsmoothedtangents
+
+	renderbump  -size 256 512 -aa 2 -trace .06 -mergehigh models/mapobjects/marine/weapons/sandbags_lo_local.tga work/models/mapobjects/marine/weapons/sandbags_hi.lwo
+
+	diffusemap 	models/mapobjects/marine/weapons/sandbags_lo_d.tga
+	bumpmap addnormals (models/mapobjects/marine/weapons/sandbags_lo_local.tga, heightmap (models/mapobjects/marine/weapons/sandbags_lo_h.tga, 2 ))
+	specularmap	models/mapobjects/marine/weapons/sandbags_lo_s.tga
+}
+//------------------------------------------------------------------------------------------------------------
+
+material models/mapobjects/marine/weapons/sb_machine_gun_lo
+{
+      	noselfshadow
+		unsmoothedtangents
+
+	renderbump  -size 256 512 -aa 2 -trace .05 -mergehigh models/mapobjects/marine/weapons/sb_machine_gun_lo_local.tga work/models/mapobjects/marine/weapons/sb_machine_gun_hi.lwo
+
+	diffusemap 	models/mapobjects/marine/weapons/sb_machine_gun_lo_d.tga
+	bumpmap addnormals (models/mapobjects/marine/weapons/sb_machine_gun_lo_local.tga, heightmap (models/mapobjects/marine/weapons/sb_machine_gun_lo_h.tga, 2 ))
+	specularmap	models/mapobjects/marine/weapons/sb_machine_gun_lo_s.tga
+}
+
+
+//--------------------------------------------------------------------------------------------------------------------
+// dark matter generator
+//-------------------------------------------------------------------------------------------------------------------
+
+material models/weapons/darkmatter/dmg.lwo
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 1024 1024 -aa 2 -trace .1 -mergehigh models/weapons/raven/darkmatter/dmg_local.tga work/models/weapons/raven/strogg_dark_matter/dmg_15.lwo
+
+	diffusemap	models/weapons/raven/darkmatter/dmg_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/darkmatter/dmg_local.tga, heightmap(models/weapons/raven/darkmatter/dmg_h.tga, 4 ))
+    specularmap	models/weapons/raven/darkmatter/dmg_s.tga
+
+	{ 
+		blend add
+		map models/weapons/raven/darkmatter/dmg_g.tga
+	}    
+
+}
+
+
+//--------------------------------------------------------------------------------------------------------------------
+// gauntlet
+//-------------------------------------------------------------------------------------------------------------------
+
+material models/weapons/gauntlet/gauntlet
+{
+	noselfshadow
+	unsmoothedtangents
+
+	renderbump  -size 1024 512 -aa 2 -trace .1 -mergehigh models/weapons/raven/gauntlet/gauntlet_local.tga work/models/weapons/raven/gauntlet/gauntlet_hi.lwo
+
+	diffusemap	models/weapons/raven/gauntlet/gauntlet_d.tga
+ 	bumpmap		addnormals(models/weapons/raven/gauntlet/gauntlet_local.tga, heightmap(models/weapons/raven/gauntlet/gauntlet_h.tga, 4 ))
+    specularmap	models/weapons/raven/gauntlet/gauntlet_s.tga
+
+	{ 
+		blend add
+		map models/weapons/raven/gauntlet/gauntlet_g.tga
+	}    
+
+}

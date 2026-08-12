@@ -1,0 +1,4 @@
+
+locString game/tasks/oppressor_deploy_firesupport/title {
+	text "#str_01003010"
+}

@@ -1,0 +1,43 @@
+// GDF High Command
+
+// Map Ark
+
+sound sounds/vo/gdf/highcommand/maps/ark/bioscanner/defend/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/ark/10201.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/ark/bioscanner/defend {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/ark/10202.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/ark/bioscanner/planted {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/ark/10203.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/ark/bioscanner/disarm {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/ark/10204.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/ark/bioscanner/planted/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/ark/10205.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/ark/bioscanner/disarmed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/ark/10206.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/ark/gdfwin {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/ark/10213.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/ark/gdflose {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/ark/10214.wav
+}

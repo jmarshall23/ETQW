@@ -1,0 +1,50 @@
+//
+// Anansi Cockpit
+//
+
+export frankie {
+		options -prefix COCK_ -nomerge -sourcedir models/vehicles/edf_anansi/dev_sd -destdir models/vehicles/edf_anansi/
+
+		mesh anansi_cockpit.mb 	-dest cockpit.md5mesh
+		anim anansi_cockpit.mb 	-dest center.md5anim -range 0 96
+		anim anansi_cockpit.mb	-dest center_firing.md5anim -range 100 100
+
+}
+
+model vehicle_anansi_cockpit {
+	mesh								models/vehicles/edf_anansi/cockpit.md5mesh
+
+	anim base							models/vehicles/edf_anansi/center.md5anim {
+	}
+	anim fire							models/vehicles/edf_anansi/center_firing.md5anim {
+	}
+
+	channel legs						( *origin - stick )
+}
+
+entityDef vehicle_anansi_cockpit {
+	"model"				"vehicle_anansi_cockpit"
+	"gui"				"guis/models/vehicles/anansi/cockpit_left"
+	"gui2"				"guis/models/vehicles/anansi/cockpit_center"
+	"gui3"				"guis/models/vehicles/anansi/cockpit_right"
+
+	"climate_skin_key"	"weapon_gdf"
+	
+	"joint_stick"		"stick"
+	"offset" 			"0 0 -2"
+	"largeFov"			"-10 0 0"
+}
+
+entityDef vehicle_anansi_cockpit_gunner {
+	"surface_name"		"barrel"
+
+	"model"				"viewmodel_minigun_mounted"
+
+	"passenger_id"		"2"
+
+	"fx_muzzle"			"effects/weapons/gpmg_muzzleflash_vehicle"
+	"joint_muzzle"		"muzzle"
+	"joint_barrel"		"barrel"
+
+	"offset"			"-26 0.8 0"
+}

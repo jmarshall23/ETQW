@@ -1,0 +1,39 @@
+material textures2/brick/concrete_dirty_generic_6
+{
+	qer_editorimage textures2/brick/concrete_dirty_generic_6_d.tga
+	diffusemap	textures2/brick/concrete_dirty_generic_6_d.tga
+	specularmap     textures2/brick/concrete_dirty_generic_6_s.tga
+	bumpmap 	textures2/brick/concrete_dirty_generic_6_local.tga
+}
+
+material textures2/brick/concrete_dirty_generic_7
+{
+	qer_editorimage textures2/brick/concrete_dirty_generic_7_d.tga
+	diffusemap	textures2/brick/concrete_dirty_generic_7_d.tga
+	specularmap     textures2/brick/concrete_dirty_generic_7_s.tga
+	bumpmap 	textures2/brick/concrete_dirty_generic_7_local.tga
+}
+
+material textures2/brick/concrete_dirty_generic_6_256
+{
+	qer_editorimage textures2/brick/concrete_dirty_generic_6_256_d.tga
+	diffusemap	textures2/brick/concrete_dirty_generic_6_256_d.tga
+	specularmap     textures2/brick/concrete_dirty_generic_6_256_s.tga
+	bumpmap 	textures2/brick/concrete_dirty_generic_6_256_local.tga
+}
+
+material textures2/brick/concrete_dirty_generic_7_256
+{
+	qer_editorimage textures2/brick/concrete_dirty_generic_7_256_d.tga
+	diffusemap	textures2/brick/concrete_dirty_generic_7_256_d.tga
+	specularmap     textures2/brick/concrete_dirty_generic_7_256_s.tga
+	bumpmap 	textures2/brick/concrete_dirty_generic_7_256_local.tga
+}
+
+material textures2/brick/brick_wall_1
+{
+	qer_editorimage textures2/brick/brick_wall_1_d.tga
+	diffusemap	textures2/brick/brick_wall_1_d.tga
+	specularmap     textures2/brick/brick_wall_1_s.tga
+	bumpmap 	textures2/brick/brick_wall_1_local.tga
+}

@@ -1,0 +1,432 @@
+effect effects/maps/valley/final_sparks
+{
+	size	171
+
+	spawner "sparks"
+	{
+		count		25,30
+		useMaterialColor
+		attenuation	0,2048
+
+		line
+		{
+			duration	1.5,2
+			blend	add
+			generatedLine
+			persist
+			material	"textures/particles/sparks/spark03"
+			gravity		0.2,1.1
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -1,-1,-1,1,1,1 cone }
+				velocity { box -100,-100,-100,100,100,100 }
+				size { point 0.5 }
+				fade { point 1 attenuate }
+				length { point 1,0,0 }
+			}
+
+			motion
+			{
+				size { envelope shamus_fastinslowout offset -0.1 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+				length { envelope shamus_fastinslowout offset -0.07,-0.07,-0.07 }
+			}
+
+			end
+			{
+				size { box 2,3 }
+				fade { point 0 attenuate }
+				length { box 10,0,0,15,0,0 }
+			}
+			lineHit
+		}
+	}
+	sound "unnamed3"
+	{
+		soundShader	"vehicles/misc/debris/glass_med"
+		volume	10,12
+		freqshift	0.5,1
+	}
+}
+
+effect effects/maps/valley/final_steam_1
+{
+	size	208
+
+	spawner "sparks"
+	{
+		count		25,30
+		useMaterialColor
+		attenuation	0,2048
+
+		line
+		{
+			duration	0.5,2
+			blend	add
+			generatedLine
+			persist
+			material	"textures/particles/sparks/spark03"
+			gravity		0.2,1.1
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -1,-1,-1,1,1,1 cone }
+				velocity { box -100,-100,-100,100,100,100 }
+				size { point 0.5 }
+				fade { point 1 attenuate }
+				length { point 1,0,0 }
+			}
+
+			motion
+			{
+				size { envelope shamus_fastinslowout offset -0.1 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+				length { envelope shamus_fastinslowout offset -0.07,-0.07,-0.07 }
+			}
+
+			end
+			{
+				size { box 2,3 }
+				fade { point 0 attenuate }
+				length { box 10,0,0,15,0,0 }
+			}
+			lineHit
+		}
+	}
+	emitter "unnamed0"
+	{
+		duration	40,40
+		count		5,5
+
+		sprite
+		{
+			duration	1.5,1.5
+			material	"particles/dustcloud_02_litsmoke"
+			gravity		-0.02,-0.02
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,-100,0 }
+				size { point 30,30 }
+				tint { point 0.423529,0.423529,0.423529 }
+				fade { point 0 }
+				rotate { box -0.277778,0.277778 }
+			}
+
+			motion
+			{
+				size { envelope concavefade }
+				tint { envelope convexfade }
+				fade { envelope shamus_fastinholdslowout }
+				offset { envelope exp_x2 }
+				rotate { envelope concavefade }
+			}
+
+			end
+			{
+				size { point 100,100 }
+				tint { point 1,1,1 }
+				fade { line 0.5,0.7 }
+				offset { point -8,0,-8 }
+				rotate { box 0.277778,-0.277778 }
+			}
+			lineHit
+		}
+	}
+	sound "unnamed2"
+	{
+		soundShader	"sounds/world/misc/steam_loop_01"
+		freqshift	0.8,1
+	}
+}
+
+effect effects/maps/valley/final_steam_2
+{
+	size	208
+
+	emitter "unnamed0"
+	{
+		duration	40,40
+		count		5,5
+
+		sprite
+		{
+			duration	1.5,1.5
+			material	"particles/dustcloud_02_litsmoke"
+			gravity		-0.05,-0.05
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,-100,0 }
+				size { point 30,30 }
+				tint { point 0.376471,0.376471,0.376471 }
+				fade { point 0 }
+				rotate { box -0.277778,0.277778 }
+			}
+
+			motion
+			{
+				size { envelope concavefade }
+				tint { envelope convexfade }
+				fade { envelope shamus_fastinholdslowout }
+				offset { envelope exp_x2 }
+				rotate { envelope concavefade }
+			}
+
+			end
+			{
+				size { point 100,100 }
+				tint { point 0.654902,0.654902,0.654902 }
+				fade { point 0.4 }
+				offset { point -8,0,-8 }
+				rotate { box 0.277778,-0.277778 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/maps/valley/entrance_blowout_1
+{
+	size	599
+
+	spawner "unnamed1"
+	{
+		count		15,15
+
+		sprite
+		{
+			duration	60,100
+			material	"textures/particles/smoke_test1"
+			trailRepeat	1
+
+			start
+			{
+				position { box -50,-50,-75,50,30,-75 }
+				velocity { box 0,0,0,0,0,6 }
+				size { point 30,30 }
+				tint { line 0.713726,0.713726,0.713726,0.454902,0.454902,0.454902 }
+				fade { point 0 }
+				windStrength { line -0.01,-0.1 }
+				rotate { box -0.277778,0.277778 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shamus_fastinslowout }
+				offset { envelope convexfade count 50,50,50 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { box 80,80,100,100 }
+				fade { line 0.5,1 }
+				offset { line 0,0,5,0,0,230 }
+				rotate { box 0.277778,-0.277778 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/maps/valley/entrance_blowout_2
+{
+	size	956
+
+	sound "unnamed4"
+	{
+		start		0.4,0.4
+		soundShader	"metal_stress"
+		volume	4,4
+	}
+	spawner "unnamed1"
+	{
+		count		20,20
+
+		sprite
+		{
+			duration	60,100
+			material	"textures/particles/smoke_test1"
+			trailRepeat	1
+
+			start
+			{
+				position { box -100,-40,-200,100,50,-200 }
+				velocity { box 0,0,0,0,0,6 }
+				size { point 30,30 }
+				tint { line 0.713726,0.713726,0.713726,0.454902,0.454902,0.454902 }
+				fade { point 0 }
+				windStrength { line -0.01,-0.1 }
+				rotate { box -0.277778,0.277778 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shamus_fastinslowout }
+				offset { envelope convexfade count 50,50,50 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { box 100,100,130,130 }
+				fade { line 0.5,1 }
+				offset { line 0,0,5,0,0,600 }
+				rotate { box 0.277778,-0.277778 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/maps/valley/entrance_smoke
+{
+	size	1115
+
+	spawner "unnamed1"
+	{
+		count		20,20
+
+		sprite
+		{
+			duration	200,300
+			material	"textures/particles/smoke_test1"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,-100,0 }
+				size { box 100,100,150,150 }
+				tint { line 0.513726,0.513726,0.513726,0.227451,0.227451,0.227451 }
+				fade { point 0 }
+				offset { box -500,0,-400,200,100,250 }
+				rotate { box -8.33333,8.33333 }
+			}
+
+			motion
+			{
+				size { envelope concavefade }
+				fade { envelope shamus_fastinholdslowout }
+				rotate { envelope concavefade }
+			}
+
+			end
+			{
+				size { box 200,200,300,300 }
+				fade { line 0.4,1 }
+				rotate { box 8.33333,-8.33333 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/maps/valley/entrance_rubble
+{
+	size	612
+
+	emitter "Chips4"
+	{
+		duration	40,40
+		count		5,5
+		useMaterialColor
+		attenuateEmitter
+		attenuation	0,1024
+
+		sprite
+		{
+			duration	2.2,2.2
+			persist
+			material	"particles/debris/debris_stone02"
+			gravity		0.3,0.8
+			trailRepeat	1
+
+			start
+			{
+				position { point -330,350,0 }
+				size { box 2,2,10,10 }
+				tint { line 0.337255,0.321569,0.301961,0.207843,0.203922,0.192157 }
+				offset { line 0,0,-250,0,0,400 }
+				rotate { box -1.66667,1.66667 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shattertable2 offset 0.1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 2,2 }
+				rotate { box 1.66667,-1.66667 }
+			}
+			lineHit
+		}
+	}
+	emitter "Chips5"
+	{
+		duration	40,40
+		count		5,5
+		useMaterialColor
+		attenuateEmitter
+		attenuation	0,1024
+
+		sprite
+		{
+			duration	2.2,2.2
+			persist
+			material	"particles/debris/debris_stone02"
+			gravity		0.3,0.8
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,350,600 }
+				size { box 2,2,10,10 }
+				tint { line 0.337255,0.321569,0.301961,0.121569,0.117647,0.113725 }
+				offset { line -250,0,0,250,0,0 }
+				rotate { box -1.66667,1.66667 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shattertable2 offset 0.1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 2,2 }
+				rotate { box 1.66667,-1.66667 }
+			}
+			lineHit
+		}
+	}
+	sound "Debris Sound"
+	{
+		start		2,2
+		soundShader	"sounds/weapons/impacts/debris_small"
+		volume	2,2
+		freqshift	0.8,0.8
+	}
+	sound "Debris Sound2"
+	{
+		start		6,6
+		soundShader	"sounds/weapons/impacts/debris_small"
+		volume	2,2
+	}
+}
+

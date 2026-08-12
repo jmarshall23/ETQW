@@ -1,0 +1,141 @@
+effect effects/valley/steam
+{
+	size	701
+
+	emitter "dirt streaks4"
+	{
+		duration	1,1
+		count		8,8
+		attenuateEmitter
+		attenuation	512,3072
+
+		line
+		{
+			duration	0.25,0.5
+			persist
+			material	"particles/water/splash_dir_04"
+			gravity		0,1e-005
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere 0,-0.1,-0.1,0.51,0.1,0.1 cone }
+				velocity { box -1,-1,-1,1,1,1 }
+				size { box 1,2 }
+				tint { line 0.529412,0.768628,1,0.847059,0.901961,0.921569 }
+				fade { line 0.4,0.1 attenuate }
+				offset { line -2,0,0,-3,0,0 }
+				length { box 1,0,0,2,0,0 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope linear }
+				fade { envelope rr2_concavefade_start_at_1 }
+				length { envelope exp_1minusx/x2 count 2.5,1,1 }
+			}
+
+			end
+			{
+				size { box 2,4 }
+				tint { line 0.666667,0.776471,0.831373,0.537255,0.537255,1 }
+				fade { point 0 attenuate }
+				length { box 8,0,0,16,0,0 }
+			}
+		}
+	}
+	emitter "dust2"
+	{
+		duration	1,1
+		count		16,16
+		attenuateEmitter
+		attenuation	512,3072
+
+		sprite
+		{
+			duration	0.6,0.8
+			persist
+			material	"particles/dustcloud_02"
+			windDeviationAngle 40.000000
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere 1,-0.51,-0.51,2,0.51,0.51 }
+				velocity { box 20,-1,-1,40,1,1 }
+				size { line 4,4,6,6 }
+				tint { line 0.666667,0.72549,0.72549,0.752941,0.752941,0.752941 }
+				fade { point 0 attenuate }
+				offset { line -15,0,0,0,0,0 }
+				rotate { box -1.25,1.25 }
+			}
+
+			motion
+			{
+				size { envelope shamus_scurve }
+				tint { envelope shamus_exp_x2 }
+				fade { envelope shamus_fastinslowout }
+				offset { envelope shamus_exp_1minusx/x2 count 0.12,0.12,0.12 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 10,10,30,30 }
+				tint { line 0.211765,0.286275,0.286275,0.501961,0.501961,0.501961 }
+				fade { line 1,0.5 attenuate }
+				offset { line 25,0,0,50,0,0 }
+				rotate { box -0.416667,0.416667 }
+			}
+		}
+	}
+	emitter "dust3"
+	{
+		duration	1,1
+		count		4,4
+		attenuateEmitter
+		attenuation	512,3072
+
+		sprite
+		{
+			duration	6,8
+			persist
+			material	"particles/dustcloud_02"
+			windDeviationAngle 40.000000
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere 1,-1,-1,2,1,1 }
+				velocity { box 12,-1,-1,25,1,1 }
+				friction { point 0.0001,0,0 }
+				size { line 3,3,1,1 }
+				tint { line 0.666667,0.72549,0.72549,0.752941,0.752941,0.752941 }
+				fade { line 0.75,0.25 attenuate }
+				rotate { box -1.25,1.25 }
+			}
+
+			motion
+			{
+				size { envelope shamus_scurve }
+				tint { envelope shamus_scurve count 0.75,0.75,0.75 }
+				fade { envelope rr2_concavefade_start_at_1 }
+				offset { envelope shamus_scurve count 1,15,1 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 100,100,150,150 }
+				tint { line 0.211765,0.286275,0.286275,0.317647,0.25098,0.184314 }
+				fade { point 0 attenuate }
+				offset { sphere 200,-1,-1,400,1,1 }
+				rotate { box -0.416667,0.416667 }
+			}
+		}
+	}
+}

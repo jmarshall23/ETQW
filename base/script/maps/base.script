@@ -1,0 +1,372 @@
+
+#define TIMED_MISSION_SHORT		0
+#define TIMED_MISSION_MEDIUM	1
+#define TIMED_MISSION_LONG		2
+
+#define TIMED_MISSION_THREAD_NAME "mapObject_Default_TimedMissionThread"
+
+object mapObject_Default : mapObject_Base {
+	void			preinit();
+	void			destroy();
+
+	void			InitObjectives();
+
+	void			StopTimedMission();
+	void			StopTimedMissionThread();
+	void			CreateInitialTimedMission( entity obj );
+	void			CreateTimedMission( entity obj, float type );
+	void			ClearTimedMission();
+	void			TimedMissionThread( entity obj, float type );
+	void			FinishTimedMission();
+	
+	void			CreateRespawnTimeThread( team_base attackingTeam );
+	void			ResetRespawnTimeThread();
+	void			ClearRespawnTimeThread();
+	void			RespawnTimeThread( team_base _attackingTeam );
+
+	task			AllocWorldTask( string name );
+	void			FreeWorldTask( task t );
+	void			CreateDeployTasks();
+	void			IntroductoryThreadWarmup();
+	void			IntroductoryThreadGameOn();
+
+	entity			worldspawn;
+	
+	task			timedMission;
+	float			timedMissionXP;
+	
+	float			timedMissionThread;
+	
+	float			respawnTimeThread;
+	team_base		attackingTeam;
+
+	float			mapToolTip;
+
+	task			engineerDeployTask;
+	task			engineerMineTask;
+	task			constructorDeployTask;
+	task			constructorMineTask;
+	task			fieldopsDeployTask;
+	task			oppressorDeployTask;
+	task			covertopsDeployTask;
+	task			infiltratorDeployTask;
+	task			medicDeployTask;
+}
+
+void mapObject_Default::preinit() {
+	worldspawn		= sys.getEntity( "worldspawn" );
+	if ( worldspawn == $null_entity ) {
+		sys.error( "mapObject_Default::preinit - worldspawn is null!" );
+	}
+
+	timedMissionThread = -1;
+	respawnTimeThread = -1;
+
+	mapToolTip		= GetToolTip( worldspawn.getKey( "tt_map" ) );
+
+	if ( sys.getLocalPlayer() != $null_entity && sys.isServer() ) {
+		thread IntroductoryThreadWarmup();
+		thread IntroductoryThreadGameOn();
+	}
+}
+
+void mapObject_Default::destroy() {
+	ClearTimedMission();
+
+	FreeWorldTask( engineerDeployTask );
+	FreeWorldTask( engineerMineTask );
+	FreeWorldTask( constructorDeployTask );
+	FreeWorldTask( constructorMineTask );
+	FreeWorldTask( fieldopsDeployTask );
+	FreeWorldTask( oppressorDeployTask );
+	FreeWorldTask( covertopsDeployTask );
+	FreeWorldTask( infiltratorDeployTask );
+	FreeWorldTask( medicDeployTask );
+
+	fieldopsDeployTask = $null;
+	oppressorDeployTask = $null;
+	engineerDeployTask = $null;
+	engineerMineTask = $null;
+	constructorDeployTask = $null;
+	constructorMineTask = $null;
+	covertopsDeployTask = $null;
+	infiltratorDeployTask = $null;
+	medicDeployTask = $null;
+}
+
+void mapObject_Default::ClearTimedMission() {
+	if ( timedMission != $null ) {
+		timedMission.free();
+		timedMission = $null;
+	}
+}
+
+void mapObject_Default::InitObjectives() {
+	// jrad - non-game maps don't need spawn waves
+	CreateRespawnTimeThread( gdfTeam );
+}
+
+void mapObject_Default::CreateInitialTimedMission( entity obj ) {
+	StopTimedMissionThread();
+	CreateTimedMission( obj, TIMED_MISSION_SHORT );
+}
+
+void mapObject_Default::StopTimedMissionThread() {
+	if ( timedMissionThread != -1 ) {
+		sys.terminate( timedMissionThread );
+		timedMissionThread = -1;
+	}
+}
+
+void mapObject_Default::StopTimedMission() {
+	StopTimedMissionThread();
+	ClearTimedMission();
+}
+
+void mapObject_Default::CreateTimedMission( entity obj, float type ) {
+	ClearTimedMission();
+	if ( timedMissionThread != -1 ) {
+		sys.warning( "Timed Mission Thread Already Running" );
+	}
+	timedMissionThread = thread TimedMissionThread( obj, type );
+}
+
+void mapObject_Default::TimedMissionThread( entity obj, float type ) {
+	if ( obj == $null_entity ) {
+		sys.assert( false );
+		sys.warning( "mapObject_Default::TimedMissionThread Entity was null" );
+		timedMissionThread = -1;
+		return;
+	}
+
+	float timelimit = -1;
+	string taskName = "task_defend_long";
+	timedMissionXP = 30;
+	if ( type == TIMED_MISSION_SHORT ) {
+		timelimit = 4.f; // FIXME: get this from the task
+		taskName = "task_defend_short";
+		timedMissionXP = 10; // FIXME: get this from the task
+	} else if ( type == TIMED_MISSION_MEDIUM ) {
+		timelimit = 8.f;
+		taskName = "task_defend_medium";
+		timedMissionXP = 20;
+	}
+	
+	timedMission = taskManager.allocEntityTask( GetPlayerTask( obj.getKey( taskName ) ), obj );
+	if ( timedMission == $null ) {
+		sys.warning( "mapObject_Default::TimedMissionThread Failed to create a Timed mission" );
+		timedMissionThread = -1;
+		return;
+	}
+	
+	obj.vInitDefendMission( timedMission );
+
+	if ( timelimit != -1 ) {
+		sys.wait( timelimit * 60.f );
+		
+		timedMissionThread = -1;
+		FinishTimedMission();
+		
+		// MCP might have been removed
+		if ( obj != $null_entity ) {
+			CreateTimedMission( obj, type + 1 );
+		}
+
+		return;
+	}
+
+	timedMissionThread = -1;
+}
+
+void mapObject_Default::FinishTimedMission() {
+	if ( timedMission != $null ) {
+	
+		timedMission.giveObjectiveProficiency( timedMissionXP, "defend task" );
+		
+		timedMission.complete();
+		timedMission.free();
+		timedMission = $null;
+	}
+	
+	StopTimedMissionThread();
+}
+
+void mapObject_Default::CreateRespawnTimeThread( team_base attackingTeam ) {
+	sys.assert( respawnTimeThread == -1 );
+	respawnTimeThread = thread RespawnTimeThread( attackingTeam );
+}
+
+void mapObject_Default::ResetRespawnTimeThread() {
+	// map should have called CreateRespawnTimeThread before calls to this function is valid.
+	ClearRespawnTimeThread();
+	CreateRespawnTimeThread( attackingTeam );
+}
+
+void mapObject_Default::ClearRespawnTimeThread() {
+	if ( respawnTimeThread != -1 ) {
+		sys.terminate( respawnTimeThread );
+		respawnTimeThread = -1;
+	}
+}
+
+void mapObject_Default::RespawnTimeThread( team_base _attackingTeam ) {
+	attackingTeam = _attackingTeam;
+
+	if ( objManager.gameState != GS_GAMEON ) {
+		respawnTimeThread = -1;
+		return;
+	}
+
+	if ( !g_fasterSpawn.getBoolValue() ) {
+		respawnTimeThread = -1;
+		return;
+	}
+
+	float respawnTimeChange = attackingTeam.GetRespawnTimeChange();
+	sys.wait( respawnTimeChange );
+	
+	float respawnTimeReduction = attackingTeam.getFloatKey( "spawnTimeReduction" );
+	float respawnWait = attackingTeam.GetRespawnWait();
+	attackingTeam.SetRespawnWait( respawnWait - respawnTimeReduction );
+
+	respawnTimeThread = -1;
+}
+
+task mapObject_Default::AllocWorldTask( string name ) {
+	sys.assert( worldspawn != $null_entity );
+	return taskManager.allocEntityTask( GetPlayerTask( worldspawn.getKey( name ) ), worldspawn );
+}
+
+void mapObject_Default::FreeWorldTask( task t ) {
+	if ( t != $null ) {
+		t.free();
+	}
+}
+
+void mapObject_Default::CreateDeployTasks() {
+	engineerDeployTask					= AllocWorldTask( "task_engineer_deploy" );
+	engineerMineTask					= AllocWorldTask( "task_engineer_plant_mines" );
+	constructorDeployTask				= AllocWorldTask( "task_constructor_deploy" );
+	constructorMineTask					= AllocWorldTask( "task_constructor_plant_mines" );
+	fieldopsDeployTask					= AllocWorldTask( "task_fieldops_deploy" );
+	oppressorDeployTask					= AllocWorldTask( "task_oppressor_deploy" );
+	covertopsDeployTask					= AllocWorldTask( "task_covertops_deploy" );
+	infiltratorDeployTask				= AllocWorldTask( "task_infiltrator_deploy" );
+	medicDeployTask						= AllocWorldTask( "task_medic_deploy" );
+}
+
+void mapObject_Default::IntroductoryThreadWarmup() {
+	float toolTip;
+	boolean tutorialMode;
+	player	localPlayer;
+
+	localPlayer = sys.getLocalPlayer();
+	sys.assert( localPlayer != $null_entity );
+
+	team_base team = localPlayer.getGameTeam();
+	while ( objManager.gameState != GS_WARMUP || team == $null_entity || localPlayer.isInLimbo() ) {
+		team = localPlayer.getGameTeam();
+		sys.wait( 0.4f );
+	}
+
+	// check if in tutorial mode
+	if ( sys.isServer() ) {
+		object trainingCVar = sys.getCVar( "g_trainingMode", 0 );
+		if ( trainingCVar.getIntValue() == 1 ) {
+			tutorialMode = true;
+		}
+	}
+
+	if ( tutorialMode ) {
+		sys.wait( 0.5f );
+
+		waitUntil( !localPlayer.isToolTipPlaying() && localPlayer.getHealth() > 0 );
+		toolTip = GetToolTip( localPlayer.getKey( "tt_introductory1" ) );
+		localPlayer.sendToolTip( toolTip );
+
+		waitUntil( !localPlayer.isSinglePlayerToolTipPlaying() );
+		sys.wait( 3.0f );
+
+		/*
+		waitUntil( !localPlayer.isToolTipPlaying() && localPlayer.getHealth() > 0 );
+		toolTip = GetToolTip( localPlayer.getKey( "tt_introductory2" ) );
+		localPlayer.sendToolTip( toolTip );
+
+		waitUntil( !localPlayer.isSinglePlayerToolTipPlaying() );
+		sys.wait( 3.0f );
+		*/
+
+		waitUntil( !localPlayer.isToolTipPlaying() && localPlayer.getHealth() > 0 );
+		toolTip = GetToolTip( localPlayer.getKey( "tt_introductory3" ) );
+		localPlayer.sendToolTip( toolTip );
+
+		waitUntil( !localPlayer.isSinglePlayerToolTipPlaying() );
+		sys.wait( 3.0f );
+	}
+
+	if ( objManager.gameState == GS_WARMUP ) {
+		waitUntil( !localPlayer.isToolTipPlaying() && localPlayer.getHealth() > 0 );
+		toolTip = GetToolTip( localPlayer.getKey( "tt_new_mission" ) );
+		localPlayer.sendToolTip( toolTip );
+		sys.wait( 3.0f );
+	}
+
+	if ( objManager.gameState == GS_WARMUP ) {
+		waitUntil( !localPlayer.isToolTipPlaying() && localPlayer.getHealth() > 0 );
+		objManager.SendToolTipToolTip();
+
+		waitUntil( !localPlayer.isSinglePlayerToolTipPlaying() );
+		sys.wait( 3.0f );
+	}
+
+	while( objManager.gameState == GS_WARMUP ) {
+		boolean notReady = sys.getGUIFloat( GUI_GLOBALS_HANDLE, "player.isReady" ) == 0.0f;
+		boolean needsReady = sys.getGUIFloat( GUI_GLOBALS_HANDLE, "player.needsReady" ) != 0.0f;
+		boolean spectating = localPlayer.getGameTeam() == $null_entity;
+
+		if ( notReady && needsReady && !spectating ) {
+			waitUntil( !localPlayer.isToolTipPlaying() && localPlayer.getHealth() > 0 );
+			toolTip = GetToolTip( localPlayer.getKey( "tt_warmup_not_ready" ) );
+			localPlayer.sendToolTip( toolTip );
+		} else if ( !spectating ) {
+			break;
+		}
+
+		sys.wait( 20.0f );
+	}
+}
+
+void mapObject_Default::IntroductoryThreadGameOn() {
+	float toolTip;
+	player localPlayer = sys.getLocalPlayer();
+	sys.assert( localPlayer != $null_entity );
+
+	team_base team = localPlayer.getGameTeam();
+	while ( objManager.gameState != GS_GAMEON || team == $null_entity || localPlayer.isInLimbo() ) {
+		team = localPlayer.getGameTeam();
+		sys.wait( 0.4f );
+	}
+
+	sys.wait( 1.0f );
+	if ( !localPlayer.isSinglePlayerToolTipPlaying() ) {
+		localPlayer.cancelToolTips();
+	}
+	if ( mapToolTip != -1 ) {
+		localPlayer.sendToolTip( mapToolTip );
+	}
+
+	if ( objManager.gameState == GS_GAMEON ) {
+		sys.wait( 3.0f );
+		waitUntil( !localPlayer.isToolTipPlaying() && localPlayer.getHealth() > 0 );
+		objManager.SendToolTipToolTip();
+
+		waitUntil( !localPlayer.isSinglePlayerToolTipPlaying() );
+		sys.wait( 3.0f );
+	}
+
+	/*sys.wait( 2.0f );
+	waitUntil( !localPlayer.isSinglePlayerToolTipPlaying() && localPlayer.getHealth() > 0 );
+	localPlayer.cancelToolTips();
+	toolTip = GetToolTip( localPlayer.getKey( "tt_explain_objectives" ) );
+	localPlayer.sendToolTip( toolTip );*/
+}

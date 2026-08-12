@@ -1,0 +1,36 @@
+
+#include <guis/game/deployment/deployment.include>
+#include <guis/common/colors.include>
+#include <guis/common/utility.include>
+#include <guis/mainmenu/components/dialog.include>
+	
+gui game/deployment/oppressor {
+	properties {
+		float flags = immediate( flags ) | GUI_FULLSCREEN;
+	}
+	
+	materials {
+		"howitzer" 								"guis/binoculars/target_howitzer_color"
+		"plasma" 								"guis/binoculars/target_plasma_color"
+		"ssg" 									"guis/binoculars/target_ssg_color"
+	}
+	
+	_hud_materials
+	_deploy_properties
+
+	windowDef desktop {		
+		windowDef buttonParent {
+			properties {
+				rect	rect = CENTER_X - ( rect.w * 0.5 ), SCREEN_HEIGHT - 68, 246, 64;
+			}		
+			_select( howitzer,	"game/deploy/railhow", 			"guis/game/deploy/msg_rail", 1, 0 )
+			_select( plasma, 	"game/deploy/plasma_mortar",	"guis/game/deploy/msg_plasma", 2, 80 )
+			_select( ssg, 		"game/deploy/ssg", 				"guis/game/deploy/msg_ssg", 3, 160 )
+		}
+		_deploy_info( true )
+		_instructions
+		_warning
+	}
+}
+
+

@@ -1,0 +1,42 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/quarry/office_building02 {
+	width	256
+	height	1024
+	/* areaDefs */
+
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 896 ) ( 1024 1024 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( -256 384 ) ( 256 896 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( -256 320 ) ( 256 384 )
+	}
+	rect {
+		surfaceType	metal_thick
+		surfaceColor	( 1 1 1 )
+		coords ( 0 896 ) ( 256 1024 )
+	}
+	rect {
+		surfaceType	wood_thick
+		surfaceColor	( 1 1 1 )
+		coords ( 0 384 ) ( 256 896 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 320 ) ( 256 384 )
+	}
+}

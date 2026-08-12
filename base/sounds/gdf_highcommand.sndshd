@@ -1,0 +1,496 @@
+//////////////////////
+// GDF High Command //
+//////////////////////
+
+
+// Alerts
+
+sound sounds/vo/gdf/highcommand/alerts/base/attacking/strogg {
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15311.wav
+}
+
+sound sounds/vo/gdf/highcommand/alerts/base/underattack/strogg {
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15312.wav
+}
+
+sound sounds/vo/gdf/highcommand/alerts/base/defend {
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15313.wav
+}
+
+sound sounds/vo/gdf/highcommand/alerts/radar/lost {
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15314.wav
+}
+
+sound sounds/vo/gdf/highcommand/alerts/vehicle/bailout {
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15315.wav
+}
+
+sound sounds/vo/gdf/highcommand/alerts/vehicle/exit {
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15316.wav
+}
+
+sound sounds/vo/gdf/highcommand/alerts/vehicle/abandon {
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15317.wav
+}
+
+sound sounds/vo/gdf/highcommand/alerts/fsbneutralised {
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15501.wav
+}
+
+sound sounds/vo/gdf/highcommand/alerts/minesspotted {
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15506.wav
+}
+
+sound sounds/vo/gdf/highcommand/alerts/violator {
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15509.wav
+}
+
+sound sounds/vo/gdf/highcommand/alerts/orbitalstrike {
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15510.wav
+}
+
+sound sounds/vo/gdf/highcommand/alerts/bombardment {
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15511.wav
+}
+
+
+// OOB Warnings
+
+sound sounds/vo/gdf/highcommand/alerts/oob/goingsomewhere {
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15321.wav
+}
+
+sound sounds/vo/gdf/highcommand/alerts/oob/backtofrontline {
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15322.wav
+}
+
+sound sounds/vo/gdf/highcommand/alerts/oob/leavingbattlefield {
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15323.wav
+}
+
+sound sounds/vo/gdf/highcommand/alerts/oob/getback {
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15324.wav
+}
+
+sound sounds/vo/gdf/highcommand/alerts/oob {
+
+	no_dups
+
+	localization/english/sounds/vo/gdf/highcommand/alerts/15321.wav
+	localization/english/sounds/vo/gdf/highcommand/alerts/15322.wav
+	localization/english/sounds/vo/gdf/highcommand/alerts/15323.wav
+	localization/english/sounds/vo/gdf/highcommand/alerts/15324.wav
+}
+
+
+// Countdowns
+
+sound sounds/vo/gdf/highcommand/countdown/tenminutes {
+
+	localization/english/sounds/vo/gdf/highcommand/countdown/15331.wav
+}
+
+sound sounds/vo/gdf/highcommand/countdown/fiveminutes {
+
+	localization/english/sounds/vo/gdf/highcommand/countdown/15332.wav
+}
+
+sound sounds/vo/gdf/highcommand/countdown/twominutes {
+
+	localization/english/sounds/vo/gdf/highcommand/countdown/15333.wav
+}
+
+sound sounds/vo/gdf/highcommand/countdown/oneminute {
+
+	localization/english/sounds/vo/gdf/highcommand/countdown/15334.wav
+}
+
+sound sounds/vo/gdf/highcommand/countdown/thirtyseconds {
+
+	localization/english/sounds/vo/gdf/highcommand/countdown/15335.wav
+}
+
+sound sounds/vo/gdf/highcommand/countdown/tenseconds {
+
+	localization/english/sounds/vo/gdf/highcommand/countdown/15336.wav
+}
+
+sound sounds/vo/gdf/highcommand/countdown/fivetoone {
+
+	localization/english/sounds/vo/gdf/highcommand/countdown/15337.wav
+}
+
+sound sounds/vo/gdf/highcommand/countdown/fight {
+
+	localization/english/sounds/vo/gdf/highcommand/countdown/15338.wav
+}
+
+
+// Praise & Blame
+
+sound sounds/vo/gdf/highcommand/praiseblame/sneaky {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15381.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/betweeneyes {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15382.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/lifesaver {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15383.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/snipeyguy {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15384.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/deathfromabove {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15385.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/attaboy {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15386.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/dangerousdriver {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15387.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/majorminer {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15388.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/topgun {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15389.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/welldone {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15390.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/asseskicked {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15391.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/spiritsoldier {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15392.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/notgoodenough {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15393.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/liveforever {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15394.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/twofer {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15395.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/threefer {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15396.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/fourfer {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15397.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/fivefer {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15398.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/party {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15399.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/orgy {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15400.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/boom {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15401.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/bang {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15402.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/ohh {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15403.wav
+}
+
+sound sounds/vo/gdf/highcommand/praiseblame/ow {
+
+	localization/english/sounds/vo/gdf/highcommand/praiseblame/15404.wav
+}
+
+
+// Promotions
+
+sound sounds/vo/gdf/highcommand/promotions/conscript {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15341.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/private {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15342.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/privatefirstclass {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15343.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/lancecorporal {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15344.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/corporal {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15345.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/sergeant {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15346.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/staffsergeant {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15347.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/gunnerysergeant {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15348.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/mastersergeant {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15349.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/firstsergeant {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15350.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/masterchief {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15351.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/sergeantmajor {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15352.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/ensign {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15353.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/thirdlieutenant {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15354.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/secondlieutenant {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15355.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/firstlieutenant {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15356.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/captain {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15357.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/groupcaptain {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15358.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/seniorcaptain {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15359.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/lieutenantmajor {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15360.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/major {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15361.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/groupmajor {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15362.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/lieutenantcommander {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15363.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/commander {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15364.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/groupcommander {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15365.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/lieutenantcolonel {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15366.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/colonel {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15367.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/brigadier {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15368.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/brigadiergeneral {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15369.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/majorgeneral {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15370.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/lieutenantgeneral {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15371.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/general {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15372.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/commandergeneral {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15373.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/fieldvicemarshall {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15374.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/fieldmarshall {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15375.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/vicecommanderarmy {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15376.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/commanderarmy {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15377.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/highcommander {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15378.wav
+}
+
+sound sounds/vo/gdf/highcommand/promotions/supremecommander {
+
+	localization/english/sounds/vo/gdf/highcommand/promotions/15379.wav
+}
+
+
+// Generic Win & Lose
+
+sound sounds/vo/gdf/highcommand/winlose/win1 {
+
+	localization/english/sounds/vo/gdf/highcommand/winlose/15512.wav
+}
+
+sound sounds/vo/gdf/highcommand/winlose/win2 {
+
+	localization/english/sounds/vo/gdf/highcommand/winlose/15513.wav
+}
+
+sound sounds/vo/gdf/highcommand/winlose/win3 {
+
+	localization/english/sounds/vo/gdf/highcommand/winlose/15514.wav
+}
+
+sound sounds/vo/gdf/highcommand/winlose/lose1 {
+
+	localization/english/sounds/vo/gdf/highcommand/winlose/15515.wav
+}
+
+sound sounds/vo/gdf/highcommand/winlose/lose2 {
+
+	localization/english/sounds/vo/gdf/highcommand/winlose/15516.wav
+}
+
+sound sounds/vo/gdf/highcommand/winlose/lose3 {
+
+	localization/english/sounds/vo/gdf/highcommand/winlose/15517.wav
+}

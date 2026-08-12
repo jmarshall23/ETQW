@@ -1,0 +1,219 @@
+effect effects/ambient/ark2_local_atmospherics_simple
+{
+	size	3027
+
+	emitter "dust2"
+	{
+		duration	8,8
+		count		30,30
+
+		sprite
+		{
+			duration	1,2
+			persist
+			material	"particles/dustcloud_02"
+			gravity		-0.0001,0.01
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -1800,-1800,-500,1800,1800,500 }
+				direction { point 0,0,8 }
+				velocity { box -50,-2,150,-25,2,50 }
+				size { line 1200,1200,750,750 }
+				tint { point 0.752941,0.752941,0.752941 }
+				fade { point 0 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				tint { envelope shamus_exp_1minusx/x2 }
+				fade { envelope shamus_fastinslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				tint { point 0.87451,0.87451,0.87451 }
+				fade { point 0.13 }
+				rotate { box -0.25,0.25 relative }
+			}
+		}
+	}
+}
+
+effect effects/ambient/ghost_local_atmospherics_simple
+{
+	size	3276
+
+	emitter "dust2"
+	{
+		duration	8,8
+		count		40,40
+		useMaterialColor
+
+		sprite
+		{
+			duration	1,2
+			material	"particles/flash/plasma_snow3"
+			windDeviationAngle 40.000000
+			gravity		-0.0001,0.01
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -2200,-2200,-500,2200,2200,500 }
+				velocity { box -2,-2,-2,2,2,2 }
+				size { line 1200,1200,750,750 }
+				tint { line 1,1,1,0.670588,0.819608,0.913726 }
+				fade { point 0 }
+				windStrength { line 6,4 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				tint { envelope shamus_exp_1minusx/x2 }
+				fade { envelope shamus_fastinslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				tint { line 0.670588,0.819608,0.913726,0.752941,0.752941,0.752941 }
+				fade { line 0.125,0.25 }
+				rotate { box -0.25,0.25 relative }
+			}
+		}
+	}
+}
+
+effect effects/ambient/islandstrom_local_atmospherics_simple
+{
+	size	3027
+
+	emitter "dust2"
+	{
+		duration	8,8
+		count		25,25
+
+		sprite
+		{
+			duration	1,2
+			persist
+			material	"particles/flash/island_storm"
+			gravity		-0.0001,0.01
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -1800,-1800,-500,1800,1800,500 }
+				direction { point 0,0,8 }
+				velocity { box -50,-2,50,-25,2,50 }
+				size { line 1200,1200,750,750 }
+				tint { line 1,1,1,0.666667,0.819608,0.913726 }
+				fade { point 0 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				tint { envelope shamus_exp_1minusx/x2 }
+				fade { envelope shamus_fastinslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				tint { line 0.666667,0.819608,0.913726,0.74902,0.74902,0.74902 }
+				fade { line 0.125,0.25 }
+				rotate { box -0.25,0.25 relative }
+			}
+		}
+	}
+}effect effects/ambient/rain_local_atmospherics_simple
+{
+	size	4554
+
+	emitter "mist"
+	{
+		duration	20,20
+		count		10,10
+
+		sprite
+		{
+			duration	1,1
+			persist
+			material	"particles/dustcloud_02"
+			gravity		1,5
+			trailRepeat	1
+
+			start
+			{
+				direction { point 0,0,8 }
+				velocity { box -500,200,0,-500,600,0 }
+				size { line 1200,1200,750,750 }
+				tint { line 0.74902,0.74902,0.74902,0.780392,0.760784,0.713726 }
+				fade { point 0 }
+				offset { sphere -1800,-1800,200,1800,1800,500 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				fade { envelope shamus_fastinslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				fade { line 0.15,0.25 }
+				rotate { box 0.125,-0.125 relative }
+			}
+		}
+	}
+}effect effects/ambient/outskirts_local_atmospherics_simple
+{
+	size	4554
+
+	emitter "mist"
+	{
+		duration	1,1
+		count		2,2
+
+		sprite
+		{
+			duration	1,1
+			persist
+			material	"particles/dustcloud_02"
+			gravity		1,2
+			trailRepeat	1
+
+			start
+			{
+				direction { point 0,0,8 }
+				velocity { box -500,200,0,-500,600,0 }
+				size { line 1200,1200,1000,1000 }
+				tint { line 0.74902,0.74902,0.74902,0.780392,0.760784,0.713726 }
+				fade { point 0 }
+				offset { sphere -1800,-1800,200,1800,1800,500 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				fade { envelope shamus_fastinslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				fade { line 0.1,0.15 }
+				rotate { box 0.125,-0.125 relative }
+			}
+			lineHit
+		}
+	}
+}
+

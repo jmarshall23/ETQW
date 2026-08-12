@@ -1,0 +1,85 @@
+
+object vehicle_badger_cockpit : vehicle_basic_cockpit {
+	void				preinit();
+	void				destroy();
+
+	void				OnEntered();
+	
+	void				AnimThread();
+	
+	string				turnLeftAnim;
+	string				turnRightAnim;
+	string				centerAnim;
+};
+
+void vehicle_badger_cockpit::preinit() {
+	turnLeftAnim	= getKey( "turn_left_anim" );
+	turnRightAnim	= getKey( "turn_right_anim" );
+	centerAnim		= getKey( "base_anim" );
+}
+
+void vehicle_badger_cockpit::OnEntered() {
+	thread AnimThread();
+}
+
+void vehicle_badger_cockpit::destroy() {
+	sys.killThread( "vehicle_badger_cockpit::AnimThread" );
+}
+
+#define BADGER_STEER_LEFT	0
+#define BADGER_STEER_RIGHT	1
+#define BADGER_STEER_CENTER 2
+
+void vehicle_badger_cockpit::AnimThread() {
+	sys.threadName( "vehicle_badger_cockpit::AnimThread" );
+
+	sys.wait( playAnim( ANIMCHANNEL_ALL, "into" ) );
+
+	float steerState = BADGER_STEER_CENTER;
+	float newSteerState;
+	
+	float oldSteer = 0.f;
+	
+	while ( true ) {
+		entity driver = myVehicle.getDriver();
+		
+		vector move;
+		if ( driver != $null_entity ) {
+			move = driver.getMove();
+		} else {
+			move = '0 0 0';
+		}
+		
+		if ( move_y < 0 ) {
+			if ( move_y > oldSteer ) {
+				newSteerState = BADGER_STEER_CENTER;
+			} else {
+				newSteerState = BADGER_STEER_LEFT;
+			}
+		} else if ( move_y > 0 ) {
+			if ( move_y < oldSteer ) {
+				newSteerState = BADGER_STEER_CENTER;
+			} else {
+				newSteerState = BADGER_STEER_RIGHT;
+			}
+		} else {
+			newSteerState = BADGER_STEER_CENTER;
+		}
+		
+		if ( newSteerState != steerState ) {
+			steerState = newSteerState;
+			
+			if ( steerState == BADGER_STEER_CENTER ) {
+				playAnimBlended( ANIMCHANNEL_ALL, centerAnim, 0.75f );
+			} else if ( steerState == BADGER_STEER_RIGHT ) {
+				playAnimBlended( ANIMCHANNEL_ALL, turnRightAnim, 0.75f );
+			} else if ( steerState == BADGER_STEER_LEFT ) {
+				playAnimBlended( ANIMCHANNEL_ALL, turnLeftAnim, 0.75f );
+			}
+		}
+
+		oldSteer = move_y;
+		
+		sys.waitFrame();
+	}
+}

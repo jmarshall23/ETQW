@@ -1,0 +1,37 @@
+
+#include <materials/guis/hud/gdf.include>
+
+material guis/assets/hud/strogg/vehicles/goliath
+{
+	_vehicle_icon( "guis/assets/icons/vehicles/strogg_top_goliath" )
+}
+
+material guis/assets/hud/strogg/vehicles/hog
+{
+	_vehicle_icon( "guis/assets/icons/vehicles/strogg_top_hog" )
+}
+
+material guis/assets/hud/strogg/vehicles/desecrator
+{
+	_vehicle_icon( "guis/assets/icons/vehicles/strogg_top_desecrator" )
+}
+
+material guis/assets/hud/strogg/vehicles/hornet
+{
+	_vehicle_icon( "guis/assets/icons/vehicles/strogg_top_hornet" )
+}
+
+material guis/assets/hud/strogg/vehicles/icarus
+{
+	_vehicle_icon( "guis/assets/icons/vehicles/strogg_top_icarus" )
+}
+
+material guis/assets/hud/strogg/vehicles/avt
+{
+	_vehicle_icon( "guis/assets/icons/vehicles/strogg_top_avt" )
+}
+
+material guis/assets/hud/strogg/vehicles/apt
+{
+	_vehicle_icon( "guis/assets/icons/vehicles/strogg_top_apt" )
+}

@@ -1,0 +1,350 @@
+//temp
+
+
+material guis/assets/gdf_generic/data_finob_bg
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/gdf_generic/data_finob_bg.tga"
+	}
+}
+
+material guis/assets/gdf_generic/data_graph
+{
+	sort gui
+	{
+		blend add
+		translate 	time * -0.5 , 0
+		scale		1, 1
+		map  "guis/assets/gdf_generic/data_graph.tga"
+	}
+}
+
+material guis/assets/gdf_generic/data_chat
+{
+	sort gui
+	{
+		blend add
+		translate 	0, time * 0.5 
+//		scale		5, 1
+		map  "guis/assets/gdf_generic/data_chat.tga"
+	}
+}
+ 
+material guis/assets/gdf_generic/sewer_finob_bg
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/gdf_generic/sewer_finob_bg.tga"
+	}
+}
+
+material guis/assets/gdf_generic/sewer_finob_prgbar
+{
+	sort gui
+	{
+		blend blend
+		translate 	time * -1 , 0
+		scale		5, 1
+		map  "guis/assets/gdf_generic/sewer_finob_prgbar.tga"
+	}
+}
+
+material guis/assets/gdf_generic/volcano_security_background
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/gdf_generic/volcano_security_background.tga"
+	}
+}
+
+material guis/assets/gdf_generic/static 
+{
+	sort gui
+	{
+		blend		blend
+		translate 	time * jrad_statictable[ time * 5 ], time * jrad_statictable[ time * 5 ]
+		rotate 		time * 7
+		map    		makealpha (textures/decals/greystatic.tga)
+		alpha 		10
+		scale		parm3-0.6, parm3-0.2
+	}
+	
+}
+
+material guis/assets/gdf_generic/volcano_transformer_off {
+sort gui
+	{
+		blend blend
+		map _white
+		colored
+		red 0.15
+		green 0.15
+		blue 0.15
+	}
+	{
+		blend		blend
+		translate 	time * jrad_statictable[ time * 5 ], time * jrad_statictable[ time * 5 ]
+		rotate 		time * 7
+		map    		makealpha (textures/decals/greystatic.tga)
+		alpha 		10
+		scale		parm3-0.6, parm3-0.2
+	}
+	
+}
+
+material guis/assets/gdf_generic/radar {
+	sort gui
+	{
+		blend add
+		map zeroclamp guis/assets/commandmap/radar_ring.tga
+	//	depthFunc equal
+		rotate time * -0.5
+	}
+}
+
+material guis/assets/gdf_generic/target
+{
+	sort gui
+	{
+		blend blend
+		vertexColor 
+		map clamp makealpha (guis/assets/gdf_generic/target.tga)
+		alpha (sintable[ time * 1.2 ] * 2 )
+	}
+}
+
+material guis/assets/gdf_generic/volcano_transformer_1
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/gdf_generic/volcano_transformer_1.tga"
+	}
+}
+
+
+
+material guis/assets/gdf_generic/volcano_transformer_2
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/gdf_generic/volcano_transformer_2.tga"
+	}
+}
+
+material guis/assets/arm/background
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp "guis/assets/arm/background"
+	}
+}
+
+material guis/assets/arm/connect
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map "guis/assets/arm/connect"
+		scale 3, 1
+		translate	time * -0.5, time * 0
+	}
+}
+
+material guis/assets/arm/bar
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map "guis/assets/arm/bar"
+		scale 3, 1
+		translate	time * -0.5, time * 0
+	}
+}
+
+material guis/assets/arm/cross
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp "guis/assets/arm/cross"
+	}
+}
+
+//edf badger
+
+material guis/assets/badger/background
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp "guis/assets/badger/background"
+	}
+}
+
+material guis/assets/black
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map _black
+	}
+}
+
+material guis/assets/white
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map _white
+	}
+}
+
+material guis/assets/qet/resupply_highlight
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp "guis/assets/qet/resupply_highlight"
+	}
+}
+
+material guis/assets/common/outerglow
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp "guis/assets/common/outerglow"
+	}
+}
+
+material guis/assets/qet/objective_icon
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp "guis/assets/qet/objective_icon"
+	}
+}
+
+material guis/assets/qet/objective_icon_directional
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp "guis/assets/qet/objective_icon_directional"
+	}
+}
+
+material guis/assets/limbo/tick
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/limbo/tick.tga"
+	}
+}
+material guis/assets/edf/screensaver
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map _black
+	}
+}
+
+material guis/assets/strogg/screensaver
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map _black
+	}
+}
+
+// new main menu
+
+material guis/assets/widgets/cursor/edit
+{
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		vertexColor
+		colored
+		map clamp nopicmip "guis/assets/widgets/cursor/edit"
+	}
+}
+
+material guis/assets/widgets/cursor/edit_overwrite
+{
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		vertexColor
+		map clamp nopicmip guis/assets/widgets/cursor/edit_overwrite
+	}
+}
+
+material guis/assets/mainmenu/serverbanner
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map _white
+		red .5
+		green .5
+		blue .5
+	}
+}
+
+material guis/assets/mainmenu/filters/show
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip guis/assets/mainmenu/filters/show.tga
+	}
+}
+
+material guis/assets/mainmenu/filters/hide
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip guis/assets/mainmenu/filters/hide.tga
+	}
+}
+
+material guis/assets/mainmenu/team_states
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip guis/assets/mainmenu/team_states.tga
+	}
+}

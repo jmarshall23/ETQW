@@ -1,0 +1,91 @@
+////////////
+// badger //
+////////////
+
+sound sounds/vehicles/badger/engine/start {
+
+	volume -5
+	maxDistance	75
+	playOnce
+
+	sounds/vehicles/badger/engine_start.wav
+}
+
+sound sounds/vehicles/badger/engine/idle {
+
+	volume -5
+	maxDistance	75
+	playOnce
+
+	looping
+	sounds/vehicles/badger/engine_idle.wav
+}
+
+sound sounds/vehicles/badger/engine/drive {
+
+	volume -2
+	maxDistance	75
+	playOnce
+
+	looping
+	sounds/vehicles/badger/engine_drive.wav
+}
+
+sound sounds/vehicles/badger/engine/hardaccel {
+
+	volume -8
+	maxDistance	75
+	playOnce
+
+	looping
+	sounds/vehicles/badger/engine_hardaccel.wav
+}
+
+
+sound sounds/vehicles/badger/engine/stop {
+
+	volume -5
+	maxDistance	75
+
+	sounds/vehicles/badger/engine_stop.wav
+}
+
+sound sounds/vehicles/badger/overdrive {
+
+	volume -5
+	maxDistance	75
+
+	playOnce
+
+	looping
+	leadin
+	sounds/vehicles/misc/overdrive_start_gdf.wav
+	sounds/vehicles/misc/overdrive_loop_gdf.wav
+}
+
+sound sounds/vehicles/badger/overdrive/stop {
+
+	volume -2
+	maxDistance	75
+	playOnce
+
+	sounds/vehicles/misc/overdrive_stop_gdf.wav
+}
+
+sound sounds/vehicles/badger/horn {
+
+	volume -5
+	maxDistance 50
+	playOnce
+
+	looping
+	sounds/vehicles/badger/horn_loop.wav
+}
+
+sound sounds/vehicles/badger/horn/stop {
+
+	volume -5
+	maxDistance 50
+
+	sounds/vehicles/badger/horn_stop.wav
+}

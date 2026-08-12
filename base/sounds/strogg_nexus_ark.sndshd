@@ -1,0 +1,43 @@
+// Strogg Nexus
+
+// Map Ark
+
+sound sounds/vo/strogg/nexus/maps/ark/bioscanner/destroy/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/ark/20201.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/ark/bioscanner/destroy {
+
+	localization/english/sounds/vo/strogg/nexus/maps/ark/20202.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/ark/bioscanner/planted {
+
+	localization/english/sounds/vo/strogg/nexus/maps/ark/20203.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/ark/bioscanner/defendexpl {
+
+	localization/english/sounds/vo/strogg/nexus/maps/ark/20204.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/ark/bioscanner/planted/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/ark/20205.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/ark/bioscanner/disarmed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/ark/20206.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/ark/stroggwin {
+
+	localization/english/sounds/vo/strogg/nexus/maps/ark/20214.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/ark/strogglose {
+
+	localization/english/sounds/vo/strogg/nexus/maps/ark/20213.wav
+}

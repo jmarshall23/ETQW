@@ -1,0 +1,710 @@
+material textures/metal/metal_door1
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_door1_d.tga
+		specularmap 	picmip -2	   textures/metal/metal_door1_s.tga
+		bumpmap 	picmip -1	addnormals (textures/metal/metal_door1_local.tga, heightmap (textures/metal/metal_door1_h.tga, 25))
+}
+
+material textures/metal/metal_steps1
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_steps1_d.tga
+		specularmap     picmip -2	textures/metal/metal_steps1_s.tga
+		bumpmap 	picmip -1	addnormals (textures/metal/metal_steps1_local.tga, heightmap (textures/metal/metal_steps1_h.tga, 1))
+}
+
+material textures/metal/metal_steps2
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_steps2_d.tga
+		specularmap     picmip -2	textures/metal/metal_steps2_s.tga
+		bumpmap 	picmip -1	addnormals (textures/metal/metal_steps2_local.tga, heightmap (textures/metal/metal_steps2_h.tga, 2))
+}
+
+material textures/metal/metal_steps3
+{
+	surfaceType 	"metal"
+	{
+		diffusemap	picmip -1	textures/metal/metal_steps3_d.tga
+		specularmap	picmip -2	textures/metal/metal_steps3_s.tga
+		bumpmap 	picmip -1	addnormals (textures/metal/metal_steps3_local.tga, heightmap (textures/metal/metal_steps3_h.tga, 3))
+	
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	3,6,0,0
+	}
+}
+
+material textures/metal/wall_outdoor_1
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_1_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_1_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_1_local.tga
+}
+
+material textures/metal/wall_outdoor_4
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_4_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_4_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_4_local.tga
+}
+
+material textures/metal/wall_outdoor_7
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_7_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_7_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_7_local.tga
+}
+
+material textures/metal/wall_outdoor_9
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_9_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_9_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_9_local.tga
+} 	
+
+material textures/metal/wall_outdoor_11
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_11_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_11_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_11_local.tga
+}
+ 	
+material textures/metal/wall_outdoor_12
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_12_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_12_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_12_local.tga
+}
+ 	
+material textures/metal/wall_outdoor_13
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_13_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_13_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_13_local.tga
+}
+ 
+material textures/metal/wall_outdoor_14
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_14_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_14_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_14_local.tga
+}
+
+material textures/metal/wall_outdoor_17
+{
+	surfaceType 	"metal"
+	{
+		diffusemap	picmip -1	textures/metal/wall_outdoor_17_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_17_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_17_local.tga
+		
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+        	detailMult 2,2,0,0
+        }
+}
+
+material textures/metal/wall_outdoor_lessspec_17
+{
+	surfaceType 	"metal"
+	{
+		diffusemap	picmip -1	textures/metal/wall_outdoor_17_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_17_lessspec_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_17_local.tga
+		
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+        	detailMult 2,2,0,0
+        }
+}
+
+material textures/metal/metalgeneric_01
+{
+		surfaceType 	"metal"
+	{
+		vertexColor
+		diffusemap	picmip -1	textures/metal/metalgeneric_01_d.tga
+		specularmap     picmip -2	textures/metal/metalgeneric_01_s.tga
+		bumpmap 	picmip -1	textures/metal/metalgeneric_01_local.tga
+	}
+}
+
+material textures/metal/wall_outdoor_18
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_18_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_18_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_18_local.tga
+}
+
+material textures/metal/wall_outdoor_lessspec_18
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_18_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_18_lessspec_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_18_local.tga
+}
+
+material textures/metal/wall_outdoor_20
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_20_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_20_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_20_local.tga
+}
+
+material textures/metal/wall_outdoor_21
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_21_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_21_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_21_local.tga
+}
+
+material textures/metal/wall_outdoor_22
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_22_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_22_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_22_local.tga
+}
+
+material textures/metal/wall_outdoor_23
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_23_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_23_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_23_local.tga
+}
+
+material textures/metal/wall_outdoor_24
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_24_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_24_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_24_local.tga
+}
+
+material textures/metal/wall_outdoor_25
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_25_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_25_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_25_local.tga
+}
+
+material textures/metal/wall_outdoor_lessspec_25
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_25_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_25_lessspec_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_25_local.tga
+}
+
+
+material textures/metal/wall_outdoor_26
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_26_d.tga
+		specularmap     picmip -2	textures/metal/wall_outdoor_26_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_26_local.tga
+}
+
+material textures/metal/wall_outdoor_lessspec_26
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_26_d.tga
+		specularmap     picmip -1	textures/metal/wall_outdoor_26_lessspec_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_26_local.tga
+}
+
+material textures/metal/wall_outdoor_27
+{
+		surfaceType 	"metal"
+
+		diffusemap	picmip -1	textures/metal/wall_outdoor_27_d.tga
+		specularmap     picmip -1	textures/metal/wall_outdoor_27_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_27_local.tga
+}
+
+material textures/metal/wall_outdoor_lessspec_27
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_27_d.tga
+		specularmap     picmip -1	textures/metal/wall_outdoor_27_lessspec_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_27_local.tga
+}
+
+material textures/metal/wall_outdoor_lessspec_27_noshadows
+{
+		noshadows
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_27_d.tga
+		specularmap     picmip -1	textures/metal/wall_outdoor_27_lessspec_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_27_local.tga
+}
+
+material textures/metal/wall_outdoor_28
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_28_d.tga
+		specularmap     picmip -1	textures/metal/wall_outdoor_28_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_28_local.tga
+}
+
+material textures/metal/wall_outdoor_29
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_29_d.tga
+		specularmap     picmip -1	textures/metal/wall_outdoor_29_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_29_local.tga
+}
+
+material textures/metal/wall_outdoor_29_1
+{
+		surfaceType 	"metal"
+		diffusemap	textures/metal/wall_outdoor_29_1_d.tga
+		specularmap     picmip -1	textures/metal/wall_outdoor_29_1_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_29_local.tga
+}
+
+material textures/metal/wall_outdoor_29_2
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/wall_outdoor_29_2_d.tga
+		specularmap     picmip -1	textures/metal/wall_outdoor_29_2_s.tga
+		bumpmap 	picmip -1	textures/metal/wall_outdoor_29_local.tga
+}
+
+material textures/metal/wall_metal_silo_1
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_silo_1_d.tga
+		specularmap     picmip -1	textures/metal/metal_silo_1_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_silo_1_local.tga
+}
+
+material textures/metal/wall_metal_silo_2
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_silo_2_d.tga
+		specularmap     picmip -1	textures/metal/metal_silo_2_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_silo_2_local.tga
+}
+
+material textures/metal/wall_metal_silo_3
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_silo_3_d.tga
+		specularmap     picmip -1	textures/metal/metal_silo_3_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_silo_3_local.tga
+}
+
+material textures/metal/wall_metal_silo_4
+{
+	surfaceType 	"metal"
+	{
+	diffusemap	picmip -1	textures/metal/metal_silo_4_d.tga
+	specularmap     picmip -1	textures/metal/metal_silo_4_s.tga
+	bumpmap 	picmip -1	textures/metal/metal_silo_4_local.tga
+	vertexcolor
+
+	diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+	bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+	specDetailMap			textures/detail/bump/metal_detail01_d.tga
+	detailMult 6,6,0,0 
+	}
+}
+
+material textures/metal/wall_metal_silo_4_noshadows
+{
+	noshadows
+	surfaceType 	"metal"
+	{
+	diffusemap	picmip -1	textures/metal/metal_silo_4_d.tga
+	specularmap     picmip -1	textures/metal/metal_silo_4_s.tga
+	bumpmap 	picmip -1	textures/metal/metal_silo_4_local.tga
+	vertexcolor
+
+	diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+	bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+	specDetailMap			textures/detail/bump/metal_detail01_d.tga
+	detailMult 6,6,0,0 
+	}
+}
+
+material textures/metal/steel_pipe_1
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/steel_pipe_1_d.tga
+		specularmap     picmip -1	textures/metal/steel_pipe_1_s.tga
+		bumpmap 	picmip -1	textures/metal/steel_pipe_1_local.tga
+}
+
+material textures/metal/steel_pipe_2
+{
+	surfaceType 	"metal"
+	{
+		diffusemap	picmip -1	textures/metal/steel_pipe_2_d.tga
+		specularmap     picmip -2	textures/metal/steel_pipe_2_s.tga
+		bumpmap 	picmip -1	textures/metal/steel_pipe_2_local.tga
+		
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+        	detailMult 2,2,0,0
+        }
+}
+
+material textures/metal/steel_pipe_3
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/steel_pipe_3_d.tga
+		specularmap     picmip -1	textures/metal/steel_pipe_3_s.tga
+		bumpmap 	picmip -1	textures/metal/steel_pipe_3_local.tga
+}
+
+material textures/metal/metal_door_1
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_door_1_d.tga
+		specularmap     picmip -1	textures/metal/metal_door_1_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_door_1_local.tga
+}
+
+material textures/metal/metal_door_2
+{
+	surfaceType 	"metal"
+	{
+ 		diffusemap	picmip -1	textures/metal/metal_door_2_d.tga
+ 		specularmap	picmip -1	textures/metal/metal_door_2_s.tga
+ 		bumpmap		picmip -1	textures/metal/metal_door_2_local.tga
+ 		
+ 		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+ 		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+ 		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	3,3,0,0
+ 	}
+}
+
+material textures/metal/metal_door_3
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_door_3_d.tga
+		specularmap     picmip -1	textures/metal/metal_door_3_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_door_3_local.tga
+}
+
+material textures/metal/metal_door_4
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_door_4_d.tga
+		specularmap     picmip -1	textures/metal/metal_door_4_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_door_4_local.tga
+}
+
+material textures/metal/metal_ballustrade1
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_ballustrade1_d.tga
+		specularmap     picmip -1	textures/metal/metal_ballustrade1_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_ballustrade1_local.tga
+}
+
+material textures/metal/metal_floor_net_1
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_floor_net_1_d.tga
+		specularmap     picmip -1	textures/metal/metal_floor_net_1_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_floor_net_1_local.tga
+}
+
+material textures/metal/metal_trim1
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_trim1_d.tga
+		specularmap     picmip -1	textures/metal/metal_trim1_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_trim1_local.tga
+}
+
+material textures/metal/metal_trim2
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_trim2_d.tga
+		specularmap     picmip -1	textures/metal/metal_trim2_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_trim2_local.tga
+}
+
+material textures/metal/metal_trim3
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_trim3_d.tga
+		specularmap     picmip -1	textures/metal/metal_trim3_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_trim3_local.tga
+}
+
+material textures/metal/metal_trim4
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_trim4_d.tga
+		specularmap     picmip -1	textures/metal/metal_trim4_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_trim4_local.tga
+}
+
+material textures/metal/metal_trim5
+{
+	surfaceType 	"metal"
+	{
+		diffusemap	picmip -1	textures/metal/metal_trim5_d.tga
+		specularmap	picmip -1	textures/metal/metal_trim5_s.tga
+		bumpmap		picmip -1	textures/metal/metal_trim5_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	4,0.5,0,0
+	}
+}
+
+material textures/metal/metal_trim6
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_trim6_d.tga
+		specularmap     picmip -1	textures/metal/metal_trim6_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_trim6_local.tga
+}
+
+material textures/metal/metal_trim7
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_trim7_d.tga
+		specularmap     picmip -1	textures/metal/metal_trim7_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_trim7_local.tga
+}
+
+material textures/metal/metal_trim8
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_trim8_d.tga
+		specularmap     picmip -1	textures/metal/metal_trim8_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_trim8_local.tga
+}
+
+material textures/metal/metal_trim9
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_trim9_d.tga
+		specularmap     picmip -1	textures/metal/metal_trim9_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_trim9_local.tga
+}
+
+material textures/metal/metal_trim10
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_trim10_d.tga
+		specularmap     picmip -1	textures/metal/metal_trim10_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_trim10_local.tga
+}
+
+material textures/metal/metal_trim11
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_trim11_d.tga
+		specularmap     picmip -1	textures/metal/metal_trim11_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_trim11_local.tga
+}
+
+material textures/metal/metal_railing1
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_railing1_d.tga
+		specularmap     picmip -1	textures/metal/metal_railing1_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_railing1_local.tga
+}
+
+material textures/metal/metal_railing2
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures/metal/metal_railing2_d.tga
+		specularmap	picmip -1	textures/metal/metal_railing2_s.tga
+		bumpmap		picmip -1	textures/metal/metal_railing2_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	2,1,0,0
+	}
+}
+
+material textures/metal/metal_railing2_ns
+{
+	noshadows
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures/metal/metal_railing2_d.tga
+		specularmap	picmip -1	textures/metal/metal_railing2_s.tga
+		bumpmap		picmip -1	textures/metal/metal_railing2_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	2,1,0,0
+	}
+}
+
+material textures/metal/metal_railing3
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_railing3_d.tga
+		specularmap     picmip -1	textures/metal/metal_railing3_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_railing3_local.tga
+}
+
+material textures/metal/metal_railing3_1
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_railing3_1_d.tga
+		specularmap     picmip -1	textures/metal/metal_railing3_1_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_railing3_1_local.tga
+}
+
+material textures/metal/metal_railing3_2
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_railing3_2_d.tga
+		specularmap     picmip -1	textures/metal/metal_railing3_2_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_railing3_local.tga
+}
+
+material textures/metal/metal_railing3_smaller
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_railing3_smaller_d.tga
+		specularmap     picmip -1	textures/metal/metal_railing3_smaller_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_railing3_smaller_local.tga
+}
+
+material textures/metal/metal_railing3_1_smaller
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_railing3_1_smaller_d.tga
+		specularmap     picmip -1	textures/metal/metal_railing3_1_smaller_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_railing3_1_smaller_local.tga
+}
+
+material textures/metal/metal_railing3_2_smaller
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_railing3_2_smaller_d.tga
+		specularmap     picmip -1	textures/metal/metal_railing3_2_smaller_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_railing3_smaller_local.tga
+}
+
+material textures/metal/metal_plate1
+{
+	surfaceType 	"metal"
+	{
+		diffusemap	picmip -1	textures/metal/metal_plate1_d.tga
+		specularmap     picmip -2	textures/metal/metal_plate1_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_plate1_local.tga
+		
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+        	detailMult 2,2,0,0
+        }
+}
+
+material textures/metal/metal_dev1
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_device_1_d.tga
+		specularmap     picmip -1	textures/metal/metal_device_1_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_device_1_local.tga
+}
+
+material textures/metal/metal_dev2
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_device_2_d.tga
+		specularmap     picmip -1	textures/metal/metal_device_2_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_device_2_local.tga
+ 	{
+		blend add
+		map		picmip -1	textures/metal/metal_device_2_glow.tga
+		maskAlpha
+	}
+}
+
+material textures/metal/metal_dev3
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_device_3_d.tga
+		specularmap     picmip -1	textures/metal/metal_device_3_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_device_3_local.tga
+}
+
+material textures/metal/metal_dev4
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_device_4_d.tga
+		specularmap     picmip -1	textures/metal/metal_device_4_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_device_4_local.tga
+}
+
+material textures/metal/metal_dev5
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_device_5_d.tga
+		specularmap     picmip -1	textures/metal/metal_device_5_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_device_5_local.tga
+}
+
+material textures/metal/metal_dev6
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_device_6_d.tga
+		specularmap     picmip -1	textures/metal/metal_device_6_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_device_6_local.tga
+}
+
+material textures/metal/metal_dev7
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	textures/metal/metal_device_7_d.tga
+		specularmap     picmip -1	textures/metal/metal_device_7_s.tga
+		bumpmap 	picmip -1	textures/metal/metal_device_7_local.tga
+}
+
+material texturesheets/desert_theme/desert_wall_1
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	texturesheets/desert_theme/desert_wall_1_ts_d.tga
+		specularmap     picmip -1	texturesheets/desert_theme/desert_wall_1_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/desert_theme/desert_wall_1_ts_local.tga
+}
+
+material texturesheets/desert_theme/desert_wall_2
+{
+		surfaceType 	"metal"
+		diffusemap	picmip -1	texturesheets/desert_theme/desert_wall_2_ts_d.tga
+		specularmap     picmip -1	texturesheets/desert_theme/desert_wall_2_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/desert_theme/desert_wall_2_ts_local.tga
+}
+
+material textures/salvage/railnetwork_exterior
+{
+		surfaceType 	"metal"
+		{
+		diffusemap	picmip -1	textures/salvage/railnetwork_exterior_d.tga
+		specularmap     picmip -1	textures/salvage/railnetwork_exterior_s.tga
+		bumpmap 	picmip -1	textures/salvage/railnetwork_exterior_local.tga
+		vertexColor
+		}
+}

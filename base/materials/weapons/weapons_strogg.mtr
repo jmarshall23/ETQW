@@ -1,0 +1,393 @@
+/**************************************************************
+	Strogg Stroyent Tubes
+**************************************************************/
+
+
+material models/weapons/stroyenttube
+
+{
+	qer_editorimage textures/strogg/fluid_red_bubble1.tga
+	NoShadows
+	noselfshadow
+	forceshadows
+	translucent
+	nonSolid
+	
+	sort postprocess
+
+   	{
+   		blend add
+   		map textures/strogg/fluid_grey_bubble1.tga
+   		scroll 0.1, time * 0
+   		scale 3, 1
+   		red	1
+   		green	0.25
+   		blue	0
+   		vertexcolor
+  	}
+	{
+		blend add
+		map textures/strogg/fluid_grey_bubble1.tga
+		scroll time * 0.2, time * 0.01
+		scale 3, 1
+		red	1
+		green	0.25
+		blue	0
+		vertexcolor
+  	}
+	{
+		blend add
+		map textures/strogg/fluid_grey_bubble2.tga
+		scroll	0.5, time * 0
+		scale 3, 1
+		red	sinTable[ time / 3 ]-0.1
+		green	sinTable[ time / 3 ]-0.7
+		blue	sinTable[ time / 3 ]-0.9
+		vertexcolor
+	}
+
+	{
+		blend blend
+		program sfx/visor
+		bumpMap	picmip -1 models/items/stroyentcells/glass_local3.tga
+		parameters 1, 0.5, 0.1
+		//scroll 0, time * .25
+	}
+}
+
+//specific hack because the UV's were screwed (Rich)
+
+material models/weapons/stroyenttube_nailgun
+
+{
+	qer_editorimage textures/strogg/fluid_red_bubble1.tga
+	NoShadows
+	noselfshadow
+	forceshadows
+	translucent
+	nonSolid
+	
+	sort postprocess
+
+   	{
+   		blend add
+   		map textures/strogg/fluid_grey_bubble1.tga
+   		scroll 0, time * 0.2
+   		scale 0.5, 2
+   		red	1
+   		green	0.25
+   		blue	0
+   		vertexcolor
+  	}
+	{
+		blend add
+		//map textures/strogg/fluid_grey_bubble1.tga
+		scroll time * 0.01, time * 0.2
+		scale 0.5, 4
+		red	1
+		green	0.25
+		blue	0
+		vertexcolor
+  	}
+	{
+		blend add
+		map textures/strogg/fluid_grey_bubble2.tga
+		scroll	 time * 0.5, 0
+		scale 0.5, 4
+		red	sinTable[ time / 3 ]-0.1
+		green	sinTable[ time / 3 ]-0.7
+		blue	sinTable[ time / 3 ]-0.9
+		vertexcolor
+	}
+
+	{
+		blend blend
+		program sfx/visor
+		bumpMap	picmip -1 models/items/stroyentcells/glass_local3.tga
+		parameters 1, 0.5, 0.1
+		//scroll 0, time * .25
+	}
+}
+
+
+/**************************************************************
+	Strogg railgun
+**************************************************************/
+
+material models/weapons/strogg_rail_gun/rail_gun
+{
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/weapons/rail_gun/rail_gun_local.tga models/weapons/rail_gun/dev_sd/hi.lwo
+	noshadows
+  	{
+		program	interaction/strogg
+		diffusemap		picmip -1 partialLoad models/weapons/strogg_rail_gun/rail_gun_d.tga
+		specularmap		picmip -2 partialLoad models/weapons/strogg_rail_gun/rail_gun_s.tga
+		bumpmap			picmip -1 partialLoad addnormals(models/weapons/strogg_rail_gun/rail_gun_local.tga, heightmap(models/weapons/strogg_rail_gun/rail_gun_h.tga, 5 ) )
+		selfIllumMap	picmip -2 partialLoad models/weapons/strogg_rail_gun/rail_gun_glow.tga
+	} 	
+}
+
+material models/weapons/strogg_rail_gun/rail_gun_world
+{
+	noshadows
+	renderbump -size 512 512 -clampOutput 0 0 1 1 -colormap models/weapons/strogg_rail_gun/rail_gun_world_local.tga models/weapons/rail_gun/dev_sd/hi_world.lwo
+
+		{
+
+		program	interaction/strogg
+		diffusemap		picmip -1 models/weapons/strogg_rail_gun/rail_gun_world_d.tga
+		specularmap		picmip -2 models/weapons/strogg_rail_gun/rail_gun_world_s.tga
+		bumpmap			picmip -1  addnormals(models/weapons/strogg_rail_gun/rail_gun_world_local.tga, heightmap(models/weapons/strogg_rail_gun/rail_gun_world_h.tga, 5 ) )
+		selfIllumMap	models/weapons/strogg_rail_gun/rail_gun_world_glow.tga
+	}
+}
+
+/**************************************************************
+	Strogg Hyperblaster
+**************************************************************/
+
+material models/weapons/strogg_hyperblaster/hyperblaster
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/hyperblaster/hyperblaster_local.tga models/weapons/hyperblaster/dev_sd/hyperblaster_high.lwo
+ 	{
+		program	interaction/strogg
+		diffusemap		picmip -1 partialLoad models/weapons/strogg_hyperblaster/hyperblaster_d.tga
+		specularmap		picmip -2 partialLoad models/weapons/strogg_hyperblaster/hyperblaster_s.tga
+		bumpmap			picmip -1 partialLoad addnormals(models/weapons/strogg_hyperblaster/hyperblaster_local.tga, heightmap(models/weapons/strogg_hyperblaster/hyperblaster_h.tga, 10 ) )
+		selfIllumMap	picmip -2 partialLoad models/weapons/strogg_hyperblaster/hyperblaster_glow.tga
+	}  	
+}
+
+material models/weapons/strogg_hyperblaster/hyperblaster_world
+{
+		noshadows
+		renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/hyperblaster/hyperblaster_world_local.tga models/weapons/hyperblaster/dev_sd/hyperblaster_world_high.lwo
+	{
+		program	interaction/strogg
+		diffusemap	picmip -1	models/weapons/strogg_hyperblaster/hyperblaster_world_d.tga
+		specularmap	picmip -2	models/weapons/strogg_hyperblaster/hyperblaster_world_s.tga
+		bumpmap	picmip -1 	models/weapons/strogg_hyperblaster/hyperblaster_world_local.tga
+		selfIllumMap	picmip -2 partialLoad models/weapons/strogg_hyperblaster/hyperblaster_glow.tga
+	}
+}
+
+/**************************************************************
+	Strogg Lightning Pistol
+**************************************************************/
+
+material models/weapons/lightning_pistol/lightning_pistol
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/lightning_pistol/lightning_pistol_local.tga models/weapons/lightning_pistol/dev_sd/lightning_pistol_high.lwo
+	diffusemap	picmip -1 partialLoad models/weapons/lightning_pistol/lightning_pistol_d.tga
+	specularmap	picmip -2 partialLoad models/weapons/lightning_pistol/lightning_pistol_s.tga
+	bumpmap		picmip -1 partialLoad addnormals(models/weapons/lightning_pistol/lightning_pistol_local.tga, heightmap(models/weapons/lightning_pistol/lightning_pistol_h.tga, 5 ) )
+}
+
+material models/weapons/lightning_pistol/lightning_pistol_world
+{
+	noshadows
+	renderbump -size 512 512 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/lightning_pistol/lightning_pistol_world_local.tga models/weapons/lightning_pistol/dev_sd/lightning_pistol_world_high.lwo
+	diffusemap	picmip -1	models/weapons/lightning_pistol/lightning_pistol_world_d.tga
+	specularmap	picmip -2	models/weapons/lightning_pistol/lightning_pistol_world_s.tga
+	bumpmap	picmip -1 	models/weapons/lightning_pistol/lightning_pistol_world_local.tga
+}
+
+/**************************************************************
+	Strogg Forearm Spike
+**************************************************************/
+
+material models/weapons/strogg_forearm_spike/strogg_forearm_spike
+{
+	renderbump -size 1024 512 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/strogg_forearm_spike/forearm_spike_local.tga models/weapons/strogg_forearm_spike/forearm_spike_hi.lwo
+	noshadows
+	{
+	program	interaction/strogg
+	diffusemap		picmip -1 models/weapons/strogg_forearm_spike/forearm_spike_d.tga
+	specularmap		picmip -2 models/weapons/strogg_forearm_spike/forearm_spike_s.tga
+	bumpmap			picmip -1 addnormals(models/weapons/strogg_forearm_spike/forearm_spike_local.tga, heightmap(models/weapons/strogg_forearm_spike/forearm_spike_h.tga, 5 ) )
+	selfIllumMap	picmip -2 models/weapons/strogg_forearm_spike/forearm_spike_glow.tga
+  	}
+}
+
+material models/weapons/strogg_forearm_spike/strogg_forearm_spike_thirdperson
+{
+	noshadows
+	{
+	program	interaction/strogg
+	diffusemap		picmip -1 models/weapons/strogg_forearm_spike/forearm_spike_thirdperson_d.tga
+	specularmap		picmip -2 models/weapons/strogg_forearm_spike/forearm_spike_thirdperson_s.tga
+	bumpmap			picmip -1 addnormals(models/weapons/strogg_forearm_spike/forearm_spike_thirdperson_local.tga, heightmap(models/weapons/strogg_forearm_spike/forearm_spike_thirdperson_h.tga, 5 ) )
+	selfIllumMap	picmip -2 models/weapons/strogg_forearm_spike/forearm_spike_thirdperson_glow.tga
+  	}
+}
+
+/**************************************************************
+	Strogg Lazor Rifle
+**************************************************************/
+
+material models/weapons/strogg_lacerator/lacerator
+{	
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/lazor_rifle/lazor_rifle_local.tga models/weapons/lazor_rifle/lazor_rifle_hi.lwo
+	diffusemap	picmip -1 models/weapons/strogg_lacerator/lacerator_d.tga
+	specularmap	picmip -2 models/weapons/strogg_lacerator/lacerator_s.tga
+	bumpmap		picmip -1 addnormals(models/weapons/strogg_lacerator/lacerator_local.tga, heightmap(models/weapons/strogg_lacerator/lacerator_h.tga, 5 ) )
+}
+
+material models/weapons/strogg_lacerator/lacerator_world
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/lazor_rifle/lazor_rifle_local.tga models/weapons/lazor_rifle/lazor_rifle_hi.lwo
+	diffusemap	picmip -1	models/weapons/strogg_lacerator/lacerator_world_d.tga
+	specularmap	picmip -2	models/weapons/strogg_lacerator/lacerator_world_s.tga
+	bumpmap	picmip -1 	addnormals(models/weapons/strogg_lacerator/lacerator_world_local.tga, heightmap(models/weapons/strogg_lacerator/lacerator_world_h.tga, 5 ) )
+}
+
+/**************************************************************
+	Strogg Blaster
+**************************************************************/
+
+material models/weapons/strogg_blaster/blaster
+{
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/weapons/blaster/blaster_local.tga models/weapons/blaster/blaster_hi.lwo
+	noshadows
+ 	{
+		program	interaction/strogg
+		diffusemap		picmip -1 partialLoad models/weapons/strogg_blaster/blaster_d.tga
+		specularmap		picmip -2 partialLoad models/weapons/strogg_blaster/blaster_s.tga
+		bumpmap			picmip -1 partialLoad addnormals(models/weapons/strogg_blaster/blaster_local.tga, heightmap(models/weapons/strogg_blaster/blaster_h.tga, 4 ) )
+		selfIllumMap	picmip -2 partialLoad models/weapons/strogg_blaster/blaster_glow.tga
+	}  	
+}
+
+material models/weapons/strogg_blaster/blaster_world
+{
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/weapons/blaster/blaster_thirdperson_local.tga models/weapons/blaster/blaster_hi.lwo
+	noshadows
+	{	
+		diffusemap		picmip -1 models/weapons/strogg_blaster/blaster_thirdperson_d.tga
+		specularmap		picmip -2 models/weapons/strogg_blaster/blaster_thirdperson_s.tga
+		bumpmap			picmip -1 addnormals(models/weapons/strogg_blaster/blaster_thirdperson_local.tga, heightmap(models/weapons/strogg_blaster/blaster_thirdperson_h.tga, 4 ) )
+		selfIllumMap	picmip -2 models/weapons/strogg_blaster/blaster_thirdperson_glow.tga
+	}  	
+}
+
+/**************************************************************
+ Strogg Nailgun
+**************************************************************/
+
+material models/weapons/strogg_nailgun/strogg_nailgun_rework
+{ 	
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/weapons/strogg_nailgun/strogg_nailgun_rework_local.tga models/weapons/strogg_nailgun/strogg_nailgun_rework_hi.lwo
+	noshadows
+	{
+	program	interaction/selfillum
+	diffusemap		picmip -1 partialLoad models/weapons/strogg_nailgun/strogg_nailgun2_d.tga
+	specularmap		picmip -2 partialLoad models/weapons/strogg_nailgun/strogg_nailgun2_s.tga
+	bumpmap			picmip -1 partialLoad models/weapons/strogg_nailgun/strogg_nailgun2_local.tga
+	selfIllumMap	picmip -2 partialLoad models/weapons/strogg_nailgun/strogg_nailgun2_glow.tga
+	}
+}
+
+
+material models/weapons/strogg_nailgun/strogg_nailgun_world
+{
+ 	noShadows
+	renderbump 		-size 2048 2048 -overdrawMap -clampOutput 0 0 1 1 models/weapons/strogg_nailgun/strogg_nailgun_world_local.tga models/weapons/strogg_nailgun/nailgun_hp.lwo
+	
+ 	{
+ 		diffusemap		picmip -1 models/weapons/strogg_nailgun/strogg_nailgun_d.tga
+ 		specularmap		picmip -2 models/weapons/strogg_nailgun/strogg_nailgun_s.tga
+  	 	bumpmap			picmip -1 models/weapons/strogg_nailgun/strogg_nailgun_local.tga
+		selfIllumMap	picmip -2 models/weapons/strogg_nailgun/strogg_nailgun_glow.tga
+	}  		
+}
+
+material models/weapons/strogg_nailgun/nail
+{
+	noShadows
+	
+	{
+		map _black
+	}
+}
+
+/**************************************************************
+	Strogg Obliterator Rework
+**************************************************************/
+
+material models/weapons/strogg_obliterator/strogg_obliterator_rework
+{
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/strogg_obliterator/strogg_obliterator_rework_local.tga models/weapons/strogg_obliterator/strogg_obliterator_rework_hi.ase
+	noshadows
+	{
+	program		interaction/selfillum
+	diffusemap		picmip -1 partialLoad models/weapons/strogg_obliterator/strogg_obliterator_d.tga
+	specularmap		picmip -2 partialLoad models/weapons/strogg_obliterator/strogg_obliterator_s.tga
+	bumpmap			picmip -1 partialLoad addnormals(models/weapons/strogg_obliterator/strogg_obliterator_rework_local.tga, heightmap(models/weapons/strogg_obliterator/strogg_obliterator_h.tga, 3 ) )
+	selfillummap	picmip -2 partialLoad models/weapons/strogg_obliterator/strogg_obliterator_glow.tga
+	}
+}
+
+material models/weapons/strogg_obliterator/strogg_obliterator_rework_world
+{
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/strogg_obliterator/strogg_obliterator_rework_local.tga models/weapons/strogg_obliterator/strogg_obliterator_rework_hi.ase
+	noshadows
+	{
+	//program		interaction/selfillum
+	diffusemap		picmip -1 models/weapons/strogg_obliterator/strogg_obliterator_world_d.tga
+	specularmap		picmip -2 models/weapons/strogg_obliterator/strogg_obliterator_world_s.tga
+	bumpmap			picmip -1 addnormals(models/weapons/strogg_obliterator/strogg_obliterator_rework_world_local.tga, heightmap(models/weapons/strogg_obliterator/strogg_obliterator_world_h.tga, 3 ) )
+	//selfillummap	picmip -2 models/weapons/strogg_obliterator/strogg_obliterator_glow.tga
+	}
+}
+
+/**************************************************************
+ Strogg obliterator
+ renderbump models/weapons/strogg_obliterator/obliterator_lp.lwo
+ testModel models/weapons/strogg_obliterator/obliterator.lwo
+**************************************************************/
+
+material models/weapons/strogg_obliterator/strogg_obliterator
+{
+ 	noShadows
+	renderbump 		-size 2048 2048 	-clampOutput 0 0 1 1	-overdrawMap models/weapons/strogg_obliterator/strogg_obliterator_local.tga 		models/weapons/strogg_obliterator/obliterator_hp.lwo
+	diffusemap		models/weapons/strogg_obliterator/obliterator_d.tga
+	specularmap		models/weapons/strogg_obliterator/obliterator_s.tga
+   	bumpmap			addnormals(models/weapons/strogg_obliterator/strogg_obliterator_local.tga, heightmap(models/weapons/strogg_obliterator/obliterator_h.tga, 6 ) )
+}
+
+/**************************************************************
+ Strogg obliterator world
+ renderbump models/weapons/strogg_obliterator/obliterator_world_lp.lwo
+ testModel models/weapons/strogg_obliterator/obliterator_world.lwo
+**************************************************************/
+
+material models/weapons/strogg_obliterator/strogg_obliterator_world
+{
+ 	noShadows
+	renderbump 		-size 4096	4096 	-clampOutput 0 0 1 1	models/weapons/strogg_obliterator/strogg_obliterator_world_local.tga 	models/weapons/strogg_obliterator/obliterator_hp.lwo
+	diffusemap	picmip -1		textures/common/dark_gray.tga
+	specularmap	picmip -1		textures/common/dark_gray.tga
+   	bumpmap			models/weapons/strogg_obliterator/strogg_obliterator_world_local.tga
+}
+/**************************************************************
+ Strogg stroy_bomb
+**************************************************************/
+material models/weapons/strogg_stroybomb/strogg_stroybomb
+{
+	renderbump -size 1024 1024 -colorMap -trace 0.05 -clampTextureSpace -overdrawMap models/weapons/strogg_stroybomb/strogg_stroybomb_local.tga models/weapons/strogg_stroybomb/strogg_stroybomb_h.lwo
+	noshadows
+	{
+	program	interaction/strogg
+	diffusemap 	picmip -1 models/weapons/strogg_stroybomb/strogg_stroybomb_d.tga
+	specularmap	picmip -2 models/weapons/strogg_stroybomb/strogg_stroybomb_s.tga
+	bumpmap		picmip -1 addnormals (models/weapons/strogg_stroybomb/strogg_stroybomb_local.tga, heightmap (models/weapons/strogg_stroybomb/strogg_stroybomb_h.tga, 4 ) )
+	selfIllumMap 	picmip -2 models/weapons/strogg_stroybomb/strogg_stroybomb_glow.tga
+	}
+	
+}
+
+

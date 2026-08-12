@@ -1,0 +1,139 @@
+
+#include <guis/game/hud/hud.include>
+
+gui game/sights/repair_drone {
+
+	properties {
+		float oldPostProcess;
+	}
+	events {
+		onActivate {
+			oldPostProcess = immediate( globals.gameHud.showPostProcess );
+			globals.gameHud.showPostProcess = 1;
+		}
+		onDeactivate {
+			globals.gameHud.showPostProcess = immediate( oldPostProcess );
+		}
+	}
+	materials {
+		"textures/sfx/railgunScope"	"textures/sfx/railgunScope"
+		"binocs"	"guis/assets/qet/binocs"
+
+		"guis/assets/weapons/sniper/border"		"guis/assets/weapons/sniper/border"
+		"guis/assets/weapons/sniper/circle"		"guis/assets/weapons/sniper/circle"
+		"guis/assets/weapons/sniper/circlelines1"	"guis/assets/weapons/sniper/circlelines1"
+		"guis/assets/weapons/sniper/circlelines2"	"guis/assets/weapons/sniper/circlelines2"
+		"guis/assets/weapons/sniper/circleticks"	"guis/assets/weapons/sniper/circleticks"
+	}
+
+	windowDef desktop {
+	}
+
+	windowDef scopeEffect {
+		properties {
+			color backColor = 0.3, 1, 1, 1;
+			string material = "textures/sfx/railgunScope";
+		}
+	}
+	windowDef binobgTicks {
+		properties {
+			rect rect = 90,20,460,440;
+			color backColor = 1,0,0,0.8;
+			string material = "guis/assets/weapons/sniper/circleticks";
+			float rotation = player.yaw + 78;
+		}
+		timeline {
+			onTime 50 {
+				backColor = transition( "1,0,0,0.8", "0.75,0,0,0.8", 50 );
+			}
+			onTime 100 {
+				backColor = transition( "0.75,0,0,0.8", "1,0,0,0.8", 50 );
+				timeline.default.resetTime( 0 );
+			}
+		}
+	}
+
+	windowDef binobgTL {
+		properties {
+			rect rect = 	-40,-100,360,340;
+			color backColor = 0,0,0,1;
+			string material = "guis/assets/weapons/sniper/circle";
+		}
+		timeline {
+			onTime 0 {
+				backColor.a = transition( 0, 1, 350 );
+			}
+		}
+	}
+	windowDef binobgTR {
+		properties {
+			rect rect = 	320,-100,-360,340;
+			color backColor = 0,0,0,1;
+			string material = "guis/assets/weapons/sniper/circle";
+		}
+		timeline {
+			onTime 0 {
+				backColor.a = transition( 0, 1, 350 );
+			}
+		}
+	}
+	windowDef binobgBL {
+		properties {
+			rect rect = 	-40,240,360,-340;
+			color backColor = 0,0,0,1;
+			string material = "guis/assets/weapons/sniper/circle";
+		}
+		timeline {
+			onTime 0 {
+				backColor.a = transition( 0, 1, 350 );
+			}
+		}
+	}
+	windowDef binobgBR {
+		properties {
+			rect rect = 	320,240,-360,-340;
+			color backColor = 0,0,0,1;
+			string material = "guis/assets/weapons/sniper/circle";
+		}
+		timeline {
+			onTime 0 {
+				backColor.a = transition( 0, 1, 350 );
+			}
+		}
+	}
+	
+	windowDef binocularsBlockLeft {
+		properties {
+			rect rect = 0,0,30,480;
+			color backColor = 0,0,0,1;
+		}
+		timeline {
+			onTime 0 {
+				backColor.a = transition( 0, 1, 250 );
+			}
+		}
+	}
+	windowDef binocularsBlockRight {
+		properties {
+			rect rect = 610,0,30,480;
+			color backColor = 0,0,0,1;
+		}
+		timeline {
+			onTime 0 {
+				backColor.a = transition( 0, 1, 250 );
+			}
+		}
+	}
+	windowDef binoculars {
+		properties {
+			rect rect = 30,0,580,480;
+			color backColor = 1,1,1,1;
+			string material = "binocs";
+		}
+		timeline {
+			onTime 0 {
+				backColor.a = transition( 0, 1, 250 );
+			}
+		}
+	}
+}

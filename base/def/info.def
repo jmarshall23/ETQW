@@ -1,0 +1,321 @@
+/***********************************************************************
+
+ info
+
+***********************************************************************/
+
+entityDef info_team_gdf_spawn {
+	"editor_color"			"1 0 0"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+	"editor_showangle"		"1"
+	"editor_camerastart"	"1"
+	
+	"editor_var target"		"the entity that the player will spawn facing"
+
+	"spawnclass"			"idPlayerStart"
+
+	"require1"				"team_gdf"
+
+	"editor_preview_model"	"models/mapobjects/helpers/gdf_player.lwo"
+}
+
+entityDef info_team_strogg_spawn {
+	"editor_color"			"0 0 1"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+	"editor_showangle"		"1"
+	"editor_camerastart"	"1"
+	
+	"editor_var target"		"the entity that the player will spawn facing"
+	
+
+	"spawnclass"			"idPlayerStart"
+
+	"require1"				"team_strogg"
+
+	"editor_preview_model"	"models/mapobjects/helpers/strogg_player.lwo"
+}
+
+entityDef info_generic_spawn {
+	"editor_color"			"1 1 1"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+	"editor_showangle"		"1"
+	"editor_camerastart"	"1"
+	
+	"editor_var target"		"the entity that the player will spawn facing"
+	
+
+	"spawnclass"			"idPlayerStart"
+}
+
+entityDef info_spectator_spawn {
+	"editor_color"			"1 1 1"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+	"editor_showangle"		"1"
+	"editor_camerastart"	"1"
+	
+	"editor_var target"		"the entity that the player will spawn facing"
+	
+
+	"spawnclass"			"idPlayerStart"
+
+	"require1"				"spectator"
+}
+
+entityDef info_spawn_master {
+	"editor_color"			"1 0 1"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+	"editor_showangle"		"1"
+	"editor_camerastart"	"1"
+
+	"spawnclass"			"sdSpawnController"
+	"scriptobject"			"spawn_master"
+
+	"require_spawn1"		"same_team"
+
+	"mtr_icon_gdf"			"hud/commandmap/spawn_edf"
+	"mtr_icon_strogg"		"hud/commandmap/spawn_edf"
+	"mtr_icon_selected"		"hud/commandmap/spawn_selected"
+	"mtr_icon_default"		"hud/commandmap/spawn_default"
+	
+	"mtr_commandmapicon_tracking"		"guis/assets/icons/tracking"
+
+	"snd_selected"			"sounds/ui/main/select_01"
+
+	"option_gui_interface"	"1"
+
+	"icon_size_cm"			"48"
+	"icon_sort_cm"			"-200"
+	
+	"editor_var	homebase" 	"Sets this spawn as the main base - where the bots will spawn back at to grab vehicles. Set on only one spawn per map. 1 = homebase"
+}
+
+skin commandpost_neutral {
+	models/mapobjects/command_post/screen		_black
+}
+
+skin commandpost_gdf {
+}
+
+skin commandpost_strogg {
+	models/mapobjects/command_post/screen		_black
+}
+
+skin stroggpost_neutral {
+	models/structures/strogg/command_post/command_post_fx		textures/common/invisible
+	models/structures/strogg/command_post/command_post_3		models/structures/strogg/command_post/command_post_3_neutral
+}
+
+skin stroggpost_strogg {
+}
+
+
+
+entityDef info_capturable_spawn {
+	"editor_color"						"0 .5 .8"
+	"editor_mins"						"-8 -8 -8"
+	"editor_maxs"						"8 8 8"
+	
+	"editor_var strogg_disabled"		"Set this to 1 for GDF-only spawns"
+	"editor_var gdf_disabled"			"Set this to 1 for Strogg-only spawns"	
+	"editor_var screen_name"			"This is the name of the location. Eg. Glass House Spawn"
+	"editor_var spawn_priority_gdf"		"Set the spawn priority. Higher numbers take priority."	
+	"editor_var spawn_priority_strogg"	"Set the spawn priority. Higher numbers take priority."
+	"editor_var target_gdf1"			"The first auto_deployable (vehicle) you want to spawn. There can be more than two."
+	"editor_var target_gdf2"			"The second auto_deployable (vehicle) you want to spawn. There can be more than two."
+	"editor_var target_strogg1"			"The first auto_deployable (vehicle) you want to spawn. There can be more than two."
+	"editor_var target_strogg2"			"The second auto_deployable (vehicle) you want to spawn. There can be more than two."	
+
+	"maxVisDist"						"3072"
+	
+	"require_spawn1"					"same_team"
+
+	"mtr_icon_gdf"						"hud/commandmap/spawn_edf"
+	"mtr_icon_strogg"					"hud/commandmap/spawn_edf"
+	"mtr_icon_selected"					"hud/commandmap/spawn_selected"
+	"mtr_icon_default"					"hud/commandmap/spawn_default"
+	
+	"mtr_unavailable_icon_gdf"			"hud/commandmap/spawn_unavailable"
+	"mtr_unavailable_icon_strogg"		"hud/commandmap/spawn_unavailable"
+	
+	"mtr_commandmapicon_tracking"		"guis/assets/icons/tracking"
+	
+	"option_gui_interface"				"1"
+	"option_crosshair_interface"		"1"
+	"option_interactive_interface"		"1"
+
+	"icon_size_cm"						"32"
+	"icon_sort_cm"						"-10"
+	
+	"spawnclass"						"sdSpawnController"
+	"scriptobject"						"capturable_spawn"
+	
+	"tt_intro_liberate_1"				"capturable_spawn_intro_liberate_1"
+	"tt_intro_capture_1"				"capturable_spawn_intro_capture_1"
+	
+	"snd_capture_gdf"					""
+	"snd_capture_strogg"				""
+	"snd_enemycapture_gdf"				""
+	"snd_enemycapture_strogg"			""
+	"snd_liberate_gdf"					""
+	"snd_liberate_strogg"				""
+	"snd_enemyliberate_gdf"				""
+	"snd_enemyliberate_strogg"			""
+	"snd_capturing_gdf"					"sounds/forwardspawn/gdf"
+	"snd_capturing_strogg"				"sounds/forwardspawn/strogg"
+	"snd_capture_local"					"sounds/forwardspawn/capture"
+	"snd_selected"						"sounds/ui/main/select_01"
+	
+	"qc_capture"						"quickchat/commands/captureforwardspawn"
+	"qc_liberate"						"quickchat/context/liberateforwardspawn"
+	"qc_defend"							"quickchat/context/defendforwardspawn"
+}
+
+entityDef info_capturable_spawn_gdf {
+	"editor_color"				"1 .25 .25"
+	
+	"inherit"					"info_capturable_spawn"
+
+	"model"						"models/structures/edf/command_post/command_post.lwo"
+	"cm_model"					"models/structures/edf/command_post/command_post.lwo"
+	
+	"strogg_disabled"			"1"
+	
+	"prof_capture"				"pro_battlesense_spawn_capture"
+	"prof_liberate"				"pro_battlesense_spawn_liberate"
+	
+	"skin_owner_neutral"		"commandpost_neutral"
+	"skin_owner_strogg"			"commandpost_strogg"
+	"skin_owner_gdf"			"commandpost_gdf"
+}
+
+entityDef info_capturable_spawn_strogg {
+	"editor_color"				".25 .25 1"
+	
+	"inherit"					"info_capturable_spawn"
+
+	"model"						"models/structures/strogg/command_post/command_post_2.lwo"
+	"cm_model"					"models/structures/strogg/command_post/command_post_2_cm.lwo"
+
+	"gdf_disabled"				"1"
+	
+	"prof_capture"				"pro_battlesense_spawn_capture"
+	"prof_liberate"				"pro_battlesense_spawn_liberate"
+
+	"skin_owner_neutral"		"stroggpost_neutral"
+	"skin_owner_strogg"			"stroggpost_strogg"
+	"skin_owner_gdf"			"stroggpost_gdf"
+}
+
+entityDef info_envmap {
+	"spawnclass"				"sdEnvDefinitionEntity"
+
+	"editor_color"				"1 1 0"
+	"editor_mins"				"-4 -4 -4"
+	"editor_maxs"				"4 4 4"
+	"editor_usage"				"Used to define an enviroment map render"
+	"editor_var env_name"		"Name of this enviroment map (will have env/ appended in front of it). Refer to this name in your shaders (e.g. env/valley)."
+	"editor_var env_size"		"Size in pixels of a single face of the cubemap (e.g. 256)."
+}
+
+entityDef info_envbound {
+	"spawnclass"				"sdEnvBoundsEntity"
+
+	"editor_color"				"1 1 0"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+//	"editor_mins"				"-4 -4 -4"
+//	"editor_maxs"				"4 4 4"
+	"editor_usage"				"Used to define an enviroment map render"
+	"editor_var env_name"		"Name of this enviroment map (will have env/ appended in front of it). Refer to this name in your shaders (e.g. env/valley)."
+//	"editor_var size"		    "Size of bounds"
+
+	"editor_spawnclass"			"sdEntityClass_EnvBounds"
+}
+
+entityDef info_objective {
+	"editor_color"						"1 1 0"
+	"editor_mins"						"-16 -16 -16"
+	"editor_maxs"						"16 16 16"
+
+	"editor_var objective_index"		""
+	"editor_var	text_objective_gdf" 	"Description of the objective for display in the limbo menu"
+	"editor_var	text_objective_strogg" 	"Description of the objective for display in the limbo menu"			
+	"editor_var	mtr_objective_gdf" 		"Material of the objective for display in the limbo menu"
+	"editor_var	mtr_objective_strogg" 	"Material of the objective for display in the limbo menu"
+	"editor_preview_model"				"models/editor/info_objective.lwo"
+	
+	"collection_objective_markers"		"objective_markers"
+	"collection_localteamwatch"			"localteamwatch"
+
+	"spawnclass"						"sdScriptEntity"
+	"scriptobject"						"objective"
+	
+	"icon_size_cm"						"16"
+}
+
+entityDef info_location {
+	"editor_color"						"0 0 1"
+	"editor_mins"						"-16 -16 -16"
+	"editor_maxs"						"16 16 16"
+
+	"editor_var range_min"				"Range within which you will only get location name"
+	"editor_var	range_max"				"Range within which this location is valid"
+	"editor_var	commandmap"				"Controls whether this will create commandmap text"
+	"editor_var	commandmap_name"		"Text to display on the commandmap"
+	"editor_var	location_name"			"Name of this location"
+	"editor_var	interior"				"If set, will limit this location to within the building it is placed in"
+	"editor_var	waypoint"				"If set, this location will have a waypoint"
+
+	"font"								"fonts/micro"
+	"text_scale"						"12"
+
+	"mtr_waypoint"						"" // FIXME: Need something for this
+
+	"spawnclass"						"sdLocationMarker"
+}
+
+toolTip capturable_spawn_intro_liberate_1 {
+	nextShowDelay 5
+	
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/capturable_spawn_liberate_1"
+}
+
+toolTip capturable_spawn_intro_capture_1 {
+	nextShowDelay 5
+
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/capturable_spawn_capture_1"
+}
+
+// Gordon: To be removed
+// ============================================
+entityDef info_player_deathmatch {
+	"editor_color"			"1 0 1"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+	"editor_showangle"		"1"
+	"editor_camerastart"	"1"
+	
+	"editor_var target"		"the entity that the player will spawn facing"
+	
+	"spawnclass"			"idPlayerStart"
+}
+
+entityDef info_player_start {
+	"editor_color"			"1 0 0"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+	"editor_showangle"		"1"
+	"editor_camerastart"	"1"
+	
+	"editor_var target"		"the entity that the player will spawn facing"
+
+	"spawnclass"			"idPlayerStart"
+}
+// ============================================

@@ -1,0 +1,291 @@
+//-------------
+//Road and Sand
+//-------------
+
+
+material textures/lloyd/sand
+{
+	noSelfShadow
+	qer_editorimage	textures/sand/dry_beach_sand_footprints_d.tga
+	bumpmap		addnormals(textures/sand/sand_ripples_sharp_local.tga, heightmap(textures/sand/skysand1_h.tga, 2))
+	diffusemap	textures/sand/dry_beach_sand_footprints_d.tga
+	specularmap	textures/sand/sand01_s.tga
+}
+
+
+material textures/lloyd/road
+{
+	noSelfShadow
+	qer_editorimage	textures/road/sandy_road_d.tga
+	diffusemap	textures/road/sandy_road_d.tga
+	specularmap 	textures/road/sandy_road_s.tga
+	bumpmap 	textures/road/sandy_road_local.tga
+}
+
+
+material textures/lloyd/merge_sandtoroad  // Sand to road
+{
+	noSelfShadow
+	qer_editorimage	textures/road/sandy_road_tile_d.tga	
+	{
+		blend	bumpmap
+		map	textures/road/sandy_road_tile_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/road/sandy_road_tile_d.tga
+		VertexColor
+	}
+	{
+		blend 	bumpmap
+		map	addnormals(textures/sand/sand_ripples_sharp_local.tga, heightmap(textures/sand/skysand1_h.tga, 2))
+	}
+	{
+		blend 	diffusemap
+		map	textures/sand/dry_beach_sand_footprints_d.tga
+		inversevertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/sand/sand01_s.tga
+		inverseVertexColor
+	}		
+}
+
+
+material textures/dirt/fallen_rock_f
+{
+	noSelfShadow
+	qer_editorimage	textures/rock/rockface02c_d.tga
+	diffusemap	textures/rock/rockface02c_d.tga
+	// bumpmap		addnormals(textures/rock/rockface02_local.tga, textures/rock/sharprock1_local.tga)
+        bumpmap		addnormals(textures/rock/rockface04_local.tga, textures/rock/rock04_local.tga)
+
+}
+
+
+
+//{
+//	noSelfShadow
+//	qer_editorimage	textures/rock/rockface10_d.tga
+//	diffusemap	textures/sand/dry_beach_sand_footprints_d.tga
+////	diffusemap	textures/rock/rockface10_d.tga
+//	specularmap	textures/rock/rockface10_s.tga
+//	bumpmap		addnormals (textures/rock/rockface10_local.tga, heightmap( textures/rock/rockface10_h.tga, 3))
+//}
+
+
+
+//{
+//	noSelfShadow
+//	qer_editorimage	textures/dirt/eroded_earth_d.tga
+//	diffusemap		textures/dirt/eroded_earth_d.tga
+//	specularmap 	textures/dirt/eroded_earth_s.tga
+//	bumpmap 		textures/dirt/eroded_earth_local.tga
+//}
+
+material textures/lloyd/merge_frocktosand  // fallen rock to sand
+{
+	noSelfShadow
+	qer_editorimage	textures/dirt/eroded_earth_d.tga
+	{
+		blend 	bumpmap
+		map	addnormals(textures/rock/rockface04_local.tga, textures/rock/rock04_local.tga)
+//		map	textures/dirt/eroded_earth_local.tga
+	}
+	{
+		blend 	diffusemap
+		map 	textures/rock/rockface02c_d.tga
+//		map	textures/dirt/eroded_earth_d.tga
+		vertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/rock/rockface10_s.tga
+//		map	textures/dirt/eroded_earth_s.tga
+		VertexColor
+	}
+
+
+	{
+		blend 	bumpmap
+		map	addnormals(textures/sand/sand_ripples_sharp_local.tga, heightmap(textures/sand/skysand1_h.tga, 2))
+	}
+	{
+		blend 	diffusemap
+		map	textures/sand/dry_beach_sand_footprints_d.tga
+		inversevertexColor
+	}
+	
+}
+
+
+material textures/rock/rock_face_f
+{
+	noSelfShadow
+	qer_editorimage	textures/rock/sedimentaryrockwithsand01_d.tga
+	diffusemap		textures/rock/sedimentaryrockwithsand01_d.tga
+	specularmap		textures/rock/sedimentaryrock_s.tga
+ 	bumpmap 		textures/rock/sedimentaryrockwithsand01_local.tga
+}
+
+
+
+material textures/lloyd/merge_facetofrock  // fallen rock to rock face
+{
+	noSelfShadow
+	qer_editorimage	textures/dirt/eroded_earth_d.tga
+		{
+		blend 	bumpmap
+		map	addnormals(textures/rock/rockface04_local.tga, textures/rock/rock04_local.tga)
+//		map	textures/dirt/eroded_earth_local.tga
+	}
+	{
+		blend 	diffusemap
+		map 	textures/rock/rockface02c_d.tga
+//		map	textures/dirt/eroded_earth_d.tga
+		vertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/rock/rockface10_s.tga
+//		map	textures/dirt/eroded_earth_s.tga
+		inversevertexColor
+	}
+
+{
+		blend 	bumpmap
+		map	addnormals (textures/rock/sedimentaryrock_local.tga, heightmap (textures/rock/sedimentaryrock01_h.tga, 1.5))
+	}
+	{
+		blend 	diffusemap
+		map	textures/rock/sedimentaryrock_d.tga
+		vertexColor
+	}
+	
+}
+
+material textures/lloyd/merge_sandtoface  // sand to rock face
+{
+	noSelfShadow
+	qer_editorimage	textures/sand/dry_beach_sand_footprints_d.tga
+	{
+		blend 	bumpmap
+		map	textures/sand/skysand1_h.tga
+	}
+	{
+		blend 	diffusemap
+		map	textures/sand/dry_beach_sand_footprints_d.tga
+		vertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/sand/sand01_s.tga
+		VertexColor
+	}
+
+
+	{
+		blend 	bumpmap
+		map	textures/rock/sedimentaryrockwithsand01_local.tga
+	}
+	{
+		blend 	diffusemap
+		map	textures/rock/sedimentaryrockwithsand01_d.tga
+		inversevertexColor
+	}
+	
+}
+
+//-------------------------
+//Billboards
+
+material textures/lloyd/burningfield
+{
+	noSelfShadow
+	qer_editorimage	textures/billboards/burningfield_d.tga
+	
+	diffusemap	textures/billboards/burningfield_d.tga
+	
+}
+
+material textures/lloyd/deadpilot
+{
+	noSelfShadow
+	qer_editorimage	textures/billboards/deadpilot_d.tga
+	
+	diffusemap	textures/billboards/deadpilot_d.tga
+	
+}
+
+material textures/lloyd/graveyard
+{
+	noSelfShadow
+	qer_editorimage	textures/billboards/graveyard_d.tga
+	
+	diffusemap	textures/billboards/graveyard_d.tga
+	
+}
+
+material textures/lloyd/reddusk
+{
+	noSelfShadow
+	qer_editorimage	textures/billboards/reddusk_d.tga
+	
+	diffusemap	textures/billboards/reddusk_d.tga
+	
+}
+
+material textures/lloyd/post_it5
+{
+	surfaceType "metal"
+	noSelfShadow
+	qer_editorimage	textures/billboards/post_it5_d.tga
+	
+	diffusemap	textures/billboards/post_it5_d.tga
+	
+}
+
+material textures/lloyd/post_it6
+{
+	surfaceType "metal"
+	noSelfShadow
+	qer_editorimage	textures/billboards/post_it6_d.tga
+	
+	diffusemap	textures/billboards/post_it6_d.tga
+	
+}
+
+
+
+
+
+//====================================
+
+material textures/lloyd/marble01
+{
+	{
+	diffusemap	textures2/stone/marble01_d.tga
+	specularmap		textures2/stone/marble01_s.tga
+ 	bumpmap 		textures2/stone/marble01_local.tga
+	vertexcolor
+	}
+}
+
+material textures/lloyd/marble03
+{
+	
+	qer_editorimage	textures2/stone/marble03
+	
+	diffusemap	textures2/stone/marble03_d.tga
+	
+}
+
+material textures/lloyd/marble04
+{
+	
+	qer_editorimage	textures2/stone/marble04
+	
+	diffusemap	textures2/stone/marble04_d.tga
+	
+}

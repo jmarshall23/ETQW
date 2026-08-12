@@ -1,0 +1,380 @@
+effect effects/ambient/craters/crater_smoke_small_simple
+{
+	size	947
+
+	emitter "smoke5"
+	{
+		duration	2,2
+		count		1,1
+
+		sprite
+		{
+			duration	5,15
+			persist
+			material	"textures/particles/smoke_test1"
+			windDeviationAngle 50.000000
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -20,-60,-25,-20,50,25 }
+				velocity { point 70,0,0 }
+				friction { point 1,0,0 }
+				size { line 60,60,90,90 }
+				tint { line 0.501961,0.501961,0.501961,0.752941,0.752941,0.752941 }
+				fade { point 0 }
+				windStrength { line 0.25,0.35 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope convexfade count 4,4,4 }
+				fade { envelope breathtable count 0.85 offset 0.18 }
+				rotate { envelope convexfade }
+			}
+
+			end
+			{
+				size { line 100,100,120,120 }
+				tint { line 0.301961,0.301961,0.301961,0.501961,0.501961,0.501961 }
+				fade { line 0.5,0.9 }
+				rotate { box 1,-1 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/ambient/craters/crater_smoke_medium_simple
+{
+	size	3471
+
+	emitter "smoke5"
+	{
+		duration	2,2
+		count		1,1
+
+		sprite
+		{
+			duration	10,20
+			persist
+			material	"textures/particles/smoke_test1"
+			windDeviationAngle 50.000000
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -20,-60,-25,-20,50,25 }
+				velocity { point 70,0,0 }
+				friction { point 1,0,0 }
+				size { line 60,60,90,90 }
+				tint { line 0.501961,0.501961,0.501961,0.752941,0.752941,0.752941 }
+				fade { point 0 }
+				windStrength { line 0.25,0.35 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope convexfade count 4,4,4 }
+				fade { envelope breathtable count 0.85 offset 0.18 }
+				rotate { envelope convexfade }
+			}
+
+			end
+			{
+				size { line 100,100,120,120 }
+				tint { line 0.317647,0.317647,0.317647,0.176471,0.176471,0.176471 }
+				fade { line 0.5,1 }
+				rotate { box 1,-1 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/ambient/craters/crater_smoke_large_simple
+{
+	size	14334
+
+	emitter "smoke5"
+	{
+		duration	1,1
+		count		1,1
+
+		sprite
+		{
+			duration	20,28
+			persist
+			material	"textures/particles/smoke_test1"
+			windDeviationAngle 30.000000
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -20,-60,-25,-20,50,25 }
+				velocity { point 70,0,0 }
+				friction { point 1,0,0 }
+				size { line 60,60,90,90 }
+				tint { line 0.501961,0.501961,0.501961,0.752941,0.752941,0.752941 }
+				fade { point 0 }
+				windStrength { line 0.25,0.35 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope convexfade count 4,4,4 }
+				fade { envelope breathtable count 0.85 offset 0.18 }
+				rotate { envelope convexfade }
+			}
+
+			end
+			{
+				size { line 100,100,120,120 }
+				tint { line 0.317647,0.317647,0.317647,0.176471,0.176471,0.176471 }
+				fade { line 0.5,1 }
+				rotate { box 1,-1 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/ambient/craters/crater_smokestack_small_simple
+{
+	size	10708
+
+	emitter "smoke5"
+	{
+		duration	2,2
+		count		1,1
+
+		sprite
+		{
+			duration	18,25
+			persist
+			material	"textures/particles/smoke_test1"
+			windDeviationAngle 10.000000
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -20,-60,-25,-20,50,25 }
+				velocity { box 70,50,0,70,75,0 }
+				friction { point 1,0,0 }
+				size { line 100,100,140,140 }
+				tint { line 0.501961,0.501961,0.501961,0.752941,0.752941,0.752941 }
+				fade { point 0 }
+				windStrength { line 0.25,0.35 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope convexfade count 4,4,4 }
+				fade { envelope breathtable count 0.85 offset 0.18 }
+				offset { envelope concavefade }
+				rotate { envelope convexfade }
+			}
+
+			end
+			{
+				size { line 200,200,300,300 }
+				tint { line 0.247059,0.247059,0.247059,0.501961,0.501961,0.501961 }
+				fade { line 0.6,1 }
+				offset { point -2000,1500,0 }
+				rotate { box 1,-1 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/ambient/craters/crater_smokestack_medium_simple
+{
+	size	46577
+
+	emitter "smoke5"
+	{
+		duration	2,2
+		count		1,1
+
+		sprite
+		{
+			duration	30,37
+			persist
+			material	"textures/particles/smoke_test1"
+			windDeviationAngle 10.000000
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -20,-60,-25,-20,50,25 }
+				velocity { box 70,50,0,70,75,0 }
+				friction { point 1,0,0 }
+				size { line 100,100,140,140 }
+				tint { line 0.501961,0.501961,0.501961,0.752941,0.752941,0.752941 }
+				fade { point 0 }
+				windStrength { line 0.25,0.35 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope convexfade count 4,4,4 }
+				fade { envelope breathtable count 0.85 offset 0.18 }
+				offset { envelope concavefade }
+				rotate { envelope convexfade }
+			}
+
+			end
+			{
+				size { line 200,200,300,300 }
+				tint { line 0.247059,0.247059,0.247059,0.501961,0.501961,0.501961 }
+				fade { line 0.6,1 }
+				offset { point -2000,1500,0 }
+				rotate { box 1,-1 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+effect effects/ambient/craters/crater_smoke_simple
+{
+	size	10176
+
+	emitter "Smoke"
+	{
+		duration	120,120
+		count		1,1
+
+		sprite
+		{
+			duration	120,120
+			material	"textures/effects/vehicledust"
+
+			start
+			{
+				velocity { box 0,0,35,0,0,65 }
+				size { box 256,256,512,512 }
+				tint { point 0.247059,0.247059,0.247059 }
+				fade { point 0.35 }
+				rotate { box -0.25,0.25 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope jrad_concavefade }
+				fade { envelope jrad_smokefade }
+				offset { envelope jrad_concavefade }
+				rotate { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { box 1024,1024,1600,1600 }
+				tint { line 1,1,1,0.87451,0.87451,0.87451 }
+				offset { box -5,4096,1,5,4500,1 }
+			}
+		}
+	}
+}
+
+effect effects/ambient/craters/crater_dust_simple
+{
+	size	7363
+
+	emitter "Smoke"
+	{
+		duration	30,30
+		count		1,1
+
+		sprite
+		{
+			duration	30,30
+			material	"textures/effects/vehicledust"
+
+			start
+			{
+				velocity { box -35,-5,20,-65,5,40 }
+				size { box 400,400,640,640 }
+				tint { point 0.298039,0.278431,0.247059 }
+				fade { point 0.2 }
+				rotate { box -0.25,0.25 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope jrad_concavefade }
+				fade { envelope jrad_smokefade }
+				offset { envelope jrad_convexfade }
+				rotate { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { box 640,640,1024,1024 }
+				tint { line 0.4,0.298039,0.2,0.6,0.498039,0.4 }
+				offset { point 0,4096,0 }
+			}
+		}
+	}
+}effect effects/ambient/craters/crater_dust_less_simple
+{
+	size	7147
+
+	emitter "Smoke"
+	{
+		duration	15,15
+		count		4,4
+
+		sprite
+		{
+			duration	10,10
+			material	"textures/effects/vehicledust"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box -35,-5,180,-65,5,180 }
+				size { box 400,400,640,640 }
+				tint { point 0.298039,0.278431,0.247059 }
+				fade { point 0.1 }
+				rotate { box -0.25,0.25 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope jrad_concavefade }
+				fade { envelope jrad_smokefade }
+				offset { envelope jrad_convexfade }
+				rotate { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { box 1024,1024,1600,1600 }
+				tint { line 0.4,0.298039,0.2,0.6,0.498039,0.4 }
+				offset { point 0,4096,0 }
+			}
+			lineHit
+		}
+	}
+}
+
+

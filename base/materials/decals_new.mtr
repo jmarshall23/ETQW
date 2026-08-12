@@ -1,0 +1,796 @@
+material textures/decals/decals_concrete_1
+{
+	noshadows
+	nonsolid
+	qer_editorimage textures/decals/decals_concrete_1_d.tga
+	{       
+      		diffusemap 	picmip -1	textures/decals/decals_concrete_1_d.tga
+		specularmap 	picmip -2 	textures/decals/decals_concrete_1_s.tga
+		bumpmap 	picmip -1	textures/decals/decals_concrete_1_local.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/decals/decals_concrete_2
+{
+	qer_editorimage textures/decals/decals_concrete_2_d.tga
+	noshadows
+	nonsolid
+	{       
+      	diffusemap textures/decals/decals_concrete_2_d.tga
+		specularmap 	textures/decals/decals_concrete_2_s.tga
+		bumpmap 	textures/decals/decals_concrete_2_local.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/decals/decals_concrete_3
+{
+	qer_editorimage textures/decals/decals_concrete_3_d.tga
+	noshadows
+	nonsolid
+	{       
+      		diffusemap 	picmip -1	textures/decals/decals_concrete_3_d.tga
+		specularmap 	picmip -2	textures/decals/decals_concrete_3_s.tga
+		bumpmap 	picmip -1	textures/decals/decals_concrete_3_local.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/decals/decals_metal_1
+{
+	qer_editorimage textures/decals/decals_metal_1_d.tga
+	{       
+      	diffusemap textures/decals/decals_metal_1_d.tga
+		specularmap 	textures/decals/decals_metal_1_s.tga
+		bumpmap 	textures/decals/decals_metal_1_local.tga
+	}
+}
+
+material textures/decals/decals_metal_2
+{
+	qer_editorimage textures/decals/decals_metal_2_d.tga
+	{       
+      	diffusemap textures/decals/decals_metal_2_d.tga
+		specularmap 	textures/decals/decals_metal_2_s.tga
+		bumpmap 	textures/decals/decals_metal_2_local.tga
+	}
+}
+
+material textures/decals/decals_metal_3
+{
+	qer_editorimage textures/decals/decals_metal_3_d.tga
+	{       
+      	diffusemap textures/decals/decals_metal_3_d.tga
+		specularmap 	textures/decals/decals_metal_3_s.tga
+		bumpmap 	textures/decals/decals_metal_3_local.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/decals/decals_metal_4
+{
+	qer_editorimage textures/decals/decals_metal_4_d.tga
+	{       
+      	diffusemap textures/decals/decals_metal_4_d.tga
+		specularmap 	textures/decals/decals_metal_4_s.tga
+		bumpmap 	textures/decals/decals_metal_4_local.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/decals/decals_metal_5
+{
+	qer_editorimage textures/decals/decals_metal_5_d.tga
+	{       
+      	diffusemap textures/decals/decals_metal_5_d.tga
+		specularmap 	textures/decals/decals_metal_5_s.tga
+		bumpmap 	textures/decals/decals_metal_5_local.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/decals/decals_metal_6
+{
+	qer_editorimage textures/decals/decals_metal_6_d.tga
+	{       
+      	diffusemap textures/decals/decals_metal_6_d.tga
+		specularmap 	textures/decals/decals_metal_6_s.tga
+		bumpmap 	textures/decals/decals_metal_6_local.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/decals/decals_metal_7
+{
+	qer_editorimage textures/decals/decals_metal_7_d.tga
+	{       
+      	diffusemap textures/decals/decals_metal_7_d.tga
+		specularmap 	textures/decals/decals_metal_7_s.tga
+		bumpmap 	textures/decals/decals_metal_7_local.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/decals/decals_metal_8
+{
+	qer_editorimage textures/decals/decals_metal_8_d.tga
+	{       
+      	diffusemap textures/decals/decals_metal_8_d.tga
+		specularmap 	textures/decals/decals_metal_8_s.tga
+		bumpmap 	textures/decals/decals_metal_8_local.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/decals/decals_metal_9
+{
+	qer_editorimage textures/decals/decals_metal_9_d.tga
+	{       
+      	diffusemap textures/decals/decals_metal_9_d.tga
+		specularmap 	textures/decals/decals_metal_9_s.tga
+		bumpmap 	textures/decals/decals_metal_9_local.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/decals/decals_metal_10
+{
+	qer_editorimage textures/decals/decals_metal_10_d.tga
+	{       
+      	diffusemap textures/decals/decals_metal_10_d.tga
+		specularmap 	textures/decals/decals_metal_10_s.tga
+		bumpmap 	textures/decals/decals_metal_10_local.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/decals/decals_metal_11
+{
+	qer_editorimage textures/decals/decals_metal_11_d.tga
+	{       
+      	diffusemap textures/decals/decals_metal_11_d.tga
+		specularmap 	textures/decals/decals_metal_11_s.tga
+		bumpmap 	textures/decals/decals_metal_11_local.tga
+	}
+}
+
+material textures/decals/decals_metal_12
+{
+	qer_editorimage textures/decals/decals_metal_12_d.tga
+	{       
+      	diffusemap textures/decals/decals_metal_2_d.tga
+		specularmap 	textures/decals/decals_metal_12_s.tga
+		bumpmap 	textures/decals/decals_metal_12_local.tga
+	}
+}
+
+material textures/decals/decals_metal_13
+{
+	qer_editorimage textures/decals/decals_metal_13_d.tga
+	{       
+      	diffusemap textures/decals/decals_metal_13_d.tga
+		specularmap 	textures/decals/decals_metal_13_s.tga
+		bumpmap 	textures/decals/decals_metal_13_local.tga
+	}
+}
+
+material textures/decals/decal1	
+{
+	polygonOffset
+	sort decal	
+	nonsolid
+	translucent
+	
+	{
+		program filterVertexColorCoverage
+		blend filter
+		map	textures/decals/decals_1_d.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material textures/decals/decal2
+	{
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_2_d.tga
+ 	}
+}
+
+material textures/decals/decal2_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_2_1_d.tga
+ 	}
+}
+
+material textures/decals/decal3
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_3_d.tga
+ 	}
+}
+
+material textures/decals/decal3_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_3_1_d.tga
+ 	}
+}
+
+
+material textures/decals/decal4
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_4_d.tga
+ 	}
+}
+
+material textures/decals/decal4_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_4_1_d.tga
+ 	}
+}
+
+material textures/decals/decal5
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_5_d.tga
+ 	}
+}
+
+material textures/decals/decal5_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_5_1_d.tga
+ 	}
+}
+
+material textures/decals/decal6
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_6_d.tga
+ 	}
+}
+
+material textures/decals/decal6_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_6_1_d.tga
+ 	}
+}
+
+material textures/decals/decal7
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_7_d.tga
+ 	}
+}
+
+material textures/decals/decal7_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_7_1_d.tga
+ 	}
+}
+
+material textures/decals/decal8
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_8_d.tga
+ 	}
+}
+
+material textures/decals/decal8_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_8_1_d.tga
+ 	}
+}
+
+material textures/decals/decal9
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		picmip -1	textures/decals/decals_9_d.tga
+ 	}
+}
+
+material textures/decals/decal9_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_9_1_d.tga
+ 	}
+}
+
+material textures/decals/decal10
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_10_d.tga
+ 	}
+}
+
+material textures/decals/decal10_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_10_1_d.tga
+ 	}
+}
+
+
+material textures/decals/decal11
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_11_d.tga
+ 	}
+}
+
+material textures/decals/decal11_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_11_1_d.tga
+
+ 	}
+}
+
+
+material textures/decals/decal12
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_12_d.tga
+ 	}
+}
+
+material textures/decals/decal12_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_12_1_d.tga
+ 	}
+}
+
+material textures/decals/decal13
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_13_d.tga
+ 	}
+}
+
+material textures/decals/decal13_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_13_1_d.tga
+ 	}
+}
+
+material textures/decals/decal14
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_14_d.tga
+ 	}
+}
+
+material textures/decals/decal14_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_14_1_d.tga
+ 	}
+}
+
+material textures/decals/decal15
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_15_d.tga
+ 	}
+}
+
+material textures/decals/decal15_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_15_1_d.tga
+ 	}
+}
+
+material textures/decals/decal16
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_16_d.tga
+ 	}
+}
+
+material textures/decals/decal16_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_16_1_d.tga
+ 	}
+}
+
+material textures/decals/decal17
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_17_d.tga
+ 	}
+}
+
+material textures/decals/decal17_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_17_1_d.tga
+ 	}
+}
+
+material textures/decals/decal18
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_18_d.tga
+ 	}
+}
+
+material textures/decals/decal18_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_18_1_d.tga
+ 	}
+}
+
+material textures/decals/decal19
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_19_d.tga
+ 	}
+}
+
+material textures/decals/decal19_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_19_1_d.tga
+ 	}
+}
+
+material textures/decals/decal20
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_20_d.tga
+ 	}
+}
+
+material textures/decals/decal20_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_20_1_d.tga
+ 	}
+}
+
+material textures/decals/decal21
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_21_d.tga
+ 	}
+}
+
+material textures/decals/decal21_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_21_1_d.tga
+ 	}
+}
+
+
+material textures/decals/decal22
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_22_d.tga
+ 	}
+}
+
+material textures/decals/decal23
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_23_d.tga
+ 	}
+}
+
+material textures/decals/decal24
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_24_d.tga
+ 	}
+}
+
+material textures/decals/decal25
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_25_d.tga
+ 	}
+}
+
+material textures/decals/decal26
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_26_d.tga
+ 	}
+}
+
+material textures/decals/decal26_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_26_1_d.tga
+ 	}
+}
+
+material textures/decals/decal27
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_27_d.tga
+ 	}
+}
+
+material textures/decals/decal28
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_28_d.tga
+ 	}
+}
+
+material textures/decals/decal28_1
+	{
+	sort decal
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures/decals/decals_28_1_d.tga
+ 	}
+}
+
+material texturesheets/desert_theme/desert_decals_1
+	{
+	polygonoffset
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		texturesheets/desert_theme/desert_decals_1_d.tga
+ 	}
+}
+

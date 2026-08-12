@@ -1,0 +1,32 @@
+/***************************************************
+oil pump
+***************************************************/
+
+export frankie {
+
+	options -prefix PUMP_ -rotate 90 -sourcedir models/md5/environments/oil_pump/dev_sd -destdir models/md5/environments/oil_pump
+
+	mesh	cycle.mb		-dest pump.md5mesh
+	anim	cycle.mb 		-dest static.md5anim		-range 1 1
+	anim	cycle.mb 		-dest rotate.md5anim		
+
+}
+
+model env_oil_pump {
+
+	mesh						models/md5/environments/oil_pump/pump.md5mesh
+
+	anim static					models/md5/environments/oil_pump/static.md5anim	
+	anim rotate					models/md5/environments/oil_pump/rotate.md5anim
+}
+
+entityDef env_oil_pump_old {
+	"editor_color"			"1 .5 0"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+									
+	"spawnclass"			"idAnimated"
+	"model"					"env_oil_pump"
+	"anim"					"rotate"
+	"start_anim"			"rotate"
+}

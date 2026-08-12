@@ -1,0 +1,223 @@
+material wall_decal_1
+{
+	qer_editorimage textures2/metal/wall_metal_dec1_d.tga
+	{       
+      	diffusemap textures2/metal/wall_metal_dec1_d.tga
+		specularmap 	textures2/metal/wall_metal_dec1_s.tga
+		bumpmap 	textures2/metal/wall_metal_dec1_local.tga
+		alphaTest 0.5
+	}
+}
+
+material wall_decal_2
+{
+	qer_editorimage textures2/metal/wall_metal_dec2_d.tga
+	{       
+      	diffusemap textures2/metal/wall_metal_dec2_d.tga
+		specularmap 	textures2/metal/wall_metal_dec2_s.tga
+		bumpmap 	textures2/metal/wall_metal_dec2_local.tga      	
+		alphaTest 0.5
+	}
+
+}
+
+material wall_decal_3
+{
+	qer_editorimage textures2/metal/wall_metal_dec3_d.tga
+	{       
+      	diffusemap textures2/metal/wall_metal_dec3_d.tga
+		specularmap 	textures2/metal/wall_metal_dec3_s.tga
+		bumpmap 	textures2/metal/wall_metal_dec3_local.tga		 
+		alphaTest 0.5
+	}
+}
+
+material wall_decal_4
+{
+	qer_editorimage textures2/metal/wall_dec1_d.tga
+	{       
+      	diffusemap textures2/metal/wall_dec1_d.tga
+		specularmap 	textures2/metal/wall_dec1_s.tga
+		bumpmap 	textures2/metal/wall_dec1_local.tga
+		alphaTest 0.1
+	}
+}
+
+material wall_decal_5
+{
+	qer_editorimage textures2/metal/wall_dec2_d.tga
+	{       
+      	diffusemap textures2/metal/wall_dec2_d.tga
+		specularmap 	textures2/metal/wall_dec2_s.tga
+		bumpmap 	textures2/metal/wall_dec2_local.tga		
+		alphaTest 0.5
+	}
+
+}
+
+material wall_decal_6
+{
+	qer_editorimage textures2/metal/wall_metal_dec6_d.tga
+	{       
+      	diffusemap textures2/metal/wall_metal_dec6_d.tga
+		specularmap 	textures2/metal/wall_metal_dec6_s.tga
+		bumpmap 	textures2/metal/wall_metal_dec6_local.tga
+		alphaTest 0.5
+	}
+
+}
+
+material wall_decal_8
+{
+	qer_editorimage textures2/metal/wall_metal_dec8_d.tga
+	{       
+		diffusemap textures2/metal/wall_metal_dec8_d.tga
+		specularmap textures2/metal/wall_metal_dec8_s.tga
+		bumpmap textures2/metal/wall_metal_dec8_local.tga
+		alphaTest 0.5
+	}
+}
+
+material window_decal_6
+{
+	qer_editorimage textures2/metal/wall_window_dec1_d.tga
+	{       
+    	diffusemap textures2/metal/wall_window_dec1_d.tga
+		specularmap 	textures2/metal/wall_window_dec1_s.tga
+		bumpmap 	textures2/metal/wall_window_dec1_local.tga		
+		alphaTest 0.5
+	}
+
+}
+
+material window_decal_2
+{
+	qer_editorimage textures2/metal/wall_window_dec2_d.tga
+	{       
+      	diffusemap textures2/metal/wall_window_dec2_d.tga
+		specularmap 	textures2/metal/wall_window_dec2_s.tga
+		bumpmap 	textures2/metal/wall_window_dec2_local.tga		 
+		alphaTest 0.5
+	}
+
+}
+
+material letters_digits_decal
+{
+	qer_editorimage textures2/metal/wall__letters_digits.tga
+	{       
+      	diffusemap textures2/metal/wall__letters_digits.tga
+		specularmap 	textures2/metal/wall__letters_digits_s.tga
+		bumpmap 	textures2/metal/wall__letters_digits_local.tga		
+		alphaTest 0.5
+	}
+
+}
+
+material letters_digits_red_decal
+{
+	qer_editorimage textures2/metal/wall__letters_digits_red.tga
+	{       
+		diffusemap textures2/metal/wall__letters_digits_red.tga
+		specularmap 	textures2/metal/wall__letters_digits_red_s.tga
+		bumpmap 	textures2/metal/wall__letters_digits_local.tga
+		alphaTest 0.5
+	}
+
+}
+
+material dirt_decal_3
+{
+	qer_editorimage textures2/concrete/dirt_decal_3_d.tga
+	{       
+      	diffusemap textures2/concrete/dirt_decal_3_d.tga
+		specularmap 	textures2/concrete/dirt_decal_3_s.tga
+		bumpmap 	textures2/concrete/dirt_decal_3_local.tga
+		alphaTest 1
+	}
+}
+
+material dirt_decal_1
+	{
+	sort decal
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures2/metal/dirt_decal_1.tga
+ 	}
+}
+
+material dirt_decal_2
+	{
+	sort decal
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures2/metal/dirt_decal_2.tga
+ 	}
+}
+
+material digits_filter_decal
+	{
+	sort decal
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures2/metal/digits_filter_decal.tga
+ 	}
+}
+
+material decals_ts_1
+	{
+		polygonOffset
+		sort decal
+		noShadows
+		nonsolid
+ 		translucent
+ 		{
+ 			program filterCoverage
+ 			blend filter
+ 			map textures2/metal/decals_ts_1.tga
+ 			maskAlpha
+ 		}
+	}
+
+material decals_ts_2
+	{
+	sort decal
+	nonsolid
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		textures2/metal/decals_ts_2.tga
+ 	}
+}
+
+material metal_decals_ts_1
+{
+	
+	qer_editorimage textures2/metal/metal_decals_ts_1_d.tga
+	noshadows
+	{       
+      	diffusemap textures2/metal/metal_decals_ts_1_d.tga
+		specularmap 	textures2/metal/metal_decals_ts_1_s.tga
+		bumpmap 	textures2/metal/metal_decals_ts_1_local.tga
+		alphaTest 0.5
+	}
+}
+
+material metal_decals_ts_2
+{
+	
+	qer_editorimage textures2/metal/metal_decals_ts_2_d.tga
+	noshadows
+	{       
+      	diffusemap textures2/metal/metal_decals_ts_2_d.tga
+		specularmap 	textures2/metal/metal_decals_ts_2_s.tga
+		bumpmap 	textures2/metal/metal_decals_ts_2_local.tga
+		alphaTest 0.5
+	}
+}

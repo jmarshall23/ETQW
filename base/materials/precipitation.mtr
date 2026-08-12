@@ -1,0 +1,45 @@
+material precipitation/raindrop01 {
+	{
+		blend blend
+		cullFace none
+		map alphazeroclamp textures/particles/precipitation/raindrop01.tga
+		
+		useTemplate templates/materials/outdoor_light<>
+	}
+}
+
+material precipitation/snowflake01 {
+	{
+		blend blend
+		map alphazeroclamp textures/particles/precipitation/snowflake01.tga
+		alpha 0.5
+	}
+}
+
+material precipitation/snowflake02
+{
+	{
+		blend blend
+		map alphazeroclamp textures/particles/precipitation/snowflake02.tga
+		alpha 0.8
+	}
+}
+
+material precipitation/snowflake02_slipgate_night
+{
+	{
+		blend blend
+		map alphazeroclamp textures/particles/precipitation/snowflake02.tga
+		alpha 0.3
+	}
+}
+
+material precipitation/raindrop_volcano {
+	{
+		blend blend
+		cullFace none
+		map alphazeroclamp textures/particles/precipitation/raindrop02.tga
+		color 1, 0.95, 0.8, 0.25
+		
+	}
+}

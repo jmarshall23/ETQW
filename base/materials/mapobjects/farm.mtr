@@ -1,0 +1,11 @@
+material models/mapobjects/farm/haybale01
+{
+	twosided
+
+	{       
+		diffusemap 	models/mapobjects/farm/haybale01_d.tga
+		specularmap	models/mapobjects/farm/haybale01_s.tga
+		bumpmap		models/mapobjects/farm/haybale01_local.tga
+		alphaTest	0.1
+	}
+}

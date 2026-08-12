@@ -1,0 +1,463 @@
+effect effects/maps/island/vault_sparks
+{
+	size	200
+
+	spawner "sparks"
+	{
+		count		25,30
+		useMaterialColor
+		attenuation	0,2048
+
+		line
+		{
+			duration	0.5,2
+			blend	add
+			generatedLine
+			persist
+			material	"textures/particles/sparks/spark03"
+			gravity		0.2,1.1
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -1,-1,-1,1,1,1 cone }
+				velocity { box -100,-100,-100,100,100,-150 }
+				size { point 0.5 }
+				fade { point 1 attenuate }
+				length { point 1,0,0 }
+			}
+
+			motion
+			{
+				size { envelope shamus_fastinslowout offset -0.1 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+				length { envelope shamus_fastinslowout offset -0.07,-0.07,-0.07 }
+			}
+
+			end
+			{
+				size { box 2,3 }
+				fade { point 0 attenuate }
+				length { box 10,0,0,15,0,0 }
+			}
+			lineHit
+		}
+	}
+	sound "Zaps"
+	{
+		soundShader	"sounds/deployables/shieldgenerator/zaps"
+		freqshift	0.4,1
+	}
+	spawner "sparks2"
+	{
+		start		3,3
+		count		25,30
+		useMaterialColor
+		attenuation	0,2048
+
+		line
+		{
+			duration	0.5,2
+			blend	add
+			generatedLine
+			persist
+			material	"textures/particles/sparks/spark03"
+			gravity		0.2,1.1
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -1,-1,-1,1,1,1 cone }
+				velocity { box -100,-100,-100,100,100,-150 }
+				size { point 0.5 }
+				fade { point 1 attenuate }
+				length { point 1,0,0 }
+			}
+
+			motion
+			{
+				size { envelope shamus_fastinslowout offset -0.1 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+				length { envelope shamus_fastinslowout offset -0.07,-0.07,-0.07 }
+			}
+
+			end
+			{
+				size { box 2,3 }
+				fade { point 0 attenuate }
+				length { box 10,0,0,15,0,0 }
+			}
+			lineHit
+		}
+	}
+	sound "Zaps2"
+	{
+		start		3,3
+		soundShader	"sounds/deployables/shieldgenerator/zaps"
+		volume	1,1
+		freqshift	0.4,1
+	}
+	spawner "sparks3"
+	{
+		start		7,7
+		count		25,30
+		useMaterialColor
+		attenuation	0,2048
+
+		line
+		{
+			duration	0.5,2
+			blend	add
+			generatedLine
+			persist
+			material	"textures/particles/sparks/spark03"
+			gravity		0.2,1.1
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -1,-1,-1,1,1,1 cone }
+				velocity { box -100,-100,-100,100,100,-150 }
+				size { point 0.5 }
+				fade { point 1 attenuate }
+				length { point 1,0,0 }
+			}
+
+			motion
+			{
+				size { envelope shamus_fastinslowout offset -0.1 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+				length { envelope shamus_fastinslowout offset -0.07,-0.07,-0.07 }
+			}
+
+			end
+			{
+				size { box 2,3 }
+				fade { point 0 attenuate }
+				length { box 10,0,0,15,0,0 }
+			}
+			lineHit
+		}
+	}
+	sound "Zaps3"
+	{
+		start		7,7
+		soundShader	"sounds/deployables/shieldgenerator/zaps"
+		freqshift	0.4,1
+	}
+	spawner "sparks4"
+	{
+		start		14,14
+		count		25,30
+		useMaterialColor
+		attenuation	0,2048
+
+		line
+		{
+			duration	0.5,2
+			blend	add
+			generatedLine
+			persist
+			material	"textures/particles/sparks/spark03"
+			gravity		0.2,1.1
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -1,-1,-1,1,1,1 cone }
+				velocity { box -100,-100,-100,100,100,-150 }
+				size { point 0.5 }
+				fade { point 1 attenuate }
+				length { point 1,0,0 }
+			}
+
+			motion
+			{
+				size { envelope shamus_fastinslowout offset -0.1 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+				length { envelope shamus_fastinslowout offset -0.07,-0.07,-0.07 }
+			}
+
+			end
+			{
+				size { box 2,3 }
+				fade { point 0 attenuate }
+				length { box 10,0,0,15,0,0 }
+			}
+			lineHit
+		}
+	}
+	sound "Zaps4"
+	{
+		start		14,14
+		soundShader	"sounds/deployables/shieldgenerator/zaps"
+		freqshift	0.4,1
+	}
+	spawner "sparks5"
+	{
+		start		18,18
+		count		25,30
+		useMaterialColor
+		attenuation	0,2048
+
+		line
+		{
+			duration	0.5,2
+			blend	add
+			generatedLine
+			persist
+			material	"textures/particles/sparks/spark03"
+			gravity		0.2,1.1
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -1,-1,-1,1,1,1 cone }
+				velocity { box -100,-100,-100,100,100,-150 }
+				size { point 0.5 }
+				fade { point 1 attenuate }
+				length { point 1,0,0 }
+			}
+
+			motion
+			{
+				size { envelope shamus_fastinslowout offset -0.1 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+				length { envelope shamus_fastinslowout offset -0.07,-0.07,-0.07 }
+			}
+
+			end
+			{
+				size { box 2,3 }
+				fade { point 0 attenuate }
+				length { box 10,0,0,15,0,0 }
+			}
+			lineHit
+		}
+	}
+	sound "Zaps5"
+	{
+		start		18,18
+		soundShader	"sounds/deployables/shieldgenerator/zaps"
+		freqshift	0.4,1
+	}
+}
+
+effect effects/maps/island/vault_light
+{
+	size	416
+
+	light "unnamed3"
+	{
+
+		light
+		{
+			duration	100,100
+			material	"lights/round"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,-50,0 }
+				size { point 200,150,300 }
+			}
+
+			motion
+			{
+				tint { envelope senetable3 count 40,40,40 offset 4,4,4 }
+			}
+			lineHit
+		}
+	}
+}effect effects/maps/island/vault_blowout
+{
+	size	667
+
+	spawner "unnamed1"
+	{
+		count		20,20
+
+		sprite
+		{
+			duration	12,20
+			material	"textures/particles/smoke_test1"
+			trailRepeat	1
+
+			start
+			{
+				position { box -65,-65,-40,65,65,0 }
+				velocity { box 0,0,1,0,0,30 }
+				size { point 30,30 }
+				tint { line 0.713726,0.713726,0.713726,0.454902,0.454902,0.454902 }
+				fade { point 0 }
+				windStrength { line -0.01,-0.1 }
+				rotate { box -0.333333,0.333333 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shamus_fastinslowout }
+				offset { envelope convexfade count 14,14,14 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { box 60,60,120,120 }
+				fade { line 0.5,1 }
+				offset { line 0,0,5,0,0,230 }
+				rotate { box 0.333333,-0.333333 }
+			}
+			lineHit
+		}
+	}
+	spawner "unnamed2"
+	{
+		count		25,25
+
+		sprite
+		{
+			duration	100,200
+			material	"textures/particles/smoke_test1"
+			trailRepeat	1
+
+			start
+			{
+				position { box -120,-20,-40,120,60,150 }
+				size { point 30,30 }
+				tint { line 0.713726,0.713726,0.713726,0.454902,0.454902,0.454902 }
+				fade { point 0 }
+				offset { point 0,0,-150 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shamus_fastinslowout count 0.8 offset 0.2 }
+				offset { envelope convexfade count 7,7,7 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { box 70,70,110,110 }
+				fade { line 0.5,1 }
+				offset { point 0,0,-150 }
+				rotate { box 1,-1 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+effect effects/maps/island/vault_steam
+{
+	size	76
+
+	emitter "unnamed1"
+	{
+		duration	100,100
+		count		6,6
+
+		sprite
+		{
+			duration	2,2
+			material	"textures/particles/smoke_test1"
+			gravity		-0.05,-0.05
+			trailRepeat	1
+
+			start
+			{
+				position { point -30,-40,0 }
+				size { point 5,5 }
+				tint { line 0.713726,0.713726,0.713726,0.454902,0.454902,0.454902 }
+				fade { point 0 }
+				offset { line -10,0,0,10,0,0 }
+				rotate { box -0.333333,0.333333 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shamus_fastinslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { box 14,14,25,25 }
+				fade { point 0.5 }
+				rotate { box 0.333333,-0.333333 }
+			}
+			lineHit
+		}
+	}
+	emitter "unnamed2"
+	{
+		duration	100,100
+		count		6,6
+
+		sprite
+		{
+			duration	2,2
+			material	"textures/particles/smoke_test1"
+			gravity		-0.05,-0.05
+			trailRepeat	1
+
+			start
+			{
+				position { point 30,-60,0 }
+				size { point 5,5 }
+				tint { line 0.713726,0.713726,0.713726,0.454902,0.454902,0.454902 }
+				fade { point 0 }
+				offset { line -10,0,0,10,0,0 }
+				rotate { box -0.333333,0.333333 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shamus_fastinslowout }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { box 14,14,25,25 }
+				fade { point 0.5 }
+				rotate { box 0.333333,-0.333333 }
+			}
+			lineHit
+		}
+	}
+	sound "unnamed3"
+	{
+		soundShader	"sounds/world/btonal_raspy_04"
+		freqshift	0.8,1
+	}
+	sound "unnamed4"
+	{
+		soundShader	"sounds/world/misc/steam_loop_01"
+		freqshift	0.8,1
+	}
+}
+
+effect effects/maps/island/final
+{
+	size	8
+
+	sound "unnamed1"
+	{
+		soundShader	"factory_main_engine"
+	}
+}
+

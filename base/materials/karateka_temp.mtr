@@ -1,0 +1,335 @@
+
+/// particles/flash/tracer1c
+material karateka_temp01
+{
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		map		textures/effects/weapons/tracer1c.tga
+		vertexcolor
+	 maskalpha
+	}
+}
+
+material karateka_temp02
+{
+   nonsolid
+   noshadows
+   twoSided
+   {
+        blend add
+        map textures/effects/weapons/muzzle_flash_side3.tga
+		vertexColor
+	}
+}
+
+material karateka_temp03
+{
+   nonsolid
+   noshadows
+   twoSided
+   {
+        blend add
+        map textures/effects/weapons/muzzle_flash_side3.tga
+		vertexColor
+	}
+}
+
+material karateka_temp04
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp05
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp06
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp07
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp08
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp09
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp10
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp11
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp12
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp13
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp14
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp15
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp16
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp17
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp18
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp19
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp20
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp21
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp22
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp23
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp24
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp25
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp26
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp27
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp28
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp29
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material karateka_temp30
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}

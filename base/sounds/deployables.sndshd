@@ -1,0 +1,66 @@
+
+sound sounds/deployables/misc/drop {
+
+	sounds/deployables/misc/drop.wav
+}
+
+sound sounds/deployables/misc/disable {
+
+	maxDistance 25
+
+	sounds/deployables/misc/disable.wav
+}
+
+sound sounds/deployables/destroy {
+
+	volume 5
+	maxDistance 350
+
+	sounds/deployables/misc/destroy_01.wav
+	sounds/deployables/misc/destroy_02.wav
+}
+
+sound sounds/deployables/misc/turrets_yaw {
+
+	looping
+	sounds/deployables/misc/turret_yaw.wav
+}
+
+sound sounds/deployables/misc/turrets_pitch {
+
+	looping
+	sounds/deployables/misc/turret_pitch.wav
+}
+
+sound sounds/deployables/misc/turrets_brass {
+
+	volume -5
+	maxDistance 50
+
+	looping
+	sounds/deployables/misc/brass_loop.wav
+}
+
+sound sounds/deployables/misc/turrets_brass_stop {
+
+	volume -5
+	maxDistance 50
+
+	sounds/deployables/misc/brass_stop.wav
+}
+
+sound sounds/deployables/misc/yaw {
+
+	volume -5
+
+	looping
+	sounds/deployables/movements/movement_01.wav
+}
+
+sound sounds/deployables/misc/pitch {
+
+	volume -5
+
+	looping
+	sounds/deployables/movements/movement_03.wav
+}

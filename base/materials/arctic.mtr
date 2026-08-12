@@ -1,0 +1,84 @@
+material textures/terrain/artic/enwall19d
+{
+	surfaceType "metal"
+	qer_editorimage		textures/terrain/artic/enwall19d.tga
+	bumpmap			textures/terrain/artic/stepanel5_local.tga
+	diffusemap		textures/terrain/artic/enwall19d.tga
+	specularmap		textures/terrain/artic/enwall19_s.tga
+}
+
+material textures/terrain/artic/enwall19f
+{
+	surfaceType "metal"
+	qer_editorimage		textures/terrain/artic/enwall19f.tga
+	bumpmap			textures/terrain/artic/stepanel5_local.tga
+	diffusemap		textures/terrain/artic/enwall19f.tga
+	specularmap		textures/terrain/artic/enwall19_s.tga
+}
+
+material textures/arctic/snow/ice_01a
+{
+	noshadows
+	noselfshadow
+	surfacetype glass
+	{
+		program interaction/subsurface
+		diffusemap	textures/arctic/snow/ice_01a_d.tga
+		bumpmap 	heightmap( textures/arctic/snow/ice_h.tga, 9 )
+		specularmap	textures/arctic/snow/ice_s.tga
+		
+		// Color of scattered light: R, G, B
+		subsurfaceColor 0.02352941, 0.2, 0.282353
+		
+		// Exponents: "Width" of scattered light, "Width" of specular highlight (i.e. specular power)
+		subsurfacePower	1, 32
+		
+		textureMatrix diffuseMatrix {
+			//translate time, 0
+			scale 1, 1
+		}
+		textureMatrix specularMatrix {
+			//translate time, 0
+			scale 1, 1
+		}		
+	}
+}
+
+material textures/arctic/snow/iceberg
+{
+	noshadows
+	noselfshadow
+	surfacetype glass
+	nonsolid
+	{
+		program interaction/subsurface
+		diffusemap	textures/arctic/snow/iceberg_d.tga
+		bumpmap 	textures/arctic/snow/iceberg_local.tga
+		specularmap	textures/arctic/snow/iceberg_s.tga
+		
+		// Color of scattered light: R, G, B
+		subsurfaceColor 0.1152941, 0.14, 0.102353
+		
+		// Exponents: "Width" of scattered light, "Width" of specular highlight (i.e. specular power)
+		subsurfacePower	0.2, 12
+		
+		textureMatrix diffuseMatrix {
+			//translate time, 0
+			scale 1, 1
+		}
+		textureMatrix specularMatrix {
+			//translate time, 0
+			scale 1, 1
+		}		
+	}
+}
+
+material textures/arctic/snow3
+{
+	noshadows
+	noselfshadow
+	//surfaceType "metal"
+	diffusemap	textures2/megagen/dirt/arctic/snow_4t1_03_d.tga
+	//specularmap	textures2/megagen/dirt/arctic/snow_4t1_02_s.tga
+	//bumpmap 	textures2/megagen/dirt/arctic/snow_4t1_02_local.tga
+}

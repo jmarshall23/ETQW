@@ -1,0 +1,66 @@
+
+entityDef playzone_commandmap {
+	"spawnclass"			"sdPlayZoneEntity"
+	"zone_commandmap"		"1"
+	
+	"dont_link_clip"		"1"
+	
+	"editor_mins"			"?"
+	"editor_maxs"			"?"
+}
+
+entityDef playzone_deploy {
+	"spawnclass"			"sdPlayZoneEntity"
+	"zone_deployment"		"1"
+
+	"dont_link_clip"		"1"
+
+	"editor_mins"			"?"
+	"editor_maxs"			"?"
+}
+
+entityDef playzone_play {
+	"spawnclass"			"sdPlayZoneEntity"
+	"zone_playzone"			"1"
+	
+	"dont_link_clip"		"1"
+
+	"editor_mins"			"?"
+	"editor_maxs"			"?"
+}
+
+entityDef playzone_path_and_heightmap {
+	"spawnclass"			"sdPlayZoneEntity"
+	"zone_paths"			"1"
+	"zone_heightmap"		"1"
+	
+	"dont_link_clip"		"1"
+
+	"editor_mins"			"?"
+	"editor_maxs"			"?"
+	
+	"editor_var heightmap"				"Path to the Heightmap TGA"
+	"editor_var path_vehicle_magog"		"Vehicle Path Decl to use for the Magog"
+}
+
+entityDef playzone_all {
+	"spawnclass"			"sdPlayZoneEntity"
+	"zone_commandmap"		"1"
+	"zone_playzone"			"1"
+	"zone_deployment"		"1"
+	
+	"dont_link_clip"		"1"
+
+	"editor_mins"			"?"
+	"editor_maxs"			"?"
+}
+
+entityDef playzone_marker {
+	"spawnclass"			"sdPlayZoneMarker"
+	
+	"dont_link_clip"		"1"
+
+	"editor_mins"			"-8 -8 -8"
+	"editor_maxs"			"8 8 8"
+}
+

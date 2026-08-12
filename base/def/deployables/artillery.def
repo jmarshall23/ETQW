@@ -1,0 +1,396 @@
+// Export
+// ========================================================================
+export frankie {
+
+options -prefix ART_ -scale 0.7 -sourcedir models/structures/edf/fsb/artillery/dev_sd -destdir  models/structures/edf/fsb/artillery/ -keep hook -keepmesh m_gun_v_rotate m_gun_h_rotate m_leg m_leg1 m_leg2 m_leg3 m_leg4 m_leg5 m_leg6 m_leg7 m_leg8 m_leg9 m_leg10 m_leg11 m_leg12 m_leg13 m_leg14 m_leg15 m_leg16 m_gun_barrel_bottom m_gun_barrel_middle m_gun_barrel_end shadow1 shadow2 shadow3 shadow4 shadow5 shadow6 shadow7 shadow8 shadow9 shadow10 shadow11 shadow12 shadow13 shadow14 shadow15 shadow16 shadow17
+
+	mesh	artillery_deploy_nerve.mb							-dest artillery_base.md5mesh					-range 0 0
+
+	anim	artillery_deploy_nerve.mb					-dest artillery_undeployed.md5anim 				-range 0 0
+	anim	artillery_deploy_nerve.mb					-dest artillery_idle.md5anim 					-range 74 74
+	anim	artillery_deploy_nerve.mb					-dest artillery_reload.md5anim 					-range 74 74
+
+	//anim 	artillery_anims.mb					-dest deploy_pre_ik.md5anim 					-range 1 55
+	//anim	artillery_anims.mb 					-dest deploy_post_ik.md5anim					-range 55 65
+	//anim	fire.mb								-dest artillery_fire.md5anim
+
+	anim 	artillery_deploy_nerve.mb			-dest deploy_pre_ik.md5anim 					-range 0 64
+	anim	artillery_deploy_nerve.mb 			-dest deploy_post_ik.md5anim					-range 64 74
+
+	anim	damage_states.mb					-dest artillery_damaged_to_idle.md5anim			-range 0 0
+	anim	damage_states.mb					-dest artillery_disabled_to_damaged.md5anim 	-range 10 10
+	anim	damage_states.mb					-dest artillery_damaged.md5anim					-range 0 10
+	anim	damage_states.mb					-dest artillery_disabled.md5anim				-range 20 50
+
+	anim	fire_nerve.mb						-dest artillery_fire.md5anim
+
+
+
+
+options -prefix ART_ -scale 0.7 -sourcedir models/structures/edf/fsb/artillery/dev_sd/ -destdir  models/structures/edf/fsb/artillery/ -noJoints -keepmesh lod1_m_gun_v_rotate lod1_m_gun_barrel_bottom lod1_m_gun_barrel_middle lod1_m_gun_barrel_end lod1_m_gun_h_rotate lod1_m_gun_base lod1_middle_base leg12 leg11 leg10 leg9 leg8 leg7 leg6 leg5 leg4 leg3 leg2 leg1 shadow1 shadow2 shadow3 shadow4 shadow5 shadow6 shadow7 shadow8 shadow9 shadow10 shadow11 shadow12 shadow13 shadow14 shadow15 shadow16 shadow17
+
+	mesh	artillery_anims.mb					-dest artillery_base_lod1.md5mesh				-range 0 0
+
+}
+
+
+	//anim 	deploy3.mb		-dest artillery_undeployed.md5anim 		-range 0 0
+	//anim 	deploy3.mb		-dest artillery_deploy.md5anim
+	//anim 	deploy2.mb		-dest artillery_undeployed2.md5anim 		-range 0 0
+	//anim 	deploy2.mb		-dest artillery_deploy2.md5anim
+	//anim 	deploy3.mb		-dest artillery_undeployed3.md5anim 		-range 0 0
+	//anim 	deploy3.mb		-dest artillery_deploy3.md5anim
+	//anim 	deploy4.mb		-dest artillery_undeployed4.md5anim 		-range 0 0
+	//anim 	deploy4.mb		-dest artillery_deploy4.md5anim
+
+
+// Models
+// ========================================================================
+
+model deployable_artillery {
+	mesh							models/structures/edf/fsb/artillery/artillery_base.md5mesh
+
+	anim undeployed					models/structures/edf/fsb/artillery/artillery_undeployed.md5anim
+
+
+	anim pre_ik						models/structures/edf/fsb/artillery/deploy_pre_ik.md5anim {
+		frame begin						sound_channel snd_deployable_deploy snd_deploy
+	}
+	anim post_ik					models/structures/edf/fsb/artillery/deploy_post_ik.md5anim
+
+
+	anim deploy						models/structures/edf/fsb/artillery/deploy_post_ik.md5anim
+
+
+
+
+	anim base						models/structures/edf/fsb/artillery/artillery_idle.md5anim
+
+	anim damaged					models/structures/edf/fsb/artillery/artillery_damaged.md5anim
+	anim destroyed					models/structures/edf/fsb/artillery/artillery_disabled.md5anim
+
+	anim fire						models/structures/edf/fsb/artillery/artillery_fire.md5anim {
+		frame 3							sound_channel snd_deployable_reload snd_reload
+	}
+	anim reload						models/structures/edf/fsb/artillery/artillery_reload.md5anim
+
+
+
+	anim disabled_to_damaged		models/structures/edf/fsb/artillery/artillery_disabled_to_damaged.md5anim
+	anim damaged_to_idle			models/structures/edf/fsb/artillery/artillery_damaged_to_idle.md5anim
+
+
+}
+
+// Entity Def
+// ========================================================================
+
+deployObject deployobject_artillery {
+	"name"							"artillery"
+	"title"							"game/deploy/artillery"
+	"wait_time"						"10000"
+	"def_deployable"				"deployable_artillery"
+	"def_deployable_carrier"		"vehicle_magog_npc"
+	"str_placement"					"deployitem_artillery_placement_model"
+	"mask"							"dm_default"
+	"max_height_diff"				"512"
+	"object_radius"					"512"
+	"ti_kill_filter"				"target_deploy_kill"
+	"mdl_scale_factor"				"0.7"
+	"category"						"firesupport"
+}
+
+stringMap deployitem_artillery_placement_model {
+	"model"							"models/structures/edf/fsb/artillery/artillery.lwo"
+	"skin"							"deployEffect"
+	"max_height_diff"				"96"
+	"maxVisDist"					"2560"
+	"pushIntoOutsideAreas"			"1"
+}
+
+entityDef deployable_artillery {
+	"inherit"						"deployable_base"
+	"inherit1"						"deployable_gdf"
+
+	"title"							"game/deploy/artillery"
+
+	"climate_skin_key"				"deployable_artillery"
+
+	"collection_gui_count"			"deployable_artillery"
+
+	"editor_color"					".3 .3 1"
+	"editor_usage"					"The EDF Artillery."
+	"editor_mins"					"-128 -144 0"
+	"editor_maxs"					"168 144 512"
+
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"deployable_artillery"
+
+	"model"							"deployable_artillery"
+	"cm_model"						"models/structures/edf/fsb/artillery/clipmodel.lwo"
+
+	"task_name"						"game/deploy/artillery"
+
+	"stat_name"						"artillery"
+
+	"ch_name"						"game/deploy/artillery"
+	"option_combat_model"			"1"
+	"option_crosshair_interface"	"1"
+	"option_commandmap_interface"	"1"
+	"option_crosshair_offset"		"0 0 64"
+
+	"option_allow_abilities"		"1"
+	"ability_1"						"fire_support"
+
+	"def_firesupport_marker"		"firesupport_marker_artillery"
+
+	"joint_attach"					"hook"
+
+	"num_ik"						"3"
+	"str_ik0"						"sounds/deployables/artillery/leg_1_ik"
+	"str_ik1"						"sounds/deployables/artillery/leg_2_ik"
+	"str_ik2"						"sounds/deployables/artillery/leg_3_ik"
+
+	"mtr_commandmap"				"guis/assets/commandmap/icon_atk_deploy"
+	"mtr_commandmap_unknown"		"guis/assets/commandmap/icon_atk_deploy"
+
+	"icon_size_cm"					"10"
+
+	"health"						"3000"
+	"repair_multiplier"				"1.5"
+
+	"action_time"					"10"
+
+	"num_missiles"					"1"
+
+	"spread"						"1.5"
+
+	"range_min"						"50"
+	"range_max"						"2500"
+
+	"missile_speed"					"5000"
+	"missile_recycle"				"1.5"
+	"missile_reload"				"10"
+	"missile_firecount"				"10"
+
+	"low_arc"						"0"
+
+	"joint_yaw"						"gun_h_rotate"
+	"joint_pitch"					"gun_v_rotate"
+	"joint_barrel"					"gun_barrel_middle"
+
+	"min_yaw_turn"					"60"
+	"max_yaw_turn"					"90"
+
+	"min_pitch_turn"				"30"
+	"max_pitch_turn"				"60"
+
+	"min_pitch"						"30"
+	"max_pitch"						"90"
+
+	"def_projectile"				"projectile_deployable_artillery"
+	"def_projectile_foreffect"		"projectile_deployable_artillery_foreffect"
+
+	"foreffect_wait"				"3"	//Wait time after the initial "for effect" shot
+
+	"missile1_delay"				"1"
+	"missile1_anim"					"fire"
+	"missile1_channel"				"0"
+	"missile1_barrel"				"gun_barrel_middle"
+
+	"snd_deploy"					"sounds/deployables/ssm/raise"
+	"snd_reload"					"sounds/deployables/artillery/reload"
+
+	"snd_turret_yaw"				"sounds/deployables/misc/turrets_yaw"
+	"snd_turret_pitch"				"sounds/deployables/misc/turrets_pitch"
+
+	"mtr_color"						"guis/binoculars/target_artillery_color"
+	"mtr_desat"						"guis/binoculars/target_artillery_desat"
+	"mtr_half_desat"				"guis/binoculars/target_artillery_half_desat"
+	"mtr_full_desat"				"guis/binoculars/target_artillery_bright_desat"
+
+	"target_timer"					"timer_artillery"
+	"target_locktime"				"4"
+	"target_lostgraceperiod"		"1"
+	"target_length"					"45"
+
+	"fx_fire"						"effects/deployables/artillery_fire"
+	"fx_death"						"effects/deployables/artillery_destroy"
+	"fx_emped"						"effects/generic_smoke/emp"
+	
+	"emp_effect_joint"				"gun_h_rotate"
+
+	"timer_name"					"timer_artillery"
+
+	"collection_firesupport_artillery"	"firesupport_artillery"
+
+	"do_object"						"deployobject_artillery"
+
+	"snd_firing"					""
+	"snd_effect"					""
+
+	"def_marker"					"target_marker"
+	"mtr_marker_cm"					"hud/objectives/firesupport"
+	"cm_marker_sort"				"0"
+
+	"deployable_type"				"1"
+
+	"contextmenu_quickchat_enemy"	"quickchat/context/attack/firesupportspotted"
+
+	"deploybonus_requireactive"		"0"
+	"prof_deploybonus"				"pro_fieldops_deploy_bonus"
+}
+
+
+stringMap sounds/deployables/artillery/leg_1_ik {
+	"joint_upper"					"leg_1_upper"
+	"joint_middle"					"leg_1_lower"
+	"joint_lower"					"leg_1_foot"
+
+	"max_up_trace"					"128"
+	"max_down_trace"				"128"
+
+	"helper_type"					"legIK"
+
+	"blend_rate"					"0.99"
+}
+
+stringMap sounds/deployables/artillery/leg_2_ik {
+	"joint_upper"					"leg_2_upper"
+	"joint_middle"					"leg_2_lower"
+	"joint_lower"					"leg_2_foot"
+
+	"max_up_trace"					"128"
+	"max_down_trace"				"128"
+
+	"helper_type"					"legIK"
+
+	"blend_rate"					"0.99"
+}
+
+stringMap sounds/deployables/artillery/leg_3_ik {
+	"joint_upper"					"leg_3_upper"
+	"joint_middle"					"leg_3_lower"
+	"joint_lower"					"leg_3_foot"
+
+	"max_up_trace"					"128"
+	"max_down_trace"				"128"
+
+	"helper_type"					"legIK"
+
+	"blend_rate"					"0.99"
+}
+
+// Projectile
+// ========================================================================
+
+entityDef projectile_deployable_artillery {
+	"inherit"					"projectile_rocket_base"
+
+	"dmg_damage"				"damage_deployable_artillery"
+	"dmg_splash_damage"			"damage_deployable_artillery_splash"
+
+	"launchFromBarrel"			"1"
+	"health"					"1"
+	"velocity"					"0 0 0"
+	"face_velocity"				"1"
+	"gravity"					"1066"
+	"fuse"						"-1"
+
+	"collection_antiair"			"antiair"
+	"collection_mdfExport"			"mdfExport"
+	"collection_firesupport_gdf"	"firesupport_gdf"
+
+	"use_air_burst"				"1"
+	"fx_airburst"				"effects/deployables/artillery_explosion_air"
+
+	"snd_fly"					"sounds/deployables/artillery/fly"
+	"fx_trail"					"effects/deployables/artillery_trail"
+	"fx_explode"				"effects/deployables/artillery_explosion"
+	"fx_explode_sand"			"effects/artillery/sand_impact"
+	"fx_explode_metal"			"effects/deployables/artillery_explosion"
+	"fx_explode_snow"			"effects/artillery/snow_impact"
+	"fx_explode_water"			"effects/impacts/frag/explosion_water"
+
+	"prof_destroy"				"pro_constructor_antimissile_artillery"
+}
+
+entityDef projectile_deployable_artillery_foreffect {
+	"inherit"					"projectile_rocket_base"
+
+	"launchFromBarrel"			"1"
+	"health"					"0"
+	"velocity"					"0 0 0"
+	"face_velocity"				"1"
+	"gravity"					"1066"
+	"fuse"						"-1"
+	"removedelay"				"10"
+
+	"snd_fly"					"sounds/deployables/artillery/fly"
+	"fx_trail"					"effects/deployables/artillery_trail"
+	"fx_explode"				"effects/deployables/artillery_foreffect"
+	"fx_explode_sand"			"effects/deployables/artillery_foreffect"
+	"fx_explode_metal"			"effects/deployables/artillery_foreffect"
+	"fx_explode_water"			"effects/water/explosion"
+	"fx_explode_water_interior"	"effects/water/explosion_interior"
+}
+
+// ========================================================================
+
+damageDef damage_deployable_artillery {
+	damage						"damage_deployable_artillery"
+
+	stat_name					"artillery"
+
+	prof_damage					"pro_fieldops_damage"
+
+	team_kill_cvar				"g_allowComplaint_firesupport"
+
+	tt_obituary					"tooltips/killmsgs/weapons/artillery"
+	tt_obituary_team_kill		"tooltips/killmsgs/weapons/artillery/teamkill"
+	tt_obituary_self			"tooltips/killmsgs/weapons/artillery/self"
+	tt_obituary_unknown			"tooltips/killmsgs/weapons/artillery/unknown"
+}
+
+damageDef damage_deployable_artillery_splash {
+	damage						"damage_deployable_artillery_splash"
+	radius						768
+	push						10000000
+
+	stat_name					"artillery"
+
+	prof_damage					"pro_fieldops_damage"
+
+	team_kill_cvar				"g_allowComplaint_firesupport"
+
+	tt_obituary					"tooltips/killmsgs/weapons/artillery"
+	tt_obituary_team_kill		"tooltips/killmsgs/weapons/artillery/teamkill"
+	tt_obituary_self			"tooltips/killmsgs/weapons/artillery/self"
+	tt_obituary_unknown			"tooltips/killmsgs/weapons/artillery/unknown"
+}
+
+// ========================================================================
+
+damageFilter damage_deployable_artillery {
+	type {
+		target	"target_all"
+		damage	1000
+	}
+
+	type {
+		target	"target_explodable"
+		damage	400
+	}
+}
+
+damageFilter damage_deployable_artillery_splash {
+	type {
+		target	"target_all"
+		damage	1000
+	}
+
+	type {
+		target	"target_explodable"
+		damage	400
+	}
+}

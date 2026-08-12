@@ -1,0 +1,31 @@
+//TEMPERATE
+
+material models/vegetation/trees/pine/pine_01_branches
+{
+	nonsolid
+	noshadows
+	twoSided
+	{
+		alphatocoverage
+		program	interaction/foliage
+		diffusemap	picmip -1	clamp	models/vegetation/trees/pine/pine_01_branches_d.tga
+		alphaTest	0.4
+
+		useTemplate wind/animatematrix< 0.15, 0.001 >
+	}
+}
+
+material models/vegetation/trees/pine/pine_01_bark
+{
+	nonsolid
+	noshadows
+	{
+		diffusemap				models/vegetation/trees/pine/pine_01_bark_d.tga
+		bumpmap		picmip -1	models/vegetation/trees/pine/pine_01_bark_local.tga
+		//specularmap			models/vegetation/trees/pine/pine_01_bark_s.tga
+	
+		bumpDetailMap			textures/detail/bump/bark_detail01_local.tga
+		specDetailMap			textures/detail/bump/bark_detail01_d.tga
+		detailMult 12,12,0,0 
+	}
+}

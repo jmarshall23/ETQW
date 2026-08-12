@@ -1,0 +1,838 @@
+
+// Global ///////////////////////////////////////////////////
+
+locString gdf/quickchat/global {
+	text "#str_0200000"
+}
+
+locString gdf/quickchat/global/yes {
+	text "#str_0200001"
+}
+
+locString gdf/quickchat/global/no {
+	text "#str_0200002"
+}
+
+locString gdf/quickchat/global/thanks {
+	text "#str_0200003"
+}
+
+locString gdf/quickchat/global/youwelcome {
+	text "#str_0200004"
+}
+
+locString gdf/quickchat/global/sorry {
+	text "#str_0200005"
+}
+
+locString gdf/quickchat/global/hi {
+	text "#str_0200006"
+}
+
+locString gdf/quickchat/global/bye {
+	text "#str_0200007"
+}
+
+locString gdf/quickchat/global/quiet {
+	text "#str_0200008"
+}
+
+// Global Cheers ////////////////////////////////////////////
+
+locString gdf/quickchat/global/cheers {
+	text "#str_0200020"
+}
+
+locString gdf/quickchat/global/cheers/awesome {
+	text "#str_0200021"
+}
+
+locString gdf/quickchat/global/cheers/greatshot {
+	text "#str_0200022"
+}
+
+locString gdf/quickchat/global/cheers/freedomofearth {
+	text "#str_0200023"
+}
+
+locString gdf/quickchat/global/cheers/wellplayed {
+	text "#str_0200024"
+}
+
+locString gdf/quickchat/global/cheers/goodgame {
+	text "#str_0200025"
+}
+
+locString gdf/quickchat/global/cheers/gdf {
+	text "#str_0200026"
+}
+
+locString gdf/quickchat/global/cheers/yourock {
+	text "#str_0200027"
+}
+
+locString gdf/quickchat/global/cheers/alright {
+	text "#str_0200028"
+}
+
+locString gdf/quickchat/global/cheers/bullseye {
+	text "#str_0200029"
+}
+
+
+// Global Taunts ////////////////////////////////////////////
+
+locString gdf/quickchat/global/taunts {
+	text "#str_0200030"
+}
+
+locString gdf/quickchat/global/taunts/ohdear {
+	text "#str_0200031"
+}
+
+locString gdf/quickchat/global/taunts/oops {
+	text "#str_0200032"
+}
+
+locString gdf/quickchat/global/taunts/enemyweakened {
+	text "#str_0200033"
+}
+
+locString gdf/quickchat/global/taunts/theyrunningaway {
+	text "#str_0200034"
+}
+
+locString gdf/quickchat/global/taunts/eatthatstrogg {
+	text "#str_0200035"
+}
+
+locString gdf/quickchat/global/taunts/killalienscum {
+	text "#str_0200036"
+}
+
+locString gdf/quickchat/global/taunts/denied {
+	text "#str_0200037"
+}
+
+locString gdf/quickchat/global/taunts/grr {
+	text "#str_0200038"
+}
+
+locString gdf/quickchat/global/taunts/cough {
+	text "#str_0200039"
+}
+
+locString gdf/quickchat/global/taunts/more_taunts {
+	text "#str_0200040"
+}
+
+locString gdf/quickchat/global/taunts/awkward {
+	text "#str_0200041"
+}
+
+locString gdf/quickchat/global/taunts/awyeahohno {
+	text "#str_0200042"
+}
+
+locString gdf/quickchat/global/taunts/awnoheyyeah {
+	text "#str_0200043"
+}
+
+locString gdf/quickchat/global/taunts/owned {
+	text "#str_0200044"
+}
+
+locString gdf/quickchat/global/taunts/thathurt {
+	text "#str_0200045"
+}
+
+locString gdf/quickchat/global/taunts/thathadtohurt {
+	text "#str_0200046"
+}
+
+locString gdf/quickchat/global/taunts/meh {
+	text "#str_0200047"
+}
+
+locString gdf/quickchat/global/taunts/ihadworse {
+	text "#str_0200048"
+}
+
+
+// Responses ////////////////////////////////////////////////
+
+locString gdf/quickchat/responses {
+	text "#str_0200060"
+}
+
+locString gdf/quickchat/responses/acknowledged {
+	text "#str_0200061"
+}
+
+locString gdf/quickchat/responses/declined {
+	text "#str_0200062"
+}
+
+locString gdf/quickchat/responses/onit {
+	text "#str_0200063"
+}
+
+locString gdf/quickchat/responses/onmyway {
+	text "#str_0200064"
+}
+
+locString gdf/quickchat/responses/sorry {
+	text "#str_0200065"
+}
+
+locString gdf/quickchat/responses/dontcare {
+	text "#str_0200066"
+}
+
+locString gdf/quickchat/responses/unabletoassist {
+	text "#str_0200067"
+}
+
+locString gdf/quickchat/responses/outofrange {
+	text "#str_0200068"
+}
+
+locString gdf/quickchat/responses/thanks {
+	text "#str_0200069"
+}
+
+locString gdf/quickchat/responses/youwelcome {
+	text "#str_0200070"
+}
+
+
+// Needs ////////////////////////////////////////////////////
+
+locString gdf/quickchat/need  {
+	text "#str_0200080"
+}
+
+locString gdf/quickchat/need/medic  {
+	text "#str_0200081"
+}
+
+locString gdf/quickchat/need/ammo  {
+	text "#str_0200082"
+}
+
+locString gdf/quickchat/need/engineer  {
+	text "#str_0200083"
+}
+
+locString gdf/quickchat/need/backup  {
+	text "#str_0200084"
+}
+
+locString gdf/quickchat/need/coveringfire  {
+	text "#str_0200085"
+}
+
+locString gdf/quickchat/need/firesupport  {
+	text "#str_0200086"
+}
+
+locString gdf/quickchat/need/mines  {
+	text "#str_0200087"
+}
+
+locString gdf/quickchat/need/supplystation  {
+	text "#str_0200099"
+}
+
+
+// Team Needs ///////////////////////////////////////////////
+
+locString gdf/quickchat/need/team  {
+	text "#str_0200088"
+}
+
+locString gdf/quickchat/need/team/medic  {
+	text "#str_0200089"
+}
+
+locString gdf/quickchat/need/team/fieldops  {
+	text "#str_0200090"
+}
+
+locString gdf/quickchat/need/team/engineer  {
+	text "#str_0200091"
+}
+
+locString gdf/quickchat/need/team/covertops  {
+	text "#str_0200092"
+}
+
+locString gdf/quickchat/need/team/soldier  {
+	text "#str_0200093"
+}
+
+locString gdf/quickchat/need/team/radar  {
+	text "#str_0200094"
+}
+
+locString gdf/quickchat/need/team/apt  {
+	text "#str_0200095"
+}
+
+locString gdf/quickchat/need/team/avt  {
+	text "#str_0200096"
+}
+
+locString gdf/quickchat/need/team/ait  {
+	text "#str_0200097"
+}
+
+locString gdf/quickchat/need/team/snipersupport  {
+	text "#str_0200098"
+}
+
+
+// Vehicles /////////////////////////////////////////////////
+
+locString gdf/quickchat/vehicles  {
+	text "#str_0200100"
+}
+
+locString gdf/quickchat/vehicles/needvehicle  {
+	text "#str_0200101"
+}
+
+locString gdf/quickchat/vehicles/needgunner  {
+	text "#str_0200102"
+}
+
+locString gdf/quickchat/vehicles/needdriver  {
+	text "#str_0200103"
+}
+
+locString gdf/quickchat/vehicles/needpilot  {
+	text "#str_0200104"
+}
+
+locString gdf/quickchat/vehicles/needrepairs  {
+	text "#str_0200105"
+}
+
+locString gdf/quickchat/vehicles/needpickup  {
+	text "#str_0200106"
+}
+
+locString gdf/quickchat/vehicles/vehicleready  {
+	text "#str_0200107"
+}
+
+locString gdf/quickchat/vehicles/holdvehicle  {
+	text "#str_0200108"
+}
+
+locString gdf/quickchat/vehicles/bailout  {
+	text "#str_0200109"
+}
+
+locString gdf/quickchat/vehicles/needpassenger  {
+	text "#str_0200110"
+}
+
+// Enemy ////////////////////////////////////////////////////
+
+locString gdf/quickchat/enemy {
+	text "#str_0200120"
+}
+
+locString gdf/quickchat/enemy/infantryspotted  {
+	text "#str_0200121"
+}
+
+locString gdf/quickchat/enemy/indisguise  {
+	text "#str_0200122"
+}
+
+locString gdf/quickchat/enemy/vehiclespotted  {
+	text "#str_0200123"
+}
+
+locString gdf/quickchat/enemy/armorspotted  {
+	text "#str_0200124"
+}
+
+locString gdf/quickchat/enemy/aircraftspotted  {
+	text "#str_0200125"
+}
+
+locString gdf/quickchat/enemy/infiltratorspotted  {
+	text "#str_0200126"
+}
+
+locString gdf/quickchat/enemy/minesspotted  {
+	text "#str_0200127"
+}
+
+locString gdf/quickchat/enemy/incomingairstrike  {
+	text "#str_0200128"
+}
+
+locString gdf/quickchat/enemy/incomingbombardment  {
+	text "#str_0200129"
+}
+
+
+// Enemy Deployables ////////////////////////////////////////
+
+locString gdf/quickchat/enemy/deployables {
+	text "#str_0200130"
+}
+
+locString gdf/quickchat/enemy/deployables/aitspotted {
+	text "#str_0200131"
+}
+
+locString gdf/quickchat/enemy/deployables/firesupportspotted  {
+	text "#str_0200132"
+}
+
+locString gdf/quickchat/enemy/deployables/aptspotted  {
+	text "#str_0200133"
+}
+
+locString gdf/quickchat/enemy/deployables/avtspotted  {
+	text "#str_0200134"
+}
+
+locString gdf/quickchat/enemy/deployables/radarspotted  {
+	text "#str_0200135"
+}
+
+
+// Commands /////////////////////////////////////////////////
+
+locString gdf/quickchat/commands  {
+	text "#str_0200140"
+}
+
+locString gdf/quickchat/commands/move  {
+	text "#str_0200141"
+}
+
+locString gdf/quickchat/commands/letsgo  {
+	text "#str_0200142"
+}
+
+locString gdf/quickchat/commands/followme  {
+	text "#str_0200143"
+}
+
+locString gdf/quickchat/commands/clearmines  {
+	text "#str_0200144"
+}
+
+locString gdf/quickchat/commands/hackenemybase  {
+	text "#str_0200145"
+}
+
+locString gdf/quickchat/commands/captureforwardspawn  {
+	text "#str_0200146"
+}
+
+locString gdf/quickchat/commands/constructguardtower  {
+	text "#str_0200147"
+}
+
+locString gdf/quickchat/commands/holdfire  {
+	text "#str_0200148"
+}
+
+
+// Objectives ///////////////////////////////////////////////
+
+locString gdf/quickchat/objectives {
+	text "#str_0200150"
+}
+
+locString gdf/quickchat/objectives/attack  {
+	text "#str_0200151"
+}
+
+locString gdf/quickchat/objectives/defend  {
+	text "#str_0200152"
+}
+
+locString gdf/quickchat/objectives/destroy  {
+	text "#str_0200153"
+}
+
+locString gdf/quickchat/objectives/hack  {
+	text "#str_0200154"
+}
+
+locString gdf/quickchat/objectives/construct  {
+	text "#str_0200155"
+}
+
+locString gdf/quickchat/objectives/take  {
+	text "#str_0200156"
+}
+
+locString gdf/quickchat/objectives/return  {
+	text "#str_0200157"
+}
+
+locString gdf/quickchat/objectives/disarmexplosives  {
+	text "#str_0200158"
+}
+
+locString gdf/quickchat/objectives/escortmcp  {
+	text "#str_0200159"
+}
+
+locString gdf/quickchat/objectives/repairmcp  {
+	text "#str_0200160"
+}
+
+locString gdf/quickchat/objectives/construct_tower  {
+	text "#str_0200161"
+}
+
+locString gdf/quickchat/objectives/destroy_tower  {
+	text "#str_0200162"
+}
+
+// Self /////////////////////////////////////////////////////
+
+locString gdf/quickchat/self  {
+	text "#str_0200170"
+}
+
+locString gdf/quickchat/self/imsoldier  {
+	text "#str_0200171"
+}
+
+locString gdf/quickchat/self/immedic  {
+	text "#str_0200172"
+}
+
+locString gdf/quickchat/self/imengineer  {
+	text "#str_0200173"
+}
+
+locString gdf/quickchat/self/imfieldops  {
+	text "#str_0200174"
+}
+
+locString gdf/quickchat/self/imcovertops  {
+	text "#str_0200175"
+}
+
+locString gdf/quickchat/self/imattacking  {
+	text "#str_0200176"
+}
+
+locString gdf/quickchat/self/imdefending  {
+	text "#str_0200177"
+}
+
+locString gdf/quickchat/self/imspec {
+	text "#str_0200178"	
+}
+
+
+// Self Disguise ////////////////////////////////////////////
+
+locString gdf/quickchat/self/disguise  {
+	text "#str_0200180"
+}
+
+locString gdf/quickchat/self/disguise/imindisguise  {
+	text "#str_0200181"
+}
+
+locString gdf/quickchat/self/disguise/enemydisguisedasme  {
+	text "#str_0200182"
+}
+
+
+// Self Deploying////////////////////////////////////////////
+
+locString gdf/quickchat/self/deploying  {
+	text "#str_0200190"
+}
+
+locString gdf/quickchat/self/deploying/radar  {
+	text "#str_0200191"
+}
+
+locString gdf/quickchat/self/deploying/apt  {
+	text "#str_0200192"
+}
+
+locString gdf/quickchat/self/deploying/avt  {
+	text "#str_0200193"
+}
+
+locString gdf/quickchat/self/deploying/ait  {
+	text "#str_0200194"
+}
+
+locString gdf/quickchat/self/deploying/artillery  {
+	text "#str_0200195"
+}
+
+locString gdf/quickchat/self/deploying/rockets  {
+	text "#str_0200196"
+}
+
+locString gdf/quickchat/self/deploying/hammer  {
+	text "#str_0200197"
+}
+
+
+// Self Deployed /////////////////////////////////////////////
+
+locString gdf/quickchat/self/deployed  {
+	text "#str_0200200"
+}
+
+locString gdf/quickchat/self/deployed/radar  {
+	text "#str_0200201"
+}
+
+locString gdf/quickchat/self/deployed/apt  {
+	text "#str_0200202"
+}
+
+locString gdf/quickchat/self/deployed/avt  {
+	text "#str_0200203"
+}
+
+locString gdf/quickchat/self/deployed/ait  {
+	text "#str_0200204"
+}
+
+locString gdf/quickchat/self/deployed/artillery  {
+	text "#str_0200205"
+}
+
+locString gdf/quickchat/self/deployed/rockets  {
+	text "#str_0200206"
+}
+
+locString gdf/quickchat/self/deployed/hammer  {
+	text "#str_0200207"
+}
+
+
+// Self Items ///////////////////////////////////////////////
+
+locString gdf/quickchat/self/items  {
+	text "#str_0200210"
+}
+
+locString gdf/quickchat/self/items/plantingmines  {
+	text "#str_0200211"
+}
+
+locString gdf/quickchat/self/items/disarmingmines  {
+	text "#str_0200212"
+}
+
+locString gdf/quickchat/self/items/suppliesdropped  {
+	text "#str_0200213"
+}
+
+locString gdf/quickchat/self/items/healthpacksdropped  {
+	text "#str_0200214"
+}
+
+locString gdf/quickchat/self/items/medpacksdropped  {
+	text "#str_0200215"
+}
+
+locString gdf/quickchat/self/items/ammopacksdropped {
+	text "#str_0200216"
+}
+
+
+// Self Repairing ///////////////////////////////////////////
+
+locString gdf/quickchat/self/repairing  {
+	text "#str_0200220"	
+}
+
+locString gdf/quickchat/self/repairing/radar  {
+	text "#str_0200221"	
+}
+
+locString gdf/quickchat/self/repairing/apt  {
+	text "#str_0200222"	
+}
+
+locString gdf/quickchat/self/repairing/avt  {
+	text "#str_0200223"	
+}
+
+locString gdf/quickchat/self/repairing/ait  {
+	text "#str_0200224"	
+}
+
+locString gdf/quickchat/self/repairing/artillery  {
+	text "#str_0200225"	
+}
+
+locString gdf/quickchat/self/repairing/rockets  {
+	text "#str_0200226"	
+}
+
+locString gdf/quickchat/self/repairing/hammer  {
+	text "#str_0200227"	
+}
+
+locString gdf/quickchat/self/repairing/mcp  {
+	text "#str_0200228"	
+}
+
+
+// Self Repairing ///////////////////////////////////////////
+
+locString gdf/quickchat/self/repaired  {
+	text "#str_0200230"	
+}
+
+locString gdf/quickchat/self/repaired/radar  {
+	text "#str_0200231"	
+}
+
+locString gdf/quickchat/self/repaired/apt  {
+	text "#str_0200232"	
+}
+
+locString gdf/quickchat/self/repaired/avt  {
+	text "#str_0200233"	
+}
+
+locString gdf/quickchat/self/repaired/ait  {
+	text "#str_0200234"	
+}
+
+locString gdf/quickchat/self/repaired/artillery  {
+	text "#str_0200235"	
+}
+
+locString gdf/quickchat/self/repaired/rockets  {
+	text "#str_0200236"	
+}
+
+locString gdf/quickchat/self/repaired/hammer  {
+	text "#str_0200237"	
+}
+
+// Context ///////////////////////////////////////////
+
+locString gdf/quickchat/context  {
+	text "#str_0200250"	
+}
+
+locString gdf/quickchat/context/order  {
+	text "#str_0200251"	
+}
+
+locString gdf/quickchat/context/vehicle  {
+	text "#str_0200252"	
+}
+
+locString gdf/quickchat/context/health  {
+	text "#str_0200253"	
+}
+
+locString gdf/quickchat/context/support  {
+	text "#str_0200254"	
+}
+
+locString gdf/quickchat/context/repair  {
+	text "#str_0200255"	
+}
+
+locString gdf/quickchat/context/waypoints  {
+	text "#str_0200270"	
+}
+
+locString gdf/quickchat/fireteam  {
+	text "#str_0200257"	
+}
+
+locString gdf/quickchat/context/defendforwardspawn  {
+	text "#str_0200259"
+}
+
+locString gdf/quickchat/context/liberateforwardspawn  {
+	text "#str_0200283"
+}
+
+locString gdf/quickchat/radio {
+	text "#str_0200260"	
+}
+
+locString gdf/quickchat/need/revive {
+	text "#str_0200261"
+}
+
+locString gdf/quickchat/context/destroy {
+	text "#str_0200262"
+}
+
+locString gdf/quickchat/context/pickup {
+	text "#str_0200263"
+}
+
+locString gdf/quickchat/context/attacktarget {
+	text "#str_0200264"
+}
+
+locString gdf/quickchat/context/repair/vehicle_other  {
+	text "#str_0200265"	
+}
+
+locString gdf/quickchat/context/repair/deployable_other  {
+	text "#str_0200266"	
+}
+
+locString gdf/quickchat/context/repair/vehicle  {
+	text "#str_0200267"	
+}
+
+locString gdf/quickchat/context/ammo  {
+	text "#str_0200258"	
+}
+
+locString gdf/quickchat/context/spawnhost_destroy  {
+	text "#str_0200268"	
+}
+
+locString gdf/quickchat/context/construct_tower  {
+	text "#str_0200161"
+}
+
+locString gdf/quickchat/context/repair/mg_nest {
+	text "#str_0200269"
+}
+
+locString gdf/quickchat/context/followme {
+	text "#str_0200143"
+}
+
+// Fireteam ///////////////////////////////////////////
+
+locString gdf/quickchat/fireteam/waypoint/attack {
+	text "#str_0200270"	
+}
+
+locString gdf/quickchat/fireteam/waypoint/defend {
+	text "#str_0200271"
+}
+
+locString gdf/quickchat/fireteam/waypoint/regroup {
+	text "#str_0200272"
+}

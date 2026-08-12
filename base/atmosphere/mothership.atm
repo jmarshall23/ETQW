@@ -1,0 +1,120 @@
+atmosphere mothership01 {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( -0.7751551867 0.4633697867 0.4294450283 )
+	sunColor ( 0.6549019814 0.6549019814 0.6980392337 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright2"
+	sunSpriteSize 39912
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1.4599999189
+		contrast 0.8199999928
+		glareParms ( 0.7799999714 0.4799999893 0 1 )
+		glareBases ( 0.0799999982 0.0899999961 0 0 )
+	}
+	fogDistHalf 3105
+	fogHeightHalf 1111
+	fogHeightOffset 2275
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "mothership01"
+	skyGradientImage "atmosphere/skies/arctic"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 323
+	windAngleDev 10
+	windStrength 84
+	windStrengthDev 0
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 2
+		maxParticles 3000
+		heightMin 3
+		heightMax 5
+		weightMin 1
+		weightMax 1.1000000238
+		timeMin 0
+		timeMax 500
+		windScale 2
+		gustWindScale 2
+		fallMin 60
+		fallMax 80
+		tumbleStrength 24
+		precipitationDistance 1000
+		material "precipitation/snowflake2"
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+ambientCubemap mothership01 {
+	ambientLight {
+		color 0.2745098174 0.3019607961 0.392156899
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.270588249 0.2745098174 0.2941176593
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3019607961 0.3176470697 0.3764706254
+		direction 0.1756406128 0.9035925865 0.3907311261
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3686274588 0.3843137622 0.4392157197
+		direction 0.0173223317 -0.9923949838 0.1218693554
+		name "Light3"
+	}
+	ambientLight {
+		color 0.2980392277 0.3215686381 0.392156899
+		direction -0.8843650818 0.4506065547 0.1218693554
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2823529541 0.3098039329 0.392156899
+		direction 1 0 0
+		name "Light5"
+	}
+	ambientLight {
+		color 0.3450980484 0.3568627536 0.392156899
+		direction -0.7036204934 -0.6794784069 0.2079117
+		name "Light6"
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+

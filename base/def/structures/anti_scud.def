@@ -1,0 +1,35 @@
+// ========================================================================
+
+export hauser {
+	options -prefix SCUD_ -sourcedir models/structures/strogg/anti_scud/dev_sd/ -destdir models/structures/strogg/anti_scud/ -keep dummyjoint dummyjoint2 -parent deform_joint dummyjoint
+
+	mesh	anti_scud.mb		-dest anti_scud.md5mesh
+
+	anim	anti_scud.mb		-dest anti_scud_idle.md5anim 				-range 0 100
+	anim	anti_scud.mb		-dest anti_scud_destroyed.md5anim 			-range 130 210
+	anim	anti_scud.mb		-dest anti_scud_destroyed_idle.md5anim 		-range 210 210
+
+
+}
+
+// ========================================================================
+// Models
+//
+
+model structure_anti_scud {
+	mesh					models/structures/strogg/anti_scud/anti_scud.md5mesh
+
+	anim idle				models/structures/strogg/anti_scud/anti_scud_idle.md5anim {
+	}
+
+	anim destroyed			models/structures/strogg/anti_scud/anti_scud_destroyed.md5anim {
+	}
+
+	anim destroyed_idle  	models/structures/strogg/anti_scud/anti_scud_destroyed_idle.md5anim {
+	}
+}
+
+// ========================================================================
+// Entity Def
+//
+

@@ -1,0 +1,16 @@
+
+locString game/tasks/medic_revive_player/title {
+	text "#str_01002000"
+}
+
+locString game/tasks/medic_heal_player/title {
+	text "#str_01002010"
+}
+
+locString game/tasks/medic_destroy_spawnhost/title {
+	text "#str_01002011"
+}
+
+locString game/tasks/medic_deploy_supplies/title {
+	text "#str_01002020"
+}

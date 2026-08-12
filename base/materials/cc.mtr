@@ -1,0 +1,273 @@
+//CC Textures
+
+material textures/cc/monitor
+{
+	qer_editorimage		textures/cc/monitor_d.tga
+	bumpmap			textures/cc/monitor_local.tga
+	diffusemap		textures/cc/monitor_d.tga
+//	specularmap		textures/cc/monitor_s.tga
+//	{
+//		blend 	add
+//		map		textures/object/a_conmonitorxl1_add.tga
+//		rgb		5
+//	}
+}
+
+material textures/cc/panel001
+{
+	qer_editorimage		textures/cc/panel001_d.tga
+	bumpmap			textures/cc/panel001_local.tga
+	diffusemap		textures/cc/panel001_d.tga
+//	specularmap		textures/cc/panel001_s.tga
+}
+
+
+material textures/cc/grate001
+{
+	qer_editorimage		textures/cc/grate001_d.tga
+	bumpmap			textures/cc/grate001_local.tga
+	diffusemap		textures/cc/grate001_d.tga
+//	specularmap		textures/cc/grate001_s.tga
+}
+
+material textures/cc/cables001
+{
+	polygonoffset
+	twoSided
+	nonsolid
+	noshadows
+	{
+		diffusemap	picmip -1 picmipmin -1 textures/cc/cables001_d.tga
+		bumpmap		textures/cc/cables001_local.tga		
+		specularmap	textures/cc/cables001_s.tga		
+		alphatest	.25
+	}
+}
+
+////////////////
+//// Daves /////
+////////////////
+
+
+// renderbumpflat -size 128 512 textures/cc/pipecolumn1.lwo
+
+material textures/cc/pipecolumn1
+{
+	qer_editorimage		textures/cc/pipecolumn1_d.tga
+	bumpmap			textures/cc/pipecolumn1_local.tga
+	diffusemap		textures/cc/pipecolumn1_d.tga
+	specularmap		textures/cc/pipecolumn1_s.tga
+}
+
+// renderbumpflat -size 256 128 textures/cc/wallpanel1.lwo
+
+material textures/cc/wallpanel1
+{
+	qer_editorimage		textures/cc/wallpanel1_d.tga
+	bumpmap			textures/cc/wallpanel1_local.tga
+	diffusemap		textures/cc/wallpanel1_d.tga
+	specularmap		textures/cc/wallpanel1_s.tga
+}
+
+
+// renderbumpflat -size 256 128 textures/cc/wallpanel2.lwo
+
+material textures/cc/wallpanel2
+{
+	qer_editorimage		textures/cc/wallpanel2_d.tga
+	bumpmap			textures/cc/wallpanel2_local.tga
+	diffusemap		textures/cc/wallpanel2_d.tga
+	specularmap		textures/cc/wallpanel2_s.tga
+}
+
+// renderbumpflat -size 256 256 textures/cc/wallpanel3.lwo
+
+material textures/cc/wallpanel3
+{
+	qer_editorimage		textures/cc/wallpanel3_d.tga
+	bumpmap			textures/cc/wallpanel3_local.tga
+	diffusemap		textures/cc/wallpanel3_d.tga
+	//specularmap		textures/cc/wallpanel3_s.tga
+}
+
+// renderbumpflat -size 128 256 textures/cc/wallpanel4.lwo
+
+material textures/cc/wallpanel4
+{
+	surfaceType	"metal"
+	qer_editorimage		textures/cc/wallpanel4_d.tga
+	bumpmap			textures/cc/wallpanel4_local.tga
+	diffusemap		textures/cc/wallpanel4_d.tga
+	specularmap		textures/cc/wallpanel4_s.tga
+}
+
+// renderbumpflat -size 256 256 textures/cc/hangingwires.lwo
+
+material textures/cc/hangingwires
+{
+	twoSided
+	nonsolid
+	noimpact
+	noshadows
+	qer_editorimage		textures/cc/hangingwires_d.tga
+	
+	{
+		diffusemap	textures/cc/hangingwires_d.tga
+		bumpmap		textures/cc/hangingwires_local.tga
+		specularmap	textures/cc/hangingwires_s.tga
+		alphatest	.75
+	}
+}
+
+// renderbumpflat -size 128 128 textures/cc/wallfixing1.lwo
+
+material textures/cc/wallfixing1
+{
+	twoSided
+	nonsolid
+	noimpact
+	noshadows
+	qer_editorimage		textures/cc/wallfixing1_d.tga
+	
+	{
+		diffusemap	textures/cc/wallfixing1_d.tga
+		specularmap	textures/cc/wallfixing1_s.tga
+		bumpmap		textures/cc/wallfixing1_local.tga
+		alphatest	.5
+	}
+	
+}
+
+// renderbumpflat -size 128 128 textures/cc/conpanel1.lwo
+
+material textures/cc/conpanel1
+{
+	qer_editorimage		textures/cc/conpanel1_d.tga
+	bumpmap			textures/cc/conpanel1_local.tga
+	diffusemap		textures/cc/conpanel1_d.tga
+	specularmap		textures/cc/conpanel1_s.tga
+}
+
+
+// renderbumpflat -size 128 256 textures/cc/wallpanel5.lwo
+
+material textures/cc/ccwall01
+{
+	qer_editorimage		textures/cc/ccwall01_d.tga
+	
+
+	bumpmap			addnormals(textures/cc/ccwall01_local.tga, heightmap(textures/cc/ccwall01_h.tga, 1 ) )
+	diffusemap		textures/cc/ccwall01_d.tga
+	specularmap		textures/cc/ccwall01_s.tga
+}
+
+material textures/cc/wallpanel5
+{
+	qer_editorimage		textures/cc/wallpanel5_d.tga
+	bumpmap			textures/cc/wallpanel5_local.tga
+	diffusemap		textures/cc/wallpanel5_d.tga
+	specularmap		textures/cc/wallpanel5_s.tga
+}
+
+// renderbumpflat -size 256 128 textures/cc/wallpanel6.lwo
+
+material textures/cc/wallpanel6
+{
+	qer_editorimage		textures/cc/wallpanel6_d.tga
+	bumpmap			textures/cc/wallpanel6_local.tga
+	diffusemap		textures/cc/wallpanel6_d.tga
+	specularmap		textures/cc/wallpanel6_s.tga
+}
+
+material textures/cc/floortile1
+{
+	qer_editorimage		textures/cc/floortile1_d.tga
+	bumpmap			textures/cc/floortile1_local.tga
+	diffusemap		textures/cc/floortile1_d.tga
+	specularmap		textures/cc/floortile1_s.tga
+}
+
+// renderbumpflat -size 64 64 textures/cc/wallfixing2.lwo
+
+material textures/cc/wallfixing2
+{
+	qer_editorimage		textures/cc/wallfixing2_d.tga
+	bumpmap			textures/cc/wallfixing2_local.tga
+	diffusemap		textures/cc/wallfixing2_d.tga
+	specularmap		textures/cc/wallfixing2_s.tga
+}
+
+
+// renderbumpflat -size 256 128 textures/cc/floorpanel1.lwo
+
+material textures/cc/floorpanel1
+{
+	qer_editorimage		textures/cc/floorpanel1_d.tga
+	bumpmap			textures/cc/floorpanel1_local.tga
+	diffusemap		textures/cc/floorpanel1_d.tga
+	//specularmap		textures/cc/floorpanel1_s.tga
+}
+
+
+//////////////
+// INTERIOR //
+//////////////
+
+material models/structures/edf/cc/interior/cc_interior_1
+{
+	surfacetype "metal"
+	{
+	program interaction/selfillum
+	diffusemap	models/structures/edf/cc/interior/cc_interior_1_d.tga
+	bumpmap		models/structures/edf/cc/interior/cc_interior_1_local.tga
+	specularmap	models/structures/edf/cc/interior/cc_interior_1_s.tga
+	selfillummap	models/structures/edf/cc/interior/cc_interior_1_glow.tga
+	}
+}
+
+material models/structures/edf/cc/interior/cc_interior_2
+{
+	surfacetype "metal"
+	diffusemap	models/structures/edf/cc/interior/cc_interior_2_d.tga
+	bumpmap		models/structures/edf/cc/interior/cc_interior_2_local.tga
+	specularmap	models/structures/edf/cc/interior/cc_interior_2_s.tga
+}
+
+material models/structures/edf/cc/interior/cc_interior_3
+{
+	surfacetype "metal"
+	diffusemap	models/structures/edf/cc/interior/cc_interior_3_d.tga
+	bumpmap		models/structures/edf/cc/interior/cc_interior_3_local.tga
+	specularmap	models/structures/edf/cc/interior/cc_interior_3_s.tga
+}
+
+material models/structures/edf/cc/interior/cc_interior_4
+{
+	noshadows
+	twosided
+	nonsolid
+	DECAL_MACRO
+	useTemplate templates/windowglass_mask_specular_cc <
+		models/structures/edf/cc/interior/cc_interior_4_d.tga,
+		models/structures/edf/cc/interior/cc_interior_4_s.tga,
+		models/structures/edf/cc/interior/cc_interior_4_local.tga,
+		models/structures/edf/cc/interior/cc_interior_4_mask.tga,
+		2, 1.0, 0.3
+	>
+	{
+		blend blend
+		depthfunc less
+		map models/structures/edf/cc/interior/cc_interior_4_dirt.tga
+		
+	}
+}
+
+material models/structures/edf/cc/interior/cc_interior_5
+{
+	nonsolid
+	translucent
+	{
+		blend	filter
+		map	models/structures/edf/cc/interior/cc_interior_5_d.tga
+	}
+}

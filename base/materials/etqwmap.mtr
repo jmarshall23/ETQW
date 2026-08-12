@@ -1,0 +1,61 @@
+#include <materials/commandmaps.include>
+
+// ====================================================
+// ETQW Map Megatexture materials
+// ====================================================
+
+material megatextures/etqwmap            		{ useTemplate megatextures/default_ambient< "sdk/etqwmap"            > }
+material megatextures/etqwmap_noshadows  		{ useTemplate megatextures/default_ambient_noshadows< "sdk/etqwmap"            > }
+
+// ====================================================
+// ETQW Map Command map materials
+// ====================================================
+
+material commandmaps/etqwmap
+{
+	templates/game/maps/cmMap( "commandmaps/etqwmap.tga" )
+}
+
+// larger scale map for out of bounds area
+material commandmaps/etqwmap_oob
+{
+	templates/game/maps/cmMap( "commandmaps/etqwmap_oob.tga" )
+}
+
+material commandmaps/etqwmap_territory_01 { 
+	templates/game/maps/cmIcon( makealpha( commandmaps/etqwmap/etqwmap_ter01.tga ) )
+}
+
+material commandmaps/etqwmap_territory_02 { 
+	templates/game/maps/cmIcon( makealpha( commandmaps/etqwmap/etqwmap_ter02.tga ) )
+}
+
+material commandmaps/etqwmap_territory_03 {
+	templates/game/maps/cmIcon( makealpha( commandmaps/etqwmap/etqwmap_ter03.tga ) )
+}
+
+material commandmaps/etqwmap_territory_04 { 
+	templates/game/maps/cmIcon( makealpha( commandmaps/etqwmap/etqwmap_ter04.tga ) )
+}
+
+material commandmaps/etqwmap_territory_05 { 
+	templates/game/maps/cmIcon( makealpha( commandmaps/etqwmap/etqwmap_ter05.tga ) )
+}
+
+material levelshots/etqwmap { 
+	 sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/etqwmap"
+	}
+}
+
+material levelshots/thumbs/etqwmap { 
+	 sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/thumbs/etqwmap"
+	}
+}

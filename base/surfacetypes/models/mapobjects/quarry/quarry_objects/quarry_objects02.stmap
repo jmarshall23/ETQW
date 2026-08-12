@@ -1,0 +1,43 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+atlas/quarry/quarry_objects02.atlas
+***
+*/
+
+surfaceTypeMap models/mapobjects/quarry/quarry_objects/quarry_objects02 {
+	width	512
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 512 2048 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 80 200 ) ( 480 240 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 532 ) ( 512 1008 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 56 244 ) ( 484 520 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 8 1228 ) ( 264 1332 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 292 1008 ) ( 488 1396 )
+	}
+}

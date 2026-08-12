@@ -1,0 +1,18 @@
+material models/weapons/minemarker/edf_flag
+{
+	twoSided
+	diffusemap	models/weapons/minemarker/edf_flag.tga
+	specularmap	models/weapons/minemarker/flag_s.tga
+	bumpmap		addnormals( models/weapons/minemarker/flag_local.tga, heightmap( models/weapons/minemarker/flag_h.tga, 2 ) )
+
+}
+
+material models/weapons/minemarker/strogg_flag
+{
+	twoSided
+	diffusemap	models/weapons/minemarker/strogg_flag.tga
+	specularmap	models/weapons/minemarker/flag_s.tga
+	bumpmap		addnormals( models/weapons/minemarker/flag_local.tga, heightmap( models/weapons/minemarker/flag_h.tga, 2 ) )
+
+
+}

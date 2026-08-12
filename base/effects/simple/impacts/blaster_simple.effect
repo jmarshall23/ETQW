@@ -1,0 +1,481 @@
+effect effects/impacts/blaster/impact_stroggify_simple
+{
+	size	64
+
+	cutOffDistance	2500
+
+	sound "Impact Sound"
+	{
+		soundShader	"sounds/weapons/lacerator/projectile_impact"
+		volume	1,5
+		freqshift	0.7,1.4
+	}
+	emitter "smokey2"
+	{
+		duration	0.5,0.5
+		count		1,1
+		attenuateEmitter
+		attenuation	300,400
+
+		sprite
+		{
+			duration	1,1
+			blend	add
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 20,-20,-20,40,20,20 }
+				size { line 4,4,8,8 }
+				tint { point 0.858824,0.52549,0.156863 }
+				fade { line 0.1,0.4 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope rr2_concavefade_start_at_1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 20,20,30,30 }
+				rotate { box -0.25,0.25 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+effect effects/impacts/blaster/impact_default_simple
+{
+	size	8
+
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_default_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster/impact_stroggify_simple"
+	}
+}
+
+effect effects/impacts/blaster/impact_flesh_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_flesh_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster/impact_stroggify_simple"
+	}
+}effect effects/impacts/blaster/impact_liquid_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_liquid_simple"
+	}
+}
+
+
+
+effect effects/impacts/blaster/impact_plastic_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_plastic_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster/impact_stroggify_simple"
+	}
+}
+
+effect effects/impacts/blaster/impact_sand_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_sand_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster/impact_stroggify_simple"
+	}
+}
+
+effect effects/impacts/blaster/impact_stone_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_stone_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster/impact_stroggify_simple"
+	}
+}
+
+effect effects/impacts/blaster/impact_pavement_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_pavement_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster/impact_stroggify_simple"
+	}
+}
+
+effect effects/impacts/blaster/impact_metal_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_metal_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster/impact_stroggify_simple"
+	}
+}
+
+effect effects/impacts/blaster/impact_grass_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_grass_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster/impact_stroggify_simple"
+	}
+}
+
+effect effects/impacts/blaster/impact_glass_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_glass_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster/impact_stroggify_simple"
+	}
+}
+
+effect effects/impacts/blaster/impact_wood_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_wood_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster/impact_stroggify_simple"
+	}
+}
+
+effect effects/impacts/blaster/impact_snow_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_snow_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster/impact_stroggify_simple"
+	}
+}
+
+effect effects/impacts/blaster_big/impact_default_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_large/impact_default_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster_big/impact_stroggify_big_simple"
+	}
+}
+
+effect effects/impacts/blaster_big/impact_flesh_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_large/impact_flesh_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster_big/impact_stroggify_big_simple"
+	}
+}effect effects/impacts/blaster_big/impact_liquid_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_large/impact_liquid_simple"
+	}
+}
+
+
+
+effect effects/impacts/blaster_big/impact_plastic_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_large/impact_plastic_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster_big/impact_stroggify_big_simple"
+	}
+}
+
+effect effects/impacts/blaster_big/impact_sand_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_large/impact_sand_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster_big/impact_stroggify_big_simple"
+	}
+}
+
+
+
+effect effects/impacts/blaster_big/impact_snow_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_large/impact_snow_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster/impact_stroggify_simple"
+	}
+}
+
+effect effects/impacts/blaster_big/impact_stone_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_large/impact_stone_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster_big/impact_stroggify_big_simple"
+	}
+}
+
+effect effects/impacts/blaster_big/impact_pavement_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_large/impact_pavement_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster_big/impact_stroggify_big_simple"
+	}
+}
+
+effect effects/impacts/blaster_big/impact_metal_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_large/impact_metal_simple"
+	}
+	effect "unnamed1"
+	{
+		effect	"effects/impacts/blaster_big/impact_stroggify_big_simple"
+	}
+}
+
+effect effects/impacts/blaster_big/impact_grass_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_large/impact_grass_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster_big/impact_stroggify_big_simple"
+	}
+}
+
+effect effects/impacts/blaster_big/impact_glass_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_large/impact_glass_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster_big/impact_stroggify_big_simple"
+	}
+}
+
+
+
+effect effects/impacts/blaster_big/impact_wood_simple
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_large/impact_wood_simple"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/blaster/impact_stroggify_simple"
+	}
+}
+
+effect effects/impacts/blaster_big/impact_dirt_simple
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/bullets_large/impact_dirt_simple"
+	}
+	effect "unnamed1"
+	{
+		effect	"effects/impacts/blaster_big/impact_stroggify_big_simple"
+	}
+}effect effects/impacts/blaster_big/impact_stroggify_big_simple
+{
+	size	89
+
+	cutOffDistance	2500
+
+	sound "Impact Sound"
+	{
+		soundShader	"sounds/weapons/lacerator/projectile_impact"
+		volume	1,8
+		freqshift	0.7,1.4
+	}
+	emitter "smokey3"
+	{
+		duration	0.5,0.5
+		count		2,2
+		attenuateEmitter
+		attenuation	300,400
+
+		sprite
+		{
+			duration	1,1
+			blend	add
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 35,-20,-20,50,20,20 }
+				size { line 4,4,8,8 }
+				tint { point 0.858824,0.52549,0.156863 }
+				fade { line 0.1,0.4 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope rr2_concavefade_start_at_1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 30,30,45,45 }
+				rotate { box -0.25,0.25 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+effect effects/impacts/blaster/impact_dirt_simple
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/bullets_small/impact_dirt_simple"
+	}
+	effect "unnamed1"
+	{
+		effect	"effects/impacts/blaster/impact_stroggify_simple"
+	}
+}
+

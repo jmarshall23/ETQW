@@ -1,0 +1,11 @@
+material models/mapobjects/cmarker
+{
+	{
+		diffusemap	picmip -1	models/mapobjects/cmarker/cmarker_d.tga
+		bumpmap		picmip -1	models/mapobjects/cmarker/cmarker_local.tga
+		specularmap	picmip -2	models/mapobjects/cmarker/cmarker_s.tga
+
+		bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+		detailMult 2,2,0,0
+	}
+}

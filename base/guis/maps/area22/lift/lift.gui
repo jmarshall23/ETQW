@@ -1,0 +1,236 @@
+
+gui maps/area22/lift {
+	properties {
+		float flags	= immediate( flags ) | GUI_SHOWCURSOR;
+	}
+	
+	events {
+	}
+	
+	timeline {
+	}
+	
+	windowDef desktop {
+		properties {
+			color backColor = 0, 0, 0, 1;
+		}
+		
+		events {
+		}
+		
+		timeline {
+		}		
+	}
+
+	windowDef upButton {
+		properties {
+			handle	localizedText		= localize( "guis/maps/up" ); // Up;
+			color	foreColor	= 0, 1, 0, 1;
+			rect	rect		= 0, 0, 640, 240;
+		}
+		
+		events {
+			onKeyDown "mouse1" {
+				gui.sendCommand( "goup" );				
+			}
+		}
+		
+		timeline {
+		}		
+	}
+
+	windowDef downButton {
+		properties {
+			handle	localizedText		= localize( "guis/maps/up" ); // "Down";
+			color	foreColor	= 0, 1, 0, 1;
+			rect	rect		= 0, 240, 640, 240;
+		}
+		
+		events {
+			onKeyDown "mouse1" {
+				gui.sendCommand( "godown" );				
+			}
+		}
+		
+		timeline {
+		}		
+	}
+}
+
+
+gui maps/area22/lift_temp {
+	properties {
+		float flags	= immediate( flags ) | GUI_SHOWCURSOR & ~GUI_SCREENSAVER;
+		float disabled = 0;
+		float mcpInPos = 1;
+		float converted = 0;
+		float atbottom = 1;
+	
+		float interactive		= ( disabled == 0 && mcpInPos == 1 && converted == 1 && atbottom == 1 ) == 1;
+	}
+
+	events {
+		onPropertyChanged "interactive" {
+			if( interactive ) {
+				flags = immediate( flags ) | GUI_INTERACTIVE;
+			} else {
+				flags = immediate( flags ) & ~GUI_INTERACTIVE;
+			}
+		}
+	}
+	
+	timeline {
+	}
+	
+	windowDef desktop {
+		properties {
+			color backColor = 0, 0, 0, 1;
+		}
+
+		events {
+		}
+		
+		timeline {
+		}		
+	}
+
+/*	windowDef disabledText {
+		properties {
+			wstring	text		= toWStr( "Under Enemy Control" );
+			color	foreColor	= 1, 0, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= gui.disabled == 1;
+		}
+	}*/
+	
+	windowDef enabledText {
+		properties {
+			wstring	text		= toWStr( "Text" );
+			color	foreColor	= 0, 1, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= (gui.disabled == 0 && gui.mcpInPos == 1 && gui.converted == 1);
+		}
+	}
+	
+	windowDef enabledButton { 
+		properties {
+			rect 	rect 		= 0, 0, 640, 480;
+			float	visible 	= (gui.disabled == 0 && gui.mcpInPos == 1 && gui.converted == 1);	
+		}
+		
+		events {
+			onKeyDown "mouse1" {
+				gui.sendCommand( "move" );				
+			}
+		}
+	}
+	
+	windowDef convertText {
+		properties {
+			//string	text		= "Repair the generator!";
+			wstring	text		= toWStr( " " );
+			color	foreColor	= 0, 1, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= (gui.disabled == 0 && gui.converted == 0);
+		}
+	}
+	
+	windowDef mcpText {
+		properties {
+			//string	text		= "Drive the MCP on to me!";
+			wstring	text		= toWStr( " " );
+			color	foreColor	= 0, 1, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= (gui.disabled == 0 && gui.mcpInPos == 0 && gui.converted == 1);
+		}
+	}
+
+}
+
+gui maps/area22/lift_personnel_temp {
+	properties {
+		float flags	= immediate( flags ) | GUI_SHOWCURSOR;
+		float disabled = 0;
+	}
+	
+	windowDef desktop {
+		properties {
+			color backColor = 0, 0, 0, 1;
+		}	
+	}
+
+	windowDef disabledText {
+		properties {
+			handle	localizedText		= localize( "guis/maps/under_enemy_control" ); // "Under Enemy Control";
+			color	foreColor	= 1, 0, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= gui.disabled == 1;
+		}	
+	}
+	
+	windowDef enabledText {
+		properties {
+			wstring	text		= toWStr( "Text" );
+			color	foreColor	= 0, 1, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= gui.disabled == 0;
+		}
+	}
+	
+	windowDef enabledButton { 
+		properties {
+			rect 	rect = 0, 0, 640, 480;
+			float	visible = gui.disabled == 0;	
+		}
+		
+		events {
+			onKeyDown "mouse1" {
+				gui.sendCommand( "move" );				
+			}
+		}
+	}
+}
+
+gui maps/area22/caller {
+	properties {
+		float flags	= immediate( flags ) | GUI_SHOWCURSOR;
+		float disabled = 0;
+	}
+
+	windowDef desktop {
+		properties {
+			color backColor = 0, 0, 0, 1;
+		}	
+	}
+
+	windowDef enabledText {
+		properties {
+			handle	localizedText	= localize( "guis/maps/call_lift" ); // "Call Lift";
+			color	foreColor	= 0, 1, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= gui.disabled == 0;
+		}
+	}
+	
+	windowDef disabledText {
+		properties {
+			handle	localizedText		= localize( "guis/maps/lift_moving" ); // "Lift Moving";
+			color	foreColor	= 1, 0, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= gui.disabled == 1;
+		}
+	}
+	
+	windowDef enabledButton { 
+		properties {
+			rect 	rect = 0, 0, 640, 480;
+			float	visible = gui.disabled == 0;	
+		}
+		
+		events {
+			onKeyDown "mouse1" {
+				gui.sendCommand( "call" );				
+			}
+		}
+	}
+}

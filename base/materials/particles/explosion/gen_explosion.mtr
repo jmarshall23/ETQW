@@ -1,0 +1,224 @@
+material particles/explosion/explode01
+{
+	qer_editorimage models/weapons/shotgun/shotgun_mflash.tga
+	sort nearest
+	//deform sprite
+	{
+		blend add
+		map clamp textures/particles/explosion/explode01.tga
+		useTemplate templates/materials/animate< 16, 0.5 >
+		alpha 1
+		maskalpha
+	}
+}
+
+
+material textures/effects/weapons/flash
+{
+	qer_editorimage textures/effects/weapons/flash.tga
+//	sort nearest
+	//deform sprite
+	{
+		blend add
+		map clamp textures/effects/weapons/flash.tga
+//		alpha 1
+		vertexcolor
+		maskalpha
+	}
+}
+
+
+material particles/explosion/explode02
+{
+	qer_editorimage models/weapons/shotgun/shotgun_mflash.tga
+	sort nearest
+	//deform sprite
+	{
+		blend add
+		map textures/particles/explosion/explode02.tga
+		scale 1 / 8, 1
+		scroll table8[ time * 1 ] , 0
+		alpha 1
+		maskalpha
+	}
+}
+
+
+material particles/explosion/explode03
+{
+	qer_editorimage models/weapons/shotgun/shotgun_mflash.tga
+	sort nearest
+	//deform sprite
+	{
+		blend add
+		map textures/particles/explosion/explode03.tga
+		useTemplate templates/materials/animate< 16, 1 >
+		alpha 1
+		maskalpha
+	}
+}
+
+
+material particles/explosion/explode32strip01
+{
+	qer_editorimage models/weapons/shotgun/shotgun_mflash.tga
+	sort nearest
+	//deform sprite
+	{
+		blend add
+		map clamp textures/particles/explosion/explode32strip01.tga
+		useTemplate templates/materials/animate< 32, 0.9 >
+		alpha 1
+		maskalpha
+		vertexcolor
+	}
+}
+
+material particles/explosion/explode32strip02
+{
+	qer_editorimage models/weapons/shotgun/shotgun_mflash.tga
+	sort nearest
+	//deform sprite
+	{
+		blend add
+		map clamp textures/particles/explosion/explode32strip02.tga
+		useTemplate templates/materials/animate_clamp< 32, 0.8 >
+		alpha 1
+		maskalpha
+		vertexcolor
+	}
+}
+
+material particles/explosion/explode04
+{
+	qer_editorimage textures/particles/explosion/explode04.tga
+	sort nearest
+	//deform sprite
+	{
+		blend add
+		map clamp textures/particles/explosion/explode04.tga
+		useTemplate templates/materials/animate< 16, 0.5 >
+		alpha 1
+		maskalpha
+		vertexcolor
+	}
+}
+
+material particles/explosion/explode05
+{
+	qer_editorimage textures/particles/explosion/explode05.tga
+	sort nearest
+	//deform sprite
+	{
+		blend add
+		map clamp textures/particles/explosion/explode05.tga
+		useTemplate templates/materials/animate< 16, 0.5 >
+		alpha 1
+		maskalpha
+		vertexcolor
+	}
+}
+
+material particles/explosion/artillery_explode
+{
+	qer_editorimage textures/particles/explosion/artilleryexp.tga
+	sort nearest
+	//deform sprite
+	{
+		blend gl_src_alpha, gl_one
+		map clamp textures/particles/explosion/artilleryexp.tga
+		useTemplate templates/materials/animate< 8, 0.4 >
+		//alpha 1
+		maskalpha
+		vertexcolor
+	}
+}
+
+material particles/explosion/explode06
+{
+	qer_editorimage textures/particles/explosion/explode06.tga
+	sort nearest
+	//deform sprite
+	{
+		blend add
+		map clamp textures/particles/explosion/explode06.tga
+		useTemplate templates/materials/animate< 16, 0.5 >
+		alpha 1
+		maskalpha
+		vertexcolor
+	}
+}
+
+material particles/explosion/explode07
+{
+	qer_editorimage textures/particles/explosion/explode07.tga
+	sort nearest
+	//deform sprite
+	{
+		blend add
+		map clamp textures/particles/explosion/explode07.tga
+		useTemplate templates/materials/animate< 16, .35>
+		alpha 1
+		maskalpha
+		vertexcolor
+	}
+}
+
+material particles/explosion/explode09
+{
+	qer_editorimage textures/particles/explosion/explode09.tga
+	sort nearest
+	//deform sprite
+	{
+		blend add
+		map clamp textures/particles/explosion/explode09.tga
+		useTemplate templates/materials/animate< 16, .35>
+		alpha 1
+		maskalpha
+		vertexcolor
+	}
+}
+
+material particles/explosion/explode08
+{
+	qer_editorimage textures/particles/explosion/explode08.tga
+	sort nearest
+	//deform sprite
+	twosided
+	{
+		blend add
+		map clamp textures/particles/explosion/explode08.tga
+		useTemplate templates/materials/animate_clamp< 8, .3>
+		alpha 1
+		maskalpha
+		vertexcolor
+	}
+}
+
+material particles/explosion/sparkflash_explosions {
+   nonsolid
+   noshadows
+   twoSided
+   {
+       blend add
+       map textures/particles/sparks/sparkflash_explosions.tga
+       vertexColor
+       maskAlpha
+       alpha 1
+   }
+}
+
+material particles/explosion/explode_burst01
+{
+	qer_editorimage textures/particles/explosion/explode_burst01.tga
+	sort nearest
+	//deform sprite
+	{
+		blend add
+		map clamp textures/particles/explosion/explode_burst01.tga
+		useTemplate templates/materials/animate_clamp< 8, 0.35 >
+		//alpha 1
+		//maskalpha
+		vertexcolor
+	}
+}

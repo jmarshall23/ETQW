@@ -1,0 +1,47 @@
+/***********************************************************************
+
+	windsock
+	reexportmodels windsock.def
+	testModel worldmodel_windsock
+
+***********************************************************************/
+
+// ========================================================================
+// Export
+//
+
+export karateka {
+	options -prefix SOCK_ -scale 4 -sourcedir models/mapobjects/windsock/dev_sd -destdir models/mapobjects/windsock/ -keep orientation cloth_1 cloth_2 cloth_3 cloth_4 cloth_5 -parent cloth_1 orientation -keepmesh sock_reversed strap_reversed sock strap
+
+	mesh	windSock_highwind.mb			-dest models/mapobjects/windsock/windsock.md5mesh
+	anim	windSock_lowwind.mb				-dest models/mapobjects/windsock/lowwind.md5anim				-range 	1 	48
+	anim	windSock_medwind.mb				-dest models/mapobjects/windsock/medwind.md5anim 				-range  1 	48
+ 	anim	windSock_highwind.mb			-dest models/mapobjects/windsock/highwind.md5anim 				-range  1 	48
+	anim	windSock_veryhighwind.mb		-dest models/mapobjects/windsock/veryhighwind.md5anim 			-range  1 	48
+}
+
+// ========================================================================
+// Model
+//
+
+model worldmodel_windsock {
+	mesh		 					models/mapobjects/windsock/windsock.md5mesh
+	anim base						models/mapobjects/windsock/lowwind.md5anim
+	anim lowwind					models/mapobjects/windsock/lowwind.md5anim
+	anim medwind					models/mapobjects/windsock/medwind.md5anim
+	anim highwind					models/mapobjects/windsock/highwind.md5anim
+	anim veryhighwind				models/mapobjects/windsock/veryhighwind.md5anim
+	anim highwind2					models/mapobjects/windsock/highwind.md5anim
+	anim medwind2					models/mapobjects/windsock/medwind.md5anim
+}
+
+entityDef mapobjects_windsock {
+	"editor_color"				"0 .5 .8"
+	"editor_mins"				"-8 -8 -8"
+	"editor_maxs"				"8 8 8"
+	"editor_usage"				"A windsock, will play animations and rotate based on the current atmosphere's wind"
+
+	"spawnclass"				"sdScriptEntity"
+	"scriptObject"				"mapobject_windsock"
+	"model"						"worldmodel_windsock"
+}

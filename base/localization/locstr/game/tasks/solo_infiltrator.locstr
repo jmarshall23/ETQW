@@ -1,0 +1,32 @@
+
+locString game/tasks/infiltrator_hack_deployable/title {
+	text "#str_01006000"
+}
+
+locString game/tasks/infiltrator_hack_objective/title {
+	text "#str_01006010"
+}
+
+locString game/tasks/infiltrator_hack_objective/title_friend {
+	text "#str_01006011"
+}
+
+locString game/tasks/infiltrator_destroy_objective/title {
+	text "#str_01001020"
+}
+
+locString game/tasks/infiltrator_destroy_objective/title_friend {
+	text "#str_01001021"
+}
+	
+locString game/tasks/infiltrator_hack_door/title {
+	text "#str_01006020"
+}
+
+locString game/tasks/infiltrator_deploy_radar/title {
+	text "#str_01006030"
+}
+
+locString game/tasks/infiltrator_use_drone/title {
+	text "#str_01006040"
+}

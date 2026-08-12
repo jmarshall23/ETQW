@@ -1,0 +1,42 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/ark/wall_ark_3_ts {
+	width	256
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1024 ) ( 256 1280 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 512 ) ( 256 1024 )
+	}
+	rect {
+		surfaceType	stone
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1836 ) ( 256 2048 )
+	}
+	rect {
+		surfaceType	stone
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1280 ) ( 256 1836 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1024 ) ( 256 1110 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 256 512 )
+	}
+}

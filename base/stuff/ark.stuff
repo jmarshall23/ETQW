@@ -1,0 +1,28 @@
+// --------------------------------------------
+// ARK STUFF
+// --------------------------------------------
+
+stuffType ark/ark_twigs {
+	Model	"stuff/ark/ark_twigs_01.lwo"
+	Model	"stuff/ark/ark_twigs_02.lwo"
+	Model	"stuff/ark/ark_twigs_03.lwo"
+	Model	"stuff/ark/ark_twigs_04.lwo"
+	Model	"stuff/ark/ark_twigs_05.lwo"
+}
+
+stuffType ark/ark_twigs_large {
+	Model	"stuff/ark/ark_twigs_large_01.lwo"
+	Model	"stuff/ark/ark_twigs_large_02.lwo"
+}
+
+stuffType ark/ark_grass {
+	Model	"stuff/ark/ark_grass01.lwo"
+	Model	"stuff/ark/ark_grass02.lwo"
+	Model	"stuff/ark/ark_grass03.lwo"
+}
+
+stuffType ark/ark_biodomegrass {
+	Model	"stuff/ark/ark_grass04.lwo"
+	Model	"stuff/ark/ark_grass05.lwo"
+	Model	"stuff/ark/ark_grass06.lwo"
+}

@@ -1,0 +1,672 @@
+
+/***********************************************************************
+
+tool_targeting.script
+
+***********************************************************************/
+
+object tool_targeting : weapon_base {
+
+	void		preinit();
+	void		init();
+	void		destroy();
+
+	void		Idle();
+	void		Lower();
+
+	void		KillFireTrace( boolean doWarning );
+
+	void		UpdateGui( object artyTrace );
+	void		HandleInput();
+	void		FreeArtyTrace( object t );
+	object		MakeArtyTrace();	
+
+	float		OnActivate( entity p, float distance );
+	float		OnActivateHeld( entity p, float distance );
+	float		OnUsed( entity p, float distance );
+	boolean		OnWeapNext();
+	boolean		OnWeapPrev();
+
+	boolean		CanFire( object traceObject );
+	
+	void		InitTargetEffect();
+	void		ClearTargetEffect();
+	void		UpdateTargetEffect( object artyTrace );
+
+	void		UpdateLock();
+	float		TargetLocked();
+
+	boolean		TargetLostGracePeriodExpired();
+
+	boolean		RocketsClearTargeting( object artyTrace );
+
+	void		ClearEffects();
+
+	void		ToolTipThread_Raise();
+	void		ToolTipThread_Scope();
+	
+	float		hudModuleHandle;
+
+	boolean		activateLatched;
+
+	entity		cachedEntity;
+	float		cachedCount;
+	string		cachedStateString;
+
+	float		cachedLockFraction;
+
+	float		beamHandle;
+	float		beamJointHandle;
+
+	float		activeState;
+	float		prevState;
+
+	float		maxTargetDiff;
+	vector		initPos;
+
+	entity		targetEntity;
+	float		crosshairStartTime;
+	float		crosshairLostTime;
+
+	boolean		scopeActive;
+
+	target_marker targetEffect;
+
+	zoomWidget	zoomer;
+	
+	fireSupportStatus fsStatus;
+
+	float		nextPlayTime;
+	
+	object		fireTrace;
+	
+	float		toolTipInvalid;
+	float		toolTipTargetingStartTime;
+}
+
+void tool_targeting::preinit() {
+	zoomer = new zoomWidget;
+	zoomer.Init( self );
+	
+	fsStatus = new fireSupportStatus;
+	
+	prevState = -1;
+	beamHandle = -1;
+	
+	beamJointHandle = myPlayer.getJointHandle( getKey( "joint_beam" ) );
+	
+	toolTipInvalid = GetToolTip( getKey( "tt_invalid_location" ) );
+}
+
+void tool_targeting::UpdateLock() {
+	if ( crosshairStartTime == -1 ) {
+		// allow the user time to settle on a target
+		crosshairStartTime = sys.getTime() + 0.2f;
+	}
+}
+
+void tool_targeting::KillFireTrace( boolean doWarning ) {
+	if ( fireTrace != $null ) {
+		FreeArtyTrace( fireTrace );
+		fireTrace = $null;
+		if ( doWarning ) {
+			sys.print( "tool_targeting::KillFireTrace dangling trace\n" );
+		}
+	}
+}
+
+void tool_targeting::destroy() {
+	KillFireTrace( true );
+
+	delete zoomer;
+	
+	delete fsStatus;
+
+	if ( myPlayer != $null_entity ) {
+		myPlayer.AI_HOLD_WEAPON = false;
+		if ( myPlayer == sys.getLocalViewPlayer() ) {
+			myPlayer.disableClientModelSights();
+			sys.setGUIFloat( GUI_GLOBALS_HANDLE, "deployables.fs_state", 0 );
+		}
+	}
+
+	ClearEffects();
+}
+
+void tool_targeting::ClearEffects() {
+	if ( myPlayer == sys.getLocalPlayer() ) {
+		ClearTargetEffect();
+	}
+
+	if ( hudModuleHandle != -1 ) {
+		sys.freeHudModule( hudModuleHandle );
+		hudModuleHandle = -1;
+	}
+
+//	ShowSights();
+
+	if ( beamHandle != -1 ) {
+		freeAllBeams();
+		beamHandle = -1;
+
+		stopSound( SND_WEAPON_MECH );
+	}
+}
+
+void tool_targeting::init() {
+	crosshairStartTime	= -1;
+	crosshairLostTime	= -1;
+
+	hudModuleHandle 	= -1;
+
+	maxTargetDiff		= getFloatKeyWithDefault( "max_target_diff", 512 );
+
+	if ( myPlayer.isLocalPlayer() ) {
+		thread ToolTipThread_Raise();
+	}
+		
+	weaponState( "Raise", 0 );
+}
+
+float tool_targeting::TargetLocked() {
+	if ( crosshairStartTime == -1 || crosshairStartTime > sys.getTime() || myPlayer.targetingItem == $null_entity ) {
+		return TARGET_LOCK_NOT_LOCKED;
+	}
+	
+	if ( myPlayer.targetingItem.vGetFireSupportMode() == TARGET_ROCKETS ) {
+		if ( myPlayer.getEnemy() != $null_entity ) {
+			return TARGET_LOCK_LOCKED;
+		}
+	}
+	
+	float lockTime = myPlayer.targetingItem.GetLockTime();
+
+	cachedLockFraction = ( sys.getTime() - crosshairStartTime ) / lockTime;
+	if ( cachedLockFraction >= 1.f ) {
+		cachedLockFraction = 1.f;
+		return TARGET_LOCK_LOCKED;
+	}
+	
+	return TARGET_LOCK_LOCKING;
+}
+
+boolean tool_targeting::TargetLostGracePeriodExpired() {
+	if ( myPlayer.targetingItem == $null_entity ) {
+		return true;
+	}
+
+	if ( crosshairLostTime == -1 ) {
+		crosshairLostTime = sys.getTime();
+	}
+	if ( ( crosshairLostTime + myPlayer.targetingItem.GetLockGraceTime() ) < sys.getTime() ) {
+		crosshairLostTime = -1;
+		return true;
+	}
+	return false;
+}
+
+void tool_targeting::InitTargetEffect() {
+	if ( targetEffect != $null_entity ) {
+		return;
+	}
+
+	deployable_base targetItem = myPlayer.targetingItem;
+	if ( targetItem == $null_entity ) {
+		return;
+	}
+	targetEffect = targetItem.vCreateTargetMarker();
+}
+
+void tool_targeting::ClearTargetEffect() {
+	if ( targetEffect != $null_entity ) {
+		delete targetEffect;
+	}
+}
+
+void tool_targeting::UpdateTargetEffect( object artyTrace ) {
+	if ( myPlayer.targetingItem != $null_entity ) {
+		if ( myPlayer.targetingItem.vGetFireSupportMode() == TARGET_ROCKETS ) {
+			if ( RocketsClearTargeting( artyTrace ) ) {
+				ClearTargetEffect();
+				return;
+			}
+		} else {
+			if ( beamHandle == -1 || !CanFire( artyTrace ) ) {
+				ClearTargetEffect();
+				return;
+			}
+		}
+	}
+
+	if ( activeState == MPS_NONE_ACTIVE || activeState == MPS_DISABLED || activeState == MPS_OUT_OF_RANGE || activeState == MPS_INVALID ) {
+		ClearTargetEffect();
+		return;
+	}
+
+	InitTargetEffect();
+
+	if ( targetEffect != $null_entity ) {
+		targetEffect.SetTarget( artyTrace, targetEntity, TargetLocked() );
+	}
+}
+
+void tool_targeting::Lower() {
+	ClearEffects();
+
+	Base_Lower();
+}
+
+void tool_targeting::HandleInput() {
+	if( myPlayer.getButton( PK_ALTFIRE ) ) {
+		if ( !altFireDown ) {
+			altFireDown = true;
+
+			if ( scopeActive ) {
+				scopeActive = false;
+				myPlayer.disableClientModelSights();
+				myPlayer.AI_HOLD_WEAPON = false;
+				ClearEffects();
+				zoomer.Disable();
+			}
+		}
+	} else {
+		altFireDown = false;
+	}
+	
+	boolean allowLock = false;
+	
+	if ( myPlayer.getButton( PK_ACTIVATE ) ) {
+		if ( !modeSwitchDown ) {
+			modeSwitchDown = true;
+		
+			if ( scopeActive && zoomer.IsEnabled() ) {
+				startSound( "snd_zoomin", SND_WEAPON_SIG );
+				zoomer.Cycle();
+			}
+		}
+	} else {
+		modeSwitchDown = false;
+	}
+	
+	KillFireTrace( true );
+	fireTrace = MakeArtyTrace();
+
+	if ( myPlayer.getButton( PK_ATTACK ) ) {
+		myPlayer.disableSprint( 1.f );
+			
+		if ( !scopeActive ) {
+			if ( !mainFireDown ) {
+				scopeActive = true;
+				myPlayer.AI_HOLD_WEAPON = true;
+				zoomer.Enable();
+				StopIdleEffect();
+				startSound( "snd_scopeup", SND_WEAPON_SIG );
+
+				if ( myPlayer.isLocalPlayer() ) {
+				
+					sys.killThread( "ToolTipThread_Raise_" + getName() );
+					sys.killThread( "ToolTipThread_Scope_" + getName() );
+					thread ToolTipThread_Scope();
+				
+					if ( getKey( "def_scopemodel" ) ) {
+						myPlayer.enableClientModelSights( getKey( "def_scopemodel" ) );
+					}
+					if ( hudModuleHandle == -1 ) {
+						hudModuleHandle = sys.allocHudModule( getKey( "gui_overlay" ), getFloatKeyWithDefault( "hud_sort", 0 ), false );
+					}
+
+					InitTargetEffect();
+					HideSights();
+				}
+			}
+		} else {
+			if ( beamHandle == -1 ) {
+				beamHandle = allocBeam( getKey( "mtr_beam" ) );
+				startSound( "snd_targeting", SND_WEAPON_MECH );
+			}
+			
+			if ( myPlayer.targetingItem != $null_entity ) {
+				if ( myPlayer.targetingItem.vGetFireSupportMode() == TARGET_ROCKETS ) {
+					allowLock = true;
+				}
+			}
+
+			UpdateLock();
+			if ( !sys.isClient() ) {
+				if ( TargetLocked() == TARGET_LOCK_LOCKED ) {
+					if ( CanFire( fireTrace ) ) {						
+						myPlayer.targetingItem.vTargetSetTarget( fireTrace.getTraceEndPos(), targetEntity );
+
+						myPlayer.setArtyAttackLocation( fireTrace.getTraceEndPos(), myPlayer.targetingItem.vGetFireSupportMode() ); //mal: make bots aware of the incoming danger!
+
+						objManager.PlaySoundForPlayer( getKey( "snd_confirm" ), myPlayer );
+					}
+				}
+			}
+
+			if ( prevState == activeState && activeState == MPS_OUT_OF_RANGE && sys.getLocalPlayer() == myPlayer && nextPlayTime <= sys.getTime() ) {
+				sys.startSoundDirect( getKey( "snd_out_of_range" ), SND_PLAYER_VO );
+
+				// need to stop the sound being play repeatedly without finishing 
+				nextPlayTime = sys.getTime() + 2;
+			}
+		}
+		
+		mainFireDown = true;
+		prevState = activeState;
+	} else {
+		mainFireDown = false;
+		if ( beamHandle != -1 ) {
+			freeAllBeams();
+			beamHandle = -1;
+
+			stopSound( SND_WEAPON_MECH );
+		}
+		crosshairStartTime = -1;
+		crosshairLostTime = -1;
+		
+		if ( !scopeActive ) {
+			myPlayer.disableSprint( 0.f );
+			if ( myPlayer.AI_SPRINT ) {
+				StopIdleEffect();
+				KillFireTrace( false );
+				weaponState( "Sprint", 4 );
+			}
+		} else {
+			myPlayer.disableSprint( 1.f );
+		}
+	}
+	
+	if ( !CanFire( fireTrace ) ) {
+		allowLock = false;
+	}
+
+	KillFireTrace( false );
+
+	if ( scopeActive ) {
+		hide();
+	} else {
+		show();
+	}
+	
+	enableTargetLock( allowLock );
+}
+
+void tool_targeting::Idle() {
+	boolean local = myPlayer == sys.getLocalPlayer();
+
+	weaponReady();
+	playCycle( ANIMCHANNEL_ALL, "idle" );
+	entity crosshairEnt;
+	vector beamStart;
+	vector beamEnd;
+	vector beamColor;
+	vector forward;
+	vector right;
+	vector currentPos;
+	float nextUpdate = -1;
+	
+	while( 1 ) {
+		if ( WEAPON_LOWERWEAPON ) {
+			StopIdleEffect();
+			weaponState( "Lower", 0 );
+		}
+		
+		if ( !scopeActive ) {
+			ShowSights();
+			StartIdleEffect();
+			myPlayer.setSniperAOR( 0.f );
+		} else {
+			HideSights();
+			myPlayer.setSniperAOR( 1.f );
+		}
+
+		HandleInput();
+		
+		if ( scopeActive ) {
+			object artyTrace = MakeArtyTrace();
+
+			if ( local || sys.isServer() ) {
+				UpdateGui( artyTrace );
+			}
+			if ( local ) {
+				UpdateTargetEffect( artyTrace );
+			}
+
+			currentPos = artyTrace.getTraceEndPos();
+
+			if ( crosshairStartTime != -1 ) {
+				if ( beamHandle != -1 ) {
+					if ( myPlayer != sys.getLocalViewPlayer() || pm_thirdperson.getBoolValue() ) {
+						beamStart = myPlayer.getJointPos( beamJointHandle );
+					} else {
+						forward = myPlayer.getViewAngles();
+						right = sys.angToRight( forward );
+						forward = sys.angToForward( forward );
+
+						beamStart = myPlayer.getOrigin();
+						beamStart = beamStart + ( forward * -32.0f );
+						beamStart = beamStart + ( right * 32.0f );
+						beamStart_z = beamStart_z + 80.0f;
+					}
+
+					if ( myPlayer.getEntityAllegiance( sys.getLocalViewPlayer() ) == TA_FRIEND ) {
+						beamColor = g_colorGreen;
+					} else {
+						beamColor = g_colorRed;
+					}
+
+					updateBeam( beamHandle, beamStart, currentPos, beamColor, 0.5f, 1.0f );
+
+					if ( crosshairLostTime == -1 ) {
+						myPlayer.lastValidTarget = currentPos;
+					}
+				}
+			}
+
+			if ( crosshairStartTime != -1 && crosshairStartTime <= sys.getTime() ) {
+				// user is aiming at something
+				
+				if ( nextUpdate < sys.getTime() ) {
+					// update the location the user aims regularily
+					initPos = currentPos;
+					nextUpdate = sys.getTime() + 2.0f;
+				}
+
+				crosshairEnt = myPlayer.getCrosshairEntity();
+				if ( myPlayer.targetingItem != $null_entity ) {
+					if ( myPlayer.targetingItem.vGetFireSupportMode() == TARGET_ROCKETS ) {
+						crosshairEnt = myPlayer.getEnemy();
+					}
+				}
+				
+				if ( targetEntity == $null_entity ) { 
+					targetEntity = crosshairEnt;
+				}
+
+				if ( !CanFire( artyTrace ) ) {
+					crosshairStartTime = -1;
+				} else if ( crosshairEnt != targetEntity ) {
+					// our target changed
+					if ( TargetLostGracePeriodExpired() ) {
+						targetEntity = crosshairEnt;
+						nextUpdate = -1;
+						crosshairStartTime = -1;
+					}
+				} else if ( sys.vecLength( currentPos - initPos ) > maxTargetDiff ) {
+					nextUpdate = -1;
+					crosshairStartTime = -1;
+				} else {
+					// reset grace period
+					crosshairLostTime = -1;
+				}
+			} else {
+				// we're not targetting anything currently (user isn't pressing "fire")
+
+				if ( targetEntity != $null_entity ) {
+					targetEntity = $null_entity;
+				}
+
+				nextUpdate = -1;
+			}
+
+			FreeArtyTrace( artyTrace );
+		}
+
+		UpdateCharge();
+
+		sys.waitFrame();
+	}
+}
+
+void tool_targeting::FreeArtyTrace( object t ) {
+	if ( t != $null_entity ) {
+		sys.freeTrace( t );
+	}
+}
+
+object tool_targeting::MakeArtyTrace() {
+	float mask = MASK_SOLID | MASK_OPAQUE;
+	if ( myPlayer.targetingItem != $null_entity ) {
+		if ( myPlayer.targetingItem.vGetFireSupportMode() == TARGET_ROCKETS ) {
+			mask |= CONTENTS_RENDERMODEL | CONTENTS_MONSTER;
+		}
+	}
+	melee( mask, 8192 * 2.f, true, false );
+	return saveMeleeTrace();
+}
+
+void tool_targeting::UpdateGui( object artyTrace ) {
+	float lockStatus = TargetLocked();
+
+	fsStatus.Update( myPlayer, artyTrace, lockStatus, cachedLockFraction );
+	
+	activeState = fsStatus.status;
+
+	if ( fsStatus.locationValid ) {
+		toolTipTargetingStartTime = 0.0f;
+	} else {
+		if ( myPlayer.isLocalPlayer() ) {
+			if ( myPlayer.getButton( PK_ATTACK ) ) {
+				if ( toolTipTargetingStartTime == 0.0f ) {
+					toolTipTargetingStartTime = sys.getTime();
+				}
+
+				if ( sys.getTime() - toolTipTargetingStartTime > 2.0f ) {
+					if ( !myPlayer.isToolTipPlaying() ) {
+						myPlayer.sendToolTip( toolTipInvalid );
+					}
+				}
+			} else {
+				toolTipTargetingStartTime = 0.0f;
+			}
+		}
+	}
+
+	if ( myPlayer == sys.getLocalViewPlayer() ) {
+		sys.setGUIFloat( GUI_GLOBALS_HANDLE, "deployables.maintainLock", fsStatus.keepLock );
+		sys.setGUIHandle( GUI_GLOBALS_HANDLE, "deployables.statusText", fsStatus.statusString );
+		sys.setGUIHandle( GUI_GLOBALS_HANDLE, "deployables.modeText", fsStatus.statusString );
+		sys.setGUIFloat( GUI_GLOBALS_HANDLE, "deployables.lockPercent", fsStatus.timerStatus );
+		sys.setGUIFloat( GUI_GLOBALS_HANDLE, "deployables.fs_state", fsStatus.guiStatus );
+	}
+}
+
+float tool_targeting::OnActivateHeld( entity p, float distance ) {
+	return scopeActive;
+}
+
+float tool_targeting::OnActivate( entity p, float distance ) {
+	return scopeActive;
+}
+
+float tool_targeting::OnUsed( entity p, float distance ) {
+	return scopeActive;
+}
+
+boolean tool_targeting::OnWeapNext() {
+	if ( scopeActive && zoomer.IsEnabled() ) {
+		if ( !zoomer.IsFullyZoomedOut() ) {
+			startSound( "snd_zoomout", SND_WEAPON_SIG );
+		}
+
+		zoomer.ZoomOut();
+		return true;
+	}
+
+	return false;
+}
+
+boolean tool_targeting::OnWeapPrev() {
+	if ( scopeActive && zoomer.IsEnabled() ) {
+		if ( !zoomer.IsFullyZoomedIn() ) {
+			startSound( "snd_zoomin", SND_WEAPON_SIG );
+		}
+		
+		zoomer.ZoomIn();
+		return true;
+	}
+
+	return false;
+}
+
+boolean tool_targeting::CanFire( object traceObject ) {
+	if ( traceObject.getTraceFraction() == 1.f || traceObject.getTraceSurfaceFlags() & SURF_NOIMPACT ) {
+		return false;
+	}
+	return activeState == MPS_READY || activeState == MPS_LOCKED || activeState == MPS_LOCKING;
+}
+
+void tool_targeting::ToolTipThread_Raise() {
+	sys.wait( myPlayer.CalcTooltipWait() );
+	while ( myPlayer.isSinglePlayerToolTipPlaying() ) {
+		sys.wait( 1.0f );
+	}
+	myPlayer.cancelToolTips();
+
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_1" ) ) );
+	
+	WAIT_FOR_TOOLTIP;
+	if ( myPlayer.targetingItem == $null_entity ) {
+		myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_no_deployable" ) ) );
+	} else {
+		myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_2" ) ) );
+	}
+}
+
+void tool_targeting::ToolTipThread_Scope() {
+	WAIT_FOR_TOOLTIP;
+	if ( myPlayer.targetingItem == $null_entity ) {
+		myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_no_deployable" ) ) );
+
+		WAIT_FOR_TOOLTIP;
+		myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_scope_up_2" ) ) );
+		
+		return;
+	}
+
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_scope_up_1" ) ) );
+
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_scope_up_2" ) ) );
+}
+
+boolean tool_targeting::RocketsClearTargeting( object artyTrace ) {
+	// predict lock-on on clients
+	vehicle_base ent = artyTrace.getTraceEntity();
+	if ( ent != $null_entity ) {
+		return true;
+	}
+
+	if ( artyTrace.getTraceFraction() == 1.f || artyTrace.getTraceSurfaceFlags() & SURF_NOIMPACT ) {
+		return true;
+	}
+
+	if ( beamHandle == -1 || ( !CanFire( artyTrace )  && activeState != MPS_FIRING ) ) {
+		return true;
+	}
+
+	return false;
+}

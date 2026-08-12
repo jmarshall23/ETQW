@@ -1,0 +1,182 @@
+
+material textures2/plaster/villagewall01
+{
+	bumpmap		picmip -1	textures2/plaster/villagewall01_local.tga
+	diffusemap	picmip -1	textures2/plaster/villagewall01_d.tga
+	specularmap	picmip -2	textures2/plaster/villagewall01_s.tga
+}
+
+material textures2/ground/groundsand01
+{
+	bumpmap		picmip -1	textures2/ground/groundsand01_local.tga
+	diffusemap	picmip -1	textures2/ground/groundsand01_d.tga
+	specularmap	picmip -2	textures2/ground/groundsand01_s.tga
+}
+
+material textures2/ground/mosaictiles01
+{
+	bumpmap		picmip -1	textures2/ground/mosaictiles01_local.tga
+	diffusemap	picmip -1	textures2/ground/mosaictiles01_d.tga
+	specularmap	picmip -2	textures2/ground/mosaictiles01_s.tga
+}
+
+material textures2/ground/mosaictiles01a
+{
+	bumpmap		picmip -1	textures2/ground/mosaictiles01a_local.tga
+	diffusemap	picmip -1	textures2/ground/mosaictiles01a_d.tga
+	specularmap	picmip -2	textures2/ground/mosaictiles01a_s.tga
+}
+
+material textures2/plaster/crumpledwall01
+{
+	bumpmap		picmip -1	textures2/plaster/crumpledwall01_local.tga
+	diffusemap	picmip -1	textures2/plaster/crumpledwall01_d.tga
+	specularmap	picmip -2	textures2/plaster/crumpledwall01_s.tga
+}
+
+material textures2/plaster/stonewall02
+{
+	bumpmap		picmip -1	textures2/plaster/stonewall02_local.tga
+	diffusemap	picmip -1	textures2/plaster/stonewall02_d.tga
+	specularmap	picmip -2	textures2/plaster/stonewall02_s.tga
+}
+
+material textures2/plaster/dirtwall04
+{
+	bumpmap		picmip -1	textures2/plaster/dirtwall04_local.tga
+	diffusemap	picmip -1	textures2/plaster/dirtwall04_d.tga
+	specularmap	picmip -2	textures2/plaster/dirtwall04_s.tga
+}
+
+material textures2/plaster/dirtwall04a
+{
+	bumpmap		picmip -1	textures2/plaster/dirtwall04a_local.tga
+	diffusemap	picmip -1	textures2/plaster/dirtwall04a_d.tga
+	specularmap	picmip -2	textures2/plaster/dirtwall04a_s.tga
+}
+
+material textures2/plaster/ceiling01
+{
+	bumpmap		picmip -1	textures2/plaster/ceiling01_local.tga
+	diffusemap	picmip -1	textures2/plaster/ceiling01_d.tga
+	specularmap	picmip -2	textures2/plaster/ceiling01_s.tga
+}
+
+material textures2/stone/stonewall01
+{
+	bumpmap		picmip -1	textures2/stone/stonewall01_local.tga
+	diffusemap	picmip -1	textures2/stone/stonewall01_d.tga
+	specularmap	picmip -2	textures2/stone/stonewall01_s.tga
+}
+
+material textures2/wood/window02
+{
+	bumpmap		picmip -1	textures2/wood/window02_local.tga
+	diffusemap	picmip -1	textures2/wood/window02_d.tga
+	specularmap	picmip -2	textures2/wood/window02_s.tga
+}
+
+material textures2/wood/window03
+{
+	bumpmap		picmip -1	textures2/wood/window03_local.tga
+	diffusemap	picmip -1	textures2/wood/window03_d.tga
+	specularmap	picmip -2	textures2/wood/window03_s.tga
+}
+
+material textures2/wood/woodenpanels01
+{
+	bumpmap		picmip -1	textures2/wood/woodenpanels01_local.tga
+	diffusemap	picmip -1	textures2/wood/woodenpanels01_d.tga
+	specularmap	picmip -2	textures2/wood/woodenpanels01_s.tga
+}
+
+material textures2/plaster/roof01
+{
+	bumpmap		picmip -1	textures2/plaster/roof01_local.tga
+	diffusemap	picmip -1	textures2/plaster/roof01_d.tga
+	specularmap	picmip -2	textures2/plaster/roof01_s.tga
+}
+
+material textures2/plaster/mudwall01
+{
+	bumpmap		picmip -1	textures2/plaster/mudwall01_local.tga
+	diffusemap	picmip -1	textures2/plaster/mudwall01_d.tga
+	specularmap	picmip -2	textures2/plaster/mudwall01_s.tga
+}
+
+material textures2/concrete/militarywall01
+{
+	bumpmap		picmip -1	textures2/concrete/militarywall01_local.tga
+	diffusemap	picmip -1	textures2/concrete/militarywall01_d.tga
+	specularmap	picmip -2	textures2/concrete/militarywall01_s.tga
+}
+
+material textures2/wood/woodenrail01
+{
+noShadows
+twosided
+{
+	bumpmap		picmip -1	textures2/wood/woodenrail01_local.tga
+	diffusemap	picmip -1	textures2/wood/woodenrail01_d.tga
+	specularmap	picmip -2	textures2/wood/woodenrail01_s.tga
+	alphaTest 0.5
+}
+}
+
+material textures2/wood/moroccopattern01
+{
+	bumpmap		picmip -1	textures2/wood/moroccopattern01_local.tga
+	diffusemap	picmip -1	textures2/wood/moroccopattern01_d.tga
+	specularmap	picmip -2	textures2/wood/moroccopattern01_s.tga
+}
+
+material textures2/wood/moroccodoor01
+{
+	bumpmap		picmip -1	textures2/wood/moroccodoor01_local.tga
+	diffusemap	picmip -1	textures2/wood/moroccodoor01_d.tga
+	specularmap	picmip -2	textures2/wood/moroccodoor01_s.tga
+}
+
+material textures2/plaster/plasterwall01
+{
+	bumpmap		picmip -1	textures2/plaster/plasterwall01_local.tga
+	diffusemap	picmip -1	textures2/plaster/plasterwall01_d.tga
+	specularmap	picmip -2	textures2/plaster/plasterwall01_s.tga
+}
+
+material textures2/plaster/plasterwall02
+{
+	bumpmap		picmip -1	textures2/plaster/plasterwall02_local.tga
+	diffusemap	picmip -1	textures2/plaster/plasterwall02_d.tga
+	specularmap	picmip -2	textures2/plaster/plasterwall02_s.tga
+}
+
+material textures2/plaster/trims01
+{
+	{
+		bumpmap		picmip -1	textures2/plaster/trims01_local.tga
+		diffusemap	picmip -1	textures2/plaster/trims01_d.tga
+		specularmap	picmip -2	textures2/plaster/trims01_s.tga
+		vertexcolor
+	}
+}
+
+material textures2/plaster/trims01_noshadows
+{
+	noshadows
+	bumpmap		picmip -1	textures2/plaster/trims01_local.tga
+	diffusemap	picmip -1	textures2/plaster/trims01_d.tga
+	specularmap	picmip -2	textures2/plaster/trims01_s.tga
+}
+material textures2/decals/stains01
+{
+	sort decal
+	nonsolid
+	translucent
+	{
+		program	filterVertexColor
+		blend	filter
+		map	textures2/decals/stains01
+		vertexColor
+	}
+}

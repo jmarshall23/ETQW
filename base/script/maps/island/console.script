@@ -1,0 +1,59 @@
+object island_console_trigger {
+	void				preinit();
+	void				init();
+	void				syncFields();
+	void				destroy();
+
+	void				OnTouch( entity other, object traceObject );
+
+	boolean				CanUse( entity p );
+	void				Activate( entity p );
+
+	entity				keycard;
+	float				objectiveIndex;
+};
+
+void island_console_trigger::preinit() {
+	objectiveIndex	= getFloatKeyWithDefault( "objective_index", -1 );
+}
+
+void island_console_trigger::init() {
+	keycard			= getEntityKey( "keycard" );
+
+	if ( keycard == $null_entity ) {
+		sys.warning( "island_console_trigger::init Failed to Find Keycard\n" );
+	}
+}
+
+void island_console_trigger::syncFields() {
+	syncBroadcast( "keycard" );
+}
+
+void island_console_trigger::destroy() {
+}
+
+void island_console_trigger::OnTouch( entity other, object traceObject ) {
+	if ( CanUse( other ) ) {
+		Activate( other );
+	}
+}
+
+void island_console_trigger::Activate( entity p ) {
+	if ( !sys.isClient() ) {
+		keycard.remove();
+	}
+
+	objManager.CompleteObjective( objectiveIndex, p );
+}
+
+boolean island_console_trigger::CanUse( entity p ) {
+	if ( keycard == $null_entity ) {
+		return false;
+	}
+
+	if ( keycard.vGetCarrier() != p ) {
+		return false;
+	}
+
+	return true;
+}

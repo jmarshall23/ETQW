@@ -1,0 +1,53 @@
+template material/foliage_translucent {
+	parameters <
+		DiffuseMapImage,
+		TranslucencyMapImage,
+		LocalMapImage,
+		SpecularMapImage,
+		TranslucencyMultiplier = "1.0",
+		ScatteringColorR = "1.0",
+		ScatteringColorG = "1.0",
+		ScatteringColorB = "1.0",
+		diffusePicMip = "",
+		bumpmapPicMip = "",
+		specularmapPicMip = "" >
+	text {
+		nonsolid
+		noshadows
+		twoSided
+	
+		{
+			program		interaction/translucent_alphatest
+			parameters	ScatteringColorR, ScatteringColorG, ScatteringColorB, TranslucencyMultiplier	// light scattering rgb, translucency multiplier
+
+			diffusemap	diffusePicMip mulAlpha( DiffuseMapImage, makeAlpha( add( scale( TranslucencyMapImage, 0.8, 0.8, 0.8, 0.8 ), 51, 51, 51, 51 ) ) )
+			bumpmap		bumpmapPicMip LocalMapImage
+			specularmap	specularmapPicMip SpecularMapImage
+			alphaTest 	0.1
+		}
+	}
+}
+
+template material/foliage_translucent_stage {
+	parameters <
+		DiffuseMapImage,
+		TranslucencyMapImage,
+		LocalMapImage,
+		SpecularMapImage,
+		TranslucencyMultiplier = "1.0",
+		ScatteringColorR = "1.0",
+		ScatteringColorG = "1.0",
+		ScatteringColorB = "1.0",
+		diffusePicMip = "",
+		bumpmapPicMip = "",
+		specularmapPicMip = "" >
+	text {
+		program		interaction/translucent_alphatest
+		parameters	ScatteringColorR, ScatteringColorG, ScatteringColorB, TranslucencyMultiplier	// light scattering rgb, translucency multiplier
+
+		diffusemap	diffusePicMip mulAlpha( DiffuseMapImage, makeAlpha( add( scale( TranslucencyMapImage, 0.8, 0.8, 0.8, 0.8 ), 51, 51, 51, 51 ) ) )
+		bumpmap		bumpmapPicMip LocalMapImage
+		specularmap	specularmapPicMip SpecularMapImage
+		alphaTest 	0.1
+	}
+}

@@ -1,0 +1,48 @@
+
+sound sounds/deployables/gdf/apt/deploy {
+
+	volume -10
+	maxDistance 50
+
+	sounds/deployables/apt_gdf/deploy.wav
+}
+
+sound sounds/deployables/gdf/apt/fire {
+
+	maxDistance 100
+
+	playOnce
+
+	looping
+	leadin
+	sounds/deployables/apt_gdf/fire_start.wav
+	sounds/deployables/apt_gdf/fire_loop.wav
+}
+
+sound sounds/deployables/gdf/apt/fire/stop {
+
+	maxDistance 100
+
+	sounds/deployables/apt_gdf/fire_stop.wav
+}
+
+sound sounds/deployables/gdf/apt/fire/far {
+
+	volume -15
+	farDistance 50
+	maxDistance 300
+
+	playOnce
+
+	looping
+	sounds/deployables/apt_gdf/fire_far_loop.wav
+}
+
+sound sounds/deployables/gdf/apt/fire/far/stop {
+
+	volume -15
+	farDistance 50
+	maxDistance 300
+
+	sounds/deployables/apt_gdf/fire_far_stop.wav
+}

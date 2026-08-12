@@ -1,0 +1,24 @@
+
+sound sounds/weapons/fafff/fire {
+
+	maxDistance 125
+	occlude_once
+
+	sounds/weapons/fafff/fire_01.wav
+	sounds/weapons/fafff/fire_02.wav
+	sounds/weapons/fafff/fire_03.wav
+	sounds/weapons/fafff/fire_04.wav
+	sounds/weapons/fafff/fire_05.wav
+	sounds/weapons/fafff/fire_06.wav
+}
+
+sound sounds/weapons/fafff/fly {
+
+	volume -10
+	maxDistance 75
+
+	looping
+	leadin
+	sounds/weapons/haw/fly_start.wav
+	sounds/weapons/haw/fly_loop.wav
+}

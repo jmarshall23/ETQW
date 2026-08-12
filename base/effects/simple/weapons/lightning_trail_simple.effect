@@ -1,0 +1,208 @@
+effect effects/projectile_lightning_2_simple
+{
+	size	31
+
+	spawner "core4"
+	{
+		count		1,1
+		locked
+		constant
+
+		line
+		{
+			duration	1,1
+			material	"textures/effects/weapons/lgun"
+			tiling	80
+			fadeIn
+			generatedNormal
+			trailRepeat	1
+
+			start
+			{
+				position { spiral -5,0,0,-5,0,0,1024 }
+				size { point 2.5 }
+				tint { point 0.501961,0.501961,0.501961 }
+				length { line 0,0,0,0,0,0 useEndOrigin }
+			}
+			lineHit
+		}
+	}
+	emitter "Spiral2"
+	{
+		duration	0.1,0.1
+		density		4,4
+		particleCap		256
+		locked
+
+		linked
+		{
+			duration	0.1,0.1
+			blend	add
+			material	"textures/particles/lightning/lightning03"
+			tiling	30
+			fadeIn
+			generatedNormal
+			trailRepeat	1
+
+			start
+			{
+				position { spiral -5,0,0,-5,0,0,10 useEndOrigin linearSpacing }
+				size { point 8 }
+				offset { cylinder -2,-2,-2,2,2,2 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 8 }
+			}
+			lineHit
+		}
+	}
+	spawner "muzzle sparks flash2"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.05,0.05
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning02"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,3 }
+				velocity { box -50,-50,-50,50,50,50 }
+				size { point 8,8 }
+				offset { point 5,-1,-3 }
+				rotate { box 0.611111,0.666667 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+			lineHit
+		}
+	}
+	spawner "muzzle sparks flash3"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.05,0.05
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning02"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,3 }
+				velocity { box -50,-50,-50,50,50,50 }
+				size { point 15,15 }
+				offset { point 5,-1,-3 }
+				rotate { box 0.611111,0.666667 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+			lineHit
+		}
+	}
+	emitter "spiralling bolts3"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		model
+		{
+			duration	100,100
+			material	"models/particles/lightningpistol/lightningpistol_bolt01"
+			model		"models/particles/lightningpistol/lightningpistol_bolt01.lwo"
+			trailRepeat	1
+
+			start
+			{
+				position { point -2,0,0 }
+				size { point 0.6,0.4,0.4 }
+			}
+
+			motion
+			{
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				rotate { point 0,0,416.667 }
+			}
+			lineHit
+		}
+	}
+	emitter "core5"
+	{
+		duration	1,1
+		count		4,4
+		locked
+
+		line
+		{
+			duration	0.05,0.1
+			material	"textures/particles/lightning/lightning03"
+			tiling	80
+			fadeIn
+			generatedNormal
+			trailRepeat	1
+
+			start
+			{
+				position { spiral -5,0,0,-8,0,0,1024 }
+				size { box 4,10 }
+				length { line 0,0,0,0,0,0 useEndOrigin }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

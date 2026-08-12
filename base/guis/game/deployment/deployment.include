@@ -1,0 +1,245 @@
+
+#ifndef __deployment__
+#define __deployment__
+
+#include <guis/game/hud/hud.include>
+#include <guis/common/colors.include>
+#include <guis/common/utility.include>
+#include <guis/mainmenu/components/dialog.include>
+
+$template _deploy_properties
+	properties {
+		handle	warningMessage		= floatToHandle( -1 );
+		float lastNumChatLines;
+	}
+	_dlg_init
+	events {
+		onActivate {
+			_decrement( globals.gameHud.showDeployableState, 1 )
+			lastNumChatLines = immediate( globals.gameHud.numChatLines );
+			globals.gameHud.numChatLines = 4;
+		}
+		onDeactivate {
+			_increment( globals.gameHud.showDeployableState, 1 );
+			globals.gameHud.numChatLines = immediate( lastNumChatLines );
+		}
+	}	
+$endtemplate
+
+$template _select( ButtonName, Title, Description, ButtonIndex, XOffParm )
+	windowDef Select##ButtonIndex {
+		properties {
+			rect	rect 		= $evalfloat( XOffParm + 4 ), 17, 72, 44;
+			color 	backColor 	= 1,1,1,0.7;
+			handle 	icon		= gui.cacheMaterial( "icon" ## #ButtonIndex, #ButtonName );
+			rect	iconRect	= absoluteRect.x + 4, absoluteRect.y + 6, 64, 32;
+			rect	titleRect	= absoluteRect.x, absoluteRect.y + ( absoluteRect.h ), absoluteRect.w, 16;
+			color	foreColor	= 1,1,1,0;
+			float 	fontSize	= 14;
+			handle	title		= localize( Title );
+			color	expandColor	= 1,1,1,0;
+			float	visible		= player.scoreboardActive == false;
+		}
+		_draw_dialog_frame( drawText, gui.blankWStr, "nogradient" )
+
+		events {
+			onActivate {
+				postNamedEvent( "updateItem" );
+			}
+			onPropertyChanged "globals.deployables.currentItem" {
+				postNamedEvent( "updateItem" );
+			}
+			onNamedEvent "updateItem" {				
+				if( globals.deployables.currentItem == $evalint( ButtonIndex - 1 ) ) {
+					backColor.a = transition( backColor.a, 1, 175 );
+					foreColor.a = transition( foreColor.a, 1, 100 );
+					rect.y = transition( rect.y, 10, 175 );
+					gui.descriptionText.localizedText = localize( Description );
+					expandColor.a = transition( 1, 0, 500 );
+				} else {
+					backColor.a = transition( backColor.a, 0.4, 175 );
+					foreColor.a = transition( foreColor.a, 0, 100 );
+					rect.y = transition( rect.y, 17, 175 );
+				}
+			}
+			onPostDraw {
+				callSuper();
+				drawCachedMaterial( icon, iconRect, backColor );
+				drawCachedMaterial( gui.dlgFillMaterial, absoluteRect, expandColor );
+				drawLocalizedText( title, titleRect, foreColor, fontSize, DTF_SINGLELINE | DTF_CENTER | DTF_VCENTER | DTF_DROPSHADOW );
+			}
+		}
+	}
+$endtemplate
+
+$template _deploy_info( ShowSelect )
+	windowDef descriptionText {
+		_med_text_props
+		properties {
+			rect	rect 				= 4, globals.gameHud.dynamicContentRect.y + globals.gameHud.dynamicContentRect.h + 4, globals.gameHud.dynamicContentRect.w - 6, 90;
+			vec2 	textAlignment 		= TA_LEFT, TA_VCENTER;
+			float	flags				= WF_WRAP_TEXT | WF_AUTO_SIZE_HEIGHT;
+		}
+
+	}
+	windowDef description {		
+		properties {
+			rect	rect 	= 2, globals.gameHud.dynamicContentRect.y + globals.gameHud.dynamicContentRect.h + 2, globals.gameHud.dynamicContentRect.w, gui.descriptionText.absoluteRect.h + 4;			
+			float 	visible	= player.scoreboardActive == false;
+		}
+		_draw_dialog_frame( drawText, gui.blankWStr, "nogradient" )		
+	}
+	windowDef selectInfo {
+		_huge_text_props
+		properties {
+			rect rect = 0, SCREEN_HEIGHT - rect.h, SCREEN_WIDTH, 136;
+			wstring text = localizeArgs( "guis/game/select_deployable", gui.getKeyBind( "_activate", "" ) );
+			float	flags	= immediate( flags) | WF_DROPSHADOW;
+			float visible = ShowSelect && player.scoreboardActive == false;
+		}
+		
+	}
+$endtemplate
+
+$template _warning
+	windowDef DeployWarning {
+		_big_text_props
+		properties {
+			float visible 				= isValidHandle( gui.warningMessage );
+			rect	rect				= ( gui.screenCenter.x - ( rect.w * 0.5f ) ), ( gui.screenCenter.y - 77 ), 100, 16;
+			float	flags				= immediate( flags) | WF_DROPSHADOW | WF_AUTO_SIZE_WIDTH;
+			handle	localizedText		= gui.warningMessage;
+		}
+	}
+$endtemplate
+
+$template _instructions
+	windowDef instructionsBack {
+		properties {
+			rect rect = 2, _to_bottom_of( description ) + 2, gui.description.rect.w, 39 + globals.deployables.allowRotation * 17;
+			rect	flashRectBase	= absoluteRect.x - 4, absoluteRect.y - 2, absoluteRect.w + 4, absoluteRect.h + 4;
+			rect	flashRect;
+			float	flashAlpha		= 0;
+			float	visible			= player.scoreboardActive == false;
+		}
+		_draw_dialog_frame( drawText, gui.blankWStr, "nogradient" )
+		
+		events {
+			onPropertyChanged "globals.deployables.allowRotation" "player.deployIsRotating" "absoluteRect.h" {
+				if ( absoluteRect.h != SCREEN_HEIGHT ) {
+					flashAlpha = transition( 0.8f, 0.f, 2000, "0.1,0.9" );
+					flashRect = transition( flashRectBase, absoluteRect, 350 );				
+				}
+			}
+			onPostDraw {
+				drawCachedMaterial( gui.dlgFillMaterial, flashRect, "1,1,1,flashAlpha" );
+			}		
+		}
+
+		windowDef textInstructions1 {
+			properties {
+				rect 	rect = 4, 4, 128, 16;
+				color	foreColor			= 1,1,1,0.5;
+			}
+			_med_text_props
+			properties {
+				float	flags				= WF_AUTO_SIZE_WIDTH;
+				handle	localizedText		= localize( "guis/game/deploy/choose_loc" );
+				vec2	textAlignment		= TA_LEFT, TA_VCENTER;
+			}
+			events {
+				onActivate {
+					postNamedEvent( "updateColors" );
+				}
+				onNamedEvent "updateColors" {
+					if( player.deploymentActive == 0 ) {
+						foreColor.a = transition( foreColor.a, 1, 100 );
+					} else {
+						foreColor.a = transition( foreColor.a, 0.5, 100 );
+					}
+				}
+				onPropertyChanged "player.deploymentActive" {
+					postNamedEvent( "updateColors" );
+				}
+				onPropertyChanged "player.deployIsRotating" {
+					if( player.deployIsRotating ) {
+						localizedText = localize( "guis/game/deploy/location_accepted" );
+						foreColor.a = 0.5;
+					} else {
+						localizedText = localize( "guis/game/deploy/choose_loc" );
+						foreColor.a = 1;
+					}
+				}
+			}
+		}
+		windowDef textInstructions2 {
+			properties {
+				rect rect = 4, _to_bottom_of( textInstructions1 ) + 2, 128, 16;
+			}
+			_med_text_props
+			properties {
+				float	flags				= WF_AUTO_SIZE_WIDTH;
+				handle	localizedText		= localize( "guis/game/deploy/choose_rot" );
+				vec2	textAlignment		= TA_LEFT, TA_VCENTER;
+				color	foreColor			= 1,1,1,0.5;
+				float	visible				= globals.deployables.allowRotation;
+			}
+			events {
+				onActivate {
+					postNamedEvent( "updateColors" );
+				}		
+				onPropertyChanged "player.deploymentActive" "player.deployIsRotating" {
+					postNamedEvent( "updateColors" );
+				}
+				onNamedEvent "updateColors" {
+					if( player.deploymentActive == 0 && player.deployIsRotating == 1 ) {
+						foreColor.a = transition( foreColor.a, 1, 100 );
+					} else {
+						foreColor.a = transition( foreColor.a, 0.5, 100 );
+					}			
+				}
+			}
+		}
+	
+		windowDef textInstructions3 {
+			_med_text_props
+			properties {
+				rect	rect 				= 4, _to_bottom_of( textInstructions2 ) + 2, 128, 16;
+				float	flags				= WF_AUTO_SIZE_WIDTH;
+				handle	localizedText		= localize( "guis/game/deploy/deploy_dispatched" );
+				color	foreColor			= 1,1,1,0.5;
+				vec2	textAlignment		= TA_LEFT, TA_VCENTER;
+			}
+			events {
+				onActivate {
+					if ( globals.deployables.allowRotation ) {
+						rect = 4, _to_bottom_of( textInstructions2 ) + 2, 128, 16;
+					} else {
+						rect = 4, _to_bottom_of( textInstructions1 ) + 2, 128, 16;
+					}
+					postNamedEvent( "updateColors" );
+				}
+				onPropertyChanged "globals.deployables.allowRotation" {
+					if ( globals.deployables.allowRotation ) {
+						rect = 4, _to_bottom_of( textInstructions2 ) + 2, 128, 16;
+					} else {
+						rect = 4, _to_bottom_of( textInstructions1 ) + 2, 128, 16;
+					}
+				}
+				onPropertyChanged "player.deploymentActive" {
+					postNamedEvent( "updateColors" );
+				}
+				onNamedEvent "updateColors" {
+					if( player.deploymentActive == 1 ) {
+						foreColor.a = transition( foreColor.a, 1, 100 );
+					} else {
+						foreColor.a = transition( foreColor.a, 0.5, 100 );
+					}			
+				}
+			}
+		}	
+	}
+	
+$endtemplate
+
+#endif // !__deployment__

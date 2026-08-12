@@ -1,0 +1,257 @@
+
+/*
+=================
+ Localization for map
+=================
+*/
+
+locString maps/refinery/strogg_device_a {
+	text "#str_00100300" 
+}
+
+locString maps/refinery/strogg_device_b {
+	text "#str_00100301" 
+}
+
+locString maps/refinery/assault_ramp {
+	text "#str_00100302" 
+}
+
+locString maps/refinery/side_entrance {
+	text "#str_00100303" 
+}
+
+locString maps/refinery/main_entrance {
+	text "#str_00100304" 
+}
+
+locString maps/refinery/rear_entrance {
+	text "#str_00100305" 
+}
+
+locString maps/refinery/strogg_barricades {
+	text "#str_00100306" 
+}
+
+locString maps/refinery/strogg_shield_generator {
+	text "#str_00100307" 
+}
+
+locString maps/refinery/captured_outpost {
+	text "#str_00100308" 
+	arguments 1
+}
+
+locString maps/refinery/destroyed_entrance {
+	text "#str_00100309" 
+	arguments 1
+}
+
+locString maps/refinery/destroyed_device_a {
+	text "#str_00100310" 
+	arguments 1
+}
+
+locString maps/refinery/destroyed_device_b {
+	text "#str_00100311" 
+	arguments 1
+}
+
+locString maps/refinery/hotel_forward_spawn {
+	text "#str_00100312" 
+}
+
+locString maps/refinery/gdf_side_gate {
+	text "#str_00100313" 
+}
+
+locString maps/refinery/gdf_main_gate {
+	text "#str_00100314" 
+}
+
+locString maps/refinery/briefing {
+	text "#str_00100315" 
+}
+
+locString maps/refinery/campaign {
+	text "#str_00100316" 
+}
+
+locString maps/refinery/location {
+	text "#str_00100317" 
+}
+
+/*
+=================
+ Objectives to do
+=================
+*/
+
+locString maps/refinery/obj01_gdf {
+	text "#str_00100318"	
+}
+
+locString maps/refinery/obj01_strogg {
+	text "#str_00100319"	
+}
+
+locString maps/refinery/obj01_gdf_short {
+	text "#str_00100320"	
+}
+
+locString maps/refinery/obj01_strogg_short {
+	text "#str_00100321"	
+}
+
+locString maps/refinery/obj02_gdf {
+	text "#str_00100322"	
+}
+
+locString maps/refinery/obj02_strogg {
+	text "#str_00100323"	
+}
+
+locString maps/refinery/obj02_gdf_short {
+	text "#str_00100324"	
+}
+
+locString maps/refinery/obj02_strogg_short {
+	text "#str_00100325"	
+}
+
+locString maps/refinery/obj03_gdf {
+	text "#str_00100326"	
+}
+
+locString maps/refinery/obj03_strogg {
+	text "#str_00100327"	
+}
+
+locString maps/refinery/obj03_gdf_short {
+	text "#str_00100328"	
+}
+
+locString maps/refinery/obj03_strogg_short {
+	text "#str_00100329"	
+}
+
+locString maps/refinery/barricade_progress {	
+	text "#str_00100330"
+	arguments 1
+}
+
+locString maps/refinery/barricade_disarm {
+	text "#str_00100331"
+	arguments 1
+}
+
+locString maps/refinery/barricade_destroy {
+	text "#str_00100332"
+	arguments 1
+}
+
+locString maps/refinery/north_stroyent_progress {	
+	text "#str_00100333"
+	arguments 1
+}
+
+locString maps/refinery/north_stroyent_disarm {
+	text "#str_00100334"
+	arguments 1
+}
+
+locString maps/refinery/north_stroyent_destroy {
+	text "#str_00100335"
+	arguments 1
+}
+
+locString maps/refinery/south_stroyent_progress {	
+	text "#str_00100336"
+	arguments 1
+}
+
+locString maps/refinery/south_stroyent_disarm {
+	text "#str_00100337"
+	arguments 1
+}
+
+locString maps/refinery/south_stroyent_destroy {
+	text "#str_00100338"
+	arguments 1
+}
+
+// defence objective
+locString maps/refinery/stroyent_filters {
+	text "#str_00100339" // "The Stroyent Filters"
+}
+
+// secondary objectives
+locString maps/refinery/obj_construct_bridge {
+	text "#str_00100340" 
+	arguments 1
+}
+
+locString maps/refinery/obj_construct_tower_mcp {
+	text "#str_00100341"
+	arguments 1
+}
+
+locString maps/refinery/obj_construct_tower_auto {
+	text "#str_00100342"
+	arguments 1
+}
+
+locString maps/refinery/obj_construct_gun_building {
+	text "#str_00100343"
+	arguments 1
+}
+
+locString maps/refinery/obj_construct_gun_house {
+	text "#str_00100344"
+	arguments 1
+}
+
+locString maps/refinery/obj_construct_bridge_complete {
+	text "#str_00100345" 
+	arguments 1
+}
+
+locString maps/refinery/obj_construct_tower_mcp_complete {
+	text "#str_00100346"
+	arguments 1
+}
+
+locString maps/refinery/obj_construct_tower_auto_complete {
+	text "#str_00100347"
+	arguments 1
+}
+
+locString maps/refinery/obj_construct_gun_building_complete {
+	text "#str_00100348"
+	arguments 1
+}
+
+locString maps/refinery/obj_construct_gun_house_complete {
+	text "#str_00100392" // borrowed from Salvage's allocation
+	arguments 1
+}
+
+locString maps/refinery/obj_construct_gun_north {
+	text "#str_00100397" // borrowed from Salvage's allocation
+	arguments 1
+}
+
+locString maps/refinery/obj_construct_gun_north_complete {
+	text "#str_00100398" // borrowed from Salvage's allocation
+	arguments 1
+}
+
+locString maps/refinery/obj_construct_gun_base {
+	text "#str_00100234" // from Island
+	arguments 1
+}
+
+locString maps/refinery/obj_construct_gun_base_complete {
+	text "#str_00100235" // from Island
+	arguments 1
+}

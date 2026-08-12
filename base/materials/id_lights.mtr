@@ -1,0 +1,114 @@
+// this is placed in front of the guis on view weapons, like the plasma gun and machinegune
+material lights/viewWeaponGuiLight
+{
+	noShadows
+	{
+		
+		lightProjectionMap zeroClamp highQuality lights/squareishlight.tga
+		red		0.1 * guiLightTable[ time ]
+		green	0.6 * guiLightTable[ time ]
+		blue	0.6 * guiLightTable[ time ]		
+	}
+}
+
+material lights/impflash
+{
+	{
+		lightProjectionMap zeroClamp highQuality lights/impflash.tga
+		rotate	time * 3.7
+		rgb		flickerblink[ time * 1 ]
+		colored
+	}
+}
+
+material lights/fullambient
+{
+	{
+		
+		lightProjectionMap zeroClamp highQuality lights/fullambient.tga
+		colored
+	}
+}
+
+material lights/round_flicker
+{
+	{
+		
+		lightProjectionMap  zeroclamp highQuality lights/round.tga
+		red 		((.25 * blinktable [Parm4 + (time * (15 * Parm3)) ]) +.75) * Parm0
+		green 	((.25 * blinktable [Parm4 + (time * (15 * Parm3)) ]) +.75) * Parm1
+		blue 		((.25 * blinktable [Parm4 + (time * (15 * Parm3)) ]) +.75) * Parm2	
+	}
+}
+
+material lights/round
+{
+	{
+		
+		lightProjectionMap	 zeroClamp highQuality lights/round.tga
+		colored
+	}
+}
+
+material lights/round2
+{
+	{
+		
+		lightProjectionMap	 zeroClamp highQuality lights/round2.tga
+		colored
+	}
+}
+
+material lights/spot01
+{
+	{
+		
+		lightProjectionMap zeroClamp highQuality lights/spot01.tga
+		colored
+	}
+}
+
+material lights/spot02
+{
+	{
+		
+		lightProjectionMap	zeroClamp highQuality lights/spot02.tga
+		colored
+	}
+}
+
+material lights/spot04
+{
+	{
+		
+		lightProjectionMap	zeroClamp highQuality lights/spot04.tga
+		colored
+	}
+}
+
+material lights/squareishlight
+{
+	{
+		
+		lightProjectionMap	zeroclamp highQuality lights/squareishlight.tga
+		colored
+	}
+}
+
+material lights/squarelight1a
+{
+	{
+		
+		lightProjectionMap	zeroclamp highQuality lights/squarelight1a.tga
+		colored
+	}
+}
+
+material lights/squarelight
+{
+	{
+		
+		lightProjectionMap zeroclamp	highQuality lights/squarelight.tga
+		colored
+	}
+}

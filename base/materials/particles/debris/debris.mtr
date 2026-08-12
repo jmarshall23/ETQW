@@ -1,0 +1,387 @@
+material particles/debris/debris_dirtdust01
+{
+	qer_editorimage textures/particles/debris/debris_dirtdust01.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_dirtdust01.tga
+		vertexcolor
+		maskalpha
+		//red sun_r * lightscale
+		//green sun_g * lightscale
+		//blue sun_b * lightscale
+		//red desat_sun_r * lightscale * 0.4
+		//green desat_sun_g * lightscale * 0.4
+		//blue desat_sun_b * lightscale * 0.4
+	}
+}
+
+
+material particles/debris/debris_dirtfly01
+{
+	qer_editorimage textures/particles/debris/debris_dirtfly01.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_dirtfly01.tga
+		vertexcolor
+		maskalpha
+		//red sun_r * lightscale
+		//green sun_g * lightscale
+		//blue sun_b * lightscale
+		red desat_sun_r * lightscale * 0.4
+		green desat_sun_g * lightscale * 0.4
+		blue desat_sun_b * lightscale * 0.4
+	}
+}
+
+material particles/debris/debris_snow
+{
+	qer_editorimage textures/particles/debris/debris_snow.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_snow.tga
+		vertexcolor
+		maskalpha
+		alpha 1
+	}
+}
+
+material particles/debris/debris_motionblur
+{
+	qer_editorimage textures/particles/debris/debris_motionblur.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_motionblur.tga
+		vertexcolor
+		maskalpha
+		alpha 1
+	}
+}
+
+material particles/debris/debris_smallbits
+{
+	qer_editorimage textures/particles/debris/debris_smallbits.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_smallbits.tga
+		vertexcolor
+		maskalpha
+		alpha 1
+	}
+}
+
+material particles/debris/debris_smallbits2
+{
+	qer_editorimage textures/particles/debris/debris_smallbits2.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_smallbits2.tga
+		vertexcolor
+		maskalpha
+		alpha 1
+	}
+}
+
+material particles/debris/debris_smallbits3
+{
+	qer_editorimage textures/particles/debris/debris_smallbits3.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_smallbits3.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/debris/debris_bigblast
+{
+	//qer_editorimage textures/particles/debris/debris_bigblast.tga
+	noshadows
+	nonsolid
+	{
+		blend blend
+		program sfx/cheap_litsmoke
+		map textures/particles/debris/debris_bigblast.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/debris/debris_smallblast
+{
+	noshadows
+	nonsolid
+	{
+		blend blend
+		program sfx/cheap_litsmoke
+		map textures/particles/debris/debris_smallblast.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/debris/debris_smallblast2
+{
+	noshadows
+	nonsolid
+	{
+		blend blend
+		program sfx/cheap_litsmoke
+		map textures/particles/debris/debris_smallblast2.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/debris/dustcloud_4
+{
+	qer_editorimage textures/particles/debris/dustcloud_04.tga
+	noshadows
+	nonsolid
+	{
+		blend blend
+		program sfx/cheap_litsmoke
+		map textures/particles/debris/dustcloud_04.tga
+		vertexcolor	
+		maskalpha
+	}
+}
+
+material particles/debris/debris_bigblast2
+{
+     { 
+     
+          blend GL_ONE, GL_ONE_MINUS_SRC_ALPHA 
+          program sfx/cheap_litsmoke
+          mask          textures/particles/debris/debris_bigblast.tga 
+          map          premultiplyAlpha( makealpha (textures/particles/debris/debris_bigblast.tga) ) 
+          vertexcolor           
+     } 
+}
+
+material particles/debris/debris_dirtfly03
+{
+	qer_editorimage textures/particles/debris/debris_dirtfly03.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_dirtfly03.tga
+		vertexcolor
+		maskalpha
+		//red sun_r * lightscale
+		//green sun_g * lightscale
+		//blue sun_b * lightscale
+		red desat_sun_r * lightscale * 0.4
+		green desat_sun_g * lightscale * 0.4
+		blue desat_sun_b * lightscale * 0.4
+	}
+}
+
+material particles/debris/debris_dirtfly03_nosun
+{
+	qer_editorimage textures/particles/debris/debris_dirtfly03.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_dirtfly03.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/debris/debris_dirtfly04
+{
+	qer_editorimage textures/particles/debris/debris_dirtfly04.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_dirtfly04.tga
+		vertexcolor
+		maskalpha
+		//red sun_r * lightscale
+		//green sun_g * lightscale
+		//blue sun_b * lightscale
+		red desat_sun_r * lightscale * 0.4
+		green desat_sun_g * lightscale * 0.4
+		blue desat_sun_b * lightscale * 0.4
+	}
+}
+
+material particles/debris/debris_dirtfly02
+{
+	qer_editorimage textures/particles/debris/debris_dirtfly02.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_dirtfly02.tga
+		vertexcolor
+		maskalpha
+		//red sun_r * lightscale
+		//green sun_g * lightscale
+		//blue sun_b * lightscale
+		red desat_sun_r * lightscale * 0.4
+		green desat_sun_g * lightscale * 0.4
+		blue desat_sun_b * lightscale * 0.4
+	}
+}
+
+material particles/debris/debris_dirtfly02_nosun
+{
+	qer_editorimage textures/particles/debris/debris_dirtfly02.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_dirtfly02.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+
+material particles/debris/debris_stone01
+{
+	qer_editorimage textures/particles/debris/debris_stone01.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone01.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/debris/debris_stone02
+{
+	qer_editorimage textures/particles/debris/debris_stone02.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone02.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/debris/debris_stone02_compound
+{
+	qer_editorimage textures/particles/debris/debris_stone02_compound.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_stone02_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/debris/debris_stone_compound
+{
+	qer_editorimage textures/particles/debris/debris_stone_compound.tga
+	{
+		blend blend
+		map clamp textures/particles/debris/debris_stone_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/debris/debris_stone03_compound
+{
+	qer_editorimage textures/particles/debris/debris_stone03_compound.tga
+	{
+		blend blend
+		map clamp textures/particles/debris/debris_stone03_compound.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+
+material particles/debris/debris_grass01
+{
+	qer_editorimage textures/particles/debris/debris_grass01.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_grass01.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/debris/debris_metal01
+{
+	qer_editorimage textures/particles/debris/debris_metal01.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_metal01.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/debris/debris_metal02
+{
+	qer_editorimage textures/particles/debris/debris_metal02.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_metal02.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/debris/debris_woodchips01
+{
+	qer_editorimage textures/particles/debris/debris_woodchips01.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_woodchips01.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/debris/debris_woodchips02
+{
+	twosided
+	{
+		diffusemap 	textures/particles/debris/debris_woodchips01.tga
+		alphaTest	0.1
+		vertexcolor
+	}
+}
+
+material particles/debris/debris_muddy
+{
+	qer_editorimage textures/particles/debris/grass_mud.tga
+	{
+		blend blend
+		map textures/particles/debris/grass_mud.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/debris/debris_muddy2
+{
+	qer_editorimage textures/particles/debris/grass_mud2.tga
+	{
+		blend blend
+		map textures/particles/debris/grass_mud2.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/debris/debris_glass01
+{
+	qer_editorimage textures/particles/debris/debris_glass01.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_glass01.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material particles/debris/debris_leaves03
+{
+	qer_editorimage textures/particles/debris/debris_leaves03.tga
+	{
+		blend blend
+		map textures/particles/debris/debris_leaves03.tga
+		vertexcolor
+		maskalpha
+	}
+}

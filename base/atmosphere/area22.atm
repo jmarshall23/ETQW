@@ -1,0 +1,462 @@
+atmosphere area22_01 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.595898807 0.2202188075 0.7722747326 )
+	sunColor ( 0.5882353187 0.5254902244 0.4392156899 )
+	sunHaloScale 0
+	sunHaloBias -1
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 13675
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 32479
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.9399999976 0.9300000072 1 0.5799999833 )
+		glareBases ( 0.1199999973 0.5999999642 0 0 )
+	}
+	fogDistHalf 8235
+	fogHeightHalf 2255
+	fogHeightOffset 6715
+	fogColor ( 0.741176486 0.7529411912 0.7254902124 )
+	fogStart 0
+	fogEnd 31410
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "area22_01"
+	skyGradientImage "atmosphere/skies/area22_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/area22" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+ambientCubeMap area22_01 {
+	ambientLight {
+		color 0.6274510026 0.6235294342 0.6235294342
+		direction 0.8085044026 0.3103557527 0.4999999702
+		name "sun_main"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1568627506 0.1294117719 0.0745098069
+		direction -0.9115465879 -0.3869285882 0.1391731054
+		name "shadow_main"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.470588237 0.4431372583 0.4078431427
+		direction 0.0331913941 0.9504771829 0.3090169728
+		name "sun_left1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3137255013 0.2862745225 0.2313725501
+		direction -0.0112182237 -0.0133693581 -0.9998477101
+		name "shadow_right1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3764705956 0.3529411852 0.3254902065
+		direction 0.739109695 -0.5985192657 0.3090169728
+		name "sun_right1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3764705956 0.3764705956 0.3764705956
+		direction -0.6100347042 -0.3811920285 0.6946583986
+		name "shadow fill light"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3254902065 0.3254902065 0.3254902065
+		direction -0.0622299388 -0.1621145457 0.9848077297
+		name "Light8"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.2156862766 0.2235294133 0.250980407
+		direction -0.8002346158 0.4808293879 0.3583679795
+		name "Light7"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.2156862766 0.2235294133 0.250980407
+		direction -0.0488598086 -0.9323009253 0.3583679795
+		name "Light8"
+		ambient 1
+		specular 1
+	}
+	envMap "env/area22"
+	ambientColor 0.5 0.5 0.5
+	minSpecAmbientColor 0.9411764741 0.9137254953 0.8784313798
+	minSpecShadowColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+
+
+
+//***************************
+//Interior cubemaps
+//***************************
+
+ambientCubemap area22_interior_comms_building {
+	ambientLight {
+		color 0.6431372762 0.6431372762 0.6431372762
+		direction 0.4057458639 0.0283725131 0.9135454297
+		name "Light0"
+	}
+	ambientLight {
+		color 0.4274510145 0.4470588565 0.4941176772
+		direction 0.9702957273 0 0.2419219017
+		name "Light1"
+	}
+	ambientLight {
+		color 0.482352972 0.482352972 0.5568627715
+		direction -0.4385211468 0.8606461883 0.2588190436
+		name "Light2"
+	}
+	ambientLight {
+		color 0.5254902244 0.5490196347 0.5764706135
+		direction -0.7869307995 -0.6148177385 0.0523359664
+		name "Light3"
+	}
+	ambientLight {
+		color 0.5372549295 0.5372549295 0.5372549295
+		direction 0.0000000243 0 -1
+		name "Light4"
+	}
+	envMap "env/area22/comms_building"
+	indoors
+}
+
+ambientCubemap area22_interior_office_building01 {
+	ambientLight {
+		color 0.6431372762 0.6431372762 0.6431372762
+		direction 0.4057458639 0.0283725131 0.9135454297
+		name "Light0"
+	}
+	ambientLight {
+		color 0.4274510145 0.4470588565 0.4941176772
+		direction 0.9702957273 0 0.2419219017
+		name "Light1"
+	}
+	ambientLight {
+		color 0.482352972 0.482352972 0.5568627715
+		direction -0.4385211468 0.8606461883 0.2588190436
+		name "Light2"
+	}
+	ambientLight {
+		color 0.5254902244 0.5490196347 0.5764706135
+		direction -0.7869307995 -0.6148177385 0.0523359664
+		name "Light3"
+	}
+	ambientLight {
+		color 0.5372549295 0.5372549295 0.5372549295
+		direction 0.0000000243 0 -1
+		name "Light4"
+	}
+	envMap "env/area22/office_building02"
+	indoors
+}
+
+ambientCubemap area22_interior_office_building02 {
+	ambientLight {
+		color 0.6431372762 0.6431372762 0.6431372762
+		direction 0.4057458639 0.0283725131 0.9135454297
+		name "Light0"
+	}
+	ambientLight {
+		color 0.4274510145 0.4470588565 0.4941176772
+		direction 0.9702957273 0 0.2419219017
+		name "Light1"
+	}
+	ambientLight {
+		color 0.482352972 0.482352972 0.5568627715
+		direction -0.4385211468 0.8606461883 0.2588190436
+		name "Light2"
+	}
+	ambientLight {
+		color 0.5254902244 0.5490196347 0.5764706135
+		direction -0.7869307995 -0.6148177385 0.0523359664
+		name "Light3"
+	}
+	ambientLight {
+		color 0.5372549295 0.5372549295 0.5372549295
+		direction 0.0000000243 0 -1
+		name "Light4"
+	}
+	envMap "env/area22/office_building02"
+	indoors
+}
+
+//***********************
+//warehouse ambients
+//***********************
+
+ambientCubemap area22_interior_warehouse01 {
+	ambientLight {
+		color 0.6431372762 0.6431372762 0.6431372762
+		direction 0.4057458639 0.0283725131 0.9135454297
+		name "Light0"
+	}
+	ambientLight {
+		color 0.4274510145 0.4470588565 0.4941176772
+		direction 0.9702957273 0 0.2419219017
+		name "Light1"
+	}
+	ambientLight {
+		color 0.482352972 0.482352972 0.5568627715
+		direction -0.4385211468 0.8606461883 0.2588190436
+		name "Light2"
+	}
+	ambientLight {
+		color 0.5254902244 0.5490196347 0.5764706135
+		direction -0.7869307995 -0.6148177385 0.0523359664
+		name "Light3"
+	}
+	ambientLight {
+		color 0.5372549295 0.5372549295 0.5372549295
+		direction 0.0000000243 0 -1
+		name "Light4"
+	}
+	envMap "env/area22/warehouse01"
+	indoors
+}
+
+ambientCubemap area22_interior_warehouse02 {
+	ambientLight {
+		color 0.6431372762 0.6431372762 0.6431372762
+		direction 0.4057458639 0.0283725131 0.9135454297
+		name "Light0"
+	}
+	ambientLight {
+		color 0.4274510145 0.4470588565 0.4941176772
+		direction 0.9702957273 0 0.2419219017
+		name "Light1"
+	}
+	ambientLight {
+		color 0.482352972 0.482352972 0.5568627715
+		direction -0.4385211468 0.8606461883 0.2588190436
+		name "Light2"
+	}
+	ambientLight {
+		color 0.5254902244 0.5490196347 0.5764706135
+		direction -0.7869307995 -0.6148177385 0.0523359664
+		name "Light3"
+	}
+	ambientLight {
+		color 0.5372549295 0.5372549295 0.5372549295
+		direction 0.0000000243 0 -1
+		name "Light4"
+	}
+	envMap "env/area22/warehouse01"
+	indoors
+}
+
+//***********************
+//tunnel ambients
+//***********************
+
+ambientCubemap area22_interior_tunnel_gdf_spawn {
+	ambientLight {
+		color 0.2980392277 0.3098039329 0.2941176593
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2549019754 0.2549019754 0.2549019754
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3176470697 0.3176470697 0.3176470697
+		direction 0.9519067407 0.2729548812 -0.1391730905
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3372549117 0.3372549117 0.3372549117
+		direction -0.3158973455 -0.9174326062 0.2419219017
+		name "Light3"
+	}
+	ambientLight {
+		color 0.3019607961 0.3019607961 0.3019607961
+		direction -0.446036011 0.7423286438 0.5
+		name "Light5"
+	}
+	envMap "env/area22/tunnel_gdf_spawn"
+	indoors
+}
+
+ambientCubemap area22_interior_tunnel01 {
+	ambientLight {
+		color 0.2980392277 0.3098039329 0.2941176593
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2549019754 0.2549019754 0.2549019754
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3176470697 0.3176470697 0.3176470697
+		direction 0.9519067407 0.2729548812 -0.1391730905
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3372549117 0.3372549117 0.3372549117
+		direction -0.3158973455 -0.9174326062 0.2419219017
+		name "Light3"
+	}
+	ambientLight {
+		color 0.3019607961 0.3019607961 0.3019607961
+		direction -0.446036011 0.7423286438 0.5
+		name "Light5"
+	}
+	envMap "env/area22/tunnel_main_interior"
+	indoors
+}
+
+ambientCubemap area22_interior_tunnel_entrance {
+	ambientLight {
+		color 0.2980392277 0.3098039329 0.2941176593
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2549019754 0.2549019754 0.2549019754
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3176470697 0.3176470697 0.3176470697
+		direction 0.9519067407 0.2729548812 -0.1391730905
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3372549117 0.3372549117 0.3372549117
+		direction -0.3158973455 -0.9174326062 0.2419219017
+		name "Light3"
+	}
+	ambientLight {
+		color 0.3019607961 0.3019607961 0.3019607961
+		direction -0.446036011 0.7423286438 0.5
+		name "Light5"
+	}
+	envMap "env/area22/tunnel03_entrance"
+	indoors
+}
+
+ambientCubemap area22_interior_tunnel_east_curvecorridor {
+	ambientLight {
+		color 0.2980392277 0.3098039329 0.2941176593
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2549019754 0.2549019754 0.2549019754
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3176470697 0.3176470697 0.3176470697
+		direction 0.9519067407 0.2729548812 -0.1391730905
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3372549117 0.3372549117 0.3372549117
+		direction -0.3158973455 -0.9174326062 0.2419219017
+		name "Light3"
+	}
+	ambientLight {
+		color 0.3019607961 0.3019607961 0.3019607961
+		direction -0.446036011 0.7423286438 0.5
+		name "Light5"
+	}
+	envMap "env/area22/tunnel_east_curvecorridor"
+	indoors
+}
+
+ambientCubemap area22_interior_tunnel_west_curvecorridor {
+	ambientLight {
+		color 0.2980392277 0.3098039329 0.2941176593
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2549019754 0.2549019754 0.2549019754
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3176470697 0.3176470697 0.3176470697
+		direction 0.9519067407 0.2729548812 -0.1391730905
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3372549117 0.3372549117 0.3372549117
+		direction -0.3158973455 -0.9174326062 0.2419219017
+		name "Light3"
+	}
+	ambientLight {
+		color 0.3019607961 0.3019607961 0.3019607961
+		direction -0.446036011 0.7423286438 0.5
+		name "Light5"
+	}
+	envMap "env/area22/tunnel_west_curvecorridor"
+	indoors
+}
+
+ambientCubemap area22_interior_tunnel_west_stairwell {
+	ambientLight {
+		color 0.2980392277 0.3098039329 0.2941176593
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2549019754 0.2549019754 0.2549019754
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3176470697 0.3176470697 0.3176470697
+		direction 0.9519067407 0.2729548812 -0.1391730905
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3372549117 0.3372549117 0.3372549117
+		direction -0.3158973455 -0.9174326062 0.2419219017
+		name "Light3"
+	}
+	ambientLight {
+		color 0.3019607961 0.3019607961 0.3019607961
+		direction -0.446036011 0.7423286438 0.5
+		name "Light5"
+	}
+	envMap "env/area22/tunnel_west_stairwell"
+	indoors
+}

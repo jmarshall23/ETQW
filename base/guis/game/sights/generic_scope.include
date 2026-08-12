@@ -1,0 +1,62 @@
+
+#ifndef __generic_scope__
+#define __generic_scope__
+
+$template __scope_info( ShowZoom, LongRange, TextColor )
+	windowDef infoBox {
+		properties {
+			rect rect = gui.screenCenter.x + 130, gui.screenCenter.y + 10, 100, 16;
+			handle outOfRangeHandle = localize( "guis/hud/scope/oor" );
+			float allowLongDistance = true;
+		}
+		events {
+			onPreDraw {
+				$if ( LongRange == "longrange" )
+					if ( allowLongDistance && compare( player.crosshairDistance, "-1" ) == true && ( globals.weapons.distance == -1 || globals.weapons.distance == -2 ) ) {
+						drawLocalizedText( outOfRangeHandle, "rect", TextColor, 12, DTF_LEFT | DTF_VCENTER );
+					} else {
+						drawText( toWStr( gui.range ), "rect", TextColor, 12, DTF_LEFT | DTF_VCENTER );
+					}
+				$else
+					if ( compare( player.crosshairDistance, "-1" ) ) {
+						drawLocalizedText( outOfRangeHandle, "rect", "0, 0, 0, 0.8", 14, DTF_LEFT | DTF_VCENTER );
+					} else {
+						drawText( toWStr( gui.range ), "rect", "0, 0, 0, 0.8", 14, DTF_LEFT | DTF_VCENTER );
+					}
+				$endif
+
+				$if ( ShowZoom == "showzoom" )
+					gui.zoomStateStr = toString( gui.zoomState, 2 ) + "x";
+					drawText( toWStr( gui.zoomStateStr ), "rect.x, rect.y + 16, rect.w, rect.h", TextColor, 12, DTF_LEFT | DTF_VCENTER );
+				$endif
+				gui.scriptPushFloat( false );
+			}
+			onPropertyChanged "player.crosshairDistance" {
+				$if ( LongRange == "longrange" )
+					if ( compare( player.crosshairDistance, "-1" ) == false ) {
+						gui.range = immediate( player.crosshairDistance );
+						return;
+					} else {
+						allowLongDistance = false;
+					}
+				$else
+					gui.range = immediate( player.crosshairDistance );
+				$endif
+			}
+			$if ( LongRange == "longrange" )
+				onPropertyChanged "globals.weapons.distance" {
+					if ( compare( player.crosshairDistance, "-1" ) == false ) {
+						return;
+					}
+
+					allowLongDistance = true;
+					if ( globals.weapons.distance != -1 && globals.weapons.distance != -2 ) {
+						gui.range = toString( ( globals.weapons.distance * 0.0254 ), 2 );
+					}
+				}
+			$endif
+		}
+	}
+$endtemplate
+
+#endif

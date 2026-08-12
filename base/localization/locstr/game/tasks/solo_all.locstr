@@ -1,0 +1,8 @@
+
+locString game/tasks/all_go_here/title {
+	text "#str_01009013"
+}
+
+locString game/tasks/all_flyer_drone_vent/title {
+	text "#str_01009013"
+}

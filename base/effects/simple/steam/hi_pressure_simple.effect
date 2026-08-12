@@ -1,0 +1,65 @@
+effect effects/steam/hi_pressure_simple
+{
+	size	173
+
+	emitter "steam"
+	{
+		duration	1,1
+		count		4,4
+
+		sprite
+		{
+			duration	1,2
+			material	"textures/effects/smoke1"
+			gravity		0.02,0.06
+			trailRepeat	1
+
+			start
+			{
+				position { line 10,-1,-1,10,1,1 }
+				velocity { box 5,-10,-10,110,10,10 }
+				size { box 2,2,10,10 }
+				tint { point 1,0.721569,0.443137 }
+				fade { point 0 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope inverse_linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { box 25,25,50,50 }
+				fade { point 0.5 }
+				rotate { box -0.388889,0.388889 relative }
+			}
+			lineHit
+		}
+	}
+	sound "sound"
+	{
+		soundShader	"sounds/world/misc/steam_loop_01"
+		volume	-30,-30
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

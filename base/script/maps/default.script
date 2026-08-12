@@ -1,0 +1,4 @@
+
+mapObject_Base Default_MapScript() {
+	return new mapObject_Default;
+}

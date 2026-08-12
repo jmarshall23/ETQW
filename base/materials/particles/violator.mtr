@@ -1,0 +1,48 @@
+material textures/effects/violator_cells_a {
+	twosided
+	{
+		//blend add
+		program sfx/blendFilterFade
+		blend filter
+		maskDepth
+		map textures/effects/violator_cells_a.tga
+		vertexcolor
+	}
+}
+
+material textures/effects/violator_beam {
+
+	//darken stage added by Rich the "genius"
+	{
+		program sfx/blendFilterFade
+		blend filter
+		maskalpha
+		maskdepth
+		map textures/effects/violator_beam_darken.tga
+	}
+	{
+		blend add
+		map textures/effects/violator_beam.tga
+		vertexcolor
+	}
+}
+
+material textures/effects/violator_beam_left {
+	{
+		blend add
+		maskalpha
+		vertexcolor
+		map textures/effects/violator_beam_edge.tga
+	}
+}
+
+material textures/effects/violator_beam_right {
+	{
+		blend add
+		maskalpha
+		vertexcolor
+		map textures/effects/violator_beam_edge.tga
+		scale 1, -1
+	}
+}
+

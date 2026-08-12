@@ -1,0 +1,198 @@
+
+// ====================================================
+// materials for Hornet HUD Attitude Indicator
+// ====================================================
+
+material guis/assets/qet/hud_attitude_overlay_strogg
+{
+	sort nearest
+	{
+		blend add
+		colored
+		map clamp guis/assets/qet/hud_attitude_overlay_strogg.tga
+		maskAlpha
+	}
+}
+
+material guis/assets/qet/hud_attitude_pitch_strogg
+{
+	sort nearest
+	{
+		blend add
+		map clamp guis/assets/qet/hud_attitude_pitch_strogg.tga
+		colored
+		alpha 0.5
+		red 1
+		maskAlpha
+	}
+}
+
+
+// ====================================================
+// materials for Anansi HUD Attitude Indicator
+// ====================================================
+
+material guis/assets/qet/hud_attitude_overlay
+{
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp guis/assets/qet/hud_attitude_overlay.tga
+	}
+}
+
+material guis/assets/qet/hud_attitude_bank
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/qet/hud_attitude_bank.tga
+	}
+}
+
+material guis/assets/qet/hud_attitude_pitch
+{
+	sort nearest
+	{
+		blend blend
+		map clamp guis/assets/qet/hud_attitude_pitch.tga
+		colored
+		alpha 0.5
+		maskAlpha
+	}
+}
+
+// ====================================================
+// materials for HUD Vehicle position displays
+// ====================================================
+
+material guis/assets/qet/hud_vehicle_anansi
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/vehicles/icons/anansi.tga
+		colored
+	}
+}
+
+material guis/assets/qet/hud_vehicle_badger
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/vehicles/icons/badger.tga
+		colored
+	}
+}
+
+material guis/assets/qet/hud_vehicle_bumblebee
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/vehicles/icons/bumblebee.tga
+		colored
+	}
+}
+
+material guis/assets/qet/hud_vehicle_desecrator
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/vehicles/icons/desecrator.tga
+		colored
+	}
+}
+
+material guis/assets/qet/hud_vehicle_goliath
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/vehicles/icons/goliath.tga
+		colored
+	}
+}
+
+material guis/assets/qet/hud_vehicle_hog
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/vehicles/icons/hog.tga
+		colored
+	}
+}
+
+material guis/assets/qet/hud_vehicle_hornet
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/vehicles/icons/hornet.tga
+		colored
+	}
+}
+
+material guis/assets/qet/hud_vehicle_icarus
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/vehicles/icons/icarus.tga
+		colored
+	}
+}
+
+material guis/assets/qet/hud_vehicle_mcp
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/vehicles/icons/mcp.tga
+		colored
+	}
+}
+
+material guis/assets/qet/hud_vehicle_husky
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/vehicles/icons/husky.tga
+		colored
+	}
+}
+
+material guis/assets/qet/hud_vehicle_platypus
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/vehicles/icons/platypus.tga
+		colored
+	}
+}
+
+material guis/assets/qet/hud_vehicle_titan
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/vehicles/icons/titan.tga
+		colored
+	}
+}
+
+material guis/assets/qet/hud_vehicle_trojan
+{
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/vehicles/icons/trojan.tga
+		colored
+	}
+}

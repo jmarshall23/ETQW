@@ -1,0 +1,101 @@
+
+object healthpack {
+	void				preinit();
+	void				init();
+	void				destroy();
+
+	void				OnPrePickup( entity o );
+	void				OnPickup( entity o );
+
+	string				ignoreAbility;
+	handle				pickupText;
+	
+	boolean				isAmmo;
+	
+	boolean				giveBonus;
+	boolean				alwaysGiveBonus;
+	
+	float				pickupProficiency;
+}
+
+void healthpack::preinit() {
+	ignoreAbility		= getKey( "ability_ignore" );
+	pickupText			= sys.localizeString( getKey( "text_pickup" ) );
+	isAmmo				= getIntKey( "is_ammo" );
+	pickupProficiency	= GetProficiency( getKey( "prof_pickup" ) );
+	alwaysGiveBonus		= getIntKey( "always_give_bonus" );
+}
+
+void healthpack::init() {
+	setClipmask( MASK_PROJECTILE );
+
+//mal: let the bots know there is a health pack out there in the world.
+	if ( !sys.isClient() ) {
+		player p = getOwner();
+		if ( p != $null_entity ) {
+			p.setPlayerItemState( self, false );
+		}
+	}
+}
+
+void healthpack::destroy() {
+//mal: by the time we reach here, any owner info has been destroyed, so we get rid of the owners tracker code side in idItem::~idItem
+//mal: we need to do this, else there would be no way to see health packs that expired. 
+}
+
+void healthpack::OnPrePickup( entity o ) {
+	giveBonus = true;
+	if ( !alwaysGiveBonus ) {
+		giveBonus = o.getTeamDamageDone() == 0;
+	}
+}
+
+void healthpack::OnPickup( entity o ) {
+	player p = o;
+	if ( p != $null_entity ) {
+
+		if ( !sys.isClient() ) {
+			p.setPlayerItemState( self, true ); //mal: someone picked up the health pack, let the bots know.
+		}
+
+		if ( p == sys.getLocalPlayer() ) {
+			// FIXME: localization
+			//sys.consoleCommand( "addChatLine \"" + pickupText + "\"\n" );
+		}
+
+		if ( isAmmo ) {
+			p.OnAmmoPickup();
+		}
+	}
+
+	entity owner = getOwner();
+	if ( owner == $null_entity ) {
+		return;
+	}
+	
+	if ( ignoreAbility != "" ) {
+		if ( p.hasAbility( ignoreAbility ) ) {
+			return;
+		}
+	}
+	
+	team_base team = getGameTeam();
+	if ( team != $null ) {
+		// gdf/strogg specific uses
+		string statName = team.getName() + "_healthpack_uses";
+		sys.increaseStatInt( sys.allocStatInt( statName ), owner.getEntityNumber(), 1 );
+
+		// total uses
+		statName = "healthpack_uses";
+		sys.increaseStatInt( sys.allocStatInt( statName ), owner.getEntityNumber(), 1 );
+
+		if ( giveBonus ) {
+			if ( pickupProficiency != -1 ) {
+				owner.giveProficiency( pickupProficiency, 1.f, $null, "heal success" );
+			}
+		}
+	}
+}
+
+object stroyentcells : healthpack {
+}

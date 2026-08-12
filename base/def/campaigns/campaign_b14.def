@@ -1,0 +1,10 @@
+
+campaignDef campaign_beta14 {
+	map	"maps/island"
+	map	"maps/outskirts"
+	map	"maps/valley"
+	
+	data {
+		"mtr_backdrop"		"levelshots/campaigns/africa"
+	}
+}

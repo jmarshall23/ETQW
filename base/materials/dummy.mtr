@@ -1,0 +1,69 @@
+
+material dummy/metal/shader1 {
+	surfaceType	"metal"
+	noshadows
+
+	{
+	}
+}
+
+material dummy/metal/shader2 {
+	surfaceType	"metal"
+	noshadows
+
+	{
+	}
+}
+
+material dummy/metal/shader3 {
+	surfaceType	"metal"
+	noshadows
+
+	{
+	}
+}
+
+material dummy/default/shader1 {
+	noshadows
+
+	{
+	}
+}
+
+material dummy/default/shader2 {
+	noshadows
+
+	{
+	}
+}
+
+material dummy/default/shader3 {
+	noshadows
+
+	{
+	}
+}
+
+material dummy/flesh/shader1 {
+	surfaceType	"flesh"
+	noshadows
+
+	{
+	}
+}
+
+material dummy/flesh/shader2 {
+	surfaceType	"flesh"
+	noshadows
+
+	{
+	}
+}
+
+material dummy/flesh/shader3 {
+	surfaceType	"flesh"
+	noshadows
+
+	{
+	}
+}

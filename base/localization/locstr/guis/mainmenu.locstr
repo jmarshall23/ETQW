@@ -1,0 +1,2565 @@
+
+/*
+=================
+ Localization for GUI
+=================
+*/
+
+locString guis/mainmenu/playonline {
+	text "#str_00013000"
+}
+
+locString guis/mainmenu/options {
+	text "#str_00013001"
+}
+
+locString guis/mainmenu/logoff {
+	text "#str_00013002"
+}
+
+locString guis/mainmenu/quitgame {
+	text "#str_00013003"
+}
+
+locString guis/mainmenu/selectuser {
+	text "#str_00013004"
+}
+
+locString guis/mainmenu/login {
+	text "#str_00013005"
+}
+
+locString guis/mainmenu/createuser {
+	text "#str_00013006"
+}
+
+locString guis/mainmenu/quitgametext {
+	text "#str_00013007"
+}
+
+locString guis/mainmenu/yes {
+	text "#str_00013008"
+}
+
+locString guis/mainmenu/no {
+	text "#str_00013009"
+}
+
+locString guis/mainmenu/next {
+	text "#str_00013010"
+}
+
+locString guis/mainmenu/finish {
+	text "#str_00013011"
+}
+
+locString guis/mainmenu/cancel {
+	text "#str_00013012"
+}
+
+locString guis/mainmenu/username {
+	text "#str_00013013"
+}
+
+locString guis/mainmenu/onlineaccount_0 {
+	text "#str_00013014"
+}
+
+locString guis/mainmenu/onlineaccount_1 {
+	text "#str_00013015"
+}
+
+locString guis/mainmenu/onlineaccount_2 {
+	text "#str_00013016"
+}
+
+locString guis/mainmenu/accountname {
+	text "#str_00013017"
+}
+
+locString guis/mainmenu/password {
+	text "#str_00013018"
+}
+
+locString guis/mainmenu/confirmpassword {
+	text "#str_00013019"
+}
+
+locString guis/mainmenu/cdkey {
+	text "#str_00013020"
+}
+
+locString guis/mainmenu/email {
+	text "#str_00013021"
+}
+
+locString guis/mainmenu/confirmemail {
+	text "#str_00013022"
+}
+
+locString guis/mainmenu/error {
+	text "#str_00013023"
+}
+
+locString guis/mainmenu/ok {
+	text "#str_00013024"
+}
+
+locString guis/mainmenu/pleasewait {
+	text "#str_00013025"
+}
+
+locString guis/mainmenu/refreshlist {
+	text "#str_00013026"
+}
+
+locString guis/mainmenu/joinserver {
+	text "#str_00013027"
+}
+
+locString guis/mainmenu/back {
+	text "#str_00013028"
+}
+
+locString guis/mainmenu/account {
+	text "#str_00013029"
+}
+
+locString guis/mainmenu/changedetails {
+	text "#str_00013030"
+}
+
+locString guis/mainmenu/changepassword {
+	text "#str_00013031"
+}
+
+locString guis/mainmenu/newpassword {
+	text "#str_00013032"
+}
+
+locString guis/mainmenu/removeuser {
+	text "#str_00013033"
+}
+
+locString guis/mainmenu/removeonline_0 {
+	text "#str_00013034"
+}
+
+locString guis/mainmenu/removeonline_1 {
+	text "#str_00013035"
+}
+
+locString guis/mainmenu/removeuserconfirmation {
+	text "#str_00013036"
+}
+
+locString guis/mainmenu/confirm {
+	text "#str_00013037"
+}
+
+locString guis/mainmenu/removeuserfinished {
+	text "#str_00013038"
+}
+
+locString guis/mainmenu/blankemail {
+	text "#str_00013039"
+}
+
+locString guis/mainmenu/invalidemail {
+	text "#str_00013040"
+}
+
+locString guis/mainmenu/confirmemailmismatch {
+	text "#str_00013041"
+}
+
+locString guis/mainmenu/blankusername {
+	text "#str_00013042"
+}
+
+locString guis/mainmenu/blankcdkey {
+	text "#str_00013043"
+}
+
+locString guis/mainmenu/blankpassword {
+	text "#str_00013044"
+}
+
+locString guis/mainmenu/confirmpasswordmismatch {
+	text "#str_00013045"
+}
+
+locString guis/mainmenu/duplicateusername {
+	text "#str_00013046"
+}
+
+locString guis/mainmenu/invalidusername {
+	text "#str_00013425"
+}
+
+locString guis/mainmenu/failedtoconnect {
+	text "#str_00013047"
+}
+
+locString guis/mainmenu/controls {
+	text "#str_00013048"
+}
+
+locString guis/mainmenu/movement {
+	text "#str_00013049"
+}
+
+locString guis/mainmenu/vehicles {
+	text "#str_00013050"
+}
+
+locString guis/mainmenu/weapons {
+	text "#str_00013051"
+}
+
+locString guis/mainmenu/misc {
+	text "#str_00013052"
+}
+
+locString guis/mainmenu/cdkeychecksummismatch {
+	text "#str_00013053"
+}
+
+locString guis/mainmenu/setdefault {
+	text "#str_00013054"
+}
+
+locString guis/mainmenu/playerstats {
+	text "#str_00013055"
+}
+
+locString guis/mainmenu/playlan {
+	text "#str_00013056"
+}
+
+locString guis/mainmenu/replay {
+	text "#str_00013057"
+}
+
+locString guis/mainmenu/credits {
+	text "#str_00013058"
+}
+
+locString guis/mainmenu/createserver {
+	text "#str_00013059"
+}
+
+locString guis/mainmenu/playcomp {
+	text "#str_00013060"
+}
+
+locString guis/mainmenu/settings {
+	text "#str_00013061"
+}
+
+locString guis/mainmenu/gamesettings {
+	text "#str_00013062"
+}
+
+locString guis/mainmenu/keyboardmouse {
+	text "#str_00013063"
+}
+
+locString guis/mainmenu/analogue {
+	text "#str_00013064"
+}
+
+locString guis/mainmenu/bindings {
+	text "#str_00013065"
+}
+
+locString guis/mainmenu/addfriend {
+	text "#str_00013066"
+}
+
+locString guis/mainmenu/removefriend {
+	text "#str_00013067"
+}
+
+locString guis/mainmenu/blockfriend {
+	text "#str_00013068"
+}
+
+locString guis/mainmenu/messagefriend {
+	text "#str_00013069"
+}
+
+locString guis/mainmenu/removefriendconfirmation {
+	text "#str_00013070"
+}
+
+locString guis/mainmenu/blockfull {
+	text "#str_00013071"
+}
+
+locString guis/mainmenu/blockinvite {
+	text "#str_00013072"
+}
+
+locString guis/mainmenu/unblock {
+	text "#str_00013073"
+}
+
+locString guis/mainmenu/accept_proposal {
+	text "#str_00013074"
+	arguments 1
+}
+
+locString guis/mainmenu/profile {
+	text "#str_00013075"
+	arguments 1
+}
+
+locString guis/mainmenu/keybindingprompt {
+	text "#str_00013076"
+	arguments 1
+}
+
+locString guis/mainmenu/unbind {
+	text "#str_00013077"
+}
+
+locString guis/mainmenu/bindkey {
+	text "#str_00013078"
+}
+
+locString guis/mainmenu/defaults {
+	text "#str_00013079"
+}
+
+locString guis/mainmenu/resetdefaultkeys {
+	text "#str_00013080"
+}
+
+locString guis/mainmenu/logoffprompt {
+	text "#str_00013088"
+}
+
+locString guis/mainmenu/invertmouse {
+	text "#str_00013089"
+}
+
+locString guis/mainmenu/invertflightmouse {
+	text "#str_00013090"
+}
+
+locString guis/mainmenu/sensitivity {
+	text "#str_00013091"
+}
+
+locString guis/mainmenu/autoswitchempty {
+	text "#str_00013092"
+}
+
+locString guis/mainmenu/mouse {
+    text "#str_00013093"
+}
+
+locString guis/mainmenu/name {
+    text "#str_00013094"
+}
+
+locString guis/mainmenu/ignoreexplosive {
+	text "#str_00013095"
+}
+
+locString guis/mainmenu/player {
+	text "#str_00013096"
+}
+
+locString guis/mainmenu/hitbeepnone {
+	text "#str_00013097"
+}
+
+locString guis/mainmenu/hitbeepbeepflash {
+	text "#str_00013098"
+}
+
+locString guis/mainmenu/hitbeepbeep {
+	text "#str_00013099"
+}
+
+locString guis/mainmenu/hitbeepflash {
+	text "#str_00013100"
+}
+
+locString guis/mainmenu/hitfeedback {
+	text "#str_00013101"
+}
+
+locString guis/mainmenu/audio {
+	text "#str_00013102"
+}
+
+locString guis/mainmenu/numberspeakers {
+	text "#str_00013103"
+}
+
+locString guis/mainmenu/2 {
+	text "#str_00013104"
+}
+
+locString guis/mainmenu/5_1 {
+	text "#str_00013105"
+}
+
+locString guis/mainmenu/best {
+	text "#str_00013106"
+}
+
+locString guis/mainmenu/dsound {
+	text "#str_00013107"
+}
+
+locString guis/mainmenu/openal {
+	text "#str_00013108"
+}
+
+locString guis/mainmenu/volume {
+	text "#str_00013109"
+}
+
+locString guis/mainmenu/video {
+	text "#str_00013110"
+}
+
+locString guis/mainmenu/brightness {
+	text "#str_00013111"
+}
+
+locString guis/mainmenu/resolution {
+	text "#str_00013112"
+}
+
+locString guis/mainmenu/aspect {
+	text "#str_00013113"
+}
+
+locString guis/mainmenu/4_3 {
+	text "#str_00013114"
+}
+
+locString guis/mainmenu/16_9 {
+	text "#str_00013115"
+}
+
+locString guis/mainmenu/16_10 {
+	text "#str_00013116"
+}
+
+locString guis/mainmenu/apply {
+	text "#str_00013117"
+}
+
+locString guis/mainmenu/fullscreen {
+	text "#str_00013118"
+}
+
+locString guis/mainmenu/aspectratio {
+	text "#str_00013119"
+}
+
+locString guis/mainmenu/quality {
+	text "#str_00013120"
+}
+
+locString guis/mainmenu/low {
+	text "#str_00013121"
+}
+
+locString guis/mainmenu/medium {
+	text "#str_00013122"
+}
+
+locString guis/mainmenu/high {
+	text "#str_00013123"
+}
+
+locString guis/mainmenu/ultra {
+	text "#str_00013124"
+}
+
+locString guis/mainmenu/autodetect {
+	text "#str_00013125"
+}
+
+locString guis/mainmenu/resume {
+	text "#str_00013126"
+}
+
+locString guis/mainmenu/disconnect {
+	text "#str_00013127"
+}
+
+locString guis/mainmenu/connectip {
+	text "#str_00013128"
+}
+
+locString guis/mainmenu/ip {
+	text "#str_00013129"
+}
+
+locString guis/mainmenu/port {
+	text "#str_00013130"
+}
+
+locString guis/mainmenu/friends {
+	text "#str_00013131"
+}
+
+locString guis/mainmenu/rank {
+	text "#str_00013132"
+}
+
+locString guis/mainmenu/xp {
+	text "#str_00013133"
+}
+
+locString guis/mainmenu/sdnetdisconnected {
+	text "#str_00013134"
+}
+
+locString guis/mainmenu/serversource {
+	text "#str_00013135"
+}
+
+locString guis/mainmenu/lan {
+	text "#str_00013136"
+}
+
+locString guis/mainmenu/internet {
+	text "#str_00013137"
+}
+
+locString guis/mainmenu/history {
+	text "#str_00013138"
+}
+
+locString guis/mainmenu/play {
+	text "#str_00013139"
+}
+
+locString guis/mainmenu/filters {
+	text "#str_00013140"
+}
+
+locString guis/mainmenu/gametype {
+	text "#str_00013141"
+}
+
+locString guis/mainmenu/servername {
+	text "#str_00013142"
+}
+
+locString guis/mainmenu/maxplayers {
+	text "#str_00013143"
+}
+
+locString guis/mainmenu/balancedteams {
+	text "#str_00013144"
+}
+
+locString guis/mainmenu/teamdamage {
+	text "#str_00013145"
+}
+
+locString guis/mainmenu/punkbuster {
+	text "#str_00013146"
+}
+
+locString guis/mainmenu/server {
+	text "#str_00013147"
+}
+
+locString guis/mainmenu/advanced {
+	text "#str_00013148"
+}
+
+locString guis/mainmenu/pure {
+	text "#str_00013149"
+}
+
+locString guis/mainmenu/warmup {
+	text "#str_00013150"
+}
+
+locString guis/mainmenu/xp_save {
+	text "#str_00013151"
+}
+
+locString guis/mainmenu/startserver {
+	text "#str_00013152"
+}
+
+locString guis/mainmenu/allowspectators {
+	text "#str_00013153"
+}
+
+locString guis/mainmenu/warmupdamage {
+	text "#str_00013154"
+}
+
+locString guis/mainmenu/mutespectators {
+	text "#str_00013155"
+}
+
+locString guis/mainmenu/allowlatejoin {
+	text "#str_00013156"
+}
+
+locString guis/mainmenu/allowcomplaint_firesupport {
+	text "#str_00013157"
+}
+
+locString guis/mainmenu/allowcomplaint_charge {
+	text "#str_00013158"
+}
+
+locString guis/mainmenu/allowcomplaint_explosives {
+	text "#str_00013159"
+}
+
+locString guis/mainmenu/disable_globalchat {
+	text "#str_00013160"
+}
+
+locString guis/mainmenu/disable_globalaudio {
+	text "#str_00013161"
+}
+
+locString guis/mainmenu/execmapconfigs {
+	text "#str_00013162"
+}
+
+locString guis/mainmenu/timelimit {
+	text "#str_00013163"
+}
+
+locString guis/mainmenu/teamswitchdelay {
+	text "#str_00013164"
+}
+
+locString guis/mainmenu/privatepass {
+	text "#str_00013165"
+}
+
+locString guis/mainmenu/motd1 {
+	text "#str_00013166"
+}
+
+locString guis/mainmenu/motd2 {
+	text "#str_00013167"
+}
+
+locString guis/mainmenu/motd3 {
+	text "#str_00013168"
+}
+
+locString guis/mainmenu/motd4 {
+	text "#str_00013169"
+}
+
+locString guis/mainmenu/website {
+	text "#str_00013170"
+}
+
+locString guis/mainmenu/admin {
+	text "#str_00013171"
+}
+
+locString guis/mainmenu/irc {
+	text "#str_00013172"
+}
+
+locString guis/mainmenu/adminstart {
+	text "#str_00013173"
+}
+
+locString guis/mainmenu/gamereviewreadywait {
+	text "#str_00013174"
+}
+
+locString guis/mainmenu/readypercent {
+	text "#str_00013175"
+}
+
+locString guis/mainmenu/gamereviewpause {
+	text "#str_00013176"
+}
+
+locString guis/mainmenu/complaintlimit {
+	text "#str_00013177"
+}
+
+locString guis/mainmenu/complaintguidlimit {
+	text "#str_00013178"
+}
+
+locString guis/mainmenu/maxplayerwarnings {
+	text "#str_00013179"
+}
+
+locString guis/mainmenu/acceptmembershipprompt {
+	text "#str_00013180"
+	arguments 1
+}
+
+
+locString guis/mainmenu/nowloading {
+	text "#str_00013181"
+	arguments 1
+}
+
+locString guis/mainmenu/nointel {
+	text "#str_00013182"
+}
+
+locString guis/mainmenu/loading {
+	text "#str_00013183"
+}
+
+locString guis/mainmenu/serverfeatures {
+	text "#str_00013184"
+}
+
+locString guis/mainmenu/campaignwins {
+	text "#str_00013185"
+	arguments 2
+}
+
+locString guis/mainmenu/clan {
+	text "#str_00013186"
+}
+
+locString guis/mainmenu/totalxp {
+	text "#str_00013187"
+}
+
+locString guis/mainmenu/l1stars {
+	text "#str_00013188"
+}
+
+locString guis/mainmenu/l2stars {
+	text "#str_00013189"
+}
+
+locString guis/mainmenu/l3stars {
+	text "#str_00013190"
+}
+
+locString guis/mainmenu/tapped {
+	text "#str_00013191"
+}
+
+locString guis/mainmenu/revived {
+	text "#str_00013192"
+}
+
+locString guis/mainmenu/suicides {
+	text "#str_00013193"
+}
+
+locString guis/mainmenu/kills {
+	text "#str_00013194"
+}
+
+locString guis/mainmenu/hit {
+	text "#str_00013195"
+}
+
+locString guis/mainmenu/ratio {
+	text "#str_00013196"
+}
+
+locString guis/mainmenu/fired {
+	text "#str_00013197"
+}
+
+locString guis/mainmenu/thrown {
+	text "#str_00013198"
+}
+
+locString guis/mainmenu/damage {
+	text "#str_00013199"
+}
+
+locString guis/mainmenu/uses {
+	text "#str_00013200"
+}
+
+locString guis/mainmenu/pickups {
+	text "#str_00013201"
+}
+
+locString guis/mainmenu/deployed {
+	text "#str_00013202"
+}
+
+locString guis/mainmenu/repaired {
+	text "#str_00013203"
+}
+
+locString guis/mainmenu/disabled {
+	text "#str_00013204"
+}
+
+locString guis/mainmenu/hoursplayed {
+	text "#str_00013205"
+}
+
+locString guis/mainmenu/firearms {
+	text "#str_00013206"
+}
+
+locString guis/mainmenu/grenades {
+	text "#str_00013207"
+}
+
+locString guis/mainmenu/totals {
+	text "#str_00013208"
+}
+
+locString guis/mainmenu/itemsandtools {
+	text "#str_00013209"
+}
+
+locString guis/mainmenu/mapname {
+	text "#str_00013213"
+}
+
+locString guis/mainmenu/players {
+	text "#str_00013214"
+}
+
+locString guis/mainmenu/disbandteam_prompt {
+	text "#str_00013215"
+}
+
+locString guis/mainmenu/createclan {
+	text "#str_00013216"
+}
+
+locString guis/mainmenu/claninfo {
+	text "#str_00013217"
+	arguments 1
+}
+
+locString guis/mainmenu/messagemember {
+	text "#str_00013218"
+}
+
+locString guis/mainmenu/invitemember {
+	text "#str_00013219"
+}
+
+locString guis/mainmenu/removemember {
+	text "#str_00013220"	
+}
+
+locString guis/mainmenu/promotemember {
+	text "#str_00013221"
+}
+
+locString guis/mainmenu/demotemember {
+	text "#str_00013222"
+}
+
+locString guis/mainmenu/transferownership {
+	text "#str_00013223"
+}
+
+locString guis/mainmenu/broadcastmessage {
+	text "#str_00013224"
+}
+
+locString guis/mainmenu/leaveclan {
+	text "#str_00013225"
+}
+
+locString guis/mainmenu/done {
+	text "#str_00013226"
+}
+
+locString guis/mainmenu/ranked {
+	text "#str_00013227"
+}
+
+locString guis/mainmenu/passworded {
+	text "#str_00013228"
+}
+
+locString guis/mainmenu/show {
+	text "#str_00013229"
+}
+
+locString guis/mainmenu/hide {
+	text "#str_00013230"
+}
+
+locString guis/mainmenu/doesntmatter {
+	text "#str_00013231"
+}
+
+locString guis/mainmenu/empty {
+	text "#str_00013232"
+}
+
+
+locString guis/mainmenu/full {
+	text "#str_00013233"
+}
+
+locString guis/mainmenu/removememberprompt {
+	text "#str_00013234"
+	arguments 1
+}
+
+locString guis/mainmenu/invitetoserver {
+	text "#str_00013235"
+}
+
+locString guis/mainmenu/reviewteaminvites {
+	text "#str_00013236"
+}
+
+locString guis/mainmenu/servers {
+	text "#str_00013237"
+}
+
+locString guis/mainmenu/hidden {
+	text "#str_00013238"
+}
+
+locString guis/mainmenu/accept {
+	text "#str_00013239"
+}
+
+locString guis/mainmenu/decline {
+	text "#str_00013240"
+}
+
+locString guis/mainmenu/transferownershipprompt {
+	text "#str_00013241"
+	arguments 1
+}
+
+locString guis/mainmenu/promotetoadmin {
+	text "#str_00013242"
+}
+
+locString guis/mainmenu/promotetoowner {
+	text "#str_00013243"
+}
+
+locString guis/mainmenu/leaveteamprompt {
+	text "#str_00013244"
+	arguments 1
+}
+
+locString guis/mainmenu/youhavebeenblocked {
+	text "#str_00013245"
+	arguments 1
+}
+
+
+locString guis/mainmenu/youhavebeenunblocked {
+	text "#str_00013246"
+	arguments 1
+}
+
+locString guis/mainmenu/simple {
+	text "#str_00013247"
+}
+
+locString guis/mainmenu/texturequality {
+	text "#str_00013248"
+}
+
+locString guis/mainmenu/diffuse {
+	text "#str_00013249"
+}
+
+locString guis/mainmenu/bump {
+	text "#str_00013250"
+}
+
+locString guis/mainmenu/specular {
+	text "#str_00013251"
+}
+
+locString guis/mainmenu/restarttoapply {
+	text "#str_00013252"
+}
+
+locString guis/mainmenu/shaderspec {
+	text "#str_00013253"
+}
+
+locString guis/mainmenu/quickchat {
+	text "#str_00013254"
+}
+
+locString guis/mainmenu/quickchat_radial {
+	text "#str_00013255"
+}
+
+locString guis/mainmenu/quickchat_vertical {
+	text "#str_00013256"
+}
+
+locString guis/mainmenu/quickchat_nomouse {
+	text "#str_00013257"
+}
+
+locString guis/mainmenu/quickchat_mouse {
+	text "#str_00013258"
+}
+
+locString guis/mainmenu/quickchat_mouseview {
+	text "#str_00013259"
+}
+
+locString guis/mainmenu/quickchat_numbers {
+	text "#str_00013260"
+}
+
+locString guis/mainmenu/quickchat_letters {
+	text "#str_00013261"
+}
+
+locString guis/mainmenu/quickchat_style {
+	text "#str_00013262"
+}
+
+locString guis/mainmenu/quickchat_shortcuts {
+	text "#str_00013263"
+}
+
+locString guis/mainmenu/commandmap {
+	text "#str_00013264"
+}
+
+locString guis/mainmenu/rotatecommandmap {
+	text "#str_00013265"
+}
+
+locString guis/mainmenu/5_4 {
+	text "#str_00013266"
+}
+
+locString guis/mainmenu/volume_voip_in {
+	text "#str_00013267"
+}
+
+locString guis/mainmenu/volume_voip_out {
+	text "#str_00013268"
+}
+
+locString guis/mainmenu/waypoint_opacity {
+	text "#str_00013269"
+}
+
+locString guis/mainmenu/map_campgain {
+	text "#str_00013270"
+}
+
+locString guis/mainmenu/numberofplayers {
+	text "#str_00013271"
+}
+
+locString guis/mainmenu/recordreplay {
+	text "#str_00013272"
+}
+
+locString guis/mainmenu/difficulty {
+	text "#str_00013273"
+}
+
+locString guis/mainmenu/skillsettings {
+	text "#str_00013274"
+}
+
+locString guis/mainmenu/botweaponskill {
+	text "#str_00013275"
+}
+
+locString guis/mainmenu/bottacticalskill {
+	text "#str_00013276"
+}
+
+locString guis/mainmenu/botscompleteobjectives {
+	text "#str_00013277"
+}
+
+locString guis/mainmenu/easy {
+	text "#str_00013278"
+}
+
+locString guis/mainmenu/hard {
+	text "#str_00013279"
+}
+
+locString guis/mainmenu/expert {
+	text "#str_00013280"
+}
+
+locString guis/mainmenu/auto {
+	text "#str_00013281"
+}
+
+locString guis/mainmenu/globalclassawards {
+	text "#str_00013282"
+}
+
+locString guis/mainmenu/highestxp {
+	text "#str_00013283"
+}
+
+locString guis/mainmenu/mostdamage {
+	text "#str_00013284"
+}
+
+locString guis/mainmenu/mostteamkills {
+	text "#str_00013285"
+}
+
+locString guis/mainmenu/mostratings {
+	text "#str_00013286"
+}
+
+locString guis/mainmenu/bestbattlesense {
+	text "#str_00013287"
+}
+
+locString guis/mainmenu/bestweapons {
+	text "#str_00013288"
+}
+
+locString guis/mainmenu/bestvehicles {
+	text "#str_00013289"
+}
+
+locString guis/mainmenu/mostkills {
+	text "#str_00013290"
+}
+
+locString guis/mainmenu/newbieofbattle {
+	text "#str_00013291"
+}
+
+locString guis/mainmenu/bestfieldops {
+	text "#str_00013292"
+}
+
+locString guis/mainmenu/bestsoldier {
+	text "#str_00013293"
+}
+
+locString guis/mainmenu/bestengineer {
+	text "#str_00013294"
+}
+
+locString guis/mainmenu/bestmedic {
+	text "#str_00013295"
+}
+
+locString guis/mainmenu/bestcovertops {
+	text "#str_00013296"
+}
+
+locString guis/mainmenu/bestoppressor {
+	text "#str_00013297"
+}
+
+locString guis/mainmenu/bestaggressor {
+	text "#str_00013298"
+}
+
+locString guis/mainmenu/bestconstructor {
+	text "#str_00013299"
+}
+
+locString guis/mainmenu/besttechnician {
+	text "#str_00013300"
+}
+
+locString guis/mainmenu/bestinfiltrator {
+	text "#str_00013301"
+}
+
+locString guis/mainmenu/destroyed {
+	text "#str_00013302"
+}
+
+locString guis/mainmenu/respondtosessioninvite {
+	text "#str_00013303"
+	arguments 1
+}
+
+locString guis/mainmenu/joinonserver {
+	text "#str_00013304"
+}
+
+locString guis/mainmenu/votes {
+	text "#str_00013305"
+}
+
+locString guis/mainmenu/callvote {
+	text "#str_00013306"
+}
+
+locString guis/mainmenu/notify/friendonline {
+	text "#str_00013307"
+	arguments 1
+}
+
+locString guis/mainmenu/notify/friendoffline {
+	text "#str_00013308"
+	arguments 1
+}
+
+locString guis/mainmenu/notify/friendim {
+	text "#str_00013309"
+	arguments 1
+}
+
+locString guis/mainmenu/notify/teamim {
+	text "#str_00013310"
+	arguments 1
+}
+
+locString guis/mainmenu/notify/friendsessioninvite {
+	text "#str_00013311"
+	arguments 1
+}
+
+locString guis/mainmenu/notify/teamsessioninvite {
+	text "#str_00013312"
+	arguments 2
+}
+
+locString guis/mainmenu/notify/teammemberonline {
+	text "#str_00013313"
+	arguments 1
+}
+
+locString guis/mainmenu/notify/teammemberoffline {
+	text "#str_00013314"
+	arguments 1
+}
+
+locString guis/mainmenu/showwaypoints {
+	text "#str_00013315"
+}
+
+locString guis/mainmenu/showfireteamlocation {
+	text "#str_00013316"
+}
+
+locString guis/mainmenu/music_volume {
+	text "#str_00013317"
+}
+
+locString guis/mainmenu/mostaccurate {
+	text "#str_00013318"
+}
+
+locString guis/mainmenu/mostobjectives {
+	text "#str_00013319"
+}
+
+locString guis/mainmenu/mostupgrades {
+	text "#str_00013320"
+}
+
+locString guis/mainmenu/resetpassword {
+	text "#str_00013321"
+}
+
+locString guis/mainmenu/userprivacyagreement {
+	text "#str_00013322"
+}
+
+locString guis/mainmenu/privacyagreementtext {
+	text "#str_00013323"
+}
+
+locString guis/mainmenu/rightclickfriends {
+	text "#str_00013324"
+}
+
+locString guis/mainmenu/rightclickteams {
+	text "#str_00013325"
+}
+
+locString guis/mainmenu/disbandclan {
+	text "#str_00013326"
+}
+
+locString guis/mainmenu/viewclaninvites {
+	text "#str_00013327"
+}
+
+locString guis/mainmenu/showtooltips {
+	text "#str_00013328"
+}
+
+locString guis/mainmenu/deaths {
+	text "#str_00013329"
+}
+
+locString guis/mainmenu/vsync {
+	text "#str_00013330"
+}
+
+locString guis/mainmenu/multisamples {
+	text "#str_00013331"
+}
+
+locString guis/mainmenu/advflight {
+	text "#str_00013332"
+}
+
+locString guis/mainmenu/advdriving {
+	text "#str_00013333"
+}
+
+locString guis/mainmenu/callvotewait {
+	text "#str_00013334"
+}
+
+locString guis/mainmenu/shadows {
+	text "#str_00013335"
+}
+
+locString guis/mainmenu/softparticles {
+	text "#str_00013336"
+}
+
+locString guis/mainmenu/alphatocoverage {
+	text "#str_00013337"
+}
+
+locString guis/mainmenu/anisotropy {
+	text "#str_00013338"
+}
+
+locString guis/mainmenu/compressedsounds {
+	text "#str_00013339"
+}
+
+locString guis/mainmenu/crosshair {
+	text "#str_00013347"
+}
+
+locString guis/mainmenu/crosshair_opacity {
+	text "#str_00013348"
+}
+
+locString guis/mainmenu/crosshair_gren_opacity {
+	text "#str_00013349"
+}
+
+locString guis/mainmenu/crosshair_spread_opacity {
+	text "#str_00013350"
+}
+
+locString guis/mainmenu/crosshair_stats_opacity {
+	text "#str_00013351"
+}
+
+locString guis/mainmenu/crosshair_spread_scale {
+	text "#str_00013352"
+}
+
+locString guis/mainmenu/newlist {
+	text "#str_00013353"
+}
+
+locString guis/mainmenu/stopsearching {
+	text "#str_00013354"
+}
+
+locString guis/mainmenu/update/serverunavailable {
+	text "#str_00013355"
+	arguments 1
+}
+
+locString guis/mainmenu/update/downloadfailed_short {
+	text "#str_00013356"
+}
+
+locString guis/mainmenu/update/downloadfailed {
+	text "#str_00013357"
+}
+
+locString guis/mainmenu/update/downloadcomplete_short {
+	text "#str_00013358"
+}
+
+locString guis/mainmenu/update/downloadcomplete {
+	text "#str_00013359"
+	arguments 1
+}
+
+locString guis/mainmenu/update/uptodate {
+	text "#str_00013360"
+}
+
+locString guis/mainmenu/update/check {
+	text "#str_00013361"
+}
+
+locString guis/mainmenu/update/updateetqw {
+	text "#str_00013362"
+}
+
+locString guis/mainmenu/update/downloadnow {
+	text "#str_00013363"
+}
+
+locString guis/mainmenu/update/gotowebsite {
+	text "#str_00013364"
+}
+
+locString guis/mainmenu/update/later {
+	text "#str_00013365"
+}
+
+locString guis/mainmenu/claninvitescount {
+	text "#str_00013366"
+	arguments 1
+}
+
+locString guis/mainmenu/friendscount {
+	text "#str_00013367"
+	arguments 1
+}
+
+locString guis/mainmenu/click_x_to_begin {
+	text "#str_00013368"
+	arguments 1
+}
+
+locString guis/mainmenu/l4stars {
+	text "#str_00013369"
+}
+
+locString guis/mainmenu/totalkills {
+	text "#str_00013370"
+}
+
+locString guis/mainmenu/totaldeaths {
+	text "#str_00013371"
+}
+
+locString guis/mainmenu/killsperdeaths {
+	text "#str_00013372"
+}
+
+locString guis/mainmenu/totalteamkills {
+	text "#str_00013373"
+}
+
+locString guis/mainmenu/totaldamage {
+	text "#str_00013374"
+}
+
+locString guis/mainmenu/totalshotfired {
+	text "#str_00013375"
+}
+
+locString guis/mainmenu/totalshothit {
+	text "#str_00013376"
+}
+
+locString guis/mainmenu/hitspershots {
+	text "#str_00013377"
+}
+
+locString guis/mainmenu/signin_to_view_stats {
+	text "#str_00013378"
+}
+
+locString guis/mainmenu/update/fromserver {
+	text "#str_00013379"
+}
+
+locString guis/mainmenu/clantag {
+	text "#str_00013387"
+}
+
+locString guis/mainmenu/clantag_notice {
+	text "#str_00013388"
+}
+
+locString guis/mainmenu/clantag_beforename {
+	text "#str_00013389"
+}
+
+locString guis/mainmenu/clantag_aftername {
+	text "#str_00013390"
+}
+
+locString guis/mainmenu/maxspectatetime {
+	text "#str_00013391"
+}
+
+locString guis/mainmenu/numprivateclients {
+	text "#str_00013392"
+}
+
+locString guis/mainmenu/custom {
+	text "#str_00013393"
+}
+
+locString guis/mainmenu/nolimit {
+	text "#str_00013394"
+}
+
+locString guis/mainmenu/total {
+	text "#str_00013395"
+}
+
+locString guis/mainmenu/addbot {
+	text "#str_00013396"
+}
+
+locString guis/mainmenu/random {
+	text "#str_00013397"
+}
+
+locString guis/mainmenu/allowvoting {
+	text "#str_00013398"
+}
+
+locString guis/mainmenu/votingdisabled {
+	text "#str_00013399"
+}
+
+locString guis/mainmenu/favoriteservers {
+	text "#str_00013400"
+}
+
+locString guis/mainmenu/favoriteprompt {
+	text "#str_00013401"
+}
+
+locString guis/mainmenu/bindlistprompt {
+	text "#str_00013402"
+}
+
+locString guis/mainmenu/kilo {
+	text "#str_00013403"
+	arguments 1
+}
+
+locString guis/mainmenu/mute {
+	text "#str_00013404"
+}
+
+locString guis/mainmenu/createuser/newaccount {
+	text "#str_00013405"
+}
+
+locString guis/mainmenu/createuser/existingaccount {
+	text "#str_00013406"
+}
+
+locString guis/mainmenu/createuser/offlineaccount {
+	text "#str_00013407"
+}
+
+locString guis/mainmenu/friend {
+	text "#str_00013408"
+}
+
+locString guis/mainmenu/clanmember {
+	text "#str_00013409"
+}
+
+locString guis/mainmenu/readnext {
+	text "#str_00013410"
+	arguments 1
+}
+
+locString guis/mainmenu/notify/teaminvite {
+	text "#str_00013411"
+	arguments 1
+}
+
+locString guis/mainmenu/loading/compiling_scripts {
+	text "#str_00013412"
+}
+
+locString guis/mainmenu/loading/loading_map {
+	text "#str_00013413"
+}
+
+locString guis/mainmenu/loading/spawning_entities {
+	text "#str_00013414"
+	arguments 1
+}
+
+locString guis/mainmenu/mustleaveclan {
+	text "#str_00013415"
+}
+
+locString guis/mainmenu/information {
+	text "#str_00013416"
+}
+
+locString guis/mainmenu/loading/mapdata {
+	text "#str_00013417"
+}
+
+locString guis/mainmenu/invitetoclan {
+	text "#str_00013418"
+}
+
+locString guis/mainmenu/doubleclicktocopy {
+	text "#str_00013419"
+}
+
+locString guis/mainmenu/ctrlctocopy {
+	text "#str_00013420"
+}
+
+locString guis/mainmenu/ctrlvtopaste {
+	text "#str_00013421"
+}
+
+locString guis/mainmenu/sdnetotheruserauthed {
+	text "#str_00013422"
+}
+
+locString guis/mainmenu/notify/teamdissolved {
+	text "#str_00013423"
+	arguments 1
+}
+
+locString guis/mainmenu/gamma {
+	text "#str_00013426"
+}
+
+locString guis/mainmenu/loading/starting_scripts {
+	text "#str_00013427"
+}
+
+locString guis/mainmenu/defaultspawn {
+	text "#str_00013428"
+}
+
+locString guis/mainmenu/loading/loading_geometry {
+	text "#str_00013429"
+}
+
+locString guis/mainmenu/restart_required {
+	text "#str_00013430"
+}
+
+locString guis/mainmenu/bots {
+	text "#str_00013431"
+}
+
+locString guis/mainmenu/maxping {
+	text "#str_00013432"
+}
+
+locString guis/mainmenu/bot {
+	text "#str_00013433"
+}
+
+locString guis/mainmenu/human {
+	text "#str_00013434"
+}
+
+locString guis/mainmenu/rankedonly {
+	text "#str_00013435"
+}
+
+locString guis/mainmenu/map {
+	text "#str_00013436"
+}
+
+locString guis/mainmenu/bindmessage {
+	text "#str_00013437"
+	arguments 2
+}
+
+locString guis/mainmenu/unboundmessage {
+	text "#str_00013438"
+	arguments 1
+}
+
+locString guis/mainmenu/timetobeat {
+	text "#str_00013439"
+	arguments 1
+}
+
+locString guis/mainmenu/normal {
+	text "#str_00013440"	
+}
+
+locString guis/mainmenu/cpulevel {
+	text "#str_00013441"	
+}
+
+locString guis/mainmenu/cpudetaillevel {
+	text "#str_00013442"	
+}
+
+locString guis/mainmenu/graphicslevel {
+	text "#str_00013443"	
+}
+
+locString guis/mainmenu/graphicsdetaillevel {
+	text "#str_00013444"	
+}
+
+locString guis/mainmenu/minplayers {
+	text "#str_00013445"	
+}
+
+locString guis/mainmenu/displaymodeprompt {
+	text "#str_00013446"	
+	arguments 1
+}
+
+locString guis/mainmenu/favorites {
+	text "#str_00013447"	
+}
+
+locString guis/mainmenu/offline {
+	text "#str_00013448"	
+}
+
+locString guis/mainmenu/clicktologin {
+	text "#str_00013449"	
+}
+
+locString guis/mainmenu/rightclickcolors {
+	text "#str_00013450"	
+}
+
+locString guis/mainmenu/notify/kickedfromteam {
+	text "#str_00013451"	
+	arguments 1
+}
+
+locString guis/mainmenu/notify/multiple/friendsonline {
+	text "#str_00013452"	
+	arguments 1
+}
+
+locString guis/mainmenu/notify/multiple/teammembersonline {
+	text "#str_00013453"	
+	arguments 1
+}
+
+locString guis/mainmenu/notify/multiple/friendims {
+	text "#str_00013454"	
+	arguments 1
+}
+
+locString guis/mainmenu/notify/multiple/teamims {
+	text "#str_00013455"	
+	arguments 1
+}
+
+locString guis/mainmenu/emptyserverlist {
+	text "#str_00013456"
+}
+
+locString guis/mainmenu/playercount {
+	text "#str_00013457"
+}
+
+locString guis/mainmenu/time {
+	text "#str_00013458"
+}
+
+locString guis/mainmenu/server/warmup {
+	text "#str_00013459"
+}
+
+locString guis/mainmenu/campaign_status {
+	text "#str_00013460"
+	arguments 3
+}
+
+locString guis/mainmenu/server/loading {
+	text "#str_00013461"
+}
+
+locString guis/mainmenu/server/reviewing {
+	text "#str_00013462"
+}
+
+locString guis/mainmenu/findserver {
+	text "#str_00013463"
+}
+
+locString guis/mainmenu/copyserverinfo {
+	text "#str_00013464"
+}
+
+locString guis/mainmenu/addfavorite {
+	text "#str_00013465"
+}
+
+locString guis/mainmenu/removefavorite {
+	text "#str_00013466"
+}
+
+locString guis/mainmenu/friendrequest {
+	text "#str_00013467"
+}
+
+locString guis/mainmenu/friends_clanmates {
+	text "#str_00013468"
+}
+
+locString guis/mainmenu/clearall {
+	text "#str_00013469"
+}
+
+locString guis/mainmenu/drawquality {
+	text "#str_00013470"
+}
+
+locString guis/mainmenu/visualquality {
+	text "#str_00013471"
+}
+
+locString guis/mainmenu/foliage {
+	text "#str_00013472"
+}
+
+locString guis/mainmenu/onlineaccount_3 {
+	text "#str_00013473"
+}
+
+locString guis/mainmenu/createuser/resetpass {
+	text "#str_00013474"
+}
+
+locString guis/mainmenu/botsdisabled {
+	text "#str_00013475"
+}
+
+locString guis/mainmenu/sentat {
+	text "#str_00013476"
+	arguments 1
+}
+
+locString guis/mainmenu/fight {
+	text "#str_00013477"
+}
+
+locString guis/mainmenu/campaigntotal {
+	text "#str_00013478"
+}
+
+locString guis/mainmenu/showcockpits {
+	text "#str_00013479"
+}
+
+
+locString guis/mainmenu/criticalclass {
+	text "#str_00013480"
+	arguments 1
+}
+
+locString guis/mainmenu/loadingfriends {
+	text "#str_00013481"
+}
+
+locString guis/mainmenu/loadingteams {
+	text "#str_00013482"
+}
+
+locString guis/mainmenu/friends/offline {
+	text "#str_00013483"
+}
+
+locString guis/mainmenu/friends/online {
+	text "#str_00013484"
+}
+
+locString guis/mainmenu/friends/onserver {
+	text "#str_00013485"
+}
+
+locString guis/mainmenu/friends/blocked {
+	text "#str_00013486"
+}
+
+locString guis/mainmenu/friends/serverinvite {
+	text "#str_00013487"
+}
+
+locString guis/mainmenu/friends/unblockedby {
+	text "#str_00013488"
+}
+
+locString guis/mainmenu/friends/blockedby {
+	text "#str_00013489"
+}
+
+locString guis/mainmenu/friends/pending {
+	text "#str_00013490"
+}
+
+locString guis/mainmenu/friends/invited {
+	text "#str_00013491"
+}
+
+locString guis/mainmenu/friends/promotion {
+	text "#str_00013492"
+}
+
+locString guis/mainmenu/clan/invited {
+	text "#str_00013493"
+}
+
+locString guis/mainmenu/togglenetdemohint {
+	text "#str_00013494"
+	arguments 1
+}
+
+locString guis/mainmenu/bindings/togglenetdemo {
+	text "#str_00013495"
+}
+
+locString guis/mainmenu/replays {
+	text "#str_00013496"
+}
+
+locString guis/mainmenu/reason {
+	text "#str_00013497"
+}
+
+locString guis/mainmenu/reviewinvites {
+	text "#str_00013498"
+}
+
+locString guis/mainmenu/defaultaddreason {
+	text "#str_00013499"
+}
+
+locString guis/mainmenu/add_reason_prompt {
+	text "#str_00013500"
+}
+
+locString guis/mainmenu/refreshing {
+	text "#str_00013501"
+}
+
+locString guis/mainmenu/serveroffline {
+	text "#str_00013502"
+	arguments 1
+}
+
+locString guis/mainmenu/friends/newmessage {
+	text "#str_00013503"
+}
+
+locString guis/mainmenu/tooltiptime {
+	text "#str_00013504"
+}
+
+locString guis/mainmenu/hud/elements {
+	text "#str_00013505"
+}
+
+locString guis/mainmenu/hud/objectivelist {
+	text "#str_00013506"
+}
+
+locString guis/mainmenu/hud/objectivestatus {
+	text "#str_00013507"
+}
+
+locString guis/mainmenu/hud/minimap {
+	text "#str_00013508"
+}
+
+locString guis/mainmenu/hud/fireteam {
+	text "#str_00013509"
+}
+
+locString guis/mainmenu/hud {
+	text "#str_00013510"
+}
+
+locString guis/mainmenu/lockcamera {
+	text "#str_00013511"
+}
+
+locString guis/mainmenu/hud/obituaries {
+	text "#str_00013512"
+}
+
+locString guis/mainmenu/hud/chat {
+	text "#str_00013513"
+}
+
+locString guis/mainmenu/hud/votes {
+	text "#str_00013514"
+}
+
+locString guis/mainmenu/hud/tooltips {
+	text "#str_00013515"
+}
+
+locString guis/mainmenu/hud/vehicle {
+	text "#str_00013516"
+}
+
+locString guis/mainmenu/hud/vehicle/direction {
+	text "#str_00013517"
+}
+
+locString guis/mainmenu/togglesprint {
+	text "#str_00013518"
+}
+
+locString guis/mainmenu/resetsettingsforpage {
+	text "#str_00013519"
+}
+
+locString guis/mainmenu/playernamenotes {
+	text "#str_00013520"
+}
+
+locString guis/mainmenu/serverfeatures/password {
+	text "#str_00013521"
+}
+
+locString guis/mainmenu/serverfeatures/friendly_fire {
+	text "#str_00013522"
+}
+
+locString guis/mainmenu/serverfeatures/punkbuster {
+	text "#str_00013523"
+}
+
+locString guis/mainmenu/serverfeatures/balance {
+	text "#str_00013524"
+}
+
+locString guis/mainmenu/serverfeatures/ranked {
+	text "#str_00013525"
+}
+
+locString guis/mainmenu/serverfeatures/latejoin {
+	text "#str_00013526"
+}
+
+locString guis/mainmenu/serverfeatures/novoting {
+	text "#str_00013527"
+}
+
+locString guis/mainmenu/serverfeatures/pure {
+	text "#str_00013528"
+}
+
+locString guis/mainmenu/serverfeatures/bot {
+	text "#str_00013529"
+}
+
+locString guis/mainmenu/viewbob {
+	text "#str_00013530"
+}
+
+locString guis/mainmenu/remembercamera {
+	text "#str_00013531"
+}
+
+locString guis/mainmenu/tooltips/newevents {
+	text "#str_00013533"
+}
+
+locString guis/mainmenu/tooltips/onlinestates {
+	text "#str_00013534"
+	arguments 2
+}
+
+locString guis/mainmenu/tooltips/admin/disableprof {
+	text "#str_00013535"
+}
+
+locString guis/mainmenu/tooltips/admin/teamdamage {
+	text "#str_00013536"
+}
+
+locString guis/mainmenu/tooltips/admin/teambalance {
+	text "#str_00013537"
+}
+
+locString guis/mainmenu/tooltips/admin/restartmap {
+	text "#str_00013538"
+}
+
+locString guis/mainmenu/tooltips/admin/restartcampaign {
+	text "#str_00013539"
+}
+
+locString guis/mainmenu/tooltips/admin/startmatch {
+	text "#str_00013540"
+}
+
+locString guis/mainmenu/tooltips/admin/kickbots {
+	text "#str_00013541"
+}
+
+locString guis/mainmenu/tooltips/admin/shufflexp {
+	text "#str_00013542"
+}
+
+locString guis/mainmenu/tooltips/admin/shufflerand {
+	text "#str_00013543"
+}
+
+locString guis/mainmenu/tooltips/admin/globaltextmute {
+	text "#str_00013544"
+}
+
+locString guis/mainmenu/tooltips/admin/timelimit {
+	text "#str_00013545"
+}
+
+locString guis/mainmenu/tooltips/admin/changemap {
+	text "#str_00013546"
+}
+
+locString guis/mainmenu/tooltips/admin/execconfig {
+	text "#str_00013547"
+}
+
+locString guis/mainmenu/loading/waitingforserver {
+	text "#str_00013548"
+}
+
+locString guis/mainmenu/resettooltips {
+	text "#str_00013549"
+}
+
+locString guis/mainmenu/invertmenumouse {
+	text "#str_00013550"
+}
+
+locString guis/mainmenu/resetsettingsforengine {
+	text "#str_00013551"
+}
+
+locString guis/mainmenu/esrb/online_experience {
+	text "#str_00013552"
+}
+
+locString guis/mainmenu/tooltipsreset {
+	text "#str_00013553"
+}
+
+locString guis/mainmenu/tooltips/readyup {
+	text "#str_00013554"
+}
+
+
+locString guis/mainmenu/tooltips/quickteam {
+	text "#str_00013555"
+}
+
+locString guis/mainmenu/tooltips/quickclass {
+	text "#str_00013556"
+}
+
+locString guis/mainmenu/tooltips/quickspawn {
+	text "#str_00013557"
+	arguments 2
+}
+
+locString guis/mainmenu/tooltips/quickaccept {
+	text "#str_00013558"
+	arguments 3
+}
+
+locString guis/mainmenu/onlineaccount {
+	text "#str_00013559"
+}
+
+locString guis/mainmenu/offlineaccount {
+	text "#str_00013560"
+}
+
+locString guis/mainmenu/tooltips/botminclients {
+	text "#str_00013561"
+}
+
+locString guis/mainmenu/tooltips/teamminclients {
+	text "#str_00013562"
+}
+
+locString guis/mainmenu/keepwindowopen {
+	text "#str_00013563"
+}
+
+locString guis/mainmenu/infinity {
+	text "#str_00013564"
+}
+
+locString guis/mainmenu/quadraphonic {
+	text "#str_00013565"
+}
+
+locString guis/mainmenu/7_1 {
+	text "#str_00013566"
+}
+
+locString guis/mainmenu/speakersetup {
+	text "#str_00013567"
+}
+
+locString guis/mainmenu/savepassword {
+	text "#str_00013568"
+}
+
+locString guis/mainmenu/managebotclasses {
+	text "#str_00013569"
+}
+
+locString guis/mainmenu/sound/primary {
+	text "#str_00013570"
+}
+
+locString guis/mainmenu/sound/voice {
+	text "#str_00013571"
+}
+
+locString guis/mainmenu/sound/microphone {
+	text "#str_00013572"
+}
+
+locString guis/mainmenu/voice {
+	text "#str_00013573"
+}
+
+locString guis/mainmenu/voice/global {
+	text "#str_00013574"
+}
+
+locString guis/mainmenu/voice/team {
+	text "#str_00013575"
+}
+
+locString guis/mainmenu/voice/fireteam {
+	text "#str_00013576"
+}
+
+locString guis/mainmenu/voice/audiofade {
+	text "#str_00013577"
+}
+
+locString guis/mainmenu/voice/testaudio {
+	text "#str_00013578"
+}
+
+locString guis/mainmenu/voice/recording {
+	text "#str_00013579"
+}
+
+locString guis/mainmenu/voice/playingback {
+	text "#str_00013580"
+}
+
+locString guis/mainmenu/safemode {
+	text "#str_00013581"
+}
+
+locString guis/mainmenu/delete {
+	text "#str_00013582"
+}
+
+locString guis/mainmenu/voice/audiofade_tip {
+	text "#str_00013583"
+}
+
+locString guis/mainmenu/delete_prompt {
+	text "#str_00013584"
+	arguments 1
+}
+
+locString guis/mainmenu/date {
+	text "#str_00013585"
+}
+
+locString guis/mainmenu/showcomplaints {
+	text "#str_00013586"
+}
+
+locString guis/mainmenu/chat/global {
+	text "#str_00013587"
+}
+
+locString guis/mainmenu/chat/team {
+	text "#str_00013588"
+}
+
+locString guis/mainmenu/chat/fireteam {
+	text "#str_00013589"
+}
+
+locString guis/mainmenu/chat/tip {
+	text "#str_00013590"
+}
+
+locString guis/mainmenu/tooltips/timelimit {
+	text "#str_00013591"
+}
+
+locString guis/mainmenu/open_community_site {
+	text "#str_00013592"
+}
+
+locString guis/mainmenu/detectaudio {
+	text "#str_00013593"
+}
+
+locString guis/mainmenu/mods {
+	text "#str_00013594"
+}
+
+locString guis/mainmenu/forgottenuser {
+	text "#str_00013595"
+}
+
+locString guis/mainmenu/find_existing_accounts {
+	text "#str_00013596"
+}
+
+locString guis/mainmenu/retrieveaccounts {
+	text "#str_00013597"
+}
+
+locString guis/mainmenu/search {
+	text "#str_00013598"
+}
+
+locString guis/mainmenu/detectdevices {
+	text "#str_00013599"
+}
+
+locString guis/mainmenu/gotourl {
+	text "#str_00013600"
+	arguments 1
+}
+
+locString guis/mainmenu/playonline_botprompt {
+	text "#str_00013601"
+}
+
+locString guis/mainmenu/advancedHud {
+	text "#str_00013602"
+}
+
+locString guis/mainmenu/showRespawnText {
+	text "#str_00013603"
+}
+
+locString guis/mainmenu/hotservers {
+	text "#str_00013604"
+}
+
+locString guis/mainmenu/interestedplayers {
+	text "#str_00013605"
+	arguments 2
+}
+
+locString guis/mainmenu/keepFireTeamList {
+	text "#str_00013606"
+}
+
+locString guis/mainmenu/predictedachievement {
+	text "#str_00013607"
+}
+
+locString guis/mainmenu/taskssatisfied {
+	text "#str_00013608"
+	arguments 2
+}
+
+locString guis/mainmenu/percentcompleted {
+	text "#str_00013609"
+	arguments 1
+}
+
+locString guis/mainmenu/allachievements {
+	text "#str_00013610"
+}
+
+locString guis/mainmenu/trainingmode {
+	text "#str_00013611"
+}
+
+locString guis/mainmenu/predictedrewards {
+	text "#str_00013612"
+}
+
+locString guis/mainmenu/personalbests {
+	text "#str_00013613"
+}
+
+locString guis/mainmenu/hud/personalbests {
+	text "#str_00013614"
+}
+
+locString guis/mainmenu/matchtotal {
+	text "#str_00013615"
+}
+
+locString guis/mainmenu/yourcampaigntotal {
+	text "#str_00013616"
+}
+
+locString guis/mainmenu/enhanced_tooltips {
+	text "#str_00013617"
+}
+
+locString guis/mainmenu/yourvalue {
+	text "#str_00013618"
+	arguments 1
+}
+
+locString guis/mainmenu/mute_tooltip_vo {
+	text "#str_00013619"
+}
+
+locString guis/mainmenu/your {
+	text "#str_00013620"
+}
+
+locString guis/mainmenu/reviewrewards {
+	text "#str_00013621"
+}
+
+locString guis/mainmenu/playonranked {
+	text "#str_00013622"
+}
+
+locString guis/mainmenu/help {
+	text "#str_00013623"
+}
+
+locString guis/mainmenu/bullet {
+	text "#str_00013624"
+}
+
+locString guis/mainmenu/training {
+	text "#str_00013625"
+}
+
+locString guis/mainmenu/mute_vo_multiplayer {
+	text "#str_00013626"
+}
+
+locString guis/mainmenu/mute_vo_never {
+	text "#str_00013627"
+}
+
+locString guis/mainmenu/mouse_input_dropdown {
+	text "#str_00013628"
+}
+
+locString guis/mainmenu/tooltip_sound_dropdown {
+	text "#str_00013629"
+}
+
+locString guis/mainmenu/quitscreen/etqw_community {
+	text "#str_00013630"
+}
+
+locString guis/mainmenu/quitscreen/etqw_community/bullet1 {
+	text "#str_00013631"
+}
+
+locString guis/mainmenu/quitscreen/etqw_community/bullet2 {
+	text "#str_00013632"
+}
+
+locString guis/mainmenu/quitscreen/etqw_community/bullet3 {
+	text "#str_00013633"
+}
+
+locString guis/mainmenu/quitscreen/etqw_stats {
+	text "#str_00013634"
+}
+
+locString guis/mainmenu/quitscreen/etqw_stats/bullet1 {
+	text "#str_00013635"
+}
+
+locString guis/mainmenu/quitscreen/etqw_stats/bullet2 {
+	text "#str_00013636"
+}
+
+locString guis/mainmenu/quitscreen/etqw_stats/bullet3 {
+	text "#str_00013637"
+}
+
+locString guis/mainmenu/tv {
+	text "#str_00013640"
+}
+
+locString guis/mainmenu/serverfeatures/tv {
+	text "#str_00013641"
+}
+
+locString guis/mainmenu/lan_tv {
+	text "#str_00013642"
+}
+
+locString guis/mainmenu/internet_tv {
+	text "#str_00013643"
+}
+
+locString guis/mainmenu/disabled_for_training {
+	text "#str_00013644"
+}
+
+locString guis/mainmenu/mine_warning {
+	text "#str_00013645"
+}
+
+locString guis/mainmenu/apt_warning_off {
+	text "#str_00008603"
+}
+
+locString guis/mainmenu/apt_warning_on_visual {
+	text "#str_00013647"
+}
+
+locString guis/mainmenu/apt_warning_on_beep {
+	text "#str_00013648"
+}
+
+locString guis/mainmenu/apt_warning_on {
+	text "#str_00008602"
+}
+
+locString guis/mainmenu/apt_warning_dropdown {
+	text "#str_00013650"
+}
+
+locString guis/mainmenu/maxbots {
+	text "#str_00013651"
+}
+
+locString guis/mainmenu/instantaction {
+	text "#str_00013652"
+}

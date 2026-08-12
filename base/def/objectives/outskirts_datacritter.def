@@ -1,0 +1,42 @@
+// ========================================================================
+
+export hauser {
+	options -prefix DATACRITTER_ -scale 2 -rotate 90 -sourcedir models/mapobjects/outskirts/pickup/dev_sd/ -destdir models/mapobjects/outskirts/pickup/
+
+	mesh	datacritter_base_file.mb		-dest datacritter.md5mesh
+	anim	datacritter_base_file.mb		-dest datacritter.md5anim
+	anim	datacritter_hang.mb				-dest datacritter_hang.md5anim
+	anim	datacritter_flounder.mb			-dest datacritter_flounder.md5anim
+	anim	datacritter_scurry.mb			-dest datacritter_scurry.md5anim
+	anim	datacritter_turn.mb				-dest datacritter_turn.md5anim
+
+
+}
+
+// ========================================================================
+// Models
+//
+
+model pickup_datacritter {
+	mesh					models/mapobjects/outskirts/pickup/datacritter.md5mesh
+
+	anim base				models/mapobjects/outskirts/pickup/datacritter.md5anim {
+	}
+
+	anim idle_atbase		models/mapobjects/outskirts/pickup/datacritter_hang.md5anim {
+	}
+
+	anim idle_onground  	models/mapobjects/outskirts/pickup/datacritter_flounder.md5anim {
+	}
+
+	anim scurry  			models/mapobjects/outskirts/pickup/datacritter_scurry.md5anim {
+	}
+
+	anim turn  				models/mapobjects/outskirts/pickup/datacritter_turn.md5anim {
+	}
+}
+
+// ========================================================================
+// Entity Def
+//
+

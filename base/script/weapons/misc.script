@@ -1,0 +1,65 @@
+//
+//		base_bar
+//
+
+object base_bar {
+	void			init();
+	void			destroy();
+	
+	void			ShowBar( float s );
+	void			SetOwner( entity owner );
+	void			SetDisplayName( handle n );
+	void			SetBarValue( float v );
+
+	handle			displayName;
+	float			lastGlobalState;
+	player			myOwner;
+};
+
+void base_bar::init() {
+	// jrad - properly preserve the player weapon energy state
+	lastGlobalState = -1;	
+}
+
+void base_bar::destroy() {
+	if( myOwner != sys.getLocalViewPlayer() || lastGlobalState == -1 || myOwner == $null_entity ) {
+		return;
+	}
+	sys.setGUIFloat( GUI_GLOBALS_HANDLE, "gameHud.weaponShowCharge", lastGlobalState );	
+}
+
+void base_bar::SetOwner( entity owner ) {
+	// there's a new owner, so the previous one shouldn't get a bar drawn
+	if ( myOwner == sys.getLocalPlayer() ) {
+		ShowBar( false );
+	}
+	
+	myOwner = owner;
+
+	// don't fiddle with the gui unless the new owner is our local player
+	if( owner != sys.getLocalPlayer() ) {
+		return;
+	}
+		
+	if( lastGlobalState == -1 ) {
+		lastGlobalState = sys.getGUIFloat( GUI_GLOBALS_HANDLE, "gameHud.weaponShowCharge" );	
+	}
+	
+	ShowBar( true );	
+}
+
+void base_bar::SetDisplayName( handle n ) {
+	displayName = n;
+}
+
+void base_bar::SetBarValue( float v ) {
+	if ( myOwner == sys.getLocalViewPlayer() && myOwner != $null_entity ) {
+		sys.setGUIFloat( GUI_GLOBALS_HANDLE, "weapons.energyBarCharge", v );
+	}
+}
+
+void base_bar::ShowBar( float s ) {
+	if ( myOwner == sys.getLocalViewPlayer() && myOwner != $null_entity ) {
+		sys.setGUIFloat( GUI_GLOBALS_HANDLE, "gameHud.weaponShowCharge", s );
+	}
+}

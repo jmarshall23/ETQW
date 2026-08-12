@@ -1,0 +1,65 @@
+///////////////
+// Airstrike //
+///////////////
+
+sound sounds/deployables/vampire/idle {
+
+	volume -10
+	maxDistance 50
+
+	looping
+	sounds/deployables/radar/idle_01.wav
+}
+
+sound sounds/deployables/vampire/deploy/arms {
+
+	volume -10
+	maxDistance 50
+
+	sounds/deployables/vampire/deploy_arm.wav
+}
+
+sound sounds/deployables/vampire/deploy/feet {
+
+	volume -15
+	maxDistance 50
+
+	sounds/deployables/vampire/deploy_feet.wav
+}
+
+sound sounds/vehicles/vampire/declined {
+
+	sounds/deployables/vampire/declined.wav
+}
+
+sound sounds/vehicles/vampire/fly {
+
+	maxDistance 100
+	no_occlusion
+	omnidirectional
+
+	looping
+	sounds/vehicles/vampire/fly_01.wav
+	sounds/vehicles/vampire/fly_02.wav
+	sounds/vehicles/vampire/fly_03.wav
+	sounds/vehicles/vampire/fly_04.wav
+	sounds/vehicles/vampire/fly_05.wav
+}
+
+sound sounds/vehicles/vampire/flyby {
+
+	no_occlusion
+	omnidirectional
+
+	sounds/vehicles/vampire/flyby_01.wav
+	sounds/vehicles/vampire/flyby_02.wav
+}
+
+sound sounds/vehicles/vampire/flyby_far {
+
+	maxdistance 500
+	no_occlusion
+
+	looping
+	sounds/vehicles/vampire/flyby_far.wav
+}

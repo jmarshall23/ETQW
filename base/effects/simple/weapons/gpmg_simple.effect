@@ -1,0 +1,669 @@
+effect effects/weapons/anansi_gpmg_fire_simple
+{
+	size	8
+
+	sound "Fire Sound"
+	{
+		soundShader	"sounds/vehicles/anansi/gpmg_fire"
+	}
+	sound "Far Fire Sound"
+	{
+		soundShader	"sounds/vehicles/anansi/gpmg_fire_far"
+	}
+}
+
+effect effects/weapons/anansi_gpmg_fire_local_simple
+{
+	size	8
+
+	sound "Local Fire Sound"
+	{
+		soundShader	"sounds/vehicles/anansi/gpmg_fire_local"
+	}
+}
+
+effect effects/weapons/gpmg_fire_simple
+{
+	size	8
+
+	sound "Fire Sound"
+	{
+		soundShader	"sounds/weapons/gpmg/fire"
+	}
+	sound "Far Fire Sound"
+	{
+		soundShader	"sounds/weapons/gpmg/fire/far"
+	}
+}
+
+effect effects/weapons/gpmg_fire_local_simple
+{
+	size	8
+
+	sound "Local Fire Sound"
+	{
+		soundShader	"sounds/weapons/gpmg/fire/local"
+	}
+}effect effects/weapons/gpmg_muzzleflash_simple
+{
+	size	336
+
+	cutOffDistance	15000
+
+	effect "casings"
+	{
+		effect	"effects/weapons/generic/casings"
+	}
+	spawner "shell"
+	{
+		count		1,1
+		attenuateEmitter
+		attenuation	300,300
+
+		model
+		{
+			duration	1,1
+			material	"models/weapons/shells/mg_shell"
+			model		"models/weapons/shells/mg_shell.lwo"
+			gravity		0.3,0.3
+			trailRepeat	1
+
+			start
+			{
+				position { point -35,0,0 }
+				velocity { box -40,30,40,40,70,50 }
+				size { point 2,0.8,0.8 }
+				rotate { box 0.777778,0.777778,0.777778,-0.777778,-0.777778,-0.777778 }
+			}
+
+			motion
+			{
+				rotate { envelope exp_1minusx/x2 count 0.5,0.5,0.5 }
+			}
+
+			end
+			{
+				rotate { box -0.777778,-0.777778,-0.777778,0.777778,0.777778,0.777778 }
+			}
+			lineHit
+		}
+	}
+	spawner "flame2"
+	{
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	300,300
+
+		sprite
+		{
+			duration	0.13,0.13
+			material	"particles/explosion/explode07"
+			trailRepeat	1
+
+			start
+			{
+				position { point 10,-2.5,0 }
+				size { line 2,2,4,4 }
+				tint { line 0.321569,0.262745,0.145098,0.443137,0.454902,0.345098 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 6,6,12,12 }
+				rotate { box 0.5,-0.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "flash"
+	{
+		count		1,1
+		locked
+
+		oriented
+		{
+			duration	0.1,0.2
+			material	"textures/effects/weapons/muzzle_flash3"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,-1 }
+				size { line 3,3,5,5 }
+				tint { line 0.854902,0.803922,0.686275,0.94902,0.94902,0.921569 }
+				rotate { box 0,0,0.194444,0,0,0.305556 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_convexfade_start_at_1 offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+
+			end
+			{
+				size { line 15,15,30,30 }
+			}
+			lineHit
+		}
+	}
+	spawner "flame"
+	{
+		count		1,1
+		locked
+
+		line
+		{
+			duration	0.01,0.01
+			generatedLine
+			material	"textures/effects/weapons/blaster_fly_yellow"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0.25,0 }
+				velocity { box 2,-0.025,-0.025,4,0.075,0 }
+				size { box 3,5 }
+				tint { line 1,0.894118,0.682353,1,1,1 }
+				offset { point -30,0,0 }
+				length { box 100,0,0,300,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1_fast count 0.9,0.9,0.9 offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+			lineHit
+		}
+	}
+	spawner "edge2"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.025,0.025
+			material	"textures/effects/weapons/muzzle_flash2"
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,0,5,0,0 }
+				size { line 10,10,6,6 }
+				tint { point 0.337255,0.337255,0.337255 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 10,10,20,20 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/weapons/gpmg_muzzleflash_view_simple
+{
+	size	336
+
+	effect "casings"
+	{
+		effect	"effects/weapons/generic/casings"
+	}
+	spawner "shell"
+	{
+		count		1,1
+
+		model
+		{
+			duration	1,1
+			material	"models/weapons/shells/mg_shell"
+			model		"models/weapons/shells/mg_shell.lwo"
+			gravity		0.3,0.3
+			trailRepeat	1
+
+			start
+			{
+				position { point -35,0,0 }
+				velocity { box -40,30,40,40,70,50 }
+				size { point 2,0.8,0.8 }
+				rotate { box 0.777778,0.777778,0.777778,-0.777778,-0.777778,-0.777778 }
+			}
+
+			motion
+			{
+				rotate { envelope exp_1minusx/x2 count 0.5,0.5,0.5 }
+			}
+
+			end
+			{
+				rotate { box -0.777778,-0.777778,-0.777778,0.777778,0.777778,0.777778 }
+			}
+			lineHit
+		}
+	}
+	spawner "flame2"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.13,0.13
+			blend	add
+			material	"particles/explosion/explode07"
+			trailRepeat	1
+
+			start
+			{
+				position { point 10,-2.5,0 }
+				size { line 2,2,4,4 }
+				tint { line 0.321569,0.262745,0.145098,0.443137,0.454902,0.345098 }
+				fade { point 0.5 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 3,3,7,7 }
+				rotate { box 0.5,-0.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "flash"
+	{
+		count		1,1
+		locked
+
+		oriented
+		{
+			duration	0.1,0.2
+			blend	add
+			material	"textures/effects/weapons/muzzle_flash3"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,-1 }
+				size { line 3,3,5,5 }
+				tint { line 0.854902,0.803922,0.686275,0.94902,0.94902,0.921569 }
+				fade { point 0.7 }
+				rotate { box 0,0,0.194444,0,0,0.305556 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_convexfade_start_at_1 offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+
+			end
+			{
+				size { line 8,8,16,16 }
+			}
+			lineHit
+		}
+	}
+	spawner "flame"
+	{
+		count		1,1
+		locked
+
+		line
+		{
+			duration	0.01,0.01
+			blend	add
+			generatedLine
+			material	"textures/effects/weapons/blaster_fly_yellow"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0.25,0 }
+				velocity { box 2,-0.025,-0.025,4,0.075,0 }
+				size { box 3,5 }
+				tint { line 1,0.894118,0.682353,1,1,1 }
+				fade { point 0.5 }
+				offset { point -30,0,0 }
+				length { box 100,0,0,300,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1_fast count 0.9,0.9,0.9 offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/weapons/gpmg_muzzleflash_world_simple
+{
+	size	101
+
+	cutOffDistance	15000
+
+	effect "casings"
+	{
+		effect	"effects/weapons/generic/casings"
+	}
+	spawner "flash"
+	{
+		count		1,1
+		locked
+
+		oriented
+		{
+			duration	0.03,0.08
+			material	"textures/effects/weapons/muzzle_flash3"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0.25,0.5,0.5 }
+				size { line 9,9,12,12 }
+				tint { line 0.94902,0.815686,0.407843,0.992157,0.901961,0.709804 }
+				fade { line 0.75,1 }
+				rotate { box 0,0,0.338889,0,0,0.394444 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+
+			end
+			{
+				size { line 18,18,25,25 }
+			}
+			lineHit
+		}
+	}
+	spawner "flame"
+	{
+		count		1,1
+		locked
+
+		line
+		{
+			duration	0.03,0.08
+			generatedLine
+			material	"textures/effects/weapons/muzzle_flash_side2"
+			trailRepeat	1
+
+			start
+			{
+				position { point -2,0.25,0 }
+				velocity { box 2,-0.025,-0.25,4,0.075,-0.0125 }
+				size { box 7,10 }
+				tint { line 0.913726,0.415686,0.0862745,0.913726,0.815686,0.529412 }
+				fade { line 0.75,1 }
+				length { box 20,0,0,28,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1_fast count 0.9,0.9,0.9 offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+			lineHit
+		}
+	}
+	spawner "edge"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.08,0.08
+			material	"textures/effects/weapons/muzzle_flash2"
+			trailRepeat	1
+
+			start
+			{
+				position { point 3,0,0 }
+				size { line 12,12,16,16 }
+				tint { line 0.164706,0.121569,0,0.176471,0.133333,0 }
+				fade { point 0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 30,30,40,40 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+	spawner "edge2"
+	{
+		count		1,1
+		locked
+		inverseAttenuateEmitter
+		attenuation	400,400
+
+		sprite
+		{
+			duration	0.08,0.08
+			material	"textures/effects/weapons/muzzle_flash2"
+			trailRepeat	1
+
+			start
+			{
+				position { point 3,0,0 }
+				size { line 10,10,12,12 }
+				tint { line 0.282353,0.211765,0,0.207843,0.156863,0 }
+				fade { point 0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 60,60,70,70 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/weapons/gpmg_muzzleflash_vehicle_simple
+{
+	size	336
+
+	cutOffDistance	15000
+
+	effect "casings"
+	{
+		effect	"effects/weapons/generic/casings"
+	}
+	spawner "flame2"
+	{
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	300,300
+
+		sprite
+		{
+			duration	0.13,0.13
+			material	"particles/explosion/explode07"
+			trailRepeat	1
+
+			start
+			{
+				position { point 10,-2.5,0 }
+				size { line 2,2,4,4 }
+				tint { line 0.321569,0.262745,0.145098,0.443137,0.454902,0.345098 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 6,6,12,12 }
+				rotate { box 0.5,-0.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "flash"
+	{
+		count		1,1
+		locked
+
+		oriented
+		{
+			duration	0.1,0.2
+			material	"textures/effects/weapons/muzzle_flash3"
+			trailRepeat	1
+
+			start
+			{
+				size { line 3,3,5,5 }
+				tint { line 0.854902,0.803922,0.686275,0.94902,0.94902,0.921569 }
+				rotate { box 0,0,0.194444,0,0,0.305556 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_convexfade_start_at_1 offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+
+			end
+			{
+				size { line 15,15,30,30 }
+			}
+			lineHit
+		}
+	}
+	spawner "flame"
+	{
+		count		1,1
+		locked
+
+		line
+		{
+			duration	0.01,0.01
+			generatedLine
+			material	"textures/effects/weapons/blaster_fly_yellow"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0.25,0 }
+				velocity { box 2,-0.025,-0.025,4,0.075,0 }
+				size { box 3,5 }
+				tint { line 1,0.894118,0.682353,1,1,1 }
+				offset { point -30,0,0 }
+				length { box 100,0,0,300,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1_fast count 0.9,0.9,0.9 offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+			lineHit
+		}
+	}
+	spawner "edge2"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.025,0.025
+			material	"textures/effects/weapons/muzzle_flash2"
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,0,5,0,0 }
+				size { line 10,10,6,6 }
+				tint { point 0.337255,0.337255,0.337255 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 10,10,20,20 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,92 @@
+sound sounds/deployables/railhowitzer/deployseq {
+	minDistance	5
+	maxDistance	75
+	
+	sounds/deployables/railhowitzer/deployseq_02.wav
+}
+
+sound sounds/deployables/railhowitzer/fire {
+	minDistance	25
+	maxDistance 125
+
+	sounds/deployables/railhowitzer/xfire_02.wav
+}
+
+sound sounds/deployables/railhowitzer/fly {
+
+	volume -10
+	maxDistance 150
+
+	sounds/deployables/artillery/fly_01.wav
+	sounds/deployables/artillery/fly_02.wav
+	sounds/deployables/artillery/fly_03.wav
+	sounds/deployables/artillery/fly_04.wav
+	sounds/deployables/artillery/fly_05.wav
+	sounds/deployables/artillery/fly_06.wav
+}
+
+// *** New Stuff - May.3.2006 - Xian
+
+sound sounds/deployables/railhowitzer/detonate_near {
+	minDistance 50
+	maxDistance 100
+	no_occlusion	
+	sounds/deployables/plasmamortar/detonation_01_near.wav
+	sounds/deployables/plasmamortar/detonation_02_near.wav
+
+}
+
+sound sounds/deployables/railhowitzer/detonate_medium {
+	volume	-5
+	farDistance 75
+	maxDistance 125
+	no_occlusion
+
+	sounds/deployables/plasmamortar/detonation_01_medium.wav
+	sounds/deployables/plasmamortar/detonation_02_medium.wav
+
+}
+
+sound sounds/deployables/railhowitzer/detonate_far {
+	volume	-5
+	farDistance 125
+	maxDistance 175
+	no_occlusion
+	sounds/deployables/plasmamortar/detonation_01_far.wav
+	sounds/deployables/plasmamortar/detonation_02_far.wav
+}
+
+// *** Fire Sounds
+
+sound sounds/deployables/railhowitzer/fire_near {
+	volume		0
+	shakes		0.1
+	minDistance	1
+	maxDistance 75
+	no_occlusion
+	
+	sounds/deployables/railhowitzer/firev3_01_near.wav
+	sounds/deployables/railhowitzer/firev3_02_near.wav
+	sounds/deployables/railhowitzer/firev3_03_near.wav
+	
+}
+
+sound sounds/deployables/railhowitzer/fire_medium {
+	volume	-5
+	farDistance 50
+	maxDistance 100
+	no_occlusion
+	
+	sounds/deployables/railhowitzer/fire_01_medium.wav
+	sounds/deployables/railhowitzer/fire_02_medium.wav
+}
+
+sound sounds/deployables/railhowitzer/fire_far {
+	volume	-5
+	farDistance 75
+	maxDistance 150
+	no_occlusion
+	sounds/deployables/railhowitzer/firev3_01_far.wav
+	sounds/deployables/railhowitzer/firev3_02_far.wav
+	sounds/deployables/railhowitzer/firev3_03_far.wav
+}

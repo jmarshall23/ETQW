@@ -1,0 +1,317 @@
+
+locString guis/admin/players {
+	text "#str_00021000"
+}
+
+locString guis/admin/server {
+	text "#str_00021001"
+}
+
+locString guis/admin/group {
+	text "#str_00021002"
+}
+
+locString guis/admin/usergroups {
+	text "#str_00021003"
+}
+
+locString guis/admin/movetogroup {
+	text "#str_00021004"
+}
+
+locString guis/admin/makespectator {
+	text "#str_00021005"
+}
+
+locString guis/admin/makegdf {
+	text "#str_00021006"
+}
+
+locString guis/admin/makestrogg {
+	text "#str_00021007"
+}
+
+locString guis/admin/kick {
+	text "#str_00021008"
+}
+
+locString guis/admin/warn {
+	text "#str_00021009"
+}
+
+locString guis/admin/ban {
+	text "#str_00021010"
+}
+
+locString guis/admin/mute {
+	text "#str_00021011"
+}
+
+locString guis/admin/unmute {
+	text "#str_00021012"
+}
+
+locString guis/admin/silence {
+	text "#str_00021013"
+}
+
+locString guis/admin/unsilence {
+	text "#str_00021014"
+}
+
+locString guis/admin/configs {
+	text "#str_00021015"
+}
+
+locString guis/admin/execconfig {
+	text "#str_00021016"
+}
+
+locString guis/admin/restartmap {
+	text "#str_00021017"
+}
+
+locString guis/admin/changemap {
+	text "#str_00021018"
+}
+
+locString guis/admin/restartcampaign {
+	text "#str_00021019"
+}
+
+locString guis/admin/changecampaign {
+	text "#str_00021020"
+}
+
+locString guis/admin/startmatch {
+	text "#str_00021021"
+}
+
+locString guis/admin/shufflexp {
+	text "#str_00021022"
+}
+
+locString guis/admin/shufflerandom {
+	text "#str_00021023"
+}
+
+locString guis/admin/muteglobalchat {
+	text "#str_00021024"
+}
+
+locString guis/admin/unmuteglobalchat {
+	text "#str_00021025"
+}
+
+locString guis/admin/muteglobalvoice {
+	text "#str_00021026"
+}
+
+locString guis/admin/unmuteglobalvoice {
+	text "#str_00021027"
+}
+
+locString guis/admin/login {
+	text "#str_00021028"
+}
+
+locString guis/admin/failed {
+	text "#str_00021029"
+}
+
+locString guis/admin/succeeded {
+	text "#str_00021030"
+}
+
+locString guis/admin/currentgroup {
+	text "#str_00021031"
+	arguments 1
+}
+
+locString guis/admin/mutelocally {
+	text "#str_00021032"
+}
+
+locString guis/admin/unmutelocally {
+	text "#str_00021033"
+}
+
+locString guis/admin/superuser {
+	text "#str_00021034"
+}
+
+locString guis/admin/commandsuccess {
+	text "#str_00021035"
+}
+
+locString guis/admin/commandfailure {
+	text "#str_00021036"
+}
+
+locString guis/admin/rightclicktoadmin {
+	text "#str_00021037"
+}
+
+locString guis/admin/system/cannotkickplayer {
+	text "#str_00021038"
+}
+locString guis/admin/system/cannotban {
+	text "#str_00021039"
+}
+locString guis/admin/system/cannotfindplayer {
+	text "#str_00021040"
+	arguments 1
+}
+locString guis/admin/system/cannotbanplayer {
+	text "#str_00021041"
+}
+locString guis/admin/system/nopermsetnumteamplayers {
+	text "#str_00021042"
+}
+locString guis/admin/system/cannotfindteam {
+	text "#str_00021043"
+	arguments 1
+}
+locString guis/admin/system/forcedchangeteam {
+	text "#str_00021044"
+	arguments 1
+}
+locString guis/admin/system/nopermchangecampaign {
+	text "#str_00021045"
+}
+locString guis/admin/system/notfoundcampaign {
+	text "#str_00021046"
+	arguments 1
+}
+locString guis/admin/system/nopermchangemap {
+	text "#str_00021047"
+}
+locString guis/admin/system/cannotchangethatmap {
+	text "#str_00021048"
+}
+locString guis/admin/system/nopermglobalchatmute {
+	text "#str_00021049"
+}
+locString guis/admin/system/nopermkickplayer {
+	text "#str_00021050"
+}
+locString guis/admin/system/specifyonoff {
+	text "#str_00021051"
+}
+locString guis/admin/system/unknownmutemode {
+	text "#str_00021052"
+	arguments 1
+}
+locString guis/admin/system/nopermchangeglobalvoipmute {
+	text "#str_00021053"
+}
+locString guis/admin/system/nopermchangeplayermute {
+	text "#str_00021054"
+}
+locString guis/admin/system/cannotmuteplayer {
+	text "#str_00021055"
+}
+locString guis/admin/system/nopermchangeplayervoip {
+	text "#str_00021056"
+}
+locString guis/admin/system/nopermwarn {
+	text "#str_00021057"
+}
+locString guis/admin/system/cannotwarnplayer {
+	text "#str_00021058"
+}
+locString guis/admin/system/nopermrestartmap {
+	text "#str_00021059"
+}
+locString guis/admin/system/nopermrestartcampaign {
+	text "#str_00021060"
+}
+locString guis/admin/system/servernocampaign {
+	text "#str_00021061"
+}
+locString guis/admin/system/nocampaignrunning {
+	text "#str_00021062"
+}
+locString guis/admin/system/cannotchangeplayergroup {
+	text "#str_00021063"
+}
+locString guis/admin/system/cannotfindgroup {
+	text "#str_00021064"
+	arguments 1
+}
+locString guis/admin/system/cannotplaceplayergroup {
+	text "#str_00021065"
+}
+locString guis/admin/system/nopermstartmatch {
+	text "#str_00021066"
+}
+locString guis/admin/system/nopermexecconfig {
+	text "#str_00021067"
+}
+locString guis/admin/system/cannotfindconfig {
+	text "#str_00021068"
+	arguments 1
+}
+locString guis/admin/system/nopermshuffleteams {
+	text "#str_00021069"
+}
+locString guis/admin/system/unknownshufflemode {
+	text "#str_00021070"
+	arguments 1
+}
+
+locString guis/admin/system/nopermaddbot {
+	text "#str_00021071"
+}
+
+locString guis/admin/kickallbots {
+	text "#str_00021072"
+}
+
+locString guis/admin/disableproficiency {
+	text "#str_00021073"
+}
+
+locString guis/admin/enableproficiency {
+	text "#str_00021074"
+}
+
+locString guis/admin/system/nopermdisableproficiency {
+	text "#str_00021075"
+}
+
+locString guis/admin/system/nopermsetteamdamage {
+	text "#str_00021076"
+}
+
+locString guis/admin/system/nopermsetteambalance {
+	text "#str_00021077"
+}
+
+locString guis/admin/system/nopermsettimelimit {
+	text "#str_00021078"
+}
+
+locString guis/admin/system/specifytime {
+	text "#str_00021079"
+}
+
+locString guis/admin/teamdamage {
+	text "#str_00021080"
+}
+
+locString guis/admin/forceteambalance {
+	text "#str_00021081"
+}
+
+locString guis/admin/system/nopermadjustbots {
+	text "#str_00021082"
+}
+
+locString guis/admin/mutequickchat {
+	text "#str_00013638"
+}
+
+locString guis/admin/unmutequickchat {
+	text "#str_00013639"
+}

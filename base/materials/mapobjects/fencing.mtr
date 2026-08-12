@@ -1,0 +1,38 @@
+material models/mapobjects/fencing/fences01
+{
+	noshadows
+	noselfshadow
+	{
+		program interaction/basic_detail_alphatest
+		diffusemap	picmipmin -1 maxLod 4	models/mapobjects/fencing/fences_01_d.tga
+		specularmap	picmip -2	models/mapobjects/fencing/fences_01_s.tga
+		bumpmap		picmip -1	models/mapobjects/fencing/fences_01_local.tga
+		alphaTest 			0.2
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	8,8,0,0
+		
+	}
+}
+
+
+material models/mapobjects/fencing/fences01_nonsolid
+{
+	nonsolid
+	noshadows
+	noselfshadow
+	{
+		program interaction/basic_detail_alphatest
+		diffusemap	picmipmin -1 maxLod 4	models/mapobjects/fencing/fences_01_d.tga
+		specularmap	picmip -2	models/mapobjects/fencing/fences_01_s.tga
+		bumpmap		picmip -1	models/mapobjects/fencing/fences_01_local.tga
+		alphaTest 			0.2
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	8,8,0,0
+	}
+}

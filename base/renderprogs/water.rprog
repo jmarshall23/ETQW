@@ -1,0 +1,1252 @@
+renderBinding water_tint	{ vector { 1 } }
+renderBinding water_distortion	{ vector { 1 } }
+renderBinding water_fresnel	{ vector { 1 } }
+renderBinding water_glare	{ vector { 1 } }
+renderBinding water_offset	{ vector { 1 } }	// how many pixels to offset the refraction (only use for special hacks like the sniper rifle scope)
+renderBinding water_desat	{ vector { 1 } }
+/*
+	A static surface with cubemap reflections
+*/
+renderProgram water/simple_cube {
+
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0, R1, R2, bitangent;
+
+		XPD		bitangent, $normalAttrib, $tangentAttrib;
+		MUL		bitangent, bitangent, $tangentAttrib.w;
+
+		# bumpmap texture coords
+		DP4		result.texcoord[0].x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4		result.texcoord[0].y, $texCoordAttrib, $diffuseMatrix_t;		
+
+		# vector to eye
+		SUB		R1, $positionAttrib, $viewOrigin;
+
+		$if ( r_shaderQuality > 1 )
+		DP3		R0.x, R1, $transposedModelMatrix_x;
+		DP3		R0.y, R1, $transposedModelMatrix_y;
+		DP3		R0.z, R1, $transposedModelMatrix_z;
+		DP3		R0.w, R0, R0;
+		RSQ		R0.w, R0.w;
+		MUL		result.texcoord[2].xyz, R0, R0.w;
+		$else
+		DP3		result.texcoord[2].x, R1, $transposedModelMatrix_x;
+		DP3		result.texcoord[2].y, R1, $transposedModelMatrix_y;
+		DP3		result.texcoord[2].z, R1, $transposedModelMatrix_z;
+		$endif
+		
+		DP3		R1.w, R1, R1;
+		RSQ		R0.w, R1.w;
+		MUL		result.texcoord[2].w, R0.w, R1.w;
+
+		# tangent->world matrix
+		DP3		result.texcoord[3].x, $tangentAttrib, $transposedModelMatrix_x;
+		DP3		result.texcoord[3].y, bitangent, $transposedModelMatrix_x;
+		DP3		result.texcoord[3].z, $normalAttrib, $transposedModelMatrix_x;
+
+		DP3		result.texcoord[4].x, $tangentAttrib, $transposedModelMatrix_y;
+		DP3		result.texcoord[4].y, bitangent, $transposedModelMatrix_y;
+		DP3		result.texcoord[4].z, $normalAttrib, $transposedModelMatrix_y;
+
+		DP3		result.texcoord[5].x, $tangentAttrib, $transposedModelMatrix_z;
+		DP3		result.texcoord[5].y, bitangent, $transposedModelMatrix_z;
+		DP3		result.texcoord[5].z, $normalAttrib, $transposedModelMatrix_z;
+
+		MOV		result.color, $colorAttrib;	
+		
+		# this doesn't even change per vertex so don't bother to calculate it per pixel
+		# texture 1 takes the deform magnitude and scales it by the projection distance
+		PARAM	vec = { 1, 0, 0, 1 };
+
+		MOV		R0, vec;
+		DP4		R0.z, $positionAttrib, state.matrix.modelview.row[2];
+
+		DP4		R1, R0, state.matrix.projection.row[0];
+		DP4		R2, R0, state.matrix.projection.row[3];
+
+		# don't let the recip get near zero for polygons that cross the view plane
+		MAX		R2, R2, 1;
+
+		RCP		R2, R2.w;
+		MUL		R1, R1, R2;
+
+		# clamp the distance so the the deformations don't get too wacky near the view
+		MIN		R1, R1, 0.02;
+
+		MUL		R1, R1, $water_distortion;		
+		MUL		result.texcoord[1], R1, $currentRenderTexelSize;
+		
+		$if ( r_megaDrawMethod != 0 )
+		TEMP _F1, _F2;
+		SUB		_F2, $positionAttrib, $viewOrigin;
+		DP3		_F1.x, _F2, _F2;
+		RSQ		_F1.y, _F1.x;
+		MUL		_F1.x, _F1.y, _F1.x;
+		MAD		result.color.secondary, _F1.x, $fogDepths.z, $fogDepths.w; 
+		$endif
+	%> }
+	
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1, R2, R3, R4, eye, mix, spec;
+
+		# get normal from normal map
+		TEX		R0, fragment.texcoord[0], $bumpMap, 2D;
+		$if !r_dxnNormalMaps
+		MOV		R0.x, R0.a;
+		$endif
+		MAD		R2, R0, 2, -1;
+		MUL		R2.xy, R2, $water_distortion.z;
+		
+		$if r_normalizeNormalMaps
+		TEMP    NR1;
+		MOV		R2.z, 0;
+		DP3		NR1.x, R2,R2;
+		ADD		NR1.x, 1, -NR1.x;
+		RSQ		NR1.x, NR1.x;
+		RCP		R2.z, NR1.x;
+		$endif
+		
+
+		# put in world space
+		DP3		R1.x, R2, fragment.texcoord[3];
+		DP3		R1.y, R2, fragment.texcoord[4];
+		DP3		R1.z, R2, fragment.texcoord[5];
+
+		#MAD		result.color, R1, 0.5, 0.5;
+
+		# warped texcoords ( normalmap * scale ) + fragpos
+		MAD		R3, R1, fragment.texcoord[1], fragment.position;
+		ADD		R3, $water_offset, R3;
+
+		# normalize to eye
+		DP3		eye.w, fragment.texcoord[2], fragment.texcoord[2];
+		RSQ		eye.w, eye.w;
+		MUL		eye, fragment.texcoord[2], eye.w;
+
+		#MAD		result.color, eye, 0.5, 0.5;
+
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		DP3		R2, eye, R1;
+		MUL		R2, R2, 2;
+		MAD		R4, -R1, R2.x, eye;
+
+		#spec
+		$if ( r_shaderQuality < 1 )
+			DP3_SAT	R0, R4, $sunDirection;
+			TEX		spec, R0, $map, 2D;
+			MUL		spec, spec, $sunColor;
+			MUL		spec, spec, $water_glare;
+		$endif
+
+		# reflect refract mixing (sorta fresnel)
+		DP3		R1, -eye, R1;
+		ADD		R1, R1, 1;
+		POW		R1, R1.x, $water_fresnel.x;
+		RCP_SAT		mix, R1.x;
+
+		# lookup textures and interpolate
+		TEX		R1, R3, $currentRender, RECT;
+		MUL		R1, R1, $water_tint; #modulate with water color
+		TEX		R2, R4, $environmentCubeMap, CUBE;
+		LRP		R2, $water_desat, 0.5, R2;
+		SUB		R3, R2, R1;
+		MAD		R3, R3, mix, R1;
+		$if ( r_shaderQuality < 1 )
+			ADD		result.color, R3, spec;
+		$else
+			MOV	result.color, R3;		
+		$endif
+		ADD		result.color.a, spec.r, spec.g;	
+	%> }
+}
+
+
+renderProgram water/simple_cube_fallback {
+
+	program vertex reference water/simple_cube
+	
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1, R2, R3, R4, eye, mix, spec;
+
+		# get normal from normal map
+		TEX		R0, fragment.texcoord[0], $bumpMap, 2D;
+		$if !r_dxnNormalMaps
+		MOV		R0.x, R0.a;
+		$endif
+		MAD		R2, R0, 2, -1;
+		MUL		R2.xy, R2, $water_distortion.z;
+		
+		$if r_normalizeNormalMaps
+		TEMP    NR1;
+		MOV		R2.z, 0;
+		DP3		NR1.x, R2,R2;
+		ADD		NR1.x, 1, -NR1.x;
+		RSQ		NR1.x, NR1.x;
+		RCP		R2.z, NR1.x;
+		$endif
+		
+
+		# put in world space
+		DP3		R1.x, R2, fragment.texcoord[3];
+		DP3		R1.y, R2, fragment.texcoord[4];
+		DP3		R1.z, R2, fragment.texcoord[5];
+
+		# warped texcoords ( normalmap * scale ) + fragpos
+		MAD		R3, R1, fragment.texcoord[1], fragment.position;
+		ADD		R3, $water_offset, R3;
+
+		# normalize to eye
+		DP3		eye.w, fragment.texcoord[2], fragment.texcoord[2];
+		RSQ		eye.w, eye.w;
+		MUL		eye, fragment.texcoord[2], eye.w;
+
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		DP3		R2, eye, R1;
+		MUL		R2, R2, 2;
+		MAD		R4, -R1, R2.x, eye;
+
+		# reflect refract mixing (sorta fresnel)
+		DP3		R1, -eye, R1;
+		ADD		R1, R1, 1;
+		POW		R1, R1.x, $water_fresnel.x;
+		RCP_SAT		mix, R1.x;
+
+		# lookup textures and interpolate
+		TEX		R2, R4, $environmentCubeMap, CUBE;
+		LRP		R3, $water_desat, 0.5, R2;
+		MOV		result.color, R3;		
+		MOV		result.color.a, 0.3;
+	%> }
+}
+
+//Exactly like the normal simple_cube but the diffuseMap alpha channel is used as an mask image..
+renderProgram water/simple_cube_mask {
+
+	program vertex reference  water/simple_cube
+	
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1, R2, R3, R4, eye, mix, spec;
+		
+		# get mask
+		TEX		R1, fragment.texcoord[0], $diffuseMap, 2D;
+		SUB		R1.a, R1.a, 0.2;
+		KIL		R1.a;
+		#MOV		result.color, R1.a;
+
+		# get normal from normal map
+		TEX		R0, fragment.texcoord[0], $bumpMap, 2D;
+		$if !r_dxnNormalMaps
+		MOV		R0.x, R0.a;
+		$endif
+		MAD		R2, R0, 2, -1;
+		MUL		R2.xy, R2, $water_distortion.z;
+
+		$if r_normalizeNormalMaps
+		TEMP    NR1;
+		MOV		R2.z, 0;
+		DP3		NR1.x, R2,R2;
+		ADD		NR1.x, 1, -NR1.x;
+		RSQ		NR1.x, NR1.x;
+		RCP		R2.z, NR1.x;
+		$endif
+
+
+		# put in world space
+		DP3		R1.x, R2, fragment.texcoord[3];
+		DP3		R1.y, R2, fragment.texcoord[4];
+		DP3		R1.z, R2, fragment.texcoord[5];
+
+		#MAD		result.color, R1, 0.5, 0.5;
+
+		# warped texcoords ( normalmap * scale ) + fragpos
+		MAD		R3, R1, fragment.texcoord[1], fragment.position;
+		ADD		R3, $water_offset, R3;
+
+		# normalize to eye
+		DP3		eye.w, fragment.texcoord[2], fragment.texcoord[2];
+		RSQ		eye.w, eye.w;
+		MUL		eye, fragment.texcoord[2], eye.w;
+
+		#MAD		result.color, eye, 0.5, 0.5;
+
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		DP3		R2, eye, R1;
+		MUL		R2, R2, 2;
+		MAD		R4, -R1, R2.x, eye;
+
+		#spec
+		$if ( r_shaderQuality < 1 )
+			DP3_SAT	R0, R4, $sunDirection;
+			TEX		spec, R0, $map, 2D;
+			MUL		spec, spec, $sunColor;
+			MUL		spec, spec, $water_glare;
+		$endif
+
+		# reflect refract mixing (sorta fresnel)
+		DP3		R1, -eye, R1;
+		ADD		R1, R1, 1;
+		POW		R1, R1.x, $water_fresnel.x;
+		RCP_SAT		mix, R1.x;
+
+		# lookup textures and interpolate
+		TEX		R1, R3, $currentRender, RECT;
+		MUL		R1, R1, $water_tint; #modulate with water color
+		TEX		R2, R4, $environmentCubeMap, CUBE;
+		LRP		R2, $water_desat, 0.5, R2;
+		SUB		R3, R2, R1;
+		MAD		R3, R3, mix, R1;
+		$if ( r_shaderQuality < 1 )
+			ADD		result.color, R3, spec;
+		$else
+			MOV	result.color, R3;		
+		$endif
+		ADD		result.color.a, spec.r, spec.g;	
+	%> }
+}
+
+
+renderProgram water/simple_cube_alpha {
+
+	program vertex reference  water/simple_cube
+	
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1, R2, R3, R4, eye, mix, spec;
+		
+		# get mask
+		TEMP diffuse;
+		TEX		diffuse, fragment.texcoord[0], $diffuseMap, 2D;
+		SUB		R1.a, diffuse.a, 0.0002;
+		KIL		R1.a;
+		#MOV		result.color, R1.a;
+
+		# get normal from normal map
+		TEX		R0, fragment.texcoord[0], $bumpMap, 2D;
+		$if !r_dxnNormalMaps
+		MOV		R0.x, R0.a;
+		$endif
+		MAD		R2, R0, 2, -1;
+		MUL		R2.xy, R2, $water_distortion.z;
+
+		$if r_normalizeNormalMaps
+		TEMP    NR1;
+		MOV		R2.z, 0;
+		DP3		NR1.x, R2,R2;
+		ADD		NR1.x, 1, -NR1.x;
+		RSQ		NR1.x, NR1.x;
+		RCP		R2.z, NR1.x;
+		$endif
+
+
+		# put in world space
+		DP3		R1.x, R2, fragment.texcoord[3];
+		DP3		R1.y, R2, fragment.texcoord[4];
+		DP3		R1.z, R2, fragment.texcoord[5];
+
+		# warped texcoords ( normalmap * scale ) + fragpos
+		MAD		R3, R1, fragment.texcoord[1], fragment.position;
+		ADD		R3, $water_offset, R3;
+
+		# normalize to eye
+		DP3		eye.w, fragment.texcoord[2], fragment.texcoord[2];
+		RSQ		eye.w, eye.w;
+		MUL		eye, fragment.texcoord[2], eye.w;
+
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		DP3		R2, eye, R1;
+		MUL		R2, R2, 2;
+		MAD		R4, -R1, R2.x, eye;
+
+		#spec
+		$if ( r_shaderQuality < 1 )
+			DP3_SAT	R0, R4, $sunDirection;
+			TEX		spec, R0, $map, 2D;
+			MUL		spec, spec, $sunColor;
+			MUL		spec, spec, $water_glare;
+		$endif
+
+		# reflect refract mixing (sorta fresnel)
+		DP3		R1, -eye, R1;
+		MAX		R1, R1, -R1;
+		ADD		R1, R1, 1;
+		POW		R1, R1.x, $water_fresnel.x;
+		RCP_SAT		mix, R1.x;
+
+		TEMP baseimg;
+		TEX		baseimg, fragment.position, $currentRender, RECT;
+
+		# lookup textures and interpolate
+		TEX		R1, R3, $currentRender, RECT;
+		MUL		R1, R1, $water_tint; #modulate with water color
+		TEX		R2, R4, $environmentCubeMap, CUBE;
+		LRP		R2, $water_desat, 0.5, R2;
+		SUB		R3, R2, R1;
+		MAD		R3, R3, mix, R1;
+		TEMP out;
+		$if ( r_shaderQuality < 1 )
+			ADD		out, R3, spec;
+		$else
+			MOV	out, R3;		
+		$endif
+		ADD		result.color.a, spec.r, spec.g;	
+		MUL_SAT diffuse.a, diffuse.a, 3;
+		LRP result.color.rgb, diffuse.a, out, baseimg;		
+	%> }
+}
+
+renderProgram water/wake_cube {
+
+	program vertex reference water/simple_cube
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1, R2, R3, R4, eye, mix, spec, mask;
+
+		# get normal from normal map
+		TEX		R0, fragment.texcoord[0], $bumpMap, 2D;
+		$if !r_dxnNormalMaps
+		MOV		R0.x, R0.a;
+		$endif
+		MAD		R2, R0, 2, -1;
+		MUL		R2.xy, R2, $water_distortion.z;
+
+		$if r_normalizeNormalMaps
+		MOV		R2.z, 0;
+		DP3		R1.x, R2,R2;
+		ADD		R1.x, 1, -R1.x;
+		RSQ		R1.x, R1.x;
+		RCP		R2.z, R1.x;
+		$endif
+
+		TEX		mask, fragment.texcoord[0], $mask, 2D;
+
+		# put in world space
+		DP3		R1.x, R2, fragment.texcoord[3];
+		DP3		R1.y, R2, fragment.texcoord[4];
+		DP3		R1.z, R2, fragment.texcoord[5];
+
+		#MAD		result.color, R1, 0.5, 0.5;
+
+		# warped texcoords
+		MUL		R3, $water_distortion, $currentRenderTexelSize;
+		MAD		R3, R3, R1, fragment.position;
+
+		# normalize to eye
+		DP3		eye.w, fragment.texcoord[2], fragment.texcoord[2];
+		RSQ		eye.w, eye.w;
+		MUL		eye, fragment.texcoord[2], eye.w;
+
+		#MAD		result.color, eye, 0.5, 0.5;
+
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		DP3		R2, eye, R1;
+		MUL		R2, R2, 2;
+		MAD		R4, -R1, R2.x, eye;
+
+		#spec
+		DP3_SAT	R0, R4, $sunDirection;
+		TEX		spec, R0, $map, 2D;
+		MUL		spec, spec, $sunColor;
+		MUL		spec, spec, $water_glare;
+
+		# reflect refract mixing (sorta fresnel)
+		DP3		R1, -eye, R1;
+		ADD		R1, R1, 1;
+		POW		R1, R1.x, $water_fresnel.x;
+		RCP_SAT		mix, R1.x;
+
+		# lookup textures and interpolate
+		TEX		R1, R3, $currentRender, RECT;
+		MUL		R1, R1, $water_tint; #modulate with water color
+		TEX		R2, R4, $environmentCubeMap, CUBE;
+		SUB		R3, R2, R1;
+		MAD		R3, R3, mix, R1;
+		ADD		result.color, R3, spec;
+		
+		MUL		result.color.a, fragment.color.a, mask.r;		
+	%> }
+
+}
+
+renderBinding water_lerp	{ vector { 1 } }
+
+/*
+	A static surface with cubemap reflections, interpolates between two normal maps for the refraction/reflection vector
+*/
+renderProgram water/simple_cube_interpolate {
+
+	earlycullversion water/simple_cube_interpolate_early
+
+	program vertex reference water/simple_cube
+	
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1, R2, R3, R4, eye, mix, spec;
+
+		# get normals from normal maps
+		TEX		R0, fragment.texcoord[0], $bumpMap, 2D;
+		TEX		R1, fragment.texcoord[0], $bumpMap2, 2D;
+
+		# interpolate
+		LRP		R2, $water_lerp, R1, R0;
+		$if !r_dxnNormalMaps
+		MOV		R2.x, R2.a;
+		$endif
+		MAD		R2, R2, 2, -1;
+		MUL		R2.xy, R2, $water_distortion.z;
+		
+		MUL_SAT		R0.a, fragment.texcoord[2].w, 0.0001;
+		SUB		R1, 0, R2;
+		MAD		R2, R2, R0.a, R1;
+
+		$if r_normalizeNormalMaps
+		TEMP    NR1;
+		MOV		R2.z, 0;
+		DP3		NR1.x, R2,R2;
+		ADD		NR1.x, 1, -NR1.x;
+		RSQ		NR1.x, NR1.x;
+		RCP		R2.z, NR1.x;
+		$endif
+
+		
+		# put in world space
+		DP3		R1.x, R2, fragment.texcoord[3];
+		DP3		R1.y, R2, fragment.texcoord[4];
+		DP3		R1.z, R2, fragment.texcoord[5];
+		
+		# warped texcoords
+		$if ( r_shaderQuality < 2 )
+		MUL		R3, $water_distortion, $currentRenderTexelSize;
+		MUL		R3, R3, fragment.color.r;
+		MAD		R3, R3, R1, fragment.position;
+		$else
+		MOV		R3, fragment.position;
+		$endif
+
+		# normalize to eye
+		$if ( r_shaderQuality < 2 )
+		DP3		eye.w, fragment.texcoord[2], fragment.texcoord[2];
+		RSQ		eye.w, eye.w;
+		MUL		eye, fragment.texcoord[2], eye.w;
+		$else
+		MOV		eye, fragment.texcoord[2];
+		$endif
+
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		DP3		R2, eye, R1;
+		MUL		R2, R2, 2;
+		MAD		R4, -R1, R2.x, eye;
+		
+		#spec
+		$if ( r_shaderQuality < 1 )
+			DP3_SAT	R0, R4, $sunDirection;
+			TEX		spec, R0, $map, 2D;
+			MUL		spec, spec, $sunColor;
+			MUL		spec, spec, $water_glare;
+			MUL		spec, spec, fragment.color.r;
+		$endif
+
+		# reflect refract mixing (sorta fresnel)
+		$if ( r_shaderQuality < 2 )
+		DP3		R1, -eye, R1;
+		ADD		R1, R1, 1;
+		POW		R1, R1.x, $water_fresnel.x;
+		RCP_SAT		mix, R1.x;
+		MUL		mix, mix, fragment.color.r;
+		$else
+		MOV		mix, 0.125;
+		$endif
+
+		# lookup textures and interpolate
+		TEX		R1, R3, $currentRender, RECT;
+		MUL		R1, R1, $water_tint; #modulate with water color
+		TEX		R2, R4, $environmentCubeMap, CUBE;
+		SUB		R3, R2, R1;
+		MAD		R3, R3, mix, R1;
+		TEMP _finalcolor;
+		$if ( r_shaderQuality < 1 )
+			ADD		_finalcolor, R3, spec;
+		$else
+			MOV		_finalcolor, R3;	
+		$endif
+		
+		ADD		result.color.a, spec.r, spec.g;
+		
+		$if ( r_megaDrawMethod != 0 )
+		LRP result.color.rgb, fragment.color.secondary.x, $fogColor, _finalcolor;
+		$else
+		MOV result.color.rgb, _finalcolor;
+		$endif
+		#MAD result.color.rgb, R4, 0.5, 0.5;
+		#MUL		result.color.rgb, fragment.texcoord[2].w, 0.00005;
+	%> }
+}
+
+renderProgram water/simple_cube_interpolate_early {
+
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0, R1, R2, bitangent;
+
+		XPD		bitangent, $normalAttrib, $tangentAttrib;
+		MUL		bitangent, bitangent, $tangentAttrib.w;
+
+		# bumpmap texture coords
+		DP4		result.texcoord[0].x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4		result.texcoord[0].y, $texCoordAttrib, $diffuseMatrix_t;		
+
+		# vector to eye
+		SUB		R1, $positionAttrib, $viewOrigin;
+
+		$if ( r_shaderQuality > 1 )
+		DP3		R0.x, R1, $transposedModelMatrix_x;
+		DP3		R0.y, R1, $transposedModelMatrix_y;
+		DP3		R0.z, R1, $transposedModelMatrix_z;
+		DP3		R0.w, R0, R0;
+		RSQ		R0.w, R0.w;
+		MUL		result.texcoord[2].xyz, R0, R0.w;
+		$else
+		DP3		result.texcoord[2].x, R1, $transposedModelMatrix_x;
+		DP3		result.texcoord[2].y, R1, $transposedModelMatrix_y;
+		DP3		result.texcoord[2].z, R1, $transposedModelMatrix_z;
+		$endif
+
+#		DP3		result.texcoord[2].x, R1, $transposedModelMatrix_x;
+#		DP3		result.texcoord[2].y, R1, $transposedModelMatrix_y;
+#		DP3		result.texcoord[2].z, R1, $transposedModelMatrix_z;
+		
+		DP3		R1.w, R1, R1;
+		RSQ		R0.w, R1.w;
+		MUL		result.texcoord[2].w, R0.w, R1.w;
+
+		# tangent->world matrix
+		DP3		result.texcoord[3].x, $tangentAttrib, $transposedModelMatrix_x;
+		DP3		result.texcoord[3].y, bitangent, $transposedModelMatrix_x;
+		DP3		result.texcoord[3].z, $normalAttrib, $transposedModelMatrix_x;
+
+		DP3		result.texcoord[4].x, $tangentAttrib, $transposedModelMatrix_y;
+		DP3		result.texcoord[4].y, bitangent, $transposedModelMatrix_y;
+		DP3		result.texcoord[4].z, $normalAttrib, $transposedModelMatrix_y;
+
+		DP3		result.texcoord[5].x, $tangentAttrib, $transposedModelMatrix_z;
+		DP3		result.texcoord[5].y, bitangent, $transposedModelMatrix_z;
+		DP3		result.texcoord[5].z, $normalAttrib, $transposedModelMatrix_z;
+
+		MOV		result.color, $colorAttrib;	
+		
+		# this doesn't even change per vertex so don't bother to calculate it per pixel
+		# texture 1 takes the deform magnitude and scales it by the projection distance
+		PARAM	vec = { 1, 0, 0, 1 };
+
+		MOV		R0, vec;
+		DP4		R0.z, $positionAttrib, state.matrix.modelview.row[2];
+
+		DP4		R1, R0, state.matrix.projection.row[0];
+		DP4		R2, R0, state.matrix.projection.row[3];
+
+		# don't let the recip get near zero for polygons that cross the view plane
+		MAX		R2, R2, 1;
+
+		RCP		R2, R2.w;
+		MUL		R1, R1, R2;
+
+		# clamp the distance so the the deformations don't get too wacky near the view
+		MIN		R1, R1, 0.02;
+
+		MUL		R1, R1, $water_distortion;		
+		MUL		result.texcoord[1], R1, $currentRenderTexelSize;
+		
+		$if ( r_megaDrawMethod != 0 )
+		TEMP _F1, _F2;
+		SUB		_F2, $positionAttrib, $viewOrigin;
+		DP3		_F1.x, _F2, _F2;
+		RSQ		_F1.y, _F1.x;
+		MUL		_F1.x, _F1.y, _F1.x;
+		MAD		result.color.secondary, _F1.x, $fogDepths.z, $fogDepths.w; 
+		$endif
+		
+		SUB result.texcoord[6], $positionAttrib, $viewOrigin;
+	%> }
+	
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1, R2, R3, R4, eye, mix, spec;
+
+		MUL R0.x, $foliageHackDistance, $foliageHackDistance;
+		DP3 R1.x, fragment.texcoord[6], fragment.texcoord[6];
+		SUB R2.x, R1, R0;
+		KIL R2.x;
+
+		TEMP blend;
+		MUL_SAT blend, R2.x, 0.0001;
+
+		# get normals from normal maps
+		TEX		R0, fragment.texcoord[0], $bumpMap, 2D;
+		TEX		R1, fragment.texcoord[0], $bumpMap2, 2D;
+
+		# interpolate
+		LRP		R2, $water_lerp, R1, R0;
+		$if !r_dxnNormalMaps
+		MOV		R2.x, R2.a;
+		$endif
+		MAD		R2, R2, 2, -1;
+		MUL		R2.xy, R2, $water_distortion.z;
+		
+		MUL_SAT		R0.a, fragment.texcoord[2].w, 0.000001;
+		SUB		R1, 0, R2;
+		MAD		R2, R2, R0.a, R1;
+
+		$if r_normalizeNormalMaps
+		TEMP    NR1;
+		MOV		R2.z, 0;
+		DP3		NR1.x, R2,R2;
+		ADD		NR1.x, 1, -NR1.x;
+		RSQ		NR1.x, NR1.x;
+		RCP		R2.z, NR1.x;
+		$endif
+
+		
+		# put in world space
+		DP3		R1.x, R2, fragment.texcoord[3];
+		DP3		R1.y, R2, fragment.texcoord[4];
+		DP3		R1.z, R2, fragment.texcoord[5];
+		
+		# warped texcoords
+		#MUL		R4, fragment.texcoord[1].w, $water_distortion;
+		#MAD		R3, R1, R4, fragment.texcoord[1];
+		$if ( r_shaderQuality < 2 )
+		MUL		R3, $water_distortion, $currentRenderTexelSize;
+		MUL		R3, R3, fragment.color.r;
+		MAD		R3, R3, R1, fragment.position;
+		$else
+		MOV		R3, fragment.position;
+		$endif
+
+		# normalize to eye
+		$if ( r_shaderQuality < 2 )
+		DP3		eye.w, fragment.texcoord[2], fragment.texcoord[2];
+		RSQ		eye.w, eye.w;
+		MUL		eye, fragment.texcoord[2], eye.w;
+		$else
+		MOV		eye, fragment.texcoord[2];
+		$endif
+
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		DP3		R2, eye, R1;
+		MUL		R2, R2, 2;
+		MAD		R4, -R1, R2.x, eye;
+		
+		
+
+		#spec
+		$if ( r_shaderQuality < 1 )
+			DP3_SAT	R0, R4, $sunDirection;
+			TEX		spec, R0, $map, 2D;
+			MUL		spec, spec, $sunColor;
+			MUL		spec, spec, $water_glare;
+			MUL		spec, spec, fragment.color.r;
+		$endif
+
+		# reflect refract mixing (sorta fresnel)
+		$if ( r_shaderQuality < 2 )
+		DP3		R1, -eye, R1;
+		ADD		R1, R1, 1;
+		POW		R1, R1.x, $water_fresnel.x;
+		RCP_SAT		mix, R1.x;
+		MUL		mix, mix, fragment.color.r;
+		$else
+		MOV		mix, 0.125;
+		$endif
+		
+		MUL		mix, mix, blend.x;
+		MUL		spec, spec, blend.x;
+
+		# lookup textures and interpolate
+		TEX		R1, R3, $currentRender, RECT;
+		#MUL		R1, R1, $water_tint; #modulate with water color
+		TEX		R2, R4, $environmentCubeMap, CUBE;
+		SUB		R3, R2, R1;
+		MAD		R3, R3, mix, R1;
+		TEMP _finalcolor;
+		$if ( r_shaderQuality < 1 )
+			ADD		_finalcolor, R3, spec;
+		$else
+			MOV		_finalcolor, R3;	
+		$endif
+		
+		ADD		result.color.a, spec.r, spec.g;
+		
+		$if ( r_megaDrawMethod != 0 )
+		MUL R1.x, fragment.color.secondary.x, blend.x;
+		LRP result.color.rgb, R1.x, $fogColor, _finalcolor;
+		$else
+		MOV result.color.rgb, _finalcolor;
+		$endif
+		
+		#TEX		R1, fragment.position, $currentRender, RECT;
+		#MOV result.color, R1;
+	%> }
+}
+
+/*
+	A static surface with cubemap reflections, interpolates between two normal maps for the refraction/reflection vector
+*/
+renderProgram water/simple_cube_interpolate_imgseq {
+
+	program vertex reference water/simple_cube
+	
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1, R2, R3, R4, eye, mix, spec;
+
+		$if ( r_shaderQuality < 1 )
+			# get normals from normal maps
+			TEX		R0, fragment.texcoord[0], $imgSequenceCur, 2D;
+			TEX		R1, fragment.texcoord[0], $imgSequenceNext, 2D;
+
+			# interpolate
+			LRP		R2, $imgSequenceBlend, R1, R0;
+			$if !r_dxnNormalMaps
+			MOV		R2.x, R2.a;
+			$endif
+			MAD		R2, R2, 2, -1;
+		$else
+			TEX		R2, fragment.texcoord[0], $imgSequenceCur, 2D;
+			$if !r_dxnNormalMaps
+			MOV		R2.x, R2.a;
+			$endif
+			MAD		R2, R2, 2, -1;
+		$endif
+		MUL		R2.xy, R2, $water_distortion.z;
+		
+		MUL_SAT		R0.a, fragment.texcoord[2].w, 0.0001;
+		SUB		R1, 0, R2;
+		MAD		R2, R2, R0.a, R1;
+
+		$if r_normalizeNormalMaps
+		TEMP    NR1;
+		MOV		R2.z, 0;
+		DP3		NR1.x, R2,R2;
+		ADD		NR1.x, 1, -NR1.x;
+		RSQ		NR1.x, NR1.x;
+		RCP		R2.z, NR1.x;
+		$endif
+
+		
+		# put in world space
+		DP3		R1.x, R2, fragment.texcoord[3];
+		DP3		R1.y, R2, fragment.texcoord[4];
+		DP3		R1.z, R2, fragment.texcoord[5];
+		
+		# warped texcoords
+		#MUL		R4, fragment.texcoord[1].w, $water_distortion;
+		#MAD		R3, R1, R4, fragment.texcoord[1];
+		MUL		R3, $water_distortion, $currentRenderTexelSize;
+		MUL		R3, R3, fragment.color.r;
+		MAD		R3, R3, R1, fragment.position;
+
+		# normalize to eye
+		DP3		eye.w, fragment.texcoord[2], fragment.texcoord[2];
+		RSQ		eye.w, eye.w;
+		MUL		eye, fragment.texcoord[2], eye.w;
+
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		DP3		R2, eye, R1;
+		MUL		R2, R2, 2;
+		MAD		R4, -R1, R2.x, eye;
+		
+		$if ( r_shaderQuality < 1 )
+			DP3_SAT	R0, R4, $sunDirection;
+			TEX		spec, R0, $map, 2D;
+			MUL		spec, spec, $sunColor;
+			MUL		spec, spec, $water_glare;
+			MUL		spec, spec, fragment.color.r;
+		$endif
+
+		# reflect refract mixing (sorta fresnel)
+		DP3		R1, -eye, R1;
+		ADD		R1, R1, 1;
+		POW		R1, R1.x, $water_fresnel.x;
+		RCP_SAT		mix, R1.x;
+		MUL		mix, mix, fragment.color.r;
+
+		# lookup textures and interpolate
+		TEX		R1, R3, $currentRender, RECT;
+		MUL		R1, R1, $water_tint; #modulate with water color
+		TEX		R2, R4, $environmentCubeMap, CUBE;
+		SUB		R3, R2, R1;
+		MAD		R3, R3, mix, R1;
+		$if ( r_shaderQuality < 1 )
+			ADD		result.color, R3, spec;
+		$else
+			MOV		result.color, R3;	
+		$endif
+		
+		ADD		result.color.a, spec.r, spec.g;
+		
+		#MUL		result.color.rgb, fragment.texcoord[2].w, 0.00005;
+	%> }
+}
+
+
+//////////////////////////////////////////////////////////
+//// Shoreline stuff
+//////////////////////////////////////////////////////////
+
+renderProgram water/shoreline_froth {
+
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0, R1, R2, bitangent;
+
+		XPD		bitangent, $normalAttrib, $tangentAttrib;
+		MUL		bitangent, bitangent, $tangentAttrib.w;
+
+		# bumpmap texture coords
+		DP4		result.texcoord[0].x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4		result.texcoord[0].y, $texCoordAttrib, $diffuseMatrix_t;		
+
+		# vector to eye
+		SUB		R1, $positionAttrib, $viewOrigin;
+
+		DP3		result.texcoord[3].x, R1, $transposedModelMatrix_x;
+		DP3		result.texcoord[3].y, R1, $transposedModelMatrix_y;
+		DP3		result.texcoord[3].z, R1, $transposedModelMatrix_z;
+
+		# tangent->world matrix
+		DP3		result.texcoord[4].x, $tangentAttrib, $transposedModelMatrix_x;
+		DP3		result.texcoord[4].y, bitangent, $transposedModelMatrix_x;
+		DP3		result.texcoord[4].z, $normalAttrib, $transposedModelMatrix_x;
+
+		DP3		result.texcoord[5].x, $tangentAttrib, $transposedModelMatrix_y;
+		DP3		result.texcoord[5].y, bitangent, $transposedModelMatrix_y;
+		DP3		result.texcoord[5].z, $normalAttrib, $transposedModelMatrix_y;
+
+		DP3		result.texcoord[6].x, $tangentAttrib, $transposedModelMatrix_z;
+		DP3		result.texcoord[6].y, bitangent, $transposedModelMatrix_z;
+		DP3		result.texcoord[6].z, $normalAttrib, $transposedModelMatrix_z;
+
+		MAD		R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL 	result.color, $diffuseColor, R0;
+	%> }
+	
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1, R2, R3, R4, eye, mix, spec;
+
+		# get diffuse
+		TEX		R1, fragment.texcoord[0], $diffuseMap, 2D;
+
+		# get normal from normal map		
+		TEX		R0, fragment.texcoord[0], $bumpMap, 2D;
+		$if !r_dxnNormalMaps
+		MOV		R0.x, R0.a;
+		$endif
+		MAD		R2, R0, 2, -1;	
+
+		$if r_normalizeNormalMaps
+		TEMP    NR1;
+		MOV		R2.z, 0;
+		DP3		NR1.x, R2,R2;
+		ADD		NR1.x, 1, -NR1.x;
+		RSQ		NR1.x, NR1.x;
+		RCP		R2.z, NR1.x;
+		$endif
+
+		
+		# put in world space
+		DP3		R0.x, R2, fragment.texcoord[4];
+		DP3		R0.y, R2, fragment.texcoord[5];
+		DP3		R0.z, R2, fragment.texcoord[6];
+				
+		# normalize to eye
+		DP3		eye.w, fragment.texcoord[3], fragment.texcoord[3];
+		RSQ		eye.w, eye.w;
+		MUL		eye, fragment.texcoord[3], eye.w;
+
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		DP3		R2, eye, R0;
+		MUL		R2, R2, 2;
+		MAD		R4, -R0, R2.x, eye;		
+		
+		# specular
+		DP3_SAT	R0, R4, $sunDirection;
+		TEX		spec, R0, $map, 2D;
+		MUL		spec, spec, $sunColor;
+		MUL		spec, spec, $water_glare;
+		MUL		spec, spec, fragment.color.r;
+		MOV		spec.a, 0;
+		
+		ADD		result.color, spec, R1;
+		MUL		result.color.a, R1, fragment.color.a;
+		#MOV		result.color, fragment.color.a;
+		
+		#MAD	result.color, R4, 0.5, 0.5;
+	%> }
+}
+
+renderProgram water/shoreline_wetshine {
+
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0, R1, R2, bitangent;
+
+		XPD		bitangent, $normalAttrib, $tangentAttrib;
+		MUL		bitangent, bitangent, $tangentAttrib.w;
+
+		# bumpmap texture coords
+		DP4		result.texcoord[0].x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4		result.texcoord[0].y, $texCoordAttrib, $diffuseMatrix_t;		
+
+		# sand texture coords
+		DP4		result.texcoord[1].x, $texCoordAttrib, $bumpMatrix_s;
+		DP4		result.texcoord[1].y, $texCoordAttrib, $bumpMatrix_t;		
+		
+		# vector to eye
+		SUB		R1, $positionAttrib, $viewOrigin;
+
+		DP3		result.texcoord[3].x, R1, $transposedModelMatrix_x;
+		DP3		result.texcoord[3].y, R1, $transposedModelMatrix_y;
+		DP3		result.texcoord[3].z, R1, $transposedModelMatrix_z;
+
+		# tangent->world matrix
+		DP3		result.texcoord[4].x, $tangentAttrib, $transposedModelMatrix_x;
+		DP3		result.texcoord[4].y, bitangent, $transposedModelMatrix_x;
+		DP3		result.texcoord[4].z, $normalAttrib, $transposedModelMatrix_x;
+
+		DP3		result.texcoord[5].x, $tangentAttrib, $transposedModelMatrix_y;
+		DP3		result.texcoord[5].y, bitangent, $transposedModelMatrix_y;
+		DP3		result.texcoord[5].z, $normalAttrib, $transposedModelMatrix_y;
+
+		DP3		result.texcoord[6].x, $tangentAttrib, $transposedModelMatrix_z;
+		DP3		result.texcoord[6].y, bitangent, $transposedModelMatrix_z;
+		DP3		result.texcoord[6].z, $normalAttrib, $transposedModelMatrix_z;
+
+		MAD		R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL 	result.color, $diffuseColor, R0;
+	%> }
+	
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1, R2, R3, R4, eye, mix, spec;
+
+		# get diffuse-mask
+		TEX		R1, fragment.texcoord[0], $diffuseMap, 2D;
+
+		# get normal from normal map		
+		TEX		R0, fragment.texcoord[1], $bumpMap, 2D;
+		$if !r_dxnNormalMaps
+		MOV		R0.x, R0.a;
+		$endif
+		MAD		R2, R0, 2, -1;	
+
+		$if r_normalizeNormalMaps
+		TEMP    NR1;
+		MOV		R2.z, 0;
+		DP3		NR1.x, R2,R2;
+		ADD		NR1.x, 1, -NR1.x;
+		RSQ		NR1.x, NR1.x;
+		RCP		R2.z, NR1.x;
+		$endif
+
+		
+		# put in world space
+		DP3		R0.x, R2, fragment.texcoord[4];
+		DP3		R0.y, R2, fragment.texcoord[5];
+		DP3		R0.z, R2, fragment.texcoord[6];
+				
+		# normalize to eye
+		DP3		eye.w, fragment.texcoord[3], fragment.texcoord[3];
+		RSQ		eye.w, eye.w;
+		MUL		eye, fragment.texcoord[3], eye.w;
+
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		DP3		R2, eye, R0;
+		MUL		R2, R2, 2;
+		MAD		R4, -R0, R2.x, eye;		
+		
+		# specular
+		DP3_SAT	R0, R4, $sunDirection;
+		TEX		spec, R0, $map, 2D;
+		MUL		spec, spec, $sunColor;
+		MUL		spec, spec, $water_glare;
+		MUL		spec, spec, R1.x;
+		MUL		result.color, spec, fragment.color.r;
+	%> }
+}
+
+renderProgram water/runningwater {
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0, R1;
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+
+		TEMP bitangent;
+
+		XPD		bitangent, $normalAttrib, $tangentAttrib;
+		MUL		bitangent, bitangent, $tangentAttrib.w;
+
+		# vector to eye
+		SUB		R1, $positionAttrib, $viewOrigin;
+
+		DP3		result.texcoord[3].x, R1, $transposedModelMatrix_x;
+		DP3		result.texcoord[3].y, R1, $transposedModelMatrix_y;
+		DP3		result.texcoord[3].z, R1, $transposedModelMatrix_z;
+
+		# tangent->world matrix
+		DP3		result.texcoord[4].x, $tangentAttrib, $transposedModelMatrix_x;
+		DP3		result.texcoord[4].y, bitangent, $transposedModelMatrix_x;
+		DP3		result.texcoord[4].z, $normalAttrib, $transposedModelMatrix_x;
+
+		DP3		result.texcoord[5].x, $tangentAttrib, $transposedModelMatrix_y;
+		DP3		result.texcoord[5].y, bitangent, $transposedModelMatrix_y;
+		DP3		result.texcoord[5].z, $normalAttrib, $transposedModelMatrix_y;
+
+		DP3		result.texcoord[6].x, $tangentAttrib, $transposedModelMatrix_z;
+		DP3		result.texcoord[6].y, bitangent, $transposedModelMatrix_z;
+		DP3		result.texcoord[6].z, $normalAttrib, $transposedModelMatrix_z;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment arb { <%
+		# get diffuse-mask
+		TEMP diffuse, test, R0, R2;
+		TEX	diffuse, fragment.texcoord[0], $diffuseMap, 2D;
+		SUB test, diffuse.w, 0.001;
+		KIL test.w;
+
+		TEX		R0, fragment.texcoord[0], $bumpMap, 2D;
+		MOV		R0.x, R0.a;
+		MAD		R2, R0, 2, -1;	
+
+		$if r_normalizeNormalMaps
+		TEMP    NR1;
+		MOV		R2.z, 0;
+		DP3		NR1.x, R2,R2;
+		ADD		NR1.x, 1, -NR1.x;
+		RSQ		NR1.x, NR1.x;
+		RCP		R2.z, NR1.x;
+		$endif
+		
+		MAD R0, R2, $water_distortion, fragment.position;
+		TEMP scr;
+		TEX scr, R0, $currentRender, RECT;
+
+		# put in world space
+		TEMP worldNormal;
+		DP3		worldNormal.x, R2, fragment.texcoord[4];
+		DP3		worldNormal.y, R2, fragment.texcoord[5];
+		DP3		worldNormal.z, R2, fragment.texcoord[6];
+
+		# normalize to eye
+		TEMP eye;
+		DP3		eye.w, fragment.texcoord[3], fragment.texcoord[3];
+		RSQ		eye.w, eye.w;
+		MUL		eye, fragment.texcoord[3], eye.w;
+		
+		TEMP reflection;
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		DP3		R2, eye, worldNormal;
+		MUL		R2, R2, 2;
+		MAD		reflection, -worldNormal, R2.x, eye;
+
+		TEMP specdp;
+		DP3_SAT specdp, reflection, $sunDirectionWorld;
+		MUL specdp, specdp, specdp;
+		MUL specdp, specdp, specdp;
+		MUL specdp, specdp, diffuse.a;
+		MUL specdp, specdp, $water_glare;
+
+		TEMP combined;		
+		MAD combined, diffuse, fragment.color, scr;
+		ADD result.color, combined, specdp;
+		
+	%> }
+}
+
+renderProgram water/runningwaterEnv {
+
+	program vertex reference water/runningwater
+
+	program fragment arb { <%
+		# get diffuse-mask
+		TEMP diffuse, test, R0, R1, R2, mix;
+		TEX	diffuse, fragment.texcoord[0], $diffuseMap, 2D;
+		SUB test, diffuse.w, 0.000001;
+		KIL test.w;
+
+		TEX		R0, fragment.texcoord[0], $bumpMap, 2D;
+		MOV		R0.x, R0.a;
+		MAD		R2, R0, 2, -1;	
+
+		$if r_normalizeNormalMaps
+		TEMP    NR1;
+		MOV		R2.z, 0;
+		DP3		NR1.x, R2,R2;
+		ADD		NR1.x, 1, -NR1.x;
+		RSQ		NR1.x, NR1.x;
+		RCP		R2.z, NR1.x;
+		$endif
+		
+		MAD R0, R2, $water_distortion, fragment.position;
+		TEMP scr;
+		TEX scr, R0, $currentRender, RECT;
+
+		# put in world space
+		TEMP worldNormal;
+		DP3		worldNormal.x, R2, fragment.texcoord[4];
+		DP3		worldNormal.y, R2, fragment.texcoord[5];
+		DP3		worldNormal.z, R2, fragment.texcoord[6];
+
+		# normalize to eye
+		TEMP eye;
+		DP3		eye.w, fragment.texcoord[3], fragment.texcoord[3];
+		RSQ		eye.w, eye.w;
+		MUL		eye, fragment.texcoord[3], eye.w;
+		
+		TEMP reflection;
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		DP3		R2, eye, worldNormal;
+		MUL		R2, R2, 2;
+		MAD		reflection, -worldNormal, R2.x, eye;
+
+		# reflect refract mixing (sorta fresnel)
+		DP3		R1, -eye, worldNormal;
+		ADD		R1, R1, 1;
+		POW		R1, R1.x, $water_fresnel.x;
+		RCP_SAT		mix, R1.x;
+		
+		TEMP specdp;
+		DP3_SAT specdp, reflection, $sunDirectionWorld;
+		MUL specdp, specdp, specdp;
+		MUL specdp, specdp, specdp;
+		MUL specdp, specdp, diffuse.a;
+		MUL specdp, specdp, $water_glare;
+
+		TEMP env;
+		TEX		env, reflection, $environmentCubeMap, CUBE;
+		
+		TEMP combined;		
+		MUL combined, diffuse, fragment.color;
+#		MUL combined, combined, R0;
+#		MAD combined, v2n, env, combined;
+		
+		ADD combined, combined, scr;
+		ADD result.color, combined, specdp;
+		
+		TEMP invmix;
+		SUB invmix, 1, mix;
+		MUL combined, combined, invmix;
+		MAD result.color, env, mix, combined;
+		MOV result.color.a, diffuse;
+		
+	%> }
+}
+

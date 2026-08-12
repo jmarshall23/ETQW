@@ -1,0 +1,43 @@
+// Strogg Nexus
+
+// Map Area 22
+
+sound sounds/vo/strogg/nexus/maps/area22/slipgate/destroy/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/area22/20101.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/area22/slipgate/destroy {
+
+	localization/english/sounds/vo/strogg/nexus/maps/area22/20103.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/area22/slipgate/planted {
+
+	localization/english/sounds/vo/strogg/nexus/maps/area22/20104.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/area22/slipgate/defendexpl {
+
+	localization/english/sounds/vo/strogg/nexus/maps/area22/20105.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/area22/slipgate/planted/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/area22/20106.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/area22/slipgate/disarmed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/area22/20107.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/area22/stroggwin {
+
+	localization/english/sounds/vo/strogg/nexus/maps/area22/20109.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/area22/strogglose {
+
+	localization/english/sounds/vo/strogg/nexus/maps/area22/20108.wav
+}

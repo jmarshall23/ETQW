@@ -1,0 +1,32 @@
+//
+// edf_husky cockpit
+//
+
+export frankie {
+	options -prefix FBV_ -sourcedir models/vehicles/edf_husky/dev_sd -destdir models/vehicles/edf_husky/ -keep origin
+
+	mesh cockpit.mb 	-dest cockpit.md5mesh
+	anim cockpit.mb 	-dest center.md5anim -range 0 0
+	anim cockpit.mb 	-dest turning_right.md5anim -range 0 14
+	anim cockpit.mb 	-dest turning_left.md5anim -range 28 44
+	anim cockpit.mb 	-dest brake.md5anim -range 61 61
+}
+
+model vehicle_husky_cockpit {
+	mesh								models/vehicles/edf_husky/cockpit.md5mesh
+
+	anim center							models/vehicles/edf_husky/center.md5anim {
+	}
+
+	anim turning_left					models/vehicles/edf_husky/turning_left.md5anim {
+	}
+
+	anim turning_right					models/vehicles/edf_husky/turning_right.md5anim {
+	}
+
+	anim brake							models/vehicles/edf_husky/brake.md5anim {
+	}
+
+	channel legs						( *origin -*right_pinky1 -*right_ring1 -*right_middle1 -*right_index1 -*right_thumb1 -*left_pinky1 -*left_ring1 -*left_middle1 -*left_index1 -*left_thumb1 -left_brake -right_brake )
+	channel torso						( *right_pinky1 *right_ring1 *right_middle1 *right_index1 *right_thumb1 *left_pinky1 *left_ring1 *left_middle1 *left_index1 *left_thumb1 left_brake right_brake )
+}

@@ -1,0 +1,27 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/ghost_town/navbrain_building {
+	width	512
+	height	512
+	/* areaDefs */
+
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 256 ) ( 512 512 )
+	}
+	rect {
+		surfaceType	stone
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 512 128 )
+	}
+	rect {
+		surfaceType	stone
+		surfaceColor	( 1 1 1 )
+		coords ( 0 128 ) ( 512 256 )
+	}
+}

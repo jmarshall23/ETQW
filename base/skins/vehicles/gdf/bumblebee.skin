@@ -1,0 +1,9 @@
+
+skin skins/vehicles/gdf/bumblebee/temperate {
+	dummy/metal/shader1		models/vehicles/gdf_bumblebee/bumblebee
+}
+
+skin skins/vehicles/gdf/bumblebee/arctic {
+	dummy/metal/shader1		models/vehicles/gdf_bumblebee/bumblebee_arctic
+
+}

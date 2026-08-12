@@ -1,0 +1,111 @@
+
+/*************************************************************
+
+	Materials
+		Artists: Make new ones using the materials
+
+*************************************************************/
+
+material atmospheres/skydomes/default {
+
+	noShadows
+	noSelfShadow
+	sort decal
+
+	//Background color of the sky
+	{
+		program skies/skycolor
+	}
+
+	translucent
+	sort opaque
+
+
+}
+
+material atmospheres/skydomes/highalt_tiled {
+	useTemplate material/highalt_tiled_template< "atmosphere/clouds/cumulus02_mask.tga", "atmosphere/clouds/cumulus02_mask.tga" >
+}
+
+material atmospheres/skydomes/mediumalt_tiled {
+	useTemplate material/mediumalt_tiled_template< "makealpha( atmosphere/clouds/cumulus02_mask.tga )",
+						"makealpha( atmosphere/clouds/cumulus02_mask.tga )" >
+}
+
+material atmospheres/skydomes/bumpmapped {
+	useTemplate material/medium_bump_template< "atmosphere/clouds/cumulus02_mask.tga", "atmosphere/clouds/cloud01c_local.tga" >
+}
+
+material atmospheres/skydomes/highalt_cube {
+	/*useTemplate  material/highalt_cube_template< "halfSphereMap atmosphere/cloudhigh.tga" >*/
+	useTemplate  material/highalt_cube_template< "cubeMap atmosphere/cloudhigh_cube" >
+}
+
+material atmospheres/skydomes/mediumalt_cube {
+	/*useTemplate material/medium_cube_template< "halfSphereMap makealpha( atmosphere/cloudhigh.tga )" >*/
+	useTemplate material/medium_cube_template< "picmip -1 cubeMap atmosphere/cloudhigh_alpha_cube" >
+}
+
+material atmospheres/skydomes/star {
+	sort 1.5
+	useTemplate  material/highalt_cube_template< "_starCubeMap" >
+}
+
+
+material atmospheres/skydomes/cloudring_cube_01 {
+	/*useTemplate material/medium_cube_template< "halfSphereMap atmosphere/clouds/cloudring01.tga" >*/
+	useTemplate material/medium_cube_template< "picmip -1 cubeMap atmosphere/clouds/cloudring01_cube" >
+}
+
+
+material atmospheres/skydomes/cloudring_cube_02 {
+	/*useTemplate material/medium_cube_template< "halfSphereMap atmosphere/clouds/cloudring02.tga" >*/
+	useTemplate material/medium_cube_template< "cubeMap atmosphere/clouds/cloudring02_cube" >
+}
+
+material atmospheres/skydomes/cloudring_distant_cube_01 {
+	/*useTemplate material/medium_cube_template< "halfSphereMap atmosphere/clouds/cloudring_distant01.tga" >*/
+	useTemplate material/medium_cube_template< "cubeMap atmosphere/clouds/cloudring_distant01_cube" >
+}
+
+material atmospheres/skydomes/daysky03 {
+	/*useTemplate material/medium_cube_template< "halfSphereMap atmosphere/skies/day_sky03_v2.tga" >*/
+	useTemplate material/medium_cube_template< "cubemap atmosphere/skies/day_sky03_v2_cube" >
+}
+
+material atmospheres/skydomes/sundisc
+{
+	description "Bright top layer rendered before the clouds"
+	parmName 0 "Tint" color 1 1 1
+	parmName 3 "Glow" float 1
+	sort 2 // after sky background but before cloudlayers
+	noAtmosphere	// Don't fog it out :D
+	{
+		blend add
+
+		// Brightness in red green blue and the glareyness
+		color parm0, parm1, parm2, parm3
+		map clamp atmosphere/sundisk.tga
+	}
+}
+
+material atmospheres/skydomes/tiledclouds
+{
+	useTemplate material/tiled_ring_template< "atmosphere/clouds/cloudring_distant_tile_01.tga" >
+}
+
+material atmospheres/skydomes/cloudy_dark_01 {
+	/*useTemplate material/medium_cube_template< "halfSphereMap atmosphere/clouds/cloudy_dark.tga" >*/
+	useTemplate material/medium_cube_template< "cubemap atmosphere/clouds/cloudy_dark_cube" >
+}
+
+material atmospheres/skydomes/lightning {
+	{
+		blend add
+		program skies/cloud_tiled
+		map textures/penta/lightning_test.tga
+		translate time * parm4, 0
+		rgb lightningOnTable[ time * 10 ] * global0
+		//scale 2, 1
+	}
+}

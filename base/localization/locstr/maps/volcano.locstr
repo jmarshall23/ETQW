@@ -1,0 +1,266 @@
+locString maps/volcano/transformer_destroyed {
+	text "#str_00100500"
+	arguments 1
+}
+
+locString maps/volcano/core_destroyed {
+	text "#str_00100501"
+	arguments 1
+}
+
+locString maps/volcano/seawall_breach {
+	text "#str_00100502"
+}
+
+locString maps/volcano/forward_bunker_door {
+	text "#str_00100503"
+}
+
+locString maps/volcano/east_bunker_breach {
+	text "#str_00100504"
+}
+
+locString maps/volcano/thermotransformer {
+	text "#str_00100505"
+}
+
+locString maps/volcano/core {
+	text "#str_00100506"
+}
+
+locString maps/volcano/strogg_beach_spawn {
+	text "#str_00100507"
+}
+
+locString maps/volcano/strogg_facility_spawn {
+	text "#str_00100508"
+}
+
+// objectives to do
+
+locString maps/volcano/obj01_strogg {
+	text "#str_00100509"
+}
+
+
+locString maps/volcano/obj01_gdf {
+	text "#str_00100510"
+}
+
+locString maps/volcano/obj01_strogg_short {
+	text "#str_00100511"
+}
+
+locString maps/volcano/obj01_gdf_short {
+	text "#str_00100512"
+}
+
+locString maps/volcano/obj02_strogg {
+	text "#str_00100513"
+}
+
+locString maps/volcano/obj02_gdf {
+	text "#str_00100514"
+}
+
+locString maps/volcano/obj02_strogg_short {
+	text "#str_00100515"
+}
+
+locString maps/volcano/obj02_gdf_short {
+	text "#str_00100516"
+}
+
+locString maps/volcano/obj03_strogg {
+	text "#str_00100537"
+}
+
+locString maps/volcano/obj03_gdf {
+	text "#str_00100538"
+}
+
+locString maps/volcano/obj03_strogg_short {
+	text "#str_00100539"
+}
+
+locString maps/volcano/obj03_gdf_short {
+	text "#str_00100540"
+}
+
+locString maps/volcano/destroyed_transformer {
+	text "#str_00100517"
+	arguments 1
+}
+
+locString maps/volcano/cc_hangar_doors {
+	text "#str_00100518"
+}
+
+locString maps/volcano/damaged_core_to80 {
+	text "#str_00100519"
+	arguments 1
+}
+
+locString maps/volcano/damaged_core_to60 {
+	text "#str_00100520"
+	arguments 1
+}
+
+locString maps/volcano/damaged_core_to40 {
+	text "#str_00100521"
+	arguments 1
+}
+
+locString maps/volcano/damaged_core_to20 {
+	text "#str_00100522"
+	arguments 1
+}
+
+locString maps/volcano/destroyed_core {
+	text "#str_00100523"
+	arguments 1
+}
+
+locString maps/volcano/transformer_progress {
+	text "#str_00100524"
+	arguments 1
+}
+
+locString maps/volcano/transformer_disarm {
+	text "#str_00100525"
+	arguments 1
+}
+
+locString maps/volcano/transformer_destroy {
+	text "#str_00100526"
+	arguments 1
+}
+
+locString maps/volcano/bunker_progress {	
+	text "#str_00100527"
+	arguments 1
+}
+
+locString maps/volcano/bunker_disarm {
+	text "#str_00100528"
+	arguments 1
+}
+
+locString maps/volcano/bunker_destroy {
+	text "#str_00100529"
+	arguments 1
+}
+
+locString maps/volcano/wall_progress {
+	text "#str_00100530"
+	arguments 1
+}
+
+locString maps/volcano/wall_disarm {
+	text "#str_00100531"
+	arguments 1
+}
+
+locString maps/volcano/wall_destroy {
+	text "#str_00100532"
+	arguments 1
+}
+
+locString maps/volcano/bunkerdoor_progress {	
+	text "#str_00100533"
+	arguments 1
+}
+
+locString maps/volcano/bunkerdoor_disarm {
+	text "#str_00100534"
+	arguments 1
+}
+
+locString maps/volcano/bunkerdoor_destroy {
+	text "#str_00100535"
+	arguments 1
+}
+
+locString maps/volcano/controls_hacked {
+	text "#str_00100536"
+	arguments 1
+}
+
+locString maps/volcano/security_controls {
+	text "#str_00100541"
+
+}
+
+locString maps/volcano/bunker_building_spawn {
+	text "#str_00100550"
+
+}
+
+//
+// Mapinfo
+//
+
+locString maps/volcano/campaign {
+	text "#str_00100547"
+}
+
+locString maps/volcano/location {
+	text "#str_00100548"
+}
+
+locString maps/volcano/briefing {
+	text "#str_00100549"
+}
+
+
+// secondary objectives
+
+locString maps/volcano/obj_construct_gun_front {
+	text "#str_00100551"
+	arguments 1
+}
+
+locString maps/volcano/obj_construct_gun_center {
+	text "#str_00100552"
+	arguments 1
+}
+
+locString maps/volcano/obj_construct_gun_west {
+	text "#str_00100553"
+	arguments 1
+}
+
+locString maps/volcano/obj_construct_gun_inside {
+	text "#str_00100554"
+	arguments 1
+}
+
+locString maps/volcano/obj_construct_gun_forward {
+	text "#str_00100555"
+	arguments 1
+}
+
+locString maps/volcano/obj_construct_gun_front_complete {
+	text "#str_00100556"
+	arguments 1
+}
+
+locString maps/volcano/obj_construct_gun_center_complete {
+	text "#str_00100557"
+	arguments 1
+}
+
+locString maps/volcano/obj_construct_gun_west_complete {
+	text "#str_00100558"
+	arguments 1
+}
+
+locString maps/volcano/obj_construct_gun_inside_complete {
+	text "#str_00100559"
+	arguments 1
+}
+
+locString maps/volcano/obj_construct_gun_forward_complete {
+	text "#str_00100560"
+	arguments 1
+}

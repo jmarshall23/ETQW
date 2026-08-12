@@ -1,0 +1,221 @@
+
+#include <materials/guis/hud/gdf.include>
+
+// OBJECTIVE STATUS
+// -----------------------------------------------------------------------
+material guis/assets/hud/gdf/objective_box_base
+{
+	sort gui
+	{
+		blend blend
+		map nopicmip clamp nopicmip linear makealpha( guis/assets/hud/gdf/objective_box_base.tga )
+		vertexColor
+	}
+}
+
+material guis/assets/hud/gdf/objective_box_frame
+{
+	sort gui
+	{
+		blend blend
+		map nopicmip clamp nopicmip linear makealpha( guis/assets/hud/gdf/objective_box_frame.tga )
+		vertexColor
+	}
+}
+
+material guis/assets/hud/gdf/sheet
+{
+	sort gui
+	{
+		blend blend
+		map nopicmip linear makeAlpha( guis/assets/hud/gdf/sheet.tga )
+		vertexColor
+	}
+}
+
+material guis/assets/hud/gdf/sheet_flash
+{
+	sort gui
+	{
+		blend blend
+		map nopicmip linear makealpha( guis/assets/hud/gdf/sheet.tga )
+		vertexColor
+		colored
+		alpha parm3 * ( sintable[ time * 2 ] * 0.4 ) + 0.6
+	}
+}
+
+material guis/assets/hud/gdf/sheet_darken
+{
+	sort gui
+/*
+	{
+		program filterAlpha
+		blend blend
+		map nopicmip linear makeAlpha( guis/assets/hud/gdf/sheet.tga )
+		vertexColor
+	}*/
+
+	{
+		blend blend
+		map nopicmip linear makeAlpha( guis/assets/hud/gdf/sheet.tga )
+		vertexColor
+	}
+/*
+	{
+		blendfunc max
+		map nopicmip linear guis/assets/hud/gdf/sheet.tga
+		vertexColor
+	}
+*/
+}
+
+material guis/assets/hud/gdf/hitring_large
+{
+	sort gui
+	{
+		blend blend
+		map clamp linear nopicmip makealpha( guis/assets/hud/gdf/hitring_large.tga )
+		vertexColor
+	}
+}
+
+material guis/assets/hud/gdf/hitring_medium
+{
+	sort gui
+	{
+		blend blend
+		map clamp linear nopicmip makealpha( guis/assets/hud/gdf/hitring_medium.tga )
+		vertexColor
+	}
+}
+
+material guis/assets/hud/gdf/hitring_small
+{
+	sort gui
+	{
+		blend blend
+		map clamp linear nopicmip makealpha( guis/assets/hud/gdf/hitring_small.tga )
+		vertexColor
+	}
+}
+
+material guis/assets/hud/gdf/weapontypes
+{
+	sort gui
+	{
+		blend blend
+		map clamp linear nopicmip makealpha( guis/assets/hud/gdf/weapontypes.tga )
+		vertexColor
+	}
+}
+
+material guis/assets/hud/gdf/deployable_status
+{
+	sort gui
+	{
+		blend blend
+		map clamp linear nopicmip makealpha( guis/assets/hud/gdf/deployable_status.tga )
+		vertexColor
+	}
+}
+
+material guis/assets/hud/gdf/crosshair/sweep_border
+{
+	sort gui
+	{
+		blend blend
+		map clamp linear nopicmip makealpha( guis/assets/hud/gdf/crosshair/sweep_border.tga )
+		vertexColor
+	}
+}
+
+material guis/assets/hud/gdf/crosshair/sweep_fill
+{
+	sort gui
+	{
+		blend blend
+		map clamp linear nopicmip makealpha( guis/assets/hud/gdf/crosshair/sweep_fill.tga )
+		vertexColor
+	}
+}
+
+material guis/assets/hud/gdf/crosshair/sweep_segmented_fill
+{
+	sort gui
+	{
+		blend blend
+		map clamp linear nopicmip makealpha( guis/assets/hud/gdf/crosshair/sweep_segmented_fill.tga )
+		vertexColor
+	}
+}
+
+material guis/assets/hud/gdf/vehicles/anansi
+{		
+	_vehicle_icon( "guis/assets/icons/vehicles/gdf_top_anansi" )
+}
+
+material guis/assets/hud/gdf/vehicles/badger
+{		
+	_vehicle_icon( "guis/assets/icons/vehicles/gdf_top_badger" )
+}
+
+material guis/assets/hud/gdf/vehicles/bumblebee
+{		
+	_vehicle_icon( "guis/assets/icons/vehicles/gdf_top_bumblebee" )
+}
+
+material guis/assets/hud/gdf/vehicles/husky
+{		
+	_vehicle_icon( "guis/assets/icons/vehicles/gdf_top_husky" )
+}
+
+material guis/assets/hud/gdf/vehicles/mcp
+{
+	_vehicle_icon( "guis/assets/icons/vehicles/gdf_top_mcp" )
+}
+
+material guis/assets/hud/gdf/vehicles/platypus
+{
+	_vehicle_icon( "guis/assets/icons/vehicles/gdf_top_platypus" )
+}
+
+material guis/assets/hud/gdf/vehicles/trojan
+{
+	_vehicle_icon( "guis/assets/icons/vehicles/gdf_top_trojan" )
+}
+
+material guis/assets/hud/gdf/vehicles/titan
+{		
+	_vehicle_icon( "guis/assets/icons/vehicles/gdf_top_titan" )
+}
+
+material guis/assets/hud/gdf/vehicles/avt
+{		
+	_vehicle_icon( "guis/assets/icons/vehicles/gdf_top_avt" )
+}
+
+material guis/assets/hud/gdf/vehicles/apt
+{		
+	_vehicle_icon( "guis/assets/icons/vehicles/gdf_top_apt" )
+}
+
+material guis/assets/hud/gdf/compassbg_fill
+{
+	sort gui
+	{
+		blend blend
+		map clamp linear nopicmip makealpha( guis/assets/hud/gdf/compassbg_fill.tga )
+		vertexColor
+	}
+}
+
+material guis/assets/hud/gdf/compassbg_line
+{
+	sort gui
+	{
+		blend blend
+		map clamp linear nopicmip makealpha( guis/assets/hud/gdf/compassbg_line.tga )
+		vertexColor
+	}
+}

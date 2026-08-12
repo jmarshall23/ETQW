@@ -1,0 +1,336 @@
+material texturesheets/outskirts/residential_wall1
+{
+	surfacetype "concrete"
+	{
+		diffusemap	picmip -1	texturesheets/outskirts/residential_wall1_d.tga
+		specularmap	picmip -2	texturesheets/outskirts/residential_wall1_wet_s.tga
+		bumpmap 	picmip -1	texturesheets/outskirts/residential_wall1_local.tga
+		vertexcolor
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	2.5,20,0,0
+	}
+}
+
+material texturesheets/outskirts/bridge
+{
+	surfacetype "concrete"
+	{
+		diffusemap	picmip -1	texturesheets/outskirts/bridge_d.tga
+		specularmap	picmip -2 	texturesheets/outskirts/bridge_s.tga
+		bumpmap 	picmip -1	texturesheets/outskirts/bridge_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	3,12,0,0
+	}
+}
+
+// Windows
+material texturesheets/outskirts/windows1
+{
+	surfacetype "glass"
+	noshadows
+	{
+		diffusemap	texturesheets/outskirts/windows1_d.tga
+		bumpmap		texturesheets/outskirts/windows1_local.tga
+		vertexcolor
+	}
+	{
+		blend blend
+		program sfx/windowglass 
+		diffusemap	texturesheets/outskirts/windows1_d.tga
+		bumpmap		texturesheets/outskirts/windows1_local.tga
+		parameters 2, 1.7, 0.6
+	}
+}
+
+material texturesheets/outskirts/floor_tiles
+{
+	surfacetype "concrete"
+	{
+		diffusemap	picmip -1	texturesheets/outskirts/floor_tiles_d.tga
+		specularmap	picmip -2	texturesheets/outskirts/floor_tiles_s.tga
+		bumpmap 	picmip -1	texturesheets/outskirts/floor_tiles_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	2,2,0,0
+	}
+}
+
+material texturesheets/outskirts/wall_panel
+{
+	surfacetype "metal"
+	{
+		diffusemap	picmip -1	texturesheets/outskirts/wall_panel_d.tga
+		specularmap	picmip -2	texturesheets/outskirts/wall_panel_s.tga
+		bumpmap 	picmip -1	texturesheets/outskirts/wall_panel_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,2,0,0
+	}
+}
+
+material texturesheets/outskirts/metal_door
+{
+	surfacetype "metal"
+	{
+		diffusemap	picmip -1	texturesheets/outskirts/metal_door_d.tga
+		specularmap	picmip -2	texturesheets/outskirts/metal_door_s.tga
+		bumpmap 	picmip -1	texturesheets/outskirts/metal_door_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	2.5,5,0,0
+	}
+}
+
+material texturesheets/outskirts/sidewalk
+{
+	noshadows
+	surfacetype "pavement"
+	{
+		diffusemap	picmip -1	texturesheets/outskirts/sidewalk_d.tga
+		specularmap	picmip -2	texturesheets/outskirts/sidewalk_s.tga
+		bumpmap 	picmip -1	texturesheets/outskirts/sidewalk_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	6,6,0,0
+	}
+}
+
+material texturesheets/outskirts/navbrain_building
+{
+	surfaceTypeMap "texturesheets/outskirts/navbrain_building"
+	qer_editorimage texturesheets/outskirts/navbrain_building_editor.tga
+	{
+		diffusemap	picmip -1	texturesheets/outskirts/navbrain_building_d.tga
+		specularmap	picmip -2	texturesheets/outskirts/navbrain_building_s.tga
+		bumpmap 	picmip -1	addnormals(texturesheets/outskirts/navbrain_building_local.tga, heightmap (texturesheets/outskirts/navbrain_building_h.tga, 4))
+		vertexcolor
+	}
+}
+
+material texturesheets/outskirts/rubble01
+{
+	surfacetype "stone"
+	{
+		diffusemap	picmip -1	texturesheets/outskirts/rubble01_d.tga
+		specularmap	picmip -2	texturesheets/outskirts/rubble01_s.tga
+		bumpmap 	picmip -1	texturesheets/outskirts/rubble01_local.tga
+	}
+}
+
+material texturesheets/outskirts/rubble01_nonsolid
+{
+	nonsolid
+	surfacetype "stone"
+	{
+		diffusemap	picmip -1	texturesheets/outskirts/rubble01_d.tga
+		specularmap	picmip -2	texturesheets/outskirts/rubble01_s.tga
+		bumpmap		picmip -1	texturesheets/outskirts/rubble01_local.tga
+	}
+}
+
+material texturesheets/outskirts/industrial_exterior1
+{
+	surfacetype "concrete"
+	{
+		diffusemap	picmip -1	texturesheets/outskirts/industrial_exterior1_d.tga
+		specularmap	picmip -1	texturesheets/outskirts/industrial_exterior1_wet_s.tga
+		bumpmap		picmip -1	texturesheets/outskirts/industrial_exterior1_local.tga
+		vertexColor
+	
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,16,0,0
+	}
+}
+
+material texturesheets/outskirts/industrial_exterior1_noshadows
+{
+	surfacetype "concrete"
+	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/outskirts/industrial_exterior1_d.tga
+		specularmap	picmip -1	texturesheets/outskirts/industrial_exterior1_wet_s.tga
+		bumpmap		picmip -1	texturesheets/outskirts/industrial_exterior1_local.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,16,0,0
+	}
+}
+
+material texturesheets/outskirts/industrial_detail
+{
+	surfaceTypeMap "texturesheets/outskirts/industrial_detail"
+	{
+		diffusemap	picmip -1	texturesheets/outskirts/industrial_detail_d.tga
+		specularmap	picmip -2	texturesheets/outskirts/industrial_detail_s.tga
+		bumpmap		picmip -1	texturesheets/outskirts/industrial_detail_local.tga
+		vertexColor
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	4,16,0,0
+	}
+}
+
+material texturesheets/outskirts/industrial_detail_noshadows
+{
+	noshadows
+	surfaceTypeMap "texturesheets/outskirts/industrial_detail"
+	{
+		diffusemap	picmip -1	texturesheets/outskirts/industrial_detail_d.tga
+		specularmap	picmip -2	texturesheets/outskirts/industrial_detail_s.tga
+		bumpmap		picmip -1	texturesheets/outskirts/industrial_detail_local.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	4,16,0,0
+	}
+}
+
+material texturesheets/outskirts/residential_detail
+{
+	surfaceTypeMap "texturesheets/outskirts/residential_detail1"
+	{
+		diffusemap	picmip -1	texturesheets/outskirts/residential_detail1_d.tga
+		specularmap	picmip -2	texturesheets/outskirts/residential_detail1_s.tga
+		bumpmap 	picmip -1	texturesheets/outskirts/residential_detail1_local.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	4,8,0,0
+	}
+}
+
+material texturesheets/outskirts/interior1
+{
+	surfaceTypeMap "texturesheets/outskirts/interior1"
+	{
+		diffusemap	picmip -1	texturesheets/outskirts/interior1_d.tga
+		specularmap	picmip -2	texturesheets/outskirts/interior1_s.tga
+		bumpmap 	picmip -1	texturesheets/outskirts/interior1_local.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,16,0,0
+	}
+}
+
+material texturesheets/outskirts/interior1_noshadows
+{
+	noshadows
+	surfaceTypeMap "texturesheets/outskirts/interior1"
+	{
+		diffusemap	picmip -1	texturesheets/outskirts/interior1_d.tga
+		specularmap	picmip -2	texturesheets/outskirts/interior1_s.tga
+		bumpmap 	picmip -1	texturesheets/outskirts/interior1_local.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,16,0,0
+	}
+}
+
+material texturesheets/outskirts/outskirts_decals
+{
+	polygonOffset
+	sort decal	
+	nonsolid
+ 	translucent
+	{
+		program filterVertexColorCoverageFogged
+ 		blend filter
+		map picmip -1	texturesheets/outskirts/outskirts_decals_d.tga
+		maskAlpha
+		vertexcolor
+		maskDepth
+		depthFunc lequal
+	}
+}
+
+material texturesheets/outskirts/triangle_light
+{
+	polygonOffset
+	sort decal	
+	nonsolid
+ 	translucent
+	{
+		//program filterVertexColorCoverage
+ 		blend add
+		map picmip -1	texturesheets/outskirts/triangle_light1.tga
+		maskAlpha
+		vertexcolor
+		maskDepth
+		depthFunc lequal
+	}
+}
+
+material texturesheets/outskirts/strogg_sheet02
+{
+	surfaceTypeMap "texturesheets/outskirts/strogg_sheet02"
+	{
+		bumpmap		picmip -1	texturesheets/outskirts/strogg_sheet02_local.tga
+		diffusemap	picmip -1	texturesheets/outskirts/strogg_sheet02_d.tga
+		specularmap	picmip -2	texturesheets/outskirts/strogg_sheet02_s.tga
+		vertexcolor
+	}
+}
+
+material texturesheets/outskirts/outskirts_neonsigns
+{
+	diffusemap	picmip -1	textures/signs/neonsigns01_desaturated_d.tga
+	bumpmap		picmip -1	textures/signs/neonsigns01_local.tga
+	specularmap	picmip -2	textures/signs/neonsigns01_s.tga
+	{
+		blend add
+		map		picmip -1	textures/signs/neonsigns01_desaturated_glow.tga
+		rgb neon_sign02[ time * 0.1 ]
+	}
+}
+
+material texturesheets/outskirts/watertank
+{
+	noshadows
+	surfacetype "metal"
+	{
+		diffusemap	picmip -1	textures/nerve/island_wall06_d.tga
+		specularmap	picmip -2	textures/nerve/island_wall06_s.tga
+		bumpmap		picmip -1	textures/nerve/island_wall06_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	6,6,0,0
+	}
+}

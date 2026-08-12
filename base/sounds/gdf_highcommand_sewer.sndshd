@@ -1,0 +1,103 @@
+// GDF High Command
+
+// Map Sewer
+
+sound sounds/vo/gdf/highcommand/maps/sewer/emp/success {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10901.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/grates/destroy/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10902.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/grates/destroy {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10903.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/northgrate/planted {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10904.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/northgrate/defendexpl {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10905.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/northgrate/planted/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10906.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/northgrate/disarmed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10907.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/northgrate/destroyed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10908.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/southgrate/planted {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10909.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/southgrate/defendexpl {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10910.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/southgrate/planted/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10911.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/southgrate/disarmed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10912.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/southgrate/destroyed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10913.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/grates/success {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10914.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/controls/hack {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10915.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/controls/hacking {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10916.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/controls/hacking/half {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10917.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/controls/hacked {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10918.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/gdfwin {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10919.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/sewer/gdflose {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/sewer/10920.wav
+}

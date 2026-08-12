@@ -1,0 +1,78 @@
+
+invItemTypeDef melee {
+	equipable
+	vehicleEquipable
+}
+
+invItemTypeDef item {
+	equipable
+}
+
+invItemTypeDef weapon {
+	equipable
+	vehicleEquipable
+}
+
+invItemTypeDef grenade {
+	equipable
+	vehicleEquipable
+}
+
+invItemTypeDef tool {
+	equipable
+}
+
+invItemTypeDef kit {
+}
+
+invItemTypeDef ability {
+}
+
+stringMap inventorySlots {
+	"slot0" "backpack"
+	"slot1" "melee"
+	"slot2" "sidearm"
+	"slot3" "twohanded"
+	"slot4" "grenade"
+	"slot5" "tool"
+	"slot6" "item"
+	"slot7" "binocs"
+}
+
+invSlotDef backpack {
+}
+
+invSlotDef melee {
+	bank 1
+	title "Melee"
+}
+
+invSlotDef sidearm {
+	bank 2
+	title "Sidearms"
+}
+
+invSlotDef twohanded {
+	bank 3
+	title "Two-handed"
+}
+
+invSlotDef grenade {
+	bank 4
+	title "Grenades"
+}
+
+invSlotDef tool {
+	bank 5
+	title "Tools"
+}
+
+invSlotDef item {
+	bank 6
+	title "Items"
+}
+
+invSlotDef binocs {
+	bank 7
+	title "Binocs"
+}

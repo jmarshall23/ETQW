@@ -1,0 +1,63 @@
+sound sounds/movement/move_01 {
+	looping
+	minDistance	5
+	maxDistance	80
+	volume 0
+
+	sounds/deployables/movements/movement_01.wav
+}
+
+sound sounds/movement/move_02 {
+	looping
+	volume -20
+	minDistance 5
+	maxDistance	80
+	sounds/deployables/movements/movement_02.wav
+}
+
+sound sounds/movement/move_03 {
+	looping
+	volume 0
+	minDistance	5
+	maxDistance	80
+
+	sounds/deployables/movements/movement_03.wav
+}
+
+sound sounds/movement/stop_01 {
+	
+	volume 0
+	minDistance	5
+	maxDistance	80
+	sounds/deployables/movements/stop_01.wav
+}
+
+sound sounds/movement/stop_02 {
+	
+	volume 0
+	minDistance	5
+	maxDistance	80
+
+	sounds/deployables/movements/stop_02.wav
+}
+
+sound sounds/movement/stop_03 {
+	
+	volume 0
+	minDistance	5
+	maxDistance	80
+
+
+	sounds/deployables/movements/stop_03.wav
+}
+
+sound sounds/movement/stop_04 {
+	
+	volume 0
+	minDistance	5
+	maxDistance	80
+
+
+	sounds/deployables/movements/stop_04.wav
+}
+

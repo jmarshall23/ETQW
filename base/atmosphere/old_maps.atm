@@ -1,0 +1,442 @@
+atmosphere craters01 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.1289746463 0.4715342224 0.8723652959 )
+	sunColor ( 0.6470588446 0.6078431606 0.5254902244 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 12600
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 8235
+	fogHeightHalf 2255
+	fogHeightOffset 5137
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "craters01"
+	skyGradientImage "atmosphere/skies/ph_day4"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 200
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_01" {
+		style old
+		parms 12 ( 0.4149999917 1 1 1 0.0015 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+ambientCubemap craters01 {
+	AmbientLight {
+		Color 0.2823529541 0.3333333433 0.4000000358
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.2980392277 0.2274509966 0.1529411823
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.3372549117 0.3568627536 0.3764706254
+		Direction 0.1756406128 0.9035925865 0.3907311261
+	}
+	AmbientLight {
+		Color 0.3803921938 0.4039216042 0.4392157197
+		Direction 0.0173223317 -0.9923949838 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3568627536 0.3960784674
+		Direction -0.8843650818 0.4506065547 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3764706254 0.4117647409
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3764706254 0.4039216042 0.4156863093
+		Direction -0.7036204934 -0.6794784069 0.2079117
+	}
+}atmosphere creek_test {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.4338014126 0.6378768086 0.6363407373 )
+	sunColor ( 0.8133748174 0.7508568764 0.6208058596 )
+	sunHaloScale 0.1700000018
+	sunHaloBias -0.1800000221
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 12600
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 1200
+	fogHeightHalf 200
+	fogHeightOffset 2500
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "creek_test"
+	skyGradientImage "atmosphere/skies/ph_dunes01"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/mediumalt_cube" {
+		style old
+		parms 12 ( 0.6999999881 1 1 1 0 0 0 1 1 0 0 0 )
+	}
+}
+
+
+
+
+
+ambientCubemap creek_test {
+	AmbientLight {
+		Color 0.5352940559 0.4294117987 0.4254902303
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.4039216042 0.3647058904 0.3333333135
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.2666667104 0.2549020052 0.2352941036
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.3666667044 0.3549019992 0.3352940977
+		Direction -1 0 0
+	}
+	AmbientLight {
+		Color 0.3882353008 0.3019607961 0.1137254983
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3882353008 0.3019607961 0.1137254983
+		Direction 0 0 -1
+	}
+}atmosphere moorland {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.9079560041 -0.1143126786 0.4031730592 )
+	sunColor ( 0.7226566076 0.6372551322 0.4725225568 )
+	sunHaloScale 0.0700000003
+	sunHaloBias -0.3599999845
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 6400
+	fogHeightHalf 9900
+	fogHeightOffset 5900
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "moorland"
+	skyGradientImage "atmosphere/skies/ph_sunset2"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/mediumalt_cube" {
+		style old
+		parms 12 ( 0.6999999881 0.9882349968 0.9803919792 0.960784018 0.0024999999 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+ambientCubemap moorland {
+	AmbientLight {
+		Color 0.501960814 0.4745098352 0.6352941394
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.5764706135 0.4274510145 0.4666666985
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.7058823705 0.5960784554 0.4862745404
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.5764706135 0.4274510145 0.4666666985
+		Direction -1 0 0
+	}
+	AmbientLight {
+		Color 0.6705882549 0.5490196347 0.4705882668
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.2980392277 0.2235294282 0.3019607961
+		Direction 0.0000000243 0 -1
+	}
+}atmosphere moorland01 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.9036983252 -0.3073062301 0.298148334 )
+	sunColor ( 0.6459636688 0.5454118848 0.364729166 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 4900
+	fogHeightHalf 1405
+	fogHeightOffset 4000
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "moorland01"
+	skyGradientImage "atmosphere/skies/day_cloudy2"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+ambientCubemap moorland01 {
+	AmbientLight {
+		Color 0.3000000119 0.3000000119 0.400000006
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.2980392277 0.2274509966 0.1529411823
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.4509804249 0.4549019933 0.6000000238
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.3450980484 0.3490196168 0.4588235617
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.4264706075 0.4274510145 0.5666667223
+		Direction -1 0 0
+	}
+	AmbientLight {
+		Color 0.4264706075 0.4274510145 0.5666667223
+		Direction 1 0 0
+	}
+}atmosphere plateau {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.7322382927 -0.3712370992 0.5709729791 )
+	sunColor ( 0.7944748998 0.7267637849 0.5880177021 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 9100
+	fogHeightHalf 1700
+	fogHeightOffset 7100
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "plateau"
+	skyGradientImage "atmosphere/sandsky01_p"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+ambientCubemap plateau {
+	AmbientLight {
+		Color 0.4705882072 0.4823529124 0.5803921819
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.1137254983 0.0823529437 0.0705882385
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.0588235296 0.0666666701 0.0823529437
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.1411765069 0.0941176489 0.0235294104
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.0901960805 0.1019608006 0.1176470965
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.0588235296 0.0549019612 0.0431372598
+		Direction -1 0 0
+	}
+}atmosphere terraces {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.0870367214 -0.2847202718 0.9546512365 )
+	sunColor ( 0.8712012768 0.8259117603 0.7274392843 )
+	sunHaloScale 0.0299999993
+	sunHaloBias -0.3400000036
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 8922
+	fogHeightHalf 2386
+	fogHeightOffset 8706
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "terraces"
+	skyGradientImage "atmosphere/g_overcast02"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+ambientCubemap terraces {
+	AmbientLight {
+		Color 0.3725490272 0.3725490272 0.3725490272
+		Direction 0.4489578903 0.8443669677 -0.2923716903
+	}
+	AmbientLight {
+		Color 0.160784319 0.160784319 0.160784319
+		Direction -1 -0.0000000243 0.0000000122
+	}
+	AmbientLight {
+		Color 0.1058823615 0.1058823615 0.1058823615
+		Direction 0.4175820947 -0.6682710052 -0.6156614423
+	}
+	AmbientLight {
+		Color 0.0784313753 0.0784313753 0.0784313753
+		Direction 0.7091950178 0.6164938211 0.342020154
+	}
+}
+

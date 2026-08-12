@@ -1,0 +1,479 @@
+/***********************************************************************
+
+ func
+
+***********************************************************************/
+
+entityDef func_group {
+	"editor_color"				"0 0 0"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+
+	"editor_usage"				"Used to group brushes together just for editor convenience.  They are turned into normal brushes by the utilities."
+}
+
+entityDef func_splinemover {
+	"editor_color"				"0 .5 .8"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+
+	"editor_usage"				"Entity which stores a spline path."
+
+	"spawnclass"				"idSplinePath"
+}
+
+entityDef func_rotating {
+	"editor_color"				"0 .5 .8"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+
+	"editor_usage"				"Generic rotating entity.  It will rotate around the Z axis by default.  Targeting entity will cause it to start or stop rotating."
+
+	"editor_bool start_on"		"set to 1 to rotate when spawned."
+	"editor_bool x_axis"		"set to 1 to rotate around x-axis."
+	"editor_bool y_axis"		"set to 1 to rotate around y-axis."
+	"editor_var speed"			"determines how fast it moves."
+	"editor_var dmg"			"damage to inflict when blocked."
+
+	"spawnclass"				"idRotater"
+	"x_axis"					"0"
+	"y_axis"					"0"
+	"speed"						"100"
+	"dmg"						"2"
+	"start_on"					"1"
+}
+
+entityDef func_bobbing {
+	"editor_color"				"0 .5 .8"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+
+	"editor_usage"				"Generic bobbing entity.  It will bob on the Z axis by default."
+	"editor_bool x_axis"		"set to 1 to rotate around x-axis."
+	"editor_bool y_axis"		"set to 1 to rotate around y-axis."
+	"editor_var height"			"amplitude of bob."
+	"editor_var speed"			"seconds to complete a bob cycle."
+	"editor_var phase"			"the 0.0 to 1.0 offset in the cycle to start at."
+	"editor_var dmg"			"damage to inflict when blocked."
+	"editor_snd snd_open"		"sound to play when opening."
+	"editor_snd snd_close"		"sound to play when closing."
+	"editor_snd snd_opened"		"looping sound for it's opened state."
+
+	"spawnclass"				"idBobber"
+
+	"x_axis"					"0"
+	"y_axis"					"0"
+	"height"					"32"
+	"speed"						"4"
+	"phase"						"0"
+	"dmg"						"2"
+}
+
+entityDef func_pendulum {
+	"editor_color"				"0 .5 .8"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+
+	"editor_usage"				"Pendulums always swing north / south on unrotated models.  Add an angles field to the model to allow rotation in other directions."
+	"editor_usage1"				"Pendulum frequency is a physical constant based on the length of the beam and gravity."
+	"editor_var freq"			"If set, overrides frequency basic on beam length and forces a specific frequency."
+	"editor_var speed"			"the number of degrees each way the pendulum swings."
+	"editor_var phase"			"the 0.0 to 1.0 offset in the cycle to start at."
+	"editor_var dmg"			"damage to inflict when blocked."
+	"editor_snd snd_open"		"sound to play when opening."
+	"editor_snd snd_close"		"sound to play when closing."
+	"editor_snd snd_opened"		"looping sound for it's opened state."
+
+	"spawnclass"				"idPendulum"
+
+	"speed"						"30"
+	"phase"						"0"
+	"dmg"						"2"
+}
+
+entityDef func_plat {
+	"editor_color"				"0 .5 .8"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+	"editor_mover"				"1"
+
+	"editor_usage"				"Standard Quake-style platform."
+	"editor_bool no_touch"		"the plat should not be triggered by the player touching it, only by another trigger."
+	"editor_var lip"			"protrusion above rest position."
+	"editor_var height"			"total height of movement, defaults to model height."
+	"editor_var speed"			"speed to move up and down at."
+	"editor_var dmg"			"damage to inflict when blocked."
+	"editor_snd snd_open"		"sound to play when opening."
+	"editor_snd snd_close"		"sound to play when closing."
+	"editor_snd snd_opened"		"looping sound for it's opened state."
+
+	"spawnclass"				"idPlat"
+
+	"no_touch"					"0"
+	"lip"						"8"
+	"speed"						"200"
+	"dmg"						"2"
+}
+
+entityDef func_activator {
+	"editor_color"				"0 .5 .8"
+	"editor_mins"				"-8 -8 -8"
+	"editor_maxs"				"8 8 8"
+
+	"editor_usage"				"Non-displayed entity used to activate triggers when it touches them.  Bind to a mover to"
+	"editor_usage1"				"have the mover activate a triggers as it moves.  When target by triggers, activating the"
+	"editor_usage2"				"trigger will toggle the activator on and off.  Activator will disable itself when it activates a trigger."
+	"editor_bool start_off"		"set to 1 to have it spawn disabled.  Activator will disable itself when it activates a trigger."
+	"editor_bool stay_on"		"to prevent activator from disabling itself."
+
+	"spawnclass"				"idActivator"
+
+	"start_off"					"0"
+	"stay_on"					"0"
+}
+
+entityDef func_door {
+	"editor_color"				"0 .5 .8"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+	"editor_mover"				"1"
+
+	"editor_usage"				"Door."
+
+	"editor_bool no_touch"		"the door should not be triggered by the player touching it, only by another trigger. in multiplayer, this door can't be shot to open."
+	"editor_var angle"			"determines the opening direction.(DEPRECATED)"
+	"editor_var movedir"		"determines the opening direction.  if set, 'angle' determines orientation.(DEPRECATED)"
+	"editor_var speed"			"movement speed. (DEPRECATED)"
+	"editor_var time"			"movement time in seconds.  overrides speed.  used for doors that move different distances, but still need to be synced."
+	"editor_bool wait"			"wait before returning (-1 = never return)."
+	"editor_bool toggle"		"wait at each position until triggered again."
+	"editor_var lip"			"lip remaining at end of move.(DEPRECATED)"
+	"editor_var health"			"if set, the door must be shot open."
+	"editor_var triggersize"	"sets the amount the trigger extends from the door."
+	"editor_snd snd_locked"		"sound to play if door is locked and player approaches."
+	"editor_snd snd_open"		"sound to play when opening."
+	"editor_snd snd_close"		"sound to play when closing."
+	"editor_snd snd_opened"		"looping sound for it's opened state."
+	"editor_var move_delta"		"xyz of delta for the door to move when triggered. By default, this is relative to the door's axis. Overrides movedir, lip and angle keys."
+	"editor_var move_absolute"	"when 1, move_delta is interpreted in world space, rather than entity space. Does nothing if move_delta is not also defined."
+	"editor_bool reverse_on_block"	"when set to 1, the door will reverse back to its previous state if it gets blocked. if not it will wait until the obstruction is removed"
+
+	"compiler_makevalueunique group" "1"
+
+	"spawnclass"				"idDoor"
+	"editor_spawnclass"			"sdEntityClass_Door"
+
+	"groupmaster"				"1"
+	
+	"no_touch"					"0"
+	"angle"						"0"
+	"speed"						"100"
+	"wait"						"3"
+	"lip"						"8"
+	"health"					"0"
+	"triggersize"				"60"	
+	"snd_close"					"entity_door_close"
+	"snd_open"					"entity_door_open"
+	"snd_opened"				"entity_door_opened"
+	"snd_locked"				"entity_door_locked"
+	"snd_unlocked"				"entity_door_unlocked"
+	"reverse_on_block"			"1"
+	"scriptObject"				"door"
+	"option_write_bind"			"1"
+
+	"maxVisDist"				"8192"
+}
+
+entityDef func_door_slave {
+	"inherit"						"func_door"
+	"groupmaster"					"0"
+}
+
+entityDef func_door_gdf {
+	"inherit"						"func_door"
+	"scriptObject"					"teamDoor"
+	"team"							"gdf"
+	"groupmaster"					"1"
+	"pickable"						"1"
+	"option_crosshair_interface"	"1"
+	"option_interactive_interface"	"1"
+	"task_hack"						"infiltrator_hack_door"
+	
+	"mtr_icon_flash"				"hud/icons/missionsystem/tsk_hack"
+	"icon_sort_cm_flash_icon"		"-103"
+}
+
+entityDef func_door_gdf_slave {
+	"inherit"						"func_door_slave"
+}
+
+entityDef func_door_gdf_breakable {
+	"inherit"						"func_door_gdf"
+}
+
+entityDef func_door_strogg {
+	"inherit"						"func_door"
+	"scriptObject"					"teamDoor"
+	"team"							"strogg"
+	"groupmaster"					"1"
+	"pickable"						"1"
+	"option_crosshair_interface"	"1"
+	"option_interactive_interface"	"1"
+	"task_hack"						"covertops_hack_door"
+}
+
+entityDef func_door_strogg_slave {
+	"inherit"						"func_door_slave"
+}
+
+entityDef func_door_strogg_breakable {
+	"inherit"						"func_door_strogg"
+}
+
+entityDef func_door_switch {
+	"editor_mins"					"?"
+	"editor_maxs"					"?"
+	"editor_usage"					"Switch to manually open and close doors"
+	
+	"editor_var target"				"the door entity to control"
+	"editor_bool start_open"		"door will start open if this is set to one, otherwise it will start closed"
+
+	"spawnclass"					"sdScriptEntity"
+	"scriptObject"					"door_switch"
+
+	"gui"							"guis/game/func_door_switch"
+	"option_network_interface"		"1"
+	"option_gui_interface"			"1"
+}
+
+entityDef func_static {
+	"editor_color"				"0 .5 .8"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+
+	"editor_usage"				"A brush model that just sits there, doing nothing.  Can be used for conditional walls and models."
+	"editor_usage1"				"When triggered, toggles between visible and hidden (see hide).  Entity is non-solid when hidden."
+
+	"editor_bool solid"			"whether the object should be solid or not."
+	"editor_bool hide"			"whether the object should be visible when spawned. you need to set a value for triggering on/off to work"
+	"editor_bool disableClip"	"whether the object should start with the clipping diabled - equivalent to calling forceDisableClip from script on spawn"
+	
+	"editor_gui gui"			"gui attached to this entity"
+	"editor_gui gui2"			"a second gui attached to this entity"
+	"editor_gui gui3"			"a second gui attached to this entity"
+	
+	"editor_callback gui"		"decl://gui"
+	"editor_callback gui2"		"decl://gui"
+	"editor_callback gui3"		"decl://gui"
+	
+	"editor_var model"			"model to use for this item. if blank, a model is generated from the entity's brushwork"
+	"editor_callback model"		"model://models"
+	
+	"editor_bool gui_noninteractive" "any gui attached will not be interactive"
+	"editor_bool noclipmodel"	"0 by default. Sets whether or not to generate a collision model for an ASE/LWO func_static at level load. (Set to 1 for stuff the player can't interact with. This will save memory.)"
+	"editor_bool inline"		"If true, turn the model into map geometry at dmap time"
+	"editor_bool pushIntoConnectedOutsideAreas"	"If true, the model will only be visible in the area its origin is in, as well as connected outside areas"
+	"editor_bool noScriptObject"		"1 by default. Set to 0 for dynamic in-game entities you need to change state in script"
+	"editor_bool networkSync"		"If true, send entity state information over the network to ensure clients see it change"
+
+	"editor_var sun_ascension"	"when the sun is under this angle, the entity will be visible"
+
+	"spawnclass"				"idStaticEntity"
+
+	"solid"						"1"
+	"noclipmodel"				"0"
+	"noscriptobject"			"1"
+
+	"maxVisDist"				"8192"
+}
+
+entityDef func_forcefield {
+	"editor_color"				"1 .5 .3"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+
+	"editor_usage"				"Force field."
+
+	"editor_var target"			"Target entity. If set the force field is uniform in the direction of the target, the magnitude of the force equals the distance to the target."
+	"editor_var uniform"		"3D force vector. If set the force field is uniform, magnitude of the force equals the length of the vector."
+	"editor_var explosion"		"Magnitude of explosive force. If set the field exerts a repelling force from the entity origin."
+	"editor_var implosion"		"Magnitude of implosive force. If set the field exerts a force that gravitates to the entity origin."
+	"editor_var randomTorque"	"Amount of random torque added to objects inside or touching the force field."
+	"editor_bool applyForce"	"If set apply a force."
+	"editor_bool applyVelocity" "If set apply a velocity."
+	"editor_bool applyImpulse"	"If set apply an impulse."
+	"editor_bool playerOnly"	"Force field only works for players."
+	"editor_bool monsterOnly"	"Force field only works for monsters."
+	"editor_bool start_on"		"By default the force field is off until activated. If 'start_on' is set to '1' the force field starts on."
+	"editor_var wait"			"If unequal zero the force field automatically switches back to the previous state (on/off) after 'wait' seconds."
+
+	"spawnclass"				"idForceField"
+
+	"randomTorque"				"0"
+	"start_on"					"0"
+}
+
+entityDef func_cameraview {
+	"editor_color"					"0 .5 .8"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_rotatable"				"1"
+	"editor_showangle"				"1"
+
+	"editor_usage"					"Simple Camera view, apply a rotation matrix, angle or target it at a target_null."
+	"editor_var cameraTarget"		"target entity to render view from, point this at self to view from this position."
+	"editor_var fov"				"fov - defaults to 90"
+	"editor_var trigger"			"if set to 1, when triggered will set the view to this camera, when triggered again will set the view back to normal"
+	"editor_bool ignore_enemies"	"If not set, when camera is activated, any active monsters that have an enemy but are not marked with 'cinematic' will be removed."
+
+	"spawnclass"					"idCameraView"
+}
+
+entityDef func_animate {
+	"editor_color"				"1 .5 .3"
+	"editor_mins"				"-16 -16 0"
+	"editor_maxs"				"16 16 32"
+
+	"editor_usage"				"Object that changes animation when triggered."
+
+	"editor_var anim"			"anim to play when triggered.  (unless 'num_anims' is set)"
+	"editor_var start_anim"		"anim to play when first spawned.  anim will loop until triggered."
+	"editor_var num_anims"		"the number of anims to play in sequence.  trigger entity to start next anim.  set anims using 'anim1', 'anim2', 'anim3', etc.  Triggers targets when done playing animl."
+	"editor_var blend_in"		"how long to transition from the start_anim to the triggered anim."
+	"editor_var wait"			"how long to wait before auto activating.  -1 means only activate when triggered."
+	"editor_var cycle"			"how many times to play the animation after being triggered (use -1 for infinite)."
+	"editor_bool remove"		"set to 1 to remove object when animation finishes."
+	"editor_var target"			"all entities with a matching name will be used after anim plays."
+	"editor_bool hide"			"if 1, object remains hidden until triggered.  doesn't work when 'start_anim' is set."
+	"editor_var sound_bone"		"Bone to play sounds from."
+	"editor_var loop_last_anim"	"Loops the last anim when 'num_anims' is set.  the next trigger will cause the entity to hide, or be removed if 'remove' is set."
+	"editor_var auto_advance"	"When 'num_anims' is set, won't wait to be triggered between each anim."
+
+	"spawnclass"				"idAnimated"
+	"blend_in"					"0"
+	"cycle"						"1"
+	"wait"						"-1"
+	"pose_frame"				"1"
+	"sound_bone"				"origin"
+}
+
+entityDef func_fx {
+	"editor_color"				"0 .5 .8"
+	"editor_mins"				"-8 -8 -8"
+	"editor_maxs"				"8 8 8"
+	"editor_showangle"			"1"
+	"editor_rotatable"			"1"
+
+	"editor_usage"				"Spawns an effect when triggered."
+	"editor_var fx"				"the .effects file to spawn when triggered"
+	"editor_var loop"			"loop on or off"
+	"editor_var start_on"		"If 1, will play effects before it is triggered."
+
+	"spawnclass"				"sdScriptEntity"
+	"scriptobject"				"synced_effect"
+	"option_no_sync"			"1"
+	
+	"editor_callback fx"		"decl://effect"
+}
+
+entityDef func_synced_fx {
+	"editor_color"				"0 .5 .8"
+	"editor_mins"				"-8 -8 -8"
+	"editor_maxs"				"8 8 8"
+	"editor_showangle"			"1"
+	"editor_rotatable"			"1"
+
+	"editor_usage"				"Spawns an effect when triggered."
+	"editor_var fx"				"the .effects file to spawn when triggered"
+	"editor_var loop"			"loop on or off"
+	"editor_var start_on"		"If 1, will play effects before it is triggered."
+	
+	"spawnclass"				"sdScriptEntity"
+	"scriptobject"				"synced_effect"
+	"option_network_interface"	"1"
+	
+	"loop"						"0"
+	"start_on"					"1"
+	
+	"editor_callback fx"		"decl://effect"
+}
+
+/*
+entityDef func_elevator {
+	"editor_color"				"0 .5 .8"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+
+	"editor_usage"				"Elevators move to predefined floors and activate door teams based on floor number."
+	"editor_usage1"				"Use the default elevator gui to control them"
+	"editor_usage2"				"Repeat floor1_ height and door info with floor2_ etc.. for as many floors as you want."
+
+	"editor_var move_speed"		"world units per second to move between floors, use this or move_time"
+	"editor_var move_time"		"time in seconds to move between floors"
+	"editor_var accel_time" 	"time in seconds to accelerate"
+	"editor_var decel_time" 	"time in seconds to decelerate"
+	"editor_snd snd_accel"		"sound to play when elevator starts moving."
+	"editor_snd snd_move"		"sound to play when elevator is moving."
+	"editor_snd snd_decel"		"sound to play when elevator stops moving."
+	"editor_var innerdoor"		"door name for interior doors, these will move automatically with the elevator."
+	"editor_var floorPos_1"		"origin of first floor"
+	"editor_var floorDoor_1"	"door name for floor 1 exterior door"
+	"editor_var floor"			"floor number to start on 1 through.. number of floors"
+	"editor_var pauseOnFloor"	"floor to pause on before opening doors"
+	"editor_var pauseTime"		"time to pause if pauseOnFloor is defined"
+	"editor_var statusgui"		"entity name to update floor info, can use statusgui2..3..4..etc. for multiple updates.  if appended with _num it will target an optional specific gui number on the entity this is handy for models with multiple guis."
+
+	"snd_accel"					"entity_door_accel"
+	"snd_decel"					"entity_door_decel"
+	"snd_move"					"entity_door_move"
+
+	"spawnclass"				"idElevator"
+}
+*/
+
+entityDef func_riser {
+	"editor_color"				"0 .5 .8"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+
+	"editor_usage"				"Simply rises or falls when triggered."
+	"editor_var time"			"how many seconds to complete the movement"
+	"editor_var hide"			"start off hidden"
+	"editor_var solid"			"set to zero to make non-solid"
+	"editor_var height"			"how much to move ( use negative to move down )"
+
+	"spawnclass"				"idRiser"
+
+	"time"						"5"
+	"height"					"32"
+}
+
+entityDef func_flare {
+	"spawnclass"				"sdMiscFlare"
+	
+	"editor_spawnclass"			"sdEntityClass_Flare"
+	"editor_color"				"0.5 .5 .8"
+	"editor_mins"				"-8 -8 -8"
+	"editor_maxs"				"8 8 8"
+	"editor_showangle"			"1"
+
+	"editor_usage"				"Spawns a special effect when triggered."
+	"editor_var width"			"Width"
+	"editor_var height"			"Height"
+	"editor_var depth"			"Depth"
+	"editor_var end_width"		"End Width"
+	"editor_var end_height"		"End Height"
+	"editor_var slices"			"Number of Slices"
+	"editor_var material"		"Render Material"
+	"editor_callback material"	"decl://materials"
+}
+
+entityDef func_ladder {
+	"spawnclass"				"sdLadderEntity"
+	
+	"editor_color"				"0.5 .5 .8"
+	"editor_mins"				"? ? ?"
+	"editor_maxs"				"? ? ?"
+
+	"expandAAS"					"1"
+}

@@ -1,0 +1,244 @@
+/**********************************************************************
+
+
+ bot entities 
+ 
+***********************************************************************/
+
+entityDef bot_action {
+	"editor_color"				"0 0 0"
+	"editor_mins"				"-24 -24 0"
+	"editor_maxs"				"24 24 82"
+
+	"editor_usage"					"A hint to indicate to the bots where/what particular goal/behavior can be done at this location."								
+	"editor_var active"				"Does this action start the map out active or inactive?"
+	"editor_var activeForever"		"Once activated, does this action stay on forever? If true - wont be turned off in scipt, unless done so directly."
+	"editor_var vehicleType"		"What vehicle type, if any, can bot use to reach/complete this goal."
+	"editor_var groupID"			"The action group this action belongs to. Allows the turning on/off of multiple actions in the script."
+	"editor_var validClasses"		"The player class types that can do this action. 0 = ANYONE, 1 = SOLDIER, 2 = MEDIC, 4 = ENGINEER, 8 = FIELDOPS, 16 = COVERTOPS."
+	"editor_var actionTime"			"How long, in seconds, a bot should do this action once reached. EX: you want the bot to camp here for 30 seconds, set to 30."
+	"editor_var posture"			"The bot's stance when it reaches this action. 0 = PRONE, 1 = CROUCH, 2 = STAND, 3 = randomly STAND or CROUCH."
+	"editor_var humanGoal"			"The goal that human bots can do here. Its legal to have an action that has different strogg/human goals. Check manual for goal numbers"
+	"editor_var stroggGoal"			"The goal that strogg bots can do here. Its legal to have an action that has different strogg/human goals. Check manual for goal numbers"
+	"editor_var targetRouteID"		"Any route starts that have a routeID number that matches this, can be used by the bot."
+	"editor_var radius"				"The radius of this action - determines how close the bot has to be to this action point before it considers it reached."
+	"editor_var VOChat"				"They type of chat the bot should say if he selects this action as his goal. Check the manual for chat numbers"
+	"editor_var teamOwner"			"Which team owns this action. Used for forward spawn points. -1 = NOTEAM, 0 = GDF, 1 = STROGG"
+	"editor_var deployableType"		"What kind of deployable you want spawned here. Obviously only used for deployable actions. 0 = No deployable"
+	"editor_var disguiseSafe"		"Should a covert in disguise do this enemy team goal? Only applies to camps and roams. 0 = No, 1 = Yes. Yes by default."
+	"editor_var weaponType"			"What kind of weapon should a bot have to do this action? Only applies to infantry camp actions. -1 = Doesn't matter, 0 = GPMG/Hyperblaster, 1 = RL. Default is -1."
+	"editor_var leanDir"			"Is this action a good place to lean from? Default = -1, which is no leaning. Only works for camp actions. 0 = lean right, 1 = lean left."
+	"editor_var blindFire"			"Should the bot blindly fire its firesupport? Only used for fire support hints. Default = 0, which is no blind firing."
+	"editor_var priority"			"By default, if an enemy is near an objective action ( plant, hack, build, etc ), bots nearby will stop what they're doing and try to protect that action. Set this to 0 for objective actions you dont want the bots to worry about. Default = 1 ( action is a priority )."
+	"editor_var requiresVehicle"	"If set to 1, the bots wont do this action unless they can find a vehicle of vehicleType. Default is 0."
+	"editor_var noHack"				"If set to 1, the bots wont try to hack any deployable inside this action's radius. Default is 0 = bots hack all actions. This is useful if you have deployables inside a base that would be dangerous for the other team to hack."
+	
+	"spawnclass"				"idBotAction"
+	"editor_spawnclass"			"sdEntityClass_BotEntity_FixedSize"
+	
+	"radius"					"120"
+	"teamOwner"					"-1" // NOTEAM owns this action
+	"active"					"0" // off by default
+	"activeForever"				"0" // not active forever by default
+	"groupID"					"0" // group id 0 by default
+	"validClasses"				"0" // anyone can do this action
+	"actionTime"				"30" // default to 30 seconds
+	"posture"					"2" // stand by default while doing this action
+	"humanGoal"					"-1" // this is a NULL action by default
+	"stroggGoal"				"-1" // this is a NULL action by default
+	"vehicleType"				"-1" // no vehicle by default.
+	"targetRouteID"				"-1" // no routes by default
+	"VOChat"					"-1" // NULL_CHAT by default
+	"deployableType"			"0" // no deployable by default.
+	"disguiseSafe"				"1" // true by default
+	"weaponType"				"-1" // no particular weapon by default.
+	"leanDir"					"-1" // no leaning at this action.
+	"blindFire"					"0"	 // no blind firing at target by default.
+	"priority"					"1"	 // this action is a priority by default.
+	"requiresVehicle"			"0"  // by default this action doesn't require a vehicle.
+	"noHack"					"0"  // by default this deployable/action is hackable.
+}
+
+entityDef bot_action_target {
+	"editor_color"				"0 1 .5"
+	"editor_mins"				"-24 -24 0"
+	"editor_maxs"				"24 24 82"
+
+	"editor_usage"				"An action target. ex: for camp actions, this would indicate a place for a bot to look to while camped. Check the manual for more possible uses."								
+	"editor_var target"			"The bot action this target points to. This entity can only point to bot_action entities!"
+		
+	"editor_var radius"			"The radius of this target."
+		
+	"spawnclass"				"idBotAction"
+	"editor_spawnclass"			"sdEntityClass_BotEntity_FixedSize"
+	"radius"					"70"
+}
+
+entityDef bot_action_bbox {
+	"editor_color"			"1 0 1"
+	"editor_mins"			"?"
+	"editor_maxs"			"?"
+	"editor_material"		"textures/common/botaction"
+	
+	"editor_usage"			"A hint to indicate the area of the bot action goal that can be done at this location."								
+	
+	"editor_var target"		"The bot action this bbox points to. This entity can only point to bot_action entities!"
+		
+	"spawnclass"			"idBotAction_BBox"
+	"editor_spawnclass"		"sdEntityClass_BotEntity"
+}
+
+entityDef bot_route_start {
+
+	"editor_color"				"1 1 .5"
+	"editor_mins"				"-24 -24 0"
+	"editor_maxs"				"24 24 82"
+
+	"editor_usage"				"The start of an route chain."								
+	"editor_var target"			"The bot route this route node points to. This entity can only point to bot_route_link entities!"
+	"editor_var targetRouteID"  "Any actions that have a routeID number that matches this, will use this route. This is a useful way to group a bunch of actions together with one route"
+	"editor_var active"			"Does this route start out active?"
+		
+	"editor_var radius"			"The radius of this target."
+	"editor_var team"			"Which team can use this route. -1 = ANYTEAM, 0 = GDF 1 = STROGG. Default is ANYTEAM"
+		
+	"spawnclass"				"idBotRoute"
+	"editor_spawnclass"			"sdEntityClass_BotEntity_FixedSize"
+	"radius"					"120" 
+	"active"					"1"
+	"team"						"-1"
+	"targetRouteID"				"-1"
+}
+
+entityDef bot_route_link {
+
+	"editor_color"				"1 .5 0"
+	"editor_mins"				"-24 -24 0"
+	"editor_maxs"				"24 24 82"
+
+	"editor_usage"				"A link in a route chain. Check the manual for more possible uses."								
+	"editor_var target"			"The route link this target points to. This entity can only point to other bot_route_link entities!"
+	"editor_var radius"			"The radius of this target."
+	"editor_var active"			"Does this route start out active?"
+	"editor_var team"			"Which team can use this route. -1 = ANYTEAM, 0 = GDF 1 = STROGG. Default is ANYTEAM"
+		
+	"spawnclass"				"idBotRoute"
+	"editor_spawnclass"			"sdEntityClass_BotEntity_FixedSize"
+	"radius"					"120" 
+	"active"					"1"
+	"team"						"-1"
+}
+
+entityDef trigger_mcp_bot {
+	"editor_color"				".5 .5 .5"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+	"editor_material"			"textures/common/trigmulti" //mal_TODO: change this texture!
+	
+	"editor_usage"				"A trigger brush that will trigger an event in the map script system, allowing you to control the bots offense/defense choices."			
+	"editor_var actionGroupOff"	"The action group you want to turn off"
+	"editor_var actionGroupOn"	"The action group you want to turn on"
+
+	"spawnclass"				"sdScriptEntity"
+	"scriptobject"				"bot_mcp_trigger"
+	
+	"actionGroupOff"			"-1"
+	"actionGroupOn"				"-1"
+	
+	"option_wants_touch"		"1"
+}
+
+entityDef bot_dynamic_obstacle {
+	"editor_color"				"0 1 1"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+	"editor_material"			"textures/common/dynamicobstacle" 
+		
+	"editor_usage"				"A dynamic obstacle that will be used by the bots. Try to make the obstacle box axis aligned if possible"								
+		
+	"spawnclass"				"idBotObstacle"
+	"editor_spawnclass"			"sdEntityClass_BotEntity"
+}
+
+entityDef bot_reachability {
+	"editor_color"				"0 1 1"
+	"editor_mins"				"-16 -16 0"
+	"editor_maxs"				"16 16 80"
+		
+	"editor_usage"				"An entity that forces a reachability between two areas, useful for jumps and teleporters. point it at another bot_reachability"
+	"editor_var target"			"The destination bot_reachability"
+	"editor_var traveltime"		"100 is 1 second"
+	"editor_var traveltype"		"type of navigation required to follow this reachability. walk, walkoffledge, walkoffbarrier, barrierjump, jump, ladder, teleport."
+
+	"editor_spawnclass"			"sdEntityClass_BotEntity_Reachability"
+
+	"expandAAS"					"1"
+}
+
+entityDef bot_reachability_target {
+	"editor_color"				"0 1 1"
+	"editor_mins"				"-4 -4 0"
+	"editor_maxs"				"4 4 8"
+		
+	"editor_usage"				"Target for a bot_reachability entity"
+
+	"editor_spawnclass"			"sdEntityClass_BotEntity_Reachability_Target"
+
+	"expandAAS"					"1"
+}
+
+entityDef bot_locationremap {
+	"editor_usage"				"used for plant HE objectives, contain the exact area where explosive charge origin can be placed, must target bot_locationremap_target"
+	"editor_var target"			"The HE plant location - target to a bot_locationremap_target"
+	"editor_material"			"textures/common/location_remap"
+	"editor_spawnclass"			"sdEntityClass_BotEntity_LocationRemap"
+}
+
+entityDef bot_locationremap_target {
+	"editor_color"				"1 0 0"
+	"editor_mins"				"-16 -16 0"
+	"editor_maxs"				"16 16 80"
+	"editor_usage"				"bot position for diffusing - place in valid AAS area for bot to effectively diffuse HE charge"
+	"editor_var target"			"The AAS location to use for diffusing"	
+	"editor_spawnclass"			"sdEntityClass_BotEntity_LocationRemap_Target"
+	"radius"					"0"
+}
+
+entityDef func_aasobstacle {
+	"spawnclass"				"idAASObstacleEntity"
+
+	"editor_color"				".8 .5 0"
+	"editor_mins"				"? ? ?"
+	"editor_maxs"				"? ? ?"
+
+	"editor_usage"				"Obstacle in the AAS that can be turned on and off by triggering it."
+
+	"editor_material"			"textures/common/aasobstacle"
+
+	"editor_bool start_on"		"set to 1 to disabled the areas when the map loads."
+	"editor_var team"			"The team this obstacle affects. 0 = GDF, 1 = STROGG, 2 = both teams. Default = 2."
+
+	"expandAAS"					"1"
+}
+
+/*
+entityDef bot_vehicle_pathnode {
+	"editor_color"				"0 0 1"
+	"editor_mins"				"-24 -24 0"
+	"editor_maxs"				"24 24 82"
+
+	"editor_usage"				"A hint to indicate to the bots where roads and the best paths for ground vehicles are."								
+	"editor_var active"			"Does this action start the map out active or inactive?"
+	"editor_var vehicleType"	"What vehicle type, if any, can bot use on this path."
+	"editor_var radius"			"The radius of this action - determines how close the bot has to be to this action point before it considers it reached."
+	"editor_var team"			"What team can use this pathnode. 0 = GDF 1 = STROGG 2 = ANYTEAM. Default is ANYTEAM"
+	
+	"spawnclass"				"idBotAction_Vehicle_Node"
+	"editor_spawnclass"			"sdEntityClass_BotEntity_FixedSize"
+	
+	"radius"					"70"
+	"active"					"0" // off by default
+	"team"						"2" // any team can use by default
+}
+*/
+

@@ -1,0 +1,79 @@
+sound sounds/deployables/rockets/flight {
+	looping
+	minDistance	10
+	maxDistance	120
+	volume		-10
+	no_dups
+	
+	//sounds/deployables/rockets/rflight_01.wav
+	sounds/deployables/rockets/rflight_02.wav
+	sounds/deployables/rockets/rflight_03.wav
+	sounds/deployables/rockets/rflight_04.wav
+	sounds/deployables/rockets/rflight_05.wav
+	//sounds/deployables/rockets/rflight_06.wav
+
+}
+
+
+sound sounds/deployables/rockets/deploy {
+
+	volume -15
+	maxDistance 50
+
+	sounds/deployables/rockets/deploy.wav
+}
+
+sound sounds/deployables/rockets/fire {
+	no_dups
+	shakes		0.05
+	volume		0
+	minDistance	10
+	maxDistance 100
+
+	//sounds/deployables/rockets/fire.wav
+	sounds/deployables/rockets/nfire_01.wav
+	//sounds/deployables/rockets/nfire_02.wav
+	//sounds/deployables/rockets/nfire_03.wav
+	//sounds/deployables/rockets/nfire_04.wav
+	sounds/deployables/rockets/nfire_05.wav
+	sounds/deployables/rockets/nfire_06.wav
+}
+
+sound sounds/deployables/rockets/fire_far {
+	no_dups
+	volume		-6
+	farDistance	75
+	maxDistance 200
+
+	//sounds/deployables/rockets/fire.wav
+	sounds/deployables/rockets/nfire_01_far.wav
+	//sounds/deployables/rockets/nfire_02_far.wav
+	//sounds/deployables/rockets/nfire_03_far.wav
+	//sounds/deployables/rockets/nfire_04_far.wav
+	sounds/deployables/rockets/nfire_05_far.wav
+	sounds/deployables/rockets/nfire_06_far.wav
+}
+
+
+sound sounds/deployables/rockets/explode {
+
+	maxDistance 150
+
+	sounds/deployables/rockets/explode.wav
+}
+
+sound sounds/deployables/rockets/fly {
+	looping
+	volume		-3
+	minDistance	45
+	maxDistance 100
+
+	sounds/deployables/rockets/fly.wav
+}
+
+sound sounds/deployables/rockets/fire_single {
+	volume		-5
+	maxDistance	100
+
+	sounds/deployables/rockets/fire.wav
+}

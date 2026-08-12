@@ -1,0 +1,587 @@
+#include <materials/guis/icons.include>
+
+material guis/assets/limbo/logo
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip linear "guis/assets/limbo/logo"
+	}
+}
+
+material guis/assets/limbo/logogdf
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip linear "guis/assets/limbo/logogdf"
+	}
+}
+
+material guis/assets/limbo/logostrogg
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip linear "guis/assets/limbo/logostrogg"
+	}
+}
+
+material hud/icons/player/revive {
+	sort nearest
+	{
+		vertexcolor
+		program filterVertexColorAlpha
+		blend filter
+		map clamp guis/assets/icons/circle_base.tga
+		colored
+	}
+	{
+		vertexcolor
+		blend blend
+		map clamp guis/assets/icons/task_revive.tga
+		colored
+	}
+	{
+		vertexcolor
+		blend blend
+		map clamp guis/assets/icons/circle_frame.tga
+		colored
+	}
+}
+
+material hud/icons/player/spawnhost {
+	deform sprite
+	{
+		blend blend
+		map guis/assets/icons/spawnhost.tga
+	}
+}
+
+material hud/icons/player/spawnhost_taken {
+	deform sprite
+	{
+		blend blend
+		map guis/assets/icons/spawnhost_taken.tga
+	}
+}
+
+material hud/icons/player/objective {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/objective.tga
+	}
+}
+
+material hud/icons/player/god {
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/icon_shield.tga
+	}
+}
+
+material hud/icons/player/voiceammo {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/voiceammo.tga
+		vertexAlpha
+	}
+}
+
+material hud/icons/player/voicestroyent {
+	sort nearest
+	{
+		vertexcolor
+		program filterVertexColorAlpha
+		blend filter
+		map clamp nopicmip linear guis/assets/icons/circle_base.tga
+		colored
+	}
+	{
+		vertexcolor
+		blend blend
+		map clamp nopicmip linear guis/assets/icons/task_stroyent.tga
+		colored
+	}
+	{
+		vertexcolor
+		blend blend
+		map clamp nopicmip linear guis/assets/icons/circle_frame.tga
+		colored
+	}
+}
+
+material hud/icons/player/voicechat {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/voicechat.tga
+		colored
+	}
+}
+
+material hud/icons/player/voicemedic {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/voicemedic.tga
+		vertexAlpha
+	}
+}
+
+material hud/icons/player/voicerepair {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/voicerepair.tga
+		vertexAlpha
+	}
+}
+
+material hud/icons/player/voicevehiclerequest {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/voicevehiclerequest.tga
+		vertexAlpha
+	}
+}
+
+material hud/icons/player/voicekill {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/voicekill.tga
+		vertexAlpha
+	}
+}
+
+material hud/icons/player/voicedefend {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/voicedefend.tga
+		vertexAlpha
+	}
+}
+
+material hud/icons/player/voicesupply {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/voicesupply.tga
+		vertexAlpha
+	}
+}
+
+material hud/icons/player/voicedisarm {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/voicedisarm.tga
+		vertexAlpha
+	}
+}
+
+material hud/icons/player/voicehack {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/voicehack.tga
+		vertexAlpha
+	}
+}
+
+material hud/icons/player/voicedeploy {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/voicedeploy.tga
+		vertexAlpha
+	}
+}
+
+material hud/icons/player/voicepilot {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/voicepilot.tga
+		vertexAlpha
+	}
+}
+
+material hud/icons/player/voicegunner {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/voicegunner.tga
+		vertexAlpha
+	}
+}
+
+material hud/icons/player/voicepassenger {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/voicepassenger.tga
+		vertexAlpha
+	}
+}
+
+material hud/icons/player/voiceradio {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/voiceradio.tga
+		vertexAlpha
+	}
+}
+
+material hud/icons/player/voicewaypoint {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/voicewaypoint.tga
+		vertexAlpha
+	}
+}
+
+material hud/icons/player/number_setting {
+	sort nearest
+	{
+		blend blend
+		map nopicmip linear guis/assets/icons/number_setting.tga
+		colored
+	}
+}
+
+// ====================================================
+// Player Icons for the different player classes
+// ====================================================
+
+material hud/icons/classes/player
+{
+	//sort gui
+	{
+		blend blend
+		map clamp nopicmip linear guis/assets/qet/cm_player.tga
+		colored
+	}
+}
+
+material hud/icons/classes/engineer			{ __classIcon( "cm_engineer.tga" ) }
+material hud/icons/classes/soldier			{ __classIcon( "cm_soldier.tga" ) }
+material hud/icons/classes/paratech			{ __classIcon( "cm_paratech.tga" ) }
+material hud/icons/classes/ranger			{ __classIcon( "cm_ranger.tga" ) }
+material hud/icons/classes/fieldops			{ __classIcon( "cm_fieldops.tga" ) }
+
+// =================
+// Player indicators
+// =================
+
+material hud/icons/player/indicator_team
+{
+	{
+		blend blend
+		map clamp nopicmip linear guis/assets/qet/hud_indicator_team.tga
+		vertexColor
+	}
+}
+
+material hud/icons/player/indicator_enemy
+{
+	{
+		blend blend
+		map clamp nopicmip linear guis/assets/qet/hud_indicator_enemy.tga
+		vertexColor
+	}
+}
+
+material hud/icons/player/indicator_side
+{
+	{
+		blend blend
+		map clamp nopicmip linear guis/assets/qet/hud_indicator_side.tga
+		vertexColor
+	}
+}
+
+material hud/icons/player/indicator_down
+{
+	{
+		blend blend
+		map clamp nopicmip linear guis/assets/qet/hud_indicator_down.tga
+		vertexColor
+	}
+}
+
+material hud/icons/player/indicator_leader
+{
+	{
+		blend blend
+		map clamp nopicmip linear guis/assets/qet/hud_indicator_leader.tga
+		vertexColor
+	}
+}
+
+material hud/icons/player/indicator_mine
+{
+	{
+		blend blend
+		map clamp nopicmip linear guis/assets/qet/hud_indicator_mine.tga
+		vertexColor
+	}
+}
+
+material hud/icons/player/hurtring
+{
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip linear guis/assets/qet/cm_class_damage.tga
+		vertexColor
+	}
+}
+
+material guis/assets/icons/gdf_ranks01 {
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip linear  "guis/assets/icons/gdf_ranks01.tga"
+	}
+}
+
+material guis/assets/icons/gdf_ranks01_flash {
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		vertexColor
+		map clamp nopicmip linear "guis/assets/icons/gdf_ranks01.tga"
+	}
+}
+
+material guis/assets/icons/gdf_ranks02 {
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip linear  "guis/assets/icons/gdf_ranks02.tga"
+	}
+}
+
+material guis/assets/icons/gdf_ranks02_flash {
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		vertexColor
+		map clamp nopicmip linear "guis/assets/icons/gdf_ranks02.tga"
+	}
+}
+
+material hud/icons/proficiency_rewards {
+	sort gui
+	{
+		// program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		map clamp nopicmip linear guis/assets/hud/rewards.tga
+		vertexColor
+	}
+}
+
+material guis/assets/icons/icons_sheet1 {
+	sort gui
+	{
+		blend blend
+		map nopicmip clamp highquality linear "guis/assets/icons/icons_sheet1.tga"
+		vertexColor
+	}
+}
+
+material guis/assets/icons/icons_sheet2 {
+	sort gui
+	{
+		blend blend
+		map nopicmip clamp highquality linear "guis/assets/icons/icons_sheet2.tga"
+		vertexColor
+	}
+}
+
+material guis/assets/icons/icons_sheet1_flash {
+	sort gui
+	{
+		blend blend
+		map nopicmip clamp highquality linear "guis/assets/icons/icons_sheet1.tga"
+		vertexColor
+		red ( fadetable[ time * 0.75 ] * 0.5 ) + 0.5
+		green ( fadetable[ time * 0.75 ] * 0.5 ) + 0.5
+		blue ( fadetable[ time * 0.75 ] * 0.5 ) + 0.5
+	}
+}
+
+material guis/assets/icons/stats {
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		map clamp linear highquality nopicmip guis/assets/icons/stats.tga
+		vertexColor
+	}
+}
+
+material guis/assets/icons/achievements01 {
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip linear  "guis/assets/icons/achievements01.tga"
+	}
+}
+
+material guis/assets/icons/achievements01_desat {
+	sort gui
+	{
+		program sfx/desaturate
+		parameters	0
+		color		0.85, 0.85, 0.85, 0.8
+		blend blend
+		map clamp nopicmip linear  "guis/assets/icons/achievements01.tga"
+	}
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		map clamp nopicmip linear  "guis/assets/icons/achievements01.tga"
+		vertexColor
+	}	
+}
+
+
+
+material guis/assets/icons/achievements01_flash {
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		vertexColor
+		map clamp nopicmip linear "guis/assets/icons/achievements01.tga"
+	}
+}
+
+material guis/assets/icons/achievements02 {
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip linear  "guis/assets/icons/achievements02.tga"
+	}
+}
+
+material guis/assets/icons/achievements02_desat {
+	sort gui
+	{
+		program sfx/desaturate
+		parameters	0
+		color		0.85, 0.85, 0.85, 0.8
+		blend blend
+		map clamp nopicmip linear  "guis/assets/icons/achievements02.tga"
+	}
+	
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		map clamp nopicmip linear  "guis/assets/icons/achievements02.tga"
+		vertexColor
+	}
+}
+
+material guis/assets/icons/achievements02_flash {
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		vertexColor
+		map clamp nopicmip linear "guis/assets/icons/achievements01.tga"
+	}
+}
+
+material hud/icons/lagicon {
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip guis/assets/icons/lag_icon.tga
+		vertexColor
+	}
+}
+
+material hud/icons/recicon {
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip guis/assets/icons/rec_icon.tga
+		vertexColor
+	}
+}
+
+material guis/assets/icons/dialog_icons {
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip guis/assets/icons/dialog_icons.tga
+		vertexColor
+	}
+}
+
+material loadscreen/icons/loading {
+	sort gui
+	{
+		if sintable[ time ] > 0
+		blend blend
+		map clamp nopicmip guis/assets/icons/loading.tga
+		vertexColor
+		scale 0.5, 1
+	}
+	{
+		if sintable[ time ] <= 0
+		blend blend
+		map clamp nopicmip guis/assets/icons/loading.tga
+		vertexColor
+		scale 0.5, 1
+		translate 1, 0
+	}
+}
+
+material guis/assets/icons/tracking {
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		map nearest clamp nopicmip "guis/assets/icons/tracking.tga"
+		vertexColor
+		scale 10, 10
+	}
+}
+
+material guis/assets/icons/gametypes {
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip "guis/assets/icons/gametypes.tga"
+		vertexColor
+	}
+}
+
+material guis/assets/icons/inaudio {
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip "guis/assets/icons/inaudio.tga"
+		vertexColor
+	}
+}

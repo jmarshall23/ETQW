@@ -1,0 +1,2034 @@
+
+#define OBJECTIVE_SLIPGATE_HACK					0
+#define OBJECTIVE_SLIPGATE_DRIVE_MCP			1
+#define OBJECTIVE_SLIPGATE_DEPLOY_MCP			2
+#define OBJECTIVE_SLIPGATE_DESTRUCTION			3
+
+// Base Deployment
+#define SLIP_GDF_BASE_DEPLOY					0 // turn on at start
+#define SLIP_STROGG_BASE_DEPLOY					1
+
+// Secondary Objectives
+#define SLIP_OBJECTIVE_BARRICADE_EAST			2 // turn on at start
+#define SLIP_OBJECTIVE_BARRICADE_SOUTH			3 // turn on at start
+#define SLIP_OBJECTIVE_BARRICADE_WEST			4 // turn on at start
+
+// GDF Fort Tower
+#define SLIP_OBJECTIVE_GDF_TOWER1				5 // turn on at start
+
+// Village Tower
+#define SLIP_OBJECTIVE_GDF_TOWER2				6 // ( vehicleType -1 at start THEN 0 OnASingleBarricadeDestroyed OR OnBarricadeDestroyedCheck )
+
+// Garrison Forward Spawn
+#define SLIP_OBJECTIVE_GDF_SPAWN1				7 // turn on at start ( vehicleType -1 at start THEN 0 OnASingleBarricadeDestroyed, but only on "gdf_forward_spawn_action1_1" )
+#define SLIP_GDF_ATTACK_GDF_SPAWN1				8 // turn on at start ( vehicleType -1 at start THEN 0 OnASingleBarricadeDestroyed )
+#define SLIP_GDF_DEFEND_GDF_SPAWN1				9 // ( vehicleType -1 at start THEN 0 OnASingleBarricadeDestroyed )
+#define SLIP_STROGG_ATTACK_GDF_SPAWN1			10
+#define SLIP_STROGG_DEFEND_GDF_SPAWN1			11 // turn on at start
+
+// Slipgate Checkpoint Spawn
+#define SLIP_OBJECTIVE_GDF_SPAWN2				12
+#define SLIP_GDF_ATTACK_GDF_SPAWN2				13
+#define SLIP_GDF_DEFEND_GDF_SPAWN2				14
+#define SLIP_STROGG_ATTACK_GDF_SPAWN2			15
+#define SLIP_STROGG_DEFEND_GDF_SPAWN2			16
+
+// Objective 1 - Hack Slipgate
+#define SLIP_OBJECTIVE_HACK						17 // turn on at start
+#define SLIP_GDF_ATTACK_HACK					18 // turn on at start ( vehicleType -1 at start THEN 0 OnASingleBarricadeDestroyed )
+#define SLIP_GDF_DEPLOY_HACK					19 // turn on at start ( vehicleType -1 at start THEN 0 OnASingleBarricadeDestroyed )
+#define SLIP_STROGG_DEFEND_HACK					20 // turn on at start
+#define SLIP_STROGG_DEPLOY_HACK					21 // turn on at start
+
+// Objective 2 - Drive MCP through Slipgate
+#define SLIP_OBJECTIVE_MCP_GATE					22 // ( vehicleType -1 at start THEN 0 OnBarricadeDestroyedCheck )
+#define SLIP_GDF_ATTACK_MCP_GATE				23 // ( vehicleType -1 at start THEN 0 OnBarricadeDestroyedCheck )
+#define SLIP_GDF_DEPLOY_MCP_GATE				24 // ( vehicleType -1 at start THEN 0 OnBarricadeDestroyedCheck )
+#define SLIP_STROGG_DEFEND_MCP_GATE				25
+#define SLIP_STROGG_DEPLOY_MCP_GATE				26
+
+// Objective 3 - Deploy MCP at Outpost
+#define SLIP_OBJECTIVE_MCP_OUTPOST				27
+#define SLIP_GDF_ATTACK_MCP_OUTPOST				28
+#define SLIP_GDF_DEPLOY_MCP_OUTPOST				29
+#define SLIP_STROGG_DEFEND_MCP_OUTPOST			30
+#define SLIP_STROGG_DEPLOY_MCP_OUTPOST			31
+
+// Objective 4 - Plant HE Charge on Nexus Tower Core
+#define SLIP_OBJECTIVE_NEXUS_CORE				32
+#define SLIP_GDF_ATTACK_NEXUS_CORE				33
+#define SLIP_GDF_DEPLOY_NEXUS_CORE				34
+#define SLIP_STROGG_DEFEND_NEXUS_CORE			35
+#define SLIP_STROGG_DEPLOY_NEXUS_CORE			36
+
+// Garrison Gun
+#define SLIP_CONSTRUCT_GDF_GUN1					37 // turn on at start ( vehicleType -1 at start THEN 0 OnASingleBarricadeDestroyed OR OnBarricadeDestroyedCheck )
+#define SLIP_USE_GDF_GUN1						38 // ( vehicleType -1 at start THEN 0 OnASingleBarricadeDestroyed OR OnBarricadeDestroyedCheck )
+
+// Fort Road Gun
+#define SLIP_CONSTRUCT_GDF_GUN2					39
+#define SLIP_USE_GDF_GUN2						40
+
+// Rooftop Gun
+#define SLIP_CONSTRUCT_GDF_GUN3					41 // ( vehicleType -1 at start THEN 0 OnASingleBarricadeDestroyed OR OnBarricadeDestroyedCheck )
+#define SLIP_USE_GDF_GUN3						42 // ( vehicleType -1 at start THEN 0 OnASingleBarricadeDestroyed OR OnBarricadeDestroyedCheck )
+
+// Village GDF Guard Tower
+#define SLIP_GDF_USE_TOWER2						43 // ( vehicleType -1 at start THEN 0 OnASingleBarricadeDestroyed OR OnBarricadeDestroyedCheck )
+#define SLIP_STROGG_DESTROY_TOWER2				44
+
+// Early defenses for the MCP objectives
+#define SLIP_STROGG_MCP_FALLBACK1				45 // turn on at start, off after MCP "near" Outpost, kill it afer MCP Outpost objective
+#define SLIP_STROGG_MCP_FALLBACK2				46 // turn on for MCP Gate objective only
+
+// GDF Village vehicle camps/roams
+#define SLIP_GDF_ATTACK_HACK_VEHICLES			47 // Turn this group on when any of the village barricades get destroyed
+
+// GDF Hack Objective
+// Air vehicle actions and Base grabs
+#define SLIP_GDF_ATTACK_HACK_AIR_AND_GRABS		48 // turn on at start
+
+// GDF Village vehicle camps/roams
+#define SLIP_GDF_ATTACK_MCP_GATE_VEHICLES		49
+
+// GDF MCP Gate Objective
+// Air vehicle actions and Base grabs
+#define SLIP_GDF_ATTACK_MCP_GATE_AIR_AND_GRABS	50 // Turn this group on IF a barricade is destroyed before or during the MCP Gate Objective
+
+// GDF Vehicle camps and roams
+#define SLIP_BARRICADE_EAST_VEHICLES			51 // turn on at start, off if GDF Garrison Spawn is captured but no barricades are destroyed, and off for good when its barricade is destroyed
+
+#define SLIP_BARRICADE_SOUTH_VEHICLES			52 // same as above
+
+#define SLIP_BARRICADE_WEST_VEHICLES			53 // same as above
+
+// ----------------------------------------------------------------------
+object mapObject_Slipgate : mapObject_Default {
+	void			preinit();
+	void			destroy();
+
+	void			InitObjectives();
+
+	void			CompleteObjective( float index, entity p );
+	handle			GetObjectiveMessage( float index );
+
+	void			StartFirstObjective();
+
+	void			OnSlipgateHacked();
+	void			OnTimeLimitHit();
+
+	void			OnMCPDriven();
+	void			OnMCPDeployed();
+	void			OnMCPSpawned( entity obj );
+	void			OnMCPDestroyed( entity obj, vector newLocation, vector newAngles );
+	void			OnMCPDelivered( entity obj );
+
+	void			PostSlipgateHackedAudio();
+	void			CallMCPThread();
+
+	void			ClearMCPData();
+
+	void			OnTowerDestroyed();
+
+	void			GeneratorEffectsThread();
+
+	void			FinalEffectsThread();
+
+	void			OnGuardtower1Built();
+	void			OnGuardTower1Destroyed();
+	void			OnGuardtower2Built();
+	void			OnGuardTower2Destroyed();
+	void			Ongun1Built();
+	void			OnGun1Destroyed();
+	void			Ongun2Built();
+	void			OnGun2Destroyed();	
+	void			Ongun3Built();
+	void			OnGun3Destroyed();	
+
+	void			OnWestBarricadeDestroyed();	
+	void			OnEastBarricadeDestroyed();
+	void			OnSouthBarricadeDestroyed();
+	void			OnASingleBarricadeDestroyed();
+	void			OnBarricadeDestroyedCheck();
+	void			OnCapturedBarricadeCheck();
+	void			OnLiberationBarricadeCheck();
+
+	void			WestBarricadeDestroyedThread();
+	void			EastBarricadeDestroyedThread();
+	void			SouthBarricadeDestroyedThread();
+
+	void			OnConstructionComplete( entity obj );
+	void			OnDestructionComplete( entity obj );
+
+	vector			GetGDFBasePosition() { return '-12050 -9690 620'; }
+
+	void			FireScudThread();
+	void			ScudExploded( entity scud );
+
+	// Bot Functions
+	void			OnSpawnCaptured( string actionName );
+	void			OnSpawnLiberated( string actionName );
+	void			NeededClassFirstObjective();
+	void			CovertOpsPleaseUseAR();
+	void			McpGateConstructionCheck();
+	void			RouteThread();
+	void			SetStroggGoalOnDeployable();
+
+	entity			GetSpectateEntity();
+
+	boolean			garrisonSpawnCaptured;
+	boolean			gun1Built;
+	boolean			gun2Built;
+	boolean			gun3Built;
+	boolean			tower1Built;
+	boolean			tower2Built;
+	boolean			anyBarricadeAlreadyDestroyed;
+	boolean			barricadeEastDestroyed;
+	boolean			barricadeSouthDestroyed;
+	boolean			barricadeWestDestroyed;
+
+// ----------------------------------------------------------------------
+	entity			gdfTerritory;
+	entity			slipgateTerritory;
+	entity			mcpTerritory_desert;
+	entity			mcpTerritory_snow;
+	entity			outpostTerritory;
+	entity			stroggTerritory;
+
+	entity			gdfBaseSpawn;
+	entity			stroggBaseSpawn;
+	entity			gdfGarrisonSpawn;
+	entity			gdfGateSpawn;
+	entity			stroggGateSpawn;
+	entity			gdfOutpostSpawn;
+	entity			stroggTowerSpawn;
+	entity			gdfCheckpointSpawn;
+
+	entity			objective1Marker;
+	entity			objective2Marker;
+	entity			objective3Marker;
+	entity			objective4Marker;
+
+	entity			objective1Arrow1;
+	entity			objective1Arrow2;
+	entity			objective1Arrow3;
+	entity			objective2Arrow1;
+	entity			objective2Arrow2;
+	entity			objective3Arrow1;
+	entity			objective3Arrow2;
+	entity			objective4Arrow1;
+	entity			objective4Arrow2;
+
+	entity			teleporter1;
+	entity			teleporter2;
+
+	entity			brokenGenerator;
+	entity			completeGenerator;
+	entity			generatorSpeaker1;
+	entity			generatorSpeaker2;
+
+	entity			towerTriggerHurt_1;
+	entity			towerTriggerHurt_2;
+	entity			towerTriggerHurt_3;
+	entity			towerTriggerHurt_4;
+	entity			towerTriggerHurt_5;	
+	entity			towerEnergyGates;
+
+	entity			slipgateHackPanel;
+
+	entity			finalObjective;
+
+	entity			mcpRouteDesert;
+	entity			mcpRouteSnow;
+	entity			mcpCaller;
+
+	entity			currentMCP;
+
+	entity			effects1;
+	entity			effects2;
+
+	entity			generator_smoke;
+
+	entity			final_smoke;
+
+	entity			final_blowout_1;
+	entity			final_blowout_2;
+
+	entity			final_sparks_1;
+	entity			final_sparks_2;
+	entity			final_sparks_3;
+	entity			final_sparks_4;
+
+	entity			desertSlipgateTriggerHurt;
+
+	entity			guardTower1Construction;
+	entity			guardTower2Construction;
+	entity			guardTower2Object;
+	entity			gun1Construction;
+	entity			gun1Object;
+	entity			gun2Construction;
+	entity			gun2Object;
+	entity			gun3Construction;
+	entity			gun3Object;
+
+	entity			westBarricade;
+	entity			eastBarricade;
+	entity			southBarricade;
+	entity			westBarricadeDestroyed;
+	entity			eastBarricadeDestroyed;
+	entity			southBarricadeDestroyed;
+
+	entity			noplant_west_barricade;
+	entity			noplant_east_barricade;
+	entity			noplant_south_barricade;
+
+	entity 			endCameraA;
+	entity			endCameraB;
+
+	float			mainObjectiveIndex;
+
+	float			directionTaskDef;
+	task			directionTask;
+
+	// Bot Obstacles
+	entity			bot_barricadeWest;
+	entity			bot_barricadeSouth;
+	entity			bot_barricadeEast;
+	entity			bot_shield_nexusTower1;
+	entity			bot_shield_nexusTower2;
+	entity			bot_shield_nexusTower3;
+	entity			bot_shield_nexusTower4;
+	entity			bot_shield_nexusTower5;
+	entity			bot_rooftopGunConstruction;
+
+	cvar 			debug_script;
+}
+
+mapObject_Base Slipgate_MapScript() {
+	return new mapObject_Slipgate;
+}
+
+void mapObject_Slipgate::preinit() {
+}
+
+void mapObject_Slipgate::destroy() {
+	if ( directionTask != $null ) {
+		directionTask.free();
+		directionTask = $null;
+	}
+}
+
+void mapObject_Slipgate::InitObjectives() {
+	gameRules.setWinningTeam( stroggTeam );
+	gdfTeam.SetRespawnWait( 20 );
+	stroggTeam.SetRespawnWait( 30 );
+	gdfTeam.InitRespawnTimeChange();
+	stroggTeam.InitRespawnTimeChange();
+	CreateRespawnTimeThread( gdfTeam );	
+
+// ----------------------------------------------------------------------
+	directionTaskDef			= GetPlayerTask( worldspawn.getKey( "task_slipgate_direction" ) );
+
+	gdfTerritory				= worldspawn.getEntityKey( "script_territory_deployzone_1" );
+	slipgateTerritory			= worldspawn.getEntityKey( "script_territory_deployzone_2" );
+	mcpTerritory_desert			= worldspawn.getEntityKey( "script_territory_deployzone_3" );
+	mcpTerritory_snow			= worldspawn.getEntityKey( "script_territory_deployzone_4" );
+	outpostTerritory			= worldspawn.getEntityKey( "script_territory_deployzone_5" );
+	stroggTerritory				= worldspawn.getEntityKey( "script_territory_deployzone_6" );
+
+	gdfBaseSpawn				= worldspawn.getEntityKey( "script_spawnmaster_gdf_base" );
+	stroggBaseSpawn				= worldspawn.getEntityKey( "script_spawnmaster_strogg_base" );
+	gdfGarrisonSpawn			= worldspawn.getEntityKey( "script_spawnmaster_gdf_garrison" );
+	gdfGateSpawn				= worldspawn.getEntityKey( "script_spawnmaster_gdf_gate" );
+	stroggGateSpawn				= worldspawn.getEntityKey( "script_spawnmaster_strogg_gate" );
+	gdfOutpostSpawn				= worldspawn.getEntityKey( "script_spawnmaster_gdf_outpost" );
+	stroggTowerSpawn			= worldspawn.getEntityKey( "script_spawnmaster_strogg_tower" );
+	gdfCheckpointSpawn			= worldspawn.getEntityKey( "script_spawnmaster_gdf_checkpoint" );
+
+	objective1Marker			= worldspawn.getEntityKey( "script_obj1_marker" );
+	objective2Marker			= worldspawn.getEntityKey( "script_obj2_marker" );
+	objective3Marker			= worldspawn.getEntityKey( "script_obj3_marker" );
+	objective4Marker			= worldspawn.getEntityKey( "script_obj4_marker" );
+
+	objective1Arrow1			= worldspawn.getEntityKey( "script_obj1_arrow1" );
+	objective1Arrow2			= worldspawn.getEntityKey( "script_obj1_arrow2" );
+	objective1Arrow3			= worldspawn.getEntityKey( "script_obj1_arrow3" );
+	objective2Arrow1			= worldspawn.getEntityKey( "script_obj2_arrow1" );
+	objective2Arrow2			= worldspawn.getEntityKey( "script_obj2_arrow2" );
+	objective3Arrow1			= worldspawn.getEntityKey( "script_obj3_arrow1" );
+	objective3Arrow2			= worldspawn.getEntityKey( "script_obj3_arrow2" );
+	objective4Arrow1			= worldspawn.getEntityKey( "script_obj4_arrow1" );
+	objective4Arrow2			= worldspawn.getEntityKey( "script_obj4_arrow2" );
+
+	generator_smoke				= worldspawn.getEntityKey( "script_generator_smoke" );
+
+	final_smoke					= worldspawn.getEntityKey( "script_final_smoke" );
+
+	final_blowout_1				= worldspawn.getEntityKey( "script_final_blowout_1" );
+	final_blowout_2				= worldspawn.getEntityKey( "script_final_blowout_2" );
+
+	final_sparks_1				= worldspawn.getEntityKey( "script_final_sparks_1" );
+	final_sparks_2				= worldspawn.getEntityKey( "script_final_sparks_2" );
+	final_sparks_3				= worldspawn.getEntityKey( "script_final_sparks_3" );
+	final_sparks_4				= worldspawn.getEntityKey( "script_final_sparks_4" );
+
+	teleporter1					= worldspawn.getEntityKey( "script_teleporter_1" );
+	teleporter2					= worldspawn.getEntityKey( "script_teleporter_2" );
+
+	brokenGenerator				= worldspawn.getEntityKey( "script_broken_generator" );
+	completeGenerator			= worldspawn.getEntityKey( "script_complete_generator" );
+	generatorSpeaker1			= worldspawn.getEntityKey( "script_generator_speaker_1" );
+	generatorSpeaker2			= worldspawn.getEntityKey( "script_generator_speaker_2" );
+
+	towerTriggerHurt_1			= worldspawn.getEntityKey( "script_trigger_hurt_tower_1" );
+	towerTriggerHurt_2			= worldspawn.getEntityKey( "script_trigger_hurt_tower_2" );
+	towerTriggerHurt_3			= worldspawn.getEntityKey( "script_trigger_hurt_tower_3" );
+	towerTriggerHurt_4			= worldspawn.getEntityKey( "script_trigger_hurt_tower_4" );
+	towerTriggerHurt_5			= worldspawn.getEntityKey( "script_trigger_hurt_tower_5" );
+
+	towerEnergyGates			= worldspawn.getEntityKey( "script_tower_energy_gates" );
+	desertSlipgateTriggerHurt	= worldspawn.getEntityKey( "script_trigger_hurt_desert_slipgate" );
+
+	slipgateHackPanel			= worldspawn.getEntityKey( "script_slipdate_hack_panel" );
+
+	finalObjective				= worldspawn.getEntityKey( "script_final_objective" );
+
+	endCameraA					= worldspawn.getEntityKey( "script_placement_camera_a" );
+	endCameraB					= worldspawn.getEntityKey( "script_placement_camera_b" );
+
+	effects1					= worldspawn.getEntityKey( "script_slipgate_effects_1" );
+	effects2					= worldspawn.getEntityKey( "script_slipgate_effects_2" );
+
+	mcpRouteDesert				= worldspawn.getEntityKey( "script_mcp_route_desert" );
+	mcpRouteSnow				= worldspawn.getEntityKey( "script_mcp_route_snow" );
+	mcpCaller					= worldspawn.getEntityKey( "script_mcp_caller" );
+
+	westBarricade				= worldspawn.getEntityKey( "script_west_barricade" );
+	eastBarricade				= worldspawn.getEntityKey( "script_east_barricade" );
+	southBarricade				= worldspawn.getEntityKey( "script_south_barricade" );
+
+	westBarricadeDestroyed		= worldspawn.getEntityKey( "script_west_barricade_destroyed" );
+	eastBarricadeDestroyed		= worldspawn.getEntityKey( "script_east_barricade_destroyed" );
+	southBarricadeDestroyed		= worldspawn.getEntityKey( "script_south_barricade_destroyed" );
+
+	guardTower1Construction		= worldspawn.getEntityKey( "script_guard_tower_1" );
+	guardTower2Construction 	= worldspawn.getEntityKey( "script_guard_tower_2" );
+	guardTower2Object		 	= worldspawn.getEntityKey( "script_guard_tower_2_object" );
+	gun1Construction			= worldspawn.getEntityKey( "script_gun_1" );
+	gun1Object					= worldspawn.getEntityKey( "script_gun_1_object" );
+	gun2Construction			= worldspawn.getEntityKey( "script_gun_2" );
+	gun2Object					= worldspawn.getEntityKey( "script_gun_2_object" );
+	gun3Construction			= worldspawn.getEntityKey( "script_gun_3" );	
+	gun3Object					= worldspawn.getEntityKey( "script_gun_3_object" );
+
+	noplant_west_barricade		= worldspawn.getEntityKey( "script_noplant_west_barricade" );
+	noplant_east_barricade		= worldspawn.getEntityKey( "script_noplant_east_barricade" );
+	noplant_south_barricade		= worldspawn.getEntityKey( "script_noplant_south_barricade" );
+
+	// Bot Obstacles
+	bot_barricadeWest			= worldspawn.getEntityKey( "script_bot_barricade_west" );
+	bot_barricadeSouth			= worldspawn.getEntityKey( "script_bot_barricade_south" );
+	bot_barricadeEast			= worldspawn.getEntityKey( "script_bot_barricade_east" );
+	bot_shield_nexusTower1		= worldspawn.getEntityKey( "script_bot_shield_nexus_tower_1" );
+	bot_shield_nexusTower2		= worldspawn.getEntityKey( "script_bot_shield_nexus_tower_2" );
+	bot_shield_nexusTower3		= worldspawn.getEntityKey( "script_bot_shield_nexus_tower_3" );
+	bot_shield_nexusTower4		= worldspawn.getEntityKey( "script_bot_shield_nexus_tower_4" );
+	bot_shield_nexusTower5		= worldspawn.getEntityKey( "script_bot_shield_nexus_tower_5" );	
+	bot_rooftopGunConstruction	= worldspawn.getEntityKey( "script_bot_rooftop_gun_construction" );	
+
+	debug_script 				= sys.getCVar( "bot_debugMapScript", "1" );
+
+	CreateDeployTasks();
+
+	// -----------------------------------------------------
+
+	gdfTerritory.setActive( true );
+	slipgateTerritory.setActive( true );
+	mcpTerritory_desert.setActive( false );
+	mcpTerritory_snow.setActive( false );
+	outpostTerritory.setActive( false );
+	stroggTerritory.setActive( false );
+
+	gdfGarrisonSpawn.setGameTeam( $null_entity );
+	gdfGarrisonSpawn.vSetActive( true );
+	gdfGateSpawn.setGameTeam( $null_entity );
+	stroggGateSpawn.setGameTeam( stroggTeam );
+	gdfOutpostSpawn.setGameTeam( $null_entity );
+	stroggTowerSpawn.setGameTeam( stroggTeam );
+	gdfCheckpointSpawn.setGameTeam( $null_entity );
+	gdfCheckpointSpawn.vSetActive( false );
+
+	objective1Arrow1.setGameTeam( gdfTeam );
+	objective1Arrow2.setGameTeam( gdfTeam );
+	objective1Arrow3.setGameTeam( gdfTeam );
+	objective2Arrow1.setGameTeam( gdfTeam );
+	objective2Arrow2.setGameTeam( gdfTeam );
+	objective3Arrow1.setGameTeam( gdfTeam );
+	objective3Arrow2.setGameTeam( gdfTeam );
+	objective4Arrow1.setGameTeam( gdfTeam );
+	objective4Arrow2.setGameTeam( gdfTeam );
+
+	objective1Marker.vStartObjective();
+	objective2Marker.vFinishObjective();
+	objective3Marker.vFinishObjective();
+	objective4Marker.vFinishObjective();
+
+	objective1Arrow1.vStartObjective();
+	objective1Arrow2.vStartObjective();
+
+	westBarricade.vCreateMission();
+	eastBarricade.vCreateMission();
+	southBarricade.vCreateMission();
+
+	westBarricadeDestroyed.hide();
+	westBarricadeDestroyed.forceDisableClip();
+	eastBarricadeDestroyed.hide();
+	eastBarricadeDestroyed.forceDisableClip();
+	southBarricadeDestroyed.hide();
+	southBarricadeDestroyed.forceDisableClip();
+
+	guardTower1Construction.vCreateMission();
+	guardTower2Construction.vCreateMission();
+	gun1Construction.vCreateMission();
+	gun2Construction.vCreateMission();	
+	gun3Construction.vCreateMission();
+
+	mainObjectiveIndex = OBJECTIVE_SLIPGATE_HACK;
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	brokenGenerator.hide();
+
+	gameRules.setEndGameCamera( endCameraB );
+
+	directionTask = taskManager.allocEntityTask( directionTaskDef, teleporter2 );
+
+	thread StartFirstObjective();
+
+// ----------------------------------------------------------------------
+// BOT OBJECTIVE: HACK THE SLIPGATE
+// ----------------------------------------------------------------------
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BOTS SETUP FOR HACK OBJECTIVE **********\n" );
+	}
+	objManager.setAttackingTeam( GDF );
+	objManager.setBotSightDist( 3000.0f );
+
+	objManager.activateBotActionGroup( SLIP_GDF_BASE_DEPLOY );
+	objManager.activateBotActionGroup( SLIP_OBJECTIVE_BARRICADE_EAST );
+	objManager.activateBotActionGroup( SLIP_BARRICADE_EAST_VEHICLES );
+	objManager.activateBotActionGroup( SLIP_OBJECTIVE_BARRICADE_SOUTH );
+	objManager.activateBotActionGroup( SLIP_BARRICADE_SOUTH_VEHICLES );
+	objManager.activateBotActionGroup( SLIP_OBJECTIVE_BARRICADE_WEST );
+	objManager.activateBotActionGroup( SLIP_BARRICADE_WEST_VEHICLES );
+	objManager.activateBotActionGroup( SLIP_OBJECTIVE_GDF_TOWER1 );
+	objManager.activateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN2 );
+	objManager.activateBotActionGroup( SLIP_OBJECTIVE_GDF_SPAWN1 );
+	objManager.activateBotActionGroup( SLIP_GDF_ATTACK_GDF_SPAWN1 );
+	objManager.activateBotActionGroup( SLIP_STROGG_DEFEND_GDF_SPAWN1 );
+	objManager.activateBotActionGroup( SLIP_OBJECTIVE_HACK );
+	objManager.activateBotActionGroup( SLIP_GDF_ATTACK_HACK );
+	objManager.activateBotActionGroup( SLIP_GDF_ATTACK_HACK_AIR_AND_GRABS );
+	objManager.activateBotActionGroup( SLIP_GDF_DEPLOY_HACK );
+	objManager.activateBotActionGroup( SLIP_STROGG_MCP_FALLBACK1 );
+	objManager.activateBotActionGroup( SLIP_STROGG_DEFEND_HACK );
+	objManager.activateBotActionGroup( SLIP_STROGG_DEPLOY_HACK );
+	objManager.activateBotActionGroup( SLIP_STROGG_DEPLOY_MCP_GATE );
+
+	objManager.setPrimaryTeamAction( GDF, "gdf_hack_slipgate_1" );
+	objManager.setPrimaryTeamAction( STROGG, "gdf_forward_spawn_action1_1" );
+	objManager.setSecondaryTeamAction( GDF, "gdf_hack_slipgate_1" );
+	//objManager.setSecondaryTeamAction( GDF, "gdf_barricade_east" );
+	objManager.setSecondaryTeamAction( STROGG, "strogg_fallback_mcp_deploy_1" );
+
+	thread NeededClassFirstObjective();
+	thread RouteThread();
+
+	objManager.setTeamUseRearSpawn( GDF, false );
+	gdfTeam.setTeamRearSpawn( gdfBaseSpawn );
+
+	objManager.setTeamUseRearSpawn( STROGG, false );
+	stroggTeam.setTeamRearSpawn( stroggBaseSpawn );
+
+	// Disable teleporter reachabilities for GDF (until Slipgate is hacked)
+	sys.enableBotReachability( "nkd_bot_reachability_teleport_1", 0, false );
+	sys.enableBotReachability( "nkd_bot_reachability_teleport_2", 0, false );
+
+	garrisonSpawnCaptured = false;
+	gun1Built = false;
+	gun2Built = false;
+	gun3Built = false;
+	tower1Built = false;
+	tower2Built = false;
+	anyBarricadeAlreadyDestroyed = false;
+	barricadeEastDestroyed = false;
+	barricadeSouthDestroyed = false;
+	barricadeWestDestroyed = false;
+}
+
+void mapObject_Slipgate::NeededClassFirstObjective() {
+	sys.wait( 15 );
+
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** SET UP CLASSES NEEDED FOR FIRST OBJECTIVE **********\n" );
+	}
+
+	objManager.setBotCriticalClass( GDF, COVERTOPS );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+
+	objManager.setTeamNeededClass( GDF, COVERTOPS, NOCLASS, 3, true, true );
+	objManager.setTeamNeededClass( GDF, SOLDIER, NOCLASS, 2, true, false );
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 2, true, true );
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 2, true, false );
+
+	objManager.switchTeamWeapons( GDF, SOLDIER, -1, 5, true );
+	objManager.switchTeamWeapons( GDF, SOLDIER, -1, 6, true );
+	
+	CovertOpsPleaseUseAR();
+}
+
+void mapObject_Slipgate::CovertOpsPleaseUseAR() {
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** COVERT OPS PLEASE SWITCH TO SCOPED ASSAULT RIFLE **********\n" );
+	}
+
+	objManager.switchTeamWeapons( GDF, COVERTOPS, -1, 2, false );
+}
+
+void mapObject_Slipgate::RouteThread() {
+	sys.wait( 0.1f );
+
+	objManager.disableNode ( "slipgate_node_1" );
+	objManager.disableNode ( "slipgate_node_2" );
+	objManager.disableNode ( "slipgate_node_3" );
+	objManager.disableNode ( "after_eastgate_1" );
+	objManager.disableNode ( "after_southgate_1" );
+	objManager.disableNode ( "after_westgate_1" );
+	objManager.disableNode ( "after_westgate_2" );
+
+	objManager.disableRoute( "nkd_bot_route_start_gdf_mcp_gate_1" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_mcp_gate_2" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_mcp_gate_3" );
+	objManager.disableRoute( "nkd_bot_route_start_strogg_mcp_gate_1" );
+
+	objManager.disableRoute( "nkd_bot_route_start_gdf_mcp_outpost_1" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_mcp_outpost_2" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_mcp_outpost_3" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_spawn2_1" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_spawn2_2" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_outpost_vehile_grab_1" );
+	objManager.disableRoute( "nkd_bot_route_start_strogg_mcp_outpost_1" );
+	objManager.disableRoute( "nkd_bot_route_start_strogg_mcp_outpost_2" );
+	objManager.disableRoute( "nkd_bot_route_start_strogg_spawn2_1" );
+
+	objManager.disableRoute( "nkd_bot_route_start_gdf_nexus_core_1" );
+	objManager.disableRoute( "nkd_bot_route_start_strogg_nexus_core_1" );
+	objManager.disableRoute( "nkd_bot_route_start_strogg_nexus_core_2" );
+}
+
+// ----------------------------------------------------------------------
+void mapObject_Slipgate::ClearMCPData() {
+	if ( currentMCP != $null_entity ) {
+		currentMCP.vFreeMission();
+		currentMCP = $null;
+	}
+}
+
+void mapObject_Slipgate::OnMCPSpawned( entity obj ) {
+	ClearMCPData();
+}
+
+void mapObject_Slipgate::OnMCPDestroyed( entity obj, vector newLocation, vector newAngles ) {
+	if ( currentMCP != obj ) {
+		return;
+	}
+
+	ClearMCPData();
+
+	mcpCaller.vCallDrop( newLocation, newAngles );
+}
+
+void mapObject_Slipgate::OnMCPDelivered( entity obj ) {
+	ClearMCPData();
+
+	if ( mainObjectiveIndex == OBJECTIVE_SLIPGATE_DRIVE_MCP ) {
+		currentMCP = obj;
+		objManager.SetObjectiveEntity( currentMCP, mainObjectiveIndex );
+		currentMCP.vSetGoalMarker( objective2Marker );
+		currentMCP.vSetPathTargets( mcpCaller.getWorldOrigin(), objective2Marker.getWorldOrigin() );
+		currentMCP.setTrackerEntity( mcpRouteDesert );
+		currentMCP.vCreateMission();
+		CreateInitialTimedMission( currentMCP );
+
+	} else if ( mainObjectiveIndex == OBJECTIVE_SLIPGATE_DEPLOY_MCP ) {
+		currentMCP = obj;
+		objManager.SetObjectiveEntity( currentMCP, mainObjectiveIndex );
+		currentMCP.vSetGoalMarker( objective3Marker );
+		currentMCP.vSetPathTargets( mcpCaller.getWorldOrigin(), objective3Marker.getWorldOrigin() );
+		currentMCP.setTrackerEntity( mcpRouteSnow );
+		currentMCP.vCreateMission();
+		CreateInitialTimedMission( currentMCP );
+	}
+}
+
+// ----------------------------------------------------------------------
+void mapObject_Slipgate::CompleteObjective( float index, entity p ) {
+	if ( index == OBJECTIVE_SLIPGATE_HACK ) {
+		OnSlipgateHacked();
+	} else if ( index == OBJECTIVE_SLIPGATE_DRIVE_MCP ) {
+		OnMCPDriven();
+	} else if ( index == OBJECTIVE_SLIPGATE_DEPLOY_MCP ) {
+		OnMCPDeployed();
+	} else if ( index == OBJECTIVE_SLIPGATE_DESTRUCTION ) {
+		OnTowerDestroyed();
+	}
+}
+
+handle mapObject_Slipgate::GetObjectiveMessage( float index ) {
+	if ( index == OBJECTIVE_SLIPGATE_HACK ) {
+		return sys.localizeString( "maps/slipgate/obj_hack_slipgate" );
+	}
+
+	if ( index == OBJECTIVE_SLIPGATE_DRIVE_MCP ) {
+		return sys.localizeString( "maps/slipgate/obj_mcp_slipgate" );
+	}	
+
+	if ( index == OBJECTIVE_SLIPGATE_DEPLOY_MCP ) {
+		return sys.localizeString( "maps/slipgate/obj_mcp_outpost" );
+	}
+
+	if ( index == OBJECTIVE_SLIPGATE_DESTRUCTION ) {
+		return sys.localizeString( "maps/slipgate/obj_tower" );
+	}
+	return g_locStr_BadObjective;
+}
+
+// ----------------------------------------------------------------------
+void mapObject_Slipgate::OnSlipgateHacked() {
+	mainObjectiveIndex = OBJECTIVE_SLIPGATE_DRIVE_MCP;
+
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	slipgateTerritory.setGameTeam( gdfTeam );
+
+	gdfTerritory.setActive( false );
+	slipgateTerritory.setActive( true );
+	mcpTerritory_desert.setActive( true );
+	mcpTerritory_snow.setActive( true );
+
+	objective1Marker.vFinishObjective();
+	objective1Arrow1.vFinishObjective();
+	objective1Arrow2.vFinishObjective();
+
+	objective2Arrow1.vStartObjective();
+	objective2Arrow2.vStartObjective();
+
+	gdfGarrisonSpawn.vSetActive( false ); // Gordon: this is before the setTeam, as this forces the team to null
+	gdfGarrisonSpawn.setGameTeam( gdfTeam );
+
+	teleporter1.enableTeam( "gdf" );
+	teleporter2.enableTeam( "gdf" );
+
+	effects1.vCompleteMission();
+	effects2.vCompleteMission();
+
+	guardTower1Construction.vFreeMission();
+	gun2Construction.vFreeMission();
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	slipgateHackPanel.vCompleteMission();
+	StopTimedMission();
+
+	desertSlipgateTriggerHurt.remove();
+	slipgateHackPanel.remove();
+
+	thread CallMCPThread();
+
+	thread PostSlipgateHackedAudio();
+
+	gdfTeam.SetRespawnWait( 20 );
+	stroggTeam.SetRespawnWait( 20 );
+	ResetRespawnTimeThread();
+
+// ----------------------------------------------------------------------
+// BOT OBJECTIVE: DRIVE MCP THROUGH THE SLIPGATE
+// ----------------------------------------------------------------------
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BOTS SETUP FOR MCP GATE OBJECTIVE **********\n" );
+	}
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+
+	objManager.killBotActionGroup( SLIP_OBJECTIVE_GDF_SPAWN1 );
+	objManager.killBotActionGroup( SLIP_GDF_ATTACK_GDF_SPAWN1 );
+	objManager.killBotActionGroup( SLIP_GDF_DEFEND_GDF_SPAWN1 );
+	objManager.killBotActionGroup( SLIP_STROGG_ATTACK_GDF_SPAWN1 );
+	objManager.killBotActionGroup( SLIP_STROGG_DEFEND_GDF_SPAWN1 );
+	objManager.killBotActionGroup( SLIP_OBJECTIVE_HACK );
+	objManager.killBotActionGroup( SLIP_GDF_ATTACK_HACK );
+	objManager.killBotActionGroup( SLIP_GDF_ATTACK_HACK_VEHICLES );
+	objManager.killBotActionGroup( SLIP_GDF_ATTACK_HACK_AIR_AND_GRABS );
+	objManager.killBotActionGroup( SLIP_STROGG_DEFEND_HACK );
+	objManager.killBotActionGroup( SLIP_STROGG_DEPLOY_HACK );
+	objManager.killBotActionGroup( SLIP_OBJECTIVE_GDF_TOWER1 );
+	objManager.killBotActionGroup( SLIP_CONSTRUCT_GDF_GUN2 );
+	objManager.killBotActionGroup( SLIP_USE_GDF_GUN2 );
+
+	objManager.activateBotActionGroup( SLIP_OBJECTIVE_MCP_GATE );
+	objManager.activateBotActionGroup( SLIP_GDF_ATTACK_MCP_GATE );
+	objManager.activateBotActionGroup( SLIP_GDF_ATTACK_MCP_GATE_AIR_AND_GRABS );
+	objManager.activateBotActionGroup( SLIP_GDF_DEPLOY_MCP_GATE );
+	objManager.activateBotActionGroup( SLIP_STROGG_DEFEND_MCP_GATE );
+	objManager.activateBotActionGroup( SLIP_STROGG_MCP_FALLBACK2 );
+
+	McpGateConstructionCheck();
+	
+	// If "true", then turn on the vehicle actions
+	// and set the vehicleType 0 on regular actions
+	OnBarricadeDestroyedCheck();
+
+	objManager.setPrimaryTeamAction( GDF, "gdf_mcp_gate_1" );
+	objManager.setPrimaryTeamAction( STROGG, "gdf_mcp_gate_1" );
+	//objManager.setSecondaryTeamAction( GDF, "xxx" );
+	objManager.setSecondaryTeamAction( STROGG, "strogg_fallback_mcp_deploy_1" );
+
+	objManager.setBotCriticalClass( GDF, ENGINEER );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+
+	objManager.setTeamNeededClass( GDF, ENGINEER, NOCLASS, 3, true, true );
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 3, true, true );
+	objManager.setTeamNeededClass( STROGG, SOLDIER, NOCLASS, 2, false, false );
+
+	objManager.switchTeamWeapons( GDF, COVERTOPS, 2, 15, true );
+	objManager.switchTeamWeapons( STROGG, SOLDIER, -1, 5, true );
+
+	objManager.setMapHasMCPGoal( true );
+
+	objManager.setTeamUseRearSpawn( GDF, true );
+	gdfTeam.setTeamRearSpawn( gdfBaseSpawn );
+
+	objManager.setTeamUseRearSpawn( STROGG, true );
+	stroggTeam.setTeamRearSpawn( stroggTowerSpawn );
+	objManager.setTeamUseRearSpawnPercentage ( STROGG, 50 );
+
+	// Enable teleporter reachabilities for GDF
+	sys.enableBotReachability( "nkd_bot_reachability_teleport_1", 0, true );
+	sys.enableBotReachability( "nkd_bot_reachability_teleport_2", 0, true );
+
+	objManager.enableNode ( "slipgate_node_1" );
+	objManager.enableNode ( "slipgate_node_2" );
+	objManager.enableNode ( "slipgate_node_3" );
+
+	objManager.disableRoute( "nkd_bot_route_start_gdf_hack_1" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_hack_2" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_hack_3" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_spawn1_1" );
+	objManager.disableRoute( "nkd_bot_route_start_strogg_hack_1" );
+	objManager.disableRoute( "nkd_bot_route_start_strogg_spawn1_1" );
+
+	objManager.enableRoute( "nkd_bot_route_start_gdf_mcp_gate_1" );
+	objManager.enableRoute( "nkd_bot_route_start_gdf_mcp_gate_2" );
+	objManager.enableRoute( "nkd_bot_route_start_gdf_mcp_gate_3" );
+	objManager.enableRoute( "nkd_bot_route_start_strogg_mcp_gate_1" );
+	objManager.enableRoute( "nkd_bot_route_start_strogg_mcp_gate_1" );
+	
+	garrisonSpawnCaptured = true;
+}
+
+void mapObject_Slipgate::McpGateConstructionCheck() {
+	if ( gun1Built ) {		// Garrison Gun
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** BOTS CAN USE THE GARRISON GUN **********\n" );
+		}
+		objManager.activateBotActionGroup( SLIP_USE_GDF_GUN1 );
+	} else {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** BOTS CAN BUILD THE GARRISON GUN **********\n" );
+		}
+		objManager.activateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN1 );
+	}
+	if ( gun3Built ) {		// Rooftop Gun
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** BOTS CAN USE THE ROOFTOP GUN **********\n" );
+		}
+		objManager.activateBotActionGroup( SLIP_USE_GDF_GUN3 );
+	} else {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** BOTS CAN BUILD THE ROOFTOP GUN **********\n" );
+		}
+		objManager.activateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN3 );
+	}
+	if ( tower2Built ) {	// Village Tower
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** BOTS CAN USE THE VILLAGE TOWER **********\n" );
+		}
+		objManager.activateBotActionGroup( SLIP_GDF_USE_TOWER2 );
+	} else {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** BOTS CAN BUILD THE VILLAGE TOWER **********\n" );
+		}
+		objManager.activateBotActionGroup( SLIP_OBJECTIVE_GDF_TOWER2 );
+	}
+}
+
+void mapObject_Slipgate::CallMCPThread() {
+	// Buy the Strogg defenders a bit of time before the MCP is delivered after the Hack
+	sys.wait( 5 );
+
+	mcpCaller.vOnDeploy();
+}
+
+// ----------------------------------------------------------------------
+void mapObject_Slipgate::OnMCPDriven() {
+	mainObjectiveIndex = OBJECTIVE_SLIPGATE_DEPLOY_MCP;
+
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	// the GDF get two pieces at once: one in each separate half of the map
+	mcpTerritory_desert.setGameTeam( gdfTeam );
+	mcpTerritory_snow.setGameTeam( gdfTeam );
+
+	slipgateTerritory.setActive( false );
+	mcpTerritory_desert.setActive( false );
+	mcpTerritory_snow.setActive( true );
+	outpostTerritory.setActive( true );
+
+	objective2Marker.vFinishObjective();
+	objective2Arrow1.vFinishObjective();
+	objective2Arrow2.vFinishObjective();
+
+	objective3Arrow1.vStartObjective();
+	objective3Arrow2.vStartObjective();
+
+	StopTimedMission();
+	if ( currentMCP != $null_entity ) {
+		currentMCP.vCompleteMission();
+
+		objManager.SetObjectiveEntity( $null_entity, -1 );
+		objManager.SetObjectiveEntity( currentMCP, mainObjectiveIndex );
+
+		currentMCP.vSetGoalMarker( objective3Marker );
+		currentMCP.vSetPathTargets( mcpCaller.getWorldOrigin(), objective3Marker.getWorldOrigin() );
+		currentMCP.setTrackerEntity( mcpRouteSnow );
+		currentMCP.vCreateMission();
+		CreateInitialTimedMission( currentMCP );
+	}
+
+	if ( directionTask != $null ) {
+		directionTask.free();
+		directionTask = $null;
+	}
+	directionTask = taskManager.allocEntityTask( directionTaskDef, teleporter1 );
+
+	guardTower2Construction.vFreeMission();
+	guardTower2Object.vFreeMission();
+	gun1Construction.vFreeMission();
+	gun3Construction.vFreeMission();
+
+	eastBarricade.vFreeMission();
+	westBarricade.vFreeMission();
+	southBarricade.vFreeMission();
+
+	gdfGateSpawn.setGameTeam( gdfTeam );
+	stroggGateSpawn.setGameTeam( $null_entity );
+	gdfCheckpointSpawn.setGameTeam( $null_entity );
+	gdfCheckpointSpawn.vSetActive( true );
+
+	gdfTeam.SetRespawnWait( 15 );
+	stroggTeam.SetRespawnWait( 20 );
+	ResetRespawnTimeThread();
+
+// ----------------------------------------------------------------------
+// BOT OBJECTIVE: DEPLOY MCP AT THE OUTPOST
+// ----------------------------------------------------------------------
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BOTS SETUP FOR MCP OUTPOST OBJECTIVE **********\n" );
+	}
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+
+	objManager.killBotActionGroup( SLIP_GDF_BASE_DEPLOY );
+	objManager.killBotActionGroup( SLIP_GDF_DEPLOY_HACK );
+	objManager.killBotActionGroup( SLIP_OBJECTIVE_BARRICADE_EAST );
+	objManager.killBotActionGroup( SLIP_BARRICADE_EAST_VEHICLES );
+	objManager.killBotActionGroup( SLIP_OBJECTIVE_BARRICADE_SOUTH );
+	objManager.killBotActionGroup( SLIP_BARRICADE_SOUTH_VEHICLES );
+	objManager.killBotActionGroup( SLIP_OBJECTIVE_BARRICADE_WEST );
+	objManager.killBotActionGroup( SLIP_BARRICADE_WEST_VEHICLES );
+	objManager.killBotActionGroup( SLIP_OBJECTIVE_GDF_TOWER2 );
+	objManager.killBotActionGroup( SLIP_GDF_USE_TOWER2 );
+	objManager.killBotActionGroup( SLIP_STROGG_DESTROY_TOWER2 );
+	objManager.killBotActionGroup( SLIP_CONSTRUCT_GDF_GUN1 );
+	objManager.killBotActionGroup( SLIP_USE_GDF_GUN1 );
+	objManager.killBotActionGroup( SLIP_CONSTRUCT_GDF_GUN3 );
+	objManager.killBotActionGroup( SLIP_USE_GDF_GUN3 );
+	objManager.killBotActionGroup( SLIP_OBJECTIVE_MCP_GATE );
+	objManager.killBotActionGroup( SLIP_GDF_ATTACK_MCP_GATE );
+	objManager.killBotActionGroup( SLIP_GDF_ATTACK_MCP_GATE_AIR_AND_GRABS );
+	objManager.killBotActionGroup( SLIP_GDF_ATTACK_MCP_GATE_VEHICLES );
+	objManager.killBotActionGroup( SLIP_GDF_DEPLOY_MCP_GATE );
+	objManager.killBotActionGroup( SLIP_STROGG_DEFEND_MCP_GATE );
+	objManager.killBotActionGroup( SLIP_STROGG_DEPLOY_MCP_GATE );
+	objManager.killBotActionGroup( SLIP_STROGG_MCP_FALLBACK2 );
+
+	objManager.activateBotActionGroup( SLIP_OBJECTIVE_GDF_SPAWN2 );
+	objManager.activateBotActionGroup( SLIP_GDF_ATTACK_GDF_SPAWN2 );
+	objManager.activateBotActionGroup( SLIP_STROGG_DEFEND_GDF_SPAWN2 );	
+	objManager.activateBotActionGroup( SLIP_OBJECTIVE_MCP_OUTPOST );
+	objManager.activateBotActionGroup( SLIP_GDF_ATTACK_MCP_OUTPOST );
+	objManager.activateBotActionGroup( SLIP_GDF_DEPLOY_MCP_OUTPOST );
+	objManager.activateBotActionGroup( SLIP_STROGG_DEFEND_MCP_OUTPOST );
+	objManager.activateBotActionGroup( SLIP_STROGG_DEPLOY_MCP_OUTPOST );
+	objManager.activateBotActionGroup( SLIP_STROGG_BASE_DEPLOY );
+
+	objManager.setPrimaryTeamAction( GDF, "gdf_mcp_outpost_1" );
+	objManager.setPrimaryTeamAction( STROGG, "gdf_mcp_outpost_1" );
+	objManager.setSecondaryTeamAction( GDF, "gdf_forward_spawn_action2_1" );
+	objManager.setSecondaryTeamAction( STROGG, "strogg_fallback_nexus_mine_1" );
+
+	objManager.setMapHasMCPGoal( true );
+
+	objManager.teamSuicideIfNotNearAction( "gdf_mcp_outpost_1", 12800.0f, STROGG );	
+
+	objManager.setBotCriticalClass( GDF, ENGINEER );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+
+	objManager.setTeamNeededClass( GDF, ENGINEER, NOCLASS, 3, false, true );
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 3, false, true );
+	objManager.setTeamNeededClass( STROGG, SOLDIER, NOCLASS, 2, false, false );
+
+	objManager.switchTeamWeapons( STROGG, SOLDIER, -1, 5, false );
+
+	objManager.setTeamUseRearSpawn( GDF, true );
+	gdfTeam.setTeamRearSpawn( gdfGateSpawn );
+	objManager.setTeamUseRearSpawnPercentage ( GDF, 50 );
+
+	objManager.setTeamUseRearSpawn( STROGG, true );
+	stroggTeam.setTeamRearSpawn( stroggBaseSpawn );
+	objManager.setTeamUseRearSpawnPercentage ( STROGG, 50 );
+
+	objManager.clearTeamBotBoundEntities ( GDF );
+
+	objManager.disableRoute( "nkd_bot_route_start_gdf_mcp_gate_1" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_mcp_gate_2" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_mcp_gate_3" );
+	objManager.disableRoute( "nkd_bot_route_start_strogg_mcp_gate_1" );
+
+	objManager.enableRoute( "nkd_bot_route_start_gdf_mcp_outpost_1" );
+	objManager.enableRoute( "nkd_bot_route_start_gdf_mcp_outpost_2" );
+	objManager.enableRoute( "nkd_bot_route_start_gdf_mcp_outpost_3" );
+	objManager.enableRoute( "nkd_bot_route_start_gdf_spawn2_1" );
+	objManager.enableRoute( "nkd_bot_route_start_gdf_spawn2_2" );
+	objManager.enableRoute( "nkd_bot_route_start_gdf_outpost_vehile_grab_1" );
+	objManager.enableRoute( "nkd_bot_route_start_strogg_mcp_outpost_1" );
+	objManager.enableRoute( "nkd_bot_route_start_strogg_mcp_outpost_2" );
+	objManager.enableRoute( "nkd_bot_route_start_strogg_spawn2_1" );
+	
+	thread SetStroggGoalOnDeployable(); //switch "Priority Deployable" action to a normal "Deployable" action
+}
+
+void mapObject_Slipgate::SetStroggGoalOnDeployable() {
+	sys.wait( 120.0f );
+
+	if ( objManager.isActionGroupActive( SLIP_STROGG_MCP_FALLBACK1 ) == 1.0f ) {
+		objManager.setActionStroggGoal( "strogg_fallback_mcp_deploy_1", 27 );
+	}
+}
+
+// ----------------------------------------------------------------------
+void mapObject_Slipgate::OnMCPDeployed() {
+	mainObjectiveIndex = OBJECTIVE_SLIPGATE_DESTRUCTION;
+
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	outpostTerritory.setGameTeam( gdfTeam );
+
+	mcpTerritory_desert.setActive( false );
+	mcpTerritory_snow.setActive( false );
+	outpostTerritory.setActive( true );
+	stroggTerritory.setActive( true );
+
+	objective3Marker.vFinishObjective();
+	objective3Arrow1.vFinishObjective();
+	objective3Arrow2.vFinishObjective();
+
+	objective4Arrow1.vStartObjective();
+	objective4Arrow2.vStartObjective();
+
+	gdfOutpostSpawn.setGameTeam( gdfTeam );
+	stroggTowerSpawn.setGameTeam( $null_entity );
+	gdfCheckpointSpawn.vSetActive( false );
+	gdfCheckpointSpawn.setGameTeam( gdfTeam );
+
+	if ( currentMCP != $null_entity ) {
+		currentMCP.vCompleteMission();
+	}
+	StopTimedMission();
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	G_PlayObjectiveCompletedRoll( GDF );
+	objManager.PlaySound( worldspawn.getKey( "snd_outpost_captured_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_outpost_captured_gdf" ), gdfTeam );
+
+	thread FireScudThread();
+
+	gdfTeam.SetRespawnWait( 20 );
+	stroggTeam.SetRespawnWait( 20 );
+	ResetRespawnTimeThread();
+
+// ----------------------------------------------------------------------
+// BOT OBJECTIVE: PLANT HE CHARGE ON THE NEXUS CORE
+// ----------------------------------------------------------------------
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BOTS SETUP FOR NEXUS CORE OBJECTIVE **********\n" );
+	}
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+
+	objManager.killBotActionGroup( SLIP_OBJECTIVE_MCP_OUTPOST );
+	objManager.killBotActionGroup( SLIP_GDF_ATTACK_MCP_OUTPOST );
+	objManager.killBotActionGroup( SLIP_GDF_DEPLOY_MCP_OUTPOST );
+	objManager.killBotActionGroup( SLIP_STROGG_DEFEND_MCP_OUTPOST );
+	objManager.killBotActionGroup( SLIP_STROGG_DEPLOY_MCP_OUTPOST );
+	objManager.killBotActionGroup( SLIP_STROGG_MCP_FALLBACK1 );	
+	objManager.killBotActionGroup( SLIP_OBJECTIVE_GDF_SPAWN2 );
+	objManager.killBotActionGroup( SLIP_GDF_ATTACK_GDF_SPAWN2 );
+	objManager.killBotActionGroup( SLIP_GDF_DEFEND_GDF_SPAWN2 );
+	objManager.killBotActionGroup( SLIP_STROGG_ATTACK_GDF_SPAWN2 );
+	objManager.killBotActionGroup( SLIP_STROGG_DEFEND_GDF_SPAWN2 );	
+
+	objManager.activateBotActionGroup( SLIP_OBJECTIVE_NEXUS_CORE );
+	objManager.activateBotActionGroup( SLIP_GDF_ATTACK_NEXUS_CORE );
+	objManager.activateBotActionGroup( SLIP_GDF_DEPLOY_NEXUS_CORE );
+	objManager.activateBotActionGroup( SLIP_STROGG_DEFEND_NEXUS_CORE );
+	objManager.activateBotActionGroup( SLIP_STROGG_DEPLOY_NEXUS_CORE );
+
+	objManager.setPrimaryTeamAction( GDF, "gdf_destroy_core_1" );
+	objManager.setPrimaryTeamAction( STROGG, "gdf_destroy_core_1" );
+	//objManager.setSecondaryTeamAction( GDF, "xxx" );
+	//objManager.setSecondaryTeamAction( STROGG, "xxx" );
+
+	objManager.setMapHasMCPGoal( false );
+
+	objManager.teamSuicideIfNotNearAction( "gdf_destroy_core_1", 12800.0f, STROGG );
+
+	objManager.setTeamAttacksDeployables( GDF, false );
+	objManager.setTeamAttacksDeployables( STROGG, false );
+
+	objManager.setBotCriticalClass( GDF, SOLDIER );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+
+	objManager.setTeamNeededClass( GDF, SOLDIER, NOCLASS, 3, true, true );
+	objManager.setTeamNeededClass( GDF, MEDIC, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 3, true, true );
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 2, false, false );
+
+	objManager.switchTeamWeapons( GDF, SOLDIER, -1, 6, true );
+
+	objManager.setTeamUseRearSpawn( GDF, false );
+	stroggTeam.setTeamRearSpawn( gdfGateSpawn );
+
+	objManager.setTeamUseRearSpawn( STROGG, false );
+	stroggTeam.setTeamRearSpawn( stroggBaseSpawn );
+
+	objManager.disableRoute( "nkd_bot_route_start_gdf_mcp_outpost_1" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_mcp_outpost_2" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_mcp_outpost_3" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_spawn2_1" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_spawn2_2" );
+	objManager.disableRoute( "nkd_bot_route_start_gdf_outpost_vehile_grab_1" );
+	objManager.disableRoute( "nkd_bot_route_start_strogg_mcp_outpost_1" );
+	objManager.disableRoute( "nkd_bot_route_start_strogg_mcp_outpost_2" );
+	objManager.disableRoute( "nkd_bot_route_start_strogg_spawn2_1" );
+
+	objManager.enableRoute( "nkd_bot_route_start_gdf_nexus_core_1" );
+	objManager.enableRoute( "nkd_bot_route_start_strogg_nexus_core_1" );
+	objManager.enableRoute( "nkd_bot_route_start_strogg_nexus_core_2" );
+}
+
+// ----------------------------------------------------------------------
+void mapObject_Slipgate::FireScudThread() {
+	sys.wait( 10.0f );
+
+	while ( true ) {
+		if ( G_TryFireScud( $null_entity, completeGenerator ) ) {
+			break;
+		} 
+
+		sys.wait( 0.5f );
+	}
+
+	objManager.PlaySound( worldspawn.getKey( "snd_launched_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_launched_gdf" ), gdfTeam );
+}
+
+void mapObject_Slipgate::GeneratorEffectsThread() {
+	generator_smoke.vTriggerParticleEffect( 1 );
+
+	// Buy the Strogg defenders a bit of time after the SSM destroys the Nexus Generator
+	sys.wait( 10 );
+
+	towerEnergyGates.remove();
+	towerTriggerHurt_1.remove();
+	towerTriggerHurt_2.remove();
+	towerTriggerHurt_3.remove();
+	towerTriggerHurt_4.remove();
+	towerTriggerHurt_5.remove();
+
+	// Bot Obstacles
+	bot_shield_nexusTower1.activate( bot_shield_nexusTower1 );
+	bot_shield_nexusTower2.activate( bot_shield_nexusTower2 );
+	bot_shield_nexusTower3.activate( bot_shield_nexusTower3 );
+	bot_shield_nexusTower4.activate( bot_shield_nexusTower4 );
+	bot_shield_nexusTower5.activate( bot_shield_nexusTower5 );
+}
+
+void mapObject_Slipgate::ScudExploded( entity scud ) {
+	objManager.SetObjectiveEntity( finalObjective, mainObjectiveIndex );
+	finalObjective.vCreateMission();
+	CreateInitialTimedMission( finalObjective );
+
+	brokenGenerator.show();
+	completeGenerator.remove();
+	generatorSpeaker1.turnOff();
+	generatorSpeaker2.turnOff();
+
+	thread GeneratorEffectsThread();
+}
+
+// ----------------------------------------------------------------------
+void mapObject_Slipgate::FinalEffectsThread() {
+	final_smoke.vTriggerParticleEffect( 1 );
+	final_blowout_1.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.1f );
+	final_blowout_2.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.2f );
+	final_sparks_1.vTriggerParticleEffect( 1 );
+
+	sys.wait( 1.4f );
+	final_sparks_2.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.9f );
+	final_sparks_3.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.3f );
+	final_sparks_4.vTriggerParticleEffect( 1 );
+}
+
+void mapObject_Slipgate::OnTowerDestroyed() {
+	stroggTerritory.setGameTeam( gdfTeam );
+
+	finalObjective.vCompleteMission();
+	StopTimedMission();
+
+	thread FinalEffectsThread();
+
+	objective4Marker.vFinishObjective();
+	objective4Arrow1.vFinishObjective();
+	objective4Arrow2.vFinishObjective();
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	gameRules.setEndGameCamera( endCameraA );
+
+	gameRules.setWinningTeam( gdfTeam );
+	gameRules.endGame();
+}
+
+// --------------------------------------------------------------------
+void mapObject_Slipgate::PostSlipgateHackedAudio() {
+		sys.wait( 3.f );
+
+		objManager.PlaySound( worldspawn.getKey( "snd_mcp_intro_strogg" ), stroggTeam );
+		objManager.PlaySound( worldspawn.getKey( "snd_mcp_intro_gdf" ), gdfTeam );
+}
+
+void mapObject_Slipgate::OnTimeLimitHit() {
+	FinishTimedMission();
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	objManager.PlaySound( worldspawn.getKey( "snd_gdflose_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_gdflose_gdf" ), gdfTeam );
+}
+
+void mapObject_Slipgate::StartFirstObjective() {
+	sys.wait( 5.f );
+
+	objManager.SetObjectiveEntity( slipgateHackPanel, mainObjectiveIndex );
+	slipgateHackPanel.vCreateMission();
+	CreateInitialTimedMission( slipgateHackPanel );
+}
+
+// ----------------------------------------------------------------------
+// SECONDARY OBJECTIVES: CONSTRUCTIONS AND DESTRUCTIONS
+// ----------------------------------------------------------------------
+void mapObject_Slipgate::OnConstructionComplete( entity obj ) {
+	if ( obj == guardTower1Construction ) {
+		OnGuardtower1Built();
+	} else if ( obj == guardTower2Construction ) {
+		OnGuardtower2Built();
+	} else if ( obj == gun1Construction ) {
+		Ongun1Built();
+	} else if ( obj == gun2Construction ) {
+		Ongun2Built();
+	} else if ( obj == gun3Construction ) {
+		Ongun3Built();
+	}
+}
+
+void mapObject_Slipgate::OnDestructionComplete( entity obj ) {
+	if ( obj == guardTower1Construction ) {
+		OnGuardTower1Destroyed();
+	} else if ( obj == guardTower2Construction ) {
+		OnGuardTower2Destroyed();
+	} else if ( obj == gun1Construction ) {
+		OnGun1Destroyed();
+	} else if ( obj == gun2Construction ) {
+		OnGun2Destroyed();
+	} else if ( obj == gun3Construction ) {
+		OnGun3Destroyed();
+	} else if ( obj == westBarricade ) {
+		OnWestBarricadeDestroyed();
+	} else if ( obj == eastBarricade ) {
+		OnEastBarricadeDestroyed();	
+	} else if ( obj == southBarricade ) {
+		OnSouthBarricadeDestroyed();
+	}
+}
+
+// ----------------------------------------------------------------------
+// SECONDARY OBJECTIVES: STROGG VILLAGE BARRICADES
+// ----------------------------------------------------------------------
+
+// --------- EAST -----------
+void mapObject_Slipgate::EastBarricadeDestroyedThread(){
+	eastBarricadeDestroyed.show();
+	sys.wait( 0.5f );
+	eastBarricadeDestroyed.forceEnableClip();
+}
+
+void mapObject_Slipgate::OnEastBarricadeDestroyed() {
+	thread EastBarricadeDestroyedThread();
+	noplant_east_barricade.remove();
+	eastBarricade.vCompleteMission();
+	
+	barricadeEastDestroyed = true;
+
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BARRICADE EAST DESTROYED **********\n" );
+		sys.print( "********** BARRICADE EAST VEHICLE ACTIONS KILLED **********\n" );
+	}
+
+	objManager.killBotActionGroup( SLIP_OBJECTIVE_BARRICADE_EAST );
+	objManager.killBotActionGroup( SLIP_BARRICADE_EAST_VEHICLES );
+
+	bot_barricadeEast.activate( bot_barricadeEast );
+
+	objManager.enableNode ( "after_eastgate_1" );
+
+	if ( mainObjectiveIndex == OBJECTIVE_SLIPGATE_HACK ) {
+		
+		CovertOpsPleaseUseAR();
+	}
+	
+	if ( garrisonSpawnCaptured ) {
+		if ( !barricadeSouthDestroyed ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BARRICADE SOUTH VEHICLE ACTIONS ON **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_BARRICADE_SOUTH_VEHICLES );
+		}
+		if ( !barricadeWestDestroyed ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BARRICADE WEST VEHICLE ACTIONS ON **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_BARRICADE_WEST_VEHICLES );
+		}
+	}
+
+	OnASingleBarricadeDestroyed();
+}
+
+// --------- SOUTH -----------
+void mapObject_Slipgate::SouthBarricadeDestroyedThread(){
+	southBarricadeDestroyed.show();
+	sys.wait( 0.5f );
+	southBarricadeDestroyed.forceEnableClip();
+}
+
+void mapObject_Slipgate::OnSouthBarricadeDestroyed() {
+	thread SouthBarricadeDestroyedThread();
+	noplant_south_barricade.remove();
+	southBarricade.vCompleteMission();
+	
+	barricadeSouthDestroyed = true;
+
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BARRICADE SOUTH DESTROYED **********\n" );
+		sys.print( "********** BARRICADE SOUTH VEHICLE ACTIONS KILLED **********\n" );
+	}
+	objManager.killBotActionGroup( SLIP_OBJECTIVE_BARRICADE_SOUTH );
+	objManager.killBotActionGroup( SLIP_BARRICADE_SOUTH_VEHICLES );
+
+	bot_barricadeSouth.activate( bot_barricadeSouth );
+
+	objManager.enableNode ( "after_southgate_1" );
+
+	if ( mainObjectiveIndex == OBJECTIVE_SLIPGATE_HACK ) {
+
+		CovertOpsPleaseUseAR();
+	}
+
+	if ( garrisonSpawnCaptured ) {
+		if ( !barricadeEastDestroyed ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BARRICADE EAST VEHICLE ACTIONS ON **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_BARRICADE_EAST_VEHICLES );
+		}
+		if ( !barricadeWestDestroyed ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BARRICADE WEST VEHICLE ACTIONS ON **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_BARRICADE_WEST_VEHICLES );
+		}
+	}
+
+	OnASingleBarricadeDestroyed();
+}
+
+// --------- WEST -----------
+void mapObject_Slipgate::WestBarricadeDestroyedThread(){
+	westBarricadeDestroyed.show();
+	sys.wait( 0.5f );
+	westBarricadeDestroyed.forceEnableClip();
+}
+
+void mapObject_Slipgate::OnWestBarricadeDestroyed() {
+	thread WestBarricadeDestroyedThread();
+	noplant_west_barricade.remove();
+	westBarricade.vCompleteMission();
+	
+	barricadeWestDestroyed = true;
+
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BARRICADE WEST DESTROYED **********\n" );
+		sys.print( "********** BARRICADE WEST VEHICLE ACTIONS KILLED **********\n" );
+	}
+	objManager.killBotActionGroup( SLIP_OBJECTIVE_BARRICADE_WEST );
+	objManager.killBotActionGroup( SLIP_BARRICADE_WEST_VEHICLES );
+
+	bot_barricadeWest.activate( bot_barricadeWest );
+
+	objManager.enableNode ( "after_westgate_1" );
+	objManager.enableNode ( "after_westgate_2" );
+
+	if ( mainObjectiveIndex == OBJECTIVE_SLIPGATE_HACK ) {
+
+		CovertOpsPleaseUseAR();
+	}
+
+	if ( garrisonSpawnCaptured ) {
+		if ( !barricadeEastDestroyed ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BARRICADE EAST VEHICLE ACTIONS ON **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_BARRICADE_EAST_VEHICLES );
+		}
+		if ( !barricadeSouthDestroyed ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BARRICADE SOUTH VEHICLE ACTIONS ON **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_BARRICADE_SOUTH_VEHICLES );
+		}
+	}
+
+	OnASingleBarricadeDestroyed();
+}
+
+// ----------- During Hack Objective --------------
+void mapObject_Slipgate::OnASingleBarricadeDestroyed() {
+	if ( anyBarricadeAlreadyDestroyed ) {
+		if ( mainObjectiveIndex == OBJECTIVE_SLIPGATE_HACK ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** GDF VILLAGE HACK VEHICLE ACTIONS ARE ALREADY ACTIVE **********\n" );
+				sys.print( "********** GDF VILLAGE HACK ACTIONS ARE ALREADY VEHICLETYPE 0 **********\n" );
+			}
+		}
+		if ( mainObjectiveIndex == OBJECTIVE_SLIPGATE_DRIVE_MCP ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** GDF VILLAGE MCP GATE VEHICLE ACTIONS ARE ALREADY ACTIVE **********\n" );
+				sys.print( "********** GDF VILLAGE MCP GATE ACTIONS ARE ALREADY VEHICLETYPE 0 **********\n" );
+			}
+		}
+		return;
+	}
+
+	anyBarricadeAlreadyDestroyed = true;
+
+	if ( mainObjectiveIndex == OBJECTIVE_SLIPGATE_HACK ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** GDF VILLAGE HACK VEHICLE ACTIONS ACTIVE **********\n" );
+			sys.print( "********** GDF VILLAGE HACK ACTIONS ARE NOW VEHICLETYPE 0 **********\n" );
+		}
+		objManager.activateBotActionGroup( SLIP_GDF_ATTACK_HACK_VEHICLES );
+
+		objManager.setBotActionVehicleType( "gdf_forward_spawn_action1_1", 0 );	// NOT Group because separate Strogg action must be vehicleType 14	
+		objManager.setBotActionGroupVehicleType( SLIP_GDF_ATTACK_GDF_SPAWN1, 0 );
+		objManager.setBotActionGroupVehicleType( SLIP_GDF_DEFEND_GDF_SPAWN1, 0 );	
+		objManager.setBotActionGroupVehicleType( SLIP_GDF_ATTACK_HACK, 0 );
+		objManager.setBotActionGroupVehicleType( SLIP_GDF_DEPLOY_HACK, 0 );
+		objManager.setBotActionGroupVehicleType( SLIP_CONSTRUCT_GDF_GUN1, 0 );
+		objManager.setBotActionGroupVehicleType( SLIP_USE_GDF_GUN1, 0 );
+		objManager.setBotActionGroupVehicleType( SLIP_CONSTRUCT_GDF_GUN3, 0 );
+		objManager.setBotActionGroupVehicleType( SLIP_USE_GDF_GUN3, 0 );
+		objManager.setBotActionGroupVehicleType( SLIP_GDF_USE_TOWER2, 0 );
+		objManager.setBotActionGroupVehicleType( SLIP_OBJECTIVE_GDF_TOWER2, 0 );
+		objManager.setBotActionVehicleType( "gdf_barricade_east", 0 );
+		objManager.setBotActionVehicleType( "gdf_barricade_south", 0 );
+		objManager.setBotActionVehicleType( "gdf_barricade_west", 0 );
+	}
+
+	OnBarricadeDestroyedCheck();
+}
+
+// ----------- During MCP Gate Objective --------------
+void mapObject_Slipgate::OnBarricadeDestroyedCheck() {
+	if ( mainObjectiveIndex == OBJECTIVE_SLIPGATE_HACK ) {
+		if ( garrisonSpawnCaptured ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS CAN USE REAR FORT SPAWN **********\n" );
+			}
+			gdfTeam.setTeamRearSpawn (  gdfBaseSpawn );
+			objManager.setTeamUseRearSpawn( GDF, true );
+			objManager.setTeamUseRearSpawnPercentage ( GDF, 50 );
+		}
+		return;
+	}	
+	
+	if ( anyBarricadeAlreadyDestroyed ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** GDF VILLAGE MCP GATE VEHICLE ACTIONS ACTIVE **********\n" );
+			sys.print( "********** GDF VILLAGE MCP GATE ACTIONS ARE NOW VEHICLETYPE 0 **********\n" );
+		}
+		objManager.activateBotActionGroup( SLIP_GDF_ATTACK_MCP_GATE_VEHICLES );
+
+		objManager.setBotActionGroupVehicleType( SLIP_CONSTRUCT_GDF_GUN1, 0 );
+		objManager.setBotActionGroupVehicleType( SLIP_USE_GDF_GUN1, 0 );
+		objManager.setBotActionGroupVehicleType( SLIP_CONSTRUCT_GDF_GUN3, 0 );
+		objManager.setBotActionGroupVehicleType( SLIP_USE_GDF_GUN3, 0 );
+		objManager.setBotActionGroupVehicleType( SLIP_GDF_USE_TOWER2, 0 );
+		objManager.setBotActionGroupVehicleType( SLIP_OBJECTIVE_GDF_TOWER2, 0 );
+		objManager.setBotActionGroupVehicleType( SLIP_OBJECTIVE_MCP_GATE, 0 );
+		objManager.setBotActionGroupVehicleType( SLIP_GDF_ATTACK_MCP_GATE, 0 );
+		objManager.setBotActionGroupVehicleType( SLIP_GDF_DEPLOY_MCP_GATE, 0 );
+		objManager.setBotActionVehicleType( "gdf_barricade_east", 0 );
+		objManager.setBotActionVehicleType( "gdf_barricade_south", 0 );
+		objManager.setBotActionVehicleType( "gdf_barricade_west", 0 );
+	}
+}
+
+// ----------------------------------------------------------------------
+// SECONDARY OBJECTIVES: GDF GUARD TOWERS
+// ----------------------------------------------------------------------
+// --------- GDF Fort Tower -----------
+void mapObject_Slipgate::OnGuardtower1Built() {
+	if ( mainObjectiveIndex == OBJECTIVE_SLIPGATE_HACK ) {
+
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** FORT TOWER BUILT, BOTS NOT USING IT **********\n" );
+		}
+		objManager.deactivateBotActionGroup( SLIP_OBJECTIVE_GDF_TOWER1 );
+
+		guardTower1Construction.vCompleteMission();
+	}
+
+	tower1Built = true;	
+}
+
+void mapObject_Slipgate::OnGuardTower1Destroyed() {
+	if ( mainObjectiveIndex == OBJECTIVE_SLIPGATE_HACK ) {
+		if( !garrisonSpawnCaptured ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS CAN BUILD THE FORT TOWER **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_OBJECTIVE_GDF_TOWER1 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS NOT BUILDING THE FORT TOWER **********\n" );
+			}
+		}
+		
+		guardTower1Construction.vCreateMission();
+	}
+	
+	tower1Built = false;
+}
+
+// --------- Village Tower -----------
+void mapObject_Slipgate::OnGuardtower2Built() {
+	if ( mainObjectiveIndex < OBJECTIVE_SLIPGATE_DEPLOY_MCP ) {
+		if( garrisonSpawnCaptured ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** VILLAGE TOWER BUILT, BOTS CAN NOW USE IT **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_OBJECTIVE_GDF_TOWER2 );
+			objManager.activateBotActionGroup( SLIP_GDF_USE_TOWER2 );
+			objManager.activateBotActionGroup( SLIP_STROGG_DESTROY_TOWER2 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** VILLAGE TOWER BUILT, BOTS NOT USING IT **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_OBJECTIVE_GDF_TOWER2 );
+			objManager.activateBotActionGroup( SLIP_STROGG_DESTROY_TOWER2 );
+		}
+
+		guardTower2Construction.vCompleteMission();
+		guardTower2Object.vCreateMission();
+	}
+
+	tower2Built = true;
+}
+
+void mapObject_Slipgate::OnGuardTower2Destroyed() {
+	if ( mainObjectiveIndex < OBJECTIVE_SLIPGATE_DEPLOY_MCP ) {
+		if( garrisonSpawnCaptured ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS CAN BUILD THE VILLAGE TOWER **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_OBJECTIVE_GDF_TOWER2 );
+			objManager.deactivateBotActionGroup( SLIP_GDF_USE_TOWER2 );
+			objManager.deactivateBotActionGroup( SLIP_STROGG_DESTROY_TOWER2 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS NOT BUILDING THE VILLAGE TOWER **********\n" );
+			}			
+			objManager.deactivateBotActionGroup( SLIP_GDF_USE_TOWER2 );
+			objManager.deactivateBotActionGroup( SLIP_STROGG_DESTROY_TOWER2 );
+		}
+
+		guardTower2Construction.vCreateMission();
+		guardTower2Object.vCompleteMission();
+	}
+
+	tower2Built = false;
+}
+
+// ----------------------------------------------------------------------
+// SECONDARY OBJECTIVES: GDF GUN EMPLACEMENTS
+// ----------------------------------------------------------------------
+
+// --------- GUN 1: Garrison gun -----------
+void mapObject_Slipgate::Ongun1Built() {
+	if ( mainObjectiveIndex < OBJECTIVE_SLIPGATE_DEPLOY_MCP ) {
+		if( garrisonSpawnCaptured ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** GARRISON GUN BUILT, BOTS CAN NOW USE IT **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN1 );
+			objManager.activateBotActionGroup( SLIP_USE_GDF_GUN1 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** GARRISON GUN BUT, BOTS NOT USING IT **********\n" );
+			}	
+			objManager.deactivateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN1 );
+		}
+
+		gun1Construction.vCompleteMission();
+	}
+
+	gun1Built = true;
+}
+
+void mapObject_Slipgate::OnGun1Destroyed() {
+	if ( mainObjectiveIndex < OBJECTIVE_SLIPGATE_DEPLOY_MCP ) {
+		if( garrisonSpawnCaptured ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS CAN BUILD THE GARRISON GUN **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_USE_GDF_GUN1 );
+			objManager.activateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN1 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS NOT BUILDING THE GARRISON GUN **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_USE_GDF_GUN1 );
+		}
+		
+		gun1Construction.vCreateMission();
+	}	
+
+	gun1Built = false;
+}
+
+// --------- GUN 2: Fort Road gun -----------
+void mapObject_Slipgate::Ongun2Built() {
+	if ( mainObjectiveIndex == OBJECTIVE_SLIPGATE_HACK ) {
+		if( !garrisonSpawnCaptured ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** FORT ROAD GUN BUILT, BOTS CAN NOW USE IT **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN2 );
+			objManager.activateBotActionGroup( SLIP_USE_GDF_GUN2 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** FORT ROAD GUN BUILT, BOTS NOT USING IT **********\n" );
+			}	
+			objManager.deactivateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN2 );
+		}
+
+		gun2Construction.vCompleteMission();
+	}
+
+	gun2Built = true;
+}
+
+void mapObject_Slipgate::OnGun2Destroyed() {
+	if ( mainObjectiveIndex == OBJECTIVE_SLIPGATE_HACK ) {
+		if( !garrisonSpawnCaptured ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS CAN BUILD THE FORT ROAD GUN **********\n" );
+			}			
+			objManager.deactivateBotActionGroup( SLIP_USE_GDF_GUN2 );
+			objManager.activateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN2 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS NOT BUILDING THE FORT ROAD GUN **********\n" );
+			}			
+			objManager.deactivateBotActionGroup( SLIP_USE_GDF_GUN2 );
+		}
+
+		gun2Construction.vCreateMission();
+	}
+
+	gun2Built = false;
+}
+
+// --------- GUN 3: Rooftop gun -----------
+void mapObject_Slipgate::Ongun3Built() {
+	if ( mainObjectiveIndex < OBJECTIVE_SLIPGATE_DEPLOY_MCP ) {
+		if( garrisonSpawnCaptured ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** ROOFTOP GUN BUILT, BOTS CAN NOW USE IT **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN3 );
+			objManager.activateBotActionGroup( SLIP_USE_GDF_GUN3 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** ROOFTOP GUN BUILT, BOTS NOT USING IT **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN3 );
+		}
+
+		gun3Construction.vCompleteMission();
+	}
+
+	gun3Built = true;
+	
+	bot_rooftopGunConstruction.activate( bot_rooftopGunConstruction ); // obstacle OFF
+}
+
+void mapObject_Slipgate::OnGun3Destroyed() {
+	if ( mainObjectiveIndex < OBJECTIVE_SLIPGATE_DEPLOY_MCP ) {
+		if( garrisonSpawnCaptured ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS CAN BUILD THE ROOFTOP GUN **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_USE_GDF_GUN3 );
+			objManager.activateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN3 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS NOT BUILDING THE ROOFTOP GUN **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_USE_GDF_GUN3 );
+		}
+
+		gun3Construction.vCreateMission();
+	}
+
+	gun3Built = false;
+	
+	bot_rooftopGunConstruction.activate( bot_rooftopGunConstruction ); // obstacle ON
+}
+
+// ----------------------------------------------------------------------
+// Bot Forward Spawn Actions
+// ----------------------------------------------------------------------
+// --------- CAPTURED -----------
+void mapObject_Slipgate::OnSpawnCaptured( string actionName ) {
+	
+	// Garrison Spawn
+	if ( actionName == "gdf_forward_spawn_action1_1" || actionName == "gdf_forward_spawn_action1_2" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** GDF CAPTURED GDF SPAWN 1 **********\n" );
+		}
+
+		garrisonSpawnCaptured = true;
+
+		if ( gun1Built ) {		// Garrison Gun
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS CAN USE THE GARRISON GUN **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_USE_GDF_GUN1 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS CAN BUILD THE GARRISON GUN **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN1 );
+		}
+		if ( gun2Built ) {		// Fort Road Gun
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS NOT USING THE FORT ROAD GUN **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_USE_GDF_GUN2 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS NOT BUILDING THE FORT ROAD GUN **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN2 );
+		}
+		if ( gun3Built ) {		// Rooftop Gun
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS CAN USE THE ROOFTOP GUN **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_USE_GDF_GUN3 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS CAN BUILD THE ROOFTOP GUN **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN3 );
+		}
+		if ( !tower1Built ) {	// GDF Fort Tower
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS NOT BUILDING THE FORT TOWER **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_OBJECTIVE_GDF_TOWER1 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** THE FORT TOWER IS ALREADY BUILT **********\n" );
+			}
+		}
+		if ( tower2Built ) {	// Village Tower
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS CAN USE THE VILLAGE TOWER **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_GDF_USE_TOWER2 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS CAN BUILD THE VILLAGE TOWER **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_OBJECTIVE_GDF_TOWER2 );
+		}
+
+		if ( anyBarricadeAlreadyDestroyed ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS CAN USE REAR FORT SPAWN **********\n" );
+			}
+			gdfTeam.setTeamRearSpawn (  gdfBaseSpawn );
+			objManager.setTeamUseRearSpawn( GDF, true );
+			objManager.setTeamUseRearSpawnPercentage ( GDF, 50 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS NOT USING REAR FORT SPAWN **********\n" );
+			}
+			objManager.setTeamUseRearSpawn( GDF, false );
+		}
+
+		OnCapturedBarricadeCheck();
+		CovertOpsPleaseUseAR();
+		
+		objManager.activateBotActionGroup( SLIP_GDF_DEFEND_GDF_SPAWN1 );
+		objManager.activateBotActionGroup( SLIP_STROGG_ATTACK_GDF_SPAWN1 );	
+
+		objManager.deactivateBotActionGroup( SLIP_GDF_BASE_DEPLOY );
+		objManager.deactivateBotActionGroup( SLIP_GDF_ATTACK_GDF_SPAWN1 );
+		objManager.deactivateBotActionGroup( SLIP_STROGG_DEFEND_GDF_SPAWN1 );
+	}
+
+	// Slipgate Checkpoint Spawn
+	if ( actionName == "gdf_forward_spawn_action2_1" || actionName == "gdf_forward_spawn_action2_2" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** GDF CAPTURED GDF SPAWN 2 **********\n" );
+		}
+		objManager.activateBotActionGroup( SLIP_GDF_DEFEND_GDF_SPAWN2 );
+		objManager.activateBotActionGroup( SLIP_STROGG_ATTACK_GDF_SPAWN2 );
+
+		objManager.deactivateBotActionGroup( SLIP_GDF_ATTACK_GDF_SPAWN2 );
+		objManager.deactivateBotActionGroup( SLIP_STROGG_DEFEND_GDF_SPAWN2 );
+	}
+}
+
+void mapObject_Slipgate::OnCapturedBarricadeCheck() {
+		if ( anyBarricadeAlreadyDestroyed ) {
+			return;
+		} 
+		if ( !barricadeEastDestroyed ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BARRICADE EAST VEHICLE ACTIONS OFF **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_BARRICADE_EAST_VEHICLES );
+			objManager.setBotActionVehicleType( "gdf_barricade_east", -1 );
+		}
+		if ( !barricadeSouthDestroyed ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BARRICADE SOUTH VEHICLE ACTIONS OFF **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_BARRICADE_SOUTH_VEHICLES );
+			objManager.setBotActionVehicleType( "gdf_barricade_south", -1 );
+		}
+		if ( !barricadeWestDestroyed ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BARRICADE WEST VEHICLE ACTIONS OFF **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_BARRICADE_WEST_VEHICLES );
+			objManager.setBotActionVehicleType( "gdf_barricade_west", -1 );
+		}
+}
+
+// --------- LIBERATED -----------
+void mapObject_Slipgate::OnSpawnLiberated( string actionName ) {
+
+	// Garrison Spawn
+	if ( actionName == "gdf_forward_spawn_action1_1" || actionName == "gdf_forward_spawn_action1_2" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** STROGG LIBERATED GDF SPAWN 1 **********\n" );
+		}
+
+		garrisonSpawnCaptured = false;
+
+		if ( gun1Built ) {		// Garrison Gun
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS NOT USING THE GARRISION GUN **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_USE_GDF_GUN1 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS NOT BUILDING THE GARRISION GUN **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN1 );
+		}
+		if ( gun2Built ) {		// Fort Road Gun
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS CAN USE THE FORT ROAD GUN **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_USE_GDF_GUN2 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS CAN BUILD THE FORT ROAD GUN **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN2 );
+		}
+		if ( gun3Built ) {		// Rooftop Gun
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS NOT USING THE ROOFTOP GUN **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_USE_GDF_GUN3 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS NOT BUILDING THE ROOFTOP GUN **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_CONSTRUCT_GDF_GUN3 );
+		}
+		if ( !tower1Built ) {	// GDF Fort Tower
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS CAN BIULD THE FORT TOWER **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_OBJECTIVE_GDF_TOWER1 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** THE FORT TOWER IS ALREADY BUILT **********\n" );
+			}
+		}
+		if ( tower2Built ) {	// Village Tower
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS NOT USING THE VILLAGE TOWER **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_GDF_USE_TOWER2 );
+		} else {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BOTS NOT BUILDING THE VILLAGE TOWER **********\n" );
+			}
+			objManager.deactivateBotActionGroup( SLIP_OBJECTIVE_GDF_TOWER2 );
+		}
+		
+		OnLiberationBarricadeCheck();
+		CovertOpsPleaseUseAR();
+
+		objManager.activateBotActionGroup( SLIP_GDF_BASE_DEPLOY );
+		objManager.activateBotActionGroup( SLIP_GDF_ATTACK_GDF_SPAWN1 );
+		objManager.activateBotActionGroup( SLIP_STROGG_DEFEND_GDF_SPAWN1 );
+
+		objManager.deactivateBotActionGroup( SLIP_GDF_DEFEND_GDF_SPAWN1 );
+		objManager.deactivateBotActionGroup( SLIP_STROGG_ATTACK_GDF_SPAWN1 );
+
+		objManager.setTeamUseRearSpawn( GDF, false );
+	}
+	
+	// Slipgate Checkpoint Spawn
+	if ( actionName == "gdf_forward_spawn_action2_1" || actionName == "gdf_forward_spawn_action2_2" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** STROGG LIBERATED GDF SPAWN 2 **********\n" );
+		}
+		objManager.activateBotActionGroup( SLIP_GDF_ATTACK_GDF_SPAWN2 );
+		objManager.activateBotActionGroup( SLIP_STROGG_DEFEND_GDF_SPAWN2 );
+		
+		objManager.deactivateBotActionGroup( SLIP_GDF_DEFEND_GDF_SPAWN2 );
+		objManager.deactivateBotActionGroup( SLIP_STROGG_ATTACK_GDF_SPAWN2 );
+	}
+}
+
+void mapObject_Slipgate::OnLiberationBarricadeCheck() {
+		if ( anyBarricadeAlreadyDestroyed ) {
+			return;
+		} 
+		if ( !barricadeEastDestroyed ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BARRICADE EAST VEHICLE ACTIONS ON **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_BARRICADE_EAST_VEHICLES );
+			objManager.setBotActionVehicleType( "gdf_barricade_east", 0 );
+		}
+		if ( !barricadeSouthDestroyed ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BARRICADE SOUTH VEHICLE ACTIONS ON **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_BARRICADE_SOUTH_VEHICLES );
+			objManager.setBotActionVehicleType( "gdf_barricade_south", 0 );
+		}
+		if ( !barricadeWestDestroyed ) {
+			if ( debug_script.getBoolValue() ) {
+				sys.print( "********** BARRICADE WEST VEHICLE ACTIONS ON **********\n" );
+			}
+			objManager.activateBotActionGroup( SLIP_BARRICADE_WEST_VEHICLES );
+			objManager.setBotActionVehicleType( "gdf_barricade_west", 0 );
+		}
+}
+
+entity mapObject_Slipgate::GetSpectateEntity() { 
+	if ( slipgateHackPanel != $null_entity ) {
+		if ( !slipgateHackPanel.vIsObjectiveComplete() ) {
+			return slipgateHackPanel.vGetSpectateEntity();
+		}
+	}
+
+	entity deployedMCP = G_FindDeployedMCP();
+	if ( currentMCP == $null_entity && deployedMCP == $null_entity ) {
+		return $null_entity;
+	}
+	
+	if ( currentMCP != $null_entity ) {
+		if ( !currentMCP.vIsObjectiveComplete() ) {
+			return currentMCP.vGetSpectateEntity();
+		}
+	}
+
+	if ( finalObjective != $null_entity ) {
+		return finalObjective.vGetSpectateEntity();
+	}
+
+	return $null_entity;
+}

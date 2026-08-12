@@ -1,0 +1,985 @@
+
+material textures/particles/boomboom3
+
+{
+    noselfShadow
+    noshadows
+	translucent
+	discrete
+	nonsolid
+	noimpact
+
+	{
+      		blend add
+		map	textures/particles/boomboom3
+		vertexcolor
+	}
+}
+
+material textures/particles/boomboom
+{
+	noselfShadow
+	noshadows
+	translucent
+	discrete
+	nonsolid
+	noimpact
+
+	{
+		blend add
+		map textures/particles/boomboom
+		vertexcolor
+		maskAlpha
+	}
+}
+
+material textures/particles/dim_disk
+{
+	noSelfShadow
+	noshadows
+	translucent
+	discrete
+	twosided
+	nonsolid
+	noimpact
+
+	qer_editorimage		textures/particles/dim_disk.tga
+
+	{
+		blend  add
+		map    lights/spot01.tga
+		red		Parm0
+		green		Parm1
+		blue		Parm2
+	}
+}
+
+
+material textures/particles/dust2
+{
+	noSelfShadow
+	noshadows
+	translucent
+	discrete
+	twosided
+	nonsolid
+	noimpact
+
+	qer_editorimage		textures/particles/dust2.tga
+
+	{
+	    blend  blend
+		map    highquality textures/particles/dust2.tga
+        	vertexcolor
+        	colored
+
+	}
+}
+
+material textures/particles/dust2bits
+{
+	noSelfShadow
+	noshadows
+	translucent
+	discrete
+	twosided
+	nonsolid
+	noimpact
+
+	qer_editorimage		textures/particles/dust2bits.tga
+
+	{
+	    blend  blend
+		map    textures/particles/dust2bits.tga
+        vertexcolor
+        colored
+		//highquality
+	}
+}
+
+material textures/particles/dust2bits_gray
+{
+	noSelfShadow
+	noshadows
+	translucent
+	discrete
+	twosided
+	nonsolid
+	noimpact
+
+	qer_editorimage		textures/particles/dust2bits_gray.tga
+
+	{
+	    blend  blend
+		map    textures/particles/dust2bits_gray.tga
+        vertexcolor
+        colored
+	}
+}
+
+
+
+material textures/particles/fbeam
+{
+
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	//deform sprite
+	{
+		blend add
+		map clamp textures/particles/fbeam.tga
+		vertexcolor
+		maskalpha
+	}
+}
+
+material textures/particles/fbeam2
+{
+
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	//deform sprite
+	{
+		blend add
+		map clamp lights/flashlight5.tga
+		vertexcolor
+	}
+}
+
+
+
+material textures/particles/pfiresmall2
+{
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	//deform sprite
+	{
+		blend add
+		map clamp textures/particles/pfiresmall2.tga
+		vertexcolor
+		maskalpha
+
+	}
+}
+
+material textures/particles/fireline1
+{
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	//deform sprite
+	{
+		blend add
+		maskalpha
+		map clamp textures/particles/fire/fireline1.tga
+		vertexcolor
+
+	}
+}
+
+// Fliped along X axis
+material textures/particles/fireline1_mirror_x
+{
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	//deform sprite
+	{
+		blend add
+		map clamp textures/particles/fire/fireline1.tga
+		vertexcolor
+		scale -1, 1
+		translate -1, 0
+	}
+}
+
+material textures/particles/flash_half
+{
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	//deform sprite
+	{
+		blend add
+		map clamp textures/particles/flash/flash_half.tga
+		vertexcolor
+
+	}
+}
+
+material textures/particles/flash
+{
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	//deform sprite
+	{
+		blend add
+		map clamp textures/particles/flash/flash.tga
+		vertexcolor
+		maskAlpha
+
+	}
+}
+
+material textures/particles/pfiresmall2_burn
+{
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	//deform sprite
+	{
+		blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR
+		maskalpha
+		map clamp textures/particles/pfiresmall2.tga
+		vertexcolor
+
+	}
+}
+
+material textures/particles/dust
+{
+	noSelfShadow
+	noshadows
+	translucent
+	discrete
+	twosided
+	nonsolid
+	noimpact
+
+	qer_editorimage		textures/particles/dust.tga
+
+	{
+	    blend  blend
+	    map    textures/particles/dust2.tga
+        vertexcolor
+        colored
+	}
+}
+
+material textures/particles/flame1
+{
+	qer_editorimage textures/particles/flame_strip.tga
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	deform tube
+	{
+		blend add
+		map clamp textures/particles/flame_strip.tga
+		scale 1 / 32 , 1
+		scroll table32[ time * .6 ] , 0
+
+	}
+}
+
+material textures/particles/flame2
+{
+	qer_editorimage textures/particles/flame2_strip.tga
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	deform tube
+	{
+		blend add
+		map clamp textures/particles/flame2_strip.tga
+		scale 1 / 32 , 1
+		scroll table32[ time * .8 ] , 0
+
+	}
+}
+
+material textures/particles/flame3
+{
+	qer_editorimage textures/particles/flame3_strip.tga
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	deform tube
+	{
+		blend add
+		map clamp textures/particles/flame3_strip.tga
+		scale 1 / 32 , 1
+		scroll table32[ time * .8 ] , 0
+
+	}
+}
+
+material textures/particles/lostflame1
+{
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	deform tube
+	{
+		blend add
+		map textures/particles/flame_strip.tga
+		scale 1 / 32 , 1
+		scroll table32[ time * .7 ] , 0
+	}
+}
+
+material textures/particles/lostflame2
+{
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	deform tube
+	{
+		blend add
+		map clamp textures/particles/flame2_strip.tga
+		scale 1 / 32 , 1
+		scroll table32[ time * .6 ] , 0
+
+	}
+}
+
+material textures/particles/lostflame1b
+{
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	deform tube
+	{
+		blend add
+		map clamp textures/particles/flame_strip.tga
+		scale 1 / 32 , 1
+		scroll table32[ time * .6 ] , 0
+
+	}
+}
+
+material textures/particles/lostflame3
+{
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	deform tube
+	{
+		blend add
+		map clamp textures/particles/flame3_strip.tga
+		scale 1 / 32 , 1
+		scroll table32[ time * .8 ] , 0
+
+	}
+}
+
+material textures/particles/lostflame3b
+{
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	deform tube
+	{
+		blend add
+		map clamp textures/particles/flame3_strip.tga
+		scale 1 / 32 , 1
+		scroll table32[ time * .9 ] , 0
+
+	}
+}
+
+material textures/particles/teststrip32
+{
+	noSelfShadow
+	translucent
+	noShadows
+	twosided
+	//deform tube
+	{
+		blend add
+		map clamp textures/particles/flame_strip.tga
+		scale 1 / 32 , 1
+		scroll table32[ time * .8 ] , 0
+
+	}
+}
+
+material textures/particles/flame3_strip
+{
+	qer_editorimage textures/particles/flame3_strip.tga
+	noSelfShadow
+	translucent
+	noShadows
+	sort		10		// sort very late, so no translucent objects in the world draws over it
+	{
+		blend clamp add
+		map textures/particles/flame3_strip.tga
+		vertexColor
+
+	}
+}
+
+
+material textures/particles/flame2_strip
+{
+	qer_editorimage textures/particles/flame2_strip.tga
+	noSelfShadow
+	translucent
+	noShadows
+	sort		10		// sort very late, so no translucent objects in the world draws over it
+	{
+		blend add
+		map clamp textures/particles/flame2_strip.tga
+		vertexColor
+
+	}
+}
+
+material textures/particles/flame_strip
+{
+	qer_editorimage textures/particles/flame_strip.tga
+	noSelfShadow
+	translucent
+	noShadows
+	sort		10		// sort very late, so no translucent objects in the world draws over it
+	{
+		blend add
+		map clamp textures/particles/flame_strip.tga
+		vertexColor
+
+	}
+}
+
+
+material textures/particles/spark3
+{
+	noSelfShadow
+	noshadows
+	translucent
+	discrete
+	nonsolid
+	noimpact
+	//deform tube
+
+	qer_editorimage		textures/particles/spark3.tga
+
+	{
+	    blend  add
+		map    textures/particles/spark3.tga
+        vertexcolor
+        colored
+		//clamp
+
+	}
+
+}
+
+material textures/sfx/redglass
+{
+	translucent
+	twoSided
+	noshadows
+
+	qer_editorimage	textures/sfx/redglass.tga
+
+	{
+		blend add
+		program sfx/cubemap
+	}
+	{
+	 	diffuseMap textures/sfx/redglass.tga
+		//scale	 16 , 16
+	}
+
+}
+
+
+material textures/sfx/blueglass
+{
+	translucent
+	twoSided
+	noshadows
+	surfaceType "glass"
+	qer_editorimage	textures/sfx/blueglass.tga
+
+	{
+		blend add
+		program sfx/cubemap
+	}
+	{
+		diffuseMap textures/sfx/blueglass.tga
+	}
+	/*
+	{
+		blend add
+		map guis/assets/test/gui_scanlines5
+		colored
+		scroll 0, time * -.02
+		alpha .1
+	}
+	*/
+}
+
+material textures/sfx/blueshard
+{
+	translucent
+	twoSided
+	noshadows
+
+	qer_editorimage	textures/sfx/blueglass.tga
+
+	{
+	 	 blend	diffuseMap
+		map textures/sfx/blueglass.tga
+		//scale	 16 , 16
+		colored
+	}
+
+}
+
+
+/* this flare dissapears when SHADERPARM_MODE (parm7) is set, indicating a broken light */
+material textures/sfx/flare
+{
+	noshadows
+	translucent
+	nonsolid
+	discrete
+	deform flare 		16
+	qer_editorimage		textures/editor/flare.tga
+	{
+		if ( parm7 == 0 )
+		blend		add
+		map		_quadratic
+		colored
+		vertexcolor
+	}
+}
+
+material textures/sfx/flare_8
+{
+	noshadows
+	translucent
+	nonsolid
+	discrete
+	deform flare 		8
+	qer_editorimage		textures/editor/flare.tga
+	{
+		if ( parm7 == 0 )
+		blend		add
+		map		_quadratic
+		colored
+		vertexcolor
+	}
+}
+
+material textures/sfx/flare_2
+{
+	noshadows
+	translucent
+	nonsolid
+	discrete
+	deform flare 		2
+	qer_editorimage		textures/editor/flare.tga
+	{
+		if ( parm7 == 0 )
+		blend		add
+		map		_quadratic
+		colored
+		vertexcolor
+	}
+}
+
+
+material textures/sfx/flare_1
+{
+	noshadows
+	translucent
+	nonsolid
+	discrete
+	deform flare 		1
+	qer_editorimage		textures/editor/flare.tga
+	{
+		if ( parm7 == 0 )
+		blend		add
+		map		_quadratic
+		colored
+		vertexcolor
+	}
+}
+
+/* this flare uses parm4 to modify the size */
+material textures/sfx/flareSizeable
+{
+	noshadows
+	translucent
+	nonsolid
+	discrete
+	deform flare 		( 16 + parm4 )
+	qer_editorimage		textures/editor/flare.tga
+	{
+		if ( parm7 == 0 )
+		blend		add
+		map		_quadratic
+		colored
+		vertexcolor
+	}
+}
+
+
+material textures/sfx/flare_cv
+{
+	noshadows
+	translucent
+	nonsolid
+	discrete
+	deform flarevcol	16
+	qer_editorimage		textures/editor/flare.tga
+
+	{
+		blend		add
+		map		_quadratic
+		colored
+		vertexcolor
+	}
+}
+
+
+
+material textures/sfx/flare_cv2
+{
+	noshadows
+	translucent
+	nonsolid
+	discrete
+	deform flarevcol	16
+	qer_editorimage		textures/editor/flare.tga
+
+	{
+		blend		add
+		map		_quadratic
+		colored
+		vertexcolor
+	}
+}
+
+material textures/sfx/flare_davepulse01
+{
+	noshadows
+	translucent
+	nonsolid
+	discrete
+	deform flare 	8//slowstart_one_zero [Parm4 + (time * (0.1 * Parm3)) ]
+	qer_editorimage		textures/editor/flare.tga
+
+	{
+		blend		add
+		map		_quadratic
+		red 	( davepulse01 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm0
+		green 	( davepulse01 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm1
+		blue	( davepulse01 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm2
+		vertexcolor
+		//maskAlpha
+	}
+}
+
+
+//duplicate of flare needed for models
+material textures/sfx/flare2
+{
+	noshadows
+	translucent
+	nonsolid
+	discrete
+	deform flare 		( 16 + parm4 )
+	qer_editorimage		textures/editor/flare.tga
+
+	{
+		blend		add
+		map		_quadratic
+		colored
+		vertexcolor
+	}
+}
+
+//duplicate of flare needed for models
+material textures/sfx/flare3
+{
+	noshadows
+	translucent
+	nonsolid
+	discrete
+	deform flare 		( 16 + parm4 )
+	qer_editorimage		textures/editor/flare.tga
+
+	{
+		blend		add
+		map		_quadratic
+		colored
+		vertexcolor
+	}
+}
+
+
+//duplicate of flare needed for models
+material textures/sfx/flare4
+{
+	noshadows
+	translucent
+	nonsolid
+	discrete
+	deform flare 		( 16 + parm4 )
+	qer_editorimage		textures/editor/flare.tga
+
+	{
+		blend		add
+		map		_quadratic
+		colored
+		vertexcolor
+	}
+}
+
+//duplicate of flare needed for models
+material textures/sfx/flare5
+{
+	noshadows
+	translucent
+	nonsolid
+	discrete
+	deform flare 		( 16 + parm4 )
+	qer_editorimage		textures/editor/flare.tga
+
+	{
+		blend		add
+		map		_quadratic
+		colored
+		vertexcolor
+	}
+}
+
+material textures/sfx/lens_flare02
+{
+	qer_editorimage textures/sfx/lens_flare02.tga
+	noShadows
+	deform sprite
+	discrete
+	nonsolid
+	noimpact
+
+	{
+      	 blend	add
+	 map	textures/sfx/lens_flare02.tga
+	}
+
+
+ }
+
+
+material textures/sfx/lens_flare01
+{
+	qer_editorimage textures/sfx/lens_flare01.tga
+	noShadows
+	deform sprite
+	discrete
+	nonsolid
+	noimpact
+
+	{
+      	 blend	add
+	 map	textures/sfx/lens_flare01.tga
+	}
+
+
+ }
+
+
+material textures/sfx/shard00
+{
+	translucent
+	twoSided
+	noshadows
+	qer_editorimage	textures/sfx/shard00.tga
+
+	{
+		blend add //diffuseMap
+		map textures/sfx/shard00.tga
+	}
+
+}
+
+material textures/sfx/techglass1
+{
+	translucent
+	//nonsolid
+	//noimpact
+	twosided
+	noshadows
+	//polygonOffset
+	qer_editorimage	textures/sfx/techglass1.tga
+
+	{
+		blend add
+		program sfx/cubemap
+	}
+
+	{
+	 	 blend	add
+		map textures/sfx/techglass1_d.tga
+		scale	8 , 8
+	}
+
+
+
+}
+
+material textures/sfx/black
+
+ {
+	description "used for big boxes no light no shadows"
+	noSelfShadow
+	noshadows
+	forceOpaque			// will still seal levels
+	//twosided
+
+	qer_editorimage textures/sfx/black.tga
+
+	{
+		map	textures/sfx/black_2.tga
+	}
+
+}
+
+/* this flare uses global parms to affect the color of all using this shader */
+material textures/sfx/flare_global
+{
+	noshadows
+	translucent
+	nonsolid
+	discrete
+	deform flare 		16
+	qer_editorimage		textures/editor/flare_global.tga
+	{
+		if ( parm7 == 0 )
+		blend		add
+		map			_quadratic
+		red			parm0 * global0
+		green		parm1 * global0
+		blue		parm2 * global0
+		vertexcolor
+	}
+}
+
+
+
+
+material textures/sfx/tracer {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		map			textures/sfx/tracer2.jpg
+		vertexcolor
+	}
+}
+
+
+material textures/particles/dust_storm {
+	{
+		blend blend
+		vertexcolor
+		map makealpha(textures/particles/dustcloud_02.tga)
+		//map textures/particles/smokecloud01.tga
+		red desat_sun_r * lightscale * 0.4
+		green desat_sun_g * lightscale * 0.4
+		blue desat_sun_b * lightscale * 0.4
+		//color sun_r, sun_g, sun_b, 1
+	}
+}
+
+
+
+material textures/sfx/laser_old  {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		map			_white
+		vertexcolor
+		maskalpha
+	}
+}
+
+material textures/sfx/laser {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		blend
+		map 		maxLod 2	makealpha(textures/particles/smoke/laser_smoke_drift2.tga)
+		vertexcolor
+		maskalpha
+		useTemplate templates/materials/animate<16, .333>
+	}
+	{
+		blend		add
+		map 		maxLod 2	textures/particles/smoke/laser_smoke_drift2.tga
+		vertexcolor
+ 		maskalpha
+		useTemplate templates/materials/animate<16, .666>
+	}
+
+
+}
+
+material textures/sfx/railguntrail {
+	twosided
+	{
+		blend		gl_src_alpha, gl_one
+		maskalpha
+		map	 textures/particles/fire/fire5a.tga
+		vertexcolor
+		//red 2
+		//green 2
+		//blue 2
+	}
+}
+
+material textures/sfx/sniper_trail {
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		blend
+		maskalpha
+		map		makealpha( textures/particles/smoke/smokepuff_alpha.tga )
+		vertexcolor
+	}
+}
+
+material textures/sfx/railguntrail_heat {
+	noshadows
+	translucent
+	nonsolid
+	sort postprocess
+	{
+		program heatHazeWithVertex
+		deformScroll 0, 0
+		deformMagnitude 1
+		bumpMap textures/particles/muzzleflash_haze.tga
+		maskAlpha
+	}
+
+}

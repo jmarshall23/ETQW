@@ -1,0 +1,25 @@
+
+entityDef vehicle_route_constraint_controller {
+	"spawnclass"				"sdRouteConstraintController"
+
+	"model_directional"			"models/guis/assets/waypoint.lwo"
+
+//	"skin_direction_model"		"deployEffect"
+
+	"directional_model_color"	"1 1 1"
+
+	"mask"						"dm_mcp_route"
+	
+	"editor_mins"				"-8 -8 -8"
+	"editor_maxs"				"8 8 8"
+}
+
+entityDef vehicle_route_constraint_marker {
+	"spawnclass"			"sdRouteConstraintMarker"
+	"editor_mins"			"-8 -8 -8"
+	"editor_maxs"			"8 8 8"
+	
+	"editor_preview_model"		"models/guis/assets/waypoint.lwo"
+	
+	"noscriptobject"		"1"
+}

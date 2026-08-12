@@ -1,0 +1,107 @@
+sound sounds/weapons/nailgun/impact {
+	compression wav
+
+	minDistance	5
+	maxDistance	20
+	volume		-5
+	lowPriority
+	occlude_once
+	
+	sounds/weapons/nailgun/tink_01.wav
+	sounds/weapons/nailgun/tink_02.wav
+	sounds/weapons/nailgun/tink_03.wav
+	sounds/weapons/nailgun/tink_04.wav
+	sounds/weapons/nailgun/tink_05.wav
+}
+
+sound sounds/weapons/nailgun/endclack {
+
+	minDistance	5
+	maxDistance	25
+	volume		-5
+	
+	sounds/weapons/nailgun/endclack_01.wav
+}
+
+sound sounds/weapons/nailgun/fire {
+	compression wav
+
+	maxDistance 75
+	antiPrivate
+	occlude_once
+	no_dups
+	
+	sounds/weapons/nailgun/fire_01.wav
+	sounds/weapons/nailgun/fire_02.wav
+	sounds/weapons/nailgun/fire_03.wav
+}
+
+sound sounds/weapons/nailgun/fire/far {
+	compression wav
+
+	farDistance 25
+	maxDistance 125
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/shotgun/fire_far.wav
+}
+
+sound sounds/weapons/nailgun/fire/local {
+	compression wav
+
+	private
+	no_dups
+	occlude_once
+
+	sounds/weapons/nailgun/fire_local_01.wav
+	sounds/weapons/nailgun/fire_local_02.wav
+	sounds/weapons/nailgun/fire_local_03.wav
+}
+
+sound sounds/weapons/nailgun/cock {
+
+	volume -15
+	maxDistance 20
+
+	sounds/weapons/nailgun/cock_03.wav
+}
+
+sound sounds/weapons/nailgun/breech {
+
+	volume -10
+	maxDistance 20
+
+	sounds/weapons/nailgun/breech_03.wav
+}
+
+sound sounds/weapons/nailgun/recock {
+
+	volume -10
+	maxDistance 20
+
+	sounds/weapons/nailgun/cock_04.wav
+}
+
+sound sounds/weapons/nailgun/rebreech {
+
+	volume -5
+	maxDistance 20
+
+	sounds/weapons/nailgun/breech_04.wav
+}
+
+sound sounds/weapons/nailgun/motor {
+
+	volume	-10
+	maxDistance	15
+
+	sounds/weapons/nailgun/motor_02.wav
+}
+
+sound sounds/weapons/nailgun/nails {
+
+	maxDistance 20
+
+	sounds/weapons/nailgun/nails_out.wav
+}

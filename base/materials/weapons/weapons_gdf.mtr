@@ -1,0 +1,573 @@
+// First Person scoped views
+
+material models/scopes/scope
+{
+	sort 100.1
+	noatmosphere
+	translucent
+	{
+		program sfx/ambsunDecalAlways //sfx/ambsunDecal
+		//map	models/scopes/scope_d.tga
+		diffusemap	_black
+		bumpmap		_flat //models/scopes/scope_local.tga
+		specularmap	picmip -1 models/scopes/scope_s.tga
+		writeDepth
+		// depthfunc always // ATI workaround
+	}
+}
+
+material models/scopes/scope_always
+{
+	sort 100.1
+	noatmosphere
+	translucent
+	{
+		program sfx/ambsunDecalAlways //sfx/ambsunDecal
+
+		diffusemap	models/scopes/scope_d.tga
+		bumpmap		textures/detail/bump/metal_detail01_local.tga
+
+		writeDepth
+		// depthfunc always // ATI workaround
+
+		textureMatrix bumpMatrix {
+			scale 16, 16
+		}
+
+	}
+}
+
+
+material models/scopes/mask
+{
+	sort 100.05
+	translucent
+	updateCurrentRender
+	//useTemplate postprocess/blur<>
+	{
+		program game/scopeModel
+		//parameters -0.15, 0.7, 1, 0
+		parameters -0.1, 0.76, 1.08, 14
+
+		red 0.81
+		green 0.98
+		blue 1
+
+		map _black //_postProcessBuffer_1
+		//depthFunc always
+		maskdepth
+	}
+}
+
+material models/scopes/mask_rifle {
+	sort 100.05
+	translucent
+	updateCurrentRender
+	//useTemplate postprocess/blur<>
+	{
+		program game/scopeModel
+		//parameters -0.15, 0.7, 0.9, 0
+		parameters -0.1, 0.76, 1.08, 14
+
+		red 0.81
+		green 0.98
+		blue 1
+
+		map _black //_postProcessBuffer_1
+		//depthFunc always
+		maskdepth
+	}
+}
+
+material models/scopes/mask_law {
+	sort 100.05
+	translucent
+	updateCurrentRender
+	//useTemplate postprocess/blur<>
+	{
+		program game/scopeModel
+		//parameters -0.15, 0.8, 1, 0
+		parameters -0.1, 0.76, 1.08, 14
+		
+		red 0.81
+		green 0.98
+		blue 1
+
+		map _black //_postProcessBuffer_1
+		//depthFunc always
+		maskdepth
+	}
+}
+
+material models/scopes/mask_binoculars {
+	sort 100.05
+	translucent
+	updateCurrentRender
+	//useTemplate postprocess/blur<>
+	{
+		program game/scopeModel
+		//parameters -0.15, 1, 1, 0
+		parameters -0.1, 0.76, 1.08, 14
+		//parameters -0.1, 0.56, 1.0, 14
+
+		red 0.81
+		green 0.98
+		blue 1
+
+		map _postProcessBuffer_1
+		//depthFunc always
+		maskdepth
+	}
+}
+
+/*** GDF N93 GPMG REWORK ***/
+
+
+
+/*GPMG shells*/
+
+material models/weapons/gdf_gpmg/gpmg_shell_last12
+{
+	renderbump -size 1024 512 -aa 3 -clampOutput 0 0 1 1 -colormap models/weapons/n93_gpmg/gpmg_local.tga models/weapons/n93_gpmg/dev_sd/hi.lwo
+	noshadows
+	diffusemap	picmip -1 models/weapons/gdf_gpmg/gpmg_roler6_d.tga
+	specularmap	picmip -2 models/weapons/gdf_gpmg/gpmg_roler6_s.tga
+	bumpmap		picmip -1 addnormals(models/weapons/gdf_gpmg/gpmg_roler6_local.tga, heightmap(models/weapons/gdf_gpmg/gpmg_roler6_h.tga, 5 ) )
+}
+
+
+
+material models/weapons/gdf_gpmg/gpmg_shell_last11
+{
+	renderbump -size 1024 512 -aa 3 -clampOutput 0 0 1 1 -colormap models/weapons/n93_gpmg/gpmg_local.tga models/weapons/n93_gpmg/dev_sd/hi.lwo
+	noshadows
+	diffusemap	picmip -1 models/weapons/gdf_gpmg/gpmg_roler6_d.tga
+	specularmap	picmip -2 models/weapons/gdf_gpmg/gpmg_roler6_s.tga
+	bumpmap		picmip -1 addnormals(models/weapons/gdf_gpmg/gpmg_roler6_local.tga, heightmap(models/weapons/gdf_gpmg/gpmg_roler6_h.tga, 5 ) )
+}
+
+
+material models/weapons/gdf_gpmg/gpmg_shell_last10
+{
+	renderbump -size 1024 512 -aa 3 -clampOutput 0 0 1 1 -colormap models/weapons/n93_gpmg/gpmg_local.tga models/weapons/n93_gpmg/dev_sd/hi.lwo
+	noshadows
+	diffusemap	picmip -1 models/weapons/gdf_gpmg/gpmg_roler6_d.tga
+	specularmap	picmip -2 models/weapons/gdf_gpmg/gpmg_roler6_s.tga
+	bumpmap		picmip -1 addnormals(models/weapons/gdf_gpmg/gpmg_roler6_local.tga, heightmap(models/weapons/gdf_gpmg/gpmg_roler6_h.tga, 5 ) )
+}
+
+material models/weapons/gdf_gpmg/gpmg_shell_last9
+{
+	renderbump -size 1024 512 -aa 3 -clampOutput 0 0 1 1 -colormap models/weapons/n93_gpmg/gpmg_local.tga models/weapons/n93_gpmg/dev_sd/hi.lwo
+	noshadows
+	diffusemap	picmip -1 models/weapons/gdf_gpmg/gpmg_roler6_d.tga
+	specularmap	picmip -2 models/weapons/gdf_gpmg/gpmg_roler6_s.tga
+	bumpmap		picmip -1 addnormals(models/weapons/gdf_gpmg/gpmg_roler6_local.tga, heightmap(models/weapons/gdf_gpmg/gpmg_roler6_h.tga, 5 ) )
+}
+
+
+material models/weapons/gdf_gpmg/gpmg_shell_last8
+{
+	renderbump -size 1024 512 -aa 3 -clampOutput 0 0 1 1 -colormap models/weapons/n93_gpmg/gpmg_local.tga models/weapons/n93_gpmg/dev_sd/hi.lwo
+	noshadows
+	diffusemap	picmip -1 models/weapons/gdf_gpmg/gpmg_roler6_d.tga
+	specularmap	picmip -2 models/weapons/gdf_gpmg/gpmg_roler6_s.tga
+	bumpmap		picmip -1 addnormals(models/weapons/gdf_gpmg/gpmg_roler6_local.tga, heightmap(models/weapons/gdf_gpmg/gpmg_roler6_h.tga, 5 ) )
+}
+
+
+material models/weapons/gdf_gpmg/gpmg_shell_last7
+{
+	renderbump -size 1024 512 -aa 3 -clampOutput 0 0 1 1 -colormap models/weapons/n93_gpmg/gpmg_local.tga models/weapons/n93_gpmg/dev_sd/hi.lwo
+	noshadows
+	diffusemap	picmip -1 models/weapons/gdf_gpmg/gpmg_roler6_d.tga
+	specularmap	picmip -2 models/weapons/gdf_gpmg/gpmg_roler6_s.tga
+	bumpmap		picmip -1 addnormals(models/weapons/gdf_gpmg/gpmg_roler6_local.tga, heightmap(models/weapons/gdf_gpmg/gpmg_roler6_h.tga, 5 ) )
+}
+
+material models/weapons/gdf_gpmg/gpmg_shell_last6
+{
+	renderbump -size 1024 512 -aa 3 -clampOutput 0 0 1 1 -colormap models/weapons/n93_gpmg/gpmg_local.tga models/weapons/n93_gpmg/dev_sd/hi.lwo
+	noshadows
+	diffusemap	models/weapons/gdf_gpmg/gpmg_roler6_d.tga
+	specularmap	picmip -2 models/weapons/gdf_gpmg/gpmg_roler6_s.tga
+	bumpmap		picmip -1 addnormals(models/weapons/gdf_gpmg/gpmg_roler6_local.tga, heightmap(models/weapons/gdf_gpmg/gpmg_roler6_h.tga, 5 ) )
+}
+
+
+material models/weapons/gdf_gpmg/gpmg_shell_last5
+{
+	renderbump -size 1024 512 -aa 3 -clampOutput 0 0 1 1 -colormap models/weapons/n93_gpmg/gpmg_local.tga models/weapons/n93_gpmg/dev_sd/hi.lwo
+	noshadows
+	diffusemap	picmip -1 models/weapons/gdf_gpmg/gpmg_roler6_d.tga
+	specularmap	picmip -2 models/weapons/gdf_gpmg/gpmg_roler6_s.tga
+	bumpmap		picmip -1 addnormals(models/weapons/gdf_gpmg/gpmg_roler6_local.tga, heightmap(models/weapons/gdf_gpmg/gpmg_roler6_h.tga, 5 ) )
+}
+
+
+material models/weapons/gdf_gpmg/gpmg_shell_last4
+{
+	renderbump -size 1024 512 -aa 3 -clampOutput 0 0 1 1 -colormap models/weapons/n93_gpmg/gpmg_local.tga models/weapons/n93_gpmg/dev_sd/hi.lwo
+	noshadows
+	diffusemap	picmip -1 models/weapons/gdf_gpmg/gpmg_roler6_d.tga
+	specularmap	picmip -2 models/weapons/gdf_gpmg/gpmg_roler6_s.tga
+	bumpmap		picmip -1 addnormals(models/weapons/gdf_gpmg/gpmg_roler6_local.tga, heightmap(models/weapons/gdf_gpmg/gpmg_roler6_h.tga, 5 ) )
+}
+
+
+material models/weapons/gdf_gpmg/gpmg_shell_last3
+{
+	renderbump -size 1024 512 -aa 3 -clampOutput 0 0 1 1 -colormap models/weapons/n93_gpmg/gpmg_local.tga models/weapons/n93_gpmg/dev_sd/hi.lwo
+	noshadows
+	diffusemap	picmip -1 models/weapons/gdf_gpmg/gpmg_roler6_d.tga
+	specularmap	picmip -2 models/weapons/gdf_gpmg/gpmg_roler6_s.tga
+	bumpmap		picmip -1 addnormals(models/weapons/gdf_gpmg/gpmg_roler6_local.tga, heightmap(models/weapons/gdf_gpmg/gpmg_roler6_h.tga, 5 ) )
+}
+
+material models/weapons/gdf_gpmg/gpmg_shell_last2
+{
+	renderbump -size 1024 512 -aa 3 -clampOutput 0 0 1 1 -colormap models/weapons/n93_gpmg/gpmg_local.tga models/weapons/n93_gpmg/dev_sd/hi.lwo
+	noshadows
+	diffusemap	picmip -1 models/weapons/gdf_gpmg/gpmg_roler6_d.tga
+	specularmap	picmip -2 models/weapons/gdf_gpmg/gpmg_roler6_s.tga
+	bumpmap		picmip -1 addnormals(models/weapons/gdf_gpmg/gpmg_roler6_local.tga, heightmap(models/weapons/gdf_gpmg/gpmg_roler6_h.tga, 5 ) )
+}
+
+
+material models/weapons/gdf_gpmg/gpmg_shell_last1
+{
+	renderbump -size 1024 512 -aa 3 -clampOutput 0 0 1 1 -colormap models/weapons/n93_gpmg/gpmg_local.tga models/weapons/n93_gpmg/dev_sd/hi.lwo
+	noshadows
+	diffusemap	picmip -1 models/weapons/gdf_gpmg/gpmg_roler6_d.tga
+	specularmap	picmip -2 models/weapons/gdf_gpmg/gpmg_roler6_s.tga
+	bumpmap		picmip -1 addnormals(models/weapons/gdf_gpmg/gpmg_roler6_local.tga, heightmap(models/weapons/gdf_gpmg/gpmg_roler6_h.tga, 5 ) )
+}
+
+
+
+
+
+
+/**************************************************************
+	GDF Minigun
+**************************************************************/
+
+material models/weapons/gdf_mini_gun/mini_gun
+{
+	renderbump -size 1024 512 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/gdf_mini_gun/mini_gun_local.tga models/weapons/gdf_mini_gun/mini_gun_hi.ase
+	noshadows
+	diffusemap	picmip -1 partialLoad models/weapons/gdf_mini_gun/mini_gun_d.tga
+	specularmap	picmip -2 partialLoad models/weapons/gdf_mini_gun/mini_gun_s.tga
+	bumpmap 	picmip -1 partialLoad addnormals(models/weapons/gdf_mini_gun/mini_gun_local.tga,
+	heightmap(models/weapons/gdf_mini_gun/mini_gun_h.tga, 5 ) )
+}
+
+material models/weapons/gdf_mini_gun/mini_gun_thirdperson
+{
+	renderbump -size 1024 512 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/gdf_mini_gun/mini_gun_local.tga models/weapons/gdf_mini_gun/mini_gun_hi.ase
+	noshadows
+	diffusemap	picmip -1 models/weapons/gdf_mini_gun/mini_gun_thirdperson_d.tga
+	specularmap	picmip -2 models/weapons/gdf_mini_gun/mini_gun_thirdperson_s.tga
+	bumpmap 	picmip -1 addnormals(models/weapons/gdf_mini_gun/mini_gun_thirdperson_local.tga,
+	heightmap(models/weapons/gdf_mini_gun/mini_gun_thirdperson_h.tga, 5 ) )
+}
+
+/**************************************************************
+	GDF Shotgun
+**************************************************************/
+
+material models/weapons/gdf_shotgun/shotgun_rework
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/n22_shotgun/shotgun_new2_local.tga models/weapons/n22_shotgun/dev_sd/shotgun_renderbump_high2.lwo
+	diffusemap	picmip -1 partialLoad models/weapons/gdf_shotgun/shotgun_new3_d.tga
+	specularmap	picmip -2 partialLoad models/weapons/gdf_shotgun/shotgun_new3_s.tga
+	bumpmap		picmip -1 partialLoad addnormals(models/weapons/gdf_shotgun/shotgun_new3_local.tga, heightmap(models/weapons/gdf_shotgun/shotgun_new3_h.tga, 2 ) )
+}
+
+material models/weapons/gdf_shotgun/shotgun_world
+{
+	noshadows
+	renderbump -size 512 512 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/n22_shotgun/shotgun_world_local.tga models/weapons/n22_shotgun/dev_sd/n22_high.lwo
+	diffusemap	picmip -1	models/weapons/gdf_shotgun/shotgun_world_d.tga
+	specularmap	picmip -2	models/weapons/gdf_shotgun/shotgun_world_s.tga
+	bumpmap	picmip -1 	models/weapons/gdf_shotgun/shotgun_world_local.tga
+}
+
+/**************************************************************
+	GDF Assault Rifle
+**************************************************************/
+
+material models/weapons/gdf_assault_rifle/assault_rifle_2
+{
+	renderbump -size 1024 1024  -trace 0.01 -colormap models/weapons/gdf_assault_rifle/assault_rifle_local_3_cd.tga models/weapons/gdf_assault_rifle/dev_sd/hi_7.lwo
+	noshadows
+	{
+	diffusemap	picmip -1 models/weapons/gdf_assault_rifle/assrifle_d.tga
+	specularmap	picmip -2 models/weapons/gdf_assault_rifle/assrifle_s.tga
+	bumpmap	 	picmip -1 addnormals(models/weapons/gdf_assault_rifle/assrifle_local.tga, heightmap(models/weapons/gdf_assault_rifle/assrifle_h.tga, 4 ) )
+	}
+}
+
+
+material models/weapons/gdf_assault_rifle/assault_rifle_world
+{
+	renderbump -size 512 256 -aa 3 -clampOutput 0 0 1 1 -colormap models/weapons/n80_assault_rifle/assault_rifle_world_local.tga models/weapons/n80_assault_rifle/dev_sd/hi.lwo
+	noshadows
+	diffusemap	picmip -1	models/weapons/gdf_assault_rifle/assault_rifle_world_d.tga
+	specularmap	picmip -2	models/weapons/gdf_assault_rifle/assault_rifle_world_s.tga
+	bumpmap	picmip -1 	models/weapons/gdf_assault_rifle/assault_rifle_world_local.tga
+}
+
+material models/weapons/gdf_assault_rifle/glass
+
+{
+	NoShadows
+	translucent
+	//twoSided
+	sort nearest
+
+   	{
+   		blend blend
+   		map models/weapons/gdf_assault_rifle/glass.tga
+	}
+}
+
+material models/weapons/gdf_assault_rifle/crosshair
+{
+	sort nearest
+	{
+		blend add
+		rotate		time * -15
+		map clamp nopicmip models/weapons/gdf_assault_rifle/crosshair_glow.tga
+		red 	 neon_sign02[ time * 0.05 ] + 0.4
+		alpha .5
+	}
+	{
+		blend add
+		rotate		time * 14
+		map clamp nopicmip models/weapons/gdf_assault_rifle/crosshair_glow.tga
+		red 	 neon_sign02[ time * 0.05 ] + 0.5
+		alpha .5
+	}
+	{
+		blend blend
+		rotate		time * -0.5
+		map clamp nopicmip models/weapons/gdf_assault_rifle/crosshair_glow.tga
+		alpha 0.25
+
+	}
+	{
+		blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR
+		rotate		time * 5
+		map clamp nopicmip models/weapons/gdf_assault_rifle/crosshair_glow.tga
+		red 0
+		green 0
+		blue 1
+		alpha 0.5
+	}
+	
+}
+
+/**************************************************************
+	GDF GPMG
+**************************************************************/
+
+material models/weapons/gdf_gpmg/gpmg_roler
+{
+	renderbump -size 1024 512 -aa 3 -clampOutput 0 0 1 1 -colormap models/weapons/n93_gpmg/gpmg_local.tga models/weapons/n93_gpmg/dev_sd/hi.lwo
+	noshadows
+	diffusemap	picmip -1 partialLoad models/weapons/gdf_gpmg/gpmg_roler6_d.tga
+	specularmap	picmip -2 partialLoad models/weapons/gdf_gpmg/gpmg_roler6_s.tga
+	bumpmap		picmip -1 partialLoad addnormals(models/weapons/gdf_gpmg/gpmg_roler6_local.tga, heightmap(models/weapons/gdf_gpmg/gpmg_roler6_h.tga, 5 ) )
+}
+
+material models/weapons/gdf_gpmg/gpmg
+{
+	renderbump -size 1024 512 -aa 3 -clampOutput 0 0 1 1 -colormap models/weapons/n93_gpmg/gpmg_local.tga models/weapons/n93_gpmg/dev_sd/hi.lwo
+	noshadows
+	surfaceType	"metal"
+
+	diffusemap	picmip -1	models/weapons/gdf_gpmg/gpmg_world_d.tga
+	specularmap	picmip -2	models/weapons/gdf_gpmg/gpmg_world_s.tga
+	bumpmap		picmip -1 	models/weapons/gdf_gpmg/gpmg_world_local.tga
+}
+
+
+material models/weapons/gdf_gpmg/gpmg_world
+{
+	renderbump -size 512 256 -aa 3 -clampOutput 0 0 1 1 -colormap models/weapons/n93_gpmg/gpmg_world_local.tga models/weapons/n93_gpmg/dev_sd/hi.lwo
+	noshadows
+	surfaceType	"metal"
+
+	diffusemap	picmip -1	models/weapons/gdf_gpmg/gpmg_world_d.tga
+	specularmap	picmip -2	models/weapons/gdf_gpmg/gpmg_world_s.tga
+	bumpmap		picmip -1 	models/weapons/gdf_gpmg/gpmg_world_local.tga
+}
+
+/*
+material models/weapons/n93_gpmg_view/n93_gpmg_view
+{
+	renderbump  -size 1024 1024 -trace 0.05 -colormap models/weapons/n93_gpmg_view/n93_gpmg_view.tga models/weapons/n93_gpmg_view/n93_gpmg_view_HP.lwo
+	noshadows
+	surfaceType	"metal"
+	unsmoothedtangents
+
+	diffusemap	picmip -1	models/weapons/n93_gpmg_view/n93_gpmg_view_d.tga
+	specularmap	picmip -2	models/weapons/n93_gpmg_view/n93_gpmg_view_s.tga
+	bumpmap	picmip -1		models/weapons/n93_gpmg_view/n93_gpmg_view_l.tga
+}
+*/
+
+/**************************************************************
+	GDF Law Rocket Launcher
+**************************************************************/
+
+material models/weapons/gdf_rocketlauncher/rocketlauncher
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/rocketlauncher_rocketlauncher/rocketlauncher_firstperson_local.tga models/weapons/rocketlauncher_rocketlauncher/dev_sd/rocketlauncher_rework_high.lwo
+	diffusemap	picmip -1 partialLoad models/weapons/gdf_rocketlauncher/rocketlauncher_firstperson_d.tga
+	specularmap	picmip -2 partialLoad models/weapons/gdf_rocketlauncher/rocketlauncher_firstperson_s.tga
+	bumpmap		picmip -1 partialLoad addnormals(models/weapons/gdf_rocketlauncher/rocketlauncher_firstperson_local.tga, heightmap(	models/weapons/gdf_rocketlauncher/rocketlauncher_firstperson_h.tga, 4 ) )
+}
+
+material models/weapons/gdf_rocketlauncher/rocketlauncher_world
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/rocketlauncher_rocketlauncher/rocketlauncher_world_local.tga models/weapons/rocketlauncher_rocketlauncher/dev_sd/rocketlauncher_rework_high.lwo
+	diffusemap	picmip -1	models/weapons/gdf_rocketlauncher/rocketlauncher_world_d.tga
+	specularmap	picmip -2	models/weapons/gdf_rocketlauncher/rocketlauncher_world_s.tga
+	bumpmap	picmip -1 	models/weapons/gdf_rocketlauncher/rocketlauncher_world_local.tga
+}
+
+/**************************************************************
+	Sniper Rifle
+**************************************************************/
+
+material models/weapons/gdf_sniper_rifle/sniper_rifle_rework
+{
+	renderbump -size 1024 1024 -clampOutput 0 0 1 1 -colormap models/weapons/sniper_rifle/sniper_rifle_rework_local.tga models/weapons/sniper_rifle/sniper_rifle_hi.lwo
+	noshadows
+	diffusemap	picmip -1 partialLoad models/weapons/gdf_sniper_rifle/sniper_rifle_rework_d.tga
+	specularmap	picmip -2 partialLoad models/weapons/gdf_sniper_rifle/sniper_rifle_rework_s.tga
+	bumpmap		picmip -1 partialLoad addnormals(models/weapons/gdf_sniper_rifle/sniper_rifle_rework_local.tga, heightmap(models/weapons/gdf_sniper_rifle/sniper_rifle_rework_h.tga, 5 ) )
+
+}
+
+material models/weapons/gdf_sniper_rifle/sniper_rifle_world
+{
+	renderbump -size 1024 512 -clampOutput 0 0 1 1 -colormap models/weapons/sniper_rifle/sniper_rifle_thirdperson_local.tga models/weapons/sniper_rifle/sniper_rifle_thirdperson_hi.lwo
+	noshadows
+
+	diffusemap	picmip -1	models/weapons/gdf_sniper_rifle/sniper_rifle_world_d.tga
+	specularmap	picmip -2	models/weapons/gdf_sniper_rifle/sniper_rifle_world_s.tga
+	bumpmap	picmip -1 	models/weapons/gdf_sniper_rifle/sniper_rifle_world_local.tga
+}
+
+/**************************************************************
+	Knife
+**************************************************************/
+
+material models/weapons/knife/knife
+{
+	renderbump -size 512 256 -clampOutput 0 0 1 1 -colormap models/weapons/knife/knife_local.tga models/weapons/knife/knife_hi.lwo
+	noshadows
+	diffusemap	picmip -1	models/weapons/knife/knife_d.tga
+	specularmap	picmip -2	models/weapons/knife/knife_s.tga
+	bumpmap	picmip -1 	addnormals(models/weapons/knife/knife_local.tga, heightmap(models/weapons/knife/knife_h.tga, 3 ) )
+}
+
+material models/weapons/knife/knife_thirdperson
+{
+	renderbump -size 512 256 -clampOutput 0 0 1 1 -colormap models/weapons/knife/knife_thirdperson_local.tga models/weapons/knife/knife_hi.lwo
+	diffusemap	picmip -1	textures/common/dark_gray.tga
+	specularmap	picmip -1	textures/common/dark_gray.tga
+	bumpmap 	models/weapons/knife/knife_thirdperson_local.tga
+	noshadows
+}
+
+/**************************************************************
+	GDF pistol
+**************************************************************/
+
+material models/weapons/gdf_pistol/pistol
+{
+	noShadows
+	renderbump 		-size 2048 2048 -aa 2 -clampOutput 0 0 1 1 models/weapons/n2_pistol/n2_pistol_local.tga models/weapons/n2_pistol/n2_pistol_hp.lwo
+	diffusemap	picmip -1 partialLoad models/weapons/gdf_pistol/pistol_d.tga
+	specularmap	picmip -2 partialLoad models/weapons/gdf_pistol/pistol_s.tga
+  	bumpmap		picmip -1 partialLoad addnormals(models/weapons/gdf_pistol/pistol_local.tga, heightmap(models/weapons/gdf_pistol/pistol_h.tga, 4 ) )
+}
+
+material models/weapons/gdf_pistol/pistol_world
+{
+	noShadows
+	renderbump 		-size 2048 2048 -aa 2 -clampOutput 0 0 1 1 models/weapons/n2_pistol/n2_pistol_world_local.tga models/weapons/n2_pistol/n2_pistol_hp.lwo
+	diffusemap	picmip -1		models/weapons/gdf_pistol/pistol_world_d.tga
+	specularmap	picmip -2		models/weapons/gdf_pistol/pistol_world_s.tga
+  	bumpmap	picmip -1			models/weapons/gdf_pistol/pistol_world_local.tga
+}
+
+/**************************************************************
+	GDF machine_pistol
+**************************************************************/
+
+material models/weapons/gdf_machine_pistol/machine_pistol
+{
+ 	noShadows
+	renderbump 		-size 1024 1024 -trace .066 -overdrawMap -clampOutput 0 0 1 1 models/weapons/n5_machine_pistol/n5_machine_pistol_local.tga models/weapons/n5_machine_pistol/n5_machine_pistol_hp.lwo
+
+	diffusemap	picmip -1 partialLoad models/weapons/gdf_machine_pistol/machine_pistol_d.tga
+	specularmap	picmip -2 partialLoad models/weapons/gdf_machine_pistol/machine_pistol_s.tga
+  	bumpmap		picmip -1 partialLoad addnormals(models/weapons/gdf_machine_pistol/machine_pistol_local.tga, heightmap(models/weapons/gdf_machine_pistol/machine_pistol_h.tga,5 ) )
+}
+
+material models/weapons/gdf_machine_pistol/machine_pistol_world
+{
+ 	noShadows
+	renderbump 		-size 1024 1024 -trace .066 -overdrawMap -clampOutput 0 0 1 1 models/weapons/gdf_machine_pistol/machine_pistol_world_local.tga models/weapons/gdf_machine_pistol/machine_pistol_hp.lwo
+	diffusemap	picmip -1		models/weapons/gdf_machine_pistol/machine_pistol_world_d.tga
+	specularmap	picmip -2		models/weapons/gdf_machine_pistol/machine_pistol_world_s.tga
+   	bumpmap	picmip -1			models/weapons/gdf_machine_pistol/machine_pistol_world_local.tga
+}
+
+material models/weapons/gdf_machine_pistol/silencer
+{
+	noshadows
+	renderbump -size 256 128 -aa 2 -clampoutput 0 0 1 1 -colormap models/weapons/n5_machine_pistol/silencer_local.tga models/weapons/n5_machine_pistol/dev_sd/silencer_high.lwo
+
+	diffusemap	picmip -1 models/weapons/gdf_machine_pistol/silencer_d.tga
+	specularmap	picmip -2 models/weapons/gdf_machine_pistol/silencer_s.tga
+	bumpmap		picmip -1 addnormals(models/weapons/gdf_machine_pistol/silencer_local.tga, heightmap(models/weapons/gdf_machine_pistol/silencer_h.tga, 5 ) )
+}
+
+/***************************************************************
+	GDF N5machine pistol
+***************************************************************/
+
+
+
+material models/md5/weapons/n5_machinepistol_view/machinepistol
+{
+	noshadows
+	diffusemap		picmip -1 models/md5/weapons/n5_machinepistol_view/machinepistol.tga
+	specularmap		picmip -2 textures/base_floor/bluetex1aspec.tga
+	bumpmap			picmip -1 addnormals( textures/base_floor/bluetex1a_local.tga, heightmap( textures/base_floor/bluetex1abmp.tga, 6 ) )
+}
+
+/***************************************************************
+	GDF mounted minigun
+***************************************************************/
+
+material models/weapons/gdf_mountedminigun/gdf_mountedminigun
+{
+	renderbump -size 1024 1024 -colorMap -trace 0.04 -clampTextureSpace -overdrawMap models/weapons/gdf_mountedminigun/gdf_mountedminigun_local.tga models/weapons/gdf_mountedminigun/gdf_mountedminigun_h.lwo
+	noshadows
+	{
+	diffusemap 	picmip -1 models/weapons/gdf_mountedminigun/gdf_mountedminigun_d.tga
+	specularmap	picmip -2 models/weapons/gdf_mountedminigun/gdf_mountedminigun_s.tga
+	bumpmap		picmip -1 addnormals (models/weapons/gdf_mountedminigun/gdf_mountedminigun_local.tga, heightmap (models/weapons/gdf_mountedminigun/gdf_mountedminigun_h.tga, 4 ) )
+	}
+}
+

@@ -1,0 +1,97 @@
+sound sounds/weapons/spikes/impact_default {
+	compression wav
+
+	minDistance	5
+	maxDistance	25
+	volume		-5
+	no_dups
+	
+	occlude_once
+	
+	sounds/weapons/spikes/impact_default_01.wav
+	sounds/weapons/spikes/impact_default_02.wav
+	sounds/weapons/spikes/impact_default_03.wav
+	sounds/weapons/spikes/impact_default_04.wav
+}
+
+sound sounds/weapons/spikes/impact_flesh {
+	compression wav
+
+	minDistance	5
+	maxDistance	25
+	volume		-5
+	no_dups
+	
+	occlude_once
+	
+	sounds/weapons/spikes/impact_flesh_01.wav
+	sounds/weapons/spikes/impact_flesh_02.wav
+	sounds/weapons/spikes/impact_flesh_03.wav
+	sounds/weapons/spikes/impact_flesh_04.wav
+	sounds/weapons/spikes/impact_flesh_05.wav
+}
+
+sound sounds/weapons/spikes/impact_ground {
+	compression wav
+
+	minDistance	5
+	maxDistance	25
+	volume		-5
+	no_dups
+	
+	occlude_once
+	
+	sounds/weapons/spikes/impact_ground_01.wav
+	sounds/weapons/spikes/impact_ground_02.wav
+	sounds/weapons/spikes/impact_ground_03.wav
+}
+
+sound sounds/weapons/spikes/impact_wood {
+	compression wav
+
+	minDistance	5
+	maxDistance	25
+	volume		-5
+	no_dups
+	
+	occlude_once
+	
+	sounds/weapons/spikes/impact_wood_01a.wav
+	sounds/weapons/spikes/impact_wood_02a.wav
+	sounds/weapons/spikes/impact_wood_03a.wav
+	sounds/weapons/spikes/impact_wood_04.wav
+	sounds/weapons/spikes/impact_wood_05.wav
+	sounds/weapons/spikes/impact_wood_06.wav
+	sounds/weapons/spikes/impact_wood_07.wav
+}
+
+
+
+
+sound sounds/weapons/spikes/fire {
+	compression wav
+
+	volume -5
+	maxDistance 20
+	
+	occlude_once
+
+	sounds/weapons/spikes/swing_03.wav
+	sounds/weapons/spikes/swing_04.wav
+}
+
+sound sounds/weapons/spikes/fire/local {
+	compression wav
+	
+	occlude_once
+
+//	sounds/weapons/spikes/fire_local.wav
+}
+
+
+sound sounds/weapons/spikes/raise {
+	volume		-4
+//	sounds/weapons/spikes/raise_03.wav
+	sounds/weapons/spikes/raise_03.wav
+}
+

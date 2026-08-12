@@ -1,0 +1,80 @@
+effect effects/vehicles/magog/groundeffect_dirt_simple
+{
+	size	0
+
+	cutOffDistance	2000
+
+}
+
+effect effects/vehicles/magog/groundeffect_grass_simple
+{
+	size	0
+
+	cutOffDistance	2000
+
+}
+
+effect effects/vehicles/magog/groundeffect_stone_simple
+{
+	size	0
+
+	cutOffDistance	2000
+
+}
+
+effect effects/vehicles/magog/groundeffect_pavement_simple
+{
+	size	0
+
+	cutOffDistance	2000
+
+}
+
+effect effects/vehicles/magog/groundeffect_sand_simple
+{
+	size	0
+
+	cutOffDistance	2000
+
+}
+
+effect effects/vehicles/magog/groundeffect_snow_simple
+{
+	size	0
+
+	cutOffDistance	2000
+
+}
+
+effect effects/vehicles/magog/groundeffect_simple
+{
+	size	0
+
+	cutOffDistance	2000
+
+}
+
+effect effects/vehicles/magog/groundeffect_water_simple
+{
+	size	0
+
+	cutOffDistance	2000
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

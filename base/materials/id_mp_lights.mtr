@@ -1,0 +1,33 @@
+material textures/base_light/striplight3_global_d3dm3
+{
+	description 		"uses global parms"
+
+	qer_editorimage		textures/base_light/striplight3.tga
+	bumpmap			textures/base_light/striplight3_local.tga
+	diffusemap		textures/base_light/striplight3_d.tga
+	specularmap		textures/base_light/striplight3_s.tga
+	{
+		blend		add
+		map		textures/base_light/striplight3_add.tga
+		red		parm0 * 2
+		green		parm1 * 2
+		blue		parm2 * 2
+	}
+}
+
+material textures/base_light/striplight3_yellow
+{
+	description 		"uses global parms"
+
+	qer_editorimage		textures/base_light/striplight3.tga
+	bumpmap			textures/base_light/striplight3_local.tga
+	diffusemap		textures/base_light/striplight3_d.tga
+	specularmap		textures/base_light/striplight3_s.tga
+	{
+		blend		add
+		map		textures/base_light/striplight3yellow_add.tga
+		red		parm0 * 2
+		green		parm1 * 2
+		blue		parm2 * 2
+	}
+}

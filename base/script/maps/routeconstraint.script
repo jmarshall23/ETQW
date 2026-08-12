@@ -1,0 +1,32 @@
+
+object mapObject_RouteConstraint : mapObject_Default {
+	void			InitObjectives();
+
+	void			OnMCPDestroyed( vector newLocation, vector newAngles );
+	void			OnMCPDelivered( entity obj );
+
+	entity			mcpRoute;
+	entity			mcpSpawner;
+}
+
+mapObject_Base RouteConstraint_MapScript() {
+	return new mapObject_RouteConstraint;
+}
+
+void mapObject_RouteConstraint::InitObjectives() {
+	gdfTeam.SetRespawnWait( 1 );
+	stroggTeam.SetRespawnWait( 1 );
+	CreateRespawnTimeThread(  gdfTeam );
+
+	mcpRoute = worldspawn.getEntityKey( "script_mcp_route" );
+	mcpSpawner = worldspawn.getEntityKey( "script_mcp_caller" );
+}
+
+void mapObject_RouteConstraint::OnMCPDestroyed( vector newLocation, vector newAngles ) {
+	mcpSpawner.vCallDrop( newLocation, newAngles );
+}
+
+void mapObject_RouteConstraint::OnMCPDelivered( entity obj ) {		
+	obj.setTrackerEntity( mcpRoute );
+	objManager.SetObjectiveEntity( obj, 0 );
+}

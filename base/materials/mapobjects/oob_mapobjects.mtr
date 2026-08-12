@@ -1,0 +1,10 @@
+material models/mapobjects/outskirts/oob_buildings01
+{
+	{
+	program interaction/selfillum
+	diffusemap	picmip -1	models/mapobjects/outskirts/oob_buildings01_d.tga
+	bumpmap		picmip -1	models/mapobjects/outskirts/oob_buildings01_local.tga
+	specularmap	picmip -1	models/mapobjects/outskirts/oob_buildings01_s.tga
+	selfillummap	picmip -1	models/mapobjects/outskirts/oob_buildings01_glow.tga
+	}
+}

@@ -1,0 +1,111 @@
+
+keybindings etqw/movement {
+	title "guis/mainmenu/movement"
+	keys {
+		"guis/mainmenu/bindings/forward"						"_forward"
+		"guis/mainmenu/bindings/back"							"_back"
+		"guis/mainmenu/bindings/move_left"						"_moveleft"
+		"guis/mainmenu/bindings/move_right"						"_moveright"
+		"guis/mainmenu/bindings/jump"							"_moveup"
+		"guis/mainmenu/bindings/crouch"							"_movedown"
+		"guis/mainmenu/bindings/prone"							"_prone"
+		"guis/mainmenu/bindings/sprintforward_thrust"			"_sprint"
+		"guis/mainmenu/bindings/walkengine_thrust"				"_speed"
+		"guis/mainmenu/bindings/lean_left"						"_leanleft"
+		"guis/mainmenu/bindings/lean_right"						"_leanright"
+	}
+}
+
+keybindings etqw/weapons {
+	title "guis/mainmenu/weapons"
+	keys {
+		"guis/mainmenu/bindings/attack"							"_attack"
+		"guis/mainmenu/bindings/alternate_attackironsights"		"_altattack"
+		"guis/mainmenu/bindings/reload"							"_reload"
+		"guis/mainmenu/bindings/next_weapon"					"_weapnext"
+		"guis/mainmenu/bindings/previous_weapon"				"_weapprev"
+
+		"guis/mainmenu/bindings/select_melee"					"_weapon0"
+		"guis/mainmenu/bindings/select_single_handed" 			"_weapon1"
+		"guis/mainmenu/bindings/select_double_handed" 			"_weapon2"
+		"guis/mainmenu/bindings/select_grenades"				"_weapon3"
+		"guis/mainmenu/bindings/select_tools"					"_weapon4"
+		"guis/mainmenu/bindings/select_items"					"_weapon5"
+//		"guis/mainmenu/bindings/select_binoculars"				"_weapon6"
+
+		"guis/mainmenu/bindings/quick_select_binoculars"		"useweapon weapon_binocs"
+		"guis/mainmenu/bindings/quick_select_tool1"				"useweapon weapon_tool1"
+		"guis/mainmenu/bindings/quick_select_tool2"				"useweapon weapon_tool2"
+		"guis/mainmenu/bindings/quick_select_item1"				"useweapon weapon_item1"
+		"guis/mainmenu/bindings/quick_select_item2"				"useweapon weapon_item2"
+	}
+}
+
+keybindings etqw/misc {
+	title "guis/mainmenu/misc"
+	keys {
+		"guis/mainmenu/bindings/activate"						"_activate"
+		"guis/mainmenu/bindings/toggle_ready"					"_ready"
+		"guis/mainmenu/bindings/togglenetdemo"					"toggleNetDemo"
+                
+                "guis/mainmenu/bindings/show_fireteam" 					"_showFireTeam"
+		"guis/mainmenu/bindings/command_map" 					"_commandmap"
+		"guis/mainmenu/bindings/zoom_map_in" 					"zoominCommandMap"
+		"guis/mainmenu/bindings/zoom_map_out" 					"zoomoutCommandMap"
+		"guis/mainmenu/bindings/show_waypoints"					"_showwaypoints"
+		"guis/mainmenu/bindings/toggle_waypoints"				"toggle g_showwaypoints 0 1"
+		"guis/mainmenu/bindings/limbo_menu" 					"_limbomenu"
+		"guis/mainmenu/bindings/fireteam_menu"					"_fireteam"
+		"guis/mainmenu/bindings/task_menu" 						"_taskmenu"
+		"guis/mainmenu/bindings/vote_menu" 						"_votemenu"
+                                                            	
+		"guis/mainmenu/bindings/chat" 							"clientMessageMode"
+		"guis/mainmenu/bindings/team_chat" 						"clientMessageMode 1"
+		"guis/mainmenu/bindings/fireteam_chat"					"clientMessageMode 2"
+		"guis/mainmenu/bindings/context_menu" 					"_context"
+		"guis/mainmenu/bindings/quick_chat" 					"_quickchat"
+		"guis/mainmenu/bindings/globalvoice_chat"				"_voice"
+		"guis/mainmenu/bindings/teamvoice_chat"					"_teamvoice"
+		"guis/mainmenu/bindings/fireteamvoice_chat"				"_fireteamvoice"
+                                                            	
+		"guis/mainmenu/bindings/stroyent_health"				"_stroydown"
+		"guis/mainmenu/bindings/health_stroyent"				"_stroyup"
+
+		"guis/mainmenu/bindings/show_scores" 					"_showscores"
+                                                            	
+		"guis/mainmenu/bindings/gdf_team" 						"clientTeam gdf"
+		"guis/mainmenu/bindings/strogg_team" 					"clientTeam strogg"
+		"guis/mainmenu/bindings/spectator"						"clientTeam spectator"
+                                                            	
+		"guis/mainmenu/bindings/vote_yes"						"vote y"
+		"guis/mainmenu/bindings/vote_no"						"vote n"
+                                                            	
+		"guis/mainmenu/bindings/screenshot"						"screenshot"
+	}
+}
+
+keybindings etqw/vehicles {
+	title "guis/mainmenu/vehicles"
+	keys {
+		"guis/mainmenu/bindings/enter_exit_vehicle"				"_usevehicle"
+		"guis/mainmenu/bindings/change_camera" 					"_vehiclecamera"
+		"guis/mainmenu/bindings/vehicle_free_look_aim"			"_tophat"
+		"guis/mainmenu/bindings/use_horn"						"_modeswitch"
+	}
+}
+
+keybindings etqw/dev {
+	title "guis/mainmenu/dev"
+	keys {
+		"guis/mainmenu/bindings/toggle_noclip"						"noclip"
+		"guis/mainmenu/bindings/toggle_thirdperson"					"toggle pm_thirdperson"
+		"guis/mainmenu/bindings/toggle_show_lagometer"				"toggle net_clientlagometer"
+		"guis/mainmenu/bindings/toggle_show_framerate"				"toggle com_showfps"
+		"guis/mainmenu/bindings/toggle_show_hud"					"toggle g_showhud"
+		"guis/mainmenu/bindings/toggle_show_first_person_weapon" 	"toggle ui_showgun"
+		"guis/mainmenu/bindings/toggle_show_texture_memory"			"toggle r_showtexturememory 0 1 2"
+		"guis/mainmenu/bindings/toggle_show_polygons"				"toggle r_showtris 0 1 2 3"
+		"guis/mainmenu/bindings/toggle_show_collision"				"toggle g_showcollisionworld; toggle g_showcollisionmodels"
+		"guis/mainmenu/bindings/cycle_timescale"					"toggle timescale 1 5 10"
+	}
+}

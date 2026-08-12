@@ -1,0 +1,694 @@
+effect effects/vehicles/dust/tire_dust
+{
+	size	1122
+
+	emitter "Dust"
+	{
+		duration	0.1,0.1
+		count		3,6
+		attenuateEmitter
+		attenuation	2000,2500
+
+		sprite
+		{
+			duration	1,3
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		-0.02,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,-8,-16,0,-8 }
+				velocity { box -20,-4,-4,20,4,4 }
+				size { box 48,48,72,72 }
+				tint { line 0.337255,0.337255,0.337255,0.560784,0.513726,0.403922 }
+				fade { line 0.2,0.6 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope exp_x2 count 0.8,0.8 }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { box 320,320,768,768 }
+				tint { line 0.176471,0.176471,0.176471,0.454902,0.364706,0.266667 }
+			}
+			lineHit
+		}
+	}
+	emitter "Small Dust"
+	{
+		duration	0.1,0.1
+		count		3,3
+		attenuateEmitter
+		attenuation	1000,1500
+
+		sprite
+		{
+			duration	0.5,1.5
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		-0.02,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,-8,-16,0,-8 }
+				velocity { box -20,-4,-4,20,4,4 }
+				size { box 16,16,32,32 }
+				tint { line 0.14902,0.14902,0.14902,0.74902,0.709804,0.65098 }
+				fade { line 0.2,0.6 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				tint { line 0.0941177,0.0941177,0.0941177,0.635294,0.517647,0.392157 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/vehicles/dust/tire_dust_grass
+{
+	size	1122
+
+	cutOffDistance	4000
+
+	emitter "Dust"
+	{
+		duration	0.1,0.1
+		count		3,6
+		attenuateEmitter
+		attenuation	2000,2500
+
+		sprite
+		{
+			duration	1,3
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		-0.02,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,-8,-16,0,-8 }
+				velocity { box -20,-4,-4,20,4,4 }
+				size { box 48,48,72,72 }
+				tint { line 0.717647,0.780392,0.619608,0.533333,0.396078,0.290196 }
+				fade { line 0.4,0.6 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope exp_x2 }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { box 320,320,768,768 }
+				tint { line 0.470588,0.529412,0.345098,0.403922,0.337255,0.294118 }
+			}
+			lineHit
+		}
+	}
+	emitter "Small Dust"
+	{
+		duration	0.1,0.1
+		count		3,3
+		attenuateEmitter
+		attenuation	1000,1500
+
+		sprite
+		{
+			duration	0.75,1.5
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		-0.02,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,-8,-16,0,-8 }
+				velocity { box -20,-4,-4,20,4,4 }
+				size { box 16,16,32,32 }
+				tint { line 0.580392,0.658824,0.392157,0.74902,0.627451,0.537255 }
+				fade { point 0.4 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				tint { line 0.533333,0.611765,0.372549,0.662745,0.490196,0.321569 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/vehicles/dust/tire_dust_metal
+{
+	size	1132
+
+	cutOffDistance	4000
+
+	emitter "Dust"
+	{
+		duration	0.1,0.1
+		count		6,6
+		attenuateEmitter
+		attenuation	2000,2500
+
+		sprite
+		{
+			duration	2,4
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		-0.02,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,-8,-16,0,-8 }
+				velocity { box -20,-4,-4,20,4,4 }
+				size { box 48,48,72,72 }
+				tint { line 0.760784,0.662745,0.572549,0.74902,0.627451,0.541176 }
+				fade { point 0.4 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { box 320,320,768,768 }
+				tint { point 0.784314,0.713726,0.639216 }
+			}
+			lineHit
+		}
+	}
+	emitter "Small Dust"
+	{
+		duration	0.1,0.1
+		count		3,3
+		attenuateEmitter
+		attenuation	1000,1500
+
+		sprite
+		{
+			duration	1,1.5
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		-0.02,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,-8,-16,0,-8 }
+				velocity { box -20,-4,-4,20,4,4 }
+				size { box 16,16,32,32 }
+				tint { line 0.760784,0.662745,0.572549,0.74902,0.627451,0.541176 }
+				fade { point 0.4 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				tint { point 0.784314,0.713726,0.639216 }
+			}
+			lineHit
+		}
+	}
+}effect effects/vehicles/dust/tire_dust_stone
+{
+	size	1122
+
+	cutOffDistance	4000
+
+	emitter "Dust2"
+	{
+		duration	0.1,0.1
+		count		3,6
+		attenuateEmitter
+		attenuation	2000,2500
+
+		sprite
+		{
+			duration	1,3
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		-0.02,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,-8,-16,0,-8 }
+				velocity { box -20,-4,-4,20,4,4 }
+				size { box 48,48,72,72 }
+				tint { line 0.505882,0.505882,0.505882,0.756863,0.733333,0.666667 }
+				fade { line 0.1,0.3 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope exp_x2 count 0.8,0.8 }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { box 320,320,768,768 }
+				tint { line 0.478431,0.478431,0.478431,0.733333,0.662745,0.6 }
+			}
+			lineHit
+		}
+	}
+	emitter "Small Dust"
+	{
+		duration	0.1,0.1
+		count		3,3
+		attenuateEmitter
+		attenuation	1000,1500
+
+		sprite
+		{
+			duration	0.5,1.5
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		-0.02,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,-8,-16,0,-8 }
+				velocity { box -20,-4,-4,20,4,4 }
+				size { box 16,16,32,32 }
+				tint { line 0.14902,0.14902,0.14902,0.74902,0.709804,0.65098 }
+				fade { line 0.2,0.6 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				tint { line 0.0941177,0.0941177,0.0941177,0.635294,0.517647,0.392157 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+effect effects/vehicles/dust/tire_dust_wood
+{
+	size	328
+
+	cutOffDistance	4000
+
+	emitter "Dust"
+	{
+		duration	0.1,0.1
+		count		6,6
+		attenuateEmitter
+		attenuation	2000,2500
+
+		sprite
+		{
+			duration	2,4
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		-0.02,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,-8,-16,0,-8 }
+				velocity { box -20,-4,-4,20,4,4 }
+				size { box 48,48,72,72 }
+				tint { line 0.760784,0.662745,0.572549,0.74902,0.627451,0.541176 }
+				fade { line 0.2,0.3 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { box 100,100,200,200 }
+				tint { point 0.784314,0.713726,0.639216 }
+			}
+			lineHit
+		}
+	}
+}effect effects/vehicles/dust/tire_dust_pavement
+{
+	size	1122
+
+	cutOffDistance	4000
+
+	emitter "Dust2"
+	{
+		duration	0.1,0.1
+		count		3,6
+		attenuateEmitter
+		attenuation	2000,2500
+
+		sprite
+		{
+			duration	1,3
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		-0.02,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,-8,-16,0,-8 }
+				velocity { box -20,-4,-4,20,4,4 }
+				size { box 48,48,72,72 }
+				tint { line 0.505882,0.505882,0.505882,0.756863,0.733333,0.666667 }
+				fade { line 0.1,0.3 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope exp_x2 count 0.8,0.8 }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { box 320,320,768,768 }
+				tint { line 0.478431,0.478431,0.478431,0.733333,0.662745,0.6 }
+			}
+			lineHit
+		}
+	}
+	emitter "Small Dust"
+	{
+		duration	0.1,0.1
+		count		3,3
+		attenuateEmitter
+		attenuation	1000,1500
+
+		sprite
+		{
+			duration	0.5,1.5
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		-0.02,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,-8,-16,0,-8 }
+				velocity { box -20,-4,-4,20,4,4 }
+				size { box 16,16,32,32 }
+				tint { line 0.14902,0.14902,0.14902,0.74902,0.709804,0.65098 }
+				fade { line 0.2,0.6 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				tint { line 0.0941177,0.0941177,0.0941177,0.635294,0.517647,0.392157 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/vehicles/dust/tire_dust_sand
+{
+	size	1122
+
+	cutOffDistance	4000
+
+	emitter "Dust"
+	{
+		duration	0.1,0.1
+		count		3,6
+		attenuateEmitter
+		attenuation	2000,2500
+
+		sprite
+		{
+			duration	1,3
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		-0.02,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,-8,-16,0,-8 }
+				velocity { box -20,-4,-4,20,4,4 }
+				size { line 48,48,72,72 }
+				tint { line 0.937255,0.709804,0.454902,0.976471,0.694118,0.415686 }
+				fade { line 0.8,1 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope exp_x2 }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { box 320,320,768,768 }
+				tint { line 0.917647,0.803922,0.592157,0.941177,0.67451,0.384314 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+effect effects/vehicles/dust/tire_dust_snow
+{
+	size	602
+
+	cutOffDistance	4000
+
+	emitter "Small Dust"
+	{
+		duration	0.1,0.1
+		count		3,3
+		attenuateEmitter
+		attenuation	1000,1500
+
+		sprite
+		{
+			duration	1,2
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		-0.02,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,-8,-16,0,-8 }
+				velocity { box -20,-4,-4,20,4,4 }
+				size { box 16,16,32,32 }
+				tint { line 0.631373,0.666667,0.686275,1,1,1 }
+				fade { point 0.4 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				tint { line 0.686275,0.713726,0.729412,1,1,1 }
+			}
+			lineHit
+		}
+	}
+	emitter "Dust3"
+	{
+		duration	0.1,0.1
+		count		3,6
+		attenuateEmitter
+		attenuation	2000,2500
+
+		sprite
+		{
+			duration	1,3
+			persist
+			material	"textures/particles/smoke_test1"
+			gravity		-0.02,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,-8,-16,0,-8 }
+				velocity { box -20,-4,-4,20,4,4 }
+				size { line 48,48,72,72 }
+				tint { line 0.807843,0.823529,0.835294,1,1,1 }
+				fade { line 0.4,0.7 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope exp_x2 }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { box 200,200,400,400 }
+				tint { line 0.87451,0.886275,0.890196,1,1,1 }
+			}
+			lineHit
+		}
+	}
+}effect effects/vehicles/dust/tire_dust_water
+{
+	size	147
+
+	cutOffDistance	4000
+
+	emitter "splash"
+	{
+		duration	5,5
+		count		10,10
+
+		sprite
+		{
+			duration	0.5,2
+			material	"particles/water/splash_dir_03"
+			gravity		0.01,0.01
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,15,0,0,50 }
+				velocity { box -20,-1,-1,-20,1,1 }
+				size { line 5,5,15,15 }
+				fade { line 0.1,0.5 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 count 0.5,0.5 }
+				fade { envelope rr2_concavefade_start_at_1 }
+				offset { envelope shamus_exp_1minusx/x2 count 2,2,2 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 50,50,85,85 }
+				offset { point 0,0,0 cone }
+				rotate { box 0.5,-0.5 }
+			}
+			lineHit
+		}
+	}
+	emitter "random"
+	{
+		duration	5,5
+		count		1,1
+
+		sprite
+		{
+			duration	0.5,0.5
+			material	"particles/water/splash_dir_02"
+			gravity		0.01,0.01
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,30 }
+				velocity { box 0,-1,-1,0,1,1 }
+				size { line 5,5,15,15 }
+				fade { line 0.3,0.7 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 count 0.5,0.5 }
+				fade { envelope rr2_concavefade_start_at_1 }
+				offset { envelope shamus_exp_1minusx/x2 count 2,2,2 }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 45,45,75,75 }
+				offset { point 0,0,0 cone }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+

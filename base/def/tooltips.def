@@ -1,0 +1,1318 @@
+
+#include "tooltips.include"
+#include "templates/tooltips.include"
+
+toolTip tip_item_landmine_limit {
+	alwaysPlay
+	length	3
+	// sound played in script
+	//sound "sounds/ui/main/cannot"
+	text	"game/tt/too_many_mines"
+}
+
+toolTip mounted_weapon_already_in_use {
+	length	5
+	sound "sounds/ui/main/bad"
+	text	"game/tt/weapon_emplacement_in_use"
+}
+
+toolTip mounted_weapon_player_invalid {
+	length	5
+	sound "sounds/ui/main/bad"
+	text	"game/tt/weapon_emplacement_cant_use"
+}
+
+toolTip vote_vehicle_driver_backup {
+	length	15
+	text	"game/tt/vehicle_driver_backup"
+
+}
+
+toolTip fireteam_initial_create {
+	length	15
+	text	"game/tt/fire_team_create"
+
+}
+
+toolTip fireteam_initial_join {
+	length	15
+	text	"game/tt/fire_team_join"
+
+}
+
+toolTip fireteam_invite {
+	length	15
+	text	"game/tt/fire_team_join_specific"
+
+}
+
+toolTip fireteam_propose {
+	length	15
+	text	"game/tt/fire_team_request_add"
+
+}
+
+toolTip fireteam_request {
+	length	15
+	text	"game/tt/fire_team_request_join"
+}
+
+toolTip fireteam_createfortask {
+	length	15
+	text	"game/tt/fire_team_request_create"
+
+}
+
+toolTip fireteam_become_leader {
+	text	"game/tt/fire_team_become_leader"
+
+	alwaysPlay
+}
+
+toolTip unbalanced_teams_switch {
+	length	15
+	text	"game/tt/unbalanced_teams_switch"
+}
+
+toolTip task_need_leave_team {
+	length	15
+	text	"game/tt/task_need_leave_team"
+
+}
+
+toolTip task_need_abandon_task {
+	length	15
+	text	"game/tt/task_need_abandon_task"
+
+}
+
+toolTip generic_weapon_reload {
+	text "game/tt/intro/generic/reload_weapon"
+
+	sound "sounds/ui/main/neutral"
+	locationIndex TOOLTIP_POSITION_AMMO_BAR
+}
+
+toolTip generic_weapon_fire {
+	text "game/tt/intro/generic/fire_shoot_item"
+	sound "sounds/ui/main/neutral"
+
+}
+
+toolTip generic_weapon_grenade_fire {
+	text "game/tt/intro/generic/fire_throw_item"
+	sound "sounds/ui/main/neutral"
+
+}
+
+toolTip generic_weapon_ironsights {
+	text "game/tt/intro/generic/ironsights_2"
+	sound "sounds/ui/main/neutral"
+
+}
+
+toolTip generic_deploy_intro_1 {
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	text "game/tt/intro/generic/deploy_intro_1"
+	sound	"sounds/tooltips/generic_deploy_intro_1/info"
+
+}
+
+toolTip generic_deploy_intro_2 {
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	text "game/tt/intro/generic/deploy_intro_2"
+	sound	"sounds/tooltips/generic_deploy_intro_2/info"
+
+}
+
+toolTip generic_deploy_start {
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	text	"game/tt/intro/generic/deploy_start"
+	sound	"sounds/tooltips/generic_deploy_start/info"
+}
+
+toolTip generic_deploy_rotate {
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	text	"game/tt/intro/generic/deploy_rotate"
+	sound	"sounds/tooltips/generic_deploy_rotate/info"
+}
+
+toolTip generic_deploy_start_fieldops {
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	text	"game/tt/intro/generic/deploy_start"
+	sound	"sounds/tooltips/generic_deploy_start/info"
+}
+
+toolTip generic_deploy_rotate_fieldops {
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	text	"game/tt/intro/generic/deploy_rotate"
+	sound	"sounds/tooltips/generic_deploy_rotate/info"
+}
+
+toolTip generic_deploy_start_covertops {
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	text	"game/tt/intro/generic/deploy_start"
+	sound	"sounds/tooltips/generic_deploy_start/info"
+}
+
+toolTip generic_deploy_rotate_covertops {
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	text	"game/tt/intro/generic/deploy_rotate"
+	sound	"sounds/tooltips/generic_deploy_rotate/info"
+}
+
+toolTip generic_weapon_heat {
+	text	"game/tt/intro/generic/heat"
+	sound	"sounds/ui/main/neutral"
+}
+
+toolTip teamkill_complaint {
+	text "game/tt/teamkill/complaint"
+	length 15
+}
+
+toolTip amt_destroyed_missile {
+	length			5
+	maxPlayCount	2
+	useSoundLength
+	singlePlayerToolTip
+	text	"game/tt/amt_destroyed_missile"
+	sound	"sounds/tooltips/amt_destroyed_missile/info"
+}
+
+toolTip amt_destroyed_missile_gdf {
+	length			5
+	maxPlayCount	2
+	useSoundLength
+	singlePlayerToolTip
+	text	"game/tt/amt_destroyed_missile_gdf"
+	sound	"sounds/tooltips/amt_destroyed_missile_gdf/info"
+}
+
+toolTip amt_destroyed_missile_strogg {
+	length			5
+	maxPlayCount	2
+	useSoundLength
+	singlePlayerToolTip
+	text	"game/tt/amt_destroyed_missile_strogg"
+	sound	"sounds/tooltips/amt_destroyed_missile_strogg/info"
+}
+
+toolTip prone_failed {
+	sound "sounds/ui/main/bad"
+	alwaysPlay
+	text	"game/tt/cannot_prone"
+}
+
+toolTip game_noobjective_warmup {
+	maxPlayCount 5
+	nextShowDelay 10
+	sound "sounds/ui/main/neutral"
+	text	"game/tt/noobjective_warmup"
+}
+
+toolTip stroytransfer_failed {
+	alwaysPlay
+	nextShowDelay 10
+	sound "sounds/ui/main/bad"
+	text	"game/tt/stroytransfer_failed"
+}
+
+
+toolTip killed_by_mine {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	useSoundLength
+	maxPlayCount	2
+	sound	"sounds/tooltips/killed_by_mine/info"
+	text	"game/tt/killed_by_mine"
+	
+	timeline {
+		onTime 10	pause
+		onTime end	unpause
+	}
+}
+
+toolTip spawnhosting_me {
+	length			8
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/spawnhosting_me/info"
+	text	"game/tt/spawnhosting_me"
+}
+
+toolTip possessing_me_gdf {
+	length			8
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/possessing_me_gdf/info"
+	text	"game/tt/possessing_me_gdf"
+}
+
+toolTip possessing_me_strogg {
+	length			8
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/possessing_me_strogg/info"
+	text	"game/tt/possessing_me_strogg"
+}
+
+toolTip killed_by_disguised_gdf {
+	length			8
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/killed_by_disguised_gdf/info"
+	text	"game/tt/killed_by_disguised_gdf"
+}
+
+toolTip killed_by_disguised_strogg {
+	length			8
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/killed_by_disguised_strogg/info"
+	text	"game/tt/killed_by_disguised_strogg"
+}
+
+toolTip low_ammo_gdf {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/low_ammo_gdf/info"
+	text	"game/tt/low_ammo_gdf"
+}
+
+toolTip low_ammo_strogg {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/low_ammo_strogg/info"
+	text	"game/tt/low_ammo_strogg"
+}
+
+toolTip low_health_gdf {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/low_health_gdf/info"
+	text	"game/tt/low_health_gdf"
+	
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+toolTip low_health_strogg {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/low_health_strogg/info"
+	text	"game/tt/low_health_strogg"
+	
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+toolTip player_parachute_gdf {
+	length			8
+	singlePlayerToolTip
+	maxPlayCount	1
+	useSoundLength
+	sound	"sounds/tooltips/player_parachute_gdf/info"
+	text "game/tt/intro/team/gdf/parachute"
+	
+	timeline {
+		onTime 0	pause
+		onTime 0	guiEvent "hl_parachute_use"
+		
+		onTime end	guiEvent ""
+		onTime end	unpause
+	}
+}
+
+toolTip player_parachute_strogg {
+	length			8
+	singlePlayerToolTip
+	maxPlayCount	1
+	useSoundLength
+	sound	"sounds/tooltips/player_parachute_strogg/info"
+	text "game/tt/intro/team/strogg/parachute"
+	
+	timeline {
+		onTime 0	pause
+		onTime 0	guiEvent "hl_parachute_use"
+		
+		onTime end	guiEvent ""
+		onTime end	unpause
+	}
+}
+
+toolTip revive_player_gdf {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/revive_player_gdf/info"
+	text "game/tt/revive_player_gdf"
+	
+	timeline {
+		unpauseWeaponSlot 5
+		onTime 0	pause
+		onTime 0	lookAtTask
+		onTime 0	waypointHighlight "revive_player_gdf"
+		onTime 40	showInventory "inventory/tools/defibrillator"
+		onTime 40	guiEvent "hl_inv_2"
+		
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip heal_player_gdf {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/heal_player_gdf/info"
+	text "game/tt/heal_player_gdf"
+	
+	timeline {
+		unpauseWeaponSlot 6
+		onTime 0	pause
+		onTime 40	showInventory "inventory/items/healthpack"
+		onTime 40	guiEvent "hl_inv_1"
+		
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip supply_player_strogg {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/supply_player_strogg/info"
+	text "game/tt/supply_player_strogg"
+	
+	timeline {
+		unpauseWeaponSlot 6
+		onTime 0	pause
+		onTime 0	showInventory "inventory/items/stroyentcells"
+		onTime 40	guiEvent "hl_inv_0"
+		
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip revive_player_strogg {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/revive_player_strogg/info"
+	text "game/tt/revive_player_strogg"
+	
+	timeline {
+		unpauseWeaponSlot 5
+		onTime 0	pause
+		onTime 0	lookAtTask
+		onTime 0	waypointHighlight "revive_player_strogg"
+		onTime 40	showInventory "inventory/tools/spike_meditech"
+		onTime 40	guiEvent "hl_inv_1"
+		
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip unconscious_gdf {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/unconscious_gdf/info"
+	text "game/tt/unconscious_gdf"
+
+	timeline {
+		onTime 10			pause
+		onTime 70			guiEvent "hl_timer"
+
+		onTime end			guiEvent ""
+		onTime end			unpause
+	}
+}
+
+toolTip unconscious_strogg {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/unconscious_strogg/info"
+	text	"game/tt/unconscious_strogg"
+	
+	timeline {
+		onTime 10			pause
+		onTime 70			guiEvent "hl_timer"
+		
+		onTime end			guiEvent ""
+		onTime end			unpause
+	}
+}
+
+toolTip constructor_defuse_charge {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/constructor_defuse_charge/info"
+	text	"game/tt/constructor_defuse_charge"
+	
+	timeline {
+		unpauseWeaponSlot 5
+		onTime 0	pause
+		onTime 0	waypointHighlight "constructor_defuse_charge"
+		onTime 40	showInventory "inventory/tools/repair_drone"
+		onTime 40	guiEvent "hl_inv_2"
+		
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip engineer_deploy_mines {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/engineer_deploy_mines/info"
+	text "game/tt/engineer_deploy_mines"
+	
+	timeline {
+		unpauseWeaponSlot 6
+		onTime 0	pause
+		onTime 0	showInventory "inventory/items/landmine"
+		onTime 0	guiEvent "hl_inv_0"
+		
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip engineer_construct_mission {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	alwaysPlay
+	useSoundLength
+	sound	"sounds/tooltips/engineer_construct_mission/info"
+	text	"game/tt/engineer_construct_mission"
+	
+	timeline {
+		unpauseWeaponSlot 5
+		onTime 0	pause
+		onTime 0	lookAtTask
+		onTime 0	waypointHighlight "engineer_construct_mission"
+		onTime 40	showInventory "inventory/tools/pliers"
+		onTime 40	guiEvent "hl_inv_2"
+
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip covertops_deploy_radar {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/covertops_deploy_radar/info"
+	text "game/tt/covertops_deploy_radar"
+	
+	timeline {
+		unpauseWeaponSlot 5
+		onTime 0	pause
+		onTime 0	showInventory "inventory/tools/deploytool/ranger"
+		onTime 0	guiEvent "hl_inv_2"
+		
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip covertops_hack_deployable {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	alwaysPlay
+	useSoundLength
+	sound	"sounds/tooltips/covertops_hack_deployable/info"
+	text "game/tt/covertops_hack_deployable"
+	
+	timeline {
+		unpauseWeaponSlot 5
+		onTime 0	pause
+		onTime 0	lookAtTask
+		onTime 0	waypointHighlight "covertops_hack_deployable"
+		onTime 40	showInventory "inventory/tools/pliers_hack"
+		onTime 40	guiEvent "hl_inv_3"
+		
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip engineer_defuse_charge {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/engineer_defuse_charge/info"
+	text "game/tt/engineer_defuse_charge"
+	
+	timeline {
+		unpauseWeaponSlot 5
+		onTime 0	pause
+		onTime 0	waypointHighlight "engineer_defuse_charge"
+		onTime 40	showInventory "inventory/tools/pliers"
+		onTime 40	guiEvent "hl_inv_2"
+		
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip engineer_deploy_turret {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/engineer_deploy_turret/info"
+	text "game/tt/engineer_deploy_turret"
+	
+	timeline {
+		unpauseWeaponSlot 5
+		onTime 0	pause
+		onTime 0	showInventory "inventory/tools/deploytool/engineer"
+		onTime 0	guiEvent "hl_inv_1"
+		
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip fieldops_deploy_firesupport {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/fieldops_deploy_firesupport/info"
+	text "game/tt/fieldops_deploy_firesupport"
+	
+	timeline {
+		unpauseWeaponSlot 5
+		onTime 0	pause
+		onTime 0	showInventory "inventory/tools/deploytool/fieldops"
+		onTime 0	guiEvent "hl_inv_3"
+		
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip soldier_destroy {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	alwaysPlay
+	useSoundLength
+	sound	"sounds/tooltips/soldier_destroy/info"
+	text "game/tt/soldier_destroy"
+	
+	timeline {
+		unpauseWeaponSlot 6
+		onTime 0	pause
+		onTime 0	lookAtTask
+		onTime 0	waypointHighlight "soldier_destroy"
+		onTime 40	showInventory "inventory/items/he_charge"
+		onTime 40	guiEvent "hl_inv_0"
+
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+
+}
+
+toolTip constructor_deploy_mines {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/constructor_deploy_mines/info"
+	text "game/tt/constructor_deploy_mines"
+	
+	timeline {
+		unpauseWeaponSlot 6
+		onTime 0	pause
+		onTime 0	showInventory "inventory/items/landmine_strogg"
+		onTime 0	guiEvent "hl_inv_0"
+		
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip constructor_construct_mission {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	alwaysPlay
+	useSoundLength
+	sound	"sounds/tooltips/constructor_construct_mission/info"
+	text "game/tt/constructor_construct_mission"
+	
+	timeline {
+		unpauseWeaponSlot 5
+		onTime 0	pause
+		onTime 0	waypointHighlight "constructor_construct_mission"
+		onTime 0	lookAtTask
+		onTime 40	showInventory "inventory/tools/repair_drone"
+		onTime 40	guiEvent "hl_inv_2"
+		
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip aggressor_destroy {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	alwaysPlay
+	useSoundLength
+	sound	"sounds/tooltips/aggressor_destroy/info"
+	text "game/tt/aggressor_destroy"
+	
+	timeline {
+		unpauseWeaponSlot 6
+		onTime 0	pause
+		onTime 0	lookAtTask
+		onTime 0	waypointHighlight "aggressor_destroy"
+		onTime 40	showInventory "inventory/items/plasma_charge"
+		onTime 40	guiEvent "hl_inv_0"
+
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip constructor_deploy_turret {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/constructor_deploy_turret/info"
+	text "game/tt/constructor_deploy_turret"
+	
+	timeline {
+		unpauseWeaponSlot 5
+		onTime 0	pause
+		onTime 0	showInventory "inventory/tools/deploytool/constructor"
+		onTime 0	guiEvent "hl_inv_1"
+		
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip infiltrator_deploy_radar {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/infiltrator_deploy_radar/info"
+	text "game/tt/infiltrator_deploy_radar"
+	
+	timeline {
+		unpauseWeaponSlot 5
+		onTime 0	pause
+		onTime 0	showInventory "inventory/tools/deploytool/infiltrator"
+		onTime 0	guiEvent "hl_inv_2"
+
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip oppressor_deploy_firesupport {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/oppressor_deploy_firesupport/info"
+	text "game/tt/oppressor_deploy_firesupport"
+	
+	timeline {
+		unpauseWeaponSlot 5
+		onTime 0	pause
+		onTime 0	showInventory "inventory/tools/deploytool/oppressor"
+		onTime 0	guiEvent "hl_inv_3"
+		
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip infiltrator_hack {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	alwaysPlay
+	useSoundLength
+	sound	"sounds/tooltips/infiltrator_hack/info"
+	text "game/tt/infiltrator_hack"
+	
+	timeline {
+		unpauseWeaponSlot 5
+		onTime 0	pause
+		onTime 0	lookAtTask
+		onTime 0	waypointHighlight "infiltrator_hack"
+		onTime 40	showInventory "inventory/tools/spike_infiltrator"
+		onTime 40	guiEvent "hl_inv_3"
+		
+		onTime end	unpause
+		onTime end	guiEvent ""
+		onTime end	hideInventory
+	}
+}
+
+toolTip capture_spawn {
+	length			10
+	nextShowDelay	10
+	singlePlayerToolTip
+	alwaysPlay
+	useSoundLength
+	sound	"sounds/tooltips/capture_spawn/info"
+	text "game/tt/capture_spawn"
+	
+	timeline {
+		onTime 0	pause
+		onTime 0	waypointHighlight "capture_spawn"
+		onTime 0	lookAtTask
+		onTime end	unpause
+	}
+}
+
+toolTip liberate_spawn {
+	length			10
+	nextShowDelay	10
+	singlePlayerToolTip
+	alwaysPlay
+	useSoundLength
+	sound	"sounds/tooltips/liberate_spawn/info"
+	text "game/tt/liberate_spawn"
+	
+	timeline {
+		onTime 0	pause
+		onTime 0	waypointHighlight "liberate_spawn"
+		onTime 0	lookAtTask
+		onTime end	unpause
+	}
+}
+
+toolTip carryable_steal {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	lookAtObjective
+	sound	"sounds/tooltips/carryable_steal/info"
+	text "game/tt/carryable_steal"
+	
+	timeline {
+		onTime 0	pause
+		onTime end	unpause
+	}
+}
+
+toolTip carryable_deliver {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/carryable_deliver/info"
+	text "game/tt/carryable_deliver"
+	
+	timeline {
+		onTime 0	pause
+		onTime 0	lookAtTask
+		onTime end	unpause
+	}
+}
+
+toolTip psi_deployed {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/psi_deployed/info"
+	text "game/tt/psi_deployed"
+	
+	timeline {
+		onTime 0			guiEvent "hl_compass"
+		onTime end			guiEvent ""
+	}
+}
+
+toolTip radar_deployed {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/radar_deployed/info"
+	text "game/tt/radar_deployed"
+	
+	timeline {
+		onTime 0			guiEvent "hl_compass"
+		onTime end			guiEvent ""
+	}
+}
+
+toolTip lockon_decoy_tooltip {
+	length			8
+	nextShowDelay	10
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/lockon_decoy_tooltip/info"
+	text "game/tt/lockon_decoy_tooltip"
+	
+	timeline {
+		onTime 10			pause
+		onTime end			unpause
+	}
+}
+
+toolTip new_mission {
+	length			8
+	nextShowDelay	10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/new_mission/info"
+	text "game/tt/new_mission"
+	lookAtObjective
+	
+	timeline {
+		onTime 0			guiEvent "hl_mis_system"
+		onTime 10			pause
+
+		onTime end			guiEvent ""
+		onTime end			unpause
+	}
+}
+
+toolTip tooltip_information {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_information/info"
+	text "game/tt/tooltip_information"
+	
+	timeline {
+		onTime 10			pause
+		onTime 40			guiEvent "hl_tip"
+
+		onTime end			guiEvent ""
+		onTime end			unpause
+	}
+}
+
+toolTip tooltip_critical_class_gdf {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_critical_class/info"
+	text "game/tt/tooltip_critical_class"
+	
+	timeline {
+			onTime 0			guiEvent "hl_objective_module"
+			onTime end			guiEvent ""
+	}
+}
+
+toolTip tooltip_critical_class_strogg {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_critical_class/info"
+	text "game/tt/tooltip_critical_class"
+	
+	timeline {
+			onTime 0			guiEvent "hl_objective_module"
+			onTime end			guiEvent ""
+	}
+}
+
+toolTip tooltip_introductory1 {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	1
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_introductory1/info"
+	text	"game/tt/tooltip_introductory1"
+	
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+toolTip tooltip_introductory2 {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	1
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_introductory2/info"
+	text	"game/tt/tooltip_introductory2"
+	
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+toolTip tooltip_introductory3 {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	1
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_introductory3/info"
+	text	"game/tt/tooltip_introductory3"
+	
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+// This tooltip will only be shown briefly in warmup if the local player hasn't pressed
+// f3, as the "press f3 to become ready" is hardcoded into the GUI.
+toolTip tooltip_warmup_not_ready {
+	length			10
+	singlePlayerToolTip
+	alwaysPlay
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_warmup_not_ready/info"
+	text	"game/tt/tooltip_warmup_not_ready"
+	
+	timeline {
+		onTime 0			guiEvent "hl_tip"
+		onTime end			guiEvent ""
+	}
+}
+
+toolTip tooltip_explain_objectives {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_explain_objectives/info"
+	text	"game/tt/tooltip_explain_objectives"
+	
+	timeline {
+		onTime 0			guiEvent "hl_objective_module"			
+		onTime 0			pause
+
+		onTime end			guiEvent ""
+		onTime end			unpause
+	}
+}
+
+toolTip tooltip_area22 {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_area22/info"
+	text	"game/tt/tooltip_area22"
+	
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+toolTip tooltip_ark {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_ark/info"
+	text	"game/tt/tooltip_ark"
+	
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+toolTip tooltip_canyon {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_canyon/info"
+	text	"game/tt/tooltip_canyon"
+	
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+toolTip tooltip_island {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_island/info"
+	text	"game/tt/tooltip_island"
+	
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+toolTip tooltip_outskirts {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_outskirts/info"
+	text	"game/tt/tooltip_outskirts"
+	
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+toolTip tooltip_quarry {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_quarry/info"
+	text	"game/tt/tooltip_quarry"
+	
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+toolTip tooltip_refinery {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_refinery/info"
+	text	"game/tt/tooltip_refinery"
+	
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+toolTip tooltip_salvage {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_salvage/info"
+	text	"game/tt/tooltip_salvage"
+	
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+toolTip tooltip_sewer {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_sewer/info"
+	text	"game/tt/tooltip_sewer"
+	
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+toolTip tooltip_slipgate {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_slipgate/info"
+	text	"game/tt/tooltip_slipgate"
+	
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+toolTip tooltip_valley {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_valley/info"
+	text	"game/tt/tooltip_valley"
+	
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+toolTip tooltip_volcano {
+	length			10
+	singlePlayerToolTip
+	maxPlayCount	2
+	useSoundLength
+	sound	"sounds/tooltips/tooltip_volcano/info"
+	text	"game/tt/tooltip_volcano"
+
+	timeline {
+		onTime 0			pause
+		onTime end			unpause
+	}
+}
+
+// regular tooltips
+toolTip low_ammo_gdf_self {
+	length			4
+	maxPlayCount	2
+	sound "sounds/ui/main/neutral"
+	text "game/tt/low_ammo_gdf_self"
+}
+
+toolTip low_ammo_strogg_self {
+	length			4
+	maxPlayCount	2
+	sound "sounds/ui/main/neutral"
+	text "game/tt/low_ammo_strogg_self"
+}
+
+toolTip low_health_gdf_self {
+	length			4
+	maxPlayCount	2
+	sound "sounds/ui/main/neutral"
+	text "game/tt/low_health_gdf_self"
+
+}
+
+toolTip low_health_strogg_self {
+	length			4
+	maxPlayCount	2
+	sound "sounds/ui/main/neutral"
+	text "game/tt/low_health_strogg_self"
+}
+
+toolTip tooltip_lookat_objective {
+	length			10
+	singlePlayerToolTip
+	alwaysPlay
+	useSoundLength
+	lookAtObjective
+	sound	"sounds/tooltips/tooltip_explain_objectives/info"
+	text	"game/tt/tooltip_explain_objectives"
+	
+	timeline {
+		onTime 10			pause
+		onTime 60			guiEvent "hl_objective_module"
+		onTime end			unpause
+	}
+}

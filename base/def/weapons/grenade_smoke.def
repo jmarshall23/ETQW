@@ -1,0 +1,259 @@
+/***********************************************************************
+
+	reexportModels weapons/grenade_smoke.def
+
+***********************************************************************/
+
+
+export hauser {
+	options -prefix SMOKE_ -sourcedir models/weapons/gdf_smoke_grenade/dev_sd -destdir models/weapons/gdf_smoke_grenade/ -keep muzzle
+
+//remember to text edit the decal for each version after export
+
+	mesh	smoke_grenade_base_file.mb		-dest models/weapons/gdf_smoke_grenade/smoke_grenade_view.md5mesh		//cops
+	mesh	smoke_grenade_base_file.mb		-dest models/weapons/gdf_smoke_grenade/smoke_grenade_green_view.md5mesh //medic
+	mesh	smoke_grenade_base_file.mb		-dest models/weapons/gdf_smoke_grenade/smoke_grenade_blue_view.md5mesh  //fops
+
+	anim	smoke_grenade_idle.mb			-dest models/weapons/gdf_smoke_grenade/smoke_grenade_idle.md5anim
+	anim	smoke_grenade_raise.mb			-dest models/weapons/gdf_smoke_grenade/smoke_grenade_raise.md5anim
+ 	anim	smoke_grenade_lower.mb			-dest models/weapons/gdf_smoke_grenade/smoke_grenade_lower.md5anim
+   	anim	smoke_grenade_start_throw.mb	-dest models/weapons/gdf_smoke_grenade/smoke_grenade_start.md5anim
+   	anim	smoke_grenade_throw.mb			-dest models/weapons/gdf_smoke_grenade/smoke_grenade_throw.md5anim
+   	anim	smoke_grenade_quick_throw.mb	-dest models/weapons/gdf_smoke_grenade/smoke_grenade_fastthrow.md5anim
+}
+
+
+
+// ========================================================================
+// view Models
+//
+
+model viewmodel_grenade_smoke {
+	mesh						models/weapons/gdf_smoke_grenade/smoke_grenade_view.md5mesh
+
+	anim raise 					models/weapons/gdf_smoke_grenade/smoke_grenade_raise.md5anim {
+		frame 5						sound_channel snd_weapon_raise snd_raise
+	}
+
+	anim idle 					models/weapons/gdf_smoke_grenade/smoke_grenade_idle.md5anim {
+	}
+
+	anim putaway 				models/weapons/gdf_smoke_grenade/smoke_grenade_lower.md5anim {
+	}
+
+ 	anim throw_start 			models/weapons/gdf_smoke_grenade/smoke_grenade_start.md5anim {
+ 		frame 3						sound_channel snd_weapon_reload snd_pin
+ 	}
+
+	anim throw 					models/weapons/gdf_smoke_grenade/smoke_grenade_throw.md5anim {
+		frame 3						sound_channel snd_weapon_mech snd_throw
+	}
+
+	anim throw_quick 			models/weapons/gdf_smoke_grenade/smoke_grenade_fastthrow.md5anim {
+		frame 1						sound_channel snd_weapon_reload snd_pin
+		frame 7						sound_channel snd_weapon_mech snd_throw
+	}
+}
+
+model viewmodel_grenade_smoke_green {
+	mesh						models/weapons/gdf_smoke_grenade/smoke_grenade_green_view.md5mesh
+
+	anim raise 					models/weapons/gdf_smoke_grenade/smoke_grenade_raise.md5anim {
+		frame 1						sound_channel snd_weapon_raise snd_raise
+	}
+
+	anim idle 					models/weapons/gdf_smoke_grenade/smoke_grenade_idle.md5anim {
+	}
+
+	anim putaway 				models/weapons/gdf_smoke_grenade/smoke_grenade_lower.md5anim {
+	}
+
+ 	anim throw_start 			models/weapons/gdf_smoke_grenade/smoke_grenade_start.md5anim {
+ 		frame	3				sound_channel snd_weapon_reload snd_pin
+ 	}
+	anim throw 					models/weapons/gdf_smoke_grenade/smoke_grenade_throw.md5anim {
+		frame	3				sound_channel snd_weapon_mech snd_throw
+	}
+	anim throw_quick 			models/weapons/gdf_smoke_grenade/smoke_grenade_fastthrow.md5anim {
+		frame	1				sound_channel snd_weapon_reload snd_pin
+		frame	7				sound_channel snd_weapon_mech snd_throw
+	}
+}
+
+model viewmodel_grenade_smoke_red {
+	mesh						models/weapons/gdf_smoke_grenade/smoke_grenade_red_view.md5mesh
+	anim raise 					models/weapons/gdf_smoke_grenade/smoke_grenade_raise.md5anim {
+		frame 1						sound_channel snd_weapon_raise snd_raise
+	}
+	anim idle 					models/weapons/gdf_smoke_grenade/smoke_grenade_idle.md5anim
+	anim putaway 				models/weapons/gdf_smoke_grenade/smoke_grenade_lower.md5anim
+
+ 	anim throw_start 			models/weapons/gdf_smoke_grenade/smoke_grenade_start.md5anim {
+ 		frame	3				sound_channel snd_weapon_reload snd_pin
+ 	}
+	anim throw 					models/weapons/gdf_smoke_grenade/smoke_grenade_throw.md5anim {
+		frame	3				sound_channel snd_weapon_mech snd_throw
+	}
+	anim throw_quick 			models/weapons/gdf_smoke_grenade/smoke_grenade_fastthrow.md5anim {
+		frame	1				sound_channel snd_weapon_reload snd_pin
+		frame	7				sound_channel snd_weapon_mech snd_throw
+	}
+}
+
+model viewmodel_grenade_smoke_blue {
+	mesh						models/weapons/gdf_smoke_grenade/smoke_grenade_blue_view.md5mesh
+	anim raise 					models/weapons/gdf_smoke_grenade/smoke_grenade_raise.md5anim {
+		frame 1						sound_channel snd_weapon_raise snd_raise
+	}
+	anim idle 					models/weapons/gdf_smoke_grenade/smoke_grenade_idle.md5anim
+	anim putaway 				models/weapons/gdf_smoke_grenade/smoke_grenade_lower.md5anim
+
+ 	anim throw_start 			models/weapons/gdf_smoke_grenade/smoke_grenade_start.md5anim {
+ 		frame	3				sound_channel snd_weapon_reload snd_pin
+ 	}
+	anim throw 					models/weapons/gdf_smoke_grenade/smoke_grenade_throw.md5anim {
+		frame	3				sound_channel snd_weapon_mech snd_throw
+	}
+	anim throw_quick 			models/weapons/gdf_smoke_grenade/smoke_grenade_fastthrow.md5anim {
+		frame	1				sound_channel snd_weapon_reload snd_pin
+		frame	7				sound_channel snd_weapon_mech snd_throw
+	}
+}
+
+
+// ========================================================================
+// world Models
+//
+
+model worldmodel_grenade_smoke {
+	mesh						models/weapons/grenades/frag_grenade.md5mesh
+
+	anim idle 					models/weapons/grenades/ades/frag_grenade.md5anim
+	anim fire					models/weapons/grenades/frag_grenade.md5anim
+}
+
+// ========================================================================
+// Entity DEFS
+//
+
+invItemDef inventory/weapons/grenades/smoke {
+	type						"grenade"
+	slot						"item"
+	name						"game/weapons/grenade_smoke"
+
+	data {
+		"model_view"			"viewmodel_grenade_smoke"
+		"model_world" 			"models/weapons/gdf_smoke_grenade/smoke_grenade_thirdperson.lwo"
+		"joint_attach"			"weapon_attach"
+
+		"view_offset"			"-1 -1 -1"
+ 		"view_foreshorten"		"0.8"
+
+		"stat_name"				"grenade_smoke"
+
+		"anim_prefix"			"grenade"
+
+		"speed_mod"				"1.1"
+
+		"weapon_scriptobject"	"item_smoke_grenade"
+
+		"def_explode_inhand"	"projectile_grenade_flash"
+
+		"snd_raise"				"sounds/weapons/grenades/smoke/raise"
+		"snd_reload"			"sounds/weapons/grenades/reload"
+		"snd_grenade_timer"		"sounds/weapons/grenades/timer"
+		"snd_modeswitch_01"		"sounds/weapons/misc/mode_switch_01"
+		"snd_modeswitch_02"		"sounds/weapons/misc/mode_switch_02"
+		"snd_throw"				"sounds/weapons/grenades/throw"
+		"snd_pin"				"sounds/weapons/grenades/pin"
+		"snd_need_charge"		"sounds/ui/main/cannot"
+
+		"tt_intro_1"			"smoke_grenade_intro_1"
+		"tt_intro_2"			"smoke_grenade_intro_2"
+		"tt_need_charge"		"smoke_grenade_need_charge"
+
+		"throw_quick"			"0.2"
+		"throw_normal"			"0.2"
+
+		"num_projectiles"		"1"
+		"hide_clip"				"1"
+		"show_charge"			"1"
+		"show_all_ammo"			"1"
+		"clip_based"			"0"
+
+		"mtr_weaponmenu"				"guis/assets/icons/weapons/smoke_marker.tga"
+
+		"climate_skin_key"				"weapon_gdf"
+
+		"crosshair"						"none"
+
+		"crosshair_spread_min"			"0.1"
+		"crosshair_spread_max"			"0.1"
+		"crosshair_spread_scale"		"1"
+
+		"spread_min"					"0"
+		"spread_max"					"0"
+
+		"spread_crouch_min"				"0"
+		"spread_crouch_max"				"0"
+
+		"spread_prone_min"				"0"
+		"spread_prone_max"				"0"
+
+		"spread_jump_min"				"0"
+		"spread_jump_max"				"0"
+
+		"timer_charge"			"energy_device"
+		"charge_per_use"		"100"
+
+		"player_weapon_num"		"20"
+	}
+
+	clip {
+		"projectile"			"projectile_grenade_smoke"
+		"type"					"infinite"
+		"ammo_per_shot"			"-1"
+	}
+}
+
+entityDef projectile_grenade_smoke {
+	"inherit"					"projectile_grenade"
+
+	"mins"						"-3 -3 -5"
+	"maxs"						"3 3 6"
+	"model"			 			"models/weapons/gdf_smoke_grenade/smoke_grenade_world.lwo"
+
+	"angular_velocity"			"250 300 200"
+
+	"fly_timeoffset"			"5"
+
+	"fuse"						"25"
+
+	"trailUnderWater"			"0"
+
+	"collection_maprestartwatch"	"maprestartwatch"
+
+	"fx_trail"					"effects/weapons/grenades/smoke"
+	"fx_explode"				"effects/weapons/grenades/smoke/stop"
+}
+
+#include "templates/tooltips.include"
+
+toolTip smoke_grenade_intro_1 {
+	text "game/tt/intro/smoke_grenade_1"
+	sound "sounds/ui/main/neutral"
+}
+
+toolTip smoke_grenade_intro_2 {
+	text "game/tt/intro/generic/fire_throw_item"
+	sound "sounds/ui/main/neutral"
+}
+
+toolTip smoke_grenade_need_charge {
+	alwaysPlay
+	length 2
+	nextShowDelay 0
+
+	text "game/tt/intro/generic/need_charge"
+	locationIndex TOOLTIP_POSITION_CHARGE
+}

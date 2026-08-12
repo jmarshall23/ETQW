@@ -1,0 +1,84 @@
+/***********************************************************************
+
+	Teams Flags
+	reexportmodels flags.def
+	testModel worldmodel_flag
+
+***********************************************************************/
+
+// ========================================================================
+// Export
+//
+
+export shamus {
+	options -prefix SOCK_ -scale 6	 -sourcedir models/mapobjects/flags/dev_sd -destdir models/mapobjects/flags/
+
+	addoptions 		 -keep 			cloth_1 cloth_1b cloth_2 cloth_2b cloth_3 cloth_3b cloth_4 cloth_4b cloth_5  cloth_5_end  cloth_5b  cloth_5b_end
+	addoptions 		 -keep 			cloth_6 cloth_6b cloth_7 cloth_7b cloth_8 cloth_8b cloth_9 cloth_9b cloth_10 cloth_10_end cloth_10b cloth_10b_end
+	addoptions 		 -keep 			strogg_1 strogg_2 strogg_3 strogg_4 strogg_5 gdf_1 gdf_2 gdf_3 gdf_4 gdf_5 pole1 pole2 pole3 pole4
+
+	addoptions 		 -keepmesh 		m_base m_mast_stage_01 m_mast_stage_02 m_mast_stage_03 m_attachment m_gdf_rope m_strogg_rope
+	addoptions 		 -keepmesh 		m_gdf_flag_left_side m_gdf_flag_right_side m_strogg_flag_right_side m_strogg_flag_left_side
+	addoptions 		 -keepmesh 		s_base s_mast_stage_01 s_mast_stage_02 s_mast_stage_03 s_gdf_flag s_strogg_flag
+	addoptions 		 -parent cloth_6 gdf_5 -parent cloth_6b strogg_5 -parent cloth_1 cloth_6 -parent cloth_1b cloth_6b -parent orientation pole4 -parent orientationb pole4
+
+
+/*
+
+	mesh	Flag_ik.mb				-dest models/mapobjects/flags/flag.md5mesh						-range  48   48
+
+	anim	Flag_ik.mb				-dest models/mapobjects/flags/flag_base.md5anim					-range  48   48
+
+	anim	Flag_ik_gdf.mb			-dest models/mapobjects/flags/flag_raise_gdf.md5anim			-range  0	 48
+ 	*/
+ 	anim	Flag_ik_gdf.mb			-dest models/mapobjects/flags/flag_highwind_gdf.md5anim			-range  48   96
+  	/*
+  	anim	Flag_ik_gdf.mb			-dest models/mapobjects/flags/flag_lower_gdf.md5anim			-range  96	144
+
+  	anim	Flag_ik_strogg.mb		-dest models/mapobjects/flags/flag_raise_strogg.md5anim			-range  0 	 48
+
+  	anim	Flag_ik_strogg.mb		-dest models/mapobjects/flags/flag_highwind_strogg.md5anim		-range  48	 96
+
+  	anim	Flag_ik_strogg.mb		-dest models/mapobjects/flags/flag_lower_strogg.md5anim			-range  96	144
+*/
+}
+
+// ========================================================================
+// Model
+//
+
+model worldmodel_flag {
+	mesh		 					models/mapobjects/flags/flag.md5mesh
+
+	anim base						models/mapobjects/flags/flag_base.md5anim
+
+	anim strogg_raise				models/mapobjects/flags/flag_raise_strogg.md5anim
+	anim strogg_play				models/mapobjects/flags/flag_highwind_strogg.md5anim
+	anim strogg_lower				models/mapobjects/flags/flag_lower_strogg.md5anim
+
+	anim gdf_raise					models/mapobjects/flags/flag_raise_gdf.md5anim
+	anim gdf_play					models/mapobjects/flags/flag_highwind_gdf.md5anim
+	anim gdf_lower					models/mapobjects/flags/flag_lower_gdf.md5anim
+
+}
+
+// ========================================================================
+// Entities
+//
+
+entityDef mapobjects_flag {
+	"editor_color"				"0 .5 .8"
+	"editor_mins"				"-8 -8 -8"
+	"editor_maxs"				"8 8 8"
+	"editor_usage"				"A flag that marks territory"
+
+	"spawnclass"				"sdScriptEntity"
+	"scriptObject"				"mapobject_flag"
+	"model"						"worldmodel_flag"
+
+	"option_no_sync"			"1"
+
+	"collection_territoryflags"	"territoryflags"
+}
+
+

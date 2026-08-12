@@ -1,0 +1,99 @@
+material guis/assets/common/gui_scanlines
+{
+	sort gui
+	{
+		blend add
+		map guis/assets/common/gui_scanlines.tga
+		scroll 0, time * -.04
+		colored
+	}
+}
+
+material guis/assets/common/gui_scanlines2
+{
+	sort gui
+	{
+		blend add
+		map guis/assets/common/gui_scanlines2.tga
+		scroll 0, time * -.04
+		red	parm0
+		green	parm1
+		blue	parm2
+	}
+}
+
+material guis/assets/common/gui_scanlines4
+{
+	sort gui
+	{
+		blend add
+		map guis/assets/common/gui_scanline4.tga
+		red	parm0
+		green	parm1
+		blue	parm2
+		uncompressed
+		highquality
+	}
+}
+
+material guis/assets/common/gui_scanlines4a
+{
+	sort gui
+	{
+		blend blend
+		map guis/assets/common/gui_scanline4a.tga
+		colored
+	}
+}
+material guis/assets/common/gui_scanlines5
+{
+	sort gui
+	{
+		blend add
+		map guis/assets/common/gui_scanlines5.tga
+		colored
+		scroll 0, time * -.02
+	}
+}
+
+
+material guis/assets/common/gui_scanpulse
+{
+	sort gui
+	{
+		blend add
+		map guis/assets/common/gui_scanline3.tga
+		scroll 0, time * -.2
+		red	parm0
+		green	parm1
+		blue	parm2
+	}
+}
+
+material guis/assets/common/gui_scanpulse2
+{
+	sort gui
+	{
+		blend blend
+		map guis/assets/common/pulseline.tga
+		scroll 0, time * -.2
+		red	parm0
+		green	parm1
+		blue	parm2
+		alpha	parm3
+	}
+}
+
+material guis/assets/common/gui_scanpulse3
+{
+	sort gui
+	{
+		blend blend
+		map guis/assets/common/pulseline3.tga
+		scroll 0, time * -.2
+		red	parm0
+		green	parm1
+		blue	parm2
+		alpha	parm3
+	}
+}

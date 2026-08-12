@@ -1,0 +1,27 @@
+material guis/sights/assaultrifle {
+	sort gui
+	{
+		blend blend
+		map alphazeroclamp guis/assets/hud/edf/weapons/ironsight01a.tga	
+	}
+}
+
+material guis/sights/antiarmor_overlay
+{
+	sort gui
+	/*{
+		program	tiles.vfp
+		vertexParm		0		240
+		vertexParm		1		0.43 + ( sinTable[ time * 0.15 ] * cosTable[ time * 0.25 ] ) * 0.2
+		fragmentMap		0		_currentRender
+	}*/
+	{
+		map guis/assets/common/gui_scanlines
+		blend add
+		translate		0, time * -0.1
+	}
+	{
+		map guis/assets/qet/resupply_bg
+		blend filter
+	}
+}

@@ -1,0 +1,103 @@
+// GDF High Command
+
+// Map Refinery
+
+sound sounds/vo/gdf/highcommand/maps/refinery/mcp/leftbase {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10701.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/destroy/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10702.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/destroy {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10704.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/converter/destroy {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10705.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/filter/destroy {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10706.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/assaultramp/success {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10707.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/barricade/success {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10708.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/converter/planted {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10709.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/converter/defendexpl {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10710.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/converter/planted/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10711.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/converter/disarmed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10712.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/converter/destroyed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10713.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/filter/planted {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10714.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/filter/defendexpl {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10715.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/filter/planted/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10716.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/filter/disarmed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10717.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/filter/destroyed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10718.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/gdfwin {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10719.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/gdflose/half {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10720.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/refinery/gdflose {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/refinery/10721.wav
+}

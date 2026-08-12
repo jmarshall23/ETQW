@@ -1,0 +1,304 @@
+
+// ========================================================================
+// Export MINING LASER
+
+
+export hauser {
+	options -prefix MINING_ -rotate 90 -sourcedir models/structures/strogg/mining_laser/dev_sd -destdir models/structures/strogg/mining_laser/ -keep origin origin2 origin_new muzzle left_broked_pipes right_broked_pipes left_repaired_pipes right_repaired_pipes joint2 joint3 joint6 joint7 joint8 joint4 joint5 joint10 joint9 joint18 joint29 joint30 joint31 joint33 joint32 joint34 joint36 joint37 joint39 joint35 joint38 joint20 joint22 joint25 joint26 joint28 joint14 joint13 joint11 joint12 joint17 hover_joint2 hover_joint1 spark_1 spark_2 spark_3 spark_4 spark_5 spark_6 /* -rename origin_new origin -rename origin origin_new */ -parent origin_new origin2 -parent hover_joint1 origin_new -parent hover_joint2 origin_new -keepmesh polySurface1623 polySurface1624 polySurface1625 polySurface1626 polySurface1627 polySurface1628 lod0_front_shell lod0_mid_shell lod0_rear_shell lod0_right_engine lod0_left_engine lod0_forks_mount lod0_forks_mid lod0_forks_front lod0_polySurface1793 lod0_polySurface1794 lod0_hover1 lod0_hover2 lod0_hover3 lod0_hover4 lod0_hover5 lod0_insides lod0_hover6 lod0_hover7 lod0_hover8 lod0_base polySurface1629 polySurface1630 polySurface1631 polySurface1636 polySurface1637 polySurface1638 polySurface1572 polySurface1573 polySurface1574 polySurface1575 polySurface1576 polySurface1577 polySurface1583 polySurface1618 polySurface1617 polySurface1616 shadow_base polySurface1615 polySurface1585 polySurface1588 polySurface1589 polySurface1591 polySurface1592 polySurface1594 polySurface1597 polySurface1598 polySurface1599 right_broke left_broke shadow_left_broke shadow_right_broke left_repaired right_repaired polySurface1654 polySurface1655
+
+	mesh	mining_laser_nerve.mb				-dest mining_laser_damaged.md5mesh -range 6 6
+
+	anim	mining_laser_nerve.mb	 			-dest mining_laser_undeployed.md5anim 			-range 5 5
+	anim	mining_laser_nerve.mb				-dest mining_laser_land.md5anim 				-range 5 20
+	anim	mining_laser_nerve.mb				-dest mining_laser_idle.md5anim 				-range 20 30
+	anim	mining_laser_nerve.mb				-dest mining_laser_startfire.md5anim 			-range 45 209
+	anim	mining_laser_nerve.mb				-dest mining_laser_fire.md5anim 				-range 210 520
+	anim	mining_laser_nerve.mb				-dest mining_laser_after_firing_idle.md5anim 	-range 520 520
+}
+
+
+
+// Models
+// ========================================================================
+
+model strogg_mining_laser {
+	mesh							models/structures/strogg/mining_laser/mining_laser_damaged.md5mesh
+
+	anim base						models/structures/strogg/mining_laser/mining_laser_undeployed.md5anim {
+	}
+
+	anim deploy						models/structures/strogg/mining_laser/mining_laser_land.md5anim {
+		frame 1							sound_channel snd_deployable_deploy snd_deploy
+	}
+
+	anim idle_damaged				models/structures/strogg/mining_laser/mining_laser_idle.md5anim {
+	}
+
+	anim startfire					models/structures/strogg/mining_laser/mining_laser_startfire.md5anim {
+		frame 1							effect fx_spark spark_5
+		frame 103						effect fx_spark spark_6
+		frame 140						effect fx_spark spark_2
+
+		frame 140						sound_channel snd_weapon_fire snd_laser_start
+
+		frame 150						effect fx_spark spark_2
+	}
+
+	anim fire						models/structures/strogg/mining_laser/mining_laser_fire.md5anim {
+
+//		frame 1							effect fx_beam_startup joint7
+//		frame 1							effect fx_beam_electricity muzzle
+
+		frame 1							effect fx_spark spark_5
+		frame 6							effect fx_spark spark_6
+		frame 15						effect fx_spark spark_2
+		frame 30						effect fx_spark spark_5
+		frame 50						effect fx_spark spark_6
+		frame 62						effect fx_spark spark_3
+		frame 70						effect fx_spark spark_1
+		frame 81						effect fx_spark spark_2
+		frame 90						effect fx_spark spark_5
+		frame 102						effect fx_spark spark_6
+		frame 130						effect fx_spark spark_2
+
+		frame 140						effect fx_spark spark_4
+		frame 150						effect fx_spark spark_2
+		frame 200						effect fx_spark spark_2
+		frame 220						effect fx_spark spark_5
+		frame 240						effect fx_spark spark_6
+		frame 243						effect fx_spark spark_3
+		frame 256						effect fx_spark spark_2
+
+		frame 270						sound_channel snd_weapon_fire snd_laser_stop
+
+		frame 279						effect fx_spark spark_2
+	}
+
+	anim idle_after_firing			models/structures/strogg/mining_laser/mining_laser_after_firing_idle.md5anim {
+	}
+}
+
+
+entityDef strogg_mining_laser_repaired {
+	"inherit"						"constructible_base"
+	"team"							"strogg"
+	"model"							"strogg_mining_laser_repaired"
+}
+
+entityDef gameplay/construction/mining_laser {
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"mining_laser"
+
+	"editor_skipmenu"				"1"
+
+	"model"							"strogg_mining_laser"
+	"cm_model"						"models/structures/strogg/mining_laser/mining_laser_body.lwo"
+
+	"maxVisDist"					"15360"
+
+	"option_simple_physics"			"1"
+	"gravity"						"0"
+
+	"option_crosshair_interface"	"1"
+	"option_interactive_interface"	"1"
+	"option_combat_model"			"1"
+	"option_selection_combat_model"	"1"
+	"mtr_crosshair_icon"			"hud/objectives/construction"
+
+	"dmg_crush"						"damage_mininglaser_crush"
+
+	"team"							"strogg"
+
+	"def_objective"					"gameplay/construction/mining_laser/objective"
+	
+	"fx_beam_startup"				"effects/structures/strogg_mining_laser_startup"
+	"fx_beam_electricity"			"effects/structures/strogg_mining_laser_electricity"
+	"fx_spark"						"effects/structures/strogg_mining_laser_sparks"
+
+	"task_construct"				"construct_bridge_strogg"
+	"prof_construct"				"pro_task_construct_bonus_strogg"
+
+	"info_name"						"game/obj/zappor"
+	"object_name"					"game/obj/zappor"
+
+	"always_drop"					"1"
+
+	"snd_laser_start"				"sounds/deployables/mininglaser/laser/start"
+	"snd_laser_stop"				"sounds/deployables/mininglaser/laser/stop"
+	
+	"collection_content_bounds"		"content_bounds"
+}
+
+damageDef damage_mininglaser_crush {
+	damage							"damage_mininglaser_crush"
+	noGod
+	noTeam
+	gib
+
+	tt_obituary_unknown				"tooltips/killmsgs/objectives/mininglaser/crush"
+}
+
+damageFilter damage_mininglaser_crush {
+	type {
+		target	"target_player_all"
+		damage	50000
+	}
+
+	type {
+		target	"target_veh_all"
+		damage	50000
+	}
+	
+	type {
+		target	"target_spawn_host"
+		damage	50000
+	}
+	
+	type {
+		target	"target_supply_crate"
+		damage	50000
+	}
+}
+
+entityDef gameplay/construction/mining_laser/objective {
+	"inherit"						"constructible_materials_strogg"
+	"scriptobject"					"mining_laser_objective"
+
+	"editor_skipmenu"				"1"
+
+	"model"							""
+	"cm_model"						"models/structures/strogg/mining_laser/mining_laser_objective.lwo"
+
+	"snd_constructing_gdf"			"sounds/vo/gdf/highcommand/objectives/mininglaser/constructing"
+	"snd_constructing_strogg"		"sounds/vo/strogg/nexus/objectives/mininglaser/constructing"
+	"snd_finished_gdf"				"sounds/vo/gdf/highcommand/objectives/mininglaser/constructed"
+	"snd_finished_strogg"			"sounds/vo/strogg/nexus/objectives/mininglaser/constructed"
+	"snd_intro_gdf"					"sounds/vo/gdf/highcommand/objectives/mininglaser/stop/long"
+	"snd_intro_strogg"				"sounds/vo/strogg/nexus/objectives/mininglaser/construct/long"
+	"snd_reminder_gdf"				"sounds/vo/gdf/highcommand/objectives/mininglaser/stop"
+	"snd_reminder_strogg"			"sounds/vo/strogg/nexus/objectives/mininglaser/construct"
+
+	"def_construction"				"gameplay/construction/mining_laser/objective/fixed"
+
+	"task_name"						"game/obj/zappor"
+	"info_name"						"game/obj/zappor"
+	"object_name"					"game/obj/zappor"
+}
+
+entityDef gameplay/construction/mining_laser/objective/fixed {
+	"inherit"						"constructible_base"
+
+	"editor_skipmenu"				"1"
+
+	"team"							"strogg"
+
+	"model"							"models/structures/strogg/mining_laser/mining_laser_objective_fixed.lwo"
+	"cm_model"						"models/structures/strogg/mining_laser/mining_laser_objective_fixed.lwo"
+}
+
+entityDef gameplay/construction/mining_laser/caller {
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"drop_caller"
+
+	"editor_preview_model"			"models/structures/strogg/mining_laser/mining_laser_body.lwo"
+	"editor_var target"				"The target for it to zap"
+
+	"def_drop_object"				"vehicle_strogg_drop"
+	"def_drop_item"					"gameplay/construction/mining_laser"
+	"drop_team"						"strogg"
+}
+
+entityDef teh_zappor_beacon {
+	"inherit"						"gameplay/construction/mining_laser/beacon"
+}
+
+entityDef gameplay/construction/mining_laser/beacon {
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"mining_laser_beacon"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"Zap beacon - big zaps will come on this spot"
+
+/*
+	"beam_startup_duration"			"2"
+	"beam_core_startup_duration"	"0.25"
+	"beam_duration"					"8"
+	"beam_area_length"				"2600"
+	"beam_fizzle_duration"			"3"
+	"beam_effect_fizzle_duration"	"1.5"
+*/
+
+	"beam_rotation_speed"			"200"
+
+	"snd_beam_start"				"sounds/deployables/mininglaser/burn/start"
+	"snd_beam_stop"					"sounds/deployables/mininglaser/burn/stop"
+	"fx_beam"						"effects/structures/strogg_mining_laser_fire"
+	"fx_beam_impact"				"effects/structures/strogg_mining_laser_impact"
+	
+	"target_offset"					"0 0 64"
+
+	"fx_explode"					"effects/structures/strogg_mining_laser_explosion"
+	"dmg_damage"					"damage_zappor"
+	"dmg_splash_damage"				"damage_zapporSplash"
+}
+
+
+
+damageDef damage_zappor {
+	damage							"damage_zappor"
+	//push							100000
+	//noTeam
+
+	tt_obituary						"tooltips/killmsgs/weapons/scud"
+	tt_obituary_team_kill			"tooltips/killmsgs/weapons/scud/teamkill"
+	tt_obituary_self				"tooltips/killmsgs/weapons/scud/self"
+	tt_obituary_unknown				"tooltips/killmsgs/weapons/mininglaser"
+}
+
+damageDef damage_zapporSplash {
+	damage							"damage_zappor_splash"
+	radius							2048
+	//push							100000
+	//noTeam
+
+	tt_obituary						"tooltips/killmsgs/weapons/scud"
+	tt_obituary_team_kill			"tooltips/killmsgs/weapons/scud/teamkill"
+	tt_obituary_self				"tooltips/killmsgs/weapons/scud/self"
+	tt_obituary_unknown				"tooltips/killmsgs/weapons/mininglaser"
+}
+
+damageFilter damage_zappor {
+	type {
+		target	"target_objectives_zappor"
+		damage	5000
+	}
+
+	type {
+		target	"target_explodable"
+		damage	1000
+	}
+
+	type {
+		target	"target_player_all"
+		damage	5000
+	}
+
+	type {
+		target	"target_veh_all"
+		damage	5000
+	}
+}
+
+damageFilter damage_zappor_splash {
+	type {
+		target	"target_objectives_zappor"
+		damage	5000
+	}
+
+	type {
+		target	"target_explodable"
+		damage	1000
+	}
+}

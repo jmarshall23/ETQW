@@ -1,0 +1,63 @@
+skin skins/structures/edf/deployables/weapons/anti_personnel_turret/turret_arctic {
+	dummy/metal/shader1				models/structures/edf/deployables/weapons/anti_personnel_turret/turret_arctic
+}
+
+skin skins/structures/edf/deployables/weapons/anti_personnel_turret/turret {
+	dummy/metal/shader1				models/structures/edf/deployables/weapons/anti_personnel_turret/turret
+}
+
+
+
+skin skins/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm {
+	dummy/metal/shader1				models/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm
+	dummy/metal/shader2				models/structures/edf/deployables/weapons/anti_personnel_turret/turret
+}
+
+skin skins/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm_arctic {
+	dummy/metal/shader1				models/structures/edf/deployables/weapons/anti_ssm_turret/anti_ssm_arctic
+	dummy/metal/shader2				models/structures/edf/deployables/weapons/anti_personnel_turret/turret_arctic
+}
+
+
+
+skin skins/structures/edf/fsb/artillery/artillery {
+	dummy/metal/shader1				models/structures/edf/fsb/artillery/artillery
+}
+
+skin skins/structures/edf/fsb/artillery/artillery_arctic {
+	dummy/metal/shader1				models/structures/edf/fsb/artillery/artillery_arctic
+}
+
+
+
+skin skins/structures/edf/fsb/rockets/rockets {
+	dummy/metal/shader1				models/structures/edf/fsb/rockets/rockets
+}
+
+skin skins/structures/edf/fsb/rockets/rockets_arctic {
+	dummy/metal/shader1				models/structures/edf/fsb/rockets/rockets_arctic
+}
+
+
+
+skin skins/structures/edf/fsb/ssm/ssm {
+	dummy/metal/shader1				models/structures/edf/fsb/ssm/ssm
+}
+
+skin skins/structures/edf/fsb/ssm/ssm_arctic {
+	dummy/metal/shader1				models/structures/edf/fsb/ssm/ssm_arctic
+}
+
+
+
+skin skins/structures/edf/deployables/intel {
+	dummy/metal/shader1				models/structures/edf/deployables/intel
+	dummy/metal/shader2				models/structures/edf/deployables/intel
+	dummy/metal/shader3				models/structures/edf/deployables/intel
+}
+
+skin skins/structures/edf/deployables/intel_arctic {
+	dummy/metal/shader1				models/structures/edf/deployables/intel_arctic
+	dummy/metal/shader2				models/structures/edf/deployables/intel_arctic
+	dummy/metal/shader3				models/structures/edf/deployables/intel_arctic
+}

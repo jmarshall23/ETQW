@@ -1,0 +1,474 @@
+//////////////////////
+// Strogg Bot Chat ///
+//////////////////////
+
+// Generic //
+
+sound sounds/players/strogg/botchat/generic/areaclear {
+
+	localization/english/sounds/bots/strogg/26301.wav
+	//"Area Clear!"
+}
+
+sound sounds/players/strogg/botchat/generic/imatechnician {
+
+	localization/english/sounds/bots/strogg/26302.wav
+	//"Hold on, I'm a Technician!"
+}
+sound sounds/players/strogg/botchat/generic/technicianenroute {
+
+	localization/english/sounds/bots/strogg/26303.wav
+	//"Technican en route!"
+}
+
+sound sounds/players/strogg/botchat/generic/onmyway {
+
+	localization/english/sounds/bots/strogg/26304.wav
+	//"I'm on my way!"
+}
+
+sound sounds/players/strogg/botchat/generic/sniper {
+
+	localization/english/sounds/bots/strogg/26305.wav
+	//"Sniper!"
+}
+
+sound sounds/players/strogg/botchat/generic/mandown {
+
+	localization/english/sounds/bots/strogg/26306.wav
+	//"Strogg Down!"
+}
+
+sound sounds/players/strogg/botchat/generic/incomingfiresupport {
+
+	localization/english/sounds/bots/strogg/26307.wav
+	//"Incoming Bombardment!"
+}
+
+
+sound sounds/players/strogg/botchat/generic/needatransport {
+
+	localization/english/sounds/bots/strogg/26308.wav
+	//"Do you require transport?"
+}
+
+sound sounds/players/strogg/botchat/generic/needaride {
+
+	localization/english/sounds/bots/strogg/26309.wav
+	//"Need a lift?"
+}
+
+sound sounds/players/strogg/botchat/generic/vehicle/letmerepair {
+
+	localization/english/sounds/bots/strogg/26375.wav
+	//"One moment, let me fix your ride"
+}
+
+sound sounds/players/strogg/botchat/generic/vehicle/iwillfixride {
+
+	localization/english/sounds/bots/strogg/26376.wav
+	//"I'll repair your vehicle"
+}
+
+sound sounds/players/strogg/botchat/generic/vehicle/stopiwillfixride {
+
+	localization/english/sounds/bots/strogg/26374.wav
+	//"Stop the vehicle! I'll fix it!"
+}
+
+
+sound sounds/players/strogg/botchat/generic/youlead {
+
+	localization/english/sounds/bots/strogg/26377.wav
+	//"You lead, I'll follow!"
+}
+
+sound sounds/players/strogg/botchat/generic/gotyourback {
+
+	localization/english/sounds/bots/strogg/26378.wav
+	//"I've got your back!"
+}
+
+sound sounds/players/strogg/botchat/generic/leadway {
+
+	localization/english/sounds/bots/strogg/26379.wav
+	//"Lead the way!"
+}
+
+sound sounds/players/strogg/botchat/generic/whereto {
+
+	localization/english/sounds/bots/strogg/26380.wav
+	//"Where to, Strogg?"
+}
+
+sound sounds/players/strogg/botchat/generic/gotammo {
+
+	localization/english/sounds/bots/strogg/26381.wav
+	//"I've got Stroyent here!"
+	localization/english/sounds/bots/strogg/26382.wav
+	//"Stroyent on the way!"
+}
+
+sound sounds/players/strogg/botchat/generic/tkrevive {
+
+	localization/english/sounds/bots/strogg/26383.wav
+	//"Hold on, I shall TK Revive you!"
+}
+
+sound sounds/players/strogg/botchat/generic/grenade {
+
+	localization/english/sounds/bots/strogg/26384.wav
+	//"Grenaaade!"
+}
+
+
+// Objectives //
+
+sound sounds/players/strogg/botchat/objectives/defend {
+
+	localization/english/sounds/bots/strogg/26310.wav
+	//"I'm going to defend the Objective"
+}
+
+sound sounds/players/strogg/botchat/objectives/destroy {
+
+	localization/english/sounds/bots/strogg/26311.wav
+	//"I'm going to destroy the Objective"
+}
+
+sound sounds/players/strogg/botchat/objectives/explosives/plant {
+
+	localization/english/sounds/bots/strogg/26312.wav
+	//"I'm going to plant explosives"
+}
+
+sound sounds/players/strogg/botchat/objectives/explosives/disarm {
+
+	localization/english/sounds/bots/strogg/26313.wav
+	//"I'm going to disarm the explosives!"
+}
+
+sound sounds/players/strogg/botchat/objectives/construct/stop {
+
+	localization/english/sounds/bots/strogg/26314.wav
+	//"I'm going to stop them building the objective!"
+}
+
+sound sounds/players/strogg/botchat/objectives/repair/stop {
+
+	localization/english/sounds/bots/strogg/26315.wav
+	//"I'm going to stop them repairing the objective!"
+}
+
+sound sounds/players/strogg/botchat/objectives/repair {
+
+	localization/english/sounds/bots/strogg/26316.wav
+	//"I'm going to repair the objective"
+}
+
+sound sounds/players/strogg/botchat/objectives/jamtower/destroy {
+
+	localization/english/sounds/bots/strogg/26317.wav
+	//"I'm going to destroy the Jamming Tower Generator!"
+}
+
+sound sounds/players/strogg/botchat/objectives/mininglaser/construct {
+
+	localization/english/sounds/bots/strogg/26318.wav
+	//"I'm going to construct the Mining Laser!"
+}
+
+sound sounds/players/strogg/botchat/objectives/bridge/stop {
+
+	localization/english/sounds/bots/strogg/26319.wav
+	//"I'm going to stop them building the bridge!"
+}
+
+sound sounds/players/strogg/botchat/objectives/mcp/disable {
+
+	localization/english/sounds/bots/strogg/26320.wav
+	//"I'm going to disable their MCP!"
+}
+
+sound sounds/players/strogg/botchat/objectives/mcp/stop {
+
+	localization/english/sounds/bots/strogg/26321.wav
+	//"I'm going to stop their MCP!"
+}
+
+sound sounds/players/strogg/botchat/objectives/mcp/repair/stop {
+
+	localization/english/sounds/bots/strogg/26322.wav
+	//"I'm going to stop them repairing their MCP!"
+}
+
+sound sounds/players/strogg/botchat/objectives/outpost/defend {
+
+	localization/english/sounds/bots/strogg/26323.wav
+	//"I'm going to defend the Outpost!"
+}
+
+sound sounds/players/strogg/botchat/objectives/shieldgen/defend {
+
+	localization/english/sounds/bots/strogg/26324.wav
+	//"I'm going to defend the Shield Generator!"
+}
+
+sound sounds/players/strogg/botchat/objectives/hack/stop {
+
+	localization/english/sounds/bots/strogg/26325.wav
+	//"I'm going to stop them hacking the objective!"
+}
+
+sound sounds/players/strogg/botchat/objectives/hack {
+
+	localization/english/sounds/bots/strogg/26326.wav
+	//"I'm going to hack the objective!"
+}
+
+sound sounds/players/strogg/botchat/objectives/emp/defend {
+
+	localization/english/sounds/bots/strogg/26327.wav
+	//"I'm going to defend the EMP Disruptor!"
+}
+
+sound sounds/players/strogg/botchat/objectives/steal/stop {
+
+	localization/english/sounds/bots/strogg/26328.wav
+	//"I'm going to stop them stealing the objective!"
+}
+
+sound sounds/players/strogg/botchat/objectives/guard {
+
+	localization/english/sounds/bots/strogg/26329.wav
+	//"I'm going to guard the objective!"
+}
+
+sound sounds/players/strogg/botchat/objectives/carrier/stop {
+
+	localization/english/sounds/bots/strogg/26330.wav
+	//"I'm going to stop their carrier!"
+}
+
+sound sounds/players/strogg/botchat/objectives/return {
+
+	localization/english/sounds/bots/strogg/26331.wav
+	//"I'm going to return the objective!"
+}
+
+sound sounds/players/strogg/botchat/objectives/steal {
+
+	localization/english/sounds/bots/strogg/26332.wav
+	//"I'm going to steal the objective!"
+}
+
+sound sounds/players/strogg/botchat/objectives/take {
+
+	localization/english/sounds/bots/strogg/26333.wav
+	//"I'm going to take the objective!"
+}
+
+sound sounds/players/strogg/botchat/objectives/carrier/escort {
+
+	localization/english/sounds/bots/strogg/26334.wav
+	//"I'm going to escort the carrier!"
+}
+
+sound sounds/players/strogg/botchat/objectives/pickup {
+
+	localization/english/sounds/bots/strogg/26335.wav
+	//"I'm going to pick up the objective!"
+}
+
+sound sounds/players/strogg/botchat/objectives/footbridge/construct/stop {
+
+	localization/english/sounds/bots/strogg/26336.wav
+	//"I'm going to stop them building the Footbridge!"
+}
+
+sound sounds/players/strogg/botchat/objectives/barricade/defend {
+
+	localization/english/sounds/bots/strogg/26337.wav
+	//"I'm going to defend the Barricade!"
+}
+
+sound sounds/players/strogg/botchat/objectives/forwardspawn/capture {
+
+	localization/english/sounds/bots/strogg/26338.wav
+	//"I'm going to capture the Forward Spawn!"
+}
+
+sound sounds/players/strogg/botchat/objectives/forwardspawn/capture/enemy {
+
+	localization/english/sounds/bots/strogg/26339.wav
+	//"I'm going to capture their Forward Spawn!"
+}
+
+sound sounds/players/strogg/botchat/objectives/forwardspawn/recapture {
+
+	localization/english/sounds/bots/strogg/26340.wav
+	//"I'm going to recapture our Forward Spawn!"
+}
+
+sound sounds/players/strogg/botchat/objectives/slipgate/destroy {
+
+	localization/english/sounds/bots/strogg/26342.wav
+	//"I'm going to destroy the Slipgate!"
+}
+
+sound sounds/players/strogg/botchat/objectives/labmats/destroy {
+
+	localization/english/sounds/bots/strogg/26343.wav
+	//"I'm going to destroy the Lab Materials!"
+}
+
+sound sounds/players/strogg/botchat/objectives/bioscanner/destroy {
+
+	localization/english/sounds/bots/strogg/26344.wav
+	//"I'm going to destroy the BioScanner!"
+}
+
+sound sounds/players/strogg/botchat/objectives/stroggifier/defend {
+
+	localization/english/sounds/bots/strogg/26345.wav
+	//"I'm going to defend the Stroggifier!"
+}
+
+sound sounds/players/strogg/botchat/objectives/generator/defend {
+
+	localization/english/sounds/bots/strogg/26346.wav
+	//"I'm going to defend the Generator!"
+}
+
+sound sounds/players/strogg/botchat/objectives/storedoor/defend {
+
+	localization/english/sounds/bots/strogg/26347.wav
+	//"I'm going to defend the Store Room Door!"
+}
+
+sound sounds/players/strogg/botchat/objectives/keycard/defend {
+
+	localization/english/sounds/bots/strogg/26348.wav
+	//"I'm going to defend the Data Keycard!"
+}
+
+sound sounds/players/strogg/botchat/objectives/keycard/return {
+
+	localization/english/sounds/bots/strogg/26349.wav
+	//"I'm going to return the Data Keycard!"
+}
+
+sound sounds/players/strogg/botchat/objectives/datadisc/defend {
+
+	localization/english/sounds/bots/strogg/26350.wav
+	//"I'm going to defend the DataDisc!"
+}
+
+sound sounds/players/strogg/botchat/objectives/datadisc/return {
+
+	localization/english/sounds/bots/strogg/26351.wav
+	//"I'm going to return the DataDisc!"
+}
+
+sound sounds/players/strogg/botchat/objectives/databrain/defend {
+
+	localization/english/sounds/bots/strogg/26352.wav
+	//"I'm going to defend the DataBrain!"
+}
+
+sound sounds/players/strogg/botchat/objectives/databrain/return {
+
+	localization/english/sounds/bots/strogg/26353.wav
+	//"I'm going to return the DataBrain!"
+}
+
+sound sounds/players/strogg/botchat/objectives/braincore/defend {
+
+	localization/english/sounds/bots/strogg/26354.wav
+	//"I'm going to defend the BrainCore!"
+}
+
+sound sounds/players/strogg/botchat/objectives/braincore/return {
+
+	localization/english/sounds/bots/strogg/26355.wav
+	//"I'm going to return the BrainCore!"
+}
+
+sound sounds/players/strogg/botchat/objectives/converter/defend {
+
+	localization/english/sounds/bots/strogg/26356.wav
+	//"I'm going to defend the Converter!"
+}
+
+sound sounds/players/strogg/botchat/objectives/filter/defend {
+
+	localization/english/sounds/bots/strogg/26357.wav
+	//"I'm going to defend the Filter!"
+}
+
+sound sounds/players/strogg/botchat/objectives/ramp/construct/stop {
+
+	localization/english/sounds/bots/strogg/26358.wav
+	//"I'm going to stop them building the Assault Ramp!"
+}
+
+sound sounds/players/strogg/botchat/objectives/salvage/defend {
+
+	localization/english/sounds/bots/strogg/26359.wav
+	//"I'm going to defend the Salvage!"
+}
+
+sound sounds/players/strogg/botchat/objectives/northsewergrate/defend {
+
+	localization/english/sounds/bots/strogg/26360.wav
+	//"I'm going to defend the North Sewer Grate!"
+}
+
+sound sounds/players/strogg/botchat/objectives/southsewergrate/defend {
+
+	localization/english/sounds/bots/strogg/26361.wav
+	//"I'm going to defend the South Sewer Grate!"
+}
+
+sound sounds/players/strogg/botchat/objectives/sewercontrols/defend {
+
+	localization/english/sounds/bots/strogg/26362.wav
+	//"I'm going to defend the Sewer Controls!"
+}
+
+sound sounds/players/strogg/botchat/objectives/slipgate/defend {
+
+	localization/english/sounds/bots/strogg/26341.wav
+	localization/english/sounds/bots/strogg/26363.wav
+	//"I'm going to defend the Slipgate!
+}
+
+sound sounds/players/strogg/botchat/objectives/nexuscore/defend {
+
+	localization/english/sounds/bots/strogg/26364.wav
+	//"I'm going to defend the Nexus Tower Core!"
+}
+
+sound sounds/players/strogg/botchat/objectives/contaminator/defend {
+
+	localization/english/sounds/bots/strogg/26365.wav
+	//"I'm going to defend the Contaminator!"
+}
+
+sound sounds/players/strogg/botchat/objectives/securitycontrols/hack {
+
+	localization/english/sounds/bots/strogg/26366.wav
+	//"I'm going to hack the Security Controls!"
+}
+
+sound sounds/players/strogg/botchat/objectives/transformer/destroy {
+
+	localization/english/sounds/bots/strogg/26367.wav
+	//"I'm going to destroy the Transformer!"
+}
+
+sound sounds/players/strogg/botchat/objectives/energycore/destroy {
+
+	localization/english/sounds/bots/strogg/26368.wav
+	//"I'm going to destroy the Energy Core!"
+}

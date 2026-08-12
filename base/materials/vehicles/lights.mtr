@@ -1,0 +1,149 @@
+material models/vehicles/edf_badger/light {
+	surfaceType	"glass"
+	noshadows
+
+	{
+		if parm5
+		blend add
+//		map	picmip -1 models/vehicles/edf_badger/badger_d.tga
+		map	picmip -1 _white 
+		red parm5
+		green parm5
+		blue parm5
+	}
+}
+
+material models/vehicles/edf_badger/light_flare {
+	surfaceType	"glass"
+	noshadows
+	discrete
+	deform flare 5
+	{
+		if parm5
+		blend add
+		map _quadratic
+		red parm5
+		green parm5
+		blue parm5
+		maskalpha
+	}
+}
+
+material models/vehicles/edf_badger/brakelight {
+	surfaceType	"glass"
+	noshadows
+
+	{
+		if parm5 || parm6
+		blend add
+		map	picmip -1 _white //models/vehicles/edf_badger/badger_d.tga
+		//red .1 + ( .5 * parm5 ) + ( .9 * parm6 )
+		red .7 * ( ( .4 * parm5 ) + ( .6 * parm6 ) )
+		green 0
+		blue 0
+	}
+}
+
+material models/vehicles/edf_badger/brakelight_flare {
+	surfaceType	"glass"
+	noshadows
+	discrete
+	deform flare 4 + ( 2 * parm6 ) * ( parm5 + .4 )
+	{
+		if parm5 || parm6
+		blend add
+		map _quadratic
+		//red .1 + ( .5 * parm5 ) + ( .9 * parm6 )
+		red .7 * ( ( .4 * parm5 ) + ( .6 * parm6 ) )
+		green 0
+		blue 0
+		maskalpha
+	}
+}
+
+material models/md5/vehicles/edf_mcp/light {
+	surfaceType	"glass"
+	noshadows
+
+	{
+		blend add
+//		map picmip -1 models/vehicles/edf_mcp/mcp_d.tga
+		map	picmip -1 _white
+		red parm5
+		green parm5
+		blue parm5
+	}
+}
+
+material models/md5/vehicles/edf_mcp/brakelight {
+	surfaceType	"glass"
+	noshadows
+
+	{
+		if parm5 || parm6
+		blend add
+//		map picmip -1 models/vehicles/edf_mcp/mcp_d.tga
+		map	picmip -1 _white 
+		red ( .05 * parm5 ) + ( .9 * parm6 )
+		green 0
+		blue 0
+	}
+}
+
+material models/md5/vehicles/edf_trojan/light {
+	surfaceType	"glass"
+	noshadows
+
+	{
+		blend add
+//		map	picmip -1 models/vehicles/edf_trojan/trojan_d.tga
+		map	picmip -1 _white 
+		red parm5
+		green parm5
+		blue parm5
+	}
+}
+
+material models/md5/vehicles/edf_trojan/brakelight {
+	surfaceType	"glass"
+	noshadows
+
+	{
+		if parm5 || parm6
+		blend add
+//		map	picmip -1 models/vehicles/edf_trojan/trojan_d.tga
+		map	picmip -1 _white 
+		red .1 + ( .5 * parm5 ) + ( .9 * parm6 )
+		green 0
+		blue 0
+	}
+}
+
+material lights/headlights1 {
+	lightFalloffImage	makeintensity( lights/squarelight1a.tga )	// this will also be the falloff for any
+
+	{
+		lightProjectionMap zeroClamp lights/headlights1c.tga
+		colored
+	}
+}
+
+material lights/rearlights1 {
+	lightFalloffImage	makeintensity( lights/squarelight1a.tga )	// this will also be the falloff for any
+
+	{
+		lightProjectionMap zeroClamp lights/rearlights1.tga
+		red .1 + ( .15 * parm5 ) + ( .3 * parm6 )
+		green 0
+		blue 0
+	}
+}
+
+material lights/vehicles/glow
+{
+	noshadows
+	{
+		blend add
+		map lights/spot02.tga
+	}
+}

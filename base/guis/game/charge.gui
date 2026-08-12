@@ -1,0 +1,33 @@
+gui guis/items/charge {
+
+	windowDef desktop {
+		properties {
+			color	backColor	=	0, 0, 0, 0;
+		}
+	}
+
+	windowDef timerInfo {
+		properties {
+			rect 	rect 				= 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT;
+			color	foreColor			= 0.36, 0.7, 0.8, 1;
+			string	font 				= "digital";
+		}
+		timeline {
+				ontime 0 {
+			foreColor = transition( "0.36, 0.7, 0.8, 1", "1,1,1,1", 500 );
+				}
+				onTime 500 {
+			foreColor = transition( "1,1,1,1", "0.36, 0.7, 0.8, 1", 500 );
+				}
+			onTime 1000 {
+				resetTime( 0 );
+				}
+		}
+		events {
+			onPreDraw {
+				drawText( toWString( globals.charge.timeLeft, 0 ), absoluteRect, foreColor, 48, DTF_SINGLELINE | DTF_CENTER | DTF_VCENTER );
+				gui.scriptPushFloat( false );
+			}
+		}
+	}
+}

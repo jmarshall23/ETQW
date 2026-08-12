@@ -1,0 +1,45 @@
+// --------------------------------------------
+// REFINERY STUFF
+// --------------------------------------------
+
+stuffType refinery/refinery_rock {
+	Model	"stuff/refinery/refinery_rock01.lwo"
+	Model	"stuff/refinery/refinery_rock02.lwo"
+	Model	"stuff/refinery/refinery_rock03.lwo"
+	Model	"stuff/refinery/refinery_rock04.lwo"
+	Model	"stuff/refinery/refinery_rock05.lwo"
+	Model	"stuff/refinery/refinery_rock06.lwo"
+	Model	"stuff/refinery/refinery_rock07.lwo"
+	Model	"stuff/refinery/refinery_rock08.lwo"
+}
+
+stuffType refinery/refinery_rock_small {
+	Model	"stuff/refinery/refinery_rock_small01.lwo"
+	Model	"stuff/refinery/refinery_rock_small02.lwo"
+	Model	"stuff/refinery/refinery_rock_small03.lwo"
+	Model	"stuff/refinery/refinery_rock_small04.lwo"
+}
+
+stuffType refinery/refinery_grass_1 {
+	Model	"stuff/refinery/refinery_grass01.lwo"
+	Model	"stuff/refinery/refinery_grass02.lwo"
+}
+
+stuffType refinery/refinery_grass_2 {
+	Model	"stuff/refinery/refinery_grass02.lwo"
+	Model	"stuff/refinery/refinery_grass03.lwo"
+}
+
+stuffType refinery/refinery_rubbish {
+	Model	"stuff/refinery/refinery_rubbish01.lwo"
+	Model	"stuff/refinery/refinery_rubbish02.lwo"
+	Model	"stuff/refinery/refinery_rubbish03.lwo"
+	Model	"stuff/refinery/refinery_rubbish04.lwo"
+	Model	"stuff/refinery/refinery_rubbish05.lwo"
+}
+
+stuffType refinery/refinery_reeds {
+	Model	"stuff/refinery/refinery_reeds01.lwo"
+	Model	"stuff/refinery/refinery_reeds02.lwo"
+	Model	"stuff/refinery/refinery_reeds03.lwo"
+}

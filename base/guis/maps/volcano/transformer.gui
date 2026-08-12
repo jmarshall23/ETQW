@@ -1,0 +1,170 @@
+gui guis/maps/volcano/transformer1{
+
+	materials {
+
+		"guis/assets/gdf_generic/volcano_transformer_1"	"guis/assets/gdf_generic/volcano_transformer_1"
+		"guis/assets/gdf_generic/target"	"guis/assets/gdf_generic/target"
+		"guis/assets/arm/bar" "guis/assets/arm/bar"
+
+	}
+	
+	
+	windowDef desktop {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			string material = "guis/assets/gdf_generic/volcano_transformer_1";
+		}
+	}
+	
+	windowDef target {
+		properties {
+			color	backColor	=	1, 1, 1, 1;
+			rect rect = 320,240,42,42;
+			string material = "guis/assets/gdf_generic/target";
+			handle target = gui.cacheMaterial( "target2", "guis/assets/gdf_generic/target" );
+		}
+		events {
+			onPostDraw {
+			drawCachedMaterial(target, "150,320,42,42", "1, 1, 1, 1" );
+			drawCachedMaterial(target, "400,340,42,42", "1, 1, 1, 1" );
+			drawCachedMaterial(target, "80,80,42,42", "1, 1, 1, 1" );
+			}
+		}
+	}
+	
+	
+	windowDef chatter1 {
+		properties {
+			color	backColor	=	0.55, 0.55, 0.55, 1;
+			string material = "guis/assets/arm/bar";
+			rect rect = 541,69,29,359;
+			float rotation = 90;
+		}
+	}
+	
+}
+
+gui guis/maps/volcano/transformer2{
+
+	materials {
+
+		"guis/assets/gdf_generic/volcano_transformer_2"	"guis/assets/gdf_generic/volcano_transformer_2"
+		"guis/assets/gdf_generic/radar" "guis/assets/gdf_generic/radar" 
+	}
+	
+	
+	windowDef desktop {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			string material = "guis/assets/gdf_generic/volcano_transformer_2";
+		}
+	}
+	windowDef radar {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			rect rect = 56,135,376,291;
+			string material = "guis/assets/gdf_generic/radar";
+		}
+	}
+}
+
+gui guis/maps/volcano/security {
+	properties {
+		float progress = 0.f;
+		float done = progress >= 1.f;
+	}
+
+	materials {
+		"security_background"	"guis/assets/gdf_generic/volcano_security_background"
+		"static"				"guis/assets/gdf_generic/static"
+		"transformer_off"		"guis/assets/gdf_generic/volcano_transformer_off"
+	}
+	
+	windowDef desktop {
+		properties {
+			color	backColor	= 0, 0, 0, 1;
+		}
+	}
+	
+	windowDef background {
+		properties {
+			color	backColor	= 1, 1, 1, 0.8;
+			string	material	= "security_background";
+		}
+	}
+	
+	windowDef disabledOverlay {
+		properties {
+			color	backColor	= 1, 1, 1, 0.8;
+			rect	rect		= 42, 74, 446, 196;
+			string	material	= "transformer_off";
+			float	visible		= gui.done;
+		}
+	}
+
+	windowDef static {
+		properties {
+			color	backColor	= 1, 1, 1, 0.8;
+			rect	rect		= 42, 74, 446, 196;
+			string	material	= "static";
+			float	visible		= gui.done == 0.f;
+		}
+	}
+	
+	windowDef errorText {
+		properties {
+			wstring	text		= toWStr( "--ERROR--" );
+			float	fontSize	= 60;
+			color	foreColor	= 0.36, 0.7, 0.8, 1;
+			rect	rect		= 167, 310, 328, 141;
+			float	flags		= immediate( flags ) | WF_WRAP_TEXT;
+			float	visible		= gui.done;
+		}
+
+		timeline {
+			ontime 0 {
+				foreColor = transition( "1,0,0,0", "1,0,0,0", 500 );
+			}
+			onTime 500 {
+				foreColor = transition( "1,0,0,1", "1,0,0,1", 500 );
+			}
+			onTime 1000 {
+				resetTime( 0 );
+			}
+		}
+	}
+
+	windowDef secureText {
+		properties {
+			wstring	text		= toWStr( "AREA SECURE" );
+			float	fontSize	= 60;
+			color	foreColor	= 0.36, 0.7, 0.8, 1;
+			rect rect			= 167, 310, 328, 141;
+			float flags			= immediate( flags ) | WF_WRAP_TEXT;
+			float	visible		= gui.done == 0.f;
+		}
+
+		timeline {
+			ontime 0 {
+				foreColor = transition( "1,1,1,0", "1,1,1,0", 500 );
+			}
+			onTime 500 {
+				foreColor = transition( "1,1,1,1", "1,1,1,1", 500 );
+			}
+			onTime 1000 {
+				resetTime( 0 );
+			}
+		}
+	}
+	
+	windowDef camText {
+		properties {
+			wstring	text		= toWStr( "Transformer Cam" );
+			float	fontSize	= 30;
+			color	foreColor	= 0.36, 0.7, 0.8, 1;
+			rect rect			= 13, 25, 328, 141;
+			float flags			= immediate( flags ) | WF_WRAP_TEXT;
+		}	
+	}
+}
+

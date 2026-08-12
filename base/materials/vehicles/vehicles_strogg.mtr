@@ -1,0 +1,590 @@
+
+/********************************************
+		strogg hog cockpit new
+		renderbump models/vehicles/strogg_hog/cockpit/dev_sd/cockpit_low2.lwo
+********************************************/
+
+material models/vehicles/strogg_hog/cockpit_scan
+{
+	sort far
+	{
+		maskalpha
+		blend add
+		map linear guis/assets/mainmenu/scanlines.tga
+		rgb 6 - sintable [time * 0.12] * 0.2
+		scale 16, 14
+		scroll time * 0.01, time * 0.03
+	}
+}
+
+material models/vehicles/strogg_hog/ram_glow
+{
+
+	vertexPositionOnly
+}
+
+material models/vehicles/strogg_hog/cockpitstest
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -colormap -clampoutput 0 0 1 1 models/vehicles/strogg_hog/cockpit/cockpit_local2.tga models/vehicles/strogg_hog/cockpit/dev_sd/cockpit_high2.lwo
+	sort opaqueFirst
+	noimpact
+	{
+	program interaction/selfillum_detail
+	diffusemap	picmip -1	partialLoad models/vehicles/strogg_hog/cockpit_d.tga
+	specularmap	picmip -2	partialLoad models/vehicles/strogg_hog/cockpit_s.tga
+	bumpmap 	picmip -1	partialLoad addnormals(models/vehicles/strogg_hog/cockpit_local2.tga, heightmap(models/vehicles/strogg_hog/cockpit_h.tga, 4 ) )
+	selfillummap	picmip -2	partialLoad models/vehicles/strogg_hog/cockpit_glow.tga
+	bumpdetailmap	textures/detail/bump/metal_detail01_local.tga
+	detailMult 10,10,0,0
+	}
+}
+
+/**************************************************************
+	Strogg Icarus
+**************************************************************/
+
+material models/vehicles/strogg_icarus/icarus
+{
+	surfaceType "metal"
+	noshadows
+	occlusionQuery
+	renderbump -size 1024 1024 -colormap -clampOutput 0 0 1 1 -aa 1 models/vehicles/strogg_icarus/icarus_local.tga models/vehicles/strogg_icarus/icarus_hi.lwo
+
+	{
+		program	interaction/strogg_detail
+		diffusemap	picmip -1	models/vehicles/strogg_icarus/icarus_d.tga
+		specularmap	picmip -2	models/vehicles/strogg_icarus/icarus_s.tga
+		bumpmap		picmip -1 	addnormals(models/vehicles/strogg_icarus/icarus_local.tga, heightmap(models/vehicles/strogg_icarus/icarus_h.tga, 2 ) )
+		selfIllumMap	picmip -2 	models/vehicles/strogg_icarus/icarus_glow.tga
+
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 6,6,0,0
+	}
+}
+
+material models/vehicles/strogg_icarus/icarus_handle_bars
+{
+	surfaceType "metal"
+	noshadows
+	renderbump -size 2048 2048 -colormap -clampOutput 0 0 1 1 models/vehicles/strogg_icarus/icarus_handle_bars_local.tga models/vehicles/strogg_icarus/icarus_handle_bars_hp.lwo
+	{
+		program interaction/strogg_detail
+		diffusemap	picmip -1 partialLoad 	models/vehicles/strogg_icarus/icarus_handle_bars_d.tga
+		specularmap	picmip -2 partialLoad 	models/vehicles/strogg_icarus/icarus_handle_bars_s.tga
+		bumpmap		picmip -1 partialLoad 	addnormals(models/vehicles/strogg_icarus/icarus_handle_bars_local.tga, heightmap(models/vehicles/strogg_icarus/icarus_handle_bars_h.tga, 2 ) )
+		selfIllumMap	_black
+
+	diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 4,4,0,0
+	}
+}
+
+/**************************************************************
+	Strogg Hornet
+**************************************************************/
+
+material models/vehicles/strogg_hornet/hornet
+{
+	surfaceType "metal"
+ 	noshadows
+	occlusionQuery
+//	unsmoothedtangents
+	renderbump  -size 1024 1024 -overdrawMap -clampOutput 0 0 1 1 -aa 2 models/vehicles/strogg_hornet/hornet_local.tga models/vehicles/strogg_hornet/dev_sd/hi.lwo
+
+	{
+		program	interaction/strogg_detailwm
+		diffusemap	picmip -1	models/vehicles/strogg_hornet/hornet_d.tga
+		specularmap	picmip -2	models/vehicles/strogg_hornet/hornet_s.tga
+		bumpmap		picmip -1	addnormals(models/vehicles/strogg_hornet/hornet_local.tga, heightmap(models/vehicles/strogg_hornet/hornet_h.tga, 5 ) )
+		selfIllumMap	picmip -2 	models/vehicles/strogg_hornet/hornet_glow.tga
+
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 10,10,0,0
+		detailWeightMap		models/vehicles/strogg_hornet/hornet_detailmask.tga
+	}
+}
+
+
+material models/vehicles/strogg_hornet/hornetblaster
+{
+	surfaceType "metal"
+ 	noshadows
+	occlusionQuery
+//	unsmoothedtangents
+	renderbump  -size 1024 1024 -overdrawMap -clampOutput 0 0 1 1 -aa 2 models/vehicles/strogg_hornet/hornet_local.tga models/vehicles/strogg_hornet/dev_sd/hi.lwo
+
+	{
+		program	interaction/strogg_detail
+		diffusemap	picmip -1	models/vehicles/strogg_hornet/hornet_d.tga
+		specularmap	picmip -2	models/vehicles/strogg_hornet/hornet_s.tga
+		bumpmap	picmip -1		addnormals(models/vehicles/strogg_hornet/hornet_local.tga, heightmap(models/vehicles/strogg_hornet/hornet_h.tga, 5 ) )
+		selfIllumMap	picmip -2 models/vehicles/strogg_hornet/hornet_glow.tga
+
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 8,8,0,0
+	}
+}
+
+
+//Hornet Cockpit
+
+material models/vehicles/strogg_hornet/hornet_cockpit
+{
+	renderbump -size 2048 2048 -aa 2 -clampoutput 0 0 1 1 models/vehicles/strogg_hornet/cockpit_local2.tga models/vehicles/strogg_hornet/dev_nerve/hornet_cockpit_high.lwo
+	noselfshadow
+
+	{
+		program	interaction/strogg_detailwm
+		diffusemap	picmip -1 partialLoad models/vehicles/strogg_hornet/cockpit_d.tga
+		specularmap	picmip -2 partialLoad models/vehicles/strogg_hornet/cockpit_s.tga
+		bumpmap		picmip -1 partialLoad addnormals(models/vehicles/strogg_hornet/cockpit_local.tga, heightmap(models/vehicles/strogg_hornet/cockpit_h.tga, 10  ) )
+		selfIllumMap	picmip -2 partialLoad models/vehicles/strogg_hornet/cockpit_glow.tga
+
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 8,8,0,0
+		detailWeightMap		models/vehicles/strogg_hornet/cockpit_detailmask.tga
+	}
+}
+/**************************************************************
+	Strogg Goliath
+**************************************************************/
+
+material models/vehicles/strogg_goliath/cockpit
+{
+
+
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/vehicles/strogg_goliath/cockpit_local.tga models/vehicles/strogg_goliath/dev_sd/cockpit_high.lwo
+	{
+			noshadows
+		program	interaction/strogg_detailwm
+		diffusemap	picmip -1 partialLoad 	models/vehicles/strogg_goliath/cockpit_d.tga
+		specularmap	picmip -2 partialLoad 	models/vehicles/strogg_goliath/cockpit_s.tga
+		bumpmap		picmip -1 partialLoad 	addnormals(models/vehicles/strogg_goliath/cockpit_local.tga, heightmap(models/vehicles/strogg_goliath/cockpit_h.tga, 4 ) )
+		selfillummap	picmip -2 partialLoad 	models/vehicles/strogg_goliath/cockpit_glow.tga
+
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 11,11,0,0
+		detailWeightMap		models/vehicles/strogg_goliath/cockpit_detailmask.tga
+	}
+}
+
+material models/vehicles/strogg_goliath/cockpit_nerve
+{
+	noshadows
+	noselfshadow
+	//renderbump	picmip -1 -size 2048 2048 -aa 2 -clampOutput 0 0 1 1 -colormap models/vehicles/strogg_goliath/cockpit_local.tga models/vehicles/strogg_goliath/dev_sd/cockpit_high.lwo
+	//renderbump	picmip -1 -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/vehicles/strogg_goliath/cockpit_local_nerve.tga models/vehicles/strogg_goliath/cockpit/goliath_cockpit_high.lwo
+	//renderbump	picmip -1 -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/vehicles/strogg_goliath/cockpit_local_nerve.tga models/vehicles/strogg_goliath/cockpit/goliath_cockpit_stick_fix_hi.lwo
+	renderbump -size 1024 1024 -aa 2 -trace 1.0 -clampOutput 0 0 1 1 -colormap models/vehicles/strogg_goliath/cockpit_local_nerve.tga models/vehicles/strogg_goliath/cockpit/left_gui_hi.lwo
+	{
+		program interaction/selfillum_detail
+		diffusemap	picmip -1 partialLoad models/vehicles/strogg_goliath/cockpit_d_nerve.tga
+		specularmap	picmip -2 partialLoad models/vehicles/strogg_goliath/cockpit_s_nerve.tga
+		bumpmap		picmip -1 partialLoad addnormals(models/vehicles/strogg_goliath/cockpit_local_nerve.tga, heightmap(models/vehicles/strogg_goliath/cockpit_h_nerve.tga, 10))
+		selfIllumMap	picmip -2 partialLoad models/vehicles/strogg_goliath/cockpit_glow_nerve.tga
+
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 8,8,0,0
+	}
+}
+
+material models/vehicles/strogg_goliath/goliath
+{
+	renderbump -aa 2-size 1024 1024 models/vehicles/strogg_goliath/goliath_local.tga models/vehicles/strogg_goliath/dev_sd/hi_3.lwo
+
+	surfaceType "metal"
+	occlusionQuery
+//	unsmoothedtangents
+	noshadows
+
+	{
+		program	interaction/strogg_detailwm
+		diffusemap	picmip -1	models/vehicles/strogg_goliath/goliath_d.tga
+		specularmap	picmip -2	models/vehicles/strogg_goliath/goliath_s.tga
+		bumpmap		picmip -1	addnormals(models/vehicles/strogg_goliath/goliath_local.tga, heightmap(models/vehicles/strogg_goliath/goliath_h.tga, 5 ) )
+		selfIllumMap	picmip -2 models/vehicles/strogg_goliath/goliath_glow.tga
+
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 16,16,0,0
+		detailWeightMap		models/vehicles/strogg_goliath/goliath_detailmask.tga
+	}
+}
+
+material models/vehicles/strogg_goliath/goliath_railgun
+{
+	surfaceType "metal"
+//	unsmoothedtangents
+	noshadows
+
+	renderbump -size 512 512 -colormap -aa 1 -trace 0.1 models/vehicles/strogg_goliath/goliathrailgun_local.tga models/peppi/goliathrailgun_hi.lwo
+	{
+		program	interaction/strogg_detailwm
+		diffusemap	picmip -1	models/vehicles/strogg_goliath/goliathrailgun_d.tga
+		specularmap	picmip -2	models/vehicles/strogg_goliath/goliathrailgun_s.tga
+		//bumpmap	picmip -1	models/vehicles/strogg_goliath/goliathrailgun_local.tga
+		bumpmap		picmip -1 	addnormals(models/vehicles/strogg_goliath/goliathrailgun_local.tga, heightmap(models/vehicles/strogg_goliath/goliathrailgun_h.tga, 5 ) )
+		selfIllumMap 	_black
+
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 8,8,0,0
+		detailWeightMap		models/vehicles/strogg_goliath/goliathrailgun_detailmask.tga
+		}
+}
+
+material models/vehicles/strogg_goliath/glow_1 {
+	// Three numbers behind glow:
+
+	// 1) Max dist: Distance at wich the glow stops being view distance independent (i.e. it starts shrinking as you get further from it)
+	// 2) Offset Scale: The glow is moved towards the viewer to reduce intersecting errors, this controls the scale factor for the eye distance to offset it
+
+	// 3) Glow Scale: Scales the source polygon (basically the "basic" glow size without perspective effects)
+	deform glow 400 0.2 0.07
+	{
+		blend add
+		maskalpha
+		colored
+		map "textures/sfx/goliath_glow.tga"
+		vertexcolor
+	}
+}
+
+table blink { clamp snap { 0, 1, 0, 1 } }
+material models/vehicles/strogg_goliath/glow_2 {
+	deform glow 400*blink[parm8] 0.2 0.07
+	{
+		blend add
+		maskalpha
+		colored
+		map "textures/sfx/goliath_glow.tga"
+		vertexcolor
+	}
+}
+
+/**************************************************************
+	Strogg Hog
+**************************************************************/
+
+material models/vehicles/strogg_hog/cockpit_driver
+{
+noshadows
+noselfshadow
+	renderbump -size 1024 1024 -aa 2 -clampoutput 0 0 1 1 -colormap models/vehicles/strogg_hog/driver_local.tga models/vehicles/strogg_hog/dev_sd/driver_renderbump_high.lwo
+	{
+		program interaction/selfillum_detailwm
+		diffusemap	picmip -1 partialLoad 	models/vehicles/strogg_hog/driver_d.tga
+		specularmap	picmip -2 partialLoad 	models/vehicles/strogg_hog/driver_s.tga
+	//	bumpmap		picmip -1 partialLoad 	models/vehicles/strogg_hog/driver_local.tga
+		bumpmap		picmip -1 partialLoad 	addnormals(models/vehicles/strogg_hog/driver_local.tga, heightmap(models/vehicles/strogg_hog/driver_h.tga, 8 ) )
+		selfillummap	picmip -2 partialLoad 	models/vehicles/strogg_hog/driver_glow.tga
+
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 11,11,0,0
+		detailWeightMap		models/vehicles/strogg_hog/driver_detailmask.tga
+	}
+}
+
+material models/vehicles/strogg_hog/cockpit_gunner
+{
+noshadows
+noselfshadow
+	renderbump -size 1024 1024 -aa 2 -clampoutput 0 0 1 1 -colormap models/vehicles/strogg_hog/gunner_local.tga models/vehicles/strogg_hog/dev_sd/driver_renderbump_high.lwo
+		{
+			program interaction/selfillum_detail
+			diffusemap	picmip -1 partialLoad 	models/vehicles/strogg_hog/gunner_d.tga
+			specularmap	picmip -2 partialLoad 	models/vehicles/strogg_hog/gunner_s.tga
+			bumpmap		picmip -1 partialLoad 	models/vehicles/strogg_hog/gunner_local.tga
+			selfillummap	picmip -2 partialLoad 	models/vehicles/strogg_hog/gunner_glow.tga
+
+			bumpdetailmap          textures/detail/bump/concrete_detail01_local.tga
+			detailMult 4,4,0,0
+		}
+}
+
+material models/vehicles/strogg_hog/hog
+{
+	surfaceType	"metal"
+	noshadows
+	occlusionQuery
+//	unsmoothedtangents
+	renderbump -size 2048 2048 -trace 1.0 -clampoutput 0 0 1 1 models/vehicles/strogg_hog/hog_wheelbit_local.tga models/vehicles/strogg_hog/dev_sd/hog_wheels_hp.lwo
+
+	{
+		program	interaction/strogg_detailwm
+		diffusemap	picmip -1 	models/vehicles/strogg_hog/hog_d.tga
+		specularmap	picmip -2	models/vehicles/strogg_hog/hog_s.tga
+		bumpmap		picmip -1 	addnormals(models/vehicles/strogg_hog/hog_l.tga, heightmap(models/vehicles/strogg_hog/hog_h.tga, 5 ) )
+		selfIllumMap	picmip -2 	models/vehicles/strogg_hog/hog_glow.tga
+
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 13,13,0,0.2
+		detailWeightMap		models/vehicles/strogg_hog/hog_detailmask.tga
+	}
+}
+
+material models/vehicles/strogg_hog/from_desecrator
+{
+	surfaceType "metal"
+	unsmoothedtangents
+	renderbump -size 2048 2048 -colormap -aa 1 models/vehicles/strogg_desecrator/desecrator_local.tga models/vehicles/strogg_desecrator/desecrator_high.lwo
+	{
+		program interaction/strogg_detailwm
+		diffusemap	picmip -1	models/vehicles/strogg_desecrator/desecrator_d.tga
+		specularmap	picmip -2	models/vehicles/strogg_desecrator/desecrator_s.tga
+		bumpmap		picmip -1 	addnormals(models/vehicles/strogg_desecrator/desecrator_local.tga, heightmap(models/vehicles/strogg_desecrator/desecrator_h.tga, 5 ) )
+		selfillummap	_black
+
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 11,11,0,0
+		detailWeightMap		models/vehicles/strogg_desecrator/desecrator_detailmask.tga
+	}
+}
+
+/**************************************************************
+	Strogg Desecrator
+**************************************************************/
+material models/vehicles/strogg_desecrator/cockpits
+{
+	surfaceType "metal"
+	noShadows
+	/*renderbump -size 1024 1024 -clampoutput 0 0 1 1 -colormap -aa 2 models/vehicles/strogg_desecrator/cockpits_local2.tga models/vehicles/strogg_desecrator/dev_sd/gunner_renderbump_high.lwo*/
+	renderbump -size 1024 1024 -clampoutput 0 0 1 1 -colormap -aa 2 models/vehicles/strogg_desecrator/cockpits_local2.tga models/vehicles/strogg_desecrator/dev_nerve/driver_renderbump_high.lwo
+	{
+		program	interaction/selfillum_detail
+		diffusemap	picmip -1 partialLoad 	models/vehicles/strogg_desecrator/cockpits_combined_d.tga
+		specularmap	picmip -2 partialLoad 	models/vehicles/strogg_desecrator/cockpits_combined_s.tga
+		bumpmap		picmip -1 partialLoad 	addnormals(models/vehicles/strogg_desecrator/cockpits_combined_local.tga, heightmap(models/vehicles/strogg_desecrator/cockpits_combined_h.tga, 8) )
+		selfillummap	picmip -2 partialLoad 	models/vehicles/strogg_desecrator/cockpits_combined_glow.tga
+
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 8,8,0,0
+	}
+}
+
+material models/vehicles/strogg_desecrator/cockpits_additional
+{
+	surfaceType "metal"
+	noShadows
+	/*renderbump	picmip -1 -size 1024 1024 -clamptexturespace -colormap -overdrawmap -aa 2 models/vehicles/strogg_desecrator/cockpits_additional_local.tga models/vehicles/strogg_desecrator/dev_sd/gunner_renderbump_high.lwo*/
+	renderbump -size 1024 1024 -clamptexturespace -colormap -overdrawmap -aa 2 models/vehicles/strogg_desecrator/cockpits_additional_local.tga models/vehicles/strogg_desecrator/dev_nerve/gunner_renderbump_high.lwo
+	{
+		program	interaction/selfillum_detail
+		diffusemap	picmip -1 partialLoad 	models/vehicles/strogg_desecrator/cockpits_additional_d.tga
+		specularmap	picmip -2 partialLoad 	models/vehicles/strogg_desecrator/cockpits_additional_s.tga
+		bumpmap		picmip -1 partialLoad 	addnormals(models/vehicles/strogg_desecrator/cockpits_additional_local.tga, heightmap(models/vehicles/strogg_desecrator/cockpits_additional_h.tga, 3) )
+		selfillummap	picmip -2 partialLoad 	models/vehicles/strogg_desecrator/cockpits_additional_glow.tga
+
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 8,8,0,0
+	}
+}
+
+material models/vehicles/strogg_desecrator/desecrator
+{
+	surfaceType "metal"
+	occlusionQuery
+	noShadows
+//	unsmoothedtangents
+	renderbump -size 2048 2048 -colormap -aa 1 models/vehicles/strogg_desecrator/desecrator_local.tga models/vehicles/strogg_desecrator/desecrator_high.lwo
+
+	{
+		program	interaction/strogg_detailwm
+		diffusemap	picmip -1	models/vehicles/strogg_desecrator/desecrator_d.tga
+		specularmap	picmip -2	models/vehicles/strogg_desecrator/desecrator_s.tga
+		bumpmap		picmip -1 	addnormals(models/vehicles/strogg_desecrator/desecrator_local.tga, heightmap(models/vehicles/strogg_desecrator/desecrator_h.tga, 4 ) )
+		selfIllumMap	picmip -2 	models/vehicles/strogg_desecrator/desecrator_glow.tga
+
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 16,16,0,0
+		detailWeightMap		models/vehicles/strogg_desecrator/desecrator_detailmask.tga
+	}
+
+}
+
+material models/vehicles/strogg_desecrator/desecrator_dead
+{
+	surfaceType "metal"
+	noShadows
+	unsmoothedtangents
+	renderbump -size 2048 2048 -colormap -aa 1 models/vehicles/strogg_desecrator/desecrator_local.tga models/vehicles/strogg_desecrator/desecrator_high.lwo
+	{
+		diffusemap	picmip -1	models/vehicles/strogg_desecrator/desecrator_d.tga
+		specularmap	picmip -2	models/vehicles/strogg_desecrator/desecrator_s.tga
+		bumpmap		picmip -1 	addnormals(models/vehicles/strogg_desecrator/desecrator_local.tga, heightmap(models/vehicles/strogg_desecrator/desecrator_h.tga, 5 ) )
+
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 16,16,0,0
+	}
+}
+
+material textures/effects/desecrator_glow
+{
+	{
+		if parm6
+		blend	add
+		map	textures/effects/desecrator_glow.tga
+		rgb	sintable [time * 0.5] * 0.5 + 0.9 + sintable [time * 0.6] * 0.125
+	}
+
+}
+
+material textures/effects/desecrator_fx
+{
+	twosided
+	{
+		if lightningOnTable[ time * 0.1 ] > 0.9 && parm6
+
+		blend	add
+		map	textures/effects/desecrator_fx.tga
+
+		translate	time * 2, lightningOfsTable[ time * 0.05 ] * 0.5 - 0.25
+		rotate		lightningRotTable[ time * 0.05 ] * 0.2 - 0.1
+		maskAlpha
+	}
+	{
+		if lightningOnTable[ time * 0.1 + 0.444 ] > 0.9 && parm6
+
+		blend	add
+		map	textures/effects/desecrator_fx.tga
+
+		translate	time * 2, lightningOfsTable[ time * 0.04 ] * 0.5 - 0.25
+		rotate		lightningRotTable[ time * 0.04 ] * 0.2 - 0.1
+		maskAlpha
+	}
+	{
+		if lightningOnTable[ time * 0.1 + 0.846 ] > 0.9 && parm6
+
+		blend	add
+		map	textures/effects/desecrator_fx.tga
+
+		translate	time * 2, lightningOfsTable[ time * 0.06 ] * 0.5 - 0.25
+		rotate		lightningRotTable[ time * 0.06 ] * 0.2 - 0.1
+		maskAlpha
+	}
+}
+
+/*
+material models/vehicles/strogg_hog/hog_ram
+{
+	twosided
+	{
+		color parm5 * 0.0005, 0, 0, 1
+		map _white
+	}
+}
+*/
+
+material models/vehicles/strogg_hog/hog_ram
+{
+	qer_editorimage "textures/editor/flare.tga" //This needs to be a square texture for the normalize coords feature to work properly
+	surfacetype "forcefield"
+	forcefieldclip
+	twosided
+	{
+		blend gl_src_alpha, gl_one
+
+		alpha  parm5 * 0.01
+
+		program	sfx/stroggForceField
+		map			textures/sfx/forcefield.tga
+		mask		clamp textures/sfx/hog_ramp.tga
+		diffuseMap	clamp textures/sfx/forcegradient.tga
+
+		parameters	time * 0.05
+		parameters2	0.1, 0.1
+
+		color 1, 1, 1, parm5 * parm5 / 810000
+
+		textureMatrix diffuseMatrix {
+			scale 1, 0.5
+		}
+
+		textureMatrix maskMatrix {
+			translate 0, 0
+		}
+	}
+
+}
+
+material models/vehicles/strogg_hog/hog_ram_cockpit
+{
+	qer_editorimage "textures/editor/flare.tga" //This needs to be a square texture for the normalize coords feature to work properly
+	surfacetype "forcefield"
+	forcefieldclip
+	twosided
+	{
+		blend gl_src_alpha, gl_one
+
+		alpha  parm5 * 0.01
+
+		program	sfx/stroggForceField
+		map			textures/sfx/forcefield.tga
+		mask		clamp textures/sfx/shieldmask.tga
+		diffuseMap	clamp textures/sfx/forcegradient.tga
+
+		parameters	time * 0.05
+		parameters2	0.2, 0.2
+
+		color 1, 1, 1, parm5 * parm5 / 810000
+
+		textureMatrix diffuseMatrix {
+			scale 0.5, 0.5
+		}
+
+		textureMatrix maskMatrix {
+			translate 0, 0
+		}
+
+	}
+
+}
+
+material models/vehicles/strogg_hog/hog_ram2
+{
+	qer_editorimage textures/particles/sparks/sparkflash03.tga
+	noShadows
+	noimpact
+	translucent
+	polygonOffset
+	twosided
+	{
+		blend gl_src_alpha, gl_one
+//		alpha	parm5 * 0.0004
+		map		clamp textures/particles/sparks/sparkflash03.tga
+		color 1, .5, .24, parm5 * parm5 / 810000
+		rotate	time * 1 + 0.15 * sinTable[ time / 2.5 ]
+		vertexcolor
+	}
+}

@@ -1,0 +1,140 @@
+// required for renderer startup
+material _default {
+	{
+		map	_default
+	}
+}
+
+// idCollisionMapLocal::SetupTrmModelStructure sets this on created triangle surfaces
+material _tracemodel {
+	allcontent
+	collision
+}
+
+material _white {
+	{
+		blend blend
+		colored
+		map "_white"
+	}
+}
+
+material _scratch {
+	{
+		blend blend
+		colored
+		map "_scratch"
+	}
+}
+
+material _black {
+	{
+		blend blend
+		colored
+		map "_black"
+	}
+}
+
+material _whiteVertexColor {
+	{
+		blend blend
+		vertexColor
+		map "_white"
+	}
+}
+
+material _glyphCache
+{
+	sort gui
+	{
+		program trivialAlpha
+		blend blend
+		vertexColor
+		map nearest nopicmip _glyphCache
+	}
+}
+
+material _cinematic_YUV
+{
+	{
+		program trivialCinematicYUV
+		cinematicY _cinematicY
+	}
+}
+
+material _cinematicGui_YUV
+{
+	sort gui
+	{
+		program trivialCinematicYUV
+		cinematicY _cinematicY
+	}
+}
+
+material _culledPortal {
+	sort opaqueNearest
+	{
+		program fadedPortal 
+		//blend blend
+		vertexColor
+		//maskDepth
+		writeDepth
+		maskAlpha
+	}
+}
+
+material _fadedPortal {
+	forceAtmosphere
+	sort opaqueNearest
+	{
+		program fadedPortal 
+		blend blend
+		vertexColor
+		//maskDepth
+		writeDepth
+		maskAlpha
+	}
+	translucent
+}
+
+material _writeDepth {
+	sort opaqueNearest
+	{
+		maskcolor
+		maskalpha
+		writeDepth
+		map _black
+	}
+	translucent
+}
+
+material shadow/multiplitive {
+	{
+		program trivialVtxColor
+		blend filter
+		maskdepth
+		maskAlpha
+		vertexColor
+		//depthFunc always
+	}
+}
+
+material shadow/fog {
+	{
+		program trivialVtxColor
+		blend gl_dst_alpha, gl_one_minus_dst_alpha
+		maskdepth
+//		maskAlpha
+		vertexColor
+		// depthFunc always // ATI workaround
+	}
+}
+
+material post/depth {
+	{
+		maskdepth
+//		maskAlpha
+		program postprocess/showDepth
+		blend blend
+	}
+}

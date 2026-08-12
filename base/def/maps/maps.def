@@ -1,0 +1,86 @@
+entityDef gameplay_generic_destructible_objective {
+	"spawnclass"	"sdScriptEntity"
+	"scriptObject"	"destructible_objective"
+
+	"editor_mins"	"?"
+	"editor_maxs"	"?"
+
+	"option_crosshair_interface" "1"
+
+	"object_name"	"Give Me A Name Please"
+}
+
+entityDef gameplay_destructible_trigger {
+	"spawnclass"			"sdScriptEntity"
+	"scriptObject"			"destructible_objective_trigger"
+
+	"editor_mins"			"?"
+	"editor_maxs"			"?"
+
+	"editor_var target"		"The entity that will be destroyed by the HE"
+	
+	"collection_hetrigger"	"hetrigger"
+}
+
+entityDef gameplay_jumppad { 
+	"spawnclass"			"sdJumpPad"
+	"scriptObject"			"jumppad"
+
+	"editor_mins"			"?"
+	"editor_maxs"			"?"
+
+	"editor_var trigger_wait" "The length of time (in msec) before the jumppad will push again"
+	"trigger_wait"			"100"
+
+	//"fx_jump"				"effects/items/hecharge_glow"		// Calls an unneeded sound -Xian
+	"snd_jump"				"sounds/misc/jumppad"
+}
+
+entityDef gameplay_jumppad_strogg { 
+	"inherit"				"gameplay_jumppad"
+	"team"					"strogg"
+}
+
+entityDef gameplay_jumppad_gdf { 
+	"inherit"				"gameplay_jumppad"
+	"team"					"gdf"
+}
+
+entityDef gameplay_hackable_objective {
+	"spawnclass"			"sdScriptEntity"
+	"scriptObject"			"hackable_objective"
+
+	"editor_mins"			"?"
+	"editor_maxs"			"?"
+	
+	"option_crosshair_interface" "1"
+	"option_interactive_interface" "1"
+}
+
+toolTip tooltip_fireteam_full {
+	sound "sounds/ui/main/cannot"
+	length	5
+	alwaysPlay
+	text	"fireteam/messages/full"
+}
+
+toolTip tooltip_kick_fireteam_member {
+	sound "sounds/ui/main/bad"
+	length	5
+	alwaysPlay
+	text	"fireteam/messages/kick"
+}
+
+toolTip tooltip_fireteam_private {
+	sound "sounds/ui/main/cannot"
+	length	5
+	alwaysPlay
+	text	"fireteam/messages/cannot_join_private"
+}
+
+toolTip tooltip_fireteam_disbanded {
+	sound "sounds/ui/main/neutral"
+	length	5
+	alwaysPlay
+	text	"fireteam/messages/disbanded"
+}

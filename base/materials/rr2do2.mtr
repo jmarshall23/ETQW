@@ -1,0 +1,225 @@
+material rr2do2/liquidPuddleTest
+{
+/*	diffusemap	_black
+	{
+		blend blend
+		cubeMap	env/guitest
+		texgen reflect
+	}*/
+
+	discrete
+	noshadows
+	//twosided
+
+	diffusemap	_black
+	{
+		blend bumpmap
+		map heightmap( textures/rock/rock04_h.tga, 120 )		
+		scroll time*0.015, time*0.001
+		centerScale (1+0.1*sintable[time*0.02]), 1+0.1*(sintable[time*0.02])
+		linear
+	}
+	{
+		refractWaterRenderMap	512	256		// size of the texture to draw the mirror view in
+		//mirrorRenderMap	512	256		// size of the texture to draw the mirror view in
+
+		// fix up the projection
+		translate .5f, .5f
+		scale .5f, .5f
+	}
+	{
+		mirrorWaterRenderMap	512	256		// size of the texture to draw the mirror view in
+		blend blend
+		vertexcolor
+
+		// fix up the projection
+		translate .5f, .5f
+		scale .5f, .5f
+	}
+}
+
+material rr2do2/liquidLakeTest
+{
+	discrete
+	noshadows
+	//twosided
+
+	diffusemap	_black
+	{
+		blend bumpmap
+		map heightmap( textures/rock/rock04_h.tga, 120 )		
+		scroll time*-0.015, time*0.001
+//		centerScale (5+0.001*sintable[time*0.02]), 5+0.001*(sintable[time*0.02])
+		centerScale (0.05+0.0001*sintable[time*0.02]), 0.05+0.0001*(sintable[time*0.02])
+	}
+	/*{
+		refractWaterRenderMap	512	256		// size of the texture to draw the mirror view in
+
+		// fix up the projection
+		translate .5f, .5f
+		scale .5f, .5f
+	}*/
+	{
+		mirrorWaterRenderMap	512	256		// size of the texture to draw the mirror view in
+		//blend blend
+		//vertexcolor
+
+		// fix up the projection
+		translate .5f, .5f
+		scale .5f, .5f
+	}
+}
+
+material lights/headlights1_colored
+{
+	{
+		map	zeroClamp	lights/headlights1b.tga
+		
+		red			parm0
+		green		parm1
+		blue		parm2
+	}
+}
+
+material models/particles/energyblast/energyblast
+{	
+	qer_editorimage    models/particles/energyblast/energyblast.tga
+	noShadows
+	deform sprite
+	noselfShadow
+	translucent
+	twosided
+   	{
+    	blend	add
+		map		models/particles/energyblast/energyblast.tga
+		zeroclamp
+		rotate	time * 0.7
+		//centerscale   mgscaleTable[time* .9], mgscaleTable[time*. 9] 
+		rgb		fireballtable[ time * .7 ]
+		
+
+	}
+   	//{
+   // 		 Blend add
+	//	Map   models/weapons/bruiserfireball/bruiserfireball2.tga
+	//	zeroclamp
+	//	rotate	time * -0.6
+	//	//centerscale   mgscaleTable[time* .9], mgscaleTable[time* .9] 
+	//	rgb		fireballtable[ time * 1 ]
+	//	
+
+	//}
+}
+
+material shaderDemos/rr2AmbientTest
+{
+	{
+		cubeMap		env/nade
+		texgen		normal
+	}
+}
+
+material shaderDemos/tiles
+{
+	{
+		program	tiles.vfp
+		vertexParm		0		10 + ( 0.5 + 0.5 * sinTable[ time * 0.25 ] ) * 1000
+		vertexParm		1		0.5 + 0.5 * sinTable[ time * 0.25 ] * 3.5
+		
+		//vertexParm		0		12000
+		//vertexParm		1		-0.5
+				
+		//vertexParm		0		160
+		//vertexParm		1		0.3 + ( sinTable[ time * 0.25 ] * cosTable[ time * 0.5 ] ) * 0.35
+		fragmentMap		0		_currentRender
+	}
+}
+
+material rr2do2/hwskinning
+{
+	diffusemap textures/roler/rusty_panel_d.tga
+	bumpmap textures/roler/rusty_panel_local.tga
+	specularmap textures/roler/rusty_panel_s.tga
+}
+
+material rr2do2/megastamp_mesh
+{
+	noShadows
+	{
+		blend blend
+		program tools/megastamp/editmesh.vfp
+	}
+}
+
+material rr2do2/megastamp_mesh_editarea
+{
+	//polygonOffset
+	/*sort decal
+	noShadows
+	{
+		blend blend
+		maskAlpha
+		program tools/megastamp/editarea.vfp
+		fragmentmap 0 _stampedit_base
+		fragmentmap 1 _borderClamp
+	}*/
+
+	/*interaction {
+		program tools/megastamp/editareainteraction.vfp
+		fragmentmap 11 _borderClamp
+	}
+	
+	{
+		//maskAlpha
+		blend diffuseMap
+		map _stampedit_base
+		alphaTest 0.5
+	}*/
+	//sort decal
+	noShadows
+	/*{
+		map _borderClamp
+		blend blend
+		red 0
+		green 0.2
+		blue 0
+		alpha 0.5
+	}*/
+	/*{
+		blend blend
+		program tools/megastamp/editarea.vfp
+	}*/
+
+	diffusemap _stampedit_previewdiffuse
+	//bumpmap _stampedit_previewlocal
+
+	/*{
+		blend blend
+		maskAlpha
+		program tools/megastamp/editarea.vfp
+		fragmentmap 0 _stampedit_previewdiffuse
+		fragmentmap 1 _borderClamp
+	}*/
+}
+
+material rr2do2/megastamp_mesh_stamp
+{
+	noShadows
+	{
+		blend diffuseMap
+		map _stampedit_stamp_diffuse
+		alphaTest 0.5
+		//centerscale 12, 12
+	}
+
+	bumpMap _stampedit_stamp_local
+	/*{
+		program tools/megastamp/stampuv.vfp
+	}*/
+	/*{
+		blend blend
+		program tools/megastamp/stamprot.vfp
+		fragmentmap 0 _stampedit_stamp_diffuse
+	}*/
+}
+

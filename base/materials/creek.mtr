@@ -1,0 +1,13 @@
+material textures/creek/pebbles001
+{
+	bumpmap		addnormals( textures/creek/pebbles001_local.tga, heightmap( textures/creek/pebbles001_bmp.tga, 6 ) )
+	diffusemap	textures/creek/pebbles001_d.tga
+	specularmap	textures/creek/pebbles001_s.tga
+}
+
+material textures/creek/pebbles002
+{
+	bumpmap		addnormals( textures/creek/pebbles002_local.tga, heightmap( textures/creek/pebbles002_bmp.tga, 6 ) )
+	diffusemap	textures/creek/pebbles002_d.tga
+	specularmap	textures/creek/pebbles002_s.tga
+}

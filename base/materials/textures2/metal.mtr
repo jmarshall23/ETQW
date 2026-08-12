@@ -1,0 +1,661 @@
+material metal_device_1
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/metal_device_1_d.tga
+		specularmap	picmip -2	textures2/metal/metal_device_1_s.tga
+		bumpmap		picmip -1	textures2/metal/metal_device_1_local.tga
+	}
+}
+
+material metal_device_2
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/metal_device_2_d.tga
+		specularmap	picmip -2	textures2/metal/metal_device_2_s.tga
+		bumpmap		picmip -1	textures2/metal/metal_device_2_local.tga
+	}
+	{
+		blend add
+		map			picmip -1	textures2/metal/metal_device_2_glow.tga
+		maskAlpha
+	}
+}
+
+material wall_outdoor_2
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_2_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_2_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_2_local.tga
+	}
+}
+
+material air_vent_1
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/airvent_1_d.tga
+		specularmap	picmip -2	textures2/metal/airvent_1_s.tga
+		bumpmap		picmip -1	textures2/metal/airvent_1_local.tga
+	}
+}
+
+material roof_metal_1
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/roof_metal_1_d.tga
+		specularmap	picmip -2	textures2/metal/roof_metal_1_s.tga
+		bumpmap		picmip -1	textures2/metal/roof_metal_1_local.tga
+	}
+}
+
+material balustrade_metal_1
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/balustrade_1_d.tga
+		specularmap	picmip -2	textures2/metal/balustrade_1_s.tga
+		bumpmap		picmip -1	textures2/metal/balustrade_1_local.tga
+	}
+}
+
+material wall_outdoor_8
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_8_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_8_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_8_local.tga
+	}
+}
+
+material wall_outdoor_10
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_10_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_10_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_10_local.tga
+	}
+}
+
+material wall_outdoor_15
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_15_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_15_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_15_local.tga
+	}
+}
+
+material wall_outdoor_16
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_16_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_16_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_16_local.tga
+	}
+}
+
+material wall_outdoor_19
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_19_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_19_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_19_local.tga
+		//vertexColor
+	}
+}
+
+material textures2/metal/wall_outdoor_20
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_20_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_20_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_20_local.tga
+		//vertexColor
+	}
+}
+ 
+material textures2/metal/wall_outdoor_21
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_21_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_20_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_20_local.tga
+		//vertexColor
+	}
+}
+ 
+material textures2/metal/wall_outdoor_22
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_22_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_20_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_20_local.tga
+		//vertexColor
+	}
+}
+
+material textures2/metal/wall_outdoor_23
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_23_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_23_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_23_local.tga
+		//vertexColor
+	}
+}
+
+material textures2/metal/wall_outdoor_23_256
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_23_256_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_23_256_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_23_256_local.tga
+		vertexColor
+	}
+}
+  
+material textures2/metal/wall_outdoor_24
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_24_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_24_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_24_local.tga
+		//vertexColor
+	}
+}
+
+material textures2/metal/wall_outdoor_25
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_25_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_25_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_25_local.tga
+		//vertexColor
+	}
+}
+  
+material textures2/metal/wall_outdoor_26
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_26_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_25_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_25_local.tga
+		//vertexColor
+	}
+}
+  
+material textures2/metal/wall_outdoor_27
+{
+	surfaceType	"metal"
+	{
+ 		diffusemap	picmip -1	textures2/metal/wall_outdoor_27_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_25_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_25_local.tga
+		//vertexColor
+	}
+}
+
+material textures2/metal/wall_outdoor_28
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_28_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_28_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_28_local.tga
+		vertexColor
+		
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult 2,2,0,0        	
+	}
+}
+  
+material textures2/metal/wall_outdoor_29
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_29_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_29_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_29_local.tga
+		//vertexColor
+	}
+}
+  
+material textures2/metal/metal_pipe_01
+{
+	noselfshadow
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/metal_pipe_01_d.tga
+		specularmap	picmip -2	textures2/metal/metal_pipe_01_s.tga
+		bumpmap		picmip -1	textures2/metal/metal_pipe_01_local.tga
+		vertexColor
+		
+		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	2,0.3,0,0
+	}
+}
+material textures2/metal/wall_outdoor_30
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_30_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_30_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_outdoor_30_local.tga
+		//vertexColor
+	}
+}
+
+material metal_stuff_1
+{
+		surfaceType	"metal"
+
+	{
+		diffusemap	picmip -1	textures2/metal/metal_stuff_1_d.tga
+		specularmap	picmip -2	textures2/metal/metal_stuff_1_s.tga
+		bumpmap		picmip -1	textures2/metal/metal_stuff_1_local.tga
+ 	}
+}
+
+material metal_stuff_2
+{
+		surfaceType	"metal"
+
+	{
+		diffusemap	picmip -1	textures2/metal/metal_stuff_2_d.tga
+		specularmap	picmip -2	textures2/metal/metal_stuff_2_s.tga
+		bumpmap		picmip -1	textures2/metal/metal_stuff_2_local.tga
+ 	}
+}
+
+material metal_stuff_3
+{
+		surfaceType	"metal"
+
+	{
+		diffusemap	picmip -1	textures2/metal/metal_stuff_3_d.tga
+		specularmap	picmip -2	textures2/metal/metal_stuff_3_s.tga
+		bumpmap		picmip -1	textures2/metal/metal_stuff_3_local.tga
+ 	}
+}
+
+material metal_stuff_4
+{
+		surfaceType	"metal"
+
+	{
+		diffusemap	picmip -1	textures2/metal/metal_stuff_4_d.tga
+		specularmap	picmip -2	textures2/metal/metal_stuff_4_s.tga
+		bumpmap		picmip -1	textures2/metal/metal_stuff_4_local.tga
+ 	}
+}
+
+material metal_stuff_5
+{
+		surfaceType	"metal"
+
+	{
+		diffusemap	picmip -1	textures2/metal/metal_stuff_5_d.tga
+		specularmap	picmip -2	textures2/metal/metal_stuff_5_s.tga
+		bumpmap		picmip -1	textures2/metal/metal_stuff_5_local.tga
+ 	}
+}
+
+material metal_window_1
+{
+		surfaceType	"metal"
+
+ 	{
+ 		diffusemap	picmip -1	textures2/metal/wall_window_1_d.tga
+ 		specularmap	picmip -2	textures2/metal/wall_window_1_s.tga
+ 		bumpmap		picmip -1	textures2/metal/wall_window_1_local.tga
+ 	}
+}
+
+material metal_wall_out_ts_1
+{	
+	surfaceType	"metal"
+	noshadows
+	{		
+		diffusemap	picmip -1	textures2/metal/metal_wall_out_ts_1_d.tga
+		specularmap	picmip -2	textures2/metal/metal_wall_out_ts_1_s.tga
+		bumpmap		picmip -1	textures2/metal/metal_wall_out_ts_1_local.tga
+ 	}
+}
+
+material metal_wall_out_ts_2
+{
+	surfaceType	"metal"
+	noshadows
+	{	
+		diffusemap	picmip -1	textures2/metal/metal_wall_out_ts_2_d.tga
+		specularmap	picmip -2	textures2/metal/metal_wall_out_ts_2_s.tga
+		bumpmap		picmip -1	textures2/metal/metal_wall_out_ts_2_local.tga
+ 	}
+}
+
+material metal_wall_out_ts_3
+{
+	surfaceType	"metal"
+	noshadows
+	{		
+		diffusemap	picmip -1	textures2/metal/metal_wall_out_ts_3_d.tga
+		specularmap	picmip -2	textures2/metal/metal_wall_out_ts_3_s.tga
+		bumpmap		picmip -1	textures2/metal/metal_wall_out_ts_3_local.tga
+ 	}
+}
+
+material metal_wall_out_ts_4
+{
+	surfaceType	"stone"
+	noshadows
+	{		
+		diffusemap	picmip -1	textures2/metal/metal_wall_out_ts_4_d.tga
+		specularmap	picmip -2	textures2/metal/metal_wall_out_ts_4_s.tga
+		bumpmap		picmip -1	textures2/metal/metal_wall_out_ts_4_local.tga
+ 	}
+}
+
+material metal_stuff_ts_1
+{
+	surfaceType	"metal"
+	noshadows
+	{
+		diffusemap	picmip -1	textures2/metal/metal_stuff_ts_1_d.tga
+		specularmap	picmip -2	textures2/metal/metal_stuff_ts_1_s.tga
+		bumpmap		picmip -1	textures2/metal/metal_stuff_ts_1_local.tga
+ 	}
+}
+
+material metal_stuff_ts_2
+{
+	surfaceType	"metal"
+	noshadows
+	{		
+		diffusemap	picmip -1	textures2/metal/metal_stuff_ts_2_d.tga
+		specularmap	picmip -2	textures2/metal/metal_stuff_ts_2_s.tga
+		bumpmap		picmip -1	textures2/metal/metal_stuff_ts_2_local.tga
+ 	}
+ 		{
+		blend add
+		map			picmip -2	textures2/metal/metal_stuff_ts_2_glow.tga
+		maskAlpha
+		}
+}
+
+material wall_in_ts_1
+{
+	surfaceType	"metal"
+	noshadows
+	{		
+		diffusemap	picmip -1	textures2/metal/wall_in_ts_1_d.tga
+		specularmap	picmip -2	textures2/metal/wall_in_ts_1_s.tga
+		bumpmap		picmip -1	textures2/metal/wall_in_ts_1_local.tga
+ 	}
+ 		{
+		blend add
+		map			picmip -2	textures2/metal/wall_in_ts_1_glow.tga
+		maskAlpha
+		}
+}
+
+material metal_stuff_ts_3
+{
+	surfaceType	"metal"
+	noshadows
+	{		
+		diffusemap	picmip -1	textures2/metal/metal_stuff_ts_3_d.tga
+		specularmap	picmip -2	textures2/metal/metal_stuff_ts_3_s.tga
+		bumpmap 	picmip -1	textures2/metal/metal_stuff_ts_3_local.tga
+ 	}
+ 	{
+		blend add
+		map			picmip -2	textures2/metal/metal_stuff_ts_3_glow.tga
+		maskAlpha
+	}
+}
+
+material models/mapobjects/devices/air_cond_4
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	models/mapobjects/devices/aircon_residential_d.tga
+		specularmap	picmip -2	models/mapobjects/devices/aircon_residential_s.tga
+		bumpmap 	picmip -1	models/mapobjects/devices/aircon_residential_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 5,5,0,0 
+ 	}
+}
+
+material textures2/metal/metal_door_5
+{
+	surfaceType	"metal"
+	{	
+		diffusemap	picmip -1	textures2/metal/metal_door_5_d.tga
+		specularmap	picmip -2	textures2/metal/metal_door_5_s.tga
+		bumpmap 	picmip -1	textures2/metal/metal_door_5_local.tga
+ 	}
+}
+
+material textures2/metal/metal_door_6
+{
+	surfaceType	"metal"
+	{	
+		diffusemap	picmip -1	textures2/metal/metal_door_6_d.tga
+		specularmap	picmip -2	textures2/metal/metal_door_6_s.tga
+		bumpmap 	picmip -1	textures2/metal/metal_door_6_local.tga
+ 	}
+}
+
+material textures2/metal/wall_outdoor_42
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_42_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_42_s.tga
+		bumpmap 	picmip -1	textures2/metal/wall_outdoor_42_local.tga
+		//vertexColor
+	}
+}
+
+material textures2/metal/wall_outdoor_43
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_43_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_43_s.tga
+		bumpmap 	picmip -1	textures2/metal/wall_outdoor_43_local.tga
+		vertexColor
+	}
+}
+
+material textures2/metal/wall_outdoor_45
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/wall_outdoor_45_d.tga
+		specularmap	picmip -2	textures2/metal/wall_outdoor_45_s.tga
+		bumpmap 	picmip -1	textures2/metal/wall_outdoor_45_local.tga
+		//vertexColor
+	}
+}
+   
+material textures2/metal/metal_shutter_01
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures2/metal/metal_shutter_01_d.tga
+		specularmap	picmip -2	textures2/metal/metal_shutter_01_s.tga
+		bumpmap 	picmip -1	textures2/metal/metal_shutter_01_local.tga
+		//vertexColor
+	}
+}
+    
+material textures2/metal/halogen_light1
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	models/mapobjects/devices/halogen_light_1_d.tga
+		specularmap	picmip -2	models/mapobjects/devices/halogen_light_1_s.tga
+		bumpmap		picmip -1	models/mapobjects/devices/halogen_light_1_local.tga
+		//vertexColor
+	}
+}
+    
+material textures2/metal/halogen_light2
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	models/mapobjects/devices/halogen_light_2_d.tga
+		specularmap	picmip -2	models/mapobjects/devices/halogen_light_2_s.tga
+		bumpmap		picmip -1	models/mapobjects/devices/halogen_light_2_local.tga
+		//vertexColor
+	}
+}
+    
+material textures2/metal/halogen_light3
+{
+	surfaceType	"metal"                    
+	{
+		diffusemap	picmip -1	models/mapobjects/devices/halogen_light_3_d.tga
+		specularmap	picmip -2	models/mapobjects/devices/halogen_light_3_s.tga
+		bumpmap 	picmip -1	models/mapobjects/devices/halogen_light_3_local.tga
+		//vertexColor
+	}
+}
+
+material textures/metal/kitchen_oven01
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures/metal/kitchen_oven01_d.tga
+		specularmap	picmip -2	textures/metal/kitchen_oven01_s.tga
+		bumpmap		picmip -1	textures/metal/kitchen_oven01_local.tga
+		vertexcolor
+	
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	4,8,0,0
+ 	}
+}
+
+material textures/metal/blackmetal1
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures/metal/blackmetal1_d.tga
+		specularmap	picmip -2	textures/metal/blackmetal1_s.tga
+		bumpmap		picmip -1	textures/metal/blackmetal1_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	2,3,0,0
+ 	}
+}
+
+material textures/metal/panels01
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures/metal/panels01_d.tga
+		specularmap	picmip -2	textures/metal/panels01_s.tga
+		bumpmap		picmip -1	textures/metal/panels01_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 4,4,0,0
+ 	}
+}
+
+material textures/metal/stainlesssteel01
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures/metal/stainlesssteel01_d.tga
+		specularmap	picmip -2	textures/metal/stainlesssteel01_s.tga
+		bumpmap		picmip -1	textures/metal/stainlesssteel01_local.tga
+		vertexcolor
+ 	}
+}
+
+material textures/metal/stainlesssteel02
+{
+	surfaceType	"metal"
+	noshadows
+	{
+		diffusemap	picmip -1	textures/metal/stainlesssteel02_d.tga
+		specularmap	picmip -2	textures/metal/stainlesssteel01_s.tga
+		bumpmap		picmip -1	textures/metal/stainlesssteel01_local.tga
+		vertexcolor
+ 	}
+}
+
+material textures/metal/darkmetal_stained01
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	textures/metal/darkmetal_stained01_d.tga
+		specularmap	picmip -2	textures/metal/darkmetal_stained01_s.tga
+		bumpmap		picmip -1	textures/metal/darkmetal_stained01_local.tga
+		vertexcolor
+			
+		diffuseDetailMap 		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,4,0,0
+ 	}
+}
+
+material textures/metal/tech_rack01
+{
+	surfaceType	"metal"
+	{
+		program	interaction/selfIllum
+		diffusemap		picmip -1	textures/metal/tech_rack01_d.tga
+		specularmap		picmip -2	textures/metal/tech_rack01_s.tga
+		bumpmap			picmip -1	textures/metal/tech_rack01_local.tga
+		selfIllumMap	picmip -1	textures/metal/tech_rack01_glow.tga
+		vertexcolor
+ 	}
+}
+
+material textures/metal/tech_rack02
+{
+	surfaceType	"metal"
+	{
+		program	interaction/selfIllum
+		diffusemap		picmip -1	textures/metal/tech_rack02_d.tga
+		specularmap		picmip -2	textures/metal/tech_rack01_s.tga
+		bumpmap			picmip -1	textures/metal/tech_rack01_local.tga
+		selfIllumMap	picmip -1	textures/metal/tech_rack01_glow.tga
+		vertexcolor
+ 	}
+}

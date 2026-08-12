@@ -1,0 +1,15 @@
+
+#ifndef __hud_include__
+#define __hud_include__
+
+$template bob_icon( ImageParm )
+	sort gui
+	{
+		blend blend
+		map nopicmip ImageParm
+		centerscale	0.95 + 0.05 * sinTable[ time ], 0.95 + 0.05 * sinTable[ time ]
+		vertexColor
+	}	
+$endtemplate
+
+#endif // !__hud_include__

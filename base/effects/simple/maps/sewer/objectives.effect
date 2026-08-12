@@ -1,0 +1,539 @@
+effect effects/maps/sewer/emp_charge_simple
+{
+	size	899
+
+	emitter "1- flash2"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	8,8
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,100 }
+				size { point 80,80 }
+				tint { point 0.00784314,0.027451,0.0392157 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 4,4 }
+				tint { envelope senetable3 count 3,3,3 offset 3,3,3 }
+			}
+
+			end
+			{
+				size { line 175,175,200,200 }
+				tint { point 0.0196078,0.321569,0.419608 }
+			}
+			lineHit
+		}
+	}
+	emitter "1- flash3"
+	{
+		start		5,5
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	8,8
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,100 }
+				size { point 80,80 }
+				tint { point 0.00784314,0.027451,0.0392157 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope senetable3 count 5,5,5 offset 5,5,5 }
+			}
+
+			end
+			{
+				size { point 600,600 }
+				tint { point 0.0196078,0.356863,0.47451 }
+			}
+			lineHit
+		}
+	}
+	emitter "muzzle sparks2"
+	{
+		duration	8,8
+		count		5,5
+		locked
+
+		sprite
+		{
+			duration	0.05,0.05
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip02"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,100 }
+				velocity { box -50,-50,-50,50,50,50 }
+				size { box 70,70,100,100 }
+				rotate { box -0.638889,0.638889 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+			lineHit
+		}
+	}
+	emitter "muzzle sparks3"
+	{
+		duration	8,8
+		count		5,5
+		locked
+
+		sprite
+		{
+			duration	0.05,0.05
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,100 }
+				velocity { box -50,-50,-50,50,50,50 }
+				size { box 70,70,100,100 }
+				rotate { box -0.638889,0.638889 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+			lineHit
+		}
+	}
+	emitter "rings"
+	{
+		start		4,4
+		duration	3,3
+		count		5,5
+
+		oriented
+		{
+			duration	1.5,1.5
+			blend	add
+			material	"textures/effects/shockwave"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,50 }
+				velocity { point 0,0,40 }
+				size { point 100,100 }
+				tint { line 0,0.25098,0.501961,0,0.501961,1 }
+				rotate { point 0.25,0,0 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 count 0.5,0.5 }
+				fade { envelope shamus_exp_x2 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 50,50 }
+				rotate { point 0.25,0,3.38889 }
+			}
+			lineHit
+		}
+	}
+	emitter "rings2"
+	{
+		start		4,4
+		duration	4,4
+		count		5,5
+
+		oriented
+		{
+			duration	4,4
+			blend	add
+			material	"textures/effects/shockwave"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,50 }
+				velocity { box 0,0,30,0,0,40 }
+				size { point 120,120 }
+				tint { line 0,0.25098,0.501961,0,0.501961,1 }
+				rotate { box 0.25,-0.0138889,0,0.25,0.0138889,0 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 count 0.25,0.25 }
+				fade { envelope shamus_exp_x2 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { box 50,50,80,80 }
+				rotate { box 0.25,-0.0138889,3.38889,0.25,0.0138889,3.38889 }
+			}
+			lineHit
+		}
+	}
+	emitter "core"
+	{
+		start		4,4
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	8,8
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,100 }
+				size { point 20,20 }
+				tint { line 0,0.501961,0.752941,0,0.501961,0.501961 }
+				fade { line 0.2,0.3 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 4,4 }
+				tint { envelope bathroomtable }
+			}
+
+			end
+			{
+				size { point 50,50 }
+				tint { point 0.501961,0.501961,1 }
+			}
+			lineHit
+		}
+	}
+	emitter "core2"
+	{
+		start		6,6
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	4,4
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,120 }
+				size { point 30,20 }
+				tint { line 0,0.501961,0.752941,0,0.501961,0.501961 }
+				fade { line 0.2,0.3 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 4,4 }
+				tint { envelope bathroomtable }
+			}
+
+			end
+			{
+				size { point 70,50 }
+				tint { point 0.501961,0.501961,1 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/maps/sewer/emp_fire_simple
+{
+	size	1548
+
+	emitter "1- flash3"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	4,4
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,100 }
+				size { point 150,150 }
+				tint { point 0.00784314,0.027451,0.0392157 }
+				fade { point 0 }
+			}
+
+			motion
+			{
+				size { envelope penta_tostepblast count 1.5,1.5 }
+				tint { envelope senetable3 count 5,5,5 offset 5,5,5 }
+				fade { envelope muzzleflashtable }
+			}
+
+			end
+			{
+				size { point 80,80 }
+				tint { point 0.0156863,0.309804,0.403922 }
+				fade { point 0.5 }
+			}
+			lineHit
+		}
+	}
+	emitter "muzzle sparks4"
+	{
+		duration	4,4
+		count		10,10
+		locked
+
+		sprite
+		{
+			duration	0.05,0.05
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip03"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,100 }
+				velocity { box -50,-50,-50,50,50,50 }
+				size { point 100,100 }
+				rotate { box -0.638889,0.638889 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { point 30,30 }
+				fade { point 0.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "Smoke Ring"
+	{
+		count		50,50
+
+		sprite
+		{
+			duration	0.5,0.5
+			persist
+			material	"particles/penta/hornetsmoke2"
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -500,-500,-500,500,500,500 }
+				velocity { box -1000,-1000,-1000,1000,1000,1000 }
+				size { point 200,200 }
+				tint { point 0.576471,0.721569,0.843137 }
+				fade { point 0.2 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope jrad_convexfade }
+				tint { envelope jrad_concavefade }
+				fade { envelope jrad_concavefade }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 400,400 }
+				tint { point 1,1,1 }
+				rotate { box 0.5,-0.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "Explosion"
+	{
+		count		1,1
+
+		sprite
+		{
+			duration	0.2,0.2
+			blend	add
+			material	"particles/penta/ssm_flash"
+			trailRepeat	1
+
+			start
+			{
+				size { point 100,100 }
+				tint { point 0.501961,0.501961,0.501961 }
+				fade { point 0.5 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope exp_x2 }
+			}
+
+			end
+			{
+				size { point 700,700 }
+			}
+			lineHit
+		}
+	}
+	spawner "Flash"
+	{
+		count		1,1
+
+		sprite
+		{
+			duration	0.3,0.3
+			blend	add
+			persist
+			material	"textures/particles/boomboom"
+			trailRepeat	1
+
+			start
+			{
+				size { point 100,100 }
+				tint { point 0,0.501961,1 }
+				fade { point 0.5 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 1000,1000 }
+			}
+			lineHit
+		}
+	}
+	emitter "center1"
+	{
+		duration	1,1
+		density		9,9
+		locked
+
+		sprite
+		{
+			duration	0.5,0.75
+			blend	add
+			material	"textures/effects/shockwave"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 300,-50,-50,400,50,50 }
+				size { box 2,2,4,4 }
+				tint { point 0,0,0 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope exp_xoverx2 }
+				fade { envelope exp_x2 count 2 offset -1 }
+			}
+
+			end
+			{
+				size { box 600,600,1000,1000 }
+				tint { point 1,1,1 }
+			}
+			lineHit
+		}
+	}
+	delay "unnamed7"
+	{
+		duration	5,5
+	}
+	spawner "out smoke"
+	{
+		count		8,8
+		attenuateEmitter
+
+		sprite
+		{
+			duration	0.125,0.5
+			persist
+			material	"particles/dustcloud_02"
+			gravity		0,0.1
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -50,-50,-50,50,50,0 }
+				velocity { box -900,-900,150,900,900,785 }
+				size { line 75,75,100,100 }
+				fade { line 0.25,0.125 }
+				rotate { box -1.38889,1.38889 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope linear }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+				offset { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 150,150,450,450 }
+				tint { point 1,1,1 }
+				offset { sphere -50,-50,-50,50,50,250 }
+			}
+			lineHit
+		}
+	}
+}
+

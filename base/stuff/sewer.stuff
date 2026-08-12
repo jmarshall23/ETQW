@@ -1,0 +1,30 @@
+// --------------------------------------------
+// SEWER STUFF
+// --------------------------------------------
+
+stuffType sewer/sewer_grass_1 {
+	Model	"stuff/sewer/sewer_grass01.lwo"
+	Model	"stuff/sewer/sewer_grass02.lwo"
+}
+
+stuffType sewer/sewer_grass_2 {
+	Model	"stuff/sewer/sewer_grass02.lwo"
+	Model	"stuff/sewer/sewer_grass03.lwo"
+}
+
+stuffType sewer/sewer_leaves {
+	Model	"stuff/sewer/sewer_leaves01.lwo"
+	Model	"stuff/sewer/sewer_leaves02.lwo"
+	Model	"stuff/sewer/sewer_leaves03.lwo"
+	Model	"stuff/sewer/sewer_leaves04.lwo"
+}
+
+stuffType sewer/sewer_shrub {
+	Model	"stuff/sewer/sewer_shrub01.lwo"
+	Model	"stuff/sewer/sewer_shrub02.lwo"
+}
+
+stuffType sewer/sewer_flowers {
+	Model	"stuff/sewer/sewer_flowers01.lwo"
+	Model	"stuff/sewer/sewer_flowers02.lwo"
+}

@@ -1,0 +1,199 @@
+material textures/strogg_floors/strogg_floor_01
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_floors/strogg_floor_01_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_floors/strogg_floor_01_local.tga
+			diffusemap	picmip -1	textures/strogg_floors/strogg_floor_01_d.tga
+			specularmap	picmip -2	textures/strogg_floors/strogg_floor_01_s.tga
+			vertexcolor
+			
+			bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+			detailMult 2,2,0.4,0.1			
+		}
+}
+
+material textures/strogg_floors/strogg_floor_02
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_floors/strogg_floor_02_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_floors/strogg_floor_02_local.tga
+			diffusemap	picmip -1	textures/strogg_floors/strogg_floor_02_d.tga
+			specularmap	picmip -2	textures/strogg_floors/strogg_floor_02_s.tga
+			vertexcolor
+			
+			bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+			detailMult 4,4,0.4,0.1			
+		}
+}
+
+material textures/strogg_floors/strogg_floor_02_trim
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_floors/strogg_floor_02_trim_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_floors/strogg_floor_02_trim_local.tga
+			diffusemap	picmip -1	textures/strogg_floors/strogg_floor_02_trim_d.tga
+			specularmap	picmip -2	textures/strogg_floors/strogg_floor_02_trim_s.tga
+			vertexcolor
+			
+			bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+			detailMult 1,4,0.4,0.1			
+		}
+}
+
+material textures/strogg_floors/strogg_floor_03
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_floors/strogg_floor_03_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_floors/strogg_floor_03_local.tga
+			diffusemap	picmip -1	textures/strogg_floors/strogg_floor_03_d.tga
+			specularmap	picmip -2	textures/strogg_floors/strogg_floor_03_s.tga
+			vertexcolor			
+		}
+}
+
+material textures/strogg_floors/strogg_floor_03_trim
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_floors/strogg_floor_03_trim_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_floors/strogg_floor_03_trim_local.tga
+			diffusemap	picmip -1	textures/strogg_floors/strogg_floor_03_trim_d.tga
+			specularmap	picmip -2	textures/strogg_floors/strogg_floor_03_trim_s.tga
+			vertexcolor
+			
+			bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+			detailMult 1,4,0.4,0.1			
+		}
+}
+
+material textures/strogg_floors/strogg_floor_04
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_floors/strogg_floor_04_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_floors/strogg_floor_04_local.tga
+			diffusemap	picmip -1	textures/strogg_floors/strogg_floor_04_d.tga
+			specularmap	picmip -2	textures/strogg_floors/strogg_floor_04_s.tga
+			vertexcolor
+		}
+}
+
+material textures/strogg_floors/strogg_floor_04_trim
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_floors/strogg_floor_04_trim_d.tga
+	{
+		program	interaction/selfillum
+		bumpmap 	textures/strogg_floors/strogg_floor_04_trim_local.tga
+		diffusemap	picmip -1	textures/strogg_floors/strogg_floor_04_trim_d.tga
+		specularmap	picmip -2	textures/strogg_floors/strogg_floor_04_trim_s.tga
+		selfIllumMap 	picmip -1	textures/strogg_floors/strogg_floor_04_trim_glow.tga
+		vertexcolor
+		
+		bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+		detailMult 1,4,0.4,0.1		
+	}
+}
+
+material textures/strogg_floors/strogg_floor_04_trim_noglow
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_floors/strogg_floor_04_trim_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_floors/strogg_floor_04_trim_local.tga
+			diffusemap	picmip -1	textures/strogg_floors/strogg_floor_04_trim_d.tga
+			specularmap	picmip -2	textures/strogg_floors/strogg_floor_04_trim_s.tga
+			selfIllumMap 	picmip -1	textures/strogg_floors/strogg_floor_04_trim_glow.tga
+			vertexcolor
+		}
+}
+
+material textures/strogg_floors/strogg_floor_05
+{
+	surfaceType 	"metal"
+	{
+		program		interaction/strogg_detail
+		bumpmap		picmip -1	textures/strogg_floors/strogg_floor_05_local.tga
+		diffusemap	picmip -1	textures/strogg_floors/strogg_floor_05_d.tga
+		specularmap	picmip -2	textures/strogg_floors/strogg_floor_05_s.tga
+		selfIllumMap 	_black
+	
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	4,4,0.4,0.1
+		vertexcolor
+	}
+}
+
+material textures/strogg_floors/strogg_floor_05_noshadows
+{
+	surfaceType 	"metal"
+	noshadows
+	{
+		program		interaction/strogg_detail
+		bumpmap		picmip -1	textures/strogg_floors/strogg_floor_05_local.tga
+		diffusemap	picmip -1	textures/strogg_floors/strogg_floor_05_d.tga
+		specularmap	picmip -2	textures/strogg_floors/strogg_floor_05_s.tga
+		selfIllumMap 	_black
+	
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	4,4,0.4,0.1
+		vertexcolor
+	}
+}
+
+
+material textures/strogg_floors/strogg_floor_06
+{
+	surfaceType 	"metal"
+	{
+		program		interaction/strogg_detail
+		bumpmap		picmip -1	textures/strogg_floors/strogg_floor_06_local.tga
+		diffusemap	picmip -1	textures/strogg_floors/strogg_floor_06_d.tga
+		specularmap	picmip -2	textures/strogg_floors/strogg_floor_06_s.tga
+		selfIllumMap 	_black
+	
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,4,0.4,0.1
+	}
+}
+
+
+material textures/strogg_floors/strogg_trim_01
+{
+	surfaceType 	"metal"
+	{
+		program		interaction/strogg
+		bumpmap 	picmip -1	textures/strogg_floors/strogg_trim_01_local
+		diffusemap	picmip -1	textures/strogg_floors/strogg_trim_01_d
+		specularmap	picmip -2	textures/strogg_floors/strogg_trim_01_s
+		selfIllumMap 	_black
+		vertexcolor	
+	}
+
+}
+
+material textures/strogg_floors/strogg_veins01
+{
+	polygonOffset
+	sort decal	
+	nonsolid
+	noshadows
+	qer_editorimage textures/strogg_floors/strogg_veins01_d.tga
+	
+	{    
+	blend blend
+      	map 	textures/strogg_floors/strogg_veins01_d.tga
+      	vertexcolor
+	}
+
+}

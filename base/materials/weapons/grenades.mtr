@@ -1,0 +1,201 @@
+
+/**************************************************************
+	GDF Smoke Grenade Thirdperson
+**************************************************************/
+
+material models/weapons/grenades/smoke_grenade_thirdperson
+{
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/grenades/smoke_grenade_local.tga models/weapons/grenades/smoke_grenade_hi.lwo
+	noshadows
+	{
+	diffusemap	picmip -1	models/weapons/grenades/smoke_grenade_thirdperson_d.tga
+	specularmap	picmip -2	models/weapons/grenades/smoke_grenade_thirdperson_s.tga
+	bumpmap	picmip -1 	addnormals(models/weapons/grenades/smoke_grenade_thirdperson_local.tga, heightmap(models/weapons/grenades/smoke_grenade_thirdperson_h.tga, 5 ) )
+
+	vertexcolor
+	}
+}
+
+/**************************************************************
+	GDF Smoke Grenade
+**************************************************************/
+
+material models/weapons/gdf_smoke_grenade/smoke_grenade
+{
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/gdf_smoke_grenade/smoke_grenade_local.tga models/weapons/gdf_smoke_grenade/smoke_grenade_hi.lwo
+	{
+	diffusemap	picmip -1 partialLoad models/weapons/gdf_smoke_grenade/smoke_grenade_d.tga
+	specularmap	picmip -2 partialLoad models/weapons/gdf_smoke_grenade/smoke_grenade_s.tga
+	bumpmap		picmip -1 partialLoad addnormals(models/weapons/gdf_smoke_grenade/smoke_grenade_local.tga, heightmap(models/weapons/gdf_smoke_grenade/smoke_grenade_h.tga, 5 ) )
+
+
+	vertexcolor
+	}
+}
+
+/**************************************************************
+	GDF Smoke Grenade decals
+**************************************************************/
+
+
+material models/weapons/gdf_smoke_grenade/smokegrenadelogo_supplydrop
+{
+	noshadows
+	{
+		blend filter
+		map	nopicmip	models/weapons/gdf_smoke_grenade/smokegrenadelogo_supplydrop.tga
+  	}
+}
+
+material models/weapons/gdf_smoke_grenade/smokegrenadelogo_concealment
+{
+	noshadows
+	{
+		blend filter
+		map	nopicmip	models/weapons/gdf_smoke_grenade/smokegrenadelogo_concealment.tga
+  	}
+}
+
+material models/weapons/gdf_smoke_grenade/smokegrenadelogo_airstrike
+{
+	noshadows
+	{
+		blend filter
+		map	nopicmip	models/weapons/gdf_smoke_grenade/smokegrenadelogo_airstrike.tga
+  	}
+}
+
+
+/**************************************************************
+	GDF EMP Grenade thirdperson
+**************************************************************/
+
+
+material models/weapons/grenades/emp_grenade/emp_grenade_thirdperson
+	{
+
+		renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/grenades/emp_grenade_local.tga models/weapons/grenades/emp_grenade_hi.lwo
+
+		{
+
+		program interaction/selfillum
+		diffusemap	picmip -1	models/weapons/gdf_emp_grenade/emp_grenade_thirdperson_d.tga
+		specularmap	picmip -2	models/weapons/gdf_emp_grenade/emp_grenade_thirdperson_s.tga
+		bumpmap		picmip -1 	addnormals(models/weapons/gdf_emp_grenade/emp_grenade_thirdperson_local.tga, heightmap(models/weapons/gdf_emp_grenade/emp_grenade_thirdperson_h.tga, 5 ) )
+		selfIllumMap	picmip -2 	models/weapons/gdf_emp_grenade/emp_grenade_glow.tga
+  	}
+}
+
+/**************************************************************
+	GDF EMP Grenade
+**************************************************************/
+
+material models/weapons/gdf_emp_grenade/emp_grenade
+{
+
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/gdf_emp_grenade/emp_grenade_local.tga models/weapons/gdf_emp_grenade/emp_grenade_hi.lwo
+
+	{
+		program interaction/selfillum
+		diffusemap	picmip -1 partialLoad models/weapons/gdf_emp_grenade/emp_grenade_d.tga
+		specularmap	picmip -2 partialLoad models/weapons/gdf_emp_grenade/emp_grenade_s.tga
+		bumpmap		picmip -1 partialLoad addnormals(models/weapons/gdf_emp_grenade/emp_grenade_local.tga, heightmap(models/weapons/gdf_emp_grenade/emp_grenade_h.tga, 5 ) )
+		selfIllumMap	picmip -2 partialLoad models/weapons/gdf_emp_grenade/emp_grenade_glow.tga
+  	}
+}
+
+/**************************************************************
+	GDF Stun Grenade Thirdperson
+**************************************************************/
+
+material models/weapons/grenades/stun_grenade_thirdperson/stun_grenade_thirdperson
+{
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/grenades/stun_grenade_local.tga models/weapons/grenades/stun_grenade_hi.lwo
+
+	noshadows
+	diffusemap	picmip -1	models/weapons/grenades/stun_grenade_thirdperson_d.tga
+	specularmap	picmip -2	models/weapons/grenades/stun_grenade_thirdperson_s.tga
+	bumpmap	picmip -1 	addnormals(models/weapons/grenades/stun_grenade_thirdperson_local.tga, heightmap(models/weapons/grenades/stun_grenade_thirdperson_h.tga, 5 ) )
+}
+
+/**************************************************************
+	GDF Stun Grenade
+**************************************************************/
+
+material models/weapons/grenades/stun_grenade/stun_grenade
+{
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/grenades/stun_grenade_local.tga models/weapons/grenades/stun_grenade_hi.lwo
+
+	diffusemap	picmip -1 partialLoad models/weapons/grenades/stun_grenade_d.tga
+	specularmap	picmip -2 partialLoad models/weapons/grenades/stun_grenade_s.tga
+	bumpmap		picmip -1 partialLoad addnormals(models/weapons/grenades/stun_grenade_local.tga, heightmap(models/weapons/grenades/stun_grenade_h.tga, 5 ) )
+}
+
+/**************************************************************
+	Strogg Gas Grenade (Third-person)
+**************************************************************/
+
+material models/weapons/grenades/gas_grenade_thirdperson
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/grenades/gas_grenade_thirdperson_local.tga models/weapons/grenades/gas_grenade_hi.lwo
+ 	{
+		program	interaction/strogg
+		diffusemap	picmip -1 models/weapons/grenades/gas_grenade_thirdperson_d.tga
+		specularmap	picmip -2 models/weapons/grenades/gas_grenade_thirdperson_s.tga
+		bumpmap 	picmip -1 models/weapons/grenades/gas_grenade_thirdperson_local.tga.tga
+		selfIllumMap picmip -2 models/weapons/grenades/gas_grenade_thirdperson_glow.tga
+	}
+}
+
+/**************************************************************
+	Strogg Gas Grenade
+**************************************************************/
+
+material models/weapons/grenades/gas_grenade
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/grenades/gas_grenade_local.tga models/weapons/grenades/gas_grenade_hi.lwo
+
+ 	{
+		program	interaction/strogg
+		diffusemap		picmip -1 partialLoad models/weapons/grenades/gas_grenade_d.tga
+		specularmap		picmip -2 partialLoad models/weapons/grenades/gas_grenade_s.tga
+		bumpmap			picmip -1 partialLoad addnormals(models/weapons/grenades/gas_grenade_local.tga, heightmap(models/weapons/grenades/gas_grenade_h.tga, 4 ) )
+		selfIllumMap	picmip -2 partialLoad models/weapons/grenades/gas_grenade_glow.tga
+	}
+}
+
+/**************************************************************
+	Strogg Shrap Grenade (Third-person)
+**************************************************************/
+
+material models/weapons/grenades/shrap_grenade_thirdperson
+{
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/grenades/shrap_grenade_thirdperson_local.tga models/weapons/grenades/shrap_grenade_hi.lwo
+  	noshadows
+ 	{
+		program	interaction/strogg
+		diffusemap		picmip -1 models/weapons/grenades/shrap_grenade_thirdperson_d.tga
+		specularmap		picmip -2 models/weapons/grenades/shrap_grenade_thirdperson_s.tga
+		bumpmap			picmip -1 addnormals(models/weapons/grenades/shrap_grenade_thirdperson_local.tga, heightmap(models/weapons/grenades/shrap_grenade_thirdperson_h.tga, 5) )
+		selfIllumMap	picmip -2 models/weapons/grenades/shrap_grenade_thirdperson_glow.tga
+	}
+}
+
+/**************************************************************
+	Strogg Shrap Grenade
+**************************************************************/
+
+material models/weapons/grenades/shrap_grenade
+{
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/grenades/shrap_grenade_local.tga models/weapons/grenades/shrap_grenade_hi.lwo
+
+ 	{
+		program	interaction/strogg
+		diffusemap		picmip -1 partialLoad models/weapons/grenades/shrap_grenade_d.tga
+		specularmap		picmip -2 partialLoad models/weapons/grenades/shrap_grenade_s.tga
+		bumpmap			picmip -1 partialLoad addnormals(models/weapons/grenades/shrap_grenade_local.tga, heightmap(models/weapons/grenades/shrap_grenade_h.tga, 5) )
+		selfIllumMap	picmip -2 partialLoad models/weapons/grenades/shrap_grenade_glow.tga
+	}
+}

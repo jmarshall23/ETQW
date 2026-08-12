@@ -1,0 +1,33 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+atlas/ark/wall_ark_7.atlas
+***
+*/
+
+surfaceTypeMap texturesheets/ark/wall_ark_7_ts {
+	width	256
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 256 896 )
+	}
+	rect {
+		surfaceType	none
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 256 2048 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1536 ) ( 256 2048 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 896 ) ( 256 1536 )
+	}
+}

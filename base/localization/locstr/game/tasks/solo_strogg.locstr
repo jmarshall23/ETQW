@@ -1,0 +1,133 @@
+
+locString game/tasks/strogg_capture_spawn/title {
+	text "#str_01005010"
+}
+
+locString game/tasks/strogg_liberate_spawn_infiltrator/title {
+	text "#str_01005020"
+}
+
+locString game/tasks/strogg_liberate_spawn/title {
+	text "#str_01005020"
+}
+
+locString game/tasks/strogg_defend_short/title {
+	text "#str_01005100"
+}
+
+locString game/tasks/strogg_defend_medium/title {
+	text "#str_01005100"
+}
+
+locString game/tasks/strogg_defend_long/title {
+	text "#str_01005050"
+}
+
+locString game/tasks/strogg_defend_short/title_completed {
+	text "#str_01005030"
+}
+
+locString game/tasks/strogg_defend_medium/title_completed {
+	text "#str_01005040"
+}
+
+locString game/tasks/strogg_defend_short_dual/title {
+	text "#str_01005100"
+}
+
+locString game/tasks/strogg_defend_medium_dual/title {
+	text "#str_01005100"
+}
+
+locString game/tasks/strogg_defend_long_dual/title {
+	text "#str_01005050"
+}
+
+locString game/tasks/strogg_defend_short_dual/title_completed {
+	text "#str_01005030"
+}
+
+locString game/tasks/strogg_defend_medium_dual/title_completed {
+	text "#str_01005040"
+}
+
+locString game/tasks/strogg_stop_mcp_short/title {
+	text "#str_01005110"
+}
+
+locString game/tasks/strogg_stop_mcp_medium/title {
+	text "#str_01005110"
+}
+
+locString game/tasks/strogg_stop_mcp_long/title {
+	text "#str_01005080"
+}
+
+locString game/tasks/strogg_stop_mcp_short/title_completed {
+	text "#str_01005060"
+}
+
+locString game/tasks/strogg_stop_mcp_medium/title_completed {
+	text "#str_01005070"
+}
+
+locString game/tasks/item_deliver_strogg_quarry/title {
+	text "#str_01005090"
+}
+
+
+locString game/tasks/item_defend_strogg/title {
+	text "#str_01009001"
+}
+
+locString game/tasks/item_defend_carryable_strogg/title {
+	text "#str_01009001"
+}
+
+locString game/tasks/item_return_strogg/title {
+	text "#str_01009002"
+}
+
+locString game/tasks/item_deliver_strogg/title {
+	text "#str_01009004"
+}
+
+locString game/tasks/item_stop_strogg/title {
+	text "#str_01009003"
+}
+
+locString game/tasks/item_pickup_strogg/title {
+	text "#str_01009000"
+}
+
+locString game/tasks/item_pickup_strogg_quarry/title {
+	text "#str_01009000"
+}
+
+locString game/tasks/destroy_deployable_strogg/title {
+	text "#str_01009006"
+}
+
+locString game/tasks/destroy_vehicle_strogg/title {
+	text "#str_01009006"
+}
+
+locString game/tasks/kill_player_strogg/title {
+	text "#str_01009007"
+}
+
+locString game/tasks/strogg_select_spawnhost/title {
+	text "#str_01009012"
+}
+
+locString game/tasks/item_defend_console_strogg/title {
+	text "#str_01009019"
+}
+
+locString game/tasks/defend_goal_strogg/title {
+	text "#str_01009020"
+}
+
+locString game/tasks/item_stop_carryable_strogg/title {
+	text "#str_01009021"
+}

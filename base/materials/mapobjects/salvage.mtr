@@ -1,0 +1,41 @@
+material models/mapobjects/salvage/salvage_train
+{
+	surfaceType	"metal"
+	noshadows
+	nooverlays
+	{	
+		diffusemap	picmip -1	models/mapobjects/salvage/salvage_train_d.tga
+		specularmap	picmip -2	models/mapobjects/salvage/salvage_train_s.tga
+		bumpmap		picmip -1	models/mapobjects/salvage/salvage_train_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	4,16,0,0
+	}
+}
+material models/mapobjects/salvage/salvage_fo
+{
+	renderbump -size 1024 1024 -colorMap -trace 0.02 -clampTextureSpace -overdrawMap models/mapobjects/salvage/salvage_fo_local.tga models/mapobjects/salvage/salvage_fo_h.lwo
+	noshadows
+	nooverlays
+	{
+		program	interaction/strogg_detailwm
+		diffusemap	picmip -1	models/mapobjects/salvage/salvage_fo_d.tga
+		specularmap	picmip -1	models/mapobjects/salvage/salvage_fo_s.tga
+		bumpmap		picmip -1	addnormals (models/mapobjects/salvage/salvage_fo_local.tga, heightmap (models/mapobjects/salvage/salvage_fo_h.tga, 4 ) )
+		selfIllumMap 	_black
+
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult	8,8,0,0
+		detailWeightMap		models/mapobjects/salvage/salvage_fo_detailmask.tga
+	}
+	{
+		blend	add
+		map					models/mapobjects/salvage/salvage_fo_glow.tga
+		rgb		flickerblink[ time * .3 ]
+	}
+
+}

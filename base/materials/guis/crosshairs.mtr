@@ -1,0 +1,19 @@
+
+material guis/assets/crosshair/elements
+{
+	sort gui
+	{
+		blend blend
+		map clamp linear nopicmip "guis/assets/crosshair/elements"
+		vertexColor		
+	}
+}
+
+material guis/assets/crosshairs/hit {
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp linear nopicmip highquality  "guis/assets/crosshair/hit.tga"
+	}
+}

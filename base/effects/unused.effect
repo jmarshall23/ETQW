@@ -1,0 +1,317 @@
+
+effect effects/weapons/blaster_bolt
+{
+	size	2880
+
+	emitter "unnamed0"
+	{
+		duration	1,1
+		count		1,1
+
+		line
+		{
+			duration	1,1
+			material	"particles/penta/strogglbaster_tracer"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 3000,0,0,6000,0,0 }
+				size { point 5 }
+				length { box 200,0,0,250,0,0 }
+			}
+		}
+	}
+}
+
+effect effects/unused/artillery_explosion
+{
+	size	1332
+
+	sound "Close Distance Explosion Sound"
+	{
+		soundShader	"sounds/deployables/artillery/explode"
+	}
+	sound "Medium Distance Explosion Sound"
+	{
+		soundShader	"sounds/deployables/artillery/impact_medium"
+	}
+	sound "Far Distance Explosion Sound"
+	{
+		soundShader	"sounds/deployables/artillery/impact_far"
+	}
+	emitter "Smoke"
+	{
+		duration	0.25,0.25
+		count		50,50
+
+		sprite
+		{
+			duration	2.5,2.5
+			persist
+			material	"textures/particles/dustcloud_opaque"
+			generatedNormal
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 600,-150,-150,700,150,150 }
+				size { point 128,128 }
+				tint { line 0.380392,0.380392,0.380392,0.615686,0.615686,0.615686 }
+				offset { box 0,0,0,32,32,32 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				fade { envelope fivestage }
+				offset { envelope jrad_convexfade }
+			}
+
+			end
+			{
+				size { point 192,192 }
+				offset { box -150,-150,-150,150,150,150 }
+			}
+		}
+	}
+	emitter "Explosion Decal"
+	{
+		duration	1,1
+		count		1,1
+
+		oriented
+		{
+			duration	0.5,0.5
+			persist
+			material	"textures/particles/boomboom"
+			generatedNormal
+			trailRepeat	1
+
+			start
+			{
+				offset { point 0,0,256 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 250,250 }
+			}
+		}
+	}
+	spawner "Explosion Flash"
+	{
+		count		1,1
+
+		sprite
+		{
+			duration	1.25,1.25
+			blend	add
+			persist
+			material	"textures/particles/boomboom"
+			trailRepeat	1
+
+			start
+			{
+				fade { point 0 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				fade { envelope watersplashrgbtable }
+			}
+
+			end
+			{
+				size { point 300,300 }
+				fade { point 1 }
+			}
+		}
+	}
+	spawner "Flash"
+	{
+		count		1,1
+
+		sprite
+		{
+			duration	0.5,0.5
+			blend	add
+			persist
+			material	"textures/particles/boomboom"
+			trailRepeat	1
+
+			start
+			{
+				fade { point 0 }
+			}
+
+			motion
+			{
+				size { envelope jrad_convexfade }
+				fade { envelope woundfade }
+			}
+
+			end
+			{
+				size { point 750,750 }
+				fade { point 1 }
+			}
+		}
+	}
+	spawner "Sparks"
+	{
+		count		25,30
+		attenuateEmitter
+		attenuation	0,1600
+
+		sprite
+		{
+			duration	1,1
+			persist
+			material	"textures/effects/spark"
+			gravity		0.5,0.5
+			trailRepeat	1
+			trailType	motion
+			trailTime	0.25,0.25
+			trailCount	5,5
+			trailMaterial	"textures/effects/motionblur_nobloom"
+
+			start
+			{
+				velocity { box 300,-800,-800,400,800,800 }
+				size { point 8,8 }
+				tint { point 1,0.501961,0.25098 }
+			}
+
+			motion
+			{
+				size { envelope decomlight1 }
+				tint { envelope fivestage }
+			}
+		}
+	}
+	light "Light"
+	{
+
+		light
+		{
+			duration	0.5,0.5
+			material	"lights/impflash"
+			trailRepeat	1
+
+			start
+			{
+				size { point 384,384,384 }
+			}
+		}
+	}
+}
+
+effect effects/unused/artillery_explosion_sand
+{
+	size	807
+
+	spawner "Horizontal Sand Burst"
+	{
+		count		50,50
+		locked
+
+		sprite
+		{
+			duration	1.5,1.5
+			persist
+			material	"textures/particles/sand_heavy"
+			gravity		0.7,0.7
+			trailRepeat	1
+
+			start
+			{
+				position { spiral 0,-64,-64,0,64,64,64 }
+				velocity { box 150,-500,-500,250,500,500 }
+				size { point 32,32 }
+				tint { point 0.643137,0.501961,0.392157 }
+				offset { box 0,-64,-64,0,64,64 }
+			}
+
+			motion
+			{
+				size { envelope jrad_convexfade }
+				fade { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 128,128 }
+			}
+		}
+	}
+	spawner "Vertical Sand Burst"
+	{
+		count		50,50
+		locked
+
+		sprite
+		{
+			duration	1.5,1.5
+			persist
+			material	"textures/particles/sand_heavy"
+			gravity		0.7,0.7
+			trailRepeat	1
+
+			start
+			{
+				position { spiral 0,0,0,0,0,0,64 }
+				velocity { box 500,-100,-100,700,100,100 }
+				size { point 32,32 }
+				tint { point 0.643137,0.501961,0.392157 }
+				offset { box 0,-64,-64,0,64,64 }
+			}
+
+			motion
+			{
+				size { envelope jrad_convexfade }
+				fade { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 128,128 }
+			}
+		}
+	}
+	effect "unnamed2"
+	{
+		effect	"effects/unused/artillery_explosion"
+	}
+}
+effect effects/test {
+}
+effect effects/crap
+{
+	size	181
+
+	emitter "unnamed0"
+	{
+		duration	1,1
+		count		5,5
+
+		sprite
+		{
+			duration	1,1
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 300,-50,-50,400,50,50 }
+				size { point 2,2 }
+			}
+		}
+	}
+}
+

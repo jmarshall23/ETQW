@@ -1,0 +1,636 @@
+/***********************************************************************
+
+	damage.def
+
+	Generic and global damage defs.  Should not contain any monster specific defs.
+
+***********************************************************************/
+
+damageDef damage_triggerhurt_toxin {
+	damage							1
+	kickDir							( 0 0 0 )
+	mtr_blob						"toxinDamage"
+	blob_time						0
+	// blob_size					0 // invalid?
+	blob_offset_x					0
+	knockback						0
+	kick_time						0
+	kick_amplitude					0
+}
+
+damageDef damage_triggerhurt_15 {
+	damage							15
+	kickDir							( 0 0 0 )
+	mtr_blob						"genericDamage"
+	blob_time						0
+	// blob_size					0 // invalid?
+	blob_offset_x					0
+	knockback						0
+	kick_time						0
+	kick_amplitude					0
+}
+
+damageDef damage_triggerhurt_25 {
+	damage							25
+	kickDir							( 0 0 0 )
+	mtr_blob						"genericDamage"
+	blob_time						0
+	// blob_size					0 // invalid?
+	blob_offset_x					0
+	knockback						0
+	kick_time						0
+	kick_amplitude					0
+}
+
+damageDef damage_triggerhurt_50 {
+	damage							100
+	kickDir							( 0 0 0 )
+	mtr_blob						"genericDamage"
+	blob_time						0
+	// blob_size					0 // invalid?
+	blob_offset_x					0
+	knockback						0
+	kick_time						0
+	kick_amplitude					0
+}
+
+damageDef damage_triggerhurt_100 {
+	damage							100
+	kickDir							( 0 0 0 )
+	mtr_blob						"genericDamage"
+	blob_time						0
+	// blob_size					0 // invalid?
+	blob_offset_x					0
+	knockback						0
+	kick_time						0
+	kick_amplitude					0
+	forcePassengerKill
+}
+
+damageFilter damage_triggerhurt_1000 {
+	type {
+		target	"target_player_all"
+		damage	1000
+	}
+	
+	type { 
+		target	"target_veh_all"
+		damage	50000
+	}
+}
+
+damageDef damage_triggerhurt_1000 {
+	damage							"damage_triggerhurt_1000"
+	kickDir							( 0 0 0 )
+	mtr_blob						"genericDamage"
+	blob_time						0
+	// blob_size					0 // invalid?
+	blob_offset_x					0
+	knockback						0
+	kick_time						0
+	kick_amplitude					0
+
+	tt_obituary						"tooltips/killmsgs/vehicles/driving"
+	tt_obituary_unknown				"tooltips/killmsgs/vehicles/driving"
+	tt_obituary_self				"tooltips/killmsgs/vehicles/driving"
+}
+
+damageDef damage_generic {
+	damage							20
+	kickDir							( 1 0 0 )
+	mtr_blob						"genericDamage"
+	blob_time						300
+//	blob_size						400
+	blob_offset_x					400
+	knockback						10
+	kick_time						400
+	kick_amplitude					1
+}
+
+damageFilter damage_deployable_turret_user {
+	type {
+		target	"target_player_all"
+		damage	1000
+	}
+}
+
+damageDef damage_deployable_turret_user {
+	damage							"damage_triggerhurt_1000"
+	kickDir							( 0 0 0 )
+	mtr_blob						"genericDamage"
+	blob_time						0
+	// blob_size					0 // invalid?
+	blob_offset_x					0
+	knockback						0
+	kick_time						0
+	kick_amplitude					0
+
+	tt_obituary						"tooltips/killmsgs/deployable/using"
+	tt_obituary_unknown				"tooltips/killmsgs/deployable/using"
+	tt_obituary_self				"tooltips/killmsgs/deployable/using"
+}
+
+damageDef damage_telefrag {
+	damage							9999
+	noArmor
+	noGod
+}
+
+damageFilter damage_suicide {
+	type {
+		target	"target_player_all"
+		damage	999
+	}
+}
+
+damageDef damage_suicide {
+	damage							"damage_suicide"
+	noArmor
+	noGod
+
+	tt_obituary_self				"tooltips/killmsgs/self/suicide/gdf"
+}
+
+damageDef damage_suicide_strogg {
+	damage							"damage_suicide"
+	noArmor
+	noGod
+
+	tt_obituary_self				"tooltips/killmsgs/self/suicide/strogg"
+}
+
+damageFilter damage_barbedwire {
+	type {
+		target	"target_player_all"
+		damage	1
+	}
+}
+
+damageDef damage_barbedwire {
+	damage							"damage_barbedwire"
+	noArmor
+	push							20000
+	knockback						20
+}
+
+damageFilter damage_crush {
+	type {
+		target	"target_player_all"
+		damage	9999
+	}
+}
+
+damageDef damage_crush {
+	damage							"damage_crush"
+	gib
+	noArmor
+	noGod
+
+	tt_obituary_self				"tooltips/killmsgs/self/crushing"
+}
+
+damageDef damage_explosion {
+	damage							70
+	radius							200
+	push							10000
+}
+
+damageDef damage_Smallexplosion {
+	damage							50
+	radius							50
+	push							5000
+}
+
+damageDef damage_HugeExplosion {
+	damage							500
+	radius							256
+	push							10000
+}
+
+damageDef damage_moverCrush {
+	damage							1
+	gib
+}
+
+damageDef damage_objective_explosion {
+	damage	damage_objective_explosion
+	radius	512
+	push	10000000
+	
+	tt_obituary_unknown		"tooltip/killmsgs/self/objective_explosion"
+}
+	
+damageFilter damage_objective_explosion {
+	type {
+		target	"target_all"
+		damage 4000
+	}
+}
+
+damageDef damage_painTrigger {
+	damage							"damage_painTrigger"
+	tt_obituary_unknown		"tooltip/killmsgs/self/fire"
+}
+
+damageFilter damage_painTrigger {
+	type {
+		target	"target_player_all"
+		damage	10
+	}
+}
+
+damageFilter damage_softfall {
+	type {
+		target	"target_player_all"
+		damage	10
+	}
+}
+
+damageDef damage_softfall {
+	damage							"damage_softfall"
+	kickDir							( 0 0 -1 )
+	noArmor
+	noPain
+	knockback						0
+	kick_time						100
+	kick_amplitude					1
+
+	tt_obituary_unknown				"tooltips/killmsgs/self/falling"
+}
+
+damageFilter damage_hardfall {
+	type {
+		target	"target_player_all"
+		damage	30
+	}
+}
+
+damageDef damage_hardfall {
+	damage							"damage_hardfall"
+	kickDir							( 0 0 -1 )
+	noArmor
+	noPain
+	knockback						0
+	kick_time						300
+	kick_amplitude					1
+
+	tt_obituary_unknown				"tooltips/killmsgs/self/falling"
+}
+
+damageFilter damage_fatalfall {
+	type {
+		target	"target_player_all"
+		damage	300
+	}
+}
+
+damageDef damage_fatalfall {
+	damage							"damage_fatalfall"
+	kickDir							( 0 0 -1 )
+	noArmor
+	noPain
+	knockback						0
+	kick_time						300
+	kick_amplitude					1
+
+	tt_obituary_unknown				"tooltips/killmsgs/self/falling"
+}
+
+damageDef damage_mover_crush {
+	damage		"damage_mover_crush"
+
+	tt_obituary_self				"tooltips/killmsgs/self/crushing"
+	tt_obituary_unknown				"tooltips/killmsgs/self/crushing"
+}
+
+damageFilter damage_mover_crush {
+	type {
+		target	"target_all"
+		damage	50000
+	}
+}
+
+damageFilter damage_give {
+	type {
+		target	"target_player_all"
+		damage	1
+	}
+}
+
+damageDef damage_give {
+	damage "damage_give"
+	noArmor
+	noGod
+	noTeam
+}
+
+damageFilter damage_falling_deployable {
+	type { 
+		target	"target_player_all"
+		damage	50000
+	}
+	
+	type {
+		target	"target_veh_all"
+		damage	50000
+	}
+	type {
+		target	"target_spawn_host"
+		damage	50000
+	}
+	type {
+		target	"target_deployables_all"
+		damage	50000
+	}
+	type {
+		target	"target_supply_crate"
+		damage	50000
+	}
+}
+
+damageDef damage_falling_deployable {
+	damage		"damage_falling_deployable"
+	noGod
+	noArmor
+	noPain
+	forcePassengerKill
+	
+	tt_obituary_unknown				"tooltips/killmsgs/self/deployable_falling"
+	tt_obituary_unknown_friendly	"tooltips/killmsgs/self/deployable_falling/friendly"
+}
+
+// ====================================================
+// OOB
+// ====================================================
+// the warning based on the mask (no damage dealt)
+
+damageDef damage_oob_warning {
+	knockback						0
+	kick_time						0
+	kick_amplitude					0
+}
+
+// the damage defs used on the trigger_hurt ents
+// values are based on a "delay" on the triggers. current value: "delay" "0.25"
+damageFilter damage_oob_1st {
+	type {
+		target	"target_player_all"
+		damage	1%
+	}
+	type {
+		target	"target_veh_all"
+		damage	1%
+	}	
+	type {
+		target	"target_oob_damage"
+		damage	1%
+	}
+}
+
+damageDef damage_oob_1st {
+	damage							"damage_oob_1st"
+	kickDir							( 0 0 -1 )
+	noArmor
+	knockback						0
+	kick_time						0
+	kick_amplitude					0
+	gib
+	noDirection
+
+	tt_obituary_unknown				"tooltips/killmsgs/self/oob"
+}
+
+damageFilter damage_oob_2nd {
+	type {
+		target	"target_player_all"
+		damage	2%
+	}
+	type {
+		target	"target_veh_all"
+		damage	2%
+	}	
+
+	type {
+		target	"target_oob_damage"
+		damage	2%
+	}	
+}
+
+damageDef damage_oob_2nd {
+	damage							"damage_oob_2nd"
+	noArmor
+	knockback						0
+	kick_time						0
+	kick_amplitude					0
+	gib
+	noDirection
+
+	tt_obituary_unknown				"tooltips/killmsgs/self/oob"
+}
+
+damageFilter damage_oob_3rd {
+	type {
+		target	"target_player_all"
+		damage	4%
+	}
+	type {
+		target	"target_veh_all"
+		damage	5%
+	}	
+	type {
+		target	"target_oob_damage"
+		damage	5%
+	}	
+}
+
+damageDef damage_oob_3rd {
+	damage							"damage_oob_3rd"
+	noArmor
+	knockback						0
+	kick_time						0
+	kick_amplitude					0
+	gib
+	noDirection
+
+	tt_obituary_unknown				"tooltips/killmsgs/self/oob"
+}
+
+damageFilter damage_oob_4th {
+	type {
+		target	"target_player_all"
+		damage	20%
+	}
+	type {
+		target	"target_veh_all"
+		damage	35%
+	}	
+	type {
+		target	"target_oob_damage"
+		damage	35%
+	}	
+}
+
+damageDef damage_oob_4th {
+	damage							"damage_oob_4th"
+	noArmor
+	knockback						0
+	kick_time						0
+	kick_amplitude					0
+	gib
+	noDirection
+
+	tt_obituary_unknown				"tooltips/killmsgs/self/oob"
+}
+
+
+// ====================================================
+// STROGG BASE WALLS
+// ====================================================
+
+damageDef damage_strogg_basewall {
+	damage		"damage_strogg_basewall"
+	knockback						10
+	kickdir 					(1 0 0)
+	kick_time						400
+	kick_amplitude					1
+	gib
+	noGod
+	forcePassengerKill
+	
+	tt_obituary						"tooltips/killmsgs/self/strogg_basewall"
+	tt_obituary_unknown				"tooltips/killmsgs/self/strogg_basewall"
+}
+
+damageFilter damage_strogg_basewall {
+	type {
+		target	"target_player_all"
+		damage	5000
+	}
+
+	type {
+		target	"target_strogg_basewall"
+		damage 5000
+	}
+}
+
+// ====================================================
+// Area22
+// ====================================================
+damageDef damage_area22_shaft {
+	damage		"damage_area22_shaft"
+
+	tt_obituary_unknown				"tooltips/killmsgs/self/area22_shaft"
+}
+
+damageFilter damage_area22_shaft {
+	type {
+		target	"target_player_all"
+		damage	999
+	}
+
+	type {
+		target	"target_veh_all"
+		damage 50000
+	}
+}
+
+// ====================================================
+// Canyon
+// ====================================================
+damageDef damage_canyon_bioreactor_pools {
+	damage		"damage_canyon_bioreactor_pools"
+	noGod
+
+	tt_obituary_unknown				"tooltips/killmsgs/self/canyon_bioreactor_pools"
+}
+
+damageFilter damage_canyon_bioreactor_pools {
+	type {
+		target	"target_player_all"
+		damage	999
+	}
+
+	type {
+		target	"target_veh_all"
+		damage 50000
+	}
+}
+
+// ====================================================
+// Refinery
+// ====================================================
+damageDef damage_refinery_strogg_slipgate {
+	damage							"damage_fatalfall"
+	kickDir							( 0 0 -1 )
+	noArmor
+	knockback						0
+	kick_time						300
+	kick_amplitude					1
+
+	tt_obituary_unknown				"tooltips/killmsgs/self/refinery_strogg_slipgate"
+}
+
+// ====================================================
+// Salvage
+// ====================================================
+damageDef damage_salvage_mine {
+	damage		"damage_salvage_mine"
+}
+
+damageFilter damage_salvage_mine {
+
+	type {
+		target	"target_salvage_mine"
+		damage 5002
+	}
+}
+
+// ====================================================
+// Slipgate
+// ====================================================
+damageDef damage_strogg_slipgate {
+	damage		"damage_strogg_slipgate"
+	noGod
+
+	tt_obituary_unknown				"tooltips/killmsgs/self/strogg_slipgate"
+}
+
+damageFilter damage_strogg_slipgate {
+	type {
+		target	"target_player_all"
+		damage	999
+	}
+
+	type {
+		target	"target_strogg_slipgate"
+		damage 50000
+	}
+}
+
+// ====================================================
+// Valley
+// ====================================================
+
+damageDef damage_strogg_doorshield {
+	damage		"damage_strogg_doorshield"
+	knockback						10
+	kickdir 					(1 0 0)
+	kick_time						400
+	kick_amplitude					1
+	noGod
+	forcePassengerKill
+
+	tt_obituary_unknown				"tooltips/killmsgs/self/strogg_doorshield"
+}
+
+damageFilter damage_strogg_doorshield {
+	type {
+		target	"target_player_all"
+		damage	5000
+	}
+
+	type {
+		target	"target_strogg_doorshield"
+		damage 5000
+	}
+}

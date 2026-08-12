@@ -1,0 +1,183 @@
+effect effects/player/spawn_edf_simple
+{
+	size	129
+
+	cutOffDistance	400
+
+	emitter "Up Rings"
+	{
+		duration	1,1
+		count		5,5
+
+		oriented
+		{
+			duration	1,2
+			material	"textures/effects/ring"
+			trailRepeat	1
+
+			start
+			{
+				size { point 0,0 }
+				tint { line 0.121569,0.121569,0.121569,0.215686,0.215686,0.215686 }
+				rotate { box -0.00833333,-0.00833333,0,0.00833333,0.00833333,0 }
+			}
+
+			motion
+			{
+				size { envelope jrad_spawnringsup count 0.78,0.78 }
+				tint { envelope linear }
+				offset { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 40,40 }
+				offset { line 64,0,0,72,0,0 }
+			}
+			lineHit
+		}
+	}
+	delay "delay"
+	{
+		duration	4,4
+	}
+}
+
+effect effects/player/spawn_strogg_simple
+{
+	size	129
+
+	cutOffDistance	400
+
+	emitter "Up Rings"
+	{
+		duration	1,1
+		count		5,5
+
+		oriented
+		{
+			duration	1,2
+			material	"textures/effects/ring"
+			trailRepeat	1
+
+			start
+			{
+				size { point 0,0 }
+				tint { line 0.188235,0.054902,0.054902,0.309804,0.117647,0.0588235 }
+				rotate { box -0.00833333,-0.00833333,0,0.00833333,0.00833333,0 }
+			}
+
+			motion
+			{
+				size { envelope jrad_spawnringsup count 0.78,0.78 }
+				tint { envelope linear }
+				offset { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 40,40 }
+				offset { line 64,0,0,72,0,0 }
+			}
+			lineHit
+		}
+	}
+	delay "delay"
+	{
+		duration	4,4
+	}
+}effect effects/crashland_strogg_simple
+{
+	size	213
+
+	cutOffDistance	2000
+
+	spawner "dirt puff"
+	{
+		count		1,1
+		attenuateEmitter
+		attenuation	500,1500
+
+		sprite
+		{
+			duration	0.2,0.2
+			blend	add
+			persist
+			material	"particles/dustcloud_02_litsmoke"
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 5,5,5 }
+				size { point 50,50 }
+				tint { point 0.501961,0.501961,0.501961 }
+				fade { point 0.7 }
+			}
+
+			motion
+			{
+				size { envelope jrad_convexfade }
+				tint { envelope jrad_concavefade }
+				fade { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 70,70 }
+				tint { point 0.752941,0.752941,0.752941 }
+			}
+			lineHit
+		}
+	}
+	emitter "core"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,0,5 }
+				size { point 100,100 }
+				tint { point 0.8,0.423529,0.0823529 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+			}
+
+			end
+			{
+				size { point 150,150 }
+			}
+			lineHit
+		}
+	}
+	sound "Debris Sound"
+	{
+		start		0.3,0.3
+		soundShader	"sounds/weapons/impacts/debris_small"
+		freqshift	0.7,0.7
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

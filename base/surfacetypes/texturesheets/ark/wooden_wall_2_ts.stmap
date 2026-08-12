@@ -1,0 +1,22 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/ark/wooden_wall_2_ts {
+	width	512
+	height	512
+	/* areaDefs */
+
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 512 512 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 160 0 ) ( 512 160 )
+	}
+}

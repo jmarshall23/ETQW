@@ -1,0 +1,18 @@
+
+gui guis/tools/maskeditor {
+	properties {
+		float flags = immediate( flags ) | GUI_FULLSCREEN;
+		float	changed;
+	}
+	
+	windowDef desktop {
+		windowDef changeIndicator {
+			properties {
+				float	visible		= gui.changed;
+				rect	rect		= 0, 200, 80, 80;
+				wstring	text		= toWStr( "*" );
+			}
+		}
+	}
+}
+

@@ -1,0 +1,24 @@
+
+template templates/guis/blend {
+	parameters< Name >
+	text {
+		sort gui
+		{
+			blend blend 
+			colored
+			map clamp Name
+		}	
+	}
+}
+
+template templates/guis/add {
+	parameters< Name >
+	text {
+		sort gui
+		{
+			blend add
+			colored
+			map clamp Name
+		}	
+	}
+}

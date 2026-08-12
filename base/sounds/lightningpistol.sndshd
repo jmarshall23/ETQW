@@ -1,0 +1,61 @@
+sound sounds/weapons/lightningpistol/raise {
+
+	maxDistance	5
+	volume		-12
+	
+	sounds/weapons/lightningpistol/raise_01.wav
+}
+
+sound sounds/weapons/lightningpistol/fire {
+	compression wav
+
+	maxDistance 125
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/lightningpistol/fire.wav
+//	sounds/weapons/lightningpistol/fire_01.wav
+}
+
+sound sounds/weapons/lightningpistol/fire/far {
+	compression wav
+	
+	farDistance 25
+	maxDistance 125
+	occlude_once
+	antiPrivate
+}
+
+sound sounds/weapons/lightningpistol/fire/local {
+	compression wav
+
+	private
+
+	sounds/weapons/lightningpistol/fire.wav
+}
+
+sound sounds/weapons/lightningpistol/fire_loop {
+	compression wav
+
+	maxDistance 125
+	playOnce
+
+	looping
+	sounds/weapons/lightningpistol/loop.wav
+}
+
+sound sounds/weapons/lightningpistol/fingers_idle {
+
+	volume -7
+	maxDistance 15
+	no_dups
+	occlude_once
+
+	sounds/vehicles/desecrator/spark_01.wav
+	sounds/vehicles/desecrator/spark_02.wav
+	sounds/vehicles/desecrator/spark_03.wav
+	sounds/vehicles/desecrator/spark_04.wav
+	sounds/vehicles/desecrator/spark_05.wav
+	sounds/vehicles/desecrator/spark_06.wav
+	sounds/vehicles/desecrator/spark_07.wav
+}

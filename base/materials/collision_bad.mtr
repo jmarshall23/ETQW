@@ -1,0 +1,50 @@
+// full clip is just like a solid brush, clipping missiles, monsters, and players
+material textures/common/full_clip {
+	qer_editorimage textures/common/full_clip.tga
+	playerclip
+	flyerhiveclip
+	vehicleclip
+	moveableclip
+	noshadows
+
+	surfaceType	"none"
+}
+
+// a monster clip brush is solid to monsters only
+material textures/common/monster_clip {
+	qer_editorimage textures/common/monster_clip.tga
+	nonsolid
+	noshadows
+
+	surfaceType	"none"
+}
+
+// a moveable clip brush is solid only to moveables like rigid bodies and articulated figures
+material textures/common/moveable_clip {
+	qer_editorimage textures/common/moveable_clip.tga
+	nonsolid
+	moveableclip
+	noshadows
+
+	surfaceType	"none"
+}
+
+material textures/common/moveableclipmodel
+{
+	qer_editorimage textures/common/clip.tga
+	noshadows
+}
+
+material textures/common/clip_plusmovables {
+	qer_editorimage textures/common/clipplus.tga
+	noimpact
+	nonsolid
+	playerclip
+	flyerhiveclip
+	vehicleclip
+	moveableclip
+	noshadows
+	collision
+
+	surfaceType	"none"
+}

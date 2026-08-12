@@ -1,0 +1,27 @@
+entityDef trigger_tooltip {
+	"spawnclass"	"sdTriggerTooltip"
+	"editor_color"				".5 .5 .5"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+	"editor_material"			"textures/editor/trigtooltip"
+
+	"editor_var tooltip"		"Message to display in the tooltips GUI."
+}
+
+entityDef trigger_barbedwire {
+	"editor_color"				"0.8 0.5 0"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+	"editor_material"			"textures/common/trighurt"
+
+	"editor_usage"				"Damages the activator  Can be turned on or off by other triggers."
+	"editor_var on"				"whether or not it is active."
+	"editor_var delay"			"delay between damage in seconds defaults to 1"
+	"editor_var def_damage"		"damage def to use"
+
+	"spawnclass"				"idTrigger_Hurt"
+
+	"on"						"1"
+	"delay"						"0.5"
+	"dmg_damage"				"damage_barbedwire"
+}

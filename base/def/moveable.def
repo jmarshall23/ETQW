@@ -1,0 +1,354 @@
+
+
+/***********************************************************************
+
+ moveable objects
+
+***********************************************************************/
+
+
+
+entityDef moveable_base {
+	"editor_color"						"0 .5 .8"
+	"editor_mins"						"-8 -8 -8"
+	"editor_maxs"						"8 8 8"
+	"editor_rotatable"					"1"
+
+	"editor_usage2"						"Moveable object. Will drop to the floor and rest untill activated."
+	"editor_usage3"						"The visual model set with the 'model' key can also be used for"
+	"editor_usage4"						"collision detection. However the model may not be too complex."
+	"editor_usage5"						"max vertices = 32"
+	"editor_usage6"						"max edges = 32"
+	"editor_usage7"						"max polygons = 16"
+	"editor_usage8"						"max edges per polygon = 16"
+	"editor_usage9"						"The collision model must be an enclosed hull. Dangling polygons or"
+	"editor_usage10"					"edges are not allowed. If the visual model is too complex or does"
+	"editor_usage11"					"not meet these requirements it can be contained in a less complex"
+	"editor_usage12"					"model for collision detection. Such a collision model is specified with the"
+	"editor_usage13"					"'clipmodel' key."
+
+	"editor_var density"				"Volume of the object times the density is the mass."
+	"editor_var friction"				"Friction with contacting surfaces in the range [0-1] where 0 is no friction."
+	"editor_var linearFriction"			"Friction in velocity direction."
+	"editor_var angularFriction"		"Rotational friction."
+	"editor_var bouncyness"				"How much the object bounces in the range [0-1] where 0 is no bounce."
+	"editor_var mass"					"Mass of the object (overrides density)."
+	"editor_var buoyancy"				"How 'floaty' the object is in water."
+	"editor_model clipmodel"			"Model to be used for collision detection."
+	"editor_bool clipshrink"				"Shrink the visual model with an epsilon and use it as a clip model."
+	"editor_bool allowStep"				"Set to 0 to prevent monsters from ever walking over this object."
+	"editor_bool nonsolid"				"Make the object non-solid."
+	"editor_bool nodrop"				"Do not drop to the floor."
+	"editor_bool noimpact"				"Do not activate by the impact of other objects."
+	"editor_bool notpushable"			"Do not allow to be pushed."
+	"editor_bool unbindondeath"			"Unbind entity when health drops down to or below zero."
+	"editor_var health"					"If set the visual model changes to 'broken' when the health drops down to or below zero."
+	"editor_model broken"				"Visual model to be used when the health drops down to or below zero."
+	"editor_bool explode"				"If set to 1 the moveable explodes and is removed when the health drops down to or below zero."
+	"editor_var init_velocity"			"Initial linear velocity set when activated."
+	"editor_var init_avelocity"			"Initial angular velocity set when activated."
+	"editor_var init_velocityDelay"		"Delay in seconds before the initial linear velocity is set after being activated."
+	"editor_var init_avelocityDelay"	"Delay in seconds before the initial angular velocity is set after being activated."
+	"editor_var initialSplineTime"		"Number of milliseconds the moveable should follow the initial spline path."
+	"editor_var dmg_damage"				"Damage definition, if this is set it will damage things it collides with"
+	"editor_var damageWhenActive"		"Only damage when active ( currently for the vagary and influence stuff )"
+	"editor_var minDamageVelocity"		"Low velocity to start damaging the hit object (ramp up applied damage untill we reach maxDamageVelocity)"
+	"editor_var maxDamageVelocity"		"High velocity to damage hit object object (i.e apply maximum damage above this)"
+	"editor_var fx_collide"				"FX system to start at impact position when object collides."
+	"editor_var fx_splash"				"FX system to start at impact position when object falls into water."
+	"editor_var fx_wake"				"FX trail the object leaves when moving on the water surface."
+
+	"spawnclass"						"idMoveable"
+
+	"density"							"0.5"
+	"friction"							"0.05"
+	"bouncyness"						"0.6"
+	"explode"							"0"
+	"unbindondeath"						"0"
+	"health"							"0"
+	"nodrop"							"0"
+	"noimpact"							"0"
+	"notPushable"						"0"
+	"clipshrink"						"0"
+	"allowStep"							"1"
+	"snd_bounce"						"entity_moveable_bounce"
+
+	"collection_deploykill"				"deploykill"
+
+	"fx_splash"							"effects/water/generic_splash"
+}
+
+
+entityDef moveable_item_cone {
+	"inherit"					"moveable_base"
+	
+	"model"						"models/mapobjects/road_works/cone.lwo"
+	"cm_model"					"models/mapobjects/road_works/cone.lwo"
+
+	"mass" 						"40"
+	"friction"					"0.9"
+	"bouncyness"				"0"
+	"buoyancy"					"0.5"
+}
+
+entityDef moveable_item_roadsign_rock {
+	"inherit"					"moveable_base"
+
+	"model"						"models/mapobjects/road_signs/sign_fallingrock.lwo"
+	"cm_model"					"models/mapobjects/road_signs/sign_fallingrock.lwo"
+
+	"mass" 						"500"
+	"friction"					"0.2"
+	"bouncyness"				"0.4"
+	"snd_bounce"				"vehicles/misc/debris/metal_small"
+}
+
+entityDef moveable_item_jerrycan {
+	"inherit"					"moveable_base"
+
+	"model"						"models/mapobjects/containers/jerrycan.lwo"
+	"cm_model"					"models/mapobjects/containers/jerrycan.lwo"
+
+	"mass" 						"50"
+	"friction"					"0.6"
+	"bouncyness"				"0.6"
+}
+
+entityDef moveable_item_ball {
+	"inherit"					"moveable_base"
+
+	"model"						"models/temp/ball.lwo"
+	"cm_model"					"models/temp/ball.lwo"
+
+	"snd_bounce"				"sounds/world/football"
+	"mass" 						"300"
+	"friction"					"0.2"
+	"bouncyness"				"15"
+}
+
+entityDef moveable_item_ballbouncy {
+	"inherit"					"moveable_base"
+
+	"model"						"models/temp/ball.lwo"
+	"cm_model"					"models/temp/ball.lwo"
+
+	"mass" 						"300"
+	"snd_bounce"				"sounds/world/football"
+	"friction"					"0.2"
+	"linear_friction"			".1"
+	"bouncyness"				"50"
+}
+
+entityDef moveable_item_metalbox01 {
+	"inherit"					"moveable_base"
+
+	"model"						"models/mapobjects/containers/metalbox01.lwo"
+	"cm_model"					"models/mapobjects/containers/metalbox01.lwo"
+
+	"mass" 						"500"
+	"snd_bounce"				"sounds/world/crates/metal"
+	"friction"					"0.7"
+	"bouncyness"				"0.6"
+	"buoyancy"					"2"
+}
+
+entityDef moveable_item_plasticcrate {
+	"inherit"					"moveable_base"
+
+	"model"						"models/andrew/refineryobjects/plasticcrate.lwo"
+	"cm_model"					"models/andrew/refineryobjects/plasticcrate.lwo"
+	
+	"mass" 						"20"
+	"snd_bounce"				"sounds/world/crates/plastic"
+	"friction"					"0.5"
+	"bouncyness"				"0.1"
+	"buoyancy"					"0.10"
+	"angular_friction"			"1"
+}
+
+entityDef moveable_item_foldupchair_a {
+	"inherit"					"moveable_base"
+
+	"model"						"models/andrew/refineryobjects/foldupchair_a.lwo"
+	"cm_model"					"models/andrew/refineryobjects/foldupchair_a.lwo"
+
+	"mass" 						"200"
+	"snd_bounce"				"sounds/world/chairs/plastic"
+	"friction"					"0.5"
+	"bouncyness"				"0.1"
+	"buoyancy"					"0.80"
+	"angular_friction"			"1"
+}
+
+entityDef moveable_item_foldupchair_b {
+	"inherit"					"moveable_base"
+	
+	"model"						"models/andrew/refineryobjects/foldupchair_b.lwo"
+	"cm_model"					"models/andrew/refineryobjects/foldupchair_b.lwo"
+
+	"mass" 						"200"
+	"snd_bounce"				"sounds/world/chairs/plastic"
+	"friction"					"0.5"
+	"bouncyness"				"0.1"
+	"buoyancy"					"0.80"
+	"angular_friction"			"1"
+}
+
+entityDef moveable_item_refinerybarrier01 {
+	"inherit"					"moveable_base"
+
+	"model"						"models/andrew/refineryobjects/refineryobjects06_physics.lwo"
+	"cm_model"					"models/andrew/refineryobjects/refineryobjects06_physics.lwo"
+
+	"mass" 						"350"
+	"snd_bounce"				"vehicles/misc/debris/metal_med"
+	"friction"					"0.5"
+	"bouncyness"				"0.1"
+	"buoyancy"					"0.40"
+	"angular_friction"			"1"
+}
+
+entityDef moveable_item_stone1 {
+	"inherit"					"moveable_base"
+
+	"model"						"models/rock/stone1_physics.lwo"
+	"cm_model"					"models/rock/stone1_physics.lwo"
+
+	"mass" 						"800"
+	"friction"					"0.1"
+	"linear_friction"			".1"
+	"bouncyness"				"0.1"
+	"snd_bounce"				"sounds/world/boulders"
+	"maxvisdist"				"6000"
+	"buoyancy"					"0"
+	"notPushable"				"1"
+}
+
+entityDef moveable_item_stone2 {
+	"inherit"					"moveable_base"
+
+	"model"						"models/rock/stone2_physics.lwo"
+	"cm_model"					"models/rock/stone2_physics.lwo"
+
+	"mass" 						"800"
+	"friction"					"0.1"
+	"linear_friction"			".1"
+	"bouncyness"				"0.1"
+	"snd_bounce"				"sounds/world/boulders"
+	"maxvisdist"				"6000"
+	"buoyancy"					"0"
+	"notPushable"				"1"
+}
+
+entityDef moveable_item_stone3 {
+	"inherit"					"moveable_base"
+
+	"model"						"models/rock/stone3_physics.lwo"
+	"cm_model"					"models/rock/stone3_physics.lwo"
+
+	"mass" 						"800"
+	"friction"					"0.1"
+	"linear_friction"			".1"
+	"bouncyness"				"0.1"
+	"snd_bounce"				"sounds/world/boulders"
+	"maxvisdist"				"6000"
+	"buoyancy"					"0"
+	"notPushable"				"1"
+}
+
+/**************************************************
+
+	These are barrels which means they roll, don't
+	copy paste this for stuff like crates pleez!
+
+**************************************************/
+
+entityDef moveable_item_barrel01 {
+	"inherit"					"moveable_base"
+	"spawnclass"				"idBarrel"
+
+	"model"						"models/mapobjects/containers/barrel01.lwo"
+	"cm_model"					"models/mapobjects/containers/barrel01.lwo"
+
+	"mass" 						"500"
+	"friction"					"0.1"
+	"bouncyness"				"0.4"
+	"snd_bounce"				"vehicles/misc/debris/metal_large"
+	"maxvisdist"				"4096"
+	"buoyancy"					"0.7"
+}
+
+entityDef moveable_item_barrel02 {
+	"inherit"					"moveable_base"
+	"spawnclass"				"idBarrel"
+
+	"model"						"models/mapobjects/containers/barrel02.lwo"
+	"cm_model"					"models/mapobjects/containers/barrel02.lwo"
+
+	"mass" 						"500"
+	"friction"					"0.2"
+	"bouncyness"				"0.1"
+	"snd_bounce"				"vehicles/misc/debris/metal_large"
+	"buoyancy"					"0.25"
+}
+
+entityDef moveable_item_beerbottle {
+	"inherit"					"moveable_base"
+	"spawnclass"				"idBarrel"
+
+	"model"						"models/andrew/refineryobjects/beerbottle_physics.lwo"
+	"cm_model"					"models/andrew/refineryobjects/beerbottle_physics.lwo"
+
+	"mass" 						"5"
+	"friction"					"0.2"
+	"bouncyness"				"0.1"
+	"snd_bounce"				"sounds/world/bottles/glass"
+	"buoyancy"					"0.5"
+	"angular_friction"			"0.2"
+}
+
+// We only have beercans, no need for softdrink cans!
+entityDef moveable_item_beercan {
+	"inherit"					"moveable_base"
+	"spawnclass"				"idBarrel"
+
+	"model"						"models/andrew/refineryobjects/beercan_physics.lwo"
+	"cm_model"					"models/andrew/refineryobjects/beercan_physics.lwo"
+
+	"mass" 						"5"
+	"friction"					"0.2"
+	"bouncyness"				"0.1"
+	"snd_bounce"				"sounds/world/cans/tin"
+	"buoyancy"					"0.5"
+	"angular_friction"			"0.2"
+}
+
+entityDef moveable_item_refinerybarrel01 {
+	"inherit"					"moveable_base"
+	"spawnclass"				"idBarrel"
+
+	"model"						"models/andrew/refineryobjects/refinerybarrel01.lwo"
+	"cm_model"					"models/andrew/refineryobjects/refinerybarrel01.lwo"
+
+	"mass" 						"500"
+	"friction"					"0.1"
+	"bouncyness"				"0.1"
+	"snd_bounce"				"vehicles/misc/debris/metal_large"
+	"buoyancy"					"0.25"
+	"angular_friction"			"0.2"
+}
+
+entityDef moveable_item_refinerybarrel02 {
+	"inherit"					"moveable_base"
+	"spawnclass"				"idBarrel"
+
+	"model"						"models/andrew/refineryobjects/refinerybarrel02.lwo"
+	"cm_model"					"models/andrew/refineryobjects/refinerybarrel02.lwo"
+
+	"mass" 						"550"
+	"friction"					"0.1"
+	"bouncyness"				"0.1"
+	"snd_bounce"				"vehicles/misc/debris/metal_large"
+	"buoyancy"					"0.25"
+	"angular_friction"			"0.2"
+}

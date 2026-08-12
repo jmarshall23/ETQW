@@ -1,0 +1,75 @@
+
+gui maps/animtest {
+	properties {
+		float flags	= immediate( flags ) | GUI_SHOWCURSOR | GUI_FULLSCREEN;
+	}
+
+	windowDef desktop {
+		properties {
+			rect	rect		= "0, 0, 640, 480";
+			color	backColor	= "0, 0, 0, 1";
+		}
+		
+		events {
+			onCreate {
+				gui.consoleCommand( "clear" + _newline );
+			}
+		}
+				
+		timeline {		
+			onTime 0 {
+				if ( gui.spawnButton.bleh == 1 ) {
+					timeline.default.resetTime( 0 );
+				}				
+			}
+			
+			onTime 100 {
+				gui.consoleCommand( "echo moo " + toString( gui.time, 0 ) + _newline );
+				timeline.default.resetTime( 0 );
+			}
+		}
+	}
+
+	windowDef spawnButton {
+		properties {
+			rect	rect		= "0, 0, 640, 160";
+			color	foreColor	= "0, 1, 0, 1";
+			wstring	text		= toWStr( "Spawn" );
+			float	bleh		= 1;
+		}
+		
+		events {
+			onKeyDown "mouse1" {
+				gui.sendCommand( "spawn" );
+			}
+		}
+	}
+
+	windowDef animateButton {
+		properties {
+			rect	rect		= "0, 160, 640, 160";
+			color	foreColor	= "0, 1, 0, 1";
+			wstring	text		= toWStr( "Animate" );
+		}
+		
+		events {
+			onKeyDown "mouse1" {
+				gui.sendCommand( "animate" );
+			}
+		}
+	}
+
+	windowDef resetButton {
+		properties {
+			rect	rect		= "0, 320, 640, 160";
+			color	foreColor	= "0, 1, 0, 1";
+			wstring	text		= toWStr( "Reset" );
+		}
+		
+		events {
+			onKeyDown "mouse1" {
+				gui.sendCommand( "reset" );
+			}
+		}
+	}
+}

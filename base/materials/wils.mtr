@@ -1,0 +1,597 @@
+// ------------------------------------
+// deploy mask material for radiant use
+// ------------------------------------
+material textures/wils/sewer_deploymask
+{
+	qer_editorimage		masks/sewer/default.tga
+	diffusemap			masks/sewer/default.tga
+}
+
+// ---------------
+// block-out trees
+// ---------------
+material models/wils/cottonwood_bark
+{
+    noshadows
+	diffusemap			models/wils/cottonwood_bark_d.tga
+    bumpmap				addnormals( models/vegetation/trees/cottonwood/cottonwood_bark_local.tga , heightmap( models/vegetation/trees/cottonwood/cottonwood_bark_h.tga , 3) )
+}
+
+material models/wils/cottonwood_foliage
+{
+ 	//Use special foliage lighting instead of normal bumpmapping
+ 	interaction {
+ 		program interaction_foliage.vfp
+	}
+ 	nonsolid
+ 	noshadows
+	{
+  		blend		diffusemap
+ 		map 		models/wils/cottonwood_branch4_d.tga
+ 		alphaTest 	0.25
+ 		clamp
+		translate	0, 0.5
+		rotate		sinTable [ time * 0.15 + 1 ] * 0.005
+ 		translate	0, -0.5
+ 	}
+}
+
+material models/wils/cottonwood_canopy
+{
+ 	//Use special foliage lighting instead of normal bumpmapping
+ 	interaction {
+ 		program interaction_foliage.vfp
+	}
+ 	nonsolid
+ 	noshadows
+ 	{
+  		blend		diffusemap
+ 		map 		models/wils/cottonwood_canopy5_d.tga
+ 		alphaTest 	0.25
+ 		clamp
+		translate	0, 0.5
+		rotate		sinTable [ time * 0.15 + 1 ] * 0.005
+ 		translate	0, -0.5
+ 	}
+}
+
+material models/wils/heavy_branch
+{
+ 	twoSided
+ 	nonsolid
+ 	noshadows
+ 	translucent
+ 	{
+ 		blend		diffusemap
+ 		map 		models/wils/linden_branch_noleaves_d.tga
+ 		alphaTest 	0.25
+ 	}
+    bumpmap			models/vegetation/trees/cottonwood/linden_branch_noleaves_local.tga
+}
+
+// ----------
+// road tests
+// ----------
+
+material textures/wils/dirtroad {
+	qer_editorimage	textures/road/dirt02_local.tga
+		
+	diffusemap	textures/dirt/dirt02_d.tga
+	bumpmap		textures/road/dirt02_local.tga
+
+}
+
+material textures/wils/dirttracks {
+	qer_editorimage	textures/roadtemplates/track_sand01_local.tga
+		
+	diffusemap	textures/road/sandy_track2_d.tga
+	bumpmap		textures/roadtemplates/track_sand01_local.tga
+}
+
+// -----------------
+// megatexture tests
+// -----------------
+material models/wils/volcano_terrain
+{
+	qer_editorimage models/wils/volcano_lit_preview2.tga
+	diffusemap models/wils/volcano_lit_preview2.tga
+}
+
+material textures/wils/ark
+{
+	qer_editorimage textures/wils/ark_layout.tga
+	diffusemap textures/wils/ark_layout.tga
+}
+
+material textures/wils/island_mapshot
+{
+	qer_editorimage textures/wils/island_mapshot.tga
+	diffusemap textures/wils/island_mapshot.tga
+}
+
+material textures/wils/island_layout
+{
+	qer_editorimage textures/wils/island_layout.tga
+	diffusemap textures/wils/island_layout.tga
+}
+
+material textures/wils/quarry_layout
+{
+	qer_editorimage textures/wils/quarry_layout.tga
+	diffusemap textures/wils/quarry_layout.tga
+}
+
+material wils/megatexture_gallerymap_africa
+{
+	noSelfShadow
+	diffusemap	megatextures/megatexture_test_d.tga
+	bumpmap		megatextures/megatexture_test_local.tga
+}
+
+// sand with no spec for terrain which isn't megatextured yet
+material textures/wils/sand_temp
+{
+	qer_editorimage	textures/sand/dry_sand_footprints_d.tga
+	noselfshadow
+	{
+		blend	diffusemap
+		map	textures/sand/dry_sand_footprints_d.tga
+		scale	64 , 64
+	}
+	{
+		blend	bumpmap
+		map	addnormals (textures/sand/sand_undulating_1_local.tga, textures/sand/sand_undulating_1_wavelines_local.tga)
+		scale	64 , 64
+	}
+}
+
+// dirt with no spec for terrain which isn't megatextured yet
+material textures/wils/dirt_temp
+{
+	qer_editorimage	textures/dirt/hard_wet_earth01g_d.tga
+	noselfshadow
+	{
+		blend	diffusemap
+		map	textures/dirt/hard_wet_earth01g_d.tga
+		scale	64 , 64
+	}
+	{
+		blend	bumpmap
+		map	textures/dirt/hard_wet_earth02_local.tga
+		scale	64 , 64
+	}
+}
+
+// -----------------------------------------------------------
+// materials for north african gallery map and geology studies
+// -----------------------------------------------------------
+
+material textures/wils/skysand
+{
+	noshadows
+	diffusemap	textures/sand/skysand1roler_gm_d.tga
+	specularmap	textures/sand/skysand1_s.tga
+	bumpmap 	addnormals (textures/sand/skysand1_local.tga, heightmap (textures/sand/skysand1_h.tga, 10))
+}
+
+material textures/wils/sand
+{
+	noshadows
+	qer_editorimage	textures/sand/dry_beach_sand_footprints01d_d.tga
+	bumpmap		textures/sand/sand_ripples06_local.tga
+	diffusemap	textures/sand/dry_beach_sand_footprints01d_d.tga
+}
+
+material textures/wils/sand_dirt
+{
+	noshadows
+	qer_editorimage	textures/sand/dry_beach_sand_footprints01b_d.tga
+	{
+		blend	bumpmap
+		map	textures/sand/sand_ripples06_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/sand/dry_beach_sand_footprints01d_d.tga
+		vertexColor
+	}
+	{
+		blend	bumpmap
+		map	textures/dirt/hard_wet_earth02_local.tga
+	}
+	{
+		blend	diffusemap	
+		map	textures/dirt/hard_wet_earth01f_d.tga
+		inverseVertexColor
+	}
+}
+
+material textures/wils/dirt
+{
+	noshadows
+	qer_editorimage	textures/dirt/hard_wet_earth01d_d.tga
+	bumpmap		textures/dirt/hard_wet_earth02_local.tga
+	diffusemap	textures/dirt/hard_wet_earth01f_d.tga
+}
+
+material textures/wils/dirt_rock
+{
+	noshadows
+	qer_editorimage	textures/dirt/dry_earth_d.tga
+	{
+		blend	bumpmap
+		map	textures/dirt/hard_wet_earth02_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/dirt/hard_wet_earth01f_d.tga
+		vertexColor
+	}
+	{
+		blend	bumpmap
+		map	textures/rock/sharprock1_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/rock/rockface02d_d.tga
+		inverseVertexColor
+	}
+}
+
+material textures/wils/rock_dirt
+{
+	noshadows
+	qer_editorimage	textures/dirt/dry_earth_d.tga
+	{
+		blend	bumpmap
+		map	textures/rock/rock_sedimentary04_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/dirt/hard_wet_earth01f_d.tga
+		vertexColor
+	}
+	{
+		blend	bumpmap
+		map	textures/dirt/hard_wet_earth02_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/dirt/hard_wet_earth01f_d.tga
+		inverseVertexColor
+	}
+}
+
+// REVERSE BLENDS FOR GREAT JUSTICE
+material textures/wils/rock_dirt_inverted
+{
+	noshadows
+	qer_editorimage	textures/dirt/dry_earth_d.tga
+	{
+		blend	bumpmap
+		map	textures/dirt/hard_wet_earth02_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/dirt/hard_wet_earth01f_d.tga
+		vertexColor
+	}	
+	{
+		blend	bumpmap
+		map	textures/rock/rock_sedimentary04_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/dirt/hard_wet_earth01f_d.tga
+		inverseVertexColor
+	}
+}
+
+material textures/wils/sand_rock
+{
+	noshadows
+	qer_editorimage	textures/dirt/dry_earth_d.tga
+	{
+		blend	bumpmap
+		map	textures/sand/sand_ripples06_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/sand/dry_beach_sand_footprints01d_d.tga
+		vertexColor
+	}
+	{
+		blend	bumpmap
+		map	textures/rock/rock_sedimentary04_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/dirt/hard_wet_earth01f_d.tga
+		inverseVertexColor
+	}
+}
+	
+material textures/wils/rock
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_d.tga
+	diffusemap	textures/rock/rockface02d_d.tga
+	bumpmap		textures/rock/rock_sedimentary01_local.tga
+}
+
+material textures/wils/rock2
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_d.tga
+	diffusemap	textures/rock/rockface02d_d.tga
+	bumpmap		textures/rock/rock_sedimentary02_local.tga
+}
+
+material textures/wils/rock3
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_d.tga
+	diffusemap	textures/rock/rockface02d_d.tga
+	bumpmap		textures/rock/rock_sedimentary03_local.tga
+}
+
+material textures/wils/rock4
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_d.tga
+	diffusemap	textures/rock/rockface02d_d.tga
+	bumpmap		textures/rock/sharprock1_local.tga
+}
+
+material textures/wils/rockridge_sand
+{
+	noshadows
+	qer_editorimage	textures/dirt/dry_earth_d.tga
+	{
+		blend	bumpmap
+		map	textures/sand/sand_ripples06_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/sand/dry_beach_sand_footprints01d_d.tga
+		vertexColor
+	}	
+	{
+		blend	bumpmap
+		map	textures/rock/rock_sedimentary04_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/dirt/hard_wet_earth01a_d.tga
+		inverseVertexColor
+	}
+}
+
+
+material textures/wils/rockridge
+{
+	noshadows
+	qer_editorimage	textures/rock/rockface02d_d.tga
+	// diffuse map should be the same as textures/wils/rockridge_sand for blends to work properly
+	diffusemap	textures/dirt/hard_wet_earth01a_d.tga
+	bumpmap		textures/rock/rock_ridge01_local.tga
+}
+
+// redder rocks near the middle of the map
+material textures/wils/rock_red
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_red_d.tga
+	diffusemap	textures/rock/rockface02d_red_d.tga
+	bumpmap		textures/rock/rock_sedimentary01_local.tga
+}
+
+material textures/wils/rock2_red
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_red_d.tga
+	diffusemap	textures/rock/rockface02d_red_d.tga
+	bumpmap		textures/rock/rock_sedimentary02_local.tga
+}
+
+material textures/wils/rock3_red
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_red_d.tga
+	diffusemap	textures/rock/rockface02d_red_d.tga
+	bumpmap		textures/rock/rock_sedimentary03_local.tga
+}
+
+material textures/wils/rock4_red
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_red_d.tga
+	diffusemap	textures/rock/rockface02d_red_d.tga
+	bumpmap		textures/rock/sharprock1_local.tga
+}
+
+// sandy coloured (less white) rocks near the middle of the map
+material textures/wils/rock_sandy
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_sandy_d.tga
+	diffusemap	textures/rock/rockface02d_sandy_d.tga
+	bumpmap		textures/rock/rock_sedimentary01_local.tga
+}
+
+material textures/wils/rock2_sandy
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_sandy_d.tga
+	diffusemap	textures/rock/rockface02d_sandy_d.tga
+	bumpmap		textures/rock/rock_sedimentary02_local.tga
+}
+
+material textures/wils/rock3_sandy
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_sandy_d.tga
+	diffusemap	textures/rock/rockface02d_sandy_d.tga
+	bumpmap		textures/rock/rock_sedimentary03_local.tga
+}
+
+material textures/wils/rock4_sandy
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_sandy_d.tga
+	//diffusemap	textures/rock/rockface02d_sandy_d.tga
+	diffusemap	textures/rock/rockface02d_brown2_d.tga
+	bumpmap		textures/rock/sharprock1_local.tga
+}
+
+// and these're fucking grey, alright?
+material textures/wils/rock_grey
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_grey_d.tga
+	diffusemap	textures/rock/rockface02d_grey_d.tga
+	bumpmap		textures/rock/rock_sedimentary01_local.tga
+}
+
+material textures/wils/rock2_grey
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_grey_d.tga
+	diffusemap	textures/rock/rockface02d_grey_d.tga
+	bumpmap		textures/rock/rock_sedimentary02_local.tga
+}
+
+material textures/wils/rock3_grey
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_grey_d.tga
+	diffusemap	textures/rock/rockface02d_grey_d.tga
+	bumpmap		textures/rock/rock_sedimentary03_local.tga
+}
+
+material textures/wils/rock4_grey
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_grey_d.tga
+	diffusemap	textures/rock/rockface02d_grey_d.tga
+	bumpmap		textures/rock/sharprock1_local.tga
+}
+
+// brown. BROWN.
+material textures/wils/rock_brown
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_brown2_d.tga
+	diffusemap	textures/rock/rockface02d_brown2_d.tga
+	bumpmap		textures/rock/rock_sedimentary01_local.tga
+}
+
+material textures/wils/rock2_brown
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_brown2_d.tga
+	diffusemap	textures/rock/rockface02d_brown2_d.tga
+	bumpmap		textures/rock/rock_sedimentary02_local.tga
+}
+
+material textures/wils/rock3_brown
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_brown2_d.tga
+	diffusemap	textures/rock/rockface02d_brown2_d.tga
+	bumpmap		textures/rock/rock_sedimentary03_local.tga
+}
+
+material textures/wils/rock4_brown
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_brown2_d.tga
+	diffusemap	textures/rock/rockface02d_brown2_d.tga
+	bumpmap		textures/rock/sharprock1_local.tga
+}
+
+material textures/wils/rock4_pond
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_brown3_d.tga
+	diffusemap	textures/rock/rockface02d_brown3_d.tga
+	bumpmap		textures/rock/sharprock1_local.tga
+}
+
+// everything below this bit is the Fry's:
+
+// ***************** sigh **********************************************************************
+// these are uniquely-assigned materials to allow for easier colour-matching to the megaTexture
+// ***************** sigh **********************************************************************
+
+material textures/wils/b1_01
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_sandy_d.tga
+	diffusemap	textures/rock/rockface02d_sandy_d.tga
+	bumpmap		textures/rock/rock_sedimentary01_local.tga
+}
+
+material textures/wils/b1_02
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_sandy_d.tga
+	diffusemap	textures/rock/rockface02d_sandy_d.tga
+	bumpmap		textures/rock/sharprock1_local.tga
+}
+
+material textures/wils/b2_01
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_sandy_d.tga
+	diffusemap	textures/rock/rockface02d_sandy_d.tga
+	bumpmap		textures/rock/rock_sedimentary01_local.tga
+}
+
+material textures/wils/b2_02
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_sandy_b2_02_d.tga
+	diffusemap	textures/rock/rockface02d_sandy_b2_02_d.tga
+	bumpmap		textures/rock/rock_sedimentary03_local.tga
+}
+
+material textures/wils/b2_03
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_d.tga.tga
+	diffusemap	textures/rock/rockface02d_d.tga.tga
+	bumpmap		textures/rock/rock_sedimentary01_local.tga
+}
+
+material textures/wils/b3_01
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_sandy_d.tga
+	diffusemap	textures/rock/rockface02d_sandy_d.tga
+	bumpmap		textures/rock/rock_sedimentary01_local.tga
+}
+
+material textures/wils/b3_02
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_red_d.tga.tga
+	diffusemap	textures/rock/rockface02d_red_d.tga.tga
+	bumpmap		textures/rock/rock_sedimentary01_local.tga
+}
+
+material textures/wils/c2_01
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_sandy_b2_02_d.tga
+	diffusemap	textures/rock/rockface02d_sandy_b2_02_d.tga
+	bumpmap		textures/rock/rock_sedimentary01_local.tga
+}
+
+material textures/wils/c2_02
+{
+	//noshadows
+	qer_editorimage	textures/rock/rockface02d_brown_d.tga
+	diffusemap	textures/rock/rockface02d_brown_d.tga
+	bumpmap		textures/rock/rock_sedimentary01_local.tga
+}

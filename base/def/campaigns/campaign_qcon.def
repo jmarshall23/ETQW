@@ -1,0 +1,10 @@
+
+campaignDef campaign_quakecon {
+	map	"maps/area22"
+	map	"maps/ark"
+	map	"maps/valley"
+	
+	data {
+		"mtr_backdrop"		"levelshots/campaigns/africa"
+	}
+}

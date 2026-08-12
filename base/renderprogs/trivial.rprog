@@ -1,0 +1,1141 @@
+
+renderProgram trivial {
+	hwSkinningVersion trivialSkinningMatrix trivialHardSkinningMatrix
+	instanceVersion trivial_instance
+
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0;
+		
+		MOV	result.texcoord, $texCoordAttrib;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0;
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		MUL result.color, R0, fragment.color;
+	%> }
+}
+
+renderProgram trivialVtxColor {
+
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		MOV result.color, fragment.color;
+	%> }
+}
+
+renderProgram trivial_instance {
+	program vertex arb { <%
+		TEMP _pos;
+		DP4 _pos.x, vertex.texcoord[5], $positionAttrib;
+		DP4 _pos.y, vertex.texcoord[6], $positionAttrib;
+		DP4 _pos.z, vertex.texcoord[7], $positionAttrib;
+		MOV _pos.w, $positionAttrib.w;
+
+		PARAM  mvp[4]       = { state.matrix.mvp };
+		OUTPUT oPos         = result.position;
+		# Transform the vertex to clip coordinates. 
+		DP4   oPos.x, mvp[0], _pos;
+		DP4   oPos.y, mvp[1], _pos;
+		DP4   oPos.z, mvp[2], _pos;
+		DP4   oPos.w, mvp[3], _pos;
+
+		TEMP R0;
+		
+		MOV	result.texcoord, $texCoordAttrib;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment reference trivial
+}
+
+renderProgram trivialSkinningMatrix {
+	program vertex arb { <%
+		TEMP	position;
+		TEMP	R0;
+
+		useTemplate skinningMatrix_ARB< "position" >
+
+		MOV		result.texcoord, $texCoordAttrib;
+
+		MAD		R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL		result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment reference trivial
+}
+
+renderProgram trivialHardSkinningMatrix {
+	program vertex arb { <%
+		TEMP	position;
+		TEMP	R0;
+
+		useTemplate hardSkinningMatrix_ARB< "position" >
+
+		MOV		result.texcoord, $texCoordAttrib;
+
+		MAD		R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL		result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment reference trivial
+}
+
+renderProgram trivialRGB {
+	hwSkinningVersion trivialRGBSkinningMatrix trivialRGBHardSkinningMatrix
+
+	program vertex reference trivial
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0;
+
+		TEX R0.rgb, fragment.texcoord, $map, 2D;
+		MOV R0.a, 1;
+		MUL result.color, R0, fragment.color;
+	%> }
+}
+
+renderProgram trivialRGBSkinningMatrix {
+	program vertex reference trivialSkinningMatrix
+
+	program fragment reference trivialRGB
+}
+
+renderProgram trivialRGBHardSkinningMatrix {
+	program vertex reference trivialHardSkinningMatrix
+
+	program fragment reference trivialRGB
+}
+
+renderProgram trivialAlpha {
+	hwSkinningVersion trivialAlphaSkinningMatrix trivialAlphaHardSkinningMatrix
+
+	program vertex reference trivial
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0;
+
+		MOV R0.rgb, 1;
+		TEX R0.a, fragment.texcoord, $map, 2D;
+		MUL result.color, R0, fragment.color;
+	%> }
+}
+
+renderProgram trivialAlphaSkinningMatrix {
+	program vertex reference trivialSkinningMatrix
+
+	program fragment reference trivialAlpha
+}
+
+renderProgram trivialAlphaHardSkinningMatrix {
+	program vertex reference trivialHardSkinningMatrix
+
+	program fragment reference trivialAlpha
+}
+
+renderProgram trivialWithTextureMatrix {
+	hwSkinningVersion trivialWithTextureMatrixSkinningMatrix trivialWithTextureMatrixHardSkinningMatrix
+	instanceVersion trivialWithTextureMatrixInst
+	depthVersion trivialWithTextureMatrix_depth
+	earlyCullVersion trivialWithTextureMatrix_Early
+
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0;
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment reference trivial
+}
+
+renderProgram trivialWithTextureMatrixTest {
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0;
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0;
+		PARAM	dp = { 0, 0, 1, 0 }; # Used to calculate masks
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		MOV result.color, 0;
+		DP3_SAT result.color.rgb, R0, dp; #35026918962576450914878050196;
+		#MOV result.color, R0;#0.57735026918962576450914878050196;
+	%> }
+}
+
+renderProgram trivialWithTextureMatrixAlways {
+	program vertex arb { <%
+		TEMP R0;
+		PARAM  mvp[4]       = { state.matrix.mvp };
+		OUTPUT oPos         = result.position;
+		# Transform the vertex to clip coordinates. 
+		DP4   oPos.x, mvp[0], $positionAttrib;
+		DP4   oPos.y, mvp[1], $positionAttrib;
+
+		TEMP  zw;
+		DP4   zw.z, mvp[2], $positionAttrib;
+		DP4   zw.w, mvp[3], $positionAttrib;
+		MOV	  oPos.w, zw;	
+		TEMP res;
+		SLT	 res.x, zw.w, zw.z;
+		SLT	 res.y, zw.z, -zw.w;
+		MUL  res.x, res.x, res.y;
+		MUL  oPos.z, res.x, zw.z;
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment reference trivial
+}
+
+renderProgram trivialWithTextureMatrix_Early {
+
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0;
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+		
+		SUB	R0.xyz, $positionAttrib, $viewOrigin;
+		DP3 R0.w, R0, R0;
+		RSQ R0.w, R0.w;
+		RCP R0.w, R0.w;
+		SUB result.texcoord[1].x, R0.w, $foliageHackDistance;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0;
+
+		KIL fragment.texcoord[1].x;
+		TEX R0, fragment.texcoord, $map, 2D;
+		MUL result.color, R0, fragment.color;
+	%> }
+}
+
+renderProgram trivialWithTextureMatrixAT {
+
+	program vertex reference trivialWithTextureMatrix
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1;
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		SUB R1, R0, 0.5;
+		KIL R1.a;
+		MUL result.color, R0, fragment.color;
+	%> }
+}
+
+renderProgram trivialMakeAlphaWithTextureMatrix {
+	hwSkinningVersion trivialMakeAlphaWithTextureMatrixSkinningMatrix trivialMakeAlphaWithTextureMatrixHardSkinningMatrix
+
+	program vertex reference trivialWithTextureMatrix
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0;
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		DP3 R0.a, R0, 0.333;
+		MOV R0.rgb, 1;
+		MUL result.color, R0, fragment.color;
+	%> }
+}
+
+renderProgram trivialWithTextureMatrixInst {
+	program vertex arb { <%
+		TEMP R0;
+		TEMP _pos;
+		DP4 _pos.x, vertex.texcoord[5], $positionAttrib;
+		DP4 _pos.y, vertex.texcoord[6], $positionAttrib;
+		DP4 _pos.z, vertex.texcoord[7], $positionAttrib;
+		MOV _pos.w, $positionAttrib.w;
+		
+		PARAM  mvp[4]       = { state.matrix.mvp };
+		OUTPUT oPos         = result.position;
+		# Transform the vertex to clip coordinates. 
+		DP4   oPos.x, mvp[0], _pos;
+		DP4   oPos.y, mvp[1], _pos;
+		DP4   oPos.z, mvp[2], _pos;
+		DP4   oPos.w, mvp[3], _pos;
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+	program fragment reference trivial
+}
+
+renderProgram trivialWithTextureMatrixSkinningMatrix {
+	program vertex arb { <%
+		TEMP	position;
+		TEMP	R0;
+
+		useTemplate skinningMatrix_ARB< "position" >
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment reference trivial
+}
+
+renderProgram trivialWithTextureMatrixHardSkinningMatrix {
+	program vertex arb { <%
+		TEMP	position;
+		TEMP	R0;
+
+		useTemplate hardSkinningMatrix_ARB< "position" >
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment reference trivial
+}
+
+
+renderProgram trivialMakeAlphaWithTextureMatrixSkinningMatrix {
+	program vertex reference trivialWithTextureMatrixSkinningMatrix
+
+	program fragment reference trivialMakeAlphaWithTextureMatrix
+}
+
+renderProgram trivialMakeAlphaWithTextureMatrixHardSkinningMatrix {
+	program vertex reference trivialWithTextureMatrixHardSkinningMatrix
+
+	program fragment reference trivialMakeAlphaWithTextureMatrix
+}
+
+
+renderProgram trivialRGBWithTextureMatrix {
+	//hwSkinningVersion trivialRGBSkinningMatrixWithTextureMatrix trivialRGBHardSkinningMatrixWithTextureMatrix
+
+	program vertex reference trivialWithTextureMatrix
+
+	program fragment reference trivialRGB
+}
+
+renderProgram trivialRGBWithTextureMatrixSkinningMatrix {
+	program vertex reference trivialWithTextureMatrixSkinningMatrix
+
+	program fragment reference trivialRGB
+}
+
+renderProgram trivialWithTextureMatrix_BlendAddAtmosphere {
+	program vertex cg { <%
+		struct VsInputs {
+			float3 pos	: POSITION;
+			float4 tex	: TEXCOORD0;
+			float4 col	: COLOR0;
+		};
+
+		struct VsOutputs {
+			float4 col  : COLOR0;
+			float2 tex	: TEXCOORD0;
+		};
+
+		$include "atmosphere.hg"
+		float4 diffuse_s : $diffuseMatrix_s;
+		float4 diffuse_t : $diffuseMatrix_t;
+		
+		VsOutputs vertex(VsInputs indata) {
+			VsOutputs outdata;
+
+			$if r_32ByteVtx
+			indata.tex.xy *= 1.f/4096.f;
+			indata.tex.zw = 1.f;
+			$endif
+
+			outdata.tex.x = dot( indata.tex, diffuse_s);
+			outdata.tex.y = dot( indata.tex, diffuse_t );
+
+			outdata.col = indata.col;
+			float2 r = Extinction(indata.pos);
+			outdata.col *= r.x;
+
+			return outdata;
+		}
+	%> }
+
+	program fragment reference trivial
+}
+
+renderProgram trivialWithTextureMatrix_BlendBlendAtmosphere {
+	program vertex cg { <%
+		struct VsInputs {
+			float3 pos	: POSITION;
+			float4 tex	: TEXCOORD0;
+			float4 col	: COLOR0;
+		};
+
+		struct VsOutputs {
+			float4 col  : COLOR0;
+			float2 tex	: TEXCOORD0;
+		};
+
+		$include "atmosphere.hg"
+		float4 diffuse_s : $diffuseMatrix_s;
+		float4 diffuse_t : $diffuseMatrix_t;
+		
+		VsOutputs vertex(VsInputs indata) {
+			VsOutputs outdata;
+
+			$if r_32ByteVtx
+			indata.tex.xy *= 1.f/4096.f;
+			indata.tex.zw = 1.f;
+			$endif
+
+			outdata.tex.x = dot( indata.tex, diffuse_s);
+			outdata.tex.y = dot( indata.tex, diffuse_t );
+
+			outdata.col = indata.col;
+			float2 r = Extinction(indata.pos);
+			outdata.col.a *= r.x;
+
+			return outdata;
+		}
+	%> }
+
+	program fragment reference trivial
+}
+
+renderProgram trivialWithTextureMatrix_BlendFilterAtmosphere {
+	program vertex cg { <%
+		struct VsInputs {
+			float3 pos	: POSITION;
+			float4 tex	: TEXCOORD0;
+			float4 col	: COLOR0;
+		};
+
+		struct VsOutputs {
+			float4 col  : COLOR0;
+			float2 tex	: TEXCOORD0;
+		};
+
+		$include "atmosphere.hg"
+		float4 diffuse_s : $diffuseMatrix_s;
+		float4 diffuse_t : $diffuseMatrix_t;
+		
+		VsOutputs vertex(VsInputs indata) {
+			VsOutputs outdata;
+
+			$if r_32ByteVtx
+			indata.tex.xy *= 1.f/4096.f;
+			indata.tex.zw = 1.f;
+			$endif
+
+			outdata.tex.x = dot( indata.tex, diffuse_s);
+			outdata.tex.y = dot( indata.tex, diffuse_t );
+
+			outdata.col = indata.col;
+			float2 r = Extinction(indata.pos);
+			// this is trickier we want them to lerp to white
+			outdata.col = lerp( indata.col, float4( 1.0f, 1.0f, 1.0f, 1.0f ), r.x );
+	
+			return outdata;
+		}
+	%> }
+
+	program fragment reference trivial
+}
+
+renderProgram trivialCinematic {
+	//hwSkinningVersion trivialCinematicSkinningMatrix
+
+	program vertex reference trivial
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0;
+
+		TEX R0, fragment.texcoord, $cinematic, 2D;
+		MUL result.color, R0, fragment.color;
+	%> }
+}
+
+renderProgram trivialCinematicYUV {
+	//hwSkinningVersion trivialCinematicYUVSkinningMatrix
+
+	program vertex reference trivial
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP YCbCr, R0;
+
+		PARAM YUVtoRGB_R = { 1.1643, 0.0, 1.5958, 0.0 };
+		PARAM YUVtoRGB_G = { 1.1643, -0.39173, -0.81290, 0.0 };
+		PARAM YUVtoRGB_B = { 1.1643, 2.017, 0.0, 0.0 };
+
+		TEX YCbCr.x, fragment.texcoord, $cinematicY, 2D;
+		TEX YCbCr.y, fragment.texcoord, $cinematicU, 2D;
+		TEX YCbCr.z, fragment.texcoord, $cinematicV, 2D;
+
+		ADD YCbCr.x, YCbCr.x, -0.0625;
+		ADD YCbCr.y, YCbCr.y, -0.5;
+		ADD YCbCr.z, YCbCr.z, -0.5;
+
+		DP3 R0.r, YUVtoRGB_R, YCbCr;
+		DP3 R0.g, YUVtoRGB_G, YCbCr;
+		DP3 R0.b, YUVtoRGB_B, YCbCr;
+		MOV R0.a, 1;
+
+		MUL result.color, R0, fragment.color;
+	%> }
+}
+
+//
+// This is a version that has edge fading
+//
+
+renderProgram trivialEdgeFade {
+	hwSkinningVersion trivialEdgeFadeSkinningMatrix trivialEdgeFadeHardSkinningMatrix
+
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0, R1;
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+
+		SUB R0, $viewOrigin, $positionAttrib;
+		DP3 R1.x, R0, R0;
+		RSQ R1.x, R1.x;
+		MUL R0, R0, R1.x;
+
+		DP3 R1, R0, $normalAttrib;
+		MUL R1, 2, R1;
+		MIN R1, R1, 1.0;
+
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL R0, R0, R1;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment reference trivial
+}
+
+renderProgram trivialEdgeFadeSkinningMatrix {
+	program vertex arb { <%
+		TEMP	position;
+		TEMP	R0, R1;
+
+		useTemplate skinningMatrix_ARB< "position" >
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+		
+		SUB R0, $viewOrigin, position;
+		DP3 R1.x, R0, R0;
+		RSQ R1.x, R1.x;
+		MUL R0, R0, R1.x;
+		
+		DP3 R1, R0, $normalAttrib;
+		MUL R1, 2, R1;
+		MIN R1, R1, 1.0;		
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL R0, R0, R1;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment reference trivial
+}
+
+renderProgram trivialEdgeFadeHardSkinningMatrix {
+	program vertex arb { <%
+		TEMP	position;
+		TEMP	R0, R1;
+
+		useTemplate hardSkinningMatrix_ARB< "position" >
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+		
+		SUB R0, $viewOrigin, position;
+		DP3 R1.x, R0, R0;
+		RSQ R1.x, R1.x;
+		MUL R0, R0, R1.x;
+		
+		DP3 R1, R0, $normalAttrib;
+		MUL R1, 2, R1;
+		MIN R1, R1, 1.0;		
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL R0, R0, R1;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment reference trivial
+}
+
+renderProgram trivial_depth {
+
+	program vertex reference trivial
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1, R2, R3, depth, SKY;
+
+		TEX		depth, fragment.position, $currentDepth, RECT;
+
+		# convert to -1.0 to 1.0 NDC
+		ADD		R0, depth.x, depth.x;
+		SUB		R0, R0, 1;
+		SGE		SKY, depth, 1.0;
+
+		# calculate the view space z by deriving w from depth.  This will be negative.
+		SUB		R0.z, -R0.z, $proj2View.x;
+		RCP		R0.z, R0.z;
+		MUL		R0.z, R0.z, $proj2View.y;
+		
+		MAD		R3.z, fragment.position.z, 2, -1;
+		SUB		R3.z, -R3.z, $proj2View.x;
+		RCP		R3.z, R3.z;
+		MUL		R3.z, R3.z, $proj2View.y;
+
+		SUB R2.x, -R0.z, -R3.z;
+		MAX R2.x, R2.x, 0;
+		MUL R2.x, R2.x, 0.06;
+		ADD R2.x, R2.x, SKY.x;
+		MIN R2.x, R2.x, 1;
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		MUL R0.w, R0.w, R2.x;
+		MUL result.color, R0, fragment.color;
+		
+#		MOV result.color.rgb, R2.x;
+#		MOV result.color.a, 1;
+	%> }
+}
+
+renderProgram trivialWithTextureMatrix_depth {
+
+	earlyCullVersion trivialWithTextureMatrix_depth_Early
+
+	program vertex reference trivialWithTextureMatrix
+	program fragment reference trivial_depth
+}
+
+renderProgram trivialWithTextureMatrix_depth_Early {
+
+	program vertex reference trivialWithTextureMatrix_Early
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1, R2, R3, depth, SKY;
+
+		TEX		depth, fragment.position, $currentDepth, RECT;
+		
+		KIL		fragment.texcoord[1].x;
+
+		# convert to -1.0 to 1.0 NDC
+		ADD		R0, depth.x, depth.x;
+		SUB		R0, R0, 1;
+		SGE		SKY, depth, 1.0;
+
+		# calculate the view space z by deriving w from depth.  This will be negative.
+		SUB		R0.z, -R0.z, $proj2View.x;
+		RCP		R0.z, R0.z;
+		MUL		R0.z, R0.z, $proj2View.y;
+		
+		MAD		R3.z, fragment.position.z, 2, -1;
+		SUB		R3.z, -R3.z, $proj2View.x;
+		RCP		R3.z, R3.z;
+		MUL		R3.z, R3.z, $proj2View.y;
+
+		SUB R2.x, -R0.z, -R3.z;
+		MAX R2.x, R2.x, 0;
+		MUL R2.x, R2.x, 0.06;
+		ADD R2.x, R2.x, SKY.x;
+		MIN R2.x, R2.x, 1;
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		MUL R0.w, R0.w, R2.x;
+		MUL result.color, R0, fragment.color;
+		
+#		MOV result.color.rgb, R2.x;
+#		MOV result.color.a, 1;
+	%> }
+}
+
+renderProgram trivial_distance {
+
+	program vertex reference trivial
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1, R2, R3;
+
+		MAD		R3.z, fragment.position.z, 2, -1;
+		SUB		R3.z, -R3.z, $proj2View.x;
+		RCP		R3.z, R3.z;
+		MUL		R3.z, R3.z, $proj2View.y;
+		
+		SUB R2.xy, -R3.zzzz, $parameters.xyxx;
+		KIL R2.x;
+		MUL_SAT R2.y, R2.y, $parameters.z;
+		
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		MUL R0, R0, R2.y;
+		MUL result.color, R0, fragment.color;
+	%> }
+}
+
+renderProgram trivialWithTextureMatrix_distance {
+
+	program vertex reference trivialWithTextureMatrix
+	program fragment reference trivial_distance
+}
+
+
+renderProgram trivialImgSequence {
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0;
+		
+		MOV	result.texcoord, $texCoordAttrib;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1;
+
+		TEX R0, fragment.texcoord, $imgSequenceCur, 2D;
+		TEX R1, fragment.texcoord, $imgSequenceNext, 2D;
+		
+		SUB R1, R1, R0;
+		MAD R0, R1, $imgSequenceBlend, R0;
+		MUL result.color, R0, fragment.color;
+	%> }
+}
+
+
+renderProgram trivial_billboard {
+	instanceVersion trivial_billboard_instance
+	program vertex arb { <%
+		PARAM  mvp[4]       = { state.matrix.mvp };
+		OUTPUT oPos         = result.position;
+		# Transform the vertex to clip coordinates. 
+		
+		TEMP _pos;
+		TEMP R0;
+		
+		MUL R0, $texCoordAttrib, 100;
+		
+		MOV _pos, $positionAttrib;
+		
+		#ADD _pos, $positionAttrib, 0;#R0;
+		DP4   oPos.x, mvp[0], _pos;
+		DP4   oPos.y, mvp[1], _pos;
+		DP4   oPos.z, mvp[2], _pos;
+		DP4   oPos.w, mvp[3], _pos;
+
+		MOV	result.texcoord, $texCoordAttrib;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0;
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		MUL result.color, R0, fragment.color;
+	%> }
+}
+
+renderProgram trivial_billboard_instance {
+	program vertex arb { <%
+		TEMP R0;
+		TEMP _pos;
+		DP4 _pos.x, vertex.texcoord[5], $positionAttrib;
+		DP4 _pos.y, vertex.texcoord[6], $positionAttrib;
+		DP4 _pos.z, vertex.texcoord[7], $positionAttrib;
+		MOV _pos.w, $positionAttrib.w;
+		
+		MUL R0, $texCoordAttrib, 12;
+
+		MAD result.texcoord[2], _pos, $worldPntToHeightMapMult, $worldPntToHeightMapAdd;
+		
+		MAD _pos.xyz, R0.x, $viewRightWorld, _pos;
+		MAD _pos.xyz, R0.y, $viewUpWorld, _pos;
+		
+		PARAM  mvp[4]       = { state.matrix.mvp };
+		OUTPUT oPos         = result.position;
+		# Transform the vertex to clip coordinates. 
+		DP4   oPos.x, mvp[0], _pos;
+		DP4   oPos.y, mvp[1], _pos;
+		DP4   oPos.z, mvp[2], _pos;
+		DP4   oPos.w, mvp[3], _pos;
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+		
+		TEMP R1;
+		MUL R1, $diffuseColor, vertex.texcoord[2];
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, R1, R0;
+	%> }
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1;
+
+		TEX R1, fragment.texcoord[2], $worldHeightMap, 2D;
+		SUB R1.z, fragment.texcoord[2], R1;
+		KIL R1.z;
+		TEX R0, fragment.texcoord, $map, 2D;
+		MUL result.color, R0, fragment.color;
+	%> }
+}
+
+renderProgram trivialWithTextureMatrixDisort {
+	instanceVersion trivialWithTextureMatrixDistortInst
+
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0;
+
+		TEMP _pos;
+		DP4   _pos.x, $transposedModelMatrix_x, $positionAttrib;
+		DP4   _pos.y, $transposedModelMatrix_y, $positionAttrib;
+		DP4   _pos.z, $transposedModelMatrix_z, $positionAttrib;
+		DP4   _pos.w, $transposedModelMatrix_w, $positionAttrib;
+
+		MAD result.texcoord[2], _pos, $worldPntToHeightMapMult, $worldPntToHeightMapAdd;
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1;
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		TEX R1, fragment.texcoord[2], $worldHeightMap, 2D;
+		MUL result.color, R0, fragment.color;
+		MOV result.color, R1;
+		#MOV result.color, 1;
+	%> }
+
+	//program fragment reference trivial
+}
+
+renderProgram trivialWithTextureMatrixDistortInst {
+	program vertex arb { <%
+		TEMP R0;
+		TEMP _pos;
+		DP4 _pos.x, vertex.texcoord[5], $positionAttrib;
+		DP4 _pos.y, vertex.texcoord[6], $positionAttrib;
+		DP4 _pos.z, vertex.texcoord[7], $positionAttrib;
+		MOV _pos.w, $positionAttrib.w;
+		
+		MUL R0, $texCoordAttrib, 0.005;
+		MAD _pos.xyz, $windWorld, R0.y, _pos;
+		
+		MAD result.texcoord[2], _pos, $worldPntToHeightMapMult, $worldPntToHeightMapAdd;
+		
+		PARAM  mvp[4]       = { state.matrix.mvp };
+		OUTPUT oPos         = result.position;
+		# Transform the vertex to clip coordinates. 
+		DP4   oPos.x, mvp[0], _pos;
+		DP4   oPos.y, mvp[1], _pos;
+		DP4   oPos.z, mvp[2], _pos;
+		DP4   oPos.w, mvp[3], _pos;
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1;
+
+		TEX R1, fragment.texcoord[2], $worldHeightMap, 2D;
+		SUB R1.z, fragment.texcoord[2], R1;
+		KIL R1.z;
+		TEX R0, fragment.texcoord, $map, 2D;
+		MUL result.color, R0, fragment.color;
+	%> }
+}
+
+
+renderProgram trivialMaskImage {
+
+	program vertex cg { <%
+		struct VsInputs {
+			float3 pos : $positionAttrib;
+			float4 tex : $texCoordAttrib;
+			float2 normal : $normalAttrib;
+			float4 color : $colorAttrib;
+		};
+		struct VsOutputs {
+			float2 tex0	: TEXCOORD0;
+			float2 tex1	: TEXCOORD1;
+			float4 col : COLOR;
+		};
+		
+		uniform float4 diffuseMatrix_s : $diffuseMatrix_s;
+		uniform float4 diffuseMatrix_t : $diffuseMatrix_t;
+
+		VsOutputs vertex( VsInputs indata ) {
+			VsOutputs outData;
+
+			$if r_32ByteVtx
+			indata.tex.xy *= 1.f/4096.f;
+			indata.normal.xy /= 1024.f;
+			$endif
+
+			outData.tex0.x = dot( indata.tex, diffuseMatrix_s );
+			outData.tex0.y = dot( indata.tex, diffuseMatrix_t );
+			outData.tex1 = indata.normal.xy;
+			outData.col = indata.color;
+			
+			return outData;
+		}
+	%> }
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0;
+		TEX R0, fragment.texcoord[0], $map, 2D;
+		TEMP R1;
+		TEX R1, fragment.texcoord[1], $mask, 2D;
+		MUL R0, R0, R1;
+		MUL result.color, R0, fragment.color;
+		#MOV result.color, R1;
+	%> }
+}
+
+renderProgram trivialBlendy {
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0;
+		
+		DP4	result.texcoord[0].x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord[0].y, $texCoordAttrib, $diffuseMatrix_t;
+		DP4	result.texcoord[1].x, $texCoordAttrib, $bumpMatrix_s;
+		DP4	result.texcoord[1].y, $texCoordAttrib, $bumpMatrix_t;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment reference trivialMaskImage
+}
+
+renderProgram trivialDetailmap {
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0;
+		
+		DP4	result.texcoord[0].x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord[0].y, $texCoordAttrib, $diffuseMatrix_t;
+		
+		PARAM  mv[4]       = { state.matrix.modelview };
+		DP4   R0.w, -mv[2], $positionAttrib;
+		SUB   R0.w, R0.w, $detailFade.x;
+		MAD result.texcoord[7].w, R0.w, $detailFade.y, 1;
+		
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+	%> }
+
+	program fragment arb {
+		OPTION ARB_precision_hint_fastest;
+		
+		TEMP DTLCOORD;
+		MAD DTLCOORD.xy, fragment.texcoord[0], $detailMult, $detailMult.zwzw;
+
+		TEMP R0;
+		TEX R0, fragment.texcoord[0], $map, 2D;
+
+		TEMP weight;
+		MOV_SAT	weight, fragment.texcoord[7].w;
+		
+
+		TEMP	detailDiff;
+		TEX		detailDiff, DTLCOORD, $mask, 2D;
+		ADD		detailDiff, detailDiff, -0.5;
+		MAD		R0.rgb, weight.x, detailDiff, R0;
+		
+		MUL result.color, R0, fragment.color;
+	}
+}
+
+renderProgram trivialMaskImageScreen {
+
+	program vertex cg { <%
+		struct VsInputs {
+			float3 pos : $positionAttrib;
+			float4 tex : $texCoordAttrib;
+			float2 normal : $normalAttrib;
+			float4 color : $colorAttrib;
+		};
+		struct VsOutputs {
+			float2 tex0	: TEXCOORD0;
+			float4 tex1	: TEXCOORD1;
+			float4 col : COLOR;
+		};
+		
+		uniform float4 diffuseMatrix_s : $diffuseMatrix_s;
+		uniform float4 diffuseMatrix_t : $diffuseMatrix_t;
+		uniform float4 parameters : $parameters;
+		uniform float4 currentRenderTexelSize : $currentRenderTexelSize;
+		uniform float4 aspectSize : $aspectSize;
+
+		VsOutputs vertex( VsInputs indata ) {
+			VsOutputs outData;
+
+			$if r_32ByteVtx
+			indata.tex.xy *= 1.f/4096.f;
+			$endif
+
+			outData.tex0.x = dot( indata.tex, diffuseMatrix_s );
+			outData.tex0.y = dot( indata.tex, diffuseMatrix_t );
+			outData.tex1.x = parameters.x * 640.f / (currentRenderTexelSize.x * aspectSize.x);
+			outData.tex1.z = parameters.z;
+			outData.tex1.y = parameters.y * 480.f / currentRenderTexelSize.y;
+			outData.tex1.w = parameters.w;
+			outData.col = indata.color;
+			
+			return outData;
+		}
+	%> }
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0;
+		TEX R0, fragment.texcoord[0], $map, 2D;
+
+		TEMP maskcoords;
+		TEMP fp;
+		MOV fp, fragment.position;
+		SUB fp.y, $currentRenderTexelSize.y, fp;
+		MAD maskcoords.xy, fp, fragment.texcoord[1].xyxy, fragment.texcoord[1].zwzw;
+		#SUB maskcoords.y, 1, maskcoords;
+		MOV maskcoords.z, 0;
+		MOV maskcoords.w, 1;
+		TEMP R1;
+		TEX R1, maskcoords, $mask, 2D;
+		
+		MUL R0, R0, R1;
+		MUL result.color, R0, fragment.color;
+	%> }
+}
+
+renderProgram trivialFogged {
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0;
+
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+		
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+
+		TEMP _F1, _F2;
+		SUB		_F2, $positionAttrib, $viewOrigin;
+		DP3		_F1.x, _F2, _F2;
+		RSQ		_F1.y, _F1.x;
+		MUL		_F1.x, _F1.y, _F1.x;
+		MUL		_F2.x, $fogDepths.z, 0.75;
+		MAD		result.color.secondary, _F1.x, _F2.x, $fogDepths.w; 
+	%> }
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP R0, R1;
+
+		TEX R0, fragment.texcoord, $map, 2D;
+		MUL R1, fragment.color.secondary.r, fragment.color.secondary.r;
+		SUB R1, 1, R1;
+
+		#LRP R0.rgb, $fogColor, R0, R1;
+
+		MUL result.color, R0, fragment.color;
+		MUL result.color.a, R0, R1;
+	%> }
+}
+
+renderProgram trivialFogout {
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0;
+
+		TEMP _F1, _F2;
+		SUB		_F2, $positionAttrib, $viewOrigin;
+		DP3		_F1.x, _F2, _F2;
+		RSQ		_F1.y, _F1.x;
+		MUL		_F1.x, _F1.y, _F1.x;
+		MUL		_F2.x, $fogDepths.z, 0.75;
+		MAD		result.color.secondary, _F1.x, _F2.x, $fogDepths.w; 
+	%> }
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+
+		MOV result.color, $fogColor;
+		MOV result.color.a, fragment.color.secondary.r;
+	%> }
+}

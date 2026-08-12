@@ -1,0 +1,149 @@
+
+
+material guis/assets/mainmenu/demo/awards
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/mainmenu/demo/awards.tga"
+		vertexColor
+	}
+}
+
+material guis/assets/mainmenu/demo/bg
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/mainmenu/demo/bg.tga"
+		vertexColor
+	}
+}
+
+material guis/assets/mainmenu/demo/boxes
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/mainmenu/demo/boxes.tga"
+	}
+}
+
+material guis/assets/mainmenu/demo/buynow
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/mainmenu/demo/buynow.tga"
+		vertexColor
+	}
+}
+
+material guis/assets/mainmenu/demo/merged_bg
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/mainmenu/demo/merged_bg.tga"
+	}
+}
+
+material guis/assets/mainmenu/demo/screenshot01
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/mainmenu/demo/screenshot01.tga"
+		vertexColor
+	}
+}
+
+material guis/assets/mainmenu/demo/screenshot02
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/mainmenu/demo/screenshot02.tga"
+		vertexColor
+	}
+}
+
+material guis/assets/mainmenu/demo/screenshot03
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/mainmenu/demo/screenshot03.tga"
+		vertexColor
+	}
+}
+
+material guis/assets/mainmenu/demo/screenshot04
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/mainmenu/demo/screenshot04.tga"
+		vertexColor
+	}
+}
+
+material guis/assets/mainmenu/demo/screenshot05
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/mainmenu/demo/screenshot05.tga"
+		vertexColor
+	}
+}
+
+material guis/assets/mainmenu/demo/screenshot06
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/mainmenu/demo/screenshot06.tga"
+		vertexColor
+	}
+}
+
+material guis/assets/mainmenu/demo/screenshot07
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/mainmenu/demo/screenshot07.tga"
+		vertexColor
+	}
+}
+
+material guis/assets/mainmenu/demo/screenshot08
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/mainmenu/demo/screenshot08.tga"
+		vertexColor
+	}
+}
+
+material guis/assets/mainmenu/demo/screenshot09
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/mainmenu/demo/screenshot09.tga"
+		vertexColor
+	}
+}
+
+material guis/assets/mainmenu/demo/quickhelp
+{
+	sort gui
+	{
+		blend blend
+		map clamp "guis/assets/mainmenu/demo/quickhelp.tga"
+		vertexColor
+	}
+}

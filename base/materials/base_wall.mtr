@@ -1,0 +1,270 @@
+
+material textures/base_wall/low_wall1
+{
+	qer_editorimage		textures/base_wall/low_wall1.tga
+	bumpmap			textures/base_wall/low_wall1_local.tga
+	diffusemap		textures/base_wall/low_wall1_d.tga
+	specularmap		textures/base_wall/low_wall1_s.tga
+}
+
+material textures/base_wall/ribpanel1
+{
+	qer_editorimage		textures/base_wall/ribpanel1.tga
+	bumpmap			textures/base_wall/ribpanel1_local.tga
+	diffusemap		textures/base_wall/ribpanel1_d.tga
+	specularmap		textures/base_wall/ribpanel1_s.tga
+}
+
+material textures/base_wall/ribpanel2
+{
+	qer_editorimage		textures/base_wall/ribpanel2.tga
+	bumpmap			textures/base_wall/ribpanel2_local.tga
+	diffusemap		textures/base_wall/ribpanel2_d.tga
+	specularmap		textures/base_wall/ribpanel2_s.tga
+}
+
+material textures/base_wall/ribpanel_bridge
+{
+	//twoSided
+ 	//noshadows
+ 	//translucent
+ 	{
+ 		diffusemap	textures/base_wall/a_rib_panel_bridge_d.tga
+		bumpmap		textures/base_wall/a_rib_panel_bridge_local.tga
+		specularmap	textures/base_wall/a_rib_panel_bridge_s.tga 		
+ 		alphaTest 	0.25
+ 	}
+
+	qer_editorimage		textures/base_wall/a_rib_panel_bridge_d.tga
+}
+
+material textures/base_wall/plaster_grime
+{
+	// noSelfShadow
+	qer_editorimage	textures/base_wall/plaster_grime_d.tga
+	diffusemap	textures/base_wall/plaster_grime_d.tga
+	specularmap 	textures/base_wall/plaster_s.tga
+	bumpmap 	textures/base_wall/plaster_grime_local.tga
+}
+
+material textures/base_wall/plaster1_variant01
+{
+	// noSelfShadow
+	qer_editorimage	textures/base_wall/plaster1_variant01_d.tga
+	diffusemap	textures/base_wall/plaster1_variant01_d.tga
+	specularmap 	textures/base_wall/plaster1_variant01_s.tga
+	bumpmap 	textures/base_wall/plaster1_variant01_local.tga
+}
+
+material textures/base_wall/plaster1
+{
+	// noSelfShadow
+	qer_editorimage	textures/base_wall/plaster1_d.tga
+	diffusemap	textures/base_wall/plaster1_d.tga
+	specularmap 	textures/base_wall/plaster1_s.tga
+	bumpmap 	textures/base_wall/plaster1_local.tga
+}
+material textures/base_wall/plaster1_middle
+{
+	// noSelfShadow
+	qer_editorimage	textures/base_wall/plaster1_middle_d.tga
+	diffusemap	textures/base_wall/plaster1_middle_d.tga
+	specularmap 	textures/base_wall/plaster1_middle_s.tga
+	bumpmap 	textures/base_wall/plaster1_middle_local.tga
+}
+material textures/base_wall/plaster1_and_bricks
+{
+	// noSelfShadow
+	qer_editorimage	textures/base_wall/plaster1_and_bricks_d.tga
+	diffusemap	textures/base_wall/plaster1_and_bricks_d.tga
+	specularmap 	textures/base_wall/plaster1_and_bricks_s.tga
+	bumpmap 	textures/base_wall/plaster1_and_bricks_local.tga
+}
+material textures/base_wall/plaster2
+{
+	// noSelfShadow
+	qer_editorimage	textures/base_wall/plaster2_d.tga
+	diffusemap	textures/base_wall/plaster2_d.tga
+	specularmap 	textures/base_wall/plaster1_s.tga
+	bumpmap 	textures/base_wall/plaster1_local.tga
+}
+material textures/base_wall/plaster2_middle
+{
+	// noSelfShadow
+	qer_editorimage	textures/base_wall/plaster2_middle_d.tga
+	diffusemap	textures/base_wall/plaster2_middle_d.tga
+	specularmap 	textures/base_wall/plaster1_middle_s.tga
+	bumpmap 	textures/base_wall/plaster1_middle_local.tga
+}
+material textures/base_wall/plaster_and_bricks
+{
+	//noSelfShadow
+	qer_editorimage	textures/base_wall/plaster_and_bricks_d.tga
+	diffusemap	textures/base_wall/plaster_and_bricks_d.tga
+	specularmap 	textures/base_wall/plaster_and_bricks_s.tga
+	bumpmap 	textures/base_wall/plaster_and_bricks_local.tga
+}
+
+material textures/base_wall/plaster_middle
+{
+	//noSelfShadow
+	qer_editorimage	textures/base_wall/plaster_middle_d.tga
+	diffusemap	textures/base_wall/plaster_middle_d.tga
+	specularmap 	textures/base_wall/plaster_middle_s.tga
+	bumpmap 	textures/base_wall/plaster_middle_local.tga
+}
+
+material textures/base_wall/plaster_bottom
+{
+	//noSelfShadow
+	qer_editorimage	textures/base_wall/plaster_bottom_d.tga
+	diffusemap	textures/base_wall/plaster_bottom_d.tga
+	specularmap 	textures/base_wall/plaster_bottom_s.tga
+	bumpmap 	textures/base_wall/plaster_bottom_local.tga
+}
+
+
+material textures/base_wall/plaster
+{
+	//noSelfShadow
+	qer_editorimage	textures/base_wall/plaster_d.tga
+	diffusemap	textures/base_wall/plaster_d.tga
+	specularmap 	textures/base_wall/plaster_s.tga
+	bumpmap 	textures/base_wall/plaster_local.tga
+}
+
+material textures/concrete/plaster
+{
+	qer_editorimage textures/concrete/plaster_d.tga
+	diffusemap	textures/concrete/plaster_d.tga
+	specularmap	picmip -2	textures/concrete/concrete01_s.tga
+	bumpmap		heightmap(textures/concrete/plaster_h.tga, 2)
+}
+
+material textures/concrete/plaster_bricks
+{
+	qer_editorimage textures/concrete/plaster_bricks_d.tga
+	diffusemap	textures/concrete/plaster_bricks_d.tga
+	specularmap	picmip -2	textures/concrete/concrete01_s.tga
+	//bumpmap	heightmap(textures/concrete/plaster_h.tga, 2)
+	bumpmap		addnormals(textures/concrete/plaster_bricks_local.tga, heightmap(textures/concrete/plaster_h.tga, 2))
+}
+
+material textures/base_wall/strogg_a_lfwall5
+// copied from Doom3 and then darkened the diffuse for a temp Strogg texure
+// the editor texture is was made using Photoshop's Render Light filter
+{
+	qer_editorimage		textures/base_wall/strogg_a_lfwall5_ed.tga
+	bumpmap			textures/base_wall/strogg_a_lfwall5_local.tga
+	diffusemap		textures/base_wall/strogg_a_lfwall5_d01.tga
+	specularmap		textures/base_wall/strogg_a_lfwall5_s01.tga
+}
+
+
+material textures/base_wall/hospital01
+{
+	useTemplate templates/lab_walls <
+		textures/base_wall/hospital01_d.tga,
+		textures/base_wall/hospital01_local.tga,
+		textures/base_wall/hospital01_s.tga,
+		3, 1.0, 0.3
+	>
+}
+
+material textures/base_wall/interiorwall03_notrim_256
+{
+	qer_editorimage	textures/base_wall/interiorwall03_notrim_256_d.tga
+	{
+		diffusemap	textures/base_wall/interiorwall03_notrim_256_d.tga
+		specularmap 	textures/base_wall/interiorwall03_notrim_256_s.tga
+		bumpmap 	textures/base_wall/interiorwall03_notrim_256_local.tga
+		vertexcolor
+	}
+}
+
+material textures/base_wall/melting_metal
+{
+    { 
+        diffusemap 	textures/raven/medlabs/tubearmsplatform_platformtopbottom_d.tga   
+        bumpmap 	textures/raven/medlabs/tubearmsplatform_platformtopbottom_local.tga   
+        specularmap 	textures/raven/medlabs/tubearmsplatform_platformtopbottom_s.tga   
+        vertexColor
+    }
+    
+    {
+        diffusemap 	textures/sfx/lfwall27alava_d
+	bumpmap 	textures/sfx/lfwall27alava_local
+        specularmap	textures/sfx/lfwall27alava_s
+        inverseVertexColor
+    }
+    {
+        blend		gl_one , gl_one
+    	map		textures/sfx/radiogoop_red
+    	rotate		time*.00015
+    	inverseVertexColor
+    }
+    {
+        blend		gl_one , gl_one
+        map		textures/sfx/radiogoop_red
+        rotate		time*-.00015
+        translate	time*.002,1
+    	inverseVertexColor
+    }
+}
+
+material textures/base_wall/melting_metal_2
+{
+	surfacetype "metal"
+	qer_editorimage	textures/base_wall/conc_metal_1_d.tga
+	rendermodelclip
+	noselfshadow
+    { 
+        diffusemap		picmip -1	textures/base_wall/conc_metal_1_d.tga  
+        bumpmap			picmip -1	textures/base_wall/conc_metal_1_local.tga
+        specularmap		picmip -2	textures/base_wall/conc_metal_1_s.tga
+        VertexColor
+        
+    /*    diffuseDetailMap			textures/detail/bump/metal_detail01_d.tga
+	specDetailMap				textures/detail/bump/metal_detail01_d.tga
+	bumpDetailMap				textures/detail/bump/metal_detail01_local.tga
+	detailMult		4,4,0,0*/
+    }
+    {
+		if cvar (r_megaDrawMethod == 0)
+     	diffusemap          	picmip -1	textures/sfx/lfwall27alava_d
+     	specularmap         	picmip -2	textures/sfx/lfwall27alava_s
+     	bumpmap             	picmip -1	textures/sfx/lfwall27alava_local
+	inverseVertexColor
+		
+	scale 3, 4 
+	rotate .35
+    }
+    {
+        blend			add
+       	map			picmip -1	textures/sfx/radiogoop_red
+        rotate			time*.00015
+        rotate .35
+        scale 3, 4
+        inverseVertexColor
+    }
+    {
+        blend			add
+        map			picmip -1	textures/sfx/radiogoop_red
+        rotate			time*-.00015
+        translate		time*.002,4
+        scale 3, 4
+       	inverseVertexColor
+    }
+    
+    /*{
+    	program	interaction/blended
+		diffusemap		picmip -1	textures2/floors/concrete_tiles01_d.tga   
+		specularmap		picmip -1	textures2/floors/concrete_tiles01_s.tga
+		bumpmap 		picmip -2	textures2/floors/concrete_tiles01_local.tga   
+		diffusemap2		picmip -1	textures2/concrete/rubble01_d.tga
+		bumpmap2		picmip -1	textures2/concrete/rubble01_local.tga 
+		specularmap2	picmip -2	textures2/concrete/rubble01_s.tga
+		inversevertexcolor
+	}*/
+} 
+

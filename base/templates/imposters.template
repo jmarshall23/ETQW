@@ -1,0 +1,83 @@
+
+template material/imposter_material {
+    parameters < 
+    	ImageName	//The name of the model this imposter material is for WITHOUT any file extensions (like .lwo)
+    >
+    text {    
+    	sort decal
+	{
+		alphatocoverage
+		alphaTest 0.05
+		//blend blend
+		program imposters/lit
+		diffuseMap nopicmip ImageName
+		maskAlpha
+		writeDepth
+	}
+	translucent
+    	sort decal
+    }
+}
+
+template material/imposter_material_nobump {
+    parameters < 
+    	ImageName	//The name of the model this imposter material is for WITHOUT any file extensions (like .lwo)
+    >
+    text {    
+    	sort decal
+	{
+		alphatocoverage
+		alphaTest 0.05
+		//blend blend
+		program imposters/lit
+		diffuseMap nopicmip ImageName
+		maskAlpha
+		writeDepth
+	}
+	translucent
+    	sort decal
+    }
+}
+
+// This is a special hack for the foliage shader
+template material/imposter_vertexcolor_material {
+    parameters < 
+    	ImageName	//The name of the model this imposter material is for WITHOUT any file extensions (like .lwo)
+    >
+    text {    
+    	sort decal
+	{
+		alphatocoverage
+		alphaTest 0.75
+		//blend blend
+		program imposters/lit_foliage
+		diffuseMap nopicmip maxlod 0 ImageName
+		//maskAlpha
+		alphatocoverage
+		writeDepth
+	}
+	translucent
+    	sort decal
+    }
+}
+
+// This is a special hack for the foliage shader
+template material/imposter_vertexcolor_material_nobump {
+    parameters < 
+    	ImageName	//The name of the model this imposter material is for WITHOUT any file extensions (like .lwo)
+    >
+    text {    
+    	sort decal
+	{
+		alphatocoverage
+		alphaTest 0.05
+		//blend blend
+		program imposters/lit_foliage
+		diffuseMap nopicmip ImageName
+		maskAlpha
+		writeDepth
+	}
+	translucent
+    	sort decal
+    }
+}

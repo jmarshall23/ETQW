@@ -1,0 +1,220 @@
+effect effects/generic_smoke_simple
+{
+	size	130
+
+	cutOffDistance	2000
+
+	emitter "smoke_base"
+	{
+		duration	1,1
+		count		5,5
+		attenuateEmitter
+		attenuation	1000,1200
+
+		sprite
+		{
+			duration	1,3
+			persist
+			material	"textures/particles/smoke_test1"
+			windDeviationAngle 180.000000
+			gravity		-0.05,-0.03
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -10,-10,-15,10,10,5 }
+				velocity { box -10,-10,5,10,10,10 }
+				size { line 10,10,20,20 }
+				tint { line 0.8,0.772549,0.741176,0.505882,0.462745,0.411765 }
+				fade { line 0.2,0.5 }
+				windStrength { point -0.025 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope rr2_convexfade_start_at_1 count 2,2,2 offset 0.5,0.5,0.5 }
+				fade { envelope rr2_concavefade_start_at_1_fast offset 0.025 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 50,50,70,70 }
+				tint { line 0.784314,0.784314,0.768628,0.466667,0.462745,0.443137 }
+				rotate { point 0.138889 relative }
+			}
+			lineHit
+		}
+	}
+}effect effects/generic_smoke/emp_simple
+{
+	size	600
+
+	cutOffDistance	10000
+
+	sound "spark sound"
+	{
+		soundShader	"sounds/vehicles/desecrator/arcs"
+		volume	0.1,0.5
+		freqshift	0.9,1.5
+	}
+	emitter "sparks"
+	{
+		duration	1,1
+		count		15,15
+		attenuateEmitter
+		attenuation	250,350
+
+		sprite
+		{
+			duration	0.5,2
+			material	"textures/particles/sparks/sparkflash03b"
+			gravity		0.8,1
+			trailRepeat	1
+			trailType	motion
+			trailTime	0.05,0.07
+			trailCount	3,3
+			trailScale	0.500000
+			trailMaterial	"textures/effects/motionblur"
+
+			start
+			{
+				position { point 0,0,11 }
+				velocity { box -300,-300,-300,300,300,300 }
+				size { line 1,1,2,2 }
+				tint { line 0.682353,0.67451,0.866667,0.282353,0.286275,0.376471 }
+				offset { sphere -80,-80,-80,80,80,80 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+			lineHit
+		}
+	}
+	emitter "flash"
+	{
+		duration	1,1
+		count		1,1
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,22 }
+				size { box 150,150,200,200 }
+				tint { point 0.0705882,0.0901961,0.105882 }
+			}
+
+			motion
+			{
+				size { envelope pdscaletable }
+				tint { envelope senetable3 count 3,3,3 }
+				fade { envelope senetable3 }
+			}
+
+			end
+			{
+				size { point 150,150 }
+				tint { point 0.0666667,0.0666667,0.0745098 }
+				fade { point 1 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/generic_smoke/emp_small_simple
+{
+	size	376
+
+	cutOffDistance	10000
+
+	sound "spark sound"
+	{
+		soundShader	"sounds/vehicles/desecrator/arcs"
+		volume	0.1,0.5
+		freqshift	0.9,1.5
+	}
+	emitter "sparks"
+	{
+		duration	1,1
+		count		10,10
+		attenuateEmitter
+		attenuation	250,350
+
+		sprite
+		{
+			duration	0.5,2
+			material	"textures/particles/sparks/sparkflash03b"
+			gravity		0.8,1
+			trailRepeat	1
+			trailType	motion
+			trailTime	0.05,0.07
+			trailCount	3,3
+			trailScale	0.500000
+			trailMaterial	"textures/effects/motionblur"
+
+			start
+			{
+				velocity { box -200,-200,-200,200,200,200 }
+				size { line 1,1,2,2 }
+				tint { line 0.682353,0.67451,0.866667,0.282353,0.286275,0.376471 }
+				offset { sphere -40,-40,-40,40,40,40 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+			lineHit
+		}
+	}
+	emitter "flash"
+	{
+		duration	1,1
+		count		1,1
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				size { box 80,80,100,100 }
+				tint { point 0.0705882,0.0901961,0.105882 }
+			}
+
+			motion
+			{
+				size { envelope pdscaletable }
+				tint { envelope senetable3 count 3,3,3 }
+				fade { envelope senetable3 }
+			}
+
+			end
+			{
+				size { point 80,80 }
+				tint { point 0.0666667,0.0666667,0.0745098 }
+				fade { point 1 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+

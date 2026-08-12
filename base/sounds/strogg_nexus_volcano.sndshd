@@ -1,0 +1,128 @@
+// Strogg Nexus
+
+// Map Volcano
+
+sound sounds/vo/strogg/nexus/maps/volcano/controls/hack/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23001.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/controls/hack {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23002.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/controls/hacking {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23003.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/controls/hacking/half {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23004.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/controls/hacked {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23005.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/beach/destroy {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23006.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/door/destroyed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23007.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/bunker/destroyed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23008.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/wall/destroyed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23009.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/transformer/destroy/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23010.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/transformer/destroy {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23011.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/transformer/planted {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23012.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/transformer/defendexpl {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23013.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/transformer/planted/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23014.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/transformer/disarmed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23015.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/transformer/destroyed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23016.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/core/destroy/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23017.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/core/destroy {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23018.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/core/integrity80 {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23019.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/core/integrity60 {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23020.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/core/integrity40 {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23021.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/core/integrity20 {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23022.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/stroggwin {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23024.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/strogglose {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/23023.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/volcano/core/attack/flyerdrone {
+
+	localization/english/sounds/vo/strogg/nexus/maps/volcano/25502.wav
+}

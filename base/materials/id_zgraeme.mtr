@@ -1,0 +1,14 @@
+material textures/particles/smokepuff
+{
+	qer_editorimage textures/particles/smokepuff.tga
+	translucent
+	noShadows
+	sort		10		// sort very late, so no translucent objects in the world draws over it
+	{
+		blend add
+		map textures/particles/smokepuff.tga
+		vertexColor
+		maskAlpha
+		//colored
+	}
+}

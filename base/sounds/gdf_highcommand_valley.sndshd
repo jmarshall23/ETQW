@@ -1,0 +1,68 @@
+// GDF High Command
+
+// Map Valley
+
+sound sounds/vo/gdf/highcommand/maps/valley/bridge/success {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/valley/12001.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/valley/mcp/drivetunnel {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/valley/12002.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/valley/mcp/enteredtunnel {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/valley/12003.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/valley/mcp/halftunnel {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/valley/12004.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/valley/mcp/exittunnel {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/valley/12005.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/valley/contaminator/destroy/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/valley/12006.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/valley/contaminator/destroy {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/valley/12008.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/valley/contaminator/planted {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/valley/12009.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/valley/contaminator/defendexpl {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/valley/12010.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/valley/contaminator/planted/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/valley/12011.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/valley/contaminator/disarmed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/valley/12012.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/valley/gdfwin {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/valley/12013.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/valley/gdflose {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/valley/12014.wav
+}

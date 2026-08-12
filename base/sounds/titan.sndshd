@@ -1,0 +1,206 @@
+///////////
+// Titan //
+///////////
+
+sound sounds/vehicles/titan/overdrive_start {
+
+	minDistance	25
+	maxDistance	125
+	
+	looping
+	leadin
+	
+	sounds/vehicles/titan/turbo_start.wav
+	sounds/vehicles/titan/turbo_loop.wav
+}
+
+sound sounds/vehicles/titan/overdrive_stop {
+
+	minDistance	25
+	maxDistance	125
+	
+	sounds/vehicles/titan/turbo_stop.wav
+}
+
+
+sound sounds/vehicles/titan/engine/start {
+
+	volume -10
+	maxDistance	100
+
+	//antiPrivate
+
+	sounds/vehicles/titan/engine_on.wav
+}
+
+sound sounds/vehicles/titan/engine/stop {
+
+	volume -5
+	maxDistance	100
+
+	antiPrivate
+
+	sounds/vehicles/titan/engine_off.wav
+}
+
+
+sound sounds/vehicles/titan/engine/idle {
+
+	volume 5
+	maxDistance	100
+
+	antiPrivate
+
+	looping
+	sounds/vehicles/titan/engine_idle_new.wav
+}
+
+sound sounds/vehicles/titan/engine/drive {
+
+	volume -3
+
+	maxDistance	100
+
+	antiPrivate
+
+	looping
+	sounds/vehicles/titan/engine_idle.wav
+}
+
+sound sounds/vehicles/titan/engine/hardaccel {
+
+	maxDistance	100
+
+	antiPrivate
+
+	looping
+	sounds/vehicles/titan/engine_idle.wav
+}
+
+
+sound sounds/vehicles/titan/turbo {
+
+	volume 0
+	maxDistance	75
+
+	antiPrivate
+//	playOnce
+
+	looping
+	sounds/vehicles/titan/turbo.wav
+}
+
+sound sounds/vehicles/titan/tracks {
+
+	maxDistance	50
+
+	antiPrivate
+	playOnce
+
+	looping
+	sounds/vehicles/titan/tracks.wav
+}
+
+sound sounds/vehicles/titan/tracks/soft {
+
+	maxDistance	50
+	antiPrivate
+	playOnce
+
+	looping
+	sounds/vehicles/titan/tracks_soft.wav
+}
+
+sound sounds/vehicles/titan/treads {
+
+	maxDistance	75
+
+	antiPrivate
+	playOnce
+
+	looping
+	sounds/vehicles/titan/treads.wav
+}
+
+sound sounds/vehicles/titan/interior/cockpit {
+
+	volume -30
+	private
+	playOnce
+	omnidirectional
+
+	looping
+	sounds/vehicles/titan/interior/cockpit.wav
+}
+
+sound sounds/vehicles/titan/interior/engine/start {
+
+	volume -10
+	private
+	playOnce
+	omnidirectional
+
+	looping
+	leadin
+	sounds/vehicles/titan/interior/engine_on.wav
+	sounds/vehicles/titan/interior/engine_idle.wav
+}
+
+sound sounds/vehicles/titan/interior/engine/stop {
+
+	volume -10
+	private
+	omnidirectional
+
+	sounds/vehicles/titan/interior/engine_off.wav
+}
+
+sound sounds/vehicles/titan/interior/tracks {
+
+	private
+	playOnce
+	omnidirectional
+
+	looping
+	sounds/vehicles/titan/interior/tracks.wav
+}
+
+sound sounds/vehicles/titan/turret/yaw {
+
+	looping
+	sounds/vehicles/titan/turret_yaw.wav
+}
+
+sound sounds/vehicles/titan/turret/pitch {
+
+	looping
+	sounds/vehicles/titan/turret_pitch.wav
+}
+
+sound sounds/vehicles/titan/interior/engine/idle {
+
+	volume 5
+	private
+
+	looping
+	sounds/vehicles/titan/engine_idle_new.wav
+}
+
+sound sounds/vehicles/titan/interior/engine/drive {
+
+	volume -3
+
+	private
+
+	looping
+	sounds/vehicles/titan/engine_idle.wav
+}
+
+sound sounds/vehicles/titan/interior/engine/hardaccel {
+
+	private
+
+	looping
+	sounds/vehicles/titan/engine_idle.wav
+}
+

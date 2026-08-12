@@ -1,0 +1,143 @@
+//
+// mounts
+//
+
+/*export frankie {
+		options -prefix mount_ -rotate 90 -sourcedir models/weapons/mount/dev_sd -destdir models/weapons/mount/ -keep mount
+
+		mesh mount.mb 	-dest mount.md5mesh
+		anim mount.mb 	-dest mount.md5anim 	-range 0 1
+}
+*/
+export frankie {
+		options -prefix GPMG_ -rotate 90 -sourcedir models/weapons/mount/dev_sd -destdir models/weapons/mount/ -keep muzzle
+
+		mesh gpmg.mb 	-dest gpmg.md5mesh
+		anim gpmg.mb 	-dest gpmg.md5anim 	-range 0 1
+}
+
+export frankie {
+		options -prefix ROCK_ -rotate 90 -sourcedir models/weapons/mount/dev_sd -destdir models/weapons/mount/ -keep muzzle
+
+		mesh rocket.mb 	-dest rocket.md5mesh
+		anim rocket.mb 	-dest rocket.md5anim 	-range 0 1
+}
+
+model mountable_gdf_base {
+	mesh					models/weapons/mount/mount.md5mesh
+	anim base				models/weapons/mount/mount.md5anim
+}
+
+model mountable_strogg_base {
+	mesh					models/weapons/mount/mount.md5mesh
+	anim base				models/weapons/mount/mount.md5anim
+}
+
+entityDef mountable_weapon_base {
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+
+	"editor_showangle"				"1"
+	"editor_skipmenu"				"1"
+
+	"spawnclass"					"sdScriptEntity"
+	"option_usable_interface"		"1"
+	"option_interactive_interface"	"1"
+	"option_combat_model"			"1"
+	"option_selection_combat_model"	"1"
+	"option_crosshair_interface"	"1"
+	"num_positions"					"1"
+
+	"maxvisdist"					"4096"
+
+	"model"							"mountable_gdf_base"
+
+	"scriptobject"					"weapon_mount"
+	"mount_joint_weapon"			"mount"
+	"mount_joint_player"			"mount"
+
+	"mtr_hint"						"hud/hint/usable"
+
+	"tt_invalid_player"				"mounted_weapon_player_invalid"
+	"tt_already_in_use"				"mounted_weapon_already_in_use"
+	
+	"mtr_icon_flash_destroy"		"hud/icons/missionsystem/tsk_soldier"
+	"mtr_icon_flash"				"hud/icons/missionsystem/tsk_engineer"
+	"icon_sort_cm_flash_icon"		"-103"
+}
+
+entityDef mountable_weapon_gdf {
+	"inherit"						"mountable_weapon_base"
+
+	"editor_skipmenu"				"0"
+
+	"str_position0"					"mountable_gdf_weapon_position0"
+	"start_team"					"gdf"
+	"def_automount"					"mountable_gdf_gpmg"
+}
+
+entityDef mountable_weapon_strogg {
+	"inherit"						"mountable_weapon_base"
+
+	"editor_skipmenu"				"0"
+
+	"str_position0"					"mountable_strogg_weapon_position0"
+	"start_team"					"strogg"
+	"def_automount"					"mountable_strogg_hyperblaster"
+}
+
+entityDef mountable_gdf_weapon_cockpit {
+	"model"							"viewmodel_mounted_gpmg_1stperson"
+
+	"passenger_id"					"1"
+
+	"fx_muzzle"						"effects/weapons/gpmg_muzzleflash_vehicle2"
+	"joint_muzzle"					"muzzle"
+
+	"offset"						"-5.3 5.311 1.57"
+
+	"no_emp_effects"				"1"
+
+	"climate_skin_key"				"weapon_gdf"
+}
+
+stringMap mountable_gdf_weapon_position0_cockpit {
+	"def_cockpit"					"mountable_gdf_weapon_cockpit"
+	"scriptobject"					"vehicle_gpmg_cockpit"
+}
+
+stringMap mountable_gdf_weapon_position0 {
+	"show_player"					"1"
+	"player_anim"					"MountedDefault"
+	"fov"							"70"
+	"clamp_yaw"						"-65 65"
+	"clamp_pitch"					"-35 35"
+
+	"attach_joint"					"player_offset"
+	"joint_view"					"cam"
+	"show_cockpit"					"1"
+	"str_cockpit_info"				"mountable_gdf_weapon_position0_cockpit"
+
+	"lock_enabled"					"0"
+	"damage_scale"					"1.0"
+	"take_damage"					"1"
+	"weapon_name"					"gpmg_mounted"
+	"gunName"						"game/weapons/gpmg"
+}
+
+stringMap mountable_strogg_weapon_position0 {
+	"show_player"					"1"
+	"player_anim"					"MountedDefault"
+	"fov"							"70"
+	"clamp_yaw"						"-65 65"
+	"clamp_pitch"					"-35 35"
+
+	"attach_joint"					"player_offset"
+	"joint_view"					"cam"
+
+	"lock_enabled"					"0"
+	"damage_scale"					"1.0"
+	"take_damage"					"1"
+	"weapon_name"					"game/weapons/hyper"
+}

@@ -1,0 +1,86 @@
+
+object placement_vehicle {
+	void				preinit();
+	void				init();
+	void				destroy();
+};
+
+void placement_vehicle::preinit() {
+}
+
+void placement_vehicle::init() {
+	entity p;
+	float index = 1;
+	
+	float jointHandle;
+	string jointName;
+	string entityName;
+	while ( true ) {
+		entityName = getKey( "player" + index );
+		if ( entityName == "" ) {
+			break;
+		}
+	
+		p = sys.getEntity( entityName );
+		if ( p == $null_entity ) {
+			break;
+		}
+		
+		jointName = getKey( "player" + index + "_joint" );
+		jointHandle = getJointHandle( jointName );
+		
+		p.setOrigin( getJointPos( jointHandle ) );
+		p.setAngles( getJointAngle( jointHandle ) );
+		p.bindToJoint( self, jointName, 1.f );
+		
+		index = index + 1;
+	}
+
+	string anim = getKey( "anim" );
+	float frame = getFloatKeyWithDefault( "frame", -1 );
+	if ( anim != "" ) {
+		if ( frame != -1 ) {
+			setAnimFrame( anim, ANIMCHANNEL_ALL, frame );
+		} else if ( getFloatKey( "cycle" ) ) {
+			playCycle( ANIMCHANNEL_ALL, anim );
+		} else {
+			playAnim( ANIMCHANNEL_ALL, anim );
+		}
+	}
+	
+	index = 1;
+	string effectName;
+	while ( true ) {
+		effectName = getKey( "fx_effect" + index );
+		if ( effectName == "" ) {
+			break;
+		}
+		
+		sys.print( "playing effect: " + effectName + "\n" );
+		
+		playEffect( "fx_effect" + index, getKey( "effect" + index + "_joint" ), 1 );
+		
+		index = index + 1;
+	}
+	
+	// rotate user specified joints
+	index = 1;
+	while ( true ) {
+		jointName = getKey( "joint" + index );
+		if ( jointName == "" ) {
+			break;
+		}
+		
+		float joint = getJointHandle( jointName );
+		vector angles;
+		angles_x = getFloatKey( "joint" + index + "_pitch" );
+		angles_y = getFloatKey( "joint" + index + "_yaw" );
+		angles_z = getFloatKey( "joint" + index + "_roll" );
+		setJointAngle( joint, JOINTMOD_WORLD, angles );
+		
+		index = index + 1;
+	}
+}
+
+void placement_vehicle::destroy() {
+}

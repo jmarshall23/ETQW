@@ -1,0 +1,228 @@
+effect effects/weapons/spikes_raise_simple
+{
+	size	20
+
+	cutOffDistance	100
+
+	spawner "centre sparks"
+	{
+		count		1,1
+		locked
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.2,0.2
+			blend	add
+			material	"textures/particles/sparks/sparkflash_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 4,4 }
+				tint { point 0.921569,0.74902,0.501961 }
+				fade { line 0.1,0.3 }
+				offset { point 0,-7,-4 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 7,7 }
+			}
+			lineHit
+		}
+	}
+	spawner "centre sparks2"
+	{
+		count		1,1
+		locked
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.2,0.2
+			blend	add
+			material	"textures/particles/sparks/sparkflash_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point -5,0,0 }
+				size { point 3,3 }
+				tint { point 1,0.74902,0.509804 }
+				fade { line 0.1,0.3 }
+				offset { point 0,-7,-4 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 6,6 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/impacts/spikes/impact_default_simple
+{
+	size	8
+
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_default"
+	}
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_default_simple"
+	}
+}
+
+effect effects/impacts/spikes/impact_pavement_simple
+{
+	size	8
+
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_default"
+	}
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_pavement_simple"
+	}
+}
+
+
+
+effect effects/impacts/spikes/impact_flesh_simple
+{
+	size	8
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_flesh"
+	}
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_flesh_simple"
+	}
+}
+
+effect effects/impacts/spikes/impact_liquid_simple
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_liquid_simple"
+	}
+}
+
+effect effects/impacts/spikes/impact_plastic_simple
+{
+	size	8
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_default"
+	}
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_plastic_simple"
+	}
+}effect effects/impacts/spikes/impact_sand_simple
+{
+	size	8
+
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_ground"
+	}
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_sand_simple"
+	}
+}
+
+effect effects/impacts/spikes/impact_stone_simple
+{
+	size	8
+
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_default"
+	}
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_stone_simple"
+	}
+}
+
+effect effects/impacts/spikes/impact_metal_simple
+{
+	size	8
+
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_default"
+	}
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_metal_simple"
+	}
+}
+
+effect effects/impacts/spikes/impact_grass_simple
+{
+	size	8
+
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_ground"
+	}
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_grass_simple"
+	}
+}effect effects/impacts/spikes/impact_glass_simple
+{
+	size	8
+
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_default"
+	}
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_glass_simple"
+	}
+}
+
+
+
+effect effects/impacts/spikes/impact_wood_simple
+{
+	size	8
+
+	sound "Hit"
+	{
+		soundShader	"sounds/weapons/spikes/impact_default"
+	}
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/knife/impact_wood_simple"
+	}
+}
+

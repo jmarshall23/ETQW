@@ -1,0 +1,11 @@
+
+campaignDef campaign_bottest {
+	map	"maps/valley"
+	map	"maps/quarry"
+	map	"maps/valley"
+	map	"maps/quarry"
+	
+	data {
+		"mtr_backdrop"		"levelshots/campaigns/northamerica"
+	}
+}

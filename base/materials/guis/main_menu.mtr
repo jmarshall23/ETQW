@@ -1,0 +1,76 @@
+
+// FRIENDS STATES
+// -----------------------------------------------------------------------
+
+material guis/assets/mainmenu/etqw_logo {
+	sort gui
+	{
+		blend blend
+		map clamp linear nopicmip guis/assets/mainmenu/etqw_logo.tga
+		vertexColor
+	}
+}
+
+material guis/assets/mainmenu/friends/states {
+	sort gui
+	{
+		blend blend
+		map clamp linear highquality guis/assets/mainmenu/friends/states.tga
+		vertexColor
+	}
+}
+
+material guis/assets/mainmenu/sheet_fill {
+	sort gui
+	{
+		program trivialMakeAlphaWithTextureMatrix
+		blend blend
+		map clamp linear nopicmip highquality guis/assets/mainmenu/mainmenuassets.tga
+        vertexColor
+	}
+}
+
+material guis/assets/mainmenu/sheet_add {
+	sort gui
+	{
+		blend add
+		map clamp linear nopicmip highquality guis/assets/mainmenu/mainmenuassets.tga
+        vertexColor
+        red 	parm0 * parm3
+        green 	parm1 * parm3
+        blue 	parm2 * parm3
+	}
+}
+
+material guis/assets/mainmenu/scanlines
+{
+	sort gui
+	{
+		blend add
+		map linear nopicmip guis/assets/mainmenu/scanlines.tga
+		rgb 0.6 - sintable [time * 0.12] * 0.2
+		scale 16, 14
+		scroll time * 0.01, time * 0.03
+	}
+}
+
+
+material guis/assets/mainmenu/community_site
+{
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/mainmenu/community_site.tga.tga
+		vertexColor
+	}
+}
+
+material guis/assets/mainmenu/stats_site
+{
+	sort gui
+	{
+		blend blend
+		map nopicmip guis/assets/mainmenu/stats_site.tga.tga
+		vertexColor
+	}
+}

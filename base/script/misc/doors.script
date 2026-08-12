@@ -1,0 +1,302 @@
+
+object door {
+	void			preinit();
+	void			syncFields();
+	
+	void			vLock();
+	void			vUnlock();
+
+	float			allowOpen( entity other );
+
+	boolean			vDisablePlantCharge() { return true; }
+
+	boolean			locked;
+}
+
+void door::syncFields() {
+	syncBroadcast( "locked" );
+}
+
+void door::preinit() {
+	locked = getIntKey( "start_locked" );
+}
+
+void door::vLock() {
+	locked = true;
+}
+
+void door::vUnlock() {
+	locked = false;
+}
+
+float door::allowOpen( entity other ) {
+	if ( locked ) {
+		return 0.f;
+	}
+	return 1.f;
+}
+
+#define DOOR_PICK_TIME 30.f
+
+object teamDoor : door {
+	void			preinit();
+	void			destroy();
+	void			syncFields();
+	
+	float			allowOpen( entity p );
+	
+	boolean			vCheckActionCode( entity p, float actionCode );
+	float			vGetPliersProgressBarValue( float action );
+	void			vHack( entity p );
+
+	void			vCreateMission();
+	void			vFreeMission();
+	void			vCompleteMission();
+
+	float			OnActivate( entity p, float distance );
+	float			OnUpdateCrosshairInfo( entity p );
+	
+	void			PickLock();
+	void			LockPickWaitThread();
+	float			GetActivateCode( entity p, float distance );
+
+	string			vGetQuickChatString( entity p );
+	void			vOnContextHack( entity p );
+
+	float			lockpickEndTime;
+	boolean			canPickLock;
+	handle			objectName;
+	
+	float			maxHackCount;
+	float			hackCount;
+	
+	boolean			hackMissionActive;
+	task			missionTask;
+
+	flashpoint_obj flashpoint;
+}
+
+void teamDoor::preinit() {
+	lockpickEndTime		= 0.f;
+	
+	canPickLock			= getIntKey( "pickable" );
+
+	maxHackCount		= getFloatKeyWithDefault( "hack_count", 40.f );
+	hackCount			= 0;	
+
+	string objectNameKey = getKey( "object_name" );
+	if ( objectNameKey != "" ) {
+		objectName		= sys.localizeString( objectNameKey );
+	} else {
+		objectName		= invalid_handle;
+	}
+	
+	setGameTeam( sys.getTeam( getKey( "team" ) ) );
+}
+
+void teamDoor::destroy() {
+	vFreeMission();
+
+	if ( flashpoint != $null ) {
+		delete flashpoint;
+	}
+}
+
+void teamDoor::syncFields() {
+	syncBroadcast( "lockpickEndTime" );
+}
+
+float teamDoor::allowOpen( entity p ) {
+	if ( locked ) {
+		return 0.f;
+	}
+
+	if ( lockpickEndTime < sys.getTime() ) {
+		float allegiance = getEntityAllegiance( p );
+		float disguiseAllegiance = allegiance;
+		
+		player playerP = p;
+		if ( playerP != $null_entity ) {
+			entity disguised = playerP.getDisguiseClient();
+			if ( disguised != $null_entity ) {
+				disguiseAllegiance = getEntityAllegiance( disguised );
+			}
+		}
+		
+		if ( allegiance != TA_FRIEND && disguiseAllegiance != TA_FRIEND ) {
+			return 0.f;
+		}
+	}
+	
+	return 1.f;
+}
+
+void teamDoor::PickLock() {
+	if ( sys.isClient() ) {
+		return;
+	}
+
+	if ( missionTask != $null ) {
+		missionTask.complete();
+		missionTask.free();
+		missionTask = $null;
+	}
+
+	lockpickEndTime = sys.getTime() + DOOR_PICK_TIME;
+	thread LockPickWaitThread();
+}
+
+void teamDoor::LockPickWaitThread() {
+	sys.wait( DOOR_PICK_TIME + 1.f );
+	
+	if ( hackMissionActive ) {
+		if ( missionTask == $null_entity ) {
+			vCreateMission();
+		}
+	}
+}
+
+void teamDoor::vCreateMission() {
+	vFreeMission();
+	hackMissionActive = true;
+	missionTask = taskManager.allocEntityTask( GetPlayerTask( getKey( "task_hack" ) ), self );
+}
+
+void teamDoor::vFreeMission() {
+	hackMissionActive = false;
+	if ( missionTask != $null ) {
+		missionTask.free();
+		missionTask = $null;
+	}
+}
+
+void teamDoor::vCompleteMission() {
+	hackMissionActive = false;
+	if ( missionTask != $null ) {
+		missionTask.complete();
+		missionTask.free();
+		missionTask = $null;
+	}
+}
+
+float teamDoor::GetActivateCode( entity p, float distance ) {
+	if ( p.getViewingEntity() != p ) {
+		return AK_NONE;
+	}
+
+	if ( p.getHealth() <= 0 ) {
+		return AK_NONE;
+	}
+
+	float allegiance = getEntityAllegiance( p );
+
+	if ( distance < DISTANCE_FOR_ACTION ) {
+		if ( allegiance == TA_ENEMY ) {
+			if ( canPickLock && lockpickEndTime < sys.getTime() ) {
+				if ( p.vHasActionItem( AK_HACK ) ) {
+					return AK_HACK;
+				}
+			}
+		}
+	}
+
+	return AK_NONE;
+}
+
+float teamDoor::OnUpdateCrosshairInfo( entity p ) {
+	if ( !sys.doClientSideStuff() ) {
+		return 1.f;
+	}
+
+	float allegiance = getEntityAllegiance( p );
+	vector color = GetAllegianceColor( allegiance );
+	float distance = chGetDistance();
+	
+	chSetNumLines( 0 );
+	
+	float index;
+	
+	if ( p != $null_entity ) {
+		// see if theres a valid action to perform
+		float code = GetActivateCode( p, distance );
+		if ( code != AK_NONE && p.vHasActionItem( code ) ) {
+			index = chAddLine();
+			chSetLineMaterial( index, p.vGetActionIcon( code ) );
+			chSetLineType( index, CI_IMAGE );
+			chSetLineSize( index, 64, 64 );
+			chSetLineColor( index, g_colorWhite, 0.9f );
+		}
+	}
+
+	index = chAddLine();
+	chSetLineTextIndex( index, objectName );
+	chSetLineColor( index, color, 1.f );
+	chSetLineType( index, CI_TEXT );
+	chSetLineSize( index, 0, 0 );
+
+	return 1.f;
+}
+
+float teamDoor::OnActivate( entity p, float distance ) {
+	if ( p.vSelectActionItem( GetActivateCode( p, distance ) ) ) {
+		return 1.f;
+	}
+	
+	return 0.f;
+}
+
+boolean teamDoor::vCheckActionCode( entity p, float actionCode ) {
+	if ( actionCode == AC_HACK ) {
+		if ( getEntityAllegiance( p ) != TA_ENEMY || !canPickLock ) {
+			return false;
+		}
+		if ( lockpickEndTime > sys.getTime() ) {
+			return false;
+		}
+		return true;
+	}
+
+	return false;
+}
+
+float teamDoor::vGetPliersProgressBarValue( float action ) {
+	if ( action == AC_HACK ) {
+		return hackCount / maxHackCount;
+	}
+
+	return 0.f;
+}
+
+void teamDoor::vHack( entity p ) {
+	if ( hackCount >= maxHackCount ) {
+		hackCount = 0;
+	}
+	hackCount = hackCount + 1;
+	if ( hackCount >= maxHackCount ) {
+		PickLock();
+	}
+}
+
+string teamDoor::vGetQuickChatString( entity p ) {
+	if ( p.getGameTeam() == stroggTeam ) {
+		if ( canPickLock ) {
+			return "quickchat/context/hack_gates";
+		}
+	}
+	return "";
+}
+
+void teamDoor::vOnContextHack( entity p ) {
+	player local = sys.getLocalViewPlayer();
+	if ( local == $null_entity || p == $null_entity ) {
+		return;
+	}
+
+	if ( flashpoint != $null ) {
+		delete flashpoint;
+	}
+
+	flashpoint = new flashpoint_obj;
+	flashpoint.SetOwner( self );
+	flashpoint.SetMaterial( getKey( "mtr_icon_flash" ) );
+}

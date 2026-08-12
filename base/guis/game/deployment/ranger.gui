@@ -1,0 +1,29 @@
+
+#include <guis/game/deployment/deployment.include>
+
+gui game/deployment/ranger {
+	properties {
+		float flags = immediate( flags ) | GUI_FULLSCREEN;
+	}
+	
+	materials {
+		"radar" "guis/assets/deploy/icons/gdf_radar"		
+	}
+
+	_hud_materials
+	_deploy_properties
+
+	windowDef desktop {	
+		windowDef buttonParent {
+			properties {
+				rect	rect = CENTER_X - ( rect.w * 0.5 ), SCREEN_HEIGHT - 68, 64, 64;
+			}
+			_select( radar, "game/deploy/radar_station",  "guis/game/deploy/msg_radar", 1, 0 )
+		}
+		_deploy_info( false )
+		_instructions
+		_warning
+	}
+}
+
+

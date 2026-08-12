@@ -1,0 +1,70 @@
+// Island Sounds
+
+sound sounds/maps/island/buoy_01 {
+
+	volume -15
+	maxDistance 100
+
+	looping
+	sounds/maps/island/buoy_loop_01.wav
+}
+
+sound sounds/maps/island/buoy_02 {
+
+	volume -15
+	maxDistance 100
+
+	looping
+	sounds/maps/island/buoy_loop_02.wav
+}
+
+
+// beacons
+sound sounds/maps/island/beacon/idle {
+
+	volume -10
+	maxDistance 100
+
+	looping
+	sounds/maps/island/beacon_idle.wav
+}
+
+sound sounds/maps/island/beacon/raise {
+
+	volume -10
+	maxDistance 100
+
+	sounds/maps/island/beacon_raise.wav
+}
+
+
+sound sounds/maps/island/beacon/run {
+
+	volume -10
+	maxDistance 100
+
+	looping
+	sounds/maps/island/beacon_run.wav
+}
+
+
+// generator
+
+sound sounds/maps/island/generator/start {
+
+	volume -10
+	maxDistance 100
+
+	looping
+	leadin
+	sounds/maps/island/generator_start.wav
+	sounds/maps/island/generator_loop.wav
+}
+
+sound sounds/maps/island/generator/stop {
+
+	volume -10
+	maxDistance 100
+
+	sounds/maps/island/generator_stop.wav
+}

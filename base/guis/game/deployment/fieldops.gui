@@ -1,0 +1,33 @@
+
+#include <guis/game/deployment/deployment.include>
+	
+gui game/deployment/fieldops {
+	properties {
+		float flags = immediate( flags ) | GUI_FULLSCREEN;
+	}
+	
+	materials {
+		"artillery" 							"guis/binoculars/target_artillery_color"
+		"rocket" 								"guis/binoculars/target_rocket_color"
+		"ssm" 									"guis/binoculars/target_ssm_color"
+	}
+
+	_deploy_properties
+	_hud_materials
+
+	windowDef desktop {
+		windowDef buttonParent {
+			properties {
+				rect	rect = CENTER_X - ( rect.w * 0.5 ), SCREEN_HEIGHT - 68, 246, 64;
+			}
+			_select( artillery, "game/deploy/artillery", 	"guis/game/deploy/msg_art", 1, 0 )
+			_select( rocket, 	"game/deploy/rocket_artillery",	"guis/game/deploy/msg_rocket_art", 2, 80 )
+			_select( ssm, 		"game/deploy/ssm", 			"guis/game/deploy/msg_ssm", 3, 160 )
+		}
+		_deploy_info( true )
+		_instructions
+		_warning
+	}
+}
+
+

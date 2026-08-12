@@ -1,0 +1,68 @@
+effect effects/maps/valley/ssm_explosion_wall2
+{
+	size	916
+
+	spawner "core dust2"
+	{
+		count		20,20
+		useMaterialColor
+		attenuateEmitter
+		attenuation	512,2048
+
+		sprite
+		{
+			duration	0.75,1.5
+			persist
+			material	"particles/debris/debris_dirtfly02"
+			gravity		0.5,1
+			trailRepeat	1
+
+			start
+			{
+				position { box -100,-200,-200,-200,200,200 }
+				velocity { box 800,-200,-200,600,203,200 }
+				friction { point 0.001,0,0 }
+				size { line 2,2,4,4 }
+				tint { line 0.631373,0.513726,0.392157,0.501961,0.501961,0.501961 }
+				fade { point 0 }
+				offset { point -50,0,0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 count 2,2 }
+				tint { envelope linear }
+				fade { envelope fastinslowout }
+				offset { envelope exp_1minusx/x2 count 4,4,4 }
+				rotate { envelope convexfade }
+			}
+
+			end
+			{
+				size { line 250,250,150,150 }
+				tint { line 0.247059,0.247059,0.247059,0.65098,0.537255,0.435294 }
+				fade { line 0.5,0.25 }
+				offset { line 50,0,0,150,0,0 }
+				rotate { box -0.5,0.5 }
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

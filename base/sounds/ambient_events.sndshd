@@ -1,0 +1,208 @@
+sound ambient/outdoors/avalanche {
+	no_dups
+	sounds/ambience/outdoors/avalanche/ava_01.wav	
+	sounds/ambience/outdoors/avalanche/ava_02.wav
+	sounds/ambience/outdoors/avalanche/ava_03.wav
+	sounds/ambience/outdoors/avalanche/ava_04.wav
+}
+
+sound ambient/animals/squirrels {
+	sounds/ambience/outdoors/forest_animals/squirrel_01.wav
+	sounds/ambience/outdoors/forest_animals/squirrel_02.wav
+}
+
+sound ambient/animals/seagulls {
+	sounds/ambience/outdoors/birds/seagulls_04.wav
+	sounds/ambience/outdoors/birds/seagulls_05.wav
+}
+
+sound ambient/events/overhead_jets {
+	no_dups
+	
+	sounds/ambience/war/overhead/jet_01.wav
+	sounds/ambience/war/overhead/jet_03.wav
+	sounds/ambience/war/overhead/jet_04.wav
+	sounds/ambience/war/overhead/jet_08.wav
+	sounds/ambience/war/overhead/jet_09.wav
+	sounds/ambience/war/overhead/transport_01.wav
+	sounds/ambience/war/overhead/transport_02.wav
+	sounds/ambience/war/overhead/transport_03.wav
+}
+
+sound ambient/events/churchbell_ring_01 {
+	sounds/maps/ark/churchbell_03.wav
+}
+
+sound ambient/events/metal/groans_01 {
+	no_dups
+	
+	sounds/object_ambience/metallic_noises/groans/groan_01.wav
+	sounds/object_ambience/metallic_noises/groans/groan_02.wav
+	sounds/object_ambience/metallic_noises/groans/groan_03.wav
+}
+
+sound ambient/events/metal/chainlink_01 {
+	no_dups
+	
+	sounds/object_ambience/metallic_noises/fence_01.wav
+	sounds/object_ambience/metallic_noises/fence_02.wav
+	sounds/object_ambience/metallic_noises/fence_03.wav
+	sounds/object_ambience/metallic_noises/fence_04.wav
+	sounds/object_ambience/metallic_noises/fence_05.wav
+	sounds/object_ambience/metallic_noises/fence_06.wav
+	sounds/object_ambience/metallic_noises/fence_07.wav
+	sounds/object_ambience/metallic_noises/fence_08.wav
+	sounds/object_ambience/metallic_noises/fence_09.wav
+	sounds/object_ambience/metallic_noises/fence_10.wav
+	sounds/object_ambience/metallic_noises/fence_11.wav
+	sounds/object_ambience/metallic_noises/gate_01.wav
+	sounds/object_ambience/metallic_noises/gate_02.wav
+}
+
+sound ambient/events/wood/slow_creaks_01 {
+	no_dups
+	
+	sounds/object_ambience/wood_creaking/slowcreak_01.wav
+	sounds/object_ambience/wood_creaking/slowcreak_02.wav
+	sounds/object_ambience/wood_creaking/slowcreak_03.wav
+	sounds/object_ambience/wood_creaking/slowcreak_04.wav
+	sounds/object_ambience/wood_creaking/slowcreak_05.wav
+	sounds/object_ambience/wood_creaking/slowcreak_06.wav
+}
+
+sound ambient/events/wood/slow_creaks_02 {
+	no_dups
+	
+	sounds/object_ambience/wood_creaking/woodcreak_03_s1.wav
+	sounds/object_ambience/wood_creaking/woodcreak_03_s2.wav
+	sounds/object_ambience/wood_creaking/woodcreak_04_s1.wav
+	sounds/object_ambience/wood_creaking/woodcreak_04_s2.wav
+	sounds/object_ambience/wood_creaking/woodcreak_11_s1.wav
+}
+
+sound ambient/events/metal/impact_01 {
+	minDistance	5
+	maxDistance	45
+	no_dups
+	
+	volume		-5
+	
+	sounds/object_ambience/impact/metal_movements/movement_01.wav
+	sounds/object_ambience/impact/metal_movements/movement_02.wav
+	sounds/object_ambience/impact/metal_movements/movement_03.wav
+	sounds/object_ambience/impact/metal_movements/movement_04.wav
+}
+
+sound ambient/events/metal/impact_02 {
+	minDistance	5
+	maxDistance	45
+	no_dups
+	
+	volume		-5
+
+	sounds/object_ambience/impact/metal_movements/movement_06.wav
+	sounds/object_ambience/impact/metal_movements/movement_07.wav
+	sounds/object_ambience/impact/metal_movements/movement_09.wav
+	sounds/object_ambience/impact/metal_movements/movement_10.wav
+}
+
+sound ambient/events/woodcreak/shortcreak_01 {
+	minDistance	2
+	maxDistance	50
+	volume		0
+	
+	sounds/object_ambience/wood_creaking/shortcreak_05.wav
+}
+
+sound ambient/events/woodcreak/slowcreak_01 {
+	minDistance	2
+	maxDistance	50
+	volume		0
+	no_dups
+	
+	sounds/object_ambience/wood_creaking/woodcreak_03_s1.wav
+	sounds/object_ambience/wood_creaking/woodcreak_03_s2.wav
+	sounds/object_ambience/wood_creaking/woodcreak_04_s1.wav
+	sounds/object_ambience/wood_creaking/woodcreak_04_s2.wav
+	sounds/object_ambience/wood_creaking/woodcreak_11_s1.wav
+}
+
+sound ambient/events/thunderclap_01 {
+	no_dups
+	
+	sounds/ambience/outdoors/thunder_lightning/thunder_01.wav
+	sounds/ambience/outdoors/thunder_lightning/thunder_02.wav
+	sounds/ambience/outdoors/thunder_lightning/thunder_03.wav
+	sounds/ambience/outdoors/thunder_lightning/thunder_04.wav
+}
+
+sound ambient/events/thunderclap_02 {
+	no_dups
+	
+	sounds/ambience/outdoors/thunder_lightning/thunder_05.wav
+	sounds/ambience/outdoors/thunder_lightning/thunder_06.wav
+	sounds/ambience/outdoors/thunder_lightning/thunder_07.wav
+	sounds/ambience/outdoors/thunder_lightning/thunder_04.wav
+}
+
+
+sound ambient/events/subhits {
+	minDistance	20
+	maxDistance	250
+	volume		-5
+	
+	no_dups
+	
+	sounds/soundscape/events/sub_01a.wav
+	sounds/soundscape/events/sub_01b.wav
+	sounds/soundscape/events/sub_01c.wav
+	sounds/soundscape/events/sub_01d.wav
+	sounds/soundscape/events/sub_01e.wav
+	sounds/soundscape/events/sub_01f.wav
+}
+
+sound ambient/events/riser_01 {
+	minDistance	20
+	maxDistance	250
+	volume		-5
+	
+	no_dups
+	
+	sounds/soundscape/events/02a.wav
+	sounds/soundscape/events/02b.wav
+	sounds/soundscape/events/02c.wav
+}
+
+sound ambient/events/subscrape {
+	minDistance	20
+	maxDistance	250
+	volume		-5
+	
+	no_dups
+	
+	sounds/soundscape/events/03.wav
+	sounds/soundscape/events/03a.wav
+	sounds/soundscape/events/03b.wav
+	sounds/soundscape/events/03c.wav
+}
+
+sound ambient/events/war/distant_explosions_01 {
+	no_dups
+	
+	sounds/ambience/war/d2_explosion_01.wav
+	sounds/ambience/war/d2_explosion_02.wav
+	sounds/ambience/war/d2_explosion_03.wav
+	sounds/ambience/war/d2_explosion_04.wav
+	sounds/ambience/war/d2_explosion_05.wav
+	sounds/ambience/war/d2_explosion_06.wav
+}
+
+sound ambient/events/war/distant_explosions_02 {
+	no_dups
+	
+	sounds/ambience/war/d2_explosion_07.wav
+	sounds/ambience/war/d2_explosion_08.wav
+	sounds/ambience/war/d2_explosion_09.wav
+	sounds/ambience/war/d2_explosion_10.wav
+	sounds/ambience/war/d2_explosion_11.wav
+}

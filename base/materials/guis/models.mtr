@@ -1,0 +1,115 @@
+// Strogg fleet for mainmenu
+
+material models/guis/assets/mainmenu/stroggfleet_bg
+{
+	sort nearest
+	{
+		blend blend
+		map	nopicmip linear partialLoad models/guis/assets/mainmenu/stroggfleet_bg.tga
+	}
+}
+
+material models/guis/assets/mainmenu/stroggfleet_mom
+{
+	sort nearest
+	{
+		blend blend
+		map	nopicmip linear partialLoad models/guis/assets/mainmenu/stroggfleet_mom.tga
+	}
+}
+
+// Earth model for mainmenu
+
+material models/guis/assets/mainmenu/earth
+{
+	{
+		parameters 0.3, 0.45, 0.6, 1
+		program sfx/feAmbDecal
+		diffusemap nopicmip linear	partialLoad models/guis/assets/mainmenu/earth_d.tga
+		selfIllumMap nopicmip linear	partialLoad models/guis/assets/mainmenu/earth_nightlights.tga
+		bumpmap 	nopicmip	partialLoad models/guis/assets/mainmenu/earth_local.tga
+		specularmap	nopicmip	partialLoad models/guis/assets/mainmenu/earth_s.tga
+	}
+}
+
+material models/guis/assets/mainmenu/cloud
+{	
+	{
+		blend blend
+
+		parameters 0.25, 0.3, 0.5, 1
+		//parameters 0.1, 0.1, 0.1, 0.2
+		program sfx/feAmbDecal_cloud
+		diffusemap nopicmip linear partialLoad makealpha(models/guis/assets/mainmenu/earth_clouds.tga)
+		bumpmap nopicmip linear partialLoad heightmap (models/guis/assets/mainmenu/earth_clouds.tga, 0.3 )
+	}
+}
+
+material models/guis/assets/mainmenu/atmosphere
+{
+	translucent
+	sort close
+	{
+		cullFace front
+		blend add
+		//parameters 0.25, 0.3, 0.5, 1
+		parameters 0.4, 0.7, 0.85, 1
+		program sfx/atmos
+		diffusemap _white
+		bumpmap _flat
+	}
+}
+
+material models/guis/assets/mainmenu/space
+{
+	translucent
+	{
+		blend add
+		map nopicmip linear partialLoad models/guis/assets/mainmenu/space.tga
+	}
+}
+
+material models/guis/assets/mainmenu/stars
+{
+	translucent
+	{
+		blend blend
+		map nopicmip linear partialLoad models/guis/assets/mainmenu/star_strip.tga
+	}
+}
+
+
+// Stuff for MCP Waypoint
+
+material models/guis/assets/waypt0
+{
+	{
+		blend add
+		map nopicmip clamp models/guis/assets/waypt0.tga
+	}
+}
+
+material models/guis/assets/waypt1
+{
+	{
+		blend add
+		map nopicmip models/guis/assets/waypt1.tga
+	//	scale		1, 0.5
+		//translate	0, -0.5
+	//	rotate	time * -0.2
+	//	translate	0, -0.5
+		//scale		2, 1
+		
+	}
+}
+
+material models/guis/assets/wayptarrows
+{
+	{
+		program trivialBlendy
+		blend add
+		map nopicmip clamp models/guis/assets/wayptarrows.tga
+		mask models/guis/assets/wayptarrows_f 
+		textureMatrix bumpMatrix{translate time * -1, 0}
+	}
+}

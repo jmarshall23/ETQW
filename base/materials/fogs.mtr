@@ -1,0 +1,286 @@
+
+material fogs/waterFog
+{
+	fogLight refractable		// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		100
+		specularPower	10
+	}
+}
+
+material fogs/waterFog_ark
+{
+	fogLight refractable			// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		6000
+		specularPower	10
+	}
+}
+
+material fogs/waterFog_island
+{
+	fogLight refractable			// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		2000
+		specularPower	2
+	}
+}
+
+material fogs/waterFog_quarry
+{
+	fogLight refractable			// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		2500
+		specularPower	10
+	}
+}
+
+material fogs/waterFog_refinery
+{
+	fogLight refractable			// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		2000
+		specularPower	20
+	}
+}
+
+material fogs/waterFog_sewer
+{
+	fogLight refractable			
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		4000
+		specularPower	10
+	}
+}
+
+material fogs/waterFog_sewer_interior
+{
+	fogLight refractable			
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		400
+		specularPower	10
+	}
+}
+
+material fogs/waterFog_slipgate_desert_ponds
+{
+	fogLight refractable			// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		2000
+		specularPower	20
+	}
+}
+
+material fogs/waterFog_slipgate_nexus_water
+{
+	fogLight refractable			
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		400
+		specularPower	10
+	}
+}
+
+material fogs/slipgate_nexus_ceiling
+{
+	fogLight			// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		50
+		specularPower	2
+	}
+}
+
+material fogs/waterFog_thin
+{
+	fogLight refractable			// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		5000
+		specularPower	10
+	}
+}
+
+material fogs/waterFog_rob
+{
+	fogLight refractable			// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		40
+		specularPower	6
+	}
+}
+
+material fogs/area22_pitfog
+{
+	fogLight			// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		50
+		specularPower	2
+	}
+}
+
+
+material fogs/waterFog_volcano_pools
+{
+	fogLight refractable			// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		2000
+		specularPower	8
+	}
+}
+
+material fogs/waterFog_valley
+{
+	fogLight refractable			// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		3000
+		specularPower	10
+	}
+}
+
+material fogs/volcanoFog1
+{
+	fogLight refractable			// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		26000
+		specularPower	10
+	}
+}
+
+material fogs/volcanoFog2
+{
+	fogLight refractable			// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		40000
+		specularPower	10
+	}
+}
+
+material fogs/volcanoFog3
+{
+	fogLight refractable			// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		18000
+		specularPower	10
+	}
+}
+
+material fogs/waterFog_volcano
+{
+	fogLight refractable			// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red			parm0
+		green		parm1
+		blue		parm2
+		alpha		25000
+		specularPower	10
+	}
+}

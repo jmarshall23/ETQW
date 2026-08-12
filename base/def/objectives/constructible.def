@@ -1,0 +1,360 @@
+entityDef constructible_base {
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"?"
+	"editor_maxs"					"?"
+	
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"constructible_base"
+
+	"health"						"5000"
+	"fizzle_time"					"45"
+	"skin_construct"				"deployEffect"
+
+	"maxVisDist"					"6144"
+	
+	"icon_sort_cm_flash_icon"		"-102"
+	"mtr_icon_flash_destroy"		"hud/icons/missionsystem/tsk_soldier"
+
+	"dmg_kill"						"damage_constructible_construction"
+}
+
+damageFilter damage_constructible_kill {
+	type {
+		target					"target_veh_all"
+		damage					500
+	}
+	type {
+		target					"target_player_all"
+		damage					200
+	}
+}
+
+damageDef damage_constructible_kill {
+	damage						"damage_constructible_kill"
+	gib
+
+	tt_obituary					"tooltips/killmsgs/tower_destroy"
+	tt_obituary_self			"tooltips/killmsgs/tower_destroy_self"
+	tt_obituary_team_kill		"tooltips/killmsgs/tower_destroy_team"
+	tt_obituary_unknown			"tooltips/killmsgs/tower_destroy_unknown"
+}
+
+damageFilter damage_constructible_construction {
+	type {
+		target					"target_veh_all"
+		damage					50000
+	}
+	type {
+		target					"target_player_all"
+		damage					50000
+	}
+}
+
+damageDef damage_constructible_construction {
+	damage						"damage_constructible_construction"
+	gib
+
+	tt_obituary_unknown			"tooltips/killmsgs/construction"
+}
+
+entityDef constructible_tower_gdf {
+	"inherit"						"constructible_base"
+	"scriptobject"					"constructible_tower"
+
+	"object_name"					"maps/generic/guard_tower"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+
+	"team"							"gdf"
+	"collection_he"					"he"
+	"health"						"1"
+
+	"model"							"models/structures/edf/guard_tower/gdf_guardtower_top.lwo"
+	"cm_model"						"models/structures/edf/guard_tower/gdf_guardtower_top.lwo"
+	
+	"dmg_kill_destroy"				"damage_constructible_kill"
+}
+
+entityDef constructible_tower_gdf_top {
+	"inherit"						"constructible_base"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+
+	"team"							"gdf"
+
+	"model"							"models/structures/edf/guard_tower/gdf_guardtower_top.lwo"
+	"cm_model"						"models/structures/edf/guard_tower/gdf_guardtower_top.lwo"
+}
+
+entityDef constructible_tower_gdf_base {
+	"inherit"						"constructible_base"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+
+	"team"							"gdf"
+
+	"model"							"models/structures/edf/guard_tower/gdf_guardtower_base.lwo"
+	"cm_model"						"models/structures/edf/guard_tower/gdf_guardtower_base.lwo"
+}
+
+entityDef constructible_tower_gdf_all {
+	"inherit"						"constructible_base"
+	"scriptobject"					"constructible_tower"
+	
+	"object_name"					"maps/generic/guard_tower"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+
+	"team"							"gdf"
+	"collection_he"					"he"
+	"health"						"1"
+	"option_crosshair_interface"	"1"
+	"option_interactive_interface"	"1"
+
+	"model"							"models/structures/edf/guard_tower/gdf_guardtower.lwo"
+	"cm_model"						"models/structures/edf/guard_tower/gdf_guardtower.lwo"
+
+	"contextmenu_quickchat_friendly" ""
+	"contextmenu_quickchat_enemy"	 "quickchat/context/destroy_tower"
+	
+	"task_name"						"maps/generic/guard_tower"
+
+	"dmg_kill_destroy"				"damage_constructible_kill"
+	"task_destroy"					"aggressor_destroy_tower"
+}
+
+// use this for mg nests
+entityDef gun_emplacement_bracket_gdf {
+	"inherit"						"constructible_tower_gdf_all"
+
+	"model"							"models/weapons/mount/wall_bracket.lwo"
+	"cm_model"						"models/weapons/mount/wall_bracket.lwo"
+	
+	"object_name"					"maps/generic/gun_nest"
+	
+	"dmg_kill_destroy"				""
+	"task_destroy"					""
+	
+	"contextmenu_quickchat_friendly" ""
+	"contextmenu_quickchat_enemy"	 "quickchat/context/destroy/mg_nest"
+}
+
+entityDef constructible_tower_strogg {
+	"inherit"						"constructible_base"
+	"scriptobject"					"constructible_tower"
+
+	"object_name"					"maps/generic/guard_tower"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+
+	"team"							"strogg"
+	"collection_he"					"he"
+	"health"						"1"
+
+	"model"							"models/structures/strogg/guard_tower/guard_tower.lwo"
+	"cm_model"						"models/structures/strogg/guard_tower/guard_tower.lwo"
+	
+	"dmg_kill_destroy"				"damage_constructible_kill"
+}
+
+entityDef constructible_materials_neutral {
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"constructible_materials"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"Neutral Construction Materials"
+	"editor_var start_constructed"	"Construction already built on map start. Default is 0 (not constructed)"
+	"editor_var construction"		"Name of the construction entity to build"
+	"editor_var construct_count"	"Counter how much is needed to construct. Default is 100"
+	"editor_var construct_count_sw"	"Counter how much is needed to construct in Stopwatch. Default is 100"
+	"editor_var waypoint_offset"	"Vector offset relative to entity for waypoint icon (default '0 0 64' )."
+
+	"model"							"models/mapobjects/cmarker/cmarker_a.lwo"
+	"cm_model"						"models/mapobjects/cmarker/cmarker_a.lwo"
+
+	"tt_warning"					"build_objective_warning"
+
+	"maxVisDist"					"6144"
+
+	"option_crosshair_interface"	"1"
+	"option_interactive_interface"	"1"
+	
+	"mtr_crosshair_icon"			"hud/objectives/construction"
+	"mtr_icon_flash"				"hud/icons/missionsystem/obj_engineer"
+	"mtr_icon_flash_destroy"		"hud/icons/missionsystem/obj_defend"
+	"icon_sort_cm_flash_icon"		"-102"
+
+	"dmg_kill"						"damage_constructible_construction"
+}
+
+entityDef constructible_materials_secondary_gdf {
+	"construct_count"				"40"
+	"construct_count_sw"			"40"
+	"inherit"						"constructible_materials_gdf"
+	"task_construct"				"engineer_construct_tower"
+	"prof_construct"				"pro_engineer_construct_secondary"
+}
+
+entityDef constructible_materials_tower_gdf {
+	"construct_count"				"40"
+	"construct_count_sw"			"40"
+	"object_name"					"maps/generic/guard_tower"
+	"task_name"						"maps/generic/guard_tower"
+	"inherit"						"constructible_materials_gdf"
+	"task_construct"				"engineer_construct_tower"
+	"prof_construct"				"pro_engineer_construct_secondary"
+	"contextmenu_quickchat_friendly" "quickchat/context/construct_tower"
+	"contextmenu_quickchat_enemy"	 "invalid"
+	
+	"mtr_icon_flash"				"hud/icons/missionsystem/mis_engineer"
+	"mtr_icon_flash_defend"			"hud/icons/missionsystem/tsk_destroy"
+	"icon_sort_cm_flash_icon"		"-102"
+	
+	"tt_intro_use_me_2"				"tooltip_build_tower_1"
+}
+
+entityDef constructible_materials_gun_gdf {
+	"construct_count"				"24"
+	"construct_count_sw"			"24"
+	"object_name"					"maps/generic/gun_nest"
+	"task_name"						"maps/generic/gun_nest"
+	"inherit"						"constructible_materials_gdf"
+	"task_construct"				"engineer_construct_gun"
+	"prof_construct"				"pro_engineer_construct_secondary"
+
+	"mtr_icon_flash"				"hud/icons/missionsystem/tsk_engineer"
+	"mtr_icon_flash_defend"			"hud/icons/missionsystem/tsk_destroy"
+	"icon_sort_cm_flash_icon"		"-102"
+
+	"tt_intro_use_me_2"				"build_gun_crosshair_info_1"
+}
+
+entityDef constructible_materials_gdf {
+	"inherit"						"constructible_materials_neutral"
+
+	"editor_usage"					"GDF Construction Materials"
+
+	"team"							"gdf"
+	
+	"task_construct"				"engineer_construct_objective"
+	"task_defend_long"				"strogg_defend_long"
+	"task_defend_medium"			"strogg_defend_medium"
+	"task_defend_short"				"strogg_defend_short"
+	
+	"tt_intro_info"					"constructible_crosshair_info_gdf"
+	"tt_intro_use_me_1"				"build_objective_crosshair_info_1"
+	"tt_intro_use_me_2"				"build_objective_crosshair_info_2"
+	
+	"prof_construct"				"pro_engineer_construct_objective"
+}
+
+entityDef constructible_materials_strogg {
+	"inherit"						"constructible_materials_neutral"
+
+	"editor_usage"					"Strogg Construction Materials"
+
+	"team"							"strogg"
+
+	"task_construct"				"constructor_construct_objective"
+	"task_defend_long"				"gdf_defend_long"
+	"task_defend_medium"			"gdf_defend_medium"
+	"task_defend_short"				"gdf_defend_short"
+
+	"tt_intro_info"					"constructible_crosshair_info_strogg"
+	"tt_intro_use_me_1"				"build_objective_crosshair_info_3"
+	"tt_intro_use_me_2"				"build_objective_crosshair_info_2"
+	
+	"prof_construct"				"pro_constructor_construct_objective"
+}
+
+entityDef constructible_door_relay {
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"constructible_door"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"Relay entity to be used to allow doors to be constructible."
+	"editor_var	door"				"The (breakable) door which should be repaired"
+}
+
+entityDef constructible_emp_disruptor_gdf {
+	"inherit"						"constructible_base"
+	
+	"collection_bounds_check"		"bounds_check"
+}
+
+proficiencyItem pro_task_construct_bonus_gdf {
+	type	"engineer"
+	count	0.01
+}
+
+proficiencyItem pro_task_construct_bonus_strogg {
+	type	"engineer"
+	count	0.01
+}
+
+#include "templates/tooltips.include"
+
+toolTip build_objective_crosshair_info_1 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/build_me_1"
+	locationIndex TOOLTIP_POSITION_WEAPON_CHANGE
+}
+
+toolTip build_objective_crosshair_info_3 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/build_me_3"
+	locationIndex TOOLTIP_POSITION_WEAPON_CHANGE
+}
+
+toolTip build_objective_crosshair_info_2 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/build_me_2"
+	nextShowDelay 30
+}
+
+toolTip build_gun_crosshair_info_1 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/build_me_4"
+	nextShowDelay 30
+}
+
+
+toolTip build_objective_warning {
+	sound "sounds/ui/main/bad"
+	length			5
+	nextShowDelay	5
+	alwaysPlay
+	text "game/tt/player_in_constructible"
+}
+
+toolTip tooltip_build_tower_1 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/build_tower"
+}
+
+toolTip constructible_crosshair_info_gdf {
+	nextShowDelay 180
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/build_gdf"
+}
+
+toolTip constructible_crosshair_info_strogg {
+	nextShowDelay 180
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/build_strogg"
+}

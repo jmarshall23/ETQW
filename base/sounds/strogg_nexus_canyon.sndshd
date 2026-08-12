@@ -1,0 +1,43 @@
+// Strogg Nexus
+
+// Map Canyon
+
+sound sounds/vo/strogg/nexus/maps/canyon/stroggifier/defend/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/canyon/20301.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/canyon/stroggifier/defend {
+
+	localization/english/sounds/vo/strogg/nexus/maps/canyon/20303.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/canyon/stroggifier/planted {
+
+	localization/english/sounds/vo/strogg/nexus/maps/canyon/20304.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/canyon/stroggifier/disarm {
+
+	localization/english/sounds/vo/strogg/nexus/maps/canyon/20305.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/canyon/stroggifier/planted/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/canyon/20306.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/canyon/stroggifier/disarmed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/canyon/20307.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/canyon/stroggwin {
+
+	localization/english/sounds/vo/strogg/nexus/maps/canyon/20309.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/canyon/strogglose {
+
+	localization/english/sounds/vo/strogg/nexus/maps/canyon/20308.wav
+}

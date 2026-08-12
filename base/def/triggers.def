@@ -1,0 +1,112 @@
+
+/***********************************************************************
+
+ trigger
+
+***********************************************************************/
+
+entityDef trigger_multiple {
+	"editor_color"				".5 .5 .5"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+	"editor_material"			"textures/common/trigmulti"
+
+	"editor_usage"				"Variable sized repeatable trigger.  Must be targeted at one or more entities.  " \
+								"The basic time between firing is a random time between (wait - random) and (wait + random)."
+
+	"editor_var wait"			"seconds between triggerings.  Use '-1' to indicate one time only."
+	"editor_var random"			"wait variance.  trigger waits wait + or - random after firing targets before triggering again."
+	"editor_var delay"			"seconds to wait before firing after triggered."
+	"editor_var random_delay"	"delay variance.  trigger waits delay + or - random_delay before firing targets."
+	"editor_var call"			"script function to call when triggered."
+	"editor_var requires"		"item required in players inventory to fire."
+	"editor_var removeItem"		"if above item is removed from inventory when used."
+	"editor_var anyTouch"		"anything can touch it, players, mobs."		// What the hell are mobs?
+	"editor_var noTouch"		"cannot be touched, must be triggered."
+	"editor_var triggerFirst"	"don't activate until triggered."
+	"editor_var noClient"		"can't be touched by players, but can be touched by other entities (func_activators, for instance)."
+
+	"spawnclass"				"idTrigger_Multi"
+
+	"wait"						"0.5"
+	"random"					"0"
+	"delay"						"0"
+	"random_delay"				"0"
+	"anyTouch"					"0"
+	"noTouch"					"0"
+	"noClient"					"0"
+}
+
+entityDef trigger_hurt {
+	"editor_color"				"0.8 0.1 0.2"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+	"editor_material"			"textures/common/trighurt"
+
+	"editor_usage"				"Damages the activator  Can be turned on or off by other triggers."
+	"editor_var on"				"whether or not it is active."
+	"editor_var delay"			"delay between damage in seconds defaults to 1"
+	"editor_var dmg_damage"		"damage def to use, common ones are damage_painTrigger, damage_triggerhurt_100, damage_triggerhurt_1000"
+
+	"spawnclass"				"idTrigger_Hurt"
+
+	"on"						"1"
+	"dmg_damage"				"damage_painTrigger"
+}
+
+entityDef trigger_scripted {
+	"editor_color"				".5 .5 .5"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+	"editor_material"			"textures/common/trigmulti"
+
+	"spawnclass"				"sdScriptEntity"
+	
+	"option_wants_touch"		"1"
+}
+
+entityDef trigger_mcp {
+	"editor_color"				".5 .5 .5"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+	"editor_material"			"textures/common/trigmulti"
+
+	"spawnclass"				"sdScriptEntity"
+	"scriptobject"				"mcp_trigger"
+	
+	"option_wants_touch"		"1"
+	"option_network_interface"	"1"
+}
+
+entityDef trigger_noplant {
+	"editor_color"				".5 .5 .5"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+	"editor_material"			"textures/common/trigmulti"
+	"editor_var team"			"The team you wish to not be able to plant"
+
+	"spawnclass"				"sdScriptEntity"
+	"scriptobject"				"trigger_noplant"
+}
+
+// strogg doors
+entityDef trigger_hurt_strogg_shield {
+	"requirement"				"team_gdf"
+	"requirement1"				"not_disguised"
+	"inherit"					"trigger_hurt"
+	"dmg_damage"				"damage_strogg_doorshield"
+	
+	"snd_pass"					"sounds/tools/forceshield/walkthrough"
+	"snd_fail"					"sounds/tools/forceshield/fry"
+}
+
+// strogg walls
+entityDef trigger_hurt_strogg_wall {
+	"requirement"				"team_gdf"
+	"requirement1"				"not_disguised"
+	"inherit"					"trigger_hurt"
+	"dmg_damage"				"damage_strogg_basewall"
+	
+	"snd_pass"					"sounds/tools/forceshield/walkthrough"
+	"snd_fail"					"sounds/tools/forceshield/fry"
+}

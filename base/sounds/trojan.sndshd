@@ -1,0 +1,106 @@
+////////////
+// Trojan //
+////////////
+
+sound sounds/vehicles/trojan/overdrive_start {
+
+	volume -8
+	maxDistance 75
+	
+	looping
+	leadin
+	sounds/vehicles/misc/overdrive_start_gdf.wav
+	sounds/vehicles/misc/overdrive_loop_gdf.wav
+}
+
+sound sounds/vehicles/trojan/overdrive_stop {
+	
+	volume -2
+	maxDistance 75
+	playOnce
+
+	sounds/vehicles/misc/overdrive_stop_gdf.wav
+}
+
+sound sounds/vehicles/trojan/engine/start {
+
+	maxDistance	75
+	no_occlusion
+
+	sounds/vehicles/trojan/engine_start.wav
+}
+
+sound sounds/vehicles/trojan/engine/stop {
+
+	maxDistance	75
+	no_occlusion
+
+	sounds/vehicles/trojan/engine_stop.wav
+}
+
+sound sounds/vehicles/trojan/engine/idle {
+
+	maxDistance	75
+	no_occlusion
+
+	looping
+	sounds/vehicles/trojan/engine_idle.wav
+}
+
+sound sounds/vehicles/trojan/engine/drive {
+
+	maxDistance	75
+	no_occlusion
+
+	looping
+	sounds/vehicles/trojan/engine_drive.wav
+}
+
+sound sounds/vehicles/trojan/engine/hardaccel {
+
+	maxDistance	75
+	no_occlusion
+
+	looping
+	sounds/vehicles/trojan/engine_hardaccel.wav
+}
+
+sound sounds/vehicles/trojan/engine/water_idle {
+
+	maxDistance	75
+	no_occlusion
+
+	looping
+	sounds/vehicles/trojan/engine_water_idle.wav
+}
+
+sound sounds/vehicles/trojan/engine/water_drive {
+
+	maxDistance	75
+	no_occlusion
+
+	looping
+	sounds/vehicles/trojan/engine_water_drive.wav
+}
+
+sound sounds/vehicles/trojan/engine/water_hardaccel {
+
+	volume 5
+	maxDistance	75
+	no_occlusion
+
+	looping
+	sounds/vehicles/trojan/engine_water_hardaccel.wav
+}
+
+sound sounds/vehicles/trojan/turret/yaw {
+
+	looping
+	sounds/vehicles/trojan/turret_yaw.wav
+}
+
+sound sounds/vehicles/trojan/turret/pitch {
+
+	looping
+	sounds/vehicles/trojan/turret_pitch.wav
+}

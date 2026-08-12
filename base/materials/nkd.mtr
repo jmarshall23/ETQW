@@ -1,0 +1,48 @@
+// test material for very reflective glass
+material textures/nkd/window01
+{
+	nonsolid
+	twosided
+	surfacetype glass
+		sort medium
+		{
+			//diffusemap	texturesheets/ark/glass_ark_1_d.tga
+			diffusemap	textures/raven/glass/terminal_d.tga
+			bumpmap		_flat
+			alphaTest 0.5
+		}
+		{
+			blend blend
+			program sfx/windowglass_mask 
+			mask		_white
+			bumpmap		_flat
+			parameters 2, 1, 0.5	
+		}
+}
+
+/*******************************
+copy of Domination Hub but nonsolid for temp Strogg walls
+*******************************/
+
+material models/structures/strogg/domination_hub/domination_hub_base_nonsolid
+{
+	renderbump -size 2048 2048 models/structures/strogg/domination_hub/domination_hub_base_local.tga models/structures/strogg/domination_hub/domination_hub_hi.lwo
+
+	nonsolid
+	
+	diffusemap	models/structures/strogg/domination_hub/domhubbase_d.tga
+	specularmap	models/structures/strogg/domination_hub/domhubbase_s.tga
+	bumpmap 	addnormals ( models/structures/strogg/domination_hub/domhubbase_local.tga, heightmap ( models/structures/strogg/domination_hub/domhubbase_h.tga, 4 ) )
+}
+
+
+material models/structures/strogg/domination_hub/domination_hub_nonsolid
+{
+	renderbump -size 2048 2048 models/structures/strogg/domination_hub/domination_hub_local_part.tga models/structures/strogg/domination_hub/domination_hub_hi.lwo
+
+	nonsolid
+
+	diffusemap	models/structures/strogg/domination_hub/domhub_d.tga
+	specularmap	models/structures/strogg/domination_hub/domhub_s.tga
+	bumpmap 	addnormals ( models/structures/strogg/domination_hub/domhub_local.tga, heightmap ( models/structures/strogg/domination_hub/domhub_h.tga, 4 ) )
+}

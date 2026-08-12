@@ -1,0 +1,333 @@
+
+material textures/effects/weapons/muzzle_flash {
+   nonsolid
+   noshadows
+   twoSided
+   {
+       blend add
+       map clamp textures/effects/weapons/muzzle_flash_front.tga
+       scale 1 / 4 , 1
+       scroll table4[ time * 3 ] , 0
+       vertexColor
+//       maskAlpha
+   }
+}
+
+material textures/effects/weapons/muzzle_flash2 {
+   nonsolid
+   noshadows
+   twoSided
+   {
+       blend add
+       map textures/effects/weapons/muzzle_flash_front2.tga
+       vertexColor
+       maskAlpha
+   }
+}
+
+material textures/effects/weapons/muzzle_flash3 {
+   nonsolid
+   noshadows
+   twoSided
+   {
+       blend add
+       map clamp textures/effects/weapons/muzzle_flash_front3.tga
+       scale 1 / 4 , 1
+       scroll table4[ time * 3 ] , 0
+       vertexColor
+ //      maskAlpha
+   }
+}
+
+material textures/effects/weapons/muzzle_flash4 {
+   nonsolid
+   noshadows
+   twoSided
+   {
+       blend add
+       program trivialEdgeFade
+       map clamp textures/effects/weapons/muzzle_flash_front3.tga
+       scale 1 / 4 , 1
+       scroll table4[ time * 3 ] , 0
+       vertexColor
+   }
+}
+
+material textures/effects/weapons/tracer {
+   nonsolid
+   noshadows
+   twoSided
+   {
+        blend add
+		map textures/effects/weapons/tracer.tga
+		vertexColor
+	}
+}
+
+material textures/effects/weapons/blaster_fly_red
+{
+   nonsolid
+   noshadows
+   twoSided
+   {
+        blend add
+        map textures/effects/weapons/blaster_fly_red.tga
+		vertexColor
+	}
+}
+
+material textures/effects/weapons/blaster_fly_yellow
+{
+   nonsolid
+   noshadows
+   twoSided
+   {
+        blend add
+        map textures/effects/weapons/blaster_fly_yellow.tga
+		vertexColor
+	}
+}
+
+material textures/effects/weapons/muzzle_flash_side
+{
+   nonsolid
+   noshadows
+   twoSided
+   {
+        blend add
+        map textures/effects/weapons/muzzle_flash_side.tga
+		vertexColor
+	}
+}
+
+material textures/effects/weapons/muzzle_flash_side2
+{
+   nonsolid
+   noshadows
+   twoSided
+   {
+        blend add
+        map textures/effects/weapons/muzzle_flash_side2.tga
+		vertexColor
+	}
+}
+
+
+material textures/effects/weapons/muzzle_burst {
+   nonsolid
+   noshadows
+   twoSided
+   {
+       blend add
+       map textures/effects/weapons/muzzle_burst.tga
+       vertexColor
+       maskAlpha
+   }
+}
+
+material textures/effects/weapons/muzzle_smoke {
+   nonsolid
+   noshadows
+   twoSided
+   {
+       blend add
+       map textures/effects/weapons/muzzle_smoke.tga
+       vertexColor
+       maskAlpha
+   }
+}
+
+material particles/flash/3_pointflash
+{
+	qer_editorimage textures/effects/weapons/3point_flash.tga
+	nonsolid
+	sort nearest
+	noshadows
+	//twoSided
+	{
+			blend		add
+			map zeroclamp textures/effects/weapons/3point_flash.tga
+			maskalpha
+			vertexcolor
+			//useTemplate templates/materials/animate< 4, 0.1 >
+	}
+}
+
+
+material particles/flash/5_pointflash_strip
+{
+	qer_editorimage textures/effects/weapons/5point_flash_strip.tga
+	nonsolid
+	sort nearest
+	noshadows
+	//twoSided
+	{
+		blend		add
+		map clamp textures/effects/weapons/5point_flash_strip.tga
+		scale 1 / 4 , 1
+		scroll table4[ time * 3 ] , 0
+		vertexColor
+		//maskAlpha
+	}
+}
+
+
+material particles/flash/flare
+{
+	qer_editorimage models/weapons/shotgun/shotgun_mflash.tga
+	{
+			blend		add
+			map		zeroclamp textures/effects/weapons/muzzleflash_1a.tga
+			maskalpha
+			vertexcolor
+			useTemplate templates/materials/animate< 4, 0.1 >
+	}
+}
+
+
+
+material particles/flash/muzzleflash_front1a
+{
+	//qer_editorimage models/weapons/shotgun/shotgun_mflash.tga
+	sort nearest
+	//deform sprite
+	{
+		blend add
+		map clamp textures/effects/weapons/muzzleflash_1a.tga
+		useTemplate templates/materials/animate< 4, 0.1 >
+		//scroll table4[ time * 3 ] , 0
+		alpha 0
+		maskalpha // stops bloom being applied
+	}
+}
+
+
+material particles/flash/muzzleflash_side1a
+{
+	qer_editorimage models/weapons/shotgun/shotgun_mflash.tga
+	sort nearest
+	twoSided
+	//deform sprite
+	{
+		blend add
+		map clamp textures/effects/weapons/muzzleflash_s1a.tga
+		useTemplate templates/materials/animate< 4, 0.1 >
+		//scale 1 / 4 , 1
+		//scroll table4[ time * 5 ] , 0
+		alpha 0
+		//maskalpha // stops bloom being applied
+	}
+}
+
+
+material particles/flash/rocketfire
+{
+	qer_editorimage models/weapons/shotgun/shotgun_mflash.tga
+	sort nearest
+	//deform sprite
+	{
+		blend add
+		map clamp textures/particles/rocketlauncher_mflash_strip.tga
+		useTemplate templates/materials/animate< 32, 1 >
+		alpha 1
+		maskalpha
+		vertexcolor
+	}
+}
+
+
+material particles/flash/artfire
+{
+	qer_editorimage textures/effects/weapons/muzzleflash_s2a.tga
+	sort nearest
+	{
+		blend add
+		map clamp textures/effects/weapons/muzzleflash_s2a.tga
+		useTemplate templates/materials/animate< 8, 0.2 >
+		alpha 1
+		//maskalpha
+		//vertexcolor
+	}
+}
+
+
+material particles/flash/shotgun_flash
+{
+	qer_editorimage textures/particles/shotgun_mflash_strip.tga
+	nonsolid
+	sort nearest
+	noshadows
+	//twoSided
+	{
+		blend		add
+		map clamp textures/particles/shotgun_mflash_strip.tga
+		useTemplate templates/materials/animate< 32, 0.3 >
+		vertexColor
+		maskAlpha
+	}
+}
+
+material particles/flash/pistol_flash
+{
+	qer_editorimage textures/particles/pistol_mflash_strip.tga
+	nonsolid
+	sort nearest
+	noshadows
+	//twoSided
+	{
+		blend		add
+		map clamp textures/particles/pistol_mflash_strip.tga
+		useTemplate templates/materials/animate< 12, 0.2 >
+		vertexColor
+		maskAlpha
+	}
+}
+
+material particles/flash/pistol_flash_side
+{
+	qer_editorimage textures/effects/weapons/pistol_mflash_side.tga
+	nonsolid
+	sort nearest
+	noshadows
+	{
+		blend		add
+		map clamp textures/effects/weapons/pistol_mflash_side.tga
+		useTemplate templates/materials/animate< 4, 0.2 >
+		vertexColor
+		maskAlpha
+	}
+}
+
+//////STROGG//////
+
+material particles/flash/strogg_muzzleflash01
+{
+	qer_editorimage textures/particles/flash/strogg_muzzleflash01.tga
+	nonsolid
+	sort nearest
+	noshadows
+	twoSided
+	{
+		blend		add
+		map clamp textures/particles/flash/strogg_muzzleflash01.tga
+		//useTemplate templates/materials/animate< 4, 0.4 >
+		vertexColor
+		maskAlpha
+	}
+}
+
+material particles/flash/strogg_muzzleflash02
+{
+	qer_editorimage textures/particles/flash/strogg_muzzleflash02.tga
+	nonsolid
+	sort nearest
+	noshadows
+	twoSided
+	{
+		blend		add
+		map clamp textures/particles/flash/strogg_muzzleflash02.tga
+		//useTemplate templates/materials/animate< 4, 0.4 >
+		vertexColor
+		maskAlpha
+	}
+}

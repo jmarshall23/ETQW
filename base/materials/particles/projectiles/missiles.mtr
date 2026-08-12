@@ -1,0 +1,36 @@
+material particles/projectiles/missile_smoke_trail {
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend blend
+		maskAlpha
+		useTemplate templates/materials/smoketrail_lit< "makealpha(textures/particles/smoke/smoke_trail02_line_mask.tga)", "textures/particles/smoke/smoke_trail03_line_local.tga", 0, "time * 0.5">
+	}
+}
+
+
+material particles/projectiles/blaster_trail {
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend blend
+		maskAlpha
+		useTemplate templates/materials/smoketrail_lit< "makealpha(textures/particles/smoke/smoke_trail02_line_mask.tga)", "textures/particles/smoke/smoke_trail03_line_local.tga", 0, "time * 0.5">
+	}
+}
+
+material particles/projectiles/missile_smoke_trail2 {
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend blend
+		maskAlpha
+		useTemplate templates/materials/smoketrail_lit< "makealpha(textures/particles/smoke/smoke_trail03_line_mask.tga)", "textures/particles/smoke/smoke_trail04_line_local.tga", 0, "time * 0.125">
+	}
+}

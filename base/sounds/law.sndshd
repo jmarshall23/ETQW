@@ -1,0 +1,105 @@
+
+sound sounds/weapons/law/fire {
+
+	maxDistance 75
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/rocketlauncher/fire_01.wav
+	sounds/weapons/rocketlauncher/fire_02.wav
+
+}
+
+sound sounds/weapons/law/fire/far {
+
+	volume -10
+//	farDistance 25
+	maxDistance 150
+//	antiPrivate
+	occlude_once
+
+	sounds/weapons/rocketlauncher/fire_far.wav
+//	sounds/weapons/rocketlauncher/fire_01_far.wav
+//	sounds/weapons/rocketlauncher/fire_02_far.wav
+
+}
+
+sound sounds/weapons/law/fire/local {
+	compression wav
+
+	private
+	occlude_once
+
+	sounds/weapons/rocketlauncher/fire_01_local.wav
+	sounds/weapons/rocketlauncher/fire_02_local.wav
+
+}
+
+sound sounds/weapons/law/fly {
+
+	volume -5
+	maxDistance 75
+
+	looping
+	sounds/weapons/law/lflight_01.wav
+	sounds/weapons/law/lflight_02.wav
+	sounds/weapons/law/lflight_03.wav
+
+}
+
+sound sounds/weapons/law/reload/start {
+
+	volume -10
+
+	sounds/weapons/law/reload_start.wav
+}
+
+sound sounds/weapons/law/reload/end {
+
+	volume -10
+
+	sounds/weapons/law/reload_end.wav
+}
+
+sound sounds/weapons/law/explode {
+
+	maxDistance	150
+	shakes 0.01
+	no_dups
+
+	sounds/weapons/law/explode_01.wav
+	sounds/weapons/law/explode_02.wav
+	sounds/weapons/law/explode_03.wav
+	sounds/weapons/law/explode_04.wav
+}
+
+sound sounds/weapons/law/charge_up {
+
+	volume		-9
+
+	sounds/weapons/rocketlauncher/prime_01.wav
+}
+
+sound sounds/weapons/law/raise {
+
+	volume -5
+
+	sounds/weapons/law/raise.wav
+}
+
+sound sounds/weapons/law/lower {
+
+	volume -10
+
+	sounds/weapons/law/lower.wav
+}
+
+sound sounds/weapons/law/zoom_in {
+
+	sounds/weapons/law/monacle_01a.wav
+}
+
+sound sounds/weapons/law/zoom_out {
+
+	sounds/weapons/law/monacle_02a.wav
+}

@@ -1,0 +1,202 @@
+locString game/tasks/kill_player {
+	text "#str_00010600"
+}
+
+locString game/tasks/destroy {
+	text "#str_00010601"
+}
+
+locString game/tasks/destroy_range {
+	text "#str_00010602"
+}
+
+locString game/tasks/repair {
+	text "#str_00010603"
+}
+
+locString game/tasks/repair_range {
+	text "#str_00010604"
+}
+
+locString game/tasks/escort {
+	text "#str_00010605"
+}
+
+locString game/tasks/enable {
+	text "#str_00010606"
+}
+
+locString game/tasks/enable_range {
+	text "#str_00010607"
+}
+
+locString game/tasks/disable_range  {
+	text "#str_00010608"
+}
+
+locString game/tasks/deploy {
+	text "#str_00010609"
+}
+
+locString game/tasks/construct {
+	text "#str_00010610"
+}
+
+locString game/tasks/revive {
+	text "#str_00010612"
+}
+
+locString game/tasks/support {
+	text "#str_00010613"
+}
+
+locString game/tasks/cover {
+	text "#str_00010614"
+}
+
+locString game/tasks/hold {
+	text "#str_00010615"
+}
+
+locString game/tasks/escort_mcp {
+	text "#str_00010616"
+}
+
+locString game/tasks/support_mcp {
+	text "#str_00010617"
+}
+
+locString game/tasks/drive_mcp {
+	text "#str_00010618"
+}
+
+locString game/tasks/destroy_mcp {
+	text "#str_00010619"
+}
+
+locString game/tasks/disable_mcp {
+	text "#str_00010620"
+}
+
+locString game/tasks/deploy_radar {
+	text "#str_00010621"
+}
+
+locString game/tasks/deploy_apt {
+	text "#str_00010622"
+}
+
+locString game/tasks/deploy_avt {
+	text "#str_00010623"
+}
+
+locString game/tasks/deploy_amt {
+	text "#str_00010624"
+}
+
+locString game/tasks/deploy_art {
+	text "#str_00010625"
+}
+
+locString game/tasks/deploy_rocket_art {
+	text "#str_00010626"
+}
+
+locString game/tasks/deploy_ssm {
+	text "#str_00010627"
+}
+
+locString game/tasks/deploy_vampire {
+	text "#str_00010628"
+}
+
+locString game/tasks/alive_engineers {
+	text "#str_00010629"
+}
+
+locString game/tasks/alive_fieldops {
+	text "#str_00010630"
+}
+
+locString game/tasks/kill_engineers {
+	text "#str_00010631"
+}
+
+locString game/tasks/kill_fieldops {
+	text "#str_00010632"
+}
+
+locString game/tasks/deploy_psi {
+	text "#str_00010633"
+}
+
+locString game/tasks/deploy_shield {
+	text "#str_00010634"
+}
+
+locString game/tasks/deploy_rail {
+	text "#str_00010635"
+}
+
+locString game/tasks/deploy_plasma {
+	text "#str_00010636"
+}
+
+locString game/tasks/deploy_ssg {
+	text "#str_00010637"
+}
+
+locString game/tasks/deploy_violator {
+	text "#str_00010638"
+}
+
+locString game/tasks/destroy_shield {
+	text "#str_00010639"
+}
+
+locString game/tasks/disable_shield {
+	text "#str_00010640"
+}
+
+locString game/tasks/destroy_ssm {
+	text "#str_00010641"
+}
+
+locString game/tasks/disable_ssm {
+	text "#str_00010642"
+}
+
+locString game/tasks/destroy_the {
+	text "#str_00010643"
+}
+
+locString game/tasks/pickup {
+	text "#str_00010644"
+}
+
+locString game/tasks/dropoff {
+	text "#str_00010645"
+}
+
+// ======================================
+// Tasks
+// ======================================
+locString game/tasks/constructor_repair_deployable/instructions {
+	text "#str_00005303"
+}
+
+locString game/tasks/engineer_repair_deployable/instructions {
+	text "#str_00005303"
+}
+
+locString game/tasks/constructor_repair_vehicle/instructions {
+	text "#str_00005304"
+}
+
+locString game/tasks/engineer_repair_vehicle/instructions {
+	text "#str_00005304"
+}
+
+locString game/tasks/covertops_hack_deployable/instructions {
+	text "#str_00005305"
+}

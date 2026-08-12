@@ -1,0 +1,59 @@
+locString guis/maps/up {
+	text "#str_00014000"	
+}
+
+locString guis/maps/down {
+	text "#str_00014001"	
+}
+
+locString guis/maps/under_enemy_control {
+	text "#str_00014002"	
+}
+
+locString guis/maps/call_lift {
+	text "#str_00014003"	
+}
+
+locString guis/maps/lift_moving {
+	text "#str_00014004"	
+}
+
+locString guis/maps/island/terminal {
+	text "#str_00014005"
+}
+
+locString guis/maps/island/data {
+	text "#str_00014006"
+}
+
+locString guis/maps/island/keycard {
+	text "#str_00014007"
+}
+
+locString guis/maps/island/unlock {
+	text "#str_00014008"
+}
+
+locString guis/maps/island/unlocked {
+	text "#str_00014009"
+}
+
+locString guis/maps/enabled {
+	text "#str_00014010"
+}
+
+locString guis/maps/contruct_me {
+	text "#str_00014011"
+}
+
+locString guis/maps/drive_mcp {
+	text "#str_00014012"
+}
+
+locString guis/maps/close {
+	text "#str_00014013"
+}
+
+locString gui/maps/open {
+	text "#str_00014014"
+}

@@ -1,0 +1,570 @@
+
+template material/player_fade {
+    parameters <
+    	DiffuseImage,
+    	BumpImage,
+    	SpecularImage,
+    	MaskImage="highquality textures/penta/fademask.tga",
+    	GradientImage="textures/penta/fadegrad.tga",
+    	FadeWidth="40",
+    	MaskScale="1" >
+    text {
+		{
+			program interaction/separate_depth
+			diffusemap	DiffuseImage
+			specularmap	SpecularImage
+			bumpmap		BumpImage
+			mask MaskImage
+			parameters 1.f * ( time - parm6 )
+			//parameters 0.5
+
+			textureMatrix maskMatrix {
+				scale MaskScale, MaskScale
+			}
+		}
+
+		{
+			writeDepth
+			program sfx/fadeedge
+			mask MaskImage
+			map GradientImage
+			parameters 1.f * ( time - parm6 ), FadeWidth
+			//parameters 0.5, FadeWidth
+
+			textureMatrix maskMatrix {
+				scale MaskScale, MaskScale
+			}
+		}
+	}
+}
+
+/**************
+ new hands
+ **************/
+
+material models/characters/edf_player/gdf_arm
+
+{
+	noshadows
+	noselfshadow
+	renderbump -size 1024 1024 -trace 0.1 -aa 2 models/characters/edf_player/gdf_arm_local.tga models/characters/edf_player/gdf_arm_hi.lwo
+
+	diffusemap	picmip -1 models/characters/edf_player/gdf_arm_d.tga
+	specularmap	picmip -2 models/characters/edf_player/gdf_arm_s.tga
+	bumpmap	 	picmip -1 models/characters/edf_player/gdf_arm_local.tga
+}
+
+material models/characters/edf_player/gdf_arm_arctic
+
+{
+	noshadows
+	noselfshadow
+	renderbump -size 1024 1024 -trace 0.1 -aa 2 models/characters/edf_player/gdf_arm_local.tga models/characters/edf_player/gdf_arm_hi.lwo
+
+	diffusemap	picmip -1 models/characters/edf_player/gdf_arm_arctic_d.tga
+	specularmap	picmip -2 models/characters/edf_player/gdf_arm_arctic_s.tga
+	bumpmap	 	picmip -1 models/characters/edf_player/gdf_arm_local.tga
+}
+
+
+/**************
+ ranger hands
+ **************/
+
+material models/characters/edf_player/ranger_hands
+{
+	noselfshadow
+
+	renderbump -size 512 512 -colormap -clampOutput 0 0 1 1 -aa 2 models/characters/edf_player/ranger_hands_local.tga models/characters/edf_player/ranger_hands_hi.lwo
+	diffusemap	picmip -1 models/characters/edf_player/ranger_hands_d.tga
+	specularmap	picmip -2 models/characters/edf_player/ranger_hands_s.tga
+	bumpmap		picmip -1 addnormals( models/characters/edf_player/ranger_hands_local.tga, heightmap( models/characters/edf_player/ranger_hands_h.tga, 5 ) )
+}
+
+
+/**************
+ gdf hands
+ **************/
+
+material models/characters/edf_player/edf_hands
+{
+	noselfshadow
+
+	renderbump -size 512 512 -colormap -clampOutput 0 0 1 1 -aa 2 models/characters/edf_player/edf_hands_local.tga models/characters/edf_player/edf_hands_hi.lwo
+	diffusemap	picmip -1 models/characters/edf_player/edf_hands_d.tga
+	specularmap	picmip -2 models/characters/edf_player/edf_hands_s.tga
+	bumpmap		picmip -1  addnormals( models/characters/edf_player/edf_hands_local.tga, heightmap( models/characters/edf_player/edf_hands_h.tga, 5 ) )
+}
+
+/**************
+ gdf field ops visor
+ renderbump models/characters/edf_player/field_ops_visor.lwo
+ **************/
+
+
+material models/characters/edf_player/field_ops_visor {
+	//unsmoothedtangents
+	renderbump -size 128 64 -aa 1 models/characters/edf_player/field_ops_visor_local.tga models/characters/edf_player/field_ops_visor_hi.lwo
+	noselfshadow
+
+	sort decal
+
+
+	{
+		blend add
+		map clamp_y models/characters/edf_player/field_ops_visor_gui1.tga
+		scale -3, 3
+		translate -0.9, 10
+		scroll 0, time * 0.2
+	}
+	{
+		blend add
+		map zeroclamp models/characters/edf_player/field_ops_visor_gui2.tga
+
+		rotate time * 0.3
+		scale 4, 2
+		translate -0.1, -0.1
+		rgb sinTable[ time * 0.1 ] * 0.5 + 0.5
+		//scroll 1, time * -0.1
+	}
+	{
+		blend blend
+		program sfx/visor
+		bumpMap	picmip -1 models/characters/edf_player/field_ops_visor_local.tga
+		parameters 1, 1.5, 0.2
+	}
+	{
+		blend filter
+		map models/characters/edf_player/field_ops_visor_d.tga
+	}
+	{
+		if cvar (r_megaDrawMethod != 0)	
+		blend blend
+		maskalpha
+		program trivialFogout
+	}
+}
+
+material models/characters/edf_player/field_ops_visor_fade {
+	//unsmoothedtangents
+	renderbump -size 128 64 -aa 1 models/characters/edf_player/field_ops_visor_local.tga models/characters/edf_player/field_ops_visor_hi.lwo
+	noselfshadow
+
+	sort decal
+
+
+	{
+		blend add
+		map clamp_y models/characters/edf_player/field_ops_visor_gui1.tga
+		scale -3, 3
+		translate -0.9, 10
+		scroll 0, time * 0.2
+		rgb 1 - ( time - parm6 )
+	}
+	{
+		blend add
+		map zeroclamp models/characters/edf_player/field_ops_visor_gui2.tga
+
+		rotate time * 0.3
+		scale 4, 2
+		translate -0.1, -0.1
+		rgb (sinTable[ time * 0.1 ] * 0.5 + 0.5) * 1 - ( time - parm6 )
+		//scroll 1, time * -0.1
+	}
+	{
+		blend blend
+		program sfx/visor
+		bumpMap	picmip -1 models/characters/edf_player/field_ops_visor_local.tga
+		parameters 1, 1.5, 0.2
+		alpha 1 - ( time - parm6 )
+	}
+	{
+		blend filter
+		map models/characters/edf_player/field_ops_visor_d.tga
+		program filterVertexColor
+		rgb 1 - ( time - parm6 )
+	}
+}
+
+/**************
+ gdf engineer visor
+ renderbump models/characters/edf_player/engineer_visor.lwo
+ **************/
+
+
+material models/characters/edf_player/engineer_visor {
+	//unsmoothedtangents
+	renderbump -size 128 32 -aa 1 models/characters/edf_player/engineer_visor_local.tga models/characters/edf_player/engineer_visor_hi.lwo
+	noselfshadow
+	forceshadows
+
+	sort decal
+	
+
+	{
+		blend blend
+		program sfx/visor
+		bumpMap	picmip -1 models/characters/edf_player/engineer_visor_local.tga
+		parameters 2, 2, 0.1
+	}
+	{
+		blend filter
+		map models/characters/edf_player/engineer_visor_d.tga
+	}
+	{
+		if cvar (r_megaDrawMethod != 0)	
+		blend blend
+		maskalpha
+		program trivialFogout
+	}
+
+}
+
+material models/characters/edf_player/engineer_visor_fade {
+	//unsmoothedtangents
+	noselfshadow
+	forceshadows
+
+	sort decal
+	
+
+	{
+		blend blend
+		program sfx/visor
+		bumpMap	picmip -1 models/characters/edf_player/engineer_visor_local.tga
+		parameters 2, 2, 0.1
+		alpha 1 - ( time - parm6 )
+	}
+	{
+		blend filter
+		map models/characters/edf_player/engineer_visor_d.tga
+		program filterVertexColor
+		rgb 1 - ( time - parm6 )
+	}
+
+}
+
+/**************
+ gdf cover ops visor
+ renderbump models/characters/edf_player/ranger_visor.lwo
+ **************/
+
+
+material models/characters/edf_player/ranger_visor {
+	//unsmoothedtangents
+	renderbump -size 128 32 -aa 1 models/characters/edf_player/ranger_visor_local.tga models/characters/edf_player/ranger_visor_hi.lwo
+	noselfshadow
+	
+	sort decal
+
+
+	{
+		blend blend
+		program sfx/visor
+		bumpMap	picmip -1 models/characters/edf_player/ranger_visor_local.tga
+		parameters 1, 2, 0.5
+	}
+	{
+		blend filter
+		map models/characters/edf_player/ranger_visor_d.tga
+	}
+	{
+		if cvar (r_megaDrawMethod != 0)	
+		blend blend
+		maskalpha
+		program trivialFogout
+	}
+}
+
+material models/characters/edf_player/ranger_visor_fade {
+	//unsmoothedtangents
+	renderbump -size 128 32 -aa 1 models/characters/edf_player/ranger_visor_local.tga models/characters/edf_player/ranger_visor_hi.lwo
+	noselfshadow
+	
+	sort decal
+
+
+	{
+		blend blend
+		program sfx/visor
+		bumpMap	picmip -1 models/characters/edf_player/ranger_visor_local.tga
+		parameters 1, 2, 0.5
+		alpha 1 - ( time - parm6 )
+	}
+	{
+		blend filter
+		map models/characters/edf_player/ranger_visor_d.tga
+		program filterVertexColor
+		rgb 1 - ( time - parm6 )
+	}
+
+}
+
+material models/characters/edf_player/field_ops_visor_e3_cc {
+	//unsmoothedtangents
+	renderbump -size 128 64 -aa 1 models/characters/edf_player/field_ops_visor_local.tga models/characters/edf_player/field_ops_visor_hi.lwo
+	noselfshadow
+	
+	sort decal
+
+	{
+		blend filter
+		map models/characters/edf_player/field_ops_visor_d.tga
+	}
+	{
+		blend blend
+		program sfx/visor
+		bumpMap	picmip -1 models/characters/edf_player/field_ops_visor_local.tga
+		parameters 0 1, 1.5, 0.2
+	}
+
+}
+
+/**************
+ gdf helmets
+ renderbump models/characters/edf_player/techpacks.lwo
+ **************/
+material models/characters/edf_player/edf_helmets {
+	renderbump -size 2048 2048 -aa 1 models/characters/edf_player/techpacks_local.tga models/characters/edf_player/techpacks_hi.lwo
+	noshadows
+
+	diffusemap	picmip -1	models/characters/edf_player/edf_helmets_d.tga
+	specularmap	picmip -2	models/characters/edf_player/edf_helmets_s.tga
+	bumpmap		picmip -1	addnormals (models/characters/edf_player/edf_helmets_local.tga, heightmap (models/characters/edf_player/edf_helmets_h.tga, 5) )
+}
+
+material models/characters/edf_player/edf_helmets_acrtic {
+	renderbump -size 2048 2048 -aa 1 models/characters/edf_player/techpacks_local.tga models/characters/edf_player/techpacks_hi.lwo
+	noshadows
+
+	diffusemap	picmip -1	models/characters/edf_player/edf_helmets_d_arctic.tga
+	specularmap	picmip -2	models/characters/edf_player/edf_helmets_s.tga
+	bumpmap		picmip -1	addnormals (models/characters/edf_player/edf_helmets_local.tga, heightmap (models/characters/edf_player/edf_helmets_h.tga, 5) )
+}
+
+material models/characters/edf_player/edf_helmets_fade {
+	noshadows
+
+	useTemplate material/player_fade <
+			"picmip -1 models/characters/edf_player/edf_helmets_d.tga",
+			"picmip -1 addnormals (models/characters/edf_player/edf_helmets_local.tga, heightmap (models/characters/edf_player/edf_helmets_h.tga, 5) )",
+			"picmip -2 models/characters/edf_player/edf_helmets_s.tga",
+	>
+}
+
+material models/characters/edf_player/edf_helmets_spawnhosted {
+	renderbump -size 2048 2048 -aa 1 models/characters/edf_player/techpacks_local.tga models/characters/edf_player/techpacks_hi.lwo
+	noshadows
+
+	diffusemap	picmip -1	models/characters/edf_player/edf_helmets_d.tga
+	specularmap	picmip -2	models/characters/edf_player/edf_helmets_s.tga
+	bumpmap		picmip -1	addnormals (models/characters/edf_player/edf_helmets_local.tga, heightmap (models/characters/edf_player/edf_helmets_h.tga, 5) )
+
+	useTemplate spawnHostPass<>
+}
+
+material models/characters/edf_player/edf_helmets_fade/arctic {
+	noshadows
+
+	useTemplate material/player_fade <
+			"picmip -1 models/characters/edf_player/edf_helmets_d_arctic.tga",
+			"picmip -1 addnormals (models/characters/edf_player/edf_helmets_local.tga, heightmap (models/characters/edf_player/edf_helmets_h.tga, 5) )",
+			"picmip -2 models/characters/edf_player/edf_helmets_s.tga",
+	>
+}
+
+material models/characters/edf_player/edf_helmets_spawnhosted/arctic {
+	renderbump -size 2048 2048 -aa 1 models/characters/edf_player/techpacks_local.tga models/characters/edf_player/techpacks_hi.lwo
+	noshadows
+
+	diffusemap	picmip -1	models/characters/edf_player/edf_helmets_d_arctic.tga
+	specularmap	picmip -2	models/characters/edf_player/edf_helmets_s.tga
+	bumpmap		picmip -1	addnormals (models/characters/edf_player/edf_helmets_local.tga, heightmap (models/characters/edf_player/edf_helmets_h.tga, 5) )
+
+	useTemplate spawnHostPass<>
+}
+
+/**************
+ gdf techpacks
+ renderbump models/characters/edf_player/techpacks.lwo
+ **************/
+material models/characters/edf_player/techpacks {
+//	surfaceType	"flesh"
+
+	renderbump -size 2048 2048 -clampOutput 0 0 1 1 -aa 1 models/characters/edf_player/techpacks_local.tga models/characters/edf_player/techpacks_hi.lwo
+	occlusionQuery
+	noshadows
+
+	diffusemap	picmip -1	models/characters/edf_player/techpacks_d.tga
+	specularmap	picmip -2 	models/characters/edf_player/techpacks_s.tga
+	bumpmap		picmip -1 	addnormals( models/characters/edf_player/techpacks_local.tga, heightmap( models/characters/edf_player/techpacks_h.tga, 5 ) )
+}
+
+material models/characters/edf_player/techpacks_arctic {
+//	surfaceType	"flesh"
+
+	renderbump -size 2048 2048 -clampOutput 0 0 1 1 -aa 1 models/characters/edf_player/techpacks_local.tga models/characters/edf_player/techpacks_hi.lwo
+	occlusionQuery
+	noshadows
+
+	diffusemap	picmip -1	models/characters/edf_player/techpacks_d_arctic.tga
+	specularmap	picmip -2 	models/characters/edf_player/techpacks_s.tga
+	bumpmap		picmip -1 	addnormals( models/characters/edf_player/techpacks_local.tga, heightmap( models/characters/edf_player/techpacks_h.tga, 5 ) )
+}
+
+
+material models/characters/edf_player/techpacks_spawnhosted {
+//	surfaceType	"flesh"
+	renderbump -size 2048 2048 -clampOutput 0 0 1 1 -aa 1 models/characters/edf_player/techpacks_local.tga models/characters/edf_player/techpacks_hi.lwo
+	occlusionQuery
+	noshadows
+
+	diffusemap	picmip -1	models/characters/edf_player/techpacks_d.tga
+	specularmap	picmip -2 models/characters/edf_player/techpacks_s.tga
+	bumpmap		picmip -1 	addnormals( models/characters/edf_player/techpacks_local.tga, heightmap( models/characters/edf_player/techpacks_h.tga, 5 ) )
+
+	useTemplate spawnHostPass<>
+}
+
+material models/characters/edf_player/techpacks_spawnhosted/arctic {
+//	surfaceType	"flesh"
+	renderbump -size 2048 2048 -clampOutput 0 0 1 1 -aa 1 models/characters/edf_player/techpacks_local.tga models/characters/edf_player/techpacks_hi.lwo
+	occlusionQuery
+	noshadows
+
+	diffusemap	picmip -1 	models/characters/edf_player/techpacks_d_arctic.tga
+	specularmap	picmip -2 	models/characters/edf_player/techpacks_s.tga
+	bumpmap		picmip -1 	addnormals( models/characters/edf_player/techpacks_local.tga, heightmap( models/characters/edf_player/techpacks_h.tga, 5 ) )
+
+	useTemplate spawnHostPass<>
+}
+
+material models/characters/edf_player/techpacks_glow {
+	renderbump -size 2048 2048 -clampOutput 0 0 1 1 -aa 1 models/characters/edf_player/techpacks_local.tga models/characters/edf_player/techpacks_hi.lwo
+	occlusionQuery
+	noshadows
+
+	bumpmap		picmip -1 	addnormals( models/characters/edf_player/techpacks_local.tga, heightmap( models/characters/edf_player/techpacks_h.tga, 5 ) )
+	diffusemap	picmip -1	models/characters/edf_player/techpacks_d.tga
+	specularmap	picmip -2 	models/characters/edf_player/techpacks_s.tga
+
+	{
+		blend	add
+		map	picmip -1	models/characters/edf_player/techpacks_d.tga
+		red			1 * blinktable[time * 1]
+		green			1 * blinktable[time * 1]
+		blue			1 * blinktable[time * 1]
+	}
+	{
+		blend	add
+		map	picmip -1	models/characters/edf_player/techpacks_d.tga
+		red			1 * blinktable[time * 1]
+		green			1 * blinktable[time * 1]
+		blue			1 * blinktable[time * 1]
+	}
+}
+
+
+material models/characters/edf_player/techpacks_fade {
+	noshadows
+
+	useTemplate material/player_fade <
+			"picmip -1 models/characters/edf_player/techpacks_d.tga",
+			"picmip -1 addnormals( models/characters/edf_player/techpacks_local.tga, heightmap( models/characters/edf_player/techpacks_h.tga, 5 ) )",
+			"picmip -2 models/characters/edf_player/techpacks_s.tga",
+	>
+}
+
+material models/characters/edf_player/techpacks_fade/arctic {
+	noshadows
+
+	useTemplate material/player_fade <
+			"picmip -1 models/characters/edf_player/techpacks_d_arctic.tga",
+			"picmip -1 addnormals( models/characters/edf_player/techpacks_local.tga, heightmap( models/characters/edf_player/techpacks_h.tga, 5 ) )",
+			"picmip -2 models/characters/edf_player/techpacks_s.tga",
+	>
+}
+
+/**************
+ edf player placeholder tongue
+ renderbump models/characters/edf_player/tongue.lwo
+ **************/
+material models/characters/edf_player/tongue
+{
+	//unsmoothedtangents
+	renderbump -size 1024 1024 -aa 1 models/characters/edf_player/tongue_local.tga models/characters/edf_player/tongue_hi.lwo
+	noselfshadow
+
+	diffusemap	models/characters/edf_player/tongue_d.tga
+	specularmap	models/characters/edf_player/tongue_s.tga
+	bumpmap 	addnormals (models/characters/edf_player/tongue_local.tga, heightmap (models/characters/edf_player/tongue_h.tga, 5) )
+}
+
+/**************
+ edf player placeholder teeth
+ renderbump models/characters/edf_player/teeth.lwo
+ **************/
+
+
+material models/characters/edf_player/teeth
+{
+	//unsmoothedtangents
+	renderbump -size 1024 1024 -aa 1 models/characters/edf_player/teeth_local.tga models/characters/edf_player/teeth_hi.lwo
+	noselfshadow
+	twosided
+
+	diffusemap	models/characters/edf_player/teeth_d.tga
+	specularmap	models/characters/edf_player/teeth_s.tga
+	bumpmap 	models/characters/edf_player/teeth_local.tga
+}
+
+/**************
+ edf player placeholder head
+ renderbump models/characters/edf_player/edf_player.lwo
+ **************/
+
+material models/characters/edf_player/playerhead {
+	//unsmoothedtangents
+	renderbump -size 1024 1024 -aa 1 models/characters/edf_player/edf_player_local.tga models/characters/edf_player/edf_player_hi.lwo
+
+	diffusemap	picmip -1	models/characters/edf_player/playerhead_d.tga
+	specularmap	picmip -2	models/characters/edf_player/playerhead_s.tga
+	bumpmap		picmip -1 	addnormals (models/characters/edf_player/playerhead_local.tga, heightmap (models/characters/edf_player/playerhead_h.tga, 5) )
+}
+
+material models/characters/edf_player/playerhead_fade {
+	noshadows
+
+	useTemplate material/player_fade <
+			"picmip -1 models/characters/edf_player/playerhead_d.tga",
+			"picmip -1 addnormals (models/characters/edf_player/playerhead_local.tga, heightmap (models/characters/edf_player/playerhead_h.tga, 5) )",
+			"picmip -2 models/characters/edf_player/playerhead_s.tga",
+	>
+}
+
+material models/characters/edf_player/playerhead_spawnhosted {
+	//unsmoothedtangents
+	renderbump -size 1024 1024 -aa 1 models/characters/edf_player/edf_player_local.tga models/characters/edf_player/edf_player_hi.lwo
+
+	diffusemap	picmip -1	models/characters/edf_player/playerhead_d.tga
+	specularmap	picmip -2	models/characters/edf_player/playerhead_s.tga
+	bumpmap		picmip -1 	addnormals (models/characters/edf_player/playerhead_local.tga, heightmap (models/characters/edf_player/playerhead_h.tga, 5) )
+
+	useTemplate spawnHostPass<>
+}
+
+/**************
+ edf player
+ renderbump models/characters/edf_player/edf_player.lwo
+ **************/
+
+
+material models/characters/edf_player/edf_player
+{
+	//unsmoothedtangents
+	renderbump -size 1024 1024 -aa 1 models/characters/edf_player/edf_player_local.tga models/characters/edf_player/edf_player_hi.lwo
+
+	diffusemap	picmip -1 models/characters/edf_player/edf_player_d.tga
+	specularmap	picmip -2	models/characters/edf_player/edf_player_s.tga
+	bumpmap		picmip -1 	addnormals (models/characters/edf_player/edf_player_local.tga, heightmap (models/characters/edf_player/edf_player_h.tga, 5) )
+}

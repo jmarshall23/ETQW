@@ -1,0 +1,171 @@
+
+entityDef gameplay/destructible {
+	"spawnclass"					"sdScriptEntity"
+
+	"editor_var health"				"The health of the destructible object"
+	"editor_var scriptobject"		"The script object used to control the entity's behaviour"
+	"editor_var model"				"The model to display for the entity"
+	"editor_var team"				"Either Strogg or GDF"
+
+	"tt_intro_info"					"destroy_crosshair_info_strogg"
+	"tt_intro_use_me_1"				"destructible_objective_crosshair_info_strogg_1"
+	"tt_intro_use_me_2"				"destructible_objective_crosshair_info_strogg_2"
+
+	"editor_color"					"0 .5 .8"
+	"editor_mins"					"?"
+	"editor_maxs"					"?"
+	"editor_usage"					"A generic destructible entity used for objectives."
+
+	"scriptobject"					"destructible_objective"
+	
+	"health"						"1"
+	
+	"editor_skipmenu"				"1"
+
+	"mtr_crosshair_icon"			"hud/objectives/destruction"
+	"mtr_icon_flash"				"hud/icons/missionsystem/obj_destroy"
+	"mtr_icon_flash_defend"			"hud/icons/missionsystem/obj_defend"
+	"icon_sort_cm_flash_icon"		"-102"
+
+	"option_crosshair_interface"	"1"
+	"option_interactive_interface"	"1"
+}
+
+entityDef gameplay/destructible/dualproxy {
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"destructible_objective_dual_proxy"
+	
+	"editor_mins"					"-16 -16 -16"
+	"editor_maxs"					"16 16 16"
+	
+	"editor_var target1"			"First target"
+	"editor_var target2"			"Second target"
+}
+
+entityDef gameplay/destructible/dualproxy/gdf {
+	"inherit"						"gameplay/destructible/dualproxy"
+	"task_defend_long"				"gdf_defend_long_dual"
+	"task_defend_medium"			"gdf_defend_medium_dual"
+	"task_defend_short"				"gdf_defend_short_dual"
+}
+
+entityDef gameplay/destructible/dualproxy/strogg {
+	"inherit"						"gameplay/destructible/dualproxy"
+	"task_defend_long"				"strogg_defend_long_dual"
+	"task_defend_medium"			"strogg_defend_medium_dual"
+	"task_defend_short"				"strogg_defend_short_dual"
+}
+
+entityDef gameplay/destructible/strogg {
+	"inherit"						"gameplay/destructible"
+	"team"							"strogg"
+
+	"tt_intro_info"					"destroy_crosshair_info_gdf"
+	"tt_intro_use_me_1"				"destructible_objective_crosshair_info_1"
+	"tt_intro_use_me_2"				"destructible_objective_crosshair_info_2"
+
+	"editor_skipmenu"				"0"
+
+	"task_destroy"					"soldier_destroy_objective"
+	"task_defend_long"				"strogg_defend_long"
+	"task_defend_medium"			"strogg_defend_medium"
+	"task_defend_short"				"strogg_defend_short"
+
+	"snd_destroyed_strogg"			""
+	"snd_destroyed_gdf"				""
+	"snd_planted_strogg"			""
+	"snd_planted_gdf"				""
+	"snd_disarmed_strogg"			""
+	"snd_disarmed_gdf"				""
+	"snd_reminder_strogg"			""
+	"snd_reminder_gdf"				""
+	"snd_defend_strogg"				""
+	"snd_defend_gdf"				""
+	"snd_intro_strogg"				""
+	"snd_intro_gdf"					""
+
+	"prof_disarm"					"pro_constructor_disarm_charge_objective"
+	"prof_destroy"					"pro_soldier_destroy_primary"
+}
+
+entityDef gameplay/destructible/strogg/secondary {
+	"inherit"						"gameplay/destructible/strogg"
+	"task_destroy"					"soldier_destroy_secondary"
+
+	"prof_disarm"					"pro_constructor_disarm_charge_secondary"
+	"prof_destroy"					"pro_soldier_destroy_secondary"
+}
+
+entityDef gameplay/destructible/gdf {
+	"inherit"						"gameplay/destructible"
+	"team"							"gdf"
+	
+	"task_destroy"					"aggressor_destroy_objective"
+	"task_defend_long"				"gdf_defend_long"
+	"task_defend_medium"			"gdf_defend_medium"
+	"task_defend_short"				"gdf_defend_short"
+
+	"editor_skipmenu"				"0"
+
+	"snd_destroyed_strogg"			""
+	"snd_destroyed_gdf"				""
+	"snd_planted_strogg"			""
+	"snd_planted_gdf"				""
+	"snd_disarmed_strogg"			""
+	"snd_disarmed_gdf"				""
+	"snd_reminder_strogg"			""
+	"snd_reminder_gdf"				""
+	"snd_defend_strogg"				""
+	"snd_defend_gdf"				""
+	"snd_intro_strogg"				""
+	"snd_intro_gdf"					""
+
+	"prof_disarm"					"pro_engineer_disarm_charge_objective"
+	"prof_destroy"					"pro_aggressor_destroy_primary"
+}
+
+entityDef gameplay/destructible/gdf/secondary {
+	"inherit"						"gameplay/destructible/gdf"
+	"task_destroy"					"aggressor_destroy_secondary"
+
+	"prof_disarm"					"pro_engineer_disarm_charge_secondary"
+	"prof_destroy"					"pro_aggressor_destroy_secondary"
+}
+
+#include "templates/tooltips.include"
+
+toolTip destructible_objective_crosshair_info_1 {
+	text "game/tt/intro/destroy_me_1"
+	sound "sounds/ui/main/neutral"
+	locationIndex TOOLTIP_POSITION_WEAPON_CHANGE
+}
+
+toolTip destructible_objective_crosshair_info_2 {
+	text "game/tt/intro/destroy_me_2"
+	sound "sounds/ui/main/neutral"
+	nextShowDelay 30
+}
+
+toolTip destructible_objective_crosshair_info_strogg_1 {
+	text "game/tt/intro/destroy_me_strogg_1"
+	sound "sounds/ui/main/neutral"
+	locationIndex TOOLTIP_POSITION_WEAPON_CHANGE
+}
+
+toolTip destructible_objective_crosshair_info_strogg_2 {
+	text "game/tt/intro/destroy_me_strogg_2"
+	sound "sounds/ui/main/neutral"
+	nextShowDelay 30
+}
+
+toolTip destroy_crosshair_info_gdf {
+	nextShowDelay 180
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/destroy_gdf"
+}
+
+toolTip destroy_crosshair_info_strogg {
+	nextShowDelay 180
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/destroy_strogg"
+}

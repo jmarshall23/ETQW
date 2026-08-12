@@ -1,0 +1,174 @@
+effect effects/base/tracers_small
+{
+	size	3590
+
+	emitter "Tracer"
+	{
+		duration	1,1
+		count		1,1
+
+		line
+		{
+			duration	0.25,0.35
+			generatedLine
+			material	"particles/flash/tracer"
+			trailRepeat	1
+
+			start
+			{
+				position { line -100,0,0,50,0,0 }
+				velocity { point 20000,0,0 }
+				size { box 1,2 }
+				tint { point 0.729412,0.772549,0.729412 }
+				offset { point 250,0,0 }
+				length { box 150,0,0,250,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope fastinslowout }
+				fade { envelope rr2_concavefade_start_at_1 }
+			}
+
+			end
+			{
+				tint { point 0.113725,0.137255,0.113725 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/base/tracers_large
+{
+	size	2752
+
+	emitter "Tracer"
+	{
+		duration	1,1
+		count		1,1
+
+		line
+		{
+			duration	0.125,0.25
+			generatedLine
+			material	"particles/flash/tracer"
+			trailRepeat	1
+
+			start
+			{
+				position { line -100,0,0,25,0,0 }
+				velocity { point 20000,0,0 }
+				size { box 1,2 }
+				tint { point 0.113725,0.137255,0.113725 }
+				fade { point 0 }
+				offset { point 250,0,0 }
+				length { box 200,0,0,300,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope fastinslowout }
+				fade { envelope fastinslowout }
+			}
+
+			end
+			{
+				tint { point 0.729412,0.772549,0.729412 }
+				fade { line 0.1,0.5 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/base/tracers_strogg
+{
+	size	44260
+
+	cutOffDistance	10000
+
+	spawner "trail"
+	{
+		count		1,1
+
+		line
+		{
+			duration	5,5
+			material	"particles/flash/tracer_1b"
+			useLightningAxis
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 20000,0,0 }
+				size { point 5 }
+				tint { point 1,0.737255,0.25098 }
+				length { box 200,0,0,250,0,0 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope flickertable }
+				fade { envelope linear }
+				length { envelope linear }
+			}
+
+			end
+			{
+				size { point 10 }
+				tint { point 1,1,0.501961 }
+				length { point 500,0,0 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/base/bullets/tracer
+{
+	size	188
+
+	cutOffDistance	3000
+
+	spawner "Tracer"
+	{
+		count		1,1
+
+		line
+		{
+			duration	0.1,0.2
+			material	"particles/flash/tracer"
+			trailRepeat	1
+
+			start
+			{
+				position { line -10,0,0,10,0,0 }
+				velocity { box 500,0,0,1500,0,0 }
+				size { box 1.25,1.75 }
+				tint { point 0.74902,0.74902,0.74902 }
+				length { box 5,0,0,50,0,0 useEndOrigin }
+			}
+
+			motion
+			{
+				tint { envelope fastinslowout }
+			}
+
+			end
+			{
+				tint { point 0.247059,0.247059,0.247059 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+

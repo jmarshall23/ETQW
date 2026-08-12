@@ -1,0 +1,1406 @@
+// =============================
+//	  Locations for maps
+// =============================
+
+
+// -----------------------------
+// Area 22 - 00110100-00110199
+// -----------------------------
+
+locString locs/area22/strogg_base {
+	text "#str_00110100"
+}
+
+locString locs/area22/warehouse {
+	text "#str_00110101"
+}
+
+locString locs/area22/office_building {
+	text "#str_00110102"
+}
+
+locString locs/area22/explosives_testing {
+	text "#str_00110103"
+}
+
+locString locs/area22/upper_silo_compound {
+	text "#str_00110104"
+}
+
+locString locs/area22/gdf_base {
+	text "#str_00110105"
+}
+
+locString locs/area22/tunnel_entrance {
+	text "#str_00110106"
+}
+
+locString locs/area22/north_east_hills {
+	text "#str_00110107"
+}
+
+locString locs/area22/lower_silo_compound {
+	text "#str_00110108"
+}
+
+locString locs/area22/slipgate_silo {
+	text "#str_00110109"
+}
+
+locString locs/area22/tunnel_loading_bay {
+	text "#str_00110110"
+}
+
+locString locs/area22/main_tunnel {
+	text "#str_00110111"
+}
+
+locString locs/area22/tunnel_admin {
+	text "#str_00110112"
+}
+
+locString locs/area22/tunnel_maintenance_corridor {
+	text "#str_00110113"
+}
+
+locString locs/area22/maintenance_corridor_upper {
+	text "#str_00110114"
+}
+
+locString locs/area22/west_silo_corridor {
+	text "#str_00110115"
+}
+
+locString locs/area22/east_silo_corridor {
+	text "#str_00110116"
+}
+
+locString locs/area22/intelligence_corridor {
+	text "#str_00110117"
+}
+
+locString locs/area22/intelligence_servers {
+	text "#str_00110118"
+}
+
+locString locs/area22/radio_building {
+	text "#str_00110119"
+}
+
+locString locs/area22/south_east_hills {
+	text "#str_00110120"
+}
+
+locString locs/area22/south_west_plains {
+	text "#str_00110121"
+}
+
+locString locs/area22/underground_control_room {
+	text "#str_00110122"
+}
+
+locString locs/area22/comms_building {
+	text "#str_00110123"
+}
+
+
+// -----------------------------
+// Ark - 00110200-00110299
+// -----------------------------
+
+locString locs/ark/church {
+	text "#str_00110200"
+}
+
+locString locs/ark/north_islet_bridge {
+	text "#str_00110201"
+}
+
+locString locs/ark/west_islet_bridge {
+	text "#str_00110202"
+}
+
+locString locs/ark/east_islet_bridge {
+	text "#str_00110203"
+}
+
+locString locs/ark/jamming_tower {
+	text "#str_00110204"
+}
+
+locString locs/ark/islet_checkpoint {
+	text "#str_00110205"
+}
+
+locString locs/ark/islet_watertower {
+	text "#str_00110206"
+}
+
+locString locs/ark/north_islet_trailers {
+	text "#str_00110207"
+}
+
+locString locs/ark/south_islet_trailers {
+	text "#str_00110208"
+}
+
+locString locs/ark/lodge {
+	text "#str_00110209"
+}
+
+locString locs/ark/gdf_base {
+	text "#str_00110210"
+}
+
+locString locs/ark/cafe {
+	text "#str_00110211"
+}
+
+locString locs/ark/inn {
+	text "#str_00110212"
+}
+
+locString locs/ark/biodome {
+	text "#str_00110213"
+}
+
+locString locs/ark/facility_entrance {
+	text "#str_00110214"
+}
+
+locString locs/ark/facility_atrium {
+	text "#str_00110215"
+}
+
+locString locs/ark/facility_kitchen {
+	text "#str_00110216"
+}
+
+locString locs/ark/facility_server_room {
+	text "#str_00110217"
+}
+
+locString locs/ark/facility_dna_lab {
+	text "#str_00110218"
+}
+
+locString locs/ark/facility_north_storage {
+	text "#str_00110219"
+}
+
+locString locs/ark/strogg_base {
+	text "#str_00110220"
+}
+
+locString locs/ark/cabins  {
+	text "#str_00110221"
+}
+
+locString locs/ark/town_house {
+	text "#str_00110222"
+}
+
+locString locs/ark/hotel {
+	text "#str_00110223"
+}
+
+locString locs/ark/fuel_station {
+	text "#str_00110224"
+}
+
+locString locs/ark/fishing_huts {
+	text "#str_00110225"
+}
+
+locString locs/ark/facility_entrance_storage {
+	text "#str_00110226"
+}
+
+locString locs/ark/north_mountains {
+	text "#str_00110227"
+}
+
+locString locs/ark/east_foothills {
+	text "#str_00110228"
+}
+
+locString locs/ark/north_road_bridge {
+	text "#str_00110229"
+}
+
+locString locs/ark/ocean {
+	text "#str_00110230"
+}
+
+locString locs/ark/biodome_entrance {
+	text "#str_00110231"
+}
+
+locString locs/ark/north_research_hut {
+	text "#str_00110232"
+}
+
+locString locs/ark/islet {
+	text "#str_00110233"
+}
+
+locString locs/ark/facility_south_storage {
+	text "#str_00110234"
+}
+
+locString locs/ark/west_road {
+	text "#str_00110235"
+}
+
+locString locs/ark/west_mountains {
+	text "#str_00110236"
+}
+
+locString locs/ark/east_mountains {
+	text "#str_00110237"
+}
+
+locString locs/ark/biodome_mountains {
+	text "#str_00110238"
+}
+
+// -----------------------------
+// Island - 00110300-00110399
+// -----------------------------
+
+locString locs/island/vault_garage {
+	text "#str_00110300"			// Vault Garage
+}
+
+locString locs/island/gdf_base {
+	text "#str_00110301"			// GDF Base
+}
+
+locString locs/island/strogg_base {
+	text "#str_00110302"			// Strogg Base
+}
+
+locString locs/island/observatory {
+	text "#str_00110303"			// Observatory
+}
+
+locString locs/island/cargoship {
+	text "#str_00110304"			// Cargo Ship
+}
+
+locString locs/island/island_bunker{
+	text "#str_00110305"			// Island Bunker
+}
+
+locString locs/island/warehouse_complex{
+	text "#str_00110306"			// Warehouse Complex
+}
+
+locString locs/island/bunker_hatch{
+	text "#str_00110307"			// Bunker Hatch
+}
+
+locString locs/island/generator{
+	text "#str_00110308"			// Generator
+}
+
+locString locs/island/vault{
+	text "#str_00110309"			// Vault
+}
+
+locString locs/island/transmitter{
+	text "#str_00110310"			// Transmitter
+}
+
+locString locs/island/guardtower{
+	text "#str_00110311"			// Guard Tower
+}
+
+locString locs/island/southbunker{
+	text "#str_00110312"			// South Bunker
+}
+
+locString locs/island/generatorsouth{
+	text "#str_00110313"			// Generator - South Entrance
+}
+
+locString locs/island/generatormain{
+	text "#str_00110314"			// Generator - Main Entrance
+}
+
+locString locs/island/generatorwarehouse{
+	text "#str_00110315"			// Generator - Warehouse Entrance
+}
+
+locString locs/island/gdf_docks{
+	text "#str_00110316"			// GDF Docks
+}
+
+locString locs/island/smallisland{
+	text "#str_00110317"			// Small Island
+}
+
+locString locs/island/beachoverlook{
+	text "#str_00110318"			// Beach Overlook
+}
+
+locString locs/island/seawallhut{
+	text "#str_00110319"			// Seawall Hut
+}
+
+locString locs/island/vaultdocks{
+	text "#str_00110320"			// Vault Docks
+}
+
+locString locs/island/vaulttunnel{
+	text "#str_00110321"			// Vault Tunnel
+}
+
+locString locs/island/vaultnorth{
+	text "#str_00110322"			// Vault - North Entrance
+}
+
+locString locs/island/observatorylower{
+	text "#str_00110323"			// Observatory - Lower Level
+}
+
+locString locs/island/beach{
+	text "#str_00110324"			// Beach
+}
+
+locString locs/island/tarmac{
+	text "#str_00110325"			// Tarmac
+}
+
+locString locs/island/westpath{
+	text "#str_00110326"			// West Path
+}
+
+locString locs/island/bridge{
+	text "#str_00110327"			// Bridge
+}
+
+locString locs/island/observatorycomplex{
+	text "#str_00110328"			// Observatory Complex
+}
+
+locString locs/island/vaultguardtower{
+	text "#str_00110329"			// Vault - Guard Tower
+}
+
+locString locs/island/vaultcontrol{
+	text "#str_00110330"			// Vault - Control Room
+}
+
+locString locs/island/vaultgaragecontrol{
+	text "#str_00110331"			// Vault Garage - Control Room
+}
+
+locString locs/island/datastorage{
+	text "#str_00110332"			// Data Storage
+}
+
+locString locs/island/dockaccess{
+	text "#str_00110333"			// Vault Docks - Access
+}
+
+locString locs/island/vaultgarageaccess{
+	text "#str_00110334"			// Vault Garage - Access
+}
+
+locString locs/island/tarmacnorth{
+	text "#str_00110335"			// Tarmac - North Building
+}
+
+locString locs/island/tarmacsouth{
+	text "#str_00110336"			// Tarmac - South Building
+}
+
+locString locs/island/seawall{
+	text "#str_00110337"			// Seawall
+}
+
+locString locs/island/seawalloverlook{
+	text "#str_00110338"			// Seawall Overlook
+}
+
+locString locs/island/observatoryroad{
+	text "#str_00110339"			// Observatory Road
+}
+
+// -----------------------------
+// Outskirts - 00110400-00110499
+// -----------------------------
+
+locString locs/outskirts/gdf_base {
+	text "#str_00110400"
+}
+
+locString locs/outskirts/strogg_barricade {
+	text "#str_00110401"
+}
+
+locString locs/outskirts/outpost {
+	text "#str_00110402"
+}
+
+locString locs/outskirts/hilltop {
+	text "#str_00110403"
+}
+
+locString locs/outskirts/brain {
+	text "#str_00110404"
+}
+
+locString locs/outskirts/transmit_room {
+	text "#str_00110405"
+}
+
+locString locs/outskirts/telecom_building {
+	text "#str_00110406"
+}
+
+locString locs/outskirts/strogg_base {
+	text "#str_00110407"
+}
+
+locString locs/outskirts/silo {
+	text "#str_00110408"
+}
+
+locString locs/outskirts/factory {
+	text "#str_00110409"
+}
+
+locString locs/outskirts/factory_offices {
+	text "#str_00110410"
+}
+
+locString locs/outskirts/packing_house {
+	text "#str_00110411"
+}
+
+locString locs/outskirts/cargo_compound {
+	text "#str_00110412"
+}
+
+locString locs/outskirts/marsh_overpass {
+	text "#str_00110413"
+}
+
+locString locs/outskirts/cafe {
+	text "#str_00110414"
+}
+
+locString locs/outskirts/liquor_shop {
+	text "#str_00110415"
+}
+
+locString locs/outskirts/theater {
+	text "#str_00110416"
+}
+
+locString locs/outskirts/bank {
+	text "#str_00110417"
+}
+
+locString locs/outskirts/lobby {
+	text "#str_00110418"
+}
+
+locString locs/outskirts/south_wing {
+	text "#str_00110419"
+}
+
+locString locs/outskirts/upper_east_wing {
+	text "#str_00110420"
+}
+
+locString locs/outskirts/lower_east_wing {
+	text "#str_00110421"
+}
+
+locString locs/outskirts/south_east_river {
+	text "#str_00110422"
+}
+
+locString locs/outskirts/north_east_marshes {
+	text "#str_00110423"
+}
+
+locString locs/outskirts/south_west_bay {
+	text "#str_00110424"
+}
+
+locString locs/outskirts/warehouses {
+	text "#str_00110425"
+}
+
+// -----------------------------
+// Quarry - 00110500-00110599
+// -----------------------------
+
+locString locs/quarry/gdf_base{
+	text "#str_00110500"			// GDF Base
+}
+
+locString locs/quarry/strogg_base{
+	text "#str_00110501"			// Strogg Base
+}
+
+locString locs/quarry/stroggship{
+	text "#str_00110502"			// Strogg Ship
+}
+
+locString locs/quarry/generator{
+	text "#str_00110503"			// Generator
+}
+
+locString locs/quarry/stroggshipconsole{
+	text "#str_00110504"			// Strogg Ship - Console
+}
+
+locString locs/quarry/gdfguardtower{
+	text "#str_00110505"			// GDF Base - Guardtower
+}
+
+locString locs/quarry/researchbuilding{
+	text "#str_00110506"			// Research Building
+}
+
+locString locs/quarry/southsilo{
+	text "#str_00110507"			// South Silo
+}
+
+locString locs/quarry/southsilostorage{
+	text "#str_00110508"			// South Silo - Storage
+}
+
+locString locs/quarry/officebuilding{
+	text "#str_00110509"			// Office Building
+}
+
+locString locs/quarry/barn{
+	text "#str_00110510"			// Barn
+}
+
+locString locs/quarry/warehouse{
+	text "#str_00110511"			// Warehouse
+}
+
+locString locs/quarry/warehousecomplex{
+	text "#str_00110512"			// Warehouse Complex
+}
+
+locString locs/quarry/miningcomplex{
+	text "#str_00110513"			// Mining Complex
+}
+
+locString locs/quarry/miningfacility{
+	text "#str_00110514"			// Mining Facility
+}
+
+locString locs/quarry/northsilo{
+	text "#str_00110515"			// North Silo
+}
+
+locString locs/quarry/northsilostorage{
+	text "#str_00110516"			// North Silo - Storage
+}
+
+locString locs/quarry/miningbarn{
+	text "#str_00110517"			// Mining Complex - Barn
+}
+
+locString locs/quarry/miningoffice{
+	text "#str_00110518"			// Mining Complex - Office
+}
+
+locString locs/quarry/miningcheckpoint{
+	text "#str_00110519"			// Mining Complex - Checkpoint
+}
+
+locString locs/quarry/barracks{
+	text "#str_00110520"			// Barracks
+}
+
+locString locs/quarry/fenced{
+	text "#str_00110521"			// Fenced Enclosure
+}
+
+
+// -----------------------------
+// Refinery - 00110600-00110699
+// -----------------------------
+
+locString locs/refinery/broken_bridge {
+	text "#str_00110600"
+}
+
+locString locs/refinery/autogarage {
+	text "#str_00110601"
+}
+
+locString locs/refinery/small_warehouse {
+	text "#str_00110602"
+}
+
+locString locs/refinery/strogg_barricade {
+	text "#str_00110603"
+}
+
+locString locs/refinery/south_east_town_apartments {
+	text "#str_00110604"
+}
+
+locString locs/refinery/courtyard {
+	text "#str_00110605"
+}
+
+locString locs/refinery/outpost {
+	text "#str_00110606"
+}
+
+locString locs/refinery/shanty_village {
+	text "#str_00110607"
+}
+
+locString locs/refinery/gdf_base {
+	text "#str_00110608"
+}
+
+locString locs/refinery/main_refinery_room {
+	text "#str_00110609"
+}
+
+locString locs/refinery/north_refinery_entrance {
+	text "#str_00110610"
+}
+
+locString locs/refinery/loading_bay {
+	text "#str_00110611"
+}
+
+locString locs/refinery/west_refinery_entrance  {
+	text "#str_00110612"
+}
+
+locString locs/refinery/dock  {
+	text "#str_00110614"
+}
+
+locString locs/refinery/marshland_tracks {
+	text "#str_00110615"
+}
+
+locString locs/refinery/sand_dunes {
+	text "#str_00110616"
+}
+
+locString locs/refinery/refinery_building {
+	text "#str_00110617"
+}
+
+locString locs/refinery/strogg_base {
+	text "#str_00110618"
+}
+
+locString locs/refinery/north_mountain_range {
+	text "#str_00110619"
+}
+
+locString locs/refinery/large_warehouse {
+	text "#str_00110620"
+}
+
+locString locs/refinery/east_mountain_range {
+	text "#str_00110621"
+}
+
+locString locs/refinery/refinery_entrance {
+	text "#str_00110622"
+}
+
+locString locs/refinery/north_stroyent_filter {
+	text "#str_00110623"
+}
+
+locString locs/refinery/south_stroyent_filter {
+	text "#str_00110624"
+}
+
+locString locs/refinery/hotel {
+	text "#str_00110625"
+}
+
+locString locs/refinery/town_center_apartments {
+	text "#str_00110626"
+}
+
+locString locs/refinery/town_house {
+	text "#str_00110627"
+}
+
+locString locs/refinery/north_town_apartments {
+	text "#str_00110628"
+}
+
+locString locs/refinery/town_courtyard {
+	text "#str_00110629"
+}
+
+// -----------------------------
+// Salvage - 00110700-00110799
+// -----------------------------
+
+locString locs/salvage/radio_building {
+	text "#str_00110700"
+}
+
+locString locs/salvage/jamming_tower {
+	text "#str_00110701"
+}
+
+locString locs/salvage/depot_compound {
+	text "#str_00110702"
+}
+
+locString locs/salvage/security_hut {
+	text "#str_00110703"
+}
+
+locString locs/salvage/west_base_bunker {
+	text "#str_00110704"
+}
+
+locString locs/salvage/base_guard_tower {
+	text "#str_00110705"
+}
+
+locString locs/salvage/east_base_bunker {
+	text "#str_00110706"
+}
+
+locString locs/salvage/east_pillbox_breach {
+	text "#str_00110707"
+}
+
+locString locs/salvage/west_bunker_breach {
+	text "#str_00110708"
+}
+
+locString locs/salvage/base_storage_depot {
+	text "#str_00110709"
+}
+
+locString locs/salvage/west_worker_barracks {
+	text "#str_00110710"
+}
+
+locString locs/salvage/rail_network_lab{
+	text "#str_00110711"
+}
+
+locString locs/salvage/rail_network_basement {
+	text "#str_00110712"
+}
+
+locString locs/salvage/rail_network_admin {
+	text "#str_00110713"
+}
+
+locString locs/salvage/rail_network_storage_hall {
+	text "#str_00110714"
+}
+
+locString locs/salvage/rail_network_train {
+	text "#str_00110715"
+}
+
+locString locs/salvage/rail_network_snack_room {
+	text "#str_00110716"
+}
+
+locString locs/salvage/rail_network_control_room {
+	text "#str_00110717"
+}
+
+locString locs/salvage/research_compound {
+	text "#str_00110718"
+}
+
+locString locs/salvage/base_gate {
+	text "#str_00110719"
+}
+
+locString locs/salvage/rail_network_comms {
+	text "#str_00110720"
+}
+
+locString locs/salvage/south_hills {
+	text "#str_00110721"
+}
+
+locString locs/salvage/south_east_slopes {
+	text "#str_00110722"
+}
+
+locString locs/salvage/west_mountain_range {
+	text "#str_00110723"
+}
+
+locString locs/salvage/north_east_slopes {
+	text "#str_00110724"
+}
+
+locString locs/salvage/strogg_base {
+	text "#str_00110725"
+}
+
+locString locs/salvage/west_ridge_pathway {
+	text "#str_00110726"
+}
+
+locString locs/salvage/ruined_strogg_base {
+	text "#str_00110727"
+}
+
+locString locs/salvage/rail_network_entrance {
+	text "#str_00110728"
+}
+
+// -----------------------------
+// Sewer - 00110800-00110899
+// -----------------------------
+
+locString locs/sewer/gdf_base {
+	text "#str_00110800"			
+}
+
+locString locs/sewer/substation {
+	text "#str_00110801"
+}
+
+locString locs/sewer/strogg_base {
+	text "#str_00110802"
+}
+
+locString locs/sewer/spillway_building {
+	text "#str_00110803"
+}
+
+locString locs/sewer/hilltop_cabin {
+	text "#str_00110804"
+}
+
+locString locs/sewer/main_substation_building {
+	text "#str_00110805"
+}
+
+locString locs/sewer/substation_warehouse {
+	text "#str_00110806"
+}
+
+locString locs/sewer/north_floodway_building {
+	text "#str_00110807"
+}
+
+locString locs/sewer/middle_floodway_building {
+	text "#str_00110808"
+}
+
+locString locs/sewer/south_floodway_building {
+	text "#str_00110809"
+}
+
+locString locs/sewer/emp_disruptor {
+	text "#str_00110810"
+}
+
+locString locs/sewer/sw_foothills {
+	text "#str_00110811"
+}
+
+locString locs/sewer/w_foothills {
+	text "#str_00110812"
+}
+
+locString locs/sewer/nw_foothills {
+	text "#str_00110813"
+}
+
+locString locs/sewer/se_foothills {
+	text "#str_00110814"
+}
+
+locString locs/sewer/s_foothills {
+	text "#str_00110815"
+}
+
+locString locs/sewer/e_foothills {
+	text "#str_00110816"
+}
+
+locString locs/sewer/n_foothills {
+	text "#str_00110817"
+}
+
+locString locs/sewer/floodway_bridge {
+	text "#str_00110818"
+}
+
+locString locs/sewer/south_floodway_footbridge {
+	text "#str_00110819"
+}
+
+locString locs/sewer/north_floodway_footbridge {
+	text "#str_00110820"
+}
+
+locString locs/sewer/spillway_floodway_entrance {
+	text "#str_00110821"
+}
+
+locString locs/sewer/spillway_road_entrance {
+	text "#str_00110822"
+}
+
+locString locs/sewer/tormentor_landing_pad {
+	text "#str_00110823"
+}
+
+locString locs/sewer/reservoir {
+	text "#str_00110824"
+}
+
+locString locs/sewer/lower_spillway {
+	text "#str_00110825"
+}
+
+locString locs/sewer/upper_spillway {
+	text "#str_00110826"
+}
+
+locString locs/sewer/sewer_generator_room {
+	text "#str_00110827"
+}
+
+locString locs/sewer/sewer_south_grate_room {
+	text "#str_00110828"
+}
+
+locString locs/sewer/sewer_north_grate_room {
+	text "#str_00110829"
+}
+
+locString locs/sewer/sewer_overflow_room {
+	text "#str_00110830"
+}
+
+locString locs/sewer/sewer_control_room {
+	text "#str_00110831"
+}
+
+locString locs/sewer/sewer_upper_tunnel_ramp {
+	text "#str_00110832"
+}
+
+locString locs/sewer/sewer_upper_tunnel_junction {
+	text "#str_00110833"
+}
+
+locString locs/sewer/sewer_upper_tunnel_entrance {
+	text "#str_00110834"
+}
+
+locString locs/sewer/sewer_upper_tunnel_grate {
+	text "#str_00110835"
+}
+
+locString locs/sewer/sewer_overflow_tunnel {
+	text "#str_00110836"
+}
+
+locString locs/sewer/sewer_lower_tunnel_entrance {
+	text "#str_00110837"
+}
+
+locString locs/sewer/sewer_lower_tunnel_junction {
+	text "#str_00110838"
+}
+
+// -----------------------------
+// Slipgate - 00110900-00110999
+// -----------------------------
+
+locString locs/slipgate/gdf_fort {
+	text "#str_00110900"
+}
+
+locString locs/slipgate/gdf_garrison_spawn_point {
+	text "#str_00110901"
+}
+
+locString locs/slipgate/oasis {
+	text "#str_00110902"
+}
+
+locString locs/slipgate/desert_slipgate {
+	text "#str_00110903"
+}
+
+locString locs/slipgate/strogg_base {
+	text "#str_00110904"
+}
+
+locString locs/slipgate/nexus_tower {
+	text "#str_00110905"
+}
+
+locString locs/slipgate/nexus_core {
+	text "#str_00110906"
+}
+
+locString locs/slipgate/arctic_slipgate {
+	text "#str_00110907"
+}
+
+locString locs/slipgate/science_outpost {
+	text "#str_00110908"
+}
+
+locString locs/slipgate/nexus_stream {
+	text "#str_00110909"
+}
+
+locString locs/slipgate/old_garrison_ruins {
+	text "#str_00110910"
+}
+
+locString locs/slipgate/village_guard_tower {
+	text "#str_00110911"
+}
+
+locString locs/slipgate/village_courtyard {
+	text "#str_00110912"
+}
+
+locString locs/slipgate/village_tower {
+	text "#str_00110913"
+}
+
+locString locs/slipgate/oil_pumps {
+	text "#str_00110914"
+}
+
+locString locs/slipgate/fort_road_mg_nest {
+	text "#str_00110915"
+}
+
+locString locs/slipgate/nexus_tower_cave {
+	text "#str_00110916"
+}
+
+locString locs/slipgate/nexus_tower_north_entrances {
+	text "#str_00110917"
+}
+
+locString locs/slipgate/nexus_tower_south_entrances {
+	text "#str_00110918"
+}
+
+locString locs/slipgate/nexus_tower_south_jumppad {
+	text "#str_00110919"
+}
+
+locString locs/slipgate/nexus_tower_north_jumppads {
+	text "#str_00110920"
+}
+
+locString locs/slipgate/gdf_checkpoint_spawn {
+	text "#str_00110921"
+}
+
+locString locs/slipgate/strogg_bridge {
+	text "#str_00110922"
+}
+
+locString locs/slipgate/ridge {
+	text "#str_00110923"
+}
+
+locString locs/slipgate/research_huts {
+	text "#str_00110924"
+}
+
+locString locs/slipgate/nexus_tower_substation {
+	text "#str_00110925"
+}
+
+locString locs/slipgate/nexus_generator {
+	text "#str_00110926"
+}
+
+locString locs/slipgate/nexus_tower_lower_south_hall {
+	text "#str_00110927"
+}
+
+// -----------------------------
+// Valley - 00111000-00111099
+// -----------------------------
+
+locString locs/valley/bridge {
+	text "#str_00111000"
+}
+
+locString locs/valley/tunnel {
+	text "#str_00111001"
+}
+
+locString locs/valley/outpost {
+	text "#str_00111002"
+}
+
+locString locs/valley/strogg_base {
+	text "#str_00111003"
+}
+
+locString locs/valley/sewer_entrance {
+	text "#str_00111004"
+}
+
+locString locs/valley/sewer {
+	text "#str_00111005"
+}
+
+locString locs/valley/sewer_stairwell {
+	text "#str_00111006"
+}
+
+locString locs/valley/sewer_exit_building {
+	text "#str_00111007"
+}
+
+locString locs/valley/treatment_buildings {
+	text "#str_00111008"
+}
+
+locString locs/valley/treatment_plant {
+	text "#str_00111009"
+}
+
+locString locs/valley/contam {
+	text "#str_00111010"
+}
+
+locString locs/valley/gdf_base {
+	text "#str_00111011"
+}
+
+// -----------------------------
+// Volcano - 00111100-00111199
+// -----------------------------
+
+locString locs/volcano/strogg_base {
+	text "#str_00111100"
+}
+
+locString locs/volcano/facility_entrance {
+	text "#str_00111101"
+}
+
+locString locs/volcano/center_bunker {
+	text "#str_00111102"
+}
+
+locString locs/volcano/west_bunker {
+	text "#str_00111103"
+}
+
+locString locs/volcano/east_bunker {
+	text "#str_00111104"
+}
+
+locString locs/volcano/west_trench {
+	text "#str_00111105"
+}
+
+locString locs/volcano/center_trench {
+	text "#str_00111106"
+}
+
+locString locs/volcano/transformer_building {
+	text "#str_00111107"
+}
+
+locString locs/volcano/beach_spawn {
+	text "#str_00111108"
+}
+
+locString locs/volcano/transformer_room {
+	text "#str_00111109"
+}
+
+locString locs/volcano/transformer_controlroom {
+	text "#str_00111110"
+}
+
+locString locs/volcano/transformer_building_stairwell {
+	text "#str_00111111"
+}
+
+locString locs/volcano/transformer_building_upper {
+	text "#str_00111112"
+}
+
+locString locs/volcano/rear_bunker_building {
+	text "#str_00111113"
+}
+
+locString locs/volcano/rear_bunker_corridor {
+	text "#str_00111114"
+}
+
+locString locs/volcano/hangar {
+	text "#str_00111115"
+}
+
+locString locs/volcano/hangar_jetty {
+	text "#str_00111116"
+}
+
+locString locs/volcano/front_bunker_building {
+	text "#str_00111117"
+}
+
+locString locs/volcano/beach_pier {
+	text "#str_00111118"
+}
+
+locString locs/volcano/east_trench {
+	text "#str_00111119"
+}
+
+locString locs/volcano/seawall_breach {
+	text "#str_00111120"
+}
+
+locString locs/volcano/geothermal_core {
+	text "#str_00111121"
+}
+
+locString locs/volcano/facility_vent_room {
+	text "#str_00111122"
+}
+
+locString locs/volcano/facility_atrium {
+	text "#str_00111123"
+}
+
+locString locs/volcano/facility_west_serverroom {
+	text "#str_00111124"
+}
+
+locString locs/volcano/damaged_forward_bunker {
+	text "#str_00111125"
+}
+
+locString locs/volcano/forward_bunker_door {
+	text "#str_00111126"
+}
+
+locString locs/volcano/security_room {
+	text "#str_00111127"
+}
+
+locString locs/volcano/east_beach {
+	text "#str_00111128"
+}
+
+locString locs/volcano/west_beach {
+	text "#str_00111129"
+}
+
+locString locs/volcano/north_volcano_rim {
+	text "#str_00111130"
+}
+
+locString locs/volcano/west_volcano_rim {
+	text "#str_00111131"
+}
+
+locString locs/volcano/east_volcano_rim {
+	text "#str_00111132"
+}
+
+locString locs/volcano/north_coast {
+	text "#str_00111133"
+}
+
+locString locs/volcano/west_coast {
+	text "#str_00111134"
+}
+
+locString locs/volcano/east_coast {
+	text "#str_00111135"
+}
+
+locString locs/volcano/facility_storage {
+	text "#str_00111136"
+}
+
+// -----------------------------
+// Canyon - 00111200-00111299
+// -----------------------------
+
+locString locs/canyon/gdf_base {
+	text "#str_00111200"
+}
+
+locString locs/canyon/restaurant {
+	text "#str_00111201"
+}
+
+locString locs/canyon/broken_bridge {
+	text "#str_00111202"
+}
+
+locString locs/canyon/destroyed_houses {
+	text "#str_00111203"
+}
+
+locString locs/canyon/outpost {
+	text "#str_00111204"
+}
+
+locString locs/canyon/bunker_entrance {
+	text "#str_00111205"
+}
+
+locString locs/canyon/stroggifier {
+	text "#str_00111206"
+}
+
+locString locs/canyon/bunker {
+	text "#str_00111207"
+}
+
+locString locs/canyon/north_bridge {
+	text "#str_00111208"
+}
+
+locString locs/canyon/strogg_base {
+	text "#str_00111209"
+}
+
+locString locs/canyon/dome_building {
+	text "#str_00111210"
+}
+
+locString locs/canyon/outpost_shelters {
+	text "#str_00111211"
+}
+
+locString locs/canyon/outpost_tower {
+	text "#str_00111212"
+}

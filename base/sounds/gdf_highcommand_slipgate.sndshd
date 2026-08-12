@@ -1,0 +1,100 @@
+// GDF High Command
+
+// Map Slipgate
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/slipgate/hack/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11001.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/slipgate/hack {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11002.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/slipgate/hacking {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11003.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/slipgate/hacking/half {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11004.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/slipgate/success {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11005.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/slipgate/success/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11006.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/mcp/driveslipgate/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11007.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/mcp/driveslipgate {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11008.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/mcp/halfslipgate {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11009.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/mcp/nearslipgate {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11010.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/mcp/throughslipgate {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11011.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/core/destroy/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11012.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/core/destroy {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11013.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/core/planted {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11014.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/core/defendexpl {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11015.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/core/planted/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11016.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/disarmed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11017.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/gdfwin {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11018.wav
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11020.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/slipgate/gdflose {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11019.wav
+	localization/english/sounds/vo/gdf/highcommand/maps/slipgate/11021.wav
+}

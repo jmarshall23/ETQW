@@ -1,0 +1,26 @@
+
+//
+// Overlays the atmosphere by doing an extra pass over the surface, this should be used for 
+// surfaces that are rendered after the atmosphere and still need to be fogged correctly (post processed water,...)
+//
+template material/atmosphere_overlay {
+    parameters <>			// How much the glare is affected by the water (murky water wants to stop glaring so make it lower)
+    text {
+		blend GL_ONE, GL_ONE_MINUS_SRC_ALPHA
+		program atmosphere2.cg		
+		fragmentParm		0 0, 0, 0, 0 		// halo parameters, just set them to zero
+		vertexParmBinding 	1 fogParams 		//: C1;//vert
+		fragmentParmBinding 	2 sunDirection 		//: C2;//fragment
+		vertexParmBinding 	4 transposedModelMatrix_0 
+		vertexParmBinding 	5 transposedModelMatrix_1 
+		vertexParmBinding 	6 transposedModelMatrix_2 
+		vertexParmBinding 	7 transposedModelMatrix_3 
+		vertexParmBinding	3 viewOrigin 		//: C8;//vert
+		vertexParmBinding	8 viewOrigin 		//: C8;//vert		
+		vertexParmBinding 	9 fogRotation_x		//: C9;//vert
+		vertexParmBinding 	10 fogRotation_y 	//: C10;//vert
+		vertexParmBinding 	11 fogRotation_z 	//: C11;//vert	
+		
+		fragmentMapBinding	0 skyGradient
+    }
+}

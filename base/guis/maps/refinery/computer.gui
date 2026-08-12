@@ -1,0 +1,78 @@
+gui maps/refinery/computer {
+	properties {
+		float flags = immediate( flags ) | GUI_SHOWCURSOR & ~GUI_SCREENSAVER;
+		float disabled = 0;
+		float mcpInPos = 1;
+		float converted = 0;
+		float atbottom = 1;
+		
+		float interactive		= ( disabled == 0 && mcpInPos == 1 && converted == 1 && atbottom == 1 ) == 1;
+	}
+
+	events {
+		onPropertyChanged "interactive" {
+			if( interactive ) {
+				flags = immediate( flags ) | GUI_INTERACTIVE;
+			} else {
+				flags = immediate( flags ) & ~GUI_INTERACTIVE;
+			}
+		}
+	}
+	
+	
+	windowDef desktop {
+		properties {
+			color backColor = 0, 0, 0, 1;
+		}
+	}
+
+/*	windowDef disabledText {
+		properties {
+			wstring	text		= toWStr( "Under Enemy Control" );
+			color	foreColor	= 1, 0, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= gui.disabled == 1;
+		}
+	}*/
+	
+	windowDef enabledText {
+		properties {
+			wstring	text		= toWStr( "Text" );
+			color	foreColor	= 0, 1, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= (gui.disabled == 0 && gui.mcpInPos == 1 && gui.converted == 1);
+		}
+	}
+	
+	windowDef enabledButton { 
+		properties {
+			rect 	rect 		= 0, 0, 640, 480;
+			float	visible 	= (gui.disabled == 0 && gui.mcpInPos == 1 && gui.converted == 1);	
+		}
+		
+		events {
+			onKeyDown "mouse1" {
+				gui.sendCommand( "move" );				
+			}
+		}
+	}
+	
+	windowDef convertText {
+		properties {
+			handle	localizedText		= localize( "guis/maps/construct_me" ); // "Construct me!";
+			color	foreColor	= 0, 1, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= (gui.disabled == 0 && gui.converted == 0);
+		}
+	}
+	
+	windowDef mcpText {
+		properties {
+			handle	localizedText		= localize( "guis/maps/drive_mcp" ); // "Drive the MCP on to me!";
+			color	foreColor	= 0, 1, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= (gui.disabled == 0 && gui.mcpInPos == 0 && gui.converted == 1);
+		}
+	}
+
+}

@@ -1,0 +1,51 @@
+effect effects/ambient/ {
+}
+effect effects/ambient/sewer_mist
+{
+	size	25328
+
+	emitter "ground dust3"
+	{
+		duration	1,1
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	0,8192
+
+		sprite
+		{
+			duration	120,160
+			persist
+			material	"particles/dustcloud_02_litsmoke"
+			windDeviationAngle 90.000000
+			gravity		0.0001,0.0001
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -400,-3000,-248,3000,3300,1000 }
+				velocity { box 30,-250,-1,45,250,0 }
+				size { line 3400,1900,4800,1600 }
+				tint { point 0.713726,0.784314,0.788235 }
+				fade { point 0 attenuate }
+				windStrength { point 0.1 }
+				rotate { box -0.0416667,0.0416667 }
+			}
+
+			motion
+			{
+				fade { envelope shamus_fastinholdslowout }
+				offset { envelope shamus_exp_1minusx/x2 count 3,3,3 offset -1.8,-1.8,-1.8 }
+				rotate { envelope convexfade }
+			}
+
+			end
+			{
+				fade { line 0.025,0.075 attenuate }
+				offset { point 555,0,0 }
+				rotate { box -0.0416667,0.0416667 }
+			}
+		}
+	}
+}
+

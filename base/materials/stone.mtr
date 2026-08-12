@@ -1,0 +1,195 @@
+material textures/stone/stonewall01
+{
+		diffusemap		textures/stone/stonewall01_d.tga
+		specularmap		textures/stone/stonewall01_s.tga
+		bumpmap			textures/stone/stonewall01_local.tga
+}
+
+material textures/stone/stonewall02
+{
+		diffusemap		textures/stone/stonewall02_d.tga
+		specularmap		textures/stone/stonewall02_s.tga
+		bumpmap			textures/stone/stonewall02_local.tga
+}
+
+material textures/stone/stonewall02b
+{
+		diffusemap		textures/stone/stonewall02b_d.tga
+		specularmap		textures/stone/stonewall02_s.tga
+		bumpmap			textures/stone/stonewall02_local.tga
+}
+
+material textures/stone/stonewall03
+{
+	{       
+		diffusemap		textures/stone/stonewall03_d.tga
+		specularmap		textures/stone/stonewall03_s.tga
+		bumpmap			textures/stone/stonewall03_local.tga
+		alphaTest	0.1
+	}
+}
+
+material textures/stone/stonewall03b
+{
+	{       
+		diffusemap		textures/stone/stonewall03b_d.tga
+		specularmap		textures/stone/stonewall03_s.tga
+		bumpmap			textures/stone/stonewall03_local.tga
+		alphaTest	0.1
+	}
+}
+
+material textures/stone/stonewall03c
+{
+	{       
+		diffusemap		textures/stone/stonewall03c_d.tga
+		specularmap		textures/stone/stonewall03_s.tga
+		bumpmap			textures/stone/stonewall03_local.tga
+		alphaTest	0.1
+	}
+}
+
+material textures/stone/wall_stone_1
+{
+	{
+		diffusemap		textures/stone/wall_stone_1_d.tga
+		specularmap		textures/stone/wall_stone_1_s.tga
+		bumpmap			textures/stone/wall_stone_1_local.tga
+ 	}
+}
+
+material textures/stone/wall_stone_2
+{
+	{
+		diffusemap		textures/stone/wall_stone_2_d.tga
+		specularmap		textures/stone/wall_stone_2_s.tga
+		bumpmap			textures/stone/wall_stone_2_local.tga
+ 	}
+}
+
+material textures/stone/wall_stone_3
+{
+	{
+		diffusemap		textures/stone/wall_stone_3_d.tga
+		specularmap		textures/stone/wall_stone_3_s.tga
+		bumpmap			textures/stone/wall_stone_3_local.tga
+ 	}
+}
+
+material textures/stone/wall_stone_4
+{
+	{
+		diffusemap		textures/stone/wall_stone_4_d.tga
+		specularmap		textures/stone/wall_stone_4_s.tga
+		bumpmap			textures/stone/wall_stone_4_local.tga
+ 	}
+}
+
+material textures/stone/wall_stone_5
+{
+	{
+		diffusemap		textures/stone/wall_stone_5_d.tga
+		specularmap		textures/stone/wall_stone_5_s.tga
+		bumpmap			textures/stone/wall_stone_5_local.tga
+ 	}
+}
+
+material textures/stone/wall_stone_6
+{
+	{
+		diffusemap		textures/stone/wall_stone_6_d.tga
+		specularmap		textures/stone/wall_stone_6_s.tga
+		bumpmap			textures/stone/wall_stone_6_local.tga
+ 	}
+}
+
+material textures/stone/wall_stone_7
+{
+	{
+		diffusemap		textures/stone/wall_stone_7_d.tga
+		specularmap		textures/stone/wall_stone_7_s.tga
+		bumpmap			textures/stone/wall_stone_7_local.tga
+ 	}
+}
+
+material textures/stone/wall_stone_8
+{
+	{
+		diffusemap		textures/stone/wall_stone_8_d.tga
+		specularmap		textures/stone/wall_stone_8_s.tga
+		bumpmap			textures/stone/wall_stone_8_local.tga
+ 	}
+}
+
+material textures/stone/wall_stone_9
+{
+	{
+		diffusemap		textures/stone/wall_stone_9_d.tga
+		specularmap		textures/stone/wall_stone_9_s.tga
+		bumpmap			textures/stone/wall_stone_9_local.tga
+ 	}
+}
+
+material textures/stone/floor_stone_1
+{
+	{
+		diffusemap		textures/stone/floor_stone_1_d.tga
+		specularmap		textures/stone/floor_stone_1_s.tga
+		bumpmap			textures/stone/floor_stone_1_local.tga
+ 	}
+}
+
+material textures/stone/floor_stone_2
+{
+	{
+		diffusemap		textures/stone/floor_stone_2_d.tga
+		specularmap		textures/stone/floor_stone_2_s.tga
+		bumpmap			textures/stone/floor_stone_2_local.tga
+ 	}
+}
+
+material textures/stone/trim_stone_1
+{
+	{
+		diffusemap		textures/stone/trim_stone_1_d.tga
+		specularmap		textures/stone/trim_stone_1_s.tga
+		bumpmap			textures/stone/trim_stone_1_local.tga
+ 	}
+}
+
+material textures/stone/trim_stone_2
+{
+	{
+		diffusemap		textures/stone/trim_stone_2_d.tga
+		specularmap		textures/stone/trim_stone_2_s.tga
+		bumpmap			textures/stone/trim_stone_2_local.tga
+ 	}
+}
+
+material textures/stone/trim_stone_3
+{
+	{
+		diffusemap		textures/stone/trim_stone_3_d.tga
+		specularmap		textures/stone/trim_stone_3_s.tga
+		bumpmap			textures/stone/trim_stone_3_local.tga
+ 	}
+}
+
+material textures/stone/trim_stone_4
+{
+	{
+		diffusemap		textures/stone/trim_stone_4_d.tga
+		specularmap		textures/stone/trim_stone_4_s.tga
+		bumpmap			textures/stone/trim_stone_4_local.tga
+ 	}
+}
+
+material textures/stone/marble01_256
+{
+	{
+		diffusemap		textures2/stone/marble01_256_d.tga
+		specularmap		textures2/stone/marble01_256_s.tga
+ 		bumpmap			textures2/stone/marble01_256_local.tga
+		vertexcolor
+	}
+}

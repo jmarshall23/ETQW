@@ -1,0 +1,74 @@
+atmosphere daniel_valley {
+	sunMaterial "atmospheres/lights/scrolling_clouds_temperate"
+	sunDir ( 0.1050025895 -0.7254762053 0.6801902652 )
+	sunColor ( 0.6392157078 0.5372549295 0.4274510145 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright2"
+	sunSpriteSize 100000
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 0.9921569228 0.9529412389 )
+		saturation 1
+		contrast 1
+		glareParms ( 1.0699999332 1.0199999809 0 1 )
+		glareBases ( 0 0 0 0 )
+	}
+	fogDistHalf 7614
+	fogHeightHalf 8824
+	fogHeightOffset 784
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "quarry"
+	skyGradientImage "atmosphere/cloudyfog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 146
+	windStrengthDev 133
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/highalt_tiled" {
+		style old
+		parms 12 ( 0.1607840061 0.1294119954 0.1137249991 0.375 0.3300000131 0.0070000002 0.0049999999 5.6500000954 3.0499999523 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudy_dark_01" {
+		style old
+		parms 12 ( 0.7749999762 0.4078429937 0.3960779905 0.400000006 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.7049999833 0.7686269879 0.7372549772 0.7372549772 0.0015 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_01" {
+		style old
+		parms 12 ( 0.6999999881 0.4196079969 0.400000006 0.4039219916 0.001 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6000000238 0.3450979888 0.3176470101 0.3176470101 0.0024999999 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/sprites/sundisc_bright" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+
+
+

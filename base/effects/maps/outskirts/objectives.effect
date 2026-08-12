@@ -1,0 +1,144 @@
+effect effects/maps/outskirts/barricade_smoke
+{
+	size	1181
+
+	spawner "unnamed1"
+	{
+		count		20,20
+
+		sprite
+		{
+			duration	100,200
+			material	"textures/particles/smoke_test1"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,-70,0 }
+				size { box 100,100,150,150 }
+				tint { line 0.415686,0.415686,0.415686,0.364706,0.364706,0.364706 }
+				fade { point 0 }
+				offset { box -600,0,-400,400,100,400 }
+				rotate { box -8.33333,8.33333 }
+			}
+
+			motion
+			{
+				size { envelope concavefade }
+				fade { envelope shamus_fastinholdslowout }
+				rotate { envelope concavefade }
+			}
+
+			end
+			{
+				size { box 200,200,300,300 }
+				fade { line 0.4,1 }
+				rotate { box 8.33333,-8.33333 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/maps/outskirts/barricade_rubble
+{
+	size	267
+
+	emitter "Chips4"
+	{
+		duration	1,1
+		count		5,5
+		useMaterialColor
+		attenuateEmitter
+		attenuation	0,1024
+
+		sprite
+		{
+			duration	2.2,2.2
+			persist
+			material	"particles/debris/debris_stone02"
+			gravity		0.3,0.8
+			trailRepeat	1
+
+			start
+			{
+				size { box 2,2,12,12 }
+				tint { line 0.337255,0.321569,0.301961,0.207843,0.203922,0.192157 }
+				offset { line 0,0,-250,0,0,250 }
+				rotate { box -1.66667,1.66667 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shattertable2 offset 0.1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 2,2 }
+				rotate { box 1.66667,-1.66667 }
+			}
+			lineHit
+		}
+	}
+	sound "Debris Sound"
+	{
+		start		2,2
+		soundShader	"sounds/weapons/impacts/debris_small"
+		volume	2,2
+		freqshift	0.8,0.8
+	}
+	sound "Debris Sound2"
+	{
+		start		6,6
+		soundShader	"sounds/weapons/impacts/debris_small"
+		volume	2,2
+	}
+}
+
+effect effects/maps/outskirts/building_smoke
+{
+	size	1393
+
+	spawner "unnamed1"
+	{
+		count		20,20
+
+		sprite
+		{
+			duration	100,200
+			material	"textures/particles/smoke_test1"
+			trailRepeat	1
+
+			start
+			{
+				position { point 550,-400,0 }
+				size { box 100,100,150,150 }
+				tint { line 0.513726,0.513726,0.513726,0.364706,0.364706,0.364706 }
+				fade { point 0 }
+				offset { box -200,0,-500,400,400,400 }
+				rotate { box -8.33333,8.33333 }
+			}
+
+			motion
+			{
+				size { envelope concavefade }
+				fade { envelope shamus_fastinholdslowout }
+				rotate { envelope concavefade }
+			}
+
+			end
+			{
+				size { box 200,200,300,300 }
+				fade { line 0.4,1 }
+				rotate { box 8.33333,-8.33333 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+

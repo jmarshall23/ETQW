@@ -1,0 +1,132 @@
+
+#include <guis/game/hud/hud.include>
+#include <guis/common/colors.include>
+#include <guis/common/utility.include>
+#include <guis/mainmenu/components/dialog.include>
+#include <guis/game/sights/strogg_scope.include>
+
+#include <script/deployables/base_defines.include>	// for deployable state constants
+
+#include <guis/game/targeting/firesupport.include>
+
+gui guis/game/targeting/trinoculars {
+	properties {
+		float flags = immediate( flags ) | GUI_FULLSCREEN;
+	}
+
+	materials {		
+		"guis/assets/ethud/scanlines"			"guis/assets/ethud/scanlines"
+		"guis/assets/deploy/gdf/icon_aa"		"guis/assets/deploy/gdf/icon_aa"
+		"guis/assets/deploy/gdf/icon_ap"		"guis/assets/deploy/gdf/icon_ap"
+		"guis/assets/deploy/gdf/icon_radar"		"guis/assets/deploy/gdf/icon_radar"
+
+		"progress_timer_bg"						"guis/assets/icons/icons_sheet1, rect( 192, 96, 32, 32 )"
+		"progress_timer"						"guis/assets/icons/icons_sheet1, rect( 224, 96, 32, 32 )"
+		"invalid_target"						"guis/assets/icons/icons_sheet1, rect( 224, 64, 32, 32 )"
+		"target_locked"							"guis/assets/icons/icons_sheet1, rect( 192, 64, 32, 32 )"
+	}
+	_dlg_init
+	_hud_materials
+	__scope_init( 1 )
+	
+	events {
+		onActivate {
+			globals.gameHud.showDeployableState = immediate( globals.gameHud.showDeployableState - 1 );
+			globals.gameHud.showPostProcess = immediate( globals.gameHud.showPostProcess + 1 );
+		}
+		onDeactivate {
+			globals.gameHud.showDeployableState = immediate( globals.gameHud.showDeployableState + 1 );
+			globals.gameHud.showPostProcess = immediate( globals.gameHud.showPostProcess - 1 );
+		}
+	}
+
+	windowDef desktop {
+		properties {
+			rect rect = 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT;
+		}
+		timeline {
+			onTime 0 {
+				gui.FadeIn.backcolor = transition( "0.25, 0.25, 0.15, 1", "0.0, 0.0, 0.0, 0.0", 350 );
+				gui.FadeIn2.backcolor.a = transition( 0.5, 0, 250 );
+			}
+		}
+		__underlays( "noeffect" )
+	
+		windowDef FadeIn {
+			properties {
+				color	backColor = 0.1, 0.1, 0.1, 0.1;
+				string	material = "guis/assets/ethud/scanlines";
+				vec2 materialScale = 1, 1.5;
+					rect rect = 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT;
+	
+			}
+		}			
+		windowDef FadeIn2 {
+			properties {
+				rect	rect = 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT;
+				color	backColor = 0, 0, 0, 0;
+			}
+		}
+		windowDef crossbarV {
+			properties {
+				rect	rect = gui.screenCenter.x - 1, 0, 2, 480;
+				color	backColor = 0, 0, 0, 0.5;
+			}
+		}
+		windowDef crossbarH {
+			properties {
+				rect	rect = 0, gui.screenCenter.y - 1, SCREEN_WIDTH, 2;
+				color	backColor = 0, 0, 0, 0.5;
+			}
+		}
+		windowDef FSBInfo {
+			properties {
+				float visible = globals.deployables.state == DS_NORMAL && icompare( player.role, "oppressor" ) == true;
+				rect rect = CENTER_X - 40, 411, 80, 44;
+			}
+			_draw_dialog_frame( drawText, gui.blankWStr, "nogradient" )
+			windowDef SelectTimerFSB {
+				properties {
+					rect	rect			= 4, 2, 71, 40;
+					color	backColor		= 1, 1, 1, 0.8;
+					string	material		= "::" + globals.deployables.statusMaterial;
+					handle 	deployableTimer;
+				}
+				events {
+					onPostDraw {
+						callSuper();
+						drawTimer( deployableTimer, absoluteRect, COLOR_WHITE, globals.deployables.timerValue, false );
+					}
+					onCreate {
+						deployableTimer = gui.cacheMaterial( "deployTime", "::" + globals.deployables.statusDesatMaterial );
+					}
+					onPropertyChanged "globals.deployables.statusDesatMaterial" {
+						deployableTimer = gui.cacheMaterial( "deployTime", "::" + globals.deployables.statusDesatMaterial );
+					}
+				}
+				windowDef StatusFSB {
+					properties {
+						rect	rect 			= 0, 40, 71, 10;
+						handle	localizedText	= -1;
+						color	foreColor 		= 1, 1, 1, 0.75;
+						vec2 	textAlignment 	= TA_CENTER, TA_TOP;
+						float	fontSize 		= 12;
+					}
+					events {
+						onCreate {
+							if ( gui.compare( globals.deployables.deployableName, "" ) == true ) {
+								return;
+							}
+							localizedText = localize( globals.deployables.deployableName );
+						}
+						onPropertyChanged "globals.deployables.deployableName" {
+							localizedText = localize( globals.deployables.deployableName );
+						}
+					}
+				}
+			}
+		}
+		
+		_deployable_info		
+	}	
+}

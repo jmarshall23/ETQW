@@ -1,0 +1,136 @@
+// ========================================================================
+// Export
+/*
+reexportmodels vehicles/magog.def
+testmodel vehicle_magog
+*/
+
+export karateka {
+	options -prefix MAG_ -rotate -90 -nomerge -sourcedir models/vehicles/edf_magog/dev_sd -destdir models/vehicles/edf_magog  -keep origin main_dummy main hatch rope hook rear_upper_rotor_dummy rear_upper_rotor_dummy2 rear_upper_rotor rear_lower_rotor_dummy rear_lower_rotor_dummy2 rear_lower_rotor front_left_upper_rotor_dummy front_left_upper_rotor_dummy2 front_left_upper_rotor front_left_lower_rotor_dummy front_left_lower_rotor_dummy2 front_left_lower_rotor front_right_upper_rotor_dummy front_right_upper_rotor_dummy2 front_right_upper_rotor front_right_lower_rotor_dummy front_right_lower_rotor_dummy2 front_right_lower_rotor  -noAnimate m_front_right_wheel_support m_right_wheel m_hook_hatch m_glass m_front_left_wheel_support m_left_wheel m_rear_wheel_support m_rear_wheel m_main
+
+		mesh 	magog_lod0.mb			-dest magog.md5mesh
+		anim 	magog_lod0.mb			-dest magog.md5anim				-range 1 1
+		//anim 	drop.mb					-dest drop.md5anim				-range 1 30
+
+ 	 //	mesh	magog_lod1.mb			-dest magog_lod1_boned.md5mesh
+	 //	mesh	magog_lod2.mb			-dest magog_lod2_boned.md5mesh
+	 // 	mesh	magog_lod3.mb			-dest magog_lod3_boned.md5mesh
+
+	addoptions 		-noJoints
+
+	  	mesh	magog_lod1.mb			-dest magog_lod1.md5mesh
+	 	mesh	magog_lod2.mb			-dest magog_lod2.md5mesh
+	 	mesh	magog_lod3.mb			-dest magog_lod3.md5mesh
+}
+
+// ========================================================================
+// Test Lod Models
+//
+
+model vehicle_magog {
+	mesh							models/vehicles/edf_magog/magog.md5mesh
+	anim ik_pose					models/vehicles/edf_magog/magog.md5anim {
+	}
+	anim base						models/vehicles/edf_magog/magog.md5anim {
+	}
+//	anim drop						models/vehicles/edf_magog/drop.md5anim {
+//	}
+}
+
+// ========================================================================
+// Entity Def
+//
+
+entityDef vehicle_magog_npc {
+	"editor_color"					"1 .5 0"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"Heavy Lift Helicopter."
+
+	"spawnclass"					"sdDeliveryVehicle"
+	"scriptObject"					"vehicle_magog_npc"
+
+	"aor_layout"					"missile"
+
+	"info_name"						"game/vec/magog"
+
+	"icon_size_cm"					"32"
+	"mtr_commandmap"				"guis/assets/qet/cm_magog"
+
+	"model"							"vehicle_magog"
+	"mins"							"-600 -570 128"
+	"maxs"							"512 570 512"
+
+	"path_type"						"vehicle_magog_npc"
+
+	"damage_smoke"					"70"
+	"damage_level1"					"50"
+	"damage_level2"					"30"
+	"damage_level3"					"10"
+
+	"joint_damage_smoke"			"main"
+	"joint_damage_fire"				"main"
+
+	"option_combat_model"			"1"
+
+	"joint_attach"					"hook"
+	"joint_rope"					"rope"
+	"joint_hatch"					"hatch"
+	"joint_main"					"main"
+
+	"fx_rotors"						"effects/vehicles/magog_npc_rotors"
+
+	"vs_vehicleScript"				"magog_npc"
+
+	"snd_rotor"						"sounds/vehicles/magog"
+	"snd_cancel_deploy"				"sounds/vo/gdf/npc/magog/invalid"
+
+	"target_pos"					"10000 0 0"
+
+	"projectile_decoy_joint"		"hatch"
+	"launch_velocity"				"0 0 -300"
+
+	"path_speed"					"1536"
+
+	"option_simple_physics"			"1"
+	"gravity"						"0"
+	"mass"							"10000"
+
+	"max_z_vel"						"400"
+	"max_thrust"					"500"
+
+	"collection_deliver"			"deliver"
+
+	"climate_skin_key"				"magog"
+
+	"fx_groundeffect"				"effects/vehicles/magog/groundeffect_dirt"
+	"fx_groundeffect_none"			"effects/vehicles/magog/groundeffect_dirt"
+	"fx_groundeffect_grass"			"effects/vehicles/magog/groundeffect_grass"
+	"fx_groundeffect_stone"			"effects/vehicles/magog/groundeffect_stone"
+	"fx_groundeffect_sand"			"effects/vehicles/magog/groundeffect_sand"
+	"fx_groundeffect_pavement"		"effects/vehicles/magog/groundeffect_pavement"
+	"fx_groundeffect_dirt"			"effects/vehicles/magog/groundeffect_dirt"
+	"fx_groundeffect_dusty_road"	"effects/vehicles/magog/groundeffect_dirt"
+	"fx_groundeffect_gravel"		"effects/vehicles/magog/groundeffect_stone"
+	"fx_groundeffect_default"		"effects/vehicles/magog/groundeffect_dirt"
+	"fx_groundeffect_water"			"effects/vehicles/magog/groundeffect_water"
+	"fx_groundeffect_snow"			"effects/vehicles/magog/groundeffect_snow"
+
+
+	"groundeffects_threshhold"		"2000"
+
+	"overridenCoverage"				"1"
+}
+
+damageFilter damage_magog_npc_collide {
+	type {
+		target					"target_veh_all"
+		damage					50000
+	}
+}
+
+damageDef damage_magog_npc_collide {
+	damage						"damage_magog_npc_collide"
+
+	tt_obituary_unknown					"tooltips/killmsgs/vehicles/magog/empty"
+}

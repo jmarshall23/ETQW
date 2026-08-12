@@ -1,0 +1,135 @@
+export nerve {
+
+options -prefix POD_ -sourcedir models/mapobjects/quarry/cellpod -destdir models/mapobjects/quarry/cellpod
+
+		mesh idle_close.mb 		-dest cellpod.md5mesh
+		anim deploy.mb 			-dest cellpod_deploy.md5anim
+		anim idle_close.mb 		-dest cellpod_idle_closed.md5anim
+		anim idle_open.mb 		-dest cellpod_idle_open.md5anim
+}
+
+export nerve {
+
+options -prefix ENERCELL_ -sourcedir models/mapobjects/quarry/enercell -destdir models/mapobjects/quarry/enercell
+
+		mesh loop.mb 		-dest enercell.md5mesh
+		anim loop.mb 		-dest enercell.md5anim
+}
+
+export nerve {
+
+options -prefix SCARAB_ -sourcedir models/mapobjects/quarry/scarab -destdir models/mapobjects/quarry/scarab -keep root_1 root_2 root_3 rightfront_joint1 rightfront_joint2 rightfront_joint3 rightfront_joint4 rightfront_joint5 leftfront_joint1 leftfront_joint2 leftfront_joint3 leftfront_joint4 leftfront_joint5 midfront_joint1 midfront_joint2 midfront_joint3 midfront_joint4 midfront_joint5 frontspike_joint1 right rightrear_joint1 rightrear_joint2 rightrear_joint3 rightrear_joint4 rightrear_joint5 rightrear_joint5 rightrear_joint6 rightrear_joint7 rightrear_joint8 rightrearspike_joint1 left leftrearspike_joint1 leftrear_joint1 leftrear_joint2 leftrear_joint3 leftrear_joint4 leftfront_emitter leftfront_emitter2 midfront_emitter rightrear_emitter rightrearspike_emitter leftrearspike_emitter
+
+		mesh makemesh.mb 		-dest scarab.md5mesh
+		anim idle.mb 		-dest scarab_idle.md5anim
+}
+
+export nerve {
+
+options -prefix BEACON_ -sourcedir models/mapobjects/island/beacon -destdir models/mapobjects/island/beacon -keep joint1 joint2 joint3 joint4 joint5 joint6 joint7 joint8 joint9 joint10
+
+		mesh activate.mb 			-dest beacon.md5mesh
+		anim activate.mb	-range 180 180	-dest idle_down.md5anim
+		anim activate.mb 	-range 0 180	-dest raise.md5anim
+		anim activate.mb 	-range 181 320	-dest idle_loop.md5anim
+}
+
+//============================
+//=== models =================
+//============================
+
+model strogg_enercell {
+	mesh					models/mapobjects/quarry/enercell/enercell.md5mesh
+	anim idle_atbase		models/mapobjects/quarry/enercell/enercell.md5anim {
+	}
+}
+
+model strogg_cellpod {
+	mesh					models/mapobjects/quarry/cellpod/cellpod.md5mesh
+
+	anim deploy				models/mapobjects/quarry/cellpod/cellpod_deploy.md5anim {
+	}
+	anim idle_closed			models/mapobjects/quarry/cellpod/cellpod_idle_closed.md5anim {
+	}
+	anim idle_open				models/mapobjects/quarry/cellpod/cellpod_idle_open.md5anim {
+	}
+}
+
+model strogg_scarab {
+	mesh					models/mapobjects/quarry/scarab/scarab.md5mesh
+
+	anim idle				models/mapobjects/quarry/scarab/scarab_idle.md5anim {
+
+		frame 12						effect fx_spark leftfront_emitter
+
+		frame 12						effect fx_spark leftfront_emitter2
+
+		frame 33						effect fx_spark rightrear_emitter
+
+		frame 36						effect fx_spark leftrearspike_emitter
+
+		frame 47						effect fx_spark midfront_emitter
+
+		frame 68						effect fx_spark midfront_emitter
+
+		frame 72						effect fx_spark rightrear_emitter
+
+		frame 76						effect fx_spark rightrearspike_emitter
+
+		frame 82						effect fx_spark rightrearspike_emitter
+		frame 82						effect fx_spark leftrearspike_emitter
+		frame 88						effect fx_spark leftrearspike_emitter
+
+		frame 131						effect fx_spark rightrear_emitter
+
+		frame 140						effect fx_spark leftfront_emitter2
+
+		frame 197						effect fx_spark leftrearspike_emitter
+
+	}
+}
+
+
+entityDef strogg_scarab {
+
+	"editor_color"			"1 .5 0"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+
+	"model"					"strogg_scarab"
+	"spawnclass"			"idAnimated"
+	"anim"					"idle"
+	"start_anim"			"idle"
+	"fx_spark"				"effects/mapobjects/crashedship/sparks"
+}
+
+model island_beacon_model {
+	mesh					models/mapobjects/island/beacon/beacon.md5mesh
+
+	anim idle_down				models/mapobjects/island/beacon/idle_down.md5anim {
+		frame begin					sound_channel snd_structure_idle snd_idle
+	}
+	anim raise					models/mapobjects/island/beacon/raise.md5anim {
+		frame begin					sound_channel snd_structure_idle snd_raise
+	}
+	anim idle_loop				models/mapobjects/island/beacon/idle_loop.md5anim {
+		frame begin					sound_channel snd_structure_idle snd_run
+	}
+}
+
+entityDef island_beacon {
+	"editor_color"			"1 .5 0"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+
+	"model"					"island_beacon_model"
+	//"spawnclass"			"idAnimated"
+	"spawnclass"			"sdScriptEntity" // MBJ
+	"scriptObject"			"island_generator_beacon" // MBJ
+	"anim"					"idle_down"
+	"start_anim"			"idle_down"
+
+	"snd_idle"				"sounds/maps/island/beacon/idle"
+	"snd_raise"				"sounds/maps/island/beacon/raise"
+	"snd_run"				"sounds/maps/island/beacon/run"
+}

@@ -1,0 +1,250 @@
+//main objective model
+
+material  models/mapobjects/sewer/console
+{
+	surfaceType	"metal"
+	noselfshadow	
+	{
+		program	interaction/selfillum_detailwm
+		diffusemap	picmip -1	models/mapobjects/sewer/console_d.tga
+		specularmap	picmip -2	models/mapobjects/sewer/console_s.tga
+		bumpmap		picmip -1	models/mapobjects/sewer/console_local.tga
+		selfIllumMap	picmip -1	models/mapobjects/sewer/console_glow.tga
+
+		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	12,12,0,0
+		detailWeightMap			models/mapobjects/sewer/console_detailmask.tga
+	}
+}
+material  models/mapobjects/sewer/console_noshadow
+{
+	surfaceType	"metal"
+	noshadows
+	noOverlays
+	{
+		program	interaction/selfillum_detailwm
+		diffusemap	picmip -1	models/mapobjects/sewer/console_d.tga
+		specularmap	picmip -2	models/mapobjects/sewer/console_s.tga
+		bumpmap		picmip -1	models/mapobjects/sewer/console_local.tga
+		selfIllumMap	picmip -1	models/mapobjects/sewer/console_glow.tga
+
+		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	12,12,0,0
+		detailWeightMap			models/mapobjects/sewer/console_detailmask.tga
+	}
+}
+
+material models/mapobjects/sewer/filter
+{
+	surfaceType	"metal"
+	noselfshadow
+	{
+		diffusemap	picmip -1	models/mapobjects/sewer/filter_d.tga
+		specularmap	picmip -2	models/mapobjects/sewer/filter_s.tga
+		bumpmap		picmip -1	models/mapobjects/sewer/filter_local.tga
+
+		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	7,7,0,0
+	}
+}
+
+material models/mapobjects/sewer/filter_noshadows
+{
+	surfaceType	"metal"
+	noshadows
+	{
+		diffusemap	picmip -1	models/mapobjects/sewer/filter_d.tga
+		specularmap	picmip -2	models/mapobjects/sewer/filter_s.tga
+		bumpmap		picmip -1	models/mapobjects/sewer/filter_local.tga
+
+		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	7,7,0,0
+	}
+}
+
+
+material models/mapobjects/sewer/battery
+{
+	surfaceType	"metal"
+	noselfshadow
+	{
+		diffusemap	picmip -1	models/mapobjects/sewer/battery_d.tga
+		specularmap	picmip -2	models/mapobjects/sewer/battery_s.tga
+		bumpmap		picmip -1	models/mapobjects/sewer/battery_local.tga
+		vertexcolor
+
+		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	7,7,0,0
+	}
+}
+
+material models/mapobjects/sewer/battery_noshadows
+{
+	surfaceType	"metal"
+	noshadows
+	{
+		diffusemap	picmip -1	models/mapobjects/sewer/battery_d.tga
+		specularmap	picmip -2	models/mapobjects/sewer/battery_s.tga
+		bumpmap		picmip -1	models/mapobjects/sewer/battery_local.tga
+		vertexcolor
+
+		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	7,7,0,0
+	}
+}
+
+material models/mapobjects/sewer/capacitor
+{
+	surfaceType	"metal"
+	noshadows	
+	{
+		diffusemap	picmip -1	models/mapobjects/sewer/capacitor_d.tga
+		specularmap	picmip -2	models/mapobjects/sewer/capacitor_s.tga
+		bumpmap		picmip -1	models/mapobjects/sewer/capacitor_local.tga
+
+		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	7,7,0,0
+	}
+}
+
+material models/mapobjects/sewer/capacitor_interior
+{
+	surfaceType	"metal"
+	noshadows	
+	{
+		diffusemap	picmip -1	models/mapobjects/sewer/capacitor_d.tga
+		specularmap	picmip -2	models/mapobjects/sewer/capacitor_s.tga
+		bumpmap		picmip -1	models/mapobjects/sewer/capacitor_local.tga
+
+		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	7,7,0,0
+	}
+}
+
+material models/mapobjects/sewer/transformer
+{
+	surfaceType	"metal"
+	noshadows
+	{
+		diffusemap	picmip -1	models/mapobjects/sewer/transformer_d.tga
+		specularmap	picmip -2	models/mapobjects/sewer/transformer_s.tga
+		bumpmap		picmip -1	models/mapobjects/sewer/transformer_local.tga
+
+		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	7,7,0,0
+	}
+}
+
+material models/mapobjects/sewer/transformer_shadows
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	models/mapobjects/sewer/transformer_d.tga
+		specularmap	picmip -2	models/mapobjects/sewer/transformer_s.tga
+		bumpmap		picmip -1	models/mapobjects/sewer/transformer_local.tga
+
+		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	7,7,0,0
+	}
+}
+
+material models/mapobjects/sewer/treatment
+{
+	surfaceType	"metal"	
+	{	
+		diffusemap	picmip -1	models/mapobjects/sewer/treatment_d.tga
+		specularmap	picmip -2	models/mapobjects/sewer/treatment_s.tga
+		bumpmap		picmip -1	models/mapobjects/sewer/treatment_local.tga
+
+		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	7,7,0,0
+	}
+}
+
+material models/mapobjects/sewer/treatment_noshadows
+{
+	surfaceType	"metal"
+	noshadows
+	{	
+		diffusemap	picmip -1	models/mapobjects/sewer/treatment_d.tga
+		specularmap	picmip -2	models/mapobjects/sewer/treatment_s.tga
+		bumpmap		picmip -1	models/mapobjects/sewer/treatment_local.tga
+
+		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	7,7,0,0
+	}
+}
+
+
+material models/mapobjects/sewer/sewer_door
+{
+	surfaceType	"metal"
+	noshadows
+	nonsolid
+	{
+		diffusemap	picmip -1	models/mapobjects/sewer/sewer_door_d.tga
+		specularmap	picmip -2	models/mapobjects/sewer/sewer_door_s.tga
+		bumpmap		picmip -1	models/mapobjects/sewer/sewer_door_local.tga
+
+		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	7,7,0,0
+	}
+}
+
+material models/mapobjects/sewer/turbinator
+{
+	surfaceType	"metal"
+	noshadows
+	{
+		diffusemap	picmip -1	models/mapobjects/sewer/turbinator_d.tga
+		bumpmap		picmip -1	addnormals(models/mapobjects/sewer/turbinator_local.tga, heightmap(models/mapobjects/sewer/turbinator_h.tga, 4))
+		specularmap	picmip -2	models/mapobjects/sewer/turbinator_s.tga
+
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	12,6,0,0
+	}
+}
+
+material models/mapobjects/sewer/blast_doors
+{
+ 	renderbump -size 512 1024 -clampoutput 0 0 1 1 -aa 2 models/mapobjects/sewer/blast_doors_local.tga models/mapobjects/sewer/blast_door_hi.ase
+	surfaceType	"metal"
+	//noshadows
+	{
+		diffusemap	picmip -1	models/mapobjects/sewer/blast_doors_d.tga
+		bumpmap		picmip -1	addnormals(models/mapobjects/sewer/blast_doors_local.tga, heightmap(models/mapobjects/sewer/blast_doors_h.tga, 4))
+		specularmap	picmip -2	models/mapobjects/sewer/blast_doors_s.tga
+
+		//diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	6,12,0,0
+	}
+}

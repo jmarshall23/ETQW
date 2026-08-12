@@ -1,0 +1,509 @@
+// Strogg Nexus
+
+// Alerts
+
+sound sounds/vo/strogg/nexus/alerts/base/attacking/gdf {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25311.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/base/underattack/gdf {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25312.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/base/defend {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25313.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/radar/lost {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25314.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/vehicle/bailout {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25315.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/vehicle/exit {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25316.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/vehicle/abandon {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25317.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/fsbneutralised {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25501.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/minesspotted {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25506.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/airstrike {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25509.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/vampire {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25510.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/firesupport {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25511.wav
+}
+
+
+// OOB Warnings
+
+sound sounds/vo/strogg/nexus/alerts/oob/macronwontforgive {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25321.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/oob/returntocombat {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25322.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/oob/leaveandburn {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25323.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/oob/getback {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25324.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/oob {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25321.wav
+	localization/english/sounds/vo/strogg/nexus/alerts/25322.wav
+	localization/english/sounds/vo/strogg/nexus/alerts/25323.wav
+	localization/english/sounds/vo/strogg/nexus/alerts/25324.wav
+}
+
+
+// Spawn Hosts
+
+sound sounds/vo/strogg/nexus/alerts/spawnhost/created {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25420.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/spawnhost/available {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25421.wav
+}
+
+sound sounds/vo/strogg/nexus/alerts/spawnhost/newspawn {
+
+	localization/english/sounds/vo/strogg/nexus/alerts/25422.wav
+}
+
+
+// Countdowns
+
+sound sounds/vo/strogg/nexus/countdown/tenminutes {
+
+	localization/english/sounds/vo/strogg/nexus/countdown/25331.wav
+}
+
+sound sounds/vo/strogg/nexus/countdown/fiveminutes {
+
+	localization/english/sounds/vo/strogg/nexus/countdown/25332.wav
+}
+
+sound sounds/vo/strogg/nexus/countdown/twominutes {
+
+	localization/english/sounds/vo/strogg/nexus/countdown/25333.wav
+}
+
+sound sounds/vo/strogg/nexus/countdown/oneminute {
+
+	localization/english/sounds/vo/strogg/nexus/countdown/25334.wav
+}
+
+sound sounds/vo/strogg/nexus/countdown/thirtyseconds {
+
+	localization/english/sounds/vo/strogg/nexus/countdown/25335.wav
+}
+
+sound sounds/vo/strogg/nexus/countdown/tenseconds {
+
+	localization/english/sounds/vo/strogg/nexus/countdown/25336.wav
+}
+
+sound sounds/vo/strogg/nexus/countdown/fivetoone {
+
+	localization/english/sounds/vo/strogg/nexus/countdown/25337.wav
+}
+
+sound sounds/vo/strogg/nexus/countdown/fight {
+
+	localization/english/sounds/vo/strogg/nexus/countdown/25338.wav
+}
+
+
+// Praise & Blame
+
+sound sounds/vo/strogg/nexus/praiseblame/sneaky {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25381.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/betweeneyes {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25382.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/lifesaver {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25383.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/snipeyguy {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25384.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/deathfromabove {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25385.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/attaboy {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25386.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/dangerousdriver {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25387.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/majorminer {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25388.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/topgun {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25389.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/welldone {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25390.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/asseskicked {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25391.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/spiritsoldier {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25392.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/notgoodenough {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25393.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/liveforever {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25394.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/twofer {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25395.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/threefer {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25396.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/fourfer {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25397.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/fivefer {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25398.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/party {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25399.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/orgy {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25400.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/boom {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25401.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/bang {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25402.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/ohh {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25403.wav
+}
+
+sound sounds/vo/strogg/nexus/praiseblame/ow {
+
+	localization/english/sounds/vo/strogg/nexus/praiseblame/25404.wav
+}
+
+
+// Promotions
+
+sound sounds/vo/strogg/nexus/promotions/rank01 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25341.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank02 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25342.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank03 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25343.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank04 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25344.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank05 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25345.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank06 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25346.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank07 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25347.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank08 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25348.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank09 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25349.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank10 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25350.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank11 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25351.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank12 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25352.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank13 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25353.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank14 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25354.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank15 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25355.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank16 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25356.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank17 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25357.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank18 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25358.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank19 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25359.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank20 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25360.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank21 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25361.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank22 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25362.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank23 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25363.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank24 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25364.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank25 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25365.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank26 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25366.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank27 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25367.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank28 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25368.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank29 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25369.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank30 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25370.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank31 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25371.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank32 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25372.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank33 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25373.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank34 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25374.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank35 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25375.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank36 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25376.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank37 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25377.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank38 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25378.wav
+}
+
+sound sounds/vo/strogg/nexus/promotions/rank39 {
+
+	localization/english/sounds/vo/strogg/nexus/promotions/25379.wav
+}
+
+
+// Generic Win & Lose
+
+sound sounds/vo/strogg/nexus/winlose/win1 {
+
+	localization/english/sounds/vo/strogg/nexus/winlose/25512.wav
+}
+
+sound sounds/vo/strogg/nexus/winlose/win2 {
+
+	localization/english/sounds/vo/strogg/nexus/winlose/25513.wav
+}
+
+sound sounds/vo/strogg/nexus/winlose/win3 {
+
+	localization/english/sounds/vo/strogg/nexus/winlose/25514.wav
+}
+
+sound sounds/vo/strogg/nexus/winlose/lose1 {
+
+	localization/english/sounds/vo/strogg/nexus/winlose/25515.wav
+}
+
+sound sounds/vo/strogg/nexus/winlose/lose2 {
+
+	localization/english/sounds/vo/strogg/nexus/winlose/25516.wav
+}
+
+sound sounds/vo/strogg/nexus/winlose/lose3 {
+
+	localization/english/sounds/vo/strogg/nexus/winlose/25517.wav
+}

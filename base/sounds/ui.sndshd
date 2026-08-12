@@ -1,0 +1,144 @@
+// UI Sounds
+
+sound sounds/ui/main/select_01 {
+	volume	-8
+	sounds/ui/main/select_04.wav
+}
+
+sound sounds/ui/weapons/click {
+
+	volume -15
+
+	sounds/guis/click.wav
+}
+
+sound sounds/ui/weapons/accept {
+
+	volume -15
+
+	sounds/guis/click.wav
+}
+
+sound sounds/ui/main/mouseover {
+
+	volume -15
+
+	sounds/ui/main/highlight_01.wav
+//	sounds/ui/main/highlight_02.wav
+}
+
+sound sounds/ui/main/click {
+
+	volume -15
+
+	sounds/ui/main/click_01.wav
+}
+
+sound sounds/ui/main/cancel {
+
+	volume -15
+
+//	sounds/ui/main/cancel_01.wav
+	sounds/ui/main/cancel_02.wav
+}
+
+sound sounds/ui/main/error {
+
+	volume -15
+
+//	sounds/ui/main/error_01.wav
+	sounds/ui/main/error_02.wav
+//	sounds/ui/main/error_03.wav
+}
+
+sound sounds/ui/main/open {
+
+	volume -15
+
+//	sounds/ui/main/open_01.wav
+//	sounds/ui/main/open_02.wav
+//	sounds/ui/main/open_03.wav
+	sounds/ui/main/open_04.wav
+}
+
+sound sounds/ui/main/close {
+
+	volume -15
+
+//	sounds/ui/main/close_01.wav
+//	sounds/ui/main/close_02.wav
+//	sounds/ui/main/close_03.wav
+	sounds/ui/main/close_04.wav
+}
+
+// bad: low health, low ammo
+sound sounds/ui/main/bad {
+
+	volume -10
+
+	sounds/ui/main/bad_02a.wav
+}
+
+// cannot: not enough power bar, no ammo left, can't perform that operation
+sound sounds/ui/main/cannot {
+
+	volume 0
+
+	sounds/ui/main/cannot_01.wav
+}
+
+// gdf command map transition swoosh
+sound sounds/ui/main/cmtrans_gdf {
+
+	volume -2
+
+	sounds/ui/main/cmtrans_gdf_01.wav
+}
+
+// strogg command map transition swoosh
+sound sounds/ui/main/cmtrans_strogg {
+
+	volume -2
+
+	sounds/ui/main/cmtrans_strogg_01.wav
+}
+
+// good: campaign rewards, proficiency rating increases, unlocked rewards, completed missions etc
+sound sounds/ui/main/good {
+
+	volume 0
+
+	sounds/ui/main/good_01.wav
+}
+
+// very good: persisten rewards, rank promotions, honours
+sound sounds/ui/main/verygood {
+
+	volume 0
+
+	sounds/ui/main/verygood_01.wav
+}
+
+// interaction: simple click when you select things in limbo menu etc
+sound sounds/ui/main/interaction {
+
+	volume 0
+
+	sounds/ui/main/interaction_01.wav
+}
+
+// neutral: new tooltip popup
+sound sounds/ui/main/neutral {
+
+	volume -11
+
+	sounds/ui/main/neutral_01.wav
+	//sounds/ui/main/neutral_02.wav // think this one is too annoying
+}
+
+
+
+
+
+
+

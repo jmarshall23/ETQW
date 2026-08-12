@@ -1,0 +1,62 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/ark/wooden_wall_1_ts {
+	width	256
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 256 ) ( 128 320 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 896 ) ( 256 1024 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 128 0 ) ( 256 256 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 128 256 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1024 ) ( 256 1152 )
+	}
+	rect {
+		surfaceType	stone
+		surfaceColor	( 1 1 1 )
+		coords ( 0 384 ) ( 256 896 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1152 ) ( 256 1280 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1792 ) ( 256 1920 )
+	}
+	rect {
+		surfaceType	wood
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1280 ) ( 256 1792 )
+	}
+	rect {
+		surfaceType	stone
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1920 ) ( 256 2048 )
+	}
+}

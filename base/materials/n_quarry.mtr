@@ -1,0 +1,426 @@
+///////////////////////////////////////
+//
+//	QUARRY BRICK
+//
+///////////////////////////////////////
+
+
+material textures/nerve/quarry_brick
+	{
+	diffusemap	picmip -1	textures/nerve/quarry_brick_d.tga
+	specularmap     picmip -2	textures/nerve/quarry_brick_s.tga
+	bumpmap 	picmip -1	textures/nerve/quarry_brick_local.tga
+ 	}
+ 	
+///////////////////////////////////////
+//
+//	QUARRY TIN SET
+//
+///////////////////////////////////////
+
+
+material textures/nerve/quarry_c_tin
+	{
+	diffusemap	picmip -1	textures/nerve/quarry_c_tin_d.tga
+	specularmap     picmip -2	textures/nerve/quarry_c_tin_s.tga
+	bumpmap 	picmip -1	textures/nerve/quarry_c_tin_local.tga
+ 	}
+ 	
+material textures/nerve/quarry_panel_tin
+	{
+	diffusemap	picmip -1	textures/nerve/quarry_panel_tin_d.tga
+	specularmap     picmip -2	textures/nerve/quarry_panel_tin_s.tga
+	bumpmap 	picmip -1	textures/nerve/quarry_panel_tin_local.tga
+ 	}
+ 	
+material textures/nerve/quarry_trim_tin
+	{
+	diffusemap	picmip -1	textures/nerve/quarry_trim_tin_d.tga
+	specularmap     picmip -2	textures/nerve/quarry_trim_tin_s.tga
+	bumpmap 	picmip -1	textures/nerve/quarry_trim_tin_local.tga
+ 	}
+ 	
+///////////////////////////////////////
+//
+//	QUARRY SILO
+//
+///////////////////////////////////////
+
+
+material textures/nerve/quarry_silo
+	{
+	diffusemap	picmip -1	textures/nerve/quarry_silo_d.tga
+	specularmap     picmip -2	textures/nerve/quarry_silo_s.tga
+	bumpmap 	picmip -1	textures/nerve/quarry_silo_local.tga
+ 	}
+ 	
+///////////////////////////////////////
+//
+//	QUARRY MINE CRANE
+//
+///////////////////////////////////////
+
+
+material models/nerve/quarry_mine_crane
+{
+	twosided
+	{
+		diffusemap	picmip -1	models/nerve/quarry_mine_crane_d.tga
+		specularmap     picmip -2	models/nerve/quarry_mine_crane_s.tga
+		bumpmap 	picmip -1	models/nerve/quarry_mine_crane_local.tga
+		
+		diffuseDetailMap 		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	6,6,0,0
+ 	}
+}
+
+///////////////////////////////////////
+//
+//	QUARRY PIPE CAP
+//
+///////////////////////////////////////
+
+
+material textures/nerve/quarry_pipecap2a
+{
+ 	noShadows
+	nonsolid
+	noimpact
+	twoSided
+	qer_editorimage textures/nerve/quarry_pipecap2a_d.tga
+
+	{       
+		diffusemap 	textures/nerve/quarry_pipecap2a_d.tga
+		specularmap	textures/decals/pipecap2a_s.tga
+		bumpmap 	addnormals (textures/decals/pipecap2a_local.tga, heightmap (textures/decals/pipecap2_bmp.tga, 1 ))      	 
+		alphaTest 0.5
+	}
+
+}
+
+///////////////////////////////////////
+//
+//	QUARRY DIAMOND PLATE
+//
+///////////////////////////////////////
+
+
+material textures/nerve/quarry_diamond_plate
+{
+	surfaceType	"metal"
+	diffusemap	picmip -1	textures/nerve/quarry_diamond_plate_d.tga
+	specularmap     picmip -2	textures/nerve/quarry_diamond_plate_s.tga
+	bumpmap 	picmip -1	textures/nerve/quarry_diamond_plate_local.tga
+}
+ 	
+///////////////////////////////////////
+//
+//	QUARRY SCAFFOLDING
+//
+///////////////////////////////////////
+
+
+material models/nerve/quarry_scaf_poles
+	{
+	diffusemap	picmip -1	models/nerve/quarry_scaf_poles_d.tga
+	specularmap     picmip -2	models/nerve/quarry_scaf_poles_s.tga
+	bumpmap 	picmip -1	models/nerve/quarry_scaf_poles_local.tga
+ 	}
+ 	
+material models/nerve/quarry_scaf_planks
+	{
+	diffusemap	picmip -1	models/nerve/quarry_scaf_planks_d.tga
+	specularmap     picmip -2	models/nerve/quarry_scaf_planks_s.tga
+	bumpmap 	picmip -1	models/nerve/quarry_scaf_planks_local.tga
+ 	}
+ 	
+///////////////////////////////////////
+//
+//	QUARRY TEXTURES
+//
+///////////////////////////////////////
+
+
+material textures/nerve/q_warehouse_cem
+{
+	{
+		diffusemap	picmip -1	textures/nerve/q_warehouse_cem_d.tga
+		specularmap     picmip -2	textures/nerve/q_warehouse_cem_s.tga
+		bumpmap 	picmip -1	textures/nerve/q_warehouse_cem_local.tga
+		vertexcolor
+	}
+}
+ 	
+material textures/nerve/q_warehouse_door
+	{
+	diffusemap	picmip -1	textures/nerve/q_warehouse_door_d.tga
+	specularmap     picmip -2	textures/nerve/q_warehouse_door_s.tga
+	bumpmap 	picmip -1	textures/nerve/q_warehouse_door_local.tga
+ 	}
+
+material textures/nerve/q_warehouse_dplatestep
+	{
+	diffusemap	picmip -1	textures/nerve/q_warehouse_dplatestep_d.tga
+	specularmap     picmip -2	textures/nerve/q_warehouse_dplatestep_s.tga
+	bumpmap 	picmip -1	textures/nerve/q_warehouse_dplatestep_local.tga
+ 	}
+ 	
+material textures/nerve/q_warehouse_ibeam
+	{
+	diffusemap	picmip -1	textures/nerve/q_warehouse_ibeam_d.tga
+	specularmap     picmip -2	textures/nerve/q_warehouse_ibeam_s.tga
+	bumpmap 	picmip -1	textures/nerve/q_warehouse_ibeam_local.tga
+ 	}
+ 	
+material textures/nerve/q_warehouse_vent
+	{
+	diffusemap	picmip -1	textures/nerve/q_warehouse_vent_d.tga
+	specularmap     picmip -2	textures/nerve/q_warehouse_vent_s.tga
+	bumpmap 	picmip -1	textures/nerve/q_warehouse_vent_local.tga
+ 	}
+ 	
+material textures/nerve/q_warehouse_ventbig
+	{
+	diffusemap	picmip -1	textures/nerve/q_warehouse_ventbig_d.tga
+	specularmap     picmip -2	textures/nerve/q_warehouse_ventbig_s.tga
+	bumpmap 	picmip -1	textures/nerve/q_warehouse_ventbig_local.tga
+ 	}
+ 	
+material textures/nerve/q_trim_dark
+	{
+	diffusemap	picmip -1	textures/nerve/q_trim_dark_d.tga
+	specularmap     picmip -2	textures/nerve/q_trim_dark_s.tga
+	bumpmap 	picmip -1	textures/nerve/q_trim_dark_local.tga
+ 	}
+ 	
+material textures/nerve/q_trim_light
+	{
+	diffusemap	picmip -1	textures/nerve/q_trim_light_d.tga
+	specularmap     picmip -2	textures/nerve/q_trim_light_s.tga
+	bumpmap 	picmip -1	textures/nerve/q_trim_light_local.tga
+ 	}
+ 	
+material textures/nerve/q_plywood_old
+	{
+	diffusemap	picmip -1	textures/nerve/q_plywood_old_d.tga
+	specularmap     picmip -2	textures/nerve/q_plywood_old_s.tga
+	bumpmap 	picmip -1	textures/nerve/q_plywood_old_local.tga
+ 	}
+ 	
+///////////////////////////////////////
+//
+//	QUARRY UNDERGROWTH
+//
+///////////////////////////////////////
+
+material stuff/foliage/quarry/undergrowth
+{
+	twoSided
+	nonsolid
+	sort decal
+	{
+		noiseMap textures/noisey.tga
+		program stuff/grass_alphatest
+		writeDepth
+		diffuseMap stuff/foliage/quarry/undergrowth_d.tga
+		vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+	twoSided
+}
+
+///////////////////////////////////////
+//
+//	QUARRY GATE FOOTING
+//
+///////////////////////////////////////
+
+
+material textures/decals/n_concrete_footing
+{
+ 	noShadows
+	nonsolid
+	noimpact
+	twoSided
+	qer_editorimage textures/decals/n_concrete_footing_d.tga
+
+	{       
+		diffusemap textures/decals/n_concrete_footing_d.tga
+		specularmap	textures/decals/n_concrete_footing_s.tga
+		bumpmap 	textures/decals/n_concrete_footing_local.tga      	 
+		alphaTest 0.5
+	}
+
+}
+
+material stuff/foliage/island_stuffgate
+{
+	noShadows
+	nonsolid
+	noimpact
+	twoSided
+	qer_editorimage stuff/foliage/temperate/island_stuff.tga
+	
+	{       
+			diffusemap stuff/foliage/temperate/island_stuff.tga     	 
+			alphaTest 0.5
+	}
+	twoSided
+}
+
+///////////////////////////////////////
+//
+//	QUARRY TEXTURES
+//
+///////////////////////////////////////
+
+
+material models/nerve/diesel_cannister
+{
+	diffusemap	picmip -1	models/nerve/diesel_cannister_d.tga
+	specularmap     picmip -2	models/nerve/diesel_cannister_s.tga
+	bumpmap 	picmip -1	models/nerve/diesel_cannister_local.tga
+}
+
+///////////////////////////////////////
+//
+//	QUARRY model sheets
+//
+///////////////////////////////////////
+
+
+material models/mapobjects/quarry/quarry_objects/quarry_objects01_s
+{
+	surfaceType "metal"
+	{
+		diffusemap	picmip -1	models/mapobjects/quarry/quarry_objects/quarry_objects01_d.tga
+		bumpmap		picmip -1	models/mapobjects/quarry/quarry_objects/quarry_objects01_local.tga
+		specularmap	picmip -2	models/mapobjects/quarry/quarry_objects/quarry_objects01_s.tga
+		vertexcolor
+		
+		//diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	14,14,0,0
+	}
+}
+
+material models/mapobjects/quarry/quarry_objects/quarry_objects01
+{
+	noshadows
+	surfaceType "metal"
+	{
+		diffusemap	picmip -1	models/mapobjects/quarry/quarry_objects/quarry_objects01_d.tga
+		bumpmap		picmip -1	models/mapobjects/quarry/quarry_objects/quarry_objects01_local.tga
+		specularmap	picmip -2	models/mapobjects/quarry/quarry_objects/quarry_objects01_s.tga
+		vertexcolor
+		
+		//diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	14,14,0,0
+	}
+}
+
+material models/mapobjects/quarry/quarry_objects/quarry_objects02_s
+{
+	surfaceTypeMap "models/mapobjects/quarry/quarry_objects/quarry_objects02"
+	{
+		diffusemap	picmip -1	models/mapobjects/quarry/quarry_objects/quarry_objects02_d.tga
+		bumpmap		picmip -1	models/mapobjects/quarry/quarry_objects/quarry_objects02_local.tga
+		specularmap	picmip -2	models/mapobjects/quarry/quarry_objects/quarry_objects02_s.tga
+		vertexcolor
+		
+		//diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	6,24,0,0
+	}
+}
+
+material models/mapobjects/quarry/quarry_objects/quarry_objects02
+{
+	noshadows
+	surfaceTypeMap "models/mapobjects/quarry/quarry_objects/quarry_objects02"
+	{
+		diffusemap	picmip -1	models/mapobjects/quarry/quarry_objects/quarry_objects02_d.tga
+		bumpmap		picmip -1	models/mapobjects/quarry/quarry_objects/quarry_objects02_local.tga
+		specularmap	picmip -2	models/mapobjects/quarry/quarry_objects/quarry_objects02_s.tga
+		vertexcolor
+		
+		//diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	6,24,0,0
+	}
+}
+
+material models/mapobjects/quarry/quarry_objects/quarry_objects03_s
+{
+	surfaceType "metal"
+	{
+		diffusemap	picmip -1	models/mapobjects/quarry/quarry_objects/quarry_objects03_d.tga
+		bumpmap		picmip -1	models/mapobjects/quarry/quarry_objects/quarry_objects03_local.tga
+		specularmap	picmip -2	models/mapobjects/quarry/quarry_objects/quarry_objects03_s.tga
+		vertexcolor
+		
+		//diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	8,16,0,0
+	}
+}
+
+material models/mapobjects/quarry/quarry_objects/quarry_objects03
+{
+	noshadows
+	surfaceType "metal"
+	{
+		diffusemap	picmip -1	models/mapobjects/quarry/quarry_objects/quarry_objects03_d.tga
+		bumpmap		picmip -1	models/mapobjects/quarry/quarry_objects/quarry_objects03_local.tga
+		specularmap	picmip -2	models/mapobjects/quarry/quarry_objects/quarry_objects03_s.tga
+		vertexcolor
+		
+		//diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	8,16,0,0
+	}
+}
+
+material models/mapobjects/quarry/quarry_objects/quarry_objects04_s
+{
+	
+	{
+		diffusemap	picmip -1	models/mapobjects/quarry/quarry_objects/quarry_objects04_d.tga
+		bumpmap		picmip -1	models/mapobjects/quarry/quarry_objects/quarry_objects04_local.tga
+		specularmap	picmip -2	models/mapobjects/quarry/quarry_objects/quarry_objects04_s.tga
+		vertexcolor
+		
+		diffuseDetailMap	textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap		textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap		textures/detail/bump/strogg_detail01_d.tga
+		detailMult 5,10,0,0
+	}
+}
+
+///////////////////////////////////////
+//
+//	QUARRY SLABS
+//
+///////////////////////////////////////
+
+
+material models/nerve/q_slab_rocks
+{
+	surfacetype "stone"
+	{
+		diffusemap	models/nerve/q_slab_rocks_d.tga
+		specularmap	models/nerve/q_slab_rocks_s.tga
+		bumpmap 	models/nerve/q_slab_rocks_local.tga
+		vertexcolor
+	}
+}

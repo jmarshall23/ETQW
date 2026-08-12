@@ -1,0 +1,221 @@
+material models/mapobjects/automobiles/car01
+{
+	surfaceType	"metal"
+	noshadows
+	{
+ 		diffusemap	picmip -2	models/mapobjects/automobiles/car01_d.tga
+ 		specularmap	picmip -2	models/mapobjects/automobiles/car01_s.tga
+ 		bumpmap		picmip -2	models/mapobjects/automobiles/car01_local.tga
+ 		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+        detailMult 6,6,0.5,0
+	}
+}
+
+
+material models/mapobjects/automobiles/car01_windows
+{
+	noshadows
+	noselfshadow
+	twosided
+	nonsolid
+	useTemplate templates/windowglass_mask < 
+		"picmip -1	models/mapobjects/automobiles/car01_windows_d.tga", 
+		"picmip -1	models/mapobjects/automobiles/car01_windows_local.tga",
+		"picmip -1	models/mapobjects/automobiles/car01_windows_mask.tga"
+		2, 1.0, 0.3
+	>
+}
+
+
+material models/mapobjects/automobiles/n_trailer
+{
+	surfacetype "metal"
+	//noselfshadow
+	renderbump -size 1024 1024   models/mapobjects/automobiles/n_trailer_local.tga models/mapobjects/automobiles/n_trailer_hi.lwo
+	//twoSided
+	{       
+		diffusemap	picmip -1	models/mapobjects/automobiles/n_trailer_d.tga
+		specularmap picmip -2	models/mapobjects/automobiles/n_trailer_s.tga
+		bumpmap		picmip -1	addnormals( models/mapobjects/automobiles/n_trailer_local.tga, heightmap( models/mapobjects/automobiles/n_trailer_h.tga, 2 ) )
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	12,12,0,0
+		alphaTest	0.5
+	}
+}
+
+material models/mapobjects/automobiles/semi_truck02
+{
+	//renderbump -size 2048 2048 -aa 1 -clampOutput 0 0 1 1 -trace 0.01 -overdrawMap models/mapobjects/automobiles/semi_truck02_local.tga models/mapobjects/automobiles/semi_truck02_high.lwo
+	surfaceType	"metal"
+	noselfshadow
+	noshadows	
+	{       
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	models/mapobjects/automobiles/semi_truck02_d.tga
+		specularmap	picmip -2	models/mapobjects/automobiles/semi_truck02_s.tga
+		bumpmap		picmip -2	models/mapobjects/automobiles/semi_truck02_local.tga
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	9,9,0,0
+		detailWeightMap			models/mapobjects/automobiles/semi_truck02_detailmask.tga
+	}
+}
+
+material models/mapobjects/automobiles/car03 
+{ 
+	//renderbump -size 2048 2048 -aa 0 -clampOutput 0 0 1 1 -trace 0.01 models/mapobjects/automobiles/car03_local.tga models/mapobjects/automobiles/car03_high.lwo 
+	surfaceType	"metal"
+	noshadows
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	models/mapobjects/automobiles/car03_d.tga 
+		specularmap	picmip -2	models/mapobjects/automobiles/car03_s.tga 
+		bumpmap		picmip -2	models/mapobjects/automobiles/car03_local.tga
+		vertexcolor
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_s.tga
+		detailMult	9,9,0,0
+		detailWeightMap			models/mapobjects/automobiles/car03_detailmask.tga
+	}
+	{
+		if cvar com_gpuSpec
+		maskcolor
+		map				makealpha(models/mapobjects/automobiles/car03_s.tga)
+	}
+	{
+		if cvar com_gpuSpec
+		blend		gl_dst_alpha, gl_one
+		maskalpha
+		program	sfx/cubemap
+		red			Parm0
+		green   	Parm1
+		blue		Parm2
+	}
+}
+
+material models/mapobjects/automobiles/flatbed01
+{
+	surfaceType	"metal"
+	noshadows
+	{	
+		diffusemap	picmip -1	models/mapobjects/automobiles/flatbed01_d.tga
+		specularmap	picmip -2	models/mapobjects/automobiles/flatbed01_s.tga
+		bumpmap		picmip -2	models/mapobjects/automobiles/flatbed01_local.tga
+	
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 3.5,8,0,0
+		vertexcolor
+	}
+}
+
+material models/mapobjects/automobiles/flatbed_shadows
+{
+	surfaceType	"metal"
+	{	
+		diffusemap	picmip -1	models/mapobjects/automobiles/flatbed01_d.tga
+		specularmap	picmip -2	models/mapobjects/automobiles/flatbed01_s.tga
+		bumpmap		picmip -2	models/mapobjects/automobiles/flatbed01_local.tga
+	
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 4,8,0,0
+		vertexcolor
+	}
+}
+
+
+material models/mapobjects/automobiles/jcb01
+{
+	surfaceType	"metal"
+	//renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/mapobjects/front_loader/front_loader_local.tga models/mapobjects/front_loader/front_loader_hi.ase
+	noshadows
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	models/mapobjects/automobiles/jcb01_d.tga
+		specularmap	picmip -2	models/mapobjects/automobiles/jcb01_s.tga
+		bumpmap		picmip -1	models/mapobjects/automobiles/jcb01_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		detailWeightMap			models/mapobjects/automobiles/jcb01_detailmask.tga
+		detailMult 10,10,0,0
+	}
+}
+
+material models/mapobjects/automobiles/jcb01_window
+{
+	twosided
+	surfaceType	"glass"
+	useTemplate templates/windowglass_mask <
+		models/mapobjects/automobiles/jcb01_window_d.tga,
+		models/mapobjects/automobiles/jcb01_window_local.tga,
+		_white,
+		2, 1.0, 0.3
+	>
+	{
+		blend blend
+		depthfunc less
+		map models/mapobjects/automobiles/jcb01_window_dirt.tga
+	}
+}
+
+material models/mapobjects/automobiles/suv02
+{
+	surfaceType	"metal"
+	noshadows
+	{	
+		diffusemap	picmip -1	models/mapobjects/automobiles/suv02_d.tga
+		specularmap	picmip -2	models/mapobjects/automobiles/suv02_s.tga
+		bumpmap		picmip -1	models/mapobjects/automobiles/suv02_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		detailMult 10,10,0,0
+	}
+}
+
+
+material models/mapobjects/automobiles/delivery_truck
+{
+	surfaceType	"metal"
+	noshadows
+	{	
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	models/mapobjects/automobiles/delivery_truck_d.tga
+		specularmap	picmip -2	models/mapobjects/automobiles/delivery_truck_s.tga
+		bumpmap		picmip -1	models/mapobjects/automobiles/delivery_truck_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 10,10,0,0
+		detailWeightMap			models/mapobjects/automobiles/delivery_truck_detailmask.tga
+	}
+}
+
+material models/mapobjects/automobiles/delivery_truck_windows
+{
+	noshadows
+	noselfshadow
+	nonsolid
+	useTemplate templates/windowglass < 
+		"picmip -1	models/mapobjects/automobiles/truck_windows_d.tga", 
+		"picmip -1	models/mapobjects/automobiles/truck_windows_local.tga",
+		2, 1.0, 0.3
+	>
+}

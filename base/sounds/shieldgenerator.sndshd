@@ -1,0 +1,37 @@
+/////////////////////////////////
+// Deployable Shield Generator //
+////////////////////////////////
+
+sound sounds/deployables/shieldgenerator/idle {
+
+	volume -20
+	maxDistance 50
+
+	looping
+	sounds/deployables/shieldgenerator/idle_01.wav
+}
+
+sound sounds/deployables/shieldgenerator/arc {
+
+	volume 3
+	maxDistance 200
+
+	sounds/deployables/shieldgenerator/arc_01.wav
+}
+
+sound sounds/deployables/shieldgenerator/zaps {
+
+	volume -15
+	maxDistance 25
+
+	sounds/deployables/shieldgenerator/zap_01.wav
+	sounds/deployables/shieldgenerator/zap_02.wav
+	sounds/deployables/shieldgenerator/zap_03.wav
+	sounds/deployables/shieldgenerator/zap_04.wav
+	sounds/deployables/shieldgenerator/zap_05.wav
+	sounds/deployables/shieldgenerator/zap_06.wav
+	sounds/deployables/shieldgenerator/zap_07.wav
+	sounds/deployables/shieldgenerator/zap_08.wav
+	sounds/deployables/shieldgenerator/zap_09.wav
+	sounds/deployables/shieldgenerator/zap_10.wav
+}

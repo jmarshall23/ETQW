@@ -1,0 +1,1319 @@
+material models/vehicles/mirror
+{
+  	surfaceType  "glass"
+  	noSelfShadow
+  	noshadows
+  	forceoverlays
+  	sort refractable
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	textures/common/dark_gray.tga
+		specularmap	picmip -2	textures/common/gray.tga
+		bumpmap		picmip -2	textures/common/gray.tga
+		vertexcolor
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_s.tga
+		detailMult	9,9,0,0
+		detailWeightMap			textures/common/gray.tga
+	}
+	{
+		maskcolor
+		map				makealpha(textures/common/gray.tga)
+	}
+	{
+		blend		gl_dst_alpha, gl_one
+		maskalpha
+		program	sfx/cubemap
+		red			Parm0
+		green   	Parm1
+		blue		Parm2
+	}
+}
+
+material models/vehicles/mirror_x
+{
+  	surfaceType  "glass"
+  	noSelfShadow
+  	noshadows
+  	translucent
+  	forceoverlays
+  	sort refractable
+
+  	{
+	maskcolor
+	map				makealpha(textures/common/gray.tga)
+	}
+	{
+		blend			gl_dst_alpha, gl_one
+		maskalpha
+		program	sfx/cubemap
+		red			Parm0
+		green   		Parm1
+		blue			Parm2
+	}
+}
+
+/**************************************************************
+	GDF MCP
+**************************************************************/
+
+material models/vehicles/gdf_mcp/mcp_cockpit
+{
+	renderbump -size 2048 2048 -aa 1 -clampOutput 0 0 1 1 models/vehicles/gdf_mcp/mcp_cockpit_local.tga models/vehicles/gdf_mcp/mcp_cockpit_hi.ase
+	sort opaqueFirst
+	noshadows
+
+	{
+		program interaction/selfillum_detailwm
+		diffusemap	picmip -1 partialLoad   models/vehicles/gdf_mcp/mcp_cockpit_d.tga
+		specularmap	picmip -2 partialLoad   models/vehicles/gdf_mcp/mcp_cockpit_s.tga
+		bumpmap		picmip -1 partialLoad   addnormals(models/vehicles/gdf_mcp/mcp_cockpit_local.tga, heightmap(models/vehicles/gdf_mcp/mcp_cockpit_h.tga, 5 ) )
+		SelfIllumMap	picmip -2 partialLoad   models/vehicles/gdf_mcp/mcp_cockpit_glow.tga
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	8,8,0,0
+		detailWeightMap				models/vehicles/gdf_mcp/mcp_cockpit_detailmask.tga
+	}
+}
+
+material models/vehicles/gdf_mcp/mcp
+{
+	surfaceType "metal"
+	renderbump -size 2048 1024 -aa 2 -clampoutput 0 0 1 1 -colormap models/vehicles/gdf_mcp/mcp_local.tga models/vehicles/gdf_mcp/dev_sd/mcp_renderbump_high.lwo
+
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/gdf_mcp/mcp_d.tga
+		specularmap	picmip -2		models/vehicles/gdf_mcp/mcp_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/gdf_mcp/mcp_local.tga, heightmap(models/vehicles/gdf_mcp/mcp_h.tga, 3 ) )
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	12,6,0,0
+		detailWeightMap				models/vehicles/gdf_mcp/mcp_detailmask.tga
+	}
+}
+
+material models/vehicles/gdf_mcp/mcp_scud
+{
+	surfaceType "metal"
+	renderbump -size 1024 1024 -aa 2 -clampoutput 0 0 1 1 -colormap models/vehicles/gdf_mcp/mcp_scud_local.tga models/vehicles/gdf_mcp/dev_sd/mcp_scud_renderbump_high.lwo
+
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/gdf_mcp/mcp_scud_d.tga
+		specularmap	picmip -2		models/vehicles/gdf_mcp/mcp_scud_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/gdf_mcp/mcp_scud_local.tga, heightmap(models/vehicles/gdf_mcp/mcp_scud_h.tga, 3 ) )
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	3,3,0,0
+		detailWeightMap				models/vehicles/gdf_mcp/mcp_scud_detailmask.tga
+	}
+}
+
+material models/vehicles/gdf_mcp/minigun_base
+{
+	surfaceType "metal"
+	renderbump -size 2048 1024 -aa 2 -clampoutput 0 0 1 1 -colormap models/vehicles/gdf_mcp/mcp_local.tga models/vehicles/gdf_mcp/dev_sd/mcp_renderbump_high.lwo
+
+	{
+		diffusemap	picmip -1		models/vehicles/gdf_mcp/mcp_d.tga
+		specularmap	picmip -2		models/vehicles/gdf_mcp/mcp_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/gdf_mcp/mcp_local.tga, heightmap(models/vehicles/gdf_mcp/mcp_h.tga, 3 ) )
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	12,6,0,0
+	}
+}
+
+material models/weapons/gdf_mini_gun/mini_gun_world
+{
+	renderbump -size 1024 512 -aa 2 -clampOutput 0 0 1 1 -colormap models/weapons/gdf_mini_gun/mini_gun_local.tga models/weapons/gdf_mini_gun/mini_gun_hi.ase
+	noshadows
+
+	{
+		diffusemap	picmip -1		models/weapons/gdf_mini_gun/mini_gun_world_d.tga
+		specularmap	picmip -2		models/weapons/gdf_mini_gun/mini_gun_world_s.tga
+		bumpmap 	picmip -1		addnormals(models/weapons/gdf_mini_gun/mini_gun_world_local.tga, heightmap(models/weapons/gdf_mini_gun/mini_gun_world_h.tga, 5 ) )
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	2,2,0,0
+	}
+}
+
+material models/vehicles/gdf_mcp/mcp_tracks_left
+{
+	surfaceType  "metal"
+	noshadows
+
+	{
+		diffusemap	picmip -1		models/vehicles/gdf_mcp/mcp_tracks_d.tga
+		specularmap	picmip -2		models/vehicles/gdf_mcp/mcp_tracks_s.tga
+		bumpmap		picmip -1		models/vehicles/gdf_mcp/mcp_tracks_local.tga
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	2,2,0,0
+
+		textureMatrix diffuseMatrix {
+			translate	0, parm9 * 0.001
+		}
+		textureMatrix specularMatrix {
+			translate	0, parm9 * 0.001
+		}
+		textureMatrix bumpMatrix {
+			translate	0, parm9 * 0.001
+		}
+	}
+}
+
+material models/vehicles/gdf_mcp/mcp_tracks_right
+{
+	surfaceType  "metal"
+	noshadows
+
+	{
+		diffusemap	picmip -1		models/vehicles/gdf_mcp/mcp_tracks_d.tga
+		specularmap	picmip -2		models/vehicles/gdf_mcp/mcp_tracks_s.tga
+		bumpmap		picmip -1		models/vehicles/gdf_mcp/mcp_tracks_local.tga
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	2,2,0,0
+
+		textureMatrix diffuseMatrix {
+			translate	0, parm10 * 0.001
+		}
+		textureMatrix specularMatrix {
+			translate	0, parm10 * 0.001
+		}
+		textureMatrix bumpMatrix {
+			translate	0, parm10 * 0.001
+		}
+	}
+}
+
+material models/vehicles/gdf_mcp/mcp_wheels
+{
+	surfaceType "metal"
+	{
+		diffusemap	picmip -1		models/vehicles/gdf_mcp/mcp_tracks_d.tga
+		specularmap	picmip -2		models/vehicles/gdf_mcp/mcp_tracks_s.tga
+		bumpmap		picmip -1		models/vehicles/gdf_mcp/mcp_tracks_local.tga
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	3,3,0,0
+	}
+}
+
+// Arctic Variations
+
+material models/vehicles/gdf_mcp/mcp_arctic
+{
+	surfaceType "metal"
+	renderbump -size 2048 1024 -aa 2 -clampoutput 0 0 1 1 -colormap models/vehicles/gdf_mcp/mcp_local.tga models/vehicles/gdf_mcp/dev_sd/mcp_renderbump_high.lwo
+
+	{
+		program interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/gdf_mcp/mcp_d_arctic.tga
+		specularmap	picmip -2		models/vehicles/gdf_mcp/mcp_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/gdf_mcp/mcp_local.tga, heightmap(models/vehicles/gdf_mcp/mcp_h.tga, 3 ) )
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	12,6,0,0
+		detailWeightMap				models/vehicles/gdf_mcp/mcp_detailmask.tga
+	}
+}
+
+material models/vehicles/gdf_mcp/mcp_scud_arctic
+{
+	surfaceType "metal"
+	renderbump -size 1024 1024 -aa 2 -clampoutput 0 0 1 1 -colormap models/vehicles/gdf_mcp/mcp_scud_local.tga models/vehicles/gdf_mcp/dev_sd/mcp_scud_renderbump_high.lwo
+
+	{
+		program interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/gdf_mcp/mcp_scud_d_arctic.tga
+		specularmap	picmip -2		models/vehicles/gdf_mcp/mcp_scud_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/gdf_mcp/mcp_scud_local.tga, heightmap(models/vehicles/gdf_mcp/mcp_scud_h.tga, 3 ) )
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	3,3,0,0
+		detailWeightMap				models/vehicles/gdf_mcp/mcp_scud_detailmask.tga
+	}
+}
+
+
+/**************************************************************
+	GDF Bumblebee
+**************************************************************/
+material models/vehicles/gdf_bumblebee/bumblebee_windows
+{
+  	surfaceType  "glass"
+  	noSelfShadow
+  	noshadows
+  	translucent
+  	forceoverlays
+  	sort refractable
+
+  	{
+  			program trivialDetailmap
+     		blend		blend
+            detailMult          5,3,0,0
+  			map		models/vehicles/gdf_bumblebee/windows.tga
+  			mask	textures/detail/bump/concrete_detail01_d.tga
+  	}
+
+}
+
+
+material models/vehicles/gdf_bumblebee/bumblebee_cockpit_glow
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/vehicles/gdf_bumblebee/cockpit_local.tga models/vehicles/gdf_bumblebee/dev_sd/cockpit/cockpit_high.lwo
+
+	{
+		blend add
+		Map	picmip -1  partialLoad  models/vehicles/gdf_bumblebee/cockpit_glow.tga
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	6,6,0,0
+	}
+}
+
+material models/vehicles/gdf_bumblebee/bumblebee_cockpit
+{
+	noshadows
+	sort opaqueFirst
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/vehicles/gdf_bumblebee/cockpit_local.tga models/vehicles/gdf_bumblebee/dev_sd/cockpit/cockpit_high.lwo
+
+	{
+//		program interaction/selfillum_detail
+		diffusemap	picmip -1 partialLoad 	models/vehicles/gdf_bumblebee/cockpit_d.tga
+		specularmap	picmip -2 partialLoad 	models/vehicles/gdf_bumblebee/cockpit_s.tga
+		bumpmap		picmip -1 partialLoad 	models/vehicles/gdf_bumblebee/cockpit_local.tga
+//		SelfIllumMap	picmip -2 partialLoad 	models/vehicles/gdf_bumblebee/cockpit_glow.tga
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	6,6,0,0
+	}
+}
+
+
+material models/vehicles/gdf_bumblebee/bumblebee
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/vehicles/gdf_bumblebee/bumblebee_local.tga models/vehicles/gdf_bumblebee/dev_sd/bumblebee_high2.lwo
+
+	{
+		program interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/gdf_bumblebee/bumblebee_d.tga
+		specularmap	picmip -2		models/vehicles/gdf_bumblebee/bumblebee_s.tga
+		bumpmap		picmip -1 		addnormals(models/vehicles/gdf_bumblebee/bumblebee_local.tga, heightmap(models/vehicles/gdf_bumblebee/bumblebee_h.tga, 3 ) )
+
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	14,14,0.05,0.05
+		detailWeightMap				models/vehicles/gdf_bumblebee/bumblebee_detailmask.tga
+	}
+}
+
+material models/vehicles/gdf_bumblebee/bumblebee_arctic
+{
+	noshadows
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/vehicles/gdf_bumblebee/bumblebee_local.tga models/vehicles/gdf_bumblebee/dev_sd/bumblebee_high2.lwo
+
+	{
+		diffusemap	picmip -1		models/vehicles/gdf_bumblebee/bumblebee_d_arctic.tga
+		specularmap	picmip -2		models/vehicles/gdf_bumblebee/bumblebee_s.tga
+		bumpmap		picmip -1 		addnormals(models/vehicles/gdf_bumblebee/bumblebee_local.tga, heightmap(models/vehicles/gdf_bumblebee/bumblebee_h.tga, 4 ) )
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	14,14,0.05,0.05
+		detailWeightMap				models/vehicles/gdf_bumblebee/bumblebee_detailmask.tga
+	}
+}
+
+material models/vehicles/gdf_bumblebee/bumblebee_turbine
+{
+	noshadows
+	renderbump -size 256 256 -aa 2 -clampOutput 0 0 1 1 -colormap models/vehicles/gdf_bumblebee/turbine_local.tga models/vehicles/gdf_bumblebee/dev_sd/turbine_high.lwo
+
+	{
+		program interaction/basic_detailwm_alphatest
+		diffusemap	picmip -1		models/vehicles/gdf_bumblebee/turbine_local_color.tga
+		specularmap	picmip -1		textures/common/dark_gray.tga
+		bumpmap		picmip -1 		models/vehicles/gdf_bumblebee/turbine_local.tga
+		alphatest 0.5
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	2,2,0,0
+		detailWeightMap				_white
+	}
+}
+
+/**************************************************************
+	GDF Jotun Cargo Plane
+**************************************************************/
+
+material models/vehicles/edf_jotun/jotun
+{
+	renderbump -size 1024 512 -aa 2 -clampOutput 0 0 1 1 -colormap models/vehicles/edf_jotun/jotun_local.tga models/vehicles/edf_jotun/jotun_hi.lwo
+	noshadows
+	{
+		diffusemap	picmip -1		models/vehicles/edf_jotun/jotun_d.tga
+		specularmap	picmip -2		models/vehicles/edf_jotun/jotun_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/edf_jotun/jotun_local.tga, heightmap(models/vehicles/edf_jotun/jotun_h.tga, 4 ) )
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	8,4,0,0
+	}
+}
+
+material models/vehicles/edf_jotun/jotun_rocket_sled
+{
+	renderbump -size 512 1024  -overdrawMap -clampOutput 0 0 1 1 models/vehicles/edf_jotun/jotun_rocket_sled_local.tga models/vehicles/edf_jotun/jotun_rocket_sled_hp.lwo
+	{
+		diffusemap	picmip -1		models/vehicles/edf_jotun/jotun_rocket_sled_d.tga
+		specularmap	picmip -2		models/vehicles/edf_jotun/jotun_rocket_sled_s.tga
+		bumpmap		picmip -1 		addnormals(models/vehicles/edf_jotun/jotun_rocket_sled_local.tga, heightmap(models/vehicles/edf_jotun/jotun_rocket_sled_h.tga, 2 ) )
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	4,8,0,0
+	}
+}
+
+material models/vehicles/edf_jotun/jotun_parachute
+{
+	noshadows
+	{
+		diffusemap	picmip -1		models/vehicles/edf_jotun/jotun_parachute_d.tga
+		specularmap	picmip -2		models/vehicles/edf_jotun/jotun_parachute_s.tga
+		bumpmap		picmip -1		models/vehicles/edf_jotun/jotun_parachute_local.tga
+		alphatest 0.5
+
+		diffuseDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/metal_detail01_local.tga
+		specDetailMap				textures/detail/bump/metal_detail01_d.tga
+		detailMult	2,2,0,0
+	}
+}
+
+material models/vehicles/edf_jotun/jotun_rocket_sled_ropes
+{
+	noshadows
+	{
+	 	diffusemap	picmip -1		models/vehicles/edf_jotun/jotun_rocket_sled_ropes.tga
+		alphaTest 0.5
+	}
+}
+material models/vehicles/edf_jotun/propeller {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		blend
+		maskalpha
+		map		clamp textures/sfx/propeller.tga
+		rotate		time * 17
+
+	}
+}
+
+/**************************************************************
+	GDF Platypus Speedboat
+**************************************************************/
+
+material models/vehicles/gdf_platypus/platypus
+{
+	renderbump -size 2048 2048 -trace 0.01 -colormap models/vehicles/gdf_platypus/gdf_platypus_local.tga models/vehicles/gdf_platypus/gdf_platypus_hp.lwo
+	noshadows
+
+	{
+		program	interaction/selfillum_detailwm
+		diffusemap	picmip -1		models/vehicles/gdf_platypus/gdf_platypus_d.tga
+		specularmap	picmip -2		models/vehicles/gdf_platypus/gdf_platypus_s.tga
+		bumpmap		picmip -1 		addnormals(models/vehicles/gdf_platypus/gdf_platypus_local.tga, heightmap(models/vehicles/gdf_platypus/gdf_platypus_h.tga, 4 ) )
+		selfillummap	picmip -2		models/vehicles/gdf_platypus/gdf_platypus_glow.tga
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	10,10,0,0
+		detailWeightMap	models/vehicles/gdf_platypus/gdf_platypus_detailmask.tga
+	}
+}
+
+/**************************************************************
+	GDF  Husky
+**************************************************************/
+
+material models/vehicles/edf_husky/husky_cockpit
+{
+	surfaceType "metal"
+	sort opaqueFirst
+	renderbump  -size 1024 1024 -aa 2 -colormap -clampoutput 0 0 1 1 models/vehicles/edf_husky/husky_cockpit_local.tga models/vehicles/edf_husky/husky_cockpit_hi.lwo
+
+	{
+		program interaction/selfillum_detailwm
+		diffusemap	picmip -1  partialLoad	models/vehicles/edf_husky/husky_cockpit_d.tga
+		specularmap	picmip -2  partialLoad	models/vehicles/edf_husky/husky_cockpit_s.tga
+		bumpmap		picmip -1  partialLoad	addnormals(models/vehicles/edf_husky/husky_cockpit_local.tga, heightmap(models/vehicles/edf_husky/husky_cockpit_h.tga, 2 ) )
+		selfIllumMap	picmip -2  partialLoad	models/vehicles/edf_husky/husky_cockpit_glow.tga
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	4,4,0,0
+		detailWeightMap	models/vehicles/edf_husky/husky_cockpit_detailmask.tga
+	}
+}
+
+
+material models/vehicles/edf_husky/husky_cockpit_body
+{
+	surfaceType "metal"
+	renderbump  -size 1024 1024 -aa 2 -colormap -clampoutput 0 0 1 1 models/vehicles/edf_husky/husky_cockpit_local.tga models/vehicles/edf_husky/husky_cockpit_hi.lwo
+	sort opaqueFirst
+
+	{
+		program interaction/selfillum_detailwm
+		diffusemap	picmip -1		models/vehicles/edf_husky/husky_cockpit_d.tga
+		specularmap	picmip -2		models/vehicles/edf_husky/husky_cockpit_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/edf_husky/husky_cockpit_local.tga, heightmap(models/vehicles/edf_husky/husky_cockpit_h.tga, 2 ) )
+		selfIllumMap	picmip -2		models/vehicles/edf_husky/husky_cockpit_glow.tga
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	4,4,0,0
+		detailWeightMap	models/vehicles/edf_husky/husky_cockpit_detailmask.tga
+	}
+}
+
+template material/vehicle_fade {
+    parameters <
+    	DiffuseImage,
+    	BumpImage,
+    	SpecularImage,
+    	MaskImage="highquality textures/penta/fademask.tga",
+    	GradientImage="textures/penta/fadegrad.tga",
+    	FadeWidth="40",
+    	MaskScale="1" >
+    text {
+		{
+			program interaction/separate_depth
+			diffusemap	DiffuseImage
+			specularmap	SpecularImage
+			bumpmap		BumpImage
+			mask MaskImage
+			parameters 0.5 + 0.5 * sinTable[ time * 0.1 ]
+			//parameters 0.5
+
+			textureMatrix maskMatrix {
+				scale MaskScale, MaskScale
+			}
+		}
+
+		{
+			writeDepth
+			program sfx/fadeedge
+			mask MaskImage
+			map GradientImage
+			parameters 0.5 + 0.5 * sinTable[ time * 0.1 ], FadeWidth
+			//parameters 0.5
+
+			textureMatrix maskMatrix {
+				scale MaskScale, MaskScale
+			}
+		}
+	}
+}
+
+material models/vehicles/edf_husky/husky
+{
+	surfaceType "metal"
+	occlusionQuery
+	noshadows
+	renderbump  -size 1024 1024 -aa 2 -colormap -clampoutput 0 0 1 1 models/vehicles/edf_husky/dev_sd/husky_local.tga models/vehicles/edf_husky/dev_sd/husky_high.lwo
+
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/edf_husky/husky_local_color.tga
+		specularmap	picmip -2		models/vehicles/edf_husky/husky_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/edf_husky/husky_local.tga, heightmap(models/vehicles/edf_husky/husky_h, 2 ) )
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	8,8,0.2,0.2
+		detailWeightMap	models/vehicles/edf_husky/husky_detailmask.tga
+	}
+}
+
+material models/vehicles/edf_husky/husky_arctic
+{
+	surfaceType "metal"
+	occlusionQuery
+	noshadows
+	renderbump  -size 1024 1024 -aa 2 -colormap -clampoutput 0 0 1 1 models/vehicles/edf_husky/dev_sd/husky_local.tga models/vehicles/edf_husky/dev_sd/husky_high.lwo
+
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/edf_husky/husky_d_arctic.tga
+		specularmap	picmip -2		models/vehicles/edf_husky/husky_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/edf_husky/husky_local.tga, heightmap(models/vehicles/edf_husky/husky_h, 2 ) )
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	8,8,0.2,0.2
+		detailWeightMap	models/vehicles/edf_husky/husky_detailmask.tga
+	}
+}
+
+/**************************************************************
+	GDF Anansi
+**************************************************************/
+material models/vehicles/edf_anansi/anansi_cockpit_front_glow
+{
+  	//noshadows
+  	renderbump -size 2048 2048 -aa 1 -clampOutput 0 0 1 1 -colormap models/vehicles/edf_anansi/anansi_cockpit_front_local.tga models/vehicles/edf_anansi/anansi_cockpit_front_hi.lwo
+
+	{
+		blend add
+		Map	picmip -1 partialLoad	models/vehicles/edf_anansi/anansi_cockpit_front_glow.tga
+
+	}
+}
+
+material models/vehicles/edf_anansi/anansi_cockpit_front
+{
+  	noshadows
+  	renderbump -size 2048 2048 -aa 1 -clampOutput 0 0 1 1 -colormap models/vehicles/edf_anansi/anansi_cockpit_front_local.tga models/vehicles/edf_anansi/anansi_cockpit_front_hi.lwo
+	sort opaqueFirst
+
+	{
+//		program interaction/selfillum_detailwm
+  		diffusemap	picmip -1 partialLoad	models/vehicles/edf_anansi/anansi_cockpit_front_d.tga
+  		specularmap	picmip -2 partialLoad	models/vehicles/edf_anansi/anansi_cockpit_front_s.tga
+  		bumpmap		picmip -1 partialLoad	addnormals (models/vehicles/edf_anansi/anansi_cockpit_front_local.tga, heightmap (models/vehicles/edf_anansi/anansi_cockpit_front_h.tga, 5) )
+//		selfIllumMap	picmip -2 partialLoad	models/vehicles/edf_anansi/anansi_cockpit_front_glow.tga
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	8,8,0,0
+		detailWeightMap				models/vehicles/edf_anansi/anansi_cockpit_front_detailmask.tga
+	}
+}
+
+material models/vehicles/edf_anansi/anansi
+{
+   	surfaceType "metal"
+   	occlusionQuery
+	noshadows
+	renderbump  -size 1024 1024 -colormap models/vehicles/edf_anansi/anansi_local.tga models/vehicles/edf_anansi/anansi_hi.lwo
+
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/edf_anansi/anansi_d.tga
+		specularmap	picmip -2		models/vehicles/edf_anansi/anansi_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/edf_anansi/anansi_local.tga, heightmap(models/vehicles/edf_anansi/anansi_h.tga, 4 ))
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	14,14,0.05,0.05
+		detailWeightMap				models/vehicles/edf_anansi/anansi_detailmask.tga
+	}
+}
+
+material models/vehicles/edf_anansi/anansi_cockpit_front_windows
+{
+  	surfaceType  "glass"
+  	noSelfShadow
+  	noshadows
+  	translucent
+  	forceoverlays
+  	sort refractable
+
+  	{
+       		blend		blend
+  		map		models/vehicles/edf_anansi/anansi_cockpit_front_windows.tga
+  	}
+}
+
+
+material models/vehicles/edf_anansi/anansi_blade
+{
+   surfaceType  "metal"
+	twosided
+	noshadows
+	translucent
+
+	{
+		program	interaction/basic_detailwm_alphatest
+		specularmap	picmip -2		models/vehicles/edf_anansi/blades_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/edf_anansi/blades_local.tga, heightmap(models/vehicles/edf_anansi/blades_h.tga, 5 ))
+		diffusemap	picmip -1 		models/vehicles/edf_anansi/blades_d.tga
+		alphaTest 	0.25
+
+		diffuseDetailMap			textures/detail/bump/strogg_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/strogg_detail01_local.tga
+		specDetailMap				textures/detail/bump/strogg_detail01_d.tga
+		detailMult	2,2,0,0
+		detailWeightMap				_white
+	}
+}
+
+material models/vehicles/edf_anansi/anansi_arctic
+{
+   	surfaceType "metal"
+   	occlusionQuery
+	noshadows
+	renderbump  -size 1024 1024 -colormap models/vehicles/edf_anansi/anansi_local.tga models/vehicles/edf_anansi/anansi_hi.lwo
+
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/edf_anansi/anansi_d_arctic.tga
+		specularmap	picmip -2		models/vehicles/edf_anansi/anansi_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/edf_anansi/anansi_local.tga, heightmap(models/vehicles/edf_anansi/anansi_h.tga, 5 ))
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	14,14,0.05,0.05
+		detailWeightMap				models/vehicles/edf_anansi/anansi_detailmask.tga
+	}
+}
+
+material models/vehicles/edf_anansi/anansi_windows
+{
+  	surfaceType  "glass"
+  	noSelfShadow
+  	noshadows
+  	translucent
+  	forceoverlays
+  	sort refractable
+
+  	{
+  			program trivialDetailmap
+     		blend		blend
+            detailMult          5,3,0,0
+  			map		models/vehicles/edf_anansi/windows.tga
+  			mask	textures/detail/bump/concrete_detail01_d.tga
+  	}
+}
+
+
+/**************************************************************
+	GDF Trojan
+**************************************************************/
+
+material models/vehicles/edf_trojan/trojan_cockpit_front
+  {
+	nofog
+  	renderbump -size 2048 2048 -aa 1 -clampOutput 0 0 1 1 models/vehicles/edf_trojan/trojan_cockpit_front_local.tga models/vehicles/edf_trojan/trojan_cockpit_hi.lwo
+	sort opaqueFirst
+	noshadows
+	{
+		diffusemap	picmip -1 partialLoad	models/vehicles/edf_trojan/trojan_cockpit_front_d.tga
+		specularmap	picmip -2 partialLoad	models/vehicles/edf_trojan/trojan_cockpit_front_s.tga
+		bumpmap		picmip -1 partialLoad	addnormals(models/vehicles/edf_trojan/trojan_cockpit_front_local.tga, heightmap(models/vehicles/edf_trojan/trojan_cockpit_front_h.tga, 5 ))
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	8,8,0,0
+	}
+}
+
+material models/vehicles/edf_trojan/trojan_cockpit_rear
+{
+	nofog
+  	renderbump -size 2048 2048 -aa 1 -clampOutput 0 0 1 1 models/vehicles/edf_trojan/trojan_cockpit_rear_local.tga models/vehicles/edf_trojan/trojan_cockpit_hi.lwo
+	sort opaqueFirst
+	noshadows
+	{
+		diffusemap	picmip -1 partialLoad	models/vehicles/edf_trojan/trojan_cockpit_rear_d.tga
+		specularmap	picmip -2 partialLoad	models/vehicles/edf_trojan/trojan_cockpit_rear_s.tga
+		bumpmap		picmip -1 partialLoad	addnormals(models/vehicles/edf_trojan/trojan_cockpit_rear_local.tga, heightmap(models/vehicles/edf_trojan/trojan_cockpit_rear_h.tga, 5 ))
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	8,8,0,0
+	}
+}
+
+material models/vehicles/edf_trojan/trojan
+{
+	surfaceType	"metal"
+	noshadows
+	occlusionQuery
+	renderbump -size 1024 1024 -colormap -aa 2 -trace 0.1 models/vehicles/edf_trojan/trojan_colorlocal.tga models/vehicles/edf_trojan/trojan_high.lwo
+
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/edf_trojan/trojan_d.tga
+		specularmap	picmip -2		models/vehicles/edf_trojan/trojan_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/edf_trojan/trojan_local.tga, heightmap(models/vehicles/edf_trojan/trojan_h.tga, 5 ))
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	14,14,0.05,0.05
+		detailWeightMap				models/vehicles/edf_trojan/trojan_detailmask.tga
+	}
+}
+
+material models/vehicles/edf_trojan/trojan_arctic
+{
+	surfaceType	"metal"
+	noshadows
+	occlusionQuery
+	renderbump -size 1024 1024 -colormap -aa 2 -trace 0.1 models/vehicles/edf_trojan/trojan_colorlocal.tga models/vehicles/edf_trojan/trojan_high.lwo
+
+	{
+		diffusemap	picmip -1		models/vehicles/edf_trojan/trojan_d_arctic.tga
+		specularmap	picmip -2		models/vehicles/edf_trojan/trojan_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/edf_trojan/trojan_local.tga, heightmap(models/vehicles/edf_trojan/trojan_h.tga, 5 ))
+
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	14,14,0.05,0.05
+		detailWeightMap				models/vehicles/edf_trojan/trojan_detailmask.tga
+	}
+}
+
+
+material models/vehicles/edf_trojan/trojan_extra
+{
+	surfaceType	"metal"
+	noshadows
+	renderbump -size 512 512 -colormap -aa 2 models/vehicles/edf_trojan/dev_sd/trojan_extra_local.tga models/vehicles/edf_trojan/dev_sd/trojan_extra_high.lwo
+
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/edf_trojan/trojan_extra_d.tga
+		specularmap	picmip -2		models/vehicles/edf_trojan/trojan_extra_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/edf_trojan/trojan_extra_local.tga, heightmap(models/vehicles/edf_trojan/trojan_extra_h.tga, 5 ))
+
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	10,10,0.05,0.05
+		detailWeightMap				models/vehicles/edf_trojan/trojan_extra_detailmask.tga
+	}
+}
+
+material models/vehicles/edf_trojan/trojan_windows
+{
+  	surfaceType  "glass"
+  	noSelfShadow
+  	noshadows
+  	translucent
+  	forceoverlays
+  	sort refractable
+
+  	{
+  			program trivialDetailmap
+     		blend		blend
+            detailMult          5,3,0,0
+  			map		models/vehicles/edf_trojan/windows.tga
+  			mask	textures/detail/bump/concrete_detail01_d.tga
+  	}
+}
+
+
+//REMOVE once new guis have gone in -RJ
+material models/vehicles/edf_trojan/fake_gui
+{
+	diffusemap 	models/vehicles/edf_trojan/fake_guis.tga
+
+	{
+		blend		add
+		map    		models/vehicles/edf_trojan/fake_guis.tga
+	}
+}
+
+
+material models/vehicles/edf_trojan/fake_gui_top
+
+{
+	noshadows
+	surfaceType "metal"
+	noOverlays
+
+		{
+		program	interaction/selfillum
+		diffusemap	nopicmip models/structures/edf/command_post/command_post_screen_d.tga
+		specularmap	picmip -1	models/structures/edf/command_post/command_post_screen_s.tga
+		bumpmap 	_flat //models/structures/edf/command_post/command_post_screen_local.tga
+		selfillummap	models/structures/edf/command_post/command_post_screen_glow.tga
+	
+		textureMatrix diffuseMatrix {
+			//translate	0, parm9 * 0.0001
+			scale 1, 0.65
+			}
+	
+		textureMatrix specularMatrix {
+			//translate	0, parm9 * 0.0001
+			scale 1, 0.65
+			}
+	
+		textureMatrix bumpMatrix {
+			//translate	0, parm9 * 0.0001
+			scale 1, 0.65
+			}
+		}
+}
+
+
+material models/vehicles/edf_trojan/fake_gui_bottom
+{
+	noshadows
+	surfaceType "metal"
+	noOverlays
+
+		{
+		program	interaction/selfillum
+		diffusemap	nopicmip models/structures/edf/command_post/command_post_screen_d.tga
+		specularmap	picmip -1	models/structures/edf/command_post/command_post_screen_s.tga
+		bumpmap 	_flat //models/structures/edf/command_post/command_post_screen_local.tga
+		selfillummap	models/structures/edf/command_post/command_post_screen_glow.tga
+	
+		textureMatrix diffuseMatrix {
+			translate	0, 0.93
+			scale 1, 0.75
+			}
+	
+		textureMatrix specularMatrix {
+			scale 1, 0.75
+			}
+	
+		textureMatrix bumpMatrix {
+			scale 1, 0.75
+			}
+		}
+}
+/**************************************************************
+	GDF Badger
+**************************************************************/
+material models/vehicles/edf_badger/cockpit_glow
+{
+
+	renderbump -size 2048 2048 models/vehicles/edf_badger/cockpit_local.tga models/peppi/badgercockpit/badgercockpit_hi.lwo
+
+	{
+		blend add
+//		program interaction/strogg_detailwm
+//	 	diffusemap _black
+//	 	specularmap	picmip -2  partialLoad	models/vehicles/edf_badger/cockpit_s.tga
+//	 	bumpmap		picmip -1  partialLoad	addnormals(models/vehicles/edf_badger/cockpit_local.tga, heightmap(models/vehicles/edf_badger/cockpit_h.tga, 4 ) )
+//		selfIllum
+		Map	picmip -1  partialLoad 	models/vehicles/edf_badger/cockpit_glow.tga
+
+	}
+}
+material models/vehicles/edf_badger/cockpit
+{
+	//noselfshadow
+	unsmoothedtangents
+	sort opaqueFirst
+	renderbump -size 2048 2048 models/vehicles/edf_badger/cockpit_local.tga models/peppi/badgercockpit/badgercockpit_hi.lwo
+
+	{
+		program	interaction/basic_detailwm
+	 	diffusemap	picmip -1  partialLoad	models/vehicles/edf_badger/cockpit.tga
+	 	specularmap	picmip -2  partialLoad	models/vehicles/edf_badger/cockpit_s.tga
+	 	bumpmap		picmip -1  partialLoad	addnormals(models/vehicles/edf_badger/cockpit_local.tga, heightmap(models/vehicles/edf_badger/cockpit_h.tga, 4 ) )
+//		selfIllumMap	picmip -2  partialLoad 	models/vehicles/edf_badger/cockpit_glow.tga
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	32,32,0,0
+		detailWeightMap				models/vehicles/edf_badger/cockpit_detailmask.tga
+
+	}
+}
+
+material models/vehicles/edf_badger/badger
+{
+	surfaceType	"metal"
+	occlusionQuery
+	noshadows
+	renderbump -size 1024 1024 -colormap -overdrawmap -clampoutput 0 0 1 1 -trace 0.02 -aa 2 models/vehicles/edf_badger/badger_back_local.tga models/vehicles/edf_badger/dev_sd/hi.lwo
+
+	{
+		program interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/edf_badger/badger_d.tga
+		specularmap	picmip -2 		models/vehicles/edf_badger/badger_s.tga
+		bumpmap		picmip -1 		addnormals(models/vehicles/edf_badger/badger_local.tga, heightmap(models/vehicles/edf_badger/badger_h.tga, 8 ) )
+		/*
+		useTemplate material/vehicle_fade <
+			models/vehicles/edf_badger/badger_d.tga,
+			addnormals(models/vehicles/edf_badger/badger_local.tga, heightmap(models/vehicles/edf_badger/badger_h.tga, 8 ) ),
+			models/vehicles/edf_badger/badger_s.tga
+		>
+		*/
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	13,13,0.05,0.05
+		detailWeightMap				models/vehicles/edf_badger/badger_detailmask.tga
+	}
+}
+
+material models/vehicles/edf_badger/badger_arctic
+{
+	surfaceType	"metal"
+	occlusionQuery
+	noshadows
+	renderbump -size 1024 1024 -colormap -overdrawmap -clampoutput 0 0 1 1 -trace 0.02 -aa 2 models/vehicles/edf_badger/badger_back_local.tga models/vehicles/edf_badger/dev_sd/hi.lwo
+	{
+		program interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/edf_badger/badger_d_arctic.tga
+		specularmap	picmip -2 		models/vehicles/edf_badger/badger_s.tga
+		bumpmap		picmip -1 		addnormals(models/vehicles/edf_badger/badger_local.tga, heightmap(models/vehicles/edf_badger/badger_h.tga, 8 ) )
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	13,13,0.05,0.05
+		detailWeightMap				models/vehicles/edf_badger/badger_detailmask.tga
+	}
+}
+
+
+material models/vehicles/edf_badger/badger_fade {
+	useTemplate material/vehicle_fade <
+			"picmip -1 models/vehicles/edf_badger/badger_d.tga",
+			"picmip -1 addnormals(models/vehicles/edf_badger/badger_local.tga, heightmap(models/vehicles/edf_badger/badger_h.tga, 8 ) )",
+			"picmip -2 models/vehicles/edf_badger/badger_s.tga",
+	>
+}
+
+skin badger_fade {
+	models/vehicles/edf_badger/badger	models/vehicles/edf_badger/badger_fade
+}
+
+material models/vehicles/edf_badger/badger_windows
+{
+  	surfaceType  "glass"
+  	noSelfShadow
+  	noshadows
+  	translucent
+  	forceoverlays
+  	sort refractable
+
+  	{
+  			program trivialDetailmap
+     		blend		blend
+            detailMult          5,3,0,0
+  			map		models/vehicles/edf_badger/windows.tga
+  			mask	textures/detail/bump/concrete_detail01_d.tga
+  	}
+  	{
+			maskcolor
+			map				makealpha(textures/common/dark_gray.tga)
+		}
+		{
+			blend		gl_dst_alpha, gl_one
+			maskalpha
+			program	sfx/cubemap
+			red			Parm0
+			green   	Parm1
+			blue		Parm2
+	}
+}
+
+
+/**************************************************************
+	GDF Titan
+**************************************************************/
+
+material models/vehicles/edf_titan/titan_cockpit
+{
+	surfaceType  "metal"
+	renderbump -size 1024 1024 -aa 2 -colormap -clampoutput 0 0 1 1 models/vehicles/edf_titan/titan_cockpit_local.tga models/vehicles/edf_titan/dev_sd/titan_cockpit_high.lwo
+	sort opaqueFirst
+
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1 partialLoad	models/vehicles/edf_titan/titan_cockpit_d.tga
+		specularmap	picmip -2 partialLoad	models/vehicles/edf_titan/titan_cockpit_s.tga
+		bumpmap		picmip -1 partialLoad 	models/vehicles/edf_titan/titan_cockpit_local.tga
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	8,8,0,0
+		detailWeightMap				models/vehicles/edf_titan/titan_cockpit_detailmask.tga
+	}
+}
+
+material models/vehicles/edf_titan/titan
+{
+	surfaceType	"metal"
+	occlusionQuery
+	noshadows
+
+	{
+		program interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/edf_titan/titan_d.tga
+		specularmap	picmip -2		models/vehicles/edf_titan/titan_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/edf_titan/titan_l.tga, heightmap(models/vehicles/edf_titan/titan_h.tga, 4 ) )
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	12,12,0.3,0.3
+		detailWeightMap				models/vehicles/edf_titan/titan_detailmask.tga
+	}
+}
+
+material models/vehicles/edf_titan/titan_arctic
+{
+	surfaceType	"metal"
+	occlusionQuery
+	noshadows
+
+	{
+		program interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/edf_titan/titan_d_arctic.tga
+		specularmap	picmip -2		models/vehicles/edf_titan/titan_s.tga
+		bumpmap		picmip -1		addnormals(models/vehicles/edf_titan/titan_l.tga, heightmap(models/vehicles/edf_titan/titan_h.tga, 4 ) )
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	12,12,0.3,0.3
+		detailWeightMap				models/vehicles/edf_titan/titan_detailmask.tga
+	}
+}
+
+
+material models/vehicles/edf_titan/titan_mk2
+{
+	surfaceType	"metal"
+	occlusionQuery
+	noshadows
+	{
+		program interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/edf_titan/titan_mk2_d.tga
+		specularmap	picmip -2		models/vehicles/edf_titan/titan_mk2_s.tga
+		bumpmap		picmip -1		models/vehicles/edf_titan/titan_mk2_l.tga
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	16,16,0,0
+		detailWeightMap				models/vehicles/edf_titan/titan_detailmask.tga
+	}
+}
+
+material models/vehicles/edf_titan/titan_mk2_arctic
+{
+	surfaceType	"metal"
+	occlusionQuery
+	noshadows
+	{
+		program interaction/basic_detailwm
+		diffusemap	picmip -1		models/vehicles/edf_titan/titan_mk2_d_arctic.tga
+		specularmap	picmip -2		models/vehicles/edf_titan/titan_mk2_s.tga
+		bumpmap		picmip -1		models/vehicles/edf_titan/titan_mk2_l.tga
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	16,16,0,0
+		detailWeightMap				models/vehicles/edf_titan/titan_detailmask.tga
+	}
+}
+
+
+material models/vehicles/edf_titan/titan_track_left
+{
+	surfaceType  "metal"
+	noshadows
+
+	{
+		diffusemap	picmip -1		models/vehicles/gdf_mcp/mcp_tracks_d.tga
+		specularmap	picmip -2		models/vehicles/gdf_mcp/mcp_tracks_s.tga
+		bumpmap		picmip -1		models/vehicles/gdf_mcp/mcp_tracks_local.tga
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	4,4,0,0
+
+	textureMatrix diffuseMatrix {
+		translate	0, parm9 * 0.0001
+		scale 0.5, 0.3
+		}
+
+	textureMatrix specularMatrix {
+		translate	0, parm9 * 0.0001
+		scale 0.5, 0.3
+		}
+
+	textureMatrix bumpMatrix {
+		translate	0, parm9 * 0.0001
+		scale 0.5, 0.3
+		}
+	}
+}
+
+material models/vehicles/edf_titan/titan_track_right
+{
+	surfaceType  "metal"
+	noshadows
+
+	{
+		diffusemap	picmip -1		models/vehicles/gdf_mcp/mcp_tracks_d.tga
+		specularmap	picmip -2		models/vehicles/gdf_mcp/mcp_tracks_s.tga
+		bumpmap		picmip -1		models/vehicles/gdf_mcp/mcp_tracks_local.tga
+
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+
+		detailMult	4,4,0,0
+
+	textureMatrix diffuseMatrix {
+		translate	0, parm10 * 0.0001
+		scale 0.5, 0.3
+		}
+
+	textureMatrix specularMatrix {
+		translate	0, parm10 * 0.0001
+		scale 0.5, 0.3
+		}
+
+	textureMatrix bumpMatrix {
+		translate	0, parm10 * 0.0001
+		scale 0.5, 0.3
+		}
+	}
+}
+
+/**************************************************************
+	GDF Vampire Bombing Jet
+**************************************************************/
+
+material models/vehicles/gdf_vampire/vampire
+{
+    	renderbump -size 1024 512 -aa 2 -colormap models/md5/vehicles/vampire/vamp_local.tga models/md5/vehicles/vampire/dev_sd/vamp_hi.lwo
+	//	noselfshadow
+	surfaceType	"metal"
+	occlusionQuery
+
+	diffusemap	picmip -1 models/vehicles/gdf_vampire/vamp_d.tga
+	specularmap	picmip -2 models/vehicles/gdf_vampire/vamp_s.tga
+   	bumpmap		picmip -1 addnormals(models/vehicles/gdf_vampire/vamp_local.tga, heightmap(models/vehicles/gdf_vampire/vamp_h.tga, 3 ) )
+}
+
+
+/**************************************************************
+	GDF Magog
+**************************************************************/
+
+material models/vehicles/edf_magog/magog
+{
+	surfaceType "metal"
+	occlusionQuery
+	noshadows
+	renderbump  -size 1024 1024 -colormap models/vehicles/edf_magog/magog_local.tga models/vehicles/edf_magog/magog_hi.lwo
+
+	diffusemap	picmip -1	models/vehicles/edf_magog/magog_d.tga
+	specularmap	picmip -2	models/vehicles/edf_magog/magog_s.tga
+	bumpmap		picmip -1	addnormals(models/vehicles/edf_magog/magog_local.tga, heightmap(models/vehicles/edf_magog/magog_h.tga, 6 ) )
+}
+
+material models/vehicles/edf_magog/magog_arctic
+{
+	surfaceType "metal"
+	occlusionQuery
+	noshadows
+	renderbump  -size 1024 1024 -colormap models/vehicles/edf_magog/magog_local.tga models/vehicles/edf_magog/magog_hi.lwo
+
+	diffusemap	picmip -1	models/vehicles/edf_magog/magog_d_arctic.tga
+	specularmap	picmip -2	models/vehicles/edf_magog/magog_s.tga
+	bumpmap		picmip -1	addnormals(models/vehicles/edf_magog/magog_local.tga, heightmap(models/vehicles/edf_magog/magog_h.tga, 6 ) )
+}
+
+
+/**************************************************************
+	GDF Parachute
+**************************************************************/
+
+material models/vehicles/gdf_parachute/gdf_parachute {
+
+	nonsolid
+	noshadows
+	noselfshadow
+
+	{
+				program		interaction/translucent
+				parameters	1.0, 1.0, 1.0, 1 
+	
+				diffusemap	picmip -1 mulAlpha( models/vehicles/gdf_parachute/gdf_parachute_d.tga, makeAlpha( models/vehicles/gdf_parachute/gdf_parachute_transluceny.tga ) )
+				bumpmap		picmip -1 models/vehicles/gdf_parachute/gdf_parachute_local.tga
+				specularmap	picmip -2 models/vehicles/gdf_parachute/gdf_parachute_s.tga
+	}
+}

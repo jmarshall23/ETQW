@@ -1,0 +1,550 @@
+material textures/concrete/wall_outdoor_3
+{
+	{
+		diffusemap	picmip -1	textures/concrete/wall_outdoor_3_d.tga
+		specularmap     picmip -2	textures/concrete/wall_outdoor_3_s.tga
+		bumpmap 	picmip -1	textures/concrete/wall_outdoor_3_local.tga
+
+		bumpdetailmap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+ 	}
+ }
+
+material textures/concrete/wall_outdoor_5
+	{
+	diffusemap	picmip -1	textures/concrete/wall_outdoor_5_d.tga
+	specularmap     picmip -2	textures/concrete/wall_outdoor_5_s.tga
+	bumpmap 	picmip -1	textures/concrete/wall_outdoor_5_local.tga
+ 	}
+ 	
+material textures/concrete/wall_outdoor_6
+	{
+	diffusemap	picmip -1	textures/concrete/wall_outdoor_6_d.tga
+	specularmap    	picmip -2	textures/concrete/wall_outdoor_6_s.tga
+	bumpmap 	picmip -1	textures/concrete/wall_outdoor_6_local.tga
+ 	}
+ 	
+material textures/concrete/stairs_concrete_1
+	{
+	diffusemap	picmip -1	textures/concrete/stairs_concrete_1_d.tga
+	specularmap     picmip -2	textures/concrete/stairs_concrete_1_s.tga
+	bumpmap 	picmip -1	textures/concrete/stairs_concrete_1_local.tga
+ 	}
+ 	
+material textures/concrete/pavement_concrete_1
+	{
+	diffusemap	picmip -1	textures/concrete/pavement_concrete_1_d.tga
+	specularmap    	picmip -2	 textures/concrete/pavement_concrete_1_s.tga
+	bumpmap 	picmip -1	textures/concrete/pavement_concrete_1_local.tga
+ 	}
+ 	
+material textures/concrete/wall_concrete_1
+	{
+	diffusemap	picmip -1	textures/concrete/wall_concrete_1_d.tga
+	specularmap     picmip -2	textures/concrete/wall_concrete_1_s.tga
+	bumpmap 	picmip -1	textures/concrete/wall_concrete_1_local.tga
+ 	}
+ 
+material textures/concrete/wall_concrete_1_1
+	{
+	diffusemap	picmip -1	textures/concrete/wall_concrete_1_1_d.tga
+	specularmap     picmip -2	textures/concrete/wall_concrete_1_1_s.tga
+	bumpmap 	picmip -1	textures/concrete/wall_concrete_1_1_local.tga
+ 	}
+
+material textures/concrete/wall_concrete_indoor_1
+	{
+	diffusemap	textures/concrete/wall_concrete_indoor_1_d.tga
+	specularmap     textures/concrete/wall_concrete_indoor_1_s.tga
+	bumpmap 	textures/concrete/wall_concrete_indoor_1_local.tga
+ 	}
+ 	
+material textures/concrete/concrete_trim1
+ 	{
+ 	diffusemap	textures/concrete/concrete_trim1_d.tga
+ 	specularmap     textures/concrete/concrete_trim1_s.tga
+ 	bumpmap 	textures/concrete/concrete_trim1_local.tga
+ 	}
+ 	
+material textures/concrete/concr_wall1
+ 	{
+ 	diffusemap	textures/concrete/concr_wall1_d.tga
+ 	specularmap     textures/concrete/concr_wall1_s.tga
+ 	bumpmap 	textures/concrete/concr_wall1_local.tga
+ 	}
+ 
+material textures/concrete/concr_wall2
+ 	{
+ 	diffusemap	textures/concrete/concr_wall2_d.tga
+ 	specularmap     textures/concrete/concr_wall2_s.tga
+ 	bumpmap 	textures/concrete/concr_wall2_local.tga
+ 	}
+ 
+material textures/concrete/concr_wall3
+  	{
+  	diffusemap	textures/concrete/concr_wall3_d.tga
+  	specularmap     textures/concrete/concr_wall3_s.tga
+  	bumpmap 	textures/concrete/concr_wall3_local.tga
+ 	}
+
+material textures/concrete/concr_wall4
+  	{
+  	diffusemap	textures/concrete/concr_wall4_d.tga
+  	specularmap     textures/concrete/concr_wall4_s.tga
+  	bumpmap 	textures/concrete/concr_wall4_local.tga
+ 	}
+
+material textures/concrete/concr_wall5
+  	{
+  		{
+  			diffusemap	textures/concrete/concr_wall5_d.tga
+  			specularmap     textures/concrete/concr_wall5_s.tga
+  			bumpmap 	textures/concrete/concr_wall5_local.tga
+  			vertexcolor
+  		}
+ 	}
+
+material textures/concrete/concr_wall5_white
+  	{
+  		{
+  			diffusemap	picmip -1	textures/concrete/concr_wall5_white_d.tga
+  			specularmap   	picmip -2	 textures/concrete/concr_wall5_s.tga
+  			bumpmap 	picmip -1	textures/concrete/concr_wall5_local.tga
+  			vertexcolor
+  		}
+ 	}
+ 	
+material textures/concrete/concr_wall7
+  	{
+  	diffusemap	textures/concrete/concr_wall7_d.tga
+  	specularmap     textures/concrete/concr_wall7_s.tga
+  	bumpmap 	textures/concrete/concr_wall7_local.tga
+ 	}
+material textures/concrete/concr_wall8
+  	{
+  	diffusemap	textures/concrete/concr_wall8_d.tga
+  	specularmap     textures/concrete/concr_wall8_s.tga
+  	bumpmap 	textures/concrete/concr_wall8_local.tga
+ 	}
+
+material textures/concrete/concr_wall9
+{
+  	{
+		diffusemap	picmip -1	textures/concrete/concr_wall9_d.tga
+		specularmap     picmip -2	textures/concrete/concr_wall9_s.tga
+		bumpmap 	picmip -1	textures/concrete/concr_wall9_local.tga
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+ 	}
+ }
+
+material textures/concrete/concr_wall10
+  	{
+  	diffusemap	textures/concrete/concr_wall10_d.tga
+  	specularmap     textures/concrete/concr_wall10_s.tga
+  	bumpmap 	textures/concrete/concr_wall10_local.tga
+ 	}
+
+material textures/concrete/concr_wall11
+  	{
+  	diffusemap	textures/concrete/concr_wall11_d.tga
+  	specularmap     textures/concrete/concr_wall11_s.tga
+  	bumpmap 	textures/concrete/concr_wall11_local.tga
+ 	}
+
+material textures/concrete/concr_wall12
+  	{
+  	diffusemap	textures/concrete/concr_wall12_d.tga
+  	specularmap     textures/concrete/concr_wall12_s.tga
+  	bumpmap 	textures/concrete/concr_wall12_local.tga
+ 	}
+
+material textures/concrete/concr_wall12_1
+{
+  	{
+		diffusemap	picmip -1	textures/concrete/concr_wall12_1_d.tga
+		specularmap     picmip -2	textures/concrete/concr_wall12_1_s.tga
+		bumpmap 	picmip -1	textures/concrete/concr_wall12_local.tga
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+ 	}
+ }
+
+material textures/concrete/concr_wall13
+  	{
+  	diffusemap	textures/concrete/concr_wall13_d.tga
+  	specularmap     textures/concrete/black_s.tga
+  	bumpmap 	textures/concrete/concr_wall13_local.tga
+ 	}
+
+material textures/concrete/concr_wall14
+  	{
+  	diffusemap	textures/concrete/concr_wall14_d.tga
+  	specularmap     textures/concrete/concr_wall14_s.tga
+  	bumpmap 	textures/concrete/concr_wall14_local.tga
+ 	}
+
+material textures/concrete/concr_wall14_1
+  	{
+  	diffusemap	textures/concrete/concr_wall14_1_d.tga
+  	specularmap     textures/concrete/concr_wall14_s.tga
+  	bumpmap 	textures/concrete/concr_wall14_local.tga
+ 	}
+
+material textures/concrete/concr_wall15
+  	{
+  	diffusemap	textures/concrete/concr_wall15_d.tga
+  	specularmap     textures/concrete/concr_wall15_s.tga
+  	bumpmap 	textures/concrete/concr_wall15_local.tga
+ 	}
+
+material textures/concrete/concr_wall16
+  	{
+  	diffusemap	textures/concrete/concr_wall16_d.tga
+  	specularmap     textures/concrete/concr_wall16_s.tga
+  	bumpmap 	textures/concrete/concr_wall16_local.tga
+ 	}
+
+material textures/concrete/concr_wall16_1
+  	{
+  	diffusemap	textures/concrete/concr_wall16_1_d.tga
+  	specularmap     textures/concrete/concr_wall16_s.tga
+  	bumpmap 	textures/concrete/concr_wall16_local.tga
+ 	}
+
+material textures/concrete/concr_wall17
+  	{
+  	diffusemap	textures/concrete/concr_wall17_d.tga
+  	specularmap     textures/concrete/concr_wall17_s.tga
+  	bumpmap 	textures/concrete/concr_wall17_local.tga
+ 	}
+
+material textures/concrete/concr_wall6
+{
+  	{
+		diffusemap	picmip -1	textures/concrete/concr_wall6_d.tga
+		specularmap     picmip -2	textures/concrete/concr_wall6_s.tga
+		bumpmap 	picmip -1	textures/concrete/concr_wall6_local.tga
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+ 	}
+ }
+
+material textures/concrete/concr_trim1
+  	{
+  	diffusemap	textures/concrete/concr_trim1_d.tga
+  	specularmap     textures/concrete/concr_trim1_s.tga
+  	bumpmap 	textures/concrete/concr_trim1_local.tga
+ 	}
+ 	
+material textures/concrete/concr_wall_in1
+  	{
+  	diffusemap	textures/concrete/concr_wall_in1_d.tga
+  	specularmap     textures/concrete/concr_wall_in1_s.tga
+  	bumpmap 	textures/concrete/concr_wall_in1_local.tga
+ 	}
+ 	
+material textures/concrete/concr_wall_in1_1
+  	{
+  	diffusemap	textures/concrete/concr_wall_in1_1_d.tga
+  	specularmap     textures/concrete/concr_wall_in1_s.tga
+  	bumpmap 	textures/concrete/concr_wall_in1_local.tga
+ 	}
+
+material textures/concrete/concr_wall_in2
+  	{
+  	diffusemap	textures/concrete/concr_wall_in2_d.tga
+  	specularmap     textures/concrete/concr_wall_in2_s.tga
+  	bumpmap 	textures/concrete/concr_wall_in2_local.tga
+ 	}
+ 	
+material textures/concrete/concr_wall_in2_1
+  	{
+  	diffusemap	textures/concrete/concr_wall_in2_1_d.tga
+  	specularmap     textures/concrete/concr_wall_in2_s.tga
+  	bumpmap 	textures/concrete/concr_wall_in2_1_local.tga
+ 	}
+ 	
+material textures/concrete/concr_wall_in3
+  	{
+  	diffusemap	textures/concrete/concr_wall_in3_d.tga
+  	specularmap     textures/concrete/concr_wall_in3_s.tga
+  	bumpmap 	textures/concrete/concr_wall_in3_local.tga
+ 	}
+ 	
+material textures/concrete/concr_wall_in3_1
+{
+  	{
+		diffusemap	picmip -1	textures/concrete/concr_wall_in3_1_d.tga
+		specularmap	picmip -2	textures/concrete/concr_wall_in3_s.tga
+		bumpmap 	picmip -1	textures/concrete/concr_wall_in3_local.tga
+
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult 4,4,0,0 
+ 	}
+ }
+ 	
+material textures/concrete/concr_wall_in4
+  	{
+  	diffusemap	textures/concrete/concr_wall_in4_d.tga
+  	specularmap     textures/concrete/concr_wall_in4_s.tga
+  	bumpmap 	textures/concrete/concr_wall_in4_local.tga
+ 	}
+ 	
+material textures/concrete/concr_wall_in4_1
+  	{
+  	diffusemap	textures/concrete/concr_wall_in4_1_d.tga
+  	specularmap     textures/concrete/concr_wall_in4_s.tga
+  	bumpmap 	textures/concrete/concr_wall_in4_1_local.tga
+ 	}
+ 	
+material textures/concrete/concr_wall_in4_2
+  	{
+  	diffusemap	textures/concrete/concr_wall_in4_2_d.tga
+  	specularmap     textures/concrete/concr_wall_in4_s.tga
+  	bumpmap 	textures/concrete/concr_wall_in4_2_local.tga
+ 	}
+ 	
+material textures/concrete/concr_wall_in5
+  	{
+  	diffusemap	textures/concrete/concr_wall_in5_d.tga
+  	specularmap     textures/concrete/concr_wall_in5_s.tga
+  	bumpmap 	textures/concrete/concr_wall_in5_local.tga
+ 	}
+ 	
+material textures/concrete/concr_wall_in6
+  	{
+  	diffusemap	textures/concrete/concr_wall_in6_d.tga
+  	specularmap     textures/concrete/concr_wall_in6_s.tga
+  	bumpmap 	textures/concrete/concr_wall_in6_local.tga
+ 	}
+ 	
+material textures/concrete/floor_1
+{
+  	{
+		diffusemap	picmip -1	textures/concrete/floor_1_d.tga
+		specularmap     picmip -2	textures/concrete/floor_1_s.tga
+		bumpmap 	picmip -1	textures/concrete/floor_1_local.tga
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+ 	}
+ }
+ 	
+material textures/concrete/floor_2
+{
+  	{
+		diffusemap	textures/concrete/floor_2_d.tga
+		specularmap     textures/concrete/floor_1_s.tga
+		bumpmap 	textures/concrete/floor_1_local.tga
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+ 	}
+ }
+
+material textures/concrete/floor_3
+{
+  	{
+		diffusemap	picmip -1	textures/concrete/floor_3_d.tga
+		specularmap     picmip -2	textures/concrete/floor_1_s.tga
+		bumpmap 	picmip -1	textures/concrete/floor_1_local.tga
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+ 	}
+ }
+ 	
+material textures/concrete/floor_4
+{
+  	{
+		diffusemap	picmip -1	textures/concrete/floor_4_d.tga
+		specularmap     picmip -2	textures/concrete/floor_1_s.tga
+		bumpmap 	picmip -1	textures/concrete/floor_1_local.tga
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+ 	}
+ }
+ 	
+material textures/concrete/floor_5
+{
+  	{
+		diffusemap	picmip -1	textures/concrete/floor_5_d.tga
+		specularmap     picmip -2	textures/concrete/floor_1_s.tga
+		bumpmap 	picmip -1	textures/concrete/floor_1_local.tga
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+ 	}
+ }
+ 	
+material textures/concrete/floor_6
+{
+  	{
+		diffusemap	picmip -1	textures/concrete/floor_6_d.tga
+		specularmap     picmip -2	textures/concrete/floor_1_s.tga
+		bumpmap 	picmip -1	textures/concrete/floor_1_local.tga
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+ 	}
+}
+ 
+material textures/concrete/floor_7
+{
+  	{
+		diffusemap	picmip -1	textures/concrete/floor_7_d.tga
+		specularmap     picmip -2	textures/concrete/floor_1_s.tga
+		bumpmap 	picmip -1	textures/concrete/floor_1_local.tga
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+ 	}
+ }
+ 	
+material textures/concrete/floor_8
+{
+  	{
+		diffusemap	picmip -1	textures/concrete/floor_8_d.tga
+		specularmap     picmip -2	textures/concrete/floor_1_s.tga
+		bumpmap 	picmip -1	textures/concrete/floor_1_local.tga
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+ 	}
+ }
+ 	
+material textures/concrete/floor_9
+{
+  	{
+		diffusemap	picmip -1	textures/concrete/floor_9_d.tga
+		specularmap     picmip -2	textures/concrete/floor_1_s.tga
+		bumpmap 	picmip -1	textures/concrete/floor_1_local.tga
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+ 	}
+ }
+ 	
+material textures/concrete/ceiling_1
+  	{
+  	diffusemap	textures/concrete/ceiling_1_d.tga
+  	specularmap     textures/concrete/ceiling_1_s.tga
+  	bumpmap 	textures/concrete/ceiling_1_local.tga
+ 	}
+ 	
+material textures/concrete/ceiling_2
+  	{
+  	diffusemap	textures/concrete/ceiling_2_d.tga
+  	specularmap     textures/concrete/ceiling_2_s.tga
+  	bumpmap 	textures/concrete/ceiling_2_local.tga
+ 	}
+ 	
+material textures/concrete/ceiling_2_1
+  	{
+  	diffusemap	textures/concrete/ceiling_2_1_d.tga
+  	specularmap     textures/concrete/ceiling_2_s.tga
+  	bumpmap 	textures/concrete/ceiling_2_local.tga
+ 	}
+ 	
+material textures/concrete/ceiling_3
+{
+	surfacetype "concrete"
+  	{
+		diffusemap	picmip -1	textures/concrete/ceiling_3_d.tga
+		specularmap	picmip -2	textures/concrete/ceiling_3_s.tga
+		bumpmap 	picmip -1	textures/concrete/ceiling_3_local.tga
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult 6,6,0,0 
+		vertexcolor
+ 	}
+ }
+ 	
+material textures/concrete/ceiling_3_1
+  	{
+  	diffusemap	textures/concrete/ceiling_3_1_d.tga
+  	specularmap     textures/concrete/ceiling_3_1_s.tga
+  	bumpmap 	textures/concrete/ceiling_3_1_local.tga
+ 	}
+ 	
+material textures/concrete/ceiling_4
+{
+	{
+		diffusemap	picmip -1	textures/concrete/ceiling_4_d.tga
+		specularmap     picmip -2	textures/concrete/ceiling_4_s.tga
+		bumpmap 	picmip -1	textures/concrete/ceiling_4_local.tga
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+	}
+}
+
+material textures/concrete/ceiling_4a
+	{
+	diffusemap	textures/concrete/ceiling_4a_d.tga
+	specularmap     textures/concrete/ceiling_4_s.tga
+	bumpmap 	textures/concrete/ceiling_4_local.tga
+	}
+ 	
+material textures/concrete/wall_lab_1
+  	{
+  	diffusemap	picmip -1	textures/concrete/wall_lab_1_d.tga
+  	specularmap     picmip -1	textures/concrete/wall_lab_1_s.tga
+  	bumpmap 	picmip -1	textures/concrete/wall_lab_1_local.tga
+ 	}
+ 	
+material textures/concrete/wall_lab_2
+{
+	{
+		diffusemap	picmip -1	textures/concrete/wall_lab_2_d.tga
+		specularmap     picmip -2	textures/concrete/wall_lab_2_s.tga
+		bumpmap 	picmip -1	textures/concrete/wall_lab_2_local.tga
+		vertexcolor
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+	}
+}
+ 	
+material textures/concrete/wall_lab_2_1
+  	{
+  	diffusemap	textures/concrete/wall_lab_2_1_d.tga
+  	specularmap     textures/concrete/wall_lab_2_s.tga
+  	bumpmap 	textures/concrete/wall_lab_2_1_local.tga
+ 	}
+ 	
+material textures/concrete/wall_lab_3
+  	{
+  		{
+  		diffusemap	picmip -1	textures/concrete/wall_lab_3_d.tga
+  		specularmap     picmip -1	textures/concrete/wall_lab_3_s.tga
+  		bumpmap 	picmip -1	textures/concrete/wall_lab_3_local.tga
+ 		vertexcolor
+ 		}
+ 	}
+ 	
+material textures/concrete/wall_lab_4
+  	{
+  	diffusemap	textures/concrete/wall_lab_4_d.tga
+  	specularmap     textures/concrete/wall_lab_4_s.tga
+  	bumpmap 	textures/concrete/wall_lab_4_local.tga
+ 	}
+ 
+material textures/concrete/door_lab_1
+  	{
+  	diffusemap	textures/concrete/door_lab_1_d.tga
+  	specularmap     textures/concrete/door_lab_1_s.tga
+  	bumpmap 	textures/concrete/door_lab_1_local.tga
+ 	}
+ 
+
+

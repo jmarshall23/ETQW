@@ -1,0 +1,43 @@
+material atmospheres/default
+{
+	{
+		if cvar ( r_megaDrawMethod == 0 )
+		depthFunc equal
+		program atmosphere
+	}
+	{
+		if cvar ( r_megaDrawMethod != 0 )
+		blend blend
+		program atmosphereLinear
+		maskcolor
+	}
+}
+
+material atmospheres/rain
+{
+	translucent
+	updateCurrentRender
+	{
+		depthFunc equal
+		program atmosphere_rain
+		map textures/water/water_ground01_03_local.tga
+		parameters randf, randf, randf, randf
+	}
+}
+
+material atmospheres/postprocess
+{
+	translucent
+	{
+		if cvar ( r_megaDrawMethod == 0 )
+		blend blend
+		program atmosphere_postprocess2
+		maskAlpha
+	}
+	{
+		if cvar ( r_megaDrawMethod != 0 )
+		blend blend
+		program atmosphere_postprocess2_Linear
+		maskAlpha
+	}
+}

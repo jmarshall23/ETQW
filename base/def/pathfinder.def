@@ -1,0 +1,186 @@
+
+#include "pathfinder.include"
+
+// -------------------------------
+// Deployable stringmap for Maps
+//
+// programs to run:
+// pathfinder pathfinder_MAPNAME
+// maskgen pathfinder_MAPNAME
+// -------------------------------
+stringMap pathfinder_area22 {
+	_pathfinder_default( "area22", 20 )
+	"playzone_0"					"area22_playzone_path_and_heightmap"
+	"resolution_x_playzone_0"		"1280"
+	"resolution_y_playzone_0"		"1280"
+		
+	"mg_resolution_x_playzone_0"	"1280"
+	"mg_resolution_y_playzone_0"	"1280"	
+}
+
+stringMap pathfinder_ark {
+	_pathfinder_default( "ark", 20 )
+	"playzone_0"					"ark_playzone_path_and_heightmap"
+	"resolution_x_playzone_0"		"1280"
+	"resolution_y_playzone_0"		"1280"
+		
+	"mg_resolution_x_playzone_0"	"1280"
+	"mg_resolution_y_playzone_0"	"1280"
+	"min_path_height"				"0"		
+}
+
+stringMap pathfinder_canyon {
+	_pathfinder_default( "canyon", 20 )
+	"playzone_0"					"canyon_playzone_path_and_heightmap"
+	"resolution_x_playzone_0"		"1280"
+	"resolution_y_playzone_0"		"1280"
+		
+	"mg_resolution_x_playzone_0"	"1280"
+	"mg_resolution_y_playzone_0"	"1280"
+}
+
+stringMap pathfinder_outskirts {
+	_pathfinder_default( "outskirts", 20 )
+	"playzone_0"					"outskirts_playzone_path_and_heightmap"
+	"resolution_x_playzone_0"		"1280"
+	"resolution_y_playzone_0"		"1280"
+		
+	"mg_resolution_x_playzone_0"	"1280"
+	"mg_resolution_y_playzone_0"	"1280"	
+	"min_path_height"				"-84"	
+}
+
+stringMap pathfinder_island {
+	_pathfinder_default( "island", 20 )
+	"playzone_0"					"island_playzone_path_and_heightmap"
+	"resolution_x_playzone_0"		"1280"
+	"resolution_y_playzone_0"		"1280"
+		
+	"mg_resolution_x_playzone_0"	"1280"
+	"mg_resolution_y_playzone_0"	"1280"	
+	"min_path_height"				"0"	
+}
+
+stringMap pathfinder_mothership {
+	_pathfinder_default( "mothership", 20 )
+}
+
+stringMap pathfinder_quarry {
+	_pathfinder_default( "quarry", 20 )
+	"playzone_0"					"quarry_playzone_path_and_heightmap"
+	"resolution_x_playzone_0"		"1280"
+	"resolution_y_playzone_0"		"1280"
+		
+	"mg_resolution_x_playzone_0"	"1280"
+	"mg_resolution_y_playzone_0"	"1280"	
+}
+
+stringMap pathfinder_refinery {
+	_pathfinder_default( "refinery", 20 )
+	"playzone_0"					"refinery_playzone_path_and_heightmap"
+	"resolution_x_playzone_0"		"1280"
+	"resolution_y_playzone_0"		"1280"
+		
+	"mg_resolution_x_playzone_0"	"1280"
+	"mg_resolution_y_playzone_0"	"1280"	
+}
+
+stringMap pathfinder_salvage {
+	_pathfinder_default( "salvage", 20 )
+	"playzone_0"					"salvage_playzone_path_and_heightmap"
+	"resolution_x_playzone_0"		"1280"
+	"resolution_y_playzone_0"		"1280"
+		
+	"mg_resolution_x_playzone_0"	"1280"
+	"mg_resolution_y_playzone_0"	"1280"
+}
+
+stringMap pathfinder_sewer {
+	_pathfinder_default( "sewer", 20 )
+	"playzone_0"					"sewer_playzone_path_and_heightmap"
+	"resolution_x_playzone_0"		"1280"
+	"resolution_y_playzone_0"		"1280"
+		
+	"mg_resolution_x_playzone_0"	"1280"
+	"mg_resolution_y_playzone_0"	"1280"	
+}
+
+stringMap pathfinder_slipgate {
+	_pathfinder_default( "slipgate", 20 )
+	
+	"playzone_0"					"slipgate_playzone_path_and_heightmap_1"
+	"resolution_x_playzone_0"		"768"
+	"resolution_y_playzone_0"		"1280"
+	
+	"mg_resolution_x_playzone_0"	"768"
+	"mg_resolution_y_playzone_0"	"1280"
+	
+	"playzone_1"					"slipgate_playzone_path_and_heightmap_2"
+
+	"resolution_x_playzone_1"		"768"
+	"resolution_y_playzone_1"		"1280"
+
+	"mg_resolution_x_playzone_1"	"768"
+	"mg_resolution_y_playzone_1"	"1280"
+}
+
+stringMap pathfinder_valley {
+	_pathfinder_default( "valley", 20 )
+	"playzone_0"					"valley_playzone_path_and_heightmap"
+	"resolution_x_playzone_0"		"1280"
+	"resolution_y_playzone_0"		"1280"
+		
+	"mg_resolution_x_playzone_0"	"1280"
+	"mg_resolution_y_playzone_0"	"1280"	
+}
+
+stringMap pathfinder_volcano {
+	_pathfinder_default( "volcano", 20 )
+	"playzone_0"					"volcano_playzone_path_and_heightmap"
+	"resolution_x_playzone_0"		"1280"
+	"resolution_y_playzone_0"		"1280"
+		
+	"mg_resolution_x_playzone_0"	"1280"
+	"mg_resolution_y_playzone_0"	"1280"	
+	"min_path_height"				"64"	
+}
+
+stringMap pathfinder_vehicletrack {
+	_pathfinder_default( "vehicletrack", 20 )
+	
+	"playzone_0"					"playzone_path_and_heightmap_1"
+}
+
+stringMap pathfinder_temperate_new {
+	_pathfinder_default( "temperate_new", 20 )
+}
+
+stringMap pathfinder_downtown {
+	_pathfinder_default( "downtown", 20 )
+}
+
+stringMap pathfinder_valley_bot {
+	_pathfinder_default( "valley_bot", 20 )
+	"playzone_0"					"valley_bot_playzone_path_and_heightmap"
+	"resolution_x_playzone_0"		"512"
+	"resolution_y_playzone_0"		"512"
+		
+	"mg_resolution_x_playzone_0"	"512"
+	"mg_resolution_y_playzone_0"	"512"	
+}
+
+stringMap pathfinder_fearog_fearog {
+	_pathfinder_default( "fearog/fearog", 20 )
+	
+	"playzone_0"					"playzone_path_and_heightmap_1"
+}
+
+stringMap pathfinder_fearog_stripped_valley {
+	_pathfinder_default( "fearog/stripped_valley", 20 )
+	"playzone_0"					"valley_playzone_path_and_heightmap"
+	"resolution_x_playzone_0"		"1280"
+	"resolution_y_playzone_0"		"1280"
+		
+	"mg_resolution_x_playzone_0"	"1280"
+	"mg_resolution_y_playzone_0"	"1280"	
+}

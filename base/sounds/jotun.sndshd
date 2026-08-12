@@ -1,0 +1,18 @@
+
+sound sounds/vehicles/jotun/flyby {
+
+	no_occlusion
+	omnidirectional
+
+	sounds/vehicles/jotun/flyby_01.wav
+}
+
+sound sounds/vehicles/jotun/flyby_far {
+
+	volume -5
+	maxdistance 250
+	no_occlusion
+
+	looping
+	sounds/vehicles/jotun/flyby_far.wav
+}

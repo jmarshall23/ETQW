@@ -1,0 +1,160 @@
+
+#include <materials/guis/targeting.include>
+
+material guis/assets/deploy/icons/gdf_am
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip guis/assets/deploy/icons/gdf_am.tga
+	}
+}
+
+
+material guis/assets/deploy/icons/gdf_am_desat {
+	target_desat( "gdf_am" )
+}
+
+material guis/assets/deploy/icons/gdf_ap
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip guis/assets/deploy/icons/gdf_ap.tga
+	}
+}
+
+material guis/assets/deploy/icons/gdf_ap_desat {
+	target_desat( "gdf_ap" )
+}
+
+material guis/assets/deploy/icons/gdf_av
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip guis/assets/deploy/icons/gdf_av.tga
+	}
+}
+
+material guis/assets/deploy/icons/gdf_av_desat {
+	target_desat( "gdf_av" )
+}
+
+material guis/assets/deploy/icons/gdf_radar
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip guis/assets/deploy/icons/gdf_radar.tga
+	}
+}
+
+material guis/assets/deploy/icons/gdf_radar_desat {
+	target_desat( "gdf_radar" )
+}
+
+
+material guis/assets/deploy/icons/strogg_radar
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip guis/assets/deploy/icons/strogg_radar.tga
+	}
+}
+
+material guis/assets/deploy/icons/strogg_radar_desat {
+	target_desat( "strogg_radar" )
+}
+
+material guis/assets/deploy/icons/strogg_av
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip guis/assets/deploy/icons/strogg_av.tga
+	}
+}
+
+
+material guis/assets/deploy/icons/strogg_av_desat {
+	target_desat( "strogg_av" )
+}
+
+material guis/assets/deploy/icons/strogg_am
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip guis/assets/deploy/icons/strogg_am.tga
+	}
+}
+
+material guis/assets/deploy/icons/strogg_am_desat {
+	target_desat( "strogg_am" )
+}
+
+material guis/assets/deploy/icons/strogg_ap
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip guis/assets/deploy/icons/strogg_ap.tga
+	}
+}
+
+
+material guis/assets/deploy/icons/strogg_ap_desat {
+	target_desat( "strogg_ap" )
+}
+
+material guis/assets/deploy/icons/gdf_supplies {
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip makealpha( "guis/assets/deploy/icons/gdf_supplydrop.tga" )
+	}
+}
+
+material guis/assets/icons/gdf_parachute {
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip makealpha( "guis/assets/icons/gdf_parachute.tga" )
+	}
+}
+
+material guis/assets/icons/strogg_dropshield {
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip makealpha( "guis/assets/icons/strogg_dropshield.tga" )
+	}
+}
+
+material guis/assets/deploy/icons/strogg_spawn {
+	sort gui
+
+	{
+		blend blend
+		map clamp nopicmip makealpha( "guis/assets/deploy/icons/strogg_spawn.tga" )
+	}
+}
+
+material guis/assets/deploy/icons/document_objective {
+	sort gui
+
+	{
+		blend blend
+		map clamp nopicmip makealpha( "guis/assets/icons/obj_document.tga" )
+	}
+}

@@ -1,0 +1,11 @@
+
+campaignDef campaign_playtest {
+	map "maps/island"
+	map	"maps/area22"
+	map	"maps/ark"
+	map	"maps/outskirts"
+	
+	data {
+		"mtr_backdrop"		"levelshots/campaigns/africa"
+	}
+}

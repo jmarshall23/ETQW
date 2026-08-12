@@ -1,0 +1,270 @@
+
+/*
+=================
+ Localization for GUI
+=================
+*/
+locString guis/hud/available_tasks {
+	text "#str_00010023"
+}
+
+locString guis/hud/no_tasks {
+	text "#str_00010024"
+}
+
+locString guis/hud/tasks_are_available {
+	text "#str_00010025"
+	arguments 1
+}
+
+locString guis/hud/personal_mission {
+	text "#str_00010026"
+}
+
+locString guis/hud/creating_fireteam {
+	text "#str_00010060"
+}
+locString guis/hud/waiting_for_members {
+	text "#str_00010061"
+}
+locString guis/hud/mission_expires_in {
+	text "#str_00010062"
+	arguments 1
+}
+
+
+locString guis/hud/missile_lock {
+	text "#str_00012002"
+}
+
+locString guis/hud/decoy_ejected {
+	text "#str_00012003"
+}
+
+locString guis/hud/campaign {
+	text "#str_00012004"
+}
+
+locString guis/hud/campaign_time {
+	text "#str_00012005"
+	arguments 2
+}
+
+locString guis/hud/delay {
+	text "#str_00012006"
+}
+
+locString guis/hud/delay_time {
+	text "#str_00012007"
+	arguments 2
+}
+
+locString guis/hud/reenforce {
+	text "#str_00012008"
+}
+
+locString guis/hud/respawnLabel_spawn {
+	text "#str_00012009"
+	arguments 2
+}
+
+locString guis/hud/stopwatch_1 {
+	text "#str_00012010"
+}
+
+locString guis/hud/stopwatch_2 {
+	text "#str_00012011"
+}
+
+locString guis/hud/respawnLabel_nospawn {
+	text "#str_00012012"
+	arguments 2
+}
+
+locString guis/hud/following {
+	text "#str_00012013"
+	arguments 1
+}
+
+locString guis/hud/team_obj {
+	text "#str_00012015"
+}
+
+locString guis/hud/audio_sending {
+	text "#str_00012016"
+}
+
+locString guis/hud/audio_receiving {
+	text "#str_00012017"
+	arguments 1
+}
+
+locString guis/hud/in_progress {
+	text "#str_00012018"
+}
+
+locString guis/hud/fire_team {
+	text "#str_00012019"
+	arguments 1
+}
+
+locString guis/hud/team_mines {
+	text "#str_00012300"
+	arguments 1
+}
+
+locString guis/hud/vehicle_hovermode {
+	text "#str_00012303"
+}
+
+locString guis/hud/vehicle_siegemode {
+	text "#str_00012304"
+}
+
+locString guis/hud/respawnLabel_nospawn_strogg {
+	text "#str_00012020"
+	arguments 2
+}
+
+locString guis/hud/respawnLabel_spawn_strogg {
+	text "#str_00012021"
+	arguments 2
+}
+
+locString guis/hud/fireteam/menu/title/main {
+	text "#str_00012305"
+}
+
+locString guis/hud/fireteam/menu/title/join {
+	text "#str_00012306"
+}
+
+locString guis/hud/fireteam/menu/title/invite {
+	text "#str_00012307"
+}
+
+locString guis/hud/fireteam/menu/title/kick {
+	text "#str_00012308"
+}
+
+locString guis/hud/fireteam/menu/title/propose {
+	text "#str_00012309"
+}
+
+locString guis/hud/fireteam/menu/title/promote {
+	text "#str_00012310"
+}
+
+locString guis/hud/fireteam/menu/join {
+	text "#str_00012311"
+}
+
+locString guis/hud/fireteam/menu/create {
+	text "#str_00012312"
+}
+
+locString guis/hud/fireteam/menu/leave {
+	text "#str_00012313"
+}
+
+locString guis/hud/fireteam/menu/disband {
+	text "#str_00012314"
+}
+
+locString guis/hud/fireteam/menu/invite {
+	text "#str_00012315"
+}
+
+locString guis/hud/fireteam/menu/kick {
+	text "#str_00012316"
+}
+
+locString guis/hud/fireteam/menu/propose {
+	text "#str_00012317"
+}
+
+locString guis/hud/fireteam/menu/promote {
+	text "#str_00012318"
+}
+
+locString guis/hud/fireteam/menu/rename {
+	text "#str_00012319"
+}
+
+locString guis/hud/fireteam/menu/makeprivate {
+	text "#str_00012320"
+}
+
+locString guis/hud/fireteam/menu/makepublic {
+	text "#str_00012321"
+}
+
+locString guis/hud/fireteam/menu/nextpage {
+	text "#str_00012322"
+}
+
+locString guis/hud/fireteam/menu/prevpage {
+	text "#str_00012323"
+}
+
+locString guis/hud/fireteam/menu/rename_dialog {
+	text "#str_00012324"
+}
+
+locString guis/hud/objectives/xp {
+	text "#str_01009015"
+}
+
+locString guis/hud/objectives/up_to_xp {
+	text "#str_01009016"
+}
+
+locString guis/hud/tasks/up_to_xp {
+	text "#str_01009017"
+}
+
+locString guis/hud/tasks/bonus_xp {
+	text "#str_01009018"
+}
+
+locString guis/hud/scope/oor {
+	text "#str_00012325"
+}
+
+locString guis/hud/freecam {
+	text "#str_00012326"
+}
+
+locString guis/hud/vehicle_walkermode {
+	text "#str_00012327"
+}
+
+locString guis/hud/game_is_paused {
+	text "#str_00012328"
+}
+
+locString guis/hud/game_is_paused_f1 {
+	text "#str_00012329"
+}
+
+locString guis/hud/deployable_lock {
+	text "#str_00012022"
+}
+
+locString guis/hud/mine_trigger_warning {
+	text "#str_00012023"
+}
+
+locString guis/hud/game_is_paused_f1_weapon {
+	text "#str_00012330"
+	arguments 1
+}
+
+locString guis/hud/mission_selected {
+	text "#str_00012331"
+	arguments 1
+}
+
+locString guis/hud/basedefence_lock {
+	text "#str_00012024"
+}

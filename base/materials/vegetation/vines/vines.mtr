@@ -1,0 +1,38 @@
+material models/vegetation/vines/undergroundentrance03_vines
+{
+	nonsolid
+ 	twoSided
+	noshadows
+	{
+ 		alphatocoverage
+		program	interaction/foliage
+		diffusemap	picmip -1	models/vegetation/vines/undergroundentrance03_vines_d.tga
+		alphaTest 	0.25
+	}
+}
+
+material models/vegetation/vines/wallvines01a
+{
+	nonsolid
+ 	twoSided
+	noshadows
+	{
+ 		alphatocoverage
+		program	interaction/foliage
+		diffusemap	picmip -1	models/vegetation/vines/wallvines01a_d.tga
+		alphaTest 	0.25
+	}
+}
+
+material models/vegetation/vines/wallvines01b
+{
+	nonsolid
+ 	twoSided
+	noshadows
+	{
+ 		alphatocoverage
+		program	interaction/foliage
+		diffusemap	picmip -1	models/vegetation/vines/wallvines01b_d.tga
+		alphaTest 	0.25
+	}
+}

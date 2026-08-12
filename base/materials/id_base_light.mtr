@@ -1,0 +1,44 @@
+material textures/base_light/striplight2_ed
+{
+	surfaceType "metal"
+	qer_editorimage		textures/base_light/striplight2_ed.tga
+	bumpmap			textures/base_light/striplight2_local.tga
+	diffusemap		textures/base_light/striplight2dif.tga
+	specularmap		textures/base_light/striplight2spec.tga
+	{
+		blend		gl_one,gl_one
+		map		textures/base_light/striplight2add.tga
+		red		parm0 * 2
+		green		parm1 * 2
+		blue		parm2 * 2
+	}
+}
+
+material textures/base_light/gottubelight2
+{
+	surfaceType "metal"
+        noShadows
+	qer_editorimage		textures/base_light/gottubelight.tga
+
+	diffusemap		textures/base_light/gottubelight_d.tga
+       {
+		blend 		add
+		map		textures/base_light/gottubelight_add.tga
+		colored
+	}
+}
+
+material textures/base_light/bluetex4a
+{
+
+	qer_editorimage textures/base_light/bluetex4a_d.tga
+	surfaceType "glass"
+	{
+		program		interaction/strogg
+		diffusemap 	textures/base_light/bluetex4a_d.tga
+		specularmap	textures/base_light/bluetex4a_s.tga
+		bumpmap		textures/base_light/bluetex4a_local.tga
+		selfIllumMap	textures/base_light/bluetex4a_s.tga
+		//vertexcolor
+	}
+}

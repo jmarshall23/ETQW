@@ -1,0 +1,339 @@
+material textures/object/hoser5
+{
+	qer_editorimage		textures/object/hoser5.tga
+	bumpmap 		picmip -1	addnormals (textures/object/hoser5_local.tga, heightmap (textures/object/hoser5_bmp.tga, 3 ))
+	diffusemap		picmip -1	textures/object/hoser5_d.tga
+	specularmap		picmip -2	textures/object/hoser5_s.tga
+}
+
+material textures/decals/wirejumble
+{
+	twoSided
+	nonsolid
+	noimpact
+	noshadows
+	qer_editorimage		textures/decals/wirejumble.tga
+	{
+		bumpmap			textures/decals/wirejumble_local.tga
+		diffusemap textures/decals/wirejumble_d.tga
+		specularmap		textures/decals/wirejumble_s.tga
+		alphatest	.25
+	}
+}
+
+material textures/decals/drophose
+{
+	twoSided
+	nonsolid
+	noimpact
+	noshadows
+	qer_editorimage		textures/decals/drophose.tga
+	{
+		diffusemap		textures/decals/drophose_d.tga
+		bumpmap			textures/decals/drophose_local.tga
+		specularmap		textures/decals/drophose_s.tga
+		alphatest	.25
+	}	
+}
+
+material textures/decals/pipecap2a
+{
+ 	noShadows
+	nonsolid
+	noimpact
+	twoSided
+	qer_editorimage textures/decals/pipecap2a.tga
+
+	{       
+		diffusemap textures/decals/pipecap2a_d.tga
+		specularmap	textures/decals/pipecap2a_s.tga
+		bumpmap 	addnormals (textures/decals/pipecap2a_local.tga, heightmap (textures/decals/pipecap2_bmp.tga, 1 ))      	 
+		alphaTest 0.5
+	}
+
+}
+
+material textures/base_wall/gotbpanel1
+{
+	surfaceType "metal"
+	qer_editorimage	textures/base_wall/gotbpanel1.tga
+	bumpmap		textures/base_wall/gotbpanel1_local.tga
+	diffusemap		textures/base_wall/gotbpanel1_d.tga
+	specularmap		textures/base_wall/gotbpanel1_s.tga
+}
+
+material textures/base_light/gottubelight
+{
+	surfaceType "metal"
+        noShadows
+	qer_editorimage		textures/base_light/gottubelight.tga
+	{
+		bumpmap			textures/base_light/gottubelight_local.tga
+		diffusemap		textures/base_light/gottubelight_d.tga
+		specularmap		textures/base_light/gottubelight_s.tga
+		vertexcolor
+	}
+        {
+		blend 		add
+		map		textures/base_light/gottubelight_add.tga
+		vertexcolor
+	}
+}
+
+material textures/base_light/gottubelight_davepulse
+{
+	surfaceType "metal"
+        noShadows
+	qer_editorimage		textures/base_light/gottubelight.tga
+	bumpmap			textures/base_light/gottubelight_local.tga
+	diffusemap		textures/base_light/gottubelight_d.tga
+	specularmap		textures/base_light/gottubelight_s.tga
+       {
+		blend 		add
+		map		textures/base_light/gottubelight_add.tga
+		red 	( davepulse01 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm0
+		green 	( davepulse01 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm1
+		blue	( davepulse01 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm2
+		vertexcolor
+	}
+}
+
+material textures/base_light/gottubelight_2
+{
+	surfaceType "metal"
+        noShadows
+	qer_editorimage		textures/base_light/gottubelight.tga
+	{
+		program		interaction/strogg
+		bumpmap		textures/base_light/gottubelight_local.tga
+		diffusemap	textures/base_light/gottubelight_d.tga
+		specularmap	textures/base_light/gottubelight_s.tga
+		selfIllumMap	textures/base_light/gottubelight_add.tga
+      	}
+}
+
+material textures/base_floor/sflgrate4
+{
+	surfaceType "metal"
+	qer_editorimage	textures/base_floor/sflgrate4_d.tga
+	bumpmap		textures/base_floor/sflgrate4_local.tga
+	diffusemap	textures/base_floor/sflgrate4_d.tga
+	specularmap	textures/base_floor/sflgrate4_s.tga
+}
+
+material textures/base_trim/stesilverswatch
+{
+	surfaceType "metal"
+	qer_editorimage	textures/base_trim/stesilverswatch.tga
+	bumpmap		textures/base_trim/stesilverswatch_local.tga
+	diffusemap		textures/base_trim/stesilverswatch_d.tga
+	specularmap		textures/base_trim/stesilverswatch_s.tga
+	}
+
+material textures/base_trim/stesilvertrim3
+{
+	surfaceType "metal"
+	qer_editorimage	textures/base_trim/stesilvertrim3.tga
+	{
+		diffusemap				textures/base_trim/stesilvertrim3_d.tga
+		bumpmap		picmip -1	textures/base_trim/stesilvertrim3_local.tga
+		specularmap	picmip -2	textures/base_trim/stesilvertrim3_s.tga
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	0.5,4,0,0
+	}
+}
+
+material textures/base_light/sterlightdecalblu
+
+{
+ 	noShadows
+	//polygonOffset
+	nonsolid
+	noimpact
+	qer_editorimage textures/base_light/sterlightdecal.tga
+
+	{       
+		diffusemap textures/base_light/sterlightdecal_d.tga
+		bumpmap 	textures/base_light/sterlightdecal_local.tga
+		alphaTest 0.5
+	}
+	{
+		colored
+		blend 	add
+		map		textures/base_light/sterlightdecalblu_add.tga
+		red		parm0 * 2
+		green		parm1 * 2
+		blue		parm2 * 2
+	}
+}
+
+material textures/base_light/sterlightdecal
+
+{
+ 	noShadows
+	//polygonOffset
+	nonsolid
+	noimpact
+	qer_editorimage textures/base_light/sterlightdecal.tga
+
+	{       
+		diffusemap textures/base_light/sterlightdecal_d.tga
+		bumpmap 	textures/base_light/sterlightdecal_local.tga
+		alphaTest 0.5
+	}
+	{
+		colored
+		blend 	add
+		map		textures/base_light/sterlightdecal_add.tga
+		red		parm0 * 2
+		green		parm1 * 2
+		blue		parm2 * 2
+				vertexColor
+	}
+}
+
+material textures/base_light/blinkydec1_g
+
+{
+ 	noShadows
+	nonsolid
+	noimpact
+	qer_editorimage textures/base_light/blinkydec1_g_add.tga
+	{       
+		diffusemap textures/base_light/blinkydec1_g_d.tga
+  		bumpmap 	textures/base_light/blinkydec1_local.tga
+		alphaTest 0.5
+	}
+	{
+		blend 	add
+		map	textures/base_light/blinkydec1_g_add.tga
+		rgb 	(.2 * sintable [.002 + time ]) + .2
+	}
+}
+
+material textures/base_wall/ghowall2
+{
+	surfaceType "metal"
+	qer_editorimage		textures/base_wall/ghowall2.tga
+	bumpmap			textures/base_wall/ghowall2_local.tga
+	diffusemap		textures/base_wall/ghowall2_d.tga
+	specularmap		textures/base_wall/ghowall2_s.tga
+}
+
+material textures/object/tecpipe3grn
+{
+	surfaceType "metal"
+	{
+	    diffusemap		textures/object/tecpipe3grn_d.tga
+		bumpmap			textures/object/tecpipe3grn_local.tga
+		specularmap		textures/object/tecpipe3_s.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 2,4,0,0
+	}
+}
+
+material textures/object/tecpipe3grn_noshadows_nonsolid
+{
+	noshadows
+	nonsolid
+	{
+        diffusemap		textures/object/tecpipe3grn_d.tga
+		bumpmap			textures/object/tecpipe3grn_local.tga
+		specularmap		textures/object/tecpipe3_s.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 2,4,0,0
+	}
+}
+
+material textures/object/a_tecpipe2sil
+{
+	surfaceType "metal"
+	qer_editorimage		textures/object/a_tecpipe2sil_d.tga
+	{
+	
+	bumpmap			textures/object/a_tecpipe2sil_local.tga
+     diffusemap		textures/object/a_tecpipe2sil_d.tga
+	specularmap		textures/object/a_tecpipe2sil_s.tga
+	vertexColor
+	}
+}
+
+material textures/object/gotcablecage
+{
+	surfaceType "metal"
+	noshadows
+	twoSided 
+	qer_editorimage	textures/object/gotcablecage.tga
+	{       
+		program	interaction/basic_detail_alphatest
+		diffuseMap				textures/object/gotcablecage_d.tga
+		bumpmap					textures/object/gotcablecage_local.tga
+		specularmap	picmip -1	textures/object/gotcablecage_s.tga
+		alphaTest 0.5
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 2,8,0,0
+	}
+}
+
+material textures/object/conpanel1tec
+{
+	qer_editorimage		textures/object/conpanel1tec_d.tga
+	bumpmap			textures/object/conpanel1_local.tga
+	diffusemap		textures/object/conpanel1tec_d.tga
+	specularmap		textures/object/conpanel1_s.tga
+	{
+	blend 	add
+	map	textures/object/conpanel1tec_add1.tga
+	rgb	5
+	}
+
+
+	{
+	blend 	add
+	map	textures/object/conpanel1tec_add2.tga
+	rgb 	(.2 * sintable [.2 + time ]) +.2
+
+	}
+}
+
+
+
+material textures/object/conpanel2tec
+{
+	qer_editorimage		textures/object/conpanel2tec_d.tga
+	bumpmap			textures/object/conpanel2_local.tga
+	diffusemap		textures/object/conpanel2tec_d.tga
+	specularmap		textures/object/conpanel2_s.tga
+	{
+		blend 	add
+		map		textures/object/conpanel2_add.tga
+		rgb		5
+	}
+}
+
+material textures/object/conmonitorxl1
+{
+	qer_editorimage		textures/object/conmonitorxl1_d.tga
+	bumpmap			textures/object/conmonitorxl1_local.tga
+	diffusemap		textures/object/conmonitorxl1_d.tga
+	specularmap		textures/object/conmonitorxl1_s.tga
+	{
+		blend 	add
+		map		textures/object/conmonitorxl1_add.tga
+		rgb		5
+	}
+}

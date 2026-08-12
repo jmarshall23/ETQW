@@ -1,0 +1,124 @@
+material textures/raven/rock/rock05
+{
+	qer_editorimage 	textures/raven/rock/rock05_d.tga
+    surfaceType			"stone"
+      		
+	diffusemap			textures/raven/rock/rock05_d.tga
+	specularmap			textures/raven/rock/rock05_s.tga
+    bumpmap	    		addnormals (textures/raven/rock/rock05b_local.tga, heightmap (textures/raven/rock/rock05_h.tga, 4))
+        
+}
+
+material textures/raven/rock/rock05a
+{
+	qer_editorimage 	textures/raven/rock/rock05a_d.tga
+    surfaceType			"stone"
+      		
+	diffusemap			textures/raven/rock/rock05a_d.tga
+	specularmap			textures/raven/rock/rock05a_s.tga
+    bumpmap	    		addnormals (textures/raven/rock/rock05b_local.tga, heightmap (textures/raven/rock/rock05a_h.tga, 8))
+        
+}
+
+material textures/raven/rock/rock05b
+{
+	qer_editorimage 	textures/raven/rock/rock05b_local.tga
+    surfaceType			"stone"
+      		
+	diffusemap			textures/raven/rock/rock05_d.tga
+	specularmap			textures/raven/rock/rock05_s.tga
+    bumpmap	    		addnormals (textures/raven/rock/rock05b_local.tga, heightmap (textures/raven/rock/rock05_h.tga, 2))
+        
+}
+
+material textures/raven/rock/rock05c
+{
+	qer_editorimage 	textures/raven/rock/rock05c_local.tga
+   	surfaceType			"stone"  
+      		
+	diffusemap			textures/raven/rock/rock05a_d.tga
+	specularmap			textures/raven/rock/rock05a_s.tga
+    bumpmap	    		addnormals (textures/raven/rock/rock05c_local.tga, heightmap (textures/raven/rock/rock05a_h.tga, 15))
+        
+}
+
+material textures/raven/rock/rock05e
+{
+	qer_editorimage 	textures/raven/rock/rock05e_d.tga
+    surfaceType			"stone"
+      		
+	diffusemap			textures/raven/rock/rock05e_d.tga
+	specularmap			textures/raven/rock/rock05e_s.tga
+    bumpmap	    		addnormals (textures/raven/rock/rock05e_local.tga, heightmap (textures/raven/rock/rock05e_h.tga, 2))
+        
+}
+
+material textures/raven/rock/rock05g
+{
+	qer_editorimage 	textures/raven/rock/rock05g_d.tga
+    surfaceType			"stone"
+      		
+	diffusemap			textures/raven/rock/rock05g_d.tga
+	specularmap			textures/raven/rock/rock05g_s.tga
+    bumpmap	    		addnormals (textures/raven/rock/rock05b_local.tga, heightmap (textures/raven/rock/rock05g_h.tga, 2))
+        
+}
+
+material textures/raven/rock/rock05i
+{
+	qer_editorimage 	textures/raven/rock/rock05i_d.tga
+    surfaceType			"stone"
+      		
+	diffusemap			textures/raven/rock/rock05i_d.tga
+	specularmap			textures/raven/rock/rock05i_s.tga
+    bumpmap	    		addnormals (textures/raven/rock/rock05b_local.tga, heightmap (textures/raven/rock/rock05i_h.tga, 2))
+        
+}
+
+material textures/raven/rock/rock05i_burnt
+{
+	qer_editorimage 	textures/raven/rock/rock05i_burnt_d.tga
+    surfaceType			"stone"
+      		
+	diffusemap			textures/raven/rock/rock05i_burnt_d.tga
+	specularmap			textures/raven/rock/rock05i_burnt_s.tga
+    bumpmap	    		addnormals (textures/raven/rock/rock05i_burnt_local.tga, heightmap (textures/raven/rock/rock05i_burnt_h.tga, 2))
+        
+}
+
+material textures/raven/rock/sand01
+{
+	qer_EditorImage		textures/raven/rock/sand01_d.tga
+	surfaceType			"stone"
+	 
+	diffusemap			textures/raven/rock/sand01_d.tga
+	bumpmap				textures/raven/rock/sand01_local.tga
+}
+
+material textures/raven/rock/sharprock
+{
+	qer_EditorImage		textures/raven/rock/sharprock.tga
+	surfaceType			"stone"
+	
+	diffusemap			textures/raven/rock/sharprock.tga
+	specularmap			textures/raven/rock/sharprock_s.tga
+	bumpmap				addnormals (textures/raven/rock/sharprock_local.tga, heightmap (textures/raven/rock/newdarkrock_bmp.tga, 10) ) 
+}
+
+material textures/raven/rock/sharprock01_brown
+{
+	qer_EditorImage		textures/raven/rock/sharprock01_brown_d.tga
+	surfaceType			"stone"
+	
+	diffusemap			textures/raven/rock/sharprock01_brown_d.tga
+	bumpmap				textures/raven/rock/sharprock_local.tga 
+}
+
+material textures/raven/rock/smoothrock01
+{
+	qer_editorimage 	textures/raven/rock/smoothrock01_d.tga
+	surfaceType			"stone"
+	
+	diffuseMap			textures/raven/rock/smoothrock01_d.tga
+	bumpmap	        	textures/raven/rock/smoothrock01_local.tga
+}

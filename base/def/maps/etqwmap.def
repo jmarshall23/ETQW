@@ -1,0 +1,52 @@
+#include "def/pathfinder.include"
+
+heightMap heightmaps/etqwmap {
+	heightMap "heightmaps/etqwmap.tga"
+}
+
+deployMask masks/etqwmap/mcp {
+	mask		"masks/etqwmap/mcp.tga"
+}
+
+deployMask masks/etqwmap/default {
+	mask		"masks/etqwmap/default.tga"
+}
+
+deployMask masks/etqwmap/mcp_route {
+	mask		"masks/etqwmap/mcp_route.tga"
+}
+
+deployMask masks/etqwmap/playzone {
+	mask		"masks/etqwmap/playzone.tga"
+}
+
+stringMap pathfinder_etqwmap {
+	_pathfinder_default( "etqwmap", 20 )
+	"playzone_0"					"etqwmap_playzone_path_and_heightmap"
+	"resolution_x_playzone_0"		"1280"
+	"resolution_y_playzone_0"		"1280"
+		
+	"mg_resolution_x_playzone_0"	"1280"
+	"mg_resolution_y_playzone_0"	"1280"	
+}
+
+entityDef constructible_base_etqwmap {
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"?"
+	"editor_maxs"					"?"
+	
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"constructible_base"
+
+	"health"						"5000"
+	"fizzle_time"					"45"
+	"skin_construct"				"deployEffect"
+
+	"maxVisDist"					"6144"
+	
+	"icon_sort_cm_flash_icon"		"-102"
+	"mtr_icon_flash_destroy"		"hud/icons/missionsystem/tsk_soldier"
+
+	"dmg_kill"						"damage_constructible_construction"
+}

@@ -1,0 +1,48 @@
+effect effects/ambient/falling_dust_512
+{
+	size	260
+
+	emitter "dust"
+	{
+		duration	30,30
+		count		200,200
+
+		sprite
+		{
+			duration	1,3
+			material	"particles/debris/debris_stone02"
+			gravity		-0.0005,0
+			trailRepeat	1
+
+			start
+			{
+				position { cylinder 0,-80,-80,500,80,80 }
+				velocity { point 1,-0.2,-0.2 }
+				angle { box 0,0,0,1,1,1 }
+				size { box 0.3,0.3,0.4,0.4 }
+				offset { box 0,-1,-1,0,1,1 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				fade { envelope fadeouttable }
+				angle { envelope linear }
+			}
+
+			end
+			{
+				angle { box -0.333333,-0.333333,-0.333333,0.333333,0.333333,0.333333 relative }
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,249 @@
+renderBinding grass_times { vector { 0 } }
+
+/*
+*	The grass shader used by the stuff system, does sine wave wind and grass positioning
+*/
+renderProgram stuff/grass {
+
+	program vertex arb { <%
+		# This is not position invariant!
+		TEMP	r0, r1, r2, r3, r4, r5, r7, r9, vert, scale, normal, normalMod;
+
+
+		PARAM   mat[4] = { state.matrix.mvp };
+		PARAM   taylor = { -0.16666666666666666666666666666667, 0.0083333333333333333333333333333333, -0.0001984126984126984126984126984127, 
+					2.7557319223985890652557319223986e-6 };
+
+		PARAM 	waveDistortx = { 30, 20.0, 0.0, 0.0 };
+		PARAM 	waveDistortz = { 0.0, 0.0, 0.0, 0.0 };
+		PARAM 	waveDistorty = { 0.0, -10.0, 0.0, 0.0 };
+		PARAM 	waveDirx = { 0.001, 0.0, 0, 0 };
+		PARAM 	waveDiry = { 0.001,-0.001, 0, 0 };
+
+		PARAM 	waveSpeed = { 0.3, 0.6, 0.7, 1.4 };
+		PARAM 	piVector = {4.0, 1.5707963267948966192313216916398, 3.1415926535897932384626433832795, 6.283185307179586476925286766559 };
+		PARAM 	lightingWaveScale = { 0.35, 0.10, 0.10, 0.03 };
+		PARAM 	lightingScaleBias = { 0.6, 0.7, 0.2, 0.0 };
+
+		# Put the stuff on it's final spot
+		MOV vert, $positionAttrib;
+
+		# Calculate arguments for the sines
+		MUL r0, waveDirx, vert;     	# use vertex pos x as inputs to sinusoidal warp 
+		MAD r0, waveDiry, vert, r0; 	# use vertex pos y as inputs to sinusoidal warp 
+		ADD r0, $grass_times.x, r0;	# add time to animate them
+		FRC r0, r0;			# wrap to 0-1 interval
+		SUB r0, r0, 0.5;      		# subtract 0.5
+		MUL r1, r0, piVector.w;     	# *=2pi, means coords now range from(-pi to pi)
+
+		# Calculate powers 
+		MUL r2, r1, r1;        		# (wave vec)^2
+		MUL r3, r2, r1;        		# (wave vec)^3 
+		MUL r5, r3, r2;        		# (wave vec)^5
+		MUL r7, r5, r2;        		# (wave vec)^7 
+		#MUL r9, r7, r2;        		# (wave vec)^9
+
+		# Approx sin with taylor coeffs   
+		MAD r0, r3, taylor.x, r1;  	#(wave vec) - ((wave vec)^3)/3! 
+		MAD r0, r5, taylor.y, r0;  	#  + ((wave vec)^5)/5! 
+		MAD r0, r7, taylor.z, r0;  	#  - ((wave vec)^7)/7! 
+		#MAD r0, r9, taylor.w, r0;  	#  - ((wave vec)^9)/9! 
+
+		# Every componenst of r0 contains the sin of a different argument
+		# sum them together to get the final offset value
+		DP4 r3.x, r0, waveDistortx;
+		DP4 r3.y, r0, waveDistorty;
+
+		# Calculate the amount of warping 
+		MUL r4.xy, r3, $colorAttrib.w;
+		MOV r4.z, 0;
+
+		# Displace the vertex
+		MOV r2.w, 1;
+		ADD r2.xyz, r4, vert;# add sinusoidal warping to grass position
+
+		MAD normal, r3, $grass_times.w, $normalAttrib;
+		
+		DP3 normal.w, normal, normal;
+		RSQ normal.w, normal.w;
+		MUL normal, normal, normal.w;
+
+		# do atmosphereing
+		#seTemplate atmosphere_ARB< r2, r1 >
+		#MUL scale, scale, r1.x;	
+		#MUL scale, scale, r1.x;	##boost fog fade a bit
+
+		# Put it in projection space
+		DP4     result.position.x, r2, mat[0];
+		DP4     result.position.y, r2, mat[1];
+		DP4     result.position.z, r2, mat[2];
+		DP4     result.position.w, r2, mat[3];
+
+		# Output texcoords & light contribution
+		MOV	result.texcoord[0], $texCoordAttrib;
+		MOV	result.texcoord[1], normal;			# normal map for ambient cubemap lookup
+		DP3	r2, normal, $sunDirection;			# dot normal,sun
+		MAD r2, r2, 0.5, 0.5;
+		MUL	result.color.xyz, r2, $sunColor;		# multiply with sunlight color (WARNING: if the lightscale is to high this will get clamped to 0..1!)
+		MOV	result.color.secondary, $colorAttrib;		# vertex color
+
+		SUB r0, $positionAttrib, $viewOrigin;
+		DP3 scale, r0, r0;
+		MUL	scale, scale, $stuffParameters.w;
+		RSQ scale.x, scale.x;
+		RCP scale.x, scale.x;
+		SLT r0, $foliageHackDistance.x, scale.x;
+		MAD scale.x, scale.x, $stuffParameters.y, -$stuffParameters.z;
+		SUB scale.x, 1, scale.x;
+		MUL	result.color.w, scale.x, r0.x;				# for fading		
+		
+		TEMP R1,R2;
+SUB		R2, $positionAttrib, $viewOrigin;
+DP3		R1.x, R2, R2;
+RSQ		R1.y, R1.x;
+MUL		R1.x, R1.y, R1.x;
+MAD		result.texcoord[2].x, R1.x, $fogDepths.z, $fogDepths.w; 
+		
+	%> }
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+
+		TEMP	r0, r1;
+
+		TEX	r0, fragment.texcoord[0], $diffuseMap, 2D;
+		
+		# use kill instead of alpha testing, this should theoretically be faster but also 
+		# it means we can blend using a different alpha than the alpha we test against...
+		#
+		# Acutal benchmarks reveal kill is actually a very big bottleneck in this shader
+		# but alpha testing has a similar cost, it's probably early z-culling or whatever
+		# related stuff that causes this.
+		# Optimizing other parts of the shader seems useless only the kill and the 
+		# dependencies seem to change the render time, hiding the kill dependencies
+		# between other instructions (to hide pipeline latency) seems to make no
+		# noticeable difference
+		SUB	r1.a, r0, 0.5;
+		KIL	r1.a;
+		TEX	r1, fragment.texcoord[1], $ambientCubeMap, CUBE;
+		MUL	r1, r1, $ambientBrightness;
+		MUL	r0.rgb, r0, fragment.color.secondary;		# diffuse color
+		ADD	r1, r1, fragment.color;				# add ambient and sun
+		MUL	result.color, r0, r1;				# final color
+		MUL	result.color.a, r0.a, fragment.color.a;		# distance scaled alpha
+	%> }
+}
+
+renderProgram stuff/grass_alphatestarb {
+
+	program vertex reference stuff/grass
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+
+		TEMP	r0, r1;
+		TEMP r3;
+		MUL r3, fragment.position, 0.0625;
+
+		TEX	r1, fragment.texcoord[1], $ambientCubeMap, CUBE;
+		TEMP noise;
+		TEX noise, r3, $noiseMap, 2D;
+		SLT noise.w, noise.w, fragment.color.a;
+		#KIL	-noise.w; #alphaout.a;
+		TEX	r0, fragment.texcoord[0], $diffuseMap, 2D;
+		MUL r1.w, noise.w, r0.w;
+		
+		# use kill instead of alpha testing, this should theoretically be faster but also 
+		# it means we can blend using a different alpha than the alpha we test against...
+		#
+		# Acutal benchmarks reveal kill is actually a very big bottleneck in this shader
+		# but alpha testing has a similar cost, it's probably early z-culling or whatever
+		# related stuff that causes this.
+		# Optimizing other parts of the shader seems useless only the kill and the 
+		# dependencies seem to change the render time, hiding the kill dependencies
+		# between other instructions (to hide pipeline latency) seems to make no
+		# noticeable difference
+		SUB	r3, r1, 0.4;
+		KIL	r3.a;
+		
+		MUL	r1, r1, $ambientBrightness;
+		MUL	r0.rgb, r0, fragment.color.secondary;		# diffuse color
+		ADD	r1, r1, fragment.color;				# add ambient and sun
+		MUL	result.color, r0, r1;				# final color
+		MUL result.color.a, r0.a, 1.15;
+		#MOV	result.color.rgb, noise.w;		# distance scaled alpha
+	%> }
+}
+
+renderProgram stuff/grass_alphatestcg {
+
+	program vertex cg {
+	<%
+		struct VsInputs {
+			float3 norm : $normalAttrib;
+			float2 diff	: $texCoordAttrib;
+		};
+		struct VsOutputs {
+			float2 diff	: TEXCOORD0;
+			float3 norm	: TEXCOORD1;
+			float4 color0 : COLOR;
+			float4 color1 : COLOR1;
+		};
+		
+		VsOutputs vertex( VsInputs indata ) {
+			VsOutputs o;
+			
+			$if r_32ByteVtx
+			indata.diff *= 1.f/4096.f;
+			$endif
+			
+			o.color0 = 1;
+			o.color1 = 1;
+			o.norm = indata.norm;
+			o.diff = indata.diff;
+			return o;
+		}
+	%>
+	}
+	program fragment cg {
+	<%
+		struct VsOutputs {
+			float2 pos  : WPOS;
+			float2 diff	: TEXCOORD0;
+			float3 norm	: TEXCOORD1;
+			float fog : TEXCOORD2;
+			float4 color0 : COLOR;
+			float4 color1 : COLOR1;
+		};
+		samplerCUBE ambientMap : $ambientCubeMap;
+		sampler2D noiseMap : $noiseMap;
+		sampler2D diffuseMap : $diffuseMap;
+		float4 ambientBrightness : $ambientBrightness;
+		float4 fogColor : $fogColor;
+		float4 fragment(VsOutputs  indata) : COLOR {
+		
+			float4 noise = tex2D( noiseMap, indata.diff * 3 );
+			if ( indata.color0.w < noise.w  ) {
+				discard;
+			}
+			
+			float4 diff = tex2D( diffuseMap, indata.diff );
+			if ( diff.w < 0.4 ) {
+				discard;
+			}
+
+			float3 amb = texCUBE( ambientMap, indata.norm ).rgb * ambientBrightness.rgb + indata.color0.rgb;
+			
+			diff.rgb *= indata.color1.rgb;
+			diff.rgb *= amb;
+			diff.a *= 1.15f;
+					
+			return float4( lerp( diff.rgb, fogColor.rgb, indata.fog ), diff.a );
+		}
+	%>
+	}
+}
+
+renderProgram stuff/grass_alphatest {
+	program vertex reference stuff/grass
+	program fragment reference stuff/grass_alphatestcg
+}

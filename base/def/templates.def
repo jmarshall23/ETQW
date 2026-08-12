@@ -1,0 +1,8 @@
+
+template cmSort_PLAYERS 		{ text { "icon_sort_cm" 	"1"	 } }
+template cmSort_FLAGS 			{ text { "icon_sort_cm" 	"2"	 } }
+template cmSort_VEHICLES 		{ text { "icon_sort_cm" 	"3"	 } }
+template cmSort_DEPLOYABLES		{ text { "icon_sort_cm" 	"4"	 } }
+template cmSort_MINES 			{ text { "icon_sort_cm" 	"5"	 } }
+template cmSort_ZONES 			{ text { "icon_sort_cm" 	"6"	 } }
+template cmSort_OBJECTIVES 		{ text { "icon_sort_cm" 	"7"	 } }

@@ -1,0 +1,509 @@
+
+#define LIBERATE_TIME_SCALE 2.f
+
+object capturable_spawn : spawn_master {
+	void				preinit();
+	void				syncFields();
+	void				destroy();
+
+	float				OnUpdateCrosshairInfo( entity p );
+	float				OnActivate( entity p, float distance );
+	float				OnActivateHeld( entity p, float distance );
+	void				OnSetTeam( object oldTeam, object newTeam );
+	void				OnActiveChanged();
+		
+	float				vGetPliersProgressBarValue( float action );
+	void				Capture( entity p );
+
+	boolean				CanActivate( entity p, float distance );
+		
+	void				ShowCaptureWayPoint();
+	void				HideCaptureWayPoint();
+	
+	void				FreeCaptureTasks();
+	void				CreateCaptureTasks();	
+	task				MakeCaptureTask( string teamName );
+
+	string				vGetQuickChatString( entity p );
+
+	void				ActivateSoundThread( entity p );
+	void				FinishActivateSound();
+	
+	boolean				IsDisabled( string teamName );
+
+	task				gdfCaptureTask;
+	task				stroggCaptureTask;
+
+	handle				screenName;
+	
+	handle				captureStat;
+	handle				liberateStat;
+	
+	boolean				active;
+	boolean				covertOnlyLiberate;
+	
+	float				maxCaptureCount;
+	float				captureCount;
+
+	float				liberateProficiency;
+	float				captureProficiency;
+	
+	float				useMeToolTipLiberate;
+	float				useMeToolTipCapture;
+			
+	float				unavailableIcon;
+
+	float				activateSoundThreadId;
+	float				lastActivateTime;
+}
+
+void capturable_spawn::preinit() {
+	screenName = sys.localizeString( getKeyWithDefault( "screen_name", "game/spawn" ) );
+	active = true;
+	unavailableIcon	= -1;
+	
+	maxCaptureCount = getFloatKeyWithDefault( "max_capture_count", 150 );
+	captureCount = 0;
+	
+	liberateProficiency = GetProficiency( getKey( "prof_liberate" ) );
+	captureProficiency = GetProficiency( getKey( "prof_capture" ) );
+	
+	covertOnlyLiberate = getIntKey( "covert_only_liberate" );
+	
+	captureStat = sys.allocStatInt( "spawns_captured" );
+	liberateStat = sys.allocStatInt( "spawns_liberated" );
+
+	setSkin( getKey( "skin_owner_neutral" ) );
+	
+	useMeToolTipLiberate = GetToolTip( getKey( "tt_intro_liberate_1" ) );
+	useMeToolTipCapture = GetToolTip( getKey( "tt_intro_capture_1" ) );
+	
+	activateSoundThreadId = -1;
+
+	ShowCaptureWayPoint();
+}
+
+void capturable_spawn::syncFields() {
+	sync( "captureCount" );
+	syncBroadcast( "active" );
+	syncCallback( "active", "OnActiveChanged" );
+}
+
+void capturable_spawn::destroy() {
+	if ( activateSoundThreadId != -1 ) {
+		sys.terminate( activateSoundThreadId );
+		FinishActivateSound();
+	}
+
+	HideCaptureWayPoint();
+}
+
+void capturable_spawn::OnActiveChanged() {
+	if ( active ) {
+		ShowCaptureWayPoint();
+	} else {
+		if ( !sys.isClient() ) {
+			setGameTeam( $null_entity );
+		}
+		HideCaptureWayPoint();
+	}
+}
+
+void capturable_spawn::FreeCaptureTasks() {
+	if ( gdfCaptureTask != $null ) {
+		gdfCaptureTask.free();
+	}
+	if ( stroggCaptureTask != $null ) {
+		stroggCaptureTask.free();
+	}
+}
+
+task capturable_spawn::MakeCaptureTask( string teamName ) {
+	object team = getGameTeam();
+	
+	team_base otherTeam = sys.getTeam( teamName );
+	
+	if ( team == otherTeam ) {
+		return $null;
+	}
+
+	if ( team == $null ) {
+		if ( IsDisabled( teamName ) ) {
+			return $null;
+		} else {
+			return taskManager.allocEntityTask( otherTeam.captureSpawnTask, self );
+		}
+	}
+
+	float taskDefHandle;
+	if ( covertOnlyLiberate ) {
+		taskDefHandle = otherTeam.liberateSpawnTaskCovertOnly;
+	} else {
+		taskDefHandle = otherTeam.liberateSpawnTask;
+	}
+	return taskManager.allocEntityTask( taskDefHandle, self );
+}
+
+void capturable_spawn::CreateCaptureTasks() {
+	FreeCaptureTasks();
+	
+	gdfCaptureTask = MakeCaptureTask( "gdf" );
+	stroggCaptureTask = MakeCaptureTask( "strogg" );
+}
+
+void capturable_spawn::ShowCaptureWayPoint() {
+	CreateCaptureTasks();
+
+	if ( unavailableIcon != -1 ) {
+		sys.error( "capturable_spawn::ShowCaptureWayPoint unavailable icon already exists" );
+	}
+
+	unavailableIcon = sys.allocCMIcon( self, getFloatKey( "icon_sort_cm" ) );
+
+	sys.setCMIconMaterial( unavailableIcon, GetMaterial( getKey( "mtr_unavailable_icon_gdf" ) ) );
+	sys.setCMIconFlag( unavailableIcon, CMF_ALWAYSKNOWN );
+	sys.setCMIconFlag( unavailableIcon, CMF_ONLYSHOWONFULLVIEW );
+	sys.setCMIconColorMode( unavailableIcon, CM_ALLEGIANCE );	
+	sys.setCMIconSize( unavailableIcon, getFloatKey( "icon_size_cm" ) );
+}
+
+void capturable_spawn::HideCaptureWayPoint() {
+	FreeCaptureTasks();
+	
+	if ( unavailableIcon != -1 ) {
+		sys.freeCMIcon( self, unavailableIcon );
+		unavailableIcon = -1;
+	}
+}
+
+void capturable_spawn::OnSetTeam( object oldTeam, object newTeam ) {
+	if ( oldTeam != $null_entity ) {
+		oldTeam.unRegisterSpawnPoint( self );
+	}
+
+	UnDeployTeam( oldTeam );
+	DeployTeam( newTeam );
+	
+	if ( newTeam == $null_entity ) {
+		ClearCommandmapIcon();
+		setSkin( getKey( "skin_owner_neutral" ) );
+	} else {
+		string teamName = newTeam.getName();
+		
+		setSkin( getKey( "skin_owner_" + teamName ) );
+
+		// if the new team isn't enabled then don't show an icon or register as a spawn point
+		if ( IsDisabled( teamName ) ) {
+			ClearCommandmapIcon();
+		} else {
+			newTeam.registerSpawnPoint( self );
+
+			SetupCommandmapIcon();
+		}
+	}
+	
+	if ( active ) {
+		CreateCaptureTasks();
+	}
+}
+
+float capturable_spawn::OnActivate( entity p, float distance ) {
+	if ( !CanActivate( p, distance ) ) {
+		return 0;
+	}
+		
+	return 1;
+}
+
+float capturable_spawn::OnActivateHeld( entity p, float distance ) {
+	if ( !CanActivate( p, distance ) ) {
+		return 0;
+	}
+
+	if ( p.isLocalPlayer() ) {
+		lastActivateTime = sys.getTime();
+		if ( activateSoundThreadId == -1 ) {
+			activateSoundThreadId = thread ActivateSoundThread( p );
+		}
+	}
+
+	Capture( p );
+
+	return 1;
+}
+
+float capturable_spawn::vGetPliersProgressBarValue( float action ) {
+	if ( action == AC_CAPTURE ) {
+		return captureCount / maxCaptureCount;
+	}
+	if ( action == AC_LIBERATE ) {
+		return captureCount / ( maxCaptureCount * LIBERATE_TIME_SCALE );
+	}
+
+	return 0.f;
+}
+
+void capturable_spawn::Capture( entity p ) {
+	boolean liberate;
+
+	object otherTeam = p.getGameTeam();
+	string teamName = otherTeam.getName();
+	player playerP = p;
+
+	if ( otherTeam != $null ) {			
+		if ( IsDisabled( teamName ) ) {
+			liberate = true;
+		}
+	}
+	
+	float count = 1;
+	
+	float useProficiency = -1;
+	string reason;
+
+	if ( liberate ) {
+		useProficiency = liberateProficiency;
+		reason = "liberating spawn";
+		playerP.ShowProgressBar( self, AC_LIBERATE );
+		sys.increaseStatInt( liberateStat, playerP.getEntityNumber(), 1 );
+	} else {
+		useProficiency = captureProficiency;
+		reason = "capturing spawn";
+		playerP.ShowProgressBar( self, AC_CAPTURE );
+		sys.increaseStatInt( captureStat, playerP.getEntityNumber(), 1 );
+	}
+	
+	object t;
+	
+	float localCaptureCount;
+	if ( liberate ) {
+		localCaptureCount = maxCaptureCount * LIBERATE_TIME_SCALE;
+	} else {
+		localCaptureCount = maxCaptureCount;
+	}
+
+	if ( useProficiency != -1 ) {		
+		if ( p.getGameTeam() == gdfTeam ) {
+			t = gdfCaptureTask;
+		} else {
+			t = stroggCaptureTask;
+		}
+	
+		p.giveProficiency( useProficiency, count / localCaptureCount, t, reason );
+	}
+	
+	if ( captureCount >= localCaptureCount ) {
+		captureCount = 0;
+	}
+	
+	captureCount = captureCount + count;	
+	
+	if ( captureCount >= localCaptureCount ) {
+		captureCount = 0;
+		t.complete();
+		if ( activateSoundThreadId != -1 ) {
+			sys.terminate( activateSoundThreadId );
+			activateSoundThreadId = -1;
+		}
+
+		if ( p == sys.getLocalPlayer() && p != $null_entity ) {
+			sys.startSoundDirect( getKey( "snd_capture_local" ), SND_STRUCTURE_SPAWNLOCATION );
+		} else {
+			sys.startSoundDirect( "", SND_STRUCTURE_SPAWNLOCATION );
+		}
+
+		if ( !sys.isClient() ) {
+			if ( p.isDisguised() ) {
+				p.disguise( $null_entity );
+			}
+
+			object team = getGameTeam();
+
+			string oldTeamName;
+			if ( team != $null_entity ) {
+				oldTeamName = team.getName();
+			}
+
+			if ( liberate ) {//mal: let the bots know a spawnpoint has been captured/liberated.
+				objManager.setSpawnActionOwner( NOTEAM, p );
+			} else if ( p.getGameTeam() == gdfTeam ) {
+				objManager.setSpawnActionOwner( GDF, p );
+			} else if ( p.getGameTeam() == stroggTeam ) {
+				objManager.setSpawnActionOwner( STROGG, p );
+			}
+
+			if ( liberate ) {
+				setGameTeam( $null );
+				
+				objManager.PushCPrintString( p.getUserName() );
+				objManager.PushCPrintHandle( screenName );
+				objManager.PushCPrintHandle( otherTeam.getTitle() );
+				objManager.CPrintEvent( sys.localizeString( "game/liberated" ), $null );
+
+				if ( team != $null_entity ) { 
+					objManager.PlaySound( getKey( "snd_enemyliberate_" + oldTeamName ), team );
+				}
+				objManager.PlaySound( getKey( "snd_liberate_" + teamName ), otherTeam );
+			} else {
+				setGameTeam( otherTeam );
+
+				objManager.PushCPrintString( p.getUserName() );
+				objManager.PushCPrintHandle( screenName );
+				objManager.PushCPrintHandle( otherTeam.getTitle() );
+				objManager.CPrintEvent( sys.localizeString( "game/captured" ), $null );
+
+				if ( team != $null_entity ) { 
+					objManager.PlaySound( getKey( "snd_enemycapture_" + oldTeamName ), team );
+				}
+				objManager.PlaySound( getKey( "snd_capture_" + teamName ), otherTeam );
+			}
+		}
+	}
+}
+
+float capturable_spawn::OnUpdateCrosshairInfo( entity p ) {
+	if ( !sys.doClientSideStuff() ) {
+		return active;
+	}
+
+	float allegiance = getEntityAllegiance( p );
+	vector color = GetAllegianceColor( allegiance );
+	float distance = chGetDistance();
+	float range = InchesToMetres( distance );
+	float health = getHealth();
+
+	chSetNumLines( 0 );
+
+	if ( !active ) {
+		return 0.0f;
+	}
+
+	float index;
+	
+	if ( p != $null_entity ) {
+		if ( CanActivate( p, distance ) ) {
+			index = chAddLine();
+			chSetLineMaterial( index, p.vGetActionIcon( AK_SPAWNCAP ) );
+			chSetLineType( index, CI_IMAGE );
+			chSetLineSize( index, 64, 64 );
+			chSetLineColor( index, g_colorWhite, 0.9f );
+		
+			if ( !p.isToolTipPlaying() ) {
+				if ( sys.getTime() - p.getCrosshairStartTime() > 0.5f ) {
+					object otherTeam = p.getGameTeam();
+					string teamName = otherTeam.getName();
+					if ( getGameTeam() != $null ) {	
+						if ( IsDisabled( teamName ) ) {
+							p.sendToolTip( useMeToolTipLiberate );
+						} else {
+							p.sendToolTip( useMeToolTipCapture );
+						}
+					} else {
+						p.sendToolTip( useMeToolTipCapture );
+					}
+				}
+			}
+		}
+	}
+	
+	index = chAddLine();
+	chSetLineTextIndex( index, screenName );
+	chSetLineColor( index, color, 1.f );
+	chSetLineType( index, CI_TEXT );
+	chSetLineSize( index, 0, 0 );
+
+	if ( range <= 100 ) {
+		index = chAddLine();
+		chSetLineText( index, G_BuildRangeStr( range ) );
+		chSetLineColor( index, color, 1.f );
+		chSetLineType( index, CI_TEXT );
+		chSetLineSize( index, 0, 0 );
+	}
+	
+	return 1.f;
+}
+
+void capturable_spawn::vSetActive( boolean a ) {
+	if ( active != a ) {
+		active = a;
+		OnActiveChanged();
+	}
+}
+
+boolean capturable_spawn::CanActivate( entity p, float distance ) {
+	if ( objManager.gameState != GS_GAMEON ) {
+		return false;
+	}
+
+	if ( !active ) {
+		return false;
+	}
+
+	if ( distance > 128 ) {
+		return false;
+	}
+	
+	if ( p.getViewingEntity() != p ) {
+		return false;
+	}
+	
+	if ( p.getHealth() <= 0 ) {
+		return false;
+	}
+
+	if ( p.getProxyEntity() != $null_entity ) {
+		return false;
+	}
+
+	// check the team that the other is on
+	object team = getGameTeam();
+	object otherTeam = p.getGameTeam();
+	
+	if ( team == otherTeam || otherTeam == $null ) {
+		return false;
+	}
+	
+	string teamName = otherTeam.getName();
+	if ( IsDisabled( teamName ) ) {
+		if ( team == $null_entity ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+string capturable_spawn::vGetQuickChatString( entity p ) {
+	object team = getGameTeam();
+	object otherTeam = p.getGameTeam();
+	string teamName = otherTeam.getName();
+
+	if ( team == $null_entity ) {
+		if ( IsDisabled( teamName ) ) {
+			return getKey( "qc_defend" );
+		}
+		return getKey( "qc_capture" );
+	}
+
+	if ( IsDisabled( teamName ) ) {
+		return getKey( "qc_liberate" );
+	}
+
+	return getKey( "qc_defend" );
+}
+
+void capturable_spawn::ActivateSoundThread( entity p ) {
+	team_base team = p.getGameTeam();
+	sys.startSoundDirect( getKey( "snd_capturing_" + team.getName() ), SND_STRUCTURE_SPAWNLOCATION );
+	waitUntil( sys.getTime() - lastActivateTime > 0.2f );
+	FinishActivateSound();
+}
+
+void capturable_spawn::FinishActivateSound() {
+	sys.startSoundDirect( "", SND_STRUCTURE_SPAWNLOCATION );
+	activateSoundThreadId = -1;
+}
+
+boolean capturable_spawn::IsDisabled( string teamName ) {
+	return getIntKey( teamName + "_disabled" ) != 0;
+}

@@ -1,0 +1,208 @@
+effect effects/deployables/destroy_simple
+{
+	size	1273
+
+	cutOffDistance	15000
+
+	sound "Destroy Sound2"
+	{
+		start		0.1,0.1
+		soundShader	"sounds/vehicles/misc/explode"
+		freqshift	0.7,0.7
+	}
+	sound "Medium Distance Explosion Sound"
+	{
+		start		0.1,0.1
+		soundShader	"sounds/deployables/artillery/impact_medium"
+	}
+	sound "Far Distance Explosion Sound"
+	{
+		start		0.1,0.1
+		soundShader	"sounds/deployables/artillery/impact_far"
+	}
+	sound "Debris Sound2"
+	{
+		start		1.5,1.5
+		soundShader	"sounds/weapons/impacts/debris_large"
+	}
+	spawner "smoke"
+	{
+		start		0.2,0.2
+		count		10,10
+		useMaterialColor
+		attenuateEmitter
+		attenuation	2000,2500
+
+		sprite
+		{
+			duration	4,6
+			persist
+			material	"particles/dustcloud_02_litsmoke"
+			gravity		-0.02,-0.002
+			trailRepeat	1
+
+			start
+			{
+				velocity { box -35,-35,-35,35,35,35 }
+				size { line 5,5,20,20 }
+				tint { line 0.0941177,0.0941177,0.0823529,0.270588,0.247059,0.227451 }
+				fade { point 0 }
+				offset { sphere -200,-200,-200,200,200,200 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 count 3,3 }
+				tint { envelope linear }
+				fade { envelope fastinslowout }
+				offset { envelope convexfade count 10,10,10 offset 0.1,0.1,0.1 }
+				rotate { envelope exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 100,100,150,150 }
+				tint { point 0.419608,0.419608,0.419608 }
+				fade { point 1 }
+				offset { sphere -300,-300,-300,300,300,300 cone }
+				rotate { box -0.166667,0.166667 }
+			}
+			lineHit
+		}
+	}
+	spawner "flash"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				size { line 700,700,900,900 }
+				tint { line 0.239216,0.0901961,0,0.34902,0.101961,0 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope rr2_concavefade_start_at_1_fast }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { point 200,200 }
+			}
+			lineHit
+		}
+	}
+	spawner "flames"
+	{
+		count		1,1
+
+		sprite
+		{
+			duration	0.8,0.8
+			persist
+			material	"particles/explosion/explode32strip02"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 0,0,0,0,0,50 }
+				size { line 20,20,60,60 }
+				tint { line 1,1,1,0.74902,0.74902,0.74902 }
+				offset { sphere -80,-80,-80,80,80,80 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+	spawner "flames3"
+	{
+		start		0.15,0.15
+		count		3,3
+
+		sprite
+		{
+			duration	0.8,0.8
+			persist
+			material	"particles/explosion/explode32strip02"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,50 }
+				velocity { box 0,0,25,0,0,100 }
+				size { line 175,175,400,400 }
+				tint { line 1,1,1,0.74902,0.74902,0.74902 }
+				offset { sphere -300,-300,-300,300,300,300 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/deployables/destroy_sparks_simple
+{
+	size	278
+
+	cutOffDistance	400
+
+	emitter "smoke_base"
+	{
+		duration	1,1
+		count		3,3
+		attenuateEmitter
+		attenuation	300,400
+
+		sprite
+		{
+			duration	1,3
+			persist
+			material	"textures/particles/smoke_test1"
+			windDeviationAngle 180.000000
+			gravity		-0.05,-0.03
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -10,-10,-15,10,10,5 }
+				velocity { box -10,-10,5,10,10,100 }
+				size { line 10,10,30,30 }
+				tint { line 0.8,0.772549,0.741176,0.505882,0.462745,0.411765 }
+				fade { line 0.2,0.5 }
+				windStrength { point -0.025 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope rr2_convexfade_start_at_1 count 2,2,2 offset 0.5,0.5,0.5 }
+				fade { envelope rr2_concavefade_start_at_1_fast offset 0.025 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 50,50,100,100 }
+				tint { line 0.784314,0.784314,0.768628,0.466667,0.462745,0.443137 }
+				rotate { point 0.138889 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+

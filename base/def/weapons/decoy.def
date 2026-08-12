@@ -1,0 +1,100 @@
+
+entityDef projectile_decoy {
+	"spawnclass"				"idProjectile_RigidBody"
+	"scriptObject"				"projectile_decoy"
+
+	"aor_layout"				"missile"
+
+	"mins"						"-16 -16 -16"
+	"maxs"						"16 16 16"
+
+	"launchFromBarrel"			"1"
+	"health"					"1"
+	"velocity"					"0 0 0"
+	"bounce"					"0.4"
+	"gravity"					"-50"
+	"fuse"						"2.5"
+	"mass"						"5"
+	
+	"collection_decoy"			"decoy"
+
+	"range"						"2048"
+
+	"detonate_on_fuse"			"1"
+	"detonate_on_death"			"1"
+	"detonate_on_world"			"0"
+	"detonate_on_actor"			"0"
+	"detonate_on_trigger"		"0"
+
+	"fx_trail"					"effects/weapons/flare_puff"
+	
+	"active_time"				"2" // seconds the decoy will catch any missiles.
+	
+	"snd_fly"					"sounds/deployables/rockets/fire_single"
+}
+
+entityDef projectile_decoy_anansi {
+	"inherit"						"projectile_decoy"
+	"fx_trail"						"effects/weapons/flare_blank"
+}
+
+entityDef projectile_decoy_badger {
+	"inherit"						"projectile_decoy"
+}
+
+entityDef projectile_decoy_bumblebee {
+	"inherit"						"projectile_decoy"
+	"fx_trail"						"effects/weapons/flare_blank"
+}
+
+entityDef projectile_decoy_desecrator {
+	"inherit"						"projectile_decoy"
+	"fx_trail"						"effects/weapons/flare_puff_strogg"
+}
+
+entityDef projectile_decoy_goliath {
+	"inherit"						"projectile_decoy"
+	"fx_trail"						"effects/weapons/flare_puff_strogg"
+}
+
+entityDef projectile_decoy_hog {
+	"inherit"						"projectile_decoy"
+	"fx_trail"						"effects/weapons/flare_puff_strogg"
+}
+
+entityDef projectile_decoy_hornet {
+	"inherit"						"projectile_decoy"
+	"fx_trail"						"effects/weapons/flare_blank"
+}
+
+entityDef projectile_decoy_husky {
+	"inherit"						"projectile_decoy"
+}
+
+entityDef projectile_decoy_icarus {
+	"inherit"						"projectile_decoy"
+	"fx_trail"						"effects/weapons/flare_puff_strogg"
+}
+
+entityDef projectile_decoy_magog {
+	"inherit"						"projectile_decoy"
+}
+
+entityDef projectile_decoy_mcp {
+	"inherit"						"projectile_decoy"
+}
+
+entityDef projectile_decoy_platypus {
+	"inherit"						"projectile_decoy"
+}
+
+entityDef projectile_decoy_titan {
+	"inherit"						"projectile_decoy"
+}
+
+entityDef projectile_decoy_trojan {
+	"inherit"						"projectile_decoy"
+}
+
+
+

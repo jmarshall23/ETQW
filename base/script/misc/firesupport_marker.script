@@ -1,0 +1,88 @@
+
+
+object generic_target_marker : target_marker {
+	void	preinit();
+	void	destroy();
+
+	void	Init( entity _owner, string entityDef, string cmMaterial, float cmIconSort );	
+	void	SetTarget( object traceObject, entity targetEntity, float targetLocked );
+	void	SetTargetPosition( vector position );
+	void	Clear();
+	void	SetLocalOnly( boolean _localOnly );
+
+	entity	owner;
+	
+	float	commandMapMaterial;
+	float	commandMapIconSort;
+	
+	float	commandMapIcon;
+	
+	entity	marker;
+	
+	float	localOnly;
+}
+
+void generic_target_marker::preinit() {
+	commandMapIcon = -1;
+	commandMapMaterial = -1;
+}
+
+void generic_target_marker::destroy() {
+	Clear();
+}
+
+void generic_target_marker::Init( entity _owner, string entityDef, string cmMaterial, float cmIconSort ) {
+	owner = _owner;
+	
+	if ( localOnly && owner.vGetDeployableOwner() != sys.getLocalPlayer() ) {
+		return;
+	}
+
+	marker = sys.spawnClient( entityDef );
+	marker.playCycle( ANIMCHANNEL_ALL, "locking" );
+	
+	commandMapMaterial = GetMaterial( cmMaterial );
+	commandMapIconSort = cmIconSort;
+}
+
+void generic_target_marker::SetTargetPosition( vector position ) {
+	marker.setOrigin( position );
+
+	if ( commandMapIcon != -1 ) {
+		sys.freeCMIcon( owner, commandMapIcon );
+		commandMapIcon = -1;
+	}
+	
+	commandMapIcon = sys.allocCMIcon( owner, commandMapIconSort );
+	sys.setCMIconMaterial( commandMapIcon, commandMapMaterial );
+	sys.setCMIconSize( commandMapIcon, 32.f );
+	sys.setCMIconFlag( commandMapIcon, CMF_TEAMONLY );
+	sys.setCMIconOrigin( commandMapIcon, position );
+	sys.setCMIconPositionMode( commandMapIcon, PM_FIXED );
+}
+	
+void generic_target_marker::SetTarget( object traceObject, entity targetEntity, float targetLocked ) {
+	if ( localOnly && owner.vGetDeployableOwner() != sys.getLocalPlayer() ) {
+		return;
+	}
+
+	SetTargetPosition( traceObject.getTraceEndPos() );
+}
+
+void generic_target_marker::Clear() {
+	if ( localOnly && owner.vGetDeployableOwner() != sys.getLocalPlayer() ) {
+		return;
+	}
+
+	marker.remove();
+	marker = $null_entity;
+	
+	if ( commandMapIcon != -1 ) {
+		sys.freeCMIcon( owner, commandMapIcon );
+		commandMapIcon = -1;
+	}
+}
+
+void generic_target_marker::SetLocalOnly( boolean _localOnly ) {
+	localOnly = _localOnly;
+}

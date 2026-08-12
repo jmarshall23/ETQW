@@ -1,0 +1,65 @@
+
+entityDef gameplay/hackable {
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"hackable_objective"
+	
+	"editor_mins"					"?"
+	"editor_maxs"					"?"
+
+	"option_interactive_interface"	"1"
+	"option_crosshair_interface"	"1"
+	
+	"hack_count"					"180"
+	"hack_count_sw"					"180" // hack count in stopwatch
+	
+	"tt_intro_use_me_1"				"hackable_intro_hack_1"
+	"tt_intro_use_me_2"				"hackable_intro_hack_2"
+	
+	"mtr_icon_flash"				"hud/icons/missionsystem/obj_hack"
+	"mtr_icon_flash_defend"			"hud/icons/missionsystem/obj_defend"
+	"icon_sort_cm_flash_icon"		"-102"
+}
+
+entityDef gameplay/hackable/strogg {
+	"inherit"						"gameplay/hackable"
+	"team"							"strogg"
+	"task_hack"						"covertops_hack_shield"
+	"task_defend_long"				"strogg_defend_long"
+	"task_defend_medium"			"strogg_defend_medium"
+	"task_defend_short"				"strogg_defend_short"
+	"prof_hack"						"pro_covertops_hack_objective"
+	"tt_intro_info"					"hack_crosshair_info_gdf"
+}
+
+entityDef gameplay/hackable/gdf {
+	"inherit"						"gameplay/hackable"
+	"team"							"gdf"
+	"task_hack"						"infiltrator_hack_objective"
+	"task_defend_long"				"gdf_defend_long"
+	"task_defend_medium"			"gdf_defend_medium"
+	"task_defend_short"				"gdf_defend_short"
+	"prof_hack"						"pro_infiltrator_hack_objective"
+	"tt_intro_info"					"hack_crosshair_info_strogg"
+}
+
+toolTip hackable_intro_hack_1 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/hack_me_1"
+}
+
+toolTip hackable_intro_hack_2 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/hack_me_2"
+}
+
+toolTip hack_crosshair_info_gdf {
+	nextShowDelay 180
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/hack_gdf"
+}
+
+toolTip hack_crosshair_info_strogg {
+	nextShowDelay 180
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/hack_strogg"
+}

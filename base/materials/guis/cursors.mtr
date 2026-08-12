@@ -1,0 +1,18 @@
+
+material guis/assets/cursors/arrow { 
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp nopicmip linear "guis/assets/guicursor_arrow"
+	}
+}
+
+material guis/assets/cursors/_hand { 
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp nopicmip linear "guis/assets/guicursor_hand"
+	}
+}

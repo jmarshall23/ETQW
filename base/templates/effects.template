@@ -1,0 +1,166 @@
+
+template templates/materials/effect_sprite
+{
+	parameters < TextureParm, BlendMode = "add" >
+	
+	text {
+	   nonsolid
+	   noshadows
+	   {
+		   blend        BlendMode
+		   map          TextureParm
+			vertexColor
+			maskAlpha
+	   }
+	}
+}
+
+template templates/materials/animate_clamp
+{
+	parameters< NumFrames, DurationInSec >
+	text {
+		scale 1 / NumFrames , 1
+		scroll tableClampNumFrames[ (time + parm4 ) * ( 1 / DurationInSec )  ] , 0		
+	}
+}
+
+template templates/materials/animate 
+{
+	parameters< NumFrames, DurationInSec >
+	text {
+		scale 1 / NumFrames , 1
+		scroll tableNumFrames[ (time + parm4 ) * ( 1 / DurationInSec )  ] , 0		
+	}
+}
+
+// This one doesn't have an "NumFrames" option, the number of frames should be set in the particle editor using the
+// "select random frame" option.
+template templates/materials/animate_randomstart 
+{
+	parameters< NumFrames, DurationInSec >
+	text {
+		scroll tableNumFrames[ (time + parm4 ) * ( 1 / DurationInSec )  ] * ( 1 / NumFrames ) , 0		
+	}
+}
+
+template templates/materials/animate_rows 
+{
+	parameters< NumColumns, NumRows, DurationInSec >
+	text {
+		scale 1 / NumColumns , 1 / NumRows
+		scroll tableNumColumnsxNumRows_column[ (time + parm4 ) * ( 1 / DurationInSec )  ] , tableNumColumnsxNumRows_row[ (time + parm4 ) * ( 1 / DurationInSec )  ]		
+	}
+}
+
+template templates/materials/outdoor_light
+{
+	parameters< >
+	text {
+		red sun_r
+		green sun_g
+		blue sun_b
+	}
+}
+
+template templates/materials/smoke_lit
+{
+	parameters < diffuseMapIN, normalMapIN, numLights >
+	
+	// Shared between all lit smokes
+
+	text {
+		diffuseMap diffuseMapIN
+		bumpMap normalMapIN
+		parameters 0, 0, 0, 0
+	}
+	
+	
+
+	// Depends on the number of lights used
+
+	// Pretty syntax!
+	commands {
+		if( numLights == "0" ) { append {
+			program sfx/litsmoke
+		}}
+		if( numLights == "1" ) { append {
+			program sfx/litsmoke_1	
+		}}
+		if( numLights == "2" ) { append {
+			program sfx/litsmoke_2
+		}}
+		if( numLights == "3" ) { append {
+			program sfx/litsmoke_2
+		}}		
+		if( numLights == "4" ) { append {
+			program sfx/litsmoke_3
+		}}		
+		
+	}
+}
+
+template templates/materials/smoketrail_lit
+{
+	parameters < diffuseMapIN, normalMapIN, numLights, scrollFactor >
+	
+	// Shared between all lit smokes
+
+	text {
+		diffuseMap diffuseMapIN
+		bumpMap highquality normalMapIN		
+		parameters	scrollFactor, -1
+	}
+	
+
+	// Depends on the number of lights used
+
+	// Pretty syntax!
+	commands {
+		if( numLights == "0" ) { append {
+			program sfx/littrail
+		}}
+		if( numLights == "1" ) { append {
+			program sfx/littrail_1	
+		}}
+		if( numLights == "2" ) { append {
+			program sfx/littrail_2
+		}}
+		if( numLights == "3" ) { append {
+			program sfx/littrail_3
+		}}		
+		if( numLights == "4" ) { append {
+			program sfx/littrail_4	
+		}}		
+		
+	}
+}
+
+
+template spawnHostPass
+{
+	parameters< >
+	text {
+		{
+			//blend add
+			blend GL_DST_COLOR, GL_SRC_COLOR
+			program	sfx/stroggForceField
+			map			textures/sfx/forcefield.tga
+			mask		clamp textures/common/gray.tga
+			diffuseMap	clamp textures/sfx/spawnhostgradient.tga
+
+
+			parameters	time * 0.005
+			parameters2	0.2, 0.2
+
+			textureMatrix diffuseMatrix {
+				scale 0.5, 0.5
+			}
+
+			textureMatrix maskMatrix {
+				translate 0, 0
+			}
+
+			//maskAlpha
+		}
+	}
+}

@@ -1,0 +1,438 @@
+material texturesheets/volcano/pipes_trims_trenches
+{
+	surfaceTypeMap "texturesheets/volcano/pipes_trims_trenches"
+	{
+		diffusemap	picmip -1	texturesheets/volcano/pipes_trims_trenches_d.tga
+		specularmap	picmip -2	texturesheets/volcano/pipes_trims_trenches_s.tga
+		bumpmap		picmip -1	texturesheets/volcano/pipes_trims_trenches_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 3,24,0,0 
+	}
+}
+
+material texturesheets/volcano/reactor
+{
+		noshadows
+		noselfshadow
+		//nonsolid
+		diffusemap	picmip -1	texturesheets/volcano/reactor_d.tga
+		//specularmap	texturesheets/volcano/reactor_s.tga
+		//bumpmap	texturesheets/volcano/reactor_local.tga
+	{	
+		blend add
+		map		picmip -1	texturesheets/volcano/reactor_glow_d.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material texturesheets/volcano/pump_house
+{
+	surfaceTypeMap "texturesheets/volcano/pump_house"
+	{
+		diffusemap				texturesheets/volcano/pump_house_d.tga
+		specularmap	picmip -1	texturesheets/volcano/pump_house_s.tga
+		bumpmap					texturesheets/volcano/pump_house_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 3,24,0,0 
+	}
+}
+
+material texturesheets/volcano/bunker_bits
+{
+	surfaceTypeMap "texturesheets/volcano/bunker_bits"
+	{
+		diffusemap				texturesheets/volcano/bunker_bits_d.tga
+		specularmap	picmip -1	texturesheets/volcano/bunker_bits_s.tga
+		bumpmap					texturesheets/volcano/bunker_bits_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 3,24,0,0 
+	}
+}
+
+material texturesheets/volcano/walls_trims
+{
+	surfaceTypeMap "texturesheets/volcano/walls_trims"
+	{
+		diffusemap				texturesheets/volcano/walls_trims_d.tga
+		specularmap	picmip -1	texturesheets/volcano/walls_trims_s.tga
+		bumpmap					texturesheets/volcano/walls_trims_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 3,24,0,0 
+	}
+}
+
+material texturesheets/volcano/walls_trims_nonsolid_noshadows
+{
+	surfaceTypeMap "texturesheets/volcano/walls_trims"
+	nonsolid
+	noshadows
+	{
+		diffusemap				texturesheets/volcano/walls_trims_d.tga
+		specularmap picmip -1	texturesheets/volcano/walls_trims_s.tga
+		bumpmap					texturesheets/volcano/walls_trims_local.tga
+		vertexcolor
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 3,24,0,0 
+	}
+}
+
+material texturesheets/volcano/walls_trims_noshadows
+{
+	surfaceTypeMap "texturesheets/volcano/walls_trims"
+	noshadows
+	{
+		diffusemap				texturesheets/volcano/walls_trims_d.tga
+		specularmap	picmip -1	texturesheets/volcano/walls_trims_s.tga
+		bumpmap					texturesheets/volcano/walls_trims_local.tga
+		vertexcolor
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 3,24,0,0 
+	}
+}
+
+material texturesheets/volcano/doors_details
+{
+	surfaceTypeMap "texturesheets/volcano/doors_details"
+	{
+		diffusemap				texturesheets/volcano/doors_details_d.tga
+		specularmap	picmip -1	texturesheets/volcano/doors_details_s.tga
+		bumpmap					texturesheets/volcano/doors_details_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		//bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 3,24,0,0 
+	}
+}
+
+material texturesheets/volcano/doors_details_noshadows
+{
+	surfaceTypeMap "texturesheets/volcano/doors_details"
+	noshadows
+	{
+		diffusemap				texturesheets/volcano/doors_details_d.tga
+		specularmap	picmip -1	texturesheets/volcano/doors_details_s.tga
+		bumpmap					texturesheets/volcano/doors_details_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		//bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 3,24,0,0 
+	}
+}
+
+material texturesheets/volcano/doors_details_nonsolid
+{
+	surfaceTypeMap "texturesheets/volcano/doors_details"
+	nonsolid
+	{
+		diffusemap		texturesheets/volcano/doors_details_d.tga
+		specularmap		texturesheets/volcano/doors_details_s.tga
+		bumpmap			texturesheets/volcano/doors_details_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		//bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 3,24,0,0 
+	}
+}
+
+material texturesheets/volcano/decals
+{
+	polygonOffset
+	sort decal	
+	nonsolid
+ 	translucent
+	{
+		program filterVertexColorCoverage
+		blend filter
+		map	picmip -1	texturesheets/volcano/decals_d.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material texturesheets/volcano/grate_shadow
+{
+	polygonOffset
+	sort decal	
+	nonsolid
+ 	translucent
+	{
+		program filterVertexColorCoverage
+		blend filter
+		map	picmip -1	texturesheets/volcano/grate_shadow_d.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material texturesheets/volcano/concrete2
+{
+	surfacetype "concrete"
+	{
+		diffusemap	picmip -1	texturesheets/volcano/concrete2_bright_d.tga
+		specularmap	picmip -2	texturesheets/sewer/concrete2_s.tga
+		bumpmap 	picmip -1	texturesheets/sewer/concrete2_local.tga
+		vertexcolor
+		
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,8,0,0 
+	}
+}
+
+material texturesheets/volcano/roof_metal_2
+{
+	surfacetype "metal"
+	{
+		diffusemap	picmip -1	texturesheets/volcano/roof_metal_2_1_bright_d.tga
+		specularmap	picmip -2	texturesheets/volcano/roof_metal_2_1_bright_s.tga
+		bumpmap		picmip -1	texturesheets/sewer/roof_metal_2_1_local.tga
+		vertexcolor
+	}
+}
+
+material texturesheets/volcano/stained_steel1
+{
+	surfaceType	"metal"
+	//noshadows
+	{
+		diffusemap	picmip -1	texturesheets/volcano/stained_steel1a_d.tga
+		//specularmap    		textures/metal/stainlesssteel01_s.tga
+		//specularmap 			texturesheets/sewer/roof_metal_2_1_s.tga
+		specularmap	picmip -2	texturesheets/volcano/roof_metal_2_1_2_s.tga
+		bumpmap 	picmip -1	textures/metal/stainlesssteel01_local.tga
+		vertexcolor
+ 	}
+}
+
+material texturesheets/volcano/stained_steel1_noshadows
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	texturesheets/volcano/stained_steel1a_d.tga
+		//specularmap    		textures/metal/stainlesssteel01_s.tga
+		//specularmap 			texturesheets/sewer/roof_metal_2_1_s.tga
+		specularmap 	picmip -2	texturesheets/volcano/roof_metal_2_1_2_s.tga
+		bumpmap 	picmip -1	textures/metal/stainlesssteel01_local.tga
+		vertexcolor
+ 	}
+}
+
+material texturesheets/volcano/stained_steel_panel1
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	texturesheets/volcano/stained_steel2_d.tga
+		//bumpmap 	picmip -1	addnormals ( textures/raven/terminal/t13_ceiling_1_local, heightmap ( textures/raven/terminal/t13_ceiling_1_h, 2 ) )
+		bumpmap		picmip -1	textures/raven/terminal/t13_ceiling_1_local.tga
+		specularmap	picmip -2	textures/raven/terminal/t13_ceiling_1_s
+		vertexcolor
+ 	}
+}
+
+material texturesheets/volcano/stained_steel_panel2
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	texturesheets/volcano/stained_steel2_d.tga
+		bumpmap		picmip -1	textures/raven/terminal/t12_wall_2_local.tga
+		specularmap	picmip -2	textures/raven/terminal/t12_wall_2_s
+		vertexcolor
+ 	}
+}
+
+material texturesheets/volcano/stained_steel_panel3
+{
+	surfaceType	"metal"
+	//noshadows
+	{
+		diffusemap	picmip -1	texturesheets/volcano/stained_steel2_d.tga
+		bumpmap		picmip -1	textures/raven/terminal/t11_wall01a_local.tga
+		specularmap	picmip -2	textures/raven/terminal/t11_wall01a_s
+		vertexcolor
+ 	}
+}
+
+
+
+material texturesheets/volcano/stained_steel_panel4
+{
+	surfaceType	"metal"
+	//noshadows
+	{
+		diffusemap	picmip -1	texturesheets/volcano/stained_steel3_d.tga
+		bumpmap		picmip -1	textures/raven/hub/sh_vertpanel10_local.tga
+		specularmap	picmip -2	textures/raven/hub/sh_vertpanel10_s
+		vertexcolor
+ 	}
+}
+
+material texturesheets/volcano/rubble
+{
+	surfaceType	"concrete"
+	//noshadows
+	{
+		diffusemap	picmip -1	textures/concrete/rubble_small01_d.tga
+		bumpmap		picmip -1	textures/concrete/rubble_small01_local.tga
+		specularmap	picmip -2	textures/concrete/rubble_small01_s
+		vertexcolor
+		
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,8,0,0 
+ 	}
+}
+
+material texturesheets/volcano/stained_steel_panel5
+{
+	surfaceType	"metal"
+	//noshadows
+	{
+		diffusemap	picmip -1	texturesheets/volcano/stained_steel4_d.tga
+		bumpmap		picmip -1	textures/raven/hub/sh2_floorrun1_local.tga
+		specularmap	picmip -2	textures/raven/hub/sh2_floorrun1_s
+		vertexcolor
+ 	}
+}
+
+material texturesheets/volcano/facility_decals
+{
+	polygonOffset
+	sort decal	
+	nonsolid
+ 	translucent
+	{
+		program filterVertexColorCoverage
+		blend filter
+		map	texturesheets/volcano/facility_decals_d.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material texturesheets/volcano/white_tank_small
+{
+	//surfaceTypeMap "texturesheets/volcano/bunker_bits"
+	{
+		diffusemap	picmip -1	texturesheets/volcano/white_tank_small_d.tga
+		specularmap	picmip -1	texturesheets/volcano/white_tank_small_s.tga
+		bumpmap		picmip -1	texturesheets/volcano/white_tank_small_local.tga
+		vertexcolor
+	}
+}
+
+material texturesheets/volcano/grating
+{
+	twosided
+	nonsolid
+	playerclip
+	flyerhiveclip
+	noimpact
+	noshadows
+	{
+		//polygonOffset
+		//qer_editorimage texturesheets/volcano/grating_d.tga
+		diffusemap	picmipmin -1 maxLod 2	texturesheets/volcano/grating_d.tga
+		specularmap    	picmip -1		texturesheets/volcano/grating_s.tga
+		bumpmap 	picmip -1		texturesheets/volcano/grating_local.tga
+		alphatest 	0.5
+		vertexcolor
+	}
+	
+}
+
+material texturesheets/volcano/grating2
+{
+	twosided
+	nonsolid
+	playerclip
+	flyerhiveclip
+	noimpact
+	noshadows
+	{
+		//polygonOffset
+		//qer_editorimage texturesheets/volcano/grating2_d.tga
+		diffusemap	picmipmin -1 maxLod 2	texturesheets/volcano/grating2_d.tga
+		specularmap    	picmip -1		texturesheets/volcano/grating2_s.tga
+		bumpmap 	picmip -1		texturesheets/volcano/grating2_local.tga
+		alphatest 	0.5
+		vertexcolor
+	}
+	
+}
+
+material texturesheets/volcano/signs_vents_caps
+{
+	nonsolid
+	noshadows
+	{
+		program	interaction/basic_detail_alphatest
+		diffusemap		texturesheets/volcano/signs_vents_caps_d.tga
+		bumpmap			texturesheets/volcano/signs_vents_caps_local.tga
+		specularmap		texturesheets/volcano/signs_vents_caps_s.tga
+		alphaTest 0.5
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 4,4,0,0 
+	}
+}
+
+material textures/metal/white_tank2_noshadows
+{
+		noshadows
+		surfaceType	"metal"
+		qer_editorimage textures/metal/white_tank2_d.tga
+
+	{
+		diffusemap	picmip -1	textures/metal/white_tank2_d.tga
+		specularmap     picmip -1	textures/metal/white_tank2_s.tga
+		bumpmap 	picmip -1	textures/metal/white_tank_local.tga
+		vertexcolor
+ 	}
+}
+
+material texturesheets/volcano/facility_trim1
+
+{
+		qer_editorimage texturesheets/volcano/facility_trim1_d.tga
+	{
+		diffusemap		texturesheets/volcano/facility_trim1_d.tga
+		bumpmap			texturesheets/volcano/facility_trim1_local.tga
+		specularmap		texturesheets/volcano/facility_trim1_s.tga
+		vertexcolor
+
+	}
+}
+
+
+
+

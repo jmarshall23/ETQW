@@ -1,0 +1,25 @@
+
+sound sounds/forwardspawn/capture {
+
+	volume -10
+
+	sounds/structures/forward/capture.wav
+}
+
+sound sounds/forwardspawn/gdf {
+
+	volume -10
+	playOnce
+
+	looping
+	sounds/structures/forward/gdf_loop.wav
+}
+
+sound sounds/forwardspawn/strogg {
+
+	volume	-10
+	playOnce
+
+	looping
+	sounds/structures/forward/strogg_loop.wav
+}

@@ -1,0 +1,142 @@
+
+
+
+// ========================================================================
+// Export
+//
+export hauser {
+	options -prefix ARMING_ -sourcedir models/tools/gdf_arming_device/dev_sd -destdir models/tools/gdf_arming_device/ -keep
+
+
+	mesh	gdf_arming_device_base_file.mb			-dest view.md5mesh
+	/*
+	anim	gdf_arming_device_idle.mb				-dest idle.md5anim
+
+ 	anim	gdf_arming_device_raise1.mb				-dest raise.md5anim
+
+ 	anim	gdf_arming_device_lower.mb				-dest lower.md5anim
+
+ 	anim	gdf_arming_device_use2_rework.mb				-dest start_use.md5anim -range 0 8
+ 	anim	gdf_arming_device_use2_rework.mb				-dest use.md5anim
+	anim	gdf_arming_device_use2_rework.mb				-dest end_use.md5anim -range 90 102
+
+	anim	gdf_arming_device_sprint.mb				-dest sprint_start.md5anim -range 1 6
+	anim	gdf_arming_device_sprint.mb				-dest sprint_end.md5anim -range 6 12
+
+*/
+
+}
+
+
+// ========================================================================
+// view Models
+//
+model viewmodel_arming_device {
+	mesh						models/tools/gdf_arming_device/view.md5mesh
+
+	anim putaway 				models/tools/gdf_arming_device/lower.md5anim {
+	}
+
+	anim raise 					models/tools/gdf_arming_device/raise.md5anim {
+		frame 4						sound_channel snd_weapon_raise snd_raise
+	}
+
+	anim idle					models/tools/gdf_arming_device/idle.md5anim {
+		frame 1						sound_channel snd_weapon_idle snd_idle
+	}
+
+
+	anim fire_start					models/tools/gdf_arming_device/start_use.md5anim {
+
+	}
+
+	anim fire					models/tools/gdf_arming_device/use.md5anim {
+		frame 6						sound_channel snd_weapon_arm snd_arm
+		frame 20					sound_channel snd_weapon_arm snd_arm
+		frame 32					sound_channel snd_weapon_arm snd_arm
+	}
+
+	anim fire_end					models/tools/gdf_arming_device/end_use.md5anim {
+
+	}
+
+	anim start_sprint			models/tools/gdf_arming_device/sprint_start.md5anim {
+	}
+
+	anim leave_sprint			models/tools/gdf_arming_device/sprint_end.md5anim {
+	}
+}
+
+
+// ========================================================================
+// Entity DEFS
+//
+invItemDef inventory/tools/pliers/charge {
+	type							"tool"
+	slot							"tool"
+	name							"game/weapons/arming_tool"
+	model							"models/tools/gdf_arming_device/arming_device_player.lwo"
+	joint							"Spine"
+
+	data {
+		"model_view" 				"viewmodel_arming_device"
+		"model_world" 				"models/tools/gdf_arming_device/arming_device_world.lwo"
+		"joint_attach"				"RightHand"
+
+		"gui"						"guis/tools/arm_searching"
+
+		"view_offset"				"2 -2 -2"
+
+		"anim_prefix"				"arming"
+		"anim_prefix_class"			"tool"
+
+		"weapon_scriptobject"		"tool_pliers"
+		"use_hold_anims"			"1"
+
+		"charge_per_use"			"2"
+		"repair_count"				"30"
+		"fire_rate"					"0.1"
+		"show_charge"				"1"
+		
+		"has_startfire_anim"		"1"
+		"has_endfire_anim"			"1"
+
+		"snd_idle"					"sounds/tools/hecharge/remote/idle"
+		"snd_arm"					"sounds/tools/hecharge/remote/arm"
+		"snd_raise"					"sounds/tools/hecharge/remote/raise"
+
+		"melee_distance"			"88"
+
+		"can_arm_charge"			"1"
+
+		"mtr_weaponmenu"			"guis/assets/icons/weapons/armingtool"
+
+		"activate_attack"			"1"
+
+		"climate_skin_key"			"weapon_gdf"
+
+		"crosshair"					"none"
+
+		"crosshair_spread_min"		"0.1"
+		"crosshair_spread_max"		"0.1"
+		"crosshair_spread_scale"	"1"
+
+		"spread_min"				"0"
+		"spread_max"				"0"
+
+		"spread_crouch_min"			"0"
+		"spread_crouch_max"			"0"
+
+		"spread_prone_min"			"0"
+		"spread_prone_max"			"0"
+
+		"spread_jump_min"			"0"
+		"spread_jump_max"			"0"
+
+		"weapon_menu_ignore"		"0"
+
+		"player_weapon_num"			"12"
+
+		"needsAmmoBox"				"0"
+	}
+}

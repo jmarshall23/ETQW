@@ -1,0 +1,29 @@
+
+entityDef item_capturepoint {
+	"spawnclass"			"sdScriptEntity"
+	"scriptobject"			"item_capturepoint"
+	
+	"option_wants_touch"	"1"
+	
+	"editor_mins"			"?"
+	"editor_maxs"			"?"
+	
+	"prof_capture"			"pro_battlesense_item_delivered"
+}
+
+
+entityDef item_capturepoint_use {
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"item_capturepoint_use"
+
+	"editor_mins"					"?"
+	"editor_maxs"					"?"
+	
+	"option_interactive_interface"	"1"
+	"option_crosshair_interface"	"1"
+	
+	"prof_capture"					"pro_battlesense_item_delivered"
+	
+	"snd_transmitting_start"		"sounds/misc/transmit/start"
+	"snd_transmitting_stop"			"sounds/misc/transmit/stop"
+}

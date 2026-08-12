@@ -1,0 +1,155 @@
+// GDF High Command
+
+// Map Quarry
+
+sound sounds/vo/gdf/highcommand/maps/quarry/autodestructor/stop {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10601.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/autodestructor/stop/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10602.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/stop {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10603.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/defend {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10604.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/stop/long  {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10605.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/lost {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10606.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/stopcarrier {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10607.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/taken/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10608.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/taken {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10609.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/dropped {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10610.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/return {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10611.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/returned {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10612.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/first/taken {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10613.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/first/dropped {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10614.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/first/returned {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10615.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/first/activated {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10616.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/second/taken {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10617.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/second/dropped {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10618.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/second/returned {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10619.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/second/activated {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10620.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/third/taken {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10621.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/third/dropped {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10622.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/third/returned {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10623.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/third/activated {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10624.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/autodestructor/third {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10625.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/autodestructor/twothirds {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10626.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/gdfwin {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10629.wav
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10630.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/gdflose {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10627.wav
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/10628.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/dropping {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/15504.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/quarry/energycells/stop/ship {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/quarry/15505.wav
+}

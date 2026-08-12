@@ -1,0 +1,98 @@
+/***********************************************************************
+
+	reexportModels tools\pliers.def
+
+***********************************************************************/
+
+model viewmodel_pliers_pda {
+	mesh						models/items/third_eye/third_eye_camera_view.md5mesh
+
+	anim idle					models/items/third_eye/third_eye_camera_pda_idle.md5anim {
+	}
+
+	anim raise					models/items/third_eye/third_eye_camera_pda_raise.md5anim {
+		frame 1						sound_channel snd_weapon_raise snd_raise
+	}
+
+	anim putaway				models/items/third_eye/third_eye_camera_pda_lower.md5anim {
+	}
+
+	anim fire_start				models/items/third_eye/third_eye_camera_pda_hack_into_loop.md5anim {
+	}
+
+	anim fire					models/items/third_eye/third_eye_camera_pda_hack_loop.md5anim {
+	}
+
+	anim fire_end				models/items/third_eye/third_eye_camera_pda_hack_from_loop.md5anim {
+	}
+}
+
+invItemDef inventory/tools/pliers_hack {
+	type					"tool"
+	slot					"tool"
+	name					"game/weapons/hacker"
+//	model					"models/tools/pliers/pliers_world.lwo"
+//	joint					"Spine"
+
+	data {
+		"model_view" 			"viewmodel_pliers_pda"
+		//"model_world" 			"models/tools/pliers/pliers_world.lwo"
+		//"joint_attach"			"RightHand"
+
+		"view_offset"			"1 0 0"
+
+		"anim_prefix"			"hacker"
+		"anim_prefix_class"		"tool"
+
+		"weapon_scriptobject"	"tool_pliers"
+		"use_hold_anims"		"1"
+
+		"melee_distance"		"88"
+
+		"snd_raise"				"sounds/tools/hacker/raise"
+		"snd_start"				"sounds/tools/hacker/start"
+		"snd_stop"				"sounds/tools/hacker/stop"
+
+		"show_charge"			"0"
+
+		"can_hack"				"1"
+		"can_disguise"			"1"
+
+		"mtr_weaponmenu"		"guis/assets/icons/weapons/repairtool"
+		"gui"					"guis/tools/hacker"
+
+		"climate_skin_key"		"weapon_gdf"
+
+		"activate_attack"		"1"
+
+		"has_startfire_anim"	"1"
+		"has_endfire_anim"		"1"
+
+		"tt_intro_1"			"hacking_tool_intro_1"
+		"tt_intro_2"			"hacking_tool_intro_2"
+		"tt_action_failed"		"hacking_tool_action_failed"
+
+		"player_weapon_num"		"18"
+
+		"needsAmmoBox"			"0"
+
+
+//		"fx_fire"			"effects/vehicles/vehicle_flames_small"
+//		"idle_effect_joint"		"wrist"
+	}
+}
+
+toolTip hacking_tool_intro_1 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/hacking_tool_1"
+}
+
+toolTip hacking_tool_intro_2 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/generic/fire_activate_use_item"
+}
+
+toolTip hacking_tool_action_failed {
+	sound "sounds/ui/main/cannot"
+	text "game/tt/intro/hacking_tool_action_failed"
+}

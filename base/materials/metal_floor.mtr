@@ -1,0 +1,7 @@
+material textures/metal_floor/metal_floor_3_128
+{
+		qer_editorimage textures/metal/metal_floor_3_128_d.tga
+		diffusemap 	textures/metal/metal_floor_3_128_d.tga
+		specularmap	textures/metal/metal_floor_3_128_s.tga
+		bumpmap		textures/metal/metal_floor_3_128_local.tga
+}

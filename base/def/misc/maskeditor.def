@@ -1,0 +1,50 @@
+#include "/def/players/player_includes.include"
+
+invItemDef inventory/misc/maskeditor {
+	type								"weapon"
+	slot								"melee"
+	name								"Mask Editor"
+
+	data {
+		"weapon_scriptobject"			"maskeditor"
+		"anim_prefix"					"knife"
+		"anim_prefix_class"				""
+
+		"autoswitch_priority"			"15"
+
+		"mtr_cm_icon"					"hud/commandmap/player"
+		"mtr_cm_icon_arrow"				"hud/commandmap/player_arrow"
+		"mtr_cm_icon_unknown"			"hud/commandmap/unknown"
+		
+		"mtr_decal"						"textures/decals/white_decal"
+		
+		"gui_overlay"					"guis/tools/maskeditor"
+		"hud_sort"						"999"
+	}
+}
+
+itemPackageDef class_maskeditor {
+	item						"inventory/misc/maskeditor"
+}
+
+playerClass maskeditor {
+	info {
+		"items"					"class_maskeditor"
+		"model"					"models/players/gdf/soldier"
+		"title"					"Mask Editor"
+
+		"class_context_cvar"	"g_class_context_maskeditor"
+	}
+
+	modelData {
+		templates/players/skeleton_info
+		templates/players/locational_damage_joints
+		templates/players/gdf_head_offset
+	}
+
+	abilities {
+	}
+
+	ammoLimits {
+	}
+}

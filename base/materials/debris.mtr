@@ -1,0 +1,124 @@
+/**************
+Carcass
+**************/
+
+material models/mapobjects/debris/carcass01
+{
+	//surfaceType "flesh"
+	surfaceColor ( 0.4 0.3333333 0.2666667 )
+//	unsmoothedtangents
+	renderbump -size 1024 512 -aa 1 models/mapobjects/debris/carcass01_local.tga models/peppi/carcass_hi.lwo
+	noselfshadow
+
+	diffusemap	models/mapobjects/debris/carcass01_d.tga
+	specularmap	models/mapobjects/debris/carcass01_s.tga
+	bumpmap 	addnormals(models/mapobjects/debris/carcass01_local.tga, heightmap(models/mapobjects/debris/carcass01_h.tga, 4 ) )
+}
+
+/**************
+Exhaust
+**************/
+
+
+material models/mapobjects/debris/exhaust
+	{
+		noselfshadow
+		renderbump -size 256 256 -aa 2  models/mapobjects/debris/exhaust_local.tga models/mapobjects/debris/dev_sd/exhaust_hi.lwo
+		diffusemap		models/mapobjects/debris/exhaust_d.tga
+		specularmap		models/mapobjects/debris/exhaust_d.tga
+		bumpmap 		models/mapobjects/debris/exhaust_local.tga
+	}
+
+/**************
+Propshaft
+**************/
+
+material models/mapobjects/debris/propshaft
+	{
+		noselfshadow
+		unsmoothedtangents
+		renderbump -size 256 256 -aa 2  models/mapobjects/debris/propshaft_local.tga models/mapobjects/debris/dev_sd/prop_hi.lwo
+
+		diffusemap		models/mapobjects/debris/propshaft_d.tga
+		specularmap		models/mapobjects/debris/propshaft_d.tga
+		bumpmap 		addnormals (models/mapobjects/debris/propshaft_local.tga, heightmap (models/mapobjects/debris/propshaft_h.tga, 5))
+	}
+
+/**************
+Lid
+**************/
+
+material stuff/debris/lid
+	{
+		noselfshadow
+		unsmoothedtangents
+		renderbump -size 128 128 -aa 2  stuff/debris/debris/lid_local.tga models/mapobjects/debris/dev_sd/lid_hi.lwo
+
+		diffusemap		stuff/debris/lid_d.tga
+		specularmap		stuff/debris/lid_d.tga
+		bumpmap 		addnormals (stuff/debris/lid_local.tga, heightmap (stuff/debris/lid_h.tga, 5))
+	}
+
+/**************
+Shoe
+**************/
+
+material stuff/debris/shoe
+    {
+		noselfshadow
+    	renderbump -size 64 128 -aa 2  models/mapobjects/debris/shoe_local.tga models/mapobjects/debris/dev_sd/shoe_hi.lwo
+
+    	diffusemap		stuff/debris/shoe_d.tga
+ 	specularmap		stuff/debris/shoe_s.tga
+     	bumpmap 		addnormals (stuff/debris/shoe_local.tga, heightmap (stuff/debris/shoe_h.tga, 5))
+    }
+
+/**************
+Beer bottle
+**************/
+
+material stuff/debris/beer
+	{
+		noselfshadow
+		renderbump -size 64 64 -aa 2  models/mapobjects/debris/beer_local.tga models/mapobjects/debris/dev_sd/beer_hi.lwo
+
+		diffusemap		stuff/debris/beer_d.tga
+		specularmap		stuff/debris/beer_d.tga
+		bumpmap 		stuff/debris/beer_local.tga
+	}
+
+/**************
+aerosol_can
+**************/
+
+material stuff/debris/aerosol_can
+	{
+		surfaceType	"metal"
+		renderbump -clampOutput 0 0 1 1 -size 512 512 -trace 0.01 stuff/debris/aerosol_can.tga stuff/debris/aerosol_can_hp.obj
+		diffusemap	picmip -1	textures/common/dark_gray.tga
+	 	specularmap stuff/debris/aerosol_can_s.tga
+	 	bumpmap  	stuff/debris/aerosol_can_l.tga
+	}
+
+material stuff/debris/aerosol_can_damaged
+	{
+		surfaceType	"metal"
+		renderbump -clampOutput 0 0 1 1 -size 512 512 -trace 0.01 stuff/debris/aerosol_can.tga stuff/debris/aerosol_can_hp.obj
+		diffusemap	picmip -1	textures/common/dark_gray.tga
+	 	specularmap stuff/debris/aerosol_can_s.tga
+	 	bumpmap addnormals(stuff/debris/aerosol_can_l.tga,heightmap(stuff/debris/aerosol_can_h.tga,.5))
+	}
+
+/**************
+skull
+**************/
+
+material models/mapobjects/debris/skull
+	{
+		surfaceType	"metal"
+		noselfshadow
+		renderbump -clampOutput 0 0 1 1 -size 512 512 models/mapobjects/debris/skull.tga models/mapobjects/debris/skull_hp.obj
+		diffusemap	models/mapobjects/debris/skull_d.tga
+	 	specularmap models/mapobjects/debris/skull_s.tga
+	 	bumpmap  	models/mapobjects/debris/skull_l.tga
+	}

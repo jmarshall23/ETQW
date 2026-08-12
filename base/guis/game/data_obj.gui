@@ -1,0 +1,92 @@
+gui guis/items/data_obj {
+	properties {
+		float progress = globals.docObjective.transmitProgress;
+	}
+
+	materials {
+
+		"guis/assets/gdf_generic/data_finob_bg"			"guis/assets/gdf_generic/data_finob_bg"
+		"guis/assets/gdf_generic/data_graph" 			"guis/assets/gdf_generic/data_graph"
+		"guis/assets/gdf_generic/data_chat"				"guis/assets/gdf_generic/data_chat"
+
+	}
+	windowDef desktop {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			string material = "guis/assets/gdf_generic/data_finob_bg";
+		}
+	}	
+	
+	windowDef bar1 {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			rect rect = 139,100,184,58;
+			string material = "guis/assets/gdf_generic/data_graph";
+		}
+	}	
+	
+	windowDef bar3 {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			rect rect = 332,60,184,58;
+			string material = "guis/assets/gdf_generic/data_graph";
+		}
+	}	
+
+	windowDef bar2 {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			rect rect = 409,245,203,185;
+			string material = "guis/assets/gdf_generic/data_chat";
+		}
+	}	
+	
+	windowDef progressbar {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			rect rect = 148,205,369*gui.progress,21;
+		}
+	}	
+	
+	windowDef Text1 {
+		properties {
+			wstring text 	= toWStr( "Awaiting Data...." );
+			float	fontSize = 30;
+			color	foreColor	=	0.76, 1, 1, 1;
+			rect rect = 145,173,400,30;
+			float visible = gui.progress == 0.f;
+		}		
+	}
+	
+	windowDef Text1Alt {
+		properties {
+			wstring text 	= toWStr( "Transmitting Data...." );
+			float	fontSize = 30;
+			color	foreColor	=	0.76, 1, 1, 1;
+			rect rect = 145,173,400,30;
+			float visible = gui.progress != 0.f;
+		}		
+	}
+
+	windowDef Text2 {
+		properties {
+			wstring text 	= toWStr( toString( gui.progress * 100, 0.f ) + "%" );
+			float	fontSize = 45;
+			color	foreColor	=	0.76, 1, 1, 1;
+			rect rect = 540,195,50,30;
+		}		
+	}
+	
+	windowDef Text3 {
+		properties {
+			wstring text 	= toWStr( "GDF Comms Terminal" );
+			float	fontSize = 30;
+			color	foreColor	=	0.76, 1, 1, 1;
+			rect rect = 52,18,200,30;
+		}		
+	}
+	
+	
+}
+
+

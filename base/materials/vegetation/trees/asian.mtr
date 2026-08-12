@@ -1,0 +1,32 @@
+material models/vegetation/trees/asian/asiantree_01
+{
+	nonsolid
+	noshadows
+	twoSided
+
+	{
+		useTemplate material/foliage_translucent_stage<
+			"models/vegetation/trees/asian/asiantree_01_d.tga",
+			"models/vegetation/trees/asian/asiantree_01_t.tga",
+			"models/vegetation/trees/asian/asiantree_01_local.tga",
+			"models/vegetation/trees/asian/asiantree_01_s.tga",
+			"1.0",				// translucency multiplier
+			"0.7", "0.9", "0.7"	// light scattering rgb
+		>	
+		useTemplate wind/animatematrix< 0.1, 0.0006 >
+		vertexcolor
+	}
+}
+
+material models/vegetation/trees/asian/asiantree_01_bark
+{
+	nonsolid
+	noshadows
+
+	{
+		diffusemap		models/vegetation/trees/asian/asiantree_01_bark_d.tga
+		specularmap		models/vegetation/trees/asian/asiantree_01_bark_s.tga
+		bumpmap			models/vegetation/trees/asian/asiantree_01_bark_local.tga
+		vertexcolor
+	}
+}

@@ -1,0 +1,77 @@
+
+/*
+===============================================================================
+
+	vehicle_trojan_cockpit
+
+===============================================================================
+*/
+
+object vehicle_trojan_cockpit : vehicle_basic_cockpit {
+	void							preinit();
+	void							destroy();
+
+	void							OnEntered();
+
+	void							AnimThread();
+	
+	string							turnLeftAnim;
+	string							turnRightAnim;
+	string							centerAnim;
+}
+
+void vehicle_trojan_cockpit::OnEntered() {
+	thread AnimThread();
+}
+
+void vehicle_trojan_cockpit::preinit() {
+	turnLeftAnim	= getKey( "turn_left_anim" );
+	turnRightAnim	= getKey( "turn_right_anim" );
+	centerAnim		= getKey( "base_anim" );
+}
+
+void vehicle_trojan_cockpit::destroy() {
+	sys.killThread( "vehicle_trojan_cockpit::AnimThread" );
+}
+
+#define TROJAN_STEER_LEFT	0
+#define TROJAN_STEER_RIGHT	1
+#define TROJAN_STEER_CENTER 2
+
+void vehicle_trojan_cockpit::AnimThread() {
+	sys.threadName( "vehicle_trojan_cockpit::AnimThread" );
+	
+	sys.wait( playAnim( ANIMCHANNEL_ALL, "into" ) );
+
+	float steerState = TROJAN_STEER_CENTER;
+	
+	while ( true ) {
+		entity driver = myVehicle.getDriver();
+		
+		vector move;
+		if ( driver != $null_entity ) {
+			move = driver.getMove();
+		} else {
+			move = '0 0 0';
+		}
+		
+		if ( move_y < 0 ) {
+			if ( steerState != TROJAN_STEER_LEFT ) {
+				playAnimBlended( ANIMCHANNEL_ALL, turnLeftAnim, 0.5f );
+				steerState = TROJAN_STEER_LEFT;
+			}
+		} else if ( move_y > 0 ) {
+			if ( steerState != TROJAN_STEER_RIGHT ) {
+				playAnimBlended( ANIMCHANNEL_ALL, turnRightAnim, 0.5f );
+				steerState = TROJAN_STEER_RIGHT;
+			}
+		} else {
+			if ( steerState != TROJAN_STEER_CENTER ) {
+				playAnimBlended( ANIMCHANNEL_ALL, centerAnim, 0.5f );
+				steerState = TROJAN_STEER_CENTER;
+			}
+		}
+		
+		sys.waitFrame();
+	}
+}

@@ -1,0 +1,127 @@
+
+#include <guis/common/utility.include>
+#include <guis/common/colors.include>
+#include <guis/common/materials.include>
+
+#include <guis/mainmenu/components/dialog.include>
+#include <guis/mainmenu/components/edit.include>
+#include <guis/mainmenu/components/list.include>
+#include <guis/mainmenu/components/window.include>
+
+#include <guis/game/hud/colors.include>
+#include <guis/game/hud/hud.include>
+
+#include <guis/game/chat.include>
+
+gui chat {	
+	properties {
+		float flags	= immediate( flags ) | GUI_SHOWCURSOR | GUI_CATCH_ALL_EVENTS | GUI_FULLSCREEN;
+		string	bindContext 			= "menu";
+	}
+	
+	_hud_materials
+	_dlg_init
+	_lst_init
+	_wnd_init
+	
+	materials {
+		"chat_tab_fill_bl"		"guis/assets/mainmenu/sheet_fill, rect( 223, 196, 12, 12 ), flipY"
+		"chat_tab_fill_b"		"guis/assets/mainmenu/sheet_fill, rect( 234, 196, 11, 12 ), flipY"
+		"chat_tab_fill_br"		"guis/assets/mainmenu/sheet_fill, rect( 223, 196, 12, 12 ), flipX, flipY"
+		"chat_tab_fill_l"		"guis/assets/mainmenu/sheet_fill, rect( 225, 202, 12, 1 ), flipY"
+		"chat_tab_fill_c"		"guis/assets/mainmenu/sheet_fill, rect( 225, 202, 1, 1 ), flipY"
+		"chat_tab_fill_r"		"guis/assets/mainmenu/sheet_fill, rect( 234, 202, 12, 1 ), flipY"
+		"chat_tab_fill_tl"		"guis/assets/mainmenu/sheet_fill, rect( 225, 202, 12, 4 ), flipY"
+		"chat_tab_fill_t"		"guis/assets/mainmenu/sheet_fill, rect( 234, 202, 1, 4 ), flipY"
+		"chat_tab_fill_tr"		"guis/assets/mainmenu/sheet_fill, rect( 234, 202, 12, 4 ), flipY"
+
+		"chat_tab_line_bl"		"guis/assets/mainmenu/sheet_fill, rect( 223, 212, 12, 12 ), flipY"
+		"chat_tab_line_b"		"guis/assets/mainmenu/sheet_fill, rect( 231, 212, 11, 12 ), flipY"
+		"chat_tab_line_br"		"guis/assets/mainmenu/sheet_fill, rect( 223, 212, 12, 12 ), flipX, flipY"
+		"chat_tab_line_l"		"guis/assets/mainmenu/sheet_fill, rect( 225, 212, 12, 2 ), flipY"
+		"chat_tab_line_c"		"guis/assets/mainmenu/sheet_fill, rect( 225, 212, 1, 1 ), flipY"
+		"chat_tab_line_r"		"guis/assets/mainmenu/sheet_fill, rect( 231, 212, 12, 1 ), flipY"
+		"chat_tab_line_tl"		"guis/assets/mainmenu/sheet_fill, rect( 223, 221, 12, 4 ), flipY"
+		"chat_tab_line_t"		"guis/assets/mainmenu/sheet_fill, rect( 225, 223, 1, 4 ), flipY"
+		"chat_tab_line_tr"		"guis/assets/mainmenu/sheet_fill, rect( 223, 221, 12, 4 ), flipX, flipY"	
+		
+		"icon"					"guis/assets/icons/icons_sheet1, rect( 224, 16, 16, 16 )"	
+	}
+	
+	events {
+		onActivate {			
+			globals.gameHud.showChat = immediate( globals.gameHud.showChat - 1 );
+		}
+		onDeactivate {
+			globals.gameHud.showChat = immediate( globals.gameHud.showChat + 1 );
+			gui.focusedWindow = "";
+		}		
+		onNamedEvent "globalChat" {
+			edtChat.chatCommand = "say";
+			edtChat.timeline.default.resetTime( 0 );
+			chatTarget.localizedText = localize( "guis/chat/global" );
+			chatTarget.icon = gui.cacheMaterial( "icon", "voip_global" );
+		}
+		onNamedEvent "teamChat" {
+			edtChat.chatCommand = "sayTeam";
+			edtChat.timeline.default.resetTime( 0 );
+			chatTarget.localizedText = localize( "guis/chat/team" );
+			chatTarget.icon = gui.cacheMaterial( "icon", "voip_team" );
+		}
+		onNamedEvent "fireteamChat" {
+			edtChat.chatCommand = "sayFireteam";
+			edtChat.timeline.default.resetTime( 0 );
+			chatTarget.localizedText = floatToHandle( -1 );
+			chatTarget.localizedText = localize( "guis/chat/fireteam" );
+			chatTarget.icon = gui.cacheMaterial( "icon", "voip_fireteam" );
+		}
+	}
+	timeline {
+		onTime 0 {
+			focusedWindow = "edtChat";
+		}
+	}
+	
+	windowDef desktop {
+		properties {
+			rect rect = 144, SCREEN_HEIGHT - 190, 370, 112;
+		}
+		_draw_dialog_frame( drawText, gui.blankWStr, "nogradient" )
+									
+		__chat( desktop )
+		
+		windowDef chatTarget {
+			properties {
+				vec2 measure 	= 0, 0;
+				rect rect 		= 4, gui.desktop.rect.h - 1, 24 + measure.x, 16;
+				handle fill 	= gui.cacheMaterial( "chatfill", "_frame chat_tab_fill" );
+				handle line 	= gui.cacheMaterial( "chatline", "_frame chat_tab_line" );
+				handle icon		= gui.cacheMaterial( "chaticon", "_st icon" );
+				
+				rect iconRect 	= absoluteRect.x + 2, absoluteRect.y + 2, 12, 12;
+				rect textRect 	= absoluteRect.x + 18, absoluteRect.y + 2, absoluteRect.w - 18, 16;								
+				float fontSize 	= 12;
+				float needMeasure = true;
+			}
+			events {
+				onPropertyChanged "localizedText" {
+					if( isValidHandle( localizedText ) ) {
+						needMeasure = true;
+					}
+				}
+				onPreDraw {
+					if( needMeasure ) {
+						measure = measureLocalizedText( localizedText, textRect, fontSize, DTF_SINGLELINE | DTF_LEFT | DTF_VCENTER );
+						needMeasure = false;
+					}
+					drawCachedMaterial( fill, absoluteRect, COLOR_DIALOG_FILL );
+					drawCachedMaterial( line, absoluteRect, COLOR_DIALOG_LINES );
+					drawCachedMaterial( icon, iconRect, COLOR_WHITE );
+					drawLocalizedText( localizedText, textRect, COLOR_ICON_DIM, fontSize, DTF_SINGLELINE | DTF_LEFT | DTF_VCENTER );
+					
+					gui.scriptPushFloat( false );
+				}
+			}			
+		}
+	}
+}

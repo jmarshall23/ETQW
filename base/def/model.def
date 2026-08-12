@@ -1,0 +1,26 @@
+
+/***********************************************************************
+
+ model
+
+***********************************************************************/
+
+entityDef model_static {
+	"spawnclass"				"sdModelStatic"
+	"editor_spawnclass"			"sdEntityClass_StaticModel"
+	
+	"editor_color"				".8 .5 .1"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+
+	"editor_usage"				"Used to put a static model in a map, it will be converted into surfaces in the proc file."
+	"editor_bool noclipmodel"	"0 by default. Sets whether or not to generate a collision model for an ASE/LWO func_static at compile time. (Set to 1 for stuff the player can't interact with. This will save memory.)"
+	"editor_bool mergecm"		"0 by default. Sets whether or not to merge the generated collision model into the world model. Set to 1 for faster collision checking. The tradeoff is that multiple instances will not share the same collision data, requiring more memory."
+	
+	"editor_var model"			"model to use for this item. if blank, a model is generated from the entity's brushwork"
+	"editor_callback model"		"model://models"
+	
+	
+	"noclipmodel"				"0"
+	"mergecm"					"0"
+}

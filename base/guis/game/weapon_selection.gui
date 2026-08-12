@@ -1,0 +1,241 @@
+
+#include <guis/game/hud/hud.include>
+#include <guis/common/colors.include>
+#include <guis/mainmenu/components/dialog.include>
+
+#define DEACTIVATE_TRANSITION_TIME 200
+
+#define SLIDE_TIME 250
+
+gui weaponSelection {
+	properties {
+		float	flags				= immediate( flags ) | GUI_FULLSCREEN;
+	}
+	
+	_hud_materials
+	
+	materials {
+		"normal_fill_tl"	"guis/quickchat/qchat_fill, rect( 152, 29, 25, 11 )"
+		"normal_fill_t"		"guis/quickchat/qchat_fill, rect( 177, 29, 1, 11 )"
+		"normal_fill_tr"	"guis/quickchat/qchat_fill, rect( 248, 29, 6, 11 )"		
+		"normal_fill_l"		"guis/quickchat/qchat_fill, rect( 152, 38, 25, 1 )"
+		"normal_fill_r"		"guis/quickchat/qchat_fill, rect( 248, 38, 6, 1 )"
+		"normal_fill_c"		"guis/quickchat/qchat_fill, rect( 176, 32, 4, 1 )"
+		"normal_fill_bl"	"guis/quickchat/qchat_fill, rect( 152, 41, 25, 9 )"
+		"normal_fill_b"		"guis/quickchat/qchat_fill, rect( 177, 41, 1, 9 )"
+		"normal_fill_br"	"guis/quickchat/qchat_fill, rect( 248, 41, 6, 9 )"		
+		
+		"normal_line_tl"	"guis/quickchat/qchat_lines, rect( 152, 29, 25, 11 )"
+		"normal_line_t"		"guis/quickchat/qchat_lines, rect( 177, 29, 1, 11 )"
+		"normal_line_tr"	"guis/quickchat/qchat_lines, rect( 248, 29, 6, 11 )"		
+		"normal_line_l"		"guis/quickchat/qchat_lines, rect( 152, 38, 25, 1 )"
+		"normal_line_r"		"guis/quickchat/qchat_lines, rect( 248, 38, 6, 1 )"
+		"normal_line_c"		"guis/quickchat/qchat_lines, rect( 176, 32, 4, 1 )"
+		"normal_line_bl"	"guis/quickchat/qchat_lines, rect( 152, 41, 25, 9 )"
+		"normal_line_b"		"guis/quickchat/qchat_lines, rect( 177, 41, 1, 9 )"
+		"normal_line_br"	"guis/quickchat/qchat_lines, rect( 248, 41, 6, 9 )"		
+		
+		"normal_grad_tl"	"guis/quickchat/qchat_highlight, rect( 152, 29, 25, 11 )"
+		"normal_grad_t"		"guis/quickchat/qchat_highlight, rect( 177, 29, 1, 11 )"
+		"normal_grad_tr"	"guis/quickchat/qchat_highlight, rect( 248, 29, 6, 11 )"
+		"normal_grad_l"		"guis/quickchat/qchat_highlight, rect( 152, 40, 25, 1 )"
+		"normal_grad_r"		"guis/quickchat/qchat_highlight, rect( 248, 40, 6, 1 )"
+		"normal_grad_c"		"guis/quickchat/qchat_highlight, rect( 153, 40, 1, 1 )"
+		"normal_grad_bl"	"guis/quickchat/qchat_highlight, rect( 152, 41, 25, 9 )"
+		"normal_grad_b"		"guis/quickchat/qchat_highlight, rect( 177, 41, 1, 9 )"
+		"normal_grad_br"	"guis/quickchat/qchat_highlight, rect( 248, 41, 6, 9 )"
+		
+		"progress_tl"		"guis/assets/mainmenu/sheet_fill, rect( 149, 213, 2, 2 )"
+		"progress_t"		"guis/assets/mainmenu/sheet_fill, rect( 151, 213, 1, 2 )"
+		"progress_tr"		"guis/assets/mainmenu/sheet_fill, rect( 149, 213, 2, 2 ), flipX"
+		
+		"progress_l"		"guis/assets/mainmenu/sheet_fill, rect( 149, 215, 2, 1 )"
+		"progress_r"		"guis/assets/mainmenu/sheet_fill, rect( 149, 215, 2, 1 ), flipX"
+		
+		"progress_bl"		"guis/assets/mainmenu/sheet_fill, rect( 149, 213, 2, 2 ), flipY"
+		"progress_b"		"guis/assets/mainmenu/sheet_fill, rect( 151, 213, 1, 2 ), flipY"
+		"progress_br"		"guis/assets/mainmenu/sheet_fill, rect( 149, 213, 2, 2 ), flipX flipY"
+		"progress_c"		"guis/nodraw"
+		
+		"progress_fill_tl"	"guis/assets/mainmenu/sheet_fill, rect( 133, 213, 2, 2 )"
+		"progress_fill_t"	"guis/assets/mainmenu/sheet_fill, rect( 135, 213, 1, 2 )"
+		"progress_fill_tr"	"guis/assets/mainmenu/sheet_fill, rect( 133, 213, 2, 2 ), flipX"
+		
+		"progress_fill_l"	"guis/assets/mainmenu/sheet_fill, rect( 133, 215, 2, 1 )"
+		"progress_fill_r"	"guis/assets/mainmenu/sheet_fill, rect( 133, 215, 2, 1 ), flipX"
+		
+		"progress_fill_bl"	"guis/assets/mainmenu/sheet_fill, rect( 133, 213, 2, 2 ), flipY"
+		"progress_fill_b"	"guis/assets/mainmenu/sheet_fill, rect( 135, 213, 1, 2 ), flipY"
+		"progress_fill_br"	"guis/assets/mainmenu/sheet_fill, rect( 133, 213, 2, 2 ), flipX flipY"
+		"progress_fill_c"	"guis/assets/white"		
+	}
+		
+	events {
+		onPropertyChanged "globals.weapons.weaponSlot" {
+			playGameSound( "click" );
+		}
+		onPropertyChanged "globals.weapons.weaponSelected" {
+			if( globals.weapons.weaponSelected > -1 ) {
+				playGameSound( "accept" );
+				globals.weapons.weaponSelected 	= -1;
+			}
+		}
+	}
+	windowDef desktop {
+		type list;
+		properties {			
+			rect	rect 				= SCREEN_WIDTH - 136, SCREEN_HEIGHT - ( ( ( fixedRowHeight + rowSpacing ) * numItems ) + 58 ), 134, 266;
+			float 	visible 			= player.commandMapState == 0 && player.spectator == 0 && player.spectating == 0 && player.health > 0/*&& globals.weapons.menuExpireTime> 0*/;			
+                                    	
+			float flags 				= ( immediate( flags ) | WF_AUTO_SIZE_HEIGHT ) & ~( LF_AUTO_SCROLL_TO_SELECTION | WF_CLIP_TO_RECT );
+			float fontSize 				= 12;
+			float fixedRowHeight 		= 28;
+			
+			float itemRow;
+			float itemCol;
+			color itemColor;
+			rect  itemRect;
+			float scratch;
+			
+			rect scratchRect;
+			
+			color fillColor;
+			color lineColor;
+			color gradColor;
+			float lastSelected 			= -1;
+			float rowSpacing			= 2;
+			float alpha;
+			                        	
+			handle fillMaterial 		= gui.cacheMaterial( "fill", "_frame normal_fill" );
+			handle lineMaterial 		= gui.cacheMaterial( "line", "_frame normal_line" );
+			handle gradMaterial 		= gui.cacheMaterial( "grad", "_frame normal_grad" );
+			                        	
+			handle progressMaterial 	= gui.cacheMaterial( "prog", "_frame progress" );
+			handle progressFillMaterial = gui.cacheMaterial( "progFill", "_frame progress_fill" );
+		}
+		events {
+			onCreate {
+				insertColumn( gui.blankWStr, 16, 0 );				// Number
+				insertColumn( toWStr( "<width = 100%>" ), 0, 1 );	// Icon
+				insertColumn( gui.blankWStr, 16, 2 );				// Ammo
+				insertColumn( gui.blankWStr, 0, 3 );				// Title
+				insertColumn( gui.blankWStr, 0, 4 );				// Available
+			}
+
+			onPropertyChanged "globals.weapons.menuExpireTime" {
+				if( globals.weapons.menuExpireTime == 0 ) {
+					clearItems();
+					clearTransitions( -1, 0 );
+					return;
+				}
+				currentSelection = -1;
+				fillFromEnumerator( "weaponSwitchList" );
+				requestLayout();
+				setItemMaterialSize( "( fixedRowHeight - 6 ) * 4, fixedRowHeight - 6", -1, 1 );
+				setItemFlags( toWStr( "<flags customDraw>" ), -1, -1 );
+			}
+			onDrawItemBackground {
+				itemRow = gui.scriptGetFloatResult();
+				itemColor = gui.scriptGetVec4Result();
+				itemRect = gui.scriptGetVec4Result();
+				scratch = toFloat( toStr( getItemText( itemRow, 4 ) ) );
+				
+				gradColor = getItemTransitionVec4Result( LTP_PROPERTY_0, COLOR_INVISIBLE, itemRow, 0 );
+				fillColor = getItemTransitionVec4Result( LTP_PROPERTY_1, COLOR_WEAPON_LIST_ITEM_FILL, itemRow, 0 );
+
+				lineColor = COLOR_WEAPON_LIST_ITEM_LINE;
+								
+				if( scratch == 0.0f ) {
+					alpha = 0.3f;
+				} else {
+					alpha = 1.0f;
+				}				
+
+				lineColor.a = immediate( lineColor.a * alpha );
+				fillColor.a = immediate( fillColor.a * alpha );
+				
+				scratchRect = getItemTransitionVec4Result( LTP_PROPERTY_2, "0,0,0,0", itemRow, 0 );
+				itemRect.x = immediate( itemRect.x + scratchRect.x );				
+
+				drawCachedMaterial( fillMaterial, itemRect, fillColor );
+				drawCachedMaterial( gradMaterial, itemRect, gradColor );
+				drawCachedMaterial( lineMaterial, itemRect, lineColor );
+			}
+			onDrawSelectedBackground {
+				itemRow = gui.scriptGetFloatResult();
+				itemRect = gui.scriptGetVec4Result();
+				
+				scratchRect = getItemTransitionVec4Result( LTP_PROPERTY_2, "0,0,0,0", itemRow, 0 );
+				itemRect.x = immediate( itemRect.x + scratchRect.x );
+				
+				gradColor = getItemTransitionVec4Result( LTP_PROPERTY_0, COLOR_WEAPON_LIST_ITEM_HI_GRADIENT, itemRow, 0 );
+				fillColor = getItemTransitionVec4Result( LTP_PROPERTY_1, COLOR_WEAPON_LIST_ITEM_HI_FILL, itemRow, 0 );
+
+				drawCachedMaterial( fillMaterial, itemRect, fillColor );
+				drawCachedMaterial( gradMaterial, itemRect, gradColor );
+				drawCachedMaterial( lineMaterial, itemRect, COLOR_WEAPON_LIST_ITEM_HI_LINE );
+			}
+			
+			onDrawItem {
+				itemRow = gui.scriptGetFloatResult();
+				itemCol = gui.scriptGetFloatResult();
+				
+				itemRect = getItemRect( itemRow, itemCol, GIR_COLUMN );
+				itemColor = getItemTransitionVec4Result( LTP_FORECOLOR, COLOR_WHITE, itemRow, itemCol );
+				
+				scratchRect = getItemTransitionVec4Result( LTP_PROPERTY_2, "0,0,0,0", itemRow, 0 );
+				itemRect.x = immediate( itemRect.x + scratchRect.x );										
+									
+				if( itemCol == 0 ) {						
+					drawText( getItemText( itemRow, itemCol ), itemRect, itemColor, 12, DTF_SINGLELINE | DTF_CENTER | DTF_VCENTER );
+					gui.scriptPushFloat( false );
+					return;
+				}
+				if( itemCol == 1 ) {
+					drawItemMaterial( itemRow, itemCol, itemRect, COLOR_WEAPON_LIST_ICON_LINE );
+					gui.scriptPushFloat( false );
+					return;
+				}
+				if( itemCol == 2 ) {
+					scratch = toFloat( toStr( getItemText( itemRow, itemCol ) ) );
+					if( scratch >= 0.0f ) {
+						drawCachedMaterial( progressMaterial, "itemRect.x + 4, itemRect.y + 2, 8, itemRect.h - 6", COLOR_WEAPON_LIST_ITEM_HI_LINE );
+						if( scratch > 0.075f ) {
+							drawCachedMaterial( progressFillMaterial, "itemRect.x + 5, itemRect.y + 3 + ( ( itemRect.h - 8 ) * ( 1 - scratch ) ), 6, ( itemRect.h - 8 ) * scratch", "1,1,1,0.5" );
+						}
+					}
+					gui.scriptPushFloat( false );
+					return;
+				}
+			}
+			onPropertyChanged "currentSelection" {
+					gui.playGameSound( "click" );
+					postNamedEvent( "transitionItems" );
+			}
+			onNamedEvent "transitionItems" {				
+				if( lastSelected != -1 && lastSelected < numItems ) {
+					itemColor = getItemTransitionVec4Result( LTP_PROPERTY_0, COLOR_WEAPON_LIST_ITEM_HI_GRADIENT, lastSelected, 0 );
+					transitionItemVec4( LTP_PROPERTY_0, itemColor, COLOR_INVISIBLE, DEACTIVATE_TRANSITION_TIME, "", lastSelected, 0 );
+					
+					itemColor = getItemTransitionVec4Result( LTP_PROPERTY_1, COLOR_WEAPON_LIST_ITEM_HI_FILL, lastSelected, 0 );
+					transitionItemVec4( LTP_PROPERTY_1, itemColor, COLOR_WEAPON_LIST_ITEM_FILL, DEACTIVATE_TRANSITION_TIME, "", lastSelected, 0 );
+	
+					itemRect = getItemTransitionVec4Result( LTP_PROPERTY_2, "0,0,0,0", lastSelected, 0 );
+					transitionItemVec4( LTP_PROPERTY_2, itemRect, "0,0,0,0", SLIDE_TIME, "", lastSelected, 0 );
+				}
+	
+				if( currentSelection != -1 && currentSelection < numItems ) {
+					itemColor = getItemTransitionVec4Result( LTP_PROPERTY_0, COLOR_INVISIBLE, currentSelection, 0 );
+					transitionItemVec4( LTP_PROPERTY_0, itemColor, COLOR_WEAPON_LIST_ITEM_HI_GRADIENT, ACTIVATE_TRANSITION_TIME, "", currentSelection, 0 );
+
+					itemColor = getItemTransitionVec4Result( LTP_PROPERTY_1, COLOR_WEAPON_LIST_ITEM_FILL, currentSelection, 0 );
+					transitionItemVec4( LTP_PROPERTY_1, itemColor, COLOR_WEAPON_LIST_ITEM_HI_FILL, ACTIVATE_TRANSITION_TIME, "", currentSelection, 0 );
+	
+					itemRect = getItemTransitionVec4Result( LTP_PROPERTY_2, "0,0,0,0", currentSelection, 0 );
+					transitionItemVec4( LTP_PROPERTY_2, itemRect, "-16,0,0,0", SLIDE_TIME, "", currentSelection, 0 );					
+				}
+				lastSelected = immediate( currentSelection );
+			}			
+		}
+	}
+}

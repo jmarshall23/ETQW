@@ -1,0 +1,135 @@
+
+/*
+=================
+ Localization for map
+=================
+*/
+
+locString maps/ark/strogg_gate {
+	text "#str_00100050"
+}
+
+locString maps/ark/gdf_gate {
+	text "#str_00100051"
+}
+
+locString maps/ark/bio_main {
+	text "#str_00100052"
+}
+
+locString maps/ark/bio_side {
+	text "#str_00100053"
+}
+
+locString maps/ark/research_lab {
+	text "#str_00100054"
+}
+
+locString maps/ark/jammer {
+	text "#str_00100073"
+}
+
+locString maps/ark/strogg_dome_spawn {
+	text "#str_00100075"
+}
+
+/*
+=================
+ Objectives
+=================
+*/
+
+locString maps/ark/obj_destroy_jammer {
+	text "#str_00100055"
+	arguments 1
+}
+
+locString maps/ark/obj_destroy_ent {
+	text "#str_00100056"
+	arguments 1
+}
+
+locString maps/ark/obj_destroy_lab {
+	text "#str_00100057"
+	arguments 1
+}
+
+// build assault ramp
+
+locString maps/ark/gdf_jammer {
+	text "#str_00100061"
+}
+
+locString maps/ark/strogg_jammer {
+	text "#str_00100062"
+}
+
+locString maps/ark/gdf_jammer_short {
+	text "#str_00100063"
+}
+
+locString maps/ark/strogg_jammer_short {
+	text "#str_00100064"
+}
+
+// ssg biodome entrance
+
+locString maps/ark/gdf_laser_zapper {
+	text "#str_00100065"
+}
+
+locString maps/ark/strogg_laser_zapper {
+	text "#str_00100066"
+}
+
+locString maps/ark/strogg_laser_zapper_short {
+	text "#str_00100067"
+}
+
+locString maps/ark/gdf_laser_zapper_short {
+	text "#str_00100068"
+}
+
+// protect lab
+
+locString maps/ark/gdf_research_lab {
+	text "#str_00100069"
+}
+
+locString maps/ark/strogg_research_lab {
+	text "#str_00100070"
+}
+
+locString maps/ark/gdf_research_lab_short {
+	text "#str_00100071"
+}
+
+locString maps/ark/strogg_research_lab_short {
+	text "#str_00100072"
+}
+
+/*
+=================
+ Map info
+=================
+*/
+
+locString maps/ark/briefing {
+	text "#str_00100058"
+}
+
+locString maps/ark/campaign {
+	text "#str_00100059"
+}
+
+locString maps/ark/location {
+	text "#str_00100060"
+}
+
+locString maps/ark/lazer_zapper {
+	text "#str_00100074"
+}
+
+locString maps/ark/gdf_gate02 {
+	text "#str_00100076"
+}

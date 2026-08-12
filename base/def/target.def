@@ -1,0 +1,15 @@
+
+/***********************************************************************
+
+ target
+
+***********************************************************************/
+
+entityDef target_null {
+	"editor_color"			"1 1 0"
+	"editor_mins"			"-6 -6 -6"
+	"editor_maxs"			"6 6 6"
+
+	"editor_usage"			"Target that removes itself after 100 msec"
+	"spawnclass"			"idTarget_Null"
+}

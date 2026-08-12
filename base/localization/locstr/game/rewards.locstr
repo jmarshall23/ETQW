@@ -1,0 +1,597 @@
+
+locString game/proficiency/soldier/reward1 {
+	text "#str_00003000"
+}
+
+locString game/proficiency/soldier/reward2 {
+	text "#str_00003001"
+}
+
+locString game/proficiency/soldier/reward3 {
+	text "#str_00003002"
+}
+
+locString game/proficiency/soldier/reward4 {
+	text "#str_00003003"
+}
+
+locString game/proficiency/medic/reward1 {
+	text "#str_00003004"
+}
+
+locString game/proficiency/medic/reward2 {
+	text "#str_00003005"
+}
+
+locString game/proficiency/medic/reward3 {
+	text "#str_00003006"
+}
+
+locString game/proficiency/medic/reward4 {
+	text "#str_00003007"
+}
+
+locString game/proficiency/engineer/reward1 {
+	text "#str_00003008"
+}
+
+locString game/proficiency/engineer/reward2 {
+	text "#str_00003009"
+}
+
+locString game/proficiency/engineer/reward3 {
+	text "#str_00003010"
+}
+
+locString game/proficiency/engineer/reward4 {
+	text "#str_00003011"
+}
+
+locString game/proficiency/fieldops/reward1 {
+	text "#str_00003012"
+}
+
+locString game/proficiency/fieldops/reward2 {
+	text "#str_00003013"
+}
+
+locString game/proficiency/fieldops/reward3 {
+	text "#str_00003014"
+}
+
+locString game/proficiency/fieldops/reward4 {
+	text "#str_00003015"
+}
+
+locString game/proficiency/covertops/reward1 {
+	text "#str_00003016"
+}
+
+locString game/proficiency/covertops/reward2 {
+	text "#str_00003017"
+}
+
+locString game/proficiency/covertops/reward3 {
+	text "#str_00003018"
+}
+
+locString game/proficiency/covertops/reward4 {
+	text "#str_00003019"
+}
+
+locString game/proficiency/battlesense/gdf/reward1 {
+	text "#str_00003024"
+}
+
+locString game/proficiency/battlesense/gdf/reward2 {
+	text "#str_00003025"
+}
+
+locString game/proficiency/battlesense/gdf/reward3 {
+	text "#str_00003026"
+}
+
+locString game/proficiency/battlesense/gdf/reward4 {
+	text "#str_00003027"
+}
+
+locString game/proficiency/weapons/gdf/reward1 {
+	text "#str_00003020"
+}
+
+locString game/proficiency/weapons/gdf/reward2 {
+	text "#str_00003021"
+}
+
+locString game/proficiency/weapons/gdf/reward3 {
+	text "#str_00003022"
+}
+
+locString game/proficiency/weapons/gdf/reward4 {
+	text "#str_00003023"
+}
+
+locString game/proficiency/vehicles/gdf/reward1 {
+	text "#str_00003028"
+}
+
+locString game/proficiency/vehicles/gdf/reward2 {
+	text "#str_00003029"
+}
+
+locString game/proficiency/vehicles/gdf/reward3 {
+	text "#str_00003030"
+}
+
+locString game/proficiency/vehicles/gdf/reward4 {
+	text "#str_00003031"
+}
+
+
+
+
+
+
+locString game/proficiency/aggressor/reward1 {
+	text "#str_00003032"
+}
+
+locString game/proficiency/aggressor/reward2 {
+	text "#str_00003033"
+}
+
+locString game/proficiency/aggressor/reward3 {
+	text "#str_00003034"
+}
+
+locString game/proficiency/aggressor/reward4 {
+	text "#str_00003035"
+}
+
+locString game/proficiency/technician/reward1 {
+	text "#str_00003036"
+}
+
+locString game/proficiency/technician/reward2 {
+	text "#str_00003037"
+}
+
+locString game/proficiency/technician/reward3 {
+	text "#str_00003038"
+}
+
+locString game/proficiency/technician/reward4 {
+	text "#str_00003039"
+}
+
+locString game/proficiency/constructor/reward1 {
+	text "#str_00003040"
+}
+
+locString game/proficiency/constructor/reward2 {
+	text "#str_00003041"
+}
+
+locString game/proficiency/constructor/reward3 {
+	text "#str_00003042"
+}
+
+locString game/proficiency/constructor/reward4 {
+	text "#str_00003043"
+}
+
+locString game/proficiency/oppressor/reward1 {
+	text "#str_00003044"
+}
+
+locString game/proficiency/oppressor/reward2 {
+	text "#str_00003045"
+}
+
+locString game/proficiency/oppressor/reward3 {
+	text "#str_00003046"
+}
+
+locString game/proficiency/oppressor/reward4 {
+	text "#str_00003047"
+}
+
+locString game/proficiency/infiltrator/reward1 {
+	text "#str_00003048"
+}
+
+locString game/proficiency/infiltrator/reward2 {
+	text "#str_00003049"
+}
+
+locString game/proficiency/infiltrator/reward3 {
+	text "#str_00003050"
+}
+
+locString game/proficiency/infiltrator/reward4 {
+	text "#str_00003051"
+}
+
+locString game/proficiency/battlesense/strogg/reward1 {
+	text "#str_00003056"
+}
+
+locString game/proficiency/battlesense/strogg/reward2 {
+	text "#str_00003057"
+}
+
+locString game/proficiency/battlesense/strogg/reward3 {
+	text "#str_00003058"
+}
+
+locString game/proficiency/battlesense/strogg/reward4 {
+	text "#str_00003059"
+}
+
+locString game/proficiency/weapons/strogg/reward1 {
+	text "#str_00003052"
+}
+
+locString game/proficiency/weapons/strogg/reward2 {
+	text "#str_00003053"
+}
+
+locString game/proficiency/weapons/strogg/reward3 {
+	text "#str_00003054"
+}
+
+locString game/proficiency/weapons/strogg/reward4 {
+	text "#str_00003055"
+}
+
+locString game/proficiency/vehicles/strogg/reward1 {
+	text "#str_00003060"
+}
+
+locString game/proficiency/vehicles/strogg/reward2 {
+	text "#str_00003061"
+}
+
+locString game/proficiency/vehicles/strogg/reward3 {
+	text "#str_00003062"
+}
+
+locString game/proficiency/vehicles/strogg/reward4 {
+	text "#str_00003063"
+}
+
+locString game/proficiency/not_unlocked {
+	text "#str_00003068"
+	arguments 1
+}
+
+locString game/proficiency/proficiency_upgrade {
+	text "#str_00003064"
+	arguments 1
+}
+
+locString game/proficiency/battlesense {
+	text "#str_00003065"
+}
+
+locString game/proficiency/lightweapons {
+	text "#str_00003066"
+}
+
+locString game/proficiency/vehicle {
+	text "#str_00003067"
+}
+
+locString game/proficiency/fieldops {
+	text "#str_00002002"
+}
+
+locString game/proficiency/oppressor {
+	text "#str_00002007"
+}
+
+locString game/proficiency/soldier {
+	text "#str_00002000"
+}
+
+locString game/proficiency/aggressor {
+	text "#str_00002005"
+}
+
+locString game/proficiency/covertops {
+	text "#str_00002003"
+}
+
+locString game/proficiency/infiltrator {
+	text "#str_00002008"
+}
+
+locString game/proficiency/engineer {
+	text "#str_00002004"
+}
+
+locString game/proficiency/constructor {
+	text "#str_00002009"
+}
+
+locString game/proficiency/medic {
+	text "#str_00002001"
+}
+
+locString game/proficiency/technician {
+	text "#str_00002006"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+locString game/proficiency/soldier/reward1_title {
+	text "#str_00103000"
+}
+
+locString game/proficiency/soldier/reward2_title {
+	text "#str_00103001"
+}
+
+locString game/proficiency/soldier/reward3_title {
+	text "#str_00103002"
+}
+
+locString game/proficiency/soldier/reward4_title {
+	text "#str_00103003"
+}
+
+locString game/proficiency/medic/reward1_title {
+	text "#str_00103004"
+}
+
+locString game/proficiency/medic/reward2_title {
+	text "#str_00103005"
+}
+
+locString game/proficiency/medic/reward3_title {
+	text "#str_00103006"
+}
+
+locString game/proficiency/medic/reward4_title {
+	text "#str_00103007"
+}
+
+locString game/proficiency/engineer/reward1_title {
+	text "#str_00103008"
+}
+
+locString game/proficiency/engineer/reward2_title {
+	text "#str_00103009"
+}
+
+locString game/proficiency/engineer/reward3_title {
+	text "#str_00103010"
+}
+
+locString game/proficiency/engineer/reward4_title {
+	text "#str_00103011"
+}
+
+locString game/proficiency/fieldops/reward1_title {
+	text "#str_00103012"
+}
+
+locString game/proficiency/fieldops/reward2_title {
+	text "#str_00103013"
+}
+
+locString game/proficiency/fieldops/reward3_title {
+	text "#str_00103014"
+}
+
+locString game/proficiency/fieldops/reward4_title {
+	text "#str_00103015"
+}
+
+locString game/proficiency/covertops/reward1_title {
+	text "#str_00103016"
+}
+
+locString game/proficiency/covertops/reward2_title {
+	text "#str_00103017"
+}
+
+locString game/proficiency/covertops/reward3_title {
+	text "#str_00103018"
+}
+
+locString game/proficiency/covertops/reward4_title {
+	text "#str_00103019"
+}
+
+locString game/proficiency/battlesense/gdf/reward1_title {
+	text "#str_00103024"
+}
+
+locString game/proficiency/battlesense/gdf/reward2_title {
+	text "#str_00103025"
+}
+
+locString game/proficiency/battlesense/gdf/reward3_title {
+	text "#str_00103026"
+}
+
+locString game/proficiency/battlesense/gdf/reward4_title {
+	text "#str_00103027"
+}
+
+locString game/proficiency/weapons/gdf/reward1_title {
+	text "#str_00103020"
+}
+
+locString game/proficiency/weapons/gdf/reward2_title {
+	text "#str_00103021"
+}
+
+locString game/proficiency/weapons/gdf/reward3_title {
+	text "#str_00103022"
+}
+
+locString game/proficiency/weapons/gdf/reward4_title {
+	text "#str_00103023"
+}
+
+locString game/proficiency/vehicles/gdf/reward1_title {
+	text "#str_00103028"
+}
+
+locString game/proficiency/vehicles/gdf/reward2_title {
+	text "#str_00103029"
+}
+
+locString game/proficiency/vehicles/gdf/reward3_title {
+	text "#str_00103030"
+}
+
+locString game/proficiency/vehicles/gdf/reward4_title {
+	text "#str_00103031"
+}
+
+
+
+
+
+
+locString game/proficiency/aggressor/reward1_title {
+	text "#str_00103032"
+}
+
+locString game/proficiency/aggressor/reward2_title {
+	text "#str_00103033"
+}
+
+locString game/proficiency/aggressor/reward3_title {
+	text "#str_00103034"
+}
+
+locString game/proficiency/aggressor/reward4_title {
+	text "#str_00103035"
+}
+
+locString game/proficiency/technician/reward1_title {
+	text "#str_00103036"
+}
+
+locString game/proficiency/technician/reward2_title {
+	text "#str_00103037"
+}
+
+locString game/proficiency/technician/reward3_title {
+	text "#str_00103038"
+}
+
+locString game/proficiency/technician/reward4_title {
+	text "#str_00103039"
+}
+
+locString game/proficiency/constructor/reward1_title {
+	text "#str_00103040"
+}
+
+locString game/proficiency/constructor/reward2_title {
+	text "#str_00103041"
+}
+
+locString game/proficiency/constructor/reward3_title {
+	text "#str_00103042"
+}
+
+locString game/proficiency/constructor/reward4_title {
+	text "#str_00103043"
+}
+
+locString game/proficiency/oppressor/reward1_title {
+	text "#str_00103044"
+}
+
+locString game/proficiency/oppressor/reward2_title {
+	text "#str_00103045"
+}
+
+locString game/proficiency/oppressor/reward3_title {
+	text "#str_00103046"
+}
+
+locString game/proficiency/oppressor/reward4_title {
+	text "#str_00103047"
+}
+
+locString game/proficiency/infiltrator/reward1_title {
+	text "#str_00103048"
+}
+
+locString game/proficiency/infiltrator/reward2_title {
+	text "#str_00103049"
+}
+
+locString game/proficiency/infiltrator/reward3_title {
+	text "#str_00103050"
+}
+
+locString game/proficiency/infiltrator/reward4_title {
+	text "#str_00103051"
+}
+
+locString game/proficiency/battlesense/strogg/reward1_title {
+	text "#str_00103056"
+}
+
+locString game/proficiency/battlesense/strogg/reward2_title {
+	text "#str_00103057"
+}
+
+locString game/proficiency/battlesense/strogg/reward3_title {
+	text "#str_00103058"
+}
+
+locString game/proficiency/battlesense/strogg/reward4_title {
+	text "#str_00103059"
+}
+
+locString game/proficiency/weapons/strogg/reward1_title {
+	text "#str_00103052"
+}
+
+locString game/proficiency/weapons/strogg/reward2_title {
+	text "#str_00103053"
+}
+
+locString game/proficiency/weapons/strogg/reward3_title {
+	text "#str_00103054"
+}
+
+locString game/proficiency/weapons/strogg/reward4_title {
+	text "#str_00103055"
+}
+
+locString game/proficiency/vehicles/strogg/reward1_title {
+	text "#str_00103060"
+}
+
+locString game/proficiency/vehicles/strogg/reward2_title {
+	text "#str_00103061"
+}
+
+locString game/proficiency/vehicles/strogg/reward3_title {
+	text "#str_00103062"
+}
+
+locString game/proficiency/vehicles/strogg/reward4_title {
+	text "#str_00103063"
+}

@@ -1,0 +1,39 @@
+
+//
+// Constructing objective
+//
+
+locString game/tasks/constructor_repair_deployable/title {
+	text "#str_01001040"
+}
+
+
+locString game/tasks/constructor_repair_vehicle/title {
+	text "#str_01001050"
+}
+
+
+
+locString game/tasks/constructor_construct_objective/title {
+	text "#str_01001000"
+}
+
+locString game/tasks/constructor_construct_objective/title_friend {
+	text "#str_01001001"
+}
+
+locString game/tasks/constructor_defuse_charge/title {
+	text "#str_01001060"
+}
+
+locString game/tasks/constructor_disarm/title {
+	text "#str_01001060"
+}
+
+locString game/tasks/constructor_deploy_turret/title {
+	text "#str_01001010"
+}
+
+locString game/tasks/constructor_deploy_mines/title {
+	text "#str_01001070"
+}

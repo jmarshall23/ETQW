@@ -1,0 +1,1291 @@
+template templates/lab_walls {
+	parameters	< 
+		DiffuseImageParam,		// Alpha channel defines the "dirty" bits where no glass should be drawn
+		BumpImageParam,
+		SpecularImageParam,
+		ReflectionPower,		// How angle dependent the reflection is
+		ReflectionBrightness,	// Muliply the reflection cubemap with this brightness value
+		BaseReflection			// Always reflect with this amount even if looking straight at the surface
+	>
+	
+	text {
+		surfacetype glass
+		diffusemap	DiffuseImageParam
+		bumpmap		BumpImageParam
+		specularmap	SpecularImageParam		
+		{
+			blend blend
+			program sfx/windowglass 
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			environmentCubeMap cubemap env/mart_window_lab
+			parameters ReflectionPower, ReflectionBrightness, BaseReflection
+		}
+	}
+}
+
+template templates/windowglass {
+	parameters	< 
+		DiffuseImageParam,		// Alpha channel defines the "dirty" bits where no glass should be drawn
+		BumpImageParam,
+		ReflectionPower,		// How angle dependent the reflection is
+		ReflectionBrightness,	// Muliply the reflection cubemap with this brightness value
+		BaseReflection			// Always reflect with this amount even if looking straight at the surface
+	>
+	
+	text {
+		diffusemap	DiffuseImageParam
+		bumpmap		BumpImageParam
+		surfacetype glass
+		{
+			blend blend
+			program sfx/windowglass 
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			parameters ReflectionPower, ReflectionBrightness, BaseReflection
+		}
+	}
+}
+
+template templates/windowglass_mask {
+	parameters	< 
+		DiffuseImageParam,		// Alpha channel defines the transparent bits
+		BumpImageParam,
+		MaskImageParam,			// Grayscale defining the dirty bits
+		ReflectionPower,		// How angle dependent the reflection is
+		ReflectionBrightness,	// Muliply the reflection cubemap with this brightness value
+		BaseReflection			// Always reflect with this amount even if looking straight at the surface
+	>
+	
+	text {
+		surfacetype glass
+		sort medium
+		{
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			alphaTest 0.5
+		}
+		{
+			blend blend
+			program sfx/windowglass_mask 
+			mask		MaskImageParam
+			bumpmap		BumpImageParam
+			parameters ReflectionPower, ReflectionBrightness, BaseReflection	
+		}
+	}
+}
+
+// With specular and reflection map
+template templates/windowglass_specular {
+	parameters	< 
+		DiffuseImageParam,		// Alpha channel defines the "dirty" bits where no glass should be drawn
+		BumpImageParam,
+		SpecularImageParam,
+		ReflectionPower,		// How angle dependent the reflection is
+		ReflectionBrightness,	// Muliply the reflection cubemap with this brightness value
+		BaseReflection			// Always reflect with this amount even if looking straight at the surface
+	>
+	
+	text {
+		surfacetype glass
+		diffusemap	DiffuseImageParam
+		bumpmap		BumpImageParam
+		specularmap	SpecularImageParam
+		{
+			blend blend
+			program sfx/windowglass 
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			parameters ReflectionPower, ReflectionBrightness, BaseReflection
+		}
+	}
+}
+
+template templates/windowglass_specular_vcol {
+	parameters	< 
+		DiffuseImageParam,		// Alpha channel defines the "dirty" bits where no glass should be drawn
+		BumpImageParam,
+		SpecularImageParam,
+		ReflectionPower,		// How angle dependent the reflection is
+		ReflectionBrightness,	// Muliply the reflection cubemap with this brightness value
+		BaseReflection			// Always reflect with this amount even if looking straight at the surface
+	>
+	
+	text {
+		surfacetype glass
+		{
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			specularmap	SpecularImageParam
+			vertexColor
+		}
+		{
+			blend blend
+			program sfx/windowglass 
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			parameters ReflectionPower, ReflectionBrightness, BaseReflection
+			vertexColor
+		}
+	}
+}
+
+
+template templates/windowglass_specular_biodome {
+	parameters	< 
+		DiffuseImageParam,		// Alpha channel defines the "dirty" bits where no glass should be drawn
+		BumpImageParam,
+		SpecularImageParam,
+		ReflectionPower,		// How angle dependent the reflection is
+		ReflectionBrightness,	// Muliply the reflection cubemap with this brightness value
+		BaseReflection			// Always reflect with this amount even if looking straight at the surface
+	>
+	
+	text {
+		surfacetype glass
+		diffusemap	DiffuseImageParam
+		bumpmap		BumpImageParam
+		specularmap	SpecularImageParam
+		{
+			blend blend
+			program sfx/windowglass 
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			environmentCubeMap cubemap env/ark/biodome_outside
+			parameters ReflectionPower, ReflectionBrightness, BaseReflection
+		}
+	}
+}
+
+template templates/windowglass_mask_specular {
+	parameters	< 
+		DiffuseImageParam,		// Alpha channel defines the transparent bits
+		SpecularImageParam,
+		BumpImageParam,
+		MaskImageParam,			// Grayscale defining the dirty bits
+		ReflectionPower,		// How angle dependent the reflection is
+		ReflectionBrightness,	// Muliply the reflection cubemap with this brightness value
+		BaseReflection			// Always reflect with this amount even if looking straight at the surface
+	>
+	
+	text {
+		surfacetype glass
+		sort medium
+		{
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			specularmap SpecularImageParam
+			alphaTest 0.5
+		}
+		{
+			blend blend
+			program sfx/windowglass_mask 
+			mask		MaskImageParam
+			bumpmap		BumpImageParam
+			parameters ReflectionPower, ReflectionBrightness, BaseReflection	
+		}
+	}
+}
+
+template templates/windowglass_mask_specular1 {
+	parameters	< 
+		DiffuseImageParam,		// Alpha channel defines the transparent bits
+		SpecularImageParam,
+		BumpImageParam,
+		MaskImageParam,			// Grayscale defining the dirty bits
+		ReflectionPower,		// How angle dependent the reflection is
+		ReflectionBrightness,	// Muliply the reflection cubemap with this brightness value
+		BaseReflection			// Always reflect with this amount even if looking straight at the surface
+	>
+	
+	text {
+		surfacetype glass
+		sort medium
+		{
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			specularmap SpecularImageParam
+			alphaTest 0.9
+		}
+		{
+			blend blend
+			program sfx/windowglass_mask 
+			mask		MaskImageParam
+			bumpmap		BumpImageParam
+			parameters ReflectionPower, ReflectionBrightness, BaseReflection	
+		}
+	}
+}
+
+template templates/windowglass_mask_specular2 {
+	parameters	< 
+		DiffuseImageParam,		// Alpha channel defines the transparent bits
+		SpecularImageParam,
+		BumpImageParam,
+		MaskImageParam,			// Grayscale defining the dirty bits
+		ReflectionPower,		// How angle dependent the reflection is
+		ReflectionBrightness,	// Muliply the reflection cubemap with this brightness value
+		BaseReflection			// Always reflect with this amount even if looking straight at the surface
+	>
+	
+	text {
+		surfacetype glass
+		sort medium
+		{
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			specularmap SpecularImageParam
+			alphaTest 0.5
+		}
+		{
+			blend blend
+			program sfx/windowglass_mask 
+			mask		MaskImageParam
+			bumpmap		BumpImageParam
+			parameters ReflectionPower, ReflectionBrightness, BaseReflection	
+		}
+	}
+}
+
+template templates/windowglass_mask_specular_cc {
+	parameters	< 
+		DiffuseImageParam,		// Alpha channel defines the transparent bits
+		SpecularImageParam,
+		BumpImageParam,
+		MaskImageParam,			// Grayscale defining the dirty bits
+		ReflectionPower,		// How angle dependent the reflection is
+		ReflectionBrightness,	// Muliply the reflection cubemap with this brightness value
+		BaseReflection			// Always reflect with this amount even if looking straight at the surface
+	>
+	
+	text {
+		surfacetype glass
+		sort medium
+		{
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			specularmap SpecularImageParam
+			alphaTest 0.5
+		}
+		{
+			blend blend
+			program sfx/windowglass_mask 
+			mask		MaskImageParam
+			bumpmap		BumpImageParam
+			environmentCubeMap cubemap env/cc
+			parameters ReflectionPower, ReflectionBrightness, BaseReflection	
+		}
+	}
+}
+
+template templates/windowglass_simple {
+	parameters	< 
+		BumpImageParam,			// Bumpmap to use for reflections
+		MaskImageParam,			// Mask to control the reflection strength
+		DirtImageParam,			// Dirtmap to use
+		ReflectionPower,		// How angle dependent the reflection is
+		ReflectionBrightness,	// Muliply the reflection cubemap with this brightness value
+		BaseReflection			// Always reflect with this amount even if looking straight at the surface
+	>
+	
+	text {
+		surfaceType  "glass"
+		noSelfShadow
+		noshadows
+		translucent
+		forceoverlays
+		{
+			blend blend
+			program sfx/windowglass_mask 
+			diffusemap	MaskImageParam
+			bumpmap		BumpImageParam
+			parameters  ReflectionPower, ReflectionBrightness, BaseReflection
+		}
+		{
+			blend blend
+			map DirtImageParam
+			// Mix in sun color so it looks all right with diff atms
+			red desat_sun_r * lightscale * 0.4
+			green desat_sun_g * lightscale * 0.4
+			blue desat_sun_b * lightscale * 0.4
+			//color sun_r, sun_g, sun_b, 1
+
+		}
+	}
+}
+
+template templates/windowglass_everything {
+	parameters	< 
+		DiffuseImageParam,		// Alpha channel defines the transparent bits
+		SpecularImageParam,
+		BumpImageParam,
+		MaskImageParam,			// Grayscale defining the dirty bits
+		DirtImageParam,			// Grayscale defining the dirty bits		
+		ReflectionPower,		// How angle dependent the reflection is
+		ReflectionBrightness,	// Muliply the reflection cubemap with this brightness value
+		BaseReflection			// Always reflect with this amount even if looking straight at the surface
+	>
+	
+	text {
+		surfacetype glass
+		sort medium
+		{
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			specularmap SpecularImageParam
+			alphaTest 0.5
+		}
+		{
+			blend blend
+			program sfx/windowglass_mask 
+			mask		MaskImageParam
+			bumpmap		BumpImageParam
+			parameters ReflectionPower, ReflectionBrightness, BaseReflection	
+		}
+		{
+			blend blend
+			map DirtImageParam
+			// Mix in sun color so it looks all right with diff atms
+			//color sun_r, sun_g, sun_b, 1
+			red desat_sun_r * lightscale * 0.4
+			green desat_sun_g * lightscale * 0.4
+			blue desat_sun_b * lightscale * 0.4
+
+		}		
+	}
+}
+
+material textures/concrete/lab_wall
+{
+	useTemplate templates/lab_walls <
+		textures/concrete/wall_lab_5_d.tga,
+		textures/concrete/wall_lab_5_local.tga,
+		textures/concrete/wall_lab_5_s.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/concrete/lab_wall6
+{
+	
+	diffusemap	picmip -1	textures/concrete/wall_lab_6_d.tga
+	bumpmap		picmip -1	textures/concrete/wall_lab_6_local.tga
+	specularmap	picmip -1	textures/concrete/wall_lab_6_s.tga
+		
+	
+}
+
+material textures/concrete/lab_wall7
+{
+	useTemplate templates/lab_walls <
+		textures/concrete/wall_lab_7_d.tga,
+		textures/concrete/wall_lab_7_local.tga,
+		textures/concrete/wall_lab_7_s.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/concrete/lab_wall8
+{
+	useTemplate templates/lab_walls <
+		textures/concrete/wall_lab_8_d.tga,
+		textures/concrete/wall_lab_8_local.tga,
+		textures/concrete/wall_lab_8_s.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window01
+{
+	useTemplate templates/windowglass <
+		textures/window/window01_d.tga,
+		textures/window/window01_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window01_boarded
+{
+	useTemplate templates/windowglass <
+		textures/window/window01_boarded_d.tga,
+		textures/window/window01_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window02
+{
+	useTemplate templates/windowglass <
+		textures/window/window02_d.tga,
+		textures/window/window02_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window02_boarded
+{
+	useTemplate templates/windowglass <
+		textures/window/window02_boarded_d.tga,
+		textures/window/window02_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window03
+{
+	useTemplate templates/windowglass <
+		textures/window/window03_d.tga,
+		textures/window/window03_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window04
+{
+	useTemplate templates/windowglass <
+		textures/window/window04_d.tga,
+		textures/window/window04_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window05
+{
+	useTemplate templates/windowglass <
+		textures/window/window05_d.tga,
+		textures/window/window05_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window06
+{
+	useTemplate templates/windowglass <
+		textures/window/window06_d.tga,
+		textures/window/window06_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window07
+{
+	useTemplate templates/windowglass <
+		textures/window/window07_d.tga,
+		textures/window/window07_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window07_boarded
+{
+	useTemplate templates/windowglass <
+		textures/window/window07_boarded_d.tga,
+		textures/window/window07_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window07_boarded_framed
+{
+	useTemplate templates/windowglass <
+		textures/window/window07_boarded_framed_d.tga,
+		textures/window/window07_framed_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window08
+{
+	useTemplate templates/windowglass <
+		textures/window/window08_d.tga,
+		textures/window/window08_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window08_boarded
+{
+	useTemplate templates/windowglass <
+		textures/window/window08_boarded_d.tga,
+		textures/window/window08_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window08_boarded_framed
+{
+	useTemplate templates/windowglass <
+		textures/window/window08_boarded_framed_d.tga,
+		textures/window/window08_framed_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window09
+{
+	useTemplate templates/windowglass <
+		textures/window/window09_d.tga,
+		textures/window/window09_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window09_framed
+{
+	useTemplate templates/windowglass <
+		textures/window/window09_framed_d.tga,
+		textures/window/window09_framed_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window10
+{
+	useTemplate templates/windowglass <
+		textures/window/window10_d.tga,
+		textures/window/window10_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window11
+{
+		diffusemap	textures/window/window11_d.tga
+		bumpmap		textures/window/window11_local.tga
+}
+
+material textures/window/window12
+{
+	useTemplate templates/windowglass <
+		textures/window/window12_d.tga,
+		textures/window/window12_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window13
+{
+	useTemplate templates/windowglass <
+		textures/window/window13_d.tga,
+		textures/window/window13_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window14
+{
+	useTemplate templates/windowglass <
+		textures/window/window14_d.tga,
+		textures/window/window14_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window15
+{
+	useTemplate templates/windowglass <
+		textures/window/window15_d.tga,
+		textures/window/window15_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window16
+{
+	useTemplate templates/windowglass <
+		textures/window/window16_d.tga,
+		textures/window/window16_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window16_256
+{
+	useTemplate templates/windowglass <
+		textures/window/window16_256_d.tga,
+		textures/window/window16_256_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window16b
+{
+	useTemplate templates/windowglass <
+		textures/window/window16b_d.tga,
+		textures/window/window16b_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window16c
+{
+	useTemplate templates/windowglass <
+		textures/window/window16c_d.tga,
+		textures/window/window16c_local.tga,
+		2, 1.4, 0.5
+	>
+}
+
+material textures/window/window16c_framed
+{
+	//nonsolid
+	noShadows
+	translucent
+	surfacetype glass
+	useTemplate templates/windowglass_mask <
+		"picmip -1	textures/window/window16c_framed_d.tga",
+		"picmip -2	textures/window/window16c_framed_local.tga",
+		"picmip -1	textures/window/window16c_framed_mask.tga",
+		0.5, 1.05, 0.9
+	>
+}
+
+material textures/window/window16c_framed_glowing
+{  
+	//nonsolid
+	noShadows
+	translucent
+	sort medium
+	surfacetype glass
+	{
+		diffusemap	picmip -1	textures/window/window16c_framed_d.tga
+		bumpmap		picmip -2	textures/window/window16c_framed_local.tga
+		alphaTest 0.5
+	}
+	{
+		program	addVertexColorCoverageFogged
+		blend	add
+		map		picmip -1	textures/window/window16c_framed_add.tga
+		colored
+		vertexcolor
+	}
+}
+
+material textures/window/window16d
+{
+	useTemplate templates/windowglass <
+		textures/window/window16_128_d.tga,
+		textures/window/window16_128_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window17
+{
+	useTemplate templates/windowglass <
+		textures/window/window17_d.tga,
+		textures/window/window17_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window18
+{
+	useTemplate templates/windowglass <
+		textures/window/window18_d.tga,
+		textures/window/window18_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window19
+{
+	useTemplate templates/windowglass <
+		textures/window/window19_d.tga,
+		textures/window/window19_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window20
+{
+	useTemplate templates/windowglass <
+		textures/window/window20_d.tga,
+		textures/window/window20_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window21
+{
+	useTemplate templates/windowglass <
+		textures/window/window21_d.tga,
+		textures/window/window21_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window22
+{
+	useTemplate templates/windowglass <
+		textures/window/window22_d.tga,
+		textures/window/window22_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window23
+{
+	useTemplate templates/windowglass <
+		textures/window/window23_d.tga,
+		textures/window/window23_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window23_framed
+{
+	useTemplate templates/windowglass <
+		textures/window/window23_framed_d.tga,
+		textures/window/window23_framed_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window23_broken_framed
+{
+	useTemplate templates/windowglass <
+		textures/window/window23_broken_framed_d.tga,
+		textures/window/window23_broken_framed_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window24
+{
+	useTemplate templates/windowglass <
+		textures/window/window24_d.tga,
+		textures/window/window24_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window25
+{
+	useTemplate templates/windowglass <
+		textures/window/window25_d.tga,
+		textures/window/window25_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window26
+{
+	useTemplate templates/windowglass <
+		textures/window/window26_d.tga,
+		textures/window/window26_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window27
+{
+	useTemplate templates/windowglass <
+		textures/window/window27_d.tga,
+		textures/window/window27_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window27_framed
+{
+	useTemplate templates/windowglass <
+		textures/window/window27_framed_d.tga,
+		textures/window/window27_framed_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window28
+{
+	useTemplate templates/windowglass <
+		textures/window/window28_d.tga,
+		textures/window/window28_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window29
+{
+	{
+		diffuseMap 	textures/window/window29_d.tga
+		bumpmap 	textures/window/window29_local.tga
+		//specularmap 	textures/window/window29_s.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/window/churchwindow01
+{
+	useTemplate templates/windowglass <
+		textures/window/churchwindow01_d.tga,
+		textures/window/churchwindow01_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/churchwindow02
+{
+	useTemplate templates/windowglass <
+		textures/window/churchwindow02_d.tga,
+		textures/window/churchwindow02_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window13_broken1
+{
+	useTemplate templates/windowglass_mask < 
+		textures/window/window13_broken1_d.tga, 
+		textures/window/window13_local.tga,
+		textures/window/window13_broken1_mask.tga
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window13_broken2
+{
+	useTemplate templates/windowglass_mask < 
+		textures/window/window13_broken2_d.tga, 
+		textures/window/window13_local.tga,
+		textures/window/window13_broken2_mask.tga
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window13_broken3
+{
+	useTemplate templates/windowglass_mask < 
+		textures/window/window13_broken3_d.tga, 
+		textures/window/window13_local.tga,
+		textures/window/window13_broken3_mask.tga
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window14_broken1
+{
+	useTemplate templates/windowglass_mask < 
+		textures/window/window14_broken1_d.tga, 
+		textures/window/window14_local.tga,
+		textures/window/window14_broken1_mask.tga
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window14_broken2
+{
+	useTemplate templates/windowglass_mask < 
+		textures/window/window14_broken2_d.tga, 
+		textures/window/window14_local.tga,
+		textures/window/window14_broken2_mask.tga
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window14_broken3
+{
+	useTemplate templates/windowglass_mask < 
+		textures/window/window14_broken3_d.tga, 
+		textures/window/window14_local.tga,
+		textures/window/window14_broken3_mask.tga
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window13_broken1_NS
+{
+	twosided
+	nonsolid
+	useTemplate templates/windowglass_mask < 
+		textures/window/window13_broken1_d.tga, 
+		textures/window/window13_local.tga,
+		textures/window/window13_broken1_mask.tga
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window13_broken2_NS
+{
+	twosided
+	nonsolid
+	useTemplate templates/windowglass_mask < 
+		textures/window/window13_broken2_d.tga, 
+		textures/window/window13_local.tga,
+		textures/window/window13_broken2_mask.tga
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window13_broken3_NS
+{
+	twosided
+	nonsolid
+	useTemplate templates/windowglass_mask < 
+		textures/window/window13_broken3_d.tga, 
+		textures/window/window13_local.tga,
+		textures/window/window13_broken3_mask.tga
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window14_broken1_NS
+{
+	twosided
+	nonsolid
+	useTemplate templates/windowglass_mask < 
+		textures/window/window14_broken1_d.tga, 
+		textures/window/window14_local.tga,
+		textures/window/window14_broken1_mask.tga
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window14_broken2_NS
+{
+	twosided
+	nonsolid
+	useTemplate templates/windowglass_mask < 
+		textures/window/window14_broken2_d.tga, 
+		textures/window/window14_local.tga,
+		textures/window/window14_broken2_mask.tga
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/window14_broken3_NS
+{
+	twosided
+	nonsolid
+	useTemplate templates/windowglass_mask < 
+		textures/window/window14_broken3_d.tga, 
+		textures/window/window14_local.tga,
+		textures/window/window14_broken3_mask.tga
+		2, 1.0, 0.3
+	>
+}
+
+//STROGG WINDOWS
+
+material textures/window/stroggwindow_01
+{
+
+	useTemplate templates/windowglass_mask <
+		textures/window/stroggwindow_01_d.tga,
+		textures/window/stroggwindow_01_local.tga,
+		textures/window/stroggwindow_01_mask.tga,
+		2, 1.0, 0.3
+	>
+	{
+		blend blend
+		depthfunc less
+		map textures/window/stroggwindow_01_dirt.tga
+		
+	}
+}
+
+material texturesheets/ark/ark_window
+{
+	nonsolid
+	useTemplate templates/windowglass_mask <
+		"picmip -1	texturesheets/ark/glass_ark_1_d.tga",
+		"picmip -1	texturesheets/ark/glass_ark_1_local.tga",
+		"picmip -1	texturesheets/ark/glass_ark_1_mask.tga",
+		2, 0.4, 0.5
+	>
+	{
+		blend blend
+		depthfunc less
+		map picmip -1	texturesheets/ark/glass_ark_1_dirt.tga		
+	}
+}
+
+/*
+material texturesheets/ark/ark_window_solid
+{
+	noshadows
+	diffusemap	picmip -1	texturesheets/ark/glass_ark_1_d.tga
+	bumpmap		picmip -1	texturesheets/ark/glass_ark_1_local.tga
+	specularmap	picmip -1	texturesheets/ark/glass_ark_1_mask.tga
+}
+*/
+material texturesheets/ark/ark_window_solid
+{
+	useTemplate templates/lab_walls <
+		texturesheets/ark/glass_ark_1_d.tga,
+		texturesheets/ark/glass_ark_1_local.tga,
+		texturesheets/ark/glass_ark_1_mask.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material texturesheets/ark/ark_window_darker
+{
+	nonsolid
+	useTemplate templates/windowglass_mask <
+		"picmip -1	texturesheets/ark/glass_ark_1_d.tga",
+		"picmip -1	texturesheets/ark/glass_ark_1_local.tga",
+		"picmip -1	texturesheets/ark/glass_ark_1_mask.tga",
+		2, 0.05, 0.3
+	>
+	{
+		blend blend
+		depthfunc less
+		map picmip -1	texturesheets/ark/glass_ark_1_dirt.tga		
+	}
+}
+
+material texturesheets/ark/window_ark_1
+{
+	useTemplate templates/windowglass_specular <
+		"picmip -1	texturesheets/ark/window_ark_1_d.tga",
+		"picmip -1	texturesheets/ark/window_ark_1_local.tga",
+		"picmip -1	texturesheets/ark/window_ark_1_s.tga",
+		2, 0.5, 0.5
+	>
+}
+
+material texturesheets/ark/church_ark_window
+{
+	noshadows
+	useTemplate templates/windowglass_specular <
+		"picmip -1	texturesheets/ark/glass_ark_1_d.tga"
+		"picmip -1	texturesheets/ark/glass_ark_1_local.tga",
+		"picmip -2	texturesheets/ark/glass_ark_1_s.tga",
+		2, 1.0, 0.3
+	>
+}
+
+material textures/window/warehouse_glowing_window
+{
+	surfaceType "glass"
+	noShadows
+	{
+		diffusemap				textures/window/window10_d.tga
+		bumpmap		picmip -1	textures/window/window10_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	4,2,0,0
+	}
+	{
+		blend 		add
+		map		textures/window/window10_add.tga
+		colored
+	}
+}
+
+material textures/window/warehouse_glowing_window_darker
+{
+	surfaceType "glass"
+	noShadows
+	{
+		diffusemap				textures/window/window10_d.tga
+		bumpmap		picmip -1	textures/window/window10_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	4,2,0,0
+	}
+	{
+		blend 		add
+		map		textures/window/window10b_add.tga
+		colored
+	}
+}
+
+material texturesheets/canyon/can_window_1
+{
+	nonsolid
+	twosided
+	useTemplate templates/windowglass_mask <
+		texturesheets/canyon/can_glass_1_d.tga,
+		texturesheets/canyon/can_glass_1_local.tga,
+		texturesheets/canyon/can_glass_1_mask.tga,
+		2, 1.0, 0.3
+	>
+	{
+		blend blend
+		depthfunc less
+		map texturesheets/canyon/can_glass_1_dirt.tga		
+	}
+}
+
+material textures/glass/broken_glass_trim
+{
+	nonsolid
+	twosided
+	useTemplate templates/windowglass_mask <
+		textures/glass/broken_glass_trim.tga,
+		textures/glass/broken_glass_trim_local.tga,
+		textures/glass/broken_glass_trim_mask.tga,
+		2, 1.0, 0.3
+	>
+	{
+		blend blend
+		depthfunc less
+		map textures/glass/broken_glass_trim_dirt.tga
+		
+	}
+}
+
+material textures/window/ghosttown_window1
+{
+	nonsolid
+	noshadows
+	translucent
+	useTemplate templates/windowglass_mask <
+		"picmip -1	picmipmin -1	textures/window/ghosttown_window1_d.tga",
+		"picmip -2					textures/window/ghosttown_window1_local.tga",
+		"picmip -1	picmipmin -1	textures/window/ghosttown_window1_mask.tga",
+		2, 1.0, 0.3
+	>
+	{
+		blend blend
+		depthfunc less
+		map textures/window/ghosttown_window1_dirt.tga
+	}
+}
+
+material textures/window/ghosttown_window1_framed
+{
+	nonsolid
+	noshadows
+	translucent
+	useTemplate templates/windowglass_mask <
+		"picmip -1	picmipmin -1	textures/window/ghosttown_window1_framed_d.tga",
+		"picmip -2					textures/window/ghosttown_window1_framed_local.tga",
+		"picmip -1	picmipmin -1	textures/window/ghosttown_window1_framed_mask.tga",
+		2, 1.0, 0.6
+	>
+}
+
+material textures/window/ghosttown_window1b_framed
+{
+	nonsolid
+	noshadows
+	translucent
+	useTemplate templates/windowglass_mask <
+		"picmip -1	picmipmin -1	textures/window/ghosttown_window1b_framed_d.tga",
+		"picmip -2					textures/window/ghosttown_window1b_framed_local.tga",
+		"picmip -1	picmipmin -1	textures/window/ghosttown_window1b_framed_mask.tga",
+		2, 1.0, 0.6
+	>
+}
+
+material textures/window/dna_lab_01
+{
+	twosided
+	nonsolid
+	{
+		blend filter
+		map picmip -1	textures/window/dna_lab_01_d.tga
+	}
+	{
+		blend blend
+		program sfx/visor
+		bumpMap picmip -1	textures/window/dna_lab_01_local.tga
+		parameters 2, 2, 0.1
+	}
+}
+
+material textures2/water/ice_edge1
+{
+	nonsolid
+	twosided
+	useTemplate templates/windowglass_mask_specular1 <
+		textures2/water/ice_edge1_d.tga,
+		textures2/water/ice_edge1_s.tga,
+		textures2/water/ice_edge1_local.tga,
+		textures2/water/ice_edge1_mask.tga,
+		2, 1, 0.4
+	>
+	
+}	
+
+material textures2/water/ice_edge2
+{
+	nonsolid
+	twosided
+	useTemplate templates/windowglass_mask_specular2 <
+		textures2/water/ice_edge2_d.tga,
+		textures2/water/ice_edge1_s.tga,
+		textures2/water/ice_edge1_local.tga,
+		textures2/water/ice_edge1_mask.tga,
+		2, 1, 0.4
+	>
+	
+}
+
+material textures/window/factory_windowtrim01
+{
+			surfaceTypeMap textures/window/factory_windowtrim01
+        useTemplate templates/windowglass_specular <
+        	textures/window/factory_windowtrim01_d.tga,
+          	textures/window/factory_windowtrim01_local.tga,
+          	textures/window/factory_windowtrim01_s.tga,
+          	2, 1.0, 0.3
+  	>
+}
+
+material textures/window/factory_windowtrim01_small
+{
+        useTemplate templates/windowglass_specular <
+        	textures/window/factory_windowtrim01_small_d.tga,
+          	textures/window/factory_windowtrim01_small_local.tga,
+          	textures/window/factory_windowtrim01_small_s.tga,
+          	2, 1.0, 0.3
+  	>
+}
+
+material textures2/water/glass_floor
+{
+	twosided
+	useTemplate templates/windowglass_mask <
+		textures/glass/glass_floor_d.tga,
+		_flat,
+		_white,
+		2, 1, 0.2
+	>
+	{
+		blend blend
+		depthfunc less
+		map textures/glass/glass_floor_d.tga
+		vertexcolor
+	}
+}
+
+material textures/window/window16_glowing
+{
+	surfaceType "metal"
+        noShadows
+	//qer_editorimage		textures/window/window16_d.tga
+
+	diffusemap	picmip -1	textures/window/window16_d.tga
+       {
+		blend 		add
+		map	picmip -2	textures/window/window16c_add.tga
+		colored
+		vertexcolor
+	}
+}
+
+
+material textures/window/broken_window_01
+{
+	nonsolid
+	twosided
+	useTemplate templates/windowglass_mask <
+		textures/glass/broken_window_01_d.tga,
+		textures/glass/broken_window_01_local.tga,
+		textures/glass/broken_window_01_mask.tga,
+		2, 1.0, 0.3
+	>
+	{
+		blend blend
+		depthfunc less
+		map textures/glass/broken_window_01_d.tga
+	}
+}

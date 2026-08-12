@@ -1,0 +1,22 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap models/mapobjects/emplacement {
+	width	512
+	height	512
+	/* areaDefs */
+
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 512 512 )
+	}
+	rect {
+		surfaceType	sand
+		surfaceColor	( 1 1 1 )
+		coords ( 410 348 ) ( 512 512 )
+	}
+}

@@ -1,0 +1,229 @@
+
+/**************************************************************
+	Supply Pack
+**************************************************************/
+
+material models/techkits/supply_pack/supply_pack
+{
+	renderbump -size 1024 512 -clampOutput 0 0 1 1 -colormap models/techkits/supply_pack_local.tga models/techkits/supply_pack_hi.lwo
+	diffusemap	models/techkits/supply_pack_d.tga
+	specularmap	models/techkits/supply_pack_s.tga
+	bumpmap 	addnormals( models/techkits/supply_pack_local.tga, heightmap( models/techkits/supply_pack_h.tga, 5 ) )
+}
+
+
+// default_techkit
+// renderbump models/techkits/default_techkit.lwo
+
+material models/techkits/default_techkit
+{
+	renderbump -size 1024 1024 -aa 2 -colormap models/techkits/default_techkit_local.tga models/techkits/default_techkit_hi.lwo
+
+	diffusemap	models/techkits/default_techkit_d.tga
+	specularmap	models/techkits/default_techkit_s.tga
+	bumpmap		addnormals( models/techkits/default_techkit_local.tga, heightmap( models/techkits/default_techkit_h.tga, 4 ) )
+}
+
+// Trap
+// renderbump models/md5/techkits/items/trap/trap.lwo
+
+material models/md5/techkits/items/trap/trap
+{
+	renderbump -size 512 512 -aa 2 -colormap models/md5/techkits/items/trap/trap_local.tga models/md5/techkits/items/trap/dev_sd/trap_hi.lwo
+
+	diffusemap	models/md5/techkits/items/trap/trap_local_color.tga
+	specularmap	textures/common/gray.tga //models/md5/techkits/items/trap/trap_local_color.tga
+	bumpmap		models/md5/techkits/items/trap/trap_local.tga
+}
+
+//Syringe
+// renderbump models/md5/techkits/items/syringe/syringe.lwo
+
+material models/md5/techkits/items/syringe/syringe
+{
+    renderbump -size 256 256 -aa 2 -colormap models/md5/techkits/items/syringe/syringe_local.tga models/md5/techkits/items/syringe/syringe_hi.lwo
+
+ 	diffusemap	models/md5/techkits/items/syringe/syringe_local_color.tga
+    //specularmap	models/md5/techkits/items/syringe/syringe_local_color.tga
+     bumpmap	models/md5/techkits/items/syringe/syringe_local.tga
+}
+
+// Pliers
+// renderbump models/md5/techkits/items/pliers/pliers.lwo
+
+material models/md5/techkits/items/pliers/pliers
+{
+    renderbump -size 256 256 -aa 2 -colormap models/md5/techkits/items/pliers/pliers_local.tga models/md5/techkits/items/pliers/pliers_hi.lwo
+
+ 	diffusemap	models/md5/techkits/items/pliers/pliers_local_color.tga
+    //specularmap	models/md5/techkits/items/pliers/pliers_local_color.tga
+	bumpmap		models/md5/techkits/items/pliers/pliers_local.tga
+}
+
+
+//Ammo Pack
+
+material models/md5/techkits/items/ammo_pack/ammo
+
+{
+	diffusemap	models/md5/techkits/items/ammo_pack/ammo.tga
+	specularmap	picmip -2	textures/base_floor/bluetex1aspec.tga
+	bumpmap		addnormals( textures/base_floor/bluetex1a_local.tga, heightmap( textures/base_floor/bluetex1abmp.tga, 6 ) )
+}
+
+// Health Pack
+
+material models/md5/techkits/items/health_pack/health
+{
+	diffusemap	models/md5/techkits/items/health_pack/health.tga
+	specularmap	picmip -2	textures/base_floor/bluetex1aspec.tga
+	bumpmap		addnormals( textures/base_floor/bluetex1a_local.tga, heightmap( textures/base_floor/bluetex1abmp.tga, 6 ) )
+}
+
+/*
+textures/base_floor/bluetex1a2_ed
+{
+	qer_editorimage	textures/base_floor/bluetex1a2_ed.tga
+	bumpmap		addnormals( textures/base_floor/bluetex1a_local.tga, heightmap( textures/base_floor/bluetex1abmp.tga, 6 ) )
+	diffusemap	picmip -1	textures/base_floor/bluetex1a2dif.tga
+
+}
+*/
+//Explosives
+
+material models/md5/techkits/items/explosives/explosives
+{
+	diffusemap	models/md5/techkits/items/explosives/explosives.tga
+	specularmap	picmip -2	textures/base_floor/bluetex1aspec.tga
+	bumpmap		addnormals( textures/base_floor/bluetex1a_local.tga, heightmap( textures/base_floor/bluetex1abmp.tga, 6 ) )
+}
+
+//ENBP
+
+material models/md5/techkits/items/grenade_empb/empb
+{
+	diffusemap	models/md5/techkits/items/grenade_emp/emp.tga
+	specularmap	picmip -2	textures/base_floor/bluetex1aspec.tga
+	bumpmap		addnormals( textures/base_floor/bluetex1a_local.tga, heightmap( textures/base_floor/bluetex1abmp.tga, 6 ) )
+}
+
+
+//binoculars
+
+material models/md5/techkits/items/explosives/binoculars
+{
+	diffusemap	models/md5/techkits/items/binoculars/binoculars.tga
+	specularmap	picmip -2	textures/base_floor/bluetex1aspec.tga
+	bumpmap		addnormals( textures/base_floor/bluetex1a_local.tga, heightmap( textures/base_floor/bluetex1abmp.tga, 6 ) )
+}
+
+//gravity
+
+material models/md5/techkits/items/grenade_gravity/gravity
+{
+	diffusemap	models/md5/techkits/items/grenade_gravity/gravity.tga
+	specularmap	picmip -2	textures/base_floor/bluetex1aspec.tga
+	bumpmap		addnormals( textures/base_floor/bluetex1a_local.tga, heightmap( textures/base_floor/bluetex1abmp.tga, 6 ) )
+}
+
+//phospose
+
+material models/md5/techkits/items/grenade_phosphore/phosphore
+{
+	diffusemap	models/md5/techkits/items/grenade_phosphore/phosphore.tga
+	specularmap	picmip -2	textures/base_floor/bluetex1aspec.tga
+	bumpmap		addnormals( textures/base_floor/bluetex1a_local.tga, heightmap( textures/base_floor/bluetex1abmp.tga, 6 ) )
+}
+
+material models/md5/techkits/items/grenade_thermite/thermite
+
+{
+	diffusemap	models/md5/techkits/items/grenade_thermite/thermite.tga
+	specularmap	picmip -2	textures/base_floor/bluetex1aspec.tga
+	bumpmap		addnormals( textures/base_floor/bluetex1a_local.tga, heightmap( textures/base_floor/bluetex1abmp.tga, 6 ) )
+}
+
+material models/md5/techkits/items/projector/projector
+
+{
+//	diffusemap	models/md5/techkits/items/projector/projector.tga
+	specularmap	picmip -2	textures/base_floor/bluetex1aspec.tga
+	bumpmap		addnormals( textures/base_floor/bluetex1a_local.tga, heightmap( textures/base_floor/bluetex1abmp.tga, 6 ) )
+}
+
+//laser pointer
+
+material models/md5/techkits/items/laser_pointer/laser
+{
+	diffusemap	models/md5/techkits/items/laser_pointer/laser.tga
+	specularmap	picmip -2	textures/base_floor/bluetex1aspec.tga
+	bumpmap		addnormals( textures/base_floor/bluetex1a_local.tga, heightmap( textures/base_floor/bluetex1abmp.tga, 6 ) )
+}
+
+
+//Weldgun
+
+material models/md5/techkits/items/weldgun/weld
+{
+	diffusemap	models/md5/techkits/items/weldgun/weld.tga
+	specularmap	picmip -2	textures/base_floor/bluetex1aspec.tga
+	bumpmap		addnormals( textures/base_floor/bluetex1a_local.tga, heightmap( textures/base_floor/bluetex1abmp.tga, 6 ) )
+}
+
+// -----------------------
+
+material models/techkits/placeholder
+{
+	noShadows
+	noselfShadow
+	diffusemap models/techkits/default.tga
+}
+
+material models/techkits/blackscreen
+{
+	noShadows
+	noselfShadow
+	diffusemap models/techkits/black.tga
+}
+
+// -----------------------
+
+skin reactiveCamo {
+	*	textures/effects/reactiveCamoSkin
+}
+
+material textures/effects/reactiveCamoSkin
+{
+	surfaceType "flesh"
+	noShadows
+	noSelfShadow
+	translucent		// don't write during the fill depth buffer phase
+	sort postprocess
+	{
+		program heatHaze
+		deformScroll 0 , time * 0.05
+		deformMagnitude 0.1
+		bumpMap picmip -1	textures/hell/lava1_local.tga
+		maskAlpha
+	}
+}
+
+material textures/sfx/thirdeyemonitor
+{
+	sort gui
+	/*{
+		program	tiles.vfp
+		vertexParm		0		160
+		vertexParm		1		0.43 + ( sinTable[ time * 0.15 ] * cosTable[ time * 0.25 ] ) * 0.2
+		fragmentMap		0		_currentRender
+	}*/
+	{
+		map guis/assets/common/gui_scanlines
+		blend add
+		translate		0, time * -0.1
+	}
+	{
+		map guis/assets/qet/resupply_bg
+		blend filter
+	}
+}

@@ -1,0 +1,78 @@
+atmosphere editor_fogpreview {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.0996466279 -0.7337033749 0.6721234322 )
+	sunColor ( 0.822327733 0.7623460293 0.6366904974 )
+	sunHaloScale 0.400000006
+	sunHaloBias 0
+	sunSpriteMaterial "textures/common/nodraw"
+	sunSpriteSize 12600
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 10000
+	fogHeightHalf 0
+	fogHeightOffset 10000
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "editor_ambientonly"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "textures/common/nodraw" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+ambientCubemap editor_fogpreview {
+	ambientLight {
+		color 0.25 0.25 0.25
+		direction 1 0 0
+		name "Light0"
+	}
+	ambientLight {
+		color 0.25 0.25 0.25
+		direction -1 0 0
+		name "Light1"
+	}
+	ambientLight {
+		color 0.25 0.25 0.25
+		direction 0 1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.25 0.25 0.25
+		direction 0 -1 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.25 0.25 0.25
+		direction 0 0 1
+		name "Light4"
+	}
+	ambientLight {
+		color 0.25 0.25 0.25
+		direction 0 0 -1
+		name "Light5"
+	}
+}

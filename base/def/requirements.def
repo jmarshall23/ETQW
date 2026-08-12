@@ -1,0 +1,479 @@
+
+requirement same_team {
+	allegiance
+	
+	parms {
+		"value"		"friend"
+	}
+}
+
+requirement is_neutral {
+	allegiance
+	
+	parms {
+		"value"		"neutral"
+	}
+}
+
+requirement is_friend {
+	allegiance
+	
+	parms {
+		"value"		"friend"
+	}
+}
+
+requirement is_enemy {
+	allegiance
+	
+	parms {
+		"value"		"enemy"
+	}
+}
+
+requirement team_strogg {
+	team
+
+	parms {
+		"value"		"strogg"
+	}
+}
+
+requirement team_gdf {
+	team
+
+	parms {
+		"value"		"gdf"
+	}
+}
+
+requirement ability_technician {
+	ability
+
+	parms {
+		"value"		"technician"
+	}
+}
+
+requirement ability_engineer {
+	ability
+
+	parms {
+		"value"		"engineer"
+	}
+}
+
+requirement ability_constructor {
+	ability
+
+	parms {
+		"value"		"constructor"
+	}
+}
+
+requirement ability_fieldops {
+	ability
+
+	parms {
+		"value"		"fieldops"
+	}
+}
+
+requirement ability_oppressor {
+	ability
+
+	parms {
+		"value"		"oppressor"
+	}
+}
+
+requirement ability_infiltrator {
+	ability
+
+	parms {
+		"value"		"infiltrator"
+	}
+}
+
+requirement ability_covertops {
+	ability
+
+	parms {
+		"value"		"covertops"
+	}
+}
+
+requirement ability_healthBoost {
+	ability
+
+	parms {
+		"value"		"healthBoost"
+	}
+}
+
+requirement ability_giveAmmo {
+	ability
+
+	parms {
+		"value"		"giveAmmo"
+	}
+}
+
+requirement ability_soldier {
+	ability
+
+	parms {
+		"value"		"soldier"
+	}
+}
+
+requirement stance_prone {
+	property
+
+	parms {
+		"property"		"prone"
+		"condition"		"=="
+		"value"			"1"
+	}
+}
+
+requirement stance_crouch {
+	property
+
+	parms {
+		"property"		"crouch"
+		"condition"		"=="
+		"value"			"1"
+	}
+}
+
+requirement not_disguised {
+	property
+	
+	parms {
+		"property"		"disguised"
+		"condition"		"!="
+		"value"			"1"
+	}
+}
+
+requirement inRadar {
+	radar
+}
+
+requirement otherInRadar {
+	radar_other
+}
+
+requirement ability_hack {
+	ability
+
+	parms {
+		"value"			"hack"
+	}
+}
+
+requirement ability_repair {
+	ability
+
+	parms {
+		"value"			"repair"
+	}
+}
+
+requirement ability_construct {
+	ability
+
+	parms {
+		"value"			"construct"
+	}
+}
+
+requirement ability_medic {
+	ability
+
+	parms {
+		"value"			"medic"
+	}
+}
+
+requirement ability_aggressor {
+	ability
+
+	parms {
+		"value"			"aggressor"
+	}
+}
+
+requirement ability_revive {
+	ability
+
+	parms {
+		"value"			"revive"
+	}
+}
+
+requirement ability_inside_mcp {
+	ability
+
+	parms {
+		"value"			"inside_mcp"
+	}
+}
+
+requirement same_entity {
+	property
+
+	parms {
+		"property"		"same_entity"
+		"condition"		"=="
+		"value"			"1"
+	}
+}
+
+requirement need_revive {
+	property
+
+	parms {
+		"property"		"need_revive"
+		"condition"		"=="
+		"value"			"1"
+	}
+}
+
+requirement other_need_revive {
+	property
+
+	parms {
+		"use_other"		"1"
+		"property"		"need_revive"
+		"condition"		"=="
+		"value"			"1"
+	}
+}
+
+requirement want_revive {
+	property
+
+	parms {
+		"property"		"want_revive"
+		"condition"		"=="
+		"value"			"1"
+	}
+}
+
+requirement spectator {
+	property
+
+	parms {
+		"property"		"spectator"
+		"condition"		"=="
+		"value"			"1"
+	}
+}
+
+requirement need_repair {
+	property
+
+	parms {
+		"property"		"need_repair"
+		"condition"		"=="
+		"value"			"1"
+	}
+}
+
+requirement is_your_driver {
+	property
+
+	parms {
+		"property"		"driver"
+		"condition"		"=="
+		"value"			"1"
+	}
+}
+
+requirement alive {
+	property
+
+	parms {
+		"property"		"health"
+		"condition"		">"
+		"value"			"0"
+	}
+}
+
+requirement fieldops_level_1 {
+	property
+	
+	parms {
+		"property"		"proficiency"
+		"property_type"	"fieldops"
+		"condition"		">="
+		"value"			"1"
+	}
+}
+
+requirement covertops_spawn_level_1 {
+	property
+	
+	parms {
+		"property"		"spawn_proficiency"
+		"property_type"	"covertops"
+		"condition"		">="
+		"value"			"1"
+	}
+}
+
+requirement light_weapons_spawn_level_4 {
+	property
+	
+	parms {
+		"property"		"spawn_proficiency"
+		"property_type"	"weapon_handling"
+		"condition"		">="
+		"value"			"4"
+	}
+}
+
+requirement oppressor_level_1 {
+	property
+	
+	parms {
+		"property"		"proficiency"
+		"property_type"	"fieldops"
+		"condition"		">="
+		"value"			"1"
+	}
+}
+
+requirement engineer_level_1 {
+	property
+	
+	parms {
+		"property"		"proficiency"
+		"property_type"	"engineer"
+		"condition"		">="
+		"value"			"1"
+	}
+}
+
+requirement constructor_level_1 {
+	property
+	
+	parms {
+		"property"		"proficiency"
+		"property_type"	"engineer"
+		"condition"		">="
+		"value"			"1"
+	}
+}
+
+requirement ability_transport_player {
+	ability
+
+	parms {
+		"value"		"transport_player"
+	}
+}
+
+
+requirement has_third_eye {
+	entity_bin
+	
+	parms {
+		"type"		"projectile_third_eye"
+	}
+}
+
+requirement vehicle_full {
+	property
+	
+	parms {
+		"property"		"vehicle_full"
+		"condition"		"=="
+		"value"			"1"
+	}
+}
+
+requirement in_vehicle {
+	property
+	
+	parms {
+		"property"		"in_vehicle"
+		"condition"		"=="
+		"value"			"1"
+	}
+}
+
+requirement local_in_this_vehicle {
+	property
+	
+	parms {
+		"property"		"in_vehicle"
+		"property_type" "local_player"
+		"condition"		"=="
+		"value"			"1"
+	}
+}
+
+requirement other_in_vehicle {
+	property
+	
+	parms {
+		"use_other"		"1"
+		"property"		"in_vehicle"
+		"condition"		"=="
+		"value"			"1"
+	}
+}
+
+requirement has_defense_turret {
+	ability
+
+	parms {
+		"value"		"defense_turret"
+	}
+}
+
+requirement has_fire_support {
+	ability
+
+	parms {
+		"value"		"fire_support"
+	}
+}
+
+requirement has_radar {
+	ability
+
+	parms {
+		"value"		"radar"
+	}
+}
+
+requirement has_supplies {
+	ability
+
+	parms {
+		"value"		"supplies"
+	}
+}
+
+requirement has_landmine {
+	ability
+
+	parms {
+		"value"		"landmine"
+	}
+}
+
+requirement same_fireteam {
+	property
+	
+	parms {
+		"use_other"		"1"
+		"property"		"same_fireteam"
+		"condition"		"=="
+		"value"			"1"
+	}
+}

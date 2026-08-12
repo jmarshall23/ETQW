@@ -1,0 +1,783 @@
+#define OBJECTIVE_ARK_DESTROY_JAMMER			0
+#define OBJECTIVE_ARK_DESTROY_ENTRANCE			1
+#define OBJECTIVE_ARK_DESTROY_RESEARCH			2
+
+// Base deployables
+#define ARK_STROGG_DEPLOY_BASE					0
+#define ARK_GDF_DEPLOY_BASE						1
+
+// First Objective - Destroy Jammer
+#define ARK_OBJECTIVE_GENERATOR					2
+#define ARK_STROGG_ATTACK_GENERATOR				3
+#define	ARK_STROGG_DEPLOY_OUTSIDE_TOWN			4
+#define ARK_GDF_DEFEND_GENERATOR				5
+#define ARK_GDF_DEPLOY_TOWN						6
+
+// Second Objective - Construct Mining Laser
+#define ARK_OBJECTIVE_LASER						7
+#define ARK_STROGG_ATTACK_LASER					8
+#define ARK_STROGG_DEPLOY_TOWN					9
+#define ARK_GDF_DEFEND_LASER					10
+#define ARK_GDF_DEPLOY_ISLET					11
+
+// Third Objective - Destroy DNA Scanner
+#define ARK_OBJECTIVE_SCANNER					12
+#define ARK_STROGG_ATTACK_SCANNER				13
+#define ARK_STROGG_DEPLOY_ISLET					14
+#define ARK_GDF_DEFEND_SCANNER					15
+#define ARK_GDF_DEPLOY_BIODOME					16
+
+// Forward Spawn - Science Facility
+#define ARK_OBJECTIVE_FACILITY_SPAWN			17
+#define ARK_STROGG_ATTACK_FACILITY_SPAWN		18
+#define ARK_STROGG_DEFEND_FACILITY_SPAWN		19
+#define ARK_GDF_ATTACK_FACILITY_SPAWN			20
+#define ARK_GDF_DEFEND_FACILITY_SPAWN			21
+
+// Forced Secondary Objectives
+#define ARK_GDF_PRIORITY_MINE_GENERATOR			22
+#define ARK_GDF_PRIORITY_MINE_LASER				23
+#define ARK_GDF_PRIORITY_BIODOME_DEPLOY			24
+#define ARK_GDF_PRIORITY_ISLET_DEPLOY			25
+
+object mapObject_Ark : mapObject_Default {
+	void			destroy();
+
+	void			InitObjectives();
+
+	void			CompleteObjective( float index, entity p );
+	handle			GetObjectiveMessage( float index );
+	void			OnMiningLaserDeployed( entity other );
+	void			OnMiningLaserConstructed( entity other );
+
+	void			StartFirstObjective();
+
+	void			NeededClassFirstObjective();
+
+	void			OnTimeLimitHit();
+	void			OnDestroyJammer();
+	void			OnEntranceDestroyed();
+	void			OnResearchDestroyed();
+
+	vector			GetGDFBasePosition() { return '3020 2850 890'; }
+
+	void			ZapporCallThread();
+
+	void			JammerDestroyThread();
+
+	void			EntranceEffectsThread();
+
+	void			ResearchEffectsThread();
+
+	void			OnSpawnCaptured( string actionName );
+	void			OnSpawnLiberated( string actionName );
+
+	//void			RandomBotactionTestThread();
+
+	entity			GetSpectateEntity();
+
+	entity			labequipment_destroyed;
+	entity			dnaTubeStrogg1;
+	entity			dnaTubeStrogg2;
+
+	entity			outpostTerritory;
+	entity			stroggBaseTerritory;
+	entity			biodomesTerritory;
+	entity			estuaryTerritory;
+
+	entity			gdfBaseSpawnMaster;
+	entity			stroggBaseSpawnMaster;
+	entity			estuarySpawnMaster;
+	entity			gdfDomesSpawnMaster;
+	entity			stroggDomesSpawn;
+	entity			churchSpawnMaster;
+	entity			jammerSpawnMaster;
+
+	entity			objective1Marker;
+	entity			objective2Marker;
+	entity			objective3Marker;
+
+	entity			objective1Arrow1;
+	entity			objective1Arrow2;
+	entity			objective2Arrow1;
+	entity			objective2Arrow2;
+	entity			objective2Arrow3;
+	entity			objective3Arrow1;
+	entity			objective3Arrow2;
+
+	entity			biodomesMainEntrance;
+	entity			biodomesSideEntrance;
+	entity			labEquipment;
+
+	entity			zapporCaller;
+
+	entity			entrance_smoke;
+
+	entity			tube_water_1;
+	entity			tube_water_2;
+	entity			tube_water_3;
+	entity			tube_water_4;
+	entity			tube_water_5;
+
+	entity			tube_water_floor_1;
+	entity			tube_water_floor_2;
+	entity			tube_water_floor_3;
+	entity			tube_water_floor_4;
+	entity			tube_water_floor_5;
+
+	entity			tube_glass_1;
+	entity			tube_glass_2;
+	entity			tube_glass_3;
+	entity			tube_glass_4;
+
+	entity			dnaTubelight01;
+	entity			dnaTubelight02;
+	entity			dnaTubelight03;
+	entity			dnaTubelight04;
+
+	entity			jammer;
+	entity			jammerEffectsIdle;
+	entity			jammerEffectsShutdown;
+	entity			generatorDestroyed;
+
+	entity			biodomeDoorMelted;
+	entity			biodomeDoorMeltedSide;
+	entity			biodomeDoorExplosion;
+
+	entity			noplant_generator;
+	entity			noplant_dna_equipment;
+
+	entity 			endCameraA;
+	entity			endCameraB;
+
+	//bot stuff
+
+	void			SetupBotsObjectiveOne();
+	void			SetupBotsObjectiveTwo();
+	void			SetupBotsObjectiveThree();
+
+	entity			botBiodomedoor1;
+	entity			botBiodomedoor2;
+
+	cvar 			debug_script;
+}
+
+mapObject_Base Ark_MapScript() {
+	return new mapObject_Ark;
+}
+
+void mapObject_Ark::destroy() {
+}
+
+void mapObject_Ark::InitObjectives() {
+
+	outpostTerritory		= worldspawn.getEntityKey( "script_outpost_territory" );
+	stroggBaseTerritory		= worldspawn.getEntityKey( "script_strogg_base_territory" );
+	biodomesTerritory		= worldspawn.getEntityKey( "script_biodomes_territory" );
+	estuaryTerritory		= worldspawn.getEntityKey( "script_estuary_territory" );
+
+	gdfBaseSpawnMaster		= worldspawn.getEntityKey( "script_gdf_base_spawn" );
+	stroggBaseSpawnMaster		= worldspawn.getEntityKey( "script_strogg_base_spawn" );
+	estuarySpawnMaster		= worldspawn.getEntityKey( "script_estuary_spawn" );
+	gdfDomesSpawnMaster		= worldspawn.getEntityKey( "script_gdf_domes_spawn" );
+	churchSpawnMaster		= worldspawn.getEntityKey( "script_church_spawnmaster") ;
+	jammerSpawnMaster		= worldspawn.getEntityKey( "script_jammer_spawnmaster" );
+
+	objective1Arrow1		= worldspawn.getEntityKey( "script_obj1_arrow1" );
+	objective1Arrow2		= worldspawn.getEntityKey( "script_obj1_arrow2" );
+	objective2Arrow1		= worldspawn.getEntityKey( "script_obj2_arrow1" );
+	objective2Arrow2		= worldspawn.getEntityKey( "script_obj2_arrow2" );
+	objective2Arrow3		= worldspawn.getEntityKey( "script_obj2_arrow3" );
+	objective3Arrow1		= worldspawn.getEntityKey( "script_obj3_arrow1" );
+	objective3Arrow2		= worldspawn.getEntityKey( "script_obj3_arrow2" );
+
+	objective1Marker		= worldspawn.getEntityKey( "script_obj1_marker" );
+	objective2Marker		= worldspawn.getEntityKey( "script_obj2_marker" );
+	objective3Marker		= worldspawn.getEntityKey( "script_obj3_marker" );
+
+	entrance_smoke			= worldspawn.getEntityKey( "script_entrance_smoke" );
+
+	tube_water_1			= worldspawn.getEntityKey( "script_tube_water_1" );
+	tube_water_2			= worldspawn.getEntityKey( "script_tube_water_2" );
+	tube_water_3			= worldspawn.getEntityKey( "script_tube_water_3" );
+	tube_water_4			= worldspawn.getEntityKey( "script_tube_water_4" );
+	tube_water_5			= worldspawn.getEntityKey( "script_tube_water_5" );
+
+	tube_water_floor_1		= worldspawn.getEntityKey( "script_tube_water_floor_1" );
+	tube_water_floor_2		= worldspawn.getEntityKey( "script_tube_water_floor_2" );
+	tube_water_floor_3		= worldspawn.getEntityKey( "script_tube_water_floor_3" );
+	tube_water_floor_4		= worldspawn.getEntityKey( "script_tube_water_floor_4" );
+	tube_water_floor_5		= worldspawn.getEntityKey( "script_tube_water_floor_5" );
+
+	tube_glass_1			= worldspawn.getEntityKey( "script_tube_glass_1" );
+	tube_glass_2			= worldspawn.getEntityKey( "script_tube_glass_2" );
+	tube_glass_3			= worldspawn.getEntityKey( "script_tube_glass_3" );
+	tube_glass_4			= worldspawn.getEntityKey( "script_tube_glass_4" );
+
+	dnaTubelight01			= worldspawn.getEntityKey( "script_dna_tubelight01" );
+	dnaTubelight02			= worldspawn.getEntityKey( "script_dna_tubelight02" );
+	dnaTubelight03			= worldspawn.getEntityKey( "script_dna_tubelight03" );
+	dnaTubelight04			= worldspawn.getEntityKey( "script_dna_tubelight04" );
+
+	endCameraA				= worldspawn.getEntityKey( "script_placement_camera_a" );
+	endCameraB				= worldspawn.getEntityKey( "script_placement_camera_b" );
+
+	biodomesMainEntrance	= worldspawn.getEntityKey( "script_biodome_entrance" );
+	biodomesSideEntrance	= worldspawn.getEntityKey( "script_biodomes_side_entrance_explosion" );
+
+	labEquipment			= worldspawn.getEntityKey( "script_lab_equipment" );
+	dnaTubeStrogg1			= worldspawn.getEntityKey( "script_dna_tube_strogg_1" );
+	dnaTubeStrogg2			= worldspawn.getEntityKey( "script_dna_tube_strogg_2" );
+
+	zapporCaller			= worldspawn.getEntityKey( "script_zappor_caller" );
+	jammer					= worldspawn.getEntityKey( "script_jammer" );
+	jammerEffectsIdle		= worldspawn.getEntityKey( "script_jammer_effects_idle" );
+	jammerEffectsShutdown	= worldspawn.getEntityKey( "script_jammer_effects_shutdown" );
+
+	generatorDestroyed		= worldspawn.getEntityKey( "script_generator_destroyed" );
+
+
+	biodomeDoorMelted		= worldspawn.getEntityKey( "script_biodome_melted_door" );
+	biodomeDoorMeltedSide	= worldspawn.getEntityKey( "script_biodome_melted_door_side" );
+	biodomeDoorMelted.hide();
+	biodomeDoorMeltedSide.hide();
+
+	biodomeDoorExplosion	= worldspawn.getEntityKey( "script_biodomedoorexplosion" );
+
+	noplant_generator		= worldspawn.getEntityKey( "script_noplant_generator" );
+	noplant_dna_equipment	= worldspawn.getEntityKey( "script_noplant_dna_equipment" );
+
+	//bot stuff
+	botBiodomedoor1			= worldspawn.getEntityKey( "script_bot_biodome_door_1" );
+	botBiodomedoor2			= worldspawn.getEntityKey( "script_bot_biodome_door_2" );
+	// end bot stuff
+
+	labequipment_destroyed	= worldspawn.getEntityKey( "script_labequipment_destroyed" );
+
+	stroggDomesSpawn		= worldspawn.getEntityKey( "script_strogg_domes_spawn" );
+
+	debug_script 				= sys.getCVar( "bot_debugMapScript", "1" );
+
+	CreateDeployTasks();
+
+	gameRules.setWinningTeam( gdfTeam );
+	gdfTeam.SetRespawnWait( 20 );
+	stroggTeam.SetRespawnWait( 20 );
+	gdfTeam.InitRespawnTimeChange();
+	stroggTeam.InitRespawnTimeChange();
+	CreateRespawnTimeThread( stroggTeam );
+
+	stroggDomesSpawn.setGameTeam( stroggTeam );
+	stroggDomesSpawn.vSetActive( false );
+
+	stroggBaseTerritory.setActive( true );
+	outpostTerritory.setActive( true );
+	biodomesTerritory.setActive( false );
+	estuaryTerritory.setActive( false );
+
+	estuarySpawnMaster.setGameTeam( $null_entity );
+	gdfDomesSpawnMaster.setGameTeam( $null_entity );
+	churchSpawnMaster.setGameTeam( gdfTeam );
+	jammerSpawnMaster.setGameTeam ( $null_entity );
+	jammerSpawnMaster.vSetActive( false );
+
+	objective1Arrow1.setGameTeam( stroggTeam );
+	objective1Arrow2.setGameTeam( stroggTeam );
+	objective2Arrow1.setGameTeam( stroggTeam );
+	objective2Arrow2.setGameTeam( stroggTeam );
+	objective2Arrow3.setGameTeam( stroggTeam );
+	objective3Arrow1.setGameTeam( stroggTeam );
+	objective3Arrow2.setGameTeam( stroggTeam );
+
+	objective1Arrow1.vStartObjective();
+	objective1Arrow2.vStartObjective();
+
+	objective1Marker.vStartObjective();
+	objective2Marker.vFinishObjective();
+	objective3Marker.vFinishObjective();
+
+	biodomesMainEntrance.setTakesDamage( 0 );
+	labEquipment.setTakesDamage( 0 );
+
+	generatorDestroyed.hide();
+	generatorDestroyed.forceDisableClip();
+	labequipment_destroyed.hide();
+
+	objManager.setNextObjective( gdfTeam, OBJECTIVE_ARK_DESTROY_JAMMER );
+	objManager.setNextObjective( stroggTeam, OBJECTIVE_ARK_DESTROY_JAMMER );
+
+	gameRules.setEndGameCamera( endCameraB );
+
+	thread StartFirstObjective();
+
+	SetupBotsObjectiveOne();
+}
+
+// ----------------------------------------------------------------------
+// BOT OBJECTIVE: PLANT PLASMA CHARGE ON THE JAMMING GENERATOR
+// ----------------------------------------------------------------------
+void mapObject_Ark::SetupBotsObjectiveOne() {
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "***** BOTS SETUP FOR GENERATOR OBJECTIVE *****\n" );
+	}
+	objManager.setAttackingTeam( STROGG );
+	objManager.setBotSightDist( 3000.0f );
+
+	objManager.killBotAction( "strogg_camp_75" ); // broken mine action
+	
+	objManager.activateBotActionGroup( ARK_OBJECTIVE_GENERATOR );
+	objManager.activateBotActionGroup( ARK_STROGG_ATTACK_GENERATOR );
+	objManager.activateBotActionGroup( ARK_STROGG_DEPLOY_OUTSIDE_TOWN );
+	objManager.activateBotActionGroup( ARK_GDF_DEFEND_GENERATOR );
+	objManager.activateBotActionGroup( ARK_GDF_DEPLOY_TOWN );
+	objManager.activateBotActionGroup( ARK_STROGG_DEPLOY_BASE );
+	objManager.activateBotActionGroup( ARK_GDF_PRIORITY_MINE_GENERATOR );
+	objManager.activateBotActionGroup( ARK_GDF_PRIORITY_ISLET_DEPLOY );
+
+	objManager.deactivateBotActionGroup ( ARK_GDF_DEFEND_LASER );		// Xian :: Not needed in stage 1
+
+	objManager.setPrimaryTeamAction( STROGG, "strogg_destroy_generator_1" );
+	objManager.setPrimaryTeamAction( GDF, "strogg_destroy_generator_1" );
+	objManager.setSecondaryTeamAction( GDF, "gdf_generator_mine_priority_1" );
+	objManager.setSecondaryTeamAction( GDF, "islet_gdf_deploy_1" );
+
+	objManager.setBotCriticalClass( STROGG, SOLDIER );
+	objManager.setBotCriticalClass( GDF, ENGINEER );
+	thread NeededClassFirstObjective ();
+
+	//objManager.setTeamUseRearSpawn( GDF, false );
+	//gdfTeam.setTeamRearSpawn( churchSpawnMaster );
+
+	gdfTeam.setTeamRearSpawn ( gdfBaseSpawnMaster );
+	objManager.setTeamUseRearSpawn( GDF, true );
+	objManager.setTeamUseRearSpawnPercentage (GDF, 50);
+
+
+	objManager.setTeamUseRearSpawn( STROGG, true );
+	stroggTeam.setTeamRearSpawn( stroggBaseSpawnMaster );
+}
+
+void mapObject_Ark::NeededClassFirstObjective() {
+	sys.wait (10);
+
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "***** SET UP CLASSES NEEDED FOR FIRST OBJECTIVE *****\n" );
+	}
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( STROGG, SOLDIER, NOCLASS, 3, true, true );
+	objManager.setTeamNeededClass( GDF, SOLDIER, NOCLASS, 1, false, false );
+	objManager.setTeamNeededClass( GDF, MEDIC, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( GDF, ENGINEER, NOCLASS, 3, true, true );
+}
+
+// ----------------------------------------------------------------------
+void mapObject_Ark::CompleteObjective( float index, entity p ) {
+	if ( index == OBJECTIVE_ARK_DESTROY_JAMMER ) {
+		OnDestroyJammer();
+	} else if ( index == OBJECTIVE_ARK_DESTROY_ENTRANCE ) {
+		OnEntranceDestroyed();
+	} else if ( index == OBJECTIVE_ARK_DESTROY_RESEARCH ) {
+		OnResearchDestroyed();
+	}
+}
+
+void mapObject_Ark::OnMiningLaserDeployed( entity other ) {
+	other.vCreateMission();
+	CreateInitialTimedMission( other );
+	objManager.SetObjectiveEntity( other, OBJECTIVE_ARK_DESTROY_ENTRANCE );
+	objManager.activateBotActionGroup( ARK_OBJECTIVE_LASER );
+	objManager.activateBotActionGroup( ARK_GDF_PRIORITY_MINE_LASER );
+}
+
+// ----------------------------------------------------------------------
+// MINING LASER CONSTRUCTED - DOOR NOT DESTROYED YET
+// ----------------------------------------------------------------------
+void mapObject_Ark::OnMiningLaserConstructed( entity other ) {
+	other.vCompleteMission();
+	StopTimedMission();
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+	objManager.killBotActionGroup( ARK_OBJECTIVE_LASER );
+	objManager.killBotActionGroup( ARK_STROGG_DEPLOY_TOWN );
+	objManager.killBotActionGroup( ARK_STROGG_ATTACK_LASER );
+	objManager.killBotActionGroup( ARK_GDF_DEFEND_LASER );
+	objManager.killBotActionGroup( ARK_GDF_PRIORITY_MINE_LASER );
+	objManager.setBotTeamRetreatTime( GDF, 10 );
+}
+
+handle mapObject_Ark::GetObjectiveMessage( float index ) {
+	if ( index == OBJECTIVE_ARK_DESTROY_JAMMER ) {
+		return sys.localizeString( "maps/ark/obj_destroy_jammer" );
+	}
+	if ( index == OBJECTIVE_ARK_DESTROY_ENTRANCE ) {
+		return sys.localizeString( "maps/ark/obj_destroy_ent" );
+	}
+	if ( index == OBJECTIVE_ARK_DESTROY_RESEARCH ) {
+		return sys.localizeString( "maps/ark/obj_destroy_lab" );
+	}
+
+	return g_locStr_BadObjective;
+}
+
+void mapObject_Ark::ZapporCallThread() {
+	sys.wait( 15.f );
+	zapporCaller.vOnDeploy();
+}
+
+void mapObject_Ark::JammerDestroyThread() {
+	generatorDestroyed.show();
+	sys.wait( 0.5f );
+	generatorDestroyed.forceEnableClip();
+}
+
+void mapObject_Ark::OnDestroyJammer() {
+	objManager.setNextObjective( gdfTeam, OBJECTIVE_ARK_DESTROY_ENTRANCE );
+	objManager.setNextObjective( stroggTeam, OBJECTIVE_ARK_DESTROY_ENTRANCE );
+
+	thread JammerDestroyThread();
+
+	jammerEffectsIdle.remove();
+	jammerEffectsShutdown.vTriggerParticleEffect( 1 );
+
+	thread ZapporCallThread();
+
+	jammerSpawnMaster.setGameTeam ( stroggTeam );
+	jammerSpawnMaster.vSetActive( true );
+	outpostTerritory.setGameTeam( stroggTeam );
+	churchSpawnMaster.setGameTeam( $null_entity );
+	churchSpawnMaster.vSetActive( false );
+
+	stroggBaseTerritory.setActive( false );
+	outpostTerritory.setActive( true );
+	estuaryTerritory.setActive( true );
+
+	objective1Arrow1.vFinishObjective();
+	objective1Arrow2.vFinishObjective();
+	objective2Arrow1.vStartObjective();
+	objective2Arrow2.vStartObjective();
+	objective2Arrow3.vStartObjective();
+
+	objective1Marker.vFinishObjective();
+	objective2Marker.vStartObjective();
+
+	biodomesMainEntrance.setTakesDamage( 1 );
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	noplant_generator.remove();
+
+	jammer.vCompleteMission();
+	StopTimedMission();
+
+	stroggTeam.SetRespawnWait( 20 );
+	ResetRespawnTimeThread();
+
+	SetupBotsObjectiveTwo();
+}
+
+// ----------------------------------------------------------------------
+// BOT OBJECTIVE: CONSTRUCT THE MINING LASER
+// ----------------------------------------------------------------------
+void mapObject_Ark::SetupBotsObjectiveTwo() {
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "***** BOTS SETUP FOR LASER OBJECTIVE *****\n" );
+	}
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+
+	objManager.killBotActionGroup( ARK_OBJECTIVE_GENERATOR );
+	objManager.killBotActionGroup( ARK_STROGG_ATTACK_GENERATOR );
+	objManager.killBotActionGroup( ARK_STROGG_DEPLOY_OUTSIDE_TOWN );
+	objManager.killBotActionGroup( ARK_STROGG_DEPLOY_BASE );
+	objManager.killBotActionGroup( ARK_GDF_DEFEND_GENERATOR );
+	objManager.killBotActionGroup( ARK_GDF_DEPLOY_TOWN );
+	objManager.killBotActionGroup( ARK_GDF_PRIORITY_MINE_GENERATOR );
+
+	//objManager.activateBotActionGroup( ARK_OBJECTIVE_LASER );
+	objManager.activateBotActionGroup( ARK_STROGG_ATTACK_LASER );
+	objManager.activateBotActionGroup( ARK_STROGG_DEPLOY_TOWN );
+	objManager.activateBotActionGroup( ARK_GDF_DEFEND_LASER );
+	objManager.activateBotActionGroup( ARK_GDF_DEPLOY_ISLET );
+	//objManager.activateBotActionGroup( ARK_GDF_PRIORITY_MINE_LASER );
+	objManager.activateBotActionGroup( ARK_GDF_DEPLOY_BASE );
+	//objManager.activateBotActionGroup( ARK_GDF_PRIORITY_BIODOME_DEPLOY );
+
+	objManager.setPrimaryTeamAction( STROGG, "strogg_construct_laser_1" );
+	objManager.setPrimaryTeamAction( GDF, "strogg_construct_laser_1" );
+	objManager.setSecondaryTeamAction( GDF, "gdf_priority_mine_laser_1" );
+	objManager.setSecondaryTeamAction( GDF, "secondary_gdf_deploy_biodome_1" );
+
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+	objManager.setBotCriticalClass( GDF, ENGINEER );
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 1, false, false );
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 3, true, true );
+	objManager.setTeamNeededClass( GDF, MEDIC, NOCLASS, 1, false, false );
+	objManager.setTeamNeededClass( GDF, ENGINEER, NOCLASS, 2, true, true );
+
+	gdfTeam.setTeamRearSpawn( gdfBaseSpawnMaster );
+	objManager.setTeamUseRearSpawn( GDF, true );
+
+	stroggTeam.setTeamRearSpawn( stroggBaseSpawnMaster );
+	objManager.setTeamUseRearSpawn( STROGG, true );
+
+	objManager.clearTeamBotBoundEntities( STROGG );
+	objManager.setBotTeamRetreatTime( GDF, 10 );
+}
+
+// ----------------------------------------------------------------------
+void mapObject_Ark::EntranceEffectsThread() {
+	sys.wait( 0.5f );
+	entrance_smoke.vTriggerParticleEffect( 1 );
+	biodomesSideEntrance.vTriggerParticleEffect( 1 );
+}
+
+void mapObject_Ark::OnEntranceDestroyed() {
+	objManager.setNextObjective( gdfTeam, OBJECTIVE_ARK_DESTROY_RESEARCH );
+	objManager.setNextObjective( stroggTeam, OBJECTIVE_ARK_DESTROY_RESEARCH );
+
+	estuaryTerritory.setGameTeam( stroggTeam );
+
+	estuarySpawnMaster.setGameTeam( stroggTeam );
+	gdfDomesSpawnMaster.setGameTeam( gdfTeam );
+
+	stroggDomesSpawn.vSetActive( true );
+
+	outpostTerritory.setActive( false );
+	biodomesTerritory.setActive( true );
+	estuaryTerritory.setActive( true );
+
+	objective2Arrow3.vFinishObjective();
+	objective3Arrow1.vStartObjective();
+	objective3Arrow2.vStartObjective();
+
+	objective2Marker.vFinishObjective();
+	objective3Marker.vStartObjective();
+
+	labEquipment.setTakesDamage( 1 );
+	objManager.SetObjectiveEntity( labEquipment, OBJECTIVE_ARK_DESTROY_RESEARCH );
+	labEquipment.vCreateMission();
+	CreateInitialTimedMission( labEquipment );
+
+	thread EntranceEffectsThread();
+
+	biodomeDoorMelted.show();
+	biodomeDoorMeltedSide.show();
+	biodomeDoorExplosion.vTriggerParticleEffect( 1 );
+
+	botBiodomedoor1.activate(botBiodomedoor1);
+	botBiodomedoor2.activate(botBiodomedoor2);
+	objManager.enableNode( "BioDomeDoorNode" );
+
+	stroggTeam.SetRespawnWait( 20 );
+	ResetRespawnTimeThread();
+
+	SetupBotsObjectiveThree();
+
+	FreeWorldTask( medicDeployTask );
+	FreeWorldTask( fieldopsDeployTask );
+	FreeWorldTask( engineerDeployTask );
+}
+
+// ----------------------------------------------------------------------
+// BOT OBJECTIVE: PLANT PLASMA CHARGE ON THE RESEARCH MATERIALS
+// ----------------------------------------------------------------------
+void mapObject_Ark::SetupBotsObjectiveThree() {
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "***** BOTS SETUP FOR RESEARCH MATERIALS OBJECTIVE *****\n" );
+	}
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+
+	//objManager.killBotActionGroup( ARK_STROGG_ATTACK_LASER );
+	//objManager.killBotActionGroup( ARK_GDF_DEFEND_LASER );
+	objManager.killBotActionGroup( ARK_GDF_DEPLOY_ISLET );
+	//objManager.killBotActionGroup( ARK_GDF_PRIORITY_MINE_LASER );
+	objManager.killBotActionGroup( ARK_GDF_PRIORITY_ISLET_DEPLOY );
+
+	objManager.activateBotActionGroup( ARK_OBJECTIVE_FACILITY_SPAWN ); //Strogg forward spawn gubbins
+	objManager.activateBotActionGroup( ARK_STROGG_ATTACK_FACILITY_SPAWN );
+	objManager.activateBotActionGroup( ARK_GDF_DEFEND_FACILITY_SPAWN );
+	objManager.activateBotActionGroup( ARK_GDF_DEPLOY_BIODOME );
+	objManager.activateBotActionGroup( ARK_OBJECTIVE_SCANNER );
+	objManager.activateBotActionGroup( ARK_STROGG_ATTACK_SCANNER );
+	objManager.activateBotActionGroup( ARK_STROGG_DEPLOY_ISLET );
+	objManager.activateBotActionGroup( ARK_GDF_DEFEND_SCANNER );
+
+	objManager.setBotCriticalClass( STROGG, SOLDIER );
+	objManager.setBotCriticalClass( GDF, ENGINEER );
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( STROGG, SOLDIER, NOCLASS, 3, true, true );
+	objManager.setTeamNeededClass( GDF, MEDIC, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( GDF, SOLDIER, NOCLASS, 1, false, false );
+	objManager.setTeamNeededClass( GDF, ENGINEER, NOCLASS, 3, true, true );
+
+	objManager.setPrimaryTeamAction( STROGG, "strogg_destroy_scanner_1" );
+	objManager.setPrimaryTeamAction( GDF, "strogg_destroy_scanner_1" );
+	//objManager.setSecondaryTeamAction( GDF, "xxx" );
+	objManager.setSecondaryTeamAction( STROGG, "strogg_forwardspawn_1" );
+
+	objManager.setTeamUseRearSpawn( GDF, false );
+	gdfTeam.setTeamRearSpawn( gdfBaseSpawnMaster );
+	objManager.setTeamUseRearSpawn( STROGG, false );
+	stroggTeam.setTeamRearSpawn( jammerSpawnMaster );
+
+	objManager.teamSuicideIfNotNearAction( "strogg_destroy_scanner_1", 4096.0f, GDF );
+
+	objManager.setTeamAttacksDeployables( GDF, false );
+	objManager.setTeamAttacksDeployables( STROGG, false );
+
+}
+
+// ----------------------------------------------------------------------
+void mapObject_Ark::ResearchEffectsThread() {
+
+	tube_water_1.vTriggerParticleEffect( 1 );
+	tube_glass_3.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.2f );
+	tube_water_4.vTriggerParticleEffect( 1 );
+	tube_glass_1.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.2f );
+	tube_water_3.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.1f );
+	tube_water_2.vTriggerParticleEffect( 1 );
+	tube_glass_2.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.2f );
+	tube_water_5.vTriggerParticleEffect( 1 );
+	tube_glass_4.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.5f );
+	tube_water_floor_1.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.5f );
+	tube_water_floor_4.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.5f );
+	tube_water_floor_3.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.5f );
+	tube_water_floor_2.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.5f );
+	tube_water_floor_5.vTriggerParticleEffect( 1 );
+}
+
+void mapObject_Ark::OnResearchDestroyed() {
+	objective3Marker.vFinishObjective();
+
+	gameRules.setEndGameCamera( endCameraA );
+
+	gameRules.setWinningTeam( stroggTeam );
+	gameRules.endGame();
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	thread ResearchEffectsThread();
+
+	labequipment_destroyed.show();
+
+	dnaTubelight01.remove();
+	dnaTubelight02.remove();
+	dnaTubelight03.remove();
+	dnaTubelight04.remove();
+
+	dnaTubeStrogg1.vStartObjective();
+	dnaTubeStrogg2.vStartObjective();
+
+	labEquipment.vCompleteMission();
+	StopTimedMission();
+}
+
+void mapObject_Ark::StartFirstObjective() {
+	sys.wait( 5.f );
+
+	objManager.SetObjectiveEntity( jammer, OBJECTIVE_ARK_DESTROY_JAMMER );
+	jammer.vCreateMission();
+	CreateInitialTimedMission( jammer );
+}
+
+void mapObject_Ark::OnTimeLimitHit() {
+	FinishTimedMission();
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	objManager.PlaySound( worldspawn.getKey( "snd_strogglose_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_strogglose_gdf" ), gdfTeam );
+}
+
+// ----------------------------------------------------------------------
+// Bot Forward Spawn Actions
+// ----------------------------------------------------------------------
+void mapObject_Ark::OnSpawnCaptured( string actionName ) {
+	if( actionName == "strogg_forwardspawn_1" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "***** STROGG CAPTURED FACILITY SPAWN *****\n" );
+		}
+		objManager.deactivateBotActionGroup( ARK_STROGG_ATTACK_FACILITY_SPAWN );
+		objManager.deactivateBotActionGroup( ARK_GDF_DEFEND_FACILITY_SPAWN );
+		objManager.deactivateBotActionGroup( ARK_GDF_DEPLOY_BIODOME );
+
+		objManager.activateBotActionGroup( ARK_GDF_ATTACK_FACILITY_SPAWN );
+		objManager.activateBotActionGroup( ARK_STROGG_DEFEND_FACILITY_SPAWN );
+	}
+}
+
+void mapObject_Ark::OnSpawnLiberated( string actionName ) {
+	if( actionName == "strogg_forwardspawn_1" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "***** STROGG LOST FACILITY SPAWN *****\n" );
+		}
+		objManager.deactivateBotActionGroup( ARK_GDF_ATTACK_FACILITY_SPAWN );
+		objManager.deactivateBotActionGroup( ARK_STROGG_DEFEND_FACILITY_SPAWN );
+
+		objManager.activateBotActionGroup( ARK_STROGG_ATTACK_FACILITY_SPAWN );
+		objManager.activateBotActionGroup( ARK_GDF_DEFEND_FACILITY_SPAWN );
+		objManager.activateBotActionGroup( ARK_GDF_DEPLOY_BIODOME );
+	}
+}
+
+entity mapObject_Ark::GetSpectateEntity() { 
+	if ( jammer != $null_entity ) {
+		return jammer.vGetSpectateEntity();
+	}
+
+	entity miningLaserMaterials = G_FindMiningLaserMaterials();
+	if ( miningLaserMaterials == $null_entity ) {
+		return $null_entity;
+	}
+	
+	if ( !miningLaserMaterials.vIsObjectiveComplete() ) {
+		return miningLaserMaterials.vGetSpectateEntity();
+	}
+
+	if ( labEquipment != $null_entity ) {
+		return labEquipment.vGetSpectateEntity();
+	}
+
+	return $null_entity;
+}
+
+
+
+object strogg_test_subject {
+	boolean activated;
+
+	void preinit() { 
+		playCycle( ANIMCHANNEL_ALL, getKey( "anim" ) );
+	}
+
+	void syncFields() {
+		syncBroadcast( "activated" );
+		syncCallback( "activated", "OnActivated" );
+	}
+
+	void OnActivated() {
+		playAnim( ANIMCHANNEL_ALL, getKey( "slump_anim" ) );
+	}
+
+	void vStartObjective() {
+		activated = true;
+		OnActivated();
+	}
+}
+

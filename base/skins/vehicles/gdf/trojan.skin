@@ -1,0 +1,18 @@
+skin skins/vehicles/gdf/trojan/temperate {
+	dummy/metal/shader1		models/vehicles/edf_trojan/trojan
+}
+
+skin skins/vehicles/gdf/trojan/arctic {
+	dummy/metal/shader1		models/vehicles/edf_trojan/trojan_arctic
+}
+
+
+skin skins/vehicles/gdf/trojan_cockpit/temperate {
+	dummy/metal/shader1		models/vehicles/edf_trojan/trojan
+	dummy/flesh/shader1		models/characters/edf_player/gdf_arm
+}
+
+skin skins/vehicles/gdf/trojan_cockpit/arctic {
+	dummy/metal/shader1		models/vehicles/edf_trojan/trojan_arctic
+	dummy/flesh/shader1		models/characters/edf_player/gdf_arm_arctic
+}

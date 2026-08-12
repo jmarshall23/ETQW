@@ -1,0 +1,63 @@
+
+//=========================
+// strogg test subject ==========
+//=========================
+
+
+export hauser {
+options -prefix STROGG_ -sourcedir models/mapobjects/ark/dev_sd -destdir models/mapobjects/ark/ -keep dummy_joint -parent hip dummy_joint
+
+		mesh strogg_test_subject.mb 				-dest strogg_test_subject.md5mesh
+		anim strogg_test_subject.mb 				-dest strogg_test_subject_idle.md5anim
+		anim strogg_test_subject.mb 				-dest strogg_test_subject_idle_a.md5anim -fps 34
+
+		anim strogg_test_subject_slump.mb 			-dest strogg_test_subject_slump.md5anim
+		anim strogg_test_subject_slump2.mb 			-dest strogg_test_subject_slump2.md5anim
+		anim strogg_test_subject_slump3.mb 			-dest strogg_test_subject_slump3.md5anim
+
+
+
+}
+
+
+//============================
+//=== models =================
+//============================
+
+model strogg_test_subject {
+	mesh						models/mapobjects/ark/strogg_test_subject.md5mesh
+
+	anim idle					models/mapobjects/ark/strogg_test_subject_idle.md5anim
+	anim idle2					models/mapobjects/ark/strogg_test_subject_idle_a.md5anim
+
+	anim slump					models/mapobjects/ark/strogg_test_subject_slump.md5anim
+	anim slump2					models/mapobjects/ark/strogg_test_subject_slump2.md5anim
+	anim slump3					models/mapobjects/ark/strogg_test_subject_slump3.md5anim
+
+
+
+}
+
+entityDef env_strogg_test_subject {
+	"editor_color"			"1 .5 0"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+
+	"spawnclass"			"sdScriptEntity"
+	"scriptobject"			"strogg_test_subject"
+	"model"					"strogg_test_subject"
+	"anim"					"idle"
+	"slump_anim"			"slump2"
+}
+
+entityDef env_strogg_test_subject_a {
+	"editor_color"			"1 .5 0"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+
+	"spawnclass"			"sdScriptEntity"
+	"scriptobject"			"strogg_test_subject"
+	"model"					"strogg_test_subject"
+	"anim"					"idle2"
+	"slump_anim"			"slump3"
+}

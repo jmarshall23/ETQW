@@ -1,0 +1,10 @@
+
+skin skins/vehicles/gdf/mcp/temperate {
+	dummy/metal/shader1		models/vehicles/gdf_mcp/mcp
+	dummy/metal/shader2		models/vehicles/gdf_mcp/mcp_scud
+}
+
+skin skins/vehicles/gdf/mcp/arctic {
+	dummy/metal/shader1		models/vehicles/gdf_mcp/mcp_arctic
+	dummy/metal/shader2		models/vehicles/gdf_mcp/mcp_scud_arctic
+}

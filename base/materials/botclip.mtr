@@ -1,0 +1,82 @@
+
+material textures/common/dynamicobstacle {
+	qer_editorimage textures/common/dynamicobstacle.tga
+	qer_nocarve		// don't let an awry CSG operation cut it up
+	noshadows
+	trigger
+	nonsolid
+}
+
+material textures/common/aassolidplayer {
+	qer_editorimage textures/common/aassolidplayer.tga
+	aassolidplayer
+	nonsolid
+	noshadows
+}
+
+material textures/common/aassolidplayer_noareas {
+	qer_editorimage textures/common/aassolidplayer_noareas.tga
+	aassolidplayer
+	nonsolid
+	noshadows
+	noareas
+}
+
+material textures/common/aassolidvehicle {
+	qer_editorimage textures/common/aassolidvehicle.tga 
+	aassolidvehicle
+	nonsolid
+	noshadows
+}
+
+material textures/common/aassolidvehicle_noareas {
+	qer_editorimage textures/common/aassolidvehicle_noareas.tga 
+	aassolidvehicle
+	nonsolid
+	noshadows
+	noareas
+}
+
+material textures/common/aaswater {
+	qer_editorimage textures/common/aaswater.tga
+	aassolidplayer
+	water
+	nonsolid
+	noshadows
+}
+
+material textures/common/aasclusterportal {
+	qer_editorimage textures/common/aasclusterportal.tga 
+	aasclusterportal
+	nonsolid
+	noshadows
+}
+
+material textures/common/aasobstacle {
+	qer_editorimage textures/common/aasobstacle.tga 
+	aasobstacle
+	nonsolid
+	noshadows
+}
+
+material textures/common/colorrange {
+	qer_editorimage textures/common/colorrange.tga
+	nonsolid
+	noshadows
+}
+
+material textures/common/botaction {
+	qer_editorimage textures/common/botaction.tga
+	qer_nocarve		// don't let an awry CSG operation cut it up
+	noshadows
+	trigger
+	nonsolid
+}
+
+material textures/common/location_remap {
+	qer_editorimage textures/common/location_remap.tga
+	qer_nocarve		// don't let an awry CSG operation cut it up
+	noshadows
+	//trigger
+	nonsolid
+}

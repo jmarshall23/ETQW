@@ -1,0 +1,86 @@
+material wa1
+	{
+	diffusemap	picmip -1	textures2/concrete/wall_outdoor_3_d.tga
+	specularmap     picmip -1	textures2/concrete/wall_outdoor_3_s.tga
+	bumpmap 	picmip -1	textures2/concrete/wall_outdoor_3_local.tga
+ 	}
+
+material wa2
+	{
+	diffusemap	picmip -1	textures2/concrete/wall_outdoor_5_d.tga
+	specularmap     picmip -1	textures2/concrete/wall_outdoor_5_s.tga
+	bumpmap 	picmip -1	textures2/concrete/wall_outdoor_5_local.tga
+ 	}
+ 	
+material wa3
+	{
+	diffusemap	picmip -1	textures2/concrete/wall_outdoor_6_d.tga
+	specularmap     picmip -1	textures2/concrete/wall_outdoor_6_s.tga
+	bumpmap 	picmip -1	textures2/concrete/wall_outdoor_6_local.tga
+ 	}
+ 	
+ material textures2/concrete/concrete_chimney01
+ 	{
+ 		surfaceType	"stone"
+ 		{		
+ 			diffusemap	picmip -1	textures2/concrete/concrete_chimney01_d.tga
+ 			specularmap     picmip -1	textures2/concrete/concrete_chimney01_s.tga
+ 			bumpmap 	picmip -1	textures2/concrete/concrete_chimney01_local.tga
+ 	 	}
+}
+
+ material textures2/concrete/concrete_chimney02
+ 	{
+ 		surfaceType	"metal"
+ 		{		
+ 			diffusemap	picmip -1	textures2/concrete/concrete_chimney02_d.tga
+ 			specularmap     picmip -1	textures2/concrete/concrete_chimney01_s.tga
+ 			bumpmap 	picmip -1	textures2/concrete/concrete_chimney01_local.tga
+ 	 	vertexcolor
+ 	 	}
+}
+	
+material textures2/concrete/concrete_interior1
+{
+	surfaceType	"stone"
+	{
+		diffusemap	picmip -1	textures2/concrete/concrete_interior1_d.tga
+		specularmap	picmip -1	textures2/concrete/concrete_interior1_s.tga
+		bumpmap 	picmip -1	textures2/concrete/concrete_interior1_local.tga
+		vertexColor
+	
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,4,0,0
+ 	}
+}
+
+material textures2/concrete/concrete_interior2
+{
+		surfaceType	"stone"
+
+	{
+		diffusemap	picmip -1	textures2/concrete/concrete_interior2_d.tga
+		specularmap     picmip -1	textures2/concrete/concrete_interior2_s.tga
+		bumpmap 	picmip -1	textures2/concrete/concrete_interior2_local.tga
+		vertexColor
+ 	}
+}
+
+material textures2/concrete/concrete_interior3
+{
+		surfaceType	"stone"
+
+	{
+		diffusemap	picmip -1	textures2/concrete/concrete_interior3_d.tga
+		specularmap     picmip -1	textures2/concrete/concrete_interior3_s.tga
+		bumpmap 	picmip -1	textures2/concrete/concrete_interior3_local.tga
+		vertexColor
+ 	}
+}
+	
+	
+ 	
+ 	
+ 	

@@ -1,0 +1,300 @@
+effect effects/impacts/lacerator/impact_stroggify
+{
+	size	95
+
+	cutOffDistance	2500
+
+	sound "Impact Sound"
+	{
+		soundShader	"sounds/weapons/lacerator/projectile_impact"
+		volume	1,8
+		freqshift	0.7,1.4
+	}
+	spawner "glow"
+	{
+		count		1,1
+		attenuateEmitter
+		attenuation	800,900
+
+		oriented
+		{
+			duration	2,2
+			blend	add
+			material	"textures/particles/sparks/sparkflash03"
+			trailRepeat	1
+
+			start
+			{
+				size { box 15,15,21,21 }
+				tint { line 0.992157,0.211765,0.0156863,1,0.501961,0.247059 }
+				fade { line 0.3,1 }
+				rotate { box 0,0,0,0,0,2 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope exp_x2 }
+			}
+
+			end
+			{
+				size { point 10,10 }
+			}
+			lineHit
+		}
+	}
+	emitter "smokey2"
+	{
+		duration	0.5,0.5
+		count		3,3
+		attenuateEmitter
+		attenuation	300,400
+
+		sprite
+		{
+			duration	1,1
+			blend	add
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 20,-20,-20,40,20,20 }
+				size { line 4,4,8,8 }
+				tint { point 0.858824,0.52549,0.156863 }
+				fade { line 0.1,0.4 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope rr2_concavefade_start_at_1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 20,20,30,30 }
+				rotate { box -0.25,0.25 relative }
+			}
+			lineHit
+		}
+	}
+	spawner "dirt_blur"
+	{
+		count		1,1
+		useMaterialColor
+
+		line
+		{
+			duration	0.4,0.4
+			blend	add
+			persist
+			material	"textures/effects/weapons/ground_flash"
+			gravity		0.001,0.001
+			trailRepeat	1
+
+			start
+			{
+				position { point 8,0,0 cone }
+				velocity { box 0,-10,-10,0,10,10 }
+				size { box 10,20 }
+				tint { line 0.792157,0.615686,0.207843,0.807843,0.317647,0.192157 }
+				offset { point -10,0,0 }
+				length { box 30,0,0,60,0,0 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+effect effects/impacts/lacerator/impact_default
+{
+	size	8
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_default"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/lacerator/impact_stroggify"
+	}
+}
+
+effect effects/impacts/lacerator/impact_flesh
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_flesh"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/lacerator/impact_stroggify"
+	}
+}effect effects/impacts/lacerator/impact_liquid
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_liquid"
+	}
+}
+
+
+
+effect effects/impacts/lacerator/impact_plastic
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_plastic"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/lacerator/impact_stroggify"
+	}
+}
+
+effect effects/impacts/lacerator/impact_sand
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_sand"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/lacerator/impact_stroggify"
+	}
+}
+
+effect effects/impacts/lacerator/impact_snow
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_sand"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/lacerator/impact_stroggify"
+	}
+}
+
+effect effects/impacts/lacerator/impact_stone
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_stone"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/lacerator/impact_stroggify"
+	}
+}
+
+effect effects/impacts/lacerator/impact_pavement
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_pavement"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/lacerator/impact_stroggify"
+	}
+}
+
+effect effects/impacts/lacerator/impact_metal
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_metal"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/lacerator/impact_stroggify"
+	}
+}
+
+effect effects/impacts/lacerator/impact_grass
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_grass"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/lacerator/impact_stroggify"
+	}
+}
+
+effect effects/impacts/lacerator/impact_glass
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_glass"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/lacerator/impact_stroggify"
+	}
+}
+
+effect effects/impacts/lacerator/impact_wood
+{
+	size	8
+
+	effect "Base Plume (GDF)"
+	{
+		effect	"effects/impacts/bullets_small/impact_wood"
+	}
+	effect "Stroggify Layer"
+	{
+		effect	"effects/impacts/lacerator/impact_stroggify"
+	}
+}
+
+effect effects/impacts/lacerator/impact_dirt
+{
+	size	8
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/bullets_small/impact_dirt"
+	}
+	effect "unnamed1"
+	{
+		effect	"effects/impacts/lacerator/impact_stroggify"
+	}
+}

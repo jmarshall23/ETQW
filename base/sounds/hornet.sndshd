@@ -1,0 +1,74 @@
+sound sounds/vehicles/hornet/chaff_fire {
+	volume	-10
+	no_dups
+	minDistance	15
+	maxDistance	100
+	sounds/weapons/chaff/stroggchaff_01.wav
+	sounds/weapons/chaff/stroggchaff_02.wav
+	sounds/weapons/chaff/stroggchaff_03.wav
+	sounds/weapons/chaff/stroggchaff_04.wav
+}
+
+sound sounds/vehicles/hornet/chaff_sizzle {
+	minDistance	5
+	maxDistance	75
+	
+	looping
+	
+	sounds/weapons/chaff/sizzle_01.wav
+	sounds/weapons/chaff/sizzle_02.wav
+	sounds/weapons/chaff/sizzle_03.wav
+}
+
+
+////////////
+// Hornet //
+////////////
+
+sound sounds/vehicles/hornet/engine_hover {
+	volume	-5
+	maxDistance 150
+	no_occlusion
+
+	looping
+	sounds/vehicles/hornet/hover_02d_mono.wav
+	
+}
+
+sound sounds/vehicles/hornet/engine_throttle {
+
+	maxDistance 150
+	no_occlusion
+	volume	0
+
+	looping
+	
+	sounds/vehicles/hornet/engine_03c.wav
+//	sounds/vehicles/hornet/hover_02_mono.wav
+//	sounds/vehicles/hornet/throttle.wav
+}
+
+sound sounds/vehicles/hornet/engine_idle {
+
+	maxDistance 150
+	no_occlusion
+
+	looping
+	sounds/vehicles/hornet/engine.wav
+}
+
+sound sounds/vehicles/hornet/start {
+	volume	-10
+	minDistance	15
+	maxDistance	150
+	
+	sounds/vehicles/hornet/engine_start.wav
+}
+
+sound sounds/vehicles/hornet/stop {
+	volume	-5
+	minDistance	25
+	maxDistance	150
+	
+	sounds/vehicles/hornet/engine_stop_02.wav
+}

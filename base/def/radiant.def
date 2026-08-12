@@ -1,0 +1,10 @@
+entityDef radiant_group {
+	"editor_color"				"0 0 0"
+	"editor_mins"				"?"
+	"editor_maxs"				"?"
+
+	"editor_usage"				"Used to group brushes and other groups together for editor convenience."
+	"editor_usage1"				"These are managed completely by radiant and are never visible in the map."
+	"editor_usage2"				"You should never explicitly create one of these."
+	"spawnclass"				"noSpawnClass"
+}

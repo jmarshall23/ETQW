@@ -1,0 +1,47 @@
+
+// ETQW Music
+
+sound sounds/music/mainmenu {
+
+	looping
+	sounds/music/mainmenu.wav
+	soundclass 1
+}
+
+
+sound sounds/music/load1 {
+
+	looping
+	sounds/music/load1.wav
+	soundclass 1
+}
+
+sound sounds/music/load2 {
+
+	looping
+	sounds/music/load2.wav
+	soundclass 1
+}
+
+sound sounds/music/load3 {
+
+	looping
+	sounds/music/load3.wav
+	soundclass 1
+}
+
+sound sounds/music/limbomenu {
+	looping
+	sounds/music/limbomenu.wav
+	soundclass 1
+}
+
+sound sounds/music/gdf {
+	sounds/music/gdf.wav
+	soundclass 1
+}
+
+sound sounds/music/strogg {
+	sounds/music/strogg.wav
+	soundclass 1
+}

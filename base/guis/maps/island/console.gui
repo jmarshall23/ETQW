@@ -1,0 +1,47 @@
+
+gui maps/island/console {
+	properties {
+		float flags			= immediate( flags ) | GUI_SHOWCURSOR;
+		float usable		= 0;
+		float active		= 0;
+	}
+	
+	windowDef desktop {
+		properties {
+			color backColor = 0, 0, 0, 1;
+		}	
+	}
+
+	windowDef needKeyText {
+		properties {
+			handle	localizedText		= localize( "guis/maps/island/keycard" ); // "You Need The Keycard";
+			color	foreColor	= 1, 0, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= ( gui.usable == 0 ) && ( gui.active == 0 );
+		}	
+	}
+	
+	windowDef haveKeyText {
+		properties {
+			handle	localizedText		= localize( "guis/maps/island/unlock" ); // "Click To Unlock Doors";
+			color	foreColor	= 1, 1, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= ( gui.usable == 1 ) && ( gui.active == 0 );
+		}
+		
+		events {
+			onKeyDown "mouse1" {
+				gui.sendCommand( "activate" );
+			}
+		}
+	}
+
+	windowDef activatedText {
+		properties {
+			handle	localizedText		= localize( "guis/maps/island/unlocked" ); // "Doors Are Unlocked!";
+			color	foreColor	= 0, 1, 0, 1;
+			rect	rect		= 0, 120, 640, 240;
+			float	visible		= gui.active == 1;
+		}			
+	}
+}

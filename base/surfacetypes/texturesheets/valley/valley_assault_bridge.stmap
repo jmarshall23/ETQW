@@ -1,0 +1,28 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+atlas/valley/valley_assault_bridge.atlas
+***
+*/
+
+surfaceTypeMap texturesheets/valley/valley_assault_bridge {
+	width	256
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 256 2048 )
+	}
+	rect {
+		surfaceType	default
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1084 ) ( 256 1344 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1344 ) ( 256 2048 )
+	}
+}

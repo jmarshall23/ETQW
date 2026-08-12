@@ -1,0 +1,14 @@
+material textures/sfx/vp1particle
+{
+	sort postprocess
+	nonsolid
+	translucent
+
+	{
+		program heatHazeWithMask
+		deformScroll time * 0.8, time * 0.5
+		deformMagnitude 4
+		bumpMap textures/sfx/vp1.tga
+		mask textures/sfx/vp1_alpha.tga
+	}
+}

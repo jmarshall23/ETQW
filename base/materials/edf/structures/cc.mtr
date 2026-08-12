@@ -1,0 +1,136 @@
+/*******************************
+Command Centre
+*******************************/
+
+// Command Center
+
+material models/structures/edf/cc/cc
+{
+	surfaceType "metal"
+	nonsolid
+	noshadows
+	rendermodelclip
+	{
+	program	interaction/basic_detailwm
+	diffusemap 	picmip -1	models/structures/edf/cc/cc_d.tga
+	specularmap	picmip -2	models/structures/edf/cc/cc_s.tga
+	bumpmap		picmip -1	addnormals (models/structures/edf/cc/cc_local.tga, heightmap (models/structures/edf/cc/cc_h.tga, 2))
+	 	
+	diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+	bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga 
+	specDetailMap			textures/detail/bump/vehicle_detail01_d.tga 
+	detailMult	5,20,0,0 
+	detailWeightMap			models/structures/edf/cc/cc_detailmask.tga
+	}
+}
+
+material models/structures/edf/cc/cc_nonsolid
+{
+	nonsolid
+	noshadows
+	{
+	program	interaction/basic_detailwm
+	diffusemap 	picmip -1	models/structures/edf/cc/cc_d.tga
+	specularmap	picmip -2	models/structures/edf/cc/cc_s.tga
+	bumpmap		picmip -1	addnormals (models/structures/edf/cc/cc_local.tga, heightmap (models/structures/edf/cc/cc_h.tga, 2))
+	 	
+	diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+	bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga 
+	specDetailMap			textures/detail/bump/vehicle_detail01_d.tga 
+	detailMult	5,20,0,0 
+	detailWeightMap			models/structures/edf/cc/cc_detailmask.tga
+	}
+}
+
+// Command Center Arctic Version
+
+material models/structures/edf/cc/cc_arctic
+{
+	surfaceType "metal"
+	nonsolid
+	noshadows
+	rendermodelclip
+	{
+	program	interaction/basic_detailwm
+	diffusemap 	picmip -1	models/structures/edf/cc/cc_d_arctic.tga
+	specularmap	picmip -2	models/structures/edf/cc/cc_s.tga
+	bumpmap		picmip -1	addnormals (models/structures/edf/cc/cc_local.tga, heightmap (models/structures/edf/cc/cc_h.tga, 2))
+ 	
+	diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+	bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga 
+	specDetailMap			textures/detail/bump/vehicle_detail01_d.tga 
+	detailMult	5,20,0,0 
+	detailWeightMap			models/structures/edf/cc/cc_detailmask.tga
+	}
+}
+
+material models/structures/edf/cc/cc_arctic_nonsolid
+{
+	nonsolid
+	noshadows
+	{
+	program	interaction/basic_detailwm
+	diffusemap 	picmip -1	models/structures/edf/cc/cc_d_arctic.tga
+	specularmap	picmip -2	models/structures/edf/cc/cc_s.tga
+	bumpmap		picmip -1	addnormals (models/structures/edf/cc/cc_local.tga, heightmap (models/structures/edf/cc/cc_h.tga, 2))
+ 	
+	diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+	bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga 
+	specDetailMap			textures/detail/bump/vehicle_detail01_d.tga 
+	detailMult	5,20,0,0 
+	detailWeightMap			models/structures/edf/cc/cc_detailmask.tga
+	}
+}
+
+// Command Center Decals
+
+material models/structures/edf/cc/cc_decals
+{
+	sort decal
+	nonsolid
+	noshadows
+	{
+	diffusemap				models/structures/edf/cc/cc_decals_d.tga
+	specularmap	picmip -1	models/structures/edf/cc/cc_decals_s.tga
+	bumpmap					models/structures/edf/cc/cc_decals_local.tga
+	alphaTest 0.5
+	}
+}
+
+// Command Center Treads
+
+material models/structures/edf/factory/factory_treads 
+{
+	surfaceType "metal"
+	noshadows
+	{
+	diffusemap	picmip -1	models/vehicles/gdf_mcp/mcp_tracks_d.tga
+	specularmap	picmip -2	models/vehicles/gdf_mcp/mcp_tracks_s.tga
+	bumpmap		picmip -1 	models/vehicles/gdf_mcp/mcp_tracks_local.tga
+	scale 0.5, 0.3
+	
+	diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+	bumpDetailMap			textures/detail/bump/metal_detail01_local.tga 
+	specDetailMap			textures/detail/bump/metal_detail01_d.tga 
+	detailMult	2,2,0,0 
+	}
+}
+
+// Command Center Cog
+
+material models/structures/edf/cc/cc_cog
+{
+	surfaceType "metal"
+	noshadows
+	{
+	diffusemap	picmip -1	models/structures/edf/cc/cc_cog_d.tga
+	bumpmap 	picmip -1	addnormals(models/structures/edf/cc/cc_cog_local.tga, heightmap (models/structures/edf/cc/cc_cog_h.tga, 2))
+	specularmap	picmip -2	models/structures/edf/cc/cc_cog_s.tga
+	alphaTest 	0.5
+	
+	diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+	bumpDetailMap			textures/detail/bump/metal_detail01_local.tga 
+	specDetailMap			textures/detail/bump/metal_detail01_d.tga 
+	detailMult	2,2,0,0 
+	}
+}

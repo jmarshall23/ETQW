@@ -1,0 +1,289 @@
+
+
+material textures/draska/solar_panel01
+{
+	surfaceType "metal"
+	qer_editorimage	textures/draska/solar_panel01_d.tga
+	diffusemap	textures/draska/solar_panel01_d.tga
+	specularmap		textures/draska/solar_panel01_s.tga
+	//specularmap		textures/raven/terminal/t1_metal1dark_s.tga
+	//bumpmap 	addnormals(textures/draska/solar_panel02_local.tga, heightmap(textures/draska/solar_panel01_h.tga, 5))
+bumpmap 	textures/draska/solar_panel02_local.tga
+}
+
+material textures/base_wall_desert/snpanelplain2
+{
+	surfaceType "metal"
+	qer_editorimage		textures/base_wall_desert/snpanelplain2.tga
+	diffusemap		textures/base_wall_desert/snpanelplain2.tga
+}
+
+material textures/base_wall_desert/snpanelplain3
+{
+	surfaceType "metal"
+	qer_editorimage		textures/base_wall_desert/snpanelplain3.tga
+	diffusemap		textures/base_wall_desert/snpanelplain3.tga
+	bumpmap		addnormals( textures/base_wall/a_rib_panel_local_fin.tga  , heightmap( textures/base_wall/a_rib_panel_b04_fin.tga, 2 ) )
+}
+
+material textures/base_wall_desert/snpanelplain4
+{
+	surfaceType "metal"
+	qer_editorimage		textures/base_wall_desert/snpanelplain4.tga
+	diffusemap		textures/base_wall_desert/snpanelplain4.tga
+	specularmap		textures/raven/terminal/t1_metal1dark_s.tga
+}
+
+material textures/draska/vent01
+{
+	surfaceType "metal"
+	qer_editorimage	textures/draska/vent01_d.tga
+	diffusemap	textures/draska/vent01_d.tga
+	//specularmap	picmip -2 	textures/concrete/concrete01_s.tga
+	//bumpmap		textures/rock/limestone_local.tga
+}
+
+//material textures/draska/sign_restricterd_area01
+//{
+//	qer_editorimage	textures/draska/sign_restricted_area01_d.tga
+//	diffusemap	textures/draska/sign_restricted_area01_d.tga
+	//specularmap		textures/raven/terminal/t1_metal1dark_s.tga
+	//bumpmap		textures/rock/limestone_local.tga
+//}
+
+material textures/draska/concrete_wall01
+{
+	qer_editorimage	textures/draska/concrete_wall01_d.tga
+	diffusemap	textures/draska/concrete_wall01_d.tga
+	specularmap 	textures/concrete/concrete02_s.tga
+	bumpmap 	addnormals(textures/draska/flat_local.tga, heightmap(textures/draska/concrete_wall01_h.tga, 9 ) )
+}
+
+material textures/draska/concrete_wall02
+{
+	qer_editorimage	textures/draska/concrete_wall02_d.tga
+	diffusemap	textures/draska/concrete_wall02_d.tga
+	specularmap 	textures/concrete/concrete02_s.tga
+	bumpmap 	addnormals(textures/draska/flat_local.tga, heightmap(textures/draska/concrete_wall01_h.tga, 9 ) )
+}
+
+material textures/draska/metalpanel01_rust1
+{
+	surfaceType "metal"
+	qer_editorimage		textures/draska/metalpanel01_rust_d.tga
+	diffusemap		textures/draska/metalpanel01_rust_d.tga
+	specularmap 	textures/draska/metalpanel01_rust_s.tga
+	bumpmap		addnormals(textures/draska/flat_local.tga, heightmap(textures/draska/metalpanel01_rust_h.tga, 5 ) )
+}
+
+//material textures/draska/metalpanel01_rust_dirt_rib
+//{
+//	qer_editorimage		textures/draska/metalpanel01_rust_dirt_rib_d.tga
+//	diffusemap		textures/draska/metalpanel01_rust_dirt_rib_d.tga
+	//specularmap		textures/draska/metalpanel01_oxy_s.tga
+//	bumpmap 	 addnormals(textures/draska/flat_local.tga, heightmap(textures/draska/metalpanel01_rust_dirt_rib_h.tga, 6 ) )
+	//bumpmap 	 addnormals(textures/draska/ribpanel_large_local.tga, heightmap(textures/draska/metalpanel01_rust_dirt_rib_h.tga, 6 ) )
+//}
+
+material textures/draska/metalpanel01_rust2
+{
+	surfaceType "metal"
+	qer_editorimage		textures/draska/metalpanel01_rust2_d.tga
+	diffusemap		textures/draska/metalpanel01_rust2_d.tga
+	specularmap 	textures/draska/rusty_panel_plain_s.tga
+	//bumpmap 	 addnormals(textures/draska/ribpanel_large_local.tga, heightmap(textures/draska/metalpanel01_rust_dirt_rib_h.tga, 6 ) )
+}
+
+material textures/draska/metalpanel01_rust3
+{
+	surfaceType "metal"
+	qer_editorimage		textures/draska/metalpanel01_rust3_d.tga
+	diffusemap		textures/draska/metalpanel01_rust3_d.tga
+	//bumpmap		addnormals(textures/draska/flat_local.tga, heightmap(textures/draska/metalpanel01_rust3_h.tga, 9))
+	//specularmap		textures/raven/terminal/t1_metal1dark_s.tga
+}
+
+
+material textures/draska/metaldoor01
+{
+	surfaceType "metal"
+	qer_editorimage		textures/draska/metaldoor01_d.tga
+	diffusemap		textures/draska/metaldoor01_d.tga
+	//specularmap		textures/raven/terminal/t1_metal1dark_s.tga
+}
+
+material textures/draska/electric_box
+{
+	surfaceType "metal"
+	qer_editorimage		textures/draska/electric_box_d.tga
+	diffusemap		textures/draska/electric_box_d.tga
+	//specularmap		textures/raven/terminal/t1_metal1dark_s.tga
+}
+
+material textures/draska/vent02_rust
+{
+	surfaceType "metal"
+	qer_editorimage		textures/draska/vent02_rust_d.tga
+	diffusemap		textures/draska/vent02_rust_d.tga
+	//specularmap		textures/raven/terminal/t1_metal1dark_s.tga
+}
+
+material textures/draska/corrigated_panel01
+{
+	qer_editorimage		textures/draska/corrigated_matalpanel01_local.tga
+	diffusemap		textures/draska/metalpanel01_rust_d.tga
+	specularmap 	textures/draska/corrugated_panel01_s.tga
+	bumpmap		addnormals(textures/draska/corrigated_matalpanel01_local.tga, heightmap(textures/draska/metalpanel01_rust_h.tga, 5 ) )
+	//bumpmap		textures/draska/corrigated_matalpanel01_local.tga
+}
+
+
+
+material textures/draska/rusty_panel_plain
+{
+	surfaceType "metal"
+	diffusemap	textures/draska/rusty_panel_plain_d.tga
+	specularmap 	textures/draska/rusty_panel_plain_s.tga
+	bumpmap		addnormals(textures/draska/rusty_panel_plain_local.tga, heightmap(textures/draska/rusty_panel_plain_h.tga, 5 ) )
+}
+
+material textures/draska/i_bar
+{
+	surfaceType "metal"
+	diffusemap	textures/draska/i_bar_d.tga
+	specularmap 	textures/draska/i_bar_s.tga
+	bumpmap		addnormals(textures/draska/i_bar_local.tga, heightmap(textures/draska/i_bar_h.tga, 7 ) )
+}
+
+material textures/draska/tank
+{
+	surfaceType "metal"
+	diffusemap	textures/draska/tank_d.tga
+	//specularmap 	textures/draska/tank_s.tga
+	bumpmap		textures/draska/tank_local.tga
+}
+
+material textures/draska/door01
+{
+	surfaceType "metal"
+	diffusemap	textures/draska/door01_d.tga
+	specularmap 	textures/draska/door01_s.tga
+	bumpmap		addnormals(textures/draska/door01_local.tga, heightmap(textures/draska/door01_h.tga, 9 ) )
+	//bumpmap		textures/draska/door01_local.tga
+}
+
+material textures/draska/concrete_retaining_wall
+{
+	surfacetype "concrete"
+	{
+		diffusemap	textures/draska/concrete_retaining_wall_d.tga
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult	6,3,0,0
+	}
+}
+
+
+material textures/draska/ind_frame01
+{
+	qer_editorimage textures/draska/ind_frame01_d.tga
+        noSelfShadow
+        noshadows
+	twoSided
+	//nonsolid
+	playerclip 
+	flyerhiveclip
+	{  
+		//specularmap	textures/draska/ind_frame01_s.tga
+		bumpmap		addnormals(textures/draska/ind_frame01_local.tga, heightmap(textures/draska/ind_frame01_h.tga, 3))	
+      	diffusemap textures/draska/ind_frame01_d.tga
+	 	alphaTest 0.5
+	} 
+}
+
+
+
+material textures/draska/ind_frame01a
+{
+	qer_editorimage textures/draska/ind_frame01a_d.tga
+        noSelfShadow
+        noshadows
+	twoSided
+	//nonsolid
+	playerclip 
+	flyerhiveclip
+	{       
+		diffusemap textures/draska/ind_frame01a_d.tga
+		//specularmap	textures/draska/ind_frame01_s.tga
+        bumpmap		addnormals(textures/draska/ind_frame01a_local.tga, heightmap(textures/draska/ind_frame01a_h.tga, 3))	 
+	 	alphaTest 0.5
+	} 
+}
+
+
+material textures/draska/ind_frame02
+{
+	qer_editorimage textures/draska/ind_frame02_d.tga
+        noSelfShadow
+        noshadows
+	twoSided
+	//nonsolid
+	playerclip 
+	flyerhiveclip
+	{       
+		diffusemap textures/draska/ind_frame02_d.tga
+		specularmap	textures/draska/ind_frame02_s.tga
+        bumpmap		addnormals(textures/draska/ind_frame02_local.tga, heightmap(textures/draska/ind_frame02_h.tga, 3))  
+		alphaTest 0.5
+	} 
+}
+
+material textures/draska/i_bar02
+{
+	surfaceType "metal"
+	diffusemap	textures/draska/i_bar02_d.tga
+	specularmap 	textures/draska/i_bar02_s.tga
+	bumpmap		addnormals(textures/draska/i_bar02_local.tga, heightmap(textures/draska/i_bar02_h.tga, 0))
+}
+
+material textures/draska/concrete_wall03
+{
+	diffusemap	textures/draska/concrete_wall03_d.tga
+	bumpmap		textures/draska/concrete_wall03_local.tga
+	specularmap	textures/draska/concrete_wall03_s.tga
+}
+
+material textures/draska/concrete_floor01
+{
+	surfacetype "concrete"
+	{
+	diffusemap	picmip -1	textures/draska/concrete_floor01_d.tga
+	bumpmap		picmip -1	textures/draska/concrete_floor01_local.tga
+	specularmap	picmip -2	textures/draska/concrete_floor01_s.tga
+	
+	diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+	specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+	bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+	detailMult	5,5,0,0
+	vertexcolor
+	}
+}
+
+material textures/draska/ghosttown
+{
+	diffusemap	textures/draska/ghosttown.tga
+}
+
+material textures/draska/dirtentrance01brown
+{
+	nonsolid
+ 	twoSided
+	noshadows
+	{
+		diffusemap	textures/draska/dirtentrance01brown_d.tga
+		bumpmap		picmip -1	models/andrew/dirtentrance/dirtentrance01_local.tga
+		alphaTest 	0.15
+	}
+}

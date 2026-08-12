@@ -1,0 +1,406 @@
+
+/**************
+ bridges
+ **************/
+
+material textures/roler/crater_bridge
+{
+	qer_editorimage textures/base_wall_desert/a_rib_panel_04_fin.tga
+
+	diffusemap	textures/roler/rib_panel_sandy_d.tga
+	specularmap	textures/roler/rib_panel_sandy_s.tga
+        bumpmap		addnormals( textures/roler/rib_panel_sandy_local.tga  , heightmap( textures/base_wall/a_rib_panel_b04_fin.tga, 2 ) )
+        description     "gray with rust spots"
+}
+
+material textures/roler/concrete_tile
+	{
+	diffusemap	textures/megagen/canyon/concrete_tile_05_d.tga
+	//specularmap     textures/common/black.tga
+	bumpmap 	textures/megagen/canyon/concrete_tile_05_local.tga
+ 	}
+
+material models/mapobjects/bridge/railings
+{
+	qer_editorimage textures/models/mapobjects/bridge/railing_local.tga
+        noSelfShadow
+        noshadows
+	twoSided
+	//nonsolid
+	playerclip
+	flyerhiveclip
+	vehicleclip
+
+	{       
+      	diffusemap models/mapobjects/bridge/railing_d.tga
+		//specularmap	models/mapobjects/bridge/railing_s.tga
+        bumpmap		models/mapobjects/bridge/railing_local.tga  
+	 	alphaTest 0.5
+	} 
+}
+
+material textures/roler/sand_decal01
+{
+	noSelfShadow
+        noshadows
+	nonsolid
+	{       
+      	 blend	blend
+	 map	textures/roler/sand_decal01_d.tga
+	} 
+}
+
+material textures/roler/sand_decal02
+{
+	noSelfShadow
+        noshadows
+	nonsolid
+	{       
+      	 blend	blend
+	 map	textures/roler/sand_decal02_d.tga
+	} 
+}
+
+material textures/roler/sand_decal03
+{
+	noSelfShadow
+	noshadows
+	nonsolid
+	{       
+		blend	blend
+		map	textures/roler/sand_decal03_d.tga
+	} 
+}
+
+/**************
+ tower
+ **************/
+
+material textures/roler/rusty_panel
+{
+	surfaceType "metal"
+	diffusemap	textures/roler/rusty_panel_d.tga
+	specularmap 	textures/roler/rusty_panel_s.tga
+	bumpmap		textures/roler/rusty_panel_local.tga
+}
+
+material textures/roler/shattered_glass
+{
+   surfaceType  "glass"
+	noSelfShadow
+	noshadows
+	translucent
+	forceoverlays
+	sort decal
+	
+	{
+		blend		gl_dst_alpha, gl_one
+		maskalpha
+		program sfx/cubemap
+		//red		Parm0
+		//green   	Parm1
+		//blue		Parm2
+	}
+
+	{
+     	blend		blend
+		map		textures/roler/shattered_glass.tga
+	}
+}
+
+material textures/roler/railings
+{
+	qer_editorimage textures/roler/railings_alpha_local.tga
+    noSelfShadow
+    noshadows
+	twoSided
+	//nonsolid
+	playerclip 
+	flyerhiveclip
+	{       
+      	diffusemap textures/roler/railings_alpha_d.tga
+		specularmap	textures/roler/metal_flat_rusty_s.tga
+    	bumpmap		textures/roler/railings_alpha_local.tga  
+	 	alphaTest 0.5
+	} 
+}
+
+/**************
+ checkpoint
+ **************/
+
+material textures/roler/vent02
+{
+	surfaceType "metal"
+	qer_editorimage	textures/draska/vent02_d.tga
+	diffusemap	textures/draska/vent02_d.tga
+	//specularmap	picmip -2 	textures/concrete/concrete01_s.tga
+	bumpmap		textures/draska/vent02_local.tga
+}
+
+material textures/concrete/concrete_sandy
+{
+	diffusemap	textures/concrete/concrete_wall02_d.tga
+	bumpmap 	textures/concrete/concrete_wall_local.tga
+}
+
+material textures/metal/corrugated_rusty
+{
+	surfaceType "metal"
+	qer_editorimage	textures/roler/corrugated_rusty_d.tga
+	diffusemap	picmip -1	textures/roler/corrugated_rusty_d.tga
+	specularmap     picmip -2	textures/roler/corrugated_rusty_s.tga
+	bumpmap 	picmip -1	textures/roler/corrugated_rusty_local.tga
+ }
+ 	
+material textures/draska/metal_flat_rusty
+	{
+	surfaceType "metal"
+	diffusemap	textures/roler/metal_flat_rusty_d.tga
+	specularmap	textures/roler/metal_flat_rusty_s.tga
+	bumpmap		textures/roler/metal_flat_rusty_local.tga
+	}
+
+material textures/raven/common_floors/c_4floor_sandy
+	{
+	qer_editorimage textures/raven/common_floors/c_4floor_1b_d
+	
+	bumpmap addnormals ( textures/raven/common_floors/c_4floor_1b_local, heightmap ( textures/raven/common_floors/c_4floor_1b_h, 1 ) )
+	diffusemap	textures/roler/c_4floor_sandy_d.tga
+	specularmap	textures/raven/common_floors/c_4floor_1b_s
+	}
+
+material textures/metal/corrugated_white
+	{
+		surfaceType "metal"
+	diffusemap	textures/roler/corrugated_white_d.tga
+	specularmap     textures/roler/corrugated_rusty_s.tga
+	bumpmap 	textures/roler/corrugated_rusty_local.tga
+ 	}
+ 	
+material textures/metal/metal_yellow
+{
+	{
+		diffusemap	picmip -1	textures/roler/metal_yellow_d.tga
+		specularmap     picmip -2	textures/roler/metal_yellow_s.tga
+		bumpmap 	picmip -1	textures/roler/metal_yellow_local.tga
+
+		bumpDetailMap          textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2,2,0,0 
+ 	}
+}
+
+material textures/metal/corrugated_edgy
+	{
+	diffusemap	textures/common/gray.tga
+	specularmap     textures/common/gray.tga
+	bumpmap 	textures/roler/corrugated_iron_local.tga
+ 	}
+
+/**************
+ shield - just for renderbumping!!!
+ renderbump models/mapobjects/checkpoint/dev_sd/shield_low.lwo
+ **************/
+
+material models/mapobjects/checkpoint/shield
+{
+	surfaceType "metal"
+	//unsmoothedtangents
+	renderbump -size 512 512 -aa 2 models/mapobjects/checkpoint/shield_local.tga models/mapobjects/checkpoint/dev_sd/shield_high.lwo
+	noselfshadow
+
+	diffusemap	models/mapobjects/checkpoint/shield_local_color.tga
+	specularmap	models/mapobjects/checkpoint/shield_s.tga
+	bumpmap 	models/mapobjects/checkpoint/shield_local.tga
+}
+
+
+/**************
+ tank - just for renderbumping!!!
+ renderbump models/characters/strogg_player/dev_sd/tank_low_renderbump.lwo
+
+
+
+material models/characters/strogg_player/tank
+{
+	//unsmoothedtangents
+	renderbump -size 1024 1024 -aa 2 models/characters/strogg_player/dev_sd/tank_local.tga models/characters/strogg_player/dev_sd/tank_high_renderbump.lwo
+	noselfshadow
+
+	diffusemap	models/characters/strogg_player/tank_local_color.tga
+	specularmap	models/characters/strogg_player/tank_local_color.tga
+	bumpmap 	models/characters/strogg_player/tank_local.tga
+}
+ **************/
+
+
+/**************
+ infiltrator - just for renderbumping!!!
+ renderbump models/characters/strogg_player/dev_sd/infiltrator_low_renderbump.lwo
+
+
+
+material models/characters/strogg_player/infiltrator
+{
+	//unsmoothedtangents
+	renderbump -size 512 512 -aa 2 models/characters/strogg_player/dev_sd/infiltrator_local.tga models/characters/strogg_player/dev_sd/infiltrator_high.lwo
+	noselfshadow
+
+	diffusemap	models/characters/strogg_player/infiltrator_d.tga
+	specularmap	textures/common/gray.tga
+	bumpmap 	models/characters/strogg_player/infiltrator_local.tga
+}
+ **************/	
+
+
+/**************
+ strogg - just for renderbumping!!!
+ renderbump models/characters/strogg_player/dev_sd/stroggplayer_body_renderbump_low.lwo
+
+
+material models/characters/strogg_player/strogg_player
+{
+	//unsmoothedtangents
+	renderbump -size 1024 1024 -aa 2 models/characters/strogg_player/dev_sd/strogg_body_local.tga models/characters/strogg_player/dev_sd/stroggplayer_body_renderbump_strapsadjusted.lwo
+	noselfshadow
+
+	diffusemap	models/characters/strogg_player/strogg_player_color.tga
+	specularmap	models/characters/strogg_player/strogg_player_s.tga
+	bumpmap 	models/characters/strogg_player/strogg_player_local.tga
+}
+ **************/	
+
+
+
+
+/**************
+textures - just for testing!!!
+ **************/
+
+
+
+/**************
+
+material models/roler/512square
+	{
+	diffusemap	textures/roler/tanktracks_d.tga
+	specularmap     textures/common/black.tga
+	bumpmap 	textures/roler/tanktracks_local.tga
+ 	}
+
+material models/roler/1024square
+	{
+	diffusemap	picmip -1	textures/common/dark_gray.tga
+	specularmap	textures/common/black.tga
+	bumpmap 	textures/roler/cc_projector_combined.tga
+ 	}
+
+material textures/rock/sharprock_2048_2t1
+	{
+	diffusemap	textures/rock/sharprock_2048_2t1_d.tga
+	//specularmap
+	bumpmap 	textures/rock/sharprock_2048_2t1_local.tga
+ 	}
+ 	
+material textures/rock/sharprock_combined
+	{
+	diffusemap	textures/rock/sharprock_combined_2048_2t1_d.tga
+	//specularmap
+	bumpmap 	textures/rock/sharprock_combined_2048_2t1_local.tga
+ 	}
+ 	
+material textures/rock/wilsrock
+	{
+	diffusemap	textures/megagen/canyon/sharprock1_big_flat_d.tga
+	//specularmap
+	bumpmap 	textures/megagen/canyon/smoothrock1_big_local.tga
+ 	}
+ 	
+material textures/rock/sharprock_01
+	{
+	diffusemap	textures/rock/sharprock_01_2048_2t1_d.tga
+	//specularmap
+	bumpmap 	textures/rock/sharprock_01_2048_2t1_local.tga
+ 	}
+ 	
+material textures/rock/sharprock_02
+	{
+	diffusemap	textures/rock/sharprock_02_2048_2t1_d.tga
+	//specularmap
+	bumpmap 	textures/rock/sharprock_02_2048_2t1_local.tga
+ 	}
+ 	
+material textures/rock/sharprock_sandy
+	{
+	diffusemap	textures/rock/sharprock_sandy_2048_2t1_d.tga
+	//specularmap
+	bumpmap 	textures/rock/sharprock_sandy_2048_2t1_local.tga
+ 	}
+ 	
+material textures/rock/sharprock_enhanced
+	{
+	diffusemap	textures/rock/sharprock_01_d.tga
+	//specularmap
+	bumpmap 	textures/rock/sharprock_01_local.tga
+ 	}
+ 	
+material textures/rock/sediment_01
+	{
+	diffusemap	textures/rock/sediment_01_1024_1t1_d.tga
+	//specularmap
+	//bumpmap 	textures/rock/sediment_01_2048_2t1_local.tga
+	bumpmap 	textures/rock/sediment_01_1024_1t1_local.tga
+ 	}
+ 	
+material textures/rock/sediment_04
+	{
+	//diffusemap	textures/common/gray.tga
+	diffusemap	textures/rock/sediment_04_1024_1t1_d.tga
+	//specularmap	textures/common/black.tga
+	bumpmap 	textures/rock/sediment_04_1024_1t1_local.tga
+ 	}
+ 	
+material textures/rock/cracked_rock_sandy_2048_4t1
+	{
+	diffusemap	textures/rock/cracked_rock_sandy_2048_4t1_d.tga
+	//specularmap
+	bumpmap 	textures/rock/cracked_rock_sandy_2048_4t1_local.tga
+ 	}
+ 	
+material textures/rock/sharprock
+	{
+	diffusemap	textures/rock/sharprock_01_2048_2t1_d.tga 
+	//specularmap
+	bumpmap 	textures/rock/sharprock_01_2048_2t1_local.tga
+ 	}
+ 	
+material textures/rock/smoothrock_02
+	{
+	//diffusemap	textures/common/gray.tga
+
+	//diffusemap	textures/rock/smoothrock_02_d.tga
+	diffusemap	textures/rock/smoothrock_sedimentary_1024_1t1_d.tga
+	//specularmap
+	//bumpmap 	textures/rock/smoothrock_sharprock_02_local.tga
+	bumpmap 	textures/rock/smoothrock_02_local.tga
+	//bumpmap 	textures/rock/smoothrock_sedimentary_1024_1t1_local.tga
+ 	}
+
+material textures/rock/smoothrock_02_deeper
+	{
+	diffusemap	textures/rock/smoothrock_sedimentary_1024_1t1_d.tga 
+	//specularmap
+	//bumpmap 	textures/rock/smoothrock_02_overlaid_local.tga
+	bumpmap 	textures/rock/smoothrock_03_2048_2t1_local.tga
+ 	} 	
+material textures/rock/sediment_rough
+	{
+	//diffusemap	textures/common/gray.tga
+	diffusemap	textures/rock/sediment_rough_1024_1t1_d.tga
+	//specularmap
+	//bumpmap 	textures/rock/smoothrock_02_local.tga
+	//bumpmap 	textures/rock/smoothrock_combined_local.tga
+	bumpmap 	textures/rock/sediment_rough2_local.tga
+ 	}
+
+***************/

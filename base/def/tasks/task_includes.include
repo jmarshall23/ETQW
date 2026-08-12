@@ -1,0 +1,44 @@
+#ifndef _TASK_INCLUDES_
+#define _TASK_INCLUDES_
+
+$template templates/tasks/solo_objective/locstr/xp
+	"xp_string"						"guis/hud/objectives/xp"
+$endtemplate
+
+$template templates/tasks/solo_objective/locstr/up_to_xp
+	"xp_string"						"guis/hud/objectives/up_to_xp"
+$endtemplate
+
+$template templates/tasks/solo_task/locstr/up_to_xp
+	"xp_string"						"guis/hud/tasks/up_to_xp"
+$endtemplate
+
+$template templates/tasks/solo_task/xp_bonus_mission
+	"xp_bonus"						"2"
+	"xp_string"						"guis/hud/tasks/bonus_xp"
+$endtemplate
+
+$template templates/tasks/solo_task( name, script ) 
+	task #name {
+		data {
+			"priority"						"0"
+			"world"							"1"
+
+			"scriptobject"					#script
+			"title"							"game/tasks/" ## #name ## "/title"
+		}			
+$endtemplate
+
+$template templates/tasks/solo_task_objective( name, script )
+	templates/tasks/solo_task( name, script )
+
+		data {
+			"objective"						"1"
+			"priority"						"10"
+			"title_friend"					"game/tasks/" ## #name ## "/title_friend"
+			"title_friend_completed"		"game/tasks/" ## #name ## "/title_friend_completed"
+			"title_completed"				"game/tasks/" ## #name ## "/title_completed"
+		}			
+$endtemplate
+
+#endif

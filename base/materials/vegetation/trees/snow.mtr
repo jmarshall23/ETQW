@@ -1,0 +1,70 @@
+//SNOW 01 - ARK//
+
+material models/vegetation/trees/snow/snowpine01_branches
+{
+ 	nonsolid
+ 	noshadows
+ 	twoSided
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap 	picmip -1	clamp models/vegetation/trees/snow/snowpine01_branches_d.tga
+		bumpmap		picmip -2	clamp models/vegetation/trees/snow/snowpine01_branches_local.tga
+		specularmap	picmip -1	clamp models/vegetation/trees/snow/snowpine01_branches_s.tga
+ 		alphaTest 	0.25
+ 		
+		useTemplate wind/animatematrix< 0.15, 0.001 >
+ 	}
+}
+
+material models/vegetation/trees/snow/snowpine01_bark
+{
+	noshadows
+	nonsolid
+	{
+		diffusemap				models/vegetation/trees/snow/snowpine01_bark_d.tga
+		bumpmap		picmip -1	models/vegetation/trees/snow/snowpine01_bark_local.tga
+		specularmap	picmip -2	models/vegetation/trees/snow/snowpine01_bark_s.tga
+		alphaTest	0.1
+	
+		bumpDetailMap			textures/detail/bump/bark_detail01_local.tga
+		specDetailMap			textures/detail/bump/bark_detail01_d.tga
+		detailMult 5,10,0,0 
+	}
+}
+
+
+//SNOW 02 - SALVAGE//
+
+material models/vegetation/trees/snow2/snow2pine01_branches
+{
+	nonsolid
+	noshadows
+	twoSided
+	{
+		alphatocoverage
+		program		interaction/foliage
+		diffusemap 	picmip -1	clamp models/vegetation/trees/snow2/snow2pine01_branches_d.tga
+		bumpmap		picmip -1	clamp models/vegetation/trees/snow2/snow2pine01_branches_local.tga
+		specularmap	picmip -1	clamp models/vegetation/trees/snow2/snow2pine01_branches_s.tga
+		alphaTest	0.2
+ 		
+		useTemplate	wind/animatematrix_centre< 0.15, 0.001 >
+ 	}
+}
+
+material models/vegetation/trees/snow2/snow2pine01_bark
+{
+	nonsolid
+	noshadows
+	{
+		diffusemap	picmip -1	models/vegetation/trees/snow2/snow2pine01_bark_d.tga
+		bumpmap		picmip -2	models/vegetation/trees/snow2/snow2pine01_bark_local.tga
+		specularmap	picmip -1	models/vegetation/trees/snow2/snow2pine01_bark_s.tga
+		alphaTest	0.2
+		
+		bumpDetailMap			textures/detail/bump/bark_detail01_local.tga
+		specDetailMap			textures/detail/bump/bark_detail01_d.tga
+		detailMult	5,10,0,0 
+	}
+}

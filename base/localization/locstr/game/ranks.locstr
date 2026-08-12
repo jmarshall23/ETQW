@@ -1,0 +1,382 @@
+
+locString game/ranks/conscript {
+	text "#str_00002121"
+}
+
+locString game/ranks/con {
+	text "#str_00002122"
+}
+
+
+locString game/ranks/private {
+	text "#str_00002010"
+}
+
+locString game/ranks/pvt {
+	text "#str_00002011"
+}
+
+
+locString game/ranks/private_1st {
+	text "#str_00002012"
+}
+
+locString game/ranks/pfc {
+	text "#str_00002013"
+}
+
+
+locString game/ranks/lance_corporal {
+	text "#str_00002123"
+}
+
+locString game/ranks/lcpl {
+	text "#str_00002124"
+}
+
+
+locString game/ranks/corporal {
+	text "#str_00002014"
+}
+
+locString game/ranks/cpl {
+	text "#str_00002015"
+}
+
+
+locString game/ranks/sergeant {
+	text "#str_00002016"
+}
+
+locString game/ranks/sgt {
+	text "#str_00002017"
+}
+
+
+locString game/ranks/staff_sergeant {
+	text "#str_00002125"
+}
+
+locString game/ranks/ssgt {
+	text "#str_00002126"
+}
+
+
+locString game/ranks/gunnery_sergeant {
+	text "#str_00002127"
+}
+
+locString game/ranks/gsgt {
+	text "#str_00002128"
+}
+
+
+locString game/ranks/master_sergeant {
+	text "#str_00002018"
+}
+
+locString game/ranks/msgt {
+	text "#str_00002019"
+}
+
+
+locString game/ranks/first_sergeant {
+	text "#str_00002129"
+}
+
+locString game/ranks/fsgt {
+	text "#str_00002130"
+}
+
+
+locString game/ranks/master_chief {
+	text "#str_00002131"
+}
+
+locString game/ranks/mstchf {
+	text "#str_00002132"
+}
+
+
+locString game/ranks/sergeant_major {
+	text "#str_00002020"
+}
+
+locString game/ranks/sgt_maj {
+	text "#str_00002021"
+}
+
+
+locString game/ranks/ensign {
+	text "#str_00002133"
+}
+
+locString game/ranks/ens {
+	text "#str_00002134"
+}
+
+
+locString game/ranks/third_lieutenant {
+	text "#str_00002135"
+}
+
+locString game/ranks/3rd_lt {
+	text "#str_00002136"
+}
+
+
+locString game/ranks/second_lieutenant {
+	text "#str_00002022"
+}
+
+locString game/ranks/2nd_lt {
+	text "#str_00002023"
+}
+
+
+locString game/ranks/first_lieutenant {
+	text "#str_00002024"
+}
+
+locString game/ranks/1st_lt {
+	text "#str_00002025"
+}
+
+locString game/ranks/captain {
+	text "#str_00002026"
+}
+locString game/ranks/cpt {
+	text "#str_00002027"
+}
+
+
+locString game/ranks/group_captain {
+	text "#str_00002137"
+}
+
+locString game/ranks/grpcpt {
+	text "#str_00002138"
+}
+
+
+locString game/ranks/senior_captain {
+	text "#str_00002139"
+}
+
+locString game/ranks/snrcpt {
+	text "#str_00002140"
+}
+
+
+locString game/ranks/lieutenant_major {
+	text "#str_00002141"
+}
+
+locString game/ranks/ltmaj {
+	text "#str_00002142"
+}
+
+
+locString game/ranks/major {
+	text "#str_00002028"
+}
+
+locString game/ranks/maj {
+	text "#str_00002029"
+}
+
+
+locString game/ranks/group_major {
+	text "#str_00002143"
+}
+
+locString game/ranks/grpmaj {
+	text "#str_00002144"
+}
+
+locString game/ranks/lieutenant_commander {
+	text "#str_00002145"
+}
+
+locString game/ranks/ltcmdr {
+	text "#str_00002146"
+}
+
+
+locString game/ranks/commander {
+	text "#str_00002147"
+}
+
+locString game/ranks/cdr {
+	text "#str_00002148"
+}
+
+
+locString game/ranks/group_commander {
+	text "#str_00002149"
+}
+
+locString game/ranks/grpcdr {
+	text "#str_00002150"
+}
+
+
+locString game/ranks/lieutenant_colonel {
+	text "#str_00002151"
+}
+
+locString game/ranks/ltcol {
+	text "#str_00002152"
+}
+
+
+locString game/ranks/colonel {
+	text "#str_00002032"
+}
+
+locString game/ranks/col {
+	text "#str_00002033"
+}
+
+
+locString game/ranks/brigadier {
+	text "#str_00002030"
+}
+
+locString game/ranks/brg {
+	text "#str_00002031"
+}
+
+
+locString game/ranks/brigadier_general {
+	text "#str_00002038"
+}
+
+locString game/ranks/brg_gen {
+	text "#str_00002039"
+}
+
+
+locString game/ranks/major_general {
+	text "#str_00002036"
+}
+
+locString game/ranks/maj_gen {
+	text "#str_00002037"
+}
+
+
+locString game/ranks/lieutenant_general {
+	text "#str_00002034"
+}
+
+locString game/ranks/lt_gen {
+	text "#str_00002035"
+}
+
+
+locString game/ranks/general {
+	text "#str_00002040"
+}
+
+locString game/ranks/gen {
+	text "#str_00002041"
+}
+
+
+locString game/ranks/commander_general {
+	text "#str_00002153"
+}
+
+locString game/ranks/cdrgen {
+	text "#str_00002154"
+}
+
+
+locString game/ranks/field_vice_marshall {
+	text "#str_00002155"
+}
+
+locString game/ranks/fvmsh {
+	text "#str_00002156"
+}
+
+
+locString game/ranks/field_marshall {
+	text "#str_00002042"
+}
+
+locString game/ranks/fm {
+	text "#str_00002043"
+}
+
+
+locString game/ranks/vice_commander_army {
+	text "#str_00002157"
+}
+
+locString game/ranks/vcdra {
+	text "#str_00002158"
+}
+
+
+locString game/ranks/commander_army {
+	text "#str_00002159"
+}
+
+locString game/ranks/cdrarm {
+	text "#str_00002160"
+}
+
+
+locString game/ranks/high_commander {
+	text "#str_00002161"
+}
+
+locString game/ranks/hicom {
+	text "#str_00002162"
+}
+
+
+locString game/ranks/supreme_commander {
+	text "#str_00002044"
+}
+
+locString game/ranks/supcom {
+	text "#str_00002045"
+}
+
+
+
+
+locString game/ratings/rookie {
+	text "#str_00002100"
+}
+
+locString game/ratings/proficient {
+	text "#str_00002101"
+}
+
+locString game/ratings/experienced {
+	text "#str_00002102"
+}
+
+locString game/ratings/senior {
+	text "#str_00002103"
+}
+
+locString game/ratings/expert {
+	text "#str_00002104"
+}
+
+locString game/ratings/veteran {
+	text "#str_00002105"
+}
+
+locString game/ratings/master {
+	text "#str_00002106"
+}
+
+locString game/ratings/elite {
+	text "#str_00002107"
+}

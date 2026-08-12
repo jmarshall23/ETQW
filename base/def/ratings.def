@@ -1,0 +1,32 @@
+
+ratingDef rookie {
+	title			"game/ratings/rookie"
+}
+
+ratingDef proficient {
+	title			"game/ratings/proficient"
+}
+
+ratingDef experienced {
+	title			"game/ratings/experienced"
+}
+
+ratingDef senior {
+	title			"game/ratings/senior"
+}
+
+ratingDef expert {
+	title			"game/ratings/expert"
+}
+
+ratingDef veteran {
+	title			"game/ratings/veteran"
+}
+
+ratingDef master {
+	title			"game/ratings/master"
+}
+
+ratingDef elite {
+	title			"game/ratings/elite"
+}

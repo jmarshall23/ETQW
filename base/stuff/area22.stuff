@@ -1,0 +1,40 @@
+// --------------------------------------------
+// AREA22 STUFF
+// --------------------------------------------
+
+stuffType area22/area22_grass {
+	Model	"stuff/area22/area22_grass01.lwo"
+	Model	"stuff/area22/area22_grass02.lwo"
+	Model	"stuff/area22/area22_grass03.lwo"
+}
+
+stuffType area22/area22_straw {
+	Model	"stuff/area22/area22_straw01.lwo"
+	Model	"stuff/area22/area22_straw02.lwo"
+	Model	"stuff/area22/area22_straw03.lwo"
+}
+
+stuffType area22/area22_rubbish {
+	Model	"stuff/area22/area22_rubbish01.lwo"
+	Model	"stuff/area22/area22_rubbish02.lwo"
+	Model	"stuff/area22/area22_rubbish03.lwo"
+	Model	"stuff/area22/area22_rubbish04.lwo"
+}
+
+stuffType area22/area22_rock {
+	Model	"stuff/area22/area22_rock01.lwo"
+	Model	"stuff/area22/area22_rock02.lwo"
+	Model	"stuff/area22/area22_rock03.lwo"
+	Model	"stuff/area22/area22_rock04.lwo"
+	Model	"stuff/area22/area22_rock05.lwo"
+	Model	"stuff/area22/area22_rock06.lwo"
+	Model	"stuff/area22/area22_rock07.lwo"
+	Model	"stuff/area22/area22_rock08.lwo"
+}
+
+stuffType area22/area22_rock_small {
+	Model	"stuff/area22/area22_rock_small01.lwo"
+	Model	"stuff/area22/area22_rock_small02.lwo"
+	Model	"stuff/area22/area22_rock_small03.lwo"
+	Model	"stuff/area22/area22_rock_small04.lwo"
+}

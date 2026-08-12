@@ -1,0 +1,651 @@
+/***********************************************************************
+
+This script contains any player state machine specific code for vehicles.
+
+***********************************************************************/
+
+object player {
+//default
+	void		Torso_VehicleDefault();
+	void		Legs_VehicleDefault();
+
+
+//badger
+	float		BadgerCalcState();
+	void		Torso_VehicleBadgerDriver_TurnLeft();
+	void		Torso_VehicleBadgerDriver_TurnRight();
+	void		Torso_VehicleBadgerDriver();
+	void		Legs_VehicleBadgerDriver();
+
+	void		Legs_VehicleBadgerGunner();
+	void		Legs_VehicleBadgerGunnerIdle();
+	void		Legs_VehicleBadgerGunnerClockWise();
+	void		Legs_VehicleBadgerGunnerAntiClockWise();
+	void		Torso_VehicleBadgerGunner();
+
+	void		Torso_VehicleBadgerRearLeftPassenger();
+	void		Legs_VehicleBadgerRearLeftPassenger();
+
+	void		Torso_VehicleBadgerRearRightPassenger();
+	void		Legs_VehicleBadgerRearRightPassenger();
+
+	void		Torso_VehicleBadgerFrontRightPassenger();
+	void		Legs_VehicleBadgerFrontRightPassenger();
+
+
+//trojan
+
+
+	void		Torso_VehicleTrojanDriver();
+	void		Legs_VehicleTrojanDriver();
+
+	void		Torso_VehicleTrojanPassenger1();
+	void		Legs_VehicleTrojanPassenger1();
+
+	void		Torso_VehicleTrojanPassenger2();
+	void		Legs_VehicleTrojanPassenger2();
+
+	void		Torso_VehicleTrojanPassenger3();
+	void		Legs_VehicleTrojanPassenger3();
+
+	void		Torso_VehicleTrojanPassenger4();
+	void		Legs_VehicleTrojanPassenger4();
+
+//manned deployables
+
+	void		Torso_DeployableStroggAntivehicle();
+	void		Legs_DeployableStroggAntivehicle();
+
+	void		Torso_DeployableStroggAntipersonnel();
+	void		Legs_DeployableStroggAntipersonnel();
+
+
+	void		Torso_DeployableGDFAntipersonnel();
+	void		Legs_DeployableGDFAntipersonnel();
+
+
+
+//bumblebee
+
+	void		Torso_VehicleBumblebeePilot();
+	void		Legs_VehicleBumblebeePilot();
+
+	void		Torso_VehicleBumblebeeLeftPassenger();
+	void		Legs_VehicleBumblebeeLeftPassenger();
+
+	void		Torso_VehicleBumblebeeRightPassenger();
+	void		Legs_VehicleBumblebeeRightPassenger();
+
+	void		Torso_VehicleBumblebeeGunnerLeft();
+	void		Legs_VehicleBumblebeeGunnerLeft();
+
+	void		Torso_VehicleBumblebeeGunnerRight();
+	void		Legs_VehicleBumblebeeGunnerRight();
+
+	void		Anim_VehicleBumblebeeGunner( float channel, float minYaw, float maxYaw );
+
+
+//icarus
+	void		Torso_VehicleIcarus();
+	void		Legs_VehicleIcarus();
+
+
+//titan
+	void		Torso_VehicleTitanPassenger();
+	void		Legs_VehicleTitanPassenger();
+
+//anansi
+	void		Torso_VehicleAnansiPilot();
+	void		Legs_VehicleAnansiPilot();
+
+	void		Torso_VehicleAnansiGunner();
+	void		Legs_VehicleAnansiGunner();
+
+
+//hornet
+	void		Torso_VehicleHornetPilot();
+	void		Legs_VehicleHornetPilot();
+
+//platypus
+	void		Torso_VehiclePlatypusDriver();
+	void		Legs_VehiclePlatypusDriver();
+
+
+//mounted gpmg
+
+	void		Torso_MountedGPMG();
+	void		Legs_MountedGPMG();
+
+
+//mounted default
+
+	void		Torso_MountedDefault();
+	void		Legs_MountedDefault();
+
+	void		Torso_MountedDefaultGunner( float minYaw, float maxYaw );
+	void		Legs_MountedDefaultGunner( float minYaw, float maxYaw );
+
+};
+
+
+
+
+
+//*********************************************************************************************************
+
+
+
+// Default
+
+void player::Torso_VehicleDefault() {
+	playCycle( ANIMCHANNEL_TORSO, "cockpit" );
+}
+
+void player::Legs_VehicleDefault() {
+	playCycle( ANIMCHANNEL_LEGS, "cockpit" );
+}
+
+
+
+
+// Anansi
+
+
+void player::Torso_VehicleAnansiPilot() {
+	playCycle( ANIMCHANNEL_TORSO, "anansi_pilot" );
+}
+
+void player::Legs_VehicleAnansiPilot() {
+	playCycle( ANIMCHANNEL_LEGS, "anansi_pilot" );
+}
+
+
+void player::Torso_VehicleAnansiGunner() {
+	playCycle( ANIMCHANNEL_TORSO, "anansi_gunner" );
+}
+
+void player::Legs_VehicleAnansiGunner() {
+	playCycle( ANIMCHANNEL_LEGS, "anansi_gunner" );
+}
+
+
+
+
+
+// Icarus
+
+void player::Torso_VehicleIcarus() {
+	playCycle( ANIMCHANNEL_TORSO, "icarus" );
+}
+
+void player::Legs_VehicleIcarus() {
+	animState( ANIMCHANNEL_LEGS, "Legs_Idle", 0 );
+}
+
+//================================================
+// Badger=========================================
+
+#define BADGER_STATE_TURN_LEFT		0
+#define BADGER_STATE_TURN_RIGHT		1
+#define BADGER_STATE_IDLE			2
+
+float player::BadgerCalcState() {
+	entity vehicle = getVehicle();
+	
+	if ( vehicle != $null_entity ) {
+		if ( vehicle.vGetSteerScale() <= -0.4 ) {
+			return BADGER_STATE_TURN_LEFT;
+		}
+		if ( vehicle.vGetSteerScale() >= 0.4 ) {
+			return BADGER_STATE_TURN_RIGHT;
+		}
+	}
+	return BADGER_STATE_IDLE;
+}
+
+void player::Torso_VehicleBadgerDriver() {
+	playCycle( ANIMCHANNEL_TORSO, "badger_driver" );
+
+	while ( true ) {
+		float newstate = BadgerCalcState();
+		if ( newstate == BADGER_STATE_TURN_LEFT ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleBadgerDriver_TurnLeft", 6 );
+		}
+		if ( newstate == BADGER_STATE_TURN_RIGHT ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleBadgerDriver_TurnRight", 6 );
+		}
+		sys.waitFrame();
+	}
+}
+
+void player::Torso_VehicleBadgerDriver_TurnLeft() {
+	playAnim( ANIMCHANNEL_TORSO, "badger_driver_turn_left" );
+
+	while ( true ) {
+		float newstate = BadgerCalcState();
+		if ( newstate == BADGER_STATE_IDLE ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleBadgerDriver", 6 );
+		}
+		if ( newstate == BADGER_STATE_TURN_RIGHT ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleBadgerDriver_TurnRight", 6 );
+		}
+		sys.waitFrame();
+	}
+}
+
+void player::Torso_VehicleBadgerDriver_TurnRight() {
+	playAnim( ANIMCHANNEL_TORSO, "badger_driver_turn_right" );
+
+	while ( true ) {
+		float newstate = BadgerCalcState();
+		if ( newstate == BADGER_STATE_TURN_LEFT ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleBadgerDriver_TurnLeft", 6 );
+		}
+		if ( newstate == BADGER_STATE_IDLE ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleBadgerDriver", 6 );
+		}
+		sys.waitFrame();
+	}
+}
+
+void player::Legs_VehicleBadgerDriver() {
+	playCycle( ANIMCHANNEL_LEGS, "badger_driver" );
+}
+
+
+void player::Legs_VehicleBadgerGunner() {
+	animState( ANIMCHANNEL_LEGS, "Legs_VehicleBadgerGunnerIdle", 0 );
+}
+
+void player::Legs_VehicleBadgerGunnerIdle() {
+	playCycle( ANIMCHANNEL_LEGS, "mounted_gpmg_idle" );
+
+	vector baseViewAngles = getViewAngles();
+	while ( true ) {
+		vector viewAngles = getViewAngles();
+
+		float diff = baseViewAngles_y - viewAngles_y;
+
+		if ( diff < -10.f ) {
+			animState( ANIMCHANNEL_LEGS, "Legs_VehicleBadgerGunnerAntiClockWise", 2 );
+		} else if ( diff > 10.f ) {
+			animState( ANIMCHANNEL_LEGS, "Legs_VehicleBadgerGunnerClockWise", 2 );
+		}
+
+		sys.waitFrame();
+	}
+}
+
+void player::Legs_VehicleBadgerGunnerClockWise() {
+	playAnim( ANIMCHANNEL_LEGS, "mounted_gpmg_clockwise" );
+	waitUntil( animDone( ANIMCHANNEL_LEGS, 2 ) );
+	animState( ANIMCHANNEL_LEGS, "Legs_VehicleBadgerGunnerIdle", 2 );
+}
+
+void player::Legs_VehicleBadgerGunnerAntiClockWise() {
+	playAnim( ANIMCHANNEL_LEGS, "mounted_gpmg_anticlockwise" );
+	waitUntil( animDone( ANIMCHANNEL_LEGS, 2 ) );
+	animState( ANIMCHANNEL_LEGS, "Legs_VehicleBadgerGunnerIdle", 2 );
+}
+
+
+
+void player::Torso_VehicleBadgerGunner() {
+	string gunnerAnim				= "mounted_gpmg_aimupdown";
+	float gunnerAnimFrames			= getNumFrames( gunnerAnim );
+
+	float minPitch = -55;
+	float maxPitch = 15;
+	float pitchTotal = maxPitch - minPitch;
+
+	float oldFrac = -1.f;
+
+	while ( true ) {
+		vector viewAngles = getViewAngles();
+
+		float frac = ( viewAngles_x - minPitch ) / pitchTotal;
+
+		if ( frac != oldFrac ) {
+			setAnimFrame( gunnerAnim, ANIMCHANNEL_TORSO, frac * gunnerAnimFrames );
+			oldFrac = frac;
+		}
+
+		sys.waitFrame();
+	}
+}
+
+
+void player::Torso_VehicleBadgerRearLeftPassenger() {
+	animState( ANIMCHANNEL_TORSO, "Torso_Idle", 0 );
+}
+
+void player::Legs_VehicleBadgerRearLeftPassenger() {
+	playCycle( ANIMCHANNEL_LEGS, "badger_rear_left_passenger" );
+}
+
+
+void player::Torso_VehicleBadgerRearRightPassenger() {
+	animState( ANIMCHANNEL_TORSO, "Torso_Idle", 0 );
+}
+
+void player::Legs_VehicleBadgerRearRightPassenger() {
+	playCycle( ANIMCHANNEL_LEGS, "badger_rear_right_passenger" );
+}
+
+
+void player::Torso_VehicleBadgerFrontRightPassenger() {
+	playCycle( ANIMCHANNEL_TORSO, "badger_front_right_passenger" );
+}
+
+void player::Legs_VehicleBadgerFrontRightPassenger() {
+	playCycle( ANIMCHANNEL_LEGS, "badger_front_right_passenger" );
+}
+
+
+// Trojan
+
+void player::Torso_VehicleTrojanDriver() {
+	playCycle( ANIMCHANNEL_TORSO, "trojan_driver" );
+}
+
+void player::Legs_VehicleTrojanDriver() {
+	playCycle( ANIMCHANNEL_LEGS, "trojan_driver" );
+}
+
+void player::Torso_VehicleTrojanPassenger1() {
+	playCycle( ANIMCHANNEL_TORSO, "trojan_passenger1" );
+}
+
+void player::Legs_VehicleTrojanPassenger1() {
+	playCycle( ANIMCHANNEL_LEGS, "trojan_passenger1" );
+}
+
+void player::Torso_VehicleTrojanPassenger2() {
+	playCycle( ANIMCHANNEL_TORSO, "trojan_passenger2" );
+}
+
+void player::Legs_VehicleTrojanPassenger2() {
+	playCycle( ANIMCHANNEL_LEGS, "trojan_passenger2" );
+}
+
+void player::Torso_VehicleTrojanPassenger3() {
+	playCycle( ANIMCHANNEL_TORSO, "trojan_passenger3" );
+}
+
+void player::Legs_VehicleTrojanPassenger3() {
+	playCycle( ANIMCHANNEL_LEGS, "trojan_passenger3" );
+}
+
+void player::Torso_VehicleTrojanPassenger4() {
+	playCycle( ANIMCHANNEL_TORSO, "trojan_passenger4" );
+}
+
+void player::Legs_VehicleTrojanPassenger4() {
+	playCycle( ANIMCHANNEL_LEGS, "trojan_passenger4" );
+}
+
+
+
+// Titan
+
+void player::Torso_VehicleTitanPassenger() {
+	setBlendFrames( ANIMCHANNEL_TORSO, 0 );
+	playCycle( ANIMCHANNEL_TORSO, "titan_passenger" );
+}
+
+void player::Legs_VehicleTitanPassenger() {
+	setBlendFrames( ANIMCHANNEL_LEGS, 0 );
+	playCycle( ANIMCHANNEL_LEGS, "titan_passenger" );
+}
+
+
+
+// Hornet
+
+void player::Torso_VehicleHornetPilot() {
+	playCycle( ANIMCHANNEL_TORSO, "hornet_pilot" );
+}
+
+void player::Legs_VehicleHornetPilot() {
+	playCycle( ANIMCHANNEL_LEGS, "hornet_pilot" );
+}
+
+
+
+// Platypus
+
+void player::Torso_VehiclePlatypusDriver() {
+	playCycle( ANIMCHANNEL_TORSO, "platypus_driver" );
+}
+
+void player::Legs_VehiclePlatypusDriver() {
+	playCycle( ANIMCHANNEL_LEGS, "platypus_driver" );
+}
+
+
+
+// manned deployables
+
+
+void player::Torso_DeployableStroggAntivehicle() {
+	playCycle( ANIMCHANNEL_TORSO, "strogg_antivehicle_gunner" );
+}
+
+void player::Legs_DeployableStroggAntivehicle() {
+	playCycle( ANIMCHANNEL_LEGS, "strogg_antivehicle_gunner" );
+}
+
+
+
+void player::Torso_DeployableStroggAntipersonnel() {
+	playCycle( ANIMCHANNEL_TORSO, "strogg_antipersonnel_gunner" );
+}
+
+void player::Legs_DeployableStroggAntipersonnel() {
+	playCycle( ANIMCHANNEL_LEGS, "strogg_antipersonnel_gunner" );
+}
+
+
+
+
+
+void player::Torso_DeployableGDFAntipersonnel() {
+	playCycle( ANIMCHANNEL_TORSO, "gdf_antipersonnel_control" );
+}
+
+void player::Legs_DeployableGDFAntipersonnel() {
+	playCycle( ANIMCHANNEL_LEGS, "gdf_antipersonnel_control" );
+}
+
+
+// Bumblebee
+
+
+void player::Torso_VehicleBumblebeePilot() {
+	playCycle( ANIMCHANNEL_TORSO, "bumblebee_pilot" );
+}
+
+void player::Legs_VehicleBumblebeePilot() {
+	playCycle( ANIMCHANNEL_LEGS, "bumblebee_pilot" );
+}
+
+
+void player::Torso_VehicleBumblebeeRightPassenger() {
+	animState( ANIMCHANNEL_TORSO, "Torso_Idle", 0 );
+}
+
+void player::Legs_VehicleBumblebeeRightPassenger() {
+	playCycle( ANIMCHANNEL_LEGS, "bumblebee_right_passenger" );
+}
+
+
+
+void player::Torso_VehicleBumblebeeLeftPassenger() {
+	animState( ANIMCHANNEL_TORSO, "Torso_Idle", 0 );
+}
+
+void player::Legs_VehicleBumblebeeLeftPassenger() {
+	playCycle( ANIMCHANNEL_LEGS, "bumblebee_left_passenger" );
+}
+
+
+
+
+void player::Anim_VehicleBumblebeeGunner( float channel, float minYaw, float maxYaw ) {
+	string gunnerAnim				= "bumblebee_gunner_righttoleft_aimcenter";
+	float gunnerAnimFrames			= getNumFrames( gunnerAnim );
+
+	float yawTotal = maxYaw - minYaw;
+
+	float oldFrac = -1.f;
+
+	entity proxy = getProxyEntity();
+
+	while ( true ) {
+		vector viewAngles = getRenderViewAngles();
+		if ( proxy == $null_entity ) {
+			break;
+		}
+		
+		viewAngles = sys.rotateAngles( viewAngles, -proxy.getAngles() );
+
+		float frac = ( viewAngles_y - minYaw ) / yawTotal;
+
+		if ( frac != oldFrac ) {
+			setAnimFrame( gunnerAnim, channel, frac * gunnerAnimFrames );
+			oldFrac = frac;
+		}
+
+		sys.waitFrame();
+	}
+}
+
+
+void player::Torso_VehicleBumblebeeGunnerLeft() {
+	Anim_VehicleBumblebeeGunner( ANIMCHANNEL_TORSO, 30, 160 );
+}
+
+void player::Legs_VehicleBumblebeeGunnerLeft() {
+	Anim_VehicleBumblebeeGunner( ANIMCHANNEL_LEGS, 30, 160 );
+}
+
+
+
+void player::Torso_VehicleBumblebeeGunnerRight() {
+	Anim_VehicleBumblebeeGunner( ANIMCHANNEL_TORSO, -160, -30 );
+}
+
+void player::Legs_VehicleBumblebeeGunnerRight() {
+	Anim_VehicleBumblebeeGunner( ANIMCHANNEL_LEGS, -160, -30 );
+}
+
+
+
+// GPMG
+
+void player::Torso_MountedGPMG() {
+	string gunnerAnim				= "mounted_gpmg_aimupdown";
+	float gunnerAnimFrames			= getNumFrames( gunnerAnim );
+
+	float minPitch = -40;
+	float maxPitch = 40;
+	float pitchTotal = maxPitch - minPitch;
+
+	float oldFrac = -1.f;
+
+	while ( true ) {
+		vector viewAngles = getViewAngles();
+
+		float frac = ( viewAngles_x - minPitch ) / pitchTotal;
+
+		if ( frac != oldFrac ) {
+			setAnimFrame( gunnerAnim, ANIMCHANNEL_TORSO, frac * gunnerAnimFrames );
+			oldFrac = frac;
+		}
+
+		sys.waitFrame();
+	}
+}
+
+void player::Legs_MountedGPMG() {
+	Legs_VehicleBadgerGunner();
+}
+
+// Mounted Weapons
+
+void player::Torso_MountedDefaultGunner( float minYaw, float maxYaw ) {
+	string gunnerAnim				= "mounted_emplacement_righttoleft";
+	float gunnerAnimFrames			= getNumFrames( gunnerAnim );
+
+	float yawTotal = maxYaw - minYaw;
+
+	float oldFrac = -1.f;
+
+	while ( true ) {
+		vector viewAngles = getViewAngles();
+
+		float frac = ( viewAngles_y - minYaw ) / yawTotal;
+
+		if ( frac != oldFrac ) {
+			setAnimFrame( gunnerAnim, ANIMCHANNEL_TORSO, frac * gunnerAnimFrames );
+			oldFrac = frac;
+		}
+
+		sys.waitFrame();
+	}
+}
+
+
+
+
+void player::Legs_MountedDefaultGunner( float minYaw, float maxYaw ) {
+	string gunnerAnim				= "mounted_emplacement_righttoleft";
+	float gunnerAnimFrames			= getNumFrames( gunnerAnim );
+
+	float yawTotal = maxYaw - minYaw;
+
+	float oldFrac = -1.f;
+
+	while ( true ) {
+		vector viewAngles = getViewAngles();
+
+		float frac = ( viewAngles_y - minYaw ) / yawTotal;
+
+		if ( frac != oldFrac ) {
+			setAnimFrame( gunnerAnim, ANIMCHANNEL_LEGS, frac * gunnerAnimFrames );
+			oldFrac = frac;
+		}
+
+		sys.waitFrame();
+	}
+}
+
+
+
+
+
+void player::Legs_MountedDefault() {
+		Legs_MountedDefaultGunner( -190, 190 );
+}
+
+void player::Torso_MountedDefault() {
+		Torso_MountedDefaultGunner( -190, 190 );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//*****************************************************************************************************************
+

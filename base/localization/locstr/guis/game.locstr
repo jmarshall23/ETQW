@@ -1,0 +1,713 @@
+locString guis/game/cam_view {
+	text "#str_00012100"
+}
+
+locString guis/chat/global {
+	text "#str_00012101"
+}
+
+locString guis/chat/team {
+	text "#str_00012102"
+}
+
+locString guis/game/deploy/cc {
+	text "#str_00012103"	
+}
+
+locString guis/game/deploy/deploy {
+	text "#str_00012108"
+}
+
+locString guis/game/steal_uniform {
+	text "#str_00012109"
+	arguments 1
+}
+
+locString guis/game/fire_team {
+	text "#str_00012110"
+}
+
+locString guis/game/invite {
+	text "#str_00012111"
+}
+
+locString guis/game/kick {
+	text "#str_00012112"
+}
+
+locString guis/game/disband {
+	text "#str_00012113"
+}
+
+locString guis/game/promote {
+	text "#str_00012114"
+}
+
+locString guis/game/leave {
+	text "#str_00012115"
+}
+
+locString guis/game/invite_color {
+	text "#str_00012116"
+}
+
+locString guis/game/kick_color {
+	text "#str_00012117"
+}
+
+locString guis/game/promote_color {
+	text "#str_00012118"
+}
+
+locString guis/game/propose_color {
+	text "#str_00012119"
+}
+
+locString guis/game/propose {
+	text "#str_00012120"
+}
+
+locString guis/game/join {
+	text "#str_00012121"
+}
+
+locString guis/game/create {
+	text "#str_00012122"
+}
+
+locString guis/game/hacker {
+	text "#str_00012123"	
+}
+
+locString guis/game/camo {
+	text "#str_00012124"	
+}
+
+locString guis/game/viewer {
+	text "#str_00012125"
+}
+
+locString guis/game/press_to_hack {
+	text "#str_00012126"
+	arguments 1
+}
+
+locString guis/game/objectives {
+	text "#str_00012127"
+}
+
+locString guis/game/quickchat_inst {
+	text "#str_00012128"
+	arguments 2
+}
+
+locString guis/game/resupply {
+	text "#str_00012029"
+}
+
+locString guis/game/disabled {
+	text "#str_00012030"
+}
+
+locString guis/game/cant_use_enemy_resupply {
+	text "#str_00012031"
+}
+
+locString guis/game/disabled_trans {
+	text "#str_00012032"	
+}
+
+locString guis/game/scoreboard/name {
+	text "#str_00012033"
+}
+
+locString guis/game/scoreboard/xp {
+	text "#str_00012034"
+}
+
+locString guis/game/scoreboard/ping {
+	text "#str_00012035"
+}
+
+locString guis/game/scoreboard/team_stats {
+	text "#str_00012036"
+}
+
+locString guis/game/scoreboard/class {
+	text "#str_00012129"
+}
+
+locString guis/game/scoreboard/averageping {
+	text "#str_00012130"
+	arguments 1
+}
+
+locString guis/game/scoreboard/averagexp {
+	text "#str_00012131"
+	arguments 1
+}
+
+locString guis/game/scoreboard/gdf {
+	text "#str_00012037"
+}
+
+locString guis/game/scoreboard/strogg {
+	text "#str_00012038"
+}
+
+locString guis/game/scoreboard/tie {
+	text "#str_00012039"
+}
+
+locString guis/game/scoreboard/wins {
+	text "#str_00012040"
+	arguments 1
+}
+
+locString guis/game/scoreboard/ready {
+	text "#str_00012132"
+}
+
+locString guis/game/scoreboard/scores {
+	text "#str_00012133"
+}
+
+locString guis/game/scoreboard/summary {
+	text "#str_00012134"
+}
+
+locString guis/game/scoreboard/gdfwin {
+	text "#str_00012135"
+}
+
+locString guis/game/scoreboard/stroggwin {
+	text "#str_00012136"
+}
+
+locString guis/game/scoreboard/nomission {
+	text "#str_00012137"
+}
+
+locString guis/game/scoreboard/currentmission {
+	text "#str_00012138"
+}
+
+locString guis/game/scoreboard/time {
+	text "#str_00012139"
+}
+
+locString guis/game/scoreboard/win_sw_speed {
+	text "#str_00012140"
+}
+
+locString guis/game/scoreboard/win_sw_xp {
+	text "#str_00012141"
+}
+
+
+locString guis/game/scoreboard/campaign_status {
+	text "#str_00012041"
+}
+
+locString guis/game/scoreboard/time_next_map {
+	text "#str_00012042"
+	arguments 1
+}
+
+locString guis/game/scoreboard/fireteam {
+	text "#str_00012043"
+}
+
+locString guis/game/scoreboard {
+	text "#str_00012044"
+}
+
+locString guis/game/scoreboard/match_in_progress {
+	text "#str_00012045"
+}
+
+locString guis/game/scoreboard/win_msg {
+	text "#str_00012046"
+	arguments 1
+}
+
+locString guis/game/scoreboard/honors/best_soldier {
+	text "#str_00012047"
+}
+
+locString guis/game/scoreboard/honors/best_clown {
+	text "#str_00012048"
+}
+
+locString guis/game/scoreboard/honors/highest {
+	text "#str_00012049"
+}
+
+locString guis/game/scoreboard/honors/most_frags {
+	text "#str_00012050"
+}
+
+locString guis/game/scoreboard/stats {
+	text "#str_00012051"
+}
+
+locString guis/game/scoreboard/weapons {
+	text "#str_00012052"
+}
+
+locString guis/game/scoreboard/maps {
+	text "#str_00012053"
+}
+
+locString guis/game/viewer/sig_strength {
+	text "#str_00012054"
+	arguments 1
+}
+
+locString guis/game/viewer/toggle {
+	text "#str_00012055"	
+	arguments 1
+}
+
+locString guis/game/viewer/destruct/third_eye {
+	text "#str_00012302"	
+	arguments 2
+}
+
+locString guis/game/viewer/destruct/flyer_drone {
+	text "#str_00012056"	
+	arguments 2
+}
+
+locString guis/game/viewer/range {
+	text "#str_00012057"	
+}
+
+locString guis/game/tip {
+	text "#str_00012058"
+}
+
+locString guis/game/console/hacked {
+	text "#str_00012059"
+}
+
+locString guis/game/console/friendly {
+	text "#str_00012060"
+}
+
+locString guis/game/console/enemy {
+	text "#str_00012061"
+}
+
+locString guis/game/console/cancel_reinf {
+	text "#str_00012062"
+}
+/*
+locString guis/game/console/cancel_veh {
+	text "#str_00012063"
+}
+
+locString guis/game/console/disable_int {
+	text "#str_00012064"
+}
+*/
+locString guis/game/console/been_hacked {
+	text "#str_00012063"
+}
+
+locString guis/game/deploy/msg_psi {
+	text "#str_00012065"
+}
+
+locString guis/game/deploy/msg_apt_strogg {
+	text "#str_00012066"
+}
+
+locString guis/game/deploy/msg_avt_strogg {
+	text "#str_00012067"
+}
+
+locString guis/game/deploy/msg_amt_strogg {
+	text "#str_00012068"
+}
+
+locString guis/game/deploy/location {
+	text "#str_00012069"
+	arguments 3
+}
+
+locString guis/game/deploy/location_accepted {
+	text "#str_00012070"
+}
+
+locString guis/game/deploy/choose_rotation {
+	text "#str_00012071"
+	arguments 1
+}
+
+locString guis/game/deploy/rotation_accepted { 
+	text "#str_00012072"
+}
+
+locString guis/game/deploy/deploy_dispatched {
+	text "#str_00012073"
+}
+
+locString guis/game/deploy/msg_radar {
+	text "#str_00012074"
+}
+
+locString guis/game/deploy/msg_apt_gdf {
+	text "#str_00012075"
+}
+
+locString guis/game/deploy/msg_avt_gdf {
+	text "#str_00012076"
+}
+
+locString guis/game/deploy/msg_amt_gdf {
+	text "#str_00012077"
+}
+
+locString guis/game/deploy/msg_art {
+	text "#str_00012078"
+}
+
+locString guis/game/deploy/msg_rocket_art {
+	text "#str_00012079"
+}
+
+locString guis/game/deploy/msg_ssm {
+	text "#str_00012080"
+}
+
+locString guis/game/deploy/msg_rail {
+	text "#str_00012082"
+}
+
+locString guis/game/deploy/msg_plasma {
+	text "#str_00012083"
+}
+
+locString guis/game/deploy/msg_ssg {
+	text "#str_00012084"
+}
+
+locString guis/game/range {
+	text "#str_00012086"
+}
+
+locString guis/game/zoom {
+	text "#str_00012087"
+}
+
+locString guis/game/ammo {
+	text "#str_00012088"
+}
+
+locString guis/game/spotting {
+	text "#str_00012089"
+}
+
+locString guis/game/deploy/personal_limit {
+	text "#str_00012090"
+}
+
+locString guis/game/deploy/team_limit {
+	text "#str_00012091"
+}
+
+locString guis/game/deploy/no_territory {
+	text "#str_00012092"
+}
+
+locString guis/game/deploy/current_mission {
+	text "#str_00012093"
+}
+
+locString guis/game/hacker/hack {
+	text "#str_00012094"
+}
+
+locString guis/game/hacker/decrypting {
+	text "#str_00012095"
+}
+
+locString guis/game/deploy/choose_loc {
+	text "#str_00012096"
+}
+
+locString guis/game/deploy/choose_rot {
+	text "#str_00012097"
+}
+
+locString guis/chat/fireteam {
+	text "#str_00012098"
+}
+
+locString guis/game/scoreboard/team_label {
+	text "#str_00012099"
+	arguments 2
+}
+
+
+
+locString guis/vehicles/alt {
+	text "#str_00015000"
+}
+
+locString guis/vehicles/speed {
+	text "#str_00015001"
+}
+
+locString guis/vehicles/hull {
+	text "#str_00015002"
+}
+
+locString guis/vehicles/mph {
+	text "#str_00015003"
+}
+
+locString guis/vehicles/kph {
+	text "#str_00015004"
+}
+
+locString guis/vehicles/deploy {
+	text "#str_00015005"
+}
+
+locString guis/vehicles/deployed {
+	text "#str_00015006"
+}
+
+locString guis/vehicles/crew {
+	text "#str_00015007"
+}
+
+locString guis/vehicles/crew_id {
+	text "#str_00015008"
+}
+
+locString guis/vehicles/deploy_now {
+	text "#str_00015009"
+}
+
+locString guis/vehicles/scanning {
+	text "#str_00015010"
+}
+
+locString guis/vehicles/online {
+	text "#str_00015011"
+}
+
+locString guis/vehicles/sat_uplink {
+	text "#str_00015012"
+}
+
+locString guis/vehicles/deploy_area {
+	text "#str_00015013"
+}
+
+locString guis/vehicles/move_to { 
+	text "#str_00015014"
+}
+
+locString guis/vehicles/anansi_driver { 
+	text "#str_00015015" // "Anansi Driver"
+}
+
+locString guis/vehicles/anansi_gunner { 
+	text "#str_00015016" // "Anansi Gunner"
+}
+
+locString guis/vehicles/badger_driver { 
+	text "#str_00015017" // "Badger Driver"
+}
+
+locString guis/vehicles/badger_gunner { 
+	text "#str_00015018" // "Badger Gunner"
+}
+
+locString guis/vehicles/badger_passenger { 
+	text "#str_00015019" // "Badger Passenger"
+}
+
+locString guis/vehicles/badger_rear_left { 
+	text "#str_00015020" // "Badger Rear Left"
+}
+
+locString guis/vehicles/badger_rear_right { 
+	text "#str_00015021" // "Badger Rear Right"
+}
+
+locString guis/vehicles/trojan_driver { 
+	text "#str_00015022" // "Trojan Driver"
+}
+
+locString guis/vehicles/trojan_gunner { 
+	text "#str_00015023" // "Trojan Gunner"
+}
+
+locString guis/vehicles/trojan_passenger_1 { 
+	text "#str_00015024" // "Trojan Passenger 1"
+}
+
+locString guis/vehicles/trojan_passenger_2 { 
+	text "#str_00015025" // "Trojan Passenger 2"
+}
+
+locString guis/vehicles/trojan_passenger_3 { 
+	text "#str_00015026" // "Trojan Passenger 3"
+}
+
+locString guis/vehicles/trojan_passenger_4 { 
+	text "#str_00015027" // "Trojan Passenger 4"
+}
+
+locString guis/vehicles/mcp_driver { 
+	text "#str_00015028" // "MCP Driver"
+}
+
+locString guis/vehicles/mcp_gunner { 
+	text "#str_00015029" // "MCP Gunner"
+}
+
+locString guis/vehicles/desc_driver { 
+	text "#str_00015030" // "Desecrator Driver"
+}
+
+locString guis/vehicles/desc_gunner { 
+	text "#str_00015031" // "Desecrator Gunner"
+}
+
+locString guis/vehicles/goliath_driver { 
+	text "#str_00015032" // "Goliath Driver"
+}
+
+locString guis/vehicles/goliath_gunner { 
+	text "#str_00015033" // "Goliath Gunner"
+}
+
+locString guis/vehicles/hog_driver { 
+	text "#str_00015034" // "Hog Driver"
+}
+
+locString guis/vehicles/hog_gunner{ 
+	text "#str_00015035" // "Hog Gunner"
+}
+
+locString guis/vehicles/hornet_driver { 
+	text "#str_00015036" // "Hornet Driver"
+}
+
+locString guis/vehicles/hornet_gunner { 
+	text "#str_00015037" // "Hornet Gunner"
+}
+
+locString guis/vehicles/husky_driver { 
+	text "#str_00015038" // "Husky Driver"
+}
+
+locString guis/vehicles/icarus_driver { 
+	text "#str_00015039" // "Icarus Driver"
+}
+
+locString guis/vehicles/platypus_driver { 
+	text "#str_00015040" // "Platypus Driver"
+}
+
+locString guis/vehicles/platypus_gunner { 
+	text "#str_00015041" // "Platypus Gunner"
+}
+
+locString guis/vehicles/titan_driver { 
+	text "#str_00015042" // "Titan Driver"
+}
+
+locString guis/vehicles/titan_gunner { 
+	text "#str_00015043" // "Titan Gunner"
+}
+
+locString guis/vehicles/titan_passenger { 
+	text "#str_00015044" // "Titan Passenger"
+}
+
+locString guis/vehicles/bee_driver { 
+	text "#str_00015045" // "Bumblebee Driver"
+}
+
+locString guis/vehicles/bee_left_gunner { 
+	text "#str_00015046" // "Bumblebee Left Gunner"
+}
+
+locString guis/vehicles/bee_right_gunner { 
+	text "#str_00015047" // "Bumblebee Right Gunner"
+}
+
+locString guis/vehicles/bee_left_passenger { 
+	text "#str_00015048" // "Bumblebee Left Passenger"
+}
+
+locString guis/vehicles/bee_right_passenger { 
+	text "#str_00015049" // "Bumblebee Right Passenger"
+}
+
+locString guis/game/empty {
+	text "#str_00040002"
+}
+
+locString guis/game/no_players {
+	text "#str_00040003"
+}
+
+locString guis/game/crosshair_title {
+	text "#str_00012301"
+	arguments 4
+}
+
+locString guis/game/new_tasks_available {
+	text "#str_00010031"	
+}
+
+locString guis/game/select_deployable {
+	text "#str_00010035"	
+	arguments 1
+}
+
+locString guis/game/task_completed {
+	text "#str_00015050"
+	arguments 1
+}
+
+locString guis/game/task_removed {
+	text "#str_00015051"
+	arguments 1
+}
+
+locString guis/vehicles/mcp_destruction {
+	text "#str_00015052"
+	arguments 1
+}
+
+locString guis/vehicles/mcp_direction_warning {
+	text "#str_00015053"
+}
+
+locString guis/game/viewer/third_eye_toggle {
+	text "#str_00015054"
+	arguments 1
+}
+
+locString guis/game/viewer/third_eye_destruct {
+	text "#str_00015055"
+	arguments 1
+}
+
+locString guis/vehicles/deploy_keys {
+	text "#str_00015056"
+	arguments 2
+}
+
+locString guis/vehicles/mcp_direction_warning_kick {
+	text "#str_00015057"
+}

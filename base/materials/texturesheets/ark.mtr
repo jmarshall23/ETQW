@@ -1,0 +1,333 @@
+material texturesheets/ark/wall_ark_1
+{
+	surfaceTypeMap "texturesheets/ark/wall_ark_1_ts"
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	texturesheets/ark/wall_ark_1_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wall_ark_1_ts_s.tga
+		bumpmap 	picmip -2	texturesheets/ark/wall_ark_1_ts_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailWeightMap			texturesheets/ark/wall_ark_1_ts_detailmask.tga
+		detailMult 2.5,20,0,0
+	}
+}
+
+material texturesheets/ark/wall_ark_1_noshadows_nonsolid
+{
+	surfaceTypeMap "texturesheets/ark/wall_ark_1_ts"
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	texturesheets/ark/wall_ark_1_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wall_ark_1_ts_s.tga
+		bumpmap 	picmip -2	texturesheets/ark/wall_ark_1_ts_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailWeightMap			texturesheets/ark/wall_ark_1_ts_detailmask.tga
+		detailMult 2.5,20,0,0
+	}
+}
+
+material texturesheets/ark/wall_ark_2
+{
+	surfaceTypeMap "texturesheets/ark/wall_ark_2_ts"
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	texturesheets/ark/wall_ark_2_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wall_ark_2_ts_s.tga
+		bumpmap		picmip -2	texturesheets/ark/wall_ark_2_ts_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		detailWeightMap			texturesheets/ark/wall_ark_2_ts_detailmask.tga
+		detailMult 2,16,0,0
+		vertexcolor
+	}
+}
+
+material texturesheets/ark/wall_ark_2_noshadows_nonsolid
+{
+	surfaceTypeMap "texturesheets/ark/wall_ark_2_ts"
+	noshadows
+	nonsolid
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	texturesheets/ark/wall_ark_2_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wall_ark_2_ts_s.tga
+		bumpmap 	picmip -2	texturesheets/ark/wall_ark_2_ts_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		detailWeightMap			texturesheets/ark/wall_ark_2_ts_detailmask.tga
+		detailMult 2,16,0,0
+	}
+}
+
+material texturesheets/ark/wall_ark_3
+{
+	noshadows
+	surfaceTypeMap "texturesheets/ark/wall_ark_3_ts"
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	texturesheets/ark/wall_ark_3_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wall_ark_3_ts_s.tga
+		bumpmap 	picmip -2	texturesheets/ark/wall_ark_3_ts_local.tga
+
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailWeightMap			texturesheets/ark/wall_ark_3_ts_detailmask.tga
+		detailMult 2.5,20,0,0
+		vertexcolor
+	}
+}
+
+material texturesheets/ark/wall_ark_3_shadows
+{
+	surfaceTypeMap "texturesheets/ark/wall_ark_3_ts"
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	texturesheets/ark/wall_ark_3_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wall_ark_3_ts_s.tga
+		bumpmap 	picmip -2	texturesheets/ark/wall_ark_3_ts_local.tga
+
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailWeightMap			texturesheets/ark/wall_ark_3_ts_detailmask.tga
+		detailMult 2.5,20,0,0
+		vertexcolor
+	}
+}
+
+material texturesheets/ark/wall_ark_3_noshadows_nonsolid
+{
+	surfaceTypeMap "texturesheets/ark/wall_ark_3_ts"
+	noshadows
+	nonsolid
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	texturesheets/ark/wall_ark_3_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wall_ark_3_ts_s.tga
+		bumpmap 	picmip -2	texturesheets/ark/wall_ark_3_ts_local.tga
+
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailWeightMap			texturesheets/ark/wall_ark_3_ts_detailmask.tga
+		detailMult 2.5,20,0,0
+	}
+}
+material texturesheets/ark/wall_ark_4
+{
+	noshadows
+	surfaceTypeMap "texturesheets/ark/wall_ark_4_ts"
+	{
+		diffusemap	picmip -1	texturesheets/ark/wall_ark_4_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wall_ark_4_ts_s.tga
+		bumpmap		picmip -2	texturesheets/ark/wall_ark_4_ts_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2.5,20,0,0
+	}
+}
+
+material texturesheets/ark/wall_ark_4_shadows
+{
+	surfaceTypeMap "texturesheets/ark/wall_ark_4_ts"
+	{
+		diffusemap	picmip -1	texturesheets/ark/wall_ark_4_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wall_ark_4_ts_s.tga
+		bumpmap 	picmip -2	texturesheets/ark/wall_ark_4_ts_local.tga
+
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2.5,20,0,0
+	}
+}
+
+material texturesheets/ark/wall_ark_4_noshadows_nonsolid
+{
+	surfaceTypeMap "texturesheets/ark/wall_ark_4_ts"
+	noshadows
+	nonsolid
+	{
+		diffusemap	picmip -1	texturesheets/ark/wall_ark_4_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wall_ark_4_ts_s.tga
+		bumpmap 	picmip -2	texturesheets/ark/wall_ark_4_ts_local.tga
+
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailMult 2.5,20,0,0
+	}
+}
+
+material texturesheets/ark/wooden_wall_1
+{
+	surfaceTypeMap	"texturesheets/ark/wooden_wall_1_ts"
+	noshadows
+	{
+		diffusemap	picmip -1	texturesheets/ark/wooden_wall_1_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wooden_wall_1_ts_s.tga
+		bumpmap		picmip -2	texturesheets/ark/wooden_wall_1_ts_local.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga	
+		detailMult 3,24,0,0
+	}
+}
+
+material texturesheets/ark/wooden_wall_1_noshadows_nonsolid
+{
+	noshadows
+	nonsolid
+	{
+		diffusemap	picmip -1	texturesheets/ark/wooden_wall_1_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wooden_wall_1_ts_s.tga
+		bumpmap		picmip -2	texturesheets/ark/wooden_wall_1_ts_local.tga
+		vertexColor
+	}
+}
+
+material texturesheets/ark/wooden_wall_2
+{
+	surfaceTypeMap "texturesheets/ark/wooden_wall_2_ts"
+	{
+		diffusemap	picmip -1	texturesheets/ark/wooden_wall_2_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wooden_wall_2_ts_s.tga
+		bumpmap		picmip -2	texturesheets/ark/wooden_wall_2_ts_local.tga
+	
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailMult 6,6,0,0
+		vertexColor
+	}
+}
+
+material texturesheets/ark/wooden_wall_2_noshadows_nonsolid
+{
+	surfaceTypeMap "texturesheets/ark/wooden_wall_2_ts"
+	noshadows
+	nonsolid
+	{
+		diffusemap	picmip -1	texturesheets/ark/wooden_wall_2_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wooden_wall_2_ts_s.tga
+		bumpmap		picmip -2	texturesheets/ark/wooden_wall_2_ts_local.tga
+		vertexColor
+	}
+}
+
+
+material texturesheets/ark/wooden_wall_5
+{
+		noshadows
+		diffusemap	picmip -1	texturesheets/ark/wall_ark_5_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wall_ark_5_ts_s.tga
+		bumpmap		picmip -2	texturesheets/ark/wall_ark_5_ts_local.tga
+}
+
+material texturesheets/ark/wooden_wall_5_shadows
+{
+	{
+		diffusemap	picmip -1	texturesheets/ark/wall_ark_5_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wall_ark_5_ts_s.tga
+		bumpmap		picmip -2	texturesheets/ark/wall_ark_5_ts_local.tga
+		vertexColor
+	}
+}
+
+material texturesheets/ark/wooden_wall_5_noshadows_nonsolid
+{
+	noshadows
+	nonsolid
+	{
+		diffusemap	picmip -1	texturesheets/ark/wall_ark_5_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wall_ark_5_ts_s.tga
+		bumpmap		picmip -2	texturesheets/ark/wall_ark_5_ts_local.tga
+		vertexColor
+	}
+}
+
+
+material texturesheets/ark/wooden_wall_7
+{
+		noshadows
+		diffusemap	picmip -1	texturesheets/ark/wall_ark_7_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wall_ark_7_ts_s.tga
+		bumpmap		picmip -2	texturesheets/ark/wall_ark_7_ts_local.tga
+}
+
+material texturesheets/ark/wooden_wall_7_shadows
+{
+	surfaceTypeMap "texturesheets/ark/wall_ark_7_ts.stmap"
+	{	
+		diffusemap	picmip -1	texturesheets/ark/wall_ark_7_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wall_ark_7_ts_s.tga
+		bumpmap		picmip -2	texturesheets/ark/wall_ark_7_ts_local.tga
+		vertexColor
+	}
+}
+
+material texturesheets/ark/wooden_wall_7_noshadows_nonsolid
+{
+	noshadows
+	nonsolid
+	{	
+		diffusemap	picmip -1	texturesheets/ark/wall_ark_7_ts_d.tga
+		specularmap	picmip -2	texturesheets/ark/wall_ark_7_ts_s.tga
+		bumpmap		picmip -2	texturesheets/ark/wall_ark_7_ts_local.tga
+		vertexColor
+	}
+}
+
+
+material texturesheets/ark/large_building
+{
+	surfaceTypeMap "texturesheets/ark/large_building.stmap"
+	{		
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	texturesheets/ark/large_building_d.tga
+		specularmap	picmip -2	texturesheets/ark/large_building_s.tga
+		bumpmap 	picmip -2	texturesheets/ark/large_building_local.tga
+		vertexColor		
+			
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailWeightMap			texturesheets/ark/large_building_detailmask.tga
+		detailMult 2.5,10,0,0
+	}
+}
+
+material texturesheets/ark/large_building_noshadows_nonsolid
+{
+	surfaceTypeMap "texturesheets/ark/large_building.stmap"
+	noshadows
+	nonsolid
+	{		
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	texturesheets/ark/large_building_d.tga
+		specularmap	picmip -2	texturesheets/ark/large_building_s.tga
+		bumpmap 	picmip -2	texturesheets/ark/large_building_local.tga
+		vertexColor		
+			
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailWeightMap			texturesheets/ark/large_building_detailmask.tga
+		detailMult 2.5,10,0,0
+	}
+}

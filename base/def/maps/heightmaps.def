@@ -1,0 +1,56 @@
+
+heightMap heightmaps/area22 {
+	heightMap "heightmaps/area22.tga"
+}
+
+heightMap heightmaps/ark {
+	heightMap "heightmaps/ark.tga"
+}
+
+heightMap heightmaps/canyon {
+	heightMap "heightmaps/canyon.tga"
+}
+
+heightMap heightmaps/island {
+	heightMap "heightmaps/island.tga"
+}
+
+heightMap heightmaps/outskirts {
+	heightMap "heightmaps/outskirts.tga"
+}
+
+heightMap heightmaps/quarry {
+	heightMap "heightmaps/quarry.tga"
+}
+
+heightMap heightmaps/refinery {
+	heightMap "heightmaps/refinery.tga"
+}
+
+heightMap heightmaps/salvage {
+	heightMap "heightmaps/salvage.tga"
+}
+
+heightMap heightmaps/sewer {
+	heightMap "heightmaps/sewer.tga"
+}
+
+heightMap heightmaps/slipgate_1 {
+	heightMap "heightmaps/slipgate_1.tga"
+}
+
+heightMap heightmaps/slipgate_2 {
+	heightMap "heightmaps/slipgate_2.tga"
+}
+
+heightMap heightmaps/valley {
+	heightMap "heightmaps/valley.tga"
+}
+
+heightMap heightmaps/vehicletrack {
+	heightMap "heightmaps/vehicletrack.tga"
+}
+
+heightMap heightmaps/volcano {
+	heightMap "heightmaps/volcano.tga"
+}

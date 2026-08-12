@@ -1,0 +1,14 @@
+
+object taskManagerType {
+	void	preinit();
+}
+
+taskManagerType taskManager;
+
+void G_SetTaskManager( object o ) {
+	taskManager = o;
+}
+
+void taskManagerType::preinit() {
+	G_SetTaskManager( self );
+}

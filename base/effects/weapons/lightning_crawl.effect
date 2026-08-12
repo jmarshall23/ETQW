@@ -1,0 +1,53 @@
+effect effects/projectile_lightning_crawl
+{
+	size	4
+
+	cutOffDistance	1000
+
+	spawner "Zaps"
+	{
+		count		1,1
+		locked
+
+		electricity
+		{
+			duration	1,1
+			fork	1
+			jitterRate	0
+			jitterSize	3,7,7
+			jitterTable	halfsintable
+			material	"textures/effects/weapons/lgun_smallbolt"
+			trailRepeat	1
+
+			start
+			{
+				length { point 3,0,0 }
+			}
+		}
+	}
+	spawner "Zaps"
+	{
+		count		1,1
+		locked
+
+		electricity
+		{
+			duration	1,1
+			fork	1
+			jitterRate	0
+			jitterSize	3,7,7
+			jitterTable	halfsintable
+			material	"textures/effects/weapons/lgun_smallbolt"
+			trailRepeat	1
+
+			start
+			{
+				length { point 3,0,0 }
+			}
+		}
+	}
+}
+
+
+
+

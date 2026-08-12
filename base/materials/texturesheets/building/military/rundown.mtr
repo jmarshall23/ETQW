@@ -1,0 +1,8 @@
+material texturesheets/building/military/rundown001_desert
+{
+	surfaceType "metal" //temp surface type
+	qer_editorimage	texturesheets/building/military/rundown001_desert_d.tga
+	diffusemap	texturesheets/building/military/rundown001_desert_d.tga
+	specularmap     texturesheets/building/military/rundown001_desert_s.tga
+	bumpmap 	texturesheets/building/military/rundown001_desert_local.tga
+ }

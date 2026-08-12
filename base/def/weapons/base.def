@@ -1,0 +1,176 @@
+entityDef projectile_bullet_base {
+	"editor_skipmenu"			"1"
+
+	"mins"						"-1 -1 -1"
+	"maxs"						"1 1 1"
+	"cone"						"3"
+	"scale"						"0.1"
+
+	"launchFromBarrel"			"0"
+	"detonate_on_world"			"1"
+	"detonate_on_actor"			"1"
+	"is_bullet"					"1"
+
+	"noshadows"					"1"
+
+	"min_damage_percent"		"10"	// percentage of total range at which damage falloff begins
+										// falls linearly to 0 at max range
+	// ricochet stuff
+	"fx_ricochet"				"effects/base/bullets/ricochet"
+	"fx_ricochet_flesh"			"effects/base/bullets/ricochet_blank"
+	"fx_ricochet_water"			"effects/base/bullets/ricochet_blank"
+
+	// explode stuff
+  	"fx_explode"				"effects/impacts/bullets_small/impact_default"
+	"fx_explode_pavement"		"effects/impacts/bullets_small/impact_pavement"
+ 	"fx_explode_stone"			"effects/impacts/bullets_small/impact_stone"
+  	"fx_explode_concrete"		"effects/impacts/bullets_small/impact_stone"
+	"fx_explode_dirt"			"effects/impacts/bullets_small/impact_dirt"
+	"fx_explode_mud"			"effects/impacts/bullets_small/impact_dirt"
+	"fx_explode_flesh"			"effects/impacts/bullets_small/impact_flesh"
+	"fx_explode_glass"			"effects/base/bullets/impact_glass"
+	"fx_explode_ice"			"effects/base/bullets/impact_glass"
+ 	"fx_explode_gravel"			"effects/impacts/bullets_small/impact_stone"
+	"fx_explode_metal"			"effects/impacts/bullets_small/impact_metal"
+	"fx_explode_metal_thick"	"effects/impacts/bullets_small/impact_metal"
+	"fx_explode_dusty_road"		"effects/impacts/bullets_small/impact_sand"
+	"fx_explode_sand"			"effects/impacts/bullets_small/impact_sand"
+	"fx_explode_snow"			"effects/impacts/bullets_small/impact_snow"
+	"fx_explode_wood"			"effects/impacts/bullets_small/impact_wood"
+	"fx_explode_wood_thick"		"effects/impacts/bullets_small/impact_wood"
+ 	"fx_explode_liquid"			"effects/impacts/bullets_small/impact_liquid"
+  	"fx_explode_water"			"effects/impacts/bullets_small/impact_liquid"
+  	"fx_explode_water_interior"	"effects/impacts/bullets_small/impact_liquid"
+	"fx_explode_forcefield"		"effects/base/bullets/impact_forcefield"
+	"fx_explode_grass"			"effects/impacts/bullets_small/impact_grass"
+ 	"fx_explode_plastic"		"effects/impacts/bullets_small/impact_plastic"
+
+	// Bullet holes (cheaper than the effects system ones)
+	"dec_impact"				"bullets/stone"
+	"dec_impact_pavement"			"bullets/stone"
+	"dec_impact_stone"			"bullets/stone"
+	"dec_impact_concrete"			"bullets/stone"
+	"dec_impact_dirt"			"bullets/stone"
+	"dec_impact_mud"			"bullets/stone"
+	// flesh
+	"dec_impact_glass"			"bullets/glass"
+	"dec_impact_ice"			"bullets/glass"
+	//gravel
+	"dec_impact_metal"			"bullets/metal"
+	"dec_impact_metal_thick"		"bullets/metal"
+	"dec_impact_dusty_road"			"bullets/stone"
+	"dec_impact_sand"			"bullets/stone"
+	//snow
+	"dec_impact_wood"			"bullets/wood"
+	"dec_impact_wood_thick"			"bullets/wood"
+	"dec_impact_grass"			"bullets/stone"
+	
+	"dec_impact_forcefield"			"_"
+	"dec_impact_water"			"_"
+
+
+	"tracerFromBarrel"			"1"
+	"tracer_chance"				"0.25"
+	"fx_tracer"					"effects/base/bullets/tracer"
+}
+
+entityDef projectile_bullet_base_big {
+	"inherit"					"projectile_bullet_base"
+
+	"fx_explode_grass"			"effects/impacts/bullets_large/impact_grass"
+	"fx_explode_metal"			"effects/impacts/bullets_large/impact_metal"
+ 	"fx_explode_plastic"		"effects/impacts/bullets_large/impact_plastic"
+ 	"fx_explode_stone"			"effects/impacts/bullets_large/impact_stone"
+	"fx_explode_wood"			"effects/impacts/bullets_large/impact_wood"
+  	"fx_explode"				"effects/impacts/bullets_large/impact_default"
+	"fx_explode_flesh"			"effects/impacts/bullets_large/impact_flesh"
+ 	"fx_explode_water"			"effects/impacts/bullets_large/impact_liquid"
+ 	"fx_explode_water_interior"	"effects/impacts/bullets_large/impact_liquid"
+	"fx_explode_pavement"		"effects/impacts/bullets_large/impact_pavement"
+	"fx_explode_sand"			"effects/impacts/bullets_large/impact_sand"
+	"fx_explode_snow"			"effects/impacts/bullets_large/impact_snow"
+	"fx_explode_forcefield"		"effects/base/bullets/impact_forcefield_big"
+}
+
+entityDef projectile_grenade {
+	"spawnclass"				"idProjectile_RigidBody"
+	"scriptObject"				"projectile_grenade" 
+
+	"mins"						"-3 -3 -3"
+	"maxs"						"3 3 3"
+
+	"model" 					"models/weapons/grenades/stun_grenade_thirdperson.lwo"
+
+	"launchFromBarrel"			"1"
+	"health"					"0"
+	"velocity"					"750 0 0"
+	"angular_velocity"			"500 600 400"
+	"bounce"					"0.4"
+	"gravity"					"550"
+	"fuse"						"4"
+	"mass"						"10"
+	"linear_friction"			"0.5"
+	"contact_friction"			"1"
+	"angular_friction"			"1"
+	"buoyancy"					"0.3"
+	"detonate_upwards"			"1"
+
+	"maxVisDist"				"2048"
+
+	"detonate_on_fuse"			"1"
+	"detonate_on_death"			"0"
+	"detonate_on_world"			"0"
+	"detonate_on_actor"			"1"
+	"detonate_on_trigger"		"1"
+	"stick_on_contact"			"0"
+
+	"trailUnderWater"			"1"
+	
+	"snd_bounce"				"sounds/weapons/grenades/bounce"
+	"snd_stick"					"sounds/weapons/grenades/bounce"
+
+	"fx_bounce_forcefield"		"effects/base/bullets/impact_forcefield"
+
+	"trail_unbindrotation"		"1"
+	"fx_trail"					"effects/grenades/generic_trail"
+	"fx_splash"					"effects/base/impact_water_large"
+	"fx_explode_water"			"effects/water/explosion"
+	"fx_explode_water_interior"	"effects/water/explosion_interior"
+}
+
+entityDef projectile_rocket_base {
+	"spawnclass"				"sdProjectile_Parabolic"
+	"scriptobject"				"projectile_missile"
+
+	"mins"						"-3 -3 -6"
+	"maxs"						"3 3 6"
+
+	"cone"						"3"
+	"cone_angles"				"90"
+
+	"model" 					"models/weapons/rocketlauncher/rocket.lwo"
+
+	"mass"						"5"
+
+	"maxVisDist"				"4096"
+
+	"aor_layout"				"missile"
+
+	"detonate_on_fuse"			"1"					// whether projectile should detonate when it's fuse runs out
+	"detonate_on_death"			"1"					// whether projectile should detonate when it's "killed" (health runs out)
+	"detonate_on_world"			"1"					// whether projectile should detonate when it hits an obstacle
+	"detonate_on_actor"			"1"					// whether projectile should detonate when it hits a character in the game
+
+	"fx_trail"					"effects/base/missile_trail"
+	"fx_splash"					"effects/base/impact_water_large"
+	"fx_explode"				"effects/impacts/rocket/explosion_default"
+	"fx_explode_sand"			"effects/impacts/rocket/explosion_sand"
+	"fx_explode_metal"			"effects/impacts/rocket/explosion_metal"
+	"fx_explode_water"			"effects/water/explosion"
+	"fx_explode_water_interior"	"effects/water/explosion_interior"
+	"fx_explode_leaves"			"effects/impacts/rocket/explosion_leaves"
+	"fx_explode_pine"			"effects/impacts/rocket/explosion_pine"
+
+//	"fx_explode"				"effects/base/explosion"
+// 	"fx_explode_sand"			"effects/base/explosion_sand"
+}

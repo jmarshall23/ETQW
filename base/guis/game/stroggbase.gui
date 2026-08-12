@@ -1,0 +1,139 @@
+gui guis/strogg/temp_strogg_gui {
+	materials {
+		"guis/assets/vehicles/strogg/veins"	"guis/assets/vehicles/strogg/veins"
+		"guis/assets/vehicles/strogg/veins2"	"guis/assets/vehicles/strogg/veins2"
+		"guis/assets/vehicles/strogg/overlay_map" "guis/assets/vehicles/strogg/overlay_map"
+		"guis/assets/common/outershadow"	"guis/assets/common/outershadow"
+		"guis/strogg/strogglogo"			"guis/strogg/strogglogo"
+		"guis/strogg/halfbody"				"guis/strogg/halfbody"
+		"guis/beating/heart"				"guis/beating/heart"
+	}
+	properties {
+		//string 	postProcessMaterial = "system/noglare";
+		float 	mapZoomLevel = 0.4;
+		float 	lastSpeed = 0;
+		float 	drawSquare = 1;
+		float flags = immediate( flags ) & ~GUI_SCREENSAVER;
+		float	iconScaleAdjustment = 4.0f;		
+	}
+	
+	windowDef desktop {
+		properties {
+			float flags = WF_CLIP_TO_RECT;
+			color backcolor = 0,0,0,0.6;
+			rect rect = 10,19,620,460;
+		}
+	}
+	windowDef BackgroundImage2 {
+		properties {
+			color backColor = 1,1,1,0.1;
+			string material = "guis/assets/vehicles/strogg/veins2";
+			rect	rect		= 0, 0, 620, 480;
+		}
+	}
+	windowDef BackgroundImage {
+		properties {
+			color backColor = 1,1,1,1;
+			string material = "guis/assets/vehicles/strogg/veins";
+			rect	rect		= 0, 0, 620, 480;
+		}
+	}
+	windowDef OverlayImage {
+		properties {
+			color backColor = 1,1,1,1;
+			string material = "guis/assets/vehicles/strogg/overlay_map";
+			rect	rect		= 0, 0, 620, 480;
+		}
+	}
+	windowDef OverlayImage2 {
+			properties {
+				color backColor = 1,1,1,1;
+				string material = "guis/strogg/strogglogo";
+				rect	rect		= 0, 0, 800, 220;
+			}
+	}
+	windowDef OverlayImageheart {
+				properties {
+					color backColor = 1,1,1,1;
+					string material = "guis/beating/heart";
+					rect	rect		= 280, 150, 200, 200;
+				}
+	}
+	windowDef OverlayImage3 {
+				properties {
+					color backColor = 1,1,1,1;
+					string material = "guis/strogg/halfbody";
+					rect	rect		= 200, 100, 400, 320;
+				}
+	}
+	windowDef mapShadow {
+		properties {
+			string	material = "guis/assets/common/outershadow";
+			color	backColor = 1,1,1,1;
+			rect	rect		= 8, 0, 620, 460;
+		}
+	}
+}
+
+gui guis/strogg/temp_strogg_gui2 {
+	materials {
+		"guis/assets/vehicles/strogg/veins"	"guis/assets/vehicles/strogg/veins"
+		"guis/assets/vehicles/strogg/veins2"	"guis/assets/vehicles/strogg/veins2"
+		"guis/assets/vehicles/strogg/overlay_map" "guis/assets/vehicles/strogg/overlay_map"
+		"guis/assets/common/outershadow"	"guis/assets/common/outershadow"
+		"guis/strogg/strogglogo"			"guis/strogg/strogglogo"
+		"guis/strogg/halfbody"				"guis/strogg/halfbody"
+		"guis/beating/heart"				"guis/beating/heart"
+	}
+	properties {
+		//string 	postProcessMaterial = "system/noglare";
+		float 	mapZoomLevel = 0.4;
+		float 	lastSpeed = 0;
+		float 	drawSquare = 1;
+		float flags = immediate( flags ) & ~GUI_SCREENSAVER;
+		float	iconScaleAdjustment = 4.0f;		
+	}
+	
+	windowDef desktop {
+		properties {
+			float flags = WF_CLIP_TO_RECT;
+			color backcolor = 0,0,0,0.6;
+			rect rect = 10,19,620,460;
+		}
+	}
+	windowDef BackgroundImage2 {
+		properties {
+			color backColor = 1,1,1,0.1;
+			string material = "guis/assets/vehicles/strogg/veins2";
+			rect	rect		= 0, 0, 620, 480;
+		}
+	}
+	windowDef BackgroundImage {
+		properties {
+			color backColor = 1,1,1,1;
+			string material = "guis/assets/vehicles/strogg/veins";
+			rect	rect		= 0, 0, 620, 480;
+		}
+	}
+	windowDef OverlayImage {
+		properties {
+			color backColor = 1,1,1,1;
+			string material = "guis/assets/vehicles/strogg/overlay_map";
+			rect	rect		= 0, 0, 620, 480;
+		}
+	}
+	windowDef OverlayImage2 {
+				properties {
+					color backColor = 1,1,1,1;
+					string material = "guis/strogg/strogglogo";
+					rect	rect		= 0, 0, 800, 220;
+				}
+	}
+	windowDef mapShadow {
+		properties {
+			string	material = "guis/assets/common/outershadow";
+			color	backColor = 1,1,1,1;
+			rect	rect		= 8, 0, 620, 460;
+		}
+	}
+}

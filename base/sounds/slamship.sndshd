@@ -1,0 +1,32 @@
+//////////////
+// Slamship //
+//////////////
+
+
+sound sounds/vehicles/slamship/landfall {
+
+	volume 0
+	maxDistance	200
+
+	sounds/vehicles/slamship/landfall.wav
+}
+
+sound sounds/vehicles/slamship/landfall/far {
+	unclamped
+	volume -5
+	minDistance	1
+	maxDistance	200
+	
+
+	sounds/vehicles/slamship/landfall_far.wav
+}
+
+sound sounds/vehicles/slamship/impact {
+	unclamped
+	volume 4
+	minDistance	5
+	maxDistance	100
+	shakes 0.05
+
+	sounds/vehicles/slamship/impact.wav
+}

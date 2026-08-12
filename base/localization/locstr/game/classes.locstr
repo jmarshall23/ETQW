@@ -1,0 +1,98 @@
+
+// GDF
+locString game/classes/soldier {
+	text "#str_00002000"
+}
+locString game/classes/medic {
+	text "#str_00002001"
+}
+locString game/classes/fieldops {
+	text "#str_00002002"
+}
+locString game/classes/covertops {
+	text "#str_00002003"
+}
+locString game/classes/engineer {
+	text "#str_00002004"
+}
+
+locString game/classes/soldier_blurb {
+	text "#str_00050005"
+}
+locString game/classes/medic_blurb {
+	text "#str_00050006"
+}
+locString game/classes/fieldops_blurb {
+	text "#str_00050008"
+}
+locString game/classes/covertops_blurb {
+	text "#str_00050009"
+}
+locString game/classes/engineer_blurb {
+	text "#str_00050007"
+}
+
+
+// Strogg
+locString game/classes/aggressor {
+	text "#str_00002005"
+}
+locString game/classes/technician {
+	text "#str_00002006"
+}
+locString game/classes/oppressor {
+	text "#str_00002007"
+}
+locString game/classes/infiltrator {
+	text "#str_00002008"
+}
+locString game/classes/constructor {
+	text "#str_00002009"
+}
+
+locString game/classes/aggressor_blurb {
+	text "#str_00050000"
+}
+locString game/classes/technician_blurb {
+	text "#str_00050001"
+}
+locString game/classes/oppressor_blurb {
+	text "#str_00050003"
+}
+locString game/classes/infiltrator_blurb {
+	text "#str_00050004"
+}
+locString game/classes/constructor_blurb {
+	text "#str_00050002"
+}
+
+
+// COMBINED
+locString game/classes/combined/soldier {
+	text "#str_00002046"
+}
+locString game/classes/combined/medic {
+	text "#str_00002047"
+}
+locString game/classes/combined/fieldops {
+	text "#str_00002048"
+}
+locString game/classes/combined/covertops {
+	text "#str_00002049"
+}
+locString game/classes/combined/engineer {
+	text "#str_00002050"
+}
+
+// only shown if client enters the game before the server
+locString game/classes/ {
+	text "#str_00002051" // empty string
+}
+
+locString game/classes/spectating {
+	text "#str_00002051" // empty string
+}
+
+locString spec {
+	text "#str_00002051" // empty string
+}

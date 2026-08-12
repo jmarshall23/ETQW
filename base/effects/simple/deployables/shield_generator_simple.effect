@@ -1,0 +1,174 @@
+effect effects/deployables/shield_generator/in_action_simple
+{
+	size	566
+
+	cutOffDistance	20000
+
+	sound "Arc"
+	{
+		soundShader	"sounds/deployables/shieldgenerator/arc"
+		volume	5,5
+	}
+	emitter "core3"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.3,0.3
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				size { point 200,200 }
+				tint { point 0.917647,0.168627,0.0823529 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 4,4 }
+				tint { envelope senetable3 count 3,3,3 offset 3,3,3 }
+			}
+
+			end
+			{
+				size { point 400,400 }
+				tint { point 0.411765,0.294118,0.027451 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/deployables/shield_generator/idle_bolt_simple
+{
+	size	283
+
+	cutOffDistance	20000
+
+	sound "Zaps"
+	{
+		soundShader	"sounds/deployables/shieldgenerator/zaps"
+		freqshift	0.6,1
+	}
+	emitter "unnamed2"
+	{
+		duration	0.1,0.6
+		count		1,1
+		attenuateEmitter
+		attenuation	400,400
+
+		electricity
+		{
+			duration	0.5,1
+			fork	0
+			jitterRate	0
+			jitterSize	4,7,7
+			jitterTable	fadetable
+			material	"textures/sfx/forcebolt"
+			trailRepeat	1
+
+			start
+			{
+				size { box 0.3,0.7 }
+				tint { line 0.305882,0.305882,0.305882,0.137255,0.137255,0.137255 }
+				length { line 0,0,0,0,0,0 useEndOrigin }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1 }
+			}
+			lineHit
+		}
+	}
+	emitter "core3"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.5,0.5
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				size { line 100,100,125,125 }
+				tint { point 0.0470588,0.0117647,0.00392157 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 4,4 }
+				tint { envelope senetable3 count 3,3,3 offset 3,3,3 }
+			}
+
+			end
+			{
+				size { line 150,150,200,200 }
+				tint { point 0.054902,0.0392157,0.00392157 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/deployables/shield_generator/impact_simple
+{
+	size	31
+
+	cutOffDistance	6000
+
+	emitter "unnamed2"
+	{
+		duration	0.5,1
+		count		3,3
+
+		electricity
+		{
+			duration	0.5,1
+			fork	0
+			jitterRate	0
+			jitterSize	4,12,12
+			jitterTable	jrad_ssmexplode
+			material	"textures/sfx/forcebolt"
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -30,-30,-30,30,30,30 }
+				size { point 5 }
+				tint { line 0.560784,0.560784,0.560784,0.74902,0.27451,0.247059 }
+				fade { line 0.7,0.5 }
+				length { line 0,0,0,0,0,0 useEndOrigin }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+effect effects/deployables/shield_generator_destroy_simple
+{
+	size	8
+
+	effect "Explosion"
+	{
+		effect	"effects/base/explosion_large_simple"
+	}
+}
+
+
+

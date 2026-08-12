@@ -1,0 +1,244 @@
+// visportal brushes stop the area flood fills in dmap and
+// define portals, separating the world into areas
+material textures/editor/visportal
+{
+	qer_editorimage	textures/editor/visportal.tga
+	areaportal
+	noshadows
+}
+
+material textures/editor/visportal_occluder
+{
+	qer_editorimage	textures/editor/visportal_occluder.tga
+	areaportal
+	portal occlusionQuery
+	noshadows
+}
+
+// This one should always be facing to the outside area
+material textures/editor/outsideportal
+{
+	qer_editorimage	textures/editor/outsideportal.tga
+	qer_nocarve
+	areaportal
+	portal vis
+	portal outside
+	portal blockAmbient	
+
+	forceshadows
+	onlyAtmosphereInteraction
+}
+
+material textures/editor/outsideportal_occluder
+{
+	qer_editorimage	textures/editor/outsideportal_occluder.tga
+	qer_nocarve
+	areaportal
+	portal vis
+	portal outside
+	portal blockAmbient
+	portal occlusionQuery
+
+	forceshadows
+	onlyAtmosphereInteraction
+}
+
+material textures/editor/ambientportal
+{
+	qer_editorimage	textures/editor/ambientportal.tga
+	qer_nocarve
+	areaportal
+	portal vis
+	portal blockAmbient
+	noshadows
+}
+
+material textures/editor/ambientportal_occluder
+{
+	qer_editorimage	textures/editor/ambientportal_occluder.tga
+	qer_nocarve
+	areaportal
+	portal vis
+	portal blockAmbient
+	portal occlusionQuery
+	noshadows
+}
+
+material textures/editor/playzoneportal
+{
+	qer_editorimage	textures/editor/playzoneportal.tga
+	qer_nocarve
+	areaportal
+	portal playzone
+	noshadows
+}
+
+material textures/editor/audioportal
+{
+	qer_editorimage	textures/editor/audioportal.tga
+	qer_nocarve
+	areaportal
+	portal audio
+	noshadows
+}
+
+// a caulk brush will behave as a normal solid surface
+// for collision detection and utility flood filling, and
+// should be used whenever you know the area isn't going to
+// be visible, but it needs to be closed off for things to
+// work right.  Curves and models don't stop the utility
+// flood filling, so you need to have solid brushes behind
+// them.  Setting the faces that won't ever be seen to
+// caulk will save some rendering time and data space.
+// This is a noimpact version for sky brushes so that
+// artillery works in ETQW
+material textures/editor/noimpactcaulk
+{
+	qer_editorimage textures/editor/noimpactcaulk.tga
+	noshadows
+	noimpact
+	forceOpaque			// will still seal levels
+}
+
+material textures/editor/shadowcaulk
+{
+	qer_editorimage textures/editor/shadowcaulk.tga
+	nonsolid
+	forceShadows
+}
+
+// entity triggers don't need to be any particular material,
+// but this is used by convention
+material textures/editor/trigtooltip
+{
+	qer_editorimage textures/editor/trigtooltip.tga
+	qer_nocarve		// don't let an awry CSG operation cut it up
+	noshadows
+}
+
+// Occluder brush used during outside quadtree occlusion building
+material textures/editor/occluder
+{
+	qer_editorimage	textures/editor/occluder.tga
+	qer_nocarve
+	occluder
+	noshadows
+}
+
+// A white material that doesn't write alpha
+material textures/editor/white
+{
+	qer_editorimage	_white
+	noshadows
+	nonsolid
+	{
+		map _white
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material textures/editor/soundwave
+{
+	qer_editorimage	_white
+	{ 
+		program trivialCinematic  
+		soundMap waveform 
+	}
+}
+	
+	
+// a white material that accepts ambient lighting
+material textures/editor/white_ambient
+{
+	qer_editorimage	_white
+	noshadows
+	nonsolid
+	{
+		diffusemap _white
+		specularmap _black
+		bumpmap _flat
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material textures/editor/checker_64
+{
+	qer_editorimage	textures/editor/checker/checker_64_d.tga
+	noshadows
+	nonsolid
+	{
+		diffusemap textures/editor/checker/checker_64_d.tga
+		specularmap textures/editor/checker/checker_64_s.tga
+		bumpmap textures/editor/checker/checker_64_n.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material textures/editor/checker_4_to_1
+{
+	qer_editorimage	textures/editor/checker/checker_4_to_1_d.tga
+	noshadows
+	nonsolid
+	{
+		diffusemap textures/editor/checker/checker_4_to_1_d.tga
+		specularmap textures/editor/checker/checker_4_to_1_s.tga
+		bumpmap textures/editor/checker/checker_4_to_1_n.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material textures/editor/checker_8_to_1
+{
+	qer_editorimage	textures/editor/checker/checker_8_to_1_d.tga
+	noshadows
+	nonsolid
+	{
+		diffusemap textures/editor/checker/checker_8_to_1_d.tga
+		specularmap textures/editor/checker/checker_8_to_1_s.tga
+		bumpmap textures/editor/checker/checker_8_to_1_n.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material textures/editor/checker_256
+{
+	qer_editorimage	textures/editor/checker/checker_256_d.tga
+	noshadows
+	nonsolid
+	{
+		diffusemap textures/editor/checker/checker_256_d.tga
+		specularmap textures/editor/checker/checker_256_s.tga
+		bumpmap textures/editor/checker/checker_256_n.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material textures/editor/checker_512
+{
+	qer_editorimage	textures/editor/checker/checker_512_d.tga
+	noshadows
+	nonsolid
+	{
+		diffusemap textures/editor/checker/checker_512_d.tga
+		specularmap textures/editor/checker/checker_512_s.tga
+		bumpmap textures/editor/checker/checker_512_n.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material textures/editor/terrain_preview
+{
+	noshadows
+	nonsolid
+	{
+		diffusemap _white
+		bumpmap _flat
+	}
+}

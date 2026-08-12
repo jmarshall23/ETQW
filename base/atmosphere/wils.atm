@@ -1,0 +1,92 @@
+atmosphere canyon_wils {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.8043974638 -0.4815025926 0.3479945362 )
+	sunColor ( 0.5882353187 0.5882353187 0.5882353187 )
+	sunHaloScale 0.0700000003
+	sunHaloBias -0.3200000226
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 47368
+	sunFlareTime 202
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 1.2400000095 0.969999969 1 0.7400000095 )
+		glareBases ( 0.1400000006 0.7599999905 0 0 )
+	}
+	fogDistHalf 719
+	fogHeightHalf 1078
+	fogHeightOffset 8824
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon_wils"
+	skyGradientImage "atmosphere/skies/canyonskyblur"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/canyon01" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/island_clouds" {
+		style old
+		parms 12 ( 0.6750000119 0.7294120193 0.6000000238 0.5764709711 0.001 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.5 1 0.8980389833 0.7921569943 0.0005 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+ambientCubemap canyon_wils {
+	ambientLight {
+		color 0.4588235617 0.4745098352 0.4980392456
+		direction 0 0 1
+		name "sky"
+	}
+	ambientLight {
+		color 0.2823529541 0.2627451122 0.2588235438
+		direction 0.0000000243 0 -1
+		name "ground bounce"
+	}
+	ambientLight {
+		color 0.4078431726 0.3882353306 0.3725490272
+		direction 1 0 0.0000000122
+		name "east"
+	}
+	ambientLight {
+		color 0.360784322 0.3294117749 0.3333333433
+		direction -0.0000000437 1 0.0000000122
+		name "north"
+	}
+	ambientLight {
+		color 0.2980392277 0.3137255013 0.2980392277
+		direction -1 0.0000000243 0.0000000122
+		name "west"
+	}
+	ambientLight {
+		color 0.360784322 0.3450980484 0.3294117749
+		direction -0.0000000437 -1 0.0000000122
+		name "south"
+	}
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}

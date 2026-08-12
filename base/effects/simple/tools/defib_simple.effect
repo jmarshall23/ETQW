@@ -1,0 +1,85 @@
+effect effects/tools/defibrillator_fire_simple
+{
+	size	29
+
+	cutOffDistance	200
+
+	emitter "FLASH!"
+	{
+		duration	0.1,0.1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.2,0.2
+			blend	add
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				size { point 10,10 }
+				tint { point 0.2,0.501961,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 0,0 }
+				rotate { point 2 }
+			}
+			lineHit
+		}
+	}
+	emitter "FLASH!2"
+	{
+		duration	0.1,0.1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.2,0.2
+			blend	add
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				size { point 20,20 }
+				tint { point 0.2,0.501961,1 }
+				fade { point 0.1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 10,10 }
+				rotate { point 2 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+

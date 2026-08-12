@@ -1,0 +1,154 @@
+effect effects/items/enercell_simple
+{
+	size	36423
+
+	cutOffDistance	20000
+
+	emitter "Halo_end"
+	{
+		duration	2,2
+		count		4,4
+		locked
+
+		sprite
+		{
+			duration	1.8,1.8
+			blend	add
+			persist
+			material	"penta/halo"
+			trailRepeat	1
+
+			start
+			{
+				position { point 36000,0,0 }
+				size { point 2000,2000 }
+				tint { line 0.501961,0.501961,1,1,0.501961,0.25098 }
+				fade { point 0.5 }
+				rotate { box -0.25,0.25 }
+			}
+
+			motion
+			{
+				tint { envelope firetable }
+				fade { envelope rr2_concavefade_start_at_1_fast }
+			}
+			lineHit
+		}
+	}
+	spawner "swirly sky 2"
+	{
+		count		1,1
+		constant
+
+		oriented
+		{
+			duration	1,1
+			material	"textures/particles/energycell_vortex02"
+			trailRepeat	1
+
+			start
+			{
+				position { point 38000,0,0 }
+				size { point 4000,4000 }
+				tint { point 0.866667,0.866667,0.890196 }
+				fade { point 0.5 }
+				rotate { point 0.5,0,0 }
+			}
+			lineHit
+		}
+	}
+	spawner "swirly sky 3"
+	{
+		count		1,1
+		constant
+
+		oriented
+		{
+			duration	1,1
+			material	"textures/particles/energycell_vortex01"
+			trailRepeat	1
+
+			start
+			{
+				position { point 36000,0,0 }
+				size { point 2000,2000 }
+				tint { point 1,0.819608,0.729412 }
+				fade { point 0.5 }
+				rotate { point 0.5,0,0 }
+			}
+			lineHit
+		}
+	}
+	spawner "swirly sky"
+	{
+		count		1,1
+		constant
+
+		oriented
+		{
+			duration	1,1
+			material	"textures/particles/energycell_vortex03"
+			trailRepeat	1
+
+			start
+			{
+				position { point 40000,0,0 }
+				size { point 6000,6000 }
+				tint { point 0.835294,0.835294,0.917647 }
+				fade { point 0.5 }
+				rotate { point 0.5,0,0 }
+			}
+			lineHit
+		}
+	}
+	emitter "main beam"
+	{
+		start		1,1
+		duration	1,1
+		count		2,2
+		locked
+
+		line
+		{
+			duration	3,3
+			persist
+			material	"textures/effects/violator_beam"
+			trailRepeat	1
+
+			start
+			{
+				position { cylinder 0,-32,-32,0,32,32 }
+				size { point 200 }
+				tint { line 0.729412,0.694118,0.854902,1,0.85098,0.776471 }
+				fade { point 0.1 }
+				length { point 36000,0,0 }
+			}
+
+			motion
+			{
+				size { envelope firetable count 40 }
+				tint { envelope jrad_concavefade count 3,3,3 offset -2,-2,-2 }
+				fade { envelope rr2_concavefade_start_at_1_fast }
+			}
+
+			end
+			{
+				size { point 400 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+effect effects/items/enercell_dropped_simple
+{
+	size	0
+
+}
+
+
+

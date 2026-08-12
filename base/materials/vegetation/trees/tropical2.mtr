@@ -1,0 +1,21 @@
+material models/vegetation/trees/tropical2/tropicalplants01
+{
+	nonsolid
+	noshadows
+	twoSided
+
+	{
+		useTemplate material/foliage_translucent_stage<
+			"models/vegetation/trees/tropical2/tropicalplants01_d.tga",
+			"models/vegetation/trees/tropical2/tropicalplants01_transluceny.tga",
+			"models/vegetation/trees/tropical2/tropicalplants01_local.tga",
+			"models/vegetation/trees/tropical2/tropicalplants01_s.tga",
+			"1.0",				// translucency multiplier
+			"0.7", "0.9", "0.7",	// light scattering rgb
+			"picmip -1",
+			"picmip -1",
+			"picmip -2"
+		>	
+		useTemplate wind/animatematrix< 0.15, 0.001 >
+	}
+}

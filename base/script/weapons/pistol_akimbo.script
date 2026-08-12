@@ -1,0 +1,46 @@
+/***********************************************************************
+
+weapon_pistol_akimbo.script
+
+***********************************************************************/
+
+object weapon_pistol_akimbo : weapon_pistol {
+	void			PlayFireAnim();
+	void			PlayFireEffect();
+	
+	void			preinit();
+
+	float			side;
+}
+
+void weapon_pistol_akimbo::preinit() {
+	hasScope		= false;
+	hasIronSights	= false;
+}
+
+void weapon_pistol_akimbo::PlayFireAnim() {
+	if ( side == 0 ) {
+		setBlendFrames( ANIMCHANNEL_ALL, 4 );
+		playAnim( ANIMCHANNEL_ALL, "fire_left" );
+		
+		side = 1;
+	} else {
+		side = 0;
+
+		setBlendFrames( ANIMCHANNEL_ALL, 4 );
+		playAnim( ANIMCHANNEL_ALL, "fire_right" );
+	}
+}
+
+void weapon_pistol_akimbo::PlayFireEffect() {
+	if ( sys.getLocalViewPlayer() != myPlayer || pm_thirdperson.getBoolValue() ) {
+		entity worldModel = getWorldModel( side ); // FIXME			
+		worldModel.playEffect( "fx_muzzle_flash_world", "muzzle", 0.0f );
+	} else {
+		if ( side == 0 ) {
+			playEffect( "fx_muzzle_flash", "muzzle_left", 0.f );
+		} else {
+			playEffect( "fx_muzzle_flash", "muzzle_right", 0.f );
+		}
+	}
+}

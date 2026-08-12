@@ -1,0 +1,58 @@
+
+object deployable_autodeployer {
+	void	preinit();
+	void	init();
+	void	destroy();
+	
+	void	vOnUnDeploy();
+	void	vOnDeploy();
+	
+	void	UnDeploy();
+	void	Deploy();
+	
+	string	objectDef;
+	entity	objectEntity;
+	boolean	alwaysKeep;
+};
+
+void deployable_autodeployer::preinit() {
+	objectDef	= getKey( "def_object" );
+	alwaysKeep	= getIntKey( "always_keep" );
+	
+	if ( objectDef == "" ) {
+		sys.error( "deployable_autodeployer::preinit Missing 'def_object' key\n" );
+	}
+}
+
+void deployable_autodeployer::init() {
+}
+
+void deployable_autodeployer::destroy() {
+}
+
+void deployable_autodeployer::Deploy() {
+	if ( objectEntity != $null_entity || sys.isClient() ) {
+		return;
+	}
+	
+	objectEntity = sys.spawn( objectDef );
+	objectEntity.setOrigin( getWorldOrigin() );
+	objectEntity.setAngles( getAngles() );
+}
+
+void deployable_autodeployer::UnDeploy() {
+	if ( alwaysKeep || objectEntity == $null_entity ) {
+		return;
+	}
+	
+	objectEntity.remove();
+	objectEntity = $null_entity;
+}
+
+void deployable_autodeployer::vOnDeploy() {
+	Deploy();
+}
+
+void deployable_autodeployer::vOnUnDeploy() {
+	UnDeploy();
+}

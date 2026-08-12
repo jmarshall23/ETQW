@@ -1,0 +1,177 @@
+material models/guis/assets/hud/target1_green
+{
+	{
+		blend add
+		maskAlpha
+
+		red	0.17
+		green	1
+		blue	0
+
+		map nopicmip models/guis/assets/hud/target1.tga
+	}
+}
+
+material models/guis/assets/hud/mission_item
+{
+	noshadows
+	{
+		program sfx/deploy
+		maskcolor
+		writeDepth
+		blend GL_ZERO, GL_ONE
+	}
+	{
+		program	sfx/deploy
+		map	    "_white"
+
+		//"textures/effects/gridlines.tga"
+		color   0.17, 1, 0, 0
+		blend add
+		writeDepth
+	}
+	{
+		//if cvar ( r_glDriverVendor != "ATI" )
+		blend		add
+		cullFace	front
+		fillMode	lines	2
+		//map 		_white
+		red		0.17
+		green		1
+		blue		0
+		maskAlpha
+	}
+/*	{
+		blend add
+		maskAlpha
+		vertexcolor
+		red	0.17
+		green	1
+		blue	0
+
+		map _white
+	}
+*/
+}
+
+
+material models/guis/assets/hud/strike_arrow
+{
+	noShadows
+	noimpact
+	{
+		blend add
+		maskAlpha
+
+		red	1 * parm0
+		green 0.17 * parm1
+		blue 0
+		
+		map _white
+	}
+
+	{
+		blend add
+		maskAlpha
+		
+		red parm0
+		green parm1
+		blue parm2
+
+		map nopicmip models/guis/assets/wayptarrows2.tga
+		translate time * -3, 0
+	}
+}
+
+
+material models/guis/assets/hud/target3
+{
+	noShadows
+	noimpact
+	twosided
+	{
+		blend add
+		maskAlpha
+		red	( 0.8 + sinTable[ time ] * 0.5 ) * parm0
+		green ( 0.3 + sinTable[ time ] * 0.17 ) * parm1
+		blue 0
+
+		map nopicmip models/guis/assets/hud/target1.tga
+	}
+}
+
+
+material models/guis/assets/hud/target_arrow
+{
+
+	{
+		blend add
+		maskAlpha
+		vertexcolor
+		red	1
+		green	0.17
+		blue	0
+
+		map nopicmip models/guis/assets/hud/target_arrow.tga
+	}
+}
+
+
+material models/guis/assets/hud/target1
+{
+	{
+		blend add
+		maskAlpha
+		red	1
+		green	0.17
+		blue	0
+
+		map nopicmip models/guis/assets/hud/target1.tga
+	}
+}
+
+material models/guis/assets/hud/target2
+{
+	{
+		blend add
+		maskAlpha
+
+		red	1
+		green	0.17
+		blue	0
+
+		map nopicmip models/guis/assets/hud/target2.tga
+	}
+}
+
+material guis/assets/hud/beam
+{
+	sort gui
+	{
+		blend add
+		map linear nopicmip highquality guis/assets/hud/beam.tga
+	}
+}
+
+
+
+material guis/assets/deploy/marker/world_waypoint
+{
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip makeAlpha( "guis/assets/deploy/marker/world_waypoint.tga" )
+		vertexcolor
+	}
+}
+
+
+material guis/assets/deploy/marker/world_waypoint_arrow
+{
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip makeAlpha( "guis/assets/deploy/marker/world_waypoint_arrow.tga" )
+		vertexcolor
+	}
+}

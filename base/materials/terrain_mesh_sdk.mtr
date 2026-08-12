@@ -1,0 +1,67 @@
+template terrain_mesh_sdk_water_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_regular_FirstFrameNumber.tga",	// Bumpmap
+				"textures2/water/water_regular_NextFrameNumber.tga",	// Bumpmap2
+				"Lerp",							// Lerp
+				"env/valley",						// Cubemap
+				"time * 0.03",						// Translate X
+				"time * 0.03",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.05",							// Distortion Strength
+				"5"							// Reflection Power
+				"1"							// Glare
+				"0.5"							// Bump Scale
+		>
+	}
+}
+
+material water/terrain_mesh_sdk_water {
+	qer_editorimage textures/common/water
+	nonsolid
+	//water
+	//surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+	
+	useTemplate animations/frames10_interpolate < "terrain_mesh_sdk_water_frametemplate", 5 >
+}
+
+
+
+material water/terrain_mesh_sdk_water_underside {
+	qer_editorimage textures/common/water
+	nonsolid
+	sort nearest
+	polygonOffset
+	{
+		blend blend
+		parameters2 0.212, 0.2, 0.122, 0.0006
+		program sfx/foggyWaterSurface
+	}
+	translucent
+}
+
+material fogs/waterFog_terrain_mesh_sdk
+{
+	fogLight refractable			// tell the engine it is fog and not a light
+	noShadows
+	{
+		fogMap		_fog
+		fogEnterMap	_fogEnter
+		red		parm0
+		green		parm1
+		blue		parm2
+		alpha		5000
+		specularPower	10
+	}
+}

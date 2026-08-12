@@ -1,0 +1,54 @@
+atmosphere blue_sky_wip {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.4626378119 -0.2006836087 0.8635349274 )
+	sunColor ( 0.5960784554 0.5803921819 0.5372549295 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 60965
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8299999833 0.3599999845 0 1 )
+		glareBases ( 0.2999999821 0.2999999821 0 0 )
+	}
+	fogDistHalf 8170
+	fogHeightHalf 1569
+	fogHeightOffset 4196
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "blue_sky"
+	skyGradientImage "atmosphere/skies/day_sky01"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 143
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_01" {
+		style old
+		parms 12 ( 0.7699999809 1 0.9411770105 0.8235290051 0.0015 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/sprites/sundisc" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+

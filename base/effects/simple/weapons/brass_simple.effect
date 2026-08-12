@@ -1,0 +1,30 @@
+effect effects/weapons/generic_brass_loop_simple
+{
+	size	8
+
+	sound "Looping Brass Sound"
+	{
+		soundShader	"sounds/weapons/misc/brass"
+	}
+}
+
+effect effects/weapons/generic_brass_stop_simple
+{
+	size	8
+
+	sound "Brass Stop Sound"
+	{
+		soundShader	"sounds/weapons/misc/brass_stop"
+	}
+}
+
+effect effects/weapons/generic/casings_simple
+{
+	size	8
+	sound "Shell Casing Sound"
+	{
+		start		0.7,0.7
+		soundShader	"sounds/weapons/misc/casing"
+		freqshift	0.95,1.05
+	}
+}

@@ -1,0 +1,93 @@
+// ----------------------------------------------------
+// Quarry
+// ----------------------------------------------------
+
+entityDef carryable_item_quarry_1 {
+	"inherit"						"carryable_item_enercell"
+	"task_name"						"maps/quarry/part_1"
+	"item_name"						"maps/quarry/part_1"
+
+	"snd_intro_strogg"				""
+	"snd_reminder_strogg"			""
+	"snd_stolen_strogg"				"sounds/vo/strogg/nexus/maps/quarry/energycells/first/taken"
+	"snd_dropped_strogg"			"sounds/vo/strogg/nexus/maps/quarry/energycells/first/dropped"
+	"snd_returned_strogg"			"sounds/vo/strogg/nexus/maps/quarry/energycells/first/returned"
+	"snd_intro_gdf"					""
+	"snd_reminder_gdf"				""
+	"snd_stolen_gdf"				"sounds/vo/gdf/highcommand/maps/quarry/energycells/first/taken"
+	"snd_dropped_gdf"				"sounds/vo/gdf/highcommand/maps/quarry/energycells/first/dropped"
+	"snd_returned_gdf"				"sounds/vo/gdf/highcommand/maps/quarry/energycells/first/returned"
+	
+	"task_pickup"					"item_pickup_strogg_quarry"
+	"task_return"					"item_return_gdf_quarry"
+	"task_defend"					"item_defend_gdf_quarry"
+	"multi_part_objective"			"1"
+	
+	"return_prof_count"				"0.3333"
+}
+
+entityDef item_drop_pod_quarry_1 {
+	"inherit"						"item_drop_pod"
+	"def_item"						"carryable_item_quarry_1"
+	"item_index"					"0"
+}
+
+entityDef carryable_item_quarry_2 {
+	"inherit"						"carryable_item_enercell"
+	"task_name"						"maps/quarry/part_2"
+	"item_name"						"maps/quarry/part_2"
+
+	"snd_intro_strogg"				""
+	"snd_reminder_strogg"			""
+	"snd_stolen_strogg"				"sounds/vo/strogg/nexus/maps/quarry/energycells/second/taken"
+	"snd_dropped_strogg"			"sounds/vo/strogg/nexus/maps/quarry/energycells/second/dropped"
+	"snd_returned_strogg"			"sounds/vo/strogg/nexus/maps/quarry/energycells/second/returned"
+	"snd_intro_gdf"					""
+	"snd_reminder_gdf"				""
+	"snd_stolen_gdf"				"sounds/vo/gdf/highcommand/maps/quarry/energycells/second/taken"
+	"snd_dropped_gdf"				"sounds/vo/gdf/highcommand/maps/quarry/energycells/second/dropped"
+	"snd_returned_gdf"				"sounds/vo/gdf/highcommand/maps/quarry/energycells/second/returned"
+
+	"task_pickup"					"item_pickup_strogg_quarry"
+	"task_return"					"item_return_gdf_quarry"
+	"task_defend"					"item_defend_gdf_quarry"
+	"multi_part_objective"			"1"
+
+	"return_prof_count"				"0.3333"
+}
+
+entityDef item_drop_pod_quarry_2 {
+	"inherit"						"item_drop_pod"
+	"def_item"						"carryable_item_quarry_2"
+	"item_index"					"1"
+}
+
+entityDef carryable_item_quarry_3 {
+	"inherit"						"carryable_item_enercell"
+	"task_name"						"maps/quarry/part_3"
+	"item_name"						"maps/quarry/part_3"
+
+	"snd_intro_strogg"				""
+	"snd_reminder_strogg"			""
+	"snd_stolen_strogg"				"sounds/vo/strogg/nexus/maps/quarry/energycells/third/taken"
+	"snd_dropped_strogg"			"sounds/vo/strogg/nexus/maps/quarry/energycells/third/dropped"
+	"snd_returned_strogg"			"sounds/vo/strogg/nexus/maps/quarry/energycells/third/returned"
+	"snd_intro_gdf"					""
+	"snd_reminder_gdf"				""
+	"snd_stolen_gdf"				"sounds/vo/gdf/highcommand/maps/quarry/energycells/third/taken"
+	"snd_dropped_gdf"				"sounds/vo/gdf/highcommand/maps/quarry/energycells/third/dropped"
+	"snd_returned_gdf"				"sounds/vo/gdf/highcommand/maps/quarry/energycells/third/returned"
+
+	"task_pickup"					"item_pickup_strogg_quarry"
+	"task_return"					"item_return_gdf_quarry"
+	"task_defend"					"item_defend_gdf_quarry"
+	"multi_part_objective"			"1"
+
+	"return_prof_count"				"0.3333"
+}
+
+entityDef item_drop_pod_quarry_3 {
+	"inherit"						"item_drop_pod"
+	"def_item"						"carryable_item_quarry_3"
+	"item_index"					"2"
+}

@@ -1,0 +1,295 @@
+sound sounds/soundscape/tonal/belltech_02 {
+	sounds/soundscape/tonal/belltech_02.wav
+}
+
+sound sounds/soundscape/tonal/btonal_raspy_01 {
+	sounds/soundscape/tonal/btonal_raspy_01.wav
+}
+
+sound sounds/soundscape/tonal/const_01 {
+	sounds/soundscape/tonal/const_01.wav
+}
+
+sound sounds/soundscape/tonal/grain_02 {
+	sounds/soundscape/tonal/grain_02.wav
+}
+
+sound sounds/soundscape/tonal/pensivestrogg_01 {
+	sounds/soundscape/tonal/pensivestrogg_01.wav
+}
+
+sound sounds/soundscape/tonal/pensivestrogg_02 {
+	sounds/soundscape/tonal/pensivestrogg_02.wav
+}
+
+sound sounds/soundscape/tonal/risenfall_01 {
+	sounds/soundscape/tonal/risenfall_01.wav
+}
+
+sound sounds/soundscape/tonal/tonal_01 {
+	sounds/soundscape/tonal/tonal_01.wav
+}
+
+sound sounds/soundscape/tonal/risenfall_03 {
+	sounds/soundscape/tonal/risenfall_03.wav
+}
+
+sound sounds/soundscape/tonal/risenfall_02 {
+	sounds/soundscape/tonal/risenfall_02.wav
+}
+
+sound sounds/soundscape/tonal/grain_01 {
+	sounds/soundscape/tonal/grain_01.wav
+}
+
+sound sounds/soundscape/tonal/const_03 {
+	sounds/soundscape/tonal/const_03.wav
+}
+
+sound sounds/soundscape/tonal/const_02 {
+	sounds/soundscape/tonal/const_02.wav
+}
+
+sound sounds/soundscape/tonal/btonal_raspy_04 {
+	sounds/soundscape/tonal/btonal_raspy_04.wav
+}
+
+sound sounds/soundscape/tonal/btonal_raspy_03 {
+	sounds/soundscape/tonal/btonal_raspy_03.wav
+}
+
+sound sounds/soundscape/tonal/btonal_raspy_02 {
+	sounds/soundscape/tonal/btonal_raspy_02.wav
+}
+
+sound sounds/soundscape/tonal/belltech_03 {
+	sounds/soundscape/tonal/belltech_03.wav
+}
+
+sound sounds/soundscape/tonal/belltech_01 {
+	sounds/soundscape/tonal/belltech_01.wav
+}
+
+sound sounds/soundscape/tonal/atonal_04 {
+	sounds/soundscape/tonal/atonal_04.wav
+}
+
+sound sounds/soundscape/tonal/atonal_03 {
+	sounds/soundscape/tonal/atonal_03.wav
+}
+
+sound sounds/soundscape/tonal/atonal_02_bass {
+	sounds/soundscape/tonal/atonal_02_bass.wav
+}
+
+sound sounds/soundscape/tonal/atonal_01 {
+	sounds/soundscape/tonal/atonal_01.wav
+}
+
+sound sounds/soundscape/plain/btone_01 {
+	sounds/soundscape/plain/btone_01.wav
+}
+
+sound sounds/soundscape/plain/atone_03 {
+	sounds/soundscape/plain/atone_03.wav
+}
+
+sound sounds/soundscape/plain/btone_04 {
+	sounds/soundscape/plain/btone_04.wav
+}
+
+sound sounds/soundscape/plain/ctone_01 {
+	sounds/soundscape/plain/ctone_01.wav
+}
+
+sound sounds/soundscape/plain/ctone_02 {
+	sounds/soundscape/plain/ctone_02.wav
+}
+
+sound sounds/soundscape/plain/dulint_03 {
+	sounds/soundscape/plain/dulint_03.wav
+}
+
+sound sounds/soundscape/plain/dulint_04 {
+	sounds/soundscape/plain/dulint_04.wav
+}
+
+sound sounds/soundscape/high/phigh_02 {
+	sounds/soundscape/high/phigh_02.wav
+}
+
+sound sounds/soundscape/high/phigh_03 {
+	sounds/soundscape/high/phigh_03.wav
+}
+
+sound sounds/soundscape/tech/slipgateb_04 {
+	sounds/soundscape/tech/slipgateb_04.wav
+}
+
+sound sounds/soundscape/tech/slipgateb_03 {
+	sounds/soundscape/tech/slipgateb_03.wav
+}
+
+sound sounds/soundscape/tech/slipgateb_02 {
+	sounds/soundscape/tech/slipgateb_02.wav
+}
+
+sound sounds/soundscape/tech/slipgateb_01 {
+	sounds/soundscape/tech/slipgateb_01.wav
+}
+
+sound sounds/soundscape/tech/atech_04 {
+	sounds/soundscape/tech/atech_04.wav
+}
+
+sound sounds/soundscape/tech/atech_03 {
+	sounds/soundscape/tech/atech_03.wav
+}
+
+sound sounds/soundscape/tech/atech_02 {
+	sounds/soundscape/tech/atech_02.wav
+}
+
+sound sounds/soundscape/tech/atech_01 {
+	sounds/soundscape/tech/atech_01.wav
+}
+
+sound sounds/soundscape/plain/btone_02 {
+	sounds/soundscape/plain/btone_02.wav
+}
+
+sound sounds/soundscape/plain/ctone_03 {
+	sounds/soundscape/plain/ctone_03.wav
+}
+
+sound sounds/soundscape/plain/dulint_01 {
+	sounds/soundscape/plain/dulint_01.wav
+}
+
+sound sounds/soundscape/plain/dulint_02 {
+	sounds/soundscape/plain/dulint_02.wav
+}
+
+sound sounds/soundscape/plain/interior_01 {
+	sounds/soundscape/plain/interior_01.wav
+}
+
+sound sounds/soundscape/plain/interior_02 {
+	sounds/soundscape/plain/interior_02.wav
+}
+
+sound sounds/soundscape/plain/interior_03 {
+	sounds/soundscape/plain/interior_03.wav
+}
+
+sound sounds/soundscape/plain/atone_02 {
+	sounds/soundscape/plain/atone_02.wav
+}
+
+sound sounds/soundscape/plain/atone_01 {
+	sounds/soundscape/plain/atone_01.wav
+}
+
+sound sounds/soundscape/grinders/grinda_03 {
+	sounds/soundscape/grinders/grinda_03.wav
+}
+
+sound sounds/soundscape/grinders/grinda_04 {
+	sounds/soundscape/grinders/grinda_04.wav
+}
+
+sound sounds/soundscape/grinders/grinda_05 {
+	sounds/soundscape/grinders/grinda_05.wav
+}
+
+sound sounds/soundscape/grinders/harmonik_01 {
+	sounds/soundscape/grinders/harmonik_01.wav
+}
+
+sound sounds/soundscape/grinders/harmonik_02 {
+	sounds/soundscape/grinders/harmonik_02.wav
+}
+
+sound sounds/soundscape/grinders/harmonik_03 {
+	sounds/soundscape/grinders/harmonik_03.wav
+}
+
+sound sounds/soundscape/grinders/strogcomtech_01 {
+	sounds/soundscape/grinders/strogcomtech_01.wav
+}
+
+sound sounds/soundscape/grinders/strogcomtech_02 {
+	sounds/soundscape/grinders/strogcomtech_02.wav
+}
+
+sound sounds/soundscape/grinders/strogcomtech_03 {
+	sounds/soundscape/grinders/strogcomtech_03.wav
+}
+
+sound sounds/soundscape/grinders/strogcomtech_04 {
+	sounds/soundscape/grinders/strogcomtech_04.wav
+}
+
+sound sounds/soundscape/grinders/strogcomtech_05 {
+	sounds/soundscape/grinders/strogcomtech_05.wav
+}
+
+sound sounds/soundscape/grinders/stroggrind_01 {
+	sounds/soundscape/grinders/stroggrind_01.wav
+}
+
+sound sounds/soundscape/grinders/stroggrind_02 {
+	sounds/soundscape/grinders/stroggrind_02.wav
+}
+
+sound sounds/soundscape/grinders/stroggrind_03 {
+	sounds/soundscape/grinders/stroggrind_03.wav
+}
+
+sound sounds/soundscape/grinders/stroggrind_04 {
+	sounds/soundscape/grinders/stroggrind_04.wav
+}
+
+sound sounds/soundscape/grinders/grinda_01 {
+	sounds/soundscape/grinders/grinda_01.wav
+}
+
+sound sounds/soundscape/deep/bowels_01 {
+	sounds/soundscape/deep/bowels_01.wav
+}
+
+sound sounds/soundscape/deep/bowels_02 {
+	sounds/soundscape/deep/bowels_02.wav
+}
+
+sound sounds/soundscape/deep/bowels_03 {
+	sounds/soundscape/deep/bowels_03.wav
+}
+
+sound sounds/soundscape/air/bair_03 {
+	sounds/soundscape/air/bair_03.wav
+}
+
+sound sounds/soundscape/plain/ctone_05 {
+	sounds/soundscape/plain/ctone_05.wav
+}
+
+sound sounds/soundscape/plain/ctone_04 {
+	sounds/soundscape/plain/ctone_04.wav
+}
+
+sound sounds/soundscape/plain/tone_02 {
+	sounds/soundscape/plain/tone_02.wav
+}
+
+sound sounds/soundscape/plain/tone_01 {
+	sounds/soundscape/plain/tone_01.wav
+}
+
+sound sounds/soundscape/plain/interior_05 {
+	sounds/soundscape/plain/interior_05.wav
+}
+
+sound sounds/soundscape/plain/interior_04 {
+	sounds/soundscape/plain/interior_04.wav
+}

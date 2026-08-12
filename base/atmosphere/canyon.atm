@@ -1,0 +1,1688 @@
+atmosphere canyon_new {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.7221633196 -0.4334068 0.53910923 )
+	sunColor ( 0.784313798 0.5294117928 0.360784322 )
+	sunHaloScale 0.0700000003
+	sunHaloBias -0.3200000226
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "m1k3/sunsprite_canyon"
+	sunFlareSize 100000
+	sunFlareTime 35
+	enableSunFlareAziZen 1
+	sunFlareAzi 133
+	sunFlareZen 21
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 1.1599999666 0.969999969 1 0.5999999642 )
+		glareBases ( 0.5 1 0 0 )
+	}
+	fogDistHalf 719
+	fogHeightHalf 1242
+	fogHeightOffset 8824
+	fogColor ( 0.4862745106 0.4392156899 0.3921568692 )
+	fogStart 0
+	fogEnd 48127
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon_final_ambient"
+	skyGradientImage "atmosphere/skies/canyon_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/canyon_newest" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+ambientCubemap canyon_new_ambient {
+	ambientLight {
+		color 0.1764705926 0.2000000179 0.250980407
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2588235438 0.2627451122 0.2980392277
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3686274588 0.4000000358 0.4705882668
+		direction -0.1299292594 0.9244948626 0.3583679497
+		name "Light2"
+	}
+	ambientLight {
+		color 0.270588249 0.3333333433 0.3843137622
+		direction -0.9549941421 0.2919710279 0.0523359664
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2078431547 0.2470588386 0.2823529541
+		direction 0.9323009849 0.0488598235 0.3583679497
+		name "Light5"
+	}
+	ambientLight {
+		color 0.6352941394 0.5764706135 0.5372549295
+		direction -0.4808294475 -0.8002346158 0.3583679497
+		name "Light6"
+	}
+	ambientLight {
+		color 0.250980407 0.231372565 0.2156862915
+		direction 0.6367003322 -0.6827774644 0.3583679497
+		name "Light6"
+	}
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}atmosphere canyon_robert {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( -0.0947882161 -0.1240931451 0.9877328873 )
+	sunColor ( 0.784313798 0.7019608021 0.5568627715 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_orange"
+	sunSpriteSize 43304
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.8784314394 0.7725490928 0.5803921819 )
+		saturation 1
+		contrast 1
+		glareParms ( 1.4900000095 0.7899999619 0.4399999976 1 )
+		glareBases ( 0.349999994 0 0 0 )
+	}
+	fogDistHalf 3079
+	fogHeightHalf 2682
+	fogHeightOffset 8053
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon_robert_amb"
+	skyGradientImage "atmosphere/canyonsky_rob"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 146
+	windStrengthDev 133
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/tiledclouds" {
+		style old
+		parms 12 ( 0.400000006 1 0.9411770105 0.8235290051 0.0009 3 0 1 1 0 0 0 )
+	}
+}
+
+atmosphere canyon01 {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright"
+	sunDir ( 0.4847435057 -0.4433989525 0.7539370656 )
+	sunColor ( 0.8399036527 0.7850415707 0.6685373783 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_orange"
+	sunSpriteSize 39912
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8899999857 0.969999969 0.7799999714 0.8399999738 )
+		glareBases ( 0 1 0 0 )
+	}
+	fogDistHalf 8170
+	fogHeightHalf 1569
+	fogHeightOffset 5647
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon01"
+	skyGradientImage "atmosphere/skies/canyon_blue"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 146
+	windStrengthDev 133
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/canyon01" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/tiledclouds" {
+		style old
+		parms 12 ( 0.6000000238 1 1 1 0.0015 1 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/canyon_clouds" {
+		style old
+		parms 12 ( 0.625 1 1 1 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/sprites/sundisc" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere canyon02 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.0934372917 -0.5204188824 0.8487837315 )
+	sunColor ( 0.6039215922 0.6156862974 0.5333333611 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.2600000203
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 5261
+	fogHeightHalf 2778
+	fogHeightOffset 8157
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon02"
+	skyGradientImage "atmosphere/sandsky01_p"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere canyon03 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.5059353113 -0.5791010857 0.6392741203 )
+	sunColor ( 0.4470588565 0.4588235617 0.3960784674 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.0700000003
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 4477
+	fogHeightHalf 2778
+	fogHeightOffset 8157
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon03"
+	skyGradientImage "atmosphere/sandsky01_p"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere canyon04 {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright"
+	sunDir ( -0.1019260883 -0.508040607 0.8552812338 )
+	sunColor ( 0.5294117928 0.5372549295 0.5960784554 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 34649
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 8170
+	fogHeightHalf 1569
+	fogHeightOffset 5647
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon04"
+	skyGradientImage "atmosphere/skies/day_sky05"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 70
+	windStrengthDev 83
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere canyon05 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.1019260883 -0.508040607 0.8552812338 )
+	sunColor ( 0.6039215922 0.6156862974 0.5333333611 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.2600000203
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 27193
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 5261
+	fogHeightHalf 2778
+	fogHeightOffset 8157
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon05"
+	skyGradientImage "atmosphere/skies/day_sky06"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere canyon06 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.1019260883 -0.508040607 0.8552812338 )
+	sunColor ( 0.6470588446 0.6078431606 0.5254902244 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 21491
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 8170
+	fogHeightHalf 1569
+	fogHeightOffset 5647
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon06"
+	skyGradientImage "atmosphere/skies/ph_day4"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 146
+	windStrengthDev 133
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_01" {
+		style old
+		parms 12 ( 0.5649999976 0.9098039865 0.9450979829 0.9686279893 0.0015 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere canyon07 {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( -0.1077844575 -0.6641930342 0.7397500277 )
+	sunColor ( 0.6470588446 0.6078431606 0.5254902244 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 35965
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 8170
+	fogHeightHalf 1569
+	fogHeightOffset 5647
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon07"
+	skyGradientImage "atmosphere/skies/day_sky07"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 146
+	windStrengthDev 133
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.3000000119 1 1 1 0.0015 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere canyon07_blank {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( -0.1077844575 -0.6641930342 0.7397500277 )
+	sunColor ( 0.6470588446 0.6078431606 0.5254902244 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 35965
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 8170
+	fogHeightHalf 1569
+	fogHeightOffset 5647
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon07_blank"
+	skyGradientImage "atmosphere/skies/day_sky07"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 146
+	windStrengthDev 133
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere canyon_cloudy {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.0934372917 -0.5204188824 0.8487837315 )
+	sunColor ( 0.7490196228 0.7490196228 0.7490196228 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.2600000203
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 9900
+	fogHeightHalf 9900
+	fogHeightOffset 9900
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon_cloudy"
+	skyGradientImage "atmosphere/skies/day_cloudy2"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere canyon_sunset {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.7082707286 -0.6365335584 0.3052503467 )
+	sunColor ( 0.6524224281 0.5529913306 0.3732008636 )
+	sunHaloScale 0.1700000018
+	sunHaloBias -0.1400000155
+	sunSpriteMaterial "atmospheres/sprites/sundisc_sunset"
+	sunSpriteSize 12719
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 1400
+	fogHeightHalf 752
+	fogHeightOffset 3137
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon_sunset"
+	skyGradientImage "atmosphere/skies/ph_sunset5"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 77
+	windAngleDev 10
+	windStrength 156
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/mediumalt_cube" {
+		style old
+		parms 12 ( 0.5 0.9294120073 0.8823530078 0.8196079731 0.0020000001 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_01" {
+		style old
+		parms 12 ( 0.400000006 0.7607839704 0.5686269999 0.4392159879 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.5049999952 0.7921569943 0.611765027 0.4901959896 0.001 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere canyon_night {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.1019260883 -0.508040607 0.8552812338 )
+	sunColor ( 0.2039215863 0.2823529541 0.4666666985 )
+	sunHaloScale 0
+	sunHaloBias -0.0400000215
+	sunSpriteMaterial "atmospheres/sprites/moon_full"
+	sunSpriteSize 14474
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.9529411793 0.9686274529 1 )
+		saturation 0.8199999928
+		contrast 1
+		glareParms ( 0.8199999928 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 359
+	fogHeightHalf 6830
+	fogHeightOffset 6627
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon_night"
+	skyGradientImage "atmosphere/skies/ph_night"
+	farClip 0
+	isNight 1
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 54
+	windStrength 100
+	windStrengthDev 32
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/star" {
+		style old
+		parms 12 ( 1 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/bumpmapped" {
+		style old
+		parms 12 ( 0.375 0.8050000072 0.0500000007 0.6000000238 2.4000000954 0.0049999999 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere canyon_dawn {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( -0.1206271276 -0.8641878963 0.4884961843 )
+	sunColor ( 0.5960784554 0.521568656 0.4392157197 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 35965
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 8170
+	fogHeightHalf 1569
+	fogHeightOffset 5647
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon_dawn"
+	skyGradientImage "atmosphere/skies/dawn_sky01"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 146
+	windStrengthDev 133
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.3000000119 1 1 1 0.0015 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere canyon_ambient2 {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( -0.0934372917 -0.5204188824 0.8487837315 )
+	sunColor ( 0.6470588446 0.6078431606 0.5254902244 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 35965
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8399999738 1 0 1 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 8170
+	fogHeightHalf 1569
+	fogHeightOffset 5647
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon_ambient2"
+	skyGradientImage "atmosphere/skies/day_sky07"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 146
+	windStrengthDev 133
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.3000000119 1 1 1 0.0015 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere canyon_sunset_tweak {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.7082707286 -0.6365335584 0.3052503467 )
+	sunColor ( 0.6524224281 0.5529913306 0.3732008636 )
+	sunHaloScale 0.1700000018
+	sunHaloBias -0.1400000155
+	sunSpriteMaterial "atmospheres/sprites/sundisc_sunset"
+	sunSpriteSize 12719
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1.0299999714
+		contrast 1
+		glareParms ( 1 0.9300000072 0.4899999797 0.4799999893 )
+		glareBases ( 0.3000000119 0.3000000119 0 1 )
+	}
+	fogDistHalf 1400
+	fogHeightHalf 752
+	fogHeightOffset 3137
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon_sunset_tweak"
+	skyGradientImage "atmosphere/skies/ph_sunset5"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 77
+	windAngleDev 10
+	windStrength 156
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/mediumalt_cube" {
+		style old
+		parms 12 ( 0.5 0.9294120073 0.8823530078 0.8196079731 0.0020000001 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_01" {
+		style old
+		parms 12 ( 0.400000006 0.7607839704 0.5686269999 0.4392159879 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.5049999952 0.7921569943 0.611765027 0.4901959896 0.001 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+ambientCubemap canyon01 {
+	ambientLight {
+		color 0.4588235617 0.4274510145 0.3254902065
+		direction -0.1953730732 -0.9191581011 0.342020154
+		name "Light0"
+	}
+	ambientLight {
+		color 0.4352941513 0.4627451301 0.501960814
+		direction -0.0341368467 0.9775517583 0.2079117
+		name "Light1"
+	}
+	ambientLight {
+		color 0.4705882668 0.5490196347 0.5960784554
+		direction 0.9561591148 0.2923271656 -0.0174523946
+		name "Light2"
+	}
+	ambientLight {
+		color 0.4705882668 0.4156863093 0.3529411852
+		direction 0.0000000243 0 -1
+		name "Light4"
+	}
+	ambientLight {
+		color 0.5254902244 0.5725490451 0.6039215922
+		direction -0.9063077569 0.0000000221 0.4226182699
+		name "Light5"
+	}
+	envMap "env/canyon"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+
+
+
+
+
+
+
+
+ambientCubemap canyon02 {
+	AmbientLight {
+		Color 0.4549019933 0.4549019933 0.5058823824
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.1921568811 0.2156862915 0.3019607961
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.4470588565 0.3725490272 0.3019607961
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.3764706254 0.3843137622 0.4117647409
+		Direction -1 0 0
+	}
+	AmbientLight {
+		Color 0.2980392277 0.3019607961 0.2941176593
+		Direction -0.0174284764 0.998477459 0.0523359664
+	}
+	AmbientLight {
+		Color 0.5921568871 0.5960784554 0.6588235497
+		Direction 0.9996954203 -0.0174497478 0.0174524188
+	}
+	AmbientLight {
+		Color 0.1372549087 0.0862745121 0.0784313753
+		Direction 0.0000000086 0.7071067691 -0.7071067691
+	}
+	AmbientLight {
+		Color 0.1215686351 0.1176470667 0.1019607931
+		Direction 0.3476583064 -0.3999351263 0.8480480909
+	}
+	AmbientLight {
+		Color 0.4549019933 0.3568627536 0.2901960909
+		Direction -0.693785429 -0.6246872544 -0.3583679497
+	}
+	AmbientLight {
+		Color 0.231372565 0.2745098174 0.2980392277
+		Direction -0.5813086629 0.7714226842 -0.2588190436
+	}
+}
+
+ambientCubemap canyon03 {
+	AmbientLight {
+		Color 0.4549019933 0.4549019933 0.5058823824
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.1921568811 0.2156862915 0.3019607961
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.4470588565 0.3725490272 0.3019607961
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.3764706254 0.3843137622 0.4117647409
+		Direction -1 0 0
+	}
+	AmbientLight {
+		Color 0.2980392277 0.3019607961 0.2941176593
+		Direction -0.0174284764 0.998477459 0.0523359664
+	}
+	AmbientLight {
+		Color 0.5921568871 0.5960784554 0.6588235497
+		Direction 0.9996954203 -0.0174497478 0.0174524188
+	}
+	AmbientLight {
+		Color 0.1372549087 0.0862745121 0.0784313753
+		Direction 0.0000000086 0.7071067691 -0.7071067691
+	}
+	AmbientLight {
+		Color 0.1215686351 0.1176470667 0.1019607931
+		Direction 0.3476583064 -0.3999351263 0.8480480909
+	}
+	AmbientLight {
+		Color 0.4549019933 0.3568627536 0.2901960909
+		Direction -0.693785429 -0.6246872544 -0.3583679497
+	}
+	AmbientLight {
+		Color 0.231372565 0.2745098174 0.2980392277
+		Direction -0.5813086629 0.7714226842 -0.2588190436
+	}
+}
+
+ambientCubemap canyon04 {
+	AmbientLight {
+		Color 0.2352941334 0.2352941334 0.2352941334
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.5647059083 0.4862745404 0.4078431726
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.3725490272 0.3803921938 0.3490196168
+		Direction 0.1756406128 0.9035925865 0.3907311261
+	}
+	AmbientLight {
+		Color 0.2470588386 0.2627451122 0.2862745225
+		Direction 0.0173223317 -0.9923949838 0.1218693554
+	}
+	AmbientLight {
+		Color 0.392156899 0.3647058904 0.3450980484
+		Direction -0.7487820387 0.39813447 0.5299192667
+	}
+	AmbientLight {
+		Color 0.4117647409 0.3764706254 0.3843137622
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.2235294282 0.2078431547 0.2078431547
+		Direction -0.7036204934 -0.6794784069 0.2079117
+	}
+	AmbientLight {
+		Color 0.4588235617 0.5294117928 0.5411764979
+		Direction 0.5998821259 0.7678140998 -0.2249510437
+	}
+}
+
+ambientCubemap canyon05 {
+	AmbientLight {
+		Color 0.4549019933 0.4549019933 0.5058823824
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.1921568811 0.2156862915 0.3019607961
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.4470588565 0.3725490272 0.3019607961
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.3764706254 0.3843137622 0.4117647409
+		Direction -1 0 0
+	}
+	AmbientLight {
+		Color 0.2980392277 0.3019607961 0.2941176593
+		Direction -0.0174284764 0.998477459 0.0523359664
+	}
+	AmbientLight {
+		Color 0.5921568871 0.5960784554 0.6588235497
+		Direction 0.9996954203 -0.0174497478 0.0174524188
+	}
+	AmbientLight {
+		Color 0.1372549087 0.0862745121 0.0784313753
+		Direction 0.0000000086 0.7071067691 -0.7071067691
+	}
+	AmbientLight {
+		Color 0.1215686351 0.1176470667 0.1019607931
+		Direction 0.3476583064 -0.3999351263 0.8480480909
+	}
+	AmbientLight {
+		Color 0.4549019933 0.3568627536 0.2901960909
+		Direction -0.693785429 -0.6246872544 -0.3583679497
+	}
+	AmbientLight {
+		Color 0.231372565 0.2745098174 0.2980392277
+		Direction -0.5813086629 0.7714226842 -0.2588190436
+	}
+}
+
+ambientCubemap canyon06 {
+	AmbientLight {
+		Color 0.2823529541 0.3333333433 0.4000000358
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.5647059083 0.4862745404 0.4078431726
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.3372549117 0.3568627536 0.3764706254
+		Direction 0.1756406128 0.9035925865 0.3907311261
+	}
+	AmbientLight {
+		Color 0.3803921938 0.4039216042 0.4392157197
+		Direction 0.0173223317 -0.9923949838 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3568627536 0.3960784674
+		Direction -0.8843650818 0.4506065547 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3764706254 0.4117647409
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3764706254 0.4039216042 0.4156863093
+		Direction -0.7036204934 -0.6794784069 0.2079117
+	}
+}
+
+ambientCubemap canyon07 {
+	AmbientLight {
+		Color 0.2823529541 0.3333333433 0.4000000358
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.5647059083 0.4862745404 0.4078431726
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.3372549117 0.3568627536 0.3764706254
+		Direction 0.1756406128 0.9035925865 0.3907311261
+	}
+	AmbientLight {
+		Color 0.3803921938 0.4039216042 0.4392157197
+		Direction 0.0173223317 -0.9923949838 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3568627536 0.3960784674
+		Direction -0.8843650818 0.4506065547 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3764706254 0.4117647409
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3764706254 0.4039216042 0.4156863093
+		Direction -0.7036204934 -0.6794784069 0.2079117
+	}
+	AmbientLight {
+		Color 0.270588249 0.2941176593 0.3254902065
+		Direction -0.1732251644 0.9824088216 -0.0697564632
+	}
+	AmbientLight {
+		Color 0.2078431547 0.231372565 0.2470588386
+		Direction 0.6486189961 0.6955587268 0.3090170026
+	}
+}
+
+ambientCubemap canyon07_blank {
+	AmbientLight {
+		Color 0.2823529541 0.3333333433 0.4000000358
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.5647059083 0.4862745404 0.4078431726
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.3372549117 0.3568627536 0.3764706254
+		Direction 0.1756406128 0.9035925865 0.3907311261
+	}
+	AmbientLight {
+		Color 0.3803921938 0.4039216042 0.4392157197
+		Direction 0.0173223317 -0.9923949838 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3568627536 0.3960784674
+		Direction -0.8843650818 0.4506065547 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3764706254 0.4117647409
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3764706254 0.4039216042 0.4156863093
+		Direction -0.7036204934 -0.6794784069 0.2079117
+	}
+	AmbientLight {
+		Color 0.270588249 0.2941176593 0.3254902065
+		Direction -0.1732251644 0.9824088216 -0.0697564632
+	}
+	AmbientLight {
+		Color 0.2078431547 0.231372565 0.2470588386
+		Direction 0.6486189961 0.6955587268 0.3090170026
+	}
+}
+
+ambientCubemap canyon_cloudy {
+	AmbientLight {
+		Color 0.4274510145 0.4196078777 0.392156899
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.2901960909 0.2745098174 0.2627451122
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.4117647409 0.3960784674 0.3725490272
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.3725490272 0.3725490272 0.4117647409
+		Direction -1 0 0
+	}
+	AmbientLight {
+		Color 0.4313725829 0.4313725829 0.4509804249
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.5254902244 0.5254902244 0.5254902244
+		Direction 1 0 0
+	}
+}
+
+ambientCubemap canyon_sunset {
+	AmbientLight {
+		Color 0.1686274558 0.1843137294 0.2078431547
+		Direction -0.743031621 0.6690286994 0.0174524188
+	}
+	AmbientLight {
+		Color 0.3568627536 0.2431372702 0.2352941334
+		Direction 0.4999238551 -0.8658934832 0.0174524188
+	}
+	AmbientLight {
+		Color 0.160784319 0.2078431547 0.2117647231
+		Direction -1 0 0
+	}
+	AmbientLight {
+		Color 0.5490196347 0.4941176772 0.4078431726
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3098039329 0.2627451122 0.2196078598
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.1725490242 0.2078431547 0.2470588386
+		Direction 0.2232743204 0.9671072364 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3411764801 0.2862745225 0.2156862915
+		Direction -0.2362673134 -0.8239620924 0.5150380731
+	}
+	AmbientLight {
+		Color 1 0.8039216399 0.5725490451
+		Direction 0.6697921157 0.4349680543 0.6018150449
+	}
+}
+
+ambientCubemap canyon_night {
+	AmbientLight {
+		Color 0.1411764771 0.1686274558 0.1960784495
+		Direction 0.1450746953 -0.4464939833 0.8829476237
+	}
+	AmbientLight {
+		Color 0.4352941513 0.5411764979 0.611764729
+		Direction 0.0000000101 0.8290376067 -0.5591928959
+	}
+	AmbientLight {
+		Color 0.3686274588 0.5137255192 0.5764706135
+		Direction 0.9396926165 0 -0.3420201242
+	}
+	AmbientLight {
+		Color 0.1372549087 0.2078431547 0.2549019754
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.3019607961 0.2117647231 0.180392161
+		Direction 0.0000000243 0 -1
+	}
+	AmbientLight {
+		Color 0.2745098174 0.3019607961 0.4117647409
+		Direction -0.870354414 0.3694435656 -0.3255681396
+	}
+}
+
+ambientCubemap canyon_dawn {
+	AmbientLight {
+		Color 0.4000000358 0.3647058904 0.3019607961
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.5647059083 0.4862745404 0.4078431726
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.3372549117 0.3568627536 0.3764706254
+		Direction 0.1756406128 0.9035925865 0.3907311261
+	}
+	AmbientLight {
+		Color 0.3647058904 0.3529411852 0.2823529541
+		Direction 0.0173223317 -0.9923949838 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3019607961 0.3568627536 0.3960784674
+		Direction -0.8843650818 0.4506065547 0.1218693554
+	}
+	AmbientLight {
+		Color 0.4392157197 0.4392157197 0.4549019933
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.521568656 0.4980392456 0.4980392456
+		Direction -0.7036204934 -0.6794784069 0.2079117
+	}
+	AmbientLight {
+		Color 0.270588249 0.2941176593 0.3254902065
+		Direction -0.1732251644 0.9824088216 -0.0697564632
+	}
+	AmbientLight {
+		Color 0.2078431547 0.231372565 0.2470588386
+		Direction 0.6486189961 0.6955587268 0.3090170026
+	}
+}
+
+ambientCubemap canyon_ambient2 {
+	AmbientLight {
+		Color 0.3333333433 0.392156899 0.4549019933
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.4666666985 0.3803921938 0.3450980484
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.4235294461 0.4470588565 0.4745098352
+		Direction 0.1756406128 0.9035925865 0.3907311261
+	}
+	AmbientLight {
+		Color 0.4745098352 0.501960814 0.5490196347
+		Direction 0.0173223317 -0.9923949838 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3960784674 0.4705882668 0.5254902244
+		Direction -0.8843650818 0.4506065547 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3568627536 0.4431372881 0.4901961088
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.4627451301 0.4941176772 0.5137255192
+		Direction -0.7036204934 -0.6794784069 0.2079117
+	}
+	envMap "env/canyon"
+}
+
+ambientCubemap canyon_sunset_tweak {
+	AmbientLight {
+		Color 0.1686274558 0.1843137294 0.2078431547
+		Direction -0.743031621 0.6690286994 0.0174524188
+	}
+	AmbientLight {
+		Color 0.3568627536 0.2431372702 0.2352941334
+		Direction 0.4999238551 -0.8658934832 0.0174524188
+	}
+	AmbientLight {
+		Color 0.160784319 0.2078431547 0.2117647231
+		Direction -1 0 0
+	}
+	AmbientLight {
+		Color 0.5490196347 0.4941176772 0.4078431726
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3098039329 0.2627451122 0.2196078598
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.1725490242 0.2078431547 0.2470588386
+		Direction 0.2232743204 0.9671072364 0.1218693554
+	}
+	AmbientLight {
+		Color 0.3411764801 0.2862745225 0.2156862915
+		Direction -0.2362673134 -0.8239620924 0.5150380731
+	}
+	AmbientLight {
+		Color 1 0.8039216399 0.5725490451
+		Direction 0.6697921157 0.4349680543 0.6018150449
+	}
+	AmbientLight {
+		Color 0.1882353127 0.2039215863 0.2274509966
+		Direction -0.783870399 0.2699082494 -0.5591928959
+	}
+	AmbientLight {
+		Color 0.7098039389 0.5686274767 0.4980392456
+		Direction 0.8365163207 0.4829629064 0.2588190436
+	}
+	AmbientLight {
+		Color 0.1764705926 0.1921568811 0.2117647231
+		Direction -0.3123921156 0.4810416996 -0.8191520572
+	}
+}
+
+ambientCubemap canyon_robert_amb {
+	AmbientLight {
+		Color 0.6431372762 0.6705882549 0.7294117808
+		Direction 0.9924038649 0.0868240893 -0.0871557295
+	}
+	AmbientLight {
+		Color 1 0.9882353544 0.9411765337
+		Direction -0.9661049843 0.2053519785 0.1564344764
+	}
+	AmbientLight {
+		Color 0 0.0745098069 0.1490196139
+		Direction 0.7783090472 -0.6080816388 -0.1564344466
+	}
+	AmbientLight {
+		Color 0.1568627506 0.1450980455 0.1254902035
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.0509803966 0.0627451017 0.0745098069
+		Direction 0.209389016 0.7814503908 0.587785244
+	}
+	AmbientLight {
+		Color 0.270588249 0.250980407 0.2000000179
+		Direction 0.4428956211 -0.7990048528 0.4067366421
+	}
+}ambientCubeMap canyon_underground_base {
+	ambientLight {
+		color 0.2117647082 0.2117647082 0.2117647082
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1960784346 0.1960784346 0.1960784346
+		direction 0.9612616897 0 0.2756373584
+		name "Light1"
+	}
+	ambientLight {
+		color 0.2666666806 0.2392156869 0.2274509817
+		direction -0.4062468112 0.8711989522 0.2756373584
+		name "Light2"
+	}
+	ambientLight {
+		color 0.2470588386 0.2235294282 0.2078431547
+		direction -0.7363691926 -0.6178871393 0.2756373584
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1333333403 0.1333333403 0.1333333403
+		direction 0 0 -1
+		name "Light4"
+	}
+	indoors
+	envMap "env/canyon/underground_base"
+	ambientColor 0.250980407 0.250980407 0.250980407
+	highLightColor 0.5803921819 0.5803921819 0.5803921819
+	brightness 1.1000000238
+}
+
+
+
+ambientCubemap canyon_outpost_storage_bunker {
+	ambientLight {
+		color 0 0 0
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.3058823645 0.3058823645 0.3058823645
+		direction 0.9612616897 0 0.2756373584
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3098039329 0.2980392277 0.2941176593
+		direction -0.4062468112 0.8711989522 0.2756373584
+		name "Light2"
+	}
+	ambientLight {
+		color 0.5490196347 0.5333333611 0.5254902244
+		direction -0.7363691926 -0.6178871393 0.2756373584
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1764705926 0.2000000179 0.2117647231
+		direction 0 0 -1
+		name "Light4"
+	}
+	indoors
+	envMap "env/canyon/has_interior"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}ambientCubeMap canyon_final_ambient {
+	ambientLight {
+		color 0.0862745121 0.0980392247 0.1254902035
+		direction 0 0 1
+		name "Light0"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3803921938 0.3254902065 0.2666666806
+		direction 0 0 -1
+		name "Light1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3137255013 0.3137255013 0.3137255013
+		direction 0.3039440513 0.8827176094 0.3583679497
+		name "Light2"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3215686381 0.3764706254 0.4392157197
+		direction -0.8878877163 0.2884922326 0.3583679497
+		name "Light4"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.250980407 0.2392157018 0.2156862915
+		direction 0.9323009849 0.0488598235 0.3583679497
+		name "Light5"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3137255013 0.3137255013 0.3137255013
+		direction -0.4808294177 -0.8002346158 0.3583679497
+		name "Light6"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.250980407 0.2392157018 0.2156862915
+		direction 0.6367003322 -0.6827774644 0.3583679497
+		name "Light6"
+		ambient 1
+		specular 1
+	}
+	envMap "env/canyon"
+	ambientColor 0.5 0.5 0.5
+	minSpecAmbientColor 0.6000000238 0.6000000238 0.6000000238
+	minSpecShadowColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+
+
+
+
+
+
+ambientCubemap canyon_final_ambient_darken {
+	ambientLight {
+		color 0.0862745121 0.0980392247 0.1254902035
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1882353127 0.1725490242 0.160784319
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.2274509966 0.2823529541 0.3137255013
+		direction 0.3039440513 0.8827176094 0.3583679497
+		name "Light2"
+	}
+	ambientLight {
+		color 0.1882353127 0.1764705926 0.1372549087
+		direction -0.8878877163 0.2884922326 0.3583679497
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2117647231 0.1921568811 0.180392161
+		direction 0.9323009849 0.0488598235 0.3583679497
+		name "Light5"
+	}
+	ambientLight {
+		color 0.2274509966 0.2823529541 0.3137255013
+		direction -0.4808294177 -0.8002346158 0.3583679497
+		name "Light6"
+	}
+	ambientLight {
+		color 0.2117647231 0.1882353127 0.1764705926
+		direction 0.6367003322 -0.6827774644 0.3583679497
+		name "Light6"
+	}
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+
+ambientCubemap canyon_has {
+	ambientLight {
+		color 0.4117647409 0.4117647409 0.4117647409
+		direction 0.4057458639 0.0283725131 0.9135454297
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2156862915 0.2196078598 0.2352941334
+		direction 0.9702957273 0 0.2419219017
+		name "Light1"
+	}
+	ambientLight {
+		color 0.392156899 0.392156899 0.4117647409
+		direction -0.4213893712 0.8639762998 0.2756373584
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3725490272 0.392156899 0.4117647409
+		direction -0.7869307995 -0.6148177385 0.0523359664
+		name "Light3"
+	}
+	ambientLight {
+		color 0.3254902065 0.3254902065 0.3254902065
+		direction 0.0000000243 0 -1
+		name "Light4"
+	}
+	indoors envMap "env/canyon/has_interior"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+
+
+
+
+
+
+
+
+atmosphere canyon_renderlight {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.7221633196 -0.4334068 0.53910923 )
+	sunColor ( 0.784313798 0.5294117928 0.360784322 )
+	sunHaloScale 0.0700000003
+	sunHaloBias -0.3200000226
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "m1k3/sunsprite_canyon"
+	sunFlareSize 100000
+	sunFlareTime 35
+	enableSunFlareAziZen 1
+	sunFlareAzi 133
+	sunFlareZen 21
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 1.1599999666 0.969999969 1 0.5999999642 )
+		glareBases ( 0.5 1 0 0 )
+	}
+	fogDistHalf 719
+	fogHeightHalf 1242
+	fogHeightOffset 8824
+	fogColor ( 0.4862745106 0.4392156899 0.3921568692 )
+	fogStart 0
+	fogEnd 48127
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon_renderlight_ambient"
+	skyGradientImage "atmosphere/skies/canyon_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/canyon_newest" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}ambientCubeMap canyon_renderlight_ambient {
+	ambientLight {
+		color 0.0862745121 0.0980392247 0.1254902035
+		direction 0 0 1
+		name "Light0"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.250980407 0.1725490242 0.1215686277
+		direction 0 0 -1
+		name "Light1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3137255013 0.3137255013 0.3137255013
+		direction 0.3039440513 0.8827176094 0.3583679497
+		name "Light2"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.200000003 0.2352941185 0.2823529541
+		direction -0.8878877163 0.2884922326 0.3583679497
+		name "Light4"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.250980407 0.2392157018 0.2156862915
+		direction 0.9323009849 0.0488598235 0.3583679497
+		name "Light5"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3137255013 0.3137255013 0.3137255013
+		direction -0.4808294177 -0.8002346158 0.3583679497
+		name "Light6"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.250980407 0.2392157018 0.2156862915
+		direction 0.6367003322 -0.6827774644 0.3583679497
+		name "Light6"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.2117647082 0.1372549087 0.1019607857
+		direction -0.7423286438 0.4460359812 -0.5000000596
+		name "Light7"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1254902035 0.0941176489 0.0705882385
+		direction -0.3681129515 -0.5891037583 -0.7193397284
+		name "Light8"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.0941176489 0.0666666701 0.0509803928
+		direction 0.6015918851 -0.3473292291 -0.7193397284
+		name "Light9"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1254902035 0.0941176489 0.0745098069
+		direction 0.4083100259 0.5619904995 -0.7193397284
+		name "Light10"
+		ambient 1
+		specular 1
+	}
+	envMap "env/canyon"
+	ambientColor 0.5 0.5 0.5
+	minSpecAmbientColor 0.6000000238 0.6000000238 0.6000000238
+	minSpecShadowColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+
+

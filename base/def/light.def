@@ -1,0 +1,83 @@
+entityDef light {
+	"spawnclass"					"idLight"
+	
+	"noscriptobject"				"1"
+
+	"editor_spawnclass"				"sdEntityClass_Light"
+	"editor_color"					"0 1 0"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_preview_model"			"models/editor/light.lwo"
+	"editor_usage"					"Light source.  If health is set, light becomes breakable and turns off when shot."
+	"editor_material texture"		"light shader to use."
+	"editor_color color"			"light color"
+	"editor_var shaderParm3"		"shaderParm 3"
+	"editor_var shaderParm4"		"shaderParm 4"
+	"editor_var shaderParm5"		"shaderParm 5"
+	"editor_var shaderParm6"		"shaderParm 6"
+	"editor_var shaderParm7"		"shaderParm 7"
+	"editor_var count"				"how many times light must be triggered to toggle."
+	"editor_var break"				"break when triggered."
+	"editor_model model"			"model to use."
+	"editor_model broken"			"model to use when the light is broken (defaults to model name with '_broken' appended to name)"
+	"editor_var hideModelOnBreak"	"hides the model when broken"
+	"editor_var health"				"amount of damage to recieve before becoming broken.  0 is nonbreakable."
+	"editor_var target"				"entities to trigger if shot."
+	"editor_var levels"				"the number of times a light must be triggered until it turns off.  Each time it's triggered, it's dimmed to a lower level."
+	"editor_var start_off"			"causes the light to be off when the level starts."
+	"editor_var snd_broken"			"sound shader to use when broken"
+	"editor_var mtr_broken"			"material to use when broken"
+	"editor_var inside"				"only effects areas which are inside"
+	
+	"editor_callback texture"		"decl://material"
+
+	"health"						"0"
+	"levels"						"1"
+	"start_off"						"0"
+	"count"							"1"
+	"break"							"0"
+}
+
+entityDef light_night {
+	"inherit"					"light"
+	
+	"spawnclass"				"sdNightLight"
+	
+	"editor_color"				"0 .7 0"
+	"editor_usage"				"Light source. If health is set, light becomes breakable and turns off when shot. Only emits light when the current atmosphere is a night one."
+}
+
+entityDef light_ambient {
+	"spawnclass"				"sdAmbientLight"
+	"editor_spawnclass"			"sdEntityClass_AmbientLight"
+
+	"editor_color"						"0.93 0.27 0.5"
+	"editor_mins"						"-8 -8 -8"
+	"editor_maxs"						"8 8 8"
+	"editor_preview_model"				"models/editor/light_ambient.lwo"
+	"editor_usage"						"Ambient light source.  The light will affect all areas unless there are outside portals or ambient portals between them."
+	"editor_var ambientCubemap"			"The cubemap to use for ambient lighting. (This is an 'ambientCubemap' decl not an image name!)"
+	"editor_callback ambientCubemap"	"decl://ambientCubemap"
+}
+
+entityDef light_interior {
+	"inherit"					"light"
+	"maxvisdist"				"3072"
+	"editor_color"				"0.5 0.85 0.1"
+	
+	"interior"					"1"
+}
+
+entityDef light_inside {
+	"inherit"					"light"
+	"maxvisdist"				"3072"
+	"editor_color"				"0.5 0.85 0.1"
+	
+	"inside"					"1"
+}
+
+entityDef light_vis_dummy {
+	"inherit"					"target_null"
+	"editor_color"				"0.5 0.85 0.1"
+	"noscriptobject"			"1"
+}

@@ -1,0 +1,107 @@
+
+// branch attachment at the bottom edge of the image
+template wind/animatematrix {
+	parameters < 
+		TimeScale = "0.15",
+		RotateAmplitute = "0.005"
+	>
+	text {
+		textureMatrix diffuseMatrix {
+			translate	0, 0.5
+			rotate		(sinTable [ time * TimeScale * 0.5 + 0.2 ] * RotateAmplitute) + (sinTable [ time * TimeScale * 1 + 0.3 ] * RotateAmplitute * 0.5)
+ 			translate	0, -0.5
+ 		}
+		textureMatrix bumpMatrix {
+			translate	0, 0.5
+			rotate		(sinTable [ time * TimeScale * 0.5 + 0.2 ] * RotateAmplitute) + (sinTable [ time * TimeScale * 1 + 0.3 ] * RotateAmplitute * 0.5)
+//			rotate		sinTable [ time * TimeScale + 1 ] * RotateAmplitute
+ 			translate	0, -0.5
+ 		}
+		textureMatrix specularMatrix {
+			translate	0, 0.5
+			rotate		(sinTable [ time * TimeScale * 0.5 + 0.2 ] * RotateAmplitute) + (sinTable [ time * TimeScale * 1 + 0.3 ] * RotateAmplitute * 0.5)
+//			rotate		sinTable [ time * TimeScale + 1 ] * RotateAmplitute
+ 			translate	0, -0.5
+ 		} 		
+	}
+}
+
+template wind/animatematrix_centre {
+	parameters < 
+		TimeScale = "0.15",
+		RotateAmplitute = "0.005"
+	>
+	text {
+		textureMatrix diffuseMatrix {
+			rotate		sinTable [ time * TimeScale + 1 ] * RotateAmplitute
+		}
+		textureMatrix bumpMatrix {
+			rotate		sinTable [ time * TimeScale + 1 ] * RotateAmplitute
+		}
+		textureMatrix specularMatrix {
+			rotate		sinTable [ time * TimeScale + 1 ] * RotateAmplitute
+		}
+	}
+}
+
+// Same as wind/animatematrix but assumes the branch attachment is at the left edge of the image
+template wind/animatematrix_left {
+	parameters < 
+		TimeScale = "0.15",
+		RotateAmplitute = "0.005"
+	>
+	text {
+		textureMatrix diffuseMatrix {
+			translate	-0.5, 0
+			rotate		sinTable [ time * TimeScale + 1 ] * RotateAmplitute
+ 			translate	0.5, 0
+ 		}
+ 		textureMatrix bumpMatrix {
+ 			translate	-0.5, 0
+ 			rotate		sinTable [ time * TimeScale + 1 ] * RotateAmplitute
+  			translate	0.5, 0
+ 		}
+ 		textureMatrix specularMatrix {
+ 			translate	-0.5, 0
+ 			rotate		sinTable [ time * TimeScale + 1 ] * RotateAmplitute
+  			translate	0.5, 0
+ 		}
+	}
+}
+
+template wind/animatematrix_right {
+	parameters < 
+		TimeScale = "0.15",
+		RotateAmplitute = "0.005"
+	>
+	text {
+		textureMatrix diffuseMatrix {
+			translate	0.5, 0
+			rotate		sinTable [ time * TimeScale + 1 ] * RotateAmplitute
+ 			translate	-0.5, 0
+ 		}
+ 		textureMatrix bumpMatrix {
+ 			translate	0.5, 0
+ 			rotate		sinTable [ time * TimeScale + 1 ] * RotateAmplitute
+  			translate	-0.5, 0
+ 		}
+ 		textureMatrix specularMatrix {
+ 			translate	0.5, 0
+ 			rotate		sinTable [ time * TimeScale + 1 ] * RotateAmplitute
+  			translate	-0.5, 0
+ 		}
+	}
+}
+
+template wind/blendlight_windmatrix {
+	parameters < 
+		TimeScale = "0.1",
+		TransAmplitute = "0.01",
+		RotateAmplitute = "0.01"
+	>
+	text {
+		translate sinTable [ time * TimeScale * 1.1 ] * TransAmplitute, cosTable [ time * TimeScale + 0.1 ] * TransAmplitute
+		rotate sinTable [ time * TimeScale * 0.7 ] * RotateAmplitute			
+	}
+}
+

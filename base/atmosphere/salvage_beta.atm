@@ -1,0 +1,105 @@
+atmosphere salvage_beta {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( 0.2860108912 -0.5747397542 0.7667281032 )
+	sunColor ( 0.0941176564 0.0862745121 0.0784313753 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 100000
+	sunFlareMaterial "atmospheres/sprites/sundisc_bright"
+	sunFlareSize 100000
+	sunFlareTime 202
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 1 1 )
+		saturation 1.25
+		contrast 0.9499999881
+		glareParms ( 1.2899999619 0.6699999571 0.6299999952 0.6800000072 )
+		glareBases ( 0.0299999993 0.2899999917 0 0 )
+	}
+	fogDistHalf 980
+	fogHeightHalf 2320
+	fogHeightOffset 2784
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "salvage_beta_ambient"
+	skyGradientImage "atmosphere/skies/arctic"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 26
+	windAngleDev 0
+	windStrength 50
+	windStrengthDev 0
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 2
+		maxParticles 4000
+		heightMin 6
+		heightMax 6
+		weightMin 1.5
+		weightMax 1.7999999523
+		timeMin 0
+		timeMax 500
+		windScale 8
+		gustWindScale 12
+		fallMin 100
+		fallMax 200
+		tumbleStrength 50
+		precipitationDistance 1000
+		material "precipitation/snowflake02_slipgate_night"
+		effect "effects/ambient/salvage_blizzard"
+	}
+}
+
+
+
+
+ambientCubemap salvage_beta_ambient {
+	ambientLight {
+		color 0.1882353127 0.1882353127 0.1882353127
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1843137294 0.1960784495 0.250980407
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.1529411823 0.1725490242 0.250980407
+		direction 0.3367557526 0.877278626 0.342020154
+		name "Light2"
+	}
+	ambientLight {
+		color 0.2156862915 0.231372565 0.250980407
+		direction 0.0316296816 -0.9057556987 0.4226182699
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1529411823 0.2000000179 0.250980407
+		direction -0.8296993375 0.4411589801 0.342020154
+		name "Light4"
+	}
+	ambientLight {
+		color 0.1529411823 0.2000000179 0.250980407
+		direction 0.9281234145 -0.1470003128 0.342020154
+		name "Light5"
+	}
+	ambientLight {
+		color 0.2156862915 0.2274509966 0.250980407
+		direction -0.6519432068 -0.6295742989 0.4226182699
+		name "Light6"
+	}
+	envMap "env/salvage/rail_room"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+

@@ -1,0 +1,4730 @@
+sound sounds/structures/strogg/enter_atmosphere {
+	sounds/structures/strogg/enter_atmosphere.wav
+}
+
+sound sounds/object_ambience/generators/sgen_03 {
+	sounds/object_ambience/generators/sgen_03.wav
+}
+
+sound sounds/object_ambience/generators/sgen_01 {
+	sounds/object_ambience/generators/sgen_01.wav
+}
+
+sound sounds/object_ambience/generators/sgen_02 {
+	sounds/object_ambience/generators/sgen_02.wav
+}
+
+sound sounds/object_ambience/generators/sgen_07 {
+	sounds/object_ambience/generators/sgen_07.wav
+}
+
+sound sounds/object_ambience/generators/sgen_08 {
+	sounds/object_ambience/generators/sgen_08.wav
+}
+
+sound sounds/object_ambience/generators/sgen_10 {
+	sounds/object_ambience/generators/sgen_10.wav
+}
+
+sound sounds/object_ambience/generators/sgen_12 {
+	sounds/object_ambience/generators/sgen_12.wav
+}
+
+sound sounds/object_ambience/generators/sgen_13 {
+	sounds/object_ambience/generators/sgen_13.wav
+}
+
+sound sounds/object_ambience/generators/sgen_04 {
+	sounds/object_ambience/generators/sgen_04.wav
+}
+
+sound sounds/object_ambience/generators/sgen_05 {
+	sounds/object_ambience/generators/sgen_05.wav
+}
+
+sound sounds/soundscape/lowfreq/alow_04 {
+	sounds/soundscape/lowfreq/alow_04.wav
+}
+
+sound sounds/soundscape/lowfreq/bmover_05_int {
+	sounds/soundscape/lowfreq/bmover_05_int.wav
+}
+
+sound sounds/soundscape/lowfreq/06a {
+	sounds/soundscape/lowfreq/06a.wav
+}
+
+sound sounds/soundscape/lowfreq/04d {
+	sounds/soundscape/lowfreq/04d.wav
+}
+
+sound sounds/soundscape/lowfreq/04 {
+	sounds/soundscape/lowfreq/04.wav
+}
+
+sound sounds/soundscape/lowfreq/02b {
+	sounds/soundscape/lowfreq/02b.wav
+}
+
+sound sounds/soundscape/lowfreq/01a {
+	sounds/soundscape/lowfreq/01a.wav
+}
+
+sound sounds/soundscape/lowfreq/02a {
+	sounds/soundscape/lowfreq/02a.wav
+}
+
+sound sounds/soundscape/lowfreq/01 {
+	sounds/soundscape/lowfreq/01.wav
+}
+
+sound sounds/soundscape/lowfreq/01b {
+	sounds/soundscape/lowfreq/01b.wav
+}
+
+sound sounds/soundscape/tech/01 {
+	sounds/soundscape/tech/01.wav
+}
+
+sound sounds/soundscape/tech/02a {
+	sounds/soundscape/tech/02a.wav
+}
+
+sound sounds/soundscape/tech/02 {
+	sounds/soundscape/tech/02.wav
+}
+
+sound sounds/soundscape/tech/03a {
+	sounds/soundscape/tech/03a.wav
+}
+
+sound sounds/soundscape/tech/03c {
+	sounds/soundscape/tech/03c.wav
+}
+
+sound sounds/soundscape/tech/03b {
+	sounds/soundscape/tech/03b.wav
+}
+
+sound sounds/soundscape/tech/04 {
+	sounds/soundscape/tech/04.wav
+}
+
+sound sounds/soundscape/tech/05 {
+	sounds/soundscape/tech/05.wav
+}
+
+sound sounds/soundscape/tech/05c {
+	sounds/soundscape/tech/05c.wav
+}
+
+sound sounds/soundscape/tech/05b {
+	sounds/soundscape/tech/05b.wav
+}
+
+sound sounds/soundscape/tech/06 {
+	sounds/soundscape/tech/06.wav
+}
+
+sound sounds/soundscape/tech/07a {
+	sounds/soundscape/tech/07a.wav
+}
+
+sound sounds/soundscape/tech/07d {
+	sounds/soundscape/tech/07d.wav
+}
+
+sound sounds/soundscape/tech/slipgatea_01 {
+	sounds/soundscape/tech/slipgatea_01.wav
+}
+
+sound sounds/soundscape/tech/08 {
+	sounds/soundscape/tech/08.wav
+}
+
+sound sounds/soundscape/tech/01b {
+	sounds/soundscape/tech/01b.wav
+}
+
+sound sounds/soundscape/tech/02b {
+	sounds/soundscape/tech/02b.wav
+}
+
+sound sounds/soundscape/tech/03 {
+	sounds/soundscape/tech/03.wav
+}
+
+sound sounds/soundscape/cold/01b {
+	sounds/soundscape/cold/01b.wav
+}
+
+sound sounds/soundscape/cold/01 {
+	sounds/soundscape/cold/01.wav
+}
+
+sound sounds/soundscape/cold/02e {
+	sounds/soundscape/cold/02e.wav
+}
+
+sound sounds/soundscape/cold/02b {
+	sounds/soundscape/cold/02b.wav
+}
+
+sound sounds/soundscape/cold/03b {
+	sounds/soundscape/cold/03b.wav
+}
+
+sound sounds/soundscape/cold/04c {
+	sounds/soundscape/cold/04c.wav
+}
+
+sound sounds/soundscape/cold/05 {
+	sounds/soundscape/cold/05.wav
+}
+
+sound sounds/soundscape/cold/04b {
+	sounds/soundscape/cold/04b.wav
+}
+
+sound sounds/soundscape/cold/03c {
+	sounds/soundscape/cold/03c.wav
+}
+
+sound sounds/soundscape/cold/02d {
+	sounds/soundscape/cold/02d.wav
+}
+
+sound sounds/soundscape/cold/02a {
+	sounds/soundscape/cold/02a.wav
+}
+
+sound sounds/soundscape/cold/02 {
+	sounds/soundscape/cold/02.wav
+}
+
+sound sounds/soundscape/cold/02c {
+	sounds/soundscape/cold/02c.wav
+}
+
+sound sounds/soundscape/cold/04a {
+	sounds/soundscape/cold/04a.wav
+}
+
+sound sounds/soundscape/cold/04 {
+	sounds/soundscape/cold/04.wav
+}
+
+sound sounds/soundscape/cold/03 {
+	sounds/soundscape/cold/03.wav
+}
+
+sound sounds/soundscape/cold/03a {
+	sounds/soundscape/cold/03a.wav
+}
+
+sound sounds/soundscape/cold/05c {
+	sounds/soundscape/cold/05c.wav
+}
+
+sound sounds/soundscape/cold/05d {
+	sounds/soundscape/cold/05d.wav
+}
+
+sound sounds/soundscape/glassy/01 {
+	sounds/soundscape/glassy/01.wav
+}
+
+sound sounds/soundscape/glassy/02a {
+	sounds/soundscape/glassy/02a.wav
+}
+
+sound sounds/soundscape/glassy/02c {
+	sounds/soundscape/glassy/02c.wav
+}
+
+sound sounds/soundscape/glassy/02d {
+	sounds/soundscape/glassy/02d.wav
+}
+
+sound sounds/soundscape/air/03a {
+	sounds/soundscape/air/03a.wav
+}
+
+sound sounds/soundscape/air/02b {
+	sounds/soundscape/air/02b.wav
+}
+
+sound sounds/soundscape/air/01b {
+	sounds/soundscape/air/01b.wav
+}
+
+sound sounds/soundscape/air/01 {
+	sounds/soundscape/air/01.wav
+}
+
+sound sounds/soundscape/air/03 {
+	sounds/soundscape/air/03.wav
+}
+
+sound sounds/soundscape/air/04 {
+	sounds/soundscape/air/04.wav
+}
+
+sound sounds/soundscape/air/air_01 {
+	sounds/soundscape/air/air_01.wav
+}
+
+sound sounds/soundscape/air/bair_04 {
+	sounds/soundscape/air/bair_04.wav
+}
+
+sound sounds/soundscape/air/bair_05 {
+	sounds/soundscape/air/bair_05.wav
+}
+
+sound sounds/soundscape/air/bair_01 {
+	sounds/soundscape/air/bair_01.wav
+}
+
+sound sounds/soundscape/cold/05b {
+	sounds/soundscape/cold/05b.wav
+}
+
+sound sounds/soundscape/air/01a {
+	sounds/soundscape/air/01a.wav
+}
+
+sound sounds/soundscape/air/02 {
+	sounds/soundscape/air/02.wav
+}
+
+sound sounds/soundscape/air/03c {
+	sounds/soundscape/air/03c.wav
+}
+
+sound sounds/soundscape/air/04b {
+	sounds/soundscape/air/04b.wav
+}
+
+sound sounds/soundscape/air/06c {
+	sounds/soundscape/air/06c.wav
+}
+
+sound sounds/soundscape/air/08d {
+	sounds/soundscape/air/08d.wav
+}
+
+sound sounds/soundscape/air/coldair_01 {
+	sounds/soundscape/air/coldair_01.wav
+}
+
+sound sounds/soundscape/air/coldair_02 {
+	sounds/soundscape/air/coldair_02.wav
+}
+
+sound sounds/soundscape/air/coldair_05 {
+	sounds/soundscape/air/coldair_05.wav
+}
+
+sound sounds/soundscape/air/subair_01 {
+	sounds/soundscape/air/subair_01.wav
+}
+
+sound sounds/soundscape/air/ventolin_03 {
+	sounds/soundscape/air/ventolin_03.wav
+}
+
+sound sounds/soundscape/air/wind_01a {
+	sounds/soundscape/air/wind_01a.wav
+}
+
+sound sounds/object_ambience/shields/nff_01 {
+	sounds/object_ambience/shields/nff_01.wav
+}
+
+sound sounds/object_ambience/shields/nff_02 {
+	sounds/object_ambience/shields/nff_02.wav
+}
+
+sound sounds/object_ambience/shields/nff_03 {
+	sounds/object_ambience/shields/nff_03.wav
+}
+
+sound sounds/object_ambience/shields/nff_04 {
+	sounds/object_ambience/shields/nff_04.wav
+}
+
+sound sounds/object_ambience/shields/nff_05 {
+	sounds/object_ambience/shields/nff_05.wav
+}
+
+sound sounds/object_ambience/shields/nff_06 {
+	sounds/object_ambience/shields/nff_06.wav
+}
+
+sound sounds/object_ambience/shields/nff_07 {
+	sounds/object_ambience/shields/nff_07.wav
+}
+
+sound sounds/object_ambience/shields/nff_09 {
+	sounds/object_ambience/shields/nff_09.wav
+}
+
+sound sounds/object_ambience/shields/nff_08 {
+	sounds/object_ambience/shields/nff_08.wav
+}
+
+sound sounds/object_ambience/shields/nff_10 {
+	sounds/object_ambience/shields/nff_10.wav
+}
+
+sound sounds/object_ambience/shields/ff_02 {
+	sounds/object_ambience/shields/ff_02.wav
+}
+
+sound sounds/soundscape/tech/04a {
+	sounds/soundscape/tech/04a.wav
+}
+
+sound sounds/soundscape/tech/05a {
+	sounds/soundscape/tech/05a.wav
+}
+
+sound sounds/soundscape/tech/07 {
+	sounds/soundscape/tech/07.wav
+}
+
+sound sounds/soundscape/tech/09a {
+	sounds/soundscape/tech/09a.wav
+}
+
+sound sounds/soundscape/tech/sidle_02 {
+	sounds/soundscape/tech/sidle_02.wav
+}
+
+sound sounds/soundscape/tech/slipgatea_03 {
+	sounds/soundscape/tech/slipgatea_03.wav
+}
+
+sound sounds/soundscape/textures/01 {
+	sounds/soundscape/textures/01.wav
+}
+
+sound sounds/soundscape/textures/02 {
+	sounds/soundscape/textures/02.wav
+}
+
+sound sounds/soundscape/tonal/01 {
+	sounds/soundscape/tonal/01.wav
+}
+
+sound sounds/soundscape/tonal/02 {
+	sounds/soundscape/tonal/02.wav
+}
+
+sound sounds/soundscape/tonal/03a {
+	sounds/soundscape/tonal/03a.wav
+}
+
+sound sounds/soundscape/tonal/04 {
+	sounds/soundscape/tonal/04.wav
+}
+
+sound sounds/soundscape/tonal/05a {
+	sounds/soundscape/tonal/05a.wav
+}
+
+sound sounds/soundscape/tonal/06 {
+	sounds/soundscape/tonal/06.wav
+}
+
+sound sounds/soundscape/tonal/07 {
+	sounds/soundscape/tonal/07.wav
+}
+
+sound sounds/ambience/wind/wind_01 {
+	sounds/ambience/wind/wind_01.wav
+}
+
+sound sounds/ambience/wind/wind_02 {
+	sounds/ambience/wind/wind_02.wav
+}
+
+sound sounds/ambience/wind/wind_04 {
+	sounds/ambience/wind/wind_04.wav
+}
+
+sound sounds/ambience/wind/wind_05 {
+	sounds/ambience/wind/wind_05.wav
+}
+
+sound sounds/ambience/wind/wind_gale_01 {
+	sounds/ambience/wind/wind_gale_01.wav
+}
+
+sound sounds/soundscape/mids/01 {
+	sounds/soundscape/mids/01.wav
+}
+
+sound sounds/soundscape/mids/02a {
+	sounds/soundscape/mids/02a.wav
+}
+
+sound sounds/soundscape/mids/03a {
+	sounds/soundscape/mids/03a.wav
+}
+
+sound sounds/soundscape/mids/04a {
+	sounds/soundscape/mids/04a.wav
+}
+
+sound sounds/soundscape/mids/05a {
+	sounds/soundscape/mids/05a.wav
+}
+
+sound sounds/soundscape/mids/06a {
+	sounds/soundscape/mids/06a.wav
+}
+
+sound sounds/soundscape/mids/07 {
+	sounds/soundscape/mids/07.wav
+}
+
+sound sounds/soundscape/mids/08 {
+	sounds/soundscape/mids/08.wav
+}
+
+sound sounds/soundscape/mids/09 {
+	sounds/soundscape/mids/09.wav
+}
+
+sound sounds/soundscape/mids/10 {
+	sounds/soundscape/mids/10.wav
+}
+
+sound sounds/soundscape/mids/11 {
+	sounds/soundscape/mids/11.wav
+}
+
+sound sounds/soundscape/mids/12 {
+	sounds/soundscape/mids/12.wav
+}
+
+sound sounds/soundscape/plain/01 {
+	sounds/soundscape/plain/01.wav
+}
+
+sound sounds/soundscape/plain/01a {
+	sounds/soundscape/plain/01a.wav
+}
+
+sound sounds/soundscape/plain/01c {
+	sounds/soundscape/plain/01c.wav
+}
+
+sound sounds/soundscape/plain/02c {
+	sounds/soundscape/plain/02c.wav
+}
+
+sound sounds/soundscape/plain/03b {
+	sounds/soundscape/plain/03b.wav
+}
+
+sound sounds/soundscape/high/phigh_01 {
+	sounds/soundscape/high/phigh_01.wav
+}
+
+sound sounds/soundscape/grinders/01a {
+	sounds/soundscape/grinders/01a.wav
+}
+
+sound sounds/soundscape/grinders/03 {
+	sounds/soundscape/grinders/03.wav
+}
+
+sound sounds/soundscape/grinders/05a {
+	sounds/soundscape/grinders/05a.wav
+}
+
+sound sounds/soundscape/grinders/06 {
+	sounds/soundscape/grinders/06.wav
+}
+
+sound sounds/soundscape/grinders/06a {
+	sounds/soundscape/grinders/06a.wav
+}
+
+sound sounds/soundscape/grinders/06b {
+	sounds/soundscape/grinders/06b.wav
+}
+
+sound sounds/soundscape/grinders/07a {
+	sounds/soundscape/grinders/07a.wav
+}
+
+sound sounds/soundscape/grinders/08b {
+	sounds/soundscape/grinders/08b.wav
+}
+
+sound sounds/soundscape/grinders/08c {
+	sounds/soundscape/grinders/08c.wav
+}
+
+sound sounds/soundscape/grinders/11a {
+	sounds/soundscape/grinders/11a.wav
+}
+
+sound sounds/soundscape/moody/01 {
+	sounds/soundscape/moody/01.wav
+}
+
+sound sounds/soundscape/moody/01a {
+	sounds/soundscape/moody/01a.wav
+}
+
+sound sounds/soundscape/moody/01b {
+	sounds/soundscape/moody/01b.wav
+}
+
+sound sounds/soundscape/stress/01 {
+	sounds/soundscape/stress/01.wav
+}
+
+sound sounds/soundscape/stress/01a {
+	sounds/soundscape/stress/01a.wav
+}
+
+sound sounds/soundscape/stress/01d {
+	sounds/soundscape/stress/01d.wav
+}
+
+sound sounds/soundscape/stress/02a {
+	sounds/soundscape/stress/02a.wav
+}
+
+sound sounds/soundscape/stress/02c {
+	sounds/soundscape/stress/02c.wav
+}
+
+sound sounds/soundscape/stress/02d {
+	sounds/soundscape/stress/02d.wav
+}
+
+sound sounds/ambience/war/distant_explosion_03 {
+	sounds/ambience/war/distant_explosion_03.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_05 {
+	sounds/object_ambience/electrical/hums/hum_05.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_01 {
+	sounds/object_ambience/electrical/hums/hum_01.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_13 {
+	sounds/object_ambience/electrical/hums/hum_13.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_14 {
+	sounds/object_ambience/electrical/hums/hum_14.wav
+}
+
+sound sounds/object_ambience/generators/sgen_16 {
+	sounds/object_ambience/generators/sgen_16.wav
+}
+
+sound sounds/object_ambience/generators/sgen_18 {
+	sounds/object_ambience/generators/sgen_18.wav
+}
+
+sound sounds/object_ambience/generators/sgen_17 {
+	sounds/object_ambience/generators/sgen_17.wav
+}
+
+sound sounds/object_ambience/generators/sgen_15 {
+	sounds/object_ambience/generators/sgen_15.wav
+}
+
+sound sounds/object_ambience/generators/sgen_14 {
+	sounds/object_ambience/generators/sgen_14.wav
+}
+
+sound sounds/object_ambience/generators/sgen_11 {
+	sounds/object_ambience/generators/sgen_11.wav
+}
+
+sound sounds/object_ambience/generators/sgen_09 {
+	sounds/object_ambience/generators/sgen_09.wav
+}
+
+sound sounds/object_ambience/generators/sgen_06 {
+	sounds/object_ambience/generators/sgen_06.wav
+}
+
+sound sounds/object_ambience/airs_vents/vent_06 {
+	sounds/object_ambience/airs_vents/vent_06.wav
+}
+
+sound sounds/soundscape/air/02a {
+	sounds/soundscape/air/02a.wav
+}
+
+sound sounds/soundscape/air/02d {
+	sounds/soundscape/air/02d.wav
+}
+
+sound sounds/soundscape/air/04a {
+	sounds/soundscape/air/04a.wav
+}
+
+sound sounds/soundscape/air/05a {
+	sounds/soundscape/air/05a.wav
+}
+
+sound sounds/soundscape/air/06b. {
+	sounds/soundscape/air/06b..wav
+}
+
+sound sounds/soundscape/air/06a {
+	sounds/soundscape/air/06a.wav
+}
+
+sound sounds/soundscape/air/07a {
+	sounds/soundscape/air/07a.wav
+}
+
+sound sounds/soundscape/air/08b {
+	sounds/soundscape/air/08b.wav
+}
+
+sound sounds/soundscape/air/ventolin_01 {
+	sounds/soundscape/air/ventolin_01.wav
+}
+
+sound sounds/soundscape/air/coldair_06 {
+	sounds/soundscape/air/coldair_06.wav
+}
+
+sound sounds/soundscape/air/ventolin_06 {
+	sounds/soundscape/air/ventolin_06.wav
+}
+
+sound sounds/soundscape/air/wind_01c {
+	sounds/soundscape/air/wind_01c.wav
+}
+
+sound sounds/soundscape/air/air_02 {
+	sounds/soundscape/air/air_02.wav
+}
+
+sound sounds/soundscape/air/air_03 {
+	sounds/soundscape/air/air_03.wav
+}
+
+sound sounds/machines/machloop_03 {
+	sounds/machines/machloop_03.wav
+}
+
+sound sounds/machines/powerline_01 {
+	sounds/machines/powerline_01.wav
+}
+
+sound sounds/world/generator_hum_01 {
+	sounds/world/generator_hum_01.wav
+}
+
+sound sounds/tools/repairdrone/idle_01 {
+	sounds/tools/repairdrone/idle_01.wav
+}
+
+sound sounds/structures/cc/alarm_01 {
+	sounds/structures/cc/alarm_01.wav
+}
+
+sound sounds/structures/cc/back_deploy_01 {
+	sounds/structures/cc/back_deploy_01.wav
+}
+
+sound sounds/ambience/rooms/tonal/tonal_01 {
+	sounds/ambience/rooms/tonal/tonal_01.wav
+}
+
+sound sounds/ambience/rooms/ambience_01 {
+	sounds/ambience/rooms/ambience_01.wav
+}
+
+sound sounds/ambience/rooms/ambience_04 {
+	sounds/ambience/rooms/ambience_04.wav
+}
+
+sound sounds/ambience/rooms/loop_machroom_01 {
+	sounds/ambience/rooms/loop_machroom_01.wav
+}
+
+sound sounds/ambience/rooms/airy/airmach_02 {
+	sounds/ambience/rooms/airy/airmach_02.wav
+}
+
+sound sounds/ambience/rooms/airy/air_02 {
+	sounds/ambience/rooms/airy/air_02.wav
+}
+
+sound sounds/object_ambience/generators/genloop_03 {
+	sounds/object_ambience/generators/genloop_03.wav
+}
+
+sound sounds/object_ambience/generators/genloop_02 {
+	sounds/object_ambience/generators/genloop_02.wav
+}
+
+sound sounds/object_ambience/generators/genloop_04 {
+	sounds/object_ambience/generators/genloop_04.wav
+}
+
+sound sounds/object_ambience/generators/genloop_05 {
+	sounds/object_ambience/generators/genloop_05.wav
+}
+
+sound sounds/object_ambience/generators/genloop_01 {
+	sounds/object_ambience/generators/genloop_01.wav
+}
+
+sound sounds/object_ambience/generators/genloop_06 {
+	sounds/object_ambience/generators/genloop_06.wav
+}
+
+sound sounds/object_ambience/generators/genloop_08 {
+	sounds/object_ambience/generators/genloop_08.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_09 {
+	sounds/object_ambience/electrical/hums/hum_09.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_02 {
+	sounds/object_ambience/electrical/hums/hum_02.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_02 {
+	sounds/ambience/rooms/active/st_machroom_02.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_05_pu75 {
+	sounds/ambience/rooms/active/st_machroom_05_pu75.wav
+}
+
+sound sounds/ambience/rooms/grindy/loop_01_u1 {
+	sounds/ambience/rooms/grindy/loop_01_u1.wav
+}
+
+sound sounds/ambience/rooms/grindy/loop_01 {
+	sounds/ambience/rooms/grindy/loop_01.wav
+}
+
+sound sounds/ambience/rooms/grindy/loop_02_d1 {
+	sounds/ambience/rooms/grindy/loop_02_d1.wav
+}
+
+sound sounds/ambience/rooms/grindy/loop_02_u1 {
+	sounds/ambience/rooms/grindy/loop_02_u1.wav
+}
+
+sound sounds/ambience/rooms/grindy/loop_01_d1 {
+	sounds/ambience/rooms/grindy/loop_01_d1.wav
+}
+
+sound sounds/ambience/rooms/subtlemech/loop_01 {
+	sounds/ambience/rooms/subtlemech/loop_01.wav
+}
+
+sound sounds/ambience/rooms/subtlemech/loop_02_d1 {
+	sounds/ambience/rooms/subtlemech/loop_02_d1.wav
+}
+
+sound sounds/ambience/rooms/grindy/loop_02 {
+	sounds/ambience/rooms/grindy/loop_02.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_07_pu1 {
+	sounds/ambience/rooms/active/st_machroom_07_pu1.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_03_pd150 {
+	sounds/ambience/rooms/active/st_machroom_03_pd150.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_05_pd125 {
+	sounds/ambience/rooms/active/st_machroom_05_pd125.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_05 {
+	sounds/ambience/rooms/active/st_machroom_05.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_05_pu50 {
+	sounds/ambience/rooms/active/st_machroom_05_pu50.wav
+}
+
+sound sounds/ambience/rooms/fanrooms/loop_04_d1 {
+	sounds/ambience/rooms/fanrooms/loop_04_d1.wav
+}
+
+sound sounds/object_ambience/slime/loop_slime_02 {
+	sounds/object_ambience/slime/loop_slime_02.wav
+}
+
+sound sounds/object_ambience/steam/loop_steam_02 {
+	sounds/object_ambience/steam/loop_steam_02.wav
+}
+
+sound sounds/soundscape/glassy/02 {
+	sounds/soundscape/glassy/02.wav
+}
+
+sound sounds/soundscape/glassy/01a {
+	sounds/soundscape/glassy/01a.wav
+}
+
+sound sounds/soundscape/grinders/03b {
+	sounds/soundscape/grinders/03b.wav
+}
+
+sound sounds/soundscape/grinders/04 {
+	sounds/soundscape/grinders/04.wav
+}
+
+sound sounds/soundscape/grinders/05 {
+	sounds/soundscape/grinders/05.wav
+}
+
+sound sounds/soundscape/grinders/05b {
+	sounds/soundscape/grinders/05b.wav
+}
+
+sound sounds/soundscape/grinders/grinda_02 {
+	sounds/soundscape/grinders/grinda_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/mid/st_mid_01 {
+	sounds/ambience/outdoors/wind/mid/st_mid_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/mid/st_mid_03 {
+	sounds/ambience/outdoors/wind/mid/st_mid_03.wav
+}
+
+sound sounds/ambience/outdoors/wind/mid/st_mid_04 {
+	sounds/ambience/outdoors/wind/mid/st_mid_04.wav
+}
+
+sound sounds/ambience/outdoors/wind/mid/st_fab_01 {
+	sounds/ambience/outdoors/wind/mid/st_fab_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_calm_03 {
+	sounds/ambience/outdoors/wind/calm/st_calm_03.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_01 {
+	sounds/ambience/outdoors/wind/calm/st_docile_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_01b {
+	sounds/ambience/outdoors/wind/calm/st_docile_01b.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/boring/boring_01 {
+	sounds/ambience/rooms/natual_roomtones/boring/boring_01.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/boring/boring_02_pu75 {
+	sounds/ambience/rooms/natual_roomtones/boring/boring_02_pu75.wav
+}
+
+sound sounds/ambience/rooms/dull/radio_bed_01 {
+	sounds/ambience/rooms/dull/radio_bed_01.wav
+}
+
+sound sounds/ambience/rooms/dull/inflight_01 {
+	sounds/ambience/rooms/dull/inflight_01.wav
+}
+
+sound sounds/ambience/rooms/dull/rumble_04 {
+	sounds/ambience/rooms/dull/rumble_04.wav
+}
+
+sound sounds/ambience/rooms/dull/radio_bed_03 {
+	sounds/ambience/rooms/dull/radio_bed_03.wav
+}
+
+sound sounds/ambience/rooms/hi/machroom_01_d1 {
+	sounds/ambience/rooms/hi/machroom_01_d1.wav
+}
+
+sound sounds/ambience/rooms/hi/machroom_01_u1 {
+	sounds/ambience/rooms/hi/machroom_01_u1.wav
+}
+
+sound sounds/ambience/rooms/subtlemech/loop_01_d1 {
+	sounds/ambience/rooms/subtlemech/loop_01_d1.wav
+}
+
+sound sounds/ambience/rooms/subtlemech/loop_02 {
+	sounds/ambience/rooms/subtlemech/loop_02.wav
+}
+
+sound sounds/ambience/rooms/subtlemech/loop_02_u1 {
+	sounds/ambience/rooms/subtlemech/loop_02_u1.wav
+}
+
+sound sounds/ambience/rooms/subtlemech/loop_01_u1 {
+	sounds/ambience/rooms/subtlemech/loop_01_u1.wav
+}
+
+sound sounds/ambience/rooms/tonal/loop_02_d1 {
+	sounds/ambience/rooms/tonal/loop_02_d1.wav
+}
+
+sound sounds/ambience/rooms/tonal/loop_03 {
+	sounds/ambience/rooms/tonal/loop_03.wav
+}
+
+sound sounds/ambience/rooms/tonal/loop_03_u1 {
+	sounds/ambience/rooms/tonal/loop_03_u1.wav
+}
+
+sound sounds/ambience/rooms/tonal/tonal_02 {
+	sounds/ambience/rooms/tonal/tonal_02.wav
+}
+
+sound sounds/ambience/rooms/ambience_03a {
+	sounds/ambience/rooms/ambience_03a.wav
+}
+
+sound sounds/soundscape/plain/03c {
+	sounds/soundscape/plain/03c.wav
+}
+
+sound sounds/soundscape/plain/04b {
+	sounds/soundscape/plain/04b.wav
+}
+
+sound sounds/soundscape/plain/05e {
+	sounds/soundscape/plain/05e.wav
+}
+
+sound sounds/object_ambience/generators/genloop_07 {
+	sounds/object_ambience/generators/genloop_07.wav
+}
+
+sound sounds/ambience/comm_chatter/loop_05 {
+	sounds/ambience/comm_chatter/loop_05.wav
+}
+
+sound sounds/ambience/comm_chatter/loop_07 {
+	sounds/ambience/comm_chatter/loop_07.wav
+}
+
+sound sounds/ambience/comm_chatter/loop_08 {
+	sounds/ambience/comm_chatter/loop_08.wav
+}
+
+sound sounds/ambience/comm_chatter/loop_shortwave_01 {
+	sounds/ambience/comm_chatter/loop_shortwave_01.wav
+}
+
+sound sounds/ambience/comm_chatter/loop_13 {
+	sounds/ambience/comm_chatter/loop_13.wav
+}
+
+sound sounds/ambience/comm_chatter/loop_12 {
+	sounds/ambience/comm_chatter/loop_12.wav
+}
+
+sound sounds/ambience/comm_chatter/loop_11 {
+	sounds/ambience/comm_chatter/loop_11.wav
+}
+
+sound sounds/ambience/comm_chatter/loop_10 {
+	sounds/ambience/comm_chatter/loop_10.wav
+}
+
+sound sounds/ambience/comm_chatter/frantic_chatter_04 {
+	sounds/ambience/comm_chatter/frantic_chatter_04.wav
+}
+
+sound sounds/ambience/comm_chatter/frantic_chatter_01 {
+	sounds/ambience/comm_chatter/frantic_chatter_01.wav
+}
+
+sound sounds/ambience/comm_chatter/frantic_chatter_02 {
+	sounds/ambience/comm_chatter/frantic_chatter_02.wav
+}
+
+sound sounds/ambience/comm_chatter/frantic_chatter_03 {
+	sounds/ambience/comm_chatter/frantic_chatter_03.wav
+}
+
+sound sounds/ambience/comm_chatter/loop_03 {
+	sounds/ambience/comm_chatter/loop_03.wav
+}
+
+sound sounds/ambience/comm_chatter/loop_04 {
+	sounds/ambience/comm_chatter/loop_04.wav
+}
+
+sound sounds/ambience/comm_chatter/loop_09 {
+	sounds/ambience/comm_chatter/loop_09.wav
+}
+
+sound sounds/object_ambience/airs_vents/vent_05 {
+	sounds/object_ambience/airs_vents/vent_05.wav
+}
+
+sound sounds/object_ambience/airs_vents/vent_08 {
+	sounds/object_ambience/airs_vents/vent_08.wav
+}
+
+sound sounds/object_ambience/airs_vents/vent_11 {
+	sounds/object_ambience/airs_vents/vent_11.wav
+}
+
+sound sounds/object_ambience/airs_vents/vent_13 {
+	sounds/object_ambience/airs_vents/vent_13.wav
+}
+
+sound sounds/ambience/rooms/airy/dull_01 {
+	sounds/ambience/rooms/airy/dull_01.wav
+}
+
+sound sounds/ambience/rooms/airy/dull_03 {
+	sounds/ambience/rooms/airy/dull_03.wav
+}
+
+sound sounds/ambience/rooms/fanrooms/loop_03_u1 {
+	sounds/ambience/rooms/fanrooms/loop_03_u1.wav
+}
+
+sound sounds/ambience/rooms/fanrooms/loop_01 {
+	sounds/ambience/rooms/fanrooms/loop_01.wav
+}
+
+sound sounds/ambience/rooms/fanrooms/st_loop_01 {
+	sounds/ambience/rooms/fanrooms/st_loop_01.wav
+}
+
+sound sounds/ambience/rooms/fanrooms/st_loop_01_u1 {
+	sounds/ambience/rooms/fanrooms/st_loop_01_u1.wav
+}
+
+sound sounds/ambience/rooms/dull/rumble_05 {
+	sounds/ambience/rooms/dull/rumble_05.wav
+}
+
+sound sounds/object_ambience/steam/loop_steam_01 {
+	sounds/object_ambience/steam/loop_steam_01.wav
+}
+
+sound sounds/object_ambience/steam/loop_steam_03 {
+	sounds/object_ambience/steam/loop_steam_03.wav
+}
+
+sound sounds/object_ambience/airs_vents/vent_02 {
+	sounds/object_ambience/airs_vents/vent_02.wav
+}
+
+sound sounds/object_ambience/airs_vents/vent_10 {
+	sounds/object_ambience/airs_vents/vent_10.wav
+}
+
+sound sounds/object_ambience/airs_vents/vent_12 {
+	sounds/object_ambience/airs_vents/vent_12.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_06 {
+	sounds/object_ambience/electrical/hums/hum_06.wav
+}
+
+sound sounds/object_ambience/shields/ff_03 {
+	sounds/object_ambience/shields/ff_03.wav
+}
+
+sound sounds/object_ambience/shields/ff_01 {
+	sounds/object_ambience/shields/ff_01.wav
+}
+
+sound sounds/soundscape/tech/04b {
+	sounds/soundscape/tech/04b.wav
+}
+
+sound sounds/soundscape/tech/01a {
+	sounds/soundscape/tech/01a.wav
+}
+
+sound sounds/soundscape/tech/07b {
+	sounds/soundscape/tech/07b.wav
+}
+
+sound sounds/ambience/outdoors/wind/interesting/creaky_wind_01a {
+	sounds/ambience/outdoors/wind/interesting/creaky_wind_01a.wav
+}
+
+sound sounds/ambience/outdoors/wind/interesting/creaky_wind_02 {
+	sounds/ambience/outdoors/wind/interesting/creaky_wind_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/interesting/creaky_wind_02b {
+	sounds/ambience/outdoors/wind/interesting/creaky_wind_02b.wav
+}
+
+sound sounds/ambience/outdoors/wind/interesting/creaky_wind_03 {
+	sounds/ambience/outdoors/wind/interesting/creaky_wind_03.wav
+}
+
+sound sounds/ambience/outdoors/wind/interesting/creaky_wind_03a {
+	sounds/ambience/outdoors/wind/interesting/creaky_wind_03a.wav
+}
+
+sound sounds/ambience/outdoors/wind/interesting/creaky_wind_03b {
+	sounds/ambience/outdoors/wind/interesting/creaky_wind_03b.wav
+}
+
+sound sounds/ambience/outdoors/wind/interesting/st_int_01 {
+	sounds/ambience/outdoors/wind/interesting/st_int_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/interesting/st_metallic_01 {
+	sounds/ambience/outdoors/wind/interesting/st_metallic_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/interesting/st_metallic_02 {
+	sounds/ambience/outdoors/wind/interesting/st_metallic_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_calm_02 {
+	sounds/ambience/outdoors/wind/calm/st_calm_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_01c {
+	sounds/ambience/outdoors/wind/calm/st_docile_01c.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_03b {
+	sounds/ambience/outdoors/wind/calm/st_docile_03b.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_empty_01 {
+	sounds/ambience/outdoors/wind/calm/st_empty_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/interesting/creaky_wind_01b {
+	sounds/ambience/outdoors/wind/interesting/creaky_wind_01b.wav
+}
+
+sound sounds/object_ambience/compressors/comp_03 {
+	sounds/object_ambience/compressors/comp_03.wav
+}
+
+sound sounds/object_ambience/compressors/comp_02 {
+	sounds/object_ambience/compressors/comp_02.wav
+}
+
+sound sounds/object_ambience/compressors/comp_06 {
+	sounds/object_ambience/compressors/comp_06.wav
+}
+
+sound sounds/object_ambience/compressors/comp_07 {
+	sounds/object_ambience/compressors/comp_07.wav
+}
+
+sound sounds/object_ambience/compressors/comp_08 {
+	sounds/object_ambience/compressors/comp_08.wav
+}
+
+sound sounds/object_ambience/compressors/comp_09 {
+	sounds/object_ambience/compressors/comp_09.wav
+}
+
+sound sounds/object_ambience/compressors/comp_10 {
+	sounds/object_ambience/compressors/comp_10.wav
+}
+
+sound sounds/object_ambience/compressors/comp_11 {
+	sounds/object_ambience/compressors/comp_11.wav
+}
+
+sound sounds/object_ambience/compressors/comp_01 {
+	sounds/object_ambience/compressors/comp_01.wav
+}
+
+sound sounds/object_ambience/compressors/comp_04 {
+	sounds/object_ambience/compressors/comp_04.wav
+}
+
+sound sounds/object_ambience/compressors/comp_05 {
+	sounds/object_ambience/compressors/comp_05.wav
+}
+
+sound sounds/soundscape/tech/08b {
+	sounds/soundscape/tech/08b.wav
+}
+
+sound sounds/soundscape/tech/09 {
+	sounds/soundscape/tech/09.wav
+}
+
+sound sounds/soundscape/tech/slipgatea_02 {
+	sounds/soundscape/tech/slipgatea_02.wav
+}
+
+sound sounds/soundscape/tech/09b {
+	sounds/soundscape/tech/09b.wav
+}
+
+sound sounds/soundscape/tech/07c {
+	sounds/soundscape/tech/07c.wav
+}
+
+sound sounds/soundscape/tech/06a {
+	sounds/soundscape/tech/06a.wav
+}
+
+sound sounds/soundscape/tonal/03c {
+	sounds/soundscape/tonal/03c.wav
+}
+
+sound sounds/soundscape/tonal/01a {
+	sounds/soundscape/tonal/01a.wav
+}
+
+sound sounds/soundscape/tonal/01b {
+	sounds/soundscape/tonal/01b.wav
+}
+
+sound sounds/soundscape/tonal/03b {
+	sounds/soundscape/tonal/03b.wav
+}
+
+sound sounds/soundscape/tonal/04b {
+	sounds/soundscape/tonal/04b.wav
+}
+
+sound sounds/soundscape/tonal/05b {
+	sounds/soundscape/tonal/05b.wav
+}
+
+sound sounds/soundscape/grinders/02a {
+	sounds/soundscape/grinders/02a.wav
+}
+
+sound sounds/soundscape/grinders/04a {
+	sounds/soundscape/grinders/04a.wav
+}
+
+sound sounds/soundscape/grinders/05c {
+	sounds/soundscape/grinders/05c.wav
+}
+
+sound sounds/soundscape/grinders/08a {
+	sounds/soundscape/grinders/08a.wav
+}
+
+sound sounds/soundscape/grinders/10 {
+	sounds/soundscape/grinders/10.wav
+}
+
+sound sounds/soundscape/grinders/11b {
+	sounds/soundscape/grinders/11b.wav
+}
+
+sound sounds/soundscape/grinders/11c {
+	sounds/soundscape/grinders/11c.wav
+}
+
+sound sounds/soundscape/lowfreq/02d {
+	sounds/soundscape/lowfreq/02d.wav
+}
+
+sound sounds/soundscape/lowfreq/02 {
+	sounds/soundscape/lowfreq/02.wav
+}
+
+sound sounds/soundscape/lowfreq/02c {
+	sounds/soundscape/lowfreq/02c.wav
+}
+
+sound sounds/soundscape/lowfreq/03b {
+	sounds/soundscape/lowfreq/03b.wav
+}
+
+sound sounds/soundscape/lowfreq/08b {
+	sounds/soundscape/lowfreq/08b.wav
+}
+
+sound sounds/soundscape/lowfreq/11c {
+	sounds/soundscape/lowfreq/11c.wav
+}
+
+sound sounds/soundscape/mids/02 {
+	sounds/soundscape/mids/02.wav
+}
+
+sound sounds/soundscape/mids/04c {
+	sounds/soundscape/mids/04c.wav
+}
+
+sound sounds/soundscape/mids/05b {
+	sounds/soundscape/mids/05b.wav
+}
+
+sound sounds/soundscape/stress/02 {
+	sounds/soundscape/stress/02.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_05_pd150 {
+	sounds/ambience/rooms/active/st_machroom_05_pd150.wav
+}
+
+sound sounds/soundscape/events/aflare_02 {
+	sounds/soundscape/events/aflare_02.wav
+}
+
+sound sounds/soundscape/events/02c {
+	sounds/soundscape/events/02c.wav
+}
+
+sound sounds/soundscape/events/sub_01d {
+	sounds/soundscape/events/sub_01d.wav
+}
+
+sound sounds/soundscape/grinders/02 {
+	sounds/soundscape/grinders/02.wav
+}
+
+sound sounds/soundscape/glassy/02b {
+	sounds/soundscape/glassy/02b.wav
+}
+
+sound sounds/soundscape/plain/02a {
+	sounds/soundscape/plain/02a.wav
+}
+
+sound sounds/soundscape/plain/02e {
+	sounds/soundscape/plain/02e.wav
+}
+
+sound sounds/soundscape/plain/03d {
+	sounds/soundscape/plain/03d.wav
+}
+
+sound sounds/soundscape/plain/03f {
+	sounds/soundscape/plain/03f.wav
+}
+
+sound sounds/soundscape/plain/04a {
+	sounds/soundscape/plain/04a.wav
+}
+
+sound sounds/soundscape/plain/05a {
+	sounds/soundscape/plain/05a.wav
+}
+
+sound sounds/soundscape/deep/02c {
+	sounds/soundscape/deep/02c.wav
+}
+
+sound sounds/soundscape/air/07b {
+	sounds/soundscape/air/07b.wav
+}
+
+sound sounds/soundscape/air/07c {
+	sounds/soundscape/air/07c.wav
+}
+
+sound sounds/soundscape/air/05c {
+	sounds/soundscape/air/05c.wav
+}
+
+sound sounds/ambience/outdoors/insects/insects_01 {
+	sounds/ambience/outdoors/insects/insects_01.wav
+}
+
+sound sounds/ambience/outdoors/insects/crickets_03 {
+	sounds/ambience/outdoors/insects/crickets_03.wav
+}
+
+sound sounds/ambience/outdoors/insects/nightchirps_01 {
+	sounds/ambience/outdoors/insects/nightchirps_01.wav
+}
+
+sound sounds/ambience/outdoors/insects/night_01 {
+	sounds/ambience/outdoors/insects/night_01.wav
+}
+
+sound sounds/ambience/outdoors/insects/flies_01 {
+	sounds/ambience/outdoors/insects/flies_01.wav
+}
+
+sound sounds/ambience/outdoors/insects/insects_04 {
+	sounds/ambience/outdoors/insects/insects_04.wav
+}
+
+sound sounds/ambience/outdoors/insects/crickets_05 {
+	sounds/ambience/outdoors/insects/crickets_05.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_calm_02_wide {
+	sounds/ambience/outdoors/wind/calm/st_calm_02_wide.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_calm_10 {
+	sounds/ambience/outdoors/wind/calm/st_calm_10.wav
+}
+
+sound sounds/ambience/outdoors/insects/insects_02 {
+	sounds/ambience/outdoors/insects/insects_02.wav
+}
+
+sound sounds/ambience/outdoors/insects/crickets_04 {
+	sounds/ambience/outdoors/insects/crickets_04.wav
+}
+
+sound sounds/ambience/outdoors/insects/crickets_02 {
+	sounds/ambience/outdoors/insects/crickets_02.wav
+}
+
+sound sounds/soundscape/lowfreq/07b {
+	sounds/soundscape/lowfreq/07b.wav
+}
+
+sound sounds/soundscape/lowfreq/09a {
+	sounds/soundscape/lowfreq/09a.wav
+}
+
+sound sounds/soundscape/lowfreq/alow_02 {
+	sounds/soundscape/lowfreq/alow_02.wav
+}
+
+sound sounds/soundscape/mids/06b {
+	sounds/soundscape/mids/06b.wav
+}
+
+sound sounds/soundscape/air/04c {
+	sounds/soundscape/air/04c.wav
+}
+
+sound sounds/soundscape/air/08c {
+	sounds/soundscape/air/08c.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_08 {
+	sounds/object_ambience/electrical/hums/hum_08.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_12 {
+	sounds/object_ambience/electrical/hums/hum_12.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_03 {
+	sounds/object_ambience/electrical/hums/hum_03.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_04 {
+	sounds/object_ambience/electrical/hums/hum_04.wav
+}
+
+sound sounds/object_ambience/burning/loop_flames_03 {
+	sounds/object_ambience/burning/loop_flames_03.wav
+}
+
+sound sounds/object_ambience/burning/1shot_sizzle_02 {
+	sounds/object_ambience/burning/1shot_sizzle_02.wav
+}
+
+sound sounds/object_ambience/burning/loop_propane_01 {
+	sounds/object_ambience/burning/loop_propane_01.wav
+}
+
+sound sounds/world/metal_stress_01 {
+	sounds/world/metal_stress_01.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/gas/gashiss_02 {
+	sounds/xlib/valley_sounds/burning/gas/gashiss_02.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_burn_02 {
+	sounds/xlib/valley_sounds/burning/loop_burn_02.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_burn_04 {
+	sounds/xlib/valley_sounds/burning/loop_burn_04.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_burn_08 {
+	sounds/xlib/valley_sounds/burning/loop_burn_08.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_burn_10 {
+	sounds/xlib/valley_sounds/burning/loop_burn_10.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_burn_01 {
+	sounds/xlib/valley_sounds/burning/loop_burn_01.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/rumbly/rumbly_02 {
+	sounds/xlib/valley_sounds/burning/rumbly/rumbly_02.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/rumbly/rumbly_04 {
+	sounds/xlib/valley_sounds/burning/rumbly/rumbly_04.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_01a {
+	sounds/ambience/outdoors/wind/calm/st_docile_01a.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_01d {
+	sounds/ambience/outdoors/wind/calm/st_docile_01d.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_03 {
+	sounds/ambience/outdoors/wind/calm/st_docile_03.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_empty_03 {
+	sounds/ambience/outdoors/wind/calm/st_empty_03.wav
+}
+
+sound sounds/soundscape/mids/03b {
+	sounds/soundscape/mids/03b.wav
+}
+
+sound sounds/soundscape/mids/01a {
+	sounds/soundscape/mids/01a.wav
+}
+
+sound sounds/soundscape/mids/03 {
+	sounds/soundscape/mids/03.wav
+}
+
+sound sounds/soundscape/mids/05c {
+	sounds/soundscape/mids/05c.wav
+}
+
+sound sounds/soundscape/lowfreq/03a {
+	sounds/soundscape/lowfreq/03a.wav
+}
+
+sound sounds/soundscape/lowfreq/03 {
+	sounds/soundscape/lowfreq/03.wav
+}
+
+sound sounds/ambience/outdoors/wind/mid/st_fab_02 {
+	sounds/ambience/outdoors/wind/mid/st_fab_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/mid/st_mid_02 {
+	sounds/ambience/outdoors/wind/mid/st_mid_02.wav
+}
+
+sound sounds/ambience/outdoors/insects/insects_05 {
+	sounds/ambience/outdoors/insects/insects_05.wav
+}
+
+sound sounds/ambience/outdoors/insects/nightchirps_03 {
+	sounds/ambience/outdoors/insects/nightchirps_03.wav
+}
+
+sound sounds/ambience/outdoors/insects/nightchirps_04 {
+	sounds/ambience/outdoors/insects/nightchirps_04.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_leafy_01 {
+	sounds/ambience/outdoors/wind/noisy/st_leafy_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_flappy_fabrics_03 {
+	sounds/ambience/outdoors/wind/noisy/st_flappy_fabrics_03.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_leafy_03 {
+	sounds/ambience/outdoors/wind/noisy/st_leafy_03.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_lowend_02 {
+	sounds/ambience/outdoors/wind/noisy/st_lowend_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_lowend_01 {
+	sounds/ambience/outdoors/wind/noisy/st_lowend_01.wav
+}
+
+sound sounds/ambience/outdoors/birds/birds_02 {
+	sounds/ambience/outdoors/birds/birds_02.wav
+}
+
+sound sounds/ambience/outdoors/birds/birds_06 {
+	sounds/ambience/outdoors/birds/birds_06.wav
+}
+
+sound sounds/ambience/outdoors/birds/birds_07 {
+	sounds/ambience/outdoors/birds/birds_07.wav
+}
+
+sound sounds/ambience/outdoors/water_creatures/frogpond_01 {
+	sounds/ambience/outdoors/water_creatures/frogpond_01.wav
+}
+
+sound sounds/ambience/outdoors/insects/nightchirps_02 {
+	sounds/ambience/outdoors/insects/nightchirps_02.wav
+}
+
+sound sounds/ambience/outdoors/insects/crickets_01 {
+	sounds/ambience/outdoors/insects/crickets_01.wav
+}
+
+sound sounds/antfarm/landfall_replicator {
+	sounds/antfarm/landfall_replicator.wav
+}
+
+sound sounds/antfarm/load_03 {
+	sounds/antfarm/load_03.wav
+}
+
+sound sounds/antfarm/player_gear {
+	sounds/antfarm/player_gear.wav
+}
+
+sound sounds/deployables/shieldgenerator/zap_03 {
+	sounds/deployables/shieldgenerator/zap_03.wav
+}
+
+sound sounds/deployables/shieldgenerator/idle_01 {
+	sounds/deployables/shieldgenerator/idle_01.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_10 {
+	sounds/object_ambience/electrical/hums/hum_10.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_11 {
+	sounds/object_ambience/electrical/hums/hum_11.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_07 {
+	sounds/object_ambience/electrical/hums/hum_07.wav
+}
+
+sound sounds/soundscape/mids/02b {
+	sounds/soundscape/mids/02b.wav
+}
+
+sound sounds/soundscape/mids/04b {
+	sounds/soundscape/mids/04b.wav
+}
+
+sound sounds/soundscape/plain/01b {
+	sounds/soundscape/plain/01b.wav
+}
+
+sound sounds/soundscape/plain/02d {
+	sounds/soundscape/plain/02d.wav
+}
+
+sound sounds/soundscape/plain/03a {
+	sounds/soundscape/plain/03a.wav
+}
+
+sound sounds/ambience/pipes/airflow/mono_airflow_02 {
+	sounds/ambience/pipes/airflow/mono_airflow_02.wav
+}
+
+sound sounds/ambience/pipes/airflow/styleflow_01 {
+	sounds/ambience/pipes/airflow/styleflow_01.wav
+}
+
+sound sounds/ambience/pipes/airflow/whistleair_01 {
+	sounds/ambience/pipes/airflow/whistleair_01.wav
+}
+
+sound sounds/ambience/pipes/airflow/mono_airflow_04 {
+	sounds/ambience/pipes/airflow/mono_airflow_04.wav
+}
+
+sound sounds/ambience/pipes/airflow/mono_airflow_01 {
+	sounds/ambience/pipes/airflow/mono_airflow_01.wav
+}
+
+sound sounds/object_ambience/airs_vents/vent_03 {
+	sounds/object_ambience/airs_vents/vent_03.wav
+}
+
+sound sounds/object_ambience/airs_vents/vent_09 {
+	sounds/object_ambience/airs_vents/vent_09.wav
+}
+
+sound sounds/object_ambience/airs_vents/vent_07 {
+	sounds/object_ambience/airs_vents/vent_07.wav
+}
+
+sound sounds/soundscape/plain/03e {
+	sounds/soundscape/plain/03e.wav
+}
+
+sound sounds/soundscape/deep/02a {
+	sounds/soundscape/deep/02a.wav
+}
+
+sound sounds/ambience/pipes/airflow/mono_airflow_03 {
+	sounds/ambience/pipes/airflow/mono_airflow_03.wav
+}
+
+sound sounds/soundscape/tech/08a {
+	sounds/soundscape/tech/08a.wav
+}
+
+sound sounds/machines/machloop_02 {
+	sounds/machines/machloop_02.wav
+}
+
+sound sounds/machines/powerline_02 {
+	sounds/machines/powerline_02.wav
+}
+
+sound sounds/soundscape/grinders/03a {
+	sounds/soundscape/grinders/03a.wav
+}
+
+sound sounds/soundscape/grinders/04b {
+	sounds/soundscape/grinders/04b.wav
+}
+
+sound sounds/soundscape/grinders/08 {
+	sounds/soundscape/grinders/08.wav
+}
+
+sound sounds/ambience/temperate/transformer_01 {
+	sounds/ambience/temperate/transformer_01.wav
+}
+
+sound sounds/ambience/temperate/transformer_02 {
+	sounds/ambience/temperate/transformer_02.wav
+}
+
+sound sounds/ambience/pipes/airflow/whistleair_02 {
+	sounds/ambience/pipes/airflow/whistleair_02.wav
+}
+
+sound sounds/ambience/rooms/steamyhissy/loop_01 {
+	sounds/ambience/rooms/steamyhissy/loop_01.wav
+}
+
+sound sounds/ambience/rooms/steamyhissy/loop_01_u1 {
+	sounds/ambience/rooms/steamyhissy/loop_01_u1.wav
+}
+
+sound sounds/ambience/rooms/steamyhissy/loop_01_d1 {
+	sounds/ambience/rooms/steamyhissy/loop_01_d1.wav
+}
+
+sound sounds/ambience/rooms/ambience_05 {
+	sounds/ambience/rooms/ambience_05.wav
+}
+
+sound sounds/ambience/rooms/hi/machroom_01 {
+	sounds/ambience/rooms/hi/machroom_01.wav
+}
+
+sound sounds/ambience/rooms/hi/machroom_02_d1 {
+	sounds/ambience/rooms/hi/machroom_02_d1.wav
+}
+
+sound sounds/ambience/rooms/hi/machroom_02_u1 {
+	sounds/ambience/rooms/hi/machroom_02_u1.wav
+}
+
+sound sounds/ambience/pipes/airflow/mono_airflow_05 {
+	sounds/ambience/pipes/airflow/mono_airflow_05.wav
+}
+
+sound sounds/ambience/pipes/airflow/whistleair_03 {
+	sounds/ambience/pipes/airflow/whistleair_03.wav
+}
+
+sound sounds/ambience/pipes/steam/steampipe_01 {
+	sounds/ambience/pipes/steam/steampipe_01.wav
+}
+
+sound sounds/ambience/pipes/steam/steampipe_02 {
+	sounds/ambience/pipes/steam/steampipe_02.wav
+}
+
+sound sounds/ambience/pipes/steam/steampipe_03_constant {
+	sounds/ambience/pipes/steam/steampipe_03_constant.wav
+}
+
+sound sounds/soundscape/deep/01b {
+	sounds/soundscape/deep/01b.wav
+}
+
+sound sounds/soundscape/deep/03a {
+	sounds/soundscape/deep/03a.wav
+}
+
+sound sounds/soundscape/deep/02b {
+	sounds/soundscape/deep/02b.wav
+}
+
+sound sounds/soundscape/deep/01 {
+	sounds/soundscape/deep/01.wav
+}
+
+sound sounds/soundscape/deep/01a {
+	sounds/soundscape/deep/01a.wav
+}
+
+sound sounds/soundscape/deep/02 {
+	sounds/soundscape/deep/02.wav
+}
+
+sound sounds/soundscape/cold/01a {
+	sounds/soundscape/cold/01a.wav
+}
+
+sound sounds/soundscape/cold/05a {
+	sounds/soundscape/cold/05a.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_gusty_03 {
+	sounds/ambience/outdoors/wind/noisy/st_gusty_03.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_flappy_fabrics_02 {
+	sounds/ambience/outdoors/wind/noisy/st_flappy_fabrics_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_gusty_04c {
+	sounds/ambience/outdoors/wind/noisy/st_gusty_04c.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_gusty_02 {
+	sounds/ambience/outdoors/wind/noisy/st_gusty_02.wav
+}
+
+sound sounds/soundscape/plain/05d {
+	sounds/soundscape/plain/05d.wav
+}
+
+sound sounds/soundscape/plain/btone_03 {
+	sounds/soundscape/plain/btone_03.wav
+}
+
+sound sounds/soundscape/lowfreq/04c {
+	sounds/soundscape/lowfreq/04c.wav
+}
+
+sound sounds/soundscape/lowfreq/05 {
+	sounds/soundscape/lowfreq/05.wav
+}
+
+sound sounds/soundscape/lowfreq/07 {
+	sounds/soundscape/lowfreq/07.wav
+}
+
+sound sounds/soundscape/lowfreq/08d {
+	sounds/soundscape/lowfreq/08d.wav
+}
+
+sound sounds/soundscape/lowfreq/09b {
+	sounds/soundscape/lowfreq/09b.wav
+}
+
+sound sounds/soundscape/lowfreq/11d {
+	sounds/soundscape/lowfreq/11d.wav
+}
+
+sound sounds/soundscape/lowfreq/alow_05 {
+	sounds/soundscape/lowfreq/alow_05.wav
+}
+
+sound sounds/soundscape/lowfreq/bmover_03 {
+	sounds/soundscape/lowfreq/bmover_03.wav
+}
+
+sound sounds/soundscape/lowfreq/bmover_04 {
+	sounds/soundscape/lowfreq/bmover_04.wav
+}
+
+sound sounds/soundscape/lowfreq/bmover_02 {
+	sounds/soundscape/lowfreq/bmover_02.wav
+}
+
+sound sounds/soundscape/mids/03c {
+	sounds/soundscape/mids/03c.wav
+}
+
+sound sounds/soundscape/mids/06c {
+	sounds/soundscape/mids/06c.wav
+}
+
+sound sounds/soundscape/stress/01b {
+	sounds/soundscape/stress/01b.wav
+}
+
+sound sounds/soundscape/stress/02b {
+	sounds/soundscape/stress/02b.wav
+}
+
+sound sounds/ambience/outdoors/wind/tonal/st_tonal_02 {
+	sounds/ambience/outdoors/wind/tonal/st_tonal_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/tonal/st_whistly_01 {
+	sounds/ambience/outdoors/wind/tonal/st_whistly_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/tonal/st_tonal_01 {
+	sounds/ambience/outdoors/wind/tonal/st_tonal_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/tonal/st_tonal_04 {
+	sounds/ambience/outdoors/wind/tonal/st_tonal_04.wav
+}
+
+sound sounds/ambience/outdoors/wind/air_01 {
+	sounds/ambience/outdoors/wind/air_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/forest_wind_01 {
+	sounds/ambience/outdoors/wind/forest_wind_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/grass_wind_01 {
+	sounds/ambience/outdoors/wind/grass_wind_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/lo_wind_02 {
+	sounds/ambience/outdoors/wind/lo_wind_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/lo_wind_03 {
+	sounds/ambience/outdoors/wind/lo_wind_03.wav
+}
+
+sound sounds/soundscape/air/02c {
+	sounds/soundscape/air/02c.wav
+}
+
+sound sounds/soundscape/air/05b {
+	sounds/soundscape/air/05b.wav
+}
+
+sound sounds/soundscape/air/bair_02 {
+	sounds/soundscape/air/bair_02.wav
+}
+
+sound sounds/soundscape/air/coldair_04 {
+	sounds/soundscape/air/coldair_04.wav
+}
+
+sound sounds/soundscape/air/ventolin_02 {
+	sounds/soundscape/air/ventolin_02.wav
+}
+
+sound sounds/soundscape/lowfreq/04a {
+	sounds/soundscape/lowfreq/04a.wav
+}
+
+sound sounds/soundscape/lowfreq/10 {
+	sounds/soundscape/lowfreq/10.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_gusty_04 {
+	sounds/ambience/outdoors/wind/noisy/st_gusty_04.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_gusty_04b {
+	sounds/ambience/outdoors/wind/noisy/st_gusty_04b.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_tempest_01b {
+	sounds/ambience/outdoors/wind/noisy/st_tempest_01b.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_tempest_01c {
+	sounds/ambience/outdoors/wind/noisy/st_tempest_01c.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_tempest_01 {
+	sounds/ambience/outdoors/wind/noisy/st_tempest_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_tempest_02a {
+	sounds/ambience/outdoors/wind/noisy/st_tempest_02a.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_tempest_03 {
+	sounds/ambience/outdoors/wind/noisy/st_tempest_03.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_tempest_03a {
+	sounds/ambience/outdoors/wind/noisy/st_tempest_03a.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_tempest_03b {
+	sounds/ambience/outdoors/wind/noisy/st_tempest_03b.wav
+}
+
+sound sounds/ambience/outdoors/wind/stormy/gusty_01 {
+	sounds/ambience/outdoors/wind/stormy/gusty_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/stormy/gusty_02 {
+	sounds/ambience/outdoors/wind/stormy/gusty_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/stormy/gusty_04 {
+	sounds/ambience/outdoors/wind/stormy/gusty_04.wav
+}
+
+sound sounds/ambience/outdoors/wind/stormy/gusty_05 {
+	sounds/ambience/outdoors/wind/stormy/gusty_05.wav
+}
+
+sound sounds/ambience/outdoors/wind/lo_slow_wind_01 {
+	sounds/ambience/outdoors/wind/lo_slow_wind_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/lo_wind_01 {
+	sounds/ambience/outdoors/wind/lo_wind_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/lo_wind_04 {
+	sounds/ambience/outdoors/wind/lo_wind_04.wav
+}
+
+sound sounds/ambience/outdoors/wind/lo_wind_06 {
+	sounds/ambience/outdoors/wind/lo_wind_06.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_gusty_01 {
+	sounds/ambience/outdoors/wind/noisy/st_gusty_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_gusty_04a {
+	sounds/ambience/outdoors/wind/noisy/st_gusty_04a.wav
+}
+
+sound sounds/ambience/outdoors/wind/grass_wind_02 {
+	sounds/ambience/outdoors/wind/grass_wind_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/whistle_wind_01 {
+	sounds/ambience/outdoors/wind/whistle_wind_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/mid_wind_02 {
+	sounds/ambience/outdoors/wind/mid_wind_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy_wind_02 {
+	sounds/ambience/outdoors/wind/noisy_wind_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy_wind_01 {
+	sounds/ambience/outdoors/wind/noisy_wind_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/whistle_wind_02 {
+	sounds/ambience/outdoors/wind/whistle_wind_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/mid_wind_01 {
+	sounds/ambience/outdoors/wind/mid_wind_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/lo_wind_07 {
+	sounds/ambience/outdoors/wind/lo_wind_07.wav
+}
+
+sound sounds/ambience/outdoors/wind/forest_wind_02 {
+	sounds/ambience/outdoors/wind/forest_wind_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/air_02 {
+	sounds/ambience/outdoors/wind/air_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_leafy_04 {
+	sounds/ambience/outdoors/wind/noisy/st_leafy_04.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_leafy_02 {
+	sounds/ambience/outdoors/wind/noisy/st_leafy_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_lowend_03 {
+	sounds/ambience/outdoors/wind/noisy/st_lowend_03.wav
+}
+
+sound sounds/soundscape/air/06d {
+	sounds/soundscape/air/06d.wav
+}
+
+sound sounds/soundscape/stress/01c {
+	sounds/soundscape/stress/01c.wav
+}
+
+sound sounds/ambience/outdoors/wind/tonal/st_tonal_03 {
+	sounds/ambience/outdoors/wind/tonal/st_tonal_03.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_03 {
+	sounds/ambience/rooms/active/st_machroom_03.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_04_pd125 {
+	sounds/ambience/rooms/active/st_machroom_04_pd125.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_08 {
+	sounds/ambience/rooms/active/st_machroom_08.wav
+}
+
+sound sounds/ambience/rooms/airy/air_03 {
+	sounds/ambience/rooms/airy/air_03.wav
+}
+
+sound sounds/ambience/rooms/airy/air_07 {
+	sounds/ambience/rooms/airy/air_07.wav
+}
+
+sound sounds/object_ambience/burning/loop_flames_04 {
+	sounds/object_ambience/burning/loop_flames_04.wav
+}
+
+sound sounds/object_ambience/burning/1shot_sizzle_03 {
+	sounds/object_ambience/burning/1shot_sizzle_03.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_burn_07 {
+	sounds/xlib/valley_sounds/burning/loop_burn_07.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/1shot_sizzle_01 {
+	sounds/xlib/valley_sounds/burning/1shot_sizzle_01.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/burnie_burn {
+	sounds/xlib/valley_sounds/burning/burnie_burn.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_burn_03 {
+	sounds/xlib/valley_sounds/burning/loop_burn_03.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_calm_06 {
+	sounds/ambience/outdoors/wind/calm/st_calm_06.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_02c {
+	sounds/ambience/outdoors/wind/calm/st_docile_02c.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_03c {
+	sounds/ambience/outdoors/wind/calm/st_docile_03c.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_04b {
+	sounds/ambience/outdoors/wind/calm/st_docile_04b.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_04d {
+	sounds/ambience/outdoors/wind/calm/st_docile_04d.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_empty_02 {
+	sounds/ambience/outdoors/wind/calm/st_empty_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_calm_01_wide {
+	sounds/ambience/outdoors/wind/calm/st_calm_01_wide.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_calm_01 {
+	sounds/ambience/outdoors/wind/calm/st_calm_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_calm_05 {
+	sounds/ambience/outdoors/wind/calm/st_calm_05.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_calm_09 {
+	sounds/ambience/outdoors/wind/calm/st_calm_09.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_02 {
+	sounds/ambience/outdoors/wind/calm/st_docile_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_02b {
+	sounds/ambience/outdoors/wind/calm/st_docile_02b.wav
+}
+
+sound sounds/ambience/outdoors/wind/spooky_wind_metal_creak_02 {
+	sounds/ambience/outdoors/wind/spooky_wind_metal_creak_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/spooky_wind_metal_creak {
+	sounds/ambience/outdoors/wind/spooky_wind_metal_creak.wav
+}
+
+sound sounds/ambience/outdoors/wind/wind_01 {
+	sounds/ambience/outdoors/wind/wind_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/creaking_wind_02 {
+	sounds/ambience/outdoors/wind/creaking_wind_02.wav
+}
+
+sound sounds/ambience/temperate/wind_01 {
+	sounds/ambience/temperate/wind_01.wav
+}
+
+sound sounds/ambience/wind/wind_03 {
+	sounds/ambience/wind/wind_03.wav
+}
+
+sound sounds/ambience/outdoors/insects/crickets_06 {
+	sounds/ambience/outdoors/insects/crickets_06.wav
+}
+
+sound sounds/ambience/outdoors/insects/insects_03 {
+	sounds/ambience/outdoors/insects/insects_03.wav
+}
+
+sound sounds/ambience/outdoors/insects/nightcreatures_01 {
+	sounds/ambience/outdoors/insects/nightcreatures_01.wav
+}
+
+sound sounds/soundscape/plain/02b {
+	sounds/soundscape/plain/02b.wav
+}
+
+sound sounds/soundscape/plain/05b {
+	sounds/soundscape/plain/05b.wav
+}
+
+sound sounds/soundscape/plain/05c {
+	sounds/soundscape/plain/05c.wav
+}
+
+sound sounds/soundscape/air/03b {
+	sounds/soundscape/air/03b.wav
+}
+
+sound sounds/soundscape/air/08a {
+	sounds/soundscape/air/08a.wav
+}
+
+sound sounds/soundscape/air/09 {
+	sounds/soundscape/air/09.wav
+}
+
+sound sounds/soundscape/watery/01 {
+	sounds/soundscape/watery/01.wav
+}
+
+sound sounds/soundscape/watery/02 {
+	sounds/soundscape/watery/02.wav
+}
+
+sound sounds/soundscape/tech/slipgatea_04 {
+	sounds/soundscape/tech/slipgatea_04.wav
+}
+
+sound sounds/soundscape/tech/slipgatea_05 {
+	sounds/soundscape/tech/slipgatea_05.wav
+}
+
+sound sounds/soundscape/tech/atech_05 {
+	sounds/soundscape/tech/atech_05.wav
+}
+
+sound sounds/soundscape/lowfreq/08a {
+	sounds/soundscape/lowfreq/08a.wav
+}
+
+sound sounds/soundscape/lowfreq/08c {
+	sounds/soundscape/lowfreq/08c.wav
+}
+
+sound sounds/soundscape/lowfreq/11a {
+	sounds/soundscape/lowfreq/11a.wav
+}
+
+sound sounds/soundscape/grinders/09 {
+	sounds/soundscape/grinders/09.wav
+}
+
+sound sounds/soundscape/grinders/04c {
+	sounds/soundscape/grinders/04c.wav
+}
+
+sound sounds/soundscape/grinders/02b {
+	sounds/soundscape/grinders/02b.wav
+}
+
+sound sounds/soundscape/tech/shiftyrez_03 {
+	sounds/soundscape/tech/shiftyrez_03.wav
+}
+
+sound sounds/soundscape/tech/tpbuzz_02 {
+	sounds/soundscape/tech/tpbuzz_02.wav
+}
+
+sound sounds/soundscape/tech/tpbuzz_01 {
+	sounds/soundscape/tech/tpbuzz_01.wav
+}
+
+sound sounds/soundscape/tech/tpbuzz_03 {
+	sounds/soundscape/tech/tpbuzz_03.wav
+}
+
+sound sounds/soundscape/tech/shiftyrez_01 {
+	sounds/soundscape/tech/shiftyrez_01.wav
+}
+
+sound sounds/soundscape/tech/shiftyrez_02 {
+	sounds/soundscape/tech/shiftyrez_02.wav
+}
+
+sound sounds/soundscape/lowfreq/11b {
+	sounds/soundscape/lowfreq/11b.wav
+}
+
+sound sounds/soundscape/lowfreq/06b {
+	sounds/soundscape/lowfreq/06b.wav
+}
+
+sound sounds/soundscape/lowfreq/04b {
+	sounds/soundscape/lowfreq/04b.wav
+}
+
+sound sounds/soundscape/xscapes/noisymachine_01 {
+	sounds/soundscape/xscapes/noisymachine_01.wav
+}
+
+sound sounds/soundscape/xscapes/scape_01 {
+	sounds/soundscape/xscapes/scape_01.wav
+}
+
+sound sounds/soundscape/xscapes/scape_01_high {
+	sounds/soundscape/xscapes/scape_01_high.wav
+}
+
+sound sounds/soundscape/xscapes/scape_03_high {
+	sounds/soundscape/xscapes/scape_03_high.wav
+}
+
+sound sounds/soundscape/xscapes/scape_04a {
+	sounds/soundscape/xscapes/scape_04a.wav
+}
+
+sound sounds/soundscape/xscapes/scape_06_high_01 {
+	sounds/soundscape/xscapes/scape_06_high_01.wav
+}
+
+sound sounds/soundscape/xscapes/scape_06_high_02 {
+	sounds/soundscape/xscapes/scape_06_high_02.wav
+}
+
+sound sounds/soundscape/xscapes/scape_07a {
+	sounds/soundscape/xscapes/scape_07a.wav
+}
+
+sound sounds/soundscape/xscapes/scape_07_high_01 {
+	sounds/soundscape/xscapes/scape_07_high_01.wav
+}
+
+sound sounds/soundscape/xscapes/scape_07_high_02 {
+	sounds/soundscape/xscapes/scape_07_high_02.wav
+}
+
+sound sounds/soundscape/xscapes/scape_08a {
+	sounds/soundscape/xscapes/scape_08a.wav
+}
+
+sound sounds/soundscape/xscapes/scape_09a_high_01 {
+	sounds/soundscape/xscapes/scape_09a_high_01.wav
+}
+
+sound sounds/soundscape/xscapes/scape_09_high_02 {
+	sounds/soundscape/xscapes/scape_09_high_02.wav
+}
+
+sound sounds/soundscape/xscapes/scape_10a_high_01 {
+	sounds/soundscape/xscapes/scape_10a_high_01.wav
+}
+
+sound sounds/soundscape/xscapes/scape_10a_high_02 {
+	sounds/soundscape/xscapes/scape_10a_high_02.wav
+}
+
+sound sounds/soundscape/xscapes/scape_10_high {
+	sounds/soundscape/xscapes/scape_10_high.wav
+}
+
+sound sounds/soundscape/xscapes/scape_11 {
+	sounds/soundscape/xscapes/scape_11.wav
+}
+
+sound sounds/soundscape/xscapes/scape_12 {
+	sounds/soundscape/xscapes/scape_12.wav
+}
+
+sound sounds/soundscape/xscapes/scape_12a {
+	sounds/soundscape/xscapes/scape_12a.wav
+}
+
+sound sounds/soundscape/xscapes/scape_13 {
+	sounds/soundscape/xscapes/scape_13.wav
+}
+
+sound sounds/soundscape/xscapes/scape_14 {
+	sounds/soundscape/xscapes/scape_14.wav
+}
+
+sound sounds/soundscape/xscapes/scape_15 {
+	sounds/soundscape/xscapes/scape_15.wav
+}
+
+sound sounds/soundscape/xscapes/scape_15a {
+	sounds/soundscape/xscapes/scape_15a.wav
+}
+
+sound sounds/soundscape/xscapes/scape_15a_high {
+	sounds/soundscape/xscapes/scape_15a_high.wav
+}
+
+sound sounds/soundscape/xscapes/scape_15_high {
+	sounds/soundscape/xscapes/scape_15_high.wav
+}
+
+sound sounds/soundscape/xscapes/scape_16 {
+	sounds/soundscape/xscapes/scape_16.wav
+}
+
+sound sounds/soundscape/xscapes/scape_16_high_01 {
+	sounds/soundscape/xscapes/scape_16_high_01.wav
+}
+
+sound sounds/soundscape/xscapes/scape_16_high_02 {
+	sounds/soundscape/xscapes/scape_16_high_02.wav
+}
+
+sound sounds/soundscape/xscapes/scape_17 {
+	sounds/soundscape/xscapes/scape_17.wav
+}
+
+sound sounds/soundscape/xscapes/scape_17a {
+	sounds/soundscape/xscapes/scape_17a.wav
+}
+
+sound sounds/soundscape/xscapes/scape_18_high_01 {
+	sounds/soundscape/xscapes/scape_18_high_01.wav
+}
+
+sound sounds/soundscape/xscapes/scape_21a_high {
+	sounds/soundscape/xscapes/scape_21a_high.wav
+}
+
+sound sounds/ambience/outdoors/wind/stormy/gusty_03 {
+	sounds/ambience/outdoors/wind/stormy/gusty_03.wav
+}
+
+sound sounds/ambience/outdoors/wind/surface_ambience02 {
+	sounds/ambience/outdoors/wind/surface_ambience02.wav
+}
+
+sound sounds/ambience/outdoors/wind/surface_ambience03 {
+	sounds/ambience/outdoors/wind/surface_ambience03.wav
+}
+
+sound sounds/ambience/outdoors/wind/surface_ambience04 {
+	sounds/ambience/outdoors/wind/surface_ambience04.wav
+}
+
+sound sounds/ambience/outdoors/wind/surface_ambience05 {
+	sounds/ambience/outdoors/wind/surface_ambience05.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_tempest_01a {
+	sounds/ambience/outdoors/wind/noisy/st_tempest_01a.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_tempest_02c {
+	sounds/ambience/outdoors/wind/noisy/st_tempest_02c.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_tempest_03c {
+	sounds/ambience/outdoors/wind/noisy/st_tempest_03c.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_tempest_02b {
+	sounds/ambience/outdoors/wind/noisy/st_tempest_02b.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_tempest_02 {
+	sounds/ambience/outdoors/wind/noisy/st_tempest_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_flappy_fabrics_04 {
+	sounds/ambience/outdoors/wind/noisy/st_flappy_fabrics_04.wav
+}
+
+sound sounds/object_ambience/generators/loop_02 {
+	sounds/object_ambience/generators/loop_02.wav
+}
+
+sound sounds/object_ambience/generators/loop_01 {
+	sounds/object_ambience/generators/loop_01.wav
+}
+
+sound sounds/object_ambience/generators/loop_03 {
+	sounds/object_ambience/generators/loop_03.wav
+}
+
+sound sounds/object_ambience/generators/loop_04 {
+	sounds/object_ambience/generators/loop_04.wav
+}
+
+sound sounds/object_ambience/generators/loop_05 {
+	sounds/object_ambience/generators/loop_05.wav
+}
+
+sound sounds/object_ambience/generators/loop_06 {
+	sounds/object_ambience/generators/loop_06.wav
+}
+
+sound sounds/object_ambience/generators/loop_07 {
+	sounds/object_ambience/generators/loop_07.wav
+}
+
+sound sounds/soundscape/moody/heartbeat_01_loop {
+	sounds/soundscape/moody/heartbeat_01_loop.wav
+}
+
+sound sounds/machines/machloop_01 {
+	sounds/machines/machloop_01.wav
+}
+
+sound sounds/machines/machloop_04 {
+	sounds/machines/machloop_04.wav
+}
+
+sound sounds/machines/machloop_05 {
+	sounds/machines/machloop_05.wav
+}
+
+sound sounds/object_ambience/steam/loop_steam_04 {
+	sounds/object_ambience/steam/loop_steam_04.wav
+}
+
+sound sounds/soundscape/grinders/11d {
+	sounds/soundscape/grinders/11d.wav
+}
+
+sound sounds/object_ambience/generators/fuelpod_01 {
+	sounds/object_ambience/generators/fuelpod_01.wav
+}
+
+sound sounds/object_ambience/generators/fuelpod_02 {
+	sounds/object_ambience/generators/fuelpod_02.wav
+}
+
+sound sounds/soundscape/lowfreq/07a {
+	sounds/soundscape/lowfreq/07a.wav
+}
+
+sound sounds/soundscape/tonal/05c {
+	sounds/soundscape/tonal/05c.wav
+}
+
+sound sounds/soundscape/xscapes/noisymachine_02 {
+	sounds/soundscape/xscapes/noisymachine_02.wav
+}
+
+sound sounds/soundscape/xscapes/scape_03 {
+	sounds/soundscape/xscapes/scape_03.wav
+}
+
+sound sounds/soundscape/xscapes/scape_06 {
+	sounds/soundscape/xscapes/scape_06.wav
+}
+
+sound sounds/soundscape/xscapes/scape_18 {
+	sounds/soundscape/xscapes/scape_18.wav
+}
+
+sound sounds/soundscape/xscapes/scape_23_high {
+	sounds/soundscape/xscapes/scape_23_high.wav
+}
+
+sound sounds/soundscape/xscapes/scape_25a {
+	sounds/soundscape/xscapes/scape_25a.wav
+}
+
+sound sounds/soundscape/xscapes/scape_25_high_01 {
+	sounds/soundscape/xscapes/scape_25_high_01.wav
+}
+
+sound sounds/soundscape/xscapes/scape_25_high_02 {
+	sounds/soundscape/xscapes/scape_25_high_02.wav
+}
+
+sound sounds/soundscape/xscapes/scape_29 {
+	sounds/soundscape/xscapes/scape_29.wav
+}
+
+sound sounds/soundscape/xscapes/scape_29_high_01 {
+	sounds/soundscape/xscapes/scape_29_high_01.wav
+}
+
+sound sounds/soundscape/xscapes/scape_30 {
+	sounds/soundscape/xscapes/scape_30.wav
+}
+
+sound sounds/ambience/outdoors/wind/surface_ambience01 {
+	sounds/ambience/outdoors/wind/surface_ambience01.wav
+}
+
+sound sounds/ambience/rain/rain_01 {
+	sounds/ambience/rain/rain_01.wav
+}
+
+sound sounds/ambience/temperate/thunder_01 {
+	sounds/ambience/temperate/thunder_01.wav
+}
+
+sound sounds/ambience/temperate/thunder_02 {
+	sounds/ambience/temperate/thunder_02.wav
+}
+
+sound sounds/ambience/temperate/thunder_03 {
+	sounds/ambience/temperate/thunder_03.wav
+}
+
+sound sounds/ambience/outdoors/water/stream_01 {
+	sounds/ambience/outdoors/water/stream_01.wav
+}
+
+sound sounds/ambience/outdoors/water/brookhum_01_pd175 {
+	sounds/ambience/outdoors/water/brookhum_01_pd175.wav
+}
+
+sound sounds/ambience/outdoors/water/mover_02 {
+	sounds/ambience/outdoors/water/mover_02.wav
+}
+
+sound sounds/ambience/outdoors/water/splashing_01 {
+	sounds/ambience/outdoors/water/splashing_01.wav
+}
+
+sound sounds/ambience/outdoors/water/splashing_02 {
+	sounds/ambience/outdoors/water/splashing_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/interesting/creaky_wind_01 {
+	sounds/ambience/outdoors/wind/interesting/creaky_wind_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/mid/st_mid_05 {
+	sounds/ambience/outdoors/wind/mid/st_mid_05.wav
+}
+
+sound sounds/ambience/outdoors/wind/wind_02 {
+	sounds/ambience/outdoors/wind/wind_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/lo_wind_05 {
+	sounds/ambience/outdoors/wind/lo_wind_05.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_03a {
+	sounds/ambience/outdoors/wind/calm/st_docile_03a.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_04a {
+	sounds/ambience/outdoors/wind/calm/st_docile_04a.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_fuseburn_03 {
+	sounds/xlib/valley_sounds/burning/loop_fuseburn_03.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/1shot_sizzle_03 {
+	sounds/xlib/valley_sounds/burning/1shot_sizzle_03.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_burn_05 {
+	sounds/xlib/valley_sounds/burning/loop_burn_05.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_burn_09 {
+	sounds/xlib/valley_sounds/burning/loop_burn_09.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_burn_06 {
+	sounds/xlib/valley_sounds/burning/loop_burn_06.wav
+}
+
+sound sounds/soundscape/xscapes/scape_09a_high_02 {
+	sounds/soundscape/xscapes/scape_09a_high_02.wav
+}
+
+sound sounds/soundscape/xscapes/scape_18_high_02 {
+	sounds/soundscape/xscapes/scape_18_high_02.wav
+}
+
+sound sounds/soundscape/xscapes/scape_19 {
+	sounds/soundscape/xscapes/scape_19.wav
+}
+
+sound sounds/soundscape/xscapes/scape_21a {
+	sounds/soundscape/xscapes/scape_21a.wav
+}
+
+sound sounds/soundscape/xscapes/scape_22 {
+	sounds/soundscape/xscapes/scape_22.wav
+}
+
+sound sounds/soundscape/xscapes/scape_22a {
+	sounds/soundscape/xscapes/scape_22a.wav
+}
+
+sound sounds/soundscape/xscapes/scape_24 {
+	sounds/soundscape/xscapes/scape_24.wav
+}
+
+sound sounds/soundscape/xscapes/scape_26a {
+	sounds/soundscape/xscapes/scape_26a.wav
+}
+
+sound sounds/soundscape/xscapes/scape_29_high_02 {
+	sounds/soundscape/xscapes/scape_29_high_02.wav
+}
+
+sound sounds/soundscape/xscapes/scape_30a {
+	sounds/soundscape/xscapes/scape_30a.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_08 {
+	sounds/object_ambience/water_goop/goop_08.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_06 {
+	sounds/object_ambience/water_goop/goop_06.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_01 {
+	sounds/object_ambience/water_goop/goop_01.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_10 {
+	sounds/object_ambience/water_goop/goop_10.wav
+}
+
+sound sounds/object_ambience/slime/loop_slime_03 {
+	sounds/object_ambience/slime/loop_slime_03.wav
+}
+
+sound sounds/object_ambience/slime/loop_slime_04 {
+	sounds/object_ambience/slime/loop_slime_04.wav
+}
+
+sound sounds/object_ambience/slime/loop_slime_01 {
+	sounds/object_ambience/slime/loop_slime_01.wav
+}
+
+sound sounds/soundscape/tonal/04a {
+	sounds/soundscape/tonal/04a.wav
+}
+
+sound sounds/soundscape/tonal/03 {
+	sounds/soundscape/tonal/03.wav
+}
+
+sound sounds/soundscape/xscapes/scape_09_high_01 {
+	sounds/soundscape/xscapes/scape_09_high_01.wav
+}
+
+sound sounds/soundscape/xscapes/scape_05 {
+	sounds/soundscape/xscapes/scape_05.wav
+}
+
+sound sounds/soundscape/air/05d {
+	sounds/soundscape/air/05d.wav
+}
+
+sound sounds/ambience/rooms/dull/radio_bed_02 {
+	sounds/ambience/rooms/dull/radio_bed_02.wav
+}
+
+sound sounds/ambience/rooms/dull/hiss_bed_01 {
+	sounds/ambience/rooms/dull/hiss_bed_01.wav
+}
+
+sound sounds/ambience/rooms/dull/rumble_01 {
+	sounds/ambience/rooms/dull/rumble_01.wav
+}
+
+sound sounds/ambience/rooms/dull/radio_bed_04 {
+	sounds/ambience/rooms/dull/radio_bed_04.wav
+}
+
+sound sounds/structures/factory/exterior_loop_01 {
+	sounds/structures/factory/exterior_loop_01.wav
+}
+
+sound sounds/structures/factory/main_engine {
+	sounds/structures/factory/main_engine.wav
+}
+
+sound sounds/soundscape/xscapes/scape_26 {
+	sounds/soundscape/xscapes/scape_26.wav
+}
+
+sound sounds/soundscape/xscapes/scape_28 {
+	sounds/soundscape/xscapes/scape_28.wav
+}
+
+sound sounds/soundscape/xscapes/scape_25 {
+	sounds/soundscape/xscapes/scape_25.wav
+}
+
+sound sounds/ambience/rooms/dull/hiss_bed_02 {
+	sounds/ambience/rooms/dull/hiss_bed_02.wav
+}
+
+sound sounds/ambience/rooms/dull/space_bed_01 {
+	sounds/ambience/rooms/dull/space_bed_01.wav
+}
+
+sound sounds/ambience/rooms/dull/space_bed_02 {
+	sounds/ambience/rooms/dull/space_bed_02.wav
+}
+
+sound sounds/ambience/rooms/dull/rumble_02 {
+	sounds/ambience/rooms/dull/rumble_02.wav
+}
+
+sound sounds/ambience/rooms/dull/space_bed_03 {
+	sounds/ambience/rooms/dull/space_bed_03.wav
+}
+
+sound sounds/ambience/rooms/airy/airmach_01 {
+	sounds/ambience/rooms/airy/airmach_01.wav
+}
+
+sound sounds/ambience/rooms/airy/air_05 {
+	sounds/ambience/rooms/airy/air_05.wav
+}
+
+sound sounds/ambience/rooms/airy/dull_02 {
+	sounds/ambience/rooms/airy/dull_02.wav
+}
+
+sound sounds/ambience/rooms/fanrooms/loop_03_d1 {
+	sounds/ambience/rooms/fanrooms/loop_03_d1.wav
+}
+
+sound sounds/ambience/rooms/fanrooms/loop_04_u1 {
+	sounds/ambience/rooms/fanrooms/loop_04_u1.wav
+}
+
+sound sounds/ambience/rooms/airy/air_06 {
+	sounds/ambience/rooms/airy/air_06.wav
+}
+
+sound sounds/ambience/rooms/dull/rumble_06 {
+	sounds/ambience/rooms/dull/rumble_06.wav
+}
+
+sound sounds/ambience/rooms/dull/rumble_03 {
+	sounds/ambience/rooms/dull/rumble_03.wav
+}
+
+sound sounds/object_ambience/airs_vents/vent_01 {
+	sounds/object_ambience/airs_vents/vent_01.wav
+}
+
+sound sounds/ambience/rooms/airy/air_01 {
+	sounds/ambience/rooms/airy/air_01.wav
+}
+
+sound sounds/ambience/rooms/airy/air_08 {
+	sounds/ambience/rooms/airy/air_08.wav
+}
+
+sound sounds/ambience/rooms/airy/air_04 {
+	sounds/ambience/rooms/airy/air_04.wav
+}
+
+sound sounds/ambience/rooms/fanrooms/loop_01_d1 {
+	sounds/ambience/rooms/fanrooms/loop_01_d1.wav
+}
+
+sound sounds/ambience/rooms/fanrooms/loop_02 {
+	sounds/ambience/rooms/fanrooms/loop_02.wav
+}
+
+sound sounds/ambience/rooms/fanrooms/loop_02_u1 {
+	sounds/ambience/rooms/fanrooms/loop_02_u1.wav
+}
+
+sound sounds/ambience/rooms/hi/machroom_02 {
+	sounds/ambience/rooms/hi/machroom_02.wav
+}
+
+sound sounds/ambience/rooms/fanrooms/loop_01_u1 {
+	sounds/ambience/rooms/fanrooms/loop_01_u1.wav
+}
+
+sound sounds/ambience/rooms/fanrooms/loop_02_d1 {
+	sounds/ambience/rooms/fanrooms/loop_02_d1.wav
+}
+
+sound sounds/object_ambience/airs_vents/vent_04 {
+	sounds/object_ambience/airs_vents/vent_04.wav
+}
+
+sound sounds/ambience/pipes/water/waterflow_02 {
+	sounds/ambience/pipes/water/waterflow_02.wav
+}
+
+sound sounds/ambience/pipes/water/pipes_04 {
+	sounds/ambience/pipes/water/pipes_04.wav
+}
+
+sound sounds/ambience/pipes/water/waterflow_05_pd200 {
+	sounds/ambience/pipes/water/waterflow_05_pd200.wav
+}
+
+sound sounds/ambience/pipes/water/waterflow_03 {
+	sounds/ambience/pipes/water/waterflow_03.wav
+}
+
+sound sounds/ambience/pipes/water/waterflow_01 {
+	sounds/ambience/pipes/water/waterflow_01.wav
+}
+
+sound sounds/ambience/pipes/water/waterflow_06 {
+	sounds/ambience/pipes/water/waterflow_06.wav
+}
+
+sound sounds/ambience/pipes/water/waterflow_07 {
+	sounds/ambience/pipes/water/waterflow_07.wav
+}
+
+sound sounds/ambience/pipes/water/waterflow_08 {
+	sounds/ambience/pipes/water/waterflow_08.wav
+}
+
+sound sounds/ambience/pipes/water/waterflow_05 {
+	sounds/ambience/pipes/water/waterflow_05.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_02a {
+	sounds/ambience/outdoors/wind/calm/st_docile_02a.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_04 {
+	sounds/ambience/outdoors/wind/calm/st_docile_04.wav
+}
+
+sound sounds/soundscape/xscapes/scape_07 {
+	sounds/soundscape/xscapes/scape_07.wav
+}
+
+sound sounds/ambience/pipes/water/pipes_03 {
+	sounds/ambience/pipes/water/pipes_03.wav
+}
+
+sound sounds/ambience/pipes/water/waterflow_06_pd200 {
+	sounds/ambience/pipes/water/waterflow_06_pd200.wav
+}
+
+sound sounds/ambience/pipes/water/waterflow_07_pd200 {
+	sounds/ambience/pipes/water/waterflow_07_pd200.wav
+}
+
+sound sounds/ambience/pipes/water/pipes_02 {
+	sounds/ambience/pipes/water/pipes_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_calm_07 {
+	sounds/ambience/outdoors/wind/calm/st_calm_07.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_calm_08 {
+	sounds/ambience/outdoors/wind/calm/st_calm_08.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_calm_04 {
+	sounds/ambience/outdoors/wind/calm/st_calm_04.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_calm_03_wide {
+	sounds/ambience/outdoors/wind/calm/st_calm_03_wide.wav
+}
+
+sound sounds/soundscape/air/11c {
+	sounds/soundscape/air/11c.wav
+}
+
+sound sounds/soundscape/air/10d {
+	sounds/soundscape/air/10d.wav
+}
+
+sound sounds/soundscape/air/10b {
+	sounds/soundscape/air/10b.wav
+}
+
+sound sounds/ambience/outdoors/wind/loop_wind_09 {
+	sounds/ambience/outdoors/wind/loop_wind_09.wav
+}
+
+sound sounds/ambience/outdoors/wind/loop_wind_10 {
+	sounds/ambience/outdoors/wind/loop_wind_10.wav
+}
+
+sound sounds/ambience/outdoors/wind/loop_wind_05 {
+	sounds/ambience/outdoors/wind/loop_wind_05.wav
+}
+
+sound sounds/ambience/outdoors/wind/loop_wind_04 {
+	sounds/ambience/outdoors/wind/loop_wind_04.wav
+}
+
+sound sounds/ambience/outdoors/wind/loop_wind_03 {
+	sounds/ambience/outdoors/wind/loop_wind_03.wav
+}
+
+sound sounds/ambience/outdoors/wind/loop_wind_02 {
+	sounds/ambience/outdoors/wind/loop_wind_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/loop_wind_01 {
+	sounds/ambience/outdoors/wind/loop_wind_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/loop_wind_06 {
+	sounds/ambience/outdoors/wind/loop_wind_06.wav
+}
+
+sound sounds/ambience/outdoors/wind/loop_wind_07 {
+	sounds/ambience/outdoors/wind/loop_wind_07.wav
+}
+
+sound sounds/ambience/outdoors/wind/loop_wind_08 {
+	sounds/ambience/outdoors/wind/loop_wind_08.wav
+}
+
+sound sounds/soundscape/grinders/12e {
+	sounds/soundscape/grinders/12e.wav
+}
+
+sound sounds/object_ambience/computers/b2_loop_04 {
+	sounds/object_ambience/computers/b2_loop_04.wav
+}
+
+sound sounds/object_ambience/computers/b2_loop_02 {
+	sounds/object_ambience/computers/b2_loop_02.wav
+}
+
+sound sounds/object_ambience/computers/loop_05 {
+	sounds/object_ambience/computers/loop_05.wav
+}
+
+sound sounds/object_ambience/computers/loop_03 {
+	sounds/object_ambience/computers/loop_03.wav
+}
+
+sound sounds/object_ambience/computers/loop_09 {
+	sounds/object_ambience/computers/loop_09.wav
+}
+
+sound sounds/object_ambience/computers/loop_07 {
+	sounds/object_ambience/computers/loop_07.wav
+}
+
+sound sounds/object_ambience/computers/loop_16 {
+	sounds/object_ambience/computers/loop_16.wav
+}
+
+sound sounds/object_ambience/computers/loop_15 {
+	sounds/object_ambience/computers/loop_15.wav
+}
+
+sound sounds/object_ambience/computers/loop_14 {
+	sounds/object_ambience/computers/loop_14.wav
+}
+
+sound sounds/object_ambience/computers/loop_13 {
+	sounds/object_ambience/computers/loop_13.wav
+}
+
+sound sounds/object_ambience/computers/loop_12 {
+	sounds/object_ambience/computers/loop_12.wav
+}
+
+sound sounds/object_ambience/computers/loop_11 {
+	sounds/object_ambience/computers/loop_11.wav
+}
+
+sound sounds/object_ambience/computers/loop_10 {
+	sounds/object_ambience/computers/loop_10.wav
+}
+
+sound sounds/object_ambience/computers/keypress_01 {
+	sounds/object_ambience/computers/keypress_01.wav
+}
+
+sound sounds/object_ambience/computers/b2_loop_03 {
+	sounds/object_ambience/computers/b2_loop_03.wav
+}
+
+sound sounds/object_ambience/computers/b2_loop_01 {
+	sounds/object_ambience/computers/b2_loop_01.wav
+}
+
+sound sounds/soundscape/xscapes/scape_04 {
+	sounds/soundscape/xscapes/scape_04.wav
+}
+
+sound sounds/soundscape/grinders/07 {
+	sounds/soundscape/grinders/07.wav
+}
+
+sound sounds/soundscape/grinders/12b {
+	sounds/soundscape/grinders/12b.wav
+}
+
+sound sounds/soundscape/lowfreq/alow_03 {
+	sounds/soundscape/lowfreq/alow_03.wav
+}
+
+sound sounds/object_ambience/generators/fuelpod_03 {
+	sounds/object_ambience/generators/fuelpod_03.wav
+}
+
+sound sounds/soundscape/tech/sg2_01a {
+	sounds/soundscape/tech/sg2_01a.wav
+}
+
+sound sounds/soundscape/tech/sg_01b {
+	sounds/soundscape/tech/sg_01b.wav
+}
+
+sound sounds/soundscape/grinders/12a {
+	sounds/soundscape/grinders/12a.wav
+}
+
+sound sounds/soundscape/grinders/12c {
+	sounds/soundscape/grinders/12c.wav
+}
+
+sound sounds/tools/flyerhive/raise_01 {
+	sounds/tools/flyerhive/raise_01.wav
+}
+
+sound sounds/tools/forceshield/electrofry_04 {
+	sounds/tools/forceshield/electrofry_04.wav
+}
+
+sound sounds/tools/forceshield/shield_02_init {
+	sounds/tools/forceshield/shield_02_init.wav
+}
+
+sound sounds/tools/forceshield/shield_01_loop {
+	sounds/tools/forceshield/shield_01_loop.wav
+}
+
+sound sounds/tools/forceshield/shield_02_loop {
+	sounds/tools/forceshield/shield_02_loop.wav
+}
+
+sound sounds/tools/forceshield/walkthrough_01 {
+	sounds/tools/forceshield/walkthrough_01.wav
+}
+
+sound sounds/tools/forceshield/walkthrough_02 {
+	sounds/tools/forceshield/walkthrough_02.wav
+}
+
+sound sounds/tools/forceshield/walkthrough_03 {
+	sounds/tools/forceshield/walkthrough_03.wav
+}
+
+sound sounds/tools/forceshield/toss_02 {
+	sounds/tools/forceshield/toss_02.wav
+}
+
+sound sounds/tools/forceshield/toss_01 {
+	sounds/tools/forceshield/toss_01.wav
+}
+
+sound sounds/tools/forceshield/shield_01_init {
+	sounds/tools/forceshield/shield_01_init.wav
+}
+
+sound sounds/tools/forceshield/hand_01_start {
+	sounds/tools/forceshield/hand_01_start.wav
+}
+
+sound sounds/tools/forceshield/electrofry_14 {
+	sounds/tools/forceshield/electrofry_14.wav
+}
+
+sound sounds/tools/hacker/loop {
+	sounds/tools/hacker/loop.wav
+}
+
+sound sounds/tools/hacker/success {
+	sounds/tools/hacker/success.wav
+}
+
+sound sounds/tools/hacker/hack {
+	sounds/tools/hacker/hack.wav
+}
+
+sound sounds/tools/hacker/fail {
+	sounds/tools/hacker/fail.wav
+}
+
+sound sounds/tools/healthpack/pickup_01 {
+	sounds/tools/healthpack/pickup_01.wav
+}
+
+sound sounds/tools/healthpack/throw_01 {
+	sounds/tools/healthpack/throw_01.wav
+}
+
+sound sounds/tools/technician/stroyent_raise_03a {
+	sounds/tools/technician/stroyent_raise_03a.wav
+}
+
+sound sounds/tools/technician/stroyent_throw_01 {
+	sounds/tools/technician/stroyent_throw_01.wav
+}
+
+sound sounds/tools/technician/spawn_host {
+	sounds/tools/technician/spawn_host.wav
+}
+
+sound sounds/tools/technician/stroyent_tool_01 {
+	sounds/tools/technician/stroyent_tool_01.wav
+}
+
+sound sounds/tools/tripmine/beep {
+	sounds/tools/tripmine/beep.wav
+}
+
+sound sounds/tools/tripmine/disarmed {
+	sounds/tools/tripmine/disarmed.wav
+}
+
+sound sounds/tools/forceshield/hand_01_loop {
+	sounds/tools/forceshield/hand_01_loop.wav
+}
+
+sound sounds/tools/forceshield/electrofry_02 {
+	sounds/tools/forceshield/electrofry_02.wav
+}
+
+sound sounds/tools/beams/stroggbeam_01 {
+	sounds/tools/beams/stroggbeam_01.wav
+}
+
+sound sounds/object_ambience/computers/loop_04 {
+	sounds/object_ambience/computers/loop_04.wav
+}
+
+sound sounds/object_ambience/computers/modem_loop_01 {
+	sounds/object_ambience/computers/modem_loop_01.wav
+}
+
+sound sounds/object_ambience/computers/loop_02 {
+	sounds/object_ambience/computers/loop_02.wav
+}
+
+sound sounds/object_ambience/computers/loop_01 {
+	sounds/object_ambience/computers/loop_01.wav
+}
+
+sound sounds/object_ambience/computers/loop_06 {
+	sounds/object_ambience/computers/loop_06.wav
+}
+
+sound sounds/structures/strogg/alarm_01 {
+	sounds/structures/strogg/alarm_01.wav
+}
+
+sound sounds/soundscape/events/03a {
+	sounds/soundscape/events/03a.wav
+}
+
+sound sounds/soundscape/events/aflare_04 {
+	sounds/soundscape/events/aflare_04.wav
+}
+
+sound sounds/soundscape/xscapes/scape_29a {
+	sounds/soundscape/xscapes/scape_29a.wav
+}
+
+sound sounds/soundscape/xscapes/scape_28a {
+	sounds/soundscape/xscapes/scape_28a.wav
+}
+
+sound sounds/soundscape/xscapes/scape_24a {
+	sounds/soundscape/xscapes/scape_24a.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_05 {
+	sounds/object_ambience/water_goop/goop_05.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_02 {
+	sounds/object_ambience/water_goop/goop_02.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_03 {
+	sounds/object_ambience/water_goop/goop_03.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_04 {
+	sounds/object_ambience/water_goop/goop_04.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_09 {
+	sounds/object_ambience/water_goop/goop_09.wav
+}
+
+sound sounds/object_ambience/water_goop/water_01 {
+	sounds/object_ambience/water_goop/water_01.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_10_nosub {
+	sounds/object_ambience/water_goop/goop_10_nosub.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_06_nosub {
+	sounds/object_ambience/water_goop/goop_06_nosub.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_05_nosub {
+	sounds/object_ambience/water_goop/goop_05_nosub.wav
+}
+
+sound sounds/ambience/outdoors/wind/interesting/creaky_wind_02a {
+	sounds/ambience/outdoors/wind/interesting/creaky_wind_02a.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_leafy_05 {
+	sounds/ambience/outdoors/wind/noisy/st_leafy_05.wav
+}
+
+sound sounds/ambience/outdoors/birds/birds_05 {
+	sounds/ambience/outdoors/birds/birds_05.wav
+}
+
+sound sounds/soundscape/air/11b {
+	sounds/soundscape/air/11b.wav
+}
+
+sound sounds/soundscape/tech/sg_01e {
+	sounds/soundscape/tech/sg_01e.wav
+}
+
+sound sounds/soundscape/lowfreq/06 {
+	sounds/soundscape/lowfreq/06.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_flames_03 {
+	sounds/xlib/valley_sounds/burning/loop_flames_03.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_flames_04 {
+	sounds/xlib/valley_sounds/burning/loop_flames_04.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_flames_05 {
+	sounds/xlib/valley_sounds/burning/loop_flames_05.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_flames_06 {
+	sounds/xlib/valley_sounds/burning/loop_flames_06.wav
+}
+
+sound sounds/soundscape/grinders/12d {
+	sounds/soundscape/grinders/12d.wav
+}
+
+sound sounds/soundscape/events/03 {
+	sounds/soundscape/events/03.wav
+}
+
+sound sounds/soundscape/events/03c {
+	sounds/soundscape/events/03c.wav
+}
+
+sound sounds/soundscape/events/aflare_06 {
+	sounds/soundscape/events/aflare_06.wav
+}
+
+sound sounds/soundscape/events/sub_01b {
+	sounds/soundscape/events/sub_01b.wav
+}
+
+sound sounds/soundscape/events/sub_01a {
+	sounds/soundscape/events/sub_01a.wav
+}
+
+sound sounds/soundscape/events/sub_01e {
+	sounds/soundscape/events/sub_01e.wav
+}
+
+sound sounds/soundscape/events/sub_01f {
+	sounds/soundscape/events/sub_01f.wav
+}
+
+sound sounds/soundscape/events/aflare_07 {
+	sounds/soundscape/events/aflare_07.wav
+}
+
+sound sounds/soundscape/events/02a {
+	sounds/soundscape/events/02a.wav
+}
+
+sound sounds/soundscape/xscapes/scape_23a {
+	sounds/soundscape/xscapes/scape_23a.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_04c {
+	sounds/ambience/outdoors/wind/calm/st_docile_04c.wav
+}
+
+sound sounds/soundscape/cold/06d {
+	sounds/soundscape/cold/06d.wav
+}
+
+sound sounds/soundscape/cold/06a {
+	sounds/soundscape/cold/06a.wav
+}
+
+sound sounds/object_ambience/tech/probepost_01a {
+	sounds/object_ambience/tech/probepost_01a.wav
+}
+
+sound sounds/object_ambience/tech/probepost_02b {
+	sounds/object_ambience/tech/probepost_02b.wav
+}
+
+sound sounds/object_ambience/tech/probepost_02a {
+	sounds/object_ambience/tech/probepost_02a.wav
+}
+
+sound sounds/object_ambience/tech/probepost_02c {
+	sounds/object_ambience/tech/probepost_02c.wav
+}
+
+sound sounds/object_ambience/tech/probepost_01 {
+	sounds/object_ambience/tech/probepost_01.wav
+}
+
+sound sounds/object_ambience/tech/probepost_01b {
+	sounds/object_ambience/tech/probepost_01b.wav
+}
+
+sound sounds/soundscape/air/coldair_03 {
+	sounds/soundscape/air/coldair_03.wav
+}
+
+sound sounds/soundscape/air/wind_01b {
+	sounds/soundscape/air/wind_01b.wav
+}
+
+sound sounds/object_ambience/lights/light_hum103 {
+	sounds/object_ambience/lights/light_hum103.wav
+}
+
+sound sounds/object_ambience/lights/loop_hum_01 {
+	sounds/object_ambience/lights/loop_hum_01.wav
+}
+
+sound sounds/object_ambience/lights/loop_hum_03 {
+	sounds/object_ambience/lights/loop_hum_03.wav
+}
+
+sound sounds/object_ambience/lights/loop_hum_02 {
+	sounds/object_ambience/lights/loop_hum_02.wav
+}
+
+sound sounds/object_ambience/lights/loop_hum_04 {
+	sounds/object_ambience/lights/loop_hum_04.wav
+}
+
+sound sounds/object_ambience/lights/loop_hum_05 {
+	sounds/object_ambience/lights/loop_hum_05.wav
+}
+
+sound sounds/object_ambience/lights/loop_hum_06 {
+	sounds/object_ambience/lights/loop_hum_06.wav
+}
+
+sound sounds/object_ambience/lights/loop_hum_07 {
+	sounds/object_ambience/lights/loop_hum_07.wav
+}
+
+sound sounds/object_ambience/flags/flagloop_01 {
+	sounds/object_ambience/flags/flagloop_01.wav
+}
+
+sound sounds/object_ambience/flags/flagloop_04 {
+	sounds/object_ambience/flags/flagloop_04.wav
+}
+
+sound sounds/object_ambience/flags/flagloop_03 {
+	sounds/object_ambience/flags/flagloop_03.wav
+}
+
+sound sounds/object_ambience/flags/flagloop_02 {
+	sounds/object_ambience/flags/flagloop_02.wav
+}
+
+sound sounds/object_ambience/flags/flagloop_05 {
+	sounds/object_ambience/flags/flagloop_05.wav
+}
+
+sound sounds/soundscape/air/10c {
+	sounds/soundscape/air/10c.wav
+}
+
+sound sounds/soundscape/tech/sg_01a {
+	sounds/soundscape/tech/sg_01a.wav
+}
+
+sound sounds/ambience/rooms/fanrooms/loop_03 {
+	sounds/ambience/rooms/fanrooms/loop_03.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/boring/boring_02_pd115 {
+	sounds/ambience/rooms/natual_roomtones/boring/boring_02_pd115.wav
+}
+
+sound sounds/ambience/rooms/ambience_02 {
+	sounds/ambience/rooms/ambience_02.wav
+}
+
+sound sounds/ambience/rooms/fanrooms/st_loop_01_d1 {
+	sounds/ambience/rooms/fanrooms/st_loop_01_d1.wav
+}
+
+sound sounds/object_ambience/computers/keypress_02 {
+	sounds/object_ambience/computers/keypress_02.wav
+}
+
+sound sounds/world/bubbles4 {
+	sounds/world/bubbles4.wav
+}
+
+sound sounds/world/bubbles5 {
+	sounds/world/bubbles5.wav
+}
+
+sound sounds/world/bubbles6 {
+	sounds/world/bubbles6.wav
+}
+
+sound sounds/world/bubbles3 {
+	sounds/world/bubbles3.wav
+}
+
+sound sounds/world/bubbles7 {
+	sounds/world/bubbles7.wav
+}
+
+sound sounds/world/bubbles1 {
+	sounds/world/bubbles1.wav
+}
+
+sound sounds/world/bubbles4a {
+	sounds/world/bubbles4a.wav
+}
+
+sound sounds/world/bubbles5a {
+	sounds/world/bubbles5a.wav
+}
+
+sound sounds/world/bubbles6a {
+	sounds/world/bubbles6a.wav
+}
+
+sound sounds/world/bubbles7a {
+	sounds/world/bubbles7a.wav
+}
+
+sound sounds/object_ambience/computers/loop_08 {
+	sounds/object_ambience/computers/loop_08.wav
+}
+
+sound sounds/ambience/rooms/dull/space_bed_04a {
+	sounds/ambience/rooms/dull/space_bed_04a.wav
+}
+
+sound sounds/ambience/rooms/dull/space_bed_04 {
+	sounds/ambience/rooms/dull/space_bed_04.wav
+}
+
+sound sounds/ambience/war/war_01 {
+	sounds/ambience/war/war_01.wav
+}
+
+sound sounds/ambience/war/war_02 {
+	sounds/ambience/war/war_02.wav
+}
+
+sound sounds/soundscape/xscapes/scape_23 {
+	sounds/soundscape/xscapes/scape_23.wav
+}
+
+sound sounds/soundscape/xscapes/scape_02 {
+	sounds/soundscape/xscapes/scape_02.wav
+}
+
+sound sounds/soundscape/xscapes/scape_04b {
+	sounds/soundscape/xscapes/scape_04b.wav
+}
+
+sound sounds/soundscape/xscapes/scape_06a {
+	sounds/soundscape/xscapes/scape_06a.wav
+}
+
+sound sounds/soundscape/tech/sg2_01b {
+	sounds/soundscape/tech/sg2_01b.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_08_nosub {
+	sounds/object_ambience/water_goop/goop_08_nosub.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_07_nosub {
+	sounds/object_ambience/water_goop/goop_07_nosub.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_09_nosub {
+	sounds/object_ambience/water_goop/goop_09_nosub.wav
+}
+
+sound sounds/object_ambience/tech/probepost_02 {
+	sounds/object_ambience/tech/probepost_02.wav
+}
+
+sound sounds/soundscape/cold/06b {
+	sounds/soundscape/cold/06b.wav
+}
+
+sound sounds/soundscape/cold/06c {
+	sounds/soundscape/cold/06c.wav
+}
+
+sound sounds/soundscape/air/11a {
+	sounds/soundscape/air/11a.wav
+}
+
+sound sounds/soundscape/air/ventolin_05 {
+	sounds/soundscape/air/ventolin_05.wav
+}
+
+sound sounds/soundscape/textures/02b {
+	sounds/soundscape/textures/02b.wav
+}
+
+sound sounds/soundscape/textures/02a {
+	sounds/soundscape/textures/02a.wav
+}
+
+sound sounds/ambience/outdoors/water/brookhum_01_pd150 {
+	sounds/ambience/outdoors/water/brookhum_01_pd150.wav
+}
+
+sound sounds/ambience/outdoors/water/brookhum_02_pd200 {
+	sounds/ambience/outdoors/water/brookhum_02_pd200.wav
+}
+
+sound sounds/ambience/outdoors/water/mover_03 {
+	sounds/ambience/outdoors/water/mover_03.wav
+}
+
+sound sounds/ambience/outdoors/water/stream_02 {
+	sounds/ambience/outdoors/water/stream_02.wav
+}
+
+sound sounds/ambience/outdoors/water/mover_01 {
+	sounds/ambience/outdoors/water/mover_01.wav
+}
+
+sound sounds/ambience/outdoors/water/brookhum_01_pd200 {
+	sounds/ambience/outdoors/water/brookhum_01_pd200.wav
+}
+
+sound sounds/ambience/outdoors/water/brookhum_01_pd125 {
+	sounds/ambience/outdoors/water/brookhum_01_pd125.wav
+}
+
+sound sounds/ambience/outdoors/water/brookhum_02 {
+	sounds/ambience/outdoors/water/brookhum_02.wav
+}
+
+sound sounds/ambience/outdoors/water/brookhum_02_pd150 {
+	sounds/ambience/outdoors/water/brookhum_02_pd150.wav
+}
+
+sound sounds/ambience/outdoors/water/stream_02_slow01 {
+	sounds/ambience/outdoors/water/stream_02_slow01.wav
+}
+
+sound sounds/ambience/outdoors/water/stream_01_slow02 {
+	sounds/ambience/outdoors/water/stream_01_slow02.wav
+}
+
+sound sounds/ambience/outdoors/water/stream_01_slow01 {
+	sounds/ambience/outdoors/water/stream_01_slow01.wav
+}
+
+sound sounds/ambience/outdoors/water/brookhum_02_pd125 {
+	sounds/ambience/outdoors/water/brookhum_02_pd125.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/watery/orch_01 {
+	sounds/ambience/rooms/natual_roomtones/watery/orch_01.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/watery/orch_01_pd200 {
+	sounds/ambience/rooms/natual_roomtones/watery/orch_01_pd200.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/watery/orch_02_pd150 {
+	sounds/ambience/rooms/natual_roomtones/watery/orch_02_pd150.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_06 {
+	sounds/ambience/rooms/active/st_machroom_06.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_08_d1 {
+	sounds/ambience/rooms/active/st_machroom_08_d1.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_01 {
+	sounds/ambience/rooms/active/st_machroom_01.wav
+}
+
+sound sounds/ambience/outdoors/water/stream_02_slow02 {
+	sounds/ambience/outdoors/water/stream_02_slow02.wav
+}
+
+sound sounds/ambience/outdoors/birds/birds_01 {
+	sounds/ambience/outdoors/birds/birds_01.wav
+}
+
+sound sounds/ambience/outdoors/birds/birds_04 {
+	sounds/ambience/outdoors/birds/birds_04.wav
+}
+
+sound sounds/ambience/outdoors/birds/birds_03 {
+	sounds/ambience/outdoors/birds/birds_03.wav
+}
+
+sound sounds/ambience/outdoors/water_creatures/frogpond_02 {
+	sounds/ambience/outdoors/water_creatures/frogpond_02.wav
+}
+
+sound sounds/ambience/pipes/water/pipes_01 {
+	sounds/ambience/pipes/water/pipes_01.wav
+}
+
+sound sounds/ambience/pipes/water/waterflow_04 {
+	sounds/ambience/pipes/water/waterflow_04.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_06_pd125 {
+	sounds/ambience/rooms/active/st_machroom_06_pd125.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_06_pu75 {
+	sounds/ambience/rooms/active/st_machroom_06_pu75.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_07_pd1 {
+	sounds/ambience/rooms/active/st_machroom_07_pd1.wav
+}
+
+sound sounds/structures/factory/deploy_alarm {
+	sounds/structures/factory/deploy_alarm.wav
+}
+
+sound sounds/structures/edf/alarm_01 {
+	sounds/structures/edf/alarm_01.wav
+}
+
+sound sounds/structures/cc/body_deploy_01 {
+	sounds/structures/cc/body_deploy_01.wav
+}
+
+sound sounds/structures/cc/exterior_loop_01 {
+	sounds/structures/cc/exterior_loop_01.wav
+}
+
+sound sounds/structures/cc/feet_deploy_01 {
+	sounds/structures/cc/feet_deploy_01.wav
+}
+
+sound sounds/structures/cc/steps_deploy_01 {
+	sounds/structures/cc/steps_deploy_01.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/watery/orch_02_pd200 {
+	sounds/ambience/rooms/natual_roomtones/watery/orch_02_pd200.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/watery/orch_02 {
+	sounds/ambience/rooms/natual_roomtones/watery/orch_02.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/boring/boring_02 {
+	sounds/ambience/rooms/natual_roomtones/boring/boring_02.wav
+}
+
+sound sounds/ambience/rooms/tonal/loop_02 {
+	sounds/ambience/rooms/tonal/loop_02.wav
+}
+
+sound sounds/ambience/rooms/tonal/loop_01 {
+	sounds/ambience/rooms/tonal/loop_01.wav
+}
+
+sound sounds/ambience/rooms/tonal/loop_03_d1 {
+	sounds/ambience/rooms/tonal/loop_03_d1.wav
+}
+
+sound sounds/soundscape/air/ventolin_04 {
+	sounds/soundscape/air/ventolin_04.wav
+}
+
+sound sounds/soundscape/xscapes/scape_08 {
+	sounds/soundscape/xscapes/scape_08.wav
+}
+
+sound sounds/soundscape/xscapes/scape_09 {
+	sounds/soundscape/xscapes/scape_09.wav
+}
+
+sound sounds/soundscape/xscapes/scape_09a {
+	sounds/soundscape/xscapes/scape_09a.wav
+}
+
+sound sounds/soundscape/xscapes/scape_10 {
+	sounds/soundscape/xscapes/scape_10.wav
+}
+
+sound sounds/soundscape/xscapes/scape_10a {
+	sounds/soundscape/xscapes/scape_10a.wav
+}
+
+sound sounds/soundscape/xscapes/scape_20 {
+	sounds/soundscape/xscapes/scape_20.wav
+}
+
+sound sounds/soundscape/xscapes/scape_21 {
+	sounds/soundscape/xscapes/scape_21.wav
+}
+
+sound sounds/maps/slipgate/slipgate_01 {
+	sounds/maps/slipgate/slipgate_01.wav
+}
+
+sound sounds/maps/island/generator_loop {
+	sounds/maps/island/generator_loop.wav
+}
+
+sound sounds/maps/ark/churchbell_01 {
+	sounds/maps/ark/churchbell_01.wav
+}
+
+sound sounds/maps/ark/churchbell_02 {
+	sounds/maps/ark/churchbell_02.wav
+}
+
+sound sounds/maps/ark/churchbell_03 {
+	sounds/maps/ark/churchbell_03.wav
+}
+
+sound sounds/maps/ark/churchbell_04 {
+	sounds/maps/ark/churchbell_04.wav
+}
+
+sound sounds/maps/area22/elevator_main_start {
+	sounds/maps/area22/elevator_main_start.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/watery/orch_01_pd150 {
+	sounds/ambience/rooms/natual_roomtones/watery/orch_01_pd150.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/watery/room_02a {
+	sounds/ambience/rooms/natual_roomtones/watery/room_02a.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/watery/room_01 {
+	sounds/ambience/rooms/natual_roomtones/watery/room_01.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/watery/room_01_pd200 {
+	sounds/ambience/rooms/natual_roomtones/watery/room_01_pd200.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/watery/room_01_pd250 {
+	sounds/ambience/rooms/natual_roomtones/watery/room_01_pd250.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/watery/room_03a {
+	sounds/ambience/rooms/natual_roomtones/watery/room_03a.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/watery/room_03 {
+	sounds/ambience/rooms/natual_roomtones/watery/room_03.wav
+}
+
+sound sounds/ambience/rooms/active/room_02 {
+	sounds/ambience/rooms/active/room_02.wav
+}
+
+sound sounds/ambience/rooms/active/room_01 {
+	sounds/ambience/rooms/active/room_01.wav
+}
+
+sound sounds/ambience/rooms/airy/room_01 {
+	sounds/ambience/rooms/airy/room_01.wav
+}
+
+sound sounds/ambience/rooms/natual_roomtones/watery/room_02 {
+	sounds/ambience/rooms/natual_roomtones/watery/room_02.wav
+}
+
+sound sounds/ambience/pipes/water/pipes_05 {
+	sounds/ambience/pipes/water/pipes_05.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_08_u1 {
+	sounds/ambience/rooms/active/st_machroom_08_u1.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_07 {
+	sounds/ambience/rooms/active/st_machroom_07.wav
+}
+
+sound sounds/ambience/rooms/hi/room_01 {
+	sounds/ambience/rooms/hi/room_01.wav
+}
+
+sound sounds/ambience/rooms/tonal/loop_02_u1 {
+	sounds/ambience/rooms/tonal/loop_02_u1.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_04_pd150 {
+	sounds/ambience/rooms/active/st_machroom_04_pd150.wav
+}
+
+sound sounds/object_ambience/generators/loop_08 {
+	sounds/object_ambience/generators/loop_08.wav
+}
+
+sound sounds/object_ambience/generators/loop_08a {
+	sounds/object_ambience/generators/loop_08a.wav
+}
+
+sound sounds/object_ambience/generators/gdf_commpost {
+	sounds/object_ambience/generators/gdf_commpost.wav
+}
+
+sound sounds/object_ambience/generators/gdf_commpost_01 {
+	sounds/object_ambience/generators/gdf_commpost_01.wav
+}
+
+sound sounds/object_ambience/generators/gdf_commencryption_01 {
+	sounds/object_ambience/generators/gdf_commencryption_01.wav
+}
+
+sound sounds/object_ambience/metallic_noises/fence_08 {
+	sounds/object_ambience/metallic_noises/fence_08.wav
+}
+
+sound sounds/object_ambience/metallic_noises/impact_01 {
+	sounds/object_ambience/metallic_noises/impact_01.wav
+}
+
+sound sounds/object_ambience/metallic_noises/metal_02 {
+	sounds/object_ambience/metallic_noises/metal_02.wav
+}
+
+sound sounds/object_ambience/wood_creaking/woodcreak_02 {
+	sounds/object_ambience/wood_creaking/woodcreak_02.wav
+}
+
+sound sounds/object_ambience/wood_creaking/shortcreak_03 {
+	sounds/object_ambience/wood_creaking/shortcreak_03.wav
+}
+
+sound sounds/object_ambience/wood_creaking/woodcreak_03_s2 {
+	sounds/object_ambience/wood_creaking/woodcreak_03_s2.wav
+}
+
+sound sounds/object_ambience/wood_creaking/woodcreak_03_s1 {
+	sounds/object_ambience/wood_creaking/woodcreak_03_s1.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_02d {
+	sounds/ambience/outdoors/wind/calm/st_docile_02d.wav
+}
+
+sound sounds/object_ambience/electrical/power_lines/loop_01 {
+	sounds/object_ambience/electrical/power_lines/loop_01.wav
+}
+
+sound sounds/object_ambience/electrical/power_lines/loop_02 {
+	sounds/object_ambience/electrical/power_lines/loop_02.wav
+}
+
+sound sounds/object_ambience/electrical/power_lines/loop_03 {
+	sounds/object_ambience/electrical/power_lines/loop_03.wav
+}
+
+sound sounds/object_ambience/electrical/power_lines/loop_04 {
+	sounds/object_ambience/electrical/power_lines/loop_04.wav
+}sound sounds/soundscape/deep/03 {
+	sounds/soundscape/deep/03.wav
+}
+
+sound sounds/ambience/outdoors/rain/loop_01 {
+	sounds/ambience/outdoors/rain/loop_01.wav
+}
+
+sound sounds/ambience/outdoors/rain/loop_02a {
+	sounds/ambience/outdoors/rain/loop_02a.wav
+}
+
+sound sounds/ambience/outdoors/rain/loop_04 {
+	sounds/ambience/outdoors/rain/loop_04.wav
+}
+
+sound sounds/ambience/outdoors/rain/loop_03 {
+	sounds/ambience/outdoors/rain/loop_03.wav
+}
+
+sound sounds/ambience/outdoors/rain/loop_03a {
+	sounds/ambience/outdoors/rain/loop_03a.wav
+}
+
+sound sounds/ambience/outdoors/rain/loop_04a {
+	sounds/ambience/outdoors/rain/loop_04a.wav
+}
+
+sound sounds/ambience/outdoors/rain/loop_05 {
+	sounds/ambience/outdoors/rain/loop_05.wav
+}
+
+sound sounds/ambience/outdoors/rain/loop_01a {
+	sounds/ambience/outdoors/rain/loop_01a.wav
+}
+
+sound sounds/soundscape/xscapes/scape_27 {
+	sounds/soundscape/xscapes/scape_27.wav
+}
+
+sound sounds/soundscape/tech/sg_01c {
+	sounds/soundscape/tech/sg_01c.wav
+}
+
+sound sounds/soundscape/tech/sg2_01c {
+	sounds/soundscape/tech/sg2_01c.wav
+}
+
+sound sounds/soundscape/tech/sg_01d {
+	sounds/soundscape/tech/sg_01d.wav
+}
+
+sound sounds/_default {
+	sounds/_default.wav
+}
+
+sound sounds/ambience/outdoors/rain/gutter_01a {
+	sounds/ambience/outdoors/rain/gutter_01a.wav
+}
+
+sound sounds/ambience/outdoors/rain/gutter_02a {
+	sounds/ambience/outdoors/rain/gutter_02a.wav
+}
+
+sound sounds/ambience/outdoors/rain/gutter_02 {
+	sounds/ambience/outdoors/rain/gutter_02.wav
+}
+
+sound sounds/ambience/outdoors/rain/gutter_01 {
+	sounds/ambience/outdoors/rain/gutter_01.wav
+}
+
+sound sounds/object_ambience/lights/light_beep_red01_1s {
+	sounds/object_ambience/lights/light_beep_red01_1s.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/1shot_sizzle_02 {
+	sounds/xlib/valley_sounds/burning/1shot_sizzle_02.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_flames_02 {
+	sounds/xlib/valley_sounds/burning/loop_flames_02.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_flames_01 {
+	sounds/xlib/valley_sounds/burning/loop_flames_01.wav
+}
+
+sound sounds/machines/machloop_06 {
+	sounds/machines/machloop_06.wav
+}
+
+sound sounds/machines/oilrig_motor {
+	sounds/machines/oilrig_motor.wav
+}
+
+sound sounds/machines/oilrig_pump {
+	sounds/machines/oilrig_pump.wav
+}
+
+sound sounds/machines/gdfbase_03 {
+	sounds/machines/gdfbase_03.wav
+}
+
+sound sounds/machines/gdfbase_01 {
+	sounds/machines/gdfbase_01.wav
+}
+
+sound sounds/machines/gdfbase_02 {
+	sounds/machines/gdfbase_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/tonal_wind_01 {
+	sounds/ambience/outdoors/wind/tonal_wind_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/tonal_wind_02 {
+	sounds/ambience/outdoors/wind/tonal_wind_02.wav
+}
+
+sound sounds/soundscape/events/02b {
+	sounds/soundscape/events/02b.wav
+}
+
+sound sounds/object_ambience/metallic_noises/fence_04 {
+	sounds/object_ambience/metallic_noises/fence_04.wav
+}
+
+sound sounds/ambience/outdoors/wind/lo_wind_08 {
+	sounds/ambience/outdoors/wind/lo_wind_08.wav
+}
+
+sound sounds/object_ambience/computers/modem_loop_02 {
+	sounds/object_ambience/computers/modem_loop_02.wav
+}
+
+sound sounds/ambience/rooms/fanrooms/loop_04 {
+	sounds/ambience/rooms/fanrooms/loop_04.wav
+}
+
+sound sounds/ambience/rooms/active/st_machroom_04 {
+	sounds/ambience/rooms/active/st_machroom_04.wav
+}
+
+sound sounds/ambience/outdoors/forest_animals/squirrel_01 {
+	sounds/ambience/outdoors/forest_animals/squirrel_01.wav
+}
+
+sound sounds/ambience/outdoors/forest_animals/squirrel_02 {
+	sounds/ambience/outdoors/forest_animals/squirrel_02.wav
+}
+
+sound sounds/soundscape/grinders/15 {
+	sounds/soundscape/grinders/15.wav
+}
+
+sound sounds/soundscape/grinders/14 {
+	sounds/soundscape/grinders/14.wav
+}
+
+sound sounds/soundscape/mids/13 {
+	sounds/soundscape/mids/13.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_18 {
+	sounds/object_ambience/electrical/hums/hum_18.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_17 {
+	sounds/object_ambience/electrical/hums/hum_17.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_16 {
+	sounds/object_ambience/electrical/hums/hum_16.wav
+}
+
+sound sounds/object_ambience/electrical/hums/hum_15 {
+	sounds/object_ambience/electrical/hums/hum_15.wav
+}
+
+sound sounds/soundscape/high/alarm_02 {
+	sounds/soundscape/high/alarm_02.wav
+}
+
+sound sounds/soundscape/high/alarm_01 {
+	sounds/soundscape/high/alarm_01.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_07 {
+	sounds/object_ambience/water_goop/goop_07.wav
+}
+
+sound sounds/soundscape/grinders/13 {
+	sounds/soundscape/grinders/13.wav
+}
+
+sound sounds/soundscape/air/10a {
+	sounds/soundscape/air/10a.wav
+}
+
+sound sounds/ambience/outdoors/wind/desert/loop_01 {
+	sounds/ambience/outdoors/wind/desert/loop_01.wav
+}
+
+sound sounds/ambience/outdoors/wind/desert/loop_03 {
+	sounds/ambience/outdoors/wind/desert/loop_03.wav
+}
+
+sound sounds/ambience/outdoors/wind/desert/loop_02 {
+	sounds/ambience/outdoors/wind/desert/loop_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/desert/loop_04 {
+	sounds/ambience/outdoors/wind/desert/loop_04.wav
+}
+
+sound sounds/weapons/mortar/fire_01 {
+	compression wav
+
+	sounds/weapons/mortar/fire_01.wav
+}
+
+sound sounds/weapons/sbc/fire_far {
+	compression wav
+
+	sounds/weapons/sbc/fire_far.wav
+}
+
+sound sounds/weapons/sbc/nfire_01_far {
+	compression wav
+
+	sounds/weapons/sbc/nfire_01_far.wav
+}
+
+sound sounds/weapons/sbc/nfire_02_far {
+	compression wav
+
+	sounds/weapons/sbc/nfire_02_far.wav
+}
+
+sound sounds/weapons/sbc/nfire_03_far {
+	compression wav
+
+	sounds/weapons/sbc/nfire_03_far.wav
+}
+
+sound sounds/weapons/sbc/nfire_04b_local {
+	compression wav
+
+	sounds/weapons/sbc/nfire_04b_local.wav
+}
+
+sound sounds/weapons/sbc/nfire_04_far {
+	compression wav
+
+	sounds/weapons/sbc/nfire_04_far.wav
+}
+
+sound sounds/weapons/sbc/nfire_05_far {
+	compression wav
+
+	sounds/weapons/sbc/nfire_05_far.wav
+}
+
+sound sounds/object_ambience/metallic_noises/fence_05 {
+	sounds/object_ambience/metallic_noises/fence_05.wav
+}
+
+sound sounds/object_ambience/metallic_noises/impact_02 {
+	sounds/object_ambience/metallic_noises/impact_02.wav
+}
+
+sound sounds/object_ambience/metallic_noises/gate_02 {
+	sounds/object_ambience/metallic_noises/gate_02.wav
+}
+
+sound sounds/object_ambience/metallic_noises/gate_01 {
+	sounds/object_ambience/metallic_noises/gate_01.wav
+}
+
+sound sounds/object_ambience/metallic_noises/impact_05 {
+	sounds/object_ambience/metallic_noises/impact_05.wav
+}
+
+sound sounds/object_ambience/metallic_noises/metalsticks_02 {
+	sounds/object_ambience/metallic_noises/metalsticks_02.wav
+}
+
+sound sounds/object_ambience/metallic_noises/metal_03 {
+	sounds/object_ambience/metallic_noises/metal_03.wav
+}
+
+sound sounds/object_ambience/metallic_noises/movement_01 {
+	sounds/object_ambience/metallic_noises/movement_01.wav
+}
+
+sound sounds/object_ambience/misc/phone_offhook {
+	sounds/object_ambience/misc/phone_offhook.wav
+}
+
+sound sounds/machines/oilpump {
+	sounds/machines/oilpump.wav
+}
+
+sound sounds/machines/oilmotor {
+	sounds/machines/oilmotor.wav
+}
+
+sound sounds/machines/oilpump_02 {
+	sounds/machines/oilpump_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/noisy/st_flappy_fabrics_01 {
+	sounds/ambience/outdoors/wind/noisy/st_flappy_fabrics_01.wav
+}
+
+sound sounds/soundscape/lowfreq/03c {
+	sounds/soundscape/lowfreq/03c.wav
+}
+
+sound sounds/soundscape/stereo/st_01 {
+	sounds/soundscape/stereo/st_01.wav
+}
+
+sound sounds/soundscape/stereo/st_02 {
+	sounds/soundscape/stereo/st_02.wav
+}
+
+sound sounds/soundscape/stereo/st_03 {
+	sounds/soundscape/stereo/st_03.wav
+}
+
+sound sounds/soundscape/tech/pulser_01 {
+	sounds/soundscape/tech/pulser_01.wav
+}
+
+sound sounds/soundscape/tech/pulser_02 {
+	sounds/soundscape/tech/pulser_02.wav
+}
+
+sound sounds/soundscape/tech/dirty_01 {
+	sounds/soundscape/tech/dirty_01.wav
+}
+
+sound sounds/soundscape/tech/carlsagan_hp_01 {
+	sounds/soundscape/tech/carlsagan_hp_01.wav
+}
+
+sound sounds/soundscape/tech/carlsagan_04_hp {
+	sounds/soundscape/tech/carlsagan_04_hp.wav
+}
+
+sound sounds/object_ambience/slime/gooshy_03 {
+	sounds/object_ambience/slime/gooshy_03.wav
+}
+
+sound sounds/object_ambience/slime/gooshy_01 {
+	sounds/object_ambience/slime/gooshy_01.wav
+}
+
+sound sounds/object_ambience/slime/gooshy_04 {
+	sounds/object_ambience/slime/gooshy_04.wav
+}
+
+sound sounds/ambience/outdoors/water/brookhum_02_pd175 {
+	sounds/ambience/outdoors/water/brookhum_02_pd175.wav
+}
+
+sound sounds/soundscape/moody/heartbeat_01a_loop {
+	sounds/soundscape/moody/heartbeat_01a_loop.wav
+}
+
+sound sounds/tools/forceshield/electrofry_07 {
+	sounds/tools/forceshield/electrofry_07.wav
+}
+
+sound sounds/tools/forceshield/hand_01_stop {
+	sounds/tools/forceshield/hand_01_stop.wav
+}
+
+sound sounds/tools/forceshield/loop {
+	sounds/tools/forceshield/loop.wav
+}
+
+sound sounds/hud/heart_flatline {
+	sounds/hud/heart_flatline.wav
+}
+
+sound sounds/misc/jumppads/pad_01 {
+	sounds/misc/jumppads/pad_01.wav
+}
+
+sound sounds/misc/jumppads/pad_02 {
+	sounds/misc/jumppads/pad_02.wav
+}
+
+sound sounds/misc/jumppads/pad_03 {
+	sounds/misc/jumppads/pad_03.wav
+}
+
+sound sounds/object_ambience/water_goop/icecrackle_01 {
+	sounds/object_ambience/water_goop/icecrackle_01.wav
+}
+
+sound sounds/object_ambience/water_goop/icecrackle_02 {
+	sounds/object_ambience/water_goop/icecrackle_02.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_08a_nosub {
+	sounds/object_ambience/water_goop/goop_08a_nosub.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_06a_nosub {
+	sounds/object_ambience/water_goop/goop_06a_nosub.wav
+}
+
+sound sounds/object_ambience/water_goop/goop_05a_nosub {
+	sounds/object_ambience/water_goop/goop_05a_nosub.wav
+}
+
+sound sounds/object_ambience/steam/loop_steam_05 {
+	sounds/object_ambience/steam/loop_steam_05.wav
+}
+
+sound sounds/object_ambience/generators/loop_06a {
+	sounds/object_ambience/generators/loop_06a.wav
+}
+
+sound sounds/soundscape/events/aflare_03 {
+	sounds/soundscape/events/aflare_03.wav
+}
+
+sound sounds/soundscape/tech/beam_01 {
+	sounds/soundscape/tech/beam_01.wav
+}
+
+sound sounds/soundscape/tech/beam_02 {
+	sounds/soundscape/tech/beam_02.wav
+}
+
+sound sounds/ambience/outdoors/rain/loop_05a {
+	sounds/ambience/outdoors/rain/loop_05a.wav
+}
+
+sound sounds/ambience/outdoors/rain/loop_02 {
+	sounds/ambience/outdoors/rain/loop_02.wav
+}
+
+sound sounds/ambience/water/gentle_01 {
+	sounds/ambience/water/gentle_01.wav
+}
+
+sound sounds/ambience/water/gentle_02 {
+	sounds/ambience/water/gentle_02.wav
+}
+
+sound sounds/ambience/outdoors/birds/birds_10 {
+	sounds/ambience/outdoors/birds/birds_10.wav
+}
+
+sound sounds/ambience/outdoors/birds/birds_08 {
+	sounds/ambience/outdoors/birds/birds_08.wav
+}
+
+sound sounds/ambience/outdoors/birds/birds_09 {
+	sounds/ambience/outdoors/birds/birds_09.wav
+}
+
+sound sounds/ambience/outdoors/birds/hawkverb_01 {
+	sounds/ambience/outdoors/birds/hawkverb_01.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_propane_01 {
+	sounds/xlib/valley_sounds/burning/loop_propane_01.wav
+}
+
+sound sounds/ambience/outdoors/birds/birdverb_01 {
+	sounds/ambience/outdoors/birds/birdverb_01.wav
+}
+
+sound sounds/ambience/outdoors/birds/birdverb_02 {
+	sounds/ambience/outdoors/birds/birdverb_02.wav
+}
+
+sound sounds/ambience/outdoors/wind/calm/st_docile_03d {
+	sounds/ambience/outdoors/wind/calm/st_docile_03d.wav
+}
+
+sound sounds/soundscape/deep/furnace_01 {
+	sounds/soundscape/deep/furnace_01.wav
+}
+
+sound sounds/soundscape/tech/cs_hp_01 {
+	sounds/soundscape/tech/cs_hp_01.wav
+}
+
+sound sounds/soundscape/tech/cs_04_hp {
+	sounds/soundscape/tech/cs_04_hp.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_fuseburn_04 {
+	sounds/xlib/valley_sounds/burning/loop_fuseburn_04.wav
+}
+
+sound sounds/xlib/valley_sounds/burning/loop_propane_02 {
+	sounds/xlib/valley_sounds/burning/loop_propane_02.wav
+}
+
+sound sounds/weapons/blaster/fire_01a {
+	sounds/weapons/blaster/fire_01a.wav
+}
+
+sound sounds/weapons/blaster/raise_03 {
+	sounds/weapons/blaster/raise_03.wav
+}
+
+sound sounds/weapons/railgun/idle_hum_02 {
+	sounds/weapons/railgun/idle_hum_02.wav
+}
+
+sound sounds/weapons/railgun/idle_hum_01a {
+	sounds/weapons/railgun/idle_hum_01a.wav
+}
+
+sound sounds/weapons/railgun/idle_hum_01 {
+	sounds/weapons/railgun/idle_hum_01.wav
+}
+
+sound sounds/weapons/railgun/idle_hum_02_start {
+	sounds/weapons/railgun/idle_hum_02_start.wav
+}
+
+sound sounds/weapons/railgun/idle_hum_03_local {
+	sounds/weapons/railgun/idle_hum_03_local.wav
+}
+
+sound sounds/weapons/railgun/idle_hum_03_start {
+	sounds/weapons/railgun/idle_hum_03_start.wav
+}
+
+sound sounds/weapons/railgun/idle_hum_popozao {
+	sounds/weapons/railgun/idle_hum_popozao.wav
+}
+
+sound sounds/weapons/railgun/init_01 {
+	sounds/weapons/railgun/init_01.wav
+}
+
+sound sounds/weapons/railgun/raise_01 {
+	sounds/weapons/railgun/raise_01.wav
+}
+
+sound sounds/weapons/railgun/st_fire_01b {
+	sounds/weapons/railgun/st_fire_01b.wav
+}
+
+sound sounds/weapons/railgun/zoomout_01 {
+	sounds/weapons/railgun/zoomout_01.wav
+}
+
+sound sounds/weapons/railgun/zoomout_02 {
+	sounds/weapons/railgun/zoomout_02.wav
+}
+
+sound sounds/weapons/railgun/zoomin_01 {
+	sounds/weapons/railgun/zoomin_01.wav
+}
+
+sound sounds/soundscape/events/03b {
+	sounds/soundscape/events/03b.wav
+}
+
+sound sounds/object_ambience/generators/slipgate_strogg_generator {
+	sounds/object_ambience/generators/slipgate_strogg_generator.wav
+}
+
+sound sounds/object_ambience/generators/slipgate_strogg_generator_wires {
+	sounds/object_ambience/generators/slipgate_strogg_generator_wires.wav
+}
+
+sound sounds/object_ambience/electrical/hums/neon_01 {
+	sounds/object_ambience/electrical/hums/neon_01.wav
+}
+
+sound sounds/object_ambience/electrical/hums/neon_02 {
+	sounds/object_ambience/electrical/hums/neon_02.wav
+}
+
+sound sounds/object_ambience/electrical/hums/neon_03 {
+	sounds/object_ambience/electrical/hums/neon_03.wav
+}
+
+sound sounds/object_ambience/burning/loop_flames_01 {
+	sounds/object_ambience/burning/loop_flames_01.wav
+}
+
+sound sounds/object_ambience/burning/loop_fuseburn_03 {
+	sounds/object_ambience/burning/loop_fuseburn_03.wav
+}
+
+sound sounds/object_ambience/burning/burnie_burn {
+	sounds/object_ambience/burning/burnie_burn.wav
+}
+
+sound sounds/object_ambience/burning/loop_flames_02 {
+	sounds/object_ambience/burning/loop_flames_02.wav
+}
+
+sound sounds/object_ambience/burning/loop_fuseburn_04 {
+	sounds/object_ambience/burning/loop_fuseburn_04.wav
+}
+

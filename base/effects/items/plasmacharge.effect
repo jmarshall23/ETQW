@@ -1,0 +1,56 @@
+effect effects/items/plasmacharge_glow
+{
+	size	285
+
+	sound "Armed Sound"
+	{
+		soundShader	"sounds/tools/plasmacharge/beep"
+	}
+	light "Light"
+	{
+
+		light
+		{
+			duration	1,1
+			shadows
+			material	"lights/defaultPointLight/shadowsCastOnlyFromStaticObjects"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,0 }
+				size { point 150,150,150 }
+				tint { point 0.768628,0.215686,0.0352941 }
+			}
+		}
+	}
+}
+
+effect effects/items/plasmacharge_unarmed_glow
+{
+	size	164
+
+	light "Light"
+	{
+		constant
+
+		light
+		{
+			duration	1,1
+			shadows
+			material	"lights/defaultPointLight/shadowsCastOnlyFromStaticObjects"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,0 }
+				size { point 80,80,80 }
+				tint { point 0.945098,0.882353,0.105882 }
+			}
+		}
+	}
+}
+
+
+
+

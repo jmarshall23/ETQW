@@ -1,0 +1,89 @@
+atmosphere valley_strogg_surprise_1 {
+	sunMaterial "atmospheres/lights/scrolling_clouds_temperate"
+	sunDir ( -0.8894044161 0.0393856317 0.4554215074 )
+	sunColor ( 0.7498056293 0.670704782 0.514503479 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 25439
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.9725490808 1 0.8117647767 )
+		saturation 0.75
+		contrast 1.0499999523
+		glareParms ( 0.7599999905 1.2400000095 0.1299999952 0.6800000072 )
+		glareBases ( 0.5 0 0 0 )
+	}
+	fogDistHalf 1046
+	fogHeightHalf 8399
+	fogHeightOffset -706
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "valley_strogg_surprise_1"
+	skyGradientImage "atmosphere/skies/ph_sunset6"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 43
+	windAngleDev 90
+	windStrength 51
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/cloudring_cube_02" {
+		style old
+		parms 12 ( 0.6999999881 0.7686269879 0.7137259841 0.611765027 0.0005 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/tiledclouds" {
+		style old
+		parms 12 ( 0.400000006 0.4313730001 0.3921569884 0.3882350028 0.0002 6 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sundisc" {
+		style old
+		parms 12 ( 0.1607840061 0.1725489944 0.2784309983 0.3400000036 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+ambientCubemap valley_strogg_surprise_1 {
+	AmbientLight {
+		Color 0.3176470697 0.3764706254 0.5098039508
+		Direction 0 0 1
+	}
+	AmbientLight {
+		Color 0.1882353127 0.1725490242 0.1529411823
+		Direction 0 0 -1
+	}
+	AmbientLight {
+		Color 0.2627451122 0.2901960909 0.3019607961
+		Direction 0 1 0
+	}
+	AmbientLight {
+		Color 0.2666666806 0.2000000179 0.1294117719
+		Direction 0 -1 0
+	}
+	AmbientLight {
+		Color 0.8078432083 0.741176486 0.6745098233
+		Direction 1 0 0
+	}
+	AmbientLight {
+		Color 0.3215686381 0.3058823645 0.250980407
+		Direction -1 0 0
+	}
+	AmbientLight {
+		Color 1 1 1
+		Direction -0.9961947203 0.0000000242 0.0871557519
+	}
+}

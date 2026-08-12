@@ -1,0 +1,86 @@
+//////////////////////////
+// Strogg Player Sounds //
+//////////////////////////
+
+
+sound sounds/players/strogg/breathe {
+
+	volume -5
+
+	no_dups
+
+	sounds/players/strogg/breathe_01.wav
+	sounds/players/strogg/breathe_02.wav
+	sounds/players/strogg/breathe_03.wav
+	sounds/players/strogg/breathe_04.wav
+	sounds/players/strogg/breathe_05.wav
+	sounds/players/strogg/breathe_06.wav
+	sounds/players/strogg/breathe_07.wav
+}
+
+sound sounds/players/strogg/breathe/heavy {
+
+	volume -5
+
+	no_dups
+
+	sounds/players/strogg/breathe_01_heavy.wav
+	sounds/players/strogg/breathe_02_heavy.wav
+	sounds/players/strogg/breathe_03_heavy.wav
+	sounds/players/strogg/breathe_04_heavy.wav
+	sounds/players/strogg/breathe_05_heavy.wav
+	sounds/players/strogg/breathe_06_heavy.wav
+	sounds/players/strogg/breathe_07_heavy.wav
+}
+
+sound sounds/players/strogg/pain/small {
+
+	sounds/players/strogg/pain1.wav
+	sounds/players/strogg/pain2.wav
+}
+
+sound sounds/players/strogg/pain/large {
+
+	sounds/players/strogg/lg_pain1.wav
+	sounds/players/strogg/lg_pain2.wav
+}
+
+sound sounds/players/strogg/death {
+
+	sounds/players/strogg/pain1.wav
+	sounds/players/strogg/pain2.wav
+}
+
+sound sounds/players/strogg/breathing {
+	
+	looping
+	sounds/vo/strogg/breathing_01.wav
+}
+
+sound sounds/players/strogg/friendlyfire/auto {
+	volume -2
+	no_dups
+	localization/english/sounds/players/strogg/auto/26200.wav
+	localization/english/sounds/players/strogg/auto/26201.wav
+	localization/english/sounds/players/strogg/auto/26202.wav
+	localization/english/sounds/players/strogg/auto/26203.wav
+	localization/english/sounds/players/strogg/auto/26204.wav
+	localization/english/sounds/players/strogg/auto/26205.wav
+}
+
+sound sounds/players/strogg/land/soft {
+	
+	volume -5
+
+	sounds/players/strogg/land_soft.wav
+}
+
+sound sounds/players/strogg/jump {
+
+	volume -5
+	no_dups
+
+	sounds/players/strogg/jump_01.wav
+	sounds/players/strogg/jump_02.wav
+	sounds/players/strogg/jump_03.wav
+}

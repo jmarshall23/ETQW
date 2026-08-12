@@ -1,0 +1,46 @@
+// ========================================================================
+
+export hauser {
+	options -prefix FOB_ -sourcedir models/mapobjects/strogg/refinery/dev_sd -destdir models/mapobjects/strogg/refinery -keep dummy tenta3_dummy -parent tenta3_1 tenta3_dummy -parent tenta4_1 dummy -parent tenta2_1 dummy -parent tenta1_1 dummy
+
+	mesh	final_objective_b.mb		-dest final_objective_b.md5mesh -range 0 0
+	anim	final_objective_b.mb		-dest final_objective_b.md5anim	-range 0 0
+	anim	final_objective_b.mb		-dest final_objective_b_idle.md5anim	-range 10 210 -quatprecision 0.00001
+	anim	final_objective_b.mb		-dest final_objective_b_panic.md5anim	-range 220 320
+
+
+}
+
+// ========================================================================
+// Models
+//
+
+model refinery_final_objective_b {
+	mesh					models/mapobjects/strogg/refinery/final_objective_b.md5mesh
+
+	anim base				models/mapobjects/strogg/refinery/final_objective_b.md5anim {
+	}
+
+	anim idle				models/mapobjects/strogg/refinery/final_objective_b_idle.md5anim {
+	}
+
+	anim panic  			models/mapobjects/strogg/refinery/final_objective_b_panic.md5anim {
+	}
+
+
+}
+
+// ========================================================================
+// Entity Def
+//
+
+entityDef env_refinery_final_objective_b {
+	"editor_color"			"1 .5 0"
+	"editor_mins"			"-16 -16 0"
+	"editor_maxs"			"16 16 64"
+
+	"spawnclass"			"idAnimated"
+	"model"					"refinery_final_objective_b"
+	"anim"					"idle"
+	"start_anim"			"idle"
+}

@@ -1,0 +1,201 @@
+
+
+object objective {
+	void		syncFields();
+	void		preinit();
+	void		init();
+	void		destroy();
+
+	float		objectiveIconNumber;
+	float		objectiveIcon;
+
+	void		OnFinishedChanged();	
+
+	void		SetupIcons();
+	void		ClearIcons();
+
+	void		UpdateObjectives( string prefix );
+	
+	void		vOnLocalTeamChanged();
+
+	void		vOnDeploy();
+
+	void		vFinishObjective();
+	void		vStartObjective();		
+	
+	float		objectiveIndex;
+	object		stroggTeam;
+	object		gdfTeam;
+
+	boolean		finished;
+	
+	handle		gdfShortText;
+	handle		stroggShortText;
+	
+	entity		objectiveOverride;
+}
+
+void objective::preinit() {
+	objectiveIcon = -1;
+	objectiveIconNumber = -1;
+	
+	objectiveIndex = getFloatKeyWithDefault( "objective_index", -1 );
+
+	vOnDeploy();
+
+	SetupIcons();
+	vFinishObjective();
+}
+
+void objective::vOnLocalTeamChanged() {	
+	OnFinishedChanged();
+	vOnDeploy();
+}
+
+void objective::vOnDeploy() {
+	if ( objectiveIndex >= 0 ) {
+		handle gdfText = sys.localizeString( getKeyWithDefault( "text_objective_gdf", "" ) );
+		handle stroggText = sys.localizeString( getKeyWithDefault( "text_objective_strogg", "" ) );
+		gdfShortText = sys.localizeString( getKeyWithDefault( "text_short_objective_gdf", "" ) );
+		stroggShortText = sys.localizeString( getKeyWithDefault( "text_short_objective_strogg", "" ) );
+		
+		objManager.InitObjectiveUI( objectiveIndex, gdfText,
+													stroggText,
+													gdfShortText,
+													stroggShortText,
+													getKeyWithDefault( "mtr_objective_gdf", 	"guis/nodraw" ),
+													getKeyWithDefault( "mtr_objective_strogg", 	"guis/nodraw" ));
+													
+		SetupIcons();													
+	}
+}
+
+
+void objective::syncFields() {
+	syncBroadcast( "finished" );
+	syncCallback( "finished", "OnFinishedChanged" );
+}
+
+void objective::init() {
+}
+
+void objective::OnFinishedChanged() {
+	if ( finished ) {
+		vFinishObjective();
+	} else {
+		vStartObjective();
+	}
+}
+
+void objective::destroy() {
+	ClearIcons();
+}
+
+void objective::UpdateObjectives( string prefix ) {
+	if ( objectiveIndex < 0 ) {
+		return;
+	}
+
+	objManager.setObjectiveState( stroggTeam, objectiveIndex, getFloatKey( prefix + "_objective_status_strogg" ) );
+	objManager.setObjectiveIcon( stroggTeam, objectiveIndex, getKey( prefix + "_objective_icon_strogg" ) );
+
+	objManager.setObjectiveState( gdfTeam, objectiveIndex, getFloatKey( prefix + "_objective_status_gdf" ) );
+	objManager.setObjectiveIcon( gdfTeam, objectiveIndex, getKey( prefix + "_objective_icon_gdf" ) );	
+}
+
+void objective::SetupIcons() {
+	entity localPlayer = sys.getLocalPlayer();
+	if( localPlayer == $null_entity ) {
+		return;
+	}
+	
+	object gameTeam = localPlayer.getGameTeam();
+	
+	ClearIcons();
+
+	float size;
+	float unknownSize;
+	//size = getFloatKey( "icon_size_cm" );
+	size = 16;
+	//unknownSize = getFloatKeyWithDefault( "icon_unknown_size_cm", size / 2 );
+	unknownSize = 16;
+	vector v;
+	v_x = 4;
+	v_y = 4;
+	v_z = 0;
+	
+	if ( size && gameTeam != $null_entity ) {
+		objectiveIcon = sys.allocCMIcon( self, getFloatKeyWithDefault( "icon_sort_cm", -6 ) );
+		
+		sys.setCMIconSize( objectiveIcon,			size );
+		sys.setCMIconUnknownSize( objectiveIcon,	unknownSize );
+		if ( finished || objectiveIndex < 0 || g_primaryObjectiveIndex != objectiveIndex ) {
+			sys.setCMIconFlag( objectiveIcon,			CMF_ONLYSHOWONFULLVIEW );
+		}
+		if( g_primaryObjectiveIndex == objectiveIndex ) { 
+			sys.clearCMIconFlag( objectiveIcon,			CMF_ONLYSHOWONFULLVIEW );
+		}
+		sys.setCMIconFlag( objectiveIcon,			CMF_ALWAYSKNOWN );
+		
+		if ( g_primaryObjectiveIndex != objectiveIndex ) {
+			string material = getKeyWithDefault( "mtr_objective_" + gameTeam.getName() + "_desat", 	"guis/nodraw" );
+			if ( material == "guis/nodraw" ) {
+				string materialColored = getKeyWithDefault( "mtr_objective_" + gameTeam.getName(), 	"guis/nodraw" );
+				if ( materialColored != "guis/nodraw" ) {
+					sys.warning( "Material not found: 'mtr_objective_" + gameTeam.getName() + "_desat' (" + materialColored + ")" );
+				}
+			}
+			sys.setCMIconMaterial( objectiveIcon,		GetMaterial( material ) );
+		} else {
+			sys.setCMIconMaterial( objectiveIcon,		GetMaterial( getKeyWithDefault( "mtr_objective_" + gameTeam.getName(), 	"guis/nodraw" ) ) );
+		}
+		//sys.setCMIconOrigin( objectiveIcon,			getVectorKey( "icon_offset_cm" ) );
+		sys.setCMIconOrigin( objectiveIcon,			v );
+
+		if ( getFloatKey( "icon_team_color_cm" ) ) {
+			sys.setCMIconColorMode( objectiveIcon, CM_ALLEGIANCE );
+		}
+	}
+
+	//size = getFloatKey( "icon_size_number_cm" );
+	size = 10;
+	if ( size ) {
+		objectiveIconNumber = sys.allocCMIcon( self, getFloatKeyWithDefault( "icon_sort_number_cm", -7 ) );
+
+		sys.setCMIconUnknownSize( objectiveIconNumber,	0 );
+		sys.setCMIconSize( objectiveIconNumber,		size );
+		sys.setCMIconFlag( objectiveIconNumber,		CMF_ALWAYSKNOWN );
+		if ( finished || objectiveIndex < 0 ) {
+			sys.setCMIconFlag( objectiveIconNumber,		CMF_ONLYSHOWONFULLVIEW );
+		}
+		sys.setCMIconMaterial( objectiveIconNumber,	GetMaterial( getKey( "mtr_icon_number" ) ) );
+	}
+}
+
+void objective::ClearIcons() {
+	if ( objectiveIcon != -1 ) {
+		sys.freeCMIcon( self, objectiveIcon );
+		objectiveIcon = -1;
+	}
+
+	if ( objectiveIconNumber != -1 ) {
+		sys.freeCMIcon( self, objectiveIconNumber );
+		objectiveIconNumber = -1;
+	}
+}
+
+void objective::vFinishObjective() {
+	finished = true;	
+	if ( objectiveIndex < 0 ) {
+		ClearIcons();
+	} else {
+		SetupIcons();
+	}
+	UpdateObjectives( "finish" );
+}
+
+void objective::vStartObjective() {
+	finished = false;
+	SetupIcons();
+	UpdateObjectives( "start" );
+}

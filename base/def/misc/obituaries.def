@@ -1,0 +1,1264 @@
+
+/*
+==================
+Generic
+==================
+*/
+
+tooltip tooltips/killmsgs/generic/kill {
+	text "game/obit/killed"
+}
+
+tooltip tooltips/killmsgs/generic/teamkill {
+	text "game/obit/team_killed"
+}
+
+tooltip tooltips/killmsgs/generic/telefrag {
+	text "game/obit/telefrag"
+}
+
+/*
+==================
+Items
+==================
+*/
+
+tooltip tooltips/killmsgs/weapons/mines/landmine {
+	text "game/obit/landmine"
+}
+
+tooltip tooltips/killmsgs/weapons/mines/landmine/self {
+	text "game/obit/landmine_self"
+}
+
+tooltip tooltips/killmsgs/weapons/mines/landmine/unknown {
+	text "game/obit/landmine_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/mines/landmine/teamkill {
+	text "game/obit/landmine_team"
+}
+
+tooltip tooltips/killmsgs/weapons/mines/trapmine {
+	text "game/obit/trapmine"
+}
+
+tooltip tooltips/killmsgs/weapons/mines/trapmine/self {
+	text "game/obit/trapmine_self"
+}
+
+tooltip tooltips/killmsgs/weapons/mines/trapmine/unknown {
+	text "game/obit/trapmine_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/mines/trapmine/teamkill {
+	text "game/obit/trapmine_team"
+}
+
+tooltip tooltips/killmsgs/weapons/mines/proxymine {
+	text "game/obit/proxymine"
+}
+
+tooltip tooltips/killmsgs/weapons/mines/proxymine/self {
+	text "game/obit/proxymine_self"
+}
+
+tooltip tooltips/killmsgs/weapons/mines/proxymine/unknown {
+	text "game/obit/proxymine_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/mines/proxymine/teamkill {
+	text "game/obit/proxymine_team"
+}
+
+tooltip tooltips/killmsgs/items/supplycrate/crush {
+	text "game/obit/supplycrate_crush"
+}
+
+tooltip tooltips/killmsgs/items/supplycrate/crush/friendly {
+	text "game/obit/supplycrate_crush/friendly"
+}
+
+tooltip tooltips/killmsgs/items/teleporter/self {
+	text "game/obit/teleporter_self"
+}
+
+tooltip tooltips/killmsgs/objectives/mininglaser/crush {
+	text "game/obit/mininglaser_crush"
+}
+
+tooltip tooltips/killmsgs/construction {
+	text "game/obit/construction_crush"
+}
+
+tooltip tooltips/killmsgs/objectives/shieldgenerator/crush {
+	text "game/obit/shieldgenerator_crush"
+}
+
+tooltip tooltips/killmsgs/tower_destroy {
+	text "game/obit/tower_kill"
+}
+
+tooltip tooltips/killmsgs/tower_destroy_team {
+	text "game/obit/tower_kill_team"
+}
+
+tooltip tooltips/killmsgs/tower_destroy_self {
+	text "game/obit/tower_kill_self"
+}
+
+tooltip tooltips/killmsgs/tower_destroy_unknown {
+	text "game/obit/tower_kill_unknown"
+}
+
+/*
+==================
+Players
+==================
+*/
+
+tooltip tooltips/killmsgs/self/suicide/gdf {
+	text "game/obit/suicide"
+}
+
+tooltip tooltips/killmsgs/self/suicide/strogg {
+	text "game/obit/makron"
+}
+
+tooltip tooltips/killmsgs/self/falling {
+	text "game/obit/fall"
+}
+
+tooltip tooltips/killmsgs/self/drowning {
+	text "game/obit/drown"
+}
+
+tooltip tooltips/killmsgs/self/crushing {
+	text "game/obit/crush"
+}
+
+tooltip tooltips/killmsgs/self/oob {
+	text "game/obit/oob"
+}
+
+tooltip tooltips/killmsgs/self/deployable_falling {
+	text "game/obit/deployable_falling"
+}
+
+tooltip tooltips/killmsgs/self/deployable_falling/friendly {
+	text "game/obit/deployable_falling/friendly"
+}
+
+tooltip tooltips/killmsgs/self/icarus_falling {
+	text "game/obit/icarus_falling"
+}
+
+tooltip tooltip/killmsgs/self/objective_explosion {
+	text "game/obit/objective_explosion"
+}
+
+tooltip tooltip/killmsgs/self/fire {
+	text "game/obit/fire"
+}
+
+/*
+==================
+GDF Weapons
+==================
+*/
+
+tooltip tooltips/killmsgs/weapons/knife {
+	text "game/obit/knife"
+}
+
+tooltip tooltips/killmsgs/weapons/knife/backstab {
+	text "game/obit/knife/backstab"
+}
+
+tooltip tooltips/killmsgs/weapons/pistol {
+	text "game/obit/pistol"
+}
+
+tooltip tooltips/killmsgs/weapons/pistol/silenced {
+	text "game/obit/pistol_silenced"
+}
+
+tooltip tooltips/killmsgs/weapons/machinepistol {
+	text "game/obit/pistol_machine"
+}
+
+tooltip tooltips/killmsgs/weapons/machinepistol/silenced {
+	text "game/obit/pistol_machine_silenced"
+}
+
+tooltip tooltips/killmsgs/weapons/assaultrifle {
+	text "game/obit/assault_rifle"
+}
+
+tooltip tooltips/killmsgs/weapons/assaultrifle/scoped {
+	text "game/obit/assault_rifle_scoped"
+}
+
+tooltip tooltips/killmsgs/weapons/grenadelauncher {
+	text "game/obit/gren_launcher"
+}
+
+tooltip tooltips/killmsgs/weapons/shotgun {
+	text "game/obit/shotgun"
+}
+
+tooltip tooltips/killmsgs/weapons/sniperrifle {
+	text "game/obit/sniper"
+}
+
+tooltip tooltips/killmsgs/weapons/rocketlauncher {
+	text "game/obit/rocketlauncher"
+}
+
+tooltip tooltips/killmsgs/weapons/aamissile {
+	text "game/obit/aamissile"
+}
+
+tooltip tooltips/killmsgs/weapons/law {
+	text "game/obit/law"
+}
+
+tooltip tooltips/killmsgs/weapons/strocket {
+	text "game/obit/strocket"
+}
+
+tooltip tooltips/killmsgs/weapons/gpmg {
+	text "game/obit/gpmg"
+}
+
+tooltip tooltips/killmsgs/weapons/mortar {
+	text "game/obit/mortar"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/frag {
+	text "game/obit/gren_frag"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/emp {
+	text "game/obit/gren_emp"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/scrambler {
+	text "game/obit/gren_scrambler"
+}
+
+tooltip tooltips/killmsgs/weapons/charges/he {
+	text "game/obit/he_charge"
+}
+
+tooltip tooltips/killmsgs/weapons/3rdeye {
+	text "game/obit/satchel"
+}
+
+tooltip tooltips/killmsgs/weapons/artillery {
+	text "game/obit/artillery"
+}
+
+tooltip tooltips/killmsgs/weapons/rockets {
+	text "game/obit/rockets"
+}
+
+tooltip tooltips/killmsgs/weapons/ssm {
+	text "game/obit/ssm"
+}
+
+tooltip tooltips/killmsgs/weapons/scud {
+	text "game/obit/scud"
+}
+
+tooltip tooltips/killmsgs/weapons/vampire {
+	text "game/obit/vampire"
+}
+
+tooltip tooltips/killmsgs/weapons/vampire/unknown {
+	text "game/obit/vampire_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/fafff {
+	text "game/obit/fafff"
+}
+
+tooltip tooltips/killmsgs/weapons/sbc {
+	text "game/obit/sbc"
+}
+
+tooltip tooltips/killmsgs/weapons/gatling {
+	text "game/obit/gatling"
+}
+
+tooltip tooltips/killmsgs/weapons/mg {
+	text "game/obit/mg"
+}
+
+tooltip tooltips/killmsgs/weapons/flakcannon {
+	text "game/obit/flak"
+}
+
+tooltip tooltips/killmsgs/weapons/thirdeye {
+	text "game/obit/thirdeye"
+}
+
+tooltip tooltips/killmsgs/weapons/defib {
+	text "game/obit/defibrillator"
+}
+
+tooltip tooltips/killmsgs/weapons/pistol_akimbo {
+	text "game/obit/pistol_akimbo"
+}
+
+tooltip tooltips/killmsgs/weapons/pistol_akimbo_silenced {
+	text "game/obit/pistol_akimbo_silenced"
+}
+
+/*
+==================
+GDF Weapons Suicides
+==================
+*/
+
+tooltip tooltips/killmsgs/weapons/grenades/frag/self {
+	text "game/obit/gren_frag_self"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/frag/unknown {
+	text "game/obit/gren_frag_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/emp/self {
+	text "game/obit/gren_emp_self"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/emp/unknown {
+	text "game/obit/gren_emp_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/scrambler/self {
+	text "game/obit/gren_scrambler_self"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/scrambler/unknown {
+	text "game/obit/gren_scrambler_unknown"
+}
+
+
+tooltip tooltips/killmsgs/weapons/grenadelauncher/self {
+	text "game/obit/gren_launcher_self"
+}
+
+tooltip tooltips/killmsgs/weapons/grenadelauncher/unknown {
+	text "game/obit/gren_launcher_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/charges/he/self {
+	text "game/obit/he_charge_self"
+}
+
+tooltip tooltips/killmsgs/weapons/charges/he/unknown {
+	text "game/obit/he_charge_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/flakcannon/self {
+	text "game/obit/flak_self"
+}
+
+tooltip tooltips/killmsgs/weapons/fafff/self {
+	text "game/obit/fafff_self"
+}
+
+tooltip tooltips/killmsgs/weapons/fafff/unknown {
+	text "game/obit/fafff_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/rocketlauncher/self {
+	text "game/obit/rocketlauncher_self"
+}
+
+tooltip tooltips/killmsgs/weapons/rocketlauncher/unknown {
+	text "game/obit/rocketlauncher_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/aamissile/self {
+	text "game/obit/aamissile_self"
+}
+
+tooltip tooltips/killmsgs/weapons/aamissile/unknown {
+	text "game/obit/aamissile_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/law/self {
+	text "game/obit/law_self"
+}
+
+tooltip tooltips/killmsgs/weapons/law/unknown {
+	text "game/obit/law_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/strocket/self {
+	text "game/obit/strocket_self"
+}
+
+tooltip tooltips/killmsgs/weapons/artillery/self {
+	text "game/obit/artillery_self"
+}
+
+tooltip tooltips/killmsgs/weapons/artillery/unknown {
+	text "game/obit/artillery_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/rockets/self {
+	text "game/obit/rockets_self"
+}
+
+tooltip tooltips/killmsgs/weapons/rockets/unknown {
+	text "game/obit/rockets_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/ssm/self {
+	text "game/obit/ssm_self"
+}
+
+tooltip tooltips/killmsgs/weapons/ssm/unknown {
+	text "game/obit/ssm_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/scud/self {
+	text "game/obit/scud_self"
+}
+
+tooltip tooltips/killmsgs/weapons/scud/unknown {
+	text "game/obit/scud_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/sbc/self {
+	text "game/obit/sbc_self"
+}
+
+tooltip tooltips/killmsgs/weapons/vampire/self {
+	text "game/obit/vampire_self"
+}
+
+tooltip tooltips/killmsgs/weapons/thirdeye/self {
+	text "game/obit/thirdeye_self"
+}
+
+/*
+==================
+GDF Weapons Teamkills
+==================
+*/
+
+tooltip tooltips/killmsgs/weapons/knife/teamkill {
+	text "game/obit/knife_team"
+}
+
+tooltip tooltips/killmsgs/weapons/knife/backstab/teamkill {
+	text "game/obit/knife/backstab_team"
+}
+
+tooltip tooltips/killmsgs/weapons/pistol/teamkill {
+	text "game/obit/pistol_team"
+}
+
+tooltip tooltips/killmsgs/weapons/pistol/silenced/teamkill {
+	text "game/obit/pistol_silenced_team"
+}
+
+tooltip tooltips/killmsgs/weapons/machinepistol/teamkill {
+	text "game/obit/pistol_machine_team"
+}
+
+tooltip tooltips/killmsgs/weapons/machinepistol/silenced/teamkill {
+	text "game/obit/pistol_machine_silenced_team"
+}
+
+tooltip tooltips/killmsgs/weapons/assaultrifle/teamkill {
+	text "game/obit/assault_rifle_team"
+}
+
+tooltip tooltips/killmsgs/weapons/assaultrifle/scoped/teamkill {
+	text "game/obit/assault_rifle_scoped_team"
+}
+
+tooltip tooltips/killmsgs/weapons/grenadelauncher/teamkill {
+	text "game/obit/gren_launcher_team"
+}
+
+tooltip tooltips/killmsgs/weapons/shotgun/teamkill {
+	text "game/obit/shotgun_team"
+}
+
+tooltip tooltips/killmsgs/weapons/sniperrifle/teamkill {
+	text "game/obit/sniper_team"
+}
+
+tooltip tooltips/killmsgs/weapons/rocketlauncher/teamkill {
+	text "game/obit/rocketlauncher_team"
+}
+
+tooltip tooltips/killmsgs/weapons/aamissile/teamkill {
+	text "game/obit/aamissile_team"
+}
+
+tooltip tooltips/killmsgs/weapons/law/teamkill {
+	text "game/obit/law_team"
+}
+
+tooltip tooltips/killmsgs/weapons/strocket/teamkill {
+	text "game/obit/strocket_team"
+}
+
+tooltip tooltips/killmsgs/weapons/gpmg/teamkill {
+	text "game/obit/gpmg_team"
+}
+
+tooltip tooltips/killmsgs/weapons/mortar/teamkill {
+	text "game/obit/mortar_team"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/frag/teamkill {
+	text "game/obit/gren_frag_team"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/emp/teamkill {
+	text "game/obit/gren_emp_team"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/scrambler/teamkill {
+	text "game/obit/gren_scrambler_team"
+}
+
+tooltip tooltips/killmsgs/weapons/charges/he/teamkill {
+	text "game/obit/he_charge_team"
+}
+
+tooltip tooltips/killmsgs/weapons/3rdeye/teamkill {
+	text "game/obit/satchel_team"
+}
+
+tooltip tooltips/killmsgs/weapons/artillery/teamkill {
+	text "game/obit/artillery_team"
+}
+
+tooltip tooltips/killmsgs/weapons/rockets/teamkill {
+	text "game/obit/rockets_team"
+}
+
+tooltip tooltips/killmsgs/weapons/ssm/teamkill {
+	text "game/obit/ssm_team"
+}
+
+tooltip tooltips/killmsgs/weapons/scud/teamkill {
+	text "game/obit/scud_team"
+}
+
+tooltip tooltips/killmsgs/weapons/fafff/teamkill {
+	text "game/obit/fafff_team"
+}
+
+tooltip tooltips/killmsgs/weapons/sbc/teamkill {
+	text "game/obit/sbc_team"
+}
+
+tooltip tooltips/killmsgs/weapons/gatling/teamkill {
+	text "game/obit/gatling_team"
+}
+
+tooltip tooltips/killmsgs/weapons/mg/teamkill {
+	text "game/obit/mg_team"
+}
+
+tooltip tooltips/killmsgs/weapons/flakcannon/teamkill {
+	text "game/obit/flak_team"
+}
+
+tooltip tooltips/killmsgs/weapons/vampire/teamkill {
+	text "game/obit/vampire_team"
+}
+
+tooltip tooltips/killmsgs/weapons/thirdeye/teamkill {
+	text "game/obit/thirdeye_team"
+}
+
+tooltip tooltips/killmsgs/weapons/defib/teamkill {
+	text "game/obit/defibrillator_team"
+}
+
+tooltip tooltips/killmsgs/weapons/pistol_akimbo_silenced/teamkill {
+	text "game/obit/pistol_akimbo_silenced_team"
+}
+
+tooltip tooltips/killmsgs/weapons/pistol_akimbo/teamkill {
+	text "game/obit/pistol_akimbo_team"
+}
+
+/*
+==================
+Strogg Weapons
+==================
+*/
+
+tooltip tooltips/killmsgs/weapons/spikes {
+	text "game/obit/spikes"
+}
+
+tooltip tooltips/killmsgs/weapons/spikes/backstab {
+	text "game/obit/spikes/backstab"
+}
+
+tooltip tooltips/killmsgs/weapons/blaster {
+	text "game/obit/blaster"
+}
+
+tooltip tooltips/killmsgs/weapons/lightningpistol {
+	text "game/obit/pistol_lightning"
+}
+
+tooltip tooltips/killmsgs/weapons/lacerator {
+	text "game/obit/lacerator"
+}
+
+tooltip tooltips/killmsgs/weapons/lacerator_scoped {
+	text "game/obit/lacerator_scoped"
+}
+
+tooltip tooltips/killmsgs/weapons/railchucker {
+	text "game/obit/railchucker"
+}
+
+tooltip tooltips/killmsgs/weapons/nailgun {
+	text "game/obit/nailgun"
+}
+
+tooltip tooltips/killmsgs/weapons/railgun {
+	text "game/obit/railgun"
+}
+
+tooltip tooltips/killmsgs/weapons/obliterator {
+	text "game/obit/oblit"
+}
+
+tooltip tooltips/killmsgs/weapons/hyperblaster {
+	text "game/obit/hyper"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/shrap {
+	text "game/obit/gren_shrap"
+}
+
+tooltip tooltips/killmsgs/weapons/stroybomb {
+	text "game/obit/stroybomb"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/acid {
+	text "game/obit/acid"
+}
+
+tooltip tooltips/killmsgs/weapons/charges/plasma {
+	text "game/obit/plasma_charge"
+}
+
+tooltip tooltips/killmsgs/weapons/flyerhive {
+	text "game/obit/drone_flyer"
+}
+
+tooltip tooltips/killmsgs/weapons/flyerhive/unknown {
+	text "game/obit/drone_flyer_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/railhowitzer {
+	text "game/obit/howitzer"
+}
+
+tooltip tooltips/killmsgs/weapons/plasmamortar {
+	text "game/obit/plasma_mortar"
+}
+
+tooltip tooltips/killmsgs/weapons/ssg {
+	text "game/obit/ssg"
+}
+
+tooltip tooltips/killmsgs/weapons/violator {
+	text "game/obit/violator"
+}
+
+tooltip tooltips/killmsgs/weapons/plasmacannon {
+	text "game/obit/plasma_cannon"
+}
+
+tooltip tooltips/killmsgs/weapons/spawnmaker {
+	text "game/obit/spawn_host"
+}
+
+tooltip tooltips/killmsgs/weapons/selfdestruct {
+	text "game/obit/selfdestruct"
+}
+
+tooltip tooltips/killmsgs/weapons/stroyent_tool {
+	text "game/obit/stroyent_tool"
+}
+
+/*
+==================
+Strogg Weapons Suicides
+==================
+*/
+
+tooltip tooltips/killmsgs/weapons/grenades/shrap/self {
+	text "game/obit/gren_shrap_self"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/shrap/unknown {
+	text "game/obit/gren_shrap_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/stroybomb/self {
+	text "game/obit/stroybomb_self"
+}
+
+tooltip tooltips/killmsgs/weapons/stroybomb/unknown {
+	text "game/obit/stroybomb_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/acid/self {
+	text "game/obit/acid_self"
+}
+
+tooltip tooltips/killmsgs/weapons/charges/plasma/self {
+	text "game/obit/plasma_charge_self"
+}
+
+tooltip tooltips/killmsgs/weapons/charges/plasma/unknown {
+	text "game/obit/plasma_charge_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/obliterator/self {
+	text "game/obit/oblit_self"
+}
+
+tooltip tooltips/killmsgs/weapons/obliterator/unknown {
+	text "game/obit/oblit_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/railchucker/self {
+	text "game/obit/railchucker_self"
+}
+
+tooltip tooltips/killmsgs/weapons/railchucker/unknown {
+	text "game/obit/railchucker_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/flyerhive/self {
+	text "game/obit/drone_flyer_self"
+}
+
+tooltip tooltips/killmsgs/weapons/plasmacannon/self {
+	text "game/obit/plasma_cannon_self"
+}
+
+tooltip tooltips/killmsgs/weapons/railhowitzer/self {
+	text "game/obit/howitzer_self"
+}
+
+tooltip tooltips/killmsgs/weapons/railhowitzer/unknown {
+	text "game/obit/howitzer_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/plasmamortar/self {
+	text "game/obit/plasma_mortar_self"
+}
+
+tooltip tooltips/killmsgs/weapons/plasmamortar/unknown {
+	text "game/obit/plasma_mortar_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/ssg/self {
+	text "game/obit/ssg_self"
+}
+
+tooltip tooltips/killmsgs/weapons/ssg/unknown {
+	text "game/obit/ssg_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/violator/self {
+	text "game/obit/violator_self"
+}
+
+tooltip tooltips/killmsgs/weapons/violator/unknown {
+	text "game/obit/violator_unknown"
+}
+
+tooltip tooltips/killmsgs/weapons/selfdestruct/self {
+}
+
+/*
+==================
+Strogg Weapons Teamkills
+==================
+*/
+
+tooltip tooltips/killmsgs/weapons/spikes/teamkill {
+	text "game/obit/spikes_team"
+}
+
+tooltip tooltips/killmsgs/weapons/spikes/backstab/teamkill {
+	text "game/obit/spikes/backstab_team"
+}
+
+tooltip tooltips/killmsgs/weapons/blaster/teamkill {
+	text "game/obit/blaster_team"
+}
+
+tooltip tooltips/killmsgs/weapons/lightningpistol/teamkill {
+	text "game/obit/pistol_lightning_team"
+}
+
+tooltip tooltips/killmsgs/weapons/lacerator/teamkill {
+	text "game/obit/lacerator_team"
+}
+
+tooltip tooltips/killmsgs/weapons/lacerator_scoped/teamkill {
+	text "game/obit/lacerator_scoped_team"
+}
+
+tooltip tooltips/killmsgs/weapons/railchucker/teamkill {
+	text "game/obit/railchucker_team"
+}
+
+tooltip tooltips/killmsgs/weapons/nailgun/teamkill {
+	text "game/obit/nailgun_team"
+}
+
+tooltip tooltips/killmsgs/weapons/railgun/teamkill {
+	text "game/obit/railgun_team"
+}
+
+tooltip tooltips/killmsgs/weapons/obliterator/teamkill {
+	text "game/obit/oblit_team"
+}
+
+tooltip tooltips/killmsgs/weapons/hyperblaster/teamkill {
+	text "game/obit/hyper_team"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/shrap/teamkill {
+	text "game/obit/gren_shrap_team"
+}
+
+tooltip tooltips/killmsgs/weapons/stroybomb/teamkill {
+	text "game/obit/stroybomb_team"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/acid/teamkill {
+	text "game/obit/acid_team"
+}
+
+tooltip tooltips/killmsgs/weapons/charges/plasma/teamkill {
+	text "game/obit/plasma_charge_team"
+}
+
+tooltip tooltips/killmsgs/weapons/flyerhive/teamkill {
+	text "game/obit/drone_flyer_team"
+}
+
+tooltip tooltips/killmsgs/weapons/railhowitzer/teamkill {
+	text "game/obit/howitzer_team"
+}
+
+tooltip tooltips/killmsgs/weapons/plasmamortar/teamkill {
+	text "game/obit/plasma_mortar_team"
+}
+
+tooltip tooltips/killmsgs/weapons/ssg/teamkill {
+	text "game/obit/ssg_team"
+}
+
+tooltip tooltips/killmsgs/weapons/violator/teamkill {
+	text "game/obit/violator_team"
+}
+
+tooltip tooltips/killmsgs/weapons/plasmacannon/teamkill {
+	text "game/obit/plasma_cannon_team"
+}
+
+tooltip tooltips/killmsgs/weapons/spawnmaker/teamkill {
+	text "game/obit/spawn_host_team"
+}
+
+tooltip tooltips/killmsgs/weapons/selfdestruct/teamkill {
+	text "game/obit/selfdestruct_team"
+}
+
+tooltip tooltips/killmsgs/weapons/stroyent_tool/teamkill {
+	text "game/obit/stroyent_tool_team"
+}
+
+/*
+==================
+Vehicles
+==================
+*/
+
+tooltip tooltips/killmsgs/vehicles/water {
+	text "game/obit/leak"
+}
+
+tooltip tooltips/killmsgs/vehicles/explode {
+	text "game/obit/veh_exp"
+}
+
+tooltip tooltips/killmsgs/vehicles/driving {
+	text "game/obit/veh_exp_empty"
+}
+
+tooltip tooltips/killmsgs/vehicles/flipped {
+	text "game/obit/veh_flipped"
+}
+
+/*
+==================
+GDF Vehicles
+==================
+*/
+
+tooltip tooltips/killmsgs/vehicles/anansi {
+	text "game/obit/anansi"
+}
+
+tooltip tooltips/killmsgs/vehicles/anansi/empty {
+	text "game/obit/anansi_empty"
+}
+
+tooltip tooltips/killmsgs/vehicles/badger {
+	text "game/obit/badger"
+}
+
+tooltip tooltips/killmsgs/vehicles/badger/empty {
+	text "game/obit/badger_empty"
+}
+
+tooltip tooltips/killmsgs/vehicles/bumblebee {
+	text "game/obit/bumblebee"
+}
+
+tooltip tooltips/killmsgs/vehicles/bumblebee/empty {
+	text "game/obit/bumblebee_empty"
+}
+
+tooltip tooltips/killmsgs/vehicles/husky {
+	text "game/obit/husky"
+}
+
+tooltip tooltips/killmsgs/vehicles/husky/empty {
+	text "game/obit/husky_empty"
+}
+
+tooltip tooltips/killmsgs/vehicles/titan {
+	text "game/obit/titan"
+}
+
+tooltip tooltips/killmsgs/vehicles/titan/empty {
+	text "game/obit/titan_empty"
+}
+
+tooltip tooltips/killmsgs/vehicles/trojan {
+	text "game/obit/trojan"
+}
+
+tooltip tooltips/killmsgs/vehicles/trojan/empty {
+	text "game/obit/trojan_empty"
+}
+
+tooltip tooltips/killmsgs/vehicles/mcp {
+	text "game/obit/mcp"
+}
+
+tooltip tooltips/killmsgs/vehicles/mcp/empty {
+	text "game/obit/mcp_empty"
+}
+
+tooltip tooltips/killmsgs/vehicles/mcp/empty_crush {
+	text "game/obit/mcp_empty_crush"
+}
+
+tooltip tooltips/killmsgs/vehicles/magog/empty {
+	text "game/obit/magog_empty"
+}
+
+tooltip tooltips/killmsgs/vehicles/platypus {
+	text "game/obit/platypus"
+}
+
+tooltip tooltips/killmsgs/vehicles/platypus/empty {
+	text "game/obit/platypus_empty"
+}
+
+/*
+==================
+GDF Vehicles Teamkills
+==================
+*/
+
+tooltip tooltips/killmsgs/vehicles/anansi/teamkill {
+	text "game/obit/anansi_team"
+}
+
+tooltip tooltips/killmsgs/vehicles/badger/teamkill {
+	text "game/obit/badger_team"
+}
+
+tooltip tooltips/killmsgs/vehicles/bumblebee/teamkill {
+	text "game/obit/bumblebee_team"
+}
+
+tooltip tooltips/killmsgs/vehicles/husky/teamkill {
+	text "game/obit/husky_team"
+}
+
+tooltip tooltips/killmsgs/vehicles/titan/teamkill {
+	text "game/obit/titan_team"
+}
+
+tooltip tooltips/killmsgs/vehicles/trojan/teamkill {
+	text "game/obit/trojan_team"
+}
+
+tooltip tooltips/killmsgs/vehicles/mcp/teamkill {
+	text "game/obit/mcp_team"
+}
+
+tooltip tooltips/killmsgs/vehicles/platypus/teamkill {
+	text "game/obit/platypus_team"
+}
+
+/*
+==================
+Strogg Vehicles
+==================
+*/
+
+tooltip tooltips/killmsgs/vehicles/desecrator {
+	text "game/obit/desecrator"
+}
+
+tooltip tooltips/killmsgs/vehicles/desecrator/empty {
+	text "game/obit/desecrator_empty"
+}
+
+tooltip tooltips/killmsgs/vehicles/goliath {
+	text "game/obit/goliath"
+}
+
+tooltip tooltips/killmsgs/vehicles/goliath/empty {
+	text "game/obit/goliath_empty"
+}
+
+tooltip tooltips/killmsgs/vehicles/hog {
+	text "game/obit/hog"
+}
+
+tooltip tooltips/killmsgs/vehicles/hog/empty {
+	text "game/obit/hog_empty"
+}
+
+tooltip tooltips/killmsgs/vehicles/hornet {
+	text "game/obit/hornet"
+}
+
+tooltip tooltips/killmsgs/vehicles/hornet/empty {
+	text "game/obit/hornet_empty"
+}
+
+tooltip tooltips/killmsgs/vehicles/icarus {
+	text "game/obit/icarus"
+}
+
+tooltip tooltips/killmsgs/vehicles/icarus/empty {
+	text "game/obit/icarus_empty"
+}
+
+
+/*
+==================
+Strogg Vehicles Teamkills
+==================
+*/
+
+tooltip tooltips/killmsgs/vehicles/desecrator/teamkill {
+	text "game/obit/desecrator_team"
+}
+
+tooltip tooltips/killmsgs/vehicles/goliath/teamkill {
+	text "game/obit/goliath_team"
+}
+
+tooltip tooltips/killmsgs/vehicles/hog/teamkill {
+	text "game/obit/hog_team"
+}
+
+tooltip tooltips/killmsgs/vehicles/hornet/teamkill {
+	text "game/obit/hornet_team"
+}
+
+tooltip tooltips/killmsgs/vehicles/icarus/teamkill {
+	text "game/obit/icarus_team"
+}
+
+
+/*
+==================
+Turrets
+==================
+*/
+
+tooltip tooltips/killmsgs/turrets/avt {
+	text "game/obit/avt"
+}
+
+tooltip tooltips/killmsgs/turrets/apt {
+	text "game/obit/apt"
+}
+
+tooltip tooltips/killmsgs/turrets/amt {
+	text "game/obit/amt"
+}
+
+tooltip tooltips/killmsgs/turrets/basedefence_gdf {
+	text "game/obit/base_defence_turret_gdf"
+}
+
+tooltip tooltips/killmsgs/turrets/basedefence_gdf_team {
+	text "game/obit/base_defence_turret_gdf_team"
+}
+
+tooltip tooltips/killmsgs/turrets/basedefence_strogg {
+	text "game/obit/base_defence_turret_strogg"
+}
+
+tooltip tooltips/killmsgs/turrets/basedefence_strogg_team {
+	text "game/obit/base_defence_turret_strogg_team"
+}
+
+/*
+==================
+Turrets Teamkills
+==================
+*/
+
+tooltip tooltips/killmsgs/turrets/avt/teamkill {
+	text "game/obit/avt_team"
+}
+
+tooltip tooltips/killmsgs/turrets/apt/teamkill {
+	text "game/obit/apt_team"
+}
+
+tooltip tooltips/killmsgs/turrets/amt/teamkill {
+	text "game/obit/amt_team"
+}
+
+/*
+==================
+Turrets Selfkills
+==================
+*/
+
+tooltip tooltips/killmsgs/turrets/avt/self {
+	text "game/obit/avt_self"
+}
+
+tooltip tooltips/killmsgs/deployable/using {
+	text "game/obit/deployable/using"
+}
+
+tooltip tooltips/killmsgs/turrets/apt/self {
+	text "game/obit/apt/self"
+}
+
+tooltip tooltips/killmsgs/turrets/amt/self {
+	text "game/obit/amt/self"
+}
+
+tooltip tooltips/killmsgs/turrets/avt/unknown {
+	text "game/obit/avt_unknown"
+}
+
+/*
+==================
+Map Specific
+==================
+*/
+
+tooltip tooltips/killmsgs/self/area22_shaft {
+	text "game/obit/area22/shaft"
+}
+
+tooltip tooltips/killmsgs/self/canyon_bioreactor_pools {
+	text "game/obit/canyon/ooze"
+}
+
+tooltip tooltips/killmsgs/self/refinery_strogg_slipgate {
+	text "game/obit/refinery/ticket"
+	text "game/obit/refinery/trip"
+}
+
+tooltip tooltips/killmsgs/self/strogg_slipgate {
+	text "game/obit/slipgate/genome"
+	text "game/obit/slipgate/slip"
+	text "game/obit/slipgate/materialise"
+}
+
+tooltip tooltips/killmsgs/self/strogg_basewall {
+	text "game/obit/strogg/base_walls"
+}
+
+tooltip tooltips/killmsgs/self/strogg_doorshield {
+	text "game/obit/strogg/doorshield"
+}
+
+tooltip tooltips/killmsgs/self/drop_pod {
+	text "game/obit/drop_pod"
+}
+
+tooltip tooltips/killmsgs/weapons/mininglaser {
+	text "game/obit/mininglaser"
+}
+
+
+
+tooltip tooltips/killmsgs/weapons/grenades/airstrike_marker {
+	text "game/obit/gren_airstrike_marker"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/airstrike_marker/teamkill {
+	text "game/obit/gren_airstrike_marker_team"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/airstrike_marker/self {
+	text "game/obit/gren_airstrike_marker_self"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/airstrike_marker/unknown {
+	text "game/obit/gren_airstrike_marker_unknown"
+}
+
+
+tooltip tooltips/killmsgs/weapons/grenades/violator_beacon {
+	text "game/obit/gren_violator_beacon"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/violator_beacon/teamkill {
+	text "game/obit/gren_violator_beacon_team"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/violator_beacon/self {
+	text "game/obit/gren_violator_beacon_self"
+}
+
+tooltip tooltips/killmsgs/weapons/grenades/violator_beacon/unknown {
+	text "game/obit/gren_violator_beacon_unknown"
+}

@@ -1,0 +1,171 @@
+/***********************************************************************
+
+tool_defibrillator.script
+
+***********************************************************************/
+
+object tool_defibrillator : weapon_base {
+
+	void		init();
+	void		destroy();
+
+	void		Raise();
+	void		Idle();
+	void		Attack();
+	void		Shock();
+
+	boolean		DoRevive();
+
+	void		ToolTipThread_Raise();
+
+	float		meleeDistance;
+}
+
+void tool_defibrillator::init() {
+	meleeDistance = getFloatKey( "melee_distance" );
+
+	if ( myPlayer.isLocalPlayer() ) {
+		thread ToolTipThread_Raise();
+	}
+
+	weaponState( "Raise", 0 );
+}
+
+void tool_defibrillator::destroy() {
+	if ( myPlayer != $null_entity ) {
+		myPlayer.SetFireAnim( "" );
+	}
+}
+
+void tool_defibrillator::Raise() {
+	UpdateCharge();
+	Base_Raise();
+}
+
+void tool_defibrillator::Idle() {
+	weaponReady();
+	playCycle( ANIMCHANNEL_ALL, "idle" );
+
+	startSound( "snd_charge", SND_WEAPON_FIRE );
+
+	while ( true ) {
+		if ( WEAPON_LOWERWEAPON ) {
+			weaponState( "Lower", 4 );
+		}
+		if ( WEAPON_ATTACK ) {
+			weaponState( "Attack", 0 );
+		}
+		if ( WEAPON_ALTFIRE ) {
+			if ( myPlayer.getProficiency( g_proficiencyMedic ) >= 3 ) {
+				if ( !CanRemove( chargePerUse ) ) {
+					G_NotifyNoCharge( myPlayer );
+				} else {
+					weaponState( "Shock", 0 );
+				}
+			}
+		}
+		UpdateCharge();
+
+		sys.waitFrame();
+	}
+}
+
+boolean tool_defibrillator::DoRevive() {
+	if ( sys.isClient() ) {
+		return false;
+	}
+
+	entity targetPlayer = myPlayer.getCrosshairEntity();
+	if ( myPlayer.getCrosshairDistance( true ) > meleeDistance ) {
+		return false;
+	}
+
+	if ( targetPlayer == $null_entity ) {
+		return false;
+	}
+
+	if ( !targetPlayer.vNeedsRevive( myPlayer ) ) {
+		return false;
+	}
+
+	float healthScale = 0.5f;
+	if ( myPlayer.getProficiency( g_proficiencyMedic ) >= 4 ) {
+		healthScale = 1.f;
+	}
+
+	if ( targetPlayer.vRevive( myPlayer, healthScale ) ) {
+		return true;
+	}
+
+	return false;
+}
+
+void tool_defibrillator::Shock() {
+	myPlayer.SetFireAnim( "shock_self" );
+
+	Remove( chargePerUse );
+
+	fired();
+	playAnim( ANIMCHANNEL_ALL, "reload" );
+
+	sys.wait( 1.0f );
+
+	startSound( "snd_shock", SND_WEAPON_FIRE2 );
+
+	myPlayer.setHealth( myPlayer.getHealth() + 20.f ); // Gordon: this allows > maxhealth
+
+	while ( !animDone( ANIMCHANNEL_ALL, 4 ) ) {
+		sys.waitFrame();
+	}
+
+	myPlayer.SetFireAnim( "" );
+
+	weaponState( "Idle", 1 );
+}
+
+void tool_defibrillator::Attack() {
+	string fireAnim = "fire";
+	string fireSnd = "snd_fire";
+	if ( myPlayer.getProficiency( g_proficiencyMedic ) >= 4 ) {
+		fireAnim = "fire_upgraded";
+		fireSnd = "snd_fire_upgraded";
+	}
+
+	fired();
+	playAnim( ANIMCHANNEL_ALL, fireAnim );
+
+	startSound( fireSnd, SND_WEAPON_FIRE );
+
+	sys.wait( 0.2f );
+
+	if ( !DoRevive() ) {
+		melee( MASK_SHOT_RENDERMODEL | CONTENTS_BODY | CONTENTS_SLIDEMOVER, meleeDistance, true, true );
+		meleeAttack( 1.f );
+		myPlayer.AI_WEAPON_FIRED = false; // Gordon: melee attack will set this, but we've already triggered the animation anyway, so reset it
+	}
+
+	while ( !animDone( ANIMCHANNEL_ALL, 4 ) ) {
+		sys.waitFrame();
+	}
+
+	weaponState( "Idle", 1 );
+}
+
+void tool_defibrillator::ToolTipThread_Raise() {
+	sys.wait( myPlayer.CalcTooltipWait() );
+	while ( myPlayer.isSinglePlayerToolTipPlaying() ) {
+		sys.wait( 1.0f );
+	}
+	myPlayer.cancelToolTips();
+
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_1" ) ) );
+
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_2" ) ) );
+
+	if ( myPlayer.getProficiency( g_proficiencyMedic ) >= 3 ) {
+		WAIT_FOR_TOOLTIP;
+		myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_3" ) ) );
+	}
+}

@@ -1,0 +1,14 @@
+effect effects/deployables/psi_destroy_simple
+{
+	size	8
+
+	effect "Explosion"
+	{
+		effect	"effects/base/explosion_large_simple"
+	}
+}
+
+
+
+
+

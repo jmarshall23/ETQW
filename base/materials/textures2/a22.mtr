@@ -1,0 +1,55 @@
+
+/*material models/henning/a22/concrete2
+{
+renderbump -size 512 512 -trace 0.04 -clampTextureSpace -overdrawMap  models/henning/a22/concrete2_local.tga models/henning/a22/concrete2_high.ase
+//noselfshadow
+	{
+	bumpmap		models/henning/a22/concrete2_local.tga
+	diffusemap	models/henning/a22/concrete2_d.tga
+	specularmap	models/henning/a22/concrete2_s.tga
+	}
+}*/
+
+material textures2/concrete/concrete_slabs01
+{
+	bumpmap		picmip -1	textures2/concrete/concrete_slabs01_local.tga
+	diffusemap	picmip -1		textures2/concrete/concrete_slabs01_d.tga
+	specularmap	picmip -1	textures2/concrete/concrete_slabs01_s.tga
+}
+
+material textures2/concrete/concrete_slabs01a
+{
+	bumpmap		picmip -1	textures2/concrete/concrete_slabs01_local.tga
+	diffusemap	picmip -1		textures2/concrete/concrete_slabs01a_d.tga
+	specularmap	picmip -1	textures2/concrete/concrete_slabs01a_s.tga
+}
+
+material textures2/ground/concrete_floor01
+{
+	{
+		bumpmap		picmip -1	textures2/ground/concrete_floor01_local.tga
+		diffusemap	picmip -1		textures2/ground/concrete_floor01_d.tga
+		specularmap	picmip -1	textures2/ground/concrete_floor01_s.tga
+		vertexColor
+	}
+}
+
+material textures2/ground/concrete_floor01_256
+{
+	diffusemap	picmip -1		textures2/ground/concrete_floor01_256_d.tga
+	specularmap	picmip -1	textures2/ground/concrete_floor01_256_s.tga
+}
+
+material textures2/ground/concrete_floor02
+{
+	bumpmap		picmip -1	textures2/ground/concrete_floor02_local.tga
+	diffusemap	picmip -1		textures2/ground/concrete_floor02_d.tga
+	specularmap	picmip -1	textures2/ground/concrete_floor02_s.tga
+}
+
+material textures2/ground/bunker_rails01
+{
+	bumpmap		picmip -1	textures2/ground/bunker_rails01_local.tga
+	diffusemap	picmip -1		textures2/ground/bunker_rails01_d.tga
+	specularmap	picmip -1	textures2/ground/bunker_rails01_s.tga
+}

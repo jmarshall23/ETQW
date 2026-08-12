@@ -1,0 +1,280 @@
+material texturesheets/salvage/salvage_decals_1
+{
+	qer_editorimage texturesheets/salvage/salvage_decals_1.tga
+	polygonOffset
+	sort decal
+	
+	nonsolid
+ 	translucent
+	{
+		program filterVertexColorCoverageFogged
+ 		blend filter
+		map texturesheets/salvage/salvage_decals_1.tga
+		maskAlpha
+		vertexcolor
+		maskDepth
+		depthFunc lequal
+	}
+}
+
+material texturesheets/salvage/salvage_outdoor_1
+{
+	surfaceTypeMap "texturesheets/salvage/salvage_outdoor_1.stmap"
+	{
+		diffusemap	picmip -1	texturesheets/salvage/salvage_outdoor_1_d.tga
+		specularmap	picmip -2	texturesheets/salvage/salvage_outdoor_1_s.tga
+		bumpmap 	picmip -1	texturesheets/salvage/salvage_outdoor_1_local.tga
+		vertexcolor
+	
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	2.5,20,0,0
+	}
+}
+
+material texturesheets/salvage/interior01
+{
+	surfaceTypeMap "texturesheets/salvage/interior01.stmap"
+	{
+		diffusemap	picmip -1	texturesheets/salvage/interior01_d.tga
+		specularmap	picmip -2	texturesheets/salvage/interior01_s.tga
+		bumpmap 	picmip -1	texturesheets/salvage/interior01_local.tga
+		vertexcolor
+	
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	2.5,20,0,0
+	}
+}
+
+material texturesheets/salvage/salvage_outdoor_2
+{
+	surfaceTypeMap "texturesheets/salvage/salvage_outdoor_2.stmap"
+	{
+		diffusemap	picmip -1	texturesheets/salvage/salvage_outdoor_2_d.tga
+		specularmap	picmip -2	texturesheets/salvage/salvage_outdoor_2_s.tga
+		bumpmap		picmip -1	texturesheets/salvage/salvage_outdoor_2_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,16,0,0
+	}
+}
+
+material texturesheets/salvage/salvage_outdoor_2_noshadows
+{
+	noshadows
+	surfaceTypeMap "texturesheets/salvage/salvage_outdoor_2.stmap"
+	{
+		diffusemap	picmip -1	texturesheets/salvage/salvage_outdoor_2_d.tga
+		specularmap	picmip -2	texturesheets/salvage/salvage_outdoor_2_s.tga
+		bumpmap 	picmip -1	texturesheets/salvage/salvage_outdoor_2_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,16,0,0
+	}
+}
+
+material texturesheets/salvage/salvage_outdoor_2_noshadows_melted
+{
+	noshadows
+	surfaceTypeMap "texturesheets/salvage/salvage_outdoor_2.stmap"
+	{
+		diffusemap	picmip -1	texturesheets/salvage/salvage_outdoor_2_d.tga
+		specularmap	picmip -2	texturesheets/salvage/salvage_outdoor_2_s.tga
+		bumpmap 	picmip -1	texturesheets/salvage/salvage_outdoor_2_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,16,0,0
+    }
+    {
+        diffusemap 	textures/sfx/lfwall27alava_d
+		bumpmap 	textures/sfx/lfwall27alava_local
+        specularmap	textures/sfx/lfwall27alava_s
+        inverseVertexColor
+        scale 2, 8
+    }
+    {
+        blend		gl_one , gl_one
+    	map		textures/sfx/radiogoop_red
+    	rotate		time*.00015
+    	inverseVertexColor
+    	scale 4, 16
+    }
+    {
+        blend		gl_one , gl_one
+        map		textures/sfx/radiogoop_red
+        rotate		time*-.00015
+        translate	time*.002,1
+    	inverseVertexColor
+    	scale 4, 16
+    }
+}
+
+material texturesheets/salvage/salvage_outdoor_3
+{
+	surfaceTypeMap "texturesheets/salvage/salvage_outdoor_3.stmap"
+	{
+		diffusemap	picmip -1	texturesheets/salvage/salvage_outdoor_3_d.tga
+		specularmap	picmip -2	texturesheets/salvage/salvage_outdoor_3_s.tga
+		bumpmap 	picmip -1	texturesheets/salvage/salvage_outdoor_3_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	2.5,20,0,0
+	}
+}
+
+material texturesheets/salvage/facility_entrance
+{
+	surfaceTypeMap "texturesheets/salvage/facility_entrance.stmap"
+	{
+		diffusemap	picmip -1	texturesheets/salvage/facility_entrance_d.tga
+		specularmap	picmip -2	texturesheets/salvage/facility_entrance_s.tga
+		bumpmap 	picmip -1	texturesheets/salvage/facility_entrance_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	2.5,10,0,0
+	}
+}
+
+material texturesheets/salvage/roof_stuff_1_snowy
+{
+	surfacetype "metal"
+	{
+		diffusemap	picmip -1	texturesheets/salvage/roof_stuff_1_snowy_ts_d.tga
+		specularmap	picmip -2	texturesheets/salvage/roof_stuff_1_snowy_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/salvage/roof_stuff_1_snowy_ts_local.tga
+		vertexcolor
+	
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	4,8,0,0
+	}
+}
+
+material texturesheets/salvage/roof_stuff_2_snowy
+{
+	surfacetype "metal"
+	{
+		diffusemap	picmip -1	texturesheets/salvage/roof_stuff_2_snowy_ts_d.tga
+		specularmap	picmip -2	texturesheets/salvage/roof_stuff_2_snowy_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/salvage/roof_stuff_2_snowy_ts_local.tga
+		vertexcolor
+	
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	4,16,0,0
+	}
+}
+
+material texturesheets/salvage/roof_stuff_1_snowy_noshadows
+{
+	noshadows
+	surfacetype "metal"
+	{
+		diffusemap	picmip -1	texturesheets/salvage/roof_stuff_1_snowy_ts_d.tga
+		specularmap	picmip -2	texturesheets/salvage/roof_stuff_1_snowy_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/salvage/roof_stuff_1_snowy_ts_local.tga
+		vertexcolor
+	
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	4,8,0,0
+	}
+}
+
+material texturesheets/salvage/roof_stuff_2_snowy_noshadows
+{
+	noshadows
+	surfacetype "metal"
+	{
+		diffusemap	picmip -1	texturesheets/salvage/roof_stuff_2_snowy_ts_d.tga
+		specularmap	picmip -2	texturesheets/salvage/roof_stuff_2_snowy_ts_s.tga
+		bumpmap 	picmip -1	texturesheets/salvage/roof_stuff_2_snowy_ts_local.tga
+		vertexcolor
+	
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	4,16,0,0
+	}
+}
+
+material texturesheets/salvage/salvage_wall
+{
+	surfacetype "metal"
+	{
+		diffusemap 	picmip -1	texturesheets/salvage/salvage_wall_d.tga
+		specularmap	picmip -2	texturesheets/salvage/salvage_wall_s.tga
+		bumpmap 	picmip -1	texturesheets/salvage/salvage_wall_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	3,12,0,0
+	}
+}
+
+material textures2/concrete/concrete_clean_13_env
+{
+	surfacetype "concrete"
+	{
+		diffusemap	picmip -1	textures2/concrete/concrete_clean_13_d.tga
+		specularmap	picmip -2	textures2/concrete/concrete_clean_13_s.tga
+		bumpmap 	picmip -1	textures2/concrete/concrete_clean_13_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	5,5,0,0
+	}
+	{
+		maskcolor
+		map			makealpha(textures2/concrete/concrete_clean_13_s.tga)
+	}
+	{
+		blend		gl_dst_alpha, gl_one
+		maskalpha
+		program		sfx/cubemap
+		red			Parm0
+		green   	Parm1
+		blue		Parm2
+	}
+}
+
+material texturesheets/salvage/round_light
+{
+	polygonOffset
+	sort decal
+	nonsolid
+ 	translucent
+	{
+ 		blend add
+		map textures/decals/round.tga
+		maskAlpha
+		vertexcolor
+		maskDepth
+		depthFunc lequal
+	}
+}

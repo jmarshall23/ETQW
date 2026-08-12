@@ -1,0 +1,1303 @@
+/***************************************************************************
+
+	Misc special effect materials
+		(seconds= file so it reloads faster)
+		
+***************************************************************************/
+
+renderProgram sfx/stroggWindow {
+
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		TEMP R0;
+
+		# Noise texture coordinates
+		DP4	result.texcoord.x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4	result.texcoord.y, $texCoordAttrib, $diffuseMatrix_t;
+
+		# Glow texture coords go trough unmodified
+		MOV	result.texcoord[1], $texCoordAttrib;	
+		
+		# Vertex coloring if needed
+		MAD	R0, $colorAttrib, $colorModulate, $colorAdd;
+		MUL result.color, $diffuseColor, R0;
+		
+		# Vector to eye for cubemap lookup
+		SUB	result.texcoord[2], $viewOrigin, $positionAttrib;
+	%> }
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+		TEMP noise, glow, dsdt, R1, screen, glass;
+		PARAM power = { 1.5, 0.0, 0.0, 0.0 };
+
+		# Noise & scanlines texture lookup
+		TEX noise, fragment.texcoord[0], $map, 2D;
+		MUL noise, noise, fragment.color;
+		
+		# Glowy edges texture lookup
+		TEX glow, fragment.texcoord[1], $selfIllumMap, 2D;
+		
+		# Offset texture
+		TEX dsdt, fragment.texcoord[0], $mask, 2D;
+		
+		# Screen buffer
+		MAD R1, dsdt, $parameters, fragment.position;
+		TEX screen, R1, $currentRender, RECT;
+		#POW screen.x, screen.x, power.x;
+		#POW screen.y, screen.y, power.x;
+		#POW screen.z, screen.z, power.x;		
+		#MUL screen, screen, screen;
+		MUL	screen, screen, 2;
+		
+		# Montitor glass reflection
+		TEX glass, fragment.texcoord[2], $environmentCubeMap, CUBE;
+		MUL glass, glass, glass;
+		MUL glass, glass, 4;
+		
+		#Composit together
+		MAD_SAT screen, screen, noise, glow;				
+		
+		
+		#MAD result.color, glass, 1, screen;
+		LRP result.color, 0.8, screen, glass;
+		MOV result.color.a, 0.5;
+	%> }
+}
+
+renderProgram sfx/cheap_litsmoke {
+
+	depthVersion sfx/cheap_litsmoke_depth
+	earlyCullVersion sfx/cheap_litsmoke_early
+
+	program vertex cg { <%
+		
+		struct VsInputs {
+			float3 pos : $positionAttrib;
+			float4 tex : $texCoordAttrib;
+			float3 center : $normalAttrib;
+			float4 tangent : $tangentAttrib;
+			float4 col	: $colorAttrib;
+			$if r_32ByteVtx
+			float4 signs : $signAttrib;
+			$endif			
+		};
+	
+		struct VsOutputs {
+			float2 tex	: TEXCOORD0;
+			float2 tex2	: TEXCOORD1;
+			float4 col	: COLOR0;
+		};
+		
+		uniform float3 viewOrigin : $viewOrigin;
+		uniform float3 sunDirection : $sunDirection;
+		uniform float4 colorModulate : $colorModulate;
+		uniform float4 colorAdd : $colorAdd;
+		uniform float4 textMatrixS : $diffuseMatrix_s;
+		uniform float4 textMatrixT : $diffuseMatrix_t;		
+		uniform float4 coverage : $coverage;
+
+		float GetZ( float2 value, float sign ) {
+			return ( sqrt( 1.0f - ( dot( value.xy, value.xy ) ) ) * ( sign - 1.f ) );
+		}
+
+		VsOutputs vertex( VsInputs indata ) {
+			VsOutputs outdata;
+
+			$if r_32ByteVtx
+			indata.tex.xy *= 1.f/4096.f;
+			indata.tex.zw = 1.f;
+			
+			indata.center.z = indata.tangent.x;
+			
+			indata.tangent = indata.signs;
+			$endif
+
+			// Calculate the tangent space for this billboard, this is a bit tricky as our billboards are all lying in planes paralel
+			// to the near plane, this makes for cheap billboard calculations on the CPU.  But then they all lit identical because they
+			// all have identical tangent space, and it is also dependent on the view angles. So we want a view-vector billboard tangent
+			// space. We fake this by taking the view-vector and thus not the billboard-normal as the normal for our tangent space and
+			// rederive the other two vectors.
+			float3 normal = normalize( viewOrigin - indata.center );
+			float3 bino = cross( normal, indata.tangent.xyz );
+			float3 tang = cross( normal, bino );
+			
+			// Sun direction in tangent space
+			float3 sunT;
+			sunT.x = dot( sunDirection, tang );
+			sunT.y = dot( sunDirection, bino );
+			sunT.z = 0;
+			sunT = normalize( sunT );
+
+			// Rotate the texcords towards the sun
+			outdata.tex.x = dot( indata.tex, textMatrixS );
+			outdata.tex.y = dot( indata.tex, textMatrixT );
+			outdata.tex2.x = dot( indata.tex.xy * 2 - 1, sunT.xy ) * 0.5 + 0.5;
+			outdata.tex2.y = 0;
+			
+			outdata.col = indata.col * colorModulate + colorAdd;
+			outdata.col.w *= coverage.x;
+			return outdata;
+		}			
+	%> }
+
+	program fragment cg { <%
+		struct VsOutputs {
+			float2 tex	: TEXCOORD0;
+			float3 tex2	: TEXCOORD1;
+			float4 col	: COLOR0;
+		};
+		
+		sampler2D colorMap : $map;
+		sampler2D lightMap : $gradientMap;
+
+		float4 fragment( VsOutputs indata ) : COLOR {
+			float4 color = tex2D( colorMap, indata.tex );
+			float4 light = tex2D( lightMap, indata.tex2.xy );
+			return color * light * indata.col;
+			/*
+			return indata.col;
+			*/
+		}	
+	%> }
+}
+
+renderProgram sfx/cheap_litsmoke_early {
+
+	program vertex cg { <%
+		
+		struct VsInputs {
+			float3 pos : $positionAttrib;
+			float4 tex : $texCoordAttrib;
+			float3 center : $normalAttrib;
+			float4 tangent : $tangentAttrib;
+			float4 col	: $colorAttrib;
+			$if r_32ByteVtx
+			float4 signs : $signAttrib;
+			$endif			
+		};
+	
+		struct VsOutputs {
+			float2 tex	: TEXCOORD0;
+			float2 tex2	: TEXCOORD1;
+			float  distance	: TEXCOORD2;
+			float4 col	: COLOR0;
+		};
+		
+		uniform float3 viewOrigin : $viewOrigin;
+		uniform float3 sunDirection : $sunDirection;
+		uniform float4 colorModulate : $colorModulate;
+		uniform float4 colorAdd : $colorAdd;
+		uniform float4 coverage : $coverage;
+		uniform float4 textMatrixS : $diffuseMatrix_s;
+		uniform float4 textMatrixT : $diffuseMatrix_t;		
+		uniform float4 foliageHackDistance : $foliageHackDistance;
+
+		float GetZ( float2 value, float sign ) {
+			return ( sqrt( 1.0f - ( dot( value.xy, value.xy ) ) ) * ( sign - 1.f ) );
+		}
+
+		VsOutputs vertex( VsInputs indata ) {
+			VsOutputs outdata;
+
+			$if r_32ByteVtx
+			indata.tex.xy *= 1.f/4096.f;
+			indata.tex.zw = 1.f;
+			
+			indata.center.z = indata.tangent.x;
+			
+			indata.tangent = indata.signs;
+			$endif
+
+			// Calculate the tangent space for this billboard, this is a bit tricky as our billboards are all lying in planes paralel
+			// to the near plane, this makes for cheap billboard calculations on the CPU.  But then they all lit identical because they
+			// all have identical tangent space, and it is also dependent on the view angles. So we want a view-vector billboard tangent
+			// space. We fake this by taking the view-vector and thus not the billboard-normal as the normal for our tangent space and
+			// rederive the other two vectors.
+			float3 dir = viewOrigin - indata.center;
+			float d = length( dir );
+			outdata.distance = d - foliageHackDistance.x;
+			float3 normal = dir * 1.f / d;
+			float3 bino = cross( normal, indata.tangent.xyz );
+			float3 tang = cross( normal, bino );
+			
+			// Sun direction in tangent space
+			float3 sunT;
+			sunT.x = dot( sunDirection, tang );
+			sunT.y = dot( sunDirection, bino );
+			sunT.z = 0;
+			sunT = normalize( sunT );
+
+			// Rotate the texcords towards the sun
+			outdata.tex.x = dot( indata.tex, textMatrixS );
+			outdata.tex.y = dot( indata.tex, textMatrixT );
+			outdata.tex2.x = dot( indata.tex.xy * 2 - 1, sunT.xy ) * 0.5 + 0.5;
+			outdata.tex2.y = 0;
+			
+			outdata.col = indata.col * colorModulate + colorAdd;
+			outdata.col.w *= coverage.x;
+			return outdata;
+		}			
+	%> }
+
+	program fragment cg { <%
+		struct VsOutputs {
+			float2 tex	: TEXCOORD0;
+			float3 tex2	: TEXCOORD1;
+			float  distance	: TEXCOORD2;
+			float4 col	: COLOR0;
+		};
+		
+		sampler2D colorMap : $map;
+		sampler2D lightMap : $gradientMap;
+
+		float4 fragment( VsOutputs indata ) : COLOR {
+			if ( indata.distance < 0.f ) {
+				discard;
+			}
+			float4 color = tex2D( colorMap, indata.tex );
+			float4 light = tex2D( lightMap, indata.tex2.xy );
+			return color * light * indata.col;
+		}	
+	%> }
+}
+
+renderProgram sfx/cheap_litsmoke_depth {
+
+	earlyCullVersion sfx/cheap_litsmoke_depth_early
+
+	program vertex reference sfx/cheap_litsmoke
+
+	program fragment cg { <%
+		struct VsOutputs {
+			float4 pos	: WPOS;
+			float2 tex	: TEXCOORD0;
+			float3 tex2	: TEXCOORD1;
+			float4 col	: COLOR0;
+		};
+		
+		sampler2D colorMap : $map;
+		samplerRECT depthMap : $currentDepth;
+		sampler2D lightMap : $gradientMap;
+		
+		float4	  proj2view : $proj2View;
+
+		float4 fragment( VsOutputs indata ) : COLOR {
+			float4 color = tex2D( colorMap, indata.tex );
+			float4 light = tex2D( lightMap, indata.tex2.xy );
+
+			float depth = texRECT( depthMap, indata.pos.xy ).x;
+			depth = (depth * 2) - 1;
+			depth = 1.f/(-depth - proj2view.x) * proj2view.y;
+			float testdepth = indata.pos.z;
+			testdepth = (testdepth * 2) - 1;
+			testdepth = 1.f/(-testdepth - proj2view.x) * proj2view.y;
+			float sky = depth >= 1.f;
+			float diff = (-depth) - (-testdepth);
+			float o = min( max( (diff * 0.06f), 0 ) + sky, 1.f );
+			
+			float3 rgb = color.xyz * light.xyz * indata.col.xyz;
+			float  alpha = color.w * indata.col.w * o;
+			return float4(rgb,alpha);
+			//return color * light * indata.col;
+			/*
+			return indata.col;
+			*/
+		}	
+	%> }
+}
+
+renderProgram sfx/cheap_litsmoke_depth_early {
+
+	program vertex reference sfx/cheap_litsmoke_early
+
+	program fragment cg { <%
+		struct VsOutputs {
+			float4 pos	: WPOS;
+			float2 tex	: TEXCOORD0;
+			float3 tex2	: TEXCOORD1;
+			float  distance	: TEXCOORD2;
+			float4 col	: COLOR0;
+		};
+		
+		sampler2D colorMap : $map;
+		samplerRECT depthMap : $currentDepth;
+		sampler2D lightMap : $gradientMap;
+		
+		float4	  proj2view : $proj2View;
+
+		float4 fragment( VsOutputs indata ) : COLOR {
+			if ( indata.distance < 0.f ) {
+				discard;
+			}
+			float4 color = tex2D( colorMap, indata.tex );
+			float4 light = tex2D( lightMap, indata.tex2.xy );
+
+			float depth = texRECT( depthMap, indata.pos.xy ).x;
+			depth = (depth * 2) - 1;
+			depth = 1.f/(-depth - proj2view.x) * proj2view.y;
+			float testdepth = indata.pos.z;
+			testdepth = (testdepth * 2) - 1;
+			testdepth = 1.f/(-testdepth - proj2view.x) * proj2view.y;
+			float sky = depth >= 1.f;
+			float diff = (-depth) - (-testdepth);
+			float o = min( max( (diff * 0.06f), 0 ) + sky, 1.f );
+			
+			float3 rgb = color.xyz * light.xyz * indata.col.xyz;
+			float  alpha = color.w * indata.col.w * o;
+			return float4(rgb,alpha);
+			//return color * light * indata.col;
+			/*
+			return indata.col;
+			*/
+		}	
+	%> }
+}
+
+
+renderProgram sfx/cheap_litsmoke_fire {
+
+	program vertex reference sfx/cheap_litsmoke
+
+	program fragment cg { <%
+		struct VsOutputs {
+			float2 tex	: TEXCOORD0;
+			float3 tex2	: TEXCOORD1;
+			float4 col	: COLOR0;
+		};
+		
+		sampler2D blendMap : $map;
+		sampler2D addMap : $mask;		
+		sampler2D lightMap : $gradientMap;
+
+		float4 fragment( VsOutputs indata ) : COLOR {
+			float4 blend = tex2D( blendMap, indata.tex );
+			float4 add = tex2D( addMap, indata.tex );			
+			float4 light = tex2D( lightMap, indata.tex2.xy );
+			
+			// This is totally arcane magic... basically premultiplied alpha
+			// with some extra faff trown in
+			float addFactor = ( indata.col.a * 2 - 1 );
+			float blendFactor = 1 - abs( addFactor );
+			addFactor = min( max( addFactor, 0 ), 1 );
+			blendFactor = min( max( blendFactor, 0 ), 1 );
+			
+			return float4( (( blend * light * blendFactor + add * addFactor ) * indata.col).rgb, blend.a * blendFactor );
+		}	
+	%> }
+}
+
+renderProgram deform/ambient_expand {
+
+	state force {
+		depthFunc less // so it behaves like a proper depth fill pass
+	}
+
+	program vertex arb { <%
+		$define deform
+		$include "interaction/basic_ambient_vertex.inc"
+	%> }
+	program fragment reference ambient/basic
+}
+
+
+renderProgram deform/expand
+{
+	interaction
+
+	amblitVersion deform/expand_amblit
+	ambientVersion deform/ambient_expand
+
+	state {
+		maskDepth
+		blend GL_ONE, GL_ONE
+	}
+
+	program vertex arb { <%
+		$define deform
+		$include "interaction/basic_vertex.inc"
+	%> }
+	
+	program fragment reference interaction/basic
+}
+
+renderProgram deform/expand_amblit
+{
+	interaction
+
+	state {
+		depthFunc less // so it behaves like a proper depth fill pass
+	}
+
+	program vertex reference deform/expand
+	
+	program fragment reference interaction/basic_amblit
+}
+
+
+renderProgram sfx/lens {
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+		PARAM  mv[4]       = { state.matrix.modelview };
+		OUTPUT oNrm         = result.texcoord[0];
+		DP3   oNrm.x, mv[0], $normalAttrib;
+		DP3   oNrm.y, mv[1], $normalAttrib;
+		DP3   oNrm.z, mv[2], $normalAttrib;
+		
+		MAD result.texcoord[1], $texcoordAttrib, $currentRenderTexelSize, 0;
+
+	%> }
+	
+	program fragment arb { <%
+		TEMP pos;
+		MAD pos, fragment.texcoord[0], 10.03, fragment.position;
+		#MOV pos, fragment.texcoord[1];
+
+		TEMP scr;
+		TEX scr, pos, $currentRender, RECT;
+		#MAD result.color, fragment.texcoord, 0.5, 0.5;
+		MOV result.color, scr.x;
+	%> }
+}
+
+renderProgram sfx/ambsunDecal {
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+
+		TEMP	bitangent;
+		TEMP	R0, R1, R2;
+		ATTRIB _pos = $positionAttrib;
+		$if !r_32ByteVtx
+		ATTRIB _nrm = $normalAttrib;
+		ATTRIB _tan = $tangentAttrib;
+		$else
+		TEMP _nrm, _tan;
+		MOV _nrm, $normalAttrib;
+		MOV _tan, $tangentAttrib;
+		$endif
+
+		PARAM	defaultTexCoord = { 0, 0.5, 0, 1 };
+
+		XPD		bitangent, _nrm, _tan;
+		MUL		bitangent, bitangent, $tangentAttrib.w;
+
+		# textures 1 takes the base coordinates by the texture matrix
+		MOV		result.texcoord[1], defaultTexCoord;
+		DP4		result.texcoord[1].x, $texCoordAttrib, $bumpMatrix_s;
+		DP4		result.texcoord[1].y, $texCoordAttrib, $bumpMatrix_t;
+
+		# textures 4 takes the base coordinates by the texture matrix
+		MOV		result.texcoord[4], defaultTexCoord;
+		DP4		result.texcoord[4].x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4		result.texcoord[4].y, $texCoordAttrib, $diffuseMatrix_t;
+
+		# generate the vertex color, which can be 1.0, color, or 1.0 - color
+		MAD		result.color, $colorAttrib, $colorModulate, $colorAdd;
+
+		# build tangent space -> world space conversion matrix
+		DP3		result.texcoord[5].x, $transposedModelMatrix_x, _tan;
+		DP3		result.texcoord[6].x, $transposedModelMatrix_y, _tan;
+		DP3		result.texcoord[7].x, $transposedModelMatrix_z, _tan;
+
+		DP3		result.texcoord[5].y, $transposedModelMatrix_x, bitangent;
+		DP3		result.texcoord[6].y, $transposedModelMatrix_y, bitangent;
+		DP3		result.texcoord[7].y, $transposedModelMatrix_z, bitangent;
+
+		DP3		result.texcoord[5].z, $transposedModelMatrix_x, _nrm;
+		DP3		result.texcoord[6].z, $transposedModelMatrix_y, _nrm;
+		DP3		result.texcoord[7].z, $transposedModelMatrix_z, _nrm;
+
+		# calculate vector to eye
+		DP4		R0.x, $transposedModelMatrix_x, _pos;
+		DP4		R0.y, $transposedModelMatrix_y, _pos;
+		DP4		R0.z, $transposedModelMatrix_z, _pos;
+
+		# normalize
+		SUB		R0.xyz, R0, $viewOriginWorld;
+		DP3		R0.w, R0, R0;
+		RSQ		R0.w, R0.w;
+		MUL		result.texcoord[2], R0, -R0.w;
+
+	%> }
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+
+		TEMP	R0, R1, color, localNormal, worldNormal, ambient, localAmbient, specLook, diffuse;
+
+		PARAM	subOne = { -1, -1, -1, -1 };
+		PARAM	scaleTwo = { 2, 2, 2, 2 };
+
+		ATTRIB _diffTC = fragment.texcoord[4];
+		ATTRIB _bumpTC = fragment.texcoord[1];
+
+		# coverage dither mask
+		$ifdef r_useDitherMask
+		MUL		R1.xy, fragment.position, 0.015625;
+		TEX		R0.r, R1, $dithermask, 2D;
+		SUB		R0.a, 0.5, R0.r;
+		KIL		R0.a;
+		$endif
+
+		# modulate by the diffuse map and constant diffuse factor
+		TEX		diffuse, _diffTC, $diffuseMap, 2D;
+		SUB R0.a, diffuse.a, 0.001;
+		KIL R0.a;
+
+		TEX		localNormal, _bumpTC, $bumpMap, 2D;
+		MOV		localNormal.x, localNormal.a;
+		MAD		localNormal.xy, localNormal, scaleTwo, subOne;
+
+		#Renormalize
+		$if r_normalizeNormalMaps
+		MOV		localNormal.z, 0;
+		DP3		R1.x, localNormal,localNormal;
+		ADD		R1.x, 1, -R1.x;
+		RSQ		R1.x, R1.x;
+		RCP		localNormal.z, R1.x;
+		$endif
+
+		# put normal into world space
+		DP3		worldNormal.x, fragment.texcoord[5], localNormal;
+		DP3		worldNormal.y, fragment.texcoord[6], localNormal;
+		DP3		worldNormal.z, fragment.texcoord[7], localNormal;
+
+		# get diffuse lighting from cubemap
+		TEX		ambient, worldNormal, $ambientCubeMap, CUBE;
+		MUL		ambient, ambient, $ambientBrightness;
+
+		MUL		color, diffuse, $diffuseColor;
+		# kill if we need this
+		$ifdef alphatest_kill
+		SUB		diffuse.a, diffuse.a, $alphaThresh;
+		KIL		diffuse.a;
+		$endif
+
+		TEMP	lightdp;
+		DP3_SAT		lightdp, worldNormal, $sunDirectionWorld;
+		
+		# modulate by ambient
+		MAD		ambient, lightdp, $sunColor, ambient;
+		MUL		color, ambient, color;
+
+		$if !r_shaderSkipSpecCubeMaps
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		TEMP refl;
+		DP3		R1, fragment.texcoord[2], worldNormal;
+		ADD		R1, R1, R1;
+		MAD		refl, -worldNormal, R1.x, fragment.texcoord[2];
+
+		# get specular from cubemap
+		TEX		ambient, refl, $specularCubeMap, CUBE;
+
+		# modulate by the specular map * 2
+		TEX		specLook, _diffTC, $specularMap, 2D;
+		ADD		R0, specLook, specLook;
+
+		TEMP specdp;
+		DP3_SAT		specdp, -refl, $sunDirectionWorld;
+		MUL		lightdp, lightdp, specdp;
+		MUL		lightdp, lightdp, lightdp;
+		MUL		lightdp, lightdp, lightdp;
+		MUL		lightdp, lightdp, lightdp;
+		MAD		R0, lightdp, 2, R0;
+
+		MAD		color, R0, ambient, color;
+		$endif
+
+		# modify by the vertex color
+
+		MUL		result.color, color, fragment.color;
+		MOV		result.color.a, diffuse.a;
+	%> }
+}
+
+renderProgram sfx/ambDecal {
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+
+		TEMP	bitangent;
+		TEMP	R0, R1, R2;
+		ATTRIB _pos = $positionAttrib;
+		$if !r_32ByteVtx
+		ATTRIB _nrm = $normalAttrib;
+		ATTRIB _tan = $tangentAttrib;
+		$else
+		TEMP _nrm, _tan;
+		MOV _nrm, $normalAttrib;
+		MOV _tan, $tangentAttrib;
+		$endif
+
+		PARAM	defaultTexCoord = { 0, 0.5, 0, 1 };
+
+		XPD		bitangent, _nrm, _tan;
+		MUL		bitangent, bitangent, $tangentAttrib.w;
+
+		# textures 1 takes the base coordinates by the texture matrix
+		MOV		result.texcoord[1], defaultTexCoord;
+		DP4		result.texcoord[1].x, $texCoordAttrib, $bumpMatrix_s;
+		DP4		result.texcoord[1].y, $texCoordAttrib, $bumpMatrix_t;
+
+		# textures 4 takes the base coordinates by the texture matrix
+		MOV		result.texcoord[4], defaultTexCoord;
+		DP4		result.texcoord[4].x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4		result.texcoord[4].y, $texCoordAttrib, $diffuseMatrix_t;
+
+		# generate the vertex color, which can be 1.0, color, or 1.0 - color
+		MAD		result.color, $colorAttrib, $colorModulate, $colorAdd;
+
+		# build tangent space -> world space conversion matrix
+		DP3		result.texcoord[5].x, $transposedModelMatrix_x, _tan;
+		DP3		result.texcoord[6].x, $transposedModelMatrix_y, _tan;
+		DP3		result.texcoord[7].x, $transposedModelMatrix_z, _tan;
+
+		DP3		result.texcoord[5].y, $transposedModelMatrix_x, bitangent;
+		DP3		result.texcoord[6].y, $transposedModelMatrix_y, bitangent;
+		DP3		result.texcoord[7].y, $transposedModelMatrix_z, bitangent;
+
+		DP3		result.texcoord[5].z, $transposedModelMatrix_x, _nrm;
+		DP3		result.texcoord[6].z, $transposedModelMatrix_y, _nrm;
+		DP3		result.texcoord[7].z, $transposedModelMatrix_z, _nrm;
+
+		# calculate vector to eye
+		DP4		R0.x, $transposedModelMatrix_x, _pos;
+		DP4		R0.y, $transposedModelMatrix_y, _pos;
+		DP4		R0.z, $transposedModelMatrix_z, _pos;
+
+		# normalize
+		SUB		R0.xyz, R0, $viewOriginWorld;
+		DP3		R0.w, R0, R0;
+		RSQ		R0.w, R0.w;
+		MUL		result.texcoord[2], R0, -R0.w;
+
+	%> }
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+
+		TEMP	R0, R1, color, localNormal, worldNormal, ambient, localAmbient, specLook, diffuse;
+
+		PARAM	subOne = { -1, -1, -1, -1 };
+		PARAM	scaleTwo = { 2, 2, 2, 2 };
+
+		ATTRIB _diffTC = fragment.texcoord[4];
+		ATTRIB _bumpTC = fragment.texcoord[1];
+
+		# coverage dither mask
+		$ifdef r_useDitherMask
+		MUL		R1.xy, fragment.position, 0.015625;
+		TEX		R0.r, R1, $dithermask, 2D;
+		SUB		R0.a, 0.5, R0.r;
+		KIL		R0.a;
+		$endif
+
+		# modulate by the diffuse map and constant diffuse factor
+		TEX		diffuse, _diffTC, $diffuseMap, 2D;
+		SUB R0.a, diffuse.a, 0.001;
+		KIL R0.a;
+
+		TEX		localNormal, _bumpTC, $bumpMap, 2D;
+		MOV		localNormal.x, localNormal.a;
+		MAD		localNormal.xy, localNormal, scaleTwo, subOne;
+
+		#Renormalize
+		$if r_normalizeNormalMaps
+		MOV		localNormal.z, 0;
+		DP3		R1.x, localNormal,localNormal;
+		ADD		R1.x, 1, -R1.x;
+		RSQ		R1.x, R1.x;
+		RCP		localNormal.z, R1.x;
+		$endif
+
+		# put normal into world space
+		DP3		worldNormal.x, fragment.texcoord[5], localNormal;
+		DP3		worldNormal.y, fragment.texcoord[6], localNormal;
+		DP3		worldNormal.z, fragment.texcoord[7], localNormal;
+
+		# get diffuse lighting from cubemap
+		TEX		ambient, worldNormal, $ambientCubeMap, CUBE;
+		MUL		ambient, ambient, $ambientBrightness;
+
+		MUL		color, diffuse, $diffuseColor;
+		# kill if we need this
+		$ifdef alphatest_kill
+		SUB		diffuse.a, diffuse.a, $alphaThresh;
+		KIL		diffuse.a;
+		$endif
+
+		# modulate by ambient
+		MUL		color, ambient, color;
+
+		$if !r_shaderSkipSpecCubeMaps
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		TEMP refl;
+		DP3		R1, fragment.texcoord[2], worldNormal;
+		ADD		R1, R1, R1;
+		MAD		refl, worldNormal, R1.x, fragment.texcoord[2];
+
+		# get specular from cubemap
+		TEX		ambient, refl, $specularCubeMap, CUBE;
+
+		# modulate by the specular map * 2
+		TEX		specLook, _diffTC, $specularMap, 2D;
+		ADD		R0, specLook, specLook;
+
+		MAD		color, R0, ambient, color;
+		$endif
+
+		# modify by the vertex color
+
+		MUL		result.color, color, fragment.color;
+		MOV		result.color.a, diffuse.a;
+		#MOV		result.color, diffuse.a;
+	%> }
+}
+
+renderProgram sfx/feAmbDecal {
+	program vertex arb { <%
+		OPTION ARB_position_invariant;
+
+		TEMP	bitangent;
+		TEMP	R0, R1, R2;
+		ATTRIB _pos = $positionAttrib;
+		$if !r_32ByteVtx
+		ATTRIB _nrm = $normalAttrib;
+		ATTRIB _tan = $tangentAttrib;
+		$else
+		TEMP _nrm, _tan;
+		MOV _nrm, $normalAttrib;
+		MOV _tan, $tangentAttrib;
+		$endif
+
+		PARAM	defaultTexCoord = { 0, 0.5, 0, 1 };
+
+		XPD		bitangent, _nrm, _tan;
+		MUL		bitangent, bitangent, $tangentAttrib.w;
+
+		# textures 1 takes the base coordinates by the texture matrix
+		MOV		result.texcoord[1], defaultTexCoord;
+		DP4		result.texcoord[1].x, $texCoordAttrib, $bumpMatrix_s;
+		DP4		result.texcoord[1].y, $texCoordAttrib, $bumpMatrix_t;
+
+		# textures 4 takes the base coordinates by the texture matrix
+		MOV		result.texcoord[4], defaultTexCoord;
+		DP4		result.texcoord[4].x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4		result.texcoord[4].y, $texCoordAttrib, $diffuseMatrix_t;
+
+		# generate the vertex color, which can be 1.0, color, or 1.0 - color
+		MAD		result.color, $colorAttrib, $colorModulate, $colorAdd;
+
+		# build tangent space -> world space conversion matrix
+		DP3		result.texcoord[5].x, $transposedModelMatrix_x, _tan;
+		DP3		result.texcoord[6].x, $transposedModelMatrix_y, _tan;
+		DP3		result.texcoord[7].x, $transposedModelMatrix_z, _tan;
+
+		DP3		result.texcoord[5].y, $transposedModelMatrix_x, bitangent;
+		DP3		result.texcoord[6].y, $transposedModelMatrix_y, bitangent;
+		DP3		result.texcoord[7].y, $transposedModelMatrix_z, bitangent;
+
+		DP3		result.texcoord[5].z, $transposedModelMatrix_x, _nrm;
+		DP3		result.texcoord[6].z, $transposedModelMatrix_y, _nrm;
+		DP3		result.texcoord[7].z, $transposedModelMatrix_z, _nrm;
+
+		# calculate vector to eye
+		DP4		R0.x, $transposedModelMatrix_x, _pos;
+		DP4		R0.y, $transposedModelMatrix_y, _pos;
+		DP4		R0.z, $transposedModelMatrix_z, _pos;
+
+		# normalize
+		SUB		R0.xyz, R0, $viewOriginWorld;
+		DP3		R0.w, R0, R0;
+		RSQ		R0.w, R0.w;
+		MUL		result.texcoord[2], R0, -R0.w;
+
+	%> }
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+
+		TEMP	R0, R1, color, localNormal, worldNormal, ambient, localAmbient, specLook, diffuse;
+
+		PARAM	subOne = { -1, -1, -1, -1 };
+		PARAM	scaleTwo = { 2, 2, 2, 2 };
+
+		ATTRIB _diffTC = fragment.texcoord[4];
+		ATTRIB _bumpTC = fragment.texcoord[4];
+
+		# coverage dither mask
+		$ifdef r_useDitherMask
+		MUL		R1.xy, fragment.position, 0.015625;
+		TEX		R0.r, R1, $dithermask, 2D;
+		SUB		R0.a, 0.5, R0.r;
+		KIL		R0.a;
+		$endif
+
+		# modulate by the diffuse map and constant diffuse factor
+		TEX		diffuse, _diffTC, $diffuseMap, 2D;
+		SUB R0.a, diffuse.a, 0.001;
+		KIL R0.a;
+
+		TEX		localNormal, _bumpTC, $bumpMap, 2D;
+		MOV		localNormal.x, localNormal.a;
+		MAD		localNormal.xy, localNormal, scaleTwo, subOne;
+
+		#Renormalize
+		$if r_normalizeNormalMaps
+		MOV		localNormal.z, 0;
+		DP3		R1.x, localNormal,localNormal;
+		ADD		R1.x, 1, -R1.x;
+		RSQ		R1.x, R1.x;
+		RCP		localNormal.z, R1.x;
+		$endif
+
+		# put normal into world space
+		DP3		worldNormal.x, fragment.texcoord[5], localNormal;
+		DP3		worldNormal.y, fragment.texcoord[6], localNormal;
+		DP3		worldNormal.z, fragment.texcoord[7], localNormal;
+
+		# get diffuse lighting from cubemap
+		TEX		ambient, worldNormal, $ambientCubeMap, CUBE;
+		MUL		ambient, ambient, $ambientBrightness;
+		MUL ambient, ambient, 2;
+
+		MUL		color, diffuse, $diffuseColor;
+		# kill if we need this
+		$ifdef alphatest_kill
+		SUB		diffuse.a, diffuse.a, $alphaThresh;
+		KIL		diffuse.a;
+		$endif
+
+		# modulate by ambient
+		MUL		color, ambient, color;
+
+		$if !r_shaderSkipSpecCubeMaps
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		TEMP refl;
+		DP3		R1, fragment.texcoord[2], worldNormal;
+		ADD		R1, R1, R1;
+		MAD		refl, worldNormal, R1.x, -fragment.texcoord[2];
+
+		# get specular from cubemap
+		TEMP	spec;
+		TEX		spec, refl, $specularCubeMap, CUBE;
+
+		# modulate by the specular map * 2
+		TEX		specLook, _diffTC, $specularMap, 2D;
+		ADD		R0, specLook, specLook;
+
+		MAD		color, R0, spec, color;
+		$endif
+
+		# modify by the vertex color
+
+		MUL		R1, color, fragment.color;
+		MOV		result.color.a, diffuse.a;
+		
+		DP3 R0, fragment.texcoord[2],	worldNormal;
+		ADD R0, 1, -R0; #worldNormal.x;
+		MUL R0, R0, R0;
+		MUL R0, R0, R0;
+		MUL R0, R0, $parameters;
+		TEMP R2;
+		MUL R2, R0, ambient;
+		MAD R2, R0, 0.1, R2;
+		
+		TEMP night;
+		TEX	 night, _diffTC, $selfIllumMap, 2D;
+		
+		MUL_SAT ambient, ambient, 8;
+		MAD  R0, night, -ambient.r, night;
+		MAX  R0, R0, 0;
+		ADD R2, R0, R2;
+		ADD result.color.rgb, R1, R2;
+		
+		#MOV result.color.rgb, specLook;
+		
+		
+		#MAD result.color.rgb, fragment.texcoord[2], 0.5, 0.5;
+	%> }
+}
+
+renderProgram sfx/feAmbDecal_cloud {
+	program vertex reference sfx/feAmbDecal
+	
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+
+		TEMP	R0, R1, color, localNormal, worldNormal, ambient, localAmbient, specLook, diffuse;
+
+		PARAM	subOne = { -1, -1, -1, -1 };
+		PARAM	scaleTwo = { 2, 2, 2, 2 };
+
+		ATTRIB _diffTC = fragment.texcoord[4];
+		ATTRIB _bumpTC = fragment.texcoord[4];
+
+		# coverage dither mask
+		$ifdef r_useDitherMask
+		MUL		R1.xy, fragment.position, 0.015625;
+		TEX		R0.r, R1, $dithermask, 2D;
+		SUB		R0.a, 0.5, R0.r;
+		KIL		R0.a;
+		$endif
+
+		# modulate by the diffuse map and constant diffuse factor
+		TEX		diffuse, _diffTC, $diffuseMap, 2D;
+		SUB R0.a, diffuse.a, 0.001;
+		#KIL R0.a;
+
+		TEX		localNormal, _bumpTC, $bumpMap, 2D;
+		MOV		localNormal.x, localNormal.a;
+		MAD		localNormal.xy, localNormal, scaleTwo, subOne;
+
+		#Renormalize
+		$if r_normalizeNormalMaps
+		MOV		localNormal.z, 0;
+		DP3		R1.x, localNormal,localNormal;
+		ADD		R1.x, 1, -R1.x;
+		RSQ		R1.x, R1.x;
+		RCP		localNormal.z, R1.x;
+		$endif
+
+		# put normal into world space
+		DP3		worldNormal.x, fragment.texcoord[5], localNormal;
+		DP3		worldNormal.y, fragment.texcoord[6], localNormal;
+		DP3		worldNormal.z, fragment.texcoord[7], localNormal;
+
+		# get diffuse lighting from cubemap
+		TEX		ambient, worldNormal, $ambientCubeMap, CUBE;
+		MUL		ambient, ambient, $ambientBrightness;
+		MUL ambient, ambient, 2;
+
+		MUL		color, diffuse, $diffuseColor;
+		# kill if we need this
+		$ifdef alphatest_kill
+		SUB		diffuse.a, diffuse.a, $alphaThresh;
+		KIL		diffuse.a;
+		$endif
+
+		# modulate by ambient
+		MUL		color, ambient, color;
+
+		$if !r_shaderSkipSpecCubeMaps
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		TEMP refl;
+		DP3		R1, fragment.texcoord[2], worldNormal;
+		ADD		R1, R1, R1;
+		MAD		refl, worldNormal, R1.x, -fragment.texcoord[2];
+
+		# get specular from cubemap
+		TEMP	spec;
+		TEX		spec, refl, $specularCubeMap, CUBE;
+
+		# modulate by the specular map * 2
+		TEX		specLook, _diffTC, $specularMap, 2D;
+		ADD		R0, specLook, specLook;
+
+		MAD		color, R0, spec, color;
+		$endif
+
+		# modify by the vertex color
+
+		MUL		R1, color, fragment.color;
+		
+		DP3 R0, fragment.texcoord[2],	worldNormal;
+		ADD R0, 1, -R0; #worldNormal.x;
+		MUL R0, R0, R0;
+		MUL R0, R0, R0;
+		TEMP DP;
+		MUL DP, R0, $parameters;
+		
+		TEMP R2;
+		MUL R2, DP, ambient;
+		MAD R2, DP, 0.1, R2;
+		
+		TEMP night;
+		TEX	 night, _diffTC, $selfIllumMap, 2D;
+		
+		MUL_SAT ambient, ambient, 8;
+		MAD  R0, night, -ambient.r, night;
+#		ADD R2, R0, R2;
+		ADD result.color.rgb, R1, R2;
+		
+		SUB R0, 1, DP;
+		MUL result.color.a, diffuse.a, R0;
+		
+		#MOV result.color.rgb, ambient;
+		
+		
+		#MAD result.color.rgb, fragment.texcoord[2], 0.5, 0.5;
+	%> }
+}
+
+
+renderProgram sfx/atmos {
+	program vertex reference sfx/feAmbDecal
+	
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+
+		TEMP	R0, R1, color, localNormal, worldNormal, ambient, localAmbient, specLook, diffuse;
+
+		PARAM	subOne = { -1, -1, -1, -1 };
+		PARAM	scaleTwo = { 2, 2, 2, 2 };
+
+		ATTRIB _bumpTC = fragment.texcoord[1];
+
+		TEX		localNormal, _bumpTC, $bumpMap, 2D;
+		MOV		localNormal.x, localNormal.a;
+		MAD		localNormal.xy, localNormal, scaleTwo, subOne;
+
+		#Renormalize
+		$if r_normalizeNormalMaps
+		MOV		localNormal.z, 0;
+		DP3		R1.x, localNormal,localNormal;
+		ADD		R1.x, 1, -R1.x;
+		RSQ		R1.x, R1.x;
+		RCP		localNormal.z, R1.x;
+		$endif
+
+		# put normal into world space
+		DP3		worldNormal.x, fragment.texcoord[5], localNormal;
+		DP3		worldNormal.y, fragment.texcoord[6], localNormal;
+		DP3		worldNormal.z, fragment.texcoord[7], localNormal;
+		
+		DP3 R0, fragment.texcoord[2], worldNormal;
+		MUL R0, R0, R0;
+		MUL_SAT R0, R0,5;
+		MUL R0, R0, $parameters;
+		MOV result.color.rgb, R0;
+		MOV result.color.a, 1;		
+		#MAD result.color.rgb, worldNormal, 0.5, 0.5;
+	%> }
+}
+
+
+renderprogram sfx/foggyWaterSurface {
+	program vertex cg { <%
+		
+		struct VsInputs {
+			float3 pos : $positionAttrib;
+			float4 tex : $texCoordAttrib;
+			float3 center : $normalAttrib;
+			float4 tangent : $tangentAttrib;
+			float4 col	: $colorAttrib;
+			$if r_32ByteVtx
+			float4 signs : $signAttrib;
+			$endif			
+		};
+	
+		struct VsOutputs {
+			float2 tex	: TEXCOORD0;
+			float dist	: TEXCOORD1;
+			float3 diff	: TEXCOORD2;
+			float4 col	: COLOR0;
+		};
+		
+		uniform float3 viewOrigin : $viewOrigin;
+
+		float GetZ( float2 value, float sign ) {
+			return ( sqrt( 1.0f - ( dot( value.xy, value.xy ) ) ) * ( sign - 1.f ) );
+		}
+
+		VsOutputs vertex( VsInputs indata ) {
+			VsOutputs outdata;
+
+			$if r_32ByteVtx
+			indata.tex.xy *= 1.f/4096.f;
+			indata.tex.zw = 1.f;
+			
+			indata.center.z = indata.tangent.x;
+			
+			indata.tangent = indata.signs;
+			$endif
+			
+			float3 diff = indata.pos - viewOrigin;
+			outdata.dist = length( diff );
+			outdata.diff = diff;
+			outdata.col = indata.col;
+
+			return outdata;
+		}			
+	%> }
+
+	program fragment cg { <%
+		struct VsOutputs {
+			float2 tex	: TEXCOORD0;
+			float dist	: TEXCOORD1;
+			float3 diff	: TEXCOORD2;
+			float4 col	: COLOR0;
+		};
+		
+		sampler2D colorMap : $map;
+		uniform float4 parameters2 : $parameters2;
+
+		float4 fragment( VsOutputs indata ) : COLOR {
+			float dist = length( indata.diff );
+			float d = dist * parameters2.w;
+			return float4( parameters2.rgb, 1-exp( -(d*d) ) );
+		}	
+	%> }
+}
+
+
+renderProgram sfx/ambsunDecalAlways {
+	program vertex arb { <%
+		PARAM  mvp[4]       = { state.matrix.mvp };
+		OUTPUT oPos         = result.position;
+		# Transform the vertex to clip coordinates. 
+		DP4   oPos.x, mvp[0], $positionAttrib;
+		DP4   oPos.y, mvp[1], $positionAttrib;
+
+		TEMP  zw;
+		DP4   zw.z, mvp[2], $positionAttrib;
+		DP4   zw.w, mvp[3], $positionAttrib;
+		MOV	  oPos.w, zw;	
+		TEMP res;
+		SLT	 res.x, zw.w, zw.z;
+		SLT	 res.y, zw.z, -zw.w;
+		MUL  res.x, res.x, res.y;
+		MUL  oPos.z, res.x, zw.z;
+
+		TEMP	bitangent;
+		TEMP	R0, R1, R2;
+		ATTRIB _pos = $positionAttrib;
+		$if !r_32ByteVtx
+		ATTRIB _nrm = $normalAttrib;
+		ATTRIB _tan = $tangentAttrib;
+		$else
+		TEMP _nrm, _tan;
+		MOV _nrm, $normalAttrib;
+		MOV _tan, $tangentAttrib;
+		$endif
+
+		PARAM	defaultTexCoord = { 0, 0.5, 0, 1 };
+
+		XPD		bitangent, _nrm, _tan;
+		MUL		bitangent, bitangent, $tangentAttrib.w;
+
+		# textures 1 takes the base coordinates by the texture matrix
+		MOV		result.texcoord[1], defaultTexCoord;
+		DP4		result.texcoord[1].x, $texCoordAttrib, $bumpMatrix_s;
+		DP4		result.texcoord[1].y, $texCoordAttrib, $bumpMatrix_t;
+
+		# textures 4 takes the base coordinates by the texture matrix
+		MOV		result.texcoord[4], defaultTexCoord;
+		DP4		result.texcoord[4].x, $texCoordAttrib, $diffuseMatrix_s;
+		DP4		result.texcoord[4].y, $texCoordAttrib, $diffuseMatrix_t;
+
+		# generate the vertex color, which can be 1.0, color, or 1.0 - color
+		MAD		result.color, $colorAttrib, $colorModulate, $colorAdd;
+
+		# build tangent space -> world space conversion matrix
+		DP3		result.texcoord[5].x, $transposedModelMatrix_x, _tan;
+		DP3		result.texcoord[6].x, $transposedModelMatrix_y, _tan;
+		DP3		result.texcoord[7].x, $transposedModelMatrix_z, _tan;
+
+		DP3		result.texcoord[5].y, $transposedModelMatrix_x, bitangent;
+		DP3		result.texcoord[6].y, $transposedModelMatrix_y, bitangent;
+		DP3		result.texcoord[7].y, $transposedModelMatrix_z, bitangent;
+
+		DP3		result.texcoord[5].z, $transposedModelMatrix_x, _nrm;
+		DP3		result.texcoord[6].z, $transposedModelMatrix_y, _nrm;
+		DP3		result.texcoord[7].z, $transposedModelMatrix_z, _nrm;
+
+		# calculate vector to eye
+		DP4		R0.x, $transposedModelMatrix_x, _pos;
+		DP4		R0.y, $transposedModelMatrix_y, _pos;
+		DP4		R0.z, $transposedModelMatrix_z, _pos;
+
+		# normalize
+		SUB		R0.xyz, R0, $viewOriginWorld;
+		DP3		R0.w, R0, R0;
+		RSQ		R0.w, R0.w;
+		MUL		result.texcoord[2], R0, -R0.w;
+
+	%> }
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+
+		TEMP	R0, R1, color, localNormal, worldNormal, ambient, localAmbient, specLook, diffuse;
+
+		PARAM	subOne = { -1, -1, -1, -1 };
+		PARAM	scaleTwo = { 2, 2, 2, 2 };
+
+		ATTRIB _diffTC = fragment.texcoord[4];
+		ATTRIB _bumpTC = fragment.texcoord[1];
+
+		# coverage dither mask
+		$ifdef r_useDitherMask
+		MUL		R1.xy, fragment.position, 0.015625;
+		TEX		R0.r, R1, $dithermask, 2D;
+		SUB		R0.a, 0.5, R0.r;
+		KIL		R0.a;
+		$endif
+
+		# modulate by the diffuse map and constant diffuse factor
+		TEX		diffuse, _diffTC, $diffuseMap, 2D;
+		SUB R0.a, diffuse.a, 0.001;
+		KIL R0.a;
+
+		TEX		localNormal, _bumpTC, $bumpMap, 2D;
+		MOV		localNormal.x, localNormal.a;
+		MAD		localNormal.xy, localNormal, scaleTwo, subOne;
+
+		#Renormalize
+		$if r_normalizeNormalMaps
+		MOV		localNormal.z, 0;
+		DP3		R1.x, localNormal,localNormal;
+		ADD		R1.x, 1, -R1.x;
+		RSQ		R1.x, R1.x;
+		RCP		localNormal.z, R1.x;
+		$endif
+
+		# put normal into world space
+		DP3		worldNormal.x, fragment.texcoord[5], localNormal;
+		DP3		worldNormal.y, fragment.texcoord[6], localNormal;
+		DP3		worldNormal.z, fragment.texcoord[7], localNormal;
+
+		# get diffuse lighting from cubemap
+		TEX		ambient, worldNormal, $ambientCubeMap, CUBE;
+		MUL		ambient, ambient, $ambientBrightness;
+
+		MUL		color, diffuse, $diffuseColor;
+		# kill if we need this
+		$ifdef alphatest_kill
+		SUB		diffuse.a, diffuse.a, $alphaThresh;
+		KIL		diffuse.a;
+		$endif
+
+		TEMP	lightdp;
+		DP3_SAT		lightdp, worldNormal, $sunDirectionWorld;
+		
+		# modulate by ambient
+		MAD		ambient, lightdp, $sunColor, ambient;
+		MUL		color, ambient, color;
+
+		$if !r_shaderSkipSpecCubeMaps
+		# calc reflection vector: i - 2 * dot(i, n) * n
+		TEMP refl;
+		DP3		R1, fragment.texcoord[2], worldNormal;
+		ADD		R1, R1, R1;
+		MAD		refl, -worldNormal, R1.x, fragment.texcoord[2];
+
+		# get specular from cubemap
+		TEX		ambient, refl, $specularCubeMap, CUBE;
+
+		# modulate by the specular map * 2
+		TEX		specLook, _diffTC, $specularMap, 2D;
+		ADD		R0, specLook, specLook;
+
+		TEMP specdp;
+		DP3_SAT		specdp, -refl, $sunDirectionWorld;
+		MUL		lightdp, lightdp, specdp;
+		MUL		lightdp, lightdp, lightdp;
+		MUL		lightdp, lightdp, lightdp;
+		MUL		lightdp, lightdp, lightdp;
+		MAD		R0, lightdp, 2, R0;
+
+		MAD		color, R0, ambient, color;
+		$endif
+
+		# modify by the vertex color
+
+		MUL		result.color, color, fragment.color;
+		MOV		result.color.a, diffuse.a;
+	%> }
+}

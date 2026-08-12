@@ -1,0 +1,46 @@
+atmosphere press_cover_03 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.057038404 -0.8220754266 0.5665144324 )
+	sunColor ( 0.7930464745 0.7249518633 0.5855807066 )
+	sunHaloScale 0.1400000006
+	sunHaloBias -0.1000000238
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright"
+	sunSpriteSize 25439
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 1 0.9529412389 0.9215686917 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.7099999785 1.0399999619 0.1700000018 0.6299999952 )
+		glareBases ( 0.6699999571 0.2899999917 0 0 )
+	}
+	fogDistHalf 2320
+	fogHeightHalf 2026
+	fogHeightOffset 6549
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "canyon_night"
+	skyGradientImage "atmosphere/skies/ph_sunset6"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 43
+	windAngleDev 90
+	windStrength 51
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+

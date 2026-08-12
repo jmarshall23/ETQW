@@ -1,0 +1,196 @@
+material texturesheets/quarry/warehouse01
+{
+	surfaceTypeMap "texturesheets/quarry/warehouse_sheet"
+	diffusemap	texturesheets/quarry/warehouse_sheet_d.tga
+	specularmap	texturesheets/quarry/warehouse_sheet_s.tga
+	bumpmap		texturesheets/quarry/warehouse_sheet_local.tga
+}
+
+material texturesheets/quarry/warehouse01a
+{
+	surfaceTypeMap "texturesheets/quarry/warehouse_quarry_a"
+	diffusemap	texturesheets/quarry/warehouse_quarry_a_d.tga
+	specularmap	texturesheets/quarry/warehouse_quarry_a_s.tga
+	bumpmap		texturesheets/quarry/warehouse_quarry_a_local.tga
+}
+
+material texturesheets/quarry/warehouse01b
+{
+	surfaceTypeMap "texturesheets/quarry/warehouse_quarry_b"
+	diffusemap	texturesheets/quarry/warehouse_quarry_b_d.tga
+	specularmap	texturesheets/quarry/warehouse_quarry_b_s.tga
+	bumpmap		texturesheets/quarry/warehouse_quarry_b_local.tga
+}
+
+material texturesheets/quarry/warehouse01c
+{
+	surfaceTypeMap	"texturesheets/quarry/warehouse01c"
+	{
+		diffusemap	picmip -1	texturesheets/quarry/warehouse01c_d.tga
+		specularmap	picmip -2	texturesheets/quarry/warehouse01c_s.tga
+		bumpmap		picmip -1	texturesheets/quarry/warehouse01c_local.tga
+
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,32,0,0
+		vertexcolor
+	}
+}
+
+material texturesheets/quarry/workshops
+{
+	surfaceTypeMap "texturesheets/quarry/workshops"
+	diffusemap	texturesheets/quarry/workshops_d.tga
+	specularmap	texturesheets/quarry/workshops_s.tga
+	bumpmap		texturesheets/quarry/workshops_local.tga
+}
+
+material texturesheets/quarry/workshops2
+{
+	surfaceTypeMap "texturesheets/quarry/workshops2"
+	diffusemap	texturesheets/quarry/workshops2_d.tga
+	specularmap	texturesheets/quarry/workshops2_s.tga
+	bumpmap		texturesheets/quarry/workshops2_local.tga
+}
+
+material texturesheets/quarry/workshops3
+{
+	surfaceTypeMap "texturesheets/quarry/workshops3"
+	diffusemap	texturesheets/quarry/workshops3_d.tga
+	specularmap	texturesheets/quarry/workshops3_s.tga
+	bumpmap		texturesheets/quarry/workshops3_local.tga
+}
+
+material texturesheets/quarry/workshops4
+{
+	surfaceTypeMap "texturesheets/quarry/workshops4"
+	diffusemap	texturesheets/quarry/workshops4_d.tga
+	specularmap	texturesheets/quarry/workshops4_s.tga
+	bumpmap		texturesheets/quarry/workshops4_local.tga
+}
+
+material texturesheets/quarry/concrete_decals1
+{
+	noshadows
+	sort decal
+	nonsolid
+	translucent
+	{
+		diffusemap	texturesheets/quarry/concrete_decals1_d.tga
+		alphaTest 0.1
+	}
+}
+
+material texturesheets/quarry/office_building01
+{
+	surfaceTypeMap "texturesheets/quarry/office_building01"
+	diffusemap	texturesheets/quarry/office_building01_d.tga
+	specularmap	texturesheets/quarry/office_building01_s.tga
+	bumpmap 	texturesheets/quarry/office_building01_local.tga
+}
+
+material texturesheets/quarry/office_building02
+{
+	surfaceTypeMap "texturesheets/quarry/office_building02"
+	diffusemap	texturesheets/quarry/office_building02_d.tga
+	specularmap	texturesheets/quarry/office_building02_s.tga
+	bumpmap 	texturesheets/quarry/office_building02_local.tga
+}
+
+material texturesheets/quarry/office_building03
+{
+	surfaceTypeMap "texturesheets/quarry/office_building03"
+	diffusemap	texturesheets/quarry/office_building03_d.tga
+	specularmap	texturesheets/quarry/office_building03_s.tga
+	bumpmap 	texturesheets/quarry/office_building03_local.tga
+}
+
+material texturesheets/quarry/admin_building01
+{
+	surfaceTypeMap "texturesheets/quarry/admin_building01"
+	diffusemap	texturesheets/quarry/admin_building01_d.tga
+	specularmap	texturesheets/quarry/admin_building01_s.tga
+	bumpmap 	texturesheets/quarry/admin_building01_local.tga
+}
+
+material texturesheets/quarry/admin_building02
+{
+	surfaceTypeMap "texturesheets/quarry/admin_building02"
+	diffusemap	texturesheets/quarry/admin_building02_d.tga
+	specularmap	texturesheets/quarry/admin_building02_s.tga
+	bumpmap 	texturesheets/quarry/admin_building02_local.tga
+}
+
+material texturesheets/quarry/admin_building03
+{
+	surfaceTypeMap "texturesheets/quarry/admin_building03"
+	diffusemap	texturesheets/quarry/admin_building03_d.tga
+	specularmap	texturesheets/quarry/admin_building03_s.tga
+	bumpmap		texturesheets/quarry/admin_building03_local.tga
+}
+
+material texturesheets/quarry/quarry_works1
+{
+	surfaceTypeMap	"texturesheets/quarry/quarry_works1"
+	{
+		diffusemap	picmip -1	texturesheets/quarry/quarry_works1_d.tga
+		bumpmap		picmip -1	texturesheets/quarry/quarry_works1_local.tga
+		specularmap	picmip -2	texturesheets/quarry/quarry_works1_s.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,32,0,0
+		vertexcolor
+	}
+}
+
+material texturesheets/quarry/quarry_works2
+{
+	surfaceTypeMap	"texturesheets/quarry/quarry_works2"
+	{
+		diffusemap	picmip -1	texturesheets/quarry/quarry_works2_d.tga
+		bumpmap		picmip -1	texturesheets/quarry/quarry_works2_local.tga
+		specularmap	picmip -2	texturesheets/quarry/quarry_works2_s.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,32,0,0
+		vertexcolor
+	}
+}
+
+material texturesheets/quarry/industrial_exterior1
+{
+	surfaceTypeMap "texturesheets/quarry/industrial_exterior1"
+	{
+		diffusemap	picmip -1	texturesheets/quarry/industrial_exterior1_d.tga
+		bumpmap		picmip -1	texturesheets/quarry/industrial_exterior1_local.tga
+		specularmap	picmip -2	texturesheets/quarry/industrial_exterior1_s.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,32,0,0
+		vertexcolor
+	}
+}
+
+material texturesheets/quarry/industrial_exterior1_noselfshadow
+{
+	surfaceTypeMap "texturesheets/quarry/industrial_exterior1"
+	noselfshadow
+	{
+		diffusemap	picmip -1	texturesheets/quarry/industrial_exterior1_d.tga
+		bumpmap		picmip -1	texturesheets/quarry/industrial_exterior1_local.tga
+		specularmap	picmip -2	texturesheets/quarry/industrial_exterior1_s.tga
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,32,0,0
+		vertexcolor
+	}
+}

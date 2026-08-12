@@ -1,0 +1,974 @@
+/////////////////////////////////////////////////////////////
+// GDF Quick Chat ///////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+
+// Global ///////////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/global/yes {
+	no_dups
+
+	localization/english/sounds/players/gdf/global/16001.wav
+	localization/english/sounds/players/gdf/global/16002.wav
+	localization/english/sounds/players/gdf/global/16003.wav
+}
+
+sound sounds/players/gdf/quickchat/global/no {
+	no_dups
+
+	localization/english/sounds/players/gdf/global/16004.wav
+	localization/english/sounds/players/gdf/global/16005.wav
+	localization/english/sounds/players/gdf/global/16006.wav
+}
+
+sound sounds/players/gdf/quickchat/global/thanks {
+	no_dups
+
+	localization/english/sounds/players/gdf/global/16007.wav
+	localization/english/sounds/players/gdf/global/16008.wav
+	localization/english/sounds/players/gdf/global/16009.wav
+	localization/english/sounds/players/gdf/global/16010.wav
+	localization/english/sounds/players/gdf/global/16199.wav
+}
+
+sound sounds/players/gdf/quickchat/global/youwelcome {
+
+	localization/english/sounds/players/gdf/global/16011.wav
+	localization/english/sounds/players/gdf/global/16012.wav
+}
+
+sound sounds/players/gdf/quickchat/global/sorry {
+
+	localization/english/sounds/players/gdf/global/16013.wav
+	localization/english/sounds/players/gdf/global/16014.wav
+}
+
+sound sounds/players/gdf/quickchat/global/hi {
+
+	localization/english/sounds/players/gdf/global/16015.wav
+	localization/english/sounds/players/gdf/global/16016.wav
+}
+
+sound sounds/players/gdf/quickchat/global/bye {
+
+	localization/english/sounds/players/gdf/global/16017.wav
+	localization/english/sounds/players/gdf/global/16018.wav
+}
+
+sound sounds/players/gdf/quickchat/global/quiet {
+
+	localization/english/sounds/players/gdf/global/16019.wav
+	localization/english/sounds/players/gdf/global/16020.wav
+}
+
+
+// Global Cheers ////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/global/cheers/awesome {
+
+	localization/english/sounds/players/gdf/global/16021.wav
+}
+
+sound sounds/players/gdf/quickchat/global/cheers/greatshot {
+
+	localization/english/sounds/players/gdf/global/16022.wav
+	localization/english/sounds/players/gdf/global/16023.wav
+}
+
+sound sounds/players/gdf/quickchat/global/cheers/freedomofearth {
+
+	localization/english/sounds/players/gdf/global/16024.wav
+}
+
+sound sounds/players/gdf/quickchat/global/cheers/wellplayed {
+
+	localization/english/sounds/players/gdf/global/16026.wav
+	localization/english/sounds/players/gdf/global/16025.wav
+}
+
+sound sounds/players/gdf/quickchat/global/cheers/goodgame {
+
+	localization/english/sounds/players/gdf/global/16027.wav
+	localization/english/sounds/players/gdf/global/16028.wav
+}
+
+sound sounds/players/gdf/quickchat/global/cheers/gdf {
+
+	localization/english/sounds/players/gdf/global/16029.wav
+	localization/english/sounds/players/gdf/global/16030.wav
+}
+
+sound sounds/players/gdf/quickchat/global/cheers/ohyes {
+	no_dups
+
+	localization/english/sounds/players/gdf/global/16031.wav
+	localization/english/sounds/players/gdf/global/16032.wav
+	localization/english/sounds/players/gdf/global/16033.wav
+}
+
+sound sounds/players/gdf/quickchat/global/cheers/whoa {
+
+	localization/english/sounds/players/gdf/global/16034.wav
+}
+
+sound sounds/players/gdf/quickchat/global/cheers/alright {
+	no_dups
+
+	localization/english/sounds/players/gdf/global/16035.wav
+	localization/english/sounds/players/gdf/global/16036.wav
+	localization/english/sounds/players/gdf/global/16037.wav
+}
+
+sound sounds/players/gdf/quickchat/global/cheers/bullseye {
+
+	localization/english/sounds/players/gdf/global/16038.wav
+}
+
+sound sounds/players/gdf/quickchat/global/cheers/yourock {
+
+	localization/english/sounds/players/gdf/global/16197.wav
+	localization/english/sounds/players/gdf/global/16198.wav
+}
+
+
+// Global Taunts ////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/global/taunts/ohdear {
+
+	localization/english/sounds/players/gdf/global/16039.wav
+	localization/english/sounds/players/gdf/global/16040.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/oops {
+
+	localization/english/sounds/players/gdf/global/16041.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/enemyweakened {
+
+	localization/english/sounds/players/gdf/global/16042.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/theyrunningaway {
+
+	localization/english/sounds/players/gdf/global/16043.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/eatthatstrogg {
+
+	localization/english/sounds/players/gdf/global/16044.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/killalienscum {
+
+	localization/english/sounds/players/gdf/global/16045.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/denied {
+
+	localization/english/sounds/players/gdf/global/16046.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/grr {
+
+	localization/english/sounds/players/gdf/global/16047.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/cough {
+	no_dups
+
+	localization/english/sounds/players/gdf/global/16048.wav
+	localization/english/sounds/players/gdf/global/16049.wav
+	localization/english/sounds/players/gdf/global/16050.wav
+	localization/english/sounds/players/gdf/global/16051.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/awkward {
+
+	localization/english/sounds/players/gdf/global/16052.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/awyeahohno {
+
+	localization/english/sounds/players/gdf/global/16053.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/awnoheyyeah {
+
+	localization/english/sounds/players/gdf/global/16054.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/owned {
+
+	localization/english/sounds/players/gdf/global/16055.wav
+	localization/english/sounds/players/gdf/global/16056.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/thathurt {
+
+	localization/english/sounds/players/gdf/global/16058.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/thathadtohurt {
+
+	localization/english/sounds/players/gdf/global/16059.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/meh {
+
+	localization/english/sounds/players/gdf/global/16060.wav
+	localization/english/sounds/players/gdf/global/16061.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/ihadworse {
+
+	localization/english/sounds/players/gdf/global/16062.wav
+}
+
+sound sounds/players/gdf/quickchat/global/taunts/stroggy {
+
+	localization/english/sounds/players/gdf/global/16206.wav
+}
+
+
+// Responses ////////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/responses/acknowledged {
+
+	localization/english/sounds/players/gdf/responses/16063.wav
+}
+
+sound sounds/players/gdf/quickchat/responses/declined {
+
+	localization/english/sounds/players/gdf/responses/16064.wav
+}
+
+sound sounds/players/gdf/quickchat/responses/onit {
+
+	localization/english/sounds/players/gdf/responses/16065.wav
+}
+
+sound sounds/players/gdf/quickchat/responses/onmyway {
+
+	localization/english/sounds/players/gdf/responses/16066.wav
+}
+
+sound sounds/players/gdf/quickchat/responses/sorry {
+
+	localization/english/sounds/players/gdf/responses/16067.wav
+	localization/english/sounds/players/gdf/responses/16068.wav
+}
+
+sound sounds/players/gdf/quickchat/responses/dontcare {
+
+	localization/english/sounds/players/gdf/responses/16069.wav
+}
+
+sound sounds/players/gdf/quickchat/responses/unabletoassist {
+
+	localization/english/sounds/players/gdf/responses/16070.wav
+}
+
+sound sounds/players/gdf/quickchat/responses/outofrange {
+
+	localization/english/sounds/players/gdf/responses/16071.wav
+}
+
+sound sounds/players/gdf/quickchat/responses/thanks {
+
+	localization/english/sounds/players/gdf/responses/16072.wav
+	localization/english/sounds/players/gdf/responses/16073.wav
+	localization/english/sounds/players/gdf/responses/16074.wav
+}
+
+sound sounds/players/gdf/quickchat/responses/youwelcome {
+
+	localization/english/sounds/players/gdf/responses/16075.wav
+	localization/english/sounds/players/gdf/responses/16076.wav
+}
+
+sound sounds/players/gdf/quickchat/responses/roger {
+
+	localization/english/sounds/players/gdf/responses/16808.wav
+}
+
+sound sounds/players/gdf/quickchat/responses/negative {
+
+	localization/english/sounds/players/gdf/responses/16809.wav
+}
+
+
+// Needs ////////////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/need/medic {
+
+	localization/english/sounds/players/gdf/need/16077.wav
+	localization/english/sounds/players/gdf/need/16806.wav
+	localization/english/sounds/players/gdf/need/16807.wav
+}
+
+sound sounds/players/gdf/quickchat/need/ammo {
+
+	localization/english/sounds/players/gdf/need/16078.wav
+}
+
+sound sounds/players/gdf/quickchat/need/engineer {
+
+	localization/english/sounds/players/gdf/need/16079.wav
+}
+
+sound sounds/players/gdf/quickchat/need/backup {
+
+	localization/english/sounds/players/gdf/need/16080.wav
+}
+
+sound sounds/players/gdf/quickchat/need/coveringfire {
+
+	localization/english/sounds/players/gdf/need/16081.wav
+}
+
+sound sounds/players/gdf/quickchat/need/firesupport {
+
+	localization/english/sounds/players/gdf/need/16082.wav
+}
+
+sound sounds/players/gdf/quickchat/need/mines {
+
+	localization/english/sounds/players/gdf/need/16083.wav
+}
+
+sound sounds/players/gdf/quickchat/need/supplystation {
+
+	localization/english/sounds/players/gdf/need/16084.wav
+}
+
+sound sounds/players/gdf/quickchat/need/health {
+
+	localization/english/sounds/players/gdf/need/16810.wav
+}
+
+sound sounds/players/gdf/quickchat/need/revive {
+
+	localization/english/sounds/players/gdf/need/16811.wav
+}
+
+
+// Team Needs ///////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/need/team/medic {
+
+	localization/english/sounds/players/gdf/need/16085.wav
+}
+
+sound sounds/players/gdf/quickchat/need/team/fieldops {
+
+	localization/english/sounds/players/gdf/need/16086.wav
+}
+
+sound sounds/players/gdf/quickchat/need/team/engineer {
+
+	localization/english/sounds/players/gdf/need/16087.wav
+}
+
+sound sounds/players/gdf/quickchat/need/team/covertops {
+
+	localization/english/sounds/players/gdf/need/16088.wav
+}
+
+sound sounds/players/gdf/quickchat/need/team/soldier {
+
+	localization/english/sounds/players/gdf/need/16089.wav
+}
+
+sound sounds/players/gdf/quickchat/need/team/radar {
+
+	localization/english/sounds/players/gdf/need/16090.wav
+	localization/english/sounds/players/gdf/need/16091.wav
+	localization/english/sounds/players/gdf/need/16092.wav
+}
+
+sound sounds/players/gdf/quickchat/need/team/apt {
+
+	localization/english/sounds/players/gdf/need/16093.wav
+}
+
+sound sounds/players/gdf/quickchat/need/team/avt {
+
+	localization/english/sounds/players/gdf/need/16094.wav
+}
+
+sound sounds/players/gdf/quickchat/need/team/ait {
+
+	localization/english/sounds/players/gdf/need/16095.wav
+}
+
+sound sounds/players/gdf/quickchat/need/team/snipersupport {
+
+	localization/english/sounds/players/gdf/need/16096.wav
+}
+
+
+// Vehicles /////////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/vehicles/needvehicle {
+
+	localization/english/sounds/players/gdf/vehicles/16097.wav
+}
+
+sound sounds/players/gdf/quickchat/vehicles/needgunner {
+
+	localization/english/sounds/players/gdf/vehicles/16098.wav
+}
+
+sound sounds/players/gdf/quickchat/vehicles/needdriver {
+
+	localization/english/sounds/players/gdf/vehicles/16099.wav
+}
+
+sound sounds/players/gdf/quickchat/vehicles/needpilot {
+
+	localization/english/sounds/players/gdf/vehicles/16100.wav
+}
+
+sound sounds/players/gdf/quickchat/vehicles/needpassenger {
+
+	localization/english/sounds/players/gdf/vehicles/16101.wav
+}
+
+sound sounds/players/gdf/quickchat/vehicles/needrepairs {
+
+	localization/english/sounds/players/gdf/vehicles/16102.wav
+}
+
+sound sounds/players/gdf/quickchat/vehicles/needpickup {
+
+	localization/english/sounds/players/gdf/vehicles/16103.wav
+}
+
+sound sounds/players/gdf/quickchat/vehicles/vehicleready {
+
+	localization/english/sounds/players/gdf/vehicles/16104.wav
+}
+
+sound sounds/players/gdf/quickchat/vehicles/holdvehicle {
+
+	localization/english/sounds/players/gdf/vehicles/16105.wav
+}
+
+sound sounds/players/gdf/quickchat/vehicles/bailout {
+
+	localization/english/sounds/players/gdf/vehicles/16106.wav
+}
+
+
+// Enemy ////////////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/enemy/infantryspotted {
+
+	localization/english/sounds/players/gdf/enemy/16107.wav
+}
+
+sound sounds/players/gdf/quickchat/enemy/indisguise {
+
+	localization/english/sounds/players/gdf/enemy/16108.wav
+}
+
+sound sounds/players/gdf/quickchat/enemy/vehiclespotted {
+
+	localization/english/sounds/players/gdf/enemy/16109.wav
+}
+
+sound sounds/players/gdf/quickchat/enemy/armorspotted {
+
+	localization/english/sounds/players/gdf/enemy/16110.wav
+}
+
+sound sounds/players/gdf/quickchat/enemy/aircraftspotted {
+
+	localization/english/sounds/players/gdf/enemy/16111.wav
+}
+
+sound sounds/players/gdf/quickchat/enemy/infiltratorspotted {
+
+	localization/english/sounds/players/gdf/enemy/16113.wav
+}
+
+sound sounds/players/gdf/quickchat/enemy/minesspotted {
+
+	localization/english/sounds/players/gdf/enemy/16114.wav
+}
+
+sound sounds/players/gdf/quickchat/enemy/incomingairstrike {
+
+	localization/english/sounds/players/gdf/enemy/16115.wav
+}
+
+sound sounds/players/gdf/quickchat/enemy/incomingbombardment {
+
+	localization/english/sounds/players/gdf/enemy/16116.wav
+}
+
+sound sounds/players/gdf/quickchat/enemy/incomingfiresupport {
+
+	localization/english/sounds/players/gdf/enemy/16117.wav
+}
+
+
+// Enemy Deployables ////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/enemy/deployables/aitspotted {
+
+	localization/english/sounds/players/gdf/enemy/16118.wav
+}
+
+sound sounds/players/gdf/quickchat/enemy/deployables/firesupportspotted {
+
+	localization/english/sounds/players/gdf/enemy/16119.wav
+}
+
+sound sounds/players/gdf/quickchat/enemy/deployables/aptspotted {
+
+	localization/english/sounds/players/gdf/enemy/16120.wav
+}
+
+sound sounds/players/gdf/quickchat/enemy/deployables/avtspotted {
+
+	localization/english/sounds/players/gdf/enemy/16121.wav
+}
+
+sound sounds/players/gdf/quickchat/enemy/deployables/radarspotted {
+
+	localization/english/sounds/players/gdf/enemy/16122.wav
+}
+
+
+// Commands /////////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/commands/move {
+
+	localization/english/sounds/players/gdf/commands/16123.wav
+	localization/english/sounds/players/gdf/commands/16124.wav
+}
+
+sound sounds/players/gdf/quickchat/commands/letsgo {
+
+	localization/english/sounds/players/gdf/commands/16125.wav
+}
+
+sound sounds/players/gdf/quickchat/commands/followme {
+
+	localization/english/sounds/players/gdf/commands/16126.wav
+}
+
+sound sounds/players/gdf/quickchat/commands/clearmines {
+
+	localization/english/sounds/players/gdf/commands/16127.wav
+}
+
+sound sounds/players/gdf/quickchat/commands/hackenemybase {
+
+	localization/english/sounds/players/gdf/commands/16128.wav
+}
+
+sound sounds/players/gdf/quickchat/commands/captureforwardspawn {
+
+	localization/english/sounds/players/gdf/commands/16129.wav
+}
+
+sound sounds/players/gdf/quickchat/commands/constructguardtower {
+
+	localization/english/sounds/players/gdf/commands/16130.wav
+}
+
+sound sounds/players/gdf/quickchat/commands/holdfire {
+
+	localization/english/sounds/players/gdf/commands/16131.wav
+}
+
+sound sounds/players/gdf/quickchat/commands/dontshoot {
+
+	localization/english/sounds/players/gdf/commands/16132.wav
+}
+
+
+// Objectives ///////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/objectives/attack {
+
+	localization/english/sounds/players/gdf/objectives/16133.wav
+	localization/english/sounds/players/gdf/objectives/16134.wav
+}
+
+sound sounds/players/gdf/quickchat/objectives/defend {
+
+	localization/english/sounds/players/gdf/objectives/16135.wav
+	localization/english/sounds/players/gdf/objectives/16136.wav
+}
+
+sound sounds/players/gdf/quickchat/objectives/destroy {
+
+	localization/english/sounds/players/gdf/objectives/16137.wav
+}
+
+sound sounds/players/gdf/quickchat/objectives/hack {
+
+	localization/english/sounds/players/gdf/objectives/16138.wav
+}
+
+sound sounds/players/gdf/quickchat/objectives/construct {
+
+	localization/english/sounds/players/gdf/objectives/16139.wav
+}
+
+sound sounds/players/gdf/quickchat/objectives/construct_tower {
+
+	localization/english/sounds/players/gdf/commands/16130.wav
+}
+
+sound sounds/players/gdf/quickchat/objectives/destroy_tower {
+
+	localization/english/sounds/players/gdf/objectives/16137.wav
+}
+
+sound sounds/players/gdf/quickchat/objectives/take {
+
+	localization/english/sounds/players/gdf/objectives/16140.wav
+}
+
+sound sounds/players/gdf/quickchat/objectives/return {
+
+	localization/english/sounds/players/gdf/objectives/16141.wav
+}
+
+sound sounds/players/gdf/quickchat/objectives/disarmexplosives {
+
+	localization/english/sounds/players/gdf/objectives/16142.wav
+}
+
+sound sounds/players/gdf/quickchat/objectives/escortmcp {
+
+	localization/english/sounds/players/gdf/objectives/16143.wav
+}
+
+sound sounds/players/gdf/quickchat/objectives/repairmcp {
+
+	localization/english/sounds/players/gdf/objectives/16144.wav
+}
+
+
+// Self /////////////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/self/imsoldier {
+
+	localization/english/sounds/players/gdf/self/16145.wav
+}
+
+sound sounds/players/gdf/quickchat/self/immedic {
+
+	localization/english/sounds/players/gdf/self/16146.wav
+}
+
+sound sounds/players/gdf/quickchat/self/imengineer {
+
+	localization/english/sounds/players/gdf/self/16147.wav
+}
+
+sound sounds/players/gdf/quickchat/self/imfieldops {
+
+	localization/english/sounds/players/gdf/self/16148.wav
+}
+
+sound sounds/players/gdf/quickchat/self/imcovertops {
+
+	localization/english/sounds/players/gdf/self/16149.wav
+}
+
+sound sounds/players/gdf/quickchat/self/imattacking {
+
+	localization/english/sounds/players/gdf/self/16150.wav
+}
+
+sound sounds/players/gdf/quickchat/self/imdefending {
+
+	localization/english/sounds/players/gdf/self/16151.wav
+}
+
+// Self Disguise ////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/self/disguise/imindisguise {
+
+	localization/english/sounds/players/gdf/self/16152.wav
+}
+
+sound sounds/players/gdf/quickchat/self/disguise/enemydisguisedasme {
+
+	localization/english/sounds/players/gdf/self/16153.wav
+}
+
+
+// Self Deploying////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/self/deploying/radar {
+
+	localization/english/sounds/players/gdf/self/16154.wav
+}
+
+sound sounds/players/gdf/quickchat/self/deploying/apt {
+
+	localization/english/sounds/players/gdf/self/16155.wav
+}
+
+sound sounds/players/gdf/quickchat/self/deploying/avt {
+
+	localization/english/sounds/players/gdf/self/16156.wav
+}
+
+sound sounds/players/gdf/quickchat/self/deploying/ait {
+
+	localization/english/sounds/players/gdf/self/16157.wav
+}
+
+sound sounds/players/gdf/quickchat/self/deploying/artillery {
+
+	localization/english/sounds/players/gdf/self/16158.wav
+}
+
+sound sounds/players/gdf/quickchat/self/deploying/rockets {
+
+	localization/english/sounds/players/gdf/self/16159.wav
+}
+
+sound sounds/players/gdf/quickchat/self/deploying/hammer {
+
+	localization/english/sounds/players/gdf/self/16160.wav
+}
+
+sound sounds/players/gdf/quickchat/self/deploying/supplystation {
+
+	localization/english/sounds/players/gdf/self/16161.wav
+}
+
+
+// Self Deployed /////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/self/deployed/radar {
+
+	localization/english/sounds/players/gdf/self/16162.wav
+}
+
+sound sounds/players/gdf/quickchat/self/deployed/apt {
+
+	localization/english/sounds/players/gdf/self/16163.wav
+}
+
+sound sounds/players/gdf/quickchat/self/deployed/avt {
+
+	localization/english/sounds/players/gdf/self/16164.wav
+}
+
+sound sounds/players/gdf/quickchat/self/deployed/ait {
+
+	localization/english/sounds/players/gdf/self/16165.wav
+}
+
+sound sounds/players/gdf/quickchat/self/deployed/artillery {
+
+	localization/english/sounds/players/gdf/self/16166.wav
+}
+
+sound sounds/players/gdf/quickchat/self/deployed/rockets {
+
+	localization/english/sounds/players/gdf/self/16167.wav
+}
+
+sound sounds/players/gdf/quickchat/self/deployed/hammer {
+
+	localization/english/sounds/players/gdf/self/16168.wav
+}
+
+sound sounds/players/gdf/quickchat/self/deployed/supplystation {
+
+	localization/english/sounds/players/gdf/self/16169.wav
+}
+
+
+// Self Items ///////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/self/items/plantingmines {
+
+	localization/english/sounds/players/gdf/self/16170.wav
+}
+
+sound sounds/players/gdf/quickchat/self/items/disarmingmines {
+
+	localization/english/sounds/players/gdf/self/16171.wav
+}
+
+sound sounds/players/gdf/quickchat/self/items/suppliesdropped {
+
+	localization/english/sounds/players/gdf/self/16172.wav
+}
+
+sound sounds/players/gdf/quickchat/self/items/healthpacksdropped {
+
+	localization/english/sounds/players/gdf/self/16173.wav
+}
+
+sound sounds/players/gdf/quickchat/self/items/medpacksdropped {
+
+	localization/english/sounds/players/gdf/self/16174.wav
+}
+
+sound sounds/players/gdf/quickchat/self/items/ammopacksdropped {
+
+	localization/english/sounds/players/gdf/self/16175.wav
+}
+
+
+// Self Repairing ///////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/self/repairing/radar {
+
+	localization/english/sounds/players/gdf/self/16176.wav
+}
+
+sound sounds/players/gdf/quickchat/self/repairing/apt {
+
+	localization/english/sounds/players/gdf/self/16177.wav
+}
+
+sound sounds/players/gdf/quickchat/self/repairing/avt {
+
+	localization/english/sounds/players/gdf/self/16178.wav
+}
+
+sound sounds/players/gdf/quickchat/self/repairing/ait {
+
+	localization/english/sounds/players/gdf/self/16179.wav
+}
+
+sound sounds/players/gdf/quickchat/self/repairing/artillery {
+
+	localization/english/sounds/players/gdf/self/16180.wav
+}
+
+sound sounds/players/gdf/quickchat/self/repairing/rockets {
+
+	localization/english/sounds/players/gdf/self/16181.wav
+}
+
+sound sounds/players/gdf/quickchat/self/repairing/hammer {
+
+	localization/english/sounds/players/gdf/self/16182.wav
+}
+
+sound sounds/players/gdf/quickchat/self/repairing/mcp {
+
+	localization/english/sounds/players/gdf/self/16183.wav
+}
+
+
+// Self Repaired ////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/self/repaired/radar {
+
+	localization/english/sounds/players/gdf/self/16184.wav
+}
+
+sound sounds/players/gdf/quickchat/self/repaired/apt {
+
+	localization/english/sounds/players/gdf/self/16185.wav
+}
+
+sound sounds/players/gdf/quickchat/self/repaired/avt {
+
+	localization/english/sounds/players/gdf/self/16186.wav
+}
+
+sound sounds/players/gdf/quickchat/self/repaired/ait {
+
+	localization/english/sounds/players/gdf/self/16187.wav
+}
+
+sound sounds/players/gdf/quickchat/self/repaired/artillery {
+
+	localization/english/sounds/players/gdf/self/16188.wav
+}
+
+sound sounds/players/gdf/quickchat/self/repaired/rockets {
+
+	localization/english/sounds/players/gdf/self/16189.wav
+}
+
+sound sounds/players/gdf/quickchat/self/repaired/hammer {
+
+	localization/english/sounds/players/gdf/self/16190.wav
+}
+
+
+// Fireteams ////////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/fireteam/waypoint/attack {
+
+	localization/english/sounds/players/gdf/fireteam/16191.wav
+}
+
+sound sounds/players/gdf/quickchat/fireteam/waypoint/defend {
+
+	localization/english/sounds/players/gdf/fireteam/16192.wav
+}
+
+sound sounds/players/gdf/quickchat/fireteam/waypoint/regroup {
+
+	localization/english/sounds/players/gdf/fireteam/16193.wav
+}
+
+
+// Context ////////////////////////////////////////////////
+
+sound sounds/players/gdf/quickchat/context/waypoints {
+
+	localization/english/sounds/players/gdf/fireteam/16191.wav
+}
+
+sound sounds/players/gdf/quickchat/context/repair/vehicle {
+
+	localization/english/sounds/players/gdf/vehicles/16102.wav
+}
+
+sound sounds/players/gdf/quickchat/context/repair/vehicle_other {
+
+	localization/english/sounds/players/gdf/vehicles/16102.wav
+}
+
+sound sounds/players/gdf/quickchat/context/repair/deployable_other {
+
+	localization/english/sounds/players/gdf/vehicles/16102.wav
+}
+
+sound sounds/players/gdf/quickchat/context/spawnhost_destroy {
+
+	localization/english/sounds/players/gdf/need/16077.wav
+	localization/english/sounds/players/gdf/need/16806.wav
+	localization/english/sounds/players/gdf/need/16807.wav
+}
+
+sound sounds/players/gdf/quickchat/context/repair/mg_nest {
+
+	localization/english/sounds/players/gdf/need/16079.wav
+}
+
+sound sounds/players/gdf/quickchat/context/defendforwardspawn {
+
+	localization/english/sounds/players/gdf/objectives/16135.wav
+	localization/english/sounds/players/gdf/objectives/16136.wav
+}
+
+sound sounds/players/gdf/quickchat/context/liberateforwardspawn {
+
+	localization/english/sounds/players/gdf/commands/16129.wav
+}
+
+sound sounds/players/gdf/quickchat/context/followme {
+
+	localization/english/sounds/players/gdf/commands/16126.wav
+}

@@ -1,0 +1,43 @@
+// GDF High Command
+
+// Map Salvage
+
+sound sounds/vo/gdf/highcommand/maps/salvage/defend/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/salvage/10801.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/salvage/defend {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/salvage/10803.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/salvage/planted {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/salvage/10804.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/salvage/disarm {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/salvage/10805.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/salvage/planted/long {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/salvage/10806.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/salvage/disarmed {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/salvage/10807.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/salvage/gdfwin {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/salvage/10808.wav
+}
+
+sound sounds/vo/gdf/highcommand/maps/salvage/gdflose {
+
+	localization/english/sounds/vo/gdf/highcommand/maps/salvage/10809.wav
+}

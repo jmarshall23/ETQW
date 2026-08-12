@@ -1,0 +1,557 @@
+locString game/tt/too_many_mines {
+	text "#str_00010714" 
+}
+
+locString game/tt/have_fun {
+	text "#str_00010715" 
+}
+
+locString game/tt/vehicle_abandoned {
+	text "#str_00010716" 
+}
+
+locString game/tt/vehicle_passenger {
+	text "#str_00010717"
+}
+
+locString game/tt/vehicle_passenger_air {
+	text "#str_00010718"
+}
+
+locString game/tt/magog {
+	text "#str_00010719"
+}
+
+locString game/tt/titan {
+	text "#str_00010720"
+}
+
+locString game/tt/trojan {
+	text "#str_00010721"
+}
+
+locString game/tt/goliath {
+	text "#str_00010722"
+}
+
+locString game/tt/mcp {
+	text "#str_00010724"
+}
+
+locString game/tt/mcp_damaged {
+	text "#str_00010725"
+}
+
+locString game/tt/vehicle_damaged {
+	text "#str_00010726" 
+}
+
+locString game/tt/mcp_repaired {
+	text "#str_00010727" 
+}
+
+locString game/tt/mcp_deploy {
+	text "#str_00010728" 
+}
+
+locString game/tt/vehicle_repaired_fully {
+	text "#str_00010729" 
+}
+
+locString game/tt/vehicle_gunner {
+	text "#str_00010730" 
+}
+
+locString game/tt/vehicle_got_consent {
+	text "#str_00010731" 
+}
+
+locString game/tt/vehicle_cant_steal {
+	text "#str_00010732" 
+}
+
+locString game/tt/empty {
+	text "#str_00010733" 
+}
+
+locString game/tt/weapon_cant_mount {
+	text "#str_00010734" 
+}
+
+locString game/tt/weapon_emplacement_in_use {
+	text "#str_00010735" 
+}
+
+locString game/tt/weapon_emplacement_cant_use {
+	text "#str_00010736" 
+}
+
+locString game/tt/bind_key_pliers {
+	text "#str_00010740" 
+}
+
+locString game/tt/vote_test {
+	text "#str_00010741" 
+}
+
+locString game/tt/fire_team_create {
+	text "#str_00010746" 
+}
+
+locString game/tt/fire_team_join {
+	text "#str_00010747" 
+}
+
+locString game/tt/fire_team_join_specific {
+	text "#str_00010748" 
+}
+
+locString game/tt/fire_team_request_add {
+	text "#str_00010749" 
+}
+
+locString game/tt/icarus {
+	text "#str_00010750"
+}
+
+locString game/tt/platypus {
+	text "#str_00010751"
+}
+
+locString game/tt/buffalo {
+	text "#str_00010752"
+}
+
+locString game/tt/desecrator {
+	text "#str_00010753"
+}
+
+locString game/tt/hog {
+	text "#str_00010754"
+}
+
+locString game/tt/hornet {
+	text "#str_00010755"
+}
+
+locString game/tt/husky {
+	text "#str_00010756"
+}
+
+locString game/guis/tools/not_own_territory {
+	text "#str_00010758"
+}
+
+locString game/guis/tools/no_charge {
+	text "#str_00010791"
+}
+
+locString game/guis/tools/dismantle {
+	text "#str_00010759"
+}
+
+locString game/tt/task_need_leave_team {
+	text "#str_00010760" 
+}
+
+locString game/tt/task_need_abandon_task {
+	text "#str_00010761" 
+}
+
+locString game/tt/fire_team_request_join {
+	text "#str_00010762" 
+}
+
+locString game/tt/fire_team_request_create {
+	text "#str_00010763" 
+}
+
+locString game/tt/spawn_host_destroyed {
+	text "#str_00010764"
+}
+
+locString game/tt/fire_team_become_leader {
+	text "#str_00010765"
+}
+
+locString game/tt/vehicle_driver_backup {
+	text "#str_00010766"
+}
+
+locString game/tt/vehicle_player_banned {
+	text "#str_00010767"
+}
+
+locString game/tt/vehicle_player_kicked {
+	text "#str_00010768"
+}
+
+locString game/tt/teleporter_destroyed {
+	text "#str_00010769"
+}
+
+locString game/tt/teamkill/complaint {
+	text "#str_00010770"
+}
+
+locString game/tt/player_in_constructible {
+	text "#str_00010771"
+}
+
+locString game/tt/teleporter_badLocation {
+	text "#str_00010772"
+}
+
+locString game/tt/targeting/invalid_location {
+	text "#str_00010773"
+}
+
+locString game/tt/flyerhive_badLocation {
+	text "#str_00010774"
+}
+
+locString game/tt/amt_destroyed_missile {
+	text "#str_00010775"
+}
+
+locString game/tt/spawn_host_select {
+	text "#str_00010776"
+}
+
+locString game/tt/spawn_host_already_selected_1 {
+	text "#str_00010777"
+}
+
+locString game/tt/spawn_host_already_selected_2 {
+	text "#str_00010778"
+}
+
+locString game/tt/intro/tripmine_wrong_surface {
+	text "#str_00010779"
+}
+
+locString game/tt/intro/tripmine_unknown_beam_range {
+	text "#str_00010780"
+}
+
+locString game/tt/vehicle_cannot_repair {
+	text "#str_00010781"
+}
+
+locString game/tt/vehicle_cannot_exit {
+	text "#str_00010787"
+}
+
+locString game/tt/cannot_prone {
+	text "#str_00010782"
+}
+
+locString game/tt/player_profupgrade_respawn {
+	text "#str_00010930"
+}
+
+locString game/tt/mcp_noentry {
+	text "#str_00010783" 
+}
+
+locString game/tt/player_nodisguise_carryable {
+	text "#str_00010785"
+}
+
+locString game/tt/noobjective_warmup {
+	text "#str_00010786"
+}
+
+locString game/tt/player_profupgrade_now {
+	text "#str_00010935"
+}
+
+locString game/tt/player_profupgrade_weapselect {
+	text "#str_00010936"
+}
+
+locString game/tt/player_profupgrade_info {
+	text "#str_00010937"
+	arguments 2
+}
+
+locString game/tt/cannot_prone_rocketlauncher {
+	text "#str_00010788"
+}
+
+locString game/tt/cannot_prone_obliterator {
+	text "#str_00010789"
+}
+
+locString game/tt/stroytransfer_failed {
+	text "#str_00010790"
+}
+
+locString game/tt/waypoint_removed {
+	text "#str_00010793"
+}
+
+locString game/tt/unbalanced_teams_switch {
+	text "#str_00010794"
+}
+
+// new below
+locString game/tt/killed_by_mine {
+	text "#str_00010960"
+}
+
+locString game/tt/spawnhosting_me {
+	text "#str_00010959"
+}
+
+locString game/tt/possessing_me_gdf {
+	text "#str_00010957"
+}
+
+locString game/tt/possessing_me_strogg {
+	text "#str_00010958"
+}
+
+locString game/tt/killed_by_disguised_gdf {
+	text "#str_00010955"
+}
+
+locString game/tt/killed_by_disguised_strogg {
+	text "#str_00010956"
+}
+
+locString game/tt/low_ammo_gdf {
+	text "#str_00010938"
+}
+
+locString game/tt/low_ammo_strogg {
+	text "#str_00010954"
+}
+
+locString game/tt/low_health_gdf {
+	text "#str_00010940"
+}
+
+locString game/tt/low_health_strogg {
+	text "#str_00010939"
+}
+
+locString game/tt/revive_player_gdf {
+	text "#str_00010942"
+}
+
+locString game/tt/heal_player_gdf {
+	text "#str_00010944"
+}
+
+locString game/tt/supply_player_strogg {
+	text "#str_00010943"
+}
+
+locString game/tt/revive_player_strogg {
+	text "#str_00010941"
+}
+
+locString game/tt/unconscious_gdf {
+	text "#str_00010946"
+}
+
+locString game/tt/unconscious_strogg {
+	text "#str_00010945"
+}
+
+locString game/tt/engineer_deploy_mines {
+	text "#str_00010951"
+}
+
+locString game/tt/engineer_construct_mission {
+	text "#str_00010964"
+}
+
+locString game/tt/covertops_deploy_radar {
+	text "#str_00010966"
+}
+
+locString game/tt/covertops_hack_deployable {
+	text "#str_00010969"
+}
+
+locString game/tt/constructor_deploy_mines {
+	text "#str_00010951"
+}
+
+locString game/tt/engineer_defuse_charge {
+	text "#str_00010950"
+}
+
+locString game/tt/engineer_deploy_turret {
+	text "#str_00010967"
+}
+
+locString game/tt/fieldops_deploy_firesupport {
+	text "#str_00010968"
+}
+
+locString game/tt/soldier_destroy {
+	text "#str_00010970"
+}
+
+locString game/tt/constructor_construct_mission {
+	text "#str_00010963"
+}
+
+locString game/tt/aggressor_destroy {
+	text "#str_00010970"
+}
+
+locString game/tt/constructor_defuse_charge {
+	text "#str_00010949"
+}
+
+locString game/tt/constructor_deploy_turret {
+	text "#str_00010967"
+}
+
+locString game/tt/infiltrator_deploy_radar {
+	text "#str_00010965"
+}
+
+locString game/tt/oppressor_deploy_firesupport {
+	text "#str_00010968"
+}
+
+locString game/tt/infiltrator_hack {
+	text "#str_00010969"
+}
+
+locString game/tt/capture_spawn {
+	text "#str_00010972"
+}
+
+locString game/tt/liberate_spawn {
+	text "#str_00010971"
+}
+
+locString game/tt/carryable_steal {
+	text "#str_00010962"
+}
+
+locString game/tt/carryable_deliver {
+	text "#str_00010961"
+}
+
+locString game/tt/psi_deployed {
+	text "#str_00010973"
+}
+
+locString game/tt/radar_deployed {
+	text "#str_00010974"
+}
+
+locString game/tt/lockon_decoy_tooltip {
+	text "#str_00010975"
+}
+
+locString game/tt/new_mission {
+	text "#str_00010977"
+}
+
+locString game/tt/tooltip_information {
+	text "#str_00010980"
+}
+
+locString game/tt/tooltip_critical_class {
+	text "#str_00010976"
+}
+
+locString game/tt/tooltip_introductory1 {
+	text "#str_00010981"
+}
+
+locString game/tt/tooltip_introductory2 {
+	text "#str_00010982"
+}
+
+locString game/tt/tooltip_introductory3 {
+	text "#str_00010983"
+}
+
+locString game/tt/tooltip_warmup_not_ready {
+	text "#str_00010984"
+}
+
+locString game/tt/tooltip_explain_objectives {
+	text "#str_00010985"
+}
+
+locString game/tt/amt_destroyed_missile_gdf {
+	text "#str_00010929"
+}
+
+locString game/tt/amt_destroyed_missile_strogg {
+	text "#str_00010928"
+}
+
+locString game/tt/tooltip_area22 {
+	text "#str_00010986"
+}
+
+locString game/tt/tooltip_ark {
+	text "#str_00010987"
+}
+
+locString game/tt/tooltip_canyon {
+	text "#str_00010988"
+}
+
+locString game/tt/tooltip_island {
+	text "#str_00010989"
+}
+
+locString game/tt/tooltip_outskirts {
+	text "#str_00010990"
+}
+
+locString game/tt/tooltip_quarry {
+	text "#str_00010991"
+}
+
+locString game/tt/tooltip_refinery {
+	text "#str_00010992"
+}
+
+locString game/tt/tooltip_salvage {
+	text "#str_00010993"
+}
+
+locString game/tt/tooltip_sewer {
+	text "#str_00010994"
+}
+
+locString game/tt/tooltip_slipgate {
+	text "#str_00010995"
+}
+
+locString game/tt/tooltip_valley {
+	text "#str_00010996"
+}
+
+locString game/tt/tooltip_volcano {
+	text "#str_00010997"
+}
+
+locString game/tt/low_ammo_gdf_self {
+	text "#str_00010998"
+}
+
+locString game/tt/low_ammo_strogg_self {
+	text "#str_00010999"
+}
+
+locString game/tt/low_health_gdf_self {
+	text "#str_00011040"
+}
+
+locString game/tt/low_health_strogg_self {
+	text "#str_00011041"
+}

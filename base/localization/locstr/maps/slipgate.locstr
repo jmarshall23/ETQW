@@ -1,0 +1,275 @@
+
+/*
+=================
+ Localization for map
+=================
+*/
+
+// map info
+//-------------------------------------------------------
+locString maps/slipgate/briefing {
+	text "#str_00100400"
+}
+
+locString maps/slipgate/location {
+	text "#str_00100401"
+}
+
+locString maps/slipgate/campaign {
+	text "#str_00100402"
+}
+
+// command map tab names in maps/slipgate.world
+//-------------------------------------------------------	
+locString maps/slipgate/commandmap/desertside {
+	text "#str_00100403"
+}
+locString maps/slipgate/commandmap/arcticside {
+	text "#str_00100404"
+}
+
+// Antarctic GDF capturable spawn point in slipgate.world
+//-------------------------------------------------------
+locString maps/slipgate/gdf_checkpoint_spawn {
+	text "#str_00100405"
+}
+
+// objective descriptions
+//-------------------------------------------------------
+// hack the slipgate
+locString maps/slipgate/gdf_gate {
+	text "#str_00100410"
+}
+
+locString maps/slipgate/strogg_gate {
+	text "#str_00100411"
+}
+
+locString maps/slipgate/gdf_gate_short {
+	text "#str_00100412"
+}
+
+locString maps/slipgate/strogg_gate_short {
+	text "#str_00100413"
+}
+
+// drive the MCP through the slipgate
+locString maps/slipgate/gdf_mcp {
+	text "#str_00100414"
+}
+
+locString maps/slipgate/strogg_mcp {
+	text "#str_00100415"
+}
+
+locString maps/slipgate/gdf_mcp_short {
+	text "#str_00100416"
+}
+
+locString maps/slipgate/strogg_mcp_short {
+	text "#str_00100417"
+}
+
+// deploy the MCP at the outpost
+locString maps/slipgate/gdf_outpost {
+	text "#str_00100418"
+}
+
+locString maps/slipgate/strogg_outpost {
+	text "#str_00100419"
+}
+
+locString maps/slipgate/gdf_outpost_short {
+	text "#str_00100420"
+}
+
+locString maps/slipgate/strogg_outpost_short {
+	text "#str_00100421"
+}
+
+// plant HE charge
+locString maps/slipgate/gdf_tower {
+	text "#str_00100422"
+}
+
+locString maps/slipgate/strogg_tower {
+	text "#str_00100423"
+}
+
+locString maps/slipgate/gdf_tower_short {
+	text "#str_00100424"
+}
+
+locString maps/slipgate/strogg_tower_short {
+	text "#str_00100425"
+}
+
+// objective completion messages in slipgate.script
+//-------------------------------------------------------
+locString maps/slipgate/obj_hack_slipgate {
+	text "#str_00100430"
+	arguments 1
+}
+
+locString maps/slipgate/obj_mcp_slipgate {
+	text "#str_00100431"
+	arguments 1
+}
+
+locString maps/slipgate/obj_mcp_outpost {
+	text "#str_00100432"
+	arguments 1
+}
+
+locString maps/slipgate/obj_tower_generator {
+	text "#str_00100433"
+}
+
+locString maps/slipgate/obj_tower {
+	text "#str_00100434"
+	arguments 1
+}
+
+// desert GDF capturable spawn point in slipgate.world
+//-------------------------------------------------------
+locString maps/slipgate/gdf_garrison_spawn {
+	text "#str_00100440"
+}
+
+// gdf base gates in maps/references/slipgate/fort.world
+//-------------------------------------------------------
+locString maps/slipgate/gdf_north_gate {
+	text "#str_00100445"
+}
+
+locString maps/slipgate/gdf_south_gate {
+	text "#str_00100446"
+}
+
+// object names in maps/references/slipgate/objectives.world
+//-------------------------------------------------------
+locString maps/slipgate/gate {
+	text "#str_00100447"
+}
+
+locString maps/slipgate/tower_generator {
+	text "#str_00100448"
+}
+
+locString maps/slipgate/tower_core {
+	text "#str_00100449"
+}
+
+// strogg village barricades (secondary GDF objectives)
+//-------------------------------------------------------
+// West barricade
+locString maps/slipgate/west_barricade {
+	text "#str_00100406"
+}
+
+locString maps/slipgate/west_barricade_destroy {
+	text "#str_00100407"
+	arguments 1
+}
+
+locString maps/slipgate/west_barricade_progress {
+	text "#str_00100408"
+	arguments 1
+}
+
+locString maps/slipgate/west_barricade_disarm {
+	text "#str_00100409"
+	arguments 1
+}
+
+// South barricade
+locString maps/slipgate/south_barricade {
+	text "#str_00100426"
+}
+
+locString maps/slipgate/south_barricade_destroy {
+	text "#str_00100427"
+	arguments 1
+}
+
+locString maps/slipgate/south_barricade_progress {
+	text "#str_00100428"
+	arguments 1
+}
+
+locString maps/slipgate/south_barricade_disarm {
+	text "#str_00100429"
+	arguments 1
+}
+
+// East barricade
+locString maps/slipgate/east_barricade {
+	text "#str_00100436"
+}
+
+locString maps/slipgate/east_barricade_destroy {
+	text "#str_00100437"
+	arguments 1
+}
+
+locString maps/slipgate/east_barricade_progress {
+	text "#str_00100438"
+	arguments 1
+}
+
+locString maps/slipgate/east_barricade_disarm {
+	text "#str_00100439"
+	arguments 1
+}
+
+locString maps/slipgate/obj_construct_gun_post {
+	text "#str_00100441"
+	arguments 1
+}
+
+locString maps/slipgate/obj_construct_tower_village {
+	text "#str_00100442"
+	arguments 1
+}
+
+locString maps/slipgate/obj_construct_tower_fort {
+	text "#str_00100443"
+	arguments 1
+}
+
+locString maps/slipgate/obj_construct_gun_post_complete {
+	text "#str_00100444"
+	arguments 1
+}
+
+// these two strings taken from Salvage's allocation:
+locString maps/slipgate/obj_construct_tower_village_complete {
+	text "#str_00100395"
+	arguments 1
+}
+
+locString maps/slipgate/obj_construct_tower_fort_complete {
+	text "#str_00100396"
+	arguments 1
+}
+
+// these are from Island's allocation:
+locString maps/slipgate/obj_construct_gun_road {
+	text "#str_00100230"
+	arguments 1
+}
+
+locString maps/slipgate/obj_construct_gun_road_complete {
+	text "#str_00100231"
+	arguments 1
+}
+
+locString maps/slipgate/obj_construct_gun_rooftop {
+	text "#str_00100232"
+	arguments 1
+}
+
+locString maps/slipgate/obj_construct_gun_rooftop_complete {
+	text "#str_00100233"
+	arguments 1
+}

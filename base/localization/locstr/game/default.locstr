@@ -1,0 +1,1357 @@
+
+/*
+=================
+ game code messages
+=================
+*/
+
+
+locString game/warmup {
+	text "#str_00001000"
+}
+
+locString game/errors/couldntresolve {
+	text "#str_00001002"
+	arguments 1
+}
+
+locString game/errors/connectfailed {
+	text "#str_00001003"
+}
+
+locString game/errors/disconnectedfromserver {
+	text "#str_00001004"
+}
+
+locString game/errors/error {
+	text "#str_00001005"
+}
+
+locString game/errors/requiresauth {
+	text "#str_00001006"
+}
+
+locString game/errors/authfailed {
+	text "#str_00001007"
+}
+
+locString game/errors/needpass {
+	text "#str_00001008"
+}
+
+locString game/errors/connectdenied {
+	text "#str_00001009"
+}
+
+locString game/errors/authfailedcode {
+	text "#str_00001010"
+	arguments 1
+}
+
+locString game/errors/lostconnection {
+	text "#str_00001011"
+}
+
+locString game/errors/timedout {
+	text "#str_00001012"
+}
+
+locString game/errors/nopurecfg {
+	text "#str_00001013"
+}
+
+locString game/errors/cantstartpure {
+	text "#str_00001014"
+}
+
+locString game/timedemoresults {
+	text "#str_00001015"
+}
+
+
+locString game/errors/unknown {
+	text "#str_00001016"
+}
+
+locString game/errors/servernomap {
+	text "#str_00001017"
+}
+
+locString game/errors/serveronlylan {
+	text "#str_00001018"
+}
+
+locString game/errors/serveronlyauth {
+	text "#str_00001019"
+}
+
+locString game/errors/serverwrongversion {
+	text "#str_00001020"
+}
+
+locString game/errors/permban {
+	text "#str_00001021"
+}
+
+locString game/errors/tempban {
+	text "#str_00001022"
+}
+
+locString game/errors/serverspawning {
+	text "#str_00001023"
+}
+
+locString game/errors/serverbadsetup {
+	text "#str_00001024"
+}
+
+locString game/errors/serverfull {
+	text "#str_00001025"
+}
+
+locString game/errors/servernosync {
+	text "#str_00001026"
+}
+
+locString guis/errors/pleasewait { // Gordon: references a main menu string
+	text "#str_00013025"
+}
+
+locString game/errors/pb/mustenable {
+	text "#str_00001027"
+}
+
+locString game/errors/pb/ban {
+	text "#str_00001021"
+}
+
+locString game/errors/pb/shortban {
+	text "#str_00001028"
+	arguments 1
+}
+
+locString game/messages/connectingtoserver {
+	text "#str_00001029"
+	arguments 1
+}
+
+locString game/errors/servernotauthenticated {
+	text "#str_00001030"
+}
+
+locString game/messages/serveroutofdate {
+	text "#str_00001031"
+}
+
+locString game/waitingforadmin {
+	text "#str_00001032"
+}
+
+locString game/waitingforplayers {
+	text "#str_00001033"
+}
+
+locString game/waitingforreadyplayers {
+	text "#str_00001034"
+}
+
+locString game/errors/mustbeauthedtoconnect {
+	text "#str_00001035"
+}
+
+locString game/errors/pb/mustinstall {
+	text "#str_00001036"
+}
+
+
+
+
+
+locString game/gdf {
+	text "#str_00010007"
+}
+
+locString game/strogg {
+	text "#str_00010008"
+}
+
+locString game/x_team {
+	text "#str_00010013"
+	arguments 2
+}
+
+locString game/team {
+	text "#str_00010000"
+}
+
+locString game/spectator {
+	text "#str_00010017"
+}
+locString game/reinforcements {
+	text "#str_00010022"
+	arguments 1
+}
+locString game/level {
+	text "#str_00010027"
+}
+locString game/spectators {
+	text "#str_00010029"
+}
+locString game/no_objectives {
+	text "#str_00010030"
+}
+
+//locString game/complete {
+//	text "#str_00010031"
+//}
+
+locString game/disabled { 
+	text "#str_00010032"
+}
+
+locString game/range_text {
+	text "#str_00010033"
+}
+
+locString game/meters {
+	text "#str_00010034"
+}
+
+locString game/range {
+	text "#str_00010036"
+	arguments 2
+}
+
+locString game/destroyed {
+	text "#str_00010037"
+}
+
+locString game/seconds {
+	text "#str_00010040"
+}
+
+locString game/disabled_info {
+	text "#str_00010041"
+	arguments 1
+}
+
+locString game/weapon_disabled_info {
+	text "#str_00010127"
+	arguments 1
+}
+
+locString game/spawn {
+	text "#str_00010042"
+}
+
+locString game/liberated {
+	text "#str_00010043"
+	arguments 3
+}
+
+locString game/captured {
+	text "#str_00010044"
+	arguments 3
+}
+
+locString game/supplies {
+	text "#str_00010351"
+}
+
+locString game/supplycrate {
+	text "#str_00010352"
+}
+
+locString game/unconscious {
+	text "#str_00010045"
+}
+
+locString game/dead {
+	text "#str_00010046"
+}
+
+locString game/immobilized {
+	text "#str_00010047"
+}
+
+locString game/charge {
+	text "#str_00010048"
+}
+
+locString game/tripmine {
+	text "#str_00010049"
+}
+
+locString game/landmine {
+	text "#str_00010050"
+}
+
+locString game/prox_mine {
+	text "#str_00010051"
+}
+
+locString game/mine {
+	text "#str_00010056"
+}
+
+locString game/airstrike {
+	text "#str_00010053"
+}
+
+locString game/completed {
+	text "#str_00010054"
+}
+
+locString game/objective {
+	text "#str_00010055"
+}
+
+locString game/unarmedtripmine {
+	text "#str_00010057"
+}
+
+locString game/unarmedproxmine {
+	text "#str_00010099"
+}
+
+locString game/selfarmingtripmine {
+	text "#str_00010091"
+}
+
+locString game/selfarmingproxmine {
+	text "#str_00010098"
+}
+
+locString game/teleport_beacon {
+	text "#str_00010585"
+}
+
+locString game/bad_objective {
+	text "#str_00010058"
+}
+
+locString game/ssg_fired {
+	text "#str_00010063"
+}
+
+locString game/hammer_fired {
+	text "#str_00010064"
+}
+
+/*
+=================
+ vechicle messages
+=================
+*/
+
+locString game/vec/immobilized {
+	text "#str_00010100"
+}
+
+locString game/vec/anansi {
+	text "#str_00010102"
+}
+
+locString game/vec/badger {
+	text "#str_00010103"
+}
+
+locString game/vec/bumblebee {
+	text "#str_00010104"
+}
+
+locString game/vec/desecrator {
+	text "#str_00010105"
+}
+
+locString game/vec/hive {
+	text "#str_00010106"
+}
+
+locString game/vec/goliath {
+	text "#str_00010107"
+}
+
+locString game/vec/hog {
+	text "#str_00010108"
+}
+
+locString game/vec/hornet {
+	text "#str_00010109"
+}
+
+locString game/vec/husky {
+	text "#str_00010110"
+}
+
+locString game/vec/icarus {
+	text "#str_00010111"
+}
+
+locString game/vec/mcp {
+	text "#str_00010112"
+}
+
+locString game/vec/platypus  {
+	text "#str_00010114"
+}
+
+locString game/vec/tank {
+	text "#str_00010115"
+}
+
+locString game/vec/titan {
+	text "#str_00010116"
+}
+
+locString game/vec/trojan {
+	text "#str_00010117"
+}
+
+locString game/goliath_long {
+	text "#str_00010118"
+}
+
+locString game/vec/jotun {
+	text "#str_00010119"
+}
+
+locString game/vec/magog {
+	text "#str_00010120"
+}
+
+locString game/vec/mdn_long {
+	text "#str_00010121"
+}
+
+locString game/vec/trojan_apc {
+	text "#str_00010123"
+}
+
+locString game/vec/drone {
+	text "#str_00010124"
+}
+
+locString game/vec/mcp_immob {
+	text "#str_00010125"
+}
+
+locString game/vec/mcp/scud {
+	text "#str_00010126"
+}
+
+
+/*
+=================
+ deployables messages
+=================
+*/
+
+locString game/deploy/amt_long {
+	text "#str_00010200"
+}
+
+locString game/deploy/amt {
+	text "#str_00010201"
+}
+
+locString game/deploy/apt_long {
+	text "#str_00010202"
+}
+
+locString game/deploy/apt {
+	text "#str_00010203"
+}
+
+locString game/deploy/avt_long {
+	text "#str_00010204"
+}
+
+locString game/deploy/avt {
+	text "#str_00010205"
+}
+
+locString game/deploy/artillery {
+	text "#str_00010206"
+}
+
+locString game/deploy/plasma_mortar {
+	text "#str_00010207"
+}
+
+locString game/deploy/psi_radar {
+	text "#str_00010208"
+}
+
+locString game/deploy/radar {
+	text "#str_00010209"
+}
+
+locString game/deploy/railhow {
+	text "#str_00010210"
+}
+
+locString game/deploy/rocket_artillery {
+	text "#str_00010211"
+}
+
+locString game/deploy/rocket_art {
+	text "#str_00010212"
+}
+
+locString game/deploy/ssg_long {
+	text "#str_00010213"
+}
+
+locString game/deploy/ssg {
+	text "#str_00010214"
+}
+
+locString game/deploy/ssm_long {
+	text "#str_00010215"
+}
+
+locString game/deploy/ssm {
+	text "#str_00010216"
+}
+
+locString game/deploy/vampire_airstrike {
+	text "#str_00010217"
+}
+
+locString game/deploy/airstrile {
+	text "#str_00010218"
+}
+
+locString game/deploy/vos_long {
+	text "#str_00010219"
+}
+
+locString game/deploy/vos {
+	text "#str_00010220"
+}
+
+locString game/deploy/shield {
+	text "#str_00010221"
+}
+
+locString game/deploy/radar_station {
+	text "#str_00010222"
+}
+
+locString game/deploy/bdt_long {
+	text "#str_00010223"
+}
+
+locString game/deploy/bdt {
+	text "#str_00010224"
+}
+
+/*
+=================
+ structures
+=================
+*/
+
+locString game/struct/commandcenter {
+	text "#str_00010300"
+}
+
+locString game/struct/dominationhub {
+	text "#str_00010301"
+}
+
+/*
+=================
+ teams
+=================
+*/
+
+locString game/team/gdf {
+	text "#str_00002108"
+}
+
+locString game/team/strogg {
+	text "#str_00002109"
+}
+
+locString game/team/gdf/highcommand {
+	text "#str_00002110"
+}
+
+locString game/team/strogg/highcommand {
+	text "#str_00002111"
+}
+
+/*
+=================
+ "func" items; supply cabinets, doors...
+=================
+*/
+locString game/func/supply_cabinet {
+	text "#str_00010350"
+}
+
+/*
+=================
+ objective messages
+=================
+*/
+
+
+locString game/obj/bridge {
+	text "#str_00010400"
+}
+
+locString game/obj/zappor {
+	text "#str_00010401"
+}
+
+/*
+=================
+ weapons
+=================
+*/
+
+locString game/weapons/ready {
+	text "#str_00010500"
+}
+
+locString game/weapons/recharging {
+	text "#str_00010501"
+}
+
+locString game/weapons/waiting {
+	text "#str_00010502"
+}
+
+locString game/weapons/reloading {
+	text "#str_00010503"
+}
+
+locString game/weapons/airstrike {
+	text "#str_00010504"
+}
+
+locString game/weapons/ammo {
+	text "#str_00010505" // "Ammo Pack"
+}
+
+locString game/weapons/drone_flyer {
+	text "#str_00010506" // "Flyer Drone"
+}
+
+locString game/weapons/health {
+	text "#str_00010507" // "Health Pack"
+}
+
+locString game/weapons/he {
+	text "#str_00010508" // "HE Charge"
+}
+
+locString game/weapons/plasma {
+	text "#str_00010509" // "Plasma Charge"
+}
+
+locString game/weapons/mine {
+	text "#str_00010510" // "Mine"
+}
+
+locString game/weapons/mine_grav {
+	text "#str_00010511" // "GravMine"
+}
+
+locString game/weapons/stroyent_cells {
+	text "#str_00010512" // "Stroyent Cells"
+}
+
+locString game/weapons/supply {
+	text "#str_00010513" // "Supply Pack"
+}
+
+locString game/weapons/teleporter {
+	text "#str_00010514" // "Teleporter"
+}
+
+locString game/weapons/third_eye_camera {
+	text "#str_00010515" // "Third Eye Camera"
+}
+
+locString game/weapons/ap_trap {
+	text "#str_00010516" // "Anti-Personal Trap"
+}
+
+locString game/weapons/knife {
+	text "#str_00010517" // "Knife"
+}
+
+locString game/weapons/law {
+	text "#str_00010518" // "LAW"
+}
+
+locString game/weapons/aamissile {
+	text "#str_00010589" // "AA Missile"
+}
+
+locString game/weapons/pistol {
+	text "#str_00010519" // "Pistol"
+}
+
+locString game/weapons/assaultrifle {
+	text "#str_00010520" // "Assault Rifle"
+}
+
+locString game/weapons/binoc {
+	text "#str_00010521" // "Binoculars"
+}
+
+locString game/weapons/targetting {
+	text "#str_00010522" // "Targeting Tool"
+}
+
+locString game/weapons/spotter {
+	text "#str_00010523" // "Spotter"
+}
+
+locString game/weapons/defib {
+	text "#str_00010524" // "Defibrillators"
+}
+
+locString game/weapons/deploy {
+	text "#str_00010525" // "Deploy Tool"
+}
+
+locString game/weapons/heatsight {
+	text "#str_00010526" // "Heatsight"
+}
+
+locString game/weapons/nightsight {
+	text "#str_00010527" // "Nightsight"
+}
+
+locString game/weapons/flashlight {
+	text "#str_00010528" // "Flashlight"
+}
+
+locString game/weapons/shield {
+	text "#str_00010529" // "Energy Shield"
+}
+
+locString game/weapons/stroyent_pda {
+	text "#str_00010530" // "Stroyent PDA"
+}
+
+locString game/weapons/disguise {
+	text "#str_00010531" // "Disguise"
+}
+
+locString game/weapons/hacker {
+	text "#str_00010532" // "Hacker"
+}
+
+locString game/weapons/pliers {
+	text "#str_00010533" // "Pliers"
+}
+
+locString game/weapons/arming_tool {
+	text "#str_00010588" // "Arming Tool"
+}
+
+locString game/weapons/drone_repair {
+	text "#str_00010534" // "Repair Drone"
+}
+
+locString game/weapons/spike {
+	text "#str_00010535" // "Spike"
+}
+
+locString game/weapons/spike_hacking_tool {
+	text "#str_00010536" // "Hacking Tool"
+}
+
+locString game/weapons/spike_arming_tool {
+	text "#str_00010593" // "Arming Tool"
+}
+
+locString game/weapons/stroyent_tool {
+	text "#str_00010537" // "Stroyent Tool"
+}
+
+locString game/weapons/third_eye_monitor {
+	text "#str_00010538" // "Third Eye Monitor"
+}
+
+locString game/weapons/trinoc {
+	text "#str_00010539" // "Trinoculars"
+}
+
+locString game/weapons/trinoc_targetting {
+	text "#str_00010540" // "Targeting Trinoculars"
+}
+
+locString game/weapons/gren_launcher {
+	text "#str_00010541" // "Grenade Launcher"
+}
+
+locString game/weapons/assaultrifle_scoped {
+	text "#str_00010542" // "Scoped Assault Rifle"
+}
+
+locString game/weapons/blaster {
+	text "#str_00010543" // "Blaster"
+}
+
+locString game/weapons/gpmg {
+	text "#str_00010544" // "GPMG"
+}
+
+locString game/weapons/mg {
+	text "#str_00010590" // "MG"
+}
+
+locString game/weapons/grenade_emp {
+	text "#str_00010546" // "EMP Grenade"
+}
+
+locString game/weapons/grenade_frag {
+	text "#str_00010547" // "Frag Grenade"
+}
+
+locString game/weapons/grenade_scrambler {
+	text "#str_00010549" // "Scrambler Grenade"
+}
+
+locString game/weapons/grenade_shrap {
+	text "#str_00010550" // "Shrap Grenade"
+}
+
+locString game/weapons/grenade_smoke {
+	text "#str_00010551" // "Smoke Grenade"
+}
+
+locString game/weapons/stun {
+	text "#str_00010552" // "Stun Grenade"
+}
+
+locString game/weapons/hyperblaster {
+	text "#str_00010553" // "Hyper Blaster"
+}
+
+locString game/weapons/lacerator {
+	text "#str_00010554" // "Lacerator"
+}
+
+locString game/weapons/lacerator_scoped {
+	text "#str_00010567" // "Accurised Lacerator"
+}
+
+locString game/weapons/railchucker {
+	text "#str_00010555" // "RailChucker"
+}
+
+locString game/weapons/lightning_pistol {
+	text "#str_00010556" // "Lightning Pistol"
+}
+
+locString game/weapons/machinepistol {
+	text "#str_00010557" // "Machine Pistol"
+}
+
+locString game/weapons/machinepistol_silenced {
+	text "#str_00010558" // "Silenced MP"
+}
+
+locString game/weapons/nailgun {
+	text "#str_00010559" // "NailGun"
+}
+
+locString game/weapons/obliterator {
+	text "#str_00010560" // "Obliterator"
+}
+
+locString game/weapons/pistol_silenced {
+	text "#str_00010561" // "Silenced Pistol"
+}
+
+locString game/weapons/railgun {
+	text "#str_00010562" // "RailGun"
+}
+
+locString game/weapons/rocketlauncher {
+	text "#str_00010563" // "Rocket Launcher"
+}
+
+locString game/weapons/shotgun {
+	text "#str_00010564" // "Shotgun"
+}
+
+locString game/weapons/sniperrifle {
+	text "#str_00010565" // "Sniper Rifle"
+}
+
+locString game/weapons/spikes {
+	text "#str_00010566" // "Spikes"
+}
+
+locString game/weapons/gatling {
+	text "#str_00010568" // "Minigun"
+}
+
+locString game/weapons/fafff {
+	text "#str_00010569" // "FAFFF"
+}
+
+locString game/weapons/plasma_cannon {
+	text "#str_00010570" // "Plasma Cannon"
+}
+
+locString game/weapons/strockets {
+	text "#str_00010571" // "Strockets"
+}
+
+locString game/weapons/stroybombs {
+	text "#str_00010572" // "Stroybombs"
+}
+
+locString game/weapons/haw {
+	text "#str_00010573" // "HAW"
+}
+
+locString game/weapons/sbc {
+	text "#str_00010574" // "SBC"
+}
+
+locString game/weapons/flak {
+	text "#str_00010575" // "Flak Cannon"
+}
+
+locString game/weapons/parachute {
+	text "#str_00010576" // "Parachute"
+}
+
+locString game/weapons/violator_beacon {
+	text "#str_00010580" // Violator Beacon
+}
+
+locString game/weapons/camo {
+	text "#str_00010581"
+}
+
+locString game/weapons/pistol_akimbo {
+	text "#str_00010583"
+}
+
+locString game/weapons/pistol_akimbo_silenced {
+	text "#str_00010584"
+}
+
+locString game/items/supplies/health {
+	text "#str_00010586"
+}
+
+locString game/items/supplies/ammo {
+	text "#str_00010587"
+}
+
+locString game/weapons/vampire {
+	text "#str_00010591"
+}
+
+locString game/weapons/violator {
+	text "#str_00010592"
+}
+
+locString game/weapons/assaultrifle_grenade {
+	text "#str_00010594" // "Grenade Launcher"
+}
+
+locString game/weapons/plasma_launcher {
+	text "#str_00010595" // "Plasma Launcher"
+}
+
+/*
+=================
+ misc message (fire support, etc)
+=================
+*/
+
+locString game/fire_sup/out_of_range {
+	text "#str_00011000"
+}
+
+locString game/fire_sup/ready {
+	text "#str_00011002"
+}
+
+locString game/fire_sup/reloading {
+	text "#str_00011003"
+}
+
+locString game/fire_sup/waiting {
+	text "#str_00011004"
+}
+
+locString game/fire_sup/disabled {
+	text "#str_00011005"
+}
+
+locString game/fire_sup/not_deployed {
+	text "#str_00011006"
+}
+
+locString game/fire_sup/firing {
+	text "#str_00011008"
+}
+
+locString game/fire_sup/locking {
+	text "#str_00011009"
+}
+
+locString game/fire_sup/acquired {
+	text "#str_00011010"
+}
+
+locString game/fire_sup/invalid {
+	text "#str_00011011"
+}
+
+locString game/fire_sup/acquired/rockets {
+	text "#str_00011012"
+}
+
+
+
+
+
+locString game/misc/unknown {
+	text "#str_00040000"
+}
+
+locString game/misc/no_description {
+	text "#str_00040001"
+}
+
+locString game/misc/leaving_combat_zone {
+	text "#str_00040004"
+}
+
+locString game/spawns/capture {
+	text "#str_00040005"
+}
+
+locString game/misc/motd {
+	text "#str_00040006"
+}
+
+locString game/misc/spawn_host {
+	text "#str_00040007"
+}
+
+locString game/construction/build {
+	text "#str_00040008"
+}
+
+// Items
+locString game/items/pickup/health {
+	text "#str_00040009"
+}
+
+locString game/items/pickup/ammo {
+	text "#str_00040010"
+}
+
+locString game/items/pickup/stroyent {
+	text "#str_00040011"
+}
+
+locString game/prog_bar/hacking {
+	text "#str_00040012"
+}
+
+locString game/prog_bar/arming {
+	text "#str_00040013"
+}
+
+locString game/prog_bar/disarming {
+	text "#str_00040014"
+}
+
+locString game/prog_bar/repairing {
+	text "#str_00040015"
+}
+
+locString game/prog_bar/constructing {
+	text "#str_00040016"
+}
+
+locString game/prog_bar/capturing {
+	text "#str_00040017"
+}
+
+locString game/prog_bar/implanting {
+	text "#str_00040018"
+}
+
+locString game/prog_bar/disguising {
+	text "#str_00040019"
+}
+
+locString game/vehicle_warning {
+	text "#str_00040020"
+}
+
+locString game/prog_bar/spotting {
+	text "#str_00040021"
+}
+
+locString game/misc/spawn_host_created {
+	text "#str_00040022"
+}
+
+locString game/misc/shield_generator_hacked_reenable {
+	text "#str_00040023"
+}
+
+locString game/misc/shield_generator_hacked_attack {
+	text "#str_00040024"
+}
+
+locString game/prog_bar/reviving {
+	text "#str_00040025"
+}
+
+locString game/prog_bar/liberating {
+	text "#str_00040026"
+}
+
+locString game/prof/battlesense {
+	text "#str_00040027"
+}
+
+locString game/prof/lightweapons {
+	text "#str_00040028"
+}
+
+locString game/prof/vehicle {
+	text "#str_00040029"
+}
+
+locString game/vote/vote_status {
+	text "#str_00010065"
+	arguments 4
+}
+
+locString game/player_rename {
+	text "#str_00010066"
+	arguments 2
+}
+
+/*locString game/player_joined {
+	text "#str_00010067"
+	arguments 2
+}*/
+
+locString fireteam/messages/disbanded {
+	text "#str_00010068"
+}
+
+locString game/team/too_many_players {
+	text "#str_00010069"
+}
+
+locString game/location/missing {
+	text "#str_00010070"
+}
+
+locString game/location/range {
+	text "#str_00010071"
+	arguments 3
+}
+
+locString game/location/direction/N {
+	text "#str_00010072"
+}
+
+locString game/location/direction/NE {
+	text "#str_00010073"
+}
+
+locString game/location/direction/E {
+	text "#str_00010074"
+}
+
+locString game/location/direction/SE {
+	text "#str_00010075"
+}
+
+locString game/location/direction/S {
+	text "#str_00010076"
+}
+
+locString game/location/direction/SW {
+	text "#str_00010077"
+}
+
+locString game/location/direction/W {
+	text "#str_00010078"
+}
+
+locString game/location/direction/NW {
+	text "#str_00010079"
+}
+
+locString fireteam/messages/noneleft {
+	text "#str_00010080"
+}
+
+locString rules/messages/warning/xleft {
+	text "#str_00010081"
+	arguments 1
+}
+
+locString rules/messages/warning {
+	text "#str_00010082"
+}
+
+locString rules/messages/muted {
+	text "#str_00010083"
+}
+
+locString rules/messages/globalchatdisabled {
+	text "#str_00010084"
+}
+
+locString teams/messages/wrongpassword {
+	text "#str_00010085"
+}
+
+locString teams/messages/toomanyplayers {
+	text "#str_00010086"
+}
+
+locString teams/messages/switchwait {
+	text "#str_00010087"
+}
+
+locString teams/messages/nojoin {
+	text "#str_00010088"
+}
+
+locString game/gametype/campaign {
+	text "#str_00002112"
+}
+
+locString game/gametype/objective {
+	text "#str_00002113"
+}
+
+locString game/gametype/stopwatch {
+	text "#str_00002114"
+}
+
+locString game/gametype/unknown {
+	text "#str_00002115"
+}
+
+locString game/playerjoined {
+	text "#str_00002117"
+	arguments 2
+}
+
+locString game/needreadyup {
+	text "#str_00002118"
+	arguments 1
+}
+
+locString game/youareready {
+	text "#str_00002119"
+}
+
+locString game/someone {
+	text "#str_00002120"
+}
+
+locString game/arm/arming {
+	text "#str_00010596"
+}
+
+locString game/arm/connected {
+	text "#str_00010597"
+}
+
+locString game/arm/search {
+	text "#str_00010598"
+}
+
+locString fireteam/messages/full {
+	text "#str_00010089"
+}
+
+locString fireteam/messages/kick {
+	text "#str_00010090"
+}
+
+locString fireteam/messages/cannot_join_private {
+	text "#str_00010093"
+}
+
+locString game/complaint {
+	text "#str_00010094"
+	arguments 1
+}
+
+locString game/voicechat/disabled {
+	text "#str_00010095"
+}
+
+locString game/voicechat/throttled {
+	text "#str_00010096"
+}
+
+locString game/tkforgiven {
+	text "#str_00010097"
+	arguments 1
+}
+
+locString game/press_for_limbo {
+	text "#str_00010784"
+	arguments 2
+}
+
+locString game/flyerhive/deactivated {
+	text "#str_00010792"
+}
+
+locString rules/messages/textmuted {
+	text "#str_00016200"
+}
+
+locString rules/messages/textunmuted {
+	text "#str_00016201"
+}
+
+locString rules/messages/voipmuted {
+	text "#str_00016202"
+}
+
+locString rules/messages/voipunmuted {
+	text "#str_00016203"
+}
+
+locString fireteam/messages/invitethrottle {
+	text "#str_00016204"
+}
+
+locString fireteam/messages/proposethrottle {
+	text "#str_00016205"
+}
+
+locString game/deployable_owner {
+	text "#str_00016300"
+	arguments 1
+}
+
+locString game/revive_by {
+	text "#str_00016301"
+	arguments 1
+}

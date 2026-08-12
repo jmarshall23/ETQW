@@ -1,0 +1,43 @@
+effect effects/violator_strike_simple
+{
+	size	32301
+
+	emitter "core"
+	{
+		duration	1,1
+		count		5,5
+		locked
+
+		line
+		{
+			duration	1,1
+			persist
+			material	"textures/effects/violator_beam"
+			trailRepeat	1
+
+			start
+			{
+				position { cylinder 64000,-32,-32,64000,32,32 }
+				size { point 200 }
+				tint { line 0.34902,0.101961,0.0156863,0.27451,0.0784314,0.0156863 }
+			}
+
+			motion
+			{
+				size { envelope convexfade }
+				tint { envelope jrad_concavefade count 3,3,3 offset -2,-2,-2 }
+				fade { envelope rr2_concavefade_start_at_1_fast }
+				length { envelope stormtable }
+			}
+
+			end
+			{
+				size { point 300 }
+				length { point -64000,0,0 }
+			}
+		}
+	}
+}
+
+
+

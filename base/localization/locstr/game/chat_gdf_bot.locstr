@@ -1,0 +1,52 @@
+locString gdf/botchat/generic/imamedic {
+	text "#str_0200275"
+}
+
+locString gdf/botchat/generic/medicenroute {
+	text "#str_0200276"
+}
+
+locString gdf/botchat/objectives/explosives/plant {
+	text "#str_0200277"
+}
+
+locString gdf/botchat/generic/needalift {
+	text "#str_0200273"
+}
+
+locString gdf/botchat/generic/needaride {
+	text "#str_0200274"
+}
+
+locString gdf/botchat/generic/youlead {
+	text "#str_0200278"
+}
+
+locString gdf/botchat/generic/leadway {
+	text "#str_0200279"
+}
+
+locString gdf/botchat/generic/whereto {
+	text "#str_0200280"
+}
+
+locString gdf/botchat/generic/gotyourback {
+	text "#str_0200281"
+}
+
+locString gdf/botchat/generic/tkrevive {
+	text "#str_0200282"
+}
+
+locString gdf/botchat/generic/vehicle/letmerepair {
+	text "#str_0200284"
+}
+
+locString gdf/botchat/generic/vehicle/iwillfixride {
+	text "#str_0200285"
+}
+
+locString gdf/botchat/generic/vehicle/stopiwillfixride {
+	text "#str_0200286"
+}
+

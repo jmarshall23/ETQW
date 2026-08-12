@@ -1,0 +1,106 @@
+////// MAP OBJECTS - SNOW VERSIONS ///////
+
+
+material models/mapobjects/crash_barriers/crash_barriers_snow
+{
+	surfaceType	"metal"
+	{
+		diffusemap	picmip -1	models/mapobjects/crash_barriers/crash_barriers_snow_d.tga
+		specularmap	picmip -2	models/mapobjects/crash_barriers/crash_barriers_snow_s.tga
+		bumpmap		picmip -1	models/mapobjects/crash_barriers/crash_barriers_local.tga
+		
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 5,2.5,0,0 
+	}
+}
+
+material models/mapobjects/barricades/barricade_sheet_snow
+{
+    noshadows
+    {
+    	diffusemap	models/mapobjects/barricades/barricade_sheet_snow_d.tga
+     	bumpmap 	addnormals (models/mapobjects/barricades/barricade_sheet_local.tga, heightmap (models/mapobjects/barricades/barricade_sheet_h.tga, 2))
+	}
+}
+
+material models/mapobjects/dumpster/skip01_snow
+{	
+	diffusemap 	models/mapobjects/dumpster/skip01_snow_d.tga
+	specularmap	models/mapobjects/dumpster/skip01_s.tga
+	bumpmap		models/mapobjects/dumpster/skip01_local.tga
+}
+
+material models/mapobjects/dumpster/dumpster01_snow
+{
+	surfaceType "metal"
+
+    	diffusemap	models/mapobjects/dumpster/dumpster01_snow_d.tga
+    	bumpmap 	models/mapobjects/dumpster/dumpster01_local.tga
+	specularmap	models/mapobjects/dumpster/dumpster01_s.tga
+}
+
+material models/mapobjects/infrastructure/busstop01_snow
+{
+	surfaceType	"metal"
+
+	diffusemap	models/mapobjects/infrastructure/busstop01_snow_d.tga
+	specularmap	models/mapobjects/infrastructure/busstop01_s.tga
+	bumpmap		models/mapobjects/infrastructure/busstop01_local.tga
+}
+
+material models/mapobjects/infrastructure/busstop01_glass_snow
+{
+	twosided
+	useTemplate templates/windowglass_mask < 
+		models/mapobjects/infrastructure/busstop01_snow_d.tga, 
+		models/mapobjects/infrastructure/busstop01_local.tga,
+		models/mapobjects/infrastructure/busstop01_mask.tga,
+		2, 1.0, 1.0
+	>
+}
+
+material models/mapobjects/infrastructure/lightpost01_snow
+{
+	surfaceType	"metal"
+
+	diffusemap	models/mapobjects/infrastructure/lightpost01_snow_d.tga
+	specularmap	models/mapobjects/infrastructure/lightpost01_s.tga
+	bumpmap		models/mapobjects/infrastructure/lightpost01_local.tga
+}
+
+material models/mapobjects/infrastructure/trashcan01_snow
+{
+	surfaceType	"metal"
+
+	twosided
+
+	{       
+		diffusemap 	models/mapobjects/infrastructure/trashcan01_snow_d.tga
+		specularmap	models/mapobjects/infrastructure/trashcan01_s.tga
+		bumpmap		models/mapobjects/infrastructure/trashcan01_local.tga
+		alphaTest	0.1
+	}
+}
+
+material models/mapobjects/infrastructure/trashcan_rubbish_snow
+{
+	twosided
+
+	{       
+		diffusemap 	models/mapobjects/infrastructure/trashcan_rubbish_snow_d.tga
+		specularmap	models/mapobjects/infrastructure/trashcan_rubbish_s.tga
+		bumpmap		models/mapobjects/infrastructure/trashcan_rubbish_local.tga
+		alphaTest	0.1
+	}
+}
+
+material models/mapobjects/infrastructure/firehydrant01_snow
+{
+	surfaceType	"metal"
+
+	diffusemap	models/mapobjects/infrastructure/firehydrant01_snow_d.tga
+	specularmap	models/mapobjects/infrastructure/firehydrant01_s.tga
+	bumpmap		models/mapobjects/infrastructure/firehydrant01_local.tga
+}

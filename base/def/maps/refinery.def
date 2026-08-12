@@ -1,0 +1,19 @@
+entityDef gameplay_refinery_bridge{
+	"inherit"						"constructible_base"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"GDF Bridge"
+	"editor_var health"				"Health of the Construction, 0 is nonbreakable. Default is 5000"
+	"editor_var construct_time"		"Time in seconds to construct. Default is 10"
+	"editor_var fizzle_time"		"Time in seconds for an unfinished construction to fade out. Default 30s"
+	"editor_var skin_construct"		"Skin used during construction. Default is deployEffect"
+
+	"team"							"gdf"
+
+	"model"							"models/mapobjects/refinery/assault_ramp.lwo"
+	"cm_model"						"models/mapobjects/refinery/assault_ramp.lwo"
+
+	"collection_he"					"he"
+}

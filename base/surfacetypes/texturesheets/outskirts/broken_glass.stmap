@@ -1,0 +1,22 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+***
+*/
+
+surfaceTypeMap texturesheets/ghost_town/broken_glass {
+	width	512
+	height	1024
+	/* areaDefs */
+
+	rect {
+		surfaceType	glass
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 512 512 )
+	}
+	rect {
+		surfaceType	glass
+		surfaceColor	( 1 1 1 )
+		coords ( 0 512 ) ( 512 768 )
+	}
+}

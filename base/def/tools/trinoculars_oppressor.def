@@ -1,0 +1,162 @@
+/***********************************************************************
+
+	reexportModels tools\trinoculars.def
+
+***********************************************************************/
+
+// ========================================================================
+// Export
+//
+
+export hauser {
+	options -prefix TARGETING_ -sourcedir models/tools/strogg_targeting_tool/dev_sd -destdir models/tools/strogg_targeting_tool/
+/*
+	mesh	strogg_targeting_tool_base_file.mb		-dest models/tools/strogg_targeting_tool/strogg_targeting_tool_view.md5mesh
+	anim	strogg_targeting_tool_idle.mb			-dest models/tools/strogg_targeting_tool/strogg_targeting_tool_idle.md5anim
+	anim	strogg_targeting_tool_raise.mb			-dest models/tools/strogg_targeting_tool/strogg_targeting_tool_raise.md5anim
+ 	anim	strogg_targeting_tool_lower.mb			-dest models/tools/strogg_targeting_tool/strogg_targeting_tool_lower.md5anim
+   	anim	strogg_targeting_tool_zoom.mb			-dest models/tools/strogg_targeting_tool/strogg_targeting_tool_zoomin.md5anim
+ 	anim	strogg_targeting_tool_zoom.mb			-dest models/tools/strogg_targeting_tool/strogg_targeting_tool_zoomout.md5anim
+   */
+   anim	strogg_targeting_tool_sprint.mb			-dest models/tools/strogg_targeting_tool/strogg_targeting_tool_startsprint.md5anim -range 1 6
+ 	anim	strogg_targeting_tool_sprint.mb			-dest models/tools/strogg_targeting_tool/strogg_targeting_tool_sprint.md5anim  -range 6 6
+ 	anim	strogg_targeting_tool_sprint.mb			-dest models/tools/strogg_targeting_tool/strogg_targeting_tool_leavesprint.md5anim -range 7 12
+
+}
+
+// ========================================================================
+// view Models
+//
+
+model viewmodel_strogg_targeting_tool {
+	mesh					models/tools/strogg_targeting_tool/strogg_targeting_tool_view.md5mesh
+
+	anim raise 				models/tools/strogg_targeting_tool/strogg_targeting_tool_raise.md5anim {
+		frame begin				sound_channel snd_weapon_raise snd_raise
+	}
+	anim idle 				models/tools/strogg_targeting_tool/strogg_targeting_tool_idle.md5anim
+	anim putaway 			models/tools/strogg_targeting_tool/strogg_targeting_tool_lower.md5anim
+	anim zoomin 			models/tools/strogg_targeting_tool/strogg_targeting_tool_zoomin.md5anim
+	anim zoomout 			models/tools/strogg_targeting_tool/strogg_targeting_tool_zoomout.md5anim
+	anim start_sprint 		models/tools/strogg_targeting_tool/strogg_targeting_tool_startsprint.md5anim
+	anim sprint 			models/tools/strogg_targeting_tool/strogg_targeting_tool_sprint.md5anim
+	anim leave_sprint 		models/tools/strogg_targeting_tool/strogg_targeting_tool_leavesprint.md5anim
+
+
+}
+
+
+// ========================================================================
+// Entity DEFS
+//
+invItemDef inventory/tools/trinoculars/oppressor {
+	type									"tool"
+	slot									"binocs"
+	name									"game/weapons/trinoc_targetting"
+	data {
+		"model_view" 						"viewmodel_strogg_targeting_tool"
+		"model_world" 						"models/tools/strogg_targeting_tool/targeting_device_new_3rdperson.lwo"
+		"joint_attach"						"LeftHand"
+
+		"view_offset"						"0 2 -2"
+
+		"anim_prefix"						"hands_trinoculars"
+		"anim_prefix_class"					"hands"
+
+		"weapon_scriptobject"				"tool_targeting"
+
+		"gui_overlay"						"guis/game/targeting/trinoculars"
+		"hud_sort"							"999"
+
+		"snd_zoomin"						"sounds/tools/binocs/zoom/in"
+		"snd_zoomout"						"sounds/tools/binocs/zoom/out"
+		"snd_target_locking"				"sounds/weapons/misc/target_track_short"
+		"snd_target_locked"					"sounds/weapons/misc/target_lock"
+		"snd_targeting"						"sounds/tools/strogg/beam"
+		"snd_raise"							"sounds/tools/trinocs/raise"
+		"snd_scopeup"						"sounds/tools/trinocs/zoom"
+		"snd_confirm"						"sounds/vo/strogg/npc/bombardment/approved"
+		"snd_out_of_range"					"sounds/vo/deploy/out_of_range/strogg"
+
+		"lock_distance"						"8192"
+		"lock_filter"						"target_lock_filter"
+		"lock_enabled"						"1"
+
+		"mtr_beam"							"textures/sfx/laser"
+		"mtr_weaponmenu"					"guis/assets/icons/weapons/strogg_target"
+
+		"show_charge"						"1"
+		"charge_per_use"					"100"
+
+		"crosshair"							"none"
+
+		"crosshair_spread_min"				"0.1"
+		"crosshair_spread_max"				"0.1"
+		"crosshair_spread_scale"			"1"
+
+		"spread_min"						"0"
+		"spread_max"						"0"
+
+		"spread_crouch_min"					"0"
+		"spread_crouch_max"					"0"
+
+		"spread_prone_min"					"0"
+		"spread_prone_max"					"0"
+
+		"spread_jump_min"					"0"
+		"spread_jump_max"					"0"
+
+		"tt_intro_1"						"trinoculars_oppressor_intro_1"
+		"tt_intro_2"						"trinoculars_oppressor_intro_2"
+		"tt_intro_no_deployable"			"trinoculars_oppressor_no_deployable"
+		"tt_intro_scope_up_1"				"trinoculars_oppressor_scope_up_1"
+		"tt_intro_scope_up_2"				"trinoculars_oppressor_scope_up_2"
+		"tt_invalid_location"				"targeting_invalid_location"
+
+		"joint_beam"						"LeftRing3"
+
+		"timer_charge"						"energy_firesupport"
+
+		"use_hold_anims"					"1"
+
+		"num_zoom_levels"					"4"
+		"zoom_fov_1"						"45"
+		"zoom_fov_2"						"30"
+		"zoom_fov_3"						"20"
+		"zoom_fov_4"						"10"
+		"zoom_time"							"0.2"
+
+		"player_weapon_num"					"9"
+
+		"fx_idle"							"effects/tools/targeting_trinoculars_idle"
+		"idle_effect_joint"					"targeting_tool_joint"
+	}
+}
+
+#include "templates/tooltips.include"
+
+toolTip trinoculars_oppressor_intro_1 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/trinoculars_oppressor_1"
+}
+
+toolTip trinoculars_oppressor_intro_2 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/generic/fire_use_item"
+}
+
+toolTip trinoculars_oppressor_no_deployable {
+	sound "sounds/ui/main/bad"
+	text "game/tt/intro/generic/no_firesupport"
+	locationIndex TOOLTIP_POSITION_WEAPON_CHANGE
+}
+
+toolTip trinoculars_oppressor_scope_up_1 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/trinoculars_oppressor_scope_up_1"
+}
+
+toolTip trinoculars_oppressor_scope_up_2 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/generic/descope_weapon"
+}

@@ -1,0 +1,99 @@
+
+sound sounds/deployables/plasmamortar/deploy {
+
+	unclamped
+	volume 1
+	minDistance	5
+	maxDistance 100
+
+	sounds/deployables/plasmamortar/deployseq.wav
+}
+
+sound sounds/deployables/plasmamortar/fly {
+
+	minDistance	25
+	maxDistance 	150
+
+	looping
+	leadin
+	sounds/weapons/plasmacannon/fly_start.wav
+	sounds/weapons/plasmacannon/fly_loop.wav
+}
+
+sound sounds/deployables/plasmamortar/explode {
+
+	maxDistance 100
+
+	sounds/deployables/plasmamortar/explode_01.wav
+	sounds/deployables/plasmamortar/explode_02.wav
+}
+
+// *** New Stuff - May.3.2006 - Xian
+
+sound sounds/deployables/plasmamortar/detonate_near {
+
+	minDistance 50
+	maxDistance 125
+
+	no_occlusion
+
+	sounds/deployables/plasmamortar/detonation_01_near.wav
+	sounds/deployables/plasmamortar/detonation_02_near.wav
+}
+
+sound sounds/deployables/plasmamortar/detonate_medium {
+
+	volume	-5
+	farDistance 100
+	maxDistance 175
+	no_occlusion
+
+	sounds/deployables/plasmamortar/detonation_01_medium.wav
+	sounds/deployables/plasmamortar/detonation_02_medium.wav
+}
+
+sound sounds/deployables/plasmamortar/detonate_far {
+
+	volume	-5
+	farDistance 150
+	maxDistance 200
+	no_occlusion
+
+	sounds/deployables/plasmamortar/detonation_01_far.wav
+	sounds/deployables/plasmamortar/detonation_02_far.wav
+}
+
+// *** Fire Sounds
+
+sound sounds/deployables/plasmamortar/fire_near {
+
+	shakes		0.1
+	minDistance 1
+	maxDistance 75
+	no_occlusion
+
+	sounds/deployables/plasmamortar/fire_01_near.wav
+	sounds/deployables/plasmamortar/fire_02_near.wav
+}
+
+sound sounds/deployables/plasmamortar/fire_medium {
+
+	volume	-5
+	farDistance 50
+	maxDistance 100
+	no_occlusion
+
+	sounds/deployables/plasmamortar/fire_01_medium.wav
+	sounds/deployables/plasmamortar/fire_02_medium.wav
+}
+
+sound sounds/deployables/plasmamortar/fire_far {
+
+	volume	-1
+	farDistance 75
+	maxDistance 150
+	no_occlusion
+
+	sounds/deployables/plasmamortar/fire_01_far.wav
+	sounds/deployables/plasmamortar/fire_02_far.wav
+}

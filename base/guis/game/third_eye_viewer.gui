@@ -1,0 +1,92 @@
+#include <guis/common/colors.include>
+
+gui guis/tools/third_eye_viewer {
+
+	properties {
+		//string	postProcessMaterial = "system/noglare";
+	}
+
+	materials {
+
+		"guis/assets/hack/covertbg2"		"guis/assets/hack/covertbg2"
+		"guis/assets/badger/tach_add_vert"	"guis/assets/badger/tach_add_vert"
+		"guis/assets/common/addhighlight"	"guis/assets/common/addhighlight"
+	}
+	windowDef desktop {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			string material = "guis/assets/hack/covertbg2";
+		}		
+	}
+	windowDef mapLight {
+		properties {
+			rect rect = 10,25,620,240;
+			string	material = "guis/assets/common/addhighlight";
+			color	backColor = 0.75,0.75,0.75,1;
+		}
+	}
+
+	windowDef textInfo {
+		properties {
+			wstring keyText1 		= gui.blankWStr;
+			wstring keyText2 		= gui.blankWStr;
+			wstring textToggle		= gui.blankWStr;
+			wstring textDestruct	= gui.blankWStr;
+			rect rect				= 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT;
+		}
+		events {
+			onCreate {
+				keyText1 = gui.getKeyBind( "_attack", "" );
+				textToggle = localizeArgs( "guis/game/viewer/third_eye_toggle", keyText1 );
+				keyText2 = gui.getKeyBind( "_altattack", "" );
+				textDestruct = localizeArgs( "guis/game/viewer/third_eye_destruct", keyText2 );
+			}
+			onPreDraw {
+				drawText( textToggle, "45, 140, 355, 130", COLOR_WHITE, 38, DTF_CENTER | DTF_VCENTER | DTF_WORDWRAP );
+				drawText( textDestruct, "45, 300, 355, 130", COLOR_WHITE, 38, DTF_CENTER | DTF_VCENTER | DTF_WORDWRAP );
+				gui.scriptPushFloat( false );
+			}
+		}
+	}
+	windowDef signalText {
+		properties {
+			rect	rect		= 0, 0, 640, 110;
+			float	fontSize = 44;
+			wstring	text		= localizeArgs( "guis/game/viewer/sig_strength", toWString( globals.gameHud.signalStrength * 100, 0 ) );
+		}
+	}
+	windowDef signalText1 {
+		properties {
+			rect	rect		= 1, 1, 640, 110;
+			float	fontSize = 44;
+			wstring	text		= localizeArgs( "guis/game/viewer/sig_strength", toWString( globals.gameHud.signalStrength * 100, 0 ) );
+		}
+	}
+	windowDef signalText2 {
+		properties {
+			rect	rect		= 2, 2, 640, 110;
+			float	fontSize = 44;
+			wstring	text		= localizeArgs( "guis/game/viewer/sig_strength", toWString( globals.gameHud.signalStrength * 100, 0 ) );
+		}
+	}
+	windowDef vehicleWeapvBG {
+		properties {
+			color backColor = 0.14,0.3,0.3,0.1;
+			string material = "guis/assets/badger/tach_add_vert";
+			rect	rect		= 417, 101, 135, 354;//0, 0, 600, 50;
+		}
+	}
+	windowDef vehicleWeapClipv {
+		properties {
+			rect	rect		= 417, (350-globals.gameHud.signalStrength*350)+101, 200, 350 * globals.gameHud.signalStrength;
+			float flags = WF_CLIP_TO_RECT;
+		}
+		windowDef vehicleWeapv {
+			properties {
+				color backColor = 0.74,1,1,1;
+				string material = "guis/assets/badger/tach_add_vert";
+				rect	rect		= 0, (globals.gameHud.signalStrength*350)-350, 135, 354;//0, 0, 600, 50;
+			}
+		}
+	}		
+}

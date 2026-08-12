@@ -1,0 +1,17 @@
+material models/mapobjects/crates/crate01
+{
+	noshadows
+	surfaceType "wood"
+	{
+		diffusemap 	models/mapobjects/crates/crate01_d.tga
+		specularmap	models/mapobjects/crates/crate01_s.tga
+		bumpmap		models/mapobjects/crates/crate01_local.tga
+		//vertexcolor
+		
+		diffuseDetailMap	 	textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	6,6,0,0
+
+	}	
+}

@@ -1,0 +1,81 @@
+renderprogram game/railgunScope {
+	program vertex arb { <%
+		OPTION ARB_position_invariant ;
+
+		TEMP	scalar, R0;
+
+		SUB		scalar.y, $colorAttrib.x, 0.5;
+		SLT		R0.x, scalar.y, 0;
+		ADD		R0.y, 1, -R0.x;
+
+		# if < 0, use extended range, else use initial range
+		MUL		R0.z, R0.y, $parameters.x;
+		MUL		R0.w, R0.y, $parameters.y;
+		MAD		R0.z, R0.x, $parameters.z, R0.z;
+		MAD		R0.w, R0.x, $parameters.w, R0.w;
+
+		# calculate scalar
+		MUL		scalar.x, 2, scalar.y;
+		ABS		scalar.x, scalar.x;
+		ADD		scalar.y, 1, -scalar.x;
+		MUL		scalar.x, R0.x, scalar.x;
+		MAD		scalar.x, R0.y, scalar.y, scalar.x;
+
+		MAD		result.texcoord.x, scalar.x, R0.w, R0.z;
+		ADD		result.texcoord.y, $colorAttrib.x, -0.01; # cut-off epsilon for effect
+	%> }
+
+	program fragment arb { <%
+		OPTION ARB_precision_hint_fastest;
+
+		PARAM	consts = { 1.0, 0.0, 0.5, 0.0 };
+		PARAM	scale = { 0.299, 0.587, 0.114, 1.0 };
+		TEMP	R0, R1, texcoord;
+		TEMP	clean, blur;
+
+		# calculate the screen texcoord in the 0.0 to 1.0 range
+		MUL		texcoord, fragment.position, $currentRenderTexelSize.zwzw;
+
+		# ensure scaling from center of screen
+		ADD		texcoord.xy, texcoord, consts.z;
+
+		RCP		R1.a, fragment.texcoord.x;
+		MOV		R0.a, fragment.texcoord.x;
+		MUL		R0.rg, R0.a, texcoord;
+		FRC		R0.rg, R0;
+		ABS		R1.y, R1.a;
+		MUL		R1.rg, R0, R1.y;
+		CMP		R0.rg, texcoord, consts.r, consts.g;
+		CMP		R0.rg, -R0, -R1, R1;
+		ADD		R0.rg, -R0, texcoord;
+		MAD		R0.rg, R1.a, consts.b, R0;
+
+		# check cut-off
+		CMP		R0, fragment.texcoord.y, texcoord, R0;
+
+		# move back
+		ADD		R0.xy, R0, -consts.b;
+
+		# scale by the screen adjust
+		MUL		texcoord, R0, $currentRenderTexelSize.xyzy;
+
+		TEX		R0, texcoord, $currentRender, RECT;
+
+		# grayscale factor
+		DP3		R1, R0, scale;
+		LRP		clean, $parameters2.x, R0, R1;
+		
+		# post processing
+		MUL		R0, 0.25, texcoord;
+		TEX		blur, R0, $map, RECT;
+		MUL		R0, blur, $postGlareParameters.y;
+		MAD		R0, clean, $postGlareParameters.x, R0;
+		DP3		R1.x, R0, scale;
+		ADD		R0, R0, -R1.x;
+		MAD		R0, $postSaturationContrast.x, R0, R1.x;
+		ADD		R0, R0, -0.5;
+		MAD		R1, $postSaturationContrast.y, R0, 0.5;
+		MUL		R1, R1, $postTint;
+		MUL		result.color, R1, $diffuseColor;
+	%> }
+}

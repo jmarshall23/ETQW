@@ -1,0 +1,42 @@
+object vehicle_strogg_cockpit : vehicle_basic_cockpit {
+	void				OnEntered();
+	void				OnEnteredStrogg_Base();
+
+	void				destroy();
+
+	void				SetupScreen();
+};
+
+void vehicle_strogg_cockpit::OnEntered() {
+	OnEnteredStrogg_Base();
+}
+
+void vehicle_strogg_cockpit::OnEnteredStrogg_Base() {
+	thread SetupScreen();
+}
+
+void vehicle_strogg_cockpit::destroy() {
+	sys.killThread( "stroggCockpitThread" );
+}
+
+#define HEALTH_CUTOFF 500
+#define HEALTH_SCALE 0.1
+
+void vehicle_strogg_cockpit::SetupScreen() {
+	sys.threadName( "stroggCockpitThread" );
+	
+	while ( true ) {
+		float h = myVehicle.getHealth();
+		float f;
+
+		if ( h < HEALTH_CUTOFF ) {
+			f = h;
+		} else {
+			f = HEALTH_CUTOFF;
+		}		
+		f = HEALTH_CUTOFF - f;
+		
+		setShaderParm( 5, HEALTH_SCALE * f );
+		sys.wait( 0.1 );
+	}
+}

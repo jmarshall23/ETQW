@@ -1,0 +1,28 @@
+/*
+***
+DO NOT EDIT THIS MANUALLY
+atlas/valley/valley_wall_1.atlas
+***
+*/
+
+surfaceTypeMap texturesheets/valley/valley_wall_1 {
+	width	256
+	height	2048
+	/* areaDefs */
+
+	rect {
+		surfaceType	
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 256 2048 )
+	}
+	rect {
+		surfaceType	metal
+		surfaceColor	( 1 1 1 )
+		coords ( 0 0 ) ( 256 1536 )
+	}
+	rect {
+		surfaceType	concrete
+		surfaceColor	( 1 1 1 )
+		coords ( 0 1536 ) ( 256 2048 )
+	}
+}

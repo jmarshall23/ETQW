@@ -1,0 +1,83 @@
+/***********************************************************************
+
+weapon_shotgun.script
+
+***********************************************************************/
+
+object weapon_shotgun : weapon_clip {
+	void		preinit();
+
+	float		DoReload( boolean wasScoped );
+	void		ShotgunReload();
+	void		Base_BeginReload();
+};
+
+void weapon_shotgun::preinit() {
+	hasScope		= false;
+	hasIronSights	= true;
+}
+
+float weapon_shotgun::DoReload( boolean wasScoped ) {
+	if ( !sys.isServer() && sys.getLocalViewPlayer() != myPlayer ) {
+		weaponReloading();
+		playAnim( ANIMCHANNEL_ALL, "reload" );
+		waitUntil( animDone( ANIMCHANNEL_ALL, 4 ) );
+		weaponReady();
+	} else {
+		playAnim( ANIMCHANNEL_ALL, "reload_start" );
+		waitUntil( animDone( ANIMCHANNEL_ALL, 4 ) );
+		
+		if ( CanReload() ) {
+			ShotgunReload();
+		}
+	}
+
+	playAnim( ANIMCHANNEL_ALL, "reload_end" );
+	waitUntil( animDone( ANIMCHANNEL_ALL, 4 ) );
+	
+	return 0.0f;
+}
+
+void weapon_shotgun::ShotgunReload() {
+	Base_BeginReload();
+
+	while ( CanReload() ) {
+		sys.waitFrame();
+		weaponReloading();
+		playAnim( ANIMCHANNEL_ALL, "reload" );
+		waitUntil( animDone( ANIMCHANNEL_ALL, 4 ) );
+		addToClip( 0, reloadAmmo );
+		weaponReady();
+
+		if ( WEAPON_ATTACK && sys.getTime() > refireTime ) {
+			// let it transition back towards an idle animation for a bit
+			Base_EndReload();
+			playAnimBlended( ANIMCHANNEL_ALL, "idle", 0.1f );
+			sys.wait( 0.1f );
+			weaponState( "Idle", 4 );
+		}
+
+		if ( WEAPON_HIDE ) {
+			Base_EndReload();
+			weaponState( "Idle", 4 );			
+		}
+
+		if ( WEAPON_LOWERWEAPON ) {
+			Base_EndReload();
+			weaponState( "Lower", 4 );
+		}
+	}
+	
+	Base_EndReload();
+}
+
+void weapon_shotgun::Base_BeginReload() {
+	if ( ShouldRunGuis() ) {
+		float need = clipSize( 0 ) - ammoInClip( 0 );
+		if ( need > ( ammoAvailable( 0 ) - ammoInClip( 0 ) ) ) {
+			need = ammoAvailable( 0 ) - ammoInClip( 0 );
+		}
+		float reloadTime = ( getAnimLength( "reload" ) ) * need - need * 0.09f;
+		sys.setGUIFloat( GUI_GLOBALS_HANDLE, "gameHud.weaponReloadTime", reloadTime );
+	}
+}

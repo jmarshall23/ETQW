@@ -1,0 +1,158 @@
+material textures/wood/woodenplanks01
+{
+		diffusemap	textures/wood/woodenplanks01_d.tga
+		specularmap	textures/wood/woodenplanks01_s.tga
+		bumpmap		textures/wood/woodenplanks01_local.tga
+}
+
+material textures/wood/woodenplanks02
+{
+		diffusemap	textures/wood/woodenplanks02_d.tga
+		specularmap	textures/wood/woodenplanks02_s.tga
+		bumpmap		textures/wood/woodenplanks02_local.tga
+}
+
+material textures/wood/wooden_wall1
+{
+		diffusemap	textures/wood/wooden_wall1_d.tga
+		specularmap	textures/wood/wooden_wall1_s.tga
+		bumpmap		textures/wood/wooden_wall1_local.tga
+}
+
+material textures/wood/wooden_wall2
+{
+		diffusemap	textures/wood/wooden_wall2_d.tga
+		specularmap	textures/wood/wooden_wall2_s.tga
+		bumpmap		textures/wood/wooden_wall2_local.tga
+}
+
+material textures/wood/wooden_wall2_1
+{
+		diffusemap	textures/wood/wooden_wall2_1_d.tga
+		specularmap	textures/wood/wooden_wall1_s.tga
+		bumpmap		textures/wood/wooden_wall2_1_local.tga
+}
+
+material textures/wood/wooden_wall2_1_white
+{
+		diffusemap	textures/wood/wooden_wall2_1_white_d.tga
+		specularmap	textures/wood/wooden_wall1_s.tga
+		bumpmap		textures/wood/wooden_wall2_1_local.tga
+}
+
+material textures/wood/wooden_wall2_2
+{
+		diffusemap	textures/wood/wooden_wall2_2_d.tga
+		specularmap	textures/wood/wooden_wall2_2_s.tga
+		bumpmap		textures/wood/wooden_wall2_2_local.tga
+}
+
+material textures/wood/wooden_wall3
+{
+		diffusemap	textures/wood/wooden_wall3_d.tga
+		specularmap	textures/wood/wooden_wall3_s.tga
+		bumpmap		textures/wood/wooden_wall3_local.tga
+}
+
+// painted wood for trimaran hulls
+material textures/wood/wooden_wall3_multicoloured
+{
+		diffusemap	textures/wood/wooden_wall3_multicoloured_d.tga
+		specularmap	textures/wood/wooden_wall3_s.tga
+		bumpmap		textures/wood/wooden_wall3_local.tga
+}
+
+material textures/wood/wooden_wall3_red
+{
+		diffusemap	textures/wood/wooden_wall3_red_d.tga
+		specularmap	textures/wood/wooden_wall3_s.tga
+		bumpmap		textures/wood/wooden_wall3_local.tga
+}
+
+material textures/wood/wooden_wall3_white
+{
+		diffusemap	textures/wood/wooden_wall3_white_d.tga
+		specularmap	textures/wood/wooden_wall3_s.tga
+		bumpmap		textures/wood/wooden_wall3_local.tga
+}
+
+material textures/wood/wooden_wall4
+{
+		diffusemap	textures/wood/wooden_wall4_d.tga
+		specularmap	textures/wood/wooden_wall4_s.tga
+		bumpmap		textures/wood/wooden_wall4_local.tga
+}
+
+material textures/wood/wooden_wall5
+{
+		diffusemap	textures/wood/wooden_wall5_d.tga
+		specularmap	textures/wood/wooden_wall5_s.tga
+		bumpmap		textures/wood/wooden_wall5_local.tga
+}
+
+material textures/wood/wooden_wall5_1
+{
+		diffusemap	textures/wood/wooden_wall5_1_d.tga
+		specularmap	textures/wood/wooden_wall5_s.tga
+		bumpmap		textures/wood/wooden_wall5_local.tga
+}
+
+material textures/wood/wooden_wall5_2
+{
+		diffusemap	textures/wood/wooden_wall5_2_d.tga
+		specularmap	textures/wood/wooden_wall5_s.tga
+		bumpmap		textures/wood/wooden_wall5_2_local.tga
+}
+
+material textures/wood/wooden_wall5_3
+{
+		diffusemap	textures/wood/wooden_wall5_3_d.tga
+		specularmap	textures/wood/wooden_wall5_s.tga
+		bumpmap		textures/wood/wooden_wall5_2_local.tga
+}
+
+material textures/wood/wooden_deck1
+{
+		diffusemap	textures/wood/wooden_deck1_d.tga
+		specularmap	textures/wood/wooden_deck1_s.tga
+		bumpmap		textures/wood/wooden_deck1_local.tga
+}
+
+material textures2/wood/wooden_trim_1
+{
+	qer_editorimage textures2/wood/wooden_trim_1_d.tga
+	diffusemap	textures2/wood/wooden_trim_1_d.tga
+	specularmap     textures2/wood/wooden_trim_1_s.tga
+	bumpmap 	textures2/wood/wooden_trim_1_local.tga
+}
+
+material textures2/wood/wooden_trim_2
+{
+	qer_editorimage textures2/wood/wooden_trim_2_d.tga
+	diffusemap	textures2/wood/wooden_trim_2_d.tga
+	specularmap     textures2/wood/wooden_trim_2_s.tga
+	bumpmap 	textures2/wood/wooden_trim_2_local.tga
+}
+
+material textures2/wood/wooden_trim_3
+{
+	qer_editorimage textures2/wood/wooden_trim_3_d.tga
+	diffusemap	textures2/wood/wooden_trim_3_d.tga
+	specularmap     textures2/wood/wooden_trim_3_s.tga
+	bumpmap 	textures2/wood/wooden_trim_3_local.tga
+}
+
+material textures2/wood/plywood01
+{
+	surfaceType	"wood"
+	{
+		diffusemap				textures2/wood/plywood01_d.tga
+		specularmap picmip -1	textures2/wood/plywood01_s.tga
+		bumpmap 				textures2/wood/plywood01_local.tga
+		
+		diffuseDetailMap 		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	4,4,0,0
+	}
+}

@@ -1,0 +1,370 @@
+// NORMAL
+
+material texturesheets/area22/area22_sheet01
+{
+	surfaceTypeMap "texturesheets/area22/area22_sheet01"
+	{
+		diffusemap	picmip -1	texturesheets/area22/area22_sheet01_d.tga
+		specularmap	picmip -2	texturesheets/area22/area22_sheet01_s.tga
+		bumpmap		picmip -1	texturesheets/area22/area22_sheet01_local.tga
+		vertexcolor
+		
+		diffuseDetailMap 		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	3,24,0,0
+	}
+}
+
+material texturesheets/area22/area22_sheet02
+{
+	surfaceTypeMap "texturesheets/area22/area22_sheet02"
+	{
+		diffusemap	picmip -1	texturesheets/area22/area22_sheet02_d.tga
+		specularmap	picmip -2	texturesheets/area22/area22_sheet02_s.tga
+		bumpmap		picmip -1	texturesheets/area22/area22_sheet02_local.tga
+		vertexcolor
+		
+		diffuseDetailMap 		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	3,24,0,0
+	}
+}
+
+material texturesheets/area22/area22_sheet03
+{
+	surfaceTypeMap "texturesheets/area22/area22_sheet03"
+	{
+		diffusemap	picmip -1	texturesheets/area22/area22_sheet03_d.tga
+		specularmap	picmip -2	texturesheets/area22/area22_sheet03_s.tga
+		bumpmap		picmip -1	texturesheets/area22/area22_sheet03_local.tga
+		vertexcolor
+		
+		diffuseDetailMap 		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	3,24,0,0
+	}
+}
+
+material texturesheets/area22/area22_sheet04
+{
+	surfaceTypeMap "texturesheets/area22/area22_sheet04"
+	{
+		diffusemap	picmip -1	texturesheets/area22/area22_sheet04_d.tga
+		specularmap	picmip -2	texturesheets/area22/area22_sheet04_s.tga
+		bumpmap		picmip -1	texturesheets/area22/area22_sheet04_local.tga
+		vertexcolor
+		
+		diffuseDetailMap 		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	3,24,0,0
+	}
+}
+
+material texturesheets/area22/area22_sheet05
+{
+	surfaceTypeMap "texturesheets/area22/area22_sheet05"
+	{
+		diffusemap	picmip -1	texturesheets/area22/area22_sheet05_d.tga
+		specularmap	picmip -2	texturesheets/area22/area22_sheet05_s.tga
+		bumpmap 	picmip -1	texturesheets/area22/area22_sheet05_local.tga
+		vertexcolor
+		
+		diffuseDetailMap 		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	3,24,0,0
+	}
+}
+
+material texturesheets/area22/area22_sheet06
+{
+	surfaceTypeMap "texturesheets/area22/area22_sheet06"
+	{
+		diffusemap	picmip -1	texturesheets/area22/area22_sheet06_d.tga
+		specularmap	picmip -2	texturesheets/area22/area22_sheet06_s.tga
+		bumpmap		picmip -1	texturesheets/area22/area22_sheet06_local.tga
+		vertexcolor
+				
+		diffuseDetailMap 		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	3,24,0,0
+	}
+}
+
+material texturesheets/area22/area22_sheet07
+{
+	surfaceTypeMap "texturesheets/area22/area22_sheet07"
+	{
+		diffusemap	picmip -1	texturesheets/area22/area22_sheet07_d.tga
+		specularmap	picmip -2	texturesheets/area22/area22_sheet07_s.tga
+		bumpmap		picmip -1	texturesheets/area22/area22_sheet07_local.tga
+		vertexcolor
+		
+		diffuseDetailMap 		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	3,24,0,0
+	}
+}
+
+material texturesheets/area22/area22_sheet08
+{
+	surfaceTypeMap "texturesheets/area22/area22_sheet08"
+	{
+		diffusemap	picmip -1	texturesheets/area22/area22_sheet08_d.tga
+		specularmap	picmip -2	texturesheets/area22/area22_sheet08_s.tga
+		bumpmap		picmip -1	texturesheets/area22/area22_sheet08_local.tga
+		vertexcolor
+		
+		diffuseDetailMap 		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	3,24,0,0
+	}
+}
+
+material texturesheets/area22/area22_sheet09
+{
+	surfaceTypeMap "texturesheets/area22/area22_sheet09"
+	{
+		diffusemap	picmip -1	texturesheets/area22/area22_sheet09_d.tga
+		specularmap	picmip -2	texturesheets/area22/area22_sheet09_s.tga
+		bumpmap		picmip -1	texturesheets/area22/area22_sheet09_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		detailMult 3,24,0,0
+	}
+}
+
+material texturesheets/area22/area22_sheet10
+{
+	surfaceTypeMap "texturesheets/area22/area22_sheet10"
+	{
+		diffusemap	picmip -1	texturesheets/area22/area22_sheet10_d.tga
+		specularmap	picmip -2	texturesheets/area22/area22_sheet10_s.tga
+		bumpmap 	picmip -1	texturesheets/area22/area22_sheet10_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		detailMult 3,24,0,0
+	}
+}
+
+material texturesheets/area22/area22_sheet11
+{
+	surfaceTypeMap "texturesheets/area22/area22_sheet11"
+	{
+		diffusemap 	picmip -1	texturesheets/area22/area22_sheet11_d.tga
+		specularmap	picmip -2	texturesheets/area22/area22_sheet11_s.tga
+		bumpmap 	picmip -1	texturesheets/area22/area22_sheet11_local.tga
+		vertexcolor
+				
+		diffuseDetailMap 		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	3,24,0,0
+	}
+}
+
+material texturesheets/area22/area22_sheet11_noshadows
+{
+	noshadows
+	surfaceTypeMap "texturesheets/area22/area22_sheet11"
+	{
+		diffusemap 	picmip -1	texturesheets/area22/area22_sheet11_d.tga
+		specularmap	picmip -2	texturesheets/area22/area22_sheet11_s.tga
+		bumpmap 	picmip -1	texturesheets/area22/area22_sheet11_local.tga
+		vertexcolor
+				
+		diffuseDetailMap 		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	3,24,0,0
+	}
+}
+
+
+material texturesheets/area22/area22_sheet12
+{
+	surfaceTypeMap "texturesheets/area22/area22_sheet12"
+	{
+		diffusemap 	picmip -1	texturesheets/area22/area22_sheet12_d.tga
+		specularmap	picmip -2	texturesheets/area22/area22_sheet12_s.tga
+		bumpmap 	picmip -1	texturesheets/area22/area22_sheet12_local.tga
+		vertexcolor
+				
+		diffuseDetailMap 		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	3,24,0,0
+	}
+}
+
+material texturesheets/area22/area22_sheet13
+{
+	surfaceTypeMap "texturesheets/area22/area22_sheet13"
+	{
+		diffusemap	picmip -1	texturesheets/area22/area22_sheet13_d.tga
+		specularmap	picmip -2	texturesheets/area22/area22_sheet13_s.tga
+		bumpmap 	picmip -1	texturesheets/area22/area22_sheet13_local.tga
+		vertexcolor
+		
+		diffuseDetailMap 		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	3,24,0,0
+	}
+}
+
+material texturesheets/area22/area22_sheet14
+{
+	surfaceTypeMap "texturesheets/area22/area22_sheet14"
+	{
+		diffusemap	picmip -1	texturesheets/area22/area22_sheet14_d.tga
+		specularmap	picmip -2	texturesheets/area22/area22_sheet14_s.tga
+		bumpmap 	picmip -1	texturesheets/area22/area22_sheet14_local.tga
+		vertexcolor
+
+		//diffuseDetailMap 		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/metal_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/metal_detail01_d.tga
+		detailMult	3,24,0,0
+	}
+}
+
+
+// DECALS
+
+material texturesheets/area22/decals_cracksandmetal
+{     
+	{	
+      	diffusemap	picmip -1	texturesheets/area22/decals_cracksandmetal_d.tga
+		specularmap	picmip -2	texturesheets/area22/decals_cracksandmetal_s.tga
+		bumpmap 	picmip -1	texturesheets/area22/decals_cracksandmetal_local.tga
+		alphaTest 0.5
+	}
+}
+
+material texturesheets/area22/decals_dirt
+{
+	polygonOffset
+	sort decal	
+	nonsolid
+ 	translucent
+	{
+		program	filterVertexColorCoverage
+		blend	filter
+		map						texturesheets/area22/decals_dirt_d.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material texturesheets/area22/gradient_round
+{
+	polygonOffset 0.25
+	sort decal	
+	nonsolid
+ 	translucent
+	{
+ 		program	filterVertexColorCoverage
+ 		blend	filter
+ 		map		picmip -1		textures/decals/round.tga
+ 		vertexcolor
+ 	}
+}
+
+material texturesheets/area22/gradient_round2
+{
+	polygonOffset 0.25
+	sort decal	
+	nonsolid
+ 	translucent
+	{
+		program	filterVertexColorCoverage
+		blend	filter
+		map						textures/decals/round2.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material texturesheets/area22/gradient_round_shortfade
+{
+	polygonOffset 0.25
+	sort decal	
+	nonsolid
+ 	translucent
+	{
+		program	filterVertexColorCoverage
+		blend	filter
+		map						textures/decals/round_shortfade.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+// MAPOBJECTS
+
+material models/mapobjects/area22/area22_mapobjects01
+{
+	surfacetype "metal"
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	models/mapobjects/area22/office/area22_mapobjects01_d.tga
+		bumpmap		picmip -2	models/mapobjects/area22/office/area22_mapobjects01_local.tga
+		specularmap	picmip -2	models/mapobjects/area22/office/area22_mapobjects01_s.tga
+
+		//diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult 5,20,0,0
+		detailWeightMap			models/mapobjects/area22/office/area22_mapobjects01_detailmask.tga
+	}
+}
+
+material models/mapobjects/area22/area22_mapobjects01_noshadows
+{
+	noshadows
+	surfacetype "metal"
+	{
+		program	interaction/basic_detailwm
+		diffusemap	picmip -1	models/mapobjects/area22/office/area22_mapobjects01_d.tga
+		bumpmap		picmip -2	models/mapobjects/area22/office/area22_mapobjects01_local.tga
+		specularmap	picmip -2	models/mapobjects/area22/office/area22_mapobjects01_s.tga
+		
+		//diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult 5,20,0,0
+		detailWeightMap			models/mapobjects/area22/office/area22_mapobjects01_detailmask.tga
+	}
+}
+
+material models/mapobjects/area22/server
+{
+	noshadows
+	surfacetype	"metal"
+	{
+		program interaction/selfillum_detail
+		diffusemap 		picmip -1	models/mapobjects/area22/server_d.tga
+		bumpmap			picmip -2	models/mapobjects/area22/server_local.tga
+		specularmap		picmip -2	models/mapobjects/area22/server_s.tga
+		selfillummap	picmip -2	models/mapobjects/area22/server_glow.tga
+		
+		//diffuseDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/metal_detail01_local.tga
+		//specDetailMap				textures/detail/bump/metal_detail01_d.tga
+		detailMult	2.5,10,0.7,0
+	}
+}

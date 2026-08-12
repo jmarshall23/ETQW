@@ -1,0 +1,311 @@
+gui guis/gdf_generic/processing_dna {
+
+	materials {
+
+		"guis/assets/gdf_generic/dna_background"	"guis/assets/gdf_generic/dna_background"
+		"guis/assets/arm/connect"					"guis/assets/arm/connect"
+		"guis/assets/gdf_generic/textblur"			"guis/assets/gdf_generic/textblur"
+	}
+	windowDef desktop {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			string material = "guis/assets/gdf_generic/dna_background";
+		}
+	}
+	windowDef blurry_text {
+			properties {
+			color	backColor	=	0.4, 0.4, 0.4, 1;
+			string material = "guis/assets/gdf_generic/textblur";
+			rect rect = 95,15,160,240;
+			}
+		}
+	windowDef Text3 {
+		properties {
+			wstring	text		= toWStr( "DNA PROCESSING" );
+			float	fontSize	= 80;
+			color	foreColor	=	0.36, 0.7, 0.8, 1;
+			rect rect = 255,269,364,201;
+			float flags = immediate( flags ) | WF_WRAP_TEXT;
+		}
+			timeline {
+				ontime 0 {
+			foreColor = transition( "0.36, 0.7, 0.8, 1", "1,1,1,1", 500 );
+				}
+				onTime 500 {
+			foreColor = transition( "1,1,1,1", "0.36, 0.7, 0.8, 1", 500 );
+				}
+			onTime 1000 {
+				resetTime( 0 );
+				}
+		}
+	}
+}
+
+gui guis/gdf_generic/processing_data {
+
+	materials {
+
+		"guis/assets/hack/covertbg"		"guis/assets/hack/covertbg"
+		"guis/assets/hack/spin1"		"guis/assets/hack/spin1"
+		"guis/assets/hack/spin1a"		"guis/assets/hack/spin1a"
+		"guis/assets/hack/spin2"		"guis/assets/hack/spin2"
+		"guis/assets/hack/spin2a"		"guis/assets/hack/spin2a"
+		"guis/assets/hack/bin1"			"guis/assets/hack/bin1"
+		"guis/assets/hack/bin2"			"guis/assets/hack/bin2"
+		"guis/assets/hack/bin3"			"guis/assets/hack/bin3"
+		"guis/assets/hack/bin4"			"guis/assets/hack/bin4"
+		"guis/assets/hack/bin5"			"guis/assets/hack/bin5"
+		"guis/assets/hack/bin6"			"guis/assets/hack/bin6"
+		"guis/assets/hack/bin7"			"guis/assets/hack/bin7"
+	}
+	windowDef desktop {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			string material = "guis/assets/hack/covertbg";
+		}		
+	}
+	windowDef spin1 {
+		properties {
+			color	backColor	=	0.5, 0.5, 0.5, 1;
+			string material = "guis/assets/hack/spin1";
+			rect rect = 280,105,260,260;
+			handle spin1a = gui.cacheMaterial( "spin1a", "guis/assets/hack/spin1a" );
+			handle spin2  = gui.cacheMaterial( "spin2",  "guis/assets/hack/spin2" );
+			handle spin2a = gui.cacheMaterial( "spin1a", "guis/assets/hack/spin2a" );
+		}
+		events {
+			onPostDraw {
+				drawCachedMaterial(spin1a, "305,130,210,210", "0.35, 0.35, 0.35, 1" );
+				drawCachedMaterial(spin2,  "280,105,260,260", "1, 1, 1, 1" );
+				drawCachedMaterial(spin2a, "305,130,220,220", "0.35, 0.35, 0.35, 1" );
+				}
+			}
+	}	
+
+	windowDef chatter3 {
+		properties {
+			color	backColor	=	0.4, 0.4, 0.4, 1;
+			string material = "guis/assets/hack/bin3";
+			rect rect = 30,177,230,32;
+			handle bin1 = gui.cacheMaterial( "bin1", "guis/assets/hack/bin1" );
+			handle bin2 = gui.cacheMaterial( "bin2", "guis/assets/hack/bin2" );
+			handle bin4 = gui.cacheMaterial( "bin4", "guis/assets/hack/bin4" );
+			handle bin5 = gui.cacheMaterial( "bin5", "guis/assets/hack/bin5" );
+			handle bin6 = gui.cacheMaterial( "bin6", "guis/assets/hack/bin6" );
+			handle bin7 = gui.cacheMaterial( "bin7", "guis/assets/hack/bin7" );
+		}
+		events {
+			onPostDraw {
+				drawCachedMaterial( bin1, "30,127,230,32", "0.5, 0.5, 0.5, 1" );
+				drawCachedMaterial( bin2, "30,152,230,32", "0.5, 0.5, 0.5, 1" );
+				drawCachedMaterial( bin4, "30,202,230,32", "0.45, 0.45, 0.45, 1" );
+				drawCachedMaterial( bin5, "30,227,230,32", "0.5, 0.5, 0.5, 1" );
+				drawCachedMaterial( bin6, "30,252,230,32", "0.5, 0.5, 0.5, 1" );
+				drawCachedMaterial( bin7, "30,277,230,32", "0.5, 0.5, 0.5, 1" );
+				//drawText( toWStr( "HI THERE" ), "30,227,230,32", "1,1,1,1", 30, DTF_SINGLELINE | DTF_CENTER | DTF_VCENTER );
+			}
+		}
+	}
+	windowDef Text1 {
+		properties {
+			wstring	text		= toWStr( "DECRYPTING" );
+			float	fontSize = 35;
+		//	float flags = WF_WRAP_TEXT;
+			color	foreColor	=	0.76, 1, 1, 1;
+			rect rect = 226,359,400,100;
+		}		
+	}
+	
+	windowDef Text4 {
+		properties {
+			wstring	text		= toWStr( "PROCESSING DATA" );
+			float flags = WF_WRAP_TEXT;
+			float	fontSize = 35;
+			color	foreColor	=	0.76, 1, 1, 1;
+			rect rect = 32,328,240,220;
+		}		
+	}
+}
+
+gui guis/gdf_generic/analyzing_data {
+
+	materials {
+
+		"guis/assets/hack/covertbg"		"guis/assets/hack/covertbg"
+		"guis/assets/hack/bin1"			"guis/assets/hack/bin1"
+		"guis/assets/hack/bin3"			"guis/assets/hack/bin3"
+		"guis/assets/hack/bin4"			"guis/assets/hack/bin4"
+		"guis/assets/hack/bin6"			"guis/assets/hack/bin6"
+		"guis/assets/arm/connect"		"guis/assets/arm/connect"
+	}
+	windowDef desktop {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			string material = "guis/assets/hack/covertbg";
+		}		
+	}
+	windowDef spin2a {
+		properties {
+			color	backColor	=	0.35, 0.35, 0.35, 1;
+			string material = "guis/assets/arm/connect";
+			rect rect = 305,130,220,220;
+		}
+
+	}
+	
+	windowDef chatter1 {
+		properties {
+			color	backColor	=	0.3, 0.3, 0.3, 1;
+			string material = "guis/assets/hack/bin1";
+			rect rect = 30,127,230,32;
+			handle bin3 = gui.cacheMaterial( "bin3", "guis/assets/hack/bin3" );
+			handle bin4 = gui.cacheMaterial( "bin4", "guis/assets/hack/bin4" );
+			handle bin6 = gui.cacheMaterial( "bin6", "guis/assets/hack/bin6" );
+		}
+		events {
+			onPostDraw {
+			drawCachedMaterial( bin3, "30,177,230,32", "0.5, 0.5, 0.5, 1" );
+			drawCachedMaterial( bin4, "30,202,230,32", "0.5, 0.5, 0.5, 1" );
+			drawCachedMaterial( bin6, "30,252,230,32", "0.5, 0.5, 0.5, 1" );
+			}
+		}
+		
+		
+	}
+	
+	windowDef Text1 {
+		properties {
+			wstring	text		= toWStr( "PROCESSING" );
+			float	fontSize = 35;
+		//	float flags = WF_WRAP_TEXT;
+			color	foreColor	=	0.76, 1, 1, 1;
+			rect rect = 226,359,400,100;
+		}		
+	}
+	
+	windowDef Text4 {
+		properties {
+			wstring	text		= toWStr( "ANALYZING DATA" );
+			float flags = WF_WRAP_TEXT;
+			float	fontSize = 35;
+			color	foreColor	=	0.76, 1, 1, 1;
+			rect rect = 32,328,240,220;
+		}		
+	}
+}
+
+
+gui guis/gdf_generic/strogg_status01 {
+
+	materials {
+
+		"guis/assets/gdf_generic/background01"		"guis/assets/gdf_generic/background01"
+		"guis/assets/gdf_generic/strogg_body"		"guis/assets/gdf_generic/strogg_body"
+		"guis/assets/gdf_generic/textblur"			"guis/assets/gdf_generic/textblur"
+		"guis/assets/common/gui_scanlines5"			"guis/assets/common/gui_scanlines5"
+		"guis/assets/common/blue_bg"				"guis/assets/common/blue_bg"
+	}
+	properties {
+		float flags = immediate( flags ) | GUI_INTERACTIVE | GUI_FRONTEND;
+	}
+	/*
+	events {
+		onPropertyChanged "cursorPos" {
+			gui.print( toString( cursorPos.x, 0 ) + ", " + toString( cursorPos.y, 0) + _newline );
+		}
+	}*/
+	
+	windowDef desktop {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			string material = "guis/assets/gdf_generic/background01";
+		}
+	}
+	
+		windowDef text {
+			properties {
+				handle text1 = gui.cacheMaterial( "text1", "guis/assets/gdf_generic/textblur" );
+			}
+			events {
+				onPreDraw {
+					clipToRect( "17,14,240,236" );
+					drawCachedMaterial(text1, "17,14,240,236", "0.3, 0.3, 0.3, 1");
+					unclipRect();
+					gui.scriptPushFloat( false );		
+			}
+			
+		}	
+	}
+	
+	windowDef blue_bar {
+			properties {
+				handle blue = gui.cacheMaterial( "blue", "guis/assets/common/blue_bg" );
+				handle blue2 = gui.cacheMaterial( "blue2", "guis/assets/common/blue_bg" );
+				rect blueRect = 189,250,70,220;
+			}
+			events {
+				onPreDraw {
+					clipToRect( "189,250,70,220" );
+					drawCachedMaterial(blue, blueRect, "0.3, 0.3, 0.3, 1");
+					drawCachedMaterial(blue2, "189,250,70,220", "1, 0.3, 0.3, 0.5");
+					unclipRect();
+				//	drawRect( "189,250,70,220", "1,1,1,1", 1 );
+					gui.scriptPushFloat( false );
+				//	drawRect( blueRect, "1,1,1,1", 1 );
+			}
+		}
+		timeline {
+					onTime 0 {
+					blueRect.y = transition( 150, 200, 2000 );
+				}					
+					onTime 2000 {
+					blueRect.y = transition( 200, 150, 2000 );
+				}					
+					onTime 4000 {
+					resetTime( 0 );
+					}
+		}
+		
+	}
+	windowDef strogg_body {
+				properties {
+					handle strogg 		= gui.cacheMaterial	( "strogg", "guis/assets/gdf_generic/strogg_body" );
+					handle scanlines1	= gui.cacheMaterial ( "scanlines1", "guis/assets/common/gui_scanlines5" );
+					rect stroggRect = 258,0,366,400;
+				}
+				events {
+					onPreDraw {
+						clipToRect( "258,0,366,362" );
+						drawCachedMaterial(strogg, stroggRect, "0.3, 0.3, 0.3, 1");
+						drawCachedMaterial(scanlines1, "258,9,366,400", "0.5, 0.5, 0.5, 1");
+						unclipRect();
+						//drawRect( "258,0,366,362", "1,1,1,1", 1 );
+						gui.scriptPushFloat( false );
+						//drawRect( stroggRect, "1,1,1,1", 1 );
+				}
+			}
+			timeline {
+						onTime 0 {
+						stroggRect.y = transition( 0, 100, 4000 );
+					}					
+						onTime 4000 {
+						stroggRect.y = transition( 100, 0, 4000 );
+					}					
+						onTime 8000 {
+						resetTime( 0 );
+						}
+			}
+			
+	}
+	
+	windowDef Text4 {
+			properties {
+				wstring	text		= toWStr( "BIO-SCAN IN PROGRESS" );
+				float flags = WF_WRAP_TEXT;
+				float	fontSize = 30;
+				color	foreColor	=	0.76, 1, 1, 1;
+				rect rect = 320,390,240,240;
+			}		
+	}
+
+}

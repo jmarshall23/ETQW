@@ -1,0 +1,360 @@
+//////////////////////////
+// Impact Sound Shaders //
+//////////////////////////
+
+////////////////////////
+// Projectile Impacts //
+////////////////////////
+
+sound sounds/weapons/impacts/stone {
+	compression wav
+
+	maxDistance 50
+	lowPriority
+	no_dups
+	occlude_once
+
+	sounds/weapons/impacts/stone_08.wav
+	sounds/weapons/impacts/stone_09.wav
+	sounds/weapons/impacts/stone_10.wav
+	sounds/weapons/impacts/stone_11.wav
+	sounds/weapons/impacts/stone_12.wav
+	sounds/weapons/impacts/stone_13.wav
+	sounds/weapons/impacts/stone_14.wav
+	sounds/weapons/impacts/stone_15.wav
+	sounds/weapons/impacts/stone_16.wav
+	sounds/weapons/impacts/stone_17.wav
+	sounds/weapons/impacts/stone_18.wav
+	sounds/weapons/impacts/stone_19.wav
+}
+
+sound sounds/weapons/impacts/wood {
+	compression wav
+
+	maxDistance 50
+	lowPriority
+	no_dups
+	occlude_once
+
+	sounds/weapons/impacts/wood_01.wav
+	sounds/weapons/impacts/wood_02.wav
+	sounds/weapons/impacts/wood_03.wav
+	sounds/weapons/impacts/wood_04.wav
+	sounds/weapons/impacts/wood_05.wav
+	sounds/weapons/impacts/wood_06.wav
+	sounds/weapons/impacts/wood_07.wav
+	sounds/weapons/impacts/wood_08.wav
+}
+
+sound sounds/weapons/impacts/metal {
+	compression wav
+
+	maxDistance 50
+	lowPriority
+	no_dups
+	occlude_once
+
+	sounds/weapons/impacts/metal_01.wav
+	sounds/weapons/impacts/metal_02.wav
+	sounds/weapons/impacts/metal_03.wav
+	sounds/weapons/impacts/metal_04.wav
+	sounds/weapons/impacts/metal_05.wav
+	sounds/weapons/impacts/metal_06.wav
+	sounds/weapons/impacts/metal_07.wav
+	sounds/weapons/impacts/metal_08.wav
+	sounds/weapons/impacts/metal_09.wav
+	sounds/weapons/impacts/metal_10.wav
+	sounds/weapons/impacts/metal_11.wav
+	sounds/weapons/impacts/metal_12.wav
+	sounds/weapons/impacts/metal_13.wav
+	sounds/weapons/impacts/metal_14.wav
+	sounds/weapons/impacts/metal_15.wav
+	sounds/weapons/impacts/metal_16.wav
+	sounds/weapons/impacts/metal_17.wav
+	sounds/weapons/impacts/metal_18.wav
+	sounds/weapons/impacts/metal_19.wav
+}
+
+sound sounds/weapons/impacts/flesh {
+	compression wav
+
+	maxDistance 50
+	lowPriority
+	no_dups
+	occlude_once
+
+	sounds/weapons/impacts/flesh_01.wav
+	sounds/weapons/impacts/flesh_02.wav
+	sounds/weapons/impacts/flesh_03.wav
+	sounds/weapons/impacts/flesh_04.wav
+	sounds/weapons/impacts/flesh_05.wav
+	sounds/weapons/impacts/flesh_06.wav
+	sounds/weapons/impacts/flesh_07.wav
+	sounds/weapons/impacts/flesh_08.wav
+	sounds/weapons/impacts/flesh_09.wav
+	sounds/weapons/impacts/flesh_10.wav
+	sounds/weapons/impacts/flesh_11.wav
+	sounds/weapons/impacts/flesh_12.wav
+	sounds/weapons/impacts/flesh_13.wav
+	sounds/weapons/impacts/flesh_14.wav
+	sounds/weapons/impacts/flesh_15.wav
+	sounds/weapons/impacts/flesh_16.wav
+	sounds/weapons/impacts/flesh_17.wav
+	sounds/weapons/impacts/flesh_18.wav
+	
+}
+
+sound sounds/weapons/impacts/glass {
+	compression wav
+
+	maxDistance 50
+	lowPriority
+	no_dups
+	occlude_once
+
+	sounds/weapons/impacts/glass_01.wav
+	sounds/weapons/impacts/glass_02.wav
+	sounds/weapons/impacts/glass_03.wav
+	sounds/weapons/impacts/glass_04.wav
+	sounds/weapons/impacts/glass_05.wav
+	sounds/weapons/impacts/glass_06.wav
+	sounds/weapons/impacts/glass_07.wav
+	sounds/weapons/impacts/glass_08.wav
+}
+
+sound sounds/weapons/impacts/water {
+	compression wav
+
+	maxDistance 50
+	lowPriority
+	no_dups
+	occlude_once
+
+	sounds/weapons/impacts/water_01.wav
+	sounds/weapons/impacts/water_02.wav
+	sounds/weapons/impacts/water_03.wav
+	sounds/weapons/impacts/water_04.wav
+	sounds/weapons/impacts/water_05.wav
+}
+
+sound sounds/weapons/impacts/plastic {
+	compression wav
+
+	maxDistance 50
+	lowPriority
+	no_dups
+	occlude_once
+
+	sounds/weapons/impacts/wood_01.wav
+	sounds/weapons/impacts/wood_02.wav
+	sounds/weapons/impacts/wood_03.wav
+	sounds/weapons/impacts/wood_04.wav
+	sounds/weapons/impacts/wood_05.wav
+	sounds/weapons/impacts/wood_06.wav
+	sounds/weapons/impacts/wood_07.wav
+	sounds/weapons/impacts/wood_08.wav
+}
+
+sound sounds/weapons/impacts/dirt {
+	compression wav
+
+	maxDistance 50
+	lowPriority
+	no_dups
+	occlude_once
+
+	sounds/weapons/impacts/dirt_01.wav
+	sounds/weapons/impacts/dirt_02.wav
+	sounds/weapons/impacts/dirt_03.wav
+	sounds/weapons/impacts/dirt_04.wav
+	sounds/weapons/impacts/dirt_05.wav
+	sounds/weapons/impacts/dirt_06.wav
+	sounds/weapons/impacts/dirt_07.wav
+	sounds/weapons/impacts/dirt_08.wav
+	sounds/weapons/impacts/dirt_09.wav
+	sounds/weapons/impacts/dirt_10.wav
+	sounds/weapons/impacts/dirt_11.wav
+	sounds/weapons/impacts/dirt_12.wav
+	sounds/weapons/impacts/dirt_13.wav
+	sounds/weapons/impacts/dirt_14.wav
+	sounds/weapons/impacts/dirt_15.wav
+	sounds/weapons/impacts/dirt_16.wav
+}
+
+sound sounds/weapons/impacts/armor {
+	compression wav
+
+	maxDistance	50
+	lowPriority
+	no_dups
+	occlude_once
+
+	sounds/weapons/impacts/armor_01.wav
+	sounds/weapons/impacts/armor_02.wav
+	sounds/weapons/impacts/armor_03.wav
+
+}
+
+sound sounds/weapons/impacts/plasma {
+	compression wav
+
+	volume -20
+	maxDistance	50
+	lowPriority
+	no_dups
+	occlude_once
+
+	sounds/weapons/impacts/plasma_01.wav
+	sounds/weapons/impacts/plasma_02.wav
+	sounds/weapons/impacts/plasma_03.wav
+
+}
+
+sound sounds/weapons/impacts/shield {
+	compression wav
+
+	volume -15
+	minDistance	1
+	maxDistance	20
+	lowPriority
+	no_dups
+	occlude_once
+
+	sounds/weapons/impacts/shield_01.wav
+	sounds/weapons/impacts/shield_02.wav
+	sounds/weapons/impacts/shield_03.wav
+	sounds/weapons/impacts/shield_04.wav
+	sounds/weapons/impacts/shield_05.wav
+}
+
+
+sound sounds/weapons/impacts/ricochet {
+	compression wav
+
+	maxDistance 50
+	lowPriority
+	no_dups
+	occlude_once
+
+	sounds/weapons/impacts/ricochet_01.wav
+	sounds/weapons/impacts/ricochet_02.wav
+	sounds/weapons/impacts/ricochet_03.wav
+	sounds/weapons/impacts/ricochet_04.wav
+	sounds/weapons/impacts/ricochet_05.wav
+	sounds/weapons/impacts/ricochet_06.wav
+	sounds/weapons/impacts/ricochet_07.wav
+	sounds/weapons/impacts/ricochet_08.wav
+	sounds/weapons/impacts/ricochet_09.wav
+	sounds/weapons/impacts/ricochet_10.wav
+	sounds/weapons/impacts/ricochet_11.wav
+	sounds/weapons/impacts/ricochet_12.wav
+	sounds/weapons/impacts/ricochet_13.wav
+	sounds/weapons/impacts/ricochet_14.wav
+}
+
+sound sounds/weapons/impacts/debris_very_large {
+	compression wav
+
+	volume 5
+	maxDistance 150
+	lowPriority
+	no_dups
+
+	sounds/weapons/impacts/debris_large_01.wav
+	sounds/weapons/impacts/debris_large_02.wav
+	sounds/weapons/impacts/debris_large_03.wav
+}
+
+sound sounds/weapons/impacts/debris_large {
+	compression wav
+
+	maxDistance 150
+	lowPriority
+	no_dups
+
+	sounds/weapons/impacts/debris_large_01.wav
+	sounds/weapons/impacts/debris_large_02.wav
+	sounds/weapons/impacts/debris_large_03.wav
+}
+
+
+sound sounds/weapons/impacts/debris_violator_vlarge {
+	compression wav
+
+	volume -2
+	maxDistance 150
+	lowPriority
+	no_dups
+
+	sounds/weapons/impacts/debris_large_01.wav
+	sounds/weapons/impacts/debris_large_02.wav
+	sounds/weapons/impacts/debris_large_03.wav
+}
+
+sound sounds/weapons/impacts/debris_violator_large {
+	compression wav
+
+	volume	-2
+	maxDistance 150
+	lowPriority
+	no_dups
+
+	sounds/weapons/impacts/debris_large_01.wav
+	sounds/weapons/impacts/debris_large_02.wav
+	sounds/weapons/impacts/debris_large_03.wav
+}
+
+sound sounds/weapons/impacts/debris_small {
+	compression wav
+
+	volume -10
+	maxDistance 50
+	lowPriority
+	no_dups
+	
+	occlude_once
+
+	sounds/weapons/impacts/debris_small_01.wav
+	sounds/weapons/impacts/debris_small_02.wav
+	sounds/weapons/impacts/debris_small_03.wav
+	sounds/weapons/impacts/debris_small_04.wav
+}
+
+
+///////////////////
+// Shell Impacts //
+///////////////////
+
+sound sounds/weapons/impacts/shell_metal {
+	compression wav
+	
+	maxDistance 50
+	occlude_once
+
+	sounds/weapons/impacts/shell_metal_01.wav
+	sounds/weapons/impacts/shell_metal_02.wav
+	sounds/weapons/impacts/shell_metal_03.wav
+	sounds/weapons/impacts/shell_metal_04.wav
+	sounds/weapons/impacts/shell_metal_05.wav
+	sounds/weapons/impacts/shell_metal_06.wav
+	sounds/weapons/impacts/shell_metal_07.wav
+}
+
+sound sounds/weapons/impacts/shell_water {
+	compression wav
+
+	volume -15
+	maxDistance 50
+	occlude_once
+
+	sounds/weapons/impacts/water_large_01.wav
+}
+
+sound sounds/weapons/impacts/water_large {
+	compression wav
+
+	maxDistance 80
+	no_dups
+
+	sounds/weapons/impacts/water_large_01.wav
+}

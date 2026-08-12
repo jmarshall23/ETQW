@@ -1,0 +1,462 @@
+atmosphere slipgate_desert01 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.4798111916 -0.4474311769 0.7547095418 )
+	sunColor ( 0.6862745285 0.5921568871 0.4823529422 )
+	sunHaloScale 0
+	sunHaloBias -1
+	sunSpriteMaterial "atmospheres/sprites/sundisc_orange"
+	sunSpriteSize 37607
+	sunFlareMaterial "atmospheres/lights/sunsprite2"
+	sunFlareSize 68376
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 216
+	sunFlareZen 47
+	postProcessParms {
+		tint ( 0.9568627477 0.9333333373 0.8352941275 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.969999969 0.8399999738 1 0.6999999881 )
+		glareBases ( 1 1 0 0 )
+	}
+	fogDistHalf 9510
+	fogHeightHalf 2124
+	fogHeightOffset 4627
+	fogColor ( 0.7294117808 0.7725490332 0.7843137383 )
+	fogStart 0
+	fogEnd 25648
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "slipgate_day01"
+	skyGradientImage "atmosphere/skies/slipgate_desert_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/slipgate_desert_final" {
+		style skybox
+		parms 12 ( 0.6999999881 1 1 1 0 0 0 0 0 0 0 0 )
+	}
+}atmosphere slipgate_snow01 {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.4212814569 0.5296323895 0.7362142801 )
+	sunColor ( 0 0 0.0039215689 )
+	sunHaloScale 0
+	sunHaloBias -0.0400000215
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/lights/sunsprite2"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 102
+	sunFlareZen 78
+	postProcessParms {
+		tint ( 0.8627451658 0.8901961446 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.9799999595 1.1999999285 0 1 )
+		glareBases ( 0 0 0 0 )
+	}
+	fogDistHalf 1144
+	fogHeightHalf 5098
+	fogHeightOffset 2902
+	fogColor ( 0.270588249 0.2862745225 0.3019607961 )
+	fogStart 1441
+	fogEnd 9222
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "slipgate_snow01"
+	skyGradientImage "atmosphere/skies/slipgate_snow_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 50
+	windAngleDev 0
+	windStrength 30
+	windStrengthDev 0
+	cloudLayer "atmospheres/skydomes/slipgate_vortex" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 2
+		maxParticles 3000
+		heightMin 5
+		heightMax 7
+		weightMin 1.5
+		weightMax 2.5
+		timeMin 0
+		timeMax 500
+		windScale 8
+		gustWindScale 20
+		fallMin 30
+		fallMax 100
+		tumbleStrength 20
+		precipitationDistance 900
+		material "precipitation/snowflake02_slipgate_night"
+		effect "effects/ambient/slipgate_snow"
+	}
+}
+
+
+
+
+
+
+
+
+
+
+ambientCubeMap slipgate_day01 {
+	ambientLight {
+		color 0.0274509825 0.0509803966 0.0627451017
+		direction 0 0 1
+		name "Light0"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.250980407 0.2392157018 0.1843137294
+		direction 0.0000000243 0 -1
+		name "Light1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.400000006 0.3764705956 0.3490196168
+		direction 0.2008272409 0.9448180199 0.2588190436
+		name "Light2"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.4352941215 0.4549019635 0.501960814
+		direction -0.1009667888 -0.9606344104 0.2588190436
+		name "Light3"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.6156862974 0.6431372762 0.7058823705
+		direction -0.9372336864 0.233678624 0.2588190436
+		name "Light4"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.6156862974 0.6431372762 0.7058823705
+		direction 0.9540336728 -0.1511040926 0.2588190436
+		name "Light5"
+		ambient 1
+		specular 1
+	}
+	envMap "env/slipgate_desert"
+	ambientColor 0.5 0.5 0.5
+	minSpecAmbientColor 0.9098039269 0.9137254953 0.9411764741
+	minSpecShadowColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+ambientCubeMap slipgate_snow01 {
+	ambientLight {
+		color 0.1529411823 0.1725490242 0.1882353127
+		direction 0 0 1
+		name "Light0"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.4078431726 0.4156863093 0.4392157197
+		direction 0.7537921071 0.367648989 0.544639051
+		name "Light1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.5686274767 0.6156862974 0.7294117808
+		direction -0.7198463082 -0.6040228009 0.342020154
+		name "Light2"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1019607931 0.1411764771 0.180392161
+		direction -0.336755693 0.877278626 0.342020154
+		name "Light3"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3725490272 0.392156899 0.4745098352
+		direction -0.1026079655 -0.9762497544 0.1908090115
+		name "Light4"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3803921938 0.4313725829 0.5098039508
+		direction 0.0000000243 0 -1
+		name "Light5"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.0980392247 0.1058823615 0.1333333403
+		direction 0.3822074234 0.8584519029 0.342020154
+		name "Light6"
+		ambient 1
+		specular 1
+	}
+	envMap "env/slipgate_arctic"
+	ambientColor 0.5 0.5 0.5
+	minSpecAmbientColor 0.4745098054 0.521568656 0.5882353187
+	minSpecShadowColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+
+
+ambientCubeMap slipgate_tower01 {
+	ambientLight {
+		color 0.380392164 0.3725490272 0.3490196168
+		direction 0.4057458639 0.0283725131 0.9135454297
+		name "Light0"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3254902065 0.3254902065 0.3254902065
+		direction 0.9702957273 0 0.2419219017
+		name "Light1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3215686381 0.3215686381 0.3215686381
+		direction -0.4385211468 0.8606461883 0.2588190436
+		name "Light2"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3254902065 0.3254902065 0.3254902065
+		direction -0.7869307995 -0.6148177385 0.0523359664
+		name "Light3"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1960784346 0.2156862766 0.2274509817
+		direction 0.0000000243 0 -1
+		name "Light4"
+		ambient 1
+		specular 1
+	}
+	indoors
+	envMap "env/slipgate/nexus_tower01"
+	ambientColor 0.5 0.5 0.5
+	minSpecAmbientColor 0.6000000238 0.6000000238 0.6000000238
+	minSpecShadowColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+ambientCubeMap slipgate_tower_blue {
+	ambientLight {
+		color 0.380392164 0.3725490272 0.3490196168
+		direction 0.4057458639 0.0283725131 0.9135454297
+		name "Light0"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3254902065 0.3254902065 0.3254902065
+		direction 0.9702957273 0 0.2419219017
+		name "Light1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3215686381 0.3215686381 0.3215686381
+		direction -0.4385211468 0.8606461883 0.2588190436
+		name "Light2"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3254902065 0.3254902065 0.3254902065
+		direction -0.7869307995 -0.6148177385 0.0523359664
+		name "Light3"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1960784346 0.2156862766 0.2274509817
+		direction 0.0000000243 0 -1
+		name "Light4"
+		ambient 1
+		specular 1
+	}
+	indoors
+	envMap "env/slipgate/nexus_tower_blue"
+	ambientColor 0.5 0.5 0.5
+	minSpecAmbientColor 0.6000000238 0.6000000238 0.6000000238
+	minSpecShadowColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+ambientCubeMap slipgate_tower_red {
+	ambientLight {
+		color 0.380392164 0.3725490272 0.3490196168
+		direction 0.4057458639 0.0283725131 0.9135454297
+		name "Light0"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3254902065 0.3254902065 0.3254902065
+		direction 0.9702957273 0 0.2419219017
+		name "Light1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3215686381 0.3215686381 0.3215686381
+		direction -0.4385211468 0.8606461883 0.2588190436
+		name "Light2"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3254902065 0.3254902065 0.3254902065
+		direction -0.7869307995 -0.6148177385 0.0523359664
+		name "Light3"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1960784346 0.2156862766 0.2274509817
+		direction 0.0000000243 0 -1
+		name "Light4"
+		ambient 1
+		specular 1
+	}
+	indoors
+	envMap "env/slipgate/nexus_tower_red"
+	ambientColor 0.5 0.5 0.5
+	minSpecAmbientColor 0.6000000238 0.6000000238 0.6000000238
+	minSpecShadowColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}atmosphere slipgate_snow01_half {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.4212814569 0.5296323895 0.7362142801 )
+	sunColor ( 0 0 0.0039215689 )
+	sunHaloScale 0
+	sunHaloBias -0.0400000215
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.8627451658 0.8901961446 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.9799999595 1.1999999285 0 1 )
+		glareBases ( 0 0 0 0 )
+	}
+	fogDistHalf 1144
+	fogHeightHalf 5098
+	fogHeightOffset 2902
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "slipgate_snow01_half"
+	skyGradientImage "atmosphere/skies/slipgate_snow_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 3
+	windAngleDev 54
+	windStrength 50
+	windStrengthDev 32
+	cloudLayer "atmospheres/skydomes/slipgate_vortex" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 2
+		maxParticles 3000
+		heightMin 5
+		heightMax 7
+		weightMin 1.5
+		weightMax 2.5
+		timeMin 0
+		timeMax 500
+		windScale 10
+		gustWindScale 20
+		fallMin 200
+		fallMax 300
+		tumbleStrength 0
+		precipitationDistance 1000
+		material "precipitation/snowflake02_slipgate_night"
+		effect "effects/ambient/slipgate_snow"
+	}
+}
+
+
+
+
+
+ambientCubeMap slipgate_snow01_half {
+	ambientLight {
+		color 0.0745098069 0.0862745121 0.0941176489
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2039215714 0.2078431398 0.2196078449
+		direction 0.7537921071 0.367648989 0.544639051
+		name "Light1"
+	}
+	ambientLight {
+		color 0.2823529541 0.3058823645 0.3647058904
+		direction -0.7198463082 -0.6040228009 0.342020154
+		name "Light2"
+	}
+	ambientLight {
+		color 0.0509803928 0.0705882385 0.0901960805
+		direction -0.336755693 0.877278626 0.342020154
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1843137294 0.1921568662 0.2352941185
+		direction -0.1026079655 -0.9762497544 0.1908090115
+		name "Light4"
+	}
+	ambientLight {
+		color 0.1882352978 0.2156862766 0.2549019754
+		direction 0.0000000243 0 -1
+		name "Light5"
+	}
+	ambientLight {
+		color 0.0470588244 0.0509803928 0.0666666701
+		direction 0.3822074234 0.8584519029 0.342020154
+		name "Light6"
+	}
+	envMap "env/slipgate_arctic"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+

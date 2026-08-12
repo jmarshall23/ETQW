@@ -1,0 +1,735 @@
+// GDF High Command
+
+// Generic Objectives
+
+// Jamming Tower
+
+sound sounds/vo/gdf/highcommand/objectives/jamtower/defend/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/jamtower/15001.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/jamtower/defend {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/jamtower/15002.wav
+	localization/english/sounds/vo/gdf/highcommand/objectives/jamtower/15508.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/jamtower/planted {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/jamtower/15003.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/jamtower/disarm {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/jamtower/15004.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/jamtower/planted/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/jamtower/15005.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/jamtower/disarmed {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/jamtower/15006.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/jamtower/destroyed/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/jamtower/15007.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/jamtower/offline/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/jamtower/15008.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/jamtower/destroyed {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/jamtower/15503.wav
+}
+
+// ao: note duplicated wav reference, also inconcistent with strogg sound shader
+sound sounds/vo/gdf/highcommand/objectives/jamtower/destroyed/short {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/jamtower/15503.wav
+}
+
+
+// Mining Laser
+
+sound sounds/vo/gdf/highcommand/objectives/mininglaser/stop/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mininglaser/15011.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mininglaser/stop {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mininglaser/15012.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mininglaser/constructing {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mininglaser/15013.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mininglaser/constructing/half {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mininglaser/15014.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mininglaser/constructed {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mininglaser/15015.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mininglaser/constructed/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mininglaser/15016.wav
+}
+
+
+// Bridge
+
+sound sounds/vo/gdf/highcommand/objectives/bridge/construct {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/bridge/15021.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/bridge/construct/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/bridge/15022.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/bridge/constructing {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/bridge/15023.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/bridge/constructing/half {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/bridge/15024.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/bridge/constructed/firststage {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/bridge/15025.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/bridge/constructed/half {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/bridge/15026.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/bridge/constructed {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/bridge/15405.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/bridge/constructed/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/bridge/15029.wav
+}
+
+// Foot Bridge
+
+sound sounds/vo/gdf/highcommand/objectives/footbridge/construct/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/bridge/15171.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/footbridge/construct {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/bridge/15172.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/footbridge/constructing {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/bridge/15173.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/footbridge/constructing/half {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/bridge/15174.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/footbridge/constructed/half {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/bridge/15175.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/footbridge/constructed {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/bridge/15176.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/footbridge/complete {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/bridge/15177.wav
+}
+
+
+// MCP
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/drive/outpostdeploy/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15031.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/drive/outpostdeploy {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15032.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/drive/outpost {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15033.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/protect {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15034.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/escort {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15035.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/checkpoint/near {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15036.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/checkpoint {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15037.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/checkpoint/past {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15038.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/outpost/half {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15039.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/outpost/near {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15040.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/disabled {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15041.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/repair {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15042.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/repairing {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15043.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/repaired {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15044.wav
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15045.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/repair/firessm {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15046.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/awol/warning1 {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15047.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/awol/warning2 {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15048.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/awol/replace {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15049.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/outpost/deployed {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15050.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/outpost/captured {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15051.wav
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15052.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/mcp/outpost/captured/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/mcp/15053.wav
+}
+
+
+// Shield Gen
+
+sound sounds/vo/gdf/highcommand/objectives/shieldgen/stoppedssm {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/shieldgen/15061.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/shieldgen/hack/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/shieldgen/15062.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/shieldgen/hack {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/shieldgen/15063.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/shieldgen/hacking {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/shieldgen/15064.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/shieldgen/hacking/half {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/shieldgen/15065.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/shieldgen/hacked/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/shieldgen/15066.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/shieldgen/hacked {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/shieldgen/15406.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/shieldgen/firessm {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/shieldgen/15407.wav
+}
+
+
+// EMP Disruptor
+
+sound sounds/vo/gdf/highcommand/objectives/empdisruptor/construct/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/empdisruptor/15131.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/empdisruptor/construct {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/empdisruptor/15132.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/empdisruptor/constructing {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/empdisruptor/15133.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/empdisruptor/constructing/half {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/empdisruptor/15134.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/empdisruptor/constructing/near {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/empdisruptor/15135.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/empdisruptor/constructed {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/empdisruptor/15136.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/empdisruptor/online {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/empdisruptor/15137.wav
+}
+
+
+// Flyer Drone
+
+sound sounds/vo/gdf/highcommand/objectives/flyerdrone/stop {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/flyerdrone/15161.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/flyerdrone/objective/integrity80 {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/flyerdrone/15162.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/flyerdrone/objective/integrity60 {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/flyerdrone/15163.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/flyerdrone/objective/integrity40 {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/flyerdrone/15164.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/flyerdrone/objective/integrity20 {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/flyerdrone/15165.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/flyerdrone/objective/damaged {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/flyerdrone/15166.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/flyerdrone/objective/destroyed/half {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/flyerdrone/15167.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/flyerdrone/objective/destroyed/near {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/flyerdrone/15168.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/flyerdrone/objective/destroyed {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/flyerdrone/15411.wav
+}
+
+
+// Barricades
+
+sound sounds/vo/gdf/highcommand/objectives/barricade/destroy/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/barricade/15181.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/barricade/destroy {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/barricade/15182.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/barricade/planted {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/barricade/15183.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/barricade/defendexpl {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/barricade/15184.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/barricade/planted/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/barricade/15185.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/barricade/30seconds {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/barricade/15186.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/barricade/20seconds {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/barricade/15187.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/barricade/10seconds {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/barricade/15188.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/barricade/disarmed {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/barricade/15189.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/barricade/destroyed {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/barricade/15412.wav
+}
+
+
+// Forward Spawn
+
+sound sounds/vo/gdf/highcommand/objectives/forwardspawn/capture {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/forwardspawn/15201.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/forwardspawn/capturing/gdf {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/forwardspawn/15202.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/forwardspawn/captured {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/forwardspawn/15203.wav
+	localization/english/sounds/vo/gdf/highcommand/objectives/forwardspawn/15204.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/forwardspawn/captured/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/forwardspawn/15205.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/forwardspawn/capturing/strogg {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/forwardspawn/15206.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/forwardspawn/recapture {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/forwardspawn/15207.wav
+}
+
+
+// Generic Destruction Objectives
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/destroy/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15071.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/destroy {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15072.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/planted/gdf {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15073.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/defendexpl {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15074.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/planted/gdf/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15075.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/30seconds/gdf {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15076.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/20seconds/gdf {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15077.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/10seconds/gdf {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15078.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/disarmed/strogg/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15079.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/disarmed/strogg {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15080.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/destroyed/gdf {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15408.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/defend/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15091.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/defend {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15092.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/planted/strogg {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15093.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/disarm {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15094.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/planted/strogg/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15095.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/30seconds/strogg {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15096.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/20seconds/strogg {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15097.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/10seconds/strogg {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15098.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/disarmed/gdf/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15099.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/disarmed/gdf {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15100.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericdestruction/destroyed/strogg {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/destroy/15101.wav
+}
+
+
+// Generic Hacking Objectives
+
+sound sounds/vo/gdf/highcommand/objectives/generichacking/hack {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/hack/15111.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/generichacking/hack/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/hack/15112.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/generichacking/hacking/gdf {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/hack/15113.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/generichacking/hacking/gdf/half {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/hack/15114.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/generichacking/hacked/gdf {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/hack/15409.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/generichacking/defend {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/hack/15121.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/generichacking/defend/long {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/hack/15122.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/generichacking/hacking/strogg {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/hack/15123.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/generichacking/hacking/strogg/half {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/hack/15124.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/generichacking/hacked/strogg {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/hack/15410.wav
+}
+
+
+// Generic Stealing Objectives
+
+sound sounds/vo/gdf/highcommand/objectives/genericstealing/steal {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/steal/15141.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericstealing/take {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/steal/15142.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericstealing/stolen/gdf {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/steal/15143.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericstealing/taken/gdf {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/steal/15144.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericstealing/taken/gdf/escort {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/steal/15145.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericstealing/dropped/gdf {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/steal/15146.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericstealing/returned/strogg {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/steal/15147.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericstealing/stop {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/steal/15151.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericstealing/defend {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/steal/15152.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericstealing/stolen/strogg {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/steal/15153.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericstealing/taken/strogg {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/steal/15154.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericstealing/taken/strogg/stop {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/steal/15155.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericstealing/dropped/strogg {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/steal/15156.wav
+}
+
+sound sounds/vo/gdf/highcommand/objectives/genericstealing/returned/gdf {
+
+	localization/english/sounds/vo/gdf/highcommand/objectives/steal/15157.wav
+}

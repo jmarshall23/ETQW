@@ -1,0 +1,475 @@
+table caustics { snap { 0.0, 1.0 } }
+table gratetable01 { snap { 1, .1, 1, 0, .7, .1, .1, .1, .1, .1, .1, .1, 0, 1, 0, 1, .1, .1, .1, .1, .1, .1, .1, .1, 1, .1, .1, .1, .1, .1, .1, .1, 1, 0, 1, 1, .1, .1, .1, .1, .1, .1, .1, .1, .1, 1, 0, .7, .1, .1, .1, .1, .1, .1, .1, .1, .1, .1, .1, .1, .1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0, 0.1, 0, 0.1, 0.1, 0, 0.1, 0, 0, 0.1, 0, 0 } }
+table treatmentbuilding01 { snap { 1, .1, 1, 0, .7, .1, .1, .1, .1, .1, .1, .1, 0, 1, 0, 1, .1, .1, .1, .1, .1, .1, .1, .1, 1, .1, .1, .1, .1, .1, .1, .1, 1, 0, 1, 1, .1, .1, .1, .1, .1, .1, .1, .1, .1, 1, 0, .7, .1, .1, .1, .1, .1, .1, .1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } }
+table davepulse01 { { 1.000000, 0.999699, 0.998795, 0.997290, 0.914210, 0.903989, 0.893224, 1, 0.470087, 0.357729, 0.844854, 0.831470, 0.817585, 0.803208, 0.788346, 0.773010, 0.757209, 0.740951, 0.724247, 0.707107, 0.689541, 0.671559, 0.653173, 0.634393, 0, 0, 0,0,0 , 0.471397, 0.449611, 0.927555, 0.405241, 0.982683, 0.859895, 0.336890, 0.313682, 0.290285, 0.266713, 0.242980, 0.219101, 0.195090, 0.170962, 0.146730, 0.122411, 0.098017, 0.073565, 0.049068, 0.024541 } }
+
+
+table cc_panels01 { snap { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, .9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1} }
+table subtle_slow_pulse { snap { .4, .4, .45, .45, .5, .5, .5, .4, .4, .45, .45, .5, .5, .55, .55, .6, .6, .65, .65, .7, .7, .65, .65, .6, .6, .55, .55, .5, .5, .55, .55, .6, .6, .65, .65, .7, .7, .75, .75, .6, .6, .55, .55, .5, .5, .5, .45, .45, .4, .4, .45, .45, .5, .5, .55, .55, .6, .6, .55, .55, .5, .5, .5, .45, .45, .4, .4, .45, .45, .5, .5, .55, .55, .6, .6, .6, .65, .65, .7, .7, .75, .75, .8, .8, .75, .75, .7, .7, .65, .65, .6, .6, .55, .55, .5, .5} }
+material lights/crosslight
+{
+	{
+		lightProjectionMap forceHighQuality zeroClamp lights/crosslight.tga
+		colored
+	}
+}
+
+
+material lights/squarelight1
+{
+	{
+		lightProjectionMap forceHighQuality zeroClamp lights/squarelight1.tga
+		colored
+	}
+}
+
+material lights/biground1
+{
+	{
+		lightProjectionMap forceHighQuality zeroClamp lights/biground1.tga
+		colored
+	}
+}
+
+material lights/defaultPointLight
+{
+	lightFalloffImage makeintensity( lights/squarelight1a.tga )	// this will also be the falloff for any
+																// point light shaders that don't specify one
+	{
+		lightProjectionMap forceHighQuality zeroClamp lights/squarelight1.tga
+		colored
+	}
+}
+
+material lights/defaultPointLight/shadowsCastOnlyFromStaticObjects
+{
+	lightFalloffImage makeintensity( lights/squarelight1a.tga )	// this will also be the falloff for any
+																// point light shaders that don't specify one
+	shadowsCastOnlyFromStaticObjects
+	{
+		lightProjectionMap forceHighQuality zeroClamp lights/squarelight1.tga
+		colored
+	}
+}
+
+material lights/defaultProjectedLight
+{
+	lightFalloffImage _noFalloff								// by default, stay bright almost all the way to the end
+	{
+		lightProjectionMap forceHighQuality zeroClamp lights/squarelight1.tga
+		colored
+	}
+}
+
+material textures/base_light/small_blue_light
+{
+	qer_editorimage	textures/base_light/small_blue_light_add.tga
+	bumpmap			heightmap (textures/base_light/smrdltbmp.tga, 6)
+	diffusemap		textures/base_light/smrdltdif.tga
+	{
+		blend 		add
+		lightProjectionMap	textures/base_light/small_blue_light_add.tga
+		red			parm0 * 2
+		green		parm1 * 2
+		blue		parm2 * 2
+	}
+}
+
+material lights/round_flicker2
+{
+	{
+		lightProjectionMap highQuality zeroclamp lights/round.tga
+		red 	( treatmentbuilding01 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm0
+		green 	( treatmentbuilding01 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm1
+		blue	( treatmentbuilding01 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm2
+	}
+}
+
+material lights/round_flicker3
+{
+	{
+		lightProjectionMap highQuality zeroclamp lights/round.tga
+		red 	( subtle_slow_pulse [Parm4 + (time * (0.1 * Parm3)) ]) * Parm0
+		green 	( subtle_slow_pulse [Parm4 + (time * (0.1 * Parm3)) ]) * Parm1
+		blue	( subtle_slow_pulse [Parm4 + (time * (0.1 * Parm3)) ]) * Parm2
+	}
+}
+
+material lights/round_flicker4
+{
+	{
+		lightProjectionMap highQuality zeroclamp lights/round.tga
+		red 	( slowstart_one_zero [Parm4 + (time * (0.1 * Parm3)) ]) * Parm0
+		green 	( slowstart_one_zero [Parm4 + (time * (0.1 * Parm3)) ]) * Parm1
+		blue	( slowstart_one_zero [Parm4 + (time * (0.1 * Parm3)) ]) * Parm2
+	}
+}
+
+material lights/round_flicker_davepulse01
+{
+	{
+		lightProjectionMap highQuality zeroclamp lights/round.tga
+		red 	( davepulse01 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm0
+		green 	( davepulse01 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm1
+		blue	( davepulse01 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm2
+	}
+}
+
+material lights/warning_light_cc
+{
+	noShadows
+	{
+		lightProjectionMap highQuality zeroClamp lights/squareishlight.tga
+		red		1 * guiLightTable[ time * 2]
+		green	0 * guiLightTable[ time ]
+		blue	0 * guiLightTable[ time ]
+	}
+}
+
+material lights/warning_light_decomchamber
+{
+	noShadows
+	{
+		lightProjectionMap highQuality zeroClamp lights/squareishlight.tga
+		red	0.87   * guiLightTable[ time ]
+		green	0.6 * guiLightTable[ time ]
+		blue	0.31 * guiLightTable[ time ]
+	}
+}
+
+material lights/ambientocclusion
+{
+	ambientOcclusionLight	// works identical to a blendlight but draws at a different time
+	lightFalloffImage	lights/squarelight1a
+	noShadows
+	{
+		blend				GL_ZERO, GL_ONE_MINUS_SRC_COLOR
+		lightProjectionMap	lights/squarelight1
+		red					1
+		green				1
+		blue				1
+	}
+}
+
+material lights/round_shortfade
+{
+	{
+		lightProjectionMap	highQuality zeroclamp lights/round_shortfade.tga
+		colored
+	}
+}
+
+material lights/squarelight_shortfade
+{
+	{
+		lightProjectionMap	highQuality zeroclamp lights/squarelight_shortfade.tga
+		colored
+	}
+}
+
+material lights/squarelight_shortfade_grate
+{
+	{
+		lightProjectionMap	highQuality zeroclamp lights/squarelight_shortfade_grate.tga
+		colored
+	}
+}
+
+material lights/flashlight
+{
+	lightFalloffImage	lights/flashlightfalloff.tga
+	{
+		lightProjectionMap	highQuality zeroclamp lights/flashlight5.tga
+		colored
+	}
+}
+
+material lights/grate6
+{
+
+	{
+		lightProjectionMap	highQuality zeroclamp lights/grate6.tga
+		colored
+	}
+}
+
+material lights/grate6_flicker01
+{
+	{
+		lightProjectionMap	highQuality zeroclamp		lights/grate6.tga
+		red 		((.25 * gratetable01 [Parm4 + (time * (25 * Parm3)) ]) +.25) * Parm0
+		green 		((.25 * gratetable01 [Parm4 + (time * (25 * Parm3)) ]) +.25) * Parm1
+		blue 		((.25 * gratetable01 [Parm4 + (time * (25 * Parm3)) ]) +.25) * Parm2
+	}
+}
+
+material lights/highlights
+{
+
+	{
+		lightProjectionMap	highQuality zeroclamp lights/highlight.tga
+		colored
+	}
+}
+
+material lights/fangrate_nonmoving
+{
+
+	{
+		lightProjectionMap	highQuality zeroclamp lights/fangrate.tga
+		colored
+	}
+}
+
+material lights/fanlightgrate_slow
+{
+	{
+		lightProjectionMap	highQuality zeroclamp	lights/fanblade.tga
+		colored
+		rotate	time * -0.2
+	}
+	{
+		lightProjectionMap	highQuality zeroclamp	lights/fangrate.tga
+		colored
+	}
+}
+
+material lights/fanlightgrate_fast
+{
+	{
+		lightProjectionMap	highQuality zeroclamp	lights/fanblade.tga
+		colored
+		rotate	time * -1
+	}
+	{
+		lightProjectionMap	highQuality zeroclamp	lights/fangrate.tga
+		colored
+	}
+}
+
+// used on the light poles in Slipgate
+material lights/strogg_light_pole
+{
+	{
+		lightProjectionMap	highQuality zeroclamp lights/strogg_light_pole.tga
+		colored
+	}
+}
+
+material lights/triangle1
+{
+	{
+		lightProjectionMap highQuality zeroclamp lights/triangle1.tga
+		colored
+	}
+}
+
+material lights/triangle2
+{
+	{
+		lightProjectionMap highQuality zeroclamp lights/triangle2.tga
+		colored
+	}
+}
+
+material lights/triangle2_davepulse01
+{
+	{
+		lightProjectionMap highQuality zeroclamp lights/triangle2.tga
+		red 	( davepulse01 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm0
+		green 	( davepulse01 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm1
+		blue	( davepulse01 [Parm4 + (time * (0.1 * Parm3)) ]) * Parm2
+		}
+}
+
+material lights/double_light
+{
+	{
+		lightProjectionMap	highQuality zeroclamp lights/double_light.tga
+		colored
+	}
+}
+
+material lights/double_light_neon
+{
+	{
+		lightProjectionMap	highQuality zeroclamp lights/double_light.tga
+		red 	 neon_sign02[ time * 0.1 ] * Parm0
+		green 	 neon_sign02[ time * 0.1 ] * Parm1
+		blue	 neon_sign02[ time * 0.1 ] * Parm2
+	}
+}
+
+material lights/squareishlight_neon
+{
+	{
+		lightProjectionMap	highQuality zeroclamp lights/squareishlight.tga
+		red 	 neon_sign02[ time * 0.1 ] * Parm0
+		green 	 neon_sign02[ time * 0.1 ] * Parm1
+		blue	 neon_sign02[ time * 0.1 ] * Parm2
+	}
+}
+
+material lights/double_light2
+{
+	{
+		lightProjectionMap	highQuality zeroclamp lights/double_light2.tga
+		colored
+	}
+}
+
+material lights/double_light3
+{
+	{
+		lightProjectionMap	highQuality zeroclamp lights/double_light3.tga
+		colored
+	}
+}
+
+material lights/double_light_grilled
+{
+	{
+		lightProjectionMap	highQuality zeroclamp lights/double_light_grilled.tga
+		colored
+	}
+}
+
+material lights/round_fire
+{
+	{
+		lightProjectionMap forceHighQuality zeroClamp lights/round.tga
+		red 	( firetable2 [Parm4 + (time * (0.2 * Parm3)) ]) * Parm0
+		green 	( firetable2 [Parm4 + (time * (0.2 * Parm3)) ]) * Parm1
+		blue	( firetable2 [Parm4 + (time * (0.2 * Parm3)) ]) * Parm2
+	}
+}
+
+material lights/round_fire2
+{
+	{
+		lightProjectionMap forceHighQuality zeroClamp lights/round.tga
+		red 	( firetable3 [Parm4 + (time * (0.2 * Parm3)) ]) * Parm0
+		green 	( firetable3 [Parm4 + (time * (0.2 * Parm3)) ]) * Parm1
+		blue	( firetable3 [Parm4 + (time * (0.2 * Parm3)) ]) * Parm2
+	}
+}
+
+material lights/round2_fire
+{
+	{
+		lightProjectionMap forceHighQuality zeroClamp lights/round2.tga
+		red 	( firetable2 [Parm4 + (time * (0.2 * Parm3)) ]) * Parm0
+		green 	( firetable2 [Parm4 + (time * (0.2 * Parm3)) ]) * Parm1
+		blue	( firetable2 [Parm4 + (time * (0.2 * Parm3)) ]) * Parm2
+	}
+}
+
+material lights/round2_fire2
+{
+	{
+		lightProjectionMap forceHighQuality zeroClamp lights/round2.tga
+		red 	( firetable3 [Parm4 + (time * (0.2 * Parm3)) ]) * Parm0
+		green 	( firetable3 [Parm4 + (time * (0.2 * Parm3)) ]) * Parm1
+		blue	( firetable3 [Parm4 + (time * (0.2 * Parm3)) ]) * Parm2
+	}
+}
+
+material lights/cc_grill2
+{
+	{
+		lightProjectionMap	highQuality zeroclamp picmip -1		lights/cc_grill2.tga
+		colored
+	}
+}
+
+material lights/cc_grill
+{
+	{
+		lightProjectionMap	highQuality zeroclamp lights/cc_grill.tga
+		colored
+	}
+}
+
+material lights/cc_panels
+/*{
+	{
+		lightProjectionMap	highQuality zeroclamp lights/cc_panels.tga
+		colored
+	}
+}*/
+
+{
+	{
+		lightProjectionMap	highQuality zeroclamp		lights/cc_panels.tga
+		red 		((.25 * cc_panels01 [Parm4 + (time * (25 * Parm3)) ]) +.25) * Parm0
+		green 		((.25 * cc_panels01 [Parm4 + (time * (25 * Parm3)) ]) +.25) * Parm1
+		blue 		((.25 * cc_panels01 [Parm4 + (time * (25 * Parm3)) ]) +.25) * Parm2
+	}
+}
+
+material lights/keycard_light
+{
+	{
+		lightProjectionMap	highQuality zeroclamp lights/keycard_light.tga
+		colored
+	}
+}
+
+
+material lights/enercell_light
+{
+	noShadows
+	{
+		lightProjectionMap highQuality zeroClamp lights/squareishlight.tga
+		red		1 * guiLightTable[ time *0.5 ]
+		green	.5 * guiLightTable[ time *0.5 ]
+		blue	0 * guiLightTable[ time ]
+	}
+}
+
+material lights/caustics
+{
+	{
+		lightProjectionMap	highQuality zeroclamp lights/caustics.tga
+		useTemplate templates/materials/animate <16,1.0>
+		//scale 1 / 16, 1
+		//scroll caustics [ (time + parm4 ) * ( 1 / 1.0 ) ], 0
+		colored
+	}
+}
+
+
+material lights/squarelight1_flicker
+{
+	{
+		lightProjectionMap forceHighQuality zeroClamp lights/squarelight1.tga
+		rgb		flickerblink[ time * 1 ]
+		colored
+	}
+}
+
+material lights/squareishlight_flicker1
+{
+	{
+		lightProjectionMap highQuality zeroclamp lights/squareishlight.tga
+		red 	( subtle_slow_pulse [Parm4 + (time * (0.1 * Parm3)) ]) * Parm0
+		green 	( subtle_slow_pulse [Parm4 + (time * (0.1 * Parm3)) ]) * Parm1
+		blue	( subtle_slow_pulse [Parm4 + (time * (0.1 * Parm3)) ]) * Parm2
+	}
+}
+
+material lights/square_grill
+{
+	{
+		lightProjectionMap	highQuality zeroclamp lights/bump1.tga
+		colored
+	}
+}
+
+material lights/newalphagrate3b
+{
+	{
+		lightProjectionMap	highQuality zeroclamp lights/newalphagrate3b.tga
+		colored
+	}
+}

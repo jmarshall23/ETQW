@@ -1,0 +1,14 @@
+/***********************************************************************
+
+weapon_machinepistolrifle.script
+
+***********************************************************************/
+
+object weapon_machinepistol : weapon_clip {
+	void		preinit();
+};
+
+void weapon_machinepistol::preinit() {
+	hasScope		= false;
+	hasIronSights	= true;
+}

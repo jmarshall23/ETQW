@@ -1,0 +1,386 @@
+
+
+// ==========================================================
+// Generic Assets
+// ==========================================================
+
+// ==========================================================
+// used for the server browser
+// level shot images are directly loaded from disk and uploaded
+// over levelshots/__scratch.tga
+// ==========================================================
+material levelshots/scratch {
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip forceHighQuality levelshots/__scratch.tga
+		vertexColor
+	}
+}
+
+material levelshots/campaigns/scratch {
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip forceHighQuality levelshots/campaigns/__scratch.tga
+		vertexColor
+	}
+}
+
+material levelshots/generic { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip	"levelshots/generic"
+	}
+}
+
+// ==========================================================
+// Map backgrounds - Current maps
+// ==========================================================
+material levelshots/area22 { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/area22"
+	}
+}
+
+material levelshots/ark { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/ark"
+	}
+}
+
+material levelshots/canyon { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/canyon"
+	}
+}
+
+material levelshots/outskirts { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/outskirts"
+	}
+}
+
+material levelshots/island { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/island"
+	}
+}
+
+material levelshots/mothership {
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/mothership"
+	}
+}
+
+
+material levelshots/quarry {
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/quarry"
+	}
+}
+
+material levelshots/refinery {
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/refinery"
+	}
+}
+
+material levelshots/salvage{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/salvage"
+	}
+}
+
+material levelshots/sewer{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/sewer"
+	}
+}
+
+material levelshots/slipgate {
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/slipgate"
+	}
+}
+
+material levelshots/valley { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/valley"
+	}
+}
+
+material levelshots/volcano {
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/volcano"
+	}
+}
+
+// ==========================================================
+// Server browser thumbnails - Current maps
+// ==========================================================
+material levelshots/thumbs/area22 { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/thumbs/area22"
+	}
+}
+
+material levelshots/thumbs/ark { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/thumbs/ark"
+	}
+}
+
+material levelshots/thumbs/canyon { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/thumbs/canyon"
+	}
+}
+
+material levelshots/thumbs/outskirts { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/thumbs/outskirts"
+	}
+}
+
+material levelshots/thumbs/island { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/thumbs/island"
+	}
+}
+
+material levelshots/thumbs/quarry {
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/thumbs/quarry"
+	}
+}
+
+material levelshots/thumbs/refinery {
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/thumbs/refinery"
+	}
+}
+
+material levelshots/thumbs/salvage{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/thumbs/salvage"
+	}
+}
+
+material levelshots/thumbs/sewer{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/thumbs/sewer"
+	}
+}
+
+material levelshots/thumbs/slipgate {
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/thumbs/slipgate"
+	}
+}
+
+material levelshots/thumbs/valley { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/thumbs/valley"
+	}
+}
+
+material levelshots/thumbs/volcano {
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/thumbs/volcano"
+	}
+}
+
+// ==========================================================
+// Map backgrounds - Test stuff
+// ==========================================================
+
+material levelshots/temperate_new { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	"levelshots/temperate_new"
+	}
+}
+
+// ==========================================================
+// Campaigns
+// ==========================================================
+
+material levelshots/campaigns/africa { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	levelshots/campaigns/africa.tga
+	}
+	{
+		blend add
+		map	guis/assets/mainmenu/scanlines.tga
+		rgb 0.5
+		scale 16, 14
+	}
+	{
+		blend filter
+		vertexColor
+		map highquality clamp	levelshots/campaigns/gradient.tga
+	}
+}
+
+material levelshots/campaigns/europe { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	levelshots/campaigns/europe.tga
+	}
+	{
+		blend add
+		map	guis/assets/mainmenu/scanlines.tga
+		rgb 0.8
+		scale 16, 14
+	}
+	{
+		blend filter
+		vertexColor
+		map highquality	clamp	levelshots/campaigns/gradient.tga
+	}
+}
+
+material levelshots/campaigns/northamerica { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	levelshots/campaigns/northamerica.tga
+	}
+	{
+		blend add
+		map	guis/assets/mainmenu/scanlines.tga
+		rgb 0.8
+		scale 16, 14
+	}
+	{
+		blend filter
+		vertexColor
+		map highquality clamp	levelshots/campaigns/gradient.tga
+	}
+}
+
+material levelshots/campaigns/pacific { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	levelshots/campaigns/pacific.tga
+	}
+	{
+		blend add
+		map	guis/assets/mainmenu/scanlines.tga
+		rgb 0.8
+		scale 16, 14
+	}
+	{
+		blend filter
+		vertexColor
+		map highquality clamp	levelshots/campaigns/gradient.tga
+	}
+}
+
+material levelshots/campaigns/custom { 
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip clamp	levelshots/campaigns/custom.tga
+	}
+	{
+		blend add
+		map	guis/assets/mainmenu/scanlines.tga
+		rgb 0.8
+		scale 16, 14
+	}
+	{
+		blend filter
+		vertexColor
+		map highquality clamp	levelshots/campaigns/gradient.tga
+	}
+}

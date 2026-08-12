@@ -1,0 +1,74 @@
+material textures/effects/weapons/railgun_spiral {
+	twoSided
+	{
+		map textures/effects/weapons/railgun/spiral.tga
+		blend add
+		vertexColor
+		colored	
+	}
+}
+
+material textures/effects/weapons/railgun_core {
+	twoSided
+	{
+		map clamp textures/effects/weapons/railgun/core.tga
+		blend add
+		vertexColor
+		red 1   * guiLightTable[ time ]
+		colored
+	}
+}
+
+material textures/effects/weapons/hyperblaster_bolt {
+	{
+		program trivial_distance
+		parameters 30, 40, 0.1
+		map textures/effects/weapons/blaster_fly_red.tga
+		blend add
+		vertexColor
+	}
+}
+
+material textures/effects/weapons/hyperblaster_trail {
+	twoSided
+	{
+		program trivial_distance
+		parameters 30, 40, 0.1
+		blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR
+		map textures/effects/weapons/hyperblaster/trail.tga
+		maskalpha
+		vertexColor
+		
+		translate 0, time * -1
+	}
+}
+
+material textures/effects/shockwave
+{
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend	add
+		map		textures/particles/shockwave.tga
+		vertexcolor
+	}
+}
+
+material textures/effects/weapons/ground_flash
+{
+	qer_editorimage textures/particles/explosion/artilleryexp.tga
+	sort nearest
+	//deform sprite
+	{
+		blend add
+		map clamp textures/particles/explosion/artilleryexp.tga
+		useTemplate templates/materials/animate_clamp< 8, 0.4 >
+		rotate -3.25
+		//alpha 1
+		//maskalpha
+		vertexcolor
+		
+	}
+}

@@ -1,0 +1,180 @@
+template postprocess/blur {
+	text {
+	{
+		program trivialWithTextureMatrixAlways
+		// depthFunc always // ATI workaround
+		maskdepth
+		program	postprocess/downsample_glare
+		destinationBuffer 1 
+	}
+	{
+		program trivialWithTextureMatrixAlways
+		// depthFunc always // ATI workaround
+		maskdepth
+		program postprocess/blur_bilinear
+		destinationBuffer 0
+		map _postProcessBuffer_1
+		parameters 1, 0
+	}	
+	{
+		program trivialWithTextureMatrixAlways
+		// depthFunc always // ATI workaround
+		program postprocess/blur_bilinear
+		destinationBuffer 1
+		map _postProcessBuffer_0
+		parameters 0, 1
+		maskdepth
+	}
+/*	{
+		program trivialWithTextureMatrixAlways
+		// depthFunc always // ATI workaround
+		maskdepth	
+		program postprocess/showrect
+		map _postProcessBuffer_1
+		scale 200, 150
+	}*/
+	}
+}
+
+material postprocess/glow
+{
+	sort postprocess
+	translucent
+	useTemplate postprocess/blur<>
+	{
+		program	postprocess/glow
+		map _postProcessBuffer_1
+		// depthFunc always // ATI workaround
+		maskdepth
+	}
+}
+
+material postprocess/glowStrogg
+{
+	sort postprocess
+	translucent
+	useTemplate postprocess/blur<>
+	{
+		if parm4 > 0
+		program	postprocess/glowStrogg
+		map _postProcessBuffer_1
+		mask textures/sfx/dsdt_noise.tga
+		// depthFunc always // ATI workaround
+		maskdepth
+
+		//parameters time * 32 * .15, ( lerp2Table[ time * 64 ]  * 2 - 1 ) * 2, lerp2Table[ time * 64 * 0.5 ]
+		//parameters 0, ( lerp2Table[ time * 64 ]  * 2 - 1 ) * 2, lerp2Table[ time * 64 * 0.5 ]
+		//parameters time * 32 * .15, ( parm0 * 2 - 1 ) * 2, lerp2Table[ time * 64 * 0.5 ]
+
+		parameters 0, parm4 * 2, lerp2Table[ time * 64 * 0.5 ] * parm4
+	}
+	{
+		if parm4 == 0
+		program	postprocess/glow
+		map _postProcessBuffer_1
+		// depthFunc always // ATI workaround
+		maskdepth
+	}
+}
+
+material postprocess/heatsight
+{
+	sort postprocess
+	translucent
+	{
+		// depthFunc always // ATI workaround
+		maskdepth
+		program	postprocess/downsample
+		destinationBuffer 1 
+	}
+
+	{
+		// depthFunc always // ATI workaround
+		maskdepth
+		program postprocess/blur_bilinear
+		destinationBuffer 0
+		map _postProcessBuffer_1
+		parameters 0.2, 0.2
+	}	
+	{
+		// depthFunc always // ATI workaround
+		program postprocess/blur_bilinear
+		destinationBuffer 1
+		map _postProcessBuffer_0
+		parameters 0.2, -0.2
+		maskdepth
+	}
+	
+	{
+		program	postprocess/heatsight
+		map _postProcessBuffer_1
+		mask clamp textures/penta/heatsight.tga
+		parameters time
+		// depthFunc always // ATI workaround
+		maskdepth
+	}
+}
+
+material postprocess/dof
+{
+	sort postprocess
+	translucent
+	{
+		// depthFunc always // ATI workaround
+		maskdepth
+		program	postprocess/downsample_dof
+		destinationBuffer 1 
+	}
+	{
+		// depthFunc always // ATI workaround
+		maskdepth
+		program postprocess/blur_bilinear
+		destinationBuffer 0
+		map _postProcessBuffer_1
+		parameters 1, 0
+	}	
+	{
+		// depthFunc always // ATI workaround
+		program postprocess/blur_bilinear
+		destinationBuffer 1
+		map _postProcessBuffer_0
+		parameters 0, 1
+		maskdepth
+	}
+/*	{
+		// depthFunc always // ATI workaround
+		maskdepth	
+		program postprocess/showrect
+		map _postProcessBuffer_1
+		scale 200, 150
+	}*/
+	{
+		program	dof_basic2
+		map _postProcessBuffer_1
+		// depthFunc always // ATI workaround
+		maskdepth
+	}
+}
+
+material postprocess/statix {
+	sort postprocess
+	translucent
+	{
+		// depthFunc always // ATI workaround
+		maskdepth
+		parameters time
+		map textures/statix.tga
+		program	postprocess/static
+	}
+}
+
+material postprocess/motionblur {
+	sort postprocess
+	translucent
+	{
+		// depthFunc always // ATI workaround
+		maskdepth
+		parameters time
+		program	postprocess/motionblur
+	}
+}

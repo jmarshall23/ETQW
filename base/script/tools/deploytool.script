@@ -1,0 +1,637 @@
+/***********************************************************************
+
+tool_deploytool.script
+
+***********************************************************************/
+
+// blend times
+#define DEPLOYPDA_IDLE_TO_LOWER	4
+#define DEPLOYPDA_IDLE_TO_ATTACK	0
+#define DEPLOYPDA_RAISE_TO_IDLE	4
+#define DEPLOYPDA_ATTACK_TO_IDLE	1
+
+object tool_deploytool : weapon_base {
+
+	void		preinit();
+	void		init();
+	void		destroy();
+
+	void		Lower();
+	void		Idle();
+
+	void		UpdateGUI();
+	void		UpdateDeploymentGUI();
+	
+	void		HandleInput();
+
+	void		DoDeployment();
+
+	void		EndDeployment();
+
+	void		FreeDeploymentGUI();
+	void		LoadDeploymentGUI();
+	
+	void		OnNetworkMessage( entity p );
+	void		OnNetworkEvent();
+
+	void		SetWarning();
+	void		ClearWarning();
+
+	void		DisplayCachedWarning();
+	void		ClearCachedWarning();
+
+	float		GetIndexedDeployObject( float index );
+
+	float		OnActivate( entity p, float distance );
+	float		OnActivateHeld( entity p, float distance );
+	float		OnUsed( entity p, float distance );
+	boolean		OnWeapNext();
+	boolean		OnWeapPrev();
+	void		SetSelectedMode( float mode );
+
+	float		CheckRules( float deployObjectIndex );
+	boolean		CheckDismantle();
+	float		CheckRule2();
+	float		CheckRule4();
+	float		CheckRule5( float deployObjectIndex );
+
+	void		ToolTipThread_Raise();
+	
+	void		CreateDeployRotationSoundThread();
+	void		ClearDeployRotationSoundThread();
+	void		DeployRotationSoundThread();
+
+	float		hudModuleHandle;
+	float		numDeployObjects;
+	float		selectedMode;
+
+	float		deployObject1;
+	float		deployObject2;
+	float		deployObject3;
+	float		deployObject4;
+
+	boolean		activateLatched;
+	boolean		warningGiven;
+	boolean		warningAccepted;
+	handle		warningText;
+
+	boolean		toolTipCheckCharge;
+
+	boolean		deployIdleSound;
+	
+	boolean		networkHeldStatus;
+
+	float		deployRotationSoundThread;
+
+	// cached results
+	handle		cachedErrorMessage;
+	boolean		cachedWarningRequired;
+	handle		cachedWarningMessage;
+	entity		cachedTerritory;
+	object		cachedTeam;
+	entity		cachedRemovalEntity;
+	vector		cachedDeployPosition;
+	float		cachedDeployResult;
+}
+
+void tool_deploytool::preinit() {
+	hudModuleHandle = -1;
+	
+	cachedWarningMessage 	= invalid_handle;
+	cachedErrorMessage 		= invalid_handle;
+	warningText				= invalid_handle;
+
+	selectedMode = 0;
+
+	numDeployObjects = getFloatKey( "num_deploy_objects" );
+
+	if ( numDeployObjects >= 1 ) {
+		deployObject1 = GetDeployObject( getKey( "do_object1" ) );
+	}
+	if ( numDeployObjects >= 2 ) {
+		deployObject2 = GetDeployObject( getKey( "do_object2" ) );
+	}
+	if ( numDeployObjects >= 3 ) {
+		deployObject3 = GetDeployObject( getKey( "do_object3" ) );
+	}
+	if ( numDeployObjects >= 4 ) {
+		deployObject4 = GetDeployObject( getKey( "do_object4" ) );
+	}
+
+	deployRotationSoundThread = -1;
+}
+
+float tool_deploytool::GetIndexedDeployObject( float index ) {
+	if ( index >= numDeployObjects ) {
+		return -1;
+	}
+
+	if ( index == 0 ) {
+		return deployObject1;
+	}
+	if ( index == 1 ) {
+		return deployObject2;
+	}
+	if ( index == 2 ) {
+		return deployObject3;
+	}
+	if ( index == 3 ) {
+		return deployObject4;
+	}
+
+	return -1;
+}
+
+void tool_deploytool::init() {
+	if ( myPlayer.isLocalPlayer() ) {
+		sys.setDeploymentObject( GetIndexedDeployObject( selectedMode ) );
+		
+		thread ToolTipThread_Raise();
+	}
+
+	weaponState( "Raise", 0 );
+}
+
+void tool_deploytool::destroy() {
+	EndDeployment();
+	ClearDeployRotationSoundThread();
+}
+
+void tool_deploytool::EndDeployment() {
+	if ( myPlayer != $null_entity ) {
+		if ( myPlayer.isLocalPlayer() ) {
+			sys.startSoundDirect( "", SND_WEAPON_IDLE );
+		}
+		myPlayer.AI_HOLD_WEAPON = false;
+		myPlayer.exitDeploymentMode();
+	}
+	FreeDeploymentGUI();	
+}
+
+void tool_deploytool::FreeDeploymentGUI() {
+	if ( hudModuleHandle != -1 ) {
+		sys.freeHudModule( hudModuleHandle );
+		hudModuleHandle = -1;
+	}
+}
+
+void tool_deploytool::LoadDeploymentGUI() {
+	if ( hudModuleHandle == -1 && myPlayer == sys.getLocalPlayer() ) {
+		hudModuleHandle = sys.allocHudModule( getKey( "gui_deployment" ), getFloatKeyWithDefault( "hud_sort", 0 ), true );
+		ClearWarning();
+		sys.setDeploymentMode( 0.f );
+	}
+}
+
+void tool_deploytool::Lower() {
+	EndDeployment();
+
+	Base_Lower();
+}
+
+void tool_deploytool::UpdateDeploymentGUI() {
+	if ( myPlayer != sys.getLocalViewPlayer() ) {
+		return;
+	}
+
+	float index = GetIndexedDeployObject( selectedMode );
+	sys.setGUIFloat( GUI_GLOBALS_HANDLE, "gameHud.deployResult", CheckRules( index ) );
+	sys.setGUIFloat( GUI_GLOBALS_HANDLE, "deployables.currentItem", selectedMode );
+	sys.setGUIFloat( GUI_GLOBALS_HANDLE, "deployables.allowRotation", sys.allowDeploymentRotation() );
+}
+
+void tool_deploytool::UpdateGUI() {
+}
+
+void tool_deploytool::DoDeployment() {
+	sendNetworkCommand( "deploy " + selectedMode + " " + sys.getDeploymentRotation() );
+	sys.setDeploymentMode( 0.f );
+	myPlayer.exitDeploymentMode();
+	sys.startSoundDirect( getKey( "snd_deploy_confirm" ), SND_PLAYER_VO );
+}
+
+void tool_deploytool::HandleInput() {
+	boolean allowRotation = sys.allowDeploymentRotation();
+	float index = GetIndexedDeployObject( selectedMode );
+	float deployResult = CheckRules( index );
+	
+	if ( deployResult == DR_CONDITION_FAILED || warningGiven ) {
+		SetWarning();
+	} else {
+		ClearWarning();
+	}
+
+	object team = myPlayer.getGameTeam();
+
+	sys.setDeploymentState( deployResult );
+
+	if ( myPlayer.getButton( PK_ATTACK ) ) {
+		if ( !mainFireDown ) {
+			mainFireDown = true;
+
+			if ( !myPlayer.getDeploymentActive() ) {
+				warningAccepted = false;
+				SetSelectedMode( 0 );
+				sys.setDeploymentObject( GetIndexedDeployObject( selectedMode ) );
+				
+				sys.startSoundDirect( getKey( "snd_idle_deploy" ), SND_WEAPON_IDLE );
+				deployIdleSound = true;
+
+				myPlayer.sendToolTip( GetToolTip( getKey( "tt_start_deployment" ) ) );
+								
+				myPlayer.enterDeploymentMode();
+			} else {
+				if ( cachedWarningRequired && !warningGiven && !warningAccepted ) {
+					DisplayCachedWarning();
+				} else {
+					ClearCachedWarning();
+
+					if ( deployResult == DR_CLEAR ) {
+						if ( !allowRotation ) {
+							DoDeployment();
+						} else {
+							if ( !sys.getDeploymentMode() ) {
+								sys.setDeploymentMode( 1.f );
+								if ( !myPlayer.isToolTipPlaying() ) {
+									myPlayer.sendToolTip( GetToolTip( getKey( "tt_rotate_deployment" ) ) );
+								}
+							} else {
+								DoDeployment();
+							}
+						}
+					} else if ( deployResult == DR_CONDITION_FAILED ) {
+						if ( toolTipCheckCharge ) {
+							if ( myPlayer.isLocalPlayer() ) {
+								if ( !myPlayer.isToolTipPlaying() ) {
+									myPlayer.sendToolTip( GetToolTip( getKey( "tt_need_charge" ) ) );
+								}
+								sys.startSoundDirect( getKey( "snd_need_charge" ), SND_ANY );
+								G_NotifyNoCharge( myPlayer );
+							}
+						}
+					} else if ( deployResult == DR_FAILED ) {
+						sys.startSoundDirect( getKey( "snd_deploy_error" ), SND_PLAYER_VO );
+					}
+				}
+			}
+		}
+	} else {
+		mainFireDown = false;
+
+		if ( !myPlayer.getDeploymentActive() ) {
+			if ( myPlayer.AI_SPRINT ) {
+				StopIdleEffect();
+				weaponState( "Sprint", 4 );
+			}
+		} else {
+			if ( deployResult == DR_FAILED ) {
+				sys.setDeploymentMode( 0.f );
+			}
+		}
+	}
+
+	if ( myPlayer.getButton( PK_ALTFIRE ) ) {
+		if ( !altFireDown ) {
+			altFireDown = true;
+
+			if ( myPlayer.getDeploymentActive() ) {
+				if ( warningGiven ) {
+					ClearCachedWarning();
+				} else {
+					if ( !sys.getDeploymentMode() ) {
+						myPlayer.exitDeploymentMode();
+						sys.startSoundDirect( getKey( "snd_deploy_cancel" ), SND_WEAPON_DEPLOY_MISC );
+					} else {
+						sys.setDeploymentMode( 0.f );
+					}
+				}
+			}
+		}
+	} else {
+		altFireDown = false;
+	}
+
+
+	if ( myPlayer.getButton( PK_ACTIVATE ) ) {
+		if ( !activateLatched && myPlayer.getDeploymentActive() ) {
+			selectedMode = selectedMode + 1;
+			if ( selectedMode >= numDeployObjects ) {
+				selectedMode = 0;
+			}
+			SetSelectedMode( selectedMode );
+		}
+		activateLatched = true;
+	} else {
+		activateLatched = false;
+	}
+}
+
+void tool_deploytool::SetSelectedMode( float mode ) {
+	selectedMode = mode;
+	sys.setDeploymentObject( GetIndexedDeployObject( selectedMode ) );
+	sys.startSoundDirect( getKey( "snd_deploy_switch" ), SND_WEAPON_DEPLOY_MISC );
+}
+
+boolean tool_deploytool::OnWeapNext() {
+	if ( myPlayer.getDeploymentActive() ) {
+		selectedMode = selectedMode - 1;
+		if ( selectedMode < 0 ) {
+			selectedMode = 0;
+		}
+
+		SetSelectedMode( selectedMode );
+		return true;
+	}
+	
+	return false;
+}
+
+boolean tool_deploytool::OnWeapPrev() {
+	if ( myPlayer.getDeploymentActive() ) {
+		selectedMode = selectedMode + 1;
+		if ( selectedMode >= numDeployObjects ) {
+			selectedMode = numDeployObjects - 1;
+		}
+
+		SetSelectedMode( selectedMode );
+		return true;
+	}
+	
+	return false;
+}
+
+void tool_deploytool::Idle() {
+	boolean isLocal = ( myPlayer == sys.getLocalPlayer() );
+
+	weaponReady();
+	playCycle( ANIMCHANNEL_ALL, "idle" );
+	while( 1 ) {
+		if ( WEAPON_LOWERWEAPON ) {
+			weaponState( "Lower", DEPLOYPDA_IDLE_TO_LOWER );
+		}
+
+		if ( isLocal ) {
+			HandleInput();
+
+			if ( myPlayer.getDeploymentActive() ) {
+				if ( myPlayer.isInWater() > 0.5f ) {
+					EndDeployment();
+					continue;
+				}
+
+				myPlayer.AI_HOLD_WEAPON = true;
+				LoadDeploymentGUI();
+				UpdateDeploymentGUI();
+				hide();
+				StopIdleEffect();
+
+				if ( !deployIdleSound ) {
+					CreateDeployRotationSoundThread();
+					sys.startSoundDirect( getKey( "snd_deploy_idle" ), SND_WEAPON_IDLE );
+					deployIdleSound = true;
+				}
+			} else {
+				myPlayer.AI_HOLD_WEAPON = false;
+				FreeDeploymentGUI();
+				show();
+				StartIdleEffect();
+
+				if ( deployIdleSound ) {
+					ClearDeployRotationSoundThread();
+					sys.startSoundDirect( "", SND_WEAPON_IDLE );
+					deployIdleSound = false;
+				}
+			}
+			
+			if ( sys.isClient() ) {
+				if ( networkHeldStatus != myPlayer.AI_HOLD_WEAPON ) {
+					networkHeldStatus = myPlayer.AI_HOLD_WEAPON;
+
+					if ( networkHeldStatus ) {
+						sendNetworkCommand( "hold 1" );
+					} else {
+						sendNetworkCommand( "hold 0" );
+					}
+				}
+			}
+		}
+
+		UpdateCharge();
+
+		sys.waitFrame();
+	}
+}
+
+void tool_deploytool::OnNetworkEvent() {
+	string message = sys.argv( 0 );
+	
+	if ( message == "success" ) {
+		sys.startSoundDirect( getKey( "snd_deploy" ), SND_WEAPON_DEPLOY_MISC );
+	}
+	
+	if ( message == "failed" ) {
+		sys.startSoundDirect( getKey( "snd_deploy_error" ), SND_WEAPON_DEPLOY_MISC );
+	}
+}
+
+void tool_deploytool::OnNetworkMessage( entity p ) {
+	if ( myPlayer != p ) {
+		return;
+	}
+
+	string message = sys.argv( 0 );
+
+	if ( message == "deploy" ) {
+		float index		= GetIndexedDeployObject( sys.argvf( 1 ) );
+		float rotation	= sys.argvf( 2 );
+		float delay		= 0;
+		
+		string result = "failed";
+
+		if ( CheckRules( index ) == DR_CLEAR ) {
+			cachedRemovalEntity = $null_entity;
+
+			if ( CheckDismantle() ) {
+				delay = 4.f;
+			}
+			if ( sys.requestCheckedDeployment( myPlayer, index, rotation, delay ) ) {
+				if ( cachedRemovalEntity != $null_entity ) {
+					cachedRemovalEntity.vDismantle( myPlayer );
+				}
+				Remove( chargePerUse );
+				result = "success";
+			}
+		}
+		sendNetworkEvent( myPlayer.getEntityNumber(), false, result );
+		return;
+	}
+
+	if ( message == "hold" ) {
+		if ( sys.argvf( 1 ) ) {
+			myPlayer.AI_HOLD_WEAPON = true;
+		} else {
+			myPlayer.AI_HOLD_WEAPON = false;
+		}
+	}
+}
+
+void tool_deploytool::SetWarning() {
+	if ( hudModuleHandle != -1 ) {
+		if ( warningGiven ) {
+			sys.setGUIHandle( hudModuleHandle, "warningMessage", warningText );
+			if( warningText == sys.stringToHandle( "0" ) ) {
+				sys.warning( "warningText == 0" );
+			}
+		} else {
+			sys.setGUIHandle( hudModuleHandle, "warningMessage", cachedErrorMessage );
+			if( cachedErrorMessage == sys.stringToHandle( "0" ) ) {
+				sys.warning( "cachedErrorMessage == 0" );
+			}
+		}
+	}
+}
+
+void tool_deploytool::ClearWarning() {
+	if ( hudModuleHandle != -1 ) {
+		sys.setGUIHandle( hudModuleHandle, "warningMessage", invalid_handle );
+	}
+}
+
+float tool_deploytool::CheckRules( float deployObjectIndex ) {
+	cachedTerritory			= $null_entity;
+	cachedErrorMessage		= invalid_handle;
+	cachedWarningRequired	= false;
+	cachedTeam				= myPlayer.getGameTeam();
+	cachedDeployPosition	= myPlayer.getDeploymentPosition();
+
+	toolTipCheckCharge		= false;
+
+	float result;
+
+	if ( !CanRemove( chargePerUse ) ) {
+		toolTipCheckCharge = true;
+		cachedErrorMessage = g_locStr_NoCharge;
+		return DR_CONDITION_FAILED;
+	}
+
+	result = CheckRule2();
+	if ( result == DR_FAILED ) {
+		return DR_CONDITION_FAILED;
+	}
+
+	result = CheckRule4();
+	if ( result == DR_FAILED ) {
+		return DR_CONDITION_FAILED;
+	}
+	
+	return CheckRule5( deployObjectIndex );
+}
+
+boolean tool_deploytool::CheckDismantle() {
+	cachedRemovalEntity = myPlayer.targetingItem;
+	if ( cachedRemovalEntity != $null_entity ) {
+		if ( cachedRemovalEntity.getHealth() <= 0 ) {
+			cachedRemovalEntity = $null_entity;
+		}
+	}
+	return cachedRemovalEntity != $null_entity;
+}
+
+float tool_deploytool::CheckRule2() {
+	cachedTerritory = sys.getTerritoryForPoint( cachedDeployPosition, cachedTeam, 1.f, 0.f );
+	if ( cachedTerritory == $null_entity ) {
+		cachedErrorMessage = g_locStr_DoNotOwnTerritory;
+		return DR_FAILED;
+	}
+
+	return DR_CLEAR;
+}
+
+float tool_deploytool::CheckRule4() {
+	if ( CheckDismantle() ) {
+		cachedWarningRequired	= true;
+		cachedWarningMessage	= g_locStr_Dismantle;
+	}
+
+	return DR_CLEAR;
+}
+
+float tool_deploytool::CheckRule5( float deployObjectIndex ) {
+	cachedDeployResult = myPlayer.getDeployResult( deployObjectIndex );
+	return cachedDeployResult;
+}
+
+float tool_deploytool::OnActivateHeld( entity p, float distance ) {
+	return myPlayer.getDeploymentActive();
+}
+
+float tool_deploytool::OnActivate( entity p, float distance ) {
+	return myPlayer.getDeploymentActive();
+}
+
+float tool_deploytool::OnUsed( entity p, float distance ) {
+	return myPlayer.getDeploymentActive();
+}
+
+void tool_deploytool::DisplayCachedWarning() {
+	warningGiven		= true;
+	warningAccepted		= true;
+	warningText			= cachedWarningMessage;
+}
+
+void tool_deploytool::ClearCachedWarning() {
+	warningGiven		= false;
+}
+
+void tool_deploytool::CreateDeployRotationSoundThread() {
+	ClearDeployRotationSoundThread();
+	deployRotationSoundThread = thread DeployRotationSoundThread();
+}
+
+void tool_deploytool::ClearDeployRotationSoundThread() {
+	if ( deployRotationSoundThread != -1 ) {
+		sys.terminate( deployRotationSoundThread );
+		deployRotationSoundThread = -1;
+	}
+	sys.startSoundDirect( "", SND_WEAPON_DEPLOY_ROTATION );
+}
+
+void tool_deploytool::DeployRotationSoundThread() {
+	boolean playingRotationSound;
+	float lastRotation = sys.getDeploymentRotation();
+	while ( true ) {
+		float rotChange = sys.fabs( sys.getDeploymentRotation() - lastRotation );
+		if ( rotChange == 0 ) {
+			if ( playingRotationSound ) {
+				playingRotationSound = false;
+				sys.startSoundDirect( "", SND_WEAPON_DEPLOY_ROTATION );
+			}
+		} else {
+			if ( rotChange > 1.0f ) {
+				if ( !playingRotationSound ) {
+					playingRotationSound = true;
+					sys.startSoundDirect( getKey( "snd_deploy_rotate" ), SND_WEAPON_DEPLOY_ROTATION );
+				}
+			}
+		}
+
+		lastRotation = sys.getDeploymentRotation();
+		sys.wait( 0.1 );
+	}
+
+	deployRotationSoundThread = -1;
+}
+
+void tool_deploytool::ToolTipThread_Raise() {
+	sys.wait( myPlayer.CalcTooltipWait() );
+	while ( myPlayer.isSinglePlayerToolTipPlaying() ) {
+		sys.wait( 1.0f );
+	}
+	myPlayer.cancelToolTips();
+
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_1" ) ) );
+	
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_2" ) ) );
+}

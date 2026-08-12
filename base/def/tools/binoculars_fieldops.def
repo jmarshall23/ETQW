@@ -1,0 +1,192 @@
+/***********************************************************************
+
+	binoculars_fieldops.def
+
+***********************************************************************/
+
+
+// ========================================================================
+// Export
+//
+
+
+export hauser {
+	options -prefix TARGETTING_ -sourcedir models/tools/targeting_tool/dev_sd -destdir models/tools/targeting_tool/ /* -keepmesh  dial  strap1 strap2  strapbit1 strapbit2 targetting_tool1 scope  strap_grip  lens s_strap1 s_strap2 s_strapbit2 s_strapbit1 s_targetting_tool s_scope s_strapgrip right_arm_mesh right_hand_mesh gui_mesh gui_holder_mesh left_hand_mesh left_arm_mesh */
+
+	mesh	targetting_tool_base_file.mb	-dest models/tools/targeting_tool/targeting_tool_view.md5mesh
+	anim	targetting_tool_idle.mb			-dest models/tools/targeting_tool/targeting_tool_idle.md5anim
+	 anim	targetting_tool_raise.mb		-dest models/tools/targeting_tool/targeting_tool_raise.md5anim
+ 	anim	targetting_tool_lower.mb		-dest models/tools/targeting_tool/targeting_tool_lower.md5anim
+ 	anim	targetting_tool_zoomin.mb		-dest models/tools/targeting_tool/targeting_tool_zoomin.md5anim
+ 	anim	targetting_tool_zoomout.mb		-dest models/tools/targeting_tool/targeting_tool_zoomout.md5anim
+ 	anim	targetting_tool_sprint.mb		-dest models/tools/targeting_tool/targeting_tool_startsprint.md5anim -range 3 9
+ 	anim	targetting_tool_sprint.mb		-dest models/tools/targeting_tool/targeting_tool_leavesprint.md5anim -range 9 14
+
+}
+
+
+// ========================================================================
+// view Models
+//
+model viewmodel_targeting_tool {
+	mesh					models/tools/targeting_tool/targeting_tool_view.md5mesh
+
+	anim raise 				models/tools/targeting_tool/targeting_tool_raise.md5anim {
+		frame 1					sound_channel snd_weapon_raise snd_raise
+	}
+
+	anim idle 				models/tools/targeting_tool/targeting_tool_idle.md5anim {
+	}
+
+	anim putaway 			models/tools/targeting_tool/targeting_tool_lower.md5anim {
+	}
+
+	anim zoomin 			models/tools/targeting_tool/targeting_tool_zoomin.md5anim {
+		frame 1					sound_channel snd_weapon_fire snd_scopeup
+	}
+
+	anim zoomout 			models/tools/targeting_tool/targeting_tool_zoomout.md5anim {
+	}
+
+	anim start_sprint 		models/tools/targeting_tool/targeting_tool_startsprint.md5anim {
+	}
+
+	anim leave_sprint 		models/tools/targeting_tool/targeting_tool_leavesprint.md5anim {
+	}
+}
+
+
+// ========================================================================
+// Entity DEFS
+//
+invItemDef inventory/tools/binoculars/fieldops {
+	type									"tool"
+	slot									"binocs"
+	name									"game/weapons/targetting"
+
+	data {
+		"model_view" 						"viewmodel_targeting_tool"
+		"model_world" 						"models/tools/targeting_tool/targeting_tool_world.lwo"
+		"joint_attach"						"RightHand"
+
+		"view_offset"						"0 0 0"
+		"view_foreshorten"					"0.6"
+
+
+		"anim_prefix"						"targeting_tool"
+		"anim_prefix_class"					"tool"
+
+		"weapon_scriptobject"				"tool_targeting"
+
+		"def_scopemodel"					"scope_binoculars"
+		"gui_overlay"						"guis/game/targeting/binoculars"
+		"hud_sort"						"999"
+
+		"snd_raise"							"sounds/tools/binocs/raise"
+		"snd_scopeup"						"sounds/tools/binocs/zoom"
+		"snd_zoomin"						"sounds/tools/binocs/zoom/in"
+		"snd_zoomout"						"sounds/tools/binocs/zoom/out"
+		"snd_target_locking"				"sounds/weapons/misc/target_track_short"
+		"snd_target_locked"					"sounds/weapons/misc/target_lock"
+		"snd_targeting"						"sounds/tools/gdf/beam"
+		"snd_confirm"						"sounds/vo/gdf/npc/firesupport/approved"
+
+		"lock_distance"						"8192"
+		"lock_filter"						"target_lock_filter"
+		"lock_enabled"						"1"
+
+		"mtr_beam"							"textures/sfx/laser"
+		"mtr_weaponmenu"					"guis/assets/icons/weapons/monocle"
+
+		"climate_skin_key"					"weapon_gdf"
+
+		"show_charge"						"1"
+		"charge_per_use"					"100"
+
+		"crosshair"							"none"
+
+		"crosshair_spread_min"				"0.1"
+		"crosshair_spread_max"				"0.1"
+		"crosshair_spread_scale"			"1"
+
+		"spread_min"						"0"
+		"spread_max"						"0"
+
+		"spread_crouch_min"					"0"
+		"spread_crouch_max"					"0"
+
+		"spread_prone_min"					"0"
+		"spread_prone_max"					"0"
+
+		"spread_jump_min"					"0"
+		"spread_jump_max"					"0"
+
+		"timer_charge"						"energy_firesupport"
+
+		"tt_intro_1"						"binoculars_fieldops_intro_1"
+		"tt_intro_2"						"binoculars_fieldops_intro_2"
+		"tt_intro_no_deployable"			"binoculars_fieldops_no_deployable"
+		"tt_intro_scope_up_1"				"binoculars_fieldops_scope_up_1"
+		"tt_intro_scope_up_2"				"binoculars_fieldops_scope_up_2"
+		"tt_invalid_location"				"targeting_invalid_location"
+
+		"joint_beam"						"RightRing3"
+
+		"use_hold_anims"					"1"
+
+		"num_zoom_levels"					"4"
+		"zoom_fov_1"						"45"
+		"zoom_fov_2"						"30"
+		"zoom_fov_3"						"20"
+		"zoom_fov_4"						"10"
+		"zoom_time"							"0.2"
+		
+		"player_weapon_num"					"9"
+
+		"snd_out_of_range"					"sounds/vo/deploy/out_of_range/gdf"
+	}
+}
+
+entityDef scope_binoculars {
+	"spawnclass"				"sdClientAnimated"
+	"scriptobject"				"default"	
+	"model" 					"models/scopes/scope_binoculars.lwo"
+	"fov"						"156"
+}
+
+
+#include "templates/tooltips.include"
+
+toolTip binoculars_fieldops_intro_1 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/binoculars_fieldops_1"
+}
+
+toolTip binoculars_fieldops_intro_2 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/generic/fire_use_item"
+}
+
+toolTip binoculars_fieldops_no_deployable {
+	sound "sounds/ui/main/cannot"
+	text "game/tt/intro/generic/no_firesupport"
+	locationIndex TOOLTIP_POSITION_WEAPON_CHANGE
+}
+
+toolTip binoculars_fieldops_scope_up_1 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/binoculars_fieldops_scope_up_1"
+}
+
+toolTip binoculars_fieldops_scope_up_2 {
+	sound "sounds/ui/main/neutral"
+	text "game/tt/intro/generic/descope_weapon"
+}
+
+toolTip targeting_invalid_location {
+	nextShowDelay 5
+	alwaysPlay
+
+	sound "sounds/ui/main/cannot"
+	text "game/tt/targeting/invalid_location"
+}

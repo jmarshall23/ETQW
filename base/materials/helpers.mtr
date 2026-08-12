@@ -1,0 +1,6 @@
+material textures/helpers/target
+{
+
+	diffusemap textures/helpers/target.tga
+}
+		

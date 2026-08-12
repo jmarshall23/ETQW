@@ -1,0 +1,518 @@
+effect effects/items/landmine_strogg_idle_simple
+{
+	size	0
+
+}
+
+effect effects/items/teleporter_idle_simple
+{
+	size	5
+
+	spawner "unnamed5"
+	{
+		count		1,1
+		locked
+		constant
+
+		sprite
+		{
+			duration	0.1,0.1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point -2,0.5,-3.7 }
+				size { point 0.5,0.5 }
+				tint { line 0.223529,0.0588235,0.0235294,0.207843,0.054902,0.0235294 }
+				rotate { point -0.0416667 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 4,4 }
+			}
+
+			end
+			{
+				size { point 1.5,1.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "unnamed6"
+	{
+		count		1,1
+		locked
+		constant
+
+		sprite
+		{
+			duration	0.1,0.1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point -2,2.9,-2.3 }
+				size { point 0.5,0.5 }
+				tint { line 0.180392,0.0509804,0.0196078,0.141176,0.0392157,0.0156863 }
+				rotate { point -0.0416667 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 4,4 }
+			}
+
+			end
+			{
+				size { point 1.5,1.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "unnamed7"
+	{
+		count		1,1
+		locked
+		constant
+
+		sprite
+		{
+			duration	0.1,0.1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 2,2,-3.2 }
+				size { point 0.5,0.5 }
+				tint { line 0.180392,0.0509804,0.0196078,0.141176,0.0392157,0.0156863 }
+				rotate { point -0.0416667 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 4,4 }
+			}
+
+			end
+			{
+				size { point 1.5,1.5 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/items/teleporter_fire_simple
+{
+	size	34
+
+	spawner "unnamed1"
+	{
+		count		1,1
+		locked
+		constant
+
+		oriented
+		{
+			duration	1,1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point -3.7,0.5,0 }
+				size { point 2.3,2.3 }
+				tint { line 0.419608,0.105882,0.0117647,0.392157,0.164706,0.0156863 }
+				rotate { point 0,0.5,0 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 4,4 }
+			}
+
+			end
+			{
+				size { line 2.3,2.3,3.1,3.1 }
+			}
+			lineHit
+		}
+	}
+	spawner "FLASH!2"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			blend	add
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 11,0,0 }
+				size { point 10,10 }
+				tint { line 0.984314,0.376471,0.00784314,0.945098,0.321569,0.054902 }
+				fade { point 0.5 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 }
+			}
+
+			end
+			{
+				size { point 20,20 }
+			}
+			lineHit
+		}
+	}
+	spawner "eject puff"
+	{
+		count		4,4
+
+		sprite
+		{
+			duration	3,3
+			material	"particles/fire5a"
+			trailRepeat	1
+
+			start
+			{
+				position { point 5,0,0 }
+				size { line 2,2,7,7 }
+				tint { line 0.192157,0.0666667,0.0431373,0.341176,0.192157,0.00784314 }
+				fade { line 0.2,0.6 }
+				offset { line -5,-5,-5,5,5,5 }
+				rotate { box 0.5,-0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 8,8,14,14 }
+				rotate { box -0.5,0.5 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/items/teleporter_idle_deployed_simple
+{
+	size	5
+
+	spawner "unnamed5"
+	{
+		count		1,1
+		locked
+		constant
+
+		sprite
+		{
+			duration	0.1,0.1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point -1.3,0.8,-3.9 }
+				tint { line 0.156863,0.0431373,0.0156863,0.121569,0.0352941,0.0117647 }
+				rotate { point -0.0416667 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 5,5 offset 0,6 }
+			}
+
+			end
+			{
+				size { point 2,2 }
+			}
+			lineHit
+		}
+	}
+	spawner "unnamed6"
+	{
+		count		1,1
+		locked
+		constant
+
+		sprite
+		{
+			duration	0.1,0.1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point -1.3,3.4,-2.7 }
+				tint { line 0.180392,0.0509804,0.0196078,0.141176,0.0392157,0.0156863 }
+				rotate { point -0.0416667 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 3,3 }
+			}
+
+			end
+			{
+				size { point 2,2 }
+			}
+			lineHit
+		}
+	}
+	spawner "unnamed7"
+	{
+		count		1,1
+		locked
+		constant
+
+		sprite
+		{
+			duration	0.1,0.1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point -0.3,1.5,-3.3 }
+				tint { line 0.235294,0.0666667,0.0235294,0.207843,0.0588235,0.0235294 }
+				rotate { point -0.0416667 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 4,4 }
+			}
+
+			end
+			{
+				size { point 2,2 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+effect effects/items/teleporter_teleport_simple
+{
+	size	34
+
+	spawner "FLASH!2"
+	{
+		start		0.8,0.8
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			blend	add
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 11,0,0 }
+				size { point 10,10 }
+				tint { line 0.984314,0.376471,0.00784314,0.976471,0.333333,0.0235294 }
+				fade { point 0.5 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 }
+			}
+
+			end
+			{
+				size { point 20,20 }
+			}
+		}
+	}
+}
+
+
+
+effect effects/items/flyerhive_idle_simple
+{
+
+	size	7
+
+	spawner "unnamed5"
+	{
+		count		1,1
+		locked
+		constant
+
+		sprite
+		{
+			duration	0.1,0.1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 2.5,1.2,3.7 }
+				size { point 1,2 }
+				tint { point 0.321569,0.0784314,0.0392157 }
+				rotate { point -0.0416667 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 4,4 }
+			}
+
+			end
+			{
+				size { point 2,3 }
+			}
+		}
+	}
+}effect effects/items/thirdeyecamera_explode_simple
+{
+	size	708
+
+	cutOffDistance	8000
+
+	sound "Impact Sound"
+	{
+		soundShader	"sounds/weapons/grenades/frag/explode"
+		volume	8,10
+		freqshift	0.7,1.3
+	}
+	sound "Debris Sound"
+	{
+		start		0.2,0.2
+		soundShader	"sounds/weapons/impacts/debris_small"
+		volume	2,2
+	}
+	spawner "smoke"
+	{
+		count		8,8
+		useMaterialColor
+		attenuateEmitter
+		attenuation	300,300
+
+		sprite
+		{
+			duration	2,4
+			persist
+			material	"particles/dustcloud_02_litsmoke"
+			gravity		-0.01,-0.002
+			trailRepeat	1
+
+			start
+			{
+				velocity { box -15,-15,0,15,15,0 }
+				size { line 5,5,20,20 }
+				tint { line 0.156863,0.14902,0.133333,0.552941,0.517647,0.478431 }
+				fade { point 0 }
+				offset { sphere 0,-90,-90,0,90,90 }
+				rotate { box -0.277778,0.277778 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 count 3,3 }
+				tint { envelope linear }
+				fade { envelope fastinslowout }
+				offset { envelope convexfade count 20,20,20 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 50,50,70,70 }
+				tint { point 0.501961,0.501961,0.501961 }
+				fade { point 1 }
+				offset { sphere -15,-135,-135,-125,135,135 cone }
+				rotate { box 0.277778,-0.277778 }
+			}
+			lineHit
+		}
+	}
+	spawner "flash2"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				size { line 300,300,500,500 }
+				tint { line 0.513726,0.192157,0,0.666667,0.247059,0 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope rr2_concavefade_start_at_1_fast }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { point 100,100 }
+			}
+			lineHit
+		}
+	}
+	emitter "flames2"
+	{
+		duration	1,1
+		count		1,1
+
+		sprite
+		{
+			duration	0.8,0.8
+			persist
+			material	"particles/explosion/explode32strip02"
+			trailRepeat	1
+
+			start
+			{
+				size { line 80,80,90,90 }
+				tint { line 1,1,1,0.74902,0.74902,0.74902 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+

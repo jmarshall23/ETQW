@@ -1,0 +1,95 @@
+atmosphere sewer_beta {
+	sunMaterial "atmospheres/lights/scrolling_clouds_temperate"
+	sunDir ( -0.1259275675 -0.7042768002 0.6986676455 )
+	sunColor ( 0.6431372762 0.5686274767 0.4745098352 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/sprites/sundisc_bright2"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/lights/sunsprite"
+	sunFlareSize 48684
+	sunFlareTime 0
+	enableSunFlareAziZen 1
+	sunFlareAzi 219
+	sunFlareZen 15
+	postProcessParms {
+		tint ( 1 0.9568628073 0.8509804606 )
+		saturation 1
+		contrast 1
+		glareParms ( 1.0699999332 0.7599999905 0.1999999881 0.6399999857 )
+		glareBases ( 0 0 0 0 )
+	}
+	fogDistHalf 10000
+	fogHeightHalf 5523
+	fogHeightOffset 1420
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "sewer_beta_ambient"
+	skyGradientImage "atmosphere/skies/sewer_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 123
+	windAngleDev 41
+	windStrength 146
+	windStrengthDev 133
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sewer" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+ambientCubemap sewer_beta_ambient {
+	ambientLight {
+		color 0.3411764801 0.3333333433 0.3450980484
+		direction -0.9781476259 0.0000000238 0.2079117
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2156862915 0.2039215863 0.1882353127
+		direction 0.7660444379 0 0.6427876353
+		name "Light1"
+	}
+	ambientLight {
+		color 0.3215686381 0.3019607961 0.2980392277
+		direction 0 0 1
+		name "Light2"
+	}
+	ambientLight {
+		color 0.1960784495 0.1882353127 0.2156862915
+		direction -0.3622796237 0.8534772396 0.3746066093
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1764705926 0.1686274558 0.1725490242
+		direction -0.158635512 -0.899666667 0.4067366421
+		name "Light4"
+	}
+	ambientLight {
+		color 0.1960784495 0.1725490242 0.160784319
+		direction 0.7071067691 0.7071067691 0.0000000122
+		name "Light5"
+	}
+	ambientLight {
+		color 0.2666666806 0.2745098174 0.2823529541
+		direction 0.0000000055 -0.0000000237 -1
+		name "Light6"
+	}
+	ambientLight {
+		color 0.1882353127 0.1882353127 0.2117647231
+		direction 0.8807967901 -0.4683279395 0.0697564855
+		name "Light7"
+	}
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}

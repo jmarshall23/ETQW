@@ -1,0 +1,57 @@
+//
+// gdf_platypus cockpit
+//
+
+export hauser {
+		options -prefix PLATYPUS_ -rotate 90 -nomerge -sourcedir models/vehicles/gdf_platypus/dev_sd -destdir models/vehicles/gdf_platypus/
+
+		mesh platypus_cockpit.mb 	-dest cockpit.md5mesh -range 12 12
+
+ 		anim platypus_cockpit.mb 	-dest center.md5anim -range 0 0
+ 		anim platypus_cockpit.mb 	-dest turning_right.md5anim -range 0 0
+ 		anim platypus_cockpit.mb 	-dest turning_left.md5anim -range 0 0
+ 		anim platypus_cockpit.mb 	-dest throttle_center.md5anim -range 0 0
+ 		anim platypus_cockpit.mb 	-dest throttle_up.md5anim -range 0 0
+ 		anim platypus_cockpit.mb 	-dest throttle_down.md5anim -range 0 0
+
+		anim platypus_cockpit.mb 	-dest reverse_to_forward.md5anim -range 50 80
+
+ 		anim platypus_cockpit.mb 	-dest left_to_right.md5anim -range 0 30
+
+}
+
+
+
+
+//-===================================================================================----------------------------
+
+model vehicle_platypus_cockpit {
+	mesh							models/vehicles/gdf_platypus/cockpit.md5mesh
+
+	anim center						models/vehicles/gdf_platypus/center.md5anim {
+	}
+
+	anim turning_left				models/vehicles/gdf_platypus/turning_left.md5anim {
+	}
+
+	anim turning_right				models/vehicles/gdf_platypus/turning_right.md5anim {
+	}
+
+	anim throttle_up				models/vehicles/gdf_platypus/throttle_up.md5anim {
+	}
+
+	anim throttle_down				models/vehicles/gdf_platypus/throttle_down.md5anim {
+	}
+
+
+
+	anim reverse_to_forward			models/vehicles/gdf_platypus/reverse_to_forward.md5anim {
+	}
+
+	anim left_to_right				models/vehicles/gdf_platypus/left_to_right.md5anim {
+	}
+
+
+	channel legs					( *left_upper_arm *steering_wheel_joint )
+	channel head					( *right_upperight_arm *throttle_joint )
+}

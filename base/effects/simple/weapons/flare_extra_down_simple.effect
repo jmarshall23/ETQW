@@ -1,0 +1,50 @@
+effect effects/weapons/flare_extra_down_simple
+{
+	size	115
+
+	emitter "trail"
+	{
+		start		0.1,0.1
+		duration	1,1
+		count		40,40
+		attenuateEmitter
+		attenuation	400,400
+
+		linked
+		{
+			duration	0.75,0.75
+			material	"textures/particles/trail_test"
+			trailRepeat	1
+
+			start
+			{
+				position { spiral -2,-2,-2,2,2,2,64 cone }
+				velocity { point 0,0,-300 }
+				size { point 15 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				fade { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 5 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+

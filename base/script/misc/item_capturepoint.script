@@ -1,0 +1,286 @@
+
+object item_capturepoint {
+	void			preinit();
+	void			init();
+
+	entity			FindItem();
+	void			OnTouch( entity p, object traceObject );
+	
+	entity			item;
+	float			objectiveIndex;
+	float			captureProficiency;
+	float			lastTouchTime;
+	float			firstTouchTime;
+	float			transmitTime;
+}
+
+void item_capturepoint::preinit() {
+	captureProficiency = GetProficiency( getKey( "prof_capture" ) );
+	objectiveIndex = getFloatKeyWithDefault( "objective_index", -1 );
+	transmitTime = getFloatKeyWithDefault( "transmit_time", 5.f );
+}
+
+void item_capturepoint::init() {
+	setContents( CONTENTS_TRIGGER );
+	
+	item = FindItem();
+	if ( item == $null_entity ) {
+		sys.warning( "item_capturepoint::init Couldn't Find Item On (" + getName() + ")\n" );
+	}
+}
+
+entity item_capturepoint::FindItem() {
+	return getEntityKey( "item_name" );
+}
+
+void item_capturepoint::OnTouch( entity p, object traceObject ) {
+	if ( item == $null_entity ) {
+		return;
+	}
+
+	if ( item.vGetCarrier() == p ) {
+		float now = sys.getTime();
+		if ( ( now - lastTouchTime ) > 0.5f ) {
+			firstTouchTime = now;
+		}
+		lastTouchTime = now;
+		
+		if ( ( now - firstTouchTime ) >= transmitTime ) {
+			item.remove();
+			
+			if ( captureProficiency != -1 ) {
+				p.giveProficiency( captureProficiency, 1.f, $null, "item captured" );
+			}
+			
+			if ( objectiveIndex != -1 ) {
+				objManager.CompleteObjective( objectiveIndex, p );
+			}
+		}
+	}
+}
+
+
+
+
+object item_capturepoint_use {
+	void			preinit();
+	void			destroy();
+	void			syncFields();
+
+	void			OnPostMapSpawn();
+	float			OnUpdateCrosshairInfo( entity p );
+
+	boolean			CanActivate( entity p, float distance );
+	float			OnActivate( entity p, float distance );
+	float			OnActivateHeld( entity p, float distance );
+	float			OnUpdateCrosshairInfo( entity p );
+
+	float			vGetPliersProgressBarValue( float action );
+	float			vGetTransmitProgress();
+
+	void			Use( entity p );
+
+	void			ActivateSoundThread( entity p );
+	void			FinishActivateSound();
+
+	void			OnTransmitTime();
+
+	entity			item;
+	float			objectiveIndex;
+	float			captureProficiency;
+
+	float			currentTransmitCount;
+	float			maxTransmitCount;
+	float			lastTransmitTime;
+	
+	handle			screenName;
+	handle			progressMessage;
+
+	float			nextProgressMessageTime;
+
+	entity			lastUser;
+	float			activateSoundThreadId;
+}
+
+void item_capturepoint_use::preinit() {
+	screenName = sys.localizeString( getKey( "screen_name" ) );
+	captureProficiency = GetProficiency( getKey( "prof_capture" ) );
+	objectiveIndex = getFloatKeyWithDefault( "objective_index", -1 );
+	maxTransmitCount = getFloatKeyWithDefault( "transmit_count", 180 );
+	progressMessage = sys.localizeString( getKeyWithDefault( "progress_message", "maps/generic/obj_transmit" ) );
+	nextProgressMessageTime	= 0;
+	activateSoundThreadId = -1;
+}
+
+void item_capturepoint_use::destroy() {
+	if ( activateSoundThreadId != -1 ) {
+		sys.terminate( activateSoundThreadId );
+		FinishActivateSound();
+	}
+}
+
+void item_capturepoint_use::syncFields() {
+	syncBroadcast( "currentTransmitCount" );
+	syncBroadcast( "lastTransmitTime" );
+	syncBroadcast( "item" );
+
+	//syncCallback( "lastTransmitTime", "OnTransmitTime" );
+}
+
+void item_capturepoint_use::OnPostMapSpawn() {
+	if ( !sys.isClient() ) {
+		item = getEntityKey( "item_name" );
+		if ( item == $null_entity ) {
+			sys.error( "item_capturepoint_use::init Couldn't Find Item On (" + getName() + ")\n" );
+		}
+	}
+}
+
+boolean item_capturepoint_use::CanActivate( entity p, float distance ) {
+	if ( distance > 128.f ) {
+		return false;
+	}
+	
+	if ( item == $null_entity ) {
+		return false;
+	}
+	
+	if ( p.getViewingEntity() != p ) {
+		return false;
+	}
+	
+	if ( item.vGetCarrier() != p ) {
+		return false;
+	}
+	
+	return true;
+}
+
+float item_capturepoint_use::OnUpdateCrosshairInfo( entity p ) {
+	if ( !sys.doClientSideStuff() ) {
+		return 1.f;
+	}
+
+	float allegiance = getEntityAllegiance( p );
+	vector color = GetAllegianceColor( allegiance );
+	float distance = chGetDistance();
+	float range = InchesToMetres( distance );
+	float health = getHealth();
+
+	chSetNumLines( 0 );
+
+	float index;
+	
+	if ( p != $null_entity ) {
+		if ( CanActivate( p, distance ) ) {
+			index = chAddLine();
+			chSetLineMaterial( index, p.vGetActionIcon( AK_USE ) );
+			chSetLineType( index, CI_IMAGE );
+			chSetLineSize( index, 64, 64 );
+			chSetLineColor( index, g_colorWhite, 0.9f );
+		}
+	}
+	
+	index = chAddLine();
+	chSetLineTextIndex( index, screenName );
+	chSetLineColor( index, color, 1.f );
+	chSetLineType( index, CI_TEXT );
+	chSetLineSize( index, 0, 0 );
+
+	return 1.f;
+}
+
+float item_capturepoint_use::OnActivate( entity p, float distance ) {
+	if ( !CanActivate( p, distance ) ) {
+		return 0;
+	}
+
+	return 1;
+}
+
+float item_capturepoint_use::OnActivateHeld( entity p, float distance ) {
+	if ( !CanActivate( p, distance ) ) {
+		return 0;
+	}
+
+	Use( p );
+
+	if ( sys.getLocalPlayer() == p ) {
+		OnTransmitTime();
+	}
+
+	return 1;
+}
+
+#define ITEM_TRANSMIT_TIMEOUT 0.5f
+
+void item_capturepoint_use::Use( entity p ) {
+	float now = sys.getTime();
+	if ( now - lastTransmitTime > ITEM_TRANSMIT_TIMEOUT ) {
+		currentTransmitCount = 0.f;
+	}
+	lastTransmitTime = now;
+
+	if ( sys.getTime() > nextProgressMessageTime || p != lastUser ) {
+		objManager.PushCPrintString( p.getUserName() );
+		objManager.CPrintEvent( progressMessage, $null );
+		lastUser = p;
+		nextProgressMessageTime = sys.getTime() + 8.f;
+	}
+
+	player playerP = p;
+	playerP.ShowProgressBar( self, AC_CAPTURE );
+
+	currentTransmitCount++;
+	if ( currentTransmitCount >= maxTransmitCount ) {
+		item.vCaptured();
+
+		if ( activateSoundThreadId != -1 ) {
+			FinishActivateSound();
+		}
+
+		if ( !sys.isClient() ) {
+			item.remove();
+			item = $null_entity;
+			
+			if ( captureProficiency != -1 ) {
+				p.giveProficiency( captureProficiency, 1.f, $null, "item captured" );
+			}
+			
+			if ( objectiveIndex != -1 ) {
+				objManager.CompleteObjective( objectiveIndex, p );
+			}
+		}
+	}
+}
+
+float item_capturepoint_use::vGetPliersProgressBarValue( float action ) {
+	if ( action == AC_CAPTURE ) {
+		return currentTransmitCount / maxTransmitCount;
+	}
+	return 0.f;
+}
+
+float item_capturepoint_use::vGetTransmitProgress() {
+	if ( sys.getTime() - lastTransmitTime > ITEM_TRANSMIT_TIMEOUT ) {
+		return 0.f;
+	}
+	return currentTransmitCount / maxTransmitCount;
+}
+
+void item_capturepoint_use::ActivateSoundThread( entity p ) {
+	sys.startSoundDirect( getKey( "snd_transmitting_start" ), SND_STRUCTURE_CAPTUREPOINT );
+	waitUntil( sys.getTime() - lastTransmitTime > 0.7f );
+	FinishActivateSound();
+}
+
+void item_capturepoint_use::FinishActivateSound() {
+	sys.startSoundDirect( getKey( "snd_transmitting_stop" ), SND_STRUCTURE_CAPTUREPOINT );
+	activateSoundThreadId = -1;
+}
+
+void item_capturepoint_use::OnTransmitTime() {
+	if ( activateSoundThreadId == -1 ) {
+		activateSoundThreadId =  thread ActivateSoundThread( $null_entity );
+	}
+}

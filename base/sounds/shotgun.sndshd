@@ -1,0 +1,110 @@
+
+sound sounds/weapons/shotgun/fire {
+	compression wav
+
+	maxDistance 75
+	antiPrivate
+	occlude_once
+
+//	sounds/weapons/shotgun/new_01.wav
+	sounds/weapons/shotgun/new_02.wav
+
+//	sounds/weapons/shotgun/fire_01.wav
+//	sounds/weapons/shotgun/fire_02.wav
+//	sounds/weapons/shotgun/fire_03.wav
+//	sounds/weapons/shotgun/fire_04.wav
+//	sounds/weapons/shotgun/fire_05.wav
+
+//	sounds/weapons/shotgun/fire02_01.wav
+//	sounds/weapons/shotgun/fire02_02.wav
+//	sounds/weapons/shotgun/fire02_03.wav
+//	sounds/weapons/shotgun/fire02_06.wav
+}
+
+sound sounds/weapons/shotgun/fire/far {
+	compression wav
+
+	volume -5
+//	farDistance 25
+	maxDistance 150
+//	antiPrivate
+	occlude_once
+
+	sounds/weapons/shotgun/fire_far.wav
+
+//	sounds/weapons/shotgun/fire02_01_far.wav
+//	sounds/weapons/shotgun/fire02_02_far.wav
+//	sounds/weapons/shotgun/fire02_03_far.wav
+//	sounds/weapons/shotgun/fire02_06_far.wav
+
+}
+
+sound sounds/weapons/shotgun/fire/local {
+	compression wav
+
+	private
+	no_dups
+	occlude_once
+	
+//	sounds/weapons/shotgun/new_local_01.wav
+//	sounds/weapons/shotgun/new_local_02.wav
+//	sounds/weapons/shotgun/new_local_03.wav
+//	sounds/weapons/shotgun/new_local_04.wav
+//	sounds/weapons/shotgun/new_local_05.wav
+//	sounds/weapons/shotgun/new_local_06.wav
+	sounds/weapons/shotgun/new_local_07.wav
+	sounds/weapons/shotgun/new_local_08.wav
+
+//	sounds/weapons/shotgun/fire_local_01.wav
+//	sounds/weapons/shotgun/fire_local_02.wav
+//	sounds/weapons/shotgun/fire_local_03.wav
+//	sounds/weapons/shotgun/fire_local_04.wav
+//	sounds/weapons/shotgun/fire_local_04.wav
+}
+
+sound sounds/weapons/shotgun/cock {
+
+	volume -2
+	maxDistance 20
+
+	sounds/weapons/shotgun/rack_01.wav
+	sounds/weapons/shotgun/rack_02.wav
+	sounds/weapons/shotgun/rack_03.wav
+}
+
+sound sounds/weapons/shotgun/reload {
+
+	volume -1
+	maxDistance 20
+	no_dups
+
+	//sounds/weapons/shotgun/reload_01.wav
+	//sounds/weapons/shotgun/reload_02.wav
+	//sounds/weapons/shotgun/shell_01.wav
+	sounds/weapons/shotgun/shell_02.wav
+	sounds/weapons/shotgun/shell_03.wav
+	sounds/weapons/shotgun/shell_04.wav
+	//sounds/weapons/shotgun/shell_05.wav
+	sounds/weapons/shotgun/shell_06.wav
+}
+
+sound sounds/weapons/shotgun/sights/up {
+
+	volume -20
+
+	sounds/weapons/shotgun/sights_up.wav
+}
+
+sound sounds/weapons/shotgun/sights/down {
+
+	volume -20
+
+	sounds/weapons/shotgun/sights_down.wav
+}
+
+sound sounds/weapons/shotgun/raise {
+
+	volume -20
+
+	sounds/weapons/shotgun/raise.wav
+}

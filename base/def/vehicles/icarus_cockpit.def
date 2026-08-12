@@ -1,0 +1,44 @@
+//
+// strogg icarus cockpit
+//
+
+export hauser {
+		options -prefix ICA_ -sourcedir models/vehicles/strogg_icarus/dev_sd -destdir models/vehicles/strogg_icarus/
+
+
+		mesh icarus_cockpit_anims.mb 	-dest cockpit.md5mesh -range 70 70
+		anim icarus_cockpit_anims.mb 	-dest cockpit_enter.md5anim -range 1 10
+		anim icarus_cockpit_anims.mb 	-dest cockpit_idle.md5anim -range 70 155
+		anim icarus_cockpit_anims.mb 	-dest cockpit_boost.md5anim -range 50 60
+		anim icarus_cockpit_anims.mb 	-dest cockpit_boost_idle.md5anim -range 180 225
+		anim icarus_cockpit_anims.mb 	-dest cockpit_boost_end.md5anim -range 60 70
+		anim icarus_cockpit_anims.mb 	-dest cockpit_fire.md5anim -range 15 48
+
+
+
+}
+
+model vehicle_icarus_cockpit {
+
+	mesh								models/vehicles/strogg_icarus/cockpit.md5mesh
+
+	anim enter							models/vehicles/strogg_icarus/cockpit_enter.md5anim {
+	}
+
+	anim base							models/vehicles/strogg_icarus/cockpit_idle.md5anim {
+	}
+
+	anim boost							models/vehicles/strogg_icarus/cockpit_boost.md5anim {
+	}
+
+	anim boost_idle						models/vehicles/strogg_icarus/cockpit_boost_idle.md5anim {
+	}
+
+	anim boost_end						models/vehicles/strogg_icarus/cockpit_boost_end.md5anim {
+	}
+
+	anim fire							models/vehicles/strogg_icarus/cockpit_fire.md5anim {
+	}
+
+	channel legs						( *l_upper_arm ) // for fire anim
+}

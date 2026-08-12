@@ -1,0 +1,249 @@
+effect effects/weapons/haw_muzzleflash_simple
+{
+	size	606
+
+	cutOffDistance	15000
+
+	sound "Fire Sound"
+	{
+		soundShader	"sounds/weapons/haw/fire"
+		volume	1,5
+	}
+	emitter "Dust cloud3"
+	{
+		duration	0.25,0.25
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	300,300
+
+		sprite
+		{
+			duration	0.5,0.5
+			persist
+			material	"particles/dustcloud_02_litsmoke"
+			gravity		0.005,0.005
+			trailRepeat	1
+
+			start
+			{
+				position { point 75,0,0 }
+				velocity { box 20,20,20,50,25,25 }
+				acceleration { point -20,-5,0 }
+				size { point 0,0 }
+				tint { line 0.992157,0.992157,0.992157,0.901961,0.886275,0.866667 }
+				fade { point 0.7 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope rich_explosiongrow count 8,8 }
+				fade { envelope jrad_concavefade }
+				offset { envelope jrad_convexfade }
+				rotate { envelope jrad_convexfade }
+			}
+
+			end
+			{
+				size { point 60,60 }
+				offset { sphere -50,-50,-50,50,50,50 }
+				rotate { box -0.138889,0.138889 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "Dust cloud4"
+	{
+		duration	0.25,0.25
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	300,300
+
+		sprite
+		{
+			duration	1,1
+			persist
+			material	"particles/dustcloud_02_litsmoke"
+			gravity		0.005,0.005
+			trailRepeat	1
+
+			start
+			{
+				position { point -55,0,0 }
+				velocity { box -40,-50,-50,-40,50,50 }
+				acceleration { point -20,-5,0 }
+				size { point 20,20 }
+				tint { line 0.839216,0.831373,0.811765,0.647059,0.639216,0.592157 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope convexfade count 14,14 }
+				fade { envelope jrad_concavefade }
+				offset { envelope jrad_convexfade }
+				rotate { envelope jrad_convexfade }
+			}
+
+			end
+			{
+				size { point 60,60 }
+				offset { sphere -50,-50,-50,-50,50,50 }
+				rotate { box -0.138889,0.138889 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "flash_side"
+	{
+		duration	0.2,0.2
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	3000,3000
+
+		line
+		{
+			duration	0.2,0.2
+			blend	add
+			material	"particles/flash/artfire"
+			trailRepeat	1
+
+			start
+			{
+				position { point 30,0,0 }
+				size { box 20,30 }
+				length { box 110,0,0,150,0,0 }
+			}
+
+			motion
+			{
+				fade { envelope jrad_concavefade }
+			}
+			lineHit
+		}
+	}
+	spawner "edge3"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.2
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point -80,0,0 }
+				size { line 40,40,60,60 }
+				tint { line 0.658824,0.454902,0.266667,0.517647,0.396078,0.309804 }
+				fade { point 0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 300,300,400,400 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+	spawner "edge4"
+	{
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	500,500
+
+		sprite
+		{
+			duration	0.1,0.2
+			material	"particles/flash/artfire"
+			trailRepeat	1
+
+			start
+			{
+				position { point -90,0,0 }
+				size { point 30,30 }
+				tint { line 0.658824,0.454902,0.266667,0.517647,0.396078,0.309804 }
+				fade { point 0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 60,60 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+	spawner "flash2"
+	{
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	400,400
+
+		oriented
+		{
+			duration	0.05,0.1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 50,0.5,0.5 }
+				size { line 30,30,40,40 }
+				tint { line 0.94902,0.811765,0.403922,0.992157,0.901961,0.709804 }
+				fade { line 0.75,1 }
+				rotate { box 0,0,0.166667,0,0,0.138889 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+
+			end
+			{
+				size { line 150,150,200,200 }
+				tint { point 1,1,1 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/weapons/haw_muzzle_smoke_simple
+{
+	size	0
+
+	cutOffDistance	300
+
+}
+
+
+
+

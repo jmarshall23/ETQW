@@ -1,0 +1,95 @@
+material textures/base_floor/volcano_floor_tiles_gdfspawn
+{
+	{
+		diffusemap	textures2/interior/factory_interiorfloor02_d.tga
+		specularmap	textures2/interior/factory_interiorfloor01_s.tga
+		bumpmap 	textures2/interior/factory_interiorfloor01_local.tga
+	
+		vertexcolor
+	}
+}
+
+material textures/base_trim/volcano_floortrim
+{
+	qer_editorimage textures/base_trim/factory_interiorwall02_trim_d.tga
+	{
+		diffusemap	textures/base_trim/factory_interiorwall02_trim_d.tga
+		specularmap	textures/base_trim/factory_interiorwall02_trim_s.tga
+		bumpmap 	textures/base_trim/factory_interiorwall02_trim_local.tga
+		vertexcolor
+	}
+}
+
+material textures/base_trim/grey_trim01
+{
+	surfacetype "metal"
+	{
+		diffusemap	textures/base_trim/grey_trim01_d.tga
+		specularmap	textures/base_trim/grey_trim01_s.tga
+		bumpmap 	textures/base_trim/grey_trim01_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult 8,1,0,0 
+	}
+}
+
+material texturesheets/volcano/ceiling_light
+{
+		noshadows
+		noselfshadow
+		//nonsolid
+		//qer_editorimage texturesheets/volcano/ceiling_light_d.tga
+		diffusemap	texturesheets/volcano/ceiling_light_d.tga
+		//specularmap     textures2/lab/lab_ceiling_light_on_s.tga
+		//bumpmap 	textures2/lab/lab_ceiling_light_on_local.tga
+	{	
+		blend add
+		map		texturesheets/volcano/ceiling_light_glow_d.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material models/mapobjects/volcano/monitor_kboard
+{
+	qer_editorimage models/mapobjects/volcano/monitor_kboard_d.tga
+	noshadows
+	{
+			diffusemap	models/mapobjects/volcano/monitor_kboard_d.tga
+			specularmap	models/mapobjects/volcano/monitor_kboard_s.tga
+			bumpmap 	models/mapobjects/volcano/monitor_kboard_local.tga
+			vertexcolor
+	}	
+}
+
+material models/mapobjects/volcano/warehouse_light_01
+{
+	qer_editorimage models/mapobjects/volcano/warehouse_light_01_d.tga
+	noshadows
+	{
+			diffusemap	models/mapobjects/volcano/warehouse_light_01_d.tga
+			specularmap	models/mapobjects/volcano/warehouse_light_01_s.tga
+			bumpmap 	models/mapobjects/volcano/warehouse_light_01_local.tga
+			vertexcolor
+	}	
+}
+
+material models/mapobjects/volcano/transformer_objective
+{
+	qer_editorimage models/mapobjects/volcano/transformer_objective_d.tga
+	noshadows
+	surfacetype	"metal"
+	{
+			program interaction/selfillum
+			diffusemap	models/mapobjects/volcano/transformer_objective_d.tga
+			specularmap	models/mapobjects/volcano/transformer_objective_s.tga
+			bumpmap 	models/mapobjects/volcano/transformer_objective_local.tga
+			selfillummap	models/mapobjects/volcano/transformer_objective_glow.tga
+			//vertexcolor
+	}	
+}
+
+

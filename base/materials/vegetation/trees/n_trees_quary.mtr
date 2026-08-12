@@ -1,0 +1,188 @@
+///ANDREW///
+
+material models/vegetation/trees/quarry/quarry_branches
+{
+	nonsolid
+	noshadows
+	twoSided
+ 	{
+		//alphatocoverage
+		program interaction/foliage
+		diffusemap	clamp	models/vegetation/trees/n_trees_quary/quarry_branches_01_d.tga
+		vertexcolor
+		alphaTest	0.25
+ 		
+		useTemplate wind/animatematrix_left< 0.12, 0.002 > // Speed, strength	
+	}
+}
+
+material models/vegetation/trees/quarry/quarry_bark
+{
+	nonsolid
+	noshadows
+	{
+		diffusemap				models/vegetation/trees/n_trees_quary/quarry_bark_01_d.tga
+		bumpmap		picmip -1	models/vegetation/trees/n_trees_quary/quarry_bark_01_local.tga
+		specularmap	picmip -1	models/vegetation/trees/n_trees_quary/quarry_bark_01_s.tga
+		alphaTest	0.25
+		vertexcolor
+		
+		bumpDetailMap			textures/detail/bump/bark_detail01_local.tga
+		specDetailMap			textures/detail/bump/bark_detail01_d.tga
+		detailMult 10,10,0,0 
+	}
+}
+
+material models/vegetation/trees/n_trees_quary/aut_tree_01
+{
+ 	nonsolid
+ 	noshadows
+	twoSided
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap 	clamp models/vegetation/trees/n_trees_quary/aut_branch_01_d.tga
+ 		alphaTest 	0.25
+ 	}
+}
+
+material models/vegetation/trees/n_trees_quary/aut_tree_02
+{
+ 	nonsolid
+ 	noshadows
+	twoSided
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap 	clamp models/vegetation/trees/n_trees_quary/aut_branch_03_d.tga
+ 		alphaTest 	0.25
+ 	}
+}
+
+material models/vegetation/trees/n_trees_quary/aut_tree_trunk_01
+{
+	nonsolid
+	noshadows	
+	{
+		diffusemap	picmip -1	models/vegetation/trees/n_trees_quary/dark_rough_bark_d2.tga
+		bumpmap 	picmip -1	models/vegetation/trees/n_trees_quary/rough_bark_local.tga
+		specularmap	picmip -2	models/vegetation/trees/n_trees_quary/rough_bark_s.tga
+	}
+}
+
+material models/vegetation/trees/n_trees_quary/aut_tree_04
+{
+ 	nonsolid
+ 	noshadows
+	twoSided
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap 	clamp models/vegetation/trees/n_trees_quary/aut_branch_04_d.tga
+ 		alphaTest 	0.25	
+ 	}
+}
+
+material models/vegetation/trees/n_trees_quary/aut_tree_04_green
+{
+ 	nonsolid
+ 	noshadows
+	twoSided
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap 	clamp models/vegetation/trees/n_trees_quary/aut_branch_04_green_d.tga
+ 		alphaTest 	0.25
+ 		vertexcolor	
+ 	}
+}
+
+material models/vegetation/trees/n_trees_quary/aut_tree_04_red
+{
+ 	nonsolid
+	noshadows
+	twoSided
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap 	clamp models/vegetation/trees/n_trees_quary/aut_branch_04_red_d.tga
+ 		alphaTest 	0.25
+ 		vertexcolor
+ 	}
+}
+
+material models/vegetation/trees/n_trees_quary/aut_tree_04_yellow
+{
+ 	nonsolid
+ 	noshadows
+	twoSided
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap 	clamp models/vegetation/trees/n_trees_quary/aut_branch_04_d
+ 		alphaTest 	0.25	
+ 	}
+}
+
+
+material models/vegetation/trees/n_trees_quary/aut_tree_trunk_04
+{
+	nonsolid
+	noshadows
+	{
+		diffusemap	picmip -1	models/vegetation/trees/n_trees_quary/aut_bark_tall_d.tga
+		bumpmap 	picmip -1	models/vegetation/trees/n_trees_quary/aut_bark_tall_local.tga
+		specularmap 	picmip -2	models/vegetation/trees/n_trees_quary/aut_bark_tall_s.tga
+		vertexcolor
+	}
+}
+
+material models/vegetation/trees/n_trees_quary/aut_twig_01
+{
+ 	nonsolid
+ 	noshadows
+	twoSided
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap 	clamp models/vegetation/trees/n_trees_quary/twiggy2_d.tga
+ 		alphaTest 	0.25
+ 	}
+}
+
+material models/vegetation/trees/n_trees_quary/aut_branch_04_dead
+{
+ 	nonsolid
+ 	noshadows
+	twoSided
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap 	models/vegetation/trees/n_trees_quary/aut_branch_04_dead_d.tga
+ 		alphaTest 	0.25
+ 	}
+}
+
+material models/vegetation/trees/n_trees_quary/dark_rough_bark_dead
+{
+	nonsolid
+	noshadows	
+	{
+		diffusemap	picmip -1	models/vegetation/trees/n_trees_quary/dark_rough_bark_dead_d.tga
+		bumpmap 	picmip -1	models/vegetation/trees/n_trees_quary/rough_bark_local.tga
+		specularmap 	picmip -2	models/vegetation/trees/n_trees_quary/rough_bark_s.tga
+	}
+}
+
+material models/vegetation/trees/n_trees_quary/wood_fern
+{
+ 	nonsolid
+ 	noshadows
+	twoSided
+ 	{
+ 		alphatocoverage
+ 		program		interaction/foliage
+  		diffusemap 	clamp models/vegetation/trees/n_trees_quary/w_fern_01_colour.tga
+ 		alphaTest 	0.25
+ 	}
+}

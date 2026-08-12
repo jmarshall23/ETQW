@@ -1,0 +1,43 @@
+// Strogg Nexus
+
+// Map Salvage
+
+sound sounds/vo/strogg/nexus/maps/salvage/destroy/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/salvage/20801.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/salvage/destroy {
+
+	localization/english/sounds/vo/strogg/nexus/maps/salvage/20803.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/salvage/planted {
+
+	localization/english/sounds/vo/strogg/nexus/maps/salvage/20804.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/salvage/defendexpl {
+
+	localization/english/sounds/vo/strogg/nexus/maps/salvage/20805.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/salvage/planted/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/salvage/20806.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/salvage/disarmed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/salvage/20807.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/salvage/stroggwin {
+
+	localization/english/sounds/vo/strogg/nexus/maps/salvage/20809.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/salvage/strogglose {
+
+	localization/english/sounds/vo/strogg/nexus/maps/salvage/20808.wav
+}

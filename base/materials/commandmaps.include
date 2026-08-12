@@ -1,0 +1,50 @@
+
+#ifndef __commandmaps__
+#define __commandmaps__
+
+$template templates/game/maps/cmIcon( MapParm )
+	translucent
+	{
+		if ( parm11 == 0 )
+		program trivialMaskImage
+		mask clamp textures/common/cmmask.tga
+		map nopicmip MapParm
+		blend blend
+		vertexColor
+	}
+	{
+		if ( parm11 != 0 )
+		mask _white
+		map nopicmip MapParm
+		blend blend
+		vertexColor
+	}
+$endtemplate
+
+$template templates/game/maps/cmMap( MapParm )
+	{
+		if ( parm11 == 0 )
+		blend blend
+		vertexColor
+		map nopicmip MapParm
+		writeDepth
+	}
+	{
+		if ( parm11 != 0 )
+		blend blend
+		red parm11
+		vertexColor
+		map nopicmip MapParm
+	}
+	{
+		blend blend
+		map highquality makealpha( "commandmaps/overlay_grid.tga" )
+		vertexColor
+		scale 16, 16
+		red 0.0
+		green 0.0
+		blue 0.0
+	}
+$endtemplate
+
+#endif // !__commandmaps__

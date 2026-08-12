@@ -1,0 +1,241 @@
+material atmospheres/lights/default
+{
+	shadowMapped
+	{
+		lightProjectionMap _white
+		lightFallOffMap _white
+		red		sun_r //* 0.9 //* 0.52
+		green		sun_g //* 0.9 //* 0.55
+		blue		sun_b //* 0.62
+		//alpha		1
+
+		//map	textures/penta/cloud05.tga
+		//red 	( firetable [Parm4 + (time / 6 * (Parm3)) ]) * Parm0
+		//green 	( firetable [Parm4 + (time / 6 * (Parm3)) ]) * Parm1
+		//blue 	( firetable [Parm4 + (time / 6 * (Parm3)) ]) * Parm2
+		//rotate	firelightrot [ time * 2 ]
+		//zeroClamp
+		//scroll time*0.01, time*0.01
+	}
+}
+
+material atmospheres/lights/scrolling_clouds01
+{
+	{
+		lightProjectionMap atmosphere/light_cloud01.tga
+		lightFallOffMap _white		
+		red		sun_r //* 0.9 //* 0.52
+		green		sun_g //* 0.9 //* 0.55
+		blue		sun_b //* 0.62
+		
+		translate	time * wind_x * 0.01, time * wind_y * 0.01
+		//translate	0, time * 0.005
+		scale		10, 10
+		
+	}
+}
+
+material atmospheres/lights/scrolling_clouds01_bright
+{
+
+	{
+		lightProjectionMap atmosphere/light_cloud01_bright.tga
+		lightFallOffMap _white		
+		red		sun_r //* 0.9 //* 0.52
+		green		sun_g //* 0.9 //* 0.55
+		blue		sun_b //* 0.62
+		
+		translate	time * wind_x * -0.01, time * wind_y * 0.01
+		//translate	0, time * 0.005
+		scale		7, 7
+		
+	}
+}
+
+
+material atmospheres/lights/scrolling_clouds01_bright02
+{
+	{
+		lightProjectionMap atmosphere/light_cloud01_bright02.tga
+		lightFallOffMap _white		
+		red		sun_r //* 0.9 //* 0.52
+		green		sun_g //* 0.9 //* 0.55
+		blue		sun_b //* 0.62
+		
+		translate	time * wind_x * -0.01, time * wind_y * 0.01
+		//translate	0, time * 0.005
+		scale		7, 7
+		
+	}
+}
+
+
+material atmospheres/lights/scrolling_clouds_temperate
+{
+
+	{
+		lightProjectionMap atmosphere/light_cloud01_bright.tga
+		lightFallOffMap _white		
+		red		sun_r 
+		green		sun_g
+		blue		sun_b
+		
+		translate	time * wind_x * -0.005, time * wind_y * 0.005
+		scale		7, 7
+		
+	}
+}
+
+material atmospheres/sprites/sundisc
+{
+	sort 2 // after sky background but before cloudlayers
+	noAtmosphere	// Don't fog it out :D
+	{
+		blend add
+		
+		// Brightness in red green blue and the glareyness
+		color sun_r * 0.3, sun_g * 0.3, sun_b * 0.3, 0.2
+		map clamp atmosphere/sundisk.tga
+	}
+}
+
+
+material atmospheres/sprites/sundisc_bright
+{
+	sort 2 // after sky background but before cloudlayers
+	noAtmosphere	// Don't fog it out :D
+	{
+		blend add
+		
+		// Brightness in red green blue and the glareyness
+		//color sun_r * 0.3, sun_g * 0.3, sun_b * 0.3, 0.2
+		color sun_r * 0.5, sun_g * 0.5, sun_b * 0.5, 0.1
+		map clamp atmosphere/sprites/sun_bright_halo.tga
+	}
+}
+
+material atmospheres/sprites/sundisc_bright2
+{
+	sort 2 // after sky background but before cloudlayers
+	noAtmosphere	// Don't fog it out :D
+	{
+		blend add
+		
+		// Brightness in red green blue and the glareyness
+		//color sun_r * 0.3, sun_g * 0.3, sun_b * 0.3, 0.2
+		color sun_r * 0.5, sun_g * 0.5, sun_b * 0.5, 0.1
+		map clamp atmosphere/sprites/sun_bright_halo2.tga
+	}
+}
+
+material atmospheres/sprites/sundisc_very_bright
+{
+	sort 2 // after sky background but before cloudlayers
+	noAtmosphere	// Don't fog it out :D
+	{
+		blend add
+		
+		// Brightness in red green blue and the glareyness
+		color sun_r * 0.8, sun_g * 0.8, sun_b * 0.8, 5.9
+		map clamp atmosphere/sprites/sun_bright_halo.tga
+	}
+}
+
+material atmospheres/sprites/sundisc_sunset
+{
+	sort 2 // after sky background but before cloudlayers
+	noAtmosphere	// Don't fog it out :D
+	{
+		blend add
+		
+		// Brightness in red green blue and the glareyness
+		//color sun_r * 0.3, sun_g * 0.3, sun_b * 0.3, 0.2
+		color sun_r * 1, sun_g * 1, sun_b * 1, 1.0
+		map clamp atmosphere/sprites/sun_bright_halo.tga
+	}
+}
+
+
+material atmospheres/sprites/moon_full
+{
+	sort 2 // after sky background but before cloudlayers
+	noAtmosphere	// Don't fog it out :D
+	{
+		blend add
+		
+		// Brightness in red green blue and the glareyness
+		color sun_r *2, sun_g *2, sun_b *2, 1.0
+		map clamp atmosphere/sprites/moon_full.tga
+		//vertexcolor
+	}
+}
+
+material atmospheres/sprites/sundisc_orange
+{
+	sort 2 // after sky background but before cloudlayers
+	noAtmosphere	// Don't fog it out :D
+	{
+		blend add
+		
+		// Brightness in red green blue and the glareyness
+		//color sun_r * 0.3, sun_g * 0.3, sun_b * 0.3, 0.2
+		color sun_r * 1, sun_g * 0.8, sun_b * 0.5, 0.001
+		map clamp atmosphere/sprites/sun_bright_halo_blured.tga
+	}
+}
+
+material atmospheres/lights/lightning
+{
+	shadowMapped
+	{
+		lightProjectionMap _white
+		lightFallOffMap _white
+		red		sun_r * (global0 * 5 * lightningOnTable[ time * 10 ] + 1)
+		green	sun_g * (global0 * 5 * lightningOnTable[ time * 10 ] + 1)
+		blue	sun_b * (global0 * 5 * lightningOnTable[ time * 10 ] + 1)
+	}
+}
+
+material atmospheres/sprites/sundisk_flare
+{
+	translucent
+	{
+		program trivialWithTextureMatrixAlways
+		map  clamp atmosphere/sundisk.tga
+		//atmosphere/sundisk.tga
+		//blend gl_src_alpha, gl_one
+		blend screen
+		color parm3 * 0.7, parm3 * 0.7, parm3 * 0.7, 1
+		//depthfunc always
+	}
+}
+
+material atmospheres/lights/sunsprite
+{
+	translucent
+	{
+		program trivialWithTextureMatrixAlways
+		map  atmosphere/sundisk2.tga
+		//atmosphere/sundisk.tga
+		//blend gl_src_alpha, gl_one
+		blend screen
+		//color 1, 1, 0.8, 1
+		//depthfunc always
+		alpha 0.4
+	}
+}
+
+material atmospheres/lights/sunsprite2
+{
+	translucent
+	{
+		program trivialWithTextureMatrixAlways
+		map  atmosphere/sundisk3.tga
+		//atmosphere/sundisk.tga
+		//blend gl_src_alpha, gl_one
+		blend screen
+		//color 1, 1, 0.8, 1
+		//depthfunc always
+		alpha 0.4
+	}
+}

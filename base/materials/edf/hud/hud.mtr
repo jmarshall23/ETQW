@@ -1,0 +1,86 @@
+
+material guis/assets/hud/edf/compass_ring {
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp "guis/assets/hud/edf/cm_ring.tga"
+	}
+}
+
+material guis/assets/hud/edf/comp_grad {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/hud/edf/comp_grad.tga"
+	}
+}
+
+material guis/assets/hud/edf/comp_lines {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/hud/edf/comp_lines.tga"
+	}
+}
+
+material guis/assets/hud/proficiency_icon {
+	sort gui
+	{
+		blend blend
+		colored
+		map "guis/assets/hud/proficiency_icon"
+	}
+}
+
+material guis/assets/icons/class_soldier {
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp linear nopicmip makealpha( "guis/assets/icons/class_soldier.tga" )
+		vertexColor
+	}
+}
+
+material guis/assets/icons/class_covert_ops {
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp linear nopicmip makealpha( "guis/assets/icons/class_covert_ops.tga" )
+		vertexColor
+	}
+}
+
+material guis/assets/icons/class_medic {
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp linear nopicmip makealpha( "guis/assets/icons/class_medic.tga" )
+		vertexColor
+	}
+}
+
+material guis/assets/icons/class_field_ops {
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp linear nopicmip makealpha( "guis/assets/icons/class_field_ops.tga" )
+		vertexColor
+	}
+}
+
+material guis/assets/icons/class_engineer {
+	sort gui
+	{
+		blend blend
+		colored
+		map clamp linear nopicmip makealpha( "guis/assets/icons/class_engineer.tga" )
+		vertexColor
+	}
+}

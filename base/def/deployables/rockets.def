@@ -1,0 +1,319 @@
+// Export
+// ========================================================================
+
+export hauser {
+
+	options -prefix ROCK_ -scale 0.7 -sourcedir models/structures/edf/fsb/rockets/dev_sd/ -destdir models/structures/edf/fsb/rockets 			-keep base h_rotate v_rotate left_rockets right_rockets right_exit left_exit -keepmesh lod0_m_rockets lod0_m_base lod0_m_turret shadow1 shadow2 shadow3
+
+	mesh	rockets_reference_file.mb		-dest rocket_base.md5mesh		-range 0 0
+
+	anim	rockets_reference_file.mb 	-dest rocket_idle.md5anim			-range 52 52
+//	anim	rockets_reference_file.mb	-dest rocket_deploy.md5anim			-range 0 52
+	anim 	rockets_reference_file.mb	-dest rocket_undeployed.md5anim			-range 1 1
+
+
+	anim	rockets_reference_file.mb	-dest rocket_damaged.md5anim			-range 60 72
+	anim	rockets_reference_file.mb	-dest rocket_disabled.md5anim			-range 86 88
+
+	anim	rockets_reference_file.mb 	-dest rocket_fire.md5anim			-range 52 52
+	anim	rockets_reference_file.mb 	-dest rocket_reload.md5anim			-range 52 52
+
+	anim 	rockets_reference_file.mb 	-dest rocket_disabled_to_damaged.md5anim	-range 72 72
+	anim	rockets_reference_file.mb 	-dest rocket_damaged_to_idle.md5anim		-range 52 52
+
+	anim	rockets_deploy_nerve.mb		-dest rocket_deploy.md5anim			-range 0 43
+
+}
+
+export hauser {
+	options -prefix ROCK_ -scale 0.7 -nojoints -sourcedir models/structures/edf/fsb/rockets/dev_sd/ -destdir models/structures/edf/fsb/rockets -keep base h_rotate v_rotate left_rockets right_rockets right_exit left_exit -keepmesh lod1_m_rockets lod1_m_base lod1_m_turret shadow1 shadow2 shadow3
+
+	mesh	rockets_reference_file.mb	-dest rocket_base_lod1.md5mesh			-range 0 0
+}
+
+// Models
+// ========================================================================
+
+model deployable_rockets {
+	mesh							models/structures/edf/fsb/rockets/rocket_base.md5mesh
+
+	anim undeployed					models/structures/edf/fsb/rockets/rocket_undeployed.md5anim
+	anim deploy						models/structures/edf/fsb/rockets/rocket_deploy.md5anim {
+		frame 1							sound_channel snd_deployable_deploy snd_deploy
+	}
+	anim base						models/structures/edf/fsb/rockets/rocket_idle.md5anim
+	anim damaged					models/structures/edf/fsb/rockets/rocket_damaged.md5anim
+	anim destroyed					models/structures/edf/fsb/rockets/rocket_disabled.md5anim
+	anim disabled_to_damaged		models/structures/edf/fsb/rockets/rocket_disabled_to_damaged.md5anim
+	anim damaged_to_idle			models/structures/edf/fsb/rockets/rocket_damaged_to_idle.md5anim
+	anim fire						models/structures/edf/fsb/rockets/rocket_fire.md5anim {
+		frame 1							sound_channel snd_deployable_fire snd_fire
+	
+	}
+	anim reload						models/structures/edf/fsb/rockets/rocket_reload.md5anim
+}
+
+// Entity Def
+// ========================================================================
+
+deployObject deployobject_rockets {
+	"name"							"rockets"
+	"title"							"game/deploy/rocket_artillery"
+	"wait_time"						"10000"
+	"def_deployable"				"deployable_rockets"
+	"def_deployable_carrier"		"vehicle_magog_npc"
+	"str_placement"					"deployitem_rockets_placement_model"
+	"mask"							"dm_default"
+	"max_height_diff"				"512"
+	"object_radius"					"2048"
+	"ti_kill_filter"				"target_deploy_kill"
+	"category"						"firesupport"
+}
+
+stringMap deployitem_rockets_placement_model {
+	"model"							"models/structures/edf/fsb/rockets/rockets.lwo"
+	"skin"							"deployEffect"
+	"maxVisDist"					"2560"
+	"pushIntoOutsideAreas"			"1"
+}
+
+entityDef deployable_rockets {
+	"inherit"						"deployable_base"
+	"inherit1"						"deployable_gdf"
+
+	"title"							"game/deploy/rocket_artillery"
+
+	"climate_skin_key"				"deployable_rockets"
+
+	"collection_gui_count"			"deployable_rockets"
+
+	"editor_color"					".3 .3 1"
+	"editor_usage"					"The GDF Rocket Turret."
+
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"deployable_rockets"
+
+	"model"							"deployable_rockets"
+	"cm_model"						"models/structures/edf/fsb/rockets/clipmodel.lwo"
+
+	"task_name"						"game/deploy/rocket_art"
+
+	"ch_name"						"game/deploy/rocket_artillery"
+	"option_combat_model"			"1"
+	"option_crosshair_interface"	"1"
+	"option_commandmap_interface"	"1"
+	"option_crosshair_offset"		"0 0 64"
+
+	"option_allow_abilities"		"1"
+	"ability_1"						"fire_support"
+
+	"mtr_commandmap"				"guis/assets/commandmap/icon_atk_deploy"
+	"mtr_commandmap_unknown"		"guis/assets/commandmap/icon_atk_deploy"
+	"icon_size_cm"					"10"
+
+	"health"						"3000"
+	"repair_multiplier"				"1.5"
+	
+	"action_time"					"20"
+
+	"num_missiles"					"6"
+
+	"spread"						"0"
+
+	"stat_name"						"rockets"
+
+	"range_min"						"50"
+	"range_max"						"1000"
+
+	"missile_speed"					"5000"
+	"missile_recycle"				"8"
+	"missile_reload"				"10"
+	"missile_firecount"				"1"
+
+	"joint_yaw"						"h_rotate"
+	"joint_pitch"					"v_rotate"
+	"joint_barrel"					"left_rockets"
+	"joint_attach"					"v_rotate"
+
+	"low_arc"						"0"
+
+	"min_yaw_turn"					"50"
+	"max_yaw_turn"					"100"
+
+	"min_pitch_turn"				"30"
+	"max_pitch_turn"				"60"
+
+	"min_pitch"						"0"
+	"max_pitch"						"90"
+
+	"def_projectile"				"projectile_deployable_rockets"
+
+	"missile1_delay"				"0.1"
+	"missile1_barrel"				"right_rockets"
+
+	"missile2_delay"				"1"
+	"missile2_barrel"				"left_rockets"
+
+	"missile3_delay"				"2.5"
+	"missile3_barrel"				"right_rockets"
+
+	"missile4_delay"				"3.4"
+	"missile4_barrel"				"left_rockets"
+
+	"missile5_delay"				"4.9"
+	"missile5_barrel"				"right_rockets"
+
+	"missile6_delay"				"5.8"
+	"missile6_barrel"				"left_rockets"
+
+
+	"snd_deploy"					"sounds/deployables/rockets/deploy"
+	"snd_fire"						"sounds/deployables/rockets/fire"
+	"snd_fire_far"					"sounds/deployables/rockets/fire_far"
+	"snd_turret_start"				"sounds/movement/move_01"
+	"snd_turret_stop"				"sounds/movement/stop_04"
+	"snd_barrel_start"				"sounds/movement/move_02"
+	"snd_barrel_stop"				"sounds/movement/stop_03"
+
+	"mtr_color"						"guis/binoculars/target_rocket_color"
+	"mtr_desat"						"guis/binoculars/target_rocket_desat"
+	"mtr_half_desat"				"guis/binoculars/target_rocket_half_desat"
+	"mtr_full_desat"				"guis/binoculars/target_rocket_bright_desat"
+
+	"target_timer"					"timer_rockets"
+	"target_locktime"				"4"
+	"target_lostgraceperiod"		"1"
+	"target_length"					"45"
+
+	"fx_fire"						"effects/deployables/rockets_fire"
+	"fx_death"						"effects/deployables/rockets_destroy"
+	"fx_splash"						"effects/water/generic_splash"
+	"fx_emped"						"effects/generic_smoke/emp"
+	
+	"emp_effect_joint"				"h_rotate"
+
+	"timer_name"					"timer_rockets"
+
+	"collection_firesupport_rockets"	"firesupport_rockets"
+
+	"do_object"						"deployobject_rockets"
+
+	"deployable_type"				"2"
+	
+	"contextmenu_quickchat_enemy"	"quickchat/context/attack/firesupportspotted"
+
+	"deploybonus_requireactive"		"0"
+	"prof_deploybonus"				"pro_fieldops_deploy_bonus"
+	
+	"def_marker"					"target_marker"
+}
+
+entityDef projectile_deployable_rockets {
+	"spawnclass"					"idProjectile_RigidBody"
+	"scriptObject"					"projectile_targetedmissile"
+
+	"aor_layout"					"missile"
+	
+	"mins"							"-3 -3 -6"
+	"maxs"							"3 3 6"
+	"cone"							"3"
+
+	"model"							"models/vehicles/edf_anansi/haw.lwo"
+
+	"dmg_damage"					"damage_deployable_rockets"
+	"dmg_splash_damage"				"damage_deployable_rockets_splash"
+
+	"health"						"1"
+	"angular_velocity"				"0 0 15"
+	"face_velocity"					"1"
+	"bounce"						"0"
+	"mass"							"5"
+	"gravity"						"533"
+	"fuse"							"10"
+	"has_thrust"					"1"
+
+	"thrust_power"					"50000"
+
+	"detonate_on_fuse"				"0"
+	"detonate_on_death"				"1"
+	"detonate_on_world"				"1"
+	"detonate_on_actor"				"0"
+
+	"target_forget"					"5"
+
+	"collection_antiair"			"antiair"
+	"collection_decoy_target"		"decoy_target"
+	"collection_mdfExport"			"mdfExport"
+	"collection_firesupport_gdf"	"firesupport_gdf"
+
+	"use_air_burst"					"1"
+	"fx_airburst"					"effects/deployables/artillery_explosion_air"
+
+	//"snd_fly"						"sounds/deployables/rockets/fire"
+	"snd_fly"						"sounds/deployables/rockets/flight"
+	"fx_trail"						"effects/deployables/rockets_trail"
+	"fx_explode"					"effects/deployables/artillery_explosion"
+	"fx_explode_sand"				"effects/base/explosion_sand"
+	"fx_explode_metal"				"effects/base/explosion_metal"
+	"fx_explode_water"				"effects/water/explosion"
+	"fx_explode_water_interior"		"effects/water/explosion_interior"
+
+	"prof_destroy"					"pro_constructor_antimissile_rockets"
+}
+
+damageDef damage_deployable_rockets {
+	damage							"damage_deployable_rockets"
+
+	prof_damage						"pro_fieldops_damage"
+
+	stat_name						"rockets"
+
+	team_kill_cvar					"g_allowComplaint_firesupport"
+
+	tt_obituary						"tooltips/killmsgs/weapons/rockets"
+	tt_obituary_team_kill			"tooltips/killmsgs/weapons/rockets/teamkill"
+	tt_obituary_self				"tooltips/killmsgs/weapons/rockets/self"
+	tt_obituary_unknown				"tooltips/killmsgs/weapons/rockets/unknown"
+}
+
+damageDef damage_deployable_rockets_splash {
+	damage							"damage_deployable_rockets_splash"
+	radius							512
+	knockback						80
+	push							10000000
+
+	prof_damage						"pro_fieldops_damage"
+
+	stat_name						"rockets"
+
+	team_kill_cvar					"g_allowComplaint_firesupport"
+
+	tt_obituary						"tooltips/killmsgs/weapons/rockets"
+	tt_obituary_team_kill			"tooltips/killmsgs/weapons/rockets/teamkill"
+	tt_obituary_self				"tooltips/killmsgs/weapons/rockets/self"
+	tt_obituary_unknown				"tooltips/killmsgs/weapons/rockets/unknown"
+}
+
+damageFilter damage_deployable_rockets {
+	type {
+		target	"target_all"
+		damage	1000
+	}
+
+	type {
+		target	"target_explodable"
+		damage	400
+	}
+}
+
+damageFilter damage_deployable_rockets_splash {
+	type {
+		target	"target_all"
+		damage	1000
+	}
+
+	type {
+		target	"target_explodable"
+		damage	400
+	}
+}

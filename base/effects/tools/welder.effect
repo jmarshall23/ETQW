@@ -1,0 +1,53 @@
+effect effects/tools/welder/blue_flame
+{
+	size	34
+
+	emitter "flame"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		line
+		{
+			duration	1,1
+			persist
+			material	"particles/fire/blue_pilot_flame"
+			trailRepeat	1
+
+			start
+			{
+				size { point 0.5 }
+				length { box 3,0,0,5,0,0 }
+			}
+		}
+	}
+	light "light"
+	{
+		locked
+
+		light
+		{
+			duration	1,1
+			blend	add
+			material	"lights/defaultPointLight"
+			trailRepeat	1
+
+			start
+			{
+				position { point 5,0,0 }
+				size { point 18,18,18 }
+				tint { point 0,0.501961,1 }
+			}
+
+			motion
+			{
+				tint { envelope firetable_m }
+				fade { envelope refract count 2 }
+			}
+		}
+	}
+}
+
+
+

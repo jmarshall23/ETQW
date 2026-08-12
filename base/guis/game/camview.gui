@@ -1,0 +1,22 @@
+gui guis/game/camview {
+
+	materials {
+		"monitor"	"textures/sfx/thirdeyemonitor"
+	}
+
+	windowDef desktop {
+		properties {
+			string	material	= "monitor";
+			color	backcolor	= 1, 0, 0, 1;
+		}
+	}
+	
+	windowDef cameraViewLabel {
+		properties {
+			rect rect = 0,22,640,40;
+			color foreColor = 0.15, 0.29, 0.22, 1;
+			float fontSize = 38;
+			handle localizedText = localize( "guis/game/cam_view" );
+		}
+	}
+}

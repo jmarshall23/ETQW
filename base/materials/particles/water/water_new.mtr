@@ -1,0 +1,52 @@
+material particles/water/squirt {
+	qer_editorimage models/particles/water/squirt
+	nonsolid
+	twosided
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+
+{
+
+	program	water/simple_cube
+	bumpMap models/particles/water/squirt_local.tga
+	map clamp highquality textures/penta/specular.tga
+	environmentCubeMap cubemap env/sewer
+	water_tint	  1, 1, 0.9
+	water_distortion  4, 3, 0, 0	
+	water_fresnel	  5
+	water_glare	  0.6
+	water_offset 0, 0, 0, 0 
+	water_desat 0
+	translate 0, Time * -5
+}
+}
+
+material particles/water/impact_ripple_01_local {
+	qer_editorimage textures/particles/water/impact_ripple_01
+	nonsolid
+	twosided
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+
+{
+
+	program	water/simple_cube
+	bumpMap textures/particles/water/impact_ripple_01_local.tga
+	map clamp highquality textures/penta/specular.tga
+	environmentCubeMap cubemap env/sewer
+	water_tint	  1, 1, 0.9
+	water_distortion  4, 4, 0, 0	
+	water_fresnel	  12
+	water_glare	  0.6
+	water_offset 0, 0, 0, 0 
+	water_desat 0
+}
+}

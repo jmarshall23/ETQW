@@ -1,0 +1,55 @@
+locString strogg/botchat/generic/imatechnician {
+	text "#str_0201275"
+}
+
+locString strogg/botchat/generic/technicianenroute {
+	text "#str_0201276"
+}
+
+locString strogg/botchat/objectives/explosives/plant {
+	text "#str_0201277"
+}
+
+locString strogg/botchat/generic/needalift {
+	text "#str_0201273"
+}
+
+locString strogg/botchat/generic/needaride {
+	text "#str_0201274"
+}
+
+locString strogg/botchat/generic/needatransport {
+	text "#str_0201278"
+}
+
+locString strogg/botchat/generic/youlead {
+	text "#str_0201279"
+}
+
+locString strogg/botchat/generic/leadway {
+	text "#str_0201280"
+}
+
+locString strogg/botchat/generic/gotyourback {
+	text "#str_0201281"
+}
+
+locString strogg/botchat/generic/whereto {
+	text "#str_0201282"
+}
+
+locString strogg/botchat/generic/vehicle/letmerepair {
+	text "#str_0201285"
+}
+
+locString strogg/botchat/generic/vehicle/iwillfixride {
+	text "#str_0201286"
+}
+
+locString strogg/botchat/generic/vehicle/stopiwillfixride {
+	text "#str_0201287"
+}
+
+locString strogg/botchat/generic/tkrevive {
+	text "#str_0201288"
+}

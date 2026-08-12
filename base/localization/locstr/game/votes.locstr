@@ -1,0 +1,186 @@
+
+locString votes/shuffleXP {
+	text "#str_00008001"
+}
+
+locString votes/shuffleRandom {
+	text "#str_00008002"
+}
+
+locString votes/swapTeams {
+	text "#str_00008003"
+}
+
+locString votes/balancedTeams {
+	text "#str_00008004"
+}
+
+locString votes/teamDamage {
+	text "#str_00008005"
+}
+
+locString votes/noXP {
+	text "#str_00008006"
+}
+
+locString votes/timelimit {
+	text "#str_00008007"
+}
+
+locString votes/serverMode {
+	text "#str_00008008"
+}
+
+locString votes/kickplayer {
+	text "#str_00008009"
+}
+
+locString votes/banplayer {
+	text "#str_00008010"
+}
+
+locString votes/mute {
+	text "#str_00008011"
+}
+
+locString votes/mutevoice {
+	text "#str_00008012"
+}
+
+locString votes/campaignreset {
+	text "#str_00008013"
+}
+
+locString votes/restartMap {
+	text "#str_00008014"
+}
+
+locString votes/setcampaign {
+	text "#str_00008015"
+}
+
+locString votes/setstopwatchmap {
+	text "#str_00008016"
+}
+
+locString votes/setobjectivemap {
+	text "#str_00008017"
+}
+
+
+
+
+
+locString votes/shuffleXP/text {
+	text "#str_00008501"
+}
+
+locString votes/shuffleRandom/text {
+	text "#str_00008502"
+}
+
+locString votes/swapTeams/text {
+	text "#str_00008503"
+}
+
+locString votes/balancedTeams/text {
+	text "#str_00008504"
+}
+
+locString votes/teamDamage/text {
+	text "#str_00008505"
+}
+
+locString votes/noXP/text {
+	text "#str_00008506"
+}
+
+locString votes/timelimit/text {
+	text "#str_00008507"
+}
+
+locString votes/serverMode/text {
+	text "#str_00008508"
+}
+
+locString votes/kickplayer/text {
+	text "#str_00008509"
+}
+
+locString votes/banplayer/text {
+	text "#str_00008510"
+}
+
+locString votes/mute/text {
+	text "#str_00008511"
+}
+
+locString votes/mutevoice/text {
+	text "#str_00008512"
+}
+
+locString votes/campaignreset/text {
+	text "#str_00008513"
+}
+
+locString votes/restartMap/text {
+	text "#str_00008514"
+}
+
+locString votes/setcampaign/text {
+	text "#str_00008515"
+}
+
+locString votes/setstopwatchmap/text {
+	text "#str_00008516"
+}
+
+locString votes/setobjectivemap/text {
+	text "#str_00008517"
+}
+
+
+locString votes/finished/success {
+	text "#str_00008600"
+}
+
+locString votes/finished/failed {
+	text "#str_00008601"
+}
+
+locString votes/values/on {
+	text "#str_00008602"
+}
+
+locString votes/values/off {
+	text "#str_00008603"
+}
+
+locString votes/values/5 {
+	text "#str_00008604"
+}
+
+locString votes/values/10 {
+	text "#str_00008605"
+}
+
+locString votes/values/15 {
+	text "#str_00008606"
+}
+
+locString votes/values/20 {
+	text "#str_00008607"
+}
+
+locString votes/values/25 {
+	text "#str_00008608"
+}
+
+locString votes/values/30 {
+	text "#str_00008609"
+}
+
+locString votes/playercalled {
+	text "#str_00008610"
+	arguments 1
+}

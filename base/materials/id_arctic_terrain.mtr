@@ -1,0 +1,545 @@
+material textures/arctic_snow/compress01
+{	
+	diffusemap	textures/arctic/snow/compress_01_d.tga
+	bumpmap		textures/arctic/snow/compress_01_n.tga
+	specularmap	textures/arctic/snow/compress_01_s.tga
+}
+
+material textures/arctic_snow/compress02
+{
+	diffusemap	textures/arctic/snow/compress_01_d.tga
+	bumpmap		textures/arctic/snow/compress_01_n.tga
+	specularmap	textures/arctic/snow/compress_01_s.tga
+}
+
+material textures/arctic_snow/hard01
+{
+	diffusemap	textures/arctic/snow/hard_01_d.tga
+	bumpmap		textures/arctic/snow/hard_01_n.tga
+	specularmap	textures/arctic/snow/hard_01_s.tga
+}
+
+material textures/arctic_snow/powder01
+{
+	diffusemap	textures/arctic/snow/powder_01_d.tga
+	bumpmap		textures/arctic/snow/powder_01_n.tga
+	specularmap	textures/arctic/snow/powder_01_s.tga
+}
+
+material textures/arctic_snow/powder02
+{
+	diffusemap	textures/arctic/snow/powder_01_d.tga
+	bumpmap		textures/arctic/snow/powder_02_n.tga
+	specularmap	textures/arctic/snow/powder_01_s.tga
+}
+
+material textures/arctic_snow/powder03
+
+{
+	diffusemap	textures/arctic/snow/powder_05_d.tga
+	bumpmap		textures/arctic/snow/powder_05_n.tga
+	specularmap	textures/arctic/snow/powder_05_s.tga
+}
+
+material textures/arctic_snow/powderrock01
+{
+	diffusemap	textures/arctic/snow/powder_01_d.tga
+	bumpmap		textures/arctic/snow/powder_02_n.tga
+	specularmap	textures/arctic/snow/powder_01_s.tga
+}
+
+material textures/arctic_snow/powderrock02
+
+{
+	diffusemap	textures/arctic/snow/powder_03_d.tga
+	bumpmap		textures/arctic/snow/powder_03_n.tga
+	specularmap	textures/arctic/snow/powder_03_s.tga
+}
+
+material textures/arctic_snow/ice01
+{
+	
+	{
+			blend add
+			program sfx/cubemap	
+	}
+
+	diffusemap	textures/arctic/snow/ice_01_d.tga
+	bumpmap		textures/arctic/snow/ice_01_n.tga
+	specularmap	textures/arctic/snow/ice_01_s.tga
+}
+
+material textures/arctic_ground/dirt01
+{	
+	bumpmap		textures/arctic/ground/dirt_01_n.tga
+	diffusemap	textures/arctic/ground/dirt_01_d.tga
+	specularmap	textures/arctic/ground/dirt_01_s.tga
+}
+
+material textures/arctic_rock/smoothrock01
+
+{	
+	diffusemap	textures/arctic/rock/smoothrock_01_d.tga
+	bumpmap		textures/arctic/rock/smoothrock_01_n.tga
+	specularmap	textures/arctic/rock/smoothrock_01_s.tga
+}
+
+// =========================================================
+// Blends are below ...
+// =========================================================
+material textures/arctic_snow/powder01_powder02_blend
+{
+	{
+		blend 		bumpmap
+		map		textures/arctic/snow/powder_01_n.tga
+	}
+	{
+		blend 		diffusemap
+		map		textures/arctic/snow/powder_01_d.tga
+		vertexColor
+	}
+	{
+		blend 		specularmap
+		map		textures/arctic/snow/powder_01_s.tga
+		vertexColor
+	}
+	{
+		blend		bumpmap
+		map		textures/arctic/snow/powder_02_n.tga
+	}
+	{
+		blend		diffusemap
+		map		textures/arctic/snow/powder_01_d.tga
+		inverseVertexColor
+	}
+	{
+		blend		specularmap
+		map		textures/arctic/snow/powder_02_s.tga
+		inverseVertexColor
+	}
+}
+
+material textures/arctic_snow/powder01_powder03_blend
+{
+	{
+		blend 		bumpmap
+		map		textures/arctic/snow/powder_05_n.tga
+	}
+	{
+		blend 		diffusemap
+		map		textures/arctic/snow/powder_05_d.tga
+		vertexColor
+	}
+	{
+		blend 		specularmap
+		map		textures/arctic/snow/powder_05_s.tga
+		vertexColor
+	}
+	
+	{
+		blend		bumpmap
+		map		textures/arctic/snow/powder_01_n.tga
+	}
+	{
+		blend		diffusemap
+		map		textures/arctic/snow/powder_01_d.tga
+		inverseVertexColor
+	}
+	{
+		blend		specularmap
+		map		textures/arctic/snow/powder_01_s.tga
+		inverseVertexColor
+	}
+}
+
+material textures/arctic_snow/powder01_powderrock01_blend
+{
+	{
+		blend 		bumpmap
+		map		textures/arctic/snow/powder_01_n.tga
+	}
+	{
+		blend 		diffusemap
+		map		textures/arctic/snow/powder_01_d.tga
+		vertexColor
+	}
+	{
+		blend 		specularmap
+		map		textures/arctic/snow/powder_01_s.tga
+		vertexColor
+	}
+	
+	{
+		blend		bumpmap
+		map		textures/arctic/snow/powder_02_n.tga
+	}
+	{
+		blend		diffusemap
+		map		textures/arctic/snow/powder_01_d.tga
+		inverseVertexColor
+	}
+	{
+		blend		specularmap
+		map		textures/arctic/snow/powder_02_s.tga
+		inverseVertexColor
+	}
+}
+
+material textures/arctic_snow/powder01_powderrock02_blend
+{
+	{
+		blend 		bumpmap
+		map		textures/arctic/snow/powder_03_n.tga
+	}
+	{
+		blend 		diffusemap
+		map		textures/arctic/snow/powder_03_d.tga
+		vertexColor
+	}
+	{
+		blend 		specularmap
+		map		textures/arctic/snow/powder_03_s.tga
+		vertexColor
+	}
+	
+	{
+		blend		bumpmap
+		map		textures/arctic/snow/powder_01_n.tga
+	}
+	{
+		blend		diffusemap
+		map		textures/arctic/snow/powder_01_d.tga
+		inverseVertexColor
+	}
+	{
+		blend		specularmap
+		map		textures/arctic/snow/powder_01_s.tga
+		inverseVertexColor
+	}
+}
+
+material textures/arctic_snow/compress01_powder01_blend
+{
+	{
+		blend 		bumpmap
+		map		textures/arctic/snow/compress_01_n.tga
+	}
+	{
+		blend 		diffusemap
+		map		textures/arctic/snow/compress_01_d.tga
+		vertexColor
+	}
+	{
+		blend 		specularmap
+		map		textures/arctic/snow/compress_01_s.tga
+		vertexColor
+	}
+	
+	{
+		blend		bumpmap
+		map		textures/arctic/snow/powder_01_n.tga
+	}
+	{
+		blend		diffusemap
+		map		textures/arctic/snow/powder_01_d.tga
+		inverseVertexColor
+	}
+	{
+		blend		specularmap
+		map		textures/arctic/snow/powder_01_s.tga
+		inverseVertexColor
+	}
+}
+
+material textures/arctic_snow/compress01_hard01_blend
+{
+	{
+		blend		bumpmap
+		map		textures/arctic/snow/hard_01_n.tga
+	
+	}
+	{
+		blend		diffusemap
+		map		textures/arctic/snow/hard_01_d.tga
+		VertexColor
+	}
+	
+	{
+		blend		specularmap
+		map		textures/arctic/snow/hard_01_s.tga
+		VertexColor
+	}
+
+	{
+		blend 		bumpmap
+		map		textures/arctic/snow/compress_01_n.tga
+	}
+	{
+		blend 		diffusemap
+		map		textures/arctic/snow/compress_01_d.tga
+		inversevertexColor
+	}
+	{
+		blend 		specularmap
+		map		textures/arctic/snow/compress_01_s.tga
+		inversevertexColor
+	}
+}
+
+material textures/arctic_snow/compress01_ice01_blend
+{
+	{
+		blend 		bumpmap
+		map		textures/arctic/snow/compress_01_n.tga
+	}
+	{
+		blend 		diffusemap
+		map		textures/arctic/snow/compress_01_d.tga
+		vertexColor
+	}
+	{
+		blend 		specularmap
+		map		textures/arctic/snow/compress_01_s.tga
+		vertexColor
+	}
+	
+	{
+		blend		bumpmap
+		map		textures/arctic/snow/ice_01_n.tga
+	
+	}
+	{
+		blend		diffusemap
+		map		textures/arctic/snow/ice_01_d.tga
+		inverseVertexColor
+	}
+	
+	{
+		blend		specularmap
+		map		textures/arctic/snow/ice_01_s.tga
+		inverseVertexColor
+	}
+}
+
+material textures/arctic_snow/hard01_powder01_blend
+{
+	{
+		blend 		bumpmap
+		map		textures/arctic/snow/hard_01_n.tga
+	}
+	{
+		blend 		diffusemap
+		map		textures/arctic/snow/hard_01_d.tga
+		vertexColor
+	}
+	{
+		blend 		specularmap
+		map		textures/arctic/snow/hard_01_s.tga
+		vertexColor
+	}
+	{
+		blend		bumpmap
+		map		textures/arctic/snow/powder_01_n.tga
+	}
+	{
+		blend		diffusemap
+		map		textures/arctic/snow/powder_01_d.tga
+		inverseVertexColor
+	}
+	{
+		blend		specularmap
+		map		textures/arctic/snow/powder_01_s.tga
+		inverseVertexColor
+	}
+}
+
+material textures/arctic_blend/compress01_smoothrock01_blend
+{
+	{	blend		bumpmap
+		map		textures/arctic/rock/smoothrock_01_n.tga
+	}
+	{
+		blend		diffusemap
+		map		textures/arctic/rock/smoothrock_01_d.tga
+		VertexColor
+	}
+	{
+		blend		specularmap
+		map		textures/arctic/rock/smoothrock_01_s.tga
+		VertexColor
+	}	
+	{
+		blend 		bumpmap
+		map		textures/arctic/snow/compress_01_n.tga
+	}
+	{
+		blend 		diffusemap
+		map		textures/arctic/snow/compress_01_d.tga
+		inversevertexColor
+	}
+	{
+		blend 		specularmap
+		map		textures/arctic/snow/compress_01_s.tga
+		inversevertexColor
+	}	
+}
+
+material textures/arctic_blend/compress01_dirt01_blend
+{
+	{
+		blend 		bumpmap
+		map		textures/arctic/ground/dirt_01_n.tga
+	}
+	{
+		blend 		diffusemap
+		map		textures/arctic/ground/dirt_01_d.tga
+		vertexColor	
+	}
+	{
+		blend 		specularmap
+		map		textures/arctic/ground/dirt_01_s.tga
+		vertexColor
+	}
+	{
+		blend		bumpmap
+		map		textures/arctic/snow/compress_01_n.tga
+	}
+	{
+		blend		diffusemap
+		map		textures/arctic/snow/compress_01_d.tga
+		inverseVertexColor
+	}
+	{
+		blend		specularmap
+		map		textures/arctic/snow/compress_01_s.tga
+		inverseVertexColor
+	}
+}
+
+material textures/arctic_blend/hard01_smoothrock01_blend
+{
+	{
+		blend		bumpmap
+		map		textures/arctic/rock/smoothrock_01_n.tga
+	}
+	{
+		blend		diffusemap
+		map		textures/arctic/rock/smoothrock_01_d.tga
+		VertexColor
+	}
+	{
+		blend		specularmap
+		map		textures/arctic/rock/smoothrock_01_s.tga
+		VertexColor
+	}	
+	{
+		blend 		bumpmap
+		map		textures/arctic/snow/hard_01_n.tga
+	}
+	{
+		blend 		diffusemap
+		map		textures/arctic/snow/hard_01_d.tga
+		inversevertexColor
+	}
+	{
+		blend 		specularmap
+		map		textures/arctic/snow/hard_01_s.tga
+		inverseVertexColor
+	}
+}
+
+material textures/arctic_blend/hard01_dirt01_blend
+{
+	{
+		blend		bumpmap
+		map		textures/arctic/ground/dirt_01_n.tga
+	}
+	{
+		blend		diffusemap
+		map		textures/arctic/ground/dirt_01_d.tga
+		VertexColor
+	}
+	{
+		blend		specularmap
+		map		textures/arctic/ground/dirt_01_s.tga
+		VertexColor
+	}
+	{
+		blend 		bumpmap
+		map		textures/arctic/snow/hard_01_n.tga
+	}
+	{
+		blend 		diffusemap
+		map		textures/arctic/snow/hard_01_d.tga
+		inverseVertexColor
+	}
+	{
+		blend 		specularmap
+		map		textures/arctic/snow/hard_01_s.tga
+		inverseVertexColor
+	}
+}
+
+material textures/arctic_blend/powder01_smoothrock01_blend
+{
+	{
+		blend 		bumpmap
+		map		textures/arctic/rock/smoothrock_01_n.tga
+	}
+	{
+		blend 		diffusemap
+		map		textures/arctic/rock/smoothrock_01_d.tga
+		VertexColor
+	}
+	{
+		blend 		specularmap
+		map		textures/arctic/rock/smoothrock_01_s.tga
+		VertexColor
+	}
+	{
+		blend		bumpmap
+		map		textures/arctic/snow/powder_01_n.tga
+	}
+	{
+		blend		diffusemap
+		map		textures/arctic/snow/powder_01_d.tga
+		inverseVertexColor
+	}
+	{
+		blend		specularmap
+		map		textures/arctic/snow/powder_01_s.tga
+		inverseVertexColor
+	}	
+}
+
+material textures/arctic_blend/powder01_dirt01_blend
+{
+	{
+		blend 		bumpmap
+		map		textures/arctic/snow/powder_01_n.tga
+	}
+	{
+		blend 		diffusemap
+		map		textures/arctic/snow/powder_01_d.tga
+		vertexColor
+	}
+	{
+		blend 		specularmap
+		map		textures/arctic/snow/powder_01_d.tga
+		vertexColor
+	}
+	{
+		blend		bumpmap
+		map		textures/arctic/ground/dirt_01_n.tga
+	}
+	{
+		blend		diffusemap
+		map		textures/arctic/ground/dirt_01_d.tga
+		inverseVertexColor
+	}
+	{
+		blend		specularmap
+		map		textures/arctic/ground/dirt_01_s.tga
+		inverseVertexColor
+	}
+}

@@ -1,0 +1,490 @@
+// Strogg modular base materials (nonsolid for mapobjects)
+
+material models/mapobjects/strogg/modular
+{
+	nonsolid
+	noshadows
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular_d.tga
+		specularmap		picmip -2	textures/strogg/modular_s.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular_local.tga, heightmap(textures/strogg/modular_h.tga, 8 ) )
+		selfIllumMap	picmip -2	textures/strogg/modular_glow.tga
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular_detailmask.tga
+	}
+}
+
+material models/mapobjects/strogg/modular2
+{
+	nonsolid
+	noshadows
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular2_d.tga
+		specularmap		picmip -2	textures/strogg/modular2_s.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular2_local.tga, heightmap(textures/strogg/modular2_h.tga, 8 ) )
+		selfIllumMap	picmip -2	textures/strogg/modular2_glow.tga
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular2_detailmask.tga
+	}
+}
+
+
+// Strogg modular snow variations (nonsolid for mapobjects)
+
+material models/mapobjects/strogg/modular_snow
+{
+	nonsolid
+	noshadows
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular_d_snow.tga
+		specularmap		picmip -2	textures/strogg/modular_s_snow.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular_local.tga, heightmap(textures/strogg/modular_h_snow.tga, 8 ) )
+		selfIllumMap 	picmip -2	textures/strogg/modular_glow.tga
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular_detailmask.tga
+	}
+}
+
+material models/mapobjects/strogg/modular2_snow
+{
+	nonsolid
+	noshadows
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular2_d_snow.tga
+		specularmap		picmip -2	textures/strogg/modular2_s_snow.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular2_local.tga, heightmap(textures/strogg/modular2_h_snow.tga, 8 ) )
+		selfIllumMap	picmip -2	textures/strogg/modular2_glow.tga
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular2_detailmask.tga
+	}
+}
+
+
+// Strogg modular base materials with no glow (nonsolid for mapobjects)
+
+material models/mapobjects/strogg/modular_noglow
+{
+	nonsolid
+	noshadows
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular_d.tga
+		specularmap		picmip -2	textures/strogg/modular_s.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular_local.tga, heightmap(textures/strogg/modular_h.tga, 8 ) )
+		selfIllumMap 				_black
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular_detailmask.tga
+	}
+}
+
+material models/mapobjects/strogg/modular2_noglow
+{
+	nonsolid
+	noshadows
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular2_d.tga
+		specularmap		picmip -2	textures/strogg/modular2_s.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular2_local.tga, heightmap(textures/strogg/modular2_h.tga, 8 ) )
+		selfIllumMap				_black
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular2_detailmask.tga 
+	}
+}
+
+
+// Strogg modular snow variations with no glow (nonsolid for mapobjects)
+
+material models/mapobjects/strogg/modular_snow_noglow
+{
+	nonsolid
+	noshadows
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular_d_snow.tga
+		specularmap		picmip -2	textures/strogg/modular_s_snow.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular_local.tga, heightmap(textures/strogg/modular_h_snow.tga, 8 ) )
+		selfIllumMap 				_black
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular_detailmask.tga
+	}
+}
+
+material models/mapobjects/strogg/modular2_snow_noglow
+{
+	nonsolid
+	noshadows
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular2_d_snow.tga
+		specularmap		picmip -2	textures/strogg/modular2_s_snow.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular2_local.tga, heightmap(textures/strogg/modular2_h_snow.tga, 8 ) )
+		selfIllumMap				_black
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular2_detailmask.tga
+	}
+}
+
+
+// Strogg modular base materials (solid for brushwork)
+
+material textures/strogg/modular
+{
+ 	surfaceType	"metal"	
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular_d.tga
+		specularmap		picmip -2	textures/strogg/modular_s.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular_local.tga, heightmap(textures/strogg/modular_h.tga, 8 ) )
+		selfIllumMap 	picmip -2	textures/strogg/modular_glow.tga
+		vertexcolor
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular_detailmask.tga
+	}
+}
+
+material textures/strogg/modular_noshadows
+{
+ 	noshadows
+ 	surfaceType	"metal"	
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular_d.tga
+		specularmap		picmip -2	textures/strogg/modular_s.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular_local.tga, heightmap(textures/strogg/modular_h.tga, 8 ) )
+		selfIllumMap 	picmip -2	textures/strogg/modular_glow.tga
+		vertexcolor
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular_detailmask.tga
+	}
+}
+
+material textures/strogg/modular2
+{
+ 	surfaceType	"metal"
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular2_d.tga
+		specularmap		picmip -2	textures/strogg/modular2_s.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular2_local.tga, heightmap(textures/strogg/modular2_h.tga, 8 ) )
+		selfIllumMap	picmip -2	textures/strogg/modular2_glow.tga
+		vertexcolor
+	
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular2_detailmask.tga
+	}
+}
+
+material textures/strogg/modular2_noshadows
+{
+ 	noshadows
+ 	surfaceType	"metal"
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular2_d.tga
+		specularmap		picmip -2	textures/strogg/modular2_s.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular2_local.tga, heightmap(textures/strogg/modular2_h.tga, 8 ) )
+		selfIllumMap	picmip -2	textures/strogg/modular2_glow.tga
+		vertexcolor
+	
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular2_detailmask.tga
+	}
+}
+
+
+// Strogg modular snow variations (solid for brushwork)
+
+material textures/strogg/modular_snow
+{
+	surfaceType	"metal"
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular_d_snow.tga
+		specularmap		picmip -2	textures/strogg/modular_s_snow.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular_local.tga, heightmap(textures/strogg/modular_h_snow.tga, 8 ) )
+		selfIllumMap 	picmip -2	textures/strogg/modular_glow.tga
+		vertexcolor
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular_detailmask.tga
+	}
+}
+
+material textures/strogg/modular_snow_noshadows
+{
+	noshadows
+	surfaceType	"metal"
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular_d_snow.tga
+		specularmap		picmip -2	textures/strogg/modular_s_snow.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular_local.tga, heightmap(textures/strogg/modular_h_snow.tga, 8 ) )
+		selfIllumMap 	picmip -2	textures/strogg/modular_glow.tga
+		vertexcolor
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular_detailmask.tga
+	}
+}
+
+material textures/strogg/modular2_snow
+{
+ 	surfaceType	"metal"
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular2_d_snow.tga
+		specularmap		picmip -2	textures/strogg/modular2_s_snow.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular2_local.tga, heightmap(textures/strogg/modular2_h_snow.tga, 8 ) )
+		selfIllumMap	picmip -2	textures/strogg/modular2_glow.tga
+		vertexcolor
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular2_detailmask.tga
+	}
+}
+
+material textures/strogg/modular2_snow_noshadows
+{
+ 	noshadows
+ 	surfaceType	"metal"
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular2_d_snow.tga
+		specularmap		picmip -2	textures/strogg/modular2_s_snow.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular2_local.tga, heightmap(textures/strogg/modular2_h_snow.tga, 8 ) )
+		selfIllumMap	picmip -2	textures/strogg/modular2_glow.tga
+		vertexcolor
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular2_detailmask.tga
+	}
+}
+
+
+// Strogg modular base materials (solid for brushwork, doesn't accept decal projections from projectiles, etc)
+
+material textures/strogg/modular_nooverlays
+{
+ 	surfaceType	"metal"	
+ 	noOverlays
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular_d.tga
+		specularmap		picmip -2	textures/strogg/modular_s.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular_local.tga, heightmap(textures/strogg/modular_h.tga, 8 ) )
+		selfIllumMap 	picmip -2	textures/strogg/modular_glow.tga
+		vertexcolor
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular_detailmask.tga
+	}
+}
+
+material textures/strogg/modular2_nooverlays
+{
+ 	surfaceType	"metal"
+ 	noOverlays
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular2_d.tga
+		specularmap		picmip -2	textures/strogg/modular2_s.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular2_local.tga, heightmap(textures/strogg/modular2_h.tga, 8 ) )
+		selfIllumMap	picmip -2	textures/strogg/modular2_glow.tga
+		vertexcolor
+	
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular2_detailmask.tga
+	}
+}
+
+
+// Strogg modular snow variations (solid for brushwork, doesn't accept decal projections from projectiles, etc)
+
+material textures/strogg/modular_snow_nooverlays
+{
+	surfaceType	"metal"
+	noOverlays
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular_d_snow.tga
+		specularmap		picmip -2	textures/strogg/modular_s_snow.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular_local.tga, heightmap(textures/strogg/modular_h_snow.tga, 8 ) )
+		selfIllumMap 	picmip -2	textures/strogg/modular_glow.tga
+		vertexcolor
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 		5,20,0,0
+        detailWeightMap				textures/strogg/modular_detailmask.tga
+	}
+}
+
+material textures/strogg/modular2_snow_nooverlays
+{
+ 	surfaceType	"metal"
+ 	noOverlays
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular2_d_snow.tga
+		specularmap		picmip -2	textures/strogg/modular2_s_snow.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular2_local.tga, heightmap(textures/strogg/modular2_h_snow.tga, 8 ) )
+		selfIllumMap	picmip -2	textures/strogg/modular2_glow.tga
+		vertexcolor
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 		5,20,0,0
+        detailWeightMap				textures/strogg/modular2_detailmask.tga
+	}
+}
+
+
+// Strogg barrels
+
+material models/mapobjects/strogg/stroyent_barrel01
+{
+	surfacetype "metal"
+	noselfshadow
+	{
+		program	interaction/strogg_detail
+		diffusemap		picmip -1	models/mapobjects/strogg/stroyent_barrel01_d.tga
+		specularmap		picmip -2	models/mapobjects/strogg/stroyent_barrel01_s.tga
+		bumpmap			picmip -1	models/mapobjects/strogg/stroyent_barrel01_local.tga
+		selfIllumMap	picmip -2	models/mapobjects/strogg/stroyent_barrel01_glow.tga
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+        detailMult		2,2,0,0 
+	}
+}
+
+material models/mapobjects/strogg/stroyent_barrel_holder
+{
+	surfacetype "metal"
+	{
+		program	interaction/strogg_detail
+		diffusemap		picmip -1	models/mapobjects/strogg/stroyent_barrel_holder_d.tga
+		specularmap		picmip -2	models/mapobjects/strogg/stroyent_barrel_holder_s.tga
+		bumpmap			picmip -1	models/mapobjects/strogg/stroyent_barrel_holder_local.tga
+		selfIllumMap	picmip -2	models/mapobjects/strogg/stroyent_barrel_holder_glow.tga
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+        detailMult		2,2,0,0 
+	}
+}
+
+//Vertexcoloured
+
+material models/mapobjects/strogg/modular_vc
+{
+	nonsolid
+	noshadows
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular_d.tga
+		specularmap		picmip -2	textures/strogg/modular_s.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular_local.tga, heightmap(textures/strogg/modular_h.tga, 8 ) )
+		selfIllumMap	picmip -2	textures/strogg/modular_glow.tga
+		vertexcolor
+	
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular_detailmask.tga
+	}
+}
+
+material models/mapobjects/strogg/modular2_vc
+{
+	nonsolid
+	noshadows
+	{
+		program	interaction/strogg_detailwm
+		diffusemap		picmip -1	textures/strogg/modular2_d.tga
+		specularmap		picmip -2	textures/strogg/modular2_s.tga
+		bumpmap			picmip -1	addnormals(textures/strogg/modular2_local.tga, heightmap(textures/strogg/modular2_h.tga, 8 ) )
+		selfIllumMap	picmip -2	textures/strogg/modular2_glow.tga
+		vertexcolor
+		
+		diffuseDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap				textures/detail/bump/vehicle_detail01_d.tga
+		detailMult		5,20,0,0
+        detailWeightMap				textures/strogg/modular2_detailmask.tga
+	}
+}

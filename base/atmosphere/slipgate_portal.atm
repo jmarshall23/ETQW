@@ -1,0 +1,95 @@
+atmosphere slipgate_portal {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.4119828343 -0.5368973017 0.7362142801 )
+	sunColor ( 0 0 0.0039215689 )
+	sunHaloScale 0
+	sunHaloBias -0.0400000215
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/sprites/sundisk_flare"
+	sunFlareSize 0
+	sunFlareTime 0
+	enableSunFlareAziZen 0
+	sunFlareAzi 90
+	sunFlareZen 90
+	postProcessParms {
+		tint ( 0.8627451658 0.8901961446 1 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.8100000024 0.6200000048 0 1 )
+		glareBases ( 0 0 0 0 )
+	}
+	fogDistHalf 1144
+	fogHeightHalf 5098
+	fogHeightOffset 2902
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "slipgate_snow01"
+	skyGradientImage "atmosphere/skies/slipgate_snow_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 3
+	windAngleDev 54
+	windStrength 50
+	windStrengthDev 32
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 2
+		maxParticles 3000
+		heightMin 5
+		heightMax 7
+		weightMin 1.5
+		weightMax 2.5
+		timeMin 0
+		timeMax 500
+		windScale 10
+		gustWindScale 20
+		fallMin 200
+		fallMax 300
+		tumbleStrength 0
+		precipitationDistance 1000
+		material "precipitation/snowflake02_slipgate_night"
+		effect "effects/ambient/slipgate_snow"
+	}
+}
+
+
+
+
+
+ambientCubemap slipgate_portal {
+	ambientLight {
+		color 0.2941176593 0.3294117749 0.3568627536
+		direction 0 0 1
+	}
+	ambientLight {
+		color 0.4078431726 0.4156863093 0.4392157197
+		direction 0.7537921071 0.367648989 0.544639051
+	}
+	ambientLight {
+		color 0.5686274767 0.6156862974 0.7294117808
+		direction -0.7198463082 -0.6040228009 0.342020154
+	}
+	ambientLight {
+		color 0.1019607931 0.1411764771 0.180392161
+		direction -0.336755693 0.877278626 0.342020154
+	}
+	ambientLight {
+		color 0.3725490272 0.392156899 0.4745098352
+		direction -0.1026079655 -0.9762497544 0.1908090115
+	}
+	ambientLight {
+		color 0.3803921938 0.4313725829 0.5098039508
+		direction 0.0000000243 0 -1
+	}
+	ambientLight {
+		color 0.0980392247 0.1058823615 0.1333333403
+		direction 0.3822074234 0.8584519029 0.342020154
+	}
+}

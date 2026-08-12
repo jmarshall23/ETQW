@@ -1,0 +1,1130 @@
+effect effects/projectile_lightning_simple
+{
+	size	394
+
+	cutOffDistance	400
+
+	spawner "Bolts"
+	{
+		count		5,5
+		locked
+		attenuateEmitter
+		attenuation	400,400
+
+		linked
+		{
+			duration	0.1,0.1
+			persist
+			material	"textures/effects/desecrator_bolt"
+			tiling	1
+			useLightningAxis
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,0,0,0,0,0 useEndOrigin linearSpacing }
+				size { point 8 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				offset { envelope firetable count 200,200,200 offset 0,175,0 }
+			}
+
+			end
+			{
+				tint { point 0.501961,0.501961,0.501961 }
+			}
+			lineHit
+		}
+	}
+	emitter "Sparks"
+	{
+		duration	0.25,0.25
+		count		10,10
+		locked
+		attenuateEmitter
+		attenuation	250,300
+
+		line
+		{
+			duration	5,5
+			generatedLine
+			material	"textures/effects/desecrator_spark"
+			gravity		0.6,0.6
+			trailRepeat	1
+
+			start
+			{
+				velocity { box -120,-120,0,120,120,0 }
+				size { box 0.5,2 }
+				length { point 5,0,0 }
+			}
+
+			motion
+			{
+				length { envelope linear }
+			}
+
+			end
+			{
+				length { point 20,0,0 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/weapons/lightningpistol_muzzleflash_simple
+{
+	size	251
+
+	emitter "Smoke"
+	{
+		duration	1,1
+		count		1,1
+
+		sprite
+		{
+			duration	1.6,1.6
+			material	"textures/particles/dustcloud_opaque"
+			trailRepeat	1
+
+			start
+			{
+				size { point 20,20 }
+				tint { point 0.611765,0.866667,1 }
+				fade { point 0.1 }
+				rotate { box 0.5,-0.5 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				fade { envelope maincontroltable }
+			}
+
+			end
+			{
+				size { point 45,45 }
+			}
+		}
+	}
+	emitter "finger sparks1"
+	{
+		duration	2,2
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip03"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,-10 }
+				tint { point 0.392157,0.694118,1 }
+				offset { point -3.5,0.8,-0.6 }
+				rotate { point 0.0277778 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { point 3,3 }
+			}
+		}
+	}
+	spawner "finger sparks2"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip03"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,-10 }
+				size { point 0.5,0.5 }
+				tint { point 0.392157,0.694118,1 }
+				offset { point -4.5,2,4 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { point 2,2 }
+			}
+		}
+	}
+	spawner "muzzle sparks1"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.05,0.05
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,3 }
+				velocity { box -50,-50,-50,50,50,50 }
+				size { box 5,5,11,11 }
+				offset { point 0,2,0 }
+				rotate { box 0.638889,0.722222 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+		}
+	}
+	spawner "muzzle sparks2"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.05,0.05
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip02"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,2 }
+				velocity { box -50,-50,-50,50,50,50 }
+				size { box 5,5,11,11 }
+				rotate { point 0.638889 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+		}
+	}
+	spawner "muzzle sparks3"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.04,0.04
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning02"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,3 }
+				velocity { box -50,-50,-50,50,50,50 }
+				size { line 5,5,8,8 }
+				offset { point 5,-1,-3 }
+				rotate { box 0.611111,0.666667 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+		}
+	}
+	spawner "glow1"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip04"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { line 5,5,20,20 }
+				tint { point 0.392157,0.694118,1 }
+				fade { line 0.05,0.15 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+			}
+		}
+	}
+	emitter "glow3"
+	{
+		duration	2,2
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip04"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { line 5,5,15,15 }
+				tint { point 0.392157,0.694118,1 }
+				fade { line 0.05,0.2 }
+				offset { point 0,0,-10 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+			}
+		}
+	}
+	spawner "glow4"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip04"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 1,3 }
+				tint { point 0.392157,0.694118,1 }
+				fade { line 0.2,0.4 }
+				offset { point -15,3.1,2 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+			}
+		}
+	}
+	spawner "small sparks"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.05,0.05
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip05"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				velocity { box -50,-50,-50,50,50,50 }
+				size { line 2,2,4,4 }
+				tint { point 0.392157,0.694118,1 }
+				fade { line 0.1,0.3 }
+				offset { line 0,0,-5,-5,5,5 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+			}
+		}
+	}
+	spawner "Zaps"
+	{
+		count		1,1
+		locked
+
+		electricity
+		{
+			duration	0.1,0.1
+			fork	1
+			jitterRate	0
+			jitterSize	1.5,4,4
+			jitterTable	halfsintable
+			material	"textures/particles/lightning/lightning01"
+			trailRepeat	1
+
+			start
+			{
+				size { point 6 }
+				tint { point 0.345098,0.345098,0.345098 }
+				fade { point 0.8 }
+				length { point 2,0,0 }
+			}
+		}
+	}
+	light "light"
+	{
+		locked
+
+		light
+		{
+			duration	0.2,0.2
+			material	"lights/round"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box -50,-50,-50,50,50,50 }
+				size { box 100,100,100,140,140,140 }
+				tint { point 0.341176,0.654902,0.843137 }
+			}
+		}
+	}
+	emitter "muzzle sparks afterburn"
+	{
+		duration	1.001,1.001
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.03,0.03
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,2 }
+				velocity { box -50,-50,-50,50,50,50 }
+				size { line 1,1,3,3 }
+				offset { point -5,0,0 }
+				rotate { point 0.638889 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+		}
+	}
+	emitter "glow afterburn"
+	{
+		duration	2,2
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip04"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 6,6 }
+				tint { point 0.392157,0.694118,1 }
+				fade { line 0.1,0.3 }
+				offset { point -3,0,1 }
+				rotate { point 0.333333 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+			}
+		}
+	}
+}effect effects/projectile_lightning_impact_simple
+{
+	size	71
+
+	cutOffDistance	2000
+
+	spawner "Zaps"
+	{
+		count		1,1
+		locked
+
+		electricity
+		{
+			duration	0.1,0.1
+			fork	1
+			jitterRate	0
+			jitterSize	1.5,4,4
+			jitterTable	halfsintable
+			persist
+			material	"textures/particles/lightning/lightning01"
+			trailRepeat	1
+
+			start
+			{
+				position { point 2,0,0 }
+				size { box 9,15 }
+				length { box 16,-4,-4,16,4,4 }
+			}
+			lineHit
+		}
+	}
+	spawner "muzzle sparks1"
+	{
+		count		1,1
+		locked
+		attenuateEmitter
+		attenuation	300,300
+
+		sprite
+		{
+			duration	0.1,0.1
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point 2,0,0 }
+				velocity { box -50,-50,-50,50,50,50 }
+				size { line 7,7,20,20 }
+				offset { point 0,2,0 }
+				rotate { box 0.638889,0.722222 }
+			}
+
+			motion
+			{
+				fade { envelope linear }
+			}
+			lineHit
+		}
+	}
+	emitter "spark flash"
+	{
+		duration	0.1,0.1
+		count		2,2
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.08,0.08
+			material	"textures/particles/lightning/lightning_impact_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point 8,0,0 }
+				size { point 10,10 }
+				fade { line 0.3,1 }
+				rotate { box 0,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 30,30 }
+			}
+			lineHit
+		}
+	}
+	spawner "sparks_short"
+	{
+		count		10,10
+		useMaterialColor
+		attenuateEmitter
+		attenuation	300,300
+
+		line
+		{
+			duration	0.25,0.25
+			blend	add
+			generatedLine
+			persist
+			material	"textures/particles/lightning/lightning_spark01"
+			gravity		0.1,0.1
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { line 5,-1,-1,10,1,1 cone }
+				velocity { box -300,-50,-50,300,50,50 }
+				acceleration { point -40,0,0 }
+				friction { point 0.0001,0,0 }
+				size { box 0.2,0.5 }
+				offset { point -8,0,0 }
+				length { box 1,0,0,2,0,0 }
+			}
+
+			motion
+			{
+				size { envelope exp_1minusx/x2 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+				length { envelope exp_1minusx/x2 count 2.5,1,1 }
+			}
+
+			end
+			{
+				size { point 2 }
+				length { box 2,0,0,5,0,0 }
+			}
+			lineHit
+		}
+	}
+	spawner "glow1"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip04"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { line 30,30,50,50 }
+				tint { point 0.392157,0.694118,1 }
+				fade { line 0.2,0.6 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+effect effects/weapons/lightningpistol_fingers_idle_simple
+{
+	size	32
+
+	cutOffDistance	100
+
+	emitter "finger sparks1"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip03"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,-10 }
+				tint { point 0.392157,0.694118,1 }
+				offset { point -3.5,0.8,-0.6 }
+				rotate { point 0.0277778 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { point 3,3 }
+			}
+			lineHit
+		}
+	}
+	emitter "glow3"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip04"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { line 5,5,15,15 }
+				tint { point 0.392157,0.694118,1 }
+				fade { line 0.1,0.3 }
+				offset { point 0,0,-10 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+			}
+			lineHit
+		}
+	}
+	sound "unnamed2"
+	{
+		soundShader	"sounds/weapons/lightningpistol/fingers_idle"
+		freqshift	1.5,1.8
+	}
+}
+
+effect effects/weapons/lightningpistol_overheat_simple
+{
+	size	47
+
+	cutOffDistance	100
+
+	emitter "small sparks2"
+	{
+		duration	2.5,2.5
+		count		3,3
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.1,0.1
+			material	"textures/particles/lightning/lightning_strip05"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 0.3,0.3 }
+				tint { point 0.819608,0.819608,0.819608 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 2,2 }
+			}
+			lineHit
+		}
+	}
+	emitter "small sparks3"
+	{
+		duration	2.5,2.5
+		count		3,3
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.08,0.08
+			material	"textures/particles/lightning/lightning_strip05"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 0.5,0.5 }
+				tint { point 0.819608,0.819608,0.819608 }
+				offset { point 0,3,3 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 3,3 }
+			}
+			lineHit
+		}
+	}
+	emitter "heat_haze2"
+	{
+		duration	2,2
+		count		5,5
+		locked
+
+		sprite
+		{
+			duration	1,1
+			material	"textures/particles/weapon_heat"
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 8,4,-4,12,4,4 }
+				tint { point 0.94902,0.94902,0.94902 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_cmzoom }
+				tint { envelope jrad_smokefade }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 6,6 }
+				rotate { point -0.166667 relative }
+			}
+			lineHit
+		}
+	}
+	spawner "smoke puff"
+	{
+		count		1,1
+
+		sprite
+		{
+			duration	3,3
+			material	"textures/particles/weapon_heat_smoke2"
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,0,5 }
+				tint { point 0.113725,0.207843,0.254902 }
+				fade { point 0.5 }
+				offset { point 2,1,0 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { point 13,13 }
+			}
+			lineHit
+		}
+	}
+	spawner "smoke puff2"
+	{
+		count		1,1
+
+		sprite
+		{
+			duration	4,4
+			material	"textures/particles/weapon_heat_smoke2"
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,0,2 }
+				size { point 5,5 }
+				tint { point 0.227451,0.282353,0.372549 }
+				fade { point 0.5 }
+				offset { point 2,1,3 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { point 28,28 }
+			}
+			lineHit
+		}
+	}
+	spawner "smoke"
+	{
+		count		1,1
+
+		sprite
+		{
+			duration	4,4
+			material	"textures/particles/dustcloud_opaque"
+			trailRepeat	1
+
+			start
+			{
+				size { point 10,10 }
+				tint { point 0.286275,0.407843,0.552941 }
+				fade { point 0.6 }
+				rotate { box 0.5,-0.5 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope linear }
+				fade { envelope maincontroltable }
+			}
+
+			end
+			{
+				size { point 30,30 }
+			}
+			lineHit
+		}
+	}
+	emitter "small sparks4"
+	{
+		duration	1.5,1.5
+		count		3,3
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.1,0.1
+			material	"textures/particles/lightning/lightning_strip01"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 1.5,1.5 }
+				tint { point 0.819608,0.819608,0.819608 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 4,4 }
+			}
+			lineHit
+		}
+	}
+	emitter "glow afterburn"
+	{
+		duration	2,2
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			blend	add
+			persist
+			material	"textures/particles/lightning/lightning_strip04"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 10,10 }
+				tint { point 0.392157,0.694118,1 }
+				fade { line 0.1,0.3 }
+				offset { point -3,0,1 }
+				rotate { point 0.333333 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+			}
+			lineHit
+		}
+	}
+	emitter "small sparks5"
+	{
+		duration	2,2
+		count		3,3
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.08,0.08
+			material	"textures/particles/lightning/lightning_strip05"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 0.5,0.5 }
+				tint { point 0.819608,0.819608,0.819608 }
+				offset { point 0,-3,-4 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 3,3 }
+			}
+			lineHit
+		}
+	}
+	emitter "small sparks6"
+	{
+		duration	1.5,1.5
+		count		2,2
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.06,0.06
+			material	"textures/particles/sparks/sparkflash_strip02"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 4,4 }
+				tint { point 0.819608,0.819608,0.819608 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 6,6 }
+			}
+			lineHit
+		}
+	}
+	emitter "small sparks7"
+	{
+		duration	1.5,1.5
+		count		2,2
+		orientateIdentity
+
+		sprite
+		{
+			duration	0.08,0.08
+			material	"textures/particles/sparks/sparkflash_strip02"
+			numFrames 4
+			trailRepeat	1
+
+			start
+			{
+				size { point 2,2 }
+				tint { point 0.819608,0.819608,0.819608 }
+				offset { point 0,3,3 }
+				rotate { box -0.5,0.5 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+			}
+
+			end
+			{
+				size { point 4,4 }
+			}
+			lineHit
+		}
+	}
+	sound "unnamed2"
+	{
+		soundShader	"sounds/weapons/lightningpistol/fingers_idle"
+		volume	1,1
+		freqshift	1.5,1.8
+	}
+	sound "unnamed3"
+	{
+		start		0.4,0.4
+		soundShader	"sounds/weapons/lightningpistol/fingers_idle"
+		volume	1,1
+		freqshift	1,0.8
+	}
+	sound "unnamed5"
+	{
+		start		1.2,1.2
+		soundShader	"sounds/weapons/lightningpistol/fingers_idle"
+		freqshift	1.5,1.9
+	}
+}
+
+
+
+
+

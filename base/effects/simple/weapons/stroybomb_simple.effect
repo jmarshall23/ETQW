@@ -1,0 +1,268 @@
+effect effects/weapons/stroybomb_launch_simple
+{
+	size	114
+
+	sound "Fire Sound"
+	{
+		soundShader	"sounds/vehicles/icarus/bomb_fire"
+		volume	7,7
+		freqshift	0.9,1
+	}
+	sound "Far Fire Sound"
+	{
+		soundShader	"sounds/weapons/hyperblaster/fire/far"
+	}
+	emitter "core2"
+	{
+		duration	1,1
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.2,0.2
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				size { point 60,60 }
+				tint { point 0.184314,0.0431373,0.0156863 }
+			}
+
+			motion
+			{
+				size { envelope shamus_fastinholdslowout }
+				tint { envelope senetable3 count 3,3,3 offset 3,3,3 }
+			}
+
+			end
+			{
+				size { point 80,80 }
+				tint { point 0.215686,0.0666667,0.0235294 }
+			}
+		}
+	}
+}
+
+effect effects/impacts/stroybomb/explosion_default_simple
+{
+	size	8
+
+	cutOffDistance	3072
+
+	effect "unnamed0"
+	{
+		effect	"effects/impacts/shrap/explosion_default_simple"
+	}
+}
+
+
+
+
+
+effect effects/impacts/stroybomb/explosion_sand_simple
+{
+	size	8
+
+	cutOffDistance	3072
+
+	effect "unnamed18"
+	{
+		effect	"effects/impacts/frag/explosion_sand_simple"
+	}
+}
+
+
+effect effects/impacts/stroybomb/explosion_snow_simple
+{
+	size	8
+
+	cutOffDistance	3072
+
+	effect "unnamed18"
+	{
+		effect	"effects/impacts/frag/explosion_snow_simple"
+	}
+}effect effects/weapons/stroybomb_trail_simple
+{
+	size	88
+
+	cutOffDistance	15000
+
+	emitter "firetrail"
+	{
+		duration	4,4
+		count		20,20
+		attenuateEmitter
+		attenuation	600,600
+
+		sprite
+		{
+			duration	0.15,0.3
+			persist
+			material	"particles/explosion/explode07"
+			trailRepeat	1
+
+			start
+			{
+				position { line 0,-2,-2,0,2,2 }
+				size { line 5,5,15,15 }
+				tint { line 0.443137,0.329412,0.27451,0.682353,0.345098,0.235294 }
+				offset { point -5,0,0 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				rotate { box -0.25,0.25 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "inky_add"
+	{
+		duration	4,4
+		count		2,2
+		locked
+
+		sprite
+		{
+			duration	1,1
+			blend	add
+			material	"particles/peppi/inky_add"
+			trailRepeat	1
+
+			start
+			{
+				size { line 10,10,15,15 }
+				tint { line 0.968628,0.0196078,0.0196078,0.984314,0.439216,0.168627 }
+				fade { line 0.4,0.8 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 4,4 }
+				tint { envelope linear }
+				fade { envelope senetable3 count 3 offset 3 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 25,25,30,30 }
+				tint { point 0.494118,0.0666667,0.00392157 }
+				rotate { box 0.5,0 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "Smoke trail"
+	{
+		duration	3,3
+		count		15,15
+
+		linked
+		{
+			duration	3,4
+			generatedLine
+			material	"particles/projectiles/missile_smoke_trail2"
+			tiling	16
+			fadeIn
+			windDeviationAngle 2.000000
+			gravity		-0.01,-0.01
+			trailRepeat	1
+
+			start
+			{
+				position { sphere 0,-3,-3,0,3,3 surface }
+				velocity { box 0,-4,-2,0,-6,2 }
+				acceleration { box 0,-2,-3,0,2,3 }
+				friction { point 0.1,0.1,0.1 }
+				size { box 16,8 }
+				tint { point 0.854902,0.854902,0.854902 }
+				fade { point 0 }
+				windStrength { line 0.3,0.4 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 count 0.25 }
+				tint { envelope shamus_exp_1minusx/x2 count 0.125,0.125,0.125 }
+				fade { envelope shamus_fastinslowout }
+			}
+
+			end
+			{
+				size { box 32,64 }
+				tint { point 1,1,1 }
+				fade { line 0.3,0.5 }
+			}
+			lineHit
+		}
+	}
+	emitter "smoke trail4"
+	{
+		duration	3,3
+		count		15,15
+		attenuateEmitter
+		attenuation	600,600
+
+		sprite
+		{
+			duration	2,3
+			material	"particles/dustcloud_02_litsmoke"
+			windDeviationAngle 2.000000
+			gravity		0.001,0.001
+			trailRepeat	1
+
+			start
+			{
+				angle { point 0.0555556,0.0555556,0.0555556 }
+				size { line 1,1,3,3 }
+				tint { line 0.176471,0.121569,0.101961,0.321569,0.223529,0.188235 }
+				fade { line 0.2,0.8 }
+				windStrength { line 0.03,0.04 }
+				rotate { box -0.25,0.25 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope shamus_exp_1minusx/x2 count 0.2,0.2,0.2 }
+				fade { envelope rr2_concavefade_start_at_1 count 1.025 offset -0.025 }
+				angle { envelope convexfade }
+				rotate { envelope shamus_exp_1minusx/x2 }
+			}
+
+			end
+			{
+				size { line 15,15,25,25 }
+				tint { line 0.517647,0.478431,0.466667,0.662745,0.639216,0.627451 }
+				angle { point 0.277778,0.277778,0.277778 }
+				rotate { box 1,-1 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

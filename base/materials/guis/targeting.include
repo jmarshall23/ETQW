@@ -1,0 +1,26 @@
+
+#ifndef __targeting_include__
+#define __targeting_include__
+
+
+$template target_color( TextureParm )
+	sort gui
+	{
+		blend blend
+		//color		0.5, 0.5, 0.5, 1
+		map	clamp nopicmip "guis/assets/deploy/icons/" ## TextureParm ## ".tga"
+		vertexColor
+	}
+$endtemplate
+
+
+$template target_desat( TextureParm )
+	sort gui
+	{
+		blend blend		
+		map clamp nopicmip "guis/assets/deploy/icons/" ## TextureParm ## ".tga"
+	}
+$endtemplate
+
+
+#endif // !__targeting_include__

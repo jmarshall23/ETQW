@@ -1,0 +1,20 @@
+
+#ifndef __GDF__
+#define __GDF__
+
+$template _vehicle_icon( Path )
+	sort gui
+	
+	{
+		blend blend
+		map clamp linear nopicmip makealpha( Path ## "_border.tga" )		
+		vertexColor
+	}
+	
+	{
+		blend blend
+		map clamp linear nopicmip makealpha( Path ## "_fill.tga" )
+	}	
+$endtemplate
+
+#endif // !__GDF__

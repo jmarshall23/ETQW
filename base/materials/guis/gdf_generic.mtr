@@ -1,0 +1,43 @@
+material guis/assets/gdf_generic/dna_background {
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/gdf_generic/dna_background.tga
+	}
+}
+
+material guis/assets/gdf_generic/background01 {
+	sort gui
+	{
+		blend blend
+		map clamp guis/assets/gdf_generic/background01.tga
+	}
+}
+
+material guis/assets/gdf_generic/textblur {
+	sort gui
+	{
+		blend add
+		vertexColor
+		map guis/assets/gdf_generic/textblur.tga
+		translate	0, time * 0.5
+	}
+}
+
+material guis/assets/gdf_generic/strogg_body {
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/gdf_generic/strogg_body
+	}
+}
+
+material guis/assets/common/blue_bg {
+	sort gui
+	{
+		blend add
+		vertexcolor
+		map guis/assets/common/blue_bg.tga
+	}
+}

@@ -1,0 +1,83 @@
+
+#include <materials/guis/weapon_icons.include>
+
+/*
+==================
+ Weapon icons for the limbo menu and weapon switching menu
+==================
+*/
+
+material guis/assets/icons/weapons/akimbopistols 			{ _weapon_icon(  "guis/assets/icons/weapons/akimbopistols" ) }
+material guis/assets/icons/weapons/assaultrifle 			{ _weapon_icon(  "guis/assets/icons/weapons/assaultrifle" ) }
+material guis/assets/icons/weapons/assaultrifle_scope 		{ _weapon_icon(  "guis/assets/icons/weapons/assaultrifle_scope" ) }
+material guis/assets/icons/weapons/assaultrifle_launcher 	{ _weapon_icon(  "guis/assets/icons/weapons/assaultrifle_launcher" ) }
+material guis/assets/icons/weapons/grenadelauncher 			{ _weapon_icon(  "guis/assets/icons/weapons/grenadelauncher" ) }
+material guis/assets/icons/weapons/smoke_marker 			{ _weapon_icon(  "guis/assets/icons/weapons/smoke_marker" ) }
+material guis/assets/icons/weapons/blaster 					{ _weapon_icon(  "guis/assets/icons/weapons/blaster" ) }
+material guis/assets/icons/weapons/silencedpistol 			{ _weapon_icon(  "guis/assets/icons/weapons/silencedpistol" ) }
+material guis/assets/icons/weapons/cannon 					{ _weapon_icon(  "guis/assets/icons/weapons/cannon" ) }
+material guis/assets/icons/weapons/teleportgun				{ _weapon_icon(  "guis/assets/icons/weapons/teleportgun" ) }
+material guis/assets/icons/weapons/shieldgun 				{ _weapon_icon(  "guis/assets/icons/weapons/shieldgun" ) }
+material guis/assets/icons/weapons/decoy 					{ _weapon_icon(  "guis/assets/icons/weapons/decoy" ) }
+material guis/assets/icons/weapons/knife 					{ _weapon_icon(  "guis/assets/icons/weapons/knife" ) }
+material guis/assets/icons/weapons/gpmg 					{ _weapon_icon(  "guis/assets/icons/weapons/gpmg" ) }
+material guis/assets/icons/weapons/empgrenade 				{ _weapon_icon(  "guis/assets/icons/weapons/empgrenade" ) }
+material guis/assets/icons/weapons/fraggrenade 				{ _weapon_icon(  "guis/assets/icons/weapons/fraggrenade" ) }
+material guis/assets/icons/weapons/incendiary 				{ _weapon_icon(  "guis/assets/icons/weapons/incendiarygrenade" ) }
+material guis/assets/icons/weapons/scrambler 				{ _weapon_icon(  "guis/assets/icons/weapons/scrambler_grenade" ) }
+material guis/assets/icons/weapons/smoke 					{ _weapon_icon(  "guis/assets/icons/weapons/smoke" ) }
+material guis/assets/icons/weapons/stun 					{ _weapon_icon(  "guis/assets/icons/weapons/stun" ) }
+material guis/assets/icons/weapons/hlacerator 				{ _weapon_icon(  "guis/assets/icons/weapons/hlacerator" ) }
+material guis/assets/icons/weapons/hyperblaster 			{ _weapon_icon(  "guis/assets/icons/weapons/hyperblaster" ) }
+material guis/assets/icons/weapons/lacerator_gren 			{ _weapon_icon(  "guis/assets/icons/weapons/lacerator_gren" ) }
+material guis/assets/icons/weapons/law 						{ _weapon_icon(  "guis/assets/icons/weapons/law" ) }
+material guis/assets/icons/weapons/lightningpistol 			{ _weapon_icon(  "guis/assets/icons/weapons/lightningpistol" ) }
+material guis/assets/icons/weapons/machinepistol 			{ _weapon_icon(  "guis/assets/icons/weapons/machinepistol" ) }
+material guis/assets/icons/weapons/pistol 					{ _weapon_icon(  "guis/assets/icons/weapons/pistol" ) }
+material guis/assets/icons/weapons/mortar 					{ _weapon_icon(  "guis/assets/icons/weapons/mortar" ) }
+material guis/assets/icons/weapons/nailgun 					{ _weapon_icon(  "guis/assets/icons/weapons/nailgun" ) }
+material guis/assets/icons/weapons/railgun 					{ _weapon_icon(  "guis/assets/icons/weapons/railgun" ) }
+material guis/assets/icons/weapons/shotgun					{ _weapon_icon(  "guis/assets/icons/weapons/shotgun" ) }
+material guis/assets/icons/weapons/sniperrifle 				{ _weapon_icon(  "guis/assets/icons/weapons/sniper" ) }
+material guis/assets/icons/weapons/landmine 				{ _weapon_icon(  "guis/assets/icons/weapons/landmine" ) }
+material guis/assets/icons/weapons/strogg_landmine 			{ _weapon_icon(  "guis/assets/icons/weapons/strogg_landmine" ) }
+material guis/assets/icons/weapons/strogg_target 			{ _weapon_icon(  "guis/assets/icons/weapons/strogg_target" ) }
+material guis/assets/icons/weapons/spikes 					{ _weapon_icon(  "guis/assets/icons/weapons/spikes" ) }
+material guis/assets/icons/weapons/stroyentcells			{ _weapon_icon(  "guis/assets/icons/weapons/stroyentcells" ) }
+material guis/assets/icons/weapons/hecharge					{ _weapon_icon(  "guis/assets/icons/weapons/hecharge" ) }
+material guis/assets/icons/weapons/deploypda				{ _weapon_icon(  "guis/assets/icons/weapons/deploypda" ) }
+material guis/assets/icons/weapons/pliers					{ _weapon_icon(  "guis/assets/icons/weapons/pliers" ) }
+material guis/assets/icons/weapons/trap						{ _weapon_icon(  "guis/assets/icons/weapons/trap" ) }
+material guis/assets/icons/weapons/thirdeye					{ _weapon_icon(  "guis/assets/icons/weapons/thirdeye" ) }
+material guis/assets/icons/weapons/spotter					{ _weapon_icon(  "guis/assets/icons/weapons/spotter" ) }
+material guis/assets/icons/weapons/binoculars				{ _weapon_icon(  "guis/assets/icons/weapons/spotter" ) }
+material guis/assets/icons/weapons/monocle				    { _weapon_icon(  "guis/assets/icons/weapons/monocle" ) }
+material guis/assets/icons/weapons/trinoculars				{ _weapon_icon(  "guis/assets/icons/weapons/trinoculars" ) }
+material guis/assets/icons/weapons/pda						{ _weapon_icon(  "guis/assets/icons/weapons/pda" ) }
+material guis/assets/icons/weapons/ammopack					{ _weapon_icon(  "guis/assets/icons/weapons/ammopack" ) }
+material guis/assets/icons/weapons/healthpack				{ _weapon_icon(  "guis/assets/icons/weapons/healthpack" ) }
+material guis/assets/icons/weapons/supplypack				{ _weapon_icon(  "guis/assets/icons/weapons/supplypack" ) }
+material guis/assets/icons/weapons/repairtool				{ _weapon_icon(  "guis/assets/icons/weapons/repairtool" ) }
+material guis/assets/icons/weapons/defibrillator			{ _weapon_icon(  "guis/assets/icons/weapons/defibrillator" ) }
+material guis/assets/icons/weapons/stroyentpda				{ _weapon_icon(  "guis/assets/icons/weapons/stroyentpda" ) }
+material guis/assets/icons/weapons/obliterator				{ _weapon_icon(  "guis/assets/icons/weapons/obliterator" ) }
+material guis/assets/icons/weapons/injector					{ _weapon_icon(  "guis/assets/icons/weapons/stroyentinjector" ) }
+material guis/assets/icons/weapons/spawnmaker				{ _weapon_icon(  "guis/assets/icons/weapons/spawnmaker" ) }
+material guis/assets/icons/weapons/lacerator 				{ _weapon_icon(  "guis/assets/icons/weapons/lacerator" ) }
+material guis/assets/icons/weapons/railchucker 				{ _weapon_icon(  "guis/assets/icons/weapons/railchucker" ) }
+material guis/assets/icons/weapons/gas_grenade 				{ _weapon_icon(  "guis/assets/icons/weapons/gas_grenade" ) }
+material guis/assets/icons/weapons/hackingdevice 			{ _weapon_icon(  "guis/assets/icons/weapons/hackingdevice" ) }
+material guis/assets/icons/weapons/lacerator_launcher 		{ _weapon_icon(  "guis/assets/icons/weapons/lacerator_launcher" ) }
+material guis/assets/icons/weapons/phosphorusgrenade		{ _weapon_icon(  "guis/assets/icons/weapons/phosphorusgrenade" ) }
+material guis/assets/icons/weapons/pinchbomb				{ _weapon_icon(  "guis/assets/icons/weapons/pinchbomb" ) }
+material guis/assets/icons/weapons/repair_drone				{ _weapon_icon(  "guis/assets/icons/weapons/repair_drone" ) }
+material guis/assets/icons/weapons/shrapgrenade				{ _weapon_icon(  "guis/assets/icons/weapons/shrapgrenade" ) }
+material guis/assets/icons/weapons/plasmacharge				{ _weapon_icon(  "guis/assets/icons/weapons/plasmacharge" ) }
+material guis/assets/icons/weapons/strogg_repairtool		{ _weapon_icon(  "guis/assets/icons/weapons/strogg_repairtool" ) }
+material guis/assets/icons/weapons/silencedmp				{ _weapon_icon(  "guis/assets/icons/weapons/silencedmp" ) }
+material guis/assets/icons/weapons/flyerhive				{ _weapon_icon(  "guis/assets/icons/weapons/flyerhive" ) }
+material guis/assets/icons/weapons/lacerator_scope 			{ _weapon_icon(  "guis/assets/icons/weapons/lacerator_scope" ) }
+material guis/assets/icons/weapons/violator_marker 			{ _weapon_icon(  "guis/assets/icons/weapons/violator_marker" ) }
+material guis/assets/icons/weapons/armingtool	 			{ _weapon_icon(  "guis/assets/icons/weapons/armingtool" ) }
+material guis/assets/icons/weapons/akimbosilencedpistols	{ _weapon_icon(  "guis/assets/icons/weapons/akimbosilencedpistols" ) }
+material guis/assets/icons/weapons/armingtool_strogg		{ _weapon_icon(  "guis/assets/icons/weapons/hackingdevice" ) }

@@ -1,0 +1,294 @@
+sound sounds/misc/jumppad {
+	minDistance	10
+	maxDistance	45
+	volume		3
+	
+	sounds/misc/jumppads/pad_01.wav
+	sounds/misc/jumppads/pad_02.wav
+}
+
+// Strogg Plasma Charge Bring-up and lock onto arm
+sound sounds/misc/pcharge_01 {
+	minDistance	3
+	maxDistance	25
+	volume		-7
+	
+	sounds/weapons/misc/pcharge_move_01.wav
+}
+
+sound sounds/misc/pcharge_02 {
+	minDistance	3
+	maxDistance	25
+	volume		-5
+	
+	sounds/weapons/misc/pcharge_move_02.wav
+}
+
+sound sounds/misc/pcharge_03 {
+	minDistance	3
+	maxDistance	25
+	volume		-25
+	
+	sounds/weapons/misc/pcharge_move_03.wav
+}
+
+// Parachute
+sound sounds/misc/parachute/start {
+
+	maxDistance 50
+
+	looping
+	leadin
+	sounds/misc/parachute/open.wav
+	sounds/misc/parachute/loop.wav
+}
+
+sound sounds/misc/parachute/stop {
+
+	maxDistance 50
+
+	sounds/misc/parachute/drop.wav
+}
+
+//Airshield
+sound sounds/misc/airshield/start {
+
+	leadinVolume -10
+	maxDistance 50
+
+	looping
+	leadin
+	sounds/misc/airshield/start.wav
+	sounds/misc/airshield/loop.wav
+}
+
+sound sounds/misc/airshield/stop {
+
+	maxDistance 50
+
+	sounds/misc/airshield/stop.wav
+}
+
+sound _default {
+
+	sounds/misc/default.wav
+}
+
+sound silence {
+
+	sounds/misc/silence.wav
+}
+
+sound demo_render_complete {
+
+	sounds/misc/render_complete.wav
+}
+
+sound feedback_hit_enemy {
+
+	volume -10
+
+	sounds/misc/hit.wav
+}
+
+sound feedback_hit_enemy_headshot {
+
+	volume 0
+
+	sounds/misc/hit_head.wav
+}
+
+sound feedback_hit_friendly {
+
+	volume -5
+
+	sounds/misc/hit_teammate.wav
+}
+
+sound feedback_hit_vehicle_enemy {
+
+	volume -5
+
+	sounds/misc/hit_vehicle.wav
+}
+
+sound feedback_hit_vehicle_friendly {
+
+	volume -5
+
+	sounds/misc/hit_vehicle_teammate.wav
+}
+
+// referenced in func.def
+
+sound entity_door_accel {
+
+}
+
+sound entity_door_decel {
+
+}
+
+sound entity_door_move {
+
+}
+
+sound entity_door_open {
+
+	volume -10
+
+	sounds/doors/open_01.wav
+}
+
+sound entity_door_close {
+
+	volume -10
+
+	sounds/doors/close_01.wav
+}
+
+sound entity_door_opened {
+
+}
+
+sound entity_door_closed {
+
+}
+
+sound entity_door_locked {
+
+}
+
+sound entity_door_unlocked {
+
+}
+
+sound entity_explosion {
+
+}
+
+sound entity_fracture_glass {
+
+}
+
+sound entity_shatter_glass{
+
+}
+
+
+// referenced in gibs.def
+
+sound entity_gibs_bounce {
+
+}
+
+
+// referenced in monster_turret.def
+
+sound entity_monster_turret_wakeup {
+
+}
+
+sound entity_monster_turret_shutdown{
+
+}
+
+sound entity_monster_turret_windup {
+
+}
+
+sound entity_monster_turret_winddown {
+
+}
+
+sound entity_monster_turret_fire {
+
+}
+
+
+// referenced in moveable.def
+
+sound entity_moveable_bounce {
+
+}
+
+// unlocked reward
+sound player/prof_unlock {
+
+	"sounds/misc/ka-ching_01.wav"
+}
+
+// new rank
+sound player/newrank {
+
+	sounds/misc/bugle_02.wav
+}
+
+sound player/newrank/gdf {
+
+	sounds/misc/rankup_gdf.wav
+//	sounds/misc/rankup_gdf_02.wav
+}
+
+sound player/newrank/strogg {
+
+	sounds/misc/rankup_strogg.wav
+}
+
+// accepted mission
+sound player/accepted_mission {
+
+	sounds/misc/stab_02.wav
+}
+
+// objective completed
+sound objective/completed_gdf {
+
+	sounds/misc/roll_06.wav
+}
+
+// objective completed
+sound objective/completed_strogg {
+
+	sounds/misc/roll_07.wav
+}
+
+
+// transmission objective
+sound sounds/misc/transmit/start {
+
+	volume -5
+
+	looping
+	leadin
+	sounds/misc/objectives/transmit_start.wav
+	sounds/misc/objectives/transmit_loop.wav
+}
+
+sound sounds/misc/transmit/done {
+
+	volume -5
+
+	sounds/misc/objectives/transmit_stop.wav
+}
+
+
+// EMP Disruptor
+
+sound sounds/misc/empdisruptor/charge {
+
+	volume 0
+	maxDistance 300
+	occlude_once
+
+	sounds/misc/objectives/emp_disruptor_charge.wav
+}
+
+sound sounds/misc/empdisruptor/fire {
+
+	volume 5
+	maxDistance 300
+	occlude_once
+
+	sounds/misc/objectives/emp_disruptor_fire.wav
+}

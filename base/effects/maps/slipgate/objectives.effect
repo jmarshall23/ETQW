@@ -1,0 +1,215 @@
+effect effects/maps/slipgate/generator_smoke
+{
+	size	0
+
+}
+
+
+
+effect effects/maps/slipgate/final_sparks
+{
+	size	171
+
+	spawner "sparks"
+	{
+		count		25,30
+		useMaterialColor
+		attenuation	0,2048
+
+		line
+		{
+			duration	0.5,2
+			blend	add
+			generatedLine
+			persist
+			material	"textures/particles/sparks/spark03"
+			gravity		0.2,1.1
+			generatedOriginNormal
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -1,-1,-1,1,1,1 cone }
+				velocity { box -100,-100,-100,100,100,100 }
+				size { point 0.5 }
+				fade { point 1 attenuate }
+				length { point 1,0,0 }
+			}
+
+			motion
+			{
+				size { envelope shamus_fastinslowout offset -0.1 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+				length { envelope shamus_fastinslowout offset -0.07,-0.07,-0.07 }
+			}
+
+			end
+			{
+				size { box 2,3 }
+				fade { point 0 attenuate }
+				length { box 10,0,0,15,0,0 }
+			}
+			lineHit
+		}
+	}
+	sound "Zaps"
+	{
+		soundShader	"sounds/deployables/shieldgenerator/zaps"
+		volume	2,4
+		freqshift	0.4,1
+	}
+	sound "unnamed3"
+	{
+		soundShader	"vehicles/misc/debris/glass_small"
+		volume	10,12
+		freqshift	0.5,1
+	}
+}
+
+effect effects/maps/slipgate/final_smoke
+{
+	size	801
+
+	spawner "unnamed1"
+	{
+		count		25,25
+
+		sprite
+		{
+			duration	8,10
+			material	"textures/particles/smoke_test1"
+			trailRepeat	1
+
+			start
+			{
+				position { cylinder -40,-90,-40,40,70,40 }
+				velocity { box 0,0,5,0,0,50 }
+				size { point 30,30 }
+				tint { line 0.360784,0.317647,0.286275,0.454902,0.454902,0.454902 }
+				fade { point 0 }
+				windStrength { line -0.01,-0.1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shamus_fastinslowout }
+				offset { envelope convexfade count 7,7,7 }
+			}
+
+			end
+			{
+				size { box 80,80,150,150 }
+				fade { line 0.5,1 }
+				offset { box -200,-50,-200,200,200,200 }
+			}
+			lineHit
+		}
+	}
+	sound "unnamed4"
+	{
+		start		0.5,0.5
+		soundShader	"metal_stress"
+		volume	3,3
+	}
+}
+
+effect effects/maps/slipgate/final_blowout
+{
+	size	845
+
+	spawner "unnamed1"
+	{
+		count		20,20
+
+		sprite
+		{
+			duration	8,10
+			material	"textures/particles/smoke_test1"
+			trailRepeat	1
+
+			start
+			{
+				position { cylinder -75,-90,-40,75,70,-40 }
+				velocity { box -15,0,5,15,0,50 }
+				size { point 30,30 }
+				tint { line 0.360784,0.317647,0.286275,0.454902,0.454902,0.454902 }
+				fade { point 0 }
+				windStrength { line -0.01,-0.1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				fade { envelope shamus_fastinslowout }
+				offset { envelope convexfade count 6,6,6 }
+			}
+
+			end
+			{
+				size { box 80,80,150,150 }
+				fade { line 0.5,1 }
+				offset { box -50,-50,5,50,50,400 }
+			}
+			lineHit
+		}
+	}
+	spawner "flames4"
+	{
+		count		1,1
+
+		sprite
+		{
+			duration	0.8,0.8
+			persist
+			material	"particles/explosion/explode32strip02"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,20,-50 }
+				velocity { point 0,0,300 }
+				size { point 200,200 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+	spawner "flash"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.8,0.8
+			material	"textures/particles/sparks/sparkflash03c"
+			trailRepeat	1
+
+			start
+			{
+				size { point 500,500 }
+				tint { point 0.384314,0.145098,0 }
+				rotate { box -1,1 }
+			}
+
+			motion
+			{
+				size { envelope rr2_concavefade_start_at_1_fast }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				fade { envelope linear }
+			}
+
+			end
+			{
+				size { point 200,200 }
+			}
+			lineHit
+		}
+	}
+	sound "Close Distance Explosion Sound2"
+	{
+		soundShader	"sounds/deployables/ssg/explode01"
+		freqshift	0.5,1
+	}
+}

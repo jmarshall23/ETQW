@@ -1,0 +1,494 @@
+
+#include "teams.include"
+#include "templates/tooltips.include"
+
+teamInfo gdf {
+	"name"						"game/team/gdf"
+	"match_win_string"			"guis/game/scoreboard/gdfwin"
+	"match_win_sw_speed"		"guis/game/scoreboard/win_sw_speed"
+	"match_win_sw_xp"			"guis/game/scoreboard/win_sw_xp"
+
+	"fx_spawn" 					"fx/teleporterplayer_edf"
+
+	"pc_default"				"soldier"	// FIXME - as this gets referenced outside of levelload, the media will get treated differently, which is bad
+
+	// Ensure classes precache
+	"pc_soldier"				"soldier"
+	"pc_medic"					"medic"
+	"pc_engineer"				"engineer"
+	"pc_fieldops"				"fieldops"
+	"pc_covertops"				"covertops"
+
+	// shared proficiency categories
+	"prof_soldier"					"game/classes/soldier"
+	"prof_medic"					"game/classes/medic"
+	"prof_engineer"					"game/classes/engineer"
+	"prof_fieldops"					"game/classes/fieldops"
+	"prof_covertops"				"game/classes/covertops"
+	"prof_battlesense"				"game/prof/battlesense"
+	"prof_lightweapons"				"game/prof/lightweapons"
+	"prof_vehicle"					"game/prof/vehicle"
+
+	// remaps for switching between teams
+	"pc_team_remap_strogg_aggressor"	"soldier"
+	"pc_team_remap_strogg_technician"	"medic"
+	"pc_team_remap_strogg_constructor"	"engineer"
+	"pc_team_remap_strogg_oppressor"	"fieldops"
+	"pc_team_remap_strogg_infiltrator"	"covertops"
+
+	"max_deploy"				"25"
+	"max_deploy_intelligence"	"3"
+	"max_deploy_firesupport"	"10"
+	"max_deploy_defences"		"10"
+
+	"high_command_name"			"game/team/gdf/highcommand"
+
+	"snd_music_won"				"sounds/music/gdf"
+
+	"proficiencyList0"			"soldier"
+	"proficiencyList1"			"fieldops"
+	"proficiencyList2"			"covertops"
+	"proficiencyList3"			"engineer"
+	"proficiencyList4"			"medic"
+	"proficiencyList5"			"weapon_handling"
+
+	"num_ratings"				"8"
+	"rating_1"					"rookie"
+	"rating_2"					"proficient"
+	"rating_3"					"experienced"
+	"rating_4"					"senior"
+	"rating_5"					"expert"
+	"rating_6"					"veteran"
+	"rating_7"					"master"
+	"rating_8"					"elite"
+
+	"cvar_password"				"g_gdfTeamPassword"
+
+	"theme_gui"					"themes/game/gdf"
+
+	"scriptObject"				"team_gdf"
+
+	"def_parachute"				"parachute"
+
+	"snd_objective_completed"	""
+	"snd_mission_accepted"		""
+	"snd_prof_unlock"			"player/prof_unlock"
+	"snd_newrank"				"player/newrank/gdf"
+	
+	"lifestat_title"			"lifestat/titles/gdf"
+
+	"snd_promotion_1"			"sounds/vo/gdf/highcommand/promotions/private"
+	"snd_promotion_2"			"sounds/vo/gdf/highcommand/promotions/privatefirstclass"
+	"snd_promotion_3"			"sounds/vo/gdf/highcommand/promotions/lancecorporal"
+	"snd_promotion_4"			"sounds/vo/gdf/highcommand/promotions/corporal"
+	"snd_promotion_5"			"sounds/vo/gdf/highcommand/promotions/sergeant"
+	"snd_promotion_6"			"sounds/vo/gdf/highcommand/promotions/staffsergeant"
+	"snd_promotion_7"			"sounds/vo/gdf/highcommand/promotions/gunnerysergeant"
+	"snd_promotion_8"			"sounds/vo/gdf/highcommand/promotions/mastersergeant"
+	"snd_promotion_9"			"sounds/vo/gdf/highcommand/promotions/firstsergeant"
+	"snd_promotion_10"			"sounds/vo/gdf/highcommand/promotions/masterchief"
+	"snd_promotion_11"			"sounds/vo/gdf/highcommand/promotions/sergeantmajor"
+	"snd_promotion_12"			"sounds/vo/gdf/highcommand/promotions/ensign"
+	"snd_promotion_13"			"sounds/vo/gdf/highcommand/promotions/thirdlieutenant"
+	"snd_promotion_14"			"sounds/vo/gdf/highcommand/promotions/secondlieutenant"
+	"snd_promotion_15"			"sounds/vo/gdf/highcommand/promotions/firstlieutenant"
+	"snd_promotion_16"			"sounds/vo/gdf/highcommand/promotions/captain"
+	"snd_promotion_17"			"sounds/vo/gdf/highcommand/promotions/groupcaptain"
+	"snd_promotion_18"			"sounds/vo/gdf/highcommand/promotions/seniorcaptain"
+	"snd_promotion_19"			"sounds/vo/gdf/highcommand/promotions/lieutenantmajor"
+	"snd_promotion_20"			"sounds/vo/gdf/highcommand/promotions/major"
+	"snd_promotion_21"			"sounds/vo/gdf/highcommand/promotions/groupmajor"
+	"snd_promotion_22"			"sounds/vo/gdf/highcommand/promotions/lieutenantcommander"
+	"snd_promotion_23"			"sounds/vo/gdf/highcommand/promotions/commander"
+	"snd_promotion_24"			"sounds/vo/gdf/highcommand/promotions/groupcommander"
+	"snd_promotion_25"			"sounds/vo/gdf/highcommand/promotions/lieutenantcolonel"
+	"snd_promotion_26"			"sounds/vo/gdf/highcommand/promotions/colonel"
+	"snd_promotion_27"			"sounds/vo/gdf/highcommand/promotions/brigadier"
+	"snd_promotion_28"			"sounds/vo/gdf/highcommand/promotions/brigadiergeneral"
+	"snd_promotion_29"			"sounds/vo/gdf/highcommand/promotions/majorgeneral"
+	"snd_promotion_30"			"sounds/vo/gdf/highcommand/promotions/lieutenantgeneral"
+	"snd_promotion_31"			"sounds/vo/gdf/highcommand/promotions/general"
+	"snd_promotion_32"			"sounds/vo/gdf/highcommand/promotions/commandergeneral"
+	"snd_promotion_33"			"sounds/vo/gdf/highcommand/promotions/fieldvicemarshall"
+	"snd_promotion_34"			"sounds/vo/gdf/highcommand/promotions/fieldmarshall"
+	"snd_promotion_35"			"sounds/vo/gdf/highcommand/promotions/vicecommanderarmy"
+	"snd_promotion_36"			"sounds/vo/gdf/highcommand/promotions/commanderarmy"
+	"snd_promotion_37"			"sounds/vo/gdf/highcommand/promotions/highcommander"
+	"snd_promotion_38"			"sounds/vo/gdf/highcommand/promotions/supremecommander"
+
+	"snd_countdown_10m"			"sounds/vo/gdf/highcommand/countdown/tenminutes"
+	"snd_countdown_5m"			"sounds/vo/gdf/highcommand/countdown/fiveminutes"
+	"snd_countdown_2m"			"sounds/vo/gdf/highcommand/countdown/twominutes"
+	"snd_countdown_1m"			"sounds/vo/gdf/highcommand/countdown/oneminute"
+	"snd_countdown_30s"			"sounds/vo/gdf/highcommand/countdown/thirtyseconds"
+	"snd_countdown_10s"			"sounds/vo/gdf/highcommand/countdown/tenseconds"
+	"snd_countdown_5s"			"sounds/vo/gdf/highcommand/countdown/fivetoone"
+	//"snd_countdown_3s"			"sounds/vo/gdf/highcommand/countdown/threetoone"
+
+	"snd_mcp_repaired"			"sounds/vo/gdf/highcommand/objectives/mcp/repaired"
+	"snd_mcp_disabled"			"sounds/vo/gdf/highcommand/objectives/mcp/disabled"
+
+	"snd_intel_repaired"		"silence"
+	"snd_intel_damaged"			"sounds/vo/gdf/highcommand/alerts/radar/lost"
+	
+	"snd_friendlyfire"			"sounds/players/gdf/friendlyfire/auto"
+
+	"snd_objective_complete_roll" "objective/completed_gdf"
+
+	"tt_task_success"			"dummy_tooltip"
+
+	"tt_player_revive_1"		"player_revive_gdf_crosshair_info_1"
+	"tt_player_revive_2"		"player_revive_gdf_crosshair_info_2"
+	"tt_player_parachute"		"player_parachute_gdf"
+	"tt_leavingzone"			"player_leaving_zone_gdf"
+	"tt_spawnhosting_me"		"spawnhosting_me"
+	"tt_possessing_me"			"possessing_me_gdf"
+	"tt_killed_by_disguised"	"killed_by_disguised_gdf"
+	"tt_low_ammo"				"low_ammo_gdf"
+	"tt_low_health"				"low_health_gdf"
+	"tt_low_ammo_self"			"low_ammo_gdf_self"
+	"tt_low_health_self"		"low_health_gdf_self"
+	"tt_unconscious"			"unconscious_gdf"
+	"tt_critical_class"			"tooltip_critical_class_gdf"
+
+	"task_revive"				"medic_revive_player"
+	"task_heal"					"medic_heal_player"
+	"task_kill"					"kill_player_strogg"
+	"task_supply"				"fieldops_supply_player"
+	"task_vehicle_repair"		"engineer_repair_vehicle"
+	"task_capture_spawn"		"gdf_capture_spawn"
+	"task_liberate_spawn_covert"	"gdf_liberate_spawn_covertops"
+	"task_liberate_spawn"		"gdf_liberate_spawn"
+	"task_create_spawn_host"	"technician_create_spawnhost"
+	"task_waypoint"				"waypoint"
+	"task_pickup"				"pickup_player"
+	
+	"def_waypoint"				"waypoint_info_gdf"
+
+	"allow_revive"				"1"
+
+	"partial_load"				"gdf/partialLoad"
+	
+	"spawnTimeChange"			"300"
+	"spawnTimeReduction"		"5"
+
+	"bot_team"					"0"
+
+	__precached_materials
+}
+
+stringMap gdf/partialLoad {
+	// view weapons
+	"viewmodel_minigun"										"viewmodel_minigun"
+	"viewmodel_grenade_smoke"								"viewmodel_grenade_smoke"
+	"viewmodel_ammopack"									"viewmodel_ammopack"
+	"viewmodel_healthpack"									"viewmodel_healthpack"
+	"viewmodel_hecharge"									"viewmodel_hecharge"
+	"viewmodel_landmine"									"viewmodel_landmine"
+	"viewmodel_item_third_eye"								"viewmodel_item_third_eye"
+	"viewmodel_pliers"										"viewmodel_pliers"
+	"viewmodel_binoculars"									"viewmodel_binoculars"
+	"viewmodel_targeting_tool"								"viewmodel_targeting_tool"
+	"viewmodel_defibrillator"								"viewmodel_defibrillator"
+	"viewmodel_pliers_pda"									"viewmodel_pliers_pda"
+	"viewmodel_arming_device"								"viewmodel_arming_device"
+	//"viewmodel_assaultrifle_rework"						"viewmodel_assaultrifle_rework"
+	//"viewmodel_assaultrifle_grenade_rework"					"viewmodel_assaultrifle_grenade_rework"
+	//"viewmodel_assaultrifle_grenadelauncher_rework"			"viewmodel_assaultrifle_grenadelauncher_rework"
+	//"viewmodel_assaultrifle_scope_rework"					"viewmodel_assaultrifle_scope_rework"
+	"viewmodel_gpmg"										"viewmodel_gpmg"
+	"viewmodel_grenade_emp"									"viewmodel_grenade_emp"
+	"viewmodel_grenade_frag"								"viewmodel_grenade_frag"
+	//"viewmodel_knife"										"viewmodel_knife"
+	"viewmodel_machinepistol"								"viewmodel_machinepistol"
+	"viewmodel_machinepistol_silenced"						"viewmodel_machinepistol_silenced"
+	"viewmodel_pistol"										"viewmodel_pistol"
+	"viewmodel_pistol_silenced"								"viewmodel_pistol_silenced"
+	"viewmodel_pistol_akimbo"								"viewmodel_pistol_akimbo"
+	"viewmodel_pistol_akimbo_silenced"						"viewmodel_pistol_akimbo_silenced"
+	"viewmodel_law"											"viewmodel_law"
+	"viewmodel_shotgun"										"viewmodel_shotgun"
+	"viewmodel_sniperrifle"									"viewmodel_sniperrifle"
+
+	//cockpits
+	"vehicle_anansi_cockpit"								"vehicle_anansi_cockpit"
+	"models/vehicles/edf_anansi/anansi_cockpit_rear.lwo"	"models/vehicles/edf_anansi/anansi_cockpit_rear.lwo"
+	"vehicle_badger_cockpit"								"vehicle_badger_cockpit"
+	"vehicle_badger_cockpit_noarms"							"vehicle_badger_cockpit_noarms"
+	//"vehicle_badger_gpmg_cockpit"							"vehicle_badger_gpmg_cockpit"
+	"vehicle_bumblebee_pilot_cockpit"						"vehicle_bumblebee_pilot_cockpit"
+	"vehicle_husky_cockpit"									"vehicle_husky_cockpit"
+	"vehicle_mcp_cockpit"									"vehicle_mcp_cockpit"
+	"vehicle_mcp_cockpit_front"								"vehicle_mcp_cockpit_front"
+	//"vehicle_mcp_minigun_cockpit"							"vehicle_mcp_minigun_cockpit"
+	"vehicle_platypus_cockpit"								"vehicle_platypus_cockpit"
+//	"vehicle_titan_cockpit"									"vehicle_titan_cockpit"
+	//"vehicle_trojan_cockpit"								"vehicle_trojan_cockpit"
+	//"vehicle_trojan_rear_cockpit"							"vehicle_trojan_rear_cockpit"
+	"vehicle_trojan_cockpit_rear"							"vehicle_trojan_cockpit_rear"
+	"vehicle_trojan_cockpit_front"							"vehicle_trojan_cockpit_front"
+}
+
+itemPackageDef weapons/misc/healaura {
+	consumable					health					10
+}
+
+toolTip player_revive_gdf_crosshair_info_1 {
+	text "game/tt/intro/player_revive_gdf_1"
+	sound "sounds/ui/main/neutral"
+	locationIndex TOOLTIP_POSITION_WEAPON_CHANGE
+}
+
+toolTip player_revive_gdf_crosshair_info_2 {
+	text "game/tt/intro/player_revive_gdf_2"
+	sound "sounds/ui/main/neutral"
+	nextShowDelay 30
+}
+
+teamInfo strogg {
+	"name"						"game/team/strogg"
+	"match_win_string"			"guis/game/scoreboard/stroggwin"
+	"match_win_sw_speed"		"guis/game/scoreboard/win_sw_speed"
+	"match_win_sw_xp"			"guis/game/scoreboard/win_sw_xp"
+
+	"fx_spawn" 					"fx/teleporterplayer_edf"
+
+	"fx_parachuteland" 			"effects/crashland_strogg"
+	"parachuteland_threshold"	"80"
+
+	"pc_default"				"aggressor"
+
+	// Ensure classes precache
+	"pc_tank"					"aggressor"
+	"pc_technician"				"technician"
+	"pc_constructor"			"constructor"
+	"pc_oppressor"				"oppressor"
+	"pc_infiltrator"			"infiltrator"
+
+	// remaps for switching between teams
+	"pc_team_remap_gdf_soldier"		"aggressor"
+	"pc_team_remap_gdf_medic"		"technician"
+	"pc_team_remap_gdf_engineer"	"constructor"
+	"pc_team_remap_gdf_fieldops"	"oppressor"
+	"pc_team_remap_gdf_covertops"	"infiltrator"
+
+	// shared proficiency categories
+	"prof_soldier"					"game/classes/aggressor"
+	"prof_medic"					"game/classes/technician"
+	"prof_engineer"					"game/classes/constructor"
+	"prof_fieldops"					"game/classes/oppressor"
+	"prof_covertops"				"game/classes/infiltrator"
+	"prof_battlesense"				"game/prof/battlesense"
+	"prof_lightweapons"				"game/prof/lightweapons"
+	"prof_vehicle"					"game/prof/vehicle"
+
+	"max_deploy"				"25"
+	"max_deploy_intelligence"	"3"
+	"max_deploy_firesupport"	"10"
+	"max_deploy_defences"		"10"
+
+	"snd_music_won"				"sounds/music/strogg"
+
+	"high_command_name"			"game/team/strogg/highcommand"
+
+	"proficiencyList0"			"soldier"
+	"proficiencyList1"			"fieldops"
+	"proficiencyList2"			"covertops"
+	"proficiencyList3"			"engineer"
+	"proficiencyList4"			"medic"
+	"proficiencyList5"			"weapon_handling"
+
+	"num_ratings"				"8"
+	"rating_1"					"rookie"
+	"rating_2"					"proficient"
+	"rating_3"					"experienced"
+	"rating_4"					"senior"
+	"rating_5"					"expert"
+	"rating_6"					"veteran"
+	"rating_7"					"master"
+	"rating_8"					"elite"
+	
+	"lifestat_title"			"lifestat/titles/strogg"
+
+	"cvar_password"				"g_stroggTeamPassword"
+
+	"theme_gui"					"themes/game/strogg"
+
+	"scriptObject"				"team_strogg"
+
+	"def_parachute"				"strogg_parachute"
+
+	"snd_objective_completed"	""
+	"snd_mission_accepted"		""
+	"snd_prof_unlock"			"player/prof_unlock"
+	"snd_newrank"				"player/newrank/strogg"
+
+	"snd_promotion_1"			"sounds/vo/strogg/nexus/promotions/rank02"
+	"snd_promotion_2"			"sounds/vo/strogg/nexus/promotions/rank03"
+	"snd_promotion_3"			"sounds/vo/strogg/nexus/promotions/rank04"
+	"snd_promotion_4"			"sounds/vo/strogg/nexus/promotions/rank05"
+	"snd_promotion_5"			"sounds/vo/strogg/nexus/promotions/rank06"
+	"snd_promotion_6"			"sounds/vo/strogg/nexus/promotions/rank07"
+	"snd_promotion_7"			"sounds/vo/strogg/nexus/promotions/rank08"
+	"snd_promotion_8"			"sounds/vo/strogg/nexus/promotions/rank09"
+	"snd_promotion_9"			"sounds/vo/strogg/nexus/promotions/rank10"
+	"snd_promotion_10"			"sounds/vo/strogg/nexus/promotions/rank11"
+	"snd_promotion_11"			"sounds/vo/strogg/nexus/promotions/rank12"
+	"snd_promotion_12"			"sounds/vo/strogg/nexus/promotions/rank13"
+	"snd_promotion_13"			"sounds/vo/strogg/nexus/promotions/rank14"
+	"snd_promotion_14"			"sounds/vo/strogg/nexus/promotions/rank15"
+	"snd_promotion_15"			"sounds/vo/strogg/nexus/promotions/rank16"
+	"snd_promotion_16"			"sounds/vo/strogg/nexus/promotions/rank17"
+	"snd_promotion_17"			"sounds/vo/strogg/nexus/promotions/rank18"
+	"snd_promotion_18"			"sounds/vo/strogg/nexus/promotions/rank19"
+	"snd_promotion_19"			"sounds/vo/strogg/nexus/promotions/rank20"
+	"snd_promotion_20"			"sounds/vo/strogg/nexus/promotions/rank21"
+	"snd_promotion_21"			"sounds/vo/strogg/nexus/promotions/rank22"
+	"snd_promotion_22"			"sounds/vo/strogg/nexus/promotions/rank23"
+	"snd_promotion_23"			"sounds/vo/strogg/nexus/promotions/rank24"
+	"snd_promotion_24"			"sounds/vo/strogg/nexus/promotions/rank25"
+	"snd_promotion_25"			"sounds/vo/strogg/nexus/promotions/rank26"
+	"snd_promotion_26"			"sounds/vo/strogg/nexus/promotions/rank27"
+	"snd_promotion_27"			"sounds/vo/strogg/nexus/promotions/rank28"
+	"snd_promotion_28"			"sounds/vo/strogg/nexus/promotions/rank29"
+	"snd_promotion_29"			"sounds/vo/strogg/nexus/promotions/rank30"
+	"snd_promotion_30"			"sounds/vo/strogg/nexus/promotions/rank31"
+	"snd_promotion_31"			"sounds/vo/strogg/nexus/promotions/rank32"
+	"snd_promotion_32"			"sounds/vo/strogg/nexus/promotions/rank33"
+	"snd_promotion_33"			"sounds/vo/strogg/nexus/promotions/rank34"
+	"snd_promotion_34"			"sounds/vo/strogg/nexus/promotions/rank35"
+	"snd_promotion_35"			"sounds/vo/strogg/nexus/promotions/rank36"
+	"snd_promotion_36"			"sounds/vo/strogg/nexus/promotions/rank37"
+	"snd_promotion_37"			"sounds/vo/strogg/nexus/promotions/rank38"
+	"snd_promotion_38"			"sounds/vo/strogg/nexus/promotions/rank39"
+
+	"snd_countdown_10m"			"sounds/vo/strogg/nexus/countdown/tenminutes"
+	"snd_countdown_5m"			"sounds/vo/strogg/nexus/countdown/fiveminutes"
+	"snd_countdown_2m"			"sounds/vo/strogg/nexus/countdown/twominutes"
+	"snd_countdown_1m"			"sounds/vo/strogg/nexus/countdown/oneminute"
+	"snd_countdown_30s"			"sounds/vo/strogg/nexus/countdown/thirtyseconds"
+	"snd_countdown_10s"			"sounds/vo/strogg/nexus/countdown/tenseconds"
+	"snd_countdown_5s"			"sounds/vo/strogg/nexus/countdown/fivetoone"
+	//"snd_countdown_3s"			"sounds/vo/strogg/nexus/countdown/threetoone"
+
+	"snd_mcp_repaired"			"sounds/vo/strogg/nexus/objectives/mcp/repaired"
+	"snd_mcp_disabled"			"sounds/vo/strogg/nexus/objectives/mcp/disabled"
+
+	"snd_ssg_fired"				"silence"
+
+	"snd_intel_repaired"		"silence"
+	"snd_intel_damaged"			"sounds/vo/strogg/nexus/alerts/radar/lost"
+	
+	"snd_friendlyfire"			"sounds/players/strogg/friendlyfire/auto"
+	
+	"snd_objective_complete_roll" "objective/completed_strogg"
+
+	"tt_task_success"			"dummy_tooltip"
+
+	"tt_player_spawnhost_1"		"dead_body_intro_spawnhost_1"
+	"tt_player_spawnhost_2"		"dead_body_intro_spawnhost_2"
+	"tt_player_parachute"		"player_parachute_strogg"
+	"tt_leavingzone"			"player_leaving_zone_strogg"
+	"tt_possessing_me"			"possessing_me_strogg"
+	"tt_killed_by_disguised"	"killed_by_disguised_strogg"
+	"tt_low_ammo"				"low_ammo_strogg"
+	"tt_low_health"				"low_health_strogg"
+	"tt_low_ammo_self"			"low_ammo_strogg_self"
+	"tt_low_health_self"		"low_health_strogg_self"
+	"tt_unconscious"			"unconscious_strogg"
+	"tt_critical_class"			"tooltip_critical_class_strogg"
+
+	"task_revive"				"technician_revive_player"
+	"task_heal"					"technician_supply_player"
+	"task_kill"					"kill_player_gdf"
+	"task_supply"				"technician_supply_player"
+	"task_vehicle_repair"		"constructor_repair_vehicle"
+	"task_capture_spawn"		"strogg_capture_spawn"
+	"task_liberate_spawn_covert"	"strogg_liberate_spawn_infiltrator"
+	"task_liberate_spawn"		"strogg_liberate_spawn"
+	"task_waypoint"				"waypoint"
+	"task_pickup"				"pickup_player"
+	
+	"def_waypoint"				"waypoint_info_strogg"
+
+	"allow_revive"				"1"
+
+	"partial_load"				"strogg/partialLoad"
+
+	"spawnTimeChange"			"300"
+	"spawnTimeReduction"		"5"
+
+	"bot_team"					"1"
+
+	__precached_materials
+}
+
+stringMap strogg/partialLoad {
+	// view weapons
+	"viewmodel_airstrike_beacon"							"viewmodel_airstrike_beacon"
+	"viewmodel_flyer_hive"									"viewmodel_flyer_hive"
+	"viewmodel_landmine_strogg"								"viewmodel_landmine_strogg"
+	"viewmodel_stroyentcells"								"viewmodel_stroyentcells"
+	"viewmodel_teleporter"									"viewmodel_teleporter"
+	"viewmodel_trinoculars"									"viewmodel_trinoculars"
+	"viewmodel_repair_drone"								"viewmodel_repair_drone"
+	//"viewmodel_spike"										"viewmodel_spike"
+	"viewmodel_repair_tool"									"viewmodel_repair_tool"
+	"viewmodel_stroyent_tool"								"viewmodel_stroyent_tool"
+	"viewmodel_blaster"										"viewmodel_blaster"
+	"viewmodel_grenade_bepb"								"viewmodel_grenade_bepb"
+	//"viewmodel_grenade_acidspleen"						"viewmodel_grenade_acidspleen"
+	"viewmodel_shrap_grenade"								"viewmodel_shrap_grenade"
+	"viewmodel_hyperblaster"								"viewmodel_hyperblaster"
+	//"viewmodel_lacerator"									"viewmodel_lacerator"
+	//"viewmodel_lacerator_grenade"							"viewmodel_lacerator_grenade"
+	//"viewmodel_lacerator_scoped"							"viewmodel_lacerator_scoped"
+	"viewmodel_lightningpistol"								"viewmodel_lightningpistol"
+	"viewmodel_nailgun"										"viewmodel_nailgun"
+	"viewmodel_obliterator"									"viewmodel_obliterator"
+	"viewmodel_railgun"										"viewmodel_railgun"
+	"viewmodel_strogg_targeting_tool"						"viewmodel_strogg_targeting_tool"
+	"viewmodel_force_shield"								"viewmodel_force_shield"
+
+	//cockpits
+//	"vehicle_desecrator_cockpit_gunner"						"vehicle_desecrator_cockpit_gunner"
+//	"vehicle_desecrator_cockpit_driver"						"vehicle_desecrator_cockpit_driver"
+//	"vehicle_goliath_driver_cockpit"						"vehicle_goliath_driver_cockpit"
+//	"vehicle_goliath_gunner_cockpit"						"vehicle_goliath_gunner_cockpit"
+//	"vehicle_hog_cockpit_gunner"							"vehicle_hog_cockpit_gunner"
+//	"vehicle_hog_cockpit_driver"							"vehicle_hog_cockpit_driver"
+//	"vehicle_hornet_cockpit"								"vehicle_hornet_cockpit"
+//	"vehicle_hornet_cockpit_gunner"							"vehicle_hornet_cockpit_gunner"
+	"vehicle_icarus_cockpit"								"vehicle_icarus_cockpit"
+	"models/vehicles/strogg_hog/cockpit.lwo"				"models/vehicles/strogg_hog/cockpit.lwo"
+}
+
+itemPackageDef weapons/misc/stroyaura {
+	consumable					ammo stroyent					20
+}
+
+toolTip player_leaving_zone_gdf {
+	length	5
+	alwaysPlay
+	sound	"sounds/vo/gdf/highcommand/alerts/oob"
+	text	"game/misc/leaving_combat_zone"
+}
+
+toolTip player_leaving_zone_strogg {
+	length	5
+	alwaysPlay
+	sound	"sounds/vo/strogg/nexus/alerts/oob"
+	text	"game/misc/leaving_combat_zone"
+}
+
+
+// used by the UI for remapping player classes to their base proficiency type
+stringMap classToProficiency {
+	"aggressor"		"soldier"
+	"technician"	"medic"	
+	"constructor"	"engineer"
+	"oppressor"		"fieldops"
+	"infiltrator"	"covertops"
+	
+	"spectating"	""				// show all
+}

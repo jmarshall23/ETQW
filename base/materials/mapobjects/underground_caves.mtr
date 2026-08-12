@@ -1,0 +1,37 @@
+material models/mapobjects/canyon/underground_caves_a
+{
+	{      
+		program interaction/parallax
+		diffusemap	picmip -1	models/mapobjects/canyon/underground_caves_a.tga
+		bumpmap		picmip -1	models/mapobjects/canyon/underground_caves_a_local.tga
+		specularmap	picmip -2	models/mapobjects/canyon/underground_caves_a_s.tga
+		heightmap	picmip -1	models/mapobjects/canyon/underground_caves_a_parallax.tga      
+		parameters	0.015
+	} 
+}
+
+material models/mapobjects/canyon/underground_caves_b
+{
+	{
+		diffusemap	picmip -1	textures/dirt/dirt01b_d.tga
+		bumpmap		picmip -1	models/mapobjects/canyon/underground_caves_a_local.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailMult	6,6,0,0
+	}
+}
+
+material models/mapobjects/slipgate/nexus_cave
+{
+	{      
+		program interaction/parallax
+		diffusemap	picmip -1	models/mapobjects/slipgate/nexus_cave.tga
+		bumpmap		picmip -1	models/mapobjects/slipgate/nexus_cave_local.tga
+		specularmap	picmip -2	models/mapobjects/slipgate/nexus_cave_s.tga
+		heightmap	picmip -1	models/mapobjects/slipgate/nexus_cave_parallax.tga      
+		parameters	0.012
+	} 
+}

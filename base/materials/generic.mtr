@@ -1,0 +1,1675 @@
+// =============================================================================
+// Collection of raw materials with blends at the bottom of the file
+// Last update: 27/05/04
+// =============================================================================
+//
+// File standards:
+// _ed = editor only version
+// _d = diffuse and/or editor
+// _s = specular
+// _local = normal map
+// _h = height/bump map (usually works with local map)
+//
+// =============================================================================
+
+material textures/dirt/asphalt01
+{
+	noSelfShadow
+	qer_editorimage	textures/dirt/asphalt01_d.tga
+	diffusemap	textures/dirt/asphalt01_d.tga
+	specularmap 	textures/dirt/asphalt01_s.tga
+	bumpmap 	textures/dirt/asphalt01_local.tga
+}
+
+/// temp valley bridge stuff
+
+material textures/metal/girder01_noshadow
+{
+	noshadows
+	diffusemap	textures/metal/girder01_d.tga
+	specularmap 	textures/metal/girder01_s.tga
+	bumpmap 	textures/metal/girder01_local.tga
+}
+
+material textures/metal/girder01_rusty_noshadow
+{
+	noshadows
+	diffusemap	textures/metal/girder01_rusty_d.tga
+	bumpmap 	textures/metal/girder01_rusty_local.tga
+}
+
+// -----------------------------------------------------------------------------
+// DIRT
+// -----------------------------------------------------------------------------
+material textures/dirt/gravel
+{
+	qer_editorimage 	textures/dirt/gravel_d.tga
+	diffusemap		textures/dirt/gravel_d.tga
+//	specularmap		textures/dirt/gravel_s.tga
+        bumpmap			textures/dirt/gravel_local.tga
+}
+
+material models/mapobjects/road/road1
+{
+	qer_editorimage	textures/dirt/asphalt01_d.tga
+	diffusemap	textures/dirt/asphalt01_d.tga
+	specularmap 	textures/dirt/asphalt01_s.tga
+	bumpmap 	textures/dirt/asphalt01_local.tga
+}
+
+
+material textures/dirt/dirt01
+{
+	{
+		diffusemap	picmip -1	textures/dirt/dirt01_d.tga
+		specularmap	picmip -2	textures/dirt/dirt01_s.tga
+		bumpmap		picmip -1	textures/dirt/dirt01_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailMult	4,4,0,0
+	}
+}
+
+material textures/dirt/dirt01b
+{
+	{
+		diffusemap	picmip -1	textures/dirt/dirt01b_d.tga
+		//specularmap	picmip -2	textures/dirt/dirt01_s.tga
+		bumpmap		picmip -1	textures/dirt/dirt01_local.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		detailMult	5,5,0,0
+	}
+}
+
+material textures/dirt/dirt02
+{
+	
+	qer_editorimage	textures/dirt/dirt02_d.tga
+	diffusemap	textures/dirt/dirt02_d.tga
+	specularmap 	textures/dirt/dirt02_s.tga
+	bumpmap 	textures/dirt/dirt02_local.tga
+}
+
+material textures/dirt/gravel01
+{
+	
+	qer_editorimage	textures/dirt/gravel01_d.tga
+	diffusemap	textures/dirt/gravel01_d.tga
+	specularmap 	textures/dirt/gravel01_s.tga
+	bumpmap		heightmap(textures/dirt/gravel01_h.tga, 16)
+}
+
+material textures/dirt/mud01
+{
+	
+	qer_editorimage	textures/dirt/mud01_d.tga
+	diffusemap	textures/dirt/mud01_d.tga
+	bumpmap		textures/dirt/mud01_local.tga
+}
+
+material textures/dirt/dry_earth
+{
+	
+	qer_editorimage	textures/dirt/dry_earth_d.tga
+	{
+		diffusemap	picmip -1	textures/dirt/dry_earth_d.tga
+		specularmap	picmip -2	textures/dirt/dry_earth_s.tga
+		bumpmap		picmip -1	textures/dirt/dry_earth_local.tga
+		vertexcolor
+	}
+}
+
+material textures/dirt/dry_earth_noshadows
+{
+	
+	qer_editorimage	textures/dirt/dry_earth_d.tga
+	noshadows
+	{
+		diffusemap	picmip -1	textures/dirt/dry_earth_d.tga
+		specularmap	picmip -2	textures/dirt/dry_earth_s.tga
+		bumpmap		picmip -1	textures/dirt/dry_earth_local.tga
+		vertexcolor
+	}
+}
+
+material textures/dirt/dry_earth_noshadows_nonsolid
+{
+	
+	qer_editorimage	textures/dirt/dry_earth_d.tga
+	nonsolid	
+	noshadows
+	{
+		diffusemap	picmip -1	textures/dirt/dry_earth_d.tga
+		specularmap	picmip -2	textures/dirt/dry_earth_s.tga
+		bumpmap		picmip -1	textures/dirt/dry_earth_local.tga
+		vertexcolor
+	}
+}
+
+material textures/dirt/dry_mud
+{
+	
+	qer_editorimage	textures/dirt/dry_mud_d.tga
+	diffusemap		textures/dirt/dry_mud_d.tga
+	specularmap 	textures/dirt/dry_mud_s.tga
+	bumpmap 		textures/dirt/dry_mud_local.tga
+}
+
+material textures/dirt/dry_mud_flakes
+{
+	
+	qer_editorimage	textures/dirt/dry_mud_flakes_d.tga
+	diffusemap		textures/dirt/dry_mud_flakes_d.tga
+	specularmap 	textures/dirt/dry_mud_flakes_s.tga
+	bumpmap 		textures/dirt/dry_mud_flakes_local.tga
+}
+
+material textures/dirt/parched_cracked_mud
+{
+	
+	qer_editorimage	textures/dirt/parched_cracked_mud_d.tga
+	diffusemap		textures/dirt/parched_cracked_mud_d.tga
+	specularmap 	textures/dirt/parched_cracked_mud_s.tga
+	bumpmap 		textures/dirt/parched_cracked_mud_local.tga
+}
+
+material textures/dirt/cracked_mud
+{
+	
+	qer_editorimage	textures/dirt/cracked_mud_d.tga
+	diffusemap		textures/dirt/cracked_mud_d.tga
+	specularmap 	textures/dirt/cracked_mud_s.tga
+	bumpmap 		textures/dirt/cracked_mud_local.tga
+}
+
+material textures/dirt/hard_wet_earth
+{
+	
+	qer_editorimage	textures/dirt/hard_wet_earth01a_d.tga
+	diffusemap		textures/dirt/hard_wet_earth01a_d.tga
+	specularmap 	textures/dirt/hard_wet_earth01_s.tga
+	bumpmap 		textures/dirt/hard_wet_earth01_local.tga
+}
+
+material textures/dirt/bumpy_hard_earth
+{
+	
+	qer_editorimage	textures/dirt/bumpy_hard_earth_d.tga
+	diffusemap		textures/dirt/bumpy_hard_earth_d.tga
+	specularmap 	textures/dirt/bumpy_hard_earth_s.tga
+	bumpmap 		textures/dirt/bumpy_hard_earth_local.tga
+}
+
+material textures/dirt/soil_reddish_stones
+{
+	
+	qer_editorimage	textures/dirt/soil_reddish_stones_d.tga
+	diffusemap		textures/dirt/soil_reddish_stones_d.tga
+	specularmap 	textures/dirt/soil_reddish_stones_s.tga
+	bumpmap 		textures/dirt/soil_reddish_stones_local.tga
+}
+
+material textures/dirt/eroded_earth
+{
+	
+	qer_editorimage	textures/dirt/eroded_earth_d.tga
+	diffusemap		textures/dirt/eroded_earth_d.tga
+	specularmap 	textures/dirt/eroded_earth_s.tga
+	bumpmap 		textures/dirt/eroded_earth_local.tga
+}
+
+material textures/dirt/eroded_earth01b
+{
+	
+	qer_editorimage	textures/dirt/eroded_earth01b_d.tga
+	diffusemap		textures/dirt/eroded_earth01b_d.tga
+	specularmap 	textures/dirt/eroded_earth_s.tga
+	bumpmap 		textures/dirt/eroded_earth_local.tga
+}
+
+// -----------------------------------------------------------------------------
+material textures/grass/grass01
+{
+	
+	qer_editorimage	textures/grass/grass01_d.tga
+	diffusemap		textures/grass/grass01_d.tga
+	specularmap 	textures/grass/grass01_s.tga
+	bumpmap 		textures/grass/grass01_local.tga
+}
+
+// -----------------------------------------------------------------------------
+material textures/road/tile01 // Road with lines and border as one
+{
+	
+	qer_editorimage	textures/road/tile01_d.tga
+	diffusemap		textures/road/tile01_d.tga
+	specularmap 	textures/road/tile01_s.tga
+	bumpmap 		textures/road/tile01_local.tga
+}
+
+material textures/road/tile01_sandy // Road with lines and border as one
+{
+	{
+	diffusemap	picmip -1	textures/road/tile01_sandy_d.tga
+	specularmap	picmip -2	textures/road/tile01_s.tga
+	bumpmap		picmip -1	textures/road/tile01_local.tga
+	}
+}
+
+material textures/road/tile01_sandy_noshadows // Road with lines and border as one
+{
+	noShadows
+	qer_editorimage	textures/road/tile01_sandy_d.tga
+	diffusemap		textures/road/tile01_sandy_d.tga
+	specularmap 	textures/road/tile01_s.tga
+	bumpmap 		textures/road/tile01_local.tga
+}
+
+material textures/road/tile02 // Just plain road
+{
+	
+	qer_editorimage	textures/road/tile02_d.tga
+	diffusemap		textures/road/tile02_d.tga
+	specularmap 	textures/road/tile02_s.tga
+	bumpmap 		textures/road/tile02_local.tga
+}
+
+material textures/road/tile03  //sandier
+{
+	diffusemap	textures/road/tile03_d.tga
+	specularmap 	textures/road/tile02_s.tga
+	bumpmap 	textures/road/tile02_local.tga
+}
+
+material textures/road/tile04  //even more sand
+{
+	diffusemap	textures/road/tile04_d.tga
+	//specularmap 	textures/road/tile04_s.tga
+	bumpmap 	textures/road/tile04_local.tga
+}
+
+material textures/road/tile02dirt1 // Dirt decal
+{
+	qer_editorimage	textures/road/tile02dirt1_d.tga
+ 	DECAL_MACRO
+ 	noShadows
+ 	nonsolid
+ 	noimpact
+ 	translucent
+	{
+		blend	blend
+		map	textures/road/tile02dirt1_d.tga
+		alpha 0.25
+	}
+}
+
+material textures/road/tile02edge1 // Edge for tile02
+{
+	
+	qer_editorimage	textures/road/tile02edge1_d.tga
+	diffusemap		textures/road/tile02edge1_d.tga
+	specularmap 	textures/road/tile02edge1_s.tga
+	bumpmap 		textures/road/tile02edge1_local.tga
+}
+
+material textures/road/tile02edge1d // (alpha)
+{
+	
+ 	translucent
+	nonsolid
+	noimpact
+	qer_editorimage	textures/road/tile02edge1d_ed.tga
+	{
+		diffusemap textures/road/tile02edge1d_d.tga
+		specularmap 	textures/road/tile02edge1d_s.tga
+		bumpmap 		textures/road/tile02edge1_local.tga
+		alphatest 0.5
+	}
+
+}
+
+material textures/road/tile02edge1d2 // (alpha)
+{
+	
+	translucent
+	nonsolid
+	noimpact
+	qer_editorimage	textures/road/tile02edge1d_ed.tga
+	{
+		diffusemap textures/road/tile02edge1d2_d.tga
+		alphatest 0.5
+		specularmap textures/road/tile02edge1d2_s.tga
+		bumpmap textures/road/tile02edge1_local.tga
+	}
+}
+
+material textures/road/cracks01 // Cracked road (alpha)
+{
+	
+	qer_editorimage	textures/road/cracks01_d.tga
+	{
+		diffusemap textures/road/cracks01_d.tga
+		specularmap 	textures/road/cracks01_s.tga
+		bumpmap 	textures/road/cracks01_local.tga		
+		alphaTest 0.5
+	}
+}
+
+material textures/road/sandy_road_tile
+{
+	
+	qer_editorimage	textures/road/sandy_road_tile_d.tga
+	diffusemap		textures/road/sandy_road_tile_d.tga
+	specularmap 	textures/road/sandy_road_tile_s.tga
+	bumpmap 		textures/road/sandy_road_tile_local.tga
+}
+
+material textures/road/a_road2
+{
+	qer_editorimage	textures/road/a_road2_d.tga
+	diffusemap		textures/road/a_road2_d.tga
+//	specularmap 	textures/road/a_road2_s.tga
+	bumpmap 		textures/road/a_road2_local.tga
+}
+
+
+
+material textures/road/sandy_road
+{
+	
+	qer_editorimage	textures/road/sandy_road_d.tga
+	diffusemap		textures/road/sandy_road_d.tga
+	specularmap 	textures/road/sandy_road_s.tga
+	bumpmap 		textures/road/sandy_road_local.tga
+}
+
+material textures/road/sandy_road_tile02
+{
+	
+	qer_editorimage	textures/road/sandy_road_tile02_d.tga
+	diffusemap		textures/road/sandy_road_tile02_d.tga
+	specularmap 	textures/road/sandy_road_tile02_s.tga
+	bumpmap 		textures/road/sandy_road_tile02_local.tga
+}
+
+material textures/road/sandy_track
+{
+	
+	qer_editorimage	textures/road/sandy_track_d.tga
+	diffusemap		textures/road/sandy_track_d.tga
+	specularmap 	textures/road/sandy_track_s.tga
+	bumpmap 		textures/road/sandy_track_local.tga
+}
+
+material textures/road/sandy_track_tile
+{
+	
+	qer_editorimage	textures/road/sandy_track_tile_d.tga
+	diffusemap		textures/road/sandy_track_tile_d.tga
+	specularmap 	textures/road/sandy_track_tile_s.tga
+	bumpmap 		textures/road/sandy_track_tile_local.tga
+}
+
+material textures/road/asphalt_dilapitated
+{
+	
+	qer_editorimage	textures/road/asphalt_dilapitated_d.tga
+	diffusemap		textures/road/asphalt_dilapitated_d.tga
+	specularmap 	textures/road/asphalt_dilapitated_s.tga
+	bumpmap 		textures/road/asphalt_dilapitated_local.tga
+}
+
+material textures/road/tile01_canyon // Road for Canyon broken bridge
+{
+	{
+		diffusemap	picmip -1	textures/road/tile01_canyon_d.tga
+		specularmap	picmip -2	textures/road/tile01_canyon_s.tga
+	
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		detailMult	4,4,0,0
+	}
+}
+
+// -----------------------------------------------------------------------------
+material textures/rock/terraced_rock04
+{
+	qer_editorimage 	textures/rock/terraced_rock04_d.tga
+	diffusemap		textures/rock/terraced_rock04_d.tga
+//	specularmap		textures/rock/terraced_rock04_s.tga
+        bumpmap			textures/rock/terraced_rock04_local.tga
+}
+
+material textures/rock/jagged_rock01
+{
+	qer_editorimage 	textures/rock/jagged_rock01_d.tga
+	diffusemap		textures/rock/jagged_rock01_d.tga
+	specularmap		textures/rock/jagged_rock01_s.tga
+        bumpmap			textures/rock/jagged_rock01_local.tga
+}
+
+// Duplicate in rock.mtr with additional nonsolid parm
+// I've commented this one out for now - Wils
+//material textures/rock/terraced_rock03
+//{
+//	qer_editorimage 	textures/rock/terraced_rock03_d.tga
+//	diffusemap		textures/rock/terraced_rock03_d.tga
+// //	specularmap		textures/rock/terraced_rock03_s.tga
+//        bumpmap			textures/rock/terraced_rock03_local.tga
+//}
+
+
+material textures/rock/terraced_rock01
+{
+	qer_editorimage 	textures/rock/terraced_rock01_d.tga
+	diffusemap		textures/rock/terraced_rock01_d.tga
+	specularmap		textures/rock/terraced_rock01_s.tga
+        bumpmap			textures/rock/terraced_rock01_local.tga
+}
+
+material textures/rock/hillside1
+{
+	qer_editorimage 	textures/rock/hillside1_d.tga
+	diffusemap		textures/rock/hillside1_d.tga
+	specularmap		textures/rock/hillside1_s.tga
+        bumpmap		addnormals (textures/rock/hillside1_local.tga, heightmap (textures/rock/hillside1_h.tga, 8))
+}
+
+material textures/rock/lanrock1
+{
+	
+	noshadows
+	qer_editorimage	textures/rock/lanrock1_d.tga
+	diffusemap		textures/rock/lanrock1_d.tga
+	specularmap		textures/rock/lanrock1_s.tga
+	bumpmap		addnormals (textures/rock/lanrock1_local.tga, heightmap(textures/rock/lanrock1_h.tga, 8))
+}
+
+material textures/rock/rock01
+{
+	
+	qer_editorimage 	textures/rock/rock01_d.tga
+	diffusemap		textures/rock/rock01_d.tga
+	specularmap		textures/rock/rock01_s.tga
+        bumpmap		addnormals (textures/rock/rock01_local.tga, heightmap (textures/rock/rock01_h.tga, 24))
+}
+
+material textures/rock/rock01_nonsolid
+{
+	nonsolid
+	qer_editorimage 	textures/rock/rock01_d.tga
+	diffusemap		textures/rock/rock01_d.tga
+	specularmap		textures/rock/rock01_s.tga
+        bumpmap		addnormals (textures/rock/rock01_local.tga, heightmap (textures/rock/rock01_h.tga, 24))
+}
+
+
+material textures/rock/rock02
+{
+	
+	qer_editorimage 	textures/rock/rock02_d.tga
+	diffusemap		textures/rock/rock02_d.tga
+	specularmap		textures/rock/rock02_s.tga
+        bumpmap		addnormals (textures/rock/rock01_local.tga, heightmap (textures/rock/rock02_h.tga, 24))
+}
+
+material textures/rock/rock04
+{
+	
+	qer_editorimage 	textures/rock/rock04_d.tga
+	diffusemap		textures/rock/rock04_d.tga
+	specularmap		textures/rock/rock04_s.tga
+        bumpmap		addnormals (textures/rock/rock04_local.tga, heightmap (textures/rock/rock04_h.tga, 4))
+}
+
+material textures/rock/sharprock1
+{
+	
+	qer_editorimage	textures/rock/sharprock1_ed.tga
+	diffusemap		textures/rock/sharprock1_d.tga
+	specularmap		textures/rock/sharprock1_s.tga
+	bumpmap		addnormals (textures/rock/sharprock1_local.tga, heightmap( textures/rock/sharprock1_h.tga, 8))
+}
+
+material textures/rock/sharprock2
+{
+	
+	qer_editorimage	textures/rock/sharprock2_d.tga
+	diffusemap		textures/rock/sharprock2_d.tga
+	specularmap		textures/rock/sharprock2_s.tga
+	bumpmap		addnormals (textures/rock/sharprock2_local.tga, heightmap( textures/rock/sharprock2_h.tga, 8))
+}
+
+material textures/rock/sharprock2b // (Frankie testmap)
+{
+	
+	noshadows
+	qer_editorimage	textures/rock/sharprock2b_d.tga
+	diffusemap		textures/rock/sharprock2b_d.tga
+	specularmap		textures/rock/sharprock2b_s.tga
+	bumpmap		addnormals (textures/rock/sharprock2b_local.tga, heightmap( textures/rock/sharprock2b_h.tga, 8))
+}
+
+material textures/rock/sharprock3
+{
+	
+	qer_editorimage	textures/rock/sharprock3_d.tga
+	diffusemap		textures/rock/sharprock3_d.tga
+	specularmap		textures/rock/sharprock3_s.tga
+	bumpmap		addnormals (textures/rock/sharprock2_local.tga, heightmap( textures/rock/sharprock2_h.tga, 8))
+}
+
+material textures/rock/skyrock1
+{
+	
+	qer_editorimage 	textures/rock/skyrock1_d.tga
+	diffusemap		textures/rock/skyrock1_d.tga
+	specularmap		textures/rock/skyrock1_s.tga
+        bumpmap		addnormals (textures/rock/skyrock1_local.tga, heightmap (textures/rock/skyrock1_h.tga, 4))
+}
+
+material textures/rock/skyrock3
+{
+	
+	qer_editorimage textures/rock/skyrock3_d.tga
+	diffusemap	textures/rock/skyrock3_d.tga
+	specularmap	textures/rock/skyrock3_s.tga
+        bumpmap	        addnormals (textures/rock/skyrock3_local.tga, heightmap (textures/rock/skyrock1_h.tga, 4))
+}
+
+material textures/rock/zbrick1
+{
+	
+	qer_editorimage textures/rock/zbrick1_d.tga
+	diffusemap	textures/rock/zbrick1_d.tga
+	specularmap	textures/rock/zbrick1_s.tga
+        bumpmap	        textures/rock/zbrick1_local.tga
+}
+
+material textures/rock/craggy_stone
+{
+	//
+	qer_editorimage textures/rock/craggy_stone_d.tga
+	diffusemap	textures/rock/craggy_stone_d.tga
+	specularmap	textures/rock/craggy_stone_s.tga
+        bumpmap	        textures/rock/craggy_stone_local.tga
+}
+
+material textures/rock/craggy_stone_dark
+{
+	
+	qer_editorimage textures/rock/craggy_stone_dark_d.tga
+	diffusemap	textures/rock/craggy_stone_dark_d.tga
+	specularmap	textures/rock/craggy_stone_s.tga
+        bumpmap	        textures/rock/craggy_stone_local.tga
+}
+
+material textures/rock/rock_lines_barnacles
+{
+	
+	qer_editorimage textures/rock/rock_lines_barnacles_d.tga
+	diffusemap	textures/rock/rock_lines_barnacles_d.tga
+	specularmap	textures/rock/rock_lines_barnacles_s.tga
+        bumpmap	        textures/rock/rock_lines_barnacles_local.tga
+}
+
+material textures/rock/reddish_crafted_stone
+{
+	
+	qer_editorimage 	textures/rock/reddish_crafted_stone_d.tga
+	diffusemap		textures/rock/reddish_crafted_stone_d.tga
+	specularmap		textures/rock/reddish_crafted_stone_s.tga
+        bumpmap		textures/rock/reddish_crafted_stone_local.tga
+}
+
+material textures/rock/limestone
+{
+	
+	qer_editorimage 	textures/rock/limestone_d.tga
+	diffusemap		textures/rock/limestone_d.tga
+	specularmap		textures/rock/limestone_s.tga
+        bumpmap		textures/rock/limestone_local.tga
+}
+
+//edited by Rich, because Ben sucks! The diffuse was a dupe.
+
+material textures/rock/rockface04
+{
+	
+	qer_editorimage 	textures/rock/rockface02_d.tga
+	diffusemap		textures/rock/rockface02_d.tga
+	specularmap		textures/rock/rockface04_s.tga
+	bumpmap		textures/rock/rockface04_local.tga
+}
+
+material textures/rock/rockface02
+{
+	
+	qer_editorimage 	textures/rock/rockface02_d.tga
+	diffusemap		textures/rock/rockface02_d.tga
+	specularmap		textures/rock/rockface02_s.tga
+	bumpmap		textures/rock/rockface02_local.tga
+}
+
+material textures/rock/cracked_rock
+{
+	
+	qer_editorimage 	textures/rock/cracked_rock_d.tga
+	diffusemap		textures/rock/cracked_rock_d.tga
+	specularmap		textures/rock/cracked_rock_s.tga
+	bumpmap		textures/rock/cracked_rock_local.tga
+}
+
+material textures/rock/cracked_rock_greyish
+{
+	//
+	qer_editorimage 	textures/rock/cracked_rock_greyish_d.tga
+	diffusemap		textures/rock/cracked_rock_greyish_d.tga
+	specularmap		textures/rock/cracked_rock_s.tga
+	bumpmap		textures/rock/cracked_rock_local.tga
+}
+
+material textures/rock/cracked_rock02
+{
+	
+	qer_editorimage 	textures/rock/cracked_rock02_d.tga
+	diffusemap		textures/rock/cracked_rock02_d.tga
+	specularmap		textures/rock/cracked_rock02_s.tga
+	bumpmap		addnormals (textures/rock/cracked_rock02_local.tga, heightmap (textures/rock/cracked_rock02_h.tga, 1.5))
+}
+
+
+material textures/rock/rock_red_02
+{
+	
+	qer_editorimage	textures/rock/rock_red_02_d.tga
+	diffusemap		textures/rock/rock_red_02_d.tga
+	specularmap		textures/rock/rock_red_02_s.tga
+ 	bumpmap 		textures/rock/rock_red_02_local.tga
+}
+
+
+material textures/rock/cracked_rock3_complete
+{
+	
+	qer_editorimage	textures/rock/cracked_rock3_complete_d.tga
+	diffusemap		textures/rock/cracked_rock3_complete_d.tga
+	specularmap		textures/rock/cracked_rock3_complete_s.tga
+	bumpmap 		addnormals (textures/rock/cracked_rock3_complete_local.tga, heightmap (textures/rock/cracked_rock3_complete_h.tga, 2))
+}
+
+
+material textures/rock/cracked_rock3_ver2
+{
+	
+	qer_editorimage	textures/rock/cracked_rock3_ver2_d.tga
+	diffusemap		textures/rock/cracked_rock3_ver2_d.tga
+	//specularmap		textures/rock/cracked_rock3_ver2_s.tga
+	bumpmap 		textures/rock/cracked_rock3_ver2_local.tga
+}
+
+
+material textures/rock/cracked_rock3_ver3
+{
+	diffusemap		textures/rock/cracked_rock3_ver3_d.tga
+	specularmap		textures/rock/cracked_rock3_ver3_s.tga
+	bumpmap 		addnormals (textures/rock/cracked_rock3_ver3_local.tga, heightmap (textures/rock/cracked_rock3_ver3_h.tga, 5))
+}
+
+
+material textures/rock/cracked_rock3_ver4
+{
+	diffusemap		textures/rock/cracked_rock3_ver4_d.tga
+	specularmap		textures/rock/cracked_rock3_ver4_s.tga
+	bumpmap 		addnormals (textures/rock/cracked_rock3_ver4_local.tga, heightmap (textures/rock/cracked_rock3_ver4_h.tga, 5))
+}
+
+material textures/rock/cracked_rock3_ver5
+{
+	surfacetype "stone"
+	{
+		diffusemap				textures/rock/cracked_rock3_ver2_gm_d.tga
+		bumpmap		picmip -1	textures/rock/cracked_rock3_ver2_local.tga
+		
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult	2,2,0,0
+	}
+}
+
+material textures/rock/salvage_boulders
+{
+	surfacetype "stone"
+	{
+		diffusemap				textures/rock/salvage_boulders_d.tga
+		bumpmap		picmip -1	textures/rock/salvage_boulders_local.tga
+
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult	2,2,0,0
+	}
+}
+
+material textures/rock/cracked_rock3_ver5_nospecular
+{
+	//noshadows
+	qer_editorimage	textures/rock/cracked_rock3_ver2_gm_d.tga
+	diffusemap		textures/rock/cracked_rock3_ver2_gm_d.tga
+	//specularmap		textures/rock/cracked_rock3_ver2_s.tga
+	bumpmap 		addnormals (textures/rock/cracked_rock3_ver2_local.tga, heightmap (textures/rock/cracked_rock3_ver2_h.tga, 5))
+}
+
+material textures/rock/cracked_rock_sandy
+{
+	//noshadows
+	qer_editorimage	textures/rock/cracked_rock_sandy.tga
+	diffusemap		textures/rock/cracked_rock_sandy.tga
+	specularmap		textures/rock/cracked_rock3_ver2_s.tga
+	bumpmap 		addnormals (textures/rock/cracked_rock3_ver2_local.tga, heightmap (textures/rock/cracked_rock3_ver2_h.tga, 5))
+}
+
+material textures/rock/sedimentaryrock
+{
+	
+	qer_editorimage 	textures/rock/sedimentaryrock_d.tga
+	diffusemap		textures/rock/sedimentaryrock_d.tga
+	specularmap		textures/rock/sedimentaryrock_s.tga
+	bumpmap		addnormals (textures/rock/sedimentaryrock_local.tga, heightmap (textures/rock/sedimentaryrock01_h.tga, 1.5))
+}
+
+material textures/rock/sedimentaryrockwithsand01
+{
+	
+	qer_editorimage	textures/rock/sedimentaryrockwithsand01_d.tga
+	diffusemap		textures/rock/sedimentaryrockwithsand01_d.tga
+	specularmap		textures/rock/sedimentaryrock_s.tga
+ 	bumpmap 		textures/rock/sedimentaryrockwithsand01_local.tga
+}
+
+material textures/rock/sedimentaryrockwithsand02
+{
+	
+	qer_editorimage	textures/rock/sedimentaryrockwithsand02_d.tga
+	diffusemap		textures/rock/sedimentaryrockwithsand02_d.tga
+	specularmap		textures/rock/sedimentaryrock_s.tga
+ 	bumpmap 		textures/rock/sedimentaryrockwithsand02_local.tga
+}
+
+material textures/rock/rockslide_1
+{
+	
+	qer_editorimage	textures/rock/rockslide_1_d.tga
+	diffusemap		textures/rock/rockslide_1_d.tga
+	specularmap		textures/rock/rockslide_1_s.tga
+	bumpmap 		addnormals (textures/rock/rockslide_1_local.tga, heightmap (textures/rock/rockslide_1_h.tga, 2))
+}
+
+
+material textures/rock/rockslide_sandy
+{
+	
+
+	diffusemap		textures/rock/rockslide_sandy_d.tga
+	specularmap		textures/rock/rockslide_sandy_s.tga
+	bumpmap 		textures/rock/rockslide_sandy_local.tga
+}
+
+// -----------------------------------------------------------------------------
+material textures/sand/sand01	// Flat sand with slight bump
+{
+	
+	qer_editorimage	textures/sand/sand01_d.tga
+	diffusemap		textures/sand/sand01_d.tga
+	specularmap 	textures/sand/sand01_s.tga
+	bumpmap 		textures/sand/sand01_local.tga
+}
+
+material textures/sand/sand01b	// More bumpy than previous version
+{
+	
+	qer_editorimage	textures/sand/sand01_d.tga
+	diffusemap		textures/sand/sand01_d.tga
+	specularmap 	textures/sand/sand01_s.tga
+	bumpmap 		textures/sand/sand01b_local.tga
+}
+
+material textures/sand/skysand1
+{
+	
+	qer_editorimage	textures/sand/skysand1_d.tga
+	diffusemap		textures/sand/skysand1_d.tga
+	specularmap 	textures/sand/skysand1_s.tga
+        bumpmap		addnormals (textures/sand/skysand1_local.tga, heightmap (textures/sand/skysand1_h.tga, 4))
+}
+
+material textures/sand/skysand2
+{
+	
+	qer_editorimage	textures/sand/skysand2_d.tga
+	diffusemap		textures/sand/skysand2_d.tga
+	specularmap 	textures/sand/skysand1_s.tga
+        bumpmap		addnormals (textures/sand/skysand1_local.tga, heightmap (textures/sand/skysand2_h.tga, 4))
+}
+
+material textures/sand/skysand2ns // Very dull, used in edge2
+{
+	
+	qer_editorimage	textures/sand/skysand2_d.tga
+	diffusemap		textures/sand/skysand2_d.tga
+	bumpmap		addnormals (textures/sand/skysand1_local.tga, heightmap (textures/sand/skysand2_h.tga, 4))
+}
+
+material textures/sand/dry_beach_sand_footprints
+{
+	
+	qer_editorimage	textures/sand/dry_beach_sand_footprints_d.tga
+	diffusemap		textures/sand/dry_beach_sand_footprints_d.tga
+	specularmap 	textures/sand/dry_beach_sand_footprints_s.tga
+        bumpmap		textures/sand/dry_beach_sand_footprints_local.tga
+}
+
+material textures/sand/dry_sand_footprints
+{
+	
+	qer_editorimage	textures/sand/dry_sand_footprints_d.tga
+	diffusemap		textures/sand/dry_sand_footprints_d.tga
+	specularmap 	textures/sand/dry_sand_footprints_s.tga
+        bumpmap		textures/sand/dry_sand_footprints_local.tga
+}
+
+material textures/sand/sandy_soil_after_rain
+{
+	
+	qer_editorimage	textures/sand/sandy_soil_after_rain_d.tga
+	diffusemap		textures/sand/sandy_soil_after_rain_d.tga
+	specularmap 	textures/sand/sandy_soil_after_rain_s.tga
+        bumpmap		textures/sand/sandy_soil_after_rain_local.tga
+}
+
+material textures/sand/hard_sand_tyre_marks
+{
+	
+	qer_editorimage	textures/sand/hard_sand_tyre_marks_d.tga
+	diffusemap		textures/sand/hard_sand_tyre_marks_d.tga
+	specularmap 	textures/sand/hard_sand_tyre_marks_s.tga
+        bumpmap		textures/sand/hard_sand_tyre_marks_local.tga
+}
+
+material textures/sand/sand_wave_lines
+{
+	
+	qer_editorimage	textures/sand/sand_wave_lines_d.tga
+	diffusemap		textures/sand/sand_wave_lines_d.tga
+	specularmap 	textures/sand/sand_wave_lines_s.tga
+        bumpmap	        textures/sand/sand_wave_lines_local.tga
+}
+
+material textures/sand/sand_wave_lines02
+{
+	
+	qer_editorimage	textures/sand/sand_wave_lines02_d.tga
+	diffusemap		textures/sand/sand_wave_lines02_d.tga
+	specularmap 	textures/sand/sand_wave_lines02_s.tga
+        bumpmap		textures/sand/sand_wave_lines02_local.tga
+}
+
+material textures/sand/sand_wave_lines03
+{
+	
+	qer_editorimage	textures/sand/sand_wave_lines_d.tga
+	diffusemap		textures/sand/sand_wave_lines_d.tga
+	specularmap 	textures/sand/sand_wave_lines03_s.tga
+        bumpmap		textures/sand/sand_wave_lines03_local.tga
+}
+
+material textures/sand/fine_dry_beach_pebbles
+{
+	
+	qer_editorimage	textures/sand/fine_dry_beach_pebbles_d.tga
+	diffusemap		textures/sand/fine_dry_beach_pebbles_d.tga
+	specularmap 	textures/sand/fine_dry_beach_pebbles_s.tga
+        bumpmap		textures/sand/fine_dry_beach_pebbles_local.tga
+}
+
+material textures/sand/seaside_and_crabholes
+{
+	
+	qer_editorimage	textures/sand/seaside_and_crabholes_d.tga
+	diffusemap		textures/sand/seaside_and_crabholes_d.tga
+	specularmap 	textures/sand/seaside_and_crabholes_s.tga
+        bumpmap		textures/sand/seaside_and_crabholes_local.tga
+}
+
+material textures/sand/sand_tyre_tracks
+{
+	
+	qer_editorimage	textures/sand/sand_tyre_tracks_d.tga
+	diffusemap		textures/sand/sand_tyre_tracks_d.tga
+	specularmap 	textures/sand/sand_tyre_tracks_s.tga
+        bumpmap		textures/sand/sand_tyre_tracks_local.tga
+}
+
+material textures/sand/sand_worm_residue
+{
+	
+	qer_editorimage	textures/sand/sand_worm_residue_d.tga
+	diffusemap		textures/sand/sand_worm_residue_d.tga
+	specularmap 	textures/sand/sand_worm_residue_s.tga
+        bumpmap		textures/sand/sand_worm_residue_local.tga
+}
+
+material textures/sand/sand_wave_lines05
+{
+	
+	qer_editorimage	textures/sand/sand_wave_lines_d.tga
+	diffusemap		textures/sand/sand_wave_lines_d.tga
+	specularmap 	textures/sand/sand_wave_lines05_s.tga
+        bumpmap		textures/sand/sand_wave_lines05_local.tga
+}
+
+
+material textures/sand/sand_undulating_1
+{
+	
+	qer_editorimage	textures/sand/dry_sand_footprints_d.tga
+	diffusemap		textures/sand/dry_sand_footprints_d.tga
+	specularmap		textures/sand/sand_undulating_1_s.tga
+	bumpmap 		addnormals (textures/sand/sand_undulating_1_local.tga, textures/sand/sand_undulating_1_wavelines_local.tga)
+}
+
+
+material textures/dirt/bomb_crater01
+{
+	
+	qer_editorimage		textures/dirt/bomb_crater01_d.tga
+	diffusemap		textures/dirt/bomb_crater01_d.tga
+	specularmap		textures/dirt/bomb_crater01_s.tga
+	bumpmap 		textures/dirt/bomb_crater01_local.tga
+}
+
+material textures/dirt/doublecrater01
+{
+	
+	qer_editorimage	textures/dirt/doublecrater01_d.tga
+	diffusemap	textures/dirt/doublecrater01_d.tga
+	specularmap	textures/dirt/doublecrater01_s.tga
+ 	bumpmap 	addnormals (textures/dirt/doublecrater01_local.tga, heightmap (textures/dirt/doublecrater01_h.tga, 15))
+}
+
+
+material textures/dirt/longishcrater01
+{
+	
+	qer_editorimage	textures/dirt/longishcrater01_d.tga
+	diffusemap	textures/dirt/longishcrater01_d.tga
+	specularmap	textures/dirt/longishcrater01_s.tga
+ 	bumpmap 	addnormals (textures/dirt/longishcrater01_local.tga, heightmap (textures/dirt/longishcrater01_h.tga, 15))
+}
+
+// -----------------------------------------------------------------------------
+// generic tree barks
+//
+
+material textures/wood/bark1
+{
+	surfaceType "wood"
+	//
+	qer_editorimage	textures/wood/bark1_d.tga
+	diffusemap		textures/wood/bark1_d.tga
+	bumpmap		heightmap (textures/wood/bark1_h.tga, 4)
+}
+
+material textures/wood/bark1a
+{
+	surfaceType "wood"
+	//
+	qer_editorimage	textures/wood/bark1a_d.tga
+	diffusemap		textures/wood/bark1a_d.tga
+	bumpmap		heightmap (textures/wood/bark1a_h.tga, 4)
+}
+
+material textures/wood/bark1b
+{
+	surfaceType "wood"
+	//
+	qer_editorimage	textures/wood/bark1b_d.tga
+	diffusemap		textures/wood/bark1b_d.tga
+	bumpmap		heightmap (textures/wood/bark1b_h.tga, 4)
+}
+
+material textures/wood/bark1c
+{
+	surfaceType "wood"
+	//
+	qer_editorimage	textures/wood/bark1c_d.tga
+	diffusemap		textures/wood/bark1c_d.tga
+	bumpmap		heightmap (textures/wood/bark1b_h.tga, 4)
+}
+
+
+// -----------------------------------------------------------------------------
+// All wood uses height/local map offset of 4 and no specular.
+//
+material textures/wood/wooden_planks
+{
+	surfaceType "wood"
+
+	qer_editorimage	textures/wood/wooden_planks_d.tga
+	diffusemap	textures/wood/wooden_planks_d.tga
+	specularmap 	textures/wood/wooden_planks_s.tga
+	bumpmap 	textures/wood/wooden_planks_local.tga
+}
+
+material textures/wood/boards1
+{
+	surfaceType "wood"
+
+	//
+	qer_editorimage	textures/wood/boards1_d.tga
+	diffusemap		textures/wood/boards1_d.tga
+//	specularmap		textures/wood/boards1_s.tga
+	bumpmap		addnormals (textures/wood/boards1_local.tga, heightmap (textures/wood/boards1_h.tga, 8))
+}
+
+material textures/wood/boards2
+{
+	surfaceType "wood"
+	//
+	qer_editorimage	textures/wood/boards2_d.tga
+	diffusemap		textures/wood/boards2_d.tga
+//	specularmap		textures/wood/boards1_s.tga
+	bumpmap		addnormals (textures/wood/boards1_local.tga, heightmap (textures/wood/boards1_h.tga, 4))
+}
+
+material textures/wood/boards2_noshadow
+{
+	surfaceType "wood"
+	noshadows
+	qer_editorimage	textures/wood/boards2_d.tga
+	diffusemap		textures/wood/boards2_d.tga
+//	specularmap		textures/wood/boards1_s.tga
+	bumpmap		addnormals (textures/wood/boards1_local.tga, heightmap (textures/wood/boards1_h.tga, 4))
+}
+
+material textures/base_wall_desert/snpanelplain1_noshadow
+{
+	noshadows
+	qer_editorimage		textures/base_wall_desert/snpanelplain1.tga
+	diffusemap		textures/base_wall_desert/snpanelplain1.tga
+}
+
+material textures/wood/planks1
+{
+	surfaceType "wood"
+	//
+	qer_editorimage	textures/wood/planks1_d.tga
+	diffusemap		textures/wood/planks1_d.tga
+//	specularmap		textures/wood/planks1_s.tga
+	bumpmap		addnormals (textures/wood/planks1_local.tga, heightmap (textures/wood/planks1_local.tga, 4))
+}
+
+material textures/wood/wood1
+{
+	surfaceType "wood"
+	//
+	qer_editorimage	textures/wood/wood1_d.tga
+	diffusemap 	picmip -1	textures/wood/wood1_d.tga
+	specularmap picmip -2	textures/wood/wood1_s.tga
+	bumpmap 	picmip -1	addnormals (textures/wood/wood1_local.tga, heightmap( textures/wood/wood1_h.tga, 4 ) )
+}
+
+material textures/wood/wood1_noshadows
+{
+	surfaceType "wood"
+	noshadows
+	qer_editorimage	textures/wood/wood1_d.tga
+	diffusemap 	picmip -1	textures/wood/wood1_d.tga
+	specularmap picmip -2	textures/wood/wood1_s.tga
+	bumpmap 	picmip -1	addnormals (textures/wood/wood1_local.tga, heightmap( textures/wood/wood1_h.tga, 4 ) )
+}
+
+/*
+
+GONE! USE THE MEGATEXTURE
+
+// =============================================================================
+// Blend versions of the above
+// =============================================================================
+material textures/rock/skysand2ns_sharprock1  // Sharprock1 to diffused sand2
+{
+	qer_editorimage	textures/rock/skysand2ns_sharprock1_ed.tga
+	{
+		blend 	bumpmap
+		map	addnormals (textures/sand/skysand1_local.tga, heightmap (textures/sand/skysand2_h.tga, 4))
+	}
+	{
+		blend 	diffusemap
+		map	textures/sand/skysand2_d.tga
+		vertexColor
+	}
+	{
+		blend	bumpmap
+		map	addnormals (textures/rock/sharprock1_local.tga, heightmap (textures/rock/sharprock1_h.tga, 8) )
+	}
+	{
+		blend	diffusemap
+		map	textures/rock/sharprock1_d.tga
+		inverseVertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/rock/sharprock1_s.tga
+		inverseVertexColor
+	}
+}
+
+material textures/rock/grass01_sharprock1  // Sharprock1 to grass01
+{
+	
+	qer_editorimage	textures/rock/grass01_sharprock1_ed.tga
+	{
+		blend 	bumpmap
+		map	textures/grass/grass01_local.tga
+	}
+	{
+		blend 	diffusemap
+		map	textures/grass/grass01_d.tga
+		vertexColor
+	}
+	{
+		blend	bumpmap
+		map	addnormals (textures/rock/sharprock1_local.tga, heightmap (textures/rock/sharprock1_h.tga, 8) )
+	}
+	{
+		blend	diffusemap
+		map	textures/rock/sharprock1_d.tga
+		inverseVertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/rock/sharprock1_s.tga
+		inverseVertexColor
+	}	
+}
+
+// -----------------------------------------------------------------------------
+material textures/dirt/gravel01_sharprock1 // Gravel1 to sharprock1
+{
+	
+	qer_editorimage	textures/dirt/gravel01_sharprock1_ed.tga
+	{
+		blend 	bumpmap
+		map	heightmap(textures/dirt/gravel01_h.tga, 16)
+	}
+	{
+		blend 	diffusemap
+		map	textures/dirt/gravel01_d.tga
+		vertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/dirt/gravel01_s.tga
+		vertexColor
+	}
+	{
+		blend	bumpmap
+		map	addnormals (textures/rock/sharprock1_local.tga, heightmap (textures/rock/sharprock1_h.tga, 8) )
+	}
+	{
+		blend	diffusemap
+		map	textures/rock/sharprock1_d.tga
+		inverseVertexColor
+	}
+	
+	
+}
+
+// -----------------------------------------------------------------------------
+material textures/dirt/sharprock1_gravel01 // Sharprock1 to Gravel01
+{
+	
+	qer_editorimage	textures/dirt/gravel01_sharprock1_ed.tga
+	{
+		blend 	bumpmap
+		map	addnormals (textures/rock/sharprock1_local.tga, heightmap (textures/rock/sharprock1_h.tga, 8) )
+	}
+	{
+		blend 	diffusemap
+		map	textures/rock/sharprock1_d.tga
+		vertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/rock/sharprock1_s.tga
+		vertexColor
+	}
+	{
+		blend	bumpmap
+		map	heightmap(textures/dirt/gravel01_h.tga, 16)
+	}
+	{
+		blend	diffusemap
+		map	textures/dirt/gravel01_d.tga
+		inverseVertexColor
+	}
+}
+
+
+// -----------------------------------------------------------------------------
+material textures/dirt/gravel01_sharprock2b // Gravel1 to sharprock2b (Frankie testmap)
+{
+	
+	qer_editorimage	textures/dirt/gravel01_sharprock2b_ed.tga
+	{
+		blend 	bumpmap
+		map	heightmap(textures/dirt/gravel01_h.tga, 16)
+	}
+	{
+		blend 	diffusemap
+		map	textures/dirt/gravel01_d.tga
+		vertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/dirt/gravel01_s.tga
+		vertexColor
+	}
+	{
+		blend	bumpmap
+		map	addnormals (textures/rock/sharprock2b_local.tga, heightmap (textures/rock/sharprock2b_h.tga, 8) )
+	}
+	{
+		blend	diffusemap
+		map	textures/rock/sharprock2b_d.tga
+		inverseVertexColor
+	}
+}
+
+// -----------------------------------------------------------------------------
+material textures/dirt/gravel01_grass01 // Gravel01 to Grass01
+{
+	
+	qer_editorimage	textures/dirt/gravel01_grass01_ed.tga
+	{
+		blend 	bumpmap
+		map	heightmap(textures/dirt/gravel01_h.tga, 16)
+	}
+	{
+		blend 	diffusemap
+		map	textures/dirt/gravel01_d.tga
+		vertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/dirt/gravel01_s.tga
+		vertexColor
+	}
+	{
+		blend	bumpmap
+		map	textures/grass/grass01_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/grass/grass01_d.tga
+		inverseVertexColor
+	}
+}
+
+// -----------------------------------------------------------------------------
+material textures/dirt/grass01_gravel01 // Grass01 to Gravel01
+{
+	
+	qer_editorimage	textures/dirt/gravel01_grass01_ed.tga
+	{
+		blend 	bumpmap
+		map	textures/grass/grass01_local.tga
+	}
+	{
+		blend 	diffusemap
+		map	textures/grass/grass01_d.tga
+		vertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/grass/grass01_s.tga
+		vertexColor
+	}
+	{
+		blend	bumpmap
+		map	heightmap(textures/dirt/gravel01_h.tga, 16)
+	}
+	{
+		blend	diffusemap
+		map	textures/dirt/gravel01_d.tga
+		inverseVertexColor
+	}
+}
+
+// -----------------------------------------------------------------------------
+material textures/dirt/asphalt01_grass01 // Asphalt01 to Grass01
+{
+	
+	qer_editorimage	textures/dirt/asphalt01_grass01_ed.tga
+	{
+		blend 	bumpmap
+		map 	textures/dirt/asphalt01_local.tga
+	}
+	{
+		blend 	diffusemap
+		map	textures/dirt/asphalt01_d.tga
+		vertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/dirt/asphalt01_s.tga
+		vertexColor
+	}
+	{
+		blend	bumpmap
+		map	textures/grass/grass01_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/grass/grass01_d.tga
+		inverseVertexColor
+	}
+}
+
+// -----------------------------------------------------------------------------
+material textures/dirt/asphalt01_gravel01 // Asphalt01 to Grass01
+{
+	
+	qer_editorimage	textures/dirt/asphalt01_gravel01_ed.tga
+	{
+		blend 	bumpmap
+		map 	textures/dirt/asphalt01_local.tga
+	}
+	{
+		blend 	diffusemap
+		map	textures/dirt/asphalt01_d.tga
+		vertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/dirt/asphalt01_s.tga
+		vertexColor
+	}
+	{
+		blend 	bumpmap
+		map	heightmap(textures/dirt/gravel01_h.tga, 16)
+	}
+	{
+		blend	diffusemap
+		map	textures/dirt/gravel01_d.tga
+		inverseVertexColor
+	}
+}
+
+// -----------------------------------------------------------------------------
+material textures/dirt/dirt02_gravel01 // Dirt02 to Gravel01
+{
+	
+	qer_editorimage	textures/dirt/dirt02_gravel01_ed.tga
+	{
+		blend 	bumpmap
+		map 	textures/dirt/dirt02_local.tga
+	}
+	{
+		blend 	diffusemap
+		map	textures/dirt/dirt02_d.tga
+		vertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/dirt/dirt02_s.tga
+		vertexColor
+	}
+	{
+		blend 	bumpmap
+		map	heightmap(textures/dirt/gravel01_h.tga, 16)
+	}
+	{
+		blend	diffusemap
+		map	textures/dirt/gravel01_d.tga
+		inverseVertexColor
+	}
+}
+
+// -----------------------------------------------------------------------------
+material textures/dirt/gravel01_dirt02 // Gravel01 to Dirt02
+{
+	
+	qer_editorimage	textures/dirt/dirt02_gravel01_ed.tga
+	{
+		blend 	bumpmap
+		map	heightmap(textures/dirt/gravel01_h.tga, 16)
+	}
+	{
+		blend 	diffusemap
+		map	textures/dirt/gravel01_d.tga
+		vertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/dirt/gravel01_s.tga
+		vertexColor
+	}
+	{
+		blend 	bumpmap
+		map 	textures/dirt/dirt02_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/dirt/dirt02_d.tga
+		inverseVertexColor
+	}
+}
+
+// -----------------------------------------------------------------------------
+material textures/dirt/asphalt01_dirt01
+{
+	
+	qer_editorimage	textures/dirt/dirt01_d.tga
+	{
+		blend 	bumpmap
+		map	textures/dirt/asphalt01_local.tga
+	}
+	{
+		blend 	diffusemap
+		map	textures/dirt/asphalt01_d.tga
+		vertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/dirt/asphalt01_s.tga
+		vertexColor
+	}
+	{
+		blend 	bumpmap
+		map 	textures/dirt/dirt02_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/dirt/dirt02_d.tga
+		inverseVertexColor
+	}
+}
+
+// -----------------------------------------------------------------------------
+material textures/dirt/dirt01_dirt02 // note: this is currently pointless
+{
+	
+	qer_editorimage	textures/dirt/dirt02_d.tga
+	{
+		blend 	bumpmap
+		map	textures/dirt/dirt02_local.tga
+	}
+	{
+		blend 	diffusemap
+		map	textures/dirt/dirt02_d.tga
+		vertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/dirt/dirt02_s.tga
+		vertexColor
+	}
+	{
+		blend 	bumpmap
+		map 	textures/dirt/dirt02_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/dirt/dirt02_d.tga
+		inverseVertexColor
+	}
+}
+
+// -----------------------------------------------------------------------------
+material textures/dirt/mud01_grass01 // Mud01 to Grass01
+{
+	
+	qer_editorimage textures/dirt/mud01_grass01_ed.tga
+	{
+		blend	bumpmap
+		map	textures/dirt/mud01_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/dirt/mud01_d.tga
+		inversevertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/grass/grass01_s.tga
+		inversevertexColor
+	}
+	{
+		blend	bumpmap
+		map	textures/grass/grass01_local.tga
+	}
+	{
+		blend	diffusemap
+		map	textures/grass/grass01_d.tga
+		VertexColor
+	}
+}
+
+// -----------------------------------------------------------------------------
+material textures/dirt/mud01_gravel01 // Mud01 to Gravel01
+{
+	
+	qer_editorimage	textures/dirt/asphalt01_gravel01_ed.tga
+	{
+		blend 	bumpmap
+		map 	textures/dirt/mud01_local.tga
+	}
+	{
+		blend 	diffusemap
+		map	textures/dirt/mud01_d.tga
+		vertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/dirt/gravel01_s.tga
+		vertexColor
+	}
+	{
+		blend 	bumpmap
+		map	heightmap(textures/dirt/gravel01_h.tga, 16)
+	}
+	{
+		blend	diffusemap
+		map	textures/dirt/gravel01_d.tga
+		inverseVertexColor
+	}
+}
+
+// -----------------------------------------------------------------------------
+material textures/road/tile02dirt1_fade1 // dirt1 to nothing
+{
+	qer_editorimage textures/road/tile02dirt1_d.tga
+	
+ 	DECAL_MACRO
+ 	noShadows
+ 	nonsolid
+ 	noimpact
+ 	translucent
+	{
+		blend	blend
+		map	textures/road/tile02dirt1_d.tga
+		alpha	0.25
+		inversevertexColor
+	}
+	{
+		blend	blend
+		map	textures/road/tile02fade1_d.tga
+		alpha	0
+		VertexColor
+	}
+}
+
+// -----------------------------------------------------------------------------
+material textures/grass/grass01_sharprock1 // Grass01 to sharprock1
+{
+	
+	qer_editorimage	textures/grass/grass01_sharprock1_ed.tga
+	{
+		blend 	bumpmap
+		map	textures/grass/grass01_local.tga
+	}
+	{
+		blend 	diffusemap
+		map	textures/grass/grass01_d.tga
+		vertexColor
+	}
+	{
+		blend	specularmap
+		map	textures/grass/grass01_s.tga
+		vertexColor
+	}
+	{
+		blend	bumpmap
+		map	addnormals (textures/rock/sharprock1_local.tga, heightmap (textures/rock/sharprock1_h.tga, 8) )
+	}
+	{
+		blend	diffusemap
+		map	textures/rock/sharprock1_d.tga
+		inverseVertexColor
+	}
+}
+
+*/
+//camouflage
+
+material textures/camouflage/camouflage_canyon
+{
+	qer_editorimage textures/camouflage/camouflage_canyon.tga
+        noshadows
+	twoSided
+
+        
+
+	{
+      	 diffusemap	textures/camouflage/camouflage_canyon.tga
+	 bumpmap	        textures/camouflage/camouflage_local.tga
+	 alphaTest 0.5
+	}
+
+}
+
+material textures/stone/rubble
+{
+	diffusemap	textures/stone/rubble_d.tga
+	specularmap	textures/concrete/concrete_sandy01_s.tga
+	bumpmap		addnormals (textures/stone/rubble_local.tga, heightmap( textures/stone/rubble_bmp.tga, 8))
+}

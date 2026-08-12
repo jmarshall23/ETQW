@@ -1,0 +1,70 @@
+!!ARBvp1.0
+
+		PARAM  __mvp[4]={state.matrix.mvp};
+DP4 result.position.x, __mvp[0], vertex.position;
+DP4 result.position.y, __mvp[1], vertex.position;
+DP4 result.position.z, __mvp[2], vertex.position;
+DP4 result.position.w, __mvp[3], vertex.position;
+#replace normalAttrib with _normalAttrib
+TEMP _normalAttrib;
+TEMP _attribTemp;
+MUL _normalAttrib, vertex.attrib[2], 0.000030518;
+MUL _attribTemp.xy, _normalAttrib, _normalAttrib;
+ADD _attribTemp.x, _attribTemp.xxxx, _attribTemp.yyyy;
+ADD _attribTemp.x, 1, -_attribTemp.x;
+RSQ _attribTemp.x, _attribTemp.x;
+RCP _normalAttrib.z, _attribTemp.x;
+ADD _attribTemp.x, $signAttrib$.x, -1;
+MUL _normalAttrib.z, _normalAttrib.z, _attribTemp.x;
+#replace tangentAttrib with _tangentAttrib
+TEMP _tangentAttrib;
+MUL _tangentAttrib, vertex.attrib[9], 0.000030518;
+MUL _attribTemp.xy, _tangentAttrib, _tangentAttrib;
+ADD _attribTemp.x, _attribTemp.xxxx, _attribTemp.yyyy;
+ADD _attribTemp.x, 1, -_attribTemp.x;
+RSQ _attribTemp.x, _attribTemp.x;
+RCP _tangentAttrib.z, _attribTemp.x;
+ADD _attribTemp.x, $signAttrib$.y, -1;
+MUL _tangentAttrib.z, _tangentAttrib.z, _attribTemp.x;
+ADD _tangentAttrib.w, $signAttrib$.z, -1;
+#replace texCoordAttrib with _texCoordAttrib
+TEMP _texCoordAttrib;
+MUL _texCoordAttrib.xy, vertex.attrib[8], 0.000244141;
+MOV _texCoordAttrib.zw, 1;
+
+		TEMP R1, bitangent;
+
+		XPD		bitangent,  _normalAttrib, _tangentAttrib;
+		MUL		bitangent, bitangent, _tangentAttrib.w;
+
+		# texture coords
+		MOV		result.texcoord[0], _texCoordAttrib;
+		DP4		result.texcoord[0].x, _texCoordAttrib, program.local[0];
+		DP4		result.texcoord[0].y, _texCoordAttrib, program.local[1];
+		
+
+		# vector to eye in worldspace
+		SUB		R1, vertex.position, program.local[2];
+		DP3		result.texcoord[2].x, R1, program.local[3];
+		DP3		result.texcoord[2].y, R1, program.local[4];
+		DP3		result.texcoord[2].z, R1, program.local[5];
+
+		# tangent->world matrix
+		DP3		result.texcoord[3].x, _tangentAttrib, program.local[3];
+		DP3		result.texcoord[3].y, bitangent, program.local[3];
+		DP3		result.texcoord[3].z, _normalAttrib, program.local[3];
+
+		DP3		result.texcoord[4].x, _tangentAttrib, program.local[4];
+		DP3		result.texcoord[4].y, bitangent, program.local[4];
+		DP3		result.texcoord[4].z, _normalAttrib, program.local[4];
+
+		DP3		result.texcoord[5].x, _tangentAttrib, program.local[5];
+		DP3		result.texcoord[5].y, bitangent, program.local[5];
+		DP3		result.texcoord[5].z, _normalAttrib, program.local[5];	
+		
+		TEMP R0;
+		MAD	R0, vertex.attrib[3], program.local[6], program.local[7];
+		MUL result.color, program.local[8], R0;
+		
+	
+END

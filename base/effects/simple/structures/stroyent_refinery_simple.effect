@@ -1,0 +1,98 @@
+effect effects/structures/stroyent_refinery_simple
+{
+	size	1833
+
+	sound "Burning Sound"
+	{
+		soundShader	"ambience_smolder"
+	}
+	emitter "Smoke"
+	{
+		duration	5,5
+		count		3,3
+		inverseDrawOrder
+
+		sprite
+		{
+			duration	10,15
+			material	"particles/smoke/normal_smoke_puff01"
+			windDeviationAngle 1.000000
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 0,0,100,0,0,150 }
+				size { point 50,50 }
+				tint { point 0.713726,0.537255,0.00392157 }
+				windStrength { line 0.2,0.4 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope jrad_concavefade }
+				fade { envelope dave_flickertable }
+				offset { envelope jrad_concavefade }
+				rotate { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { box 300,300,600,600 }
+				tint { point 0.54902,0.423529,0 }
+				rotate { point 1 }
+			}
+		}
+	}
+}
+
+effect effects/structures/stroyent_refinery2_simple
+{
+	size	1833
+
+	sound "Burning Sound"
+	{
+		soundShader	"ambience_smolder"
+	}
+	emitter "Smoke"
+	{
+		duration	3,4
+		count		2,3
+		inverseDrawOrder
+
+		sprite
+		{
+			duration	10,15
+			material	"particles/smoke/normal_smoke_puff01"
+			windDeviationAngle 1.000000
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 0,0,80,0,0,130 }
+				size { point 50,50 }
+				tint { point 0.713726,0.537255,0.00392157 }
+				windStrength { line 0.2,0.4 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope jrad_concavefade }
+				fade { envelope dave_flickertable }
+				offset { envelope jrad_concavefade }
+				rotate { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { box 200,350,400,500 }
+				tint { point 0.54902,0.423529,0 }
+				rotate { point 1 }
+			}
+		}
+	}
+}
+

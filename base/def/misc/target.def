@@ -1,0 +1,114 @@
+// =======================================================================================================
+// Export
+//========================================================================================================
+
+/*
+export hauser {
+		options -prefix TARGET_  -sourcedir models/guis/assets/hud/dev_sd -destdir models/guis/assets/hud/ -keep origin
+
+		mesh target_anims.mb 				-dest target.md5mesh
+		anim target_anims.mb 				-dest target_locking.md5anim
+		anim target_anims_locked.mb 		-dest target_locked.md5anim
+
+}
+
+*/
+/*
+export hauser {
+		options -prefix TARGET_  -sourcedir models/guis/assets/hud/dev_sd -destdir models/guis/assets/hud/ -keep origin
+
+		mesh stroggmine_anims.mb 				-dest stroggmine_target.md5mesh
+		anim stroggmine_anims.mb 				-dest stroggmine_target.md5anim
+}
+
+
+export hauser {
+		options -prefix TARGET_  -sourcedir models/guis/assets/hud/dev_sd -destdir models/guis/assets/hud/ -keep origin
+
+		mesh gdfmine_anims.mb 				-dest gdfmine_target.md5mesh
+		anim gdfmine_anims.mb 				-dest gdfmine_target.md5anim
+}
+
+export hauser {
+		options -prefix TARGET_  -sourcedir models/guis/assets/hud/dev_sd -destdir models/guis/assets/hud/ -keep origin
+
+		mesh deploy_anim.mb 				-dest deploy_target.md5mesh
+		anim deploy_anim.mb 				-dest deploy_target.md5anim
+}
+*/
+
+
+export hauser {
+		options -prefix TARGET_  -sourcedir models/guis/assets/hud/dev_sd -destdir models/guis/assets/hud/ -keep origin
+
+		mesh airstrike_marker.mb 				-dest airstrike_marker.md5mesh
+		anim airstrike_marker.mb 				-dest airstrike_marker.md5anim
+}
+
+
+
+
+
+//========================================================================================================
+// Model
+//========================================================================================================
+
+model target_marker {
+	mesh							models/guis/assets/hud/target.md5mesh
+
+	anim locking					models/guis/assets/hud/target_locking.md5anim {
+	}
+
+	anim locked						models/guis/assets/hud/target_locked.md5anim {
+	}
+}
+
+
+model stroggmine_marker {
+	mesh							models/guis/assets/hud/stroggmine_target.md5mesh
+
+	anim locking					models/guis/assets/hud/stroggmine_target.md5anim {
+	}
+
+}
+
+
+model gdfmine_marker {
+	mesh							models/guis/assets/hud/gdfmine_target.md5mesh
+
+	anim locking					models/guis/assets/hud/gdfmine_target.md5anim {
+	}
+
+}
+
+
+model deploy_marker {
+	mesh						models/guis/assets/hud/deploy_target.md5mesh
+
+	anim locking					models/guis/assets/hud/deploy_target.md5anim {
+	}
+
+}
+
+
+model airstrike_marker {
+	mesh						models/guis/assets/hud/airstrike_marker.md5mesh
+
+	anim locking					models/guis/assets/hud/airstrike_marker.md5anim {
+	}
+
+}
+
+entityDef target_marker {
+	"spawnclass"					"sdClientAnimated"
+	"model"							"target_marker"
+
+	"scriptobject"					"default"
+}
+
+entityDef targetdirection_marker {
+	"spawnclass"					"sdClientAnimated"
+	"model"							"airstrike_marker"
+
+	"scriptobject"					"default"
+}

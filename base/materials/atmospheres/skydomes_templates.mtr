@@ -1,0 +1,317 @@
+
+/*************************************************************
+
+	Templates
+		Artists: Don't touch!
+		Don't even think of it!
+
+*************************************************************/
+
+template material/cloudmatte {
+    parameters < Map1 >		// The texture to use
+    text {
+	description "A cloud 'matte painting' use this as the background layer."
+	noShadows
+	translucent
+	sort opaque
+	{
+		//breakpoint
+		program skies/cloud_cube
+		matrix	cosTable[ sun_azimuth / 360 ], sinTable[ sun_azimuth / 360 ], 0, sinTable[ sun_azimuth / 360 ] * -1, cosTable[ sun_azimuth / 360 ], 0
+		skies_cloudColor 1, 1, 1, 1
+		skies_cloudCube Map1
+	}
+    }
+}
+
+template material/skybox {
+	parameters< Map1 >
+	text {
+	description "A skybox layer (use with Skybox Style)"
+	noShadows
+	noSelfShadow
+	noAtmosphere
+	translucent
+	sort opaque	
+	{
+		program skies/skybox
+		matrix	cosTable[ sun_azimuth / -360 ], sinTable[ sun_azimuth / -360 ], 0, sinTable[ sun_azimuth / -360 ] * -1, cosTable[ sun_azimuth / -360 ], 0		
+		skies_cloudColor 1, 1, 1, 1
+		map clamp_x Map1_side.tga
+		mask clamp Map1_top.tga
+	}
+	}
+}
+
+template material/medium_skybox_template {
+    parameters <
+    	Map1 >		// The textures to use
+    text {
+	description "A cubemapped cloud layer"
+	parmName 0 "Cloud Density" float 0.7
+	parmName 1 "Cloud Tint"	color 1.0 1.0 1.0
+	parmName 4 "Wind rotation speed" float 0.0 0.0 0.1
+	sort opaque
+	{
+		blend blend
+		program skies/skybox
+		matrix	cosTable[ sun_azimuth / 360 + time * parm4 ], sinTable[ sun_azimuth / 360 + time * parm4 ], 0, sinTable[ sun_azimuth / 360 + time * parm4 ] * -1, cosTable[ sun_azimuth / 360 + time * parm4 ], 0
+		skies_cloudColor parm1, parm2, parm3, parm0
+		map clamp_x Map1_side.tga
+		mask clamp Map1_top.tga
+	}
+    }
+}
+
+template material/high_skybox_template {
+    parameters <
+    	Map1 >		// The textures to use
+    text {
+	description "A cubemapped cloud layer"
+	parmName 0 "Cloud Density" float 0.7
+	parmName 1 "Wind rotation speed" float 0.0 0.0 0.1
+	sort opaque
+	{
+		//breakpoint
+		blend add
+		program skies/skybox
+		matrix	cosTable[ sun_azimuth / 360 + time * parm1 ], sinTable[ sun_azimuth / 360 + time * parm1 ], 0, sinTable[ sun_azimuth / 360 + time * parm1 ] * -1, cosTable[ sun_azimuth / 360 + time * parm1 ], 0
+		skies_cloudColor parm0, parm0, parm0, 0
+		map clamp_x Map1_side.tga
+		mask clamp Map1_top.tga
+	}
+    }
+}
+
+template material/high_skybox_template_nobloom {
+    parameters <
+    	Map1 >		// The textures to use
+    text {
+	description "A cubemapped cloud layer"
+	parmName 0 "Cloud Density" float 0.7
+	parmName 1 "Wind rotation speed" float 0.0 0.0 0.1
+	sort opaque
+	{
+		//breakpoint
+		blend add
+		program skies/skybox
+		matrix	cosTable[ sun_azimuth / 360 + time * parm1 ], sinTable[ sun_azimuth / 360 + time * parm1 ], 0, sinTable[ sun_azimuth / 360 + time * parm1 ] * -1, cosTable[ sun_azimuth / 360 + time * parm1 ], 0
+		skies_cloudColor parm0, parm0, parm0, 0
+		map clamp_x Map1_side.tga
+		mask clamp Map1_top.tga
+		maskAlpha
+	}
+    }
+}
+
+
+/*************************************************************
+
+	Templates Redundant
+		Artists: Still don't touch!
+		Don't even think of it!
+
+*************************************************************/
+
+template material/highalt_tiled_template {
+    parameters <
+    	Map1,			// The textures to use
+		Map2 >
+    text {
+ 	description "A high altitude cloud layer"
+	parmName 0 "Cloud Tint" color 1 1 1
+	parmName 3 "Cloud Density 1" float 0.7
+	parmName 4 "Cloud Density 2" float 0.7
+	parmName 5 "Cloud Speed 1" float 0.0 0.0 0.2
+	parmName 6 "Cloud Speed 2" float 0.0 0.0 0.2
+	parmName 7 "Cloud Scale 1" float 1.0 0.1 10.1
+	parmName 8 "Cloud Scale 2" float 1.0 0.1 10.1
+	noAtmosphere
+	sort opaque
+	{
+		blend add
+		map Map1
+		red parm0 * parm3 * sun_r
+		green parm1 * parm3 * sun_g
+		blue parm2 * parm3 * sun_b
+
+		scale parm7, parm7
+		translate time * parm5 * wind_x, time * parm5 * wind_y
+	}
+	{
+		blend add
+		map Map2
+		red parm0 * parm4 * sun_r
+		green parm1 * parm4 * sun_g
+		blue parm2 * parm4 * sun_b
+
+		scale parm8, parm8
+		translate time * parm6 * wind_x, time * parm6 * wind_y
+	}
+    }
+}
+
+template material/mediumalt_tiled_template {
+    parameters <
+    	Map1,			// The textures to use
+	Map2 >
+    text {
+	description "A high altitude cloud layer"
+	parmName 0 "Cloud Tint" color 1 1 1
+	parmName 3 "Cloud Density 1" float 0.7
+	parmName 4 "Cloud Density 2" float 0.7
+	parmName 5 "Cloud Speed 1" float 0.0 0.0 0.2
+	parmName 6 "Cloud Speed 2" float 0.0 0.0 0.2
+	parmName 7 "Cloud Scale 1" float 1.0 0.1 10.1
+	parmName 8 "Cloud Scale 2" float 1.0 0.1 10.1
+	noAtmosphere
+	sort opaque
+	{
+		blend blend
+		program skies/cloud_mediumalt
+
+		map Map1
+		red parm0 * sun_r
+		green parm1 * sun_g
+		blue parm2 * sun_b
+		alpha parm3
+
+		scale parm7, parm7
+		translate time * parm5 * wind_x, time * parm5 * wind_y
+	}
+	{
+		blend blend
+		program skies/cloud_mediumalt
+
+		map Map2
+		red parm0 * sun_r
+		green parm1 * sun_g
+		blue parm2 * sun_b
+		alpha parm4
+
+		scale parm8, parm8
+		translate time * parm6 * wind_x, time * parm6 * wind_y
+	}
+    }
+}
+
+template material/highalt_cube_template {
+    parameters <
+    	Map1 >		// The textures to use
+    text {
+	description "A cubemapped cloud layer"
+	parmName 0 "Cloud Density" float 0.7
+	parmName 1 "Wind rotation speed" float 0.0 0.0 0.1
+	sort opaque
+	{
+		//breakpoint
+		blend add
+		program skies/cloud_cube
+		matrix	cosTable[ sun_azimuth / 360 + time * parm1 ], sinTable[ sun_azimuth / 360 + time * parm1 ], 0, sinTable[ sun_azimuth / 360 + time * parm1 ] * -1, cosTable[ sun_azimuth / 360 + time * parm1 ], 0
+		skies_cloudColor parm0, parm0, parm0, 0
+		skies_cloudCube Map1
+	}
+    }
+}
+
+
+template material/medium_cube_template {
+    parameters <
+    	Map1 >		// The textures to use
+    text {
+	description "A cubemapped cloud layer"
+	parmName 0 "Cloud Density" float 0.7
+	parmName 1 "Cloud Tint"	color 1.0 1.0 1.0
+	parmName 4 "Wind rotation speed" float 0.0 0.0 0.1
+	sort opaque
+	{
+		blend blend
+		program skies/cloud_cube
+		matrix	cosTable[ sun_azimuth / 360 + time * parm4 ], sinTable[ sun_azimuth / 360 + time * parm4 ], 0, sinTable[ sun_azimuth / 360 + time * parm4 ] * -1, cosTable[ sun_azimuth / 360 + time * parm4 ], 0
+		skies_cloudColor parm1, parm2, parm3, parm0
+		skies_cloudCube Map1
+	}
+    }
+}
+
+
+template material/medium_cube_template_no_alpha_write {
+    parameters <
+    	Map1 >		// The textures to use
+    text {
+	description "A cubemapped cloud layer"
+	parmName 0 "Cloud Density" float 0.7
+	parmName 1 "Cloud Tint"	color 1.0 1.0 1.0
+	parmName 4 "Wind rotation speed" float 0.0 0.0 0.1
+	sort opaque
+	{
+		blend blend
+		program skies/cloud_cube
+		matrix	cosTable[ sun_azimuth / 360 + time * parm4 ], sinTable[ sun_azimuth / 360 + time * parm4 ], 0, sinTable[ sun_azimuth / 360 + time * parm4 ] * -1, cosTable[ sun_azimuth / 360 + time * parm4 ], 0
+		skies_cloudColor parm1, parm2, parm3, parm0
+		skies_cloudCube Map1
+		maskAlpha
+	}
+    }
+}
+
+template material/medium_bump_template {
+    parameters <
+    	InDiffuseMap,
+    	InNormalMap >		// The textures to use
+    text {
+	description "A bumpmapped cloud layer"
+	parmName 0 "Cloud Density" float 0.7
+	parmName 1 "Ambient contribution" float 0.7
+	parmName 2 "Ambient desaturation" float 0.2
+	parmName 3 "Sun contribution" float 0.7
+
+	parmName 4 "Cloud Scale" float 1.0 0.1 10.1
+	parmName 5 "Cloud Speed" float 0.0 0.0 0.2
+
+	noAtmosphere
+	sort opaque
+	//Add bumpmapped clouds
+	{
+		blend blend
+		program skies/cloud_bump
+		diffuseMap	InDiffuseMap
+		bumpMap 	InNormalMap
+		parameters	parm1, parm2, parm3, parm0
+
+		scale parm4, parm4
+		translate time * parm5 * wind_x, time * parm5 * wind_y
+
+		maskAlpha
+	}
+    }
+}
+
+template material/tiled_ring_template {
+    parameters <
+    	InDiffuseMap >		// The textures to use
+    text {
+		description "A ring of clouds"
+		parmName 0 "Cloud Density" float 0.7
+		parmName 1 "Cloud Tint"	color 1.0 1.0 1.0
+		parmName 4 "Wind rotation speed" float 0.0 0.0 0.1
+		parmName 5 "Tiles" float 1.0 1.0 10.0
+
+		noAtmosphere	// Don't fog it out :D
+		sort opaque
+		{
+			blend blend
+			program skies/cloud_tiled
+
+			red parm1
+			green parm2
+			blue parm3
+			alpha parm0
+
+			map InDiffuseMap
+
+			translate time * parm4, 0
+			scale parm5, 1
+		}
+	}
+}

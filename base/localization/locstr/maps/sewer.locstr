@@ -1,0 +1,231 @@
+/*
+=================
+ Localization for map
+=================
+*/
+
+//
+// Objective texts
+//
+locString maps/sewer/obj_short_1_gdf {
+	text "#str_00100700"			
+}
+
+locString maps/sewer/obj_short_1_strogg {
+	text "#str_00100701"			
+}
+
+locString maps/sewer/obj_short_2_gdf {
+	text "#str_00100702"			
+}
+
+locString maps/sewer/obj_short_2_strogg {
+	text "#str_00100703"			
+}
+
+locString maps/sewer/obj_short_3_gdf {
+	text "#str_00100704"			
+}
+
+locString maps/sewer/obj_short_3_strogg {
+	text "#str_00100705"			
+}
+
+locString maps/sewer/obj_constructed {
+	text "#str_00100706"			
+	arguments 1
+}
+
+locString maps/sewer/obj_destroyed_a {
+	text "#str_00100707"		
+	arguments 1
+}
+
+locString maps/sewer/obj_destroyed_b {
+	text "#str_00100708"		
+	arguments 1
+}
+
+locString maps/sewer/obj_hacked {
+	text "#str_00100709"		
+	arguments 1
+}
+
+//
+// Objective names
+//
+
+locString maps/sewer/sewer_grate_a {
+	text "#str_00100730"		
+}
+locString maps/sewer/sewer_grate_b {
+	text "#str_00100731"		
+}
+
+//
+// Mapinfo
+//
+
+locString maps/sewer/campaign {
+	text "#str_00100732"
+}
+
+locString maps/sewer/location {
+	text "#str_00100733"
+}
+
+locString maps/sewer/briefing {
+	text "#str_00100734"
+}
+
+//
+// Miscellaneous
+//
+
+locString maps/sewer/gdf_main_gate {
+	text "#str_00100735" 
+}
+
+locString maps/sewer/gdf_side_gate {
+	text "#str_00100736" 
+}
+
+locString maps/sewer/overflow_hatch {
+	text "#str_00100737"
+}
+
+locString maps/sewer/maintenance_hatch {
+	text "#str_00100738"
+}
+
+// more objective names
+locString maps/sewer/sewer_controls {
+	text "#str_00100739"
+}
+
+//
+// Objective messages
+//
+locString maps/sewer/south_grate_progress {
+	text "#str_00100740"
+	arguments 1
+}
+
+locString maps/sewer/south_grate_destroy {
+	text "#str_00100741"
+	arguments 1
+}
+
+locString maps/sewer/south_grate_disarm {
+	text "#str_00100742"
+	arguments 1
+}
+
+locString maps/sewer/north_grate_progress {
+	text "#str_00100743"
+	arguments 1
+}
+
+locString maps/sewer/north_grate_destroy {
+	text "#str_00100744"
+	arguments 1
+}
+
+locString maps/sewer/north_grate_disarm {
+	text "#str_00100745"
+	arguments 1
+}
+
+locString maps/sewer/emp_disruptor {
+	text "#str_00100746"
+}
+
+//
+// more misc
+//
+
+locString maps/sewer/substation_barricade {
+	text "#str_00100747"
+}
+
+locString maps/sewer/substation_barricade_destroy {
+	text "#str_00100748"
+	arguments 1
+}
+
+locString maps/sewer/substation_barricade_progress {
+	text "#str_00100749"
+	arguments 1
+}
+
+locString maps/sewer/substation_barricade_disarm {
+	text "#str_00100750"
+	arguments 1
+}
+
+locString maps/sewer/overflow_hatch_destroy {
+	text "#str_00100751"
+	arguments 1
+}
+
+locString maps/sewer/overflow_hatch_progress {
+	text "#str_00100752"
+	arguments 1
+}
+
+locString maps/sewer/overflow_hatch_disarm {
+	text "#str_00100753"
+	arguments 1
+}
+
+locString maps/sewer/maintenance_hatch_destroy {
+	text "#str_00100754"
+	arguments 1
+}
+
+locString maps/sewer/maintenance_hatch_progress {
+	text "#str_00100755"
+	arguments 1
+}
+
+locString maps/sewer/maintenance_hatch_disarm {
+	text "#str_00100756"
+	arguments 1
+}
+
+locString maps/sewer/hilltop_spawn {
+	text "#str_00100757"
+}
+
+locString maps/sewer/spillway_spawn {
+	text "#str_00100758"
+}
+
+locString maps/sewer/sewer_grates {
+	text "#str_00100759"
+}
+
+locString maps/sewer/obj_construct_tower_base {
+	text "#str_00100760"
+	arguments 1
+}
+
+locString maps/sewer/obj_construct_tower_hilltop {
+	text "#str_00100761"
+	arguments 1
+}
+
+locString maps/sewer/obj_construct_emp_disruptor {
+	text "#str_00100762"
+	arguments 1
+}
+
+locString maps/sewer/obj_construct_tower_base_complete {
+	text "#str_00100763"
+	arguments 1
+}
+
+locString maps/sewer/obj_construct_tower_hilltop_complete {
+	text "#str_00100764"
+	arguments 1
+}

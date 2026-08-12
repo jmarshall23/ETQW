@@ -1,0 +1,268 @@
+material textures/military/floor_tiles1
+{
+	surfaceType "metal"
+	{
+		diffusemap	textures/military/floor_tiles1_d.tga
+		specularmap 	textures/military/floor_tiles1_s.tga
+		bumpmap 	textures/military/floor_tiles1_local.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	2,2,0,0
+	}
+}
+
+material textures/military/floor_tiles2
+{
+	surfaceType "metal"
+	{
+		diffusemap				textures/military/floor_tiles2_d.tga
+		specularmap	picmip -1	textures/military/floor_tiles2_s.tga
+		bumpmap 				textures/military/floor_tiles2_local.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	2.5,2.5,0,0
+	}
+}
+
+material textures/military/floor_tiles3
+{
+	surfaceType "metal"
+	{
+		diffusemap	textures/military/floor_tiles3_d.tga
+		specularmap	textures/military/floor_tiles3_s.tga
+		bumpmap 	textures/military/floor_tiles3_local.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	2.5,2.5,0,0
+	}
+}
+
+material textures/military/floor_tiles4
+{
+	surfaceType 	metal
+	qer_editorimage	textures/military/floor_tiles4_d.tga
+	{
+		diffusemap	textures/military/floor_tiles4_d.tga
+		specularmap	textures/military/floor_tiles4_s.tga
+		bumpmap 	textures/military/floor_tiles4_local.tga
+		vertexColor
+
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	2,2,0,0
+	}
+}
+
+material textures/military/trim1
+{
+	qer_editorimage	textures/military/trim1_local.tga
+	diffusemap		textures/military/trim1_color.tga
+	//specularmap 	textures/military/trim1_s.tga
+	bumpmap 		textures/military/trim1_local.tga
+}
+
+material textures/military/trim2
+{
+	surfaceType 	metal
+	qer_editorimage	textures/military/trim2_d.tga
+	{
+		diffusemap	textures/military/trim2_d.tga
+		specularmap 	textures/military/trim2_s.tga
+		bumpmap 	textures/military/trim2_local.tga
+		vertexColor
+	}
+}
+
+material textures/military/trim_large1
+{
+	surfaceType "metal"
+	{
+		diffusemap	textures/military/trim_large1_d.tga
+		specularmap 	textures/military/trim_large1_s.tga
+		bumpmap 	textures/military/trim_large1_local.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	1.5,1.5,0,0
+	}
+}
+
+material textures/military/trim_large2_pipes
+{
+	surfaceType 	metal
+	qer_editorimage	textures/military/trim_large2_pipes_d.tga
+	{
+		diffusemap	textures/military/trim_large2_pipes_d.tga
+		specularmap 	textures/military/trim_large2_pipes_s.tga
+		bumpmap 	textures/military/trim_large2_pipes_local.tga
+		vertexColor
+	}
+}
+
+material textures/military/trim_large2_pipes_end
+{
+	surfaceType 	metal
+	qer_editorimage	textures/military/trim_large2_pipes_end_color.tga
+	{
+		diffusemap	textures/military/trim_large2_pipes_end_color.tga
+		//specularmap 	textures/military/trim_large2_pipes_end_s.tga
+		bumpmap 	textures/military/trim_large2_pipes_end_local.tga
+		vertexColor
+	}
+}
+
+material textures/military/wall1
+{
+	surfaceType "metal"
+	{
+		diffusemap				textures/military/wall1_d.tga
+		bumpmap					textures/military/wall1_local.tga
+		specularmap	picmip -1	textures/military/wall1_s.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	1.5,3,0,0
+	}
+}
+
+material textures/military/wall1b
+{
+	surfaceType "metal"
+	{
+		diffusemap				textures/military/wall1b_d.tga
+		bumpmap					textures/military/wall1_local.tga
+		specularmap	picmip -1	textures/military/wall1b_s.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	1.5,3,0,0
+	}
+}
+
+material textures/military/wall1_pipes
+{
+	qer_editorimage	textures/military/wall1_pipes_local.tga
+	diffusemap		textures/military/wall1_pipes_color.tga
+	//specularmap 	textures/military/wall1_pipes_s.tga
+	bumpmap 		textures/military/wall1_pipes_local.tga
+}
+
+material textures/military/wall1_pipes_end
+{
+	qer_editorimage	textures/military/wall1_pipes_end_local.tga
+	diffusemap		textures/military/wall1_pipes_end_color.tga
+	//specularmap 	textures/military/wall1_pipes_end_s.tga
+	bumpmap 		textures/military/wall1_pipes_end_local.tga
+}
+
+material textures/military/wall1_support
+{
+	qer_editorimage	textures/military/wall1_support_local.tga
+	diffusemap		textures/military/wall1_support_color.tga
+	//specularmap 	textures/military/wall1_support_s.tga
+	bumpmap 		textures/military/wall1_support_local.tga
+}
+
+material textures/military/wall1_support2
+{
+	surfaceType "metal"
+	{
+		diffusemap	textures/military/wall1_support2_d.tga
+		specularmap	textures/military/wall1_support2_s.tga
+		bumpmap		textures/military/wall1_support2_local.tga
+		vertexColor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	1,4,0,0
+	}
+}
+
+material textures/military/wall2
+{
+	surfaceType "metal"
+	{
+		diffusemap	textures/military/wall2_d.tga
+		specularmap	textures/military/wall2_s.tga
+		bumpmap		textures/military/wall2_local.tga
+		vertexColor
+	}
+}
+
+material textures/military/wall2_wpanels
+{
+	surfaceType "metal"
+	{
+		diffusemap	textures/military/wall2_wpanels_d.tga
+		specularmap	textures/military/wall2_wpanels_s.tga
+		bumpmap 	textures/military/wall2_wpanels_local.tga
+		vertexColor
+	}
+}
+
+material textures/military/wall2_wpanels_white
+{
+	surfaceType "metal"
+	{
+		diffusemap		textures/military/wall2_wpanels_white_d.tga
+		specularmap 	textures/military/wall2_wpanels_s.tga
+		bumpmap 		textures/military/wall2_wpanels_local.tga
+		vertexColor
+	}
+}
+
+material textures/military/wall2_wpanels_white_env
+{
+	useTemplate templates/refineryinterior <
+	textures/military/wall2_wpanels_white_d.tga,
+	textures/military/wall2_wpanels_local.tga,
+	textures/military/wall2_wpanels_s.tga,
+		2, 1.0, 0.3
+	>
+}
+
+
+material textures/military/wall2_support
+{
+	qer_editorimage	textures/military/wall2_support_local.tga
+	diffusemap		textures/military/wall2_support_color.tga
+	//specularmap 	textures/military/wall2_support_s.tga
+	bumpmap 		textures/military/wall2_support_local.tga
+}
+
+material textures/military/wall2_support2
+{
+	qer_editorimage	textures/military/wall2_support2_local.tga
+	diffusemap		textures/military/wall2_support2_color.tga
+	//specularmap 	textures/military/wall2_support2_s.tga
+	bumpmap 		textures/military/wall2_support2_local.tga
+}
+
+material textures/military/wall3
+{
+	surfaceType 	metal
+	qer_editorimage	textures/military/wall3_d.tga
+	{
+		diffusemap	textures/military/wall3_d.tga
+		specularmap 	textures/military/wall3_s.tga
+		bumpmap 	textures/military/wall3_local.tga
+		vertexColor
+	}
+}

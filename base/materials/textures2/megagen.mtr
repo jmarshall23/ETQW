@@ -1,0 +1,6 @@
+material textures2/megagen/dirt/temperate/dirt_dusty_stones_pale_4t1_nospec
+{
+	qer_editorimage	textures2/megagen/dirt/temperate/dirt_dusty_stones_pale_4t1_d.tga
+	diffusemap		textures2/megagen/dirt/temperate/dirt_dusty_stones_pale_4t1_d.tga
+	bumpmap 		textures2/megagen/dirt/temperate/dirt_dusty_stones_4t1_local.tga
+}

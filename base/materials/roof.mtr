@@ -1,0 +1,23 @@
+material textures/roof/roof_tiles01
+{
+		qer_editorimage	textures/roof/roof_tiles01_d.tga
+		diffusemap	textures/roof/roof_tiles01_d.tga
+		specularmap	textures/roof/roof_tiles01_s.tga
+		bumpmap		textures/roof/roof_tiles01_local.tga
+}
+
+material textures/roof/roof_tiles02
+{
+		qer_editorimage	textures/roof/roof_tiles02_d.tga
+		diffusemap	textures/roof/roof_tiles02_d.tga
+		specularmap	textures/roof/roof_tiles02_s.tga
+		bumpmap		textures/roof/roof_tiles02_local.tga
+}
+
+material textures/roof/roof_lining01
+{
+		qer_editorimage	textures/roof/roof_lining01_d.tga
+		diffusemap	textures/roof/roof_lining01_d.tga
+		specularmap	textures/roof/roof_lining01_s.tga
+		bumpmap		textures/roof/roof_lining01_local.tga
+}

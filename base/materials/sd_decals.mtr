@@ -1,0 +1,489 @@
+material textures/decals/playershadow
+{
+	DECAL_MACRO
+	decalInfo 0 0 ( 1 1 1 1 ) ( 1 1 1 1 )
+	{       
+      		blend	gl_zero, gl_one_minus_src_color
+		map		clamp lights/spot01.tga
+		vertexColor	// oblique projections will be slightly faded down
+	}
+}
+
+material textures/decals/diagonal_stripe_01
+{
+ 	qer_editorimage textures/decals/diagonal_stripe_01.tga
+ 	sort decal
+ 	noShadows
+ 	nonsolid
+ 	noimpact
+ 	translucent
+ 	polygonOffset
+ 	
+	{
+		blend 	gl_one_minus_dst_color,gl_one
+		map	textures/decals/diagonal_stripe_01.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}	
+}
+
+material textures/decals/diagonal_stripe_01_endcap
+{
+	qer_editorimage textures/decals/diagonal_stripe_01_endcap.tga
+	sort decal
+	noShadows
+	nonsolid
+	noimpact
+	translucent
+	polygonOffset
+
+
+	{       
+		blend 	gl_one_minus_dst_color,gl_one
+		map	textures/decals/diagonal_stripe_01_endcap.tga
+		red	parm0
+		green	parm1
+		blue	parm2	 
+	}
+}
+ 
+material textures/decals/diagonal_stripe_01_line_interval
+ {
+ 	qer_editorimage textures/decals/diagonal_stripe_01_line_interval.tga
+ 	sort decal
+ 	noShadows
+ 	nonsolid
+ 	noimpact
+ 	translucent
+ 	polygonOffset
+
+ 	{       
+		blend 	gl_one_minus_dst_color,gl_one
+ 	 	map	textures/decals/diagonal_stripe_01_line_interval.tga
+ 	 	red	parm0
+		green	parm1
+		blue	parm2 	 	
+ 	}
+  }
+  
+material textures/decals/container_position
+{
+ 	qer_editorimage textures/decals/container_position.tga
+        sort decal
+ 	noShadows
+ 	nonsolid
+ 	noimpact
+ 	translucent
+ 	polygonOffset
+
+ 	{       
+		blend 	gl_one_minus_dst_color,gl_one
+ 		map	textures/decals/container_position.tga
+		red	parm0
+		green	parm1
+		blue	parm2 		 
+ 	}
+}
+
+material textures/decals/container_position_clear
+{
+ 	qer_editorimage textures/decals/container_position_clear.tga
+ 	sort decal
+ 	noShadows
+ 	nonsolid
+ 	noimpact
+ 	translucent
+ 	polygonOffset
+
+ 	{       
+		blend 	gl_one_minus_dst_color,gl_one
+ 	 	map	textures/decals/container_position_clear.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+ 	}
+}
+  
+material textures/decals/diagonal_stripe_01_endless
+{
+ 	qer_editorimage textures/decals/diagonal_stripe_01_endless.tga
+ 	sort decal
+ 	noShadows
+ 	nonsolid
+ 	noimpact
+ 	translucent
+ 	polygonOffset
+
+ 	{       
+		blend 	gl_one_minus_dst_color,gl_one
+ 	 	map	textures/decals/diagonal_stripe_01_endless.tga
+		red	parm0
+		green	parm1
+		blue	parm2
+		vertexcolor	
+	}
+}
+  
+material textures/decals/diagonal_stripe_01_line
+{
+ 	qer_editorimage textures/decals/diagonal_stripe_01_line.tga
+ 	sort decal
+ 	noShadows
+ 	nonsolid
+ 	noimpact
+ 	translucent
+	polygonOffset
+ 	{       
+		blend 	gl_one_minus_dst_color,gl_one
+ 		map	textures/decals/diagonal_stripe_01_line.tga
+		red	parm0
+		green	parm1
+		blue	parm2 		
+	}
+}
+ 
+material textures/decals/arrow_straight
+{
+	qer_editorimage textures/decals/arrow_straight.tga
+	sort decal
+	noShadows
+	nonsolid
+	noimpact
+	translucent
+	polygonOffset
+
+	{       
+		blend 	gl_one_minus_dst_color,gl_one
+		map	textures/decals/arrow_straight.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}
+}
+
+material textures/decals/mark_giveway
+{
+	qer_editorimage textures/decals/mark_giveway.tga
+	sort decal
+	noShadows
+	nonsolid
+	noimpact
+	translucent
+	polygonOffset
+	{       
+		blend 	gl_one_minus_dst_color,gl_one
+		map	textures/decals/mark_giveway.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}
+}
+
+material textures/decals/blastmark
+{
+	qer_editorimage textures/decals/ballburn01.tga
+
+	sort decal
+	// fade rgb down fast (clamps to 0), but leave alpha clamped at 1 for the first nine seconds
+	decalInfo 0.5 10 ( 1 1 1 10 ) ( -5 -5 -5 0 )
+	polygonOffset
+	{       
+      		blend	gl_zero, gl_one_minus_src_alpha
+		map	clamp makealpha(textures/decals/ballburn01.tga)
+		vertexColor
+	}
+	{
+      		blend	add  
+		map	textures/decals/ballburn01_fx.tga
+		blue	firetable[ time * .2 ]		// all marks will be flickering the same, unfortunately
+		green	firetable[ time * .2 ]
+		red	firetable[ time * .1 ]
+		vertexColor
+	}
+}
+
+material textures/decals/arrow_bent
+{
+	qer_editorimage textures/decals/arrow_bent.tga
+	sort decal
+	noShadows
+	nonsolid
+	noimpact
+ 	translucent
+ 	polygonOffset
+
+	{       
+		blend 	gl_one_minus_dst_color,gl_one
+		map	textures/decals/arrow_bent.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}
+}
+
+material textures/decals/roadcracks01
+{
+	qer_editorimage	textures/decals/roadcracks01_d.tga
+	sort decal
+	noshadows
+	nonsolid
+	noimpact
+	translucent
+	polygonOffset
+
+	{
+		blend 	gl_zero,gl_one_minus_src_color
+		map	textures/decals/roadcracks01_d.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}	
+}
+
+material textures/decals/roadline01
+{
+ 	qer_editorimage textures/decals/roadline01_d.tga
+ 	sort decal
+ 	noShadows
+ 	nonsolid
+ 	noimpact
+ 	translucent
+ 	polygonOffset
+	{
+		blend	diffuseMap  //GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
+		map	textures/decals/roadline01_d.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}	
+}
+
+material textures/decals/dirt01
+{
+ 	qer_editorimage textures/decals/dirt01.tga
+ 	sort decal
+ 	noShadows
+ 	nonsolid
+ 	noimpact
+ 	translucent
+ 	polygonOffset
+	{
+		blend 	gl_zero,gl_one_minus_src_color
+		map	textures/decals/dirt01.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}	
+}
+
+material textures/decals/oilstain01
+{
+ 	qer_editorimage textures/decals/oilstain01_d.tga
+ 	sort decal
+ 	noShadows
+ 	nonsolid
+ 	noimpact
+ 	translucent
+ 	polygonOffset
+	{
+		blend 	gl_zero,gl_one_minus_src_color
+		map	textures/decals/oilstain01_d.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}	
+}
+
+material textures/decals/sign_circ01 //circular road sign (need to slap decals on top)
+{
+ 	noSelfShadow
+	qer_editorimage textures/decals/sign_circ01_d.tga
+	{       
+		diffusemap	textures/decals/sign_circ01_d.tga
+		specularmap 	textures/decals/sign_circ01_s.tga
+		alphaTest 0.5
+	}
+	
+}
+
+material textures/decals/container_decal_01
+{
+	qer_editorimage textures/decals/container_decal_01.tga
+	sort decal
+	noShadows
+	nonsolid
+	noimpact
+ 	translucent
+ 	polygonOffset
+
+	{       
+		blend 	gl_one_minus_dst_color,gl_one
+		map	textures/decals/container_decal_01.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}
+}
+
+material textures/decals/container_decal_01a
+{
+	qer_editorimage textures/decals/container_decal_01a.tga
+	sort decal
+	noShadows
+	nonsolid
+	noimpact
+ 	translucent
+	polygonOffset
+	{       
+		blend 	gl_one_minus_dst_color,gl_one
+		map	textures/decals/container_decal_01a.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}
+}
+
+material textures/decals/container_decal_02
+{
+	qer_editorimage textures/decals/container_decal_02.tga
+	sort decal
+	noShadows
+	nonsolid
+	noimpact
+ 	translucent
+	polygonOffset
+	{       
+		blend 	gl_one_minus_dst_color,gl_one
+		map	textures/decals/container_decal_02.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}
+}
+
+material textures/decals/container_decal_02a
+{
+	qer_editorimage textures/decals/container_decal_02a.tga
+	sort decal
+	noShadows
+	nonsolid
+	noimpact
+ 	translucent
+	polygonOffset
+	{       
+		blend 	gl_one_minus_dst_color,gl_one
+		map	textures/decals/container_decal_02a.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}
+}
+
+material textures/decals/container_decal_03
+{
+	qer_editorimage textures/decals/container_decal_03.tga
+	sort decal
+	noShadows
+	nonsolid
+	noimpact
+ 	translucent
+	polygonOffset
+	{       
+		blend 	gl_one_minus_dst_color,gl_one
+		map	textures/decals/container_decal_03.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}
+}
+
+material textures/decals/container_decal_03a
+{
+	qer_editorimage textures/decals/container_decal_03a.tga
+	sort decal
+	noShadows
+	nonsolid
+	noimpact
+ 	translucent
+	polygonOffset
+	{       
+		blend 	gl_one_minus_dst_color,gl_one
+		map	textures/decals/container_decal_03a.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}
+}
+
+material textures/decals/container_decal_04
+{
+	qer_editorimage textures/decals/container_decal_04.tga
+	sort decal
+	noShadows
+	nonsolid
+	noimpact
+ 	translucent
+	polygonOffset
+	{       
+		blend 	gl_one_minus_dst_color,gl_one
+		map	textures/decals/container_decal_04.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}
+}
+
+material textures/decals/container_decal_04a
+{
+	qer_editorimage textures/decals/container_decal_04a.tga
+	sort decal
+	noShadows
+	nonsolid
+	noimpact
+ 	translucent
+	polygonOffset
+	{       
+		blend 	gl_one_minus_dst_color,gl_one
+		map	textures/decals/container_decal_04a.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}
+}
+
+material textures/decals/container_decal_05
+{
+	qer_editorimage textures/decals/container_decal_05.tga
+	sort decal
+	noShadows
+	nonsolid
+	noimpact
+ 	translucent
+	polygonOffset
+	{       
+		blend 	gl_one_minus_dst_color,gl_one
+		map	textures/decals/container_decal_05.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}
+}
+
+material textures/decals/container_decal_05a
+{
+	qer_editorimage textures/decals/container_decal_05a.tga
+	sort decal
+	noShadows
+	nonsolid
+	noimpact
+ 	translucent
+	polygonOffset
+	{       
+		blend 	gl_one_minus_dst_color,gl_one
+		map	textures/decals/container_decal_05a.tga
+		red	parm0
+		green	parm1
+		blue	parm2 
+	}
+}

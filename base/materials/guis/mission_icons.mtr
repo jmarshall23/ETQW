@@ -1,0 +1,194 @@
+#include <materials/guis/mission_icons.include>
+
+// Mission system icons
+material hud/icons/missionsystem/obj_covert_ops				{ _missionsystemIcon( objective, "class_covert_ops.tga" )			}
+material hud/icons/missionsystem/mis_covert_ops				{ _missionsystemIcon( mission, "class_covert_ops.tga" )				}
+material hud/icons/missionsystem/tsk_covert_ops				{ _missionsystemIcon( task, "class_covert_ops.tga" )				}
+material hud/icons/missionsystem/obj_engineer				{ _missionsystemIcon( objective, "class_engineer.tga" )				}
+material hud/icons/missionsystem/mis_engineer				{ _missionsystemIcon( mission, "class_engineer.tga" )				}
+material hud/icons/missionsystem/tsk_engineer				{ _missionsystemIcon( task, "class_engineer.tga" )					}
+material hud/icons/missionsystem/obj_field_ops				{ _missionsystemIcon( objective, "class_field_ops.tga" )			}
+material hud/icons/missionsystem/mis_field_ops				{ _missionsystemIcon( mission, "class_field_ops.tga" )				}
+material hud/icons/missionsystem/tsk_field_ops				{ _missionsystemIcon( task, "class_field_ops.tga" )					}
+material hud/icons/missionsystem/tsk_ammo_field_ops			{ _missionsystemIcon( task, "task_ammo.tga" )						}
+material hud/icons/missionsystem/obj_medic					{ _missionsystemIcon( objective, "class_medic.tga" )				}
+material hud/icons/missionsystem/mis_medic					{ _missionsystemIcon( mission, "class_medic.tga" )					}
+material hud/icons/missionsystem/tsk_medic					{ _missionsystemIcon( task, "class_medic.tga" )						}
+material hud/icons/missionsystem/tsk_stroyent_technician	{ _missionsystemIcon( task, "task_stroyent.tga" )					}
+material hud/icons/missionsystem/obj_soldier				{ _missionsystemIcon( objective, "class_soldier.tga" )				}
+material hud/icons/missionsystem/mis_soldier				{ _missionsystemIcon( mission, "class_soldier.tga" )				}
+material hud/icons/missionsystem/tsk_soldier				{ _missionsystemIcon( task, "class_soldier.tga" )					}
+material hud/icons/missionsystem/obj_any_class				{ _missionsystemIcon( objective, "class_any.tga" )					}
+material hud/icons/missionsystem/mis_any_class				{ _missionsystemIcon( mission, "class_any.tga" )					}
+material hud/icons/missionsystem/mis_spawn					{ _missionsystemIcon( mission, "task_spawn.tga" )					}
+material hud/icons/missionsystem/tsk_any_class				{ _missionsystemIcon( task, "class_any.tga" )						}
+material hud/icons/missionsystem/obj_build					{ _missionsystemIcon( objective, "class_engineer.tga" )				}
+material hud/icons/missionsystem/obj_destroy				{ _missionsystemIcon( objective, "class_soldier.tga" )				}
+material hud/icons/missionsystem/obj_destroy_drone			{ _missionsystemIcon( objective, "obj_destroy_drone.tga" )			}
+material hud/icons/missionsystem/obj_document 				{ _missionsystemIcon( objective, "obj_document.tga" )				}
+material hud/icons/missionsystem/obj_document_taken 		{ _missionsystemIcon( objective, "obj_document_taken.tga" )				}
+material hud/icons/missionsystem/obj_document_dropped 		{ _missionsystemIcon( objective, "obj_document_dropped.tga" )				}
+material hud/icons/missionsystem/obj_defend					{ _missionsystemIcon( objective, "obj_defend.tga" )					}
+material hud/icons/missionsystem/obj_goal					{ _missionsystemIcon( objective, "obj_goal.tga" )					}
+material hud/icons/missionsystem/obj_hack					{ _missionsystemIcon( objective, "class_covert_ops.tga" )					}
+material hud/icons/missionsystem/obj_mcp					{ _missionsystemIcon( objective, "obj_mcp.tga" )					}
+material hud/icons/missionsystem/mis_kill_any_class			{ _missionsystemIcon( mission, "task_kill.tga" )					}
+// material hud/icons/missionsystem/tsk_kill_any_class			{ _missionsystemIcon( task, "task_kill.tga" )						}
+material hud/icons/missionsystem/tsk_hack					{ _missionsystemIcon( task, "class_covert_ops.tga" )					}
+material hud/icons/missionsystem/tsk_defend					{ _missionsystemIcon( task, "obj_defend.tga" )					}
+
+material hud/icons/missionsystem/tsk_waypoint				{ _missionsystemIcon( task, "obj_goal.tga" )						}
+material hud/icons/missionsystem/tsk_revive					{ _missionsystemIcon( task, "task_revive.tga" )						}
+material hud/icons/missionsystem/mis_revive					{ _missionsystemIcon( mission, "task_revive.tga" )						}
+material hud/icons/missionsystem/tsk_pilot					{ _missionsystemIcon( task, "task_pilot.tga" )						}
+material hud/icons/missionsystem/tsk_gunner					{ _missionsystemIcon( task, "task_gunner.tga" )						}
+material hud/icons/missionsystem/tsk_passenger				{ _missionsystemIcon( task, "task_passenger.tga" )					}
+material hud/icons/missionsystem/tsk_pickup					{ _missionsystemIcon( task, "task_pickup.tga" )						}
+material hud/icons/missionsystem/tsk_spawnhost				{ _missionsystemIcon( task, "task_spawnhost.tga" )					}
+material hud/icons/missionsystem/mis_spawnhost				{ _missionsystemIcon( mission, "task_spawnhost.tga" )					}
+material hud/icons/missionsystem/tsk_select_spawnhost		{ _missionsystemIcon( task, "task_spawn.tga" )					}
+material hud/icons/missionsystem/obj_direction				{ _missionsystemIcon( objective, "obj_arrow.tga" )					}
+material hud/icons/missionsystem/tsk_destroy_spawnhost		{ _missionsystemIcon( task, "task_killspawn.tga" )					}
+material hud/icons/missionsystem/mis_destroy_spawnhost		{ _missionsystemIcon( mission, "task_killspawn.tga" )					}
+
+material hud/icons/missionsystem/obj_covert_ops_desat		{ _missionsystemIconDesat( objective, "class_covert_ops.tga" )		}
+material hud/icons/missionsystem/obj_engineer_desat			{ _missionsystemIconDesat( objective, "class_engineer.tga" )		}
+material hud/icons/missionsystem/obj_field_ops_desat		{ _missionsystemIconDesat( objective, "class_field_ops.tga" )		}
+material hud/icons/missionsystem/obj_medic_desat			{ _missionsystemIconDesat( objective, "class_medic.tga" )			}
+material hud/icons/missionsystem/obj_soldier_desat			{ _missionsystemIconDesat( objective, "class_soldier.tga" )			}
+material hud/icons/missionsystem/obj_any_class_desat		{ _missionsystemIconDesat( objective, "class_any.tga" )				}
+
+material hud/icons/missionsystem/obj_build_desat			{ _missionsystemIconDesat( objective, "class_engineer.tga" )		}
+material hud/icons/missionsystem/obj_destroy_desat			{ _missionsystemIconDesat( objective, "class_soldier.tga" )			}
+material hud/icons/missionsystem/obj_destroy_drone_desat	{ _missionsystemIconDesat( objective, "obj_destroy_drone.tga" )		}
+material hud/icons/missionsystem/obj_document_desat			{ _missionsystemIconDesat( objective, "obj_document.tga" )			}
+material hud/icons/missionsystem/obj_defend_desat			{ _missionsystemIconDesat( objective, "obj_defend.tga" )			}
+material hud/icons/missionsystem/obj_goal_desat				{ _missionsystemIconDesat( objective, "obj_goal.tga" )				}
+material hud/icons/missionsystem/obj_hack_desat				{ _missionsystemIconDesat( objective, "class_covert_ops.tga" )				}
+material hud/icons/missionsystem/obj_mcp_desat				{ _missionsystemIconDesat( objective, "obj_mcp.tga" )				}
+material hud/icons/missionsystem/obj_direction_desat		{ _missionsystemIconDesat( objective, "obj_arrow.tga" )				}
+
+// CM icons for missions
+material hud/icons/missionsystem/engineer_repair_deployable		{ _missionsystemIcon( mission, "class_engineer.tga" )				}
+material hud/icons/missionsystem/constructor_repair_deployable	{ _missionsystemIcon( mission, "class_engineer.tga" )				}
+material hud/icons/missionsystem/infiltrator_hack_deployable	{ _missionsystemIcon( mission, "class_covert_ops.tga" )				}
+material hud/icons/missionsystem/covertops_hack_deployable		{ _missionsystemIcon( mission, "class_covert_ops.tga" )				}
+material hud/icons/missionsystem/engineer_construct_tower		{ _missionsystemIcon( mission, "class_engineer.tga" )				}
+material hud/icons/missionsystem/gdf_capture_spawn				{ _missionsystemIcon( mission, "task_spawn.tga" )				}
+material hud/icons/missionsystem/gdf_liberate_spawn				{ _missionsystemIcon( mission, "task_spawn.tga" )				}
+material hud/icons/missionsystem/strogg_capture_spawn			{ _missionsystemIcon( mission, "task_spawn.tga" )				}
+material hud/icons/missionsystem/strogg_liberate_spawn			{ _missionsystemIcon( mission, "task_spawn.tga" )				}
+material hud/icons/missionsystem/engineer_repair_vehicle		{ _missionsystemIcon( mission, "class_engineer.tga" )				}
+material hud/icons/missionsystem/constructor_repair_vehicle		{ _missionsystemIcon( mission, "class_engineer.tga" )				}
+material hud/icons/missionsystem/destroy_deployable_strogg		{ _missionsystemIcon( mission, "task_kill.tga" )				}
+material hud/icons/missionsystem/destroy_deployable_gdf			{ _missionsystemIcon( mission, "task_kill.tga" )				}
+material hud/icons/missionsystem/technician_create_spawnhost	{ _missionsystemIcon( mission, "task_spawnhost.tga" )				}
+material hud/icons/missionsystem/medic_destroy_spawnhost		{ _missionsystemIcon( mission, "task_killspawn.tga" )				}
+
+// Red Framed Kill Task
+material hud/icons/missionsystem/tsk_kill_any_class
+{
+	sort gui
+	{
+		vertexcolor
+		program filterVertexColorAlpha
+		blend filter
+		map clamp nopicmip linear guis/assets/icons/circle_red_base.tga
+		colored
+	}
+	{
+		vertexcolor
+		blend blend
+		map clamp nopicmip linear guis/assets/icons/task_kill.tga
+		colored
+	}
+	{
+		vertexcolor
+		blend blend
+		map clamp nopicmip linear guis/assets/icons/circle_red_frame.tga
+		colored
+	}
+}
+
+
+// Small mission icon frames
+material hud/icons/missionsystem/obj_sml
+{
+	sort gui
+	{
+		blend gl_one, gl_one_minus_src_alpha
+		map clamp nopicmip linear guis/assets/icons/diamond_frame_sml.tga
+		colored
+	}
+	{
+		blend gl_one_minus_dst_color, GL_one
+		map clamp nopicmip linear guis/assets/icons/diamond_frame_sml.tga
+	}
+	{
+		blend blend
+		map clamp nopicmip linear guis/assets/icons/ident01.tga
+		rotate time * 0.3
+		alpha parm4
+	}	
+}
+
+material hud/icons/missionsystem/mis_sml
+{
+	sort gui
+	{
+		blend gl_one, gl_one_minus_src_alpha
+		map clamp nopicmip linear guis/assets/icons/square_frame_sml.tga
+		colored
+	}
+	{
+		blend gl_one_minus_dst_color, GL_one
+		map clamp nopicmip linear guis/assets/icons/square_frame_sml.tga
+	}
+	{
+		blend blend
+		map clamp nopicmip linear guis/assets/icons/ident01.tga
+		rotate time * 0.3
+		alpha parm4
+	}		
+}
+
+material hud/icons/missionsystem/tsk_sml
+{
+	sort gui
+	{
+		blend gl_one, gl_one_minus_src_alpha
+		map clamp nopicmip linear guis/assets/icons/circle_frame_sml.tga
+		colored
+	}
+	{
+		blend gl_one_minus_dst_color, GL_one
+		map clamp nopicmip linear guis/assets/icons/circle_frame_sml.tga
+	}
+	{
+		blend blend
+		map clamp nopicmip linear guis/assets/icons/ident01.tga
+		rotate time * 0.3
+		alpha parm4
+	}		
+}
+
+material hud/icons/missionsystem/obj_fill_material
+{
+	sort gui
+	{
+		vertexAlpha
+		blend gl_src_alpha, gl_one_minus_src_alpha
+		map clamp nopicmip linear guis/assets/icons/diamond_white_frame.tga
+	}
+}
+
+material hud/icons/missionsystem/obj_highlight
+{
+	sort gui
+	{
+		blend blend
+		map clamp nopicmip linear guis/assets/icons/ident01.tga
+		rotate time * 0.3
+		vertexAlpha
+	}
+}	

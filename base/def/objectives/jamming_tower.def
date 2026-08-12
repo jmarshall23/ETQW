@@ -1,0 +1,13 @@
+
+entityDef jammer_tower_effects_idle {
+	"inherit"				"func_synced_fx"
+	"fx"					"effects/objectives/jamming_tower_idle"
+	"start_on"				"1"
+	"loop"					"1"
+	"no_direction"			"1"
+}
+
+entityDef jammer_tower_effects_shutdown {
+	"inherit"				"misc_particle_trigger"
+	"fx_triggered_1"		"effects/objectives/jamming_tower_shutdown"
+}

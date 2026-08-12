@@ -1,0 +1,22 @@
+
+#ifndef __TOOLTIPS_INCLUDES__
+#define __TOOLTIPS_INCLUDES__
+
+$template templates/tooltips/hud_highlight( GuiEvent )
+	timeline {
+		onTime 0			guiEvent GuiEvent
+		onTime end			guiEvent ""
+	}
+$endtemplate
+
+$template templates/tooltips/hud_highlight_pause( PercentPause, GuiEvent )
+	timeline {
+		onTime 0			guiEvent GuiEvent
+		onTime PercentPause	pause
+		
+		onTime end			guiEvent ""
+		onTime end			unpause
+	}
+$endtemplate
+
+#endif

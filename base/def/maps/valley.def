@@ -1,0 +1,111 @@
+// ----------------------------------------------------
+// Objectives for Valley
+// ----------------------------------------------------
+entityDef gameplay_valley_bridge_stage1 {
+	"inherit"						"constructible_base"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"EDF Bridge"
+	"editor_var health"				"Health of the Construction, 0 is nonbreakable. Default is 5000"
+	"editor_var construct_time"		"Time in seconds to construct. Default is 10"
+	"editor_var fizzle_time"		"Time in seconds for an unfinished construction to fade out. Default 30s"
+	"editor_var skin_construct"		"Skin used during construction. Default is deployEffect"
+
+	"team"							"gdf"
+
+	"model"							"models/mapobjects/bridge/bridge_valley_ramp.lwo"
+	"cm_model"						"models/mapobjects/bridge/bridge_valley_ramp.lwo"
+
+	"collection_he"					"he"
+}
+
+entityDef gameplay_valley_bridge_stage2 {
+	"inherit"						"constructible_base"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"EDF Bridge"
+	"editor_var health"				"Health of the Construction, 0 is nonbreakable. Default is 5000"
+	"editor_var construct_time"		"Time in seconds to construct. Default is 10"
+	"editor_var fizzle_time"		"Time in seconds for an unfinished construction to fade out. Default 30s"
+	"editor_var skin_construct"		"Skin used during construction. Default is deployEffect"
+
+	"team"							"gdf"
+
+	"model"							"models/mapobjects/bridge/bridge_valley.lwo"
+	"cm_model"						"models/mapobjects/bridge/bridge_valley.lwo"
+}
+
+entityDef gameplay_valley_bridge_destroyed {
+	"inherit"						"constructible_base"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"EDF Bridge"
+	"editor_var health"				"Health of the Construction, 0 is nonbreakable. Default is 5000"
+	"editor_var construct_time"		"Time in seconds to construct. Default is 10"
+	"editor_var fizzle_time"		"Time in seconds for an unfinished construction to fade out. Default 30s"
+	"editor_var skin_construct"		"Skin used during construction. Default is deployEffect"
+
+	"team"							"gdf"
+
+	"model"							"models/mapobjects/bridge/bridge_valley_destroyed.lwo"
+	"cm_model"						"models/mapobjects/bridge/bridge_valley_destroyed.lwo"
+}
+
+
+entityDef gameplay_valley_bridge_fixer {
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"GDF Bridge Fixer"
+
+	"inherit"						"constructible_base"
+	"team"							"gdf"
+
+	"model"							"models/mapobjects/bridge/assaultbridge_fixer.lwo"
+	"cm_model"						"models/mapobjects/bridge/assaultbridge_fixer.lwo"
+}
+
+entityDef gameplay_valley_bridge_frame {
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"GDF Bridge Frame"
+
+	"inherit"						"constructible_base"
+	"team"							"gdf"
+
+	"model"							"models/mapobjects/bridge/valley_assault_bridge_stage_1.lwo"
+	"cm_model"						"models/mapobjects/bridge/valley_assault_bridge_stage_1.lwo"
+}
+
+entityDef gameplay_valley_bridge_platform {
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"GDF Bridge Platform"
+
+	"inherit"						"constructible_base"
+	"team"							"gdf"
+
+	"model"							"models/mapobjects/bridge/valley_assault_bridge_stage_2.lwo"
+	"cm_model"						"models/mapobjects/bridge/valley_assault_bridge_stage_2.lwo"
+}
+
+entityDef gameplay_valley_bridge_constructed {
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"GDF Bridge Constructed"
+
+	"inherit"						"constructible_base"
+	"team"							"gdf"
+
+	"model"							"models/mapobjects/bridge/valley_assault_bridge_complete.lwo"
+	"cm_model"						"models/mapobjects/bridge/valley_assault_bridge_complete.lwo"
+}

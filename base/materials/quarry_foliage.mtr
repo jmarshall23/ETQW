@@ -1,0 +1,18 @@
+material stuff/foliage/quarry/dead_grass_foliage
+{
+	twoSided
+	nonsolid
+	sort decal
+	{
+		noiseMap textures/noisey.tga
+		program stuff/grass_alphatest
+		writeDepth
+		grass_times time * 0.1, time, time, time
+		diffuseMap clamp stuff/foliage/snow/twigs_d.tga
+		alphatest 0.5
+		//vertexcolor
+	}	
+	translucent // this goes AFTER the stages or it will be disabled by the shader parsing!
+	deform clusterTransform	
+	twoSided
+}

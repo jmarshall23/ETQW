@@ -1,0 +1,468 @@
+// =======================================
+// GENERAL USE CLIP for players and vehicles
+// =======================================
+material textures/common/clip {
+	qer_editorimage textures/common/clip.tga
+	noimpact
+	nonsolid
+	playerclip
+	flyerhiveclip
+	vehicleclip
+	noshadows
+	collision
+
+	surfaceType	"none"
+}
+
+material textures/common/clip_metal {
+	qer_editorimage textures/common/clip_metal.tga
+	noimpact
+	nonsolid
+	playerclip
+	flyerhiveclip
+	vehicleclip
+	noshadows
+	collision
+
+	surfaceType	"metal"
+}
+
+material textures/common/clip_noflyer {
+	qer_editorimage textures/common/clip_noflyer.tga
+	noimpact
+	nonsolid
+	playerclip
+	vehicleclip
+	noshadows
+	collision
+
+	surfaceType	"none"
+}
+// =======================================
+// PLAYER CLIP
+// =======================================
+template templates/player_clip {
+
+	text {
+		qer_editorimage textures/common/player_clip.tga
+		noimpact
+		nonsolid
+		playerclip
+		flyerhiveclip
+		noshadows
+		collision
+		surfaceType	"SurfaceType"
+	}
+
+	parameters	< SurfaceType = "none" >
+}
+
+material textures/common/player_clip {
+	useTemplate templates/player_clip <
+	>
+}
+
+material textures/common/player_clip_metal {
+	useTemplate templates/player_clip <
+		"metal"
+	>
+}
+
+material textures/common/player_clip_wood {
+	useTemplate templates/player_clip <
+		"wood"
+	>
+}
+
+material textures/common/player_clip_concrete {
+	useTemplate templates/player_clip <
+		"concrete"
+	>
+}
+
+material textures/common/player_clip_glass {
+	useTemplate templates/player_clip <
+		"glass"
+	>
+}
+
+// =======================================
+// VEHICLE CLIP
+// =======================================
+template templates/vehicle_clip {
+
+	text {
+		qer_editorimage textures/common/vehicle_clip.tga
+		nonsolid
+		vehicleclip
+		noshadows
+		surfaceType	"SurfaceType"
+		collision
+	}
+
+	parameters	< SurfaceType = "none" >
+}
+
+material textures/common/vehicle_clip {
+	useTemplate templates/vehicle_clip <
+	>
+}
+
+material textures/common/vehicle_clip_metal {
+	useTemplate templates/vehicle_clip <
+		"metal"
+	>
+}
+
+material textures/common/vehicle_clip_wood {
+	useTemplate templates/vehicle_clip <
+		"wood"
+	>
+}
+
+material textures/common/vehicle_clip_concrete {
+	useTemplate templates/vehicle_clip <
+		"concrete"
+	>
+}
+
+material textures/common/vehicle_clip_snow {
+	useTemplate templates/vehicle_clip <
+		"snow"
+	>
+}
+
+// =======================================
+// VEHICLE + PLAYER CLIP
+// =======================================
+template templates/vehicleplayer_clip {
+
+	text {
+		qer_editorimage textures/common/clipplus.tga
+		noimpact
+		nonsolid
+		playerclip
+		flyerhiveclip
+		vehicleclip
+		moveableclip
+		noshadows
+		collision
+		surfaceType	"SurfaceType"
+	}
+
+	parameters	< SurfaceType = "none" >
+}
+
+material textures/common/vehicleplayer_clip {
+	useTemplate templates/vehicleplayer_clip <
+	>
+}
+
+material textures/common/vehicleplayer_clip_metal {
+	useTemplate templates/vehicleplayer_clip <
+		"metal"
+	>
+}
+
+material textures/common/vehicleplayer_clip_wood {
+	useTemplate templates/vehicleplayer_clip <
+		"wood"
+	>
+}
+
+material textures/common/vehicleplayer_clip_concrete {
+	useTemplate templates/vehicleplayer_clip <
+		"concrete"
+	>
+}
+
+material textures/common/vehicleplayer_clip_glass {
+	useTemplate templates/vehicleplayer_clip <
+		"glass"
+	>
+}
+
+material textures/common/vehicleplayer_clip_snow {
+	useTemplate templates/vehicleplayer_clip <
+		"snow"
+	>
+}
+
+// =======================================
+// WALKER CLIP
+// =======================================
+template templates/walker_clip {
+
+	text {
+		qer_editorimage textures/common/walker_clip.tga
+		nonsolid
+		walkerclip
+		noshadows
+		surfaceType	"SurfaceType"
+		collision
+	}
+
+	parameters	< SurfaceType = "none" >
+}
+
+material textures/common/walker_clip {
+	useTemplate templates/walker_clip <
+	>
+}
+
+material textures/common/walker_clip_metal {
+	useTemplate templates/walker_clip <
+		"metal"
+	>
+}
+
+material textures/common/walker_clip_wood {
+	useTemplate templates/walker_clip <
+		"wood"
+	>
+}
+
+material textures/common/walker_clip_concrete {
+	useTemplate templates/walker_clip <
+		"concrete"
+	>
+}
+
+material textures/common/walker_clip_snow {
+	useTemplate templates/walker_clip <
+		"snow"
+	>
+}
+
+// =======================================
+// COLLISION
+// =======================================
+template templates/collision {
+
+	text {
+		qer_editorimage textures/common/collision.tga
+		noshadows
+		collision
+		vertexPositionOnly
+		surfaceType	"SurfaceType"
+	}
+
+	parameters	< SurfaceType = "none" >
+}
+
+material textures/common/collision {
+	useTemplate templates/collision <
+	>
+}
+
+material textures/common/collision_concrete {
+	forceOverlays
+	useTemplate templates/collision <
+		"concrete"
+	>
+}
+
+material textures/common/collision_glass {
+	forceOverlays
+	useTemplate templates/collision <
+		"glass"
+	>
+}
+
+material textures/common/collision_leaves {
+	qer_editorimage textures/common/collision_leaves.tga
+	collision
+	nonsolid
+	projectileclip
+	noshadows
+
+	surfaceType	"leaves"
+}
+
+material textures/common/collision_pine {
+	qer_editorimage textures/common/collision_leaves.tga
+	collision
+	nonsolid
+	projectileclip
+	noshadows
+
+	surfaceType	"pine"
+}
+
+material textures/common/collision_metal {
+	forceOverlays
+	useTemplate templates/collision <
+		"metal"
+	>
+}
+
+material textures/common/collision_snow {
+	forceOverlays
+	useTemplate templates/collision <
+		"snow"
+	>
+}
+
+material textures/common/collision_wood {
+	forceOverlays
+	useTemplate templates/collision <
+		"wood"
+	>
+}
+
+// =======================================
+// COLLISION WATER (for special cases)
+// =======================================
+
+// used when you don't need a water volume but still need the fx
+material textures/common/collision_water {
+	qer_editorimage textures/common/collision_water
+	surfaceType "water"
+}
+
+// used when you don't need a water volume but still need the fx
+// (this version uses smaller explosion fx than the above)
+material textures/common/collision_water_interior {
+	qer_editorimage textures/common/collision_water
+	surfaceType "water_interior"
+}
+
+// =======================================
+// RENDERMODEL CLIP
+// =======================================
+template templates/rendermodel_clip {
+
+	text {
+		qer_editorimage textures/common/rendermodel_clip.tga
+		collision
+		nonsolid
+		rendermodelclip
+		noshadows
+		surfaceType	"SurfaceType"
+	}
+
+	parameters	< SurfaceType = "none" >
+}
+
+material textures/common/rendermodel_clip {
+	forceOverlays
+	useTemplate templates/rendermodel_clip <
+	>
+}
+
+material textures/common/rendermodel_clip_metal {
+	forceOverlays
+	useTemplate templates/rendermodel_clip <
+		"metal"
+	>
+}
+
+material textures/common/rendermodel_clip_wood {
+	forceOverlays
+	useTemplate templates/rendermodel_clip <	
+		"wood"
+	>
+}
+
+material textures/common/rendermodel_clip_concrete {
+	forceOverlays
+	useTemplate templates/rendermodel_clip <
+		"concrete"
+	>
+}
+
+material textures/common/rendermodel_clip_glass {
+	forceOverlays
+	useTemplate templates/rendermodel_clip <
+		"glass"
+	>
+}
+
+material textures/common/rendermodel_clip_snow {
+	forceOverlays
+	useTemplate templates/rendermodel_clip <
+		"snow"
+	>
+}
+
+// =======================================
+// RENDERMODEL + PLAYER CLIP
+// =======================================
+template templates/rendermodel_player_clip {
+
+	text {
+		qer_editorimage textures/common/collision.tga
+		noshadows
+		collision
+		nonsolid
+		rendermodelclip
+		playerclip
+		flyerhiveclip
+		vertexPositionOnly
+		surfaceType	"SurfaceType"
+	}
+
+	parameters	< SurfaceType = "none" >
+}
+
+material textures/common/rendermodel_player_clip {
+	useTemplate templates/rendermodel_player_clip <
+	>
+}
+
+material textures/common/rendermodel_player_clip_metal {
+	useTemplate templates/rendermodel_player_clip <
+		"metal"
+	>
+}
+
+material textures/common/rendermodel_player_clip_wood {
+	useTemplate templates/rendermodel_player_clip <
+		"wood"
+	>
+}
+
+material textures/common/rendermodel_player_clip_concrete {
+	useTemplate templates/rendermodel_player_clip <
+		"concrete"
+	>
+}
+
+
+// =======================================
+// PROJECTILE CLIP
+// =======================================
+
+// a clip that allows bullets to pass through, but not rockets, etc.
+material textures/common/projectile_clip {
+	qer_editorimage textures/common/projectile_clip.tga
+	nonsolid
+	collision
+	playerclip
+	flyerhiveclip
+	vehicleclip
+	projectileclip
+	noshadows
+
+	surfaceType	"none"
+}
+
+material textures/common/explosion_clip {
+	qer_editorimage textures/common/explosion_clip.tga
+	nonsolid
+	collision
+	explosionclip
+	noshadows
+
+	surfaceType	"none"
+}
+
+material textures/common/collision_clip_concrete {
+	qer_editorimage textures/common/collision_concrete.tga
+	collision
+	nonsolid
+	projectileclip
+	noshadows
+
+	surfaceType	"concrete"
+}

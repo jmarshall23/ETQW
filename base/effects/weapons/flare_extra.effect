@@ -1,0 +1,1140 @@
+effect effects/weapons/flare_extra
+{
+	size	2912
+
+	cutOffDistance	20000
+
+	light "light"
+	{
+		locked
+
+		light
+		{
+			duration	0.5,0.5
+			blend	add
+			material	"lights/impflash"
+			trailRepeat	1
+
+			start
+			{
+				position { point -150,0,0 }
+				size { point 500,500,500 }
+				tint { point 1,0.811765,0.47451 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+			lineHit
+		}
+	}
+	emitter "flash_front_left2"
+	{
+		duration	5,5
+		density		1,1
+
+		sprite
+		{
+			duration	5,5
+			blend	add
+			material	"textures/particles/flash"
+			gravity		0.3,0.3
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,550,0 }
+				size { line 40,40,50,50 }
+				tint { point 1,0.882353,0.603922 }
+				offset { point 0,0,25 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 8,8 }
+				tint { envelope senetable3 count 4,4,4 }
+				fade { envelope senetable3 count 4 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 10,10,20,20 }
+				tint { point 0.34902,0.27451,0 }
+				rotate { point 5.55556 }
+			}
+			lineHit
+		}
+	}
+	emitter "flash_front_left3"
+	{
+		duration	5,5
+		density		1,1
+
+		sprite
+		{
+			duration	5,5
+			blend	add
+			material	"textures/particles/flash"
+			gravity		0.3,0.3
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,550,0 }
+				size { line 100,100,300,300 }
+				tint { point 0.603922,0.364706,0 }
+				fade { point 0.5 }
+				offset { point 0,0,25 }
+			}
+
+			motion
+			{
+				size { envelope sargetable3 count 8,8 }
+				tint { envelope threestage count 2,2,2 }
+				fade { envelope senetable3 count 4 offset 2 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 30,30,50,50 }
+				tint { line 1,0.819608,0.458824,1,1,1 }
+				rotate { point 4 }
+			}
+			lineHit
+		}
+	}
+	emitter "trail_left"
+	{
+		duration	1,1
+		count		20,20
+		attenuateEmitter
+		attenuation	400,400
+
+		linked
+		{
+			duration	1,1
+			material	"textures/particles/trail_test"
+			gravity		0.3,0.3
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,550,0 }
+				acceleration { point 50,0,0 }
+				size { point 25 }
+				fade { line 0.3,0.8 }
+				offset { point 0,0,25 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope linear }
+				fade { envelope jrad_convexfade }
+			}
+
+			end
+			{
+				size { point 15 }
+				tint { point 1,1,1 }
+			}
+			lineHit
+		}
+	}
+	emitter "flash_front_right"
+	{
+		duration	5,5
+		density		1,1
+
+		sprite
+		{
+			duration	5,5
+			blend	add
+			material	"textures/particles/flash"
+			gravity		0.3,0.3
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,-550,0 }
+				size { line 40,40,50,50 }
+				tint { point 1,0.882353,0.603922 }
+				offset { point 0,0,25 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 8,8 }
+				tint { envelope senetable3 count 4,4,4 }
+				fade { envelope senetable3 count 4 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 10,10,20,20 }
+				tint { point 0.34902,0.27451,0 }
+				rotate { point -5.55556 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "flash_front_right2"
+	{
+		duration	5,5
+		density		1,1
+
+		sprite
+		{
+			duration	5,5
+			blend	add
+			material	"textures/particles/flash"
+			gravity		0.3,0.3
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,-550,0 }
+				size { line 100,100,300,300 }
+				tint { point 0.603922,0.364706,0 }
+				fade { point 0.5 }
+				offset { point 0,0,25 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 8,8 }
+				tint { envelope threestage count 2,2,2 }
+				fade { envelope senetable3 count 4 offset 2 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 30,30,50,50 }
+				tint { line 1,0.819608,0.458824,1,1,1 }
+				rotate { point -4 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "trail_right"
+	{
+		start		0.1,0.1
+		duration	1,1
+		count		20,20
+		attenuateEmitter
+		attenuation	400,400
+
+		linked
+		{
+			duration	1,1
+			generatedLine
+			material	"textures/particles/trail_test"
+			gravity		0.3,0.3
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 0,-550,0,0,-500,0 }
+				size { point 25 }
+				fade { line 0.3,0.8 }
+				offset { point 0,0,25 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope linear }
+				fade { envelope jrad_convexfade }
+			}
+
+			end
+			{
+				size { point 15 }
+				tint { point 1,1,1 }
+			}
+			lineHit
+		}
+	}
+	emitter "smoke front3"
+	{
+		duration	0.5,0.5
+		count		3,3
+		attenuateEmitter
+		attenuation	250,250
+
+		sprite
+		{
+			duration	2,9
+			material	"particles/dustcloud_02_litsmoke"
+		parentvelocity
+			gravity		-0.1,-0.1
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -5,-5,-40,5,5,-40 }
+				velocity { box -1,-100,-5,1,-100,-70 }
+				acceleration { point 0,-150,0 }
+				friction { point 0.001,0,0 }
+				size { point 15,15 }
+				fade { line 0.3,1 }
+				offset { point 0,-20,25 }
+				rotate { box 0,0.125 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope linear }
+				fade { envelope rr2_convexfade_start_at_1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 100,100 }
+				tint { point 0.294118,0.294118,0.294118 }
+				rotate { box -0.25,0.25 }
+			}
+			lineHit
+		}
+	}
+	emitter "smoke front4"
+	{
+		duration	0.5,0.5
+		count		3,3
+		attenuateEmitter
+		attenuation	250,250
+
+		sprite
+		{
+			duration	2,4
+			material	"particles/dustcloud_02_litsmoke"
+		parentvelocity
+			gravity		-0.1,-0.1
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -5,-5,-40,5,5,-40 }
+				velocity { point 0,100,0 }
+				acceleration { point 0,150,0 }
+				friction { point 0.001,0,0 }
+				size { point 15,15 }
+				fade { line 0.3,1 }
+				offset { point 0,-20,25 }
+				rotate { box 0,0.125 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope linear }
+				fade { envelope rr2_convexfade_start_at_1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 100,100 }
+				tint { point 0.294118,0.294118,0.294118 }
+				rotate { box -0.25,0.25 }
+			}
+			lineHit
+		}
+	}
+	spawner "right_flare_line"
+	{
+		count		1,1
+
+		line
+		{
+			duration	5,5
+			blend	add
+			material	"particles/flash/muzzleflash_side1a"
+			gravity		0.3,0.3
+			flipNormal
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,-550,0 }
+				size { box 16,8 }
+				tint { line 1,0.67451,0.0156863,1,0.054902,0.054902 }
+				offset { point 0,0,25 }
+				length { point -40,0,0 }
+			}
+
+			motion
+			{
+				fade { envelope flashtable }
+			}
+
+			end
+			{
+				fade { point 0.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "left_flare_line"
+	{
+		count		1,1
+
+		line
+		{
+			duration	5,5
+			blend	add
+			material	"particles/flash/muzzleflash_side1a"
+			gravity		0.3,0.3
+			flipNormal
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,550,0 }
+				size { box 16,8 }
+				tint { line 1,0.67451,0.0156863,1,0.054902,0.054902 }
+				offset { point 0,0,25 }
+				length { point -40,0,0 }
+			}
+
+			motion
+			{
+				fade { envelope flashtable }
+			}
+
+			end
+			{
+				fade { point 0.5 }
+			}
+			lineHit
+		}
+	}
+	emitter "trail_center"
+	{
+		start		0.1,0.1
+		duration	1,1
+		count		40,40
+		attenuateEmitter
+		attenuation	400,400
+
+		linked
+		{
+			duration	1,1
+			material	"textures/particles/trail_test"
+			trailRepeat	1
+
+			start
+			{
+				position { spiral -2,-2,-2,2,2,2,64 cone }
+				velocity { point 0,0,-300 }
+				size { point 25 }
+				fade { line 0.3,0.5 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				fade { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 15 }
+			}
+			lineHit
+		}
+	}
+	emitter "flash_front_center"
+	{
+		duration	5,5
+		density		1,1
+
+		sprite
+		{
+			duration	5,5
+			blend	add
+			material	"textures/particles/flash"
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,0,-300 }
+				size { line 40,40,50,50 }
+				tint { point 1,0.882353,0.603922 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 8,8 }
+				tint { envelope senetable3 count 4,4,4 }
+				fade { envelope senetable3 count 4 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 10,10,20,20 }
+				tint { point 0.34902,0.27451,0 }
+				rotate { point 5.55556 }
+			}
+			lineHit
+		}
+	}
+	emitter "flash_front_center2"
+	{
+		duration	5,5
+		density		1,1
+
+		sprite
+		{
+			duration	5,5
+			blend	add
+			material	"textures/particles/flash"
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,0,-300 }
+				size { line 100,100,300,300 }
+				tint { point 0.611765,0.368627,0 }
+				fade { point 0.5 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 8,8 }
+				tint { envelope threestage count 2,2,2 }
+				fade { envelope senetable3 count 4 offset 2 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 30,30,50,50 }
+				tint { line 1,0.819608,0.458824,1,1,1 }
+				rotate { point 4 }
+			}
+			lineHit
+		}
+	}
+	spawner "center_flare_line"
+	{
+		count		1,1
+
+		line
+		{
+			duration	5,5
+			blend	add
+			material	"particles/flash/muzzleflash_side1a"
+			flipNormal
+			trailRepeat	1
+
+			start
+			{
+				position { point -20,0,0 }
+				velocity { point 0,0,300 }
+				size { box 16,8 }
+				tint { line 1,0.67451,0.0156863,1,0.054902,0.054902 }
+				length { point -40,0,0 }
+			}
+
+			motion
+			{
+				fade { envelope flashtable }
+			}
+
+			end
+			{
+				fade { point 0.5 }
+			}
+			lineHit
+		}
+	}
+	sound "Eject"
+	{
+		soundShader	"sounds/vehicles/anansi/chaff_fire"
+		//volume	1,3
+		freqshift	1,0.7
+	}
+}
+
+effect effects/weapons/flare_extra_new
+{
+	size	2912
+
+	cutOffDistance	20000
+
+	light "light"
+	{
+		locked
+
+		light
+		{
+			duration	0.5,0.5
+			blend	add
+			material	"lights/impflash"
+			trailRepeat	1
+
+			start
+			{
+				position { point -150,0,0 }
+				size { point 500,500,500 }
+				tint { point 1,0.811765,0.47451 }
+			}
+
+			motion
+			{
+				tint { envelope linear }
+				fade { envelope linear }
+			}
+			lineHit
+		}
+	}
+	emitter "flash_front_left2"
+	{
+		duration	5,5
+		density		1,1
+
+		sprite
+		{
+			duration	5,5
+			blend	add
+			material	"textures/particles/flash"
+			gravity		0.3,0.3
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,550,0 }
+				size { line 40,40,50,50 }
+				tint { point 1,0.882353,0.603922 }
+				offset { point 0,0,25 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 8,8 }
+				tint { envelope senetable3 count 4,4,4 }
+				fade { envelope senetable3 count 4 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 10,10,20,20 }
+				tint { point 0.34902,0.27451,0 }
+				rotate { point 5.55556 }
+			}
+			lineHit
+		}
+	}
+	emitter "flash_front_left3"
+	{
+		duration	5,5
+		density		1,1
+
+		sprite
+		{
+			duration	5,5
+			blend	add
+			material	"textures/particles/flash"
+			gravity		0.3,0.3
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,550,0 }
+				size { line 70,70,300,300 }
+				tint { point 0.607843,0.368627,0 }
+				fade { point 0.3 }
+				offset { point 0,0,25 }
+			}
+
+			motion
+			{
+				size { envelope sargetable3 count 8,8 }
+				tint { envelope threestage count 2,2,2 }
+				fade { envelope senetable3 count 4 offset 2 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 30,30,50,50 }
+				tint { point 1,0.819608,0.458824 }
+				rotate { point 4 }
+			}
+			lineHit
+		}
+	}
+	emitter "trail_left"
+	{
+		duration	1,1
+		count		20,20
+		attenuateEmitter
+		attenuation	400,400
+
+		linked
+		{
+			duration	1,1
+			material	"textures/particles/trail_test"
+			gravity		0.3,0.3
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,550,0 }
+				acceleration { point 50,0,0 }
+				size { point 25 }
+				fade { line 0.3,0.8 }
+				offset { point 0,0,25 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope linear }
+				fade { envelope jrad_convexfade }
+			}
+
+			end
+			{
+				size { point 15 }
+				tint { point 1,1,1 }
+			}
+			lineHit
+		}
+	}
+	emitter "flash_front_right"
+	{
+		duration	5,5
+		density		1,1
+
+		sprite
+		{
+			duration	5,5
+			blend	add
+			material	"textures/particles/flash"
+			gravity		0.3,0.3
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,-550,0 }
+				size { line 40,40,50,50 }
+				tint { point 1,0.882353,0.603922 }
+				offset { point 0,0,25 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 8,8 }
+				tint { envelope senetable3 count 4,4,4 }
+				fade { envelope senetable3 count 4 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 10,10,20,20 }
+				tint { point 0.34902,0.27451,0 }
+				rotate { point -5.55556 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "flash_front_right2"
+	{
+		duration	5,5
+		density		1,1
+
+		sprite
+		{
+			duration	5,5
+			blend	add
+			material	"textures/particles/flash"
+			gravity		0.3,0.3
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,-550,0 }
+				size { line 70,70,300,300 }
+				tint { point 0.607843,0.368627,0 }
+				fade { point 0.3 }
+				offset { point 0,0,25 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 8,8 }
+				tint { envelope threestage count 2,2,2 }
+				fade { envelope senetable3 count 4 offset 2 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 30,30,50,50 }
+				tint { point 1,0.819608,0.458824 }
+				rotate { point -4 relative }
+			}
+			lineHit
+		}
+	}
+	emitter "trail_right"
+	{
+		start		0.1,0.1
+		duration	1,1
+		count		20,20
+		attenuateEmitter
+		attenuation	400,400
+
+		linked
+		{
+			duration	1,1
+			generatedLine
+			material	"textures/particles/trail_test"
+			gravity		0.3,0.3
+			trailRepeat	1
+
+			start
+			{
+				velocity { box 0,-550,0,0,-500,0 }
+				size { point 25 }
+				fade { line 0.3,0.8 }
+				offset { point 0,0,25 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope linear }
+				fade { envelope jrad_convexfade }
+			}
+
+			end
+			{
+				size { point 15 }
+				tint { point 1,1,1 }
+			}
+			lineHit
+		}
+	}
+	emitter "smoke front3"
+	{
+		duration	0.5,0.5
+		count		3,3
+		attenuateEmitter
+		attenuation	250,250
+
+		sprite
+		{
+			duration	2,9
+			material	"particles/dustcloud_02_litsmoke"
+		parentvelocity
+			gravity		-0.1,-0.1
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -5,-5,-40,5,5,-40 }
+				velocity { box -1,-100,-5,1,-100,-70 }
+				acceleration { point 0,-150,0 }
+				friction { point 0.001,0,0 }
+				size { point 15,15 }
+				fade { line 0.3,1 }
+				offset { point 0,-20,25 }
+				rotate { box 0,0.125 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope linear }
+				fade { envelope rr2_convexfade_start_at_1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 100,100 }
+				tint { point 0.294118,0.294118,0.294118 }
+				rotate { box -0.25,0.25 }
+			}
+			lineHit
+		}
+	}
+	emitter "smoke front4"
+	{
+		duration	0.5,0.5
+		count		3,3
+		attenuateEmitter
+		attenuation	250,250
+
+		sprite
+		{
+			duration	2,4
+			material	"particles/dustcloud_02_litsmoke"
+		parentvelocity
+			gravity		-0.1,-0.1
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -5,-5,-40,5,5,-40 }
+				velocity { point 0,100,0 }
+				acceleration { point 0,150,0 }
+				friction { point 0.001,0,0 }
+				size { point 15,15 }
+				fade { line 0.3,1 }
+				offset { point 0,-20,25 }
+				rotate { box 0,0.125 }
+			}
+
+			motion
+			{
+				size { envelope shamus_exp_1minusx/x2 }
+				tint { envelope linear }
+				fade { envelope rr2_convexfade_start_at_1 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 100,100 }
+				tint { point 0.294118,0.294118,0.294118 }
+				rotate { box -0.25,0.25 }
+			}
+			lineHit
+		}
+	}
+	spawner "right_flare_line"
+	{
+		count		1,1
+
+		line
+		{
+			duration	5,5
+			blend	add
+			material	"particles/flash/muzzleflash_side1a"
+			gravity		0.3,0.3
+			flipNormal
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,-550,0 }
+				size { box 16,8 }
+				tint { line 1,0.67451,0.0156863,1,0.054902,0.054902 }
+				offset { point 0,0,25 }
+				length { point -40,0,0 }
+			}
+
+			motion
+			{
+				fade { envelope flashtable }
+			}
+
+			end
+			{
+				fade { point 0.5 }
+			}
+			lineHit
+		}
+	}
+	spawner "left_flare_line"
+	{
+		count		1,1
+
+		line
+		{
+			duration	5,5
+			blend	add
+			material	"particles/flash/muzzleflash_side1a"
+			gravity		0.3,0.3
+			flipNormal
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,550,0 }
+				size { box 16,8 }
+				tint { line 1,0.67451,0.0156863,1,0.054902,0.054902 }
+				offset { point 0,0,25 }
+				length { point -40,0,0 }
+			}
+
+			motion
+			{
+				fade { envelope flashtable }
+			}
+
+			end
+			{
+				fade { point 0.5 }
+			}
+			lineHit
+		}
+	}
+	emitter "trail_center"
+	{
+		start		0.1,0.1
+		duration	1,1
+		count		40,40
+		attenuateEmitter
+		attenuation	400,400
+
+		linked
+		{
+			duration	1,1
+			material	"textures/particles/trail_test"
+			trailRepeat	1
+
+			start
+			{
+				position { spiral -2,-2,-2,2,2,2,64 cone }
+				velocity { point 0,0,-300 }
+				size { point 25 }
+				fade { line 0.3,0.5 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				fade { envelope jrad_concavefade }
+			}
+
+			end
+			{
+				size { point 15 }
+			}
+			lineHit
+		}
+	}
+	emitter "flash_front_center"
+	{
+		duration	5,5
+		density		1,1
+
+		sprite
+		{
+			duration	5,5
+			blend	add
+			material	"textures/particles/flash"
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,0,-300 }
+				size { line 40,40,50,50 }
+				tint { point 1,0.882353,0.603922 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 8,8 }
+				tint { envelope senetable3 count 4,4,4 }
+				fade { envelope senetable3 count 4 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 10,10,20,20 }
+				tint { point 0.34902,0.27451,0 }
+				rotate { point 5.55556 }
+			}
+			lineHit
+		}
+	}
+	emitter "flash_front_center2"
+	{
+		duration	5,5
+		density		1,1
+
+		sprite
+		{
+			duration	5,5
+			blend	add
+			material	"textures/particles/flash"
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,0,-300 }
+				size { line 70,70,300,300 }
+				tint { point 0.615686,0.372549,0 }
+				fade { point 0.3 }
+			}
+
+			motion
+			{
+				size { envelope senetable3 count 8,8 }
+				tint { envelope threestage count 2,2,2 }
+				fade { envelope senetable3 count 4 offset 2 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 30,30,50,50 }
+				tint { point 1,0.819608,0.458824 }
+				rotate { point 4 }
+			}
+			lineHit
+		}
+	}
+	spawner "center_flare_line"
+	{
+		count		1,1
+
+		line
+		{
+			duration	5,5
+			blend	add
+			material	"particles/flash/muzzleflash_side1a"
+			flipNormal
+			trailRepeat	1
+
+			start
+			{
+				position { point -20,0,0 }
+				velocity { point 0,0,300 }
+				size { box 16,8 }
+				tint { line 1,0.67451,0.0156863,1,0.054902,0.054902 }
+				length { point -40,0,0 }
+			}
+
+			motion
+			{
+				fade { envelope flashtable }
+			}
+
+			end
+			{
+				fade { point 0.5 }
+			}
+			lineHit
+		}
+	}
+	sound "Eject"
+	{
+		soundShader	"sounds/vehicles/anansi/chaff_fire"
+//		volume	1,3
+		freqshift	1,0.7
+	}
+}
+
+
+
+
+

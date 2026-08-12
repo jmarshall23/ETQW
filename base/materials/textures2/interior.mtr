@@ -1,0 +1,272 @@
+template templates/refineryinterior {
+	parameters	< 
+		DiffuseImageParam,		// Alpha channel defines the "dirty" bits where no glass should be drawn
+		BumpImageParam,
+		SpecularImageParam,
+		ReflectionPower,		// How angle dependent the reflection is
+		ReflectionBrightness,	// Muliply the reflection cubemap with this brightness value
+		BaseReflection,			// Always reflect with this amount even if looking straight at the surface
+		dtlMult = "4,4,0,0"
+	>
+	
+	text {
+			surfacetype "metal"
+			{
+			
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			specularmap	SpecularImageParam
+			vertexColor
+
+			diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+			bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+			specDetailMap			textures/detail/bump/metal_detail01_d.tga
+			detailMult	dtlMult
+			}
+		{
+			if cvar com_gpuSpec
+			blend blend
+			program sfx/windowglass 
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			parameters ReflectionPower, ReflectionBrightness, BaseReflection
+		}
+	}
+}
+
+template templates/refineryinterior_ns {
+	parameters	< 
+		DiffuseImageParam,		// Alpha channel defines the "dirty" bits where no glass should be drawn
+		BumpImageParam,
+		SpecularImageParam,
+		ReflectionPower,		// How angle dependent the reflection is
+		ReflectionBrightness,	// Muliply the reflection cubemap with this brightness value
+		BaseReflection,			// Always reflect with this amount even if looking straight at the surface
+		dtlMult = "4,4,0,0"
+	>
+	
+	text {
+			surfacetype "metal"
+			noshadows
+			{
+			
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			specularmap	SpecularImageParam
+			vertexColor
+
+			diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+			bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+			specDetailMap			textures/detail/bump/metal_detail01_d.tga
+			detailMult	dtlMult
+			}
+		{
+			if cvar com_gpuSpec
+			blend blend
+			program sfx/windowglass 
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			parameters ReflectionPower, ReflectionBrightness, BaseReflection
+		}
+	}
+}
+
+material textures2/interior/factory_interiorwall01
+{
+	surfacetype "metal"
+	{
+		diffusemap	textures2/interior/factory_interiorwall01_d.tga
+		specularmap	textures2/interior/factory_interiorwall01_s.tga
+		bumpmap 	_flat
+	}
+}
+
+material textures2/interior/factory_interiorwall01_corridor
+{
+	surfacetype "metal"
+	{
+		diffusemap	textures2/interior/factory_interiorwall01_corr_d.tga
+		specularmap	textures2/interior/factory_interiorwall01_s.tga
+		bumpmap 	_flat
+	}
+}
+
+material textures2/interior/factory_interiorwall02
+{
+	surfacetype "metal"
+	{
+		diffusemap	textures2/interior/factory_interiorwall02_d.tga
+		specularmap	textures2/interior/factory_interiorwall02_s.tga
+		bumpmap 	textures2/interior/factory_interiorwall02_local.tga
+		vertexColor
+	}
+}
+
+material textures2/interior/factory_interiorwall01_trim
+{
+	surfacetype "metal"
+	{
+	diffusemap	textures2/interior/factory_interiorwall01_trim_d.tga
+	specularmap	textures2/interior/factory_interiorwall01_trim_s.tga
+	bumpmap 	textures2/interior/factory_interiorwall01_trim_local.tga
+	}
+}
+
+material textures2/interior/factory_interiorwall01_trim_nonsolid
+{		
+	nonsolid
+	diffusemap	textures2/interior/factory_interiorwall01_trim_d.tga
+	specularmap	textures2/interior/factory_interiorwall01_trim_s.tga
+	bumpmap 	textures2/interior/factory_interiorwall01_trim_local.tga
+}
+
+material textures2/interior/factory_ceiling_01
+{
+	surfaceType	"metal"
+	{
+		diffusemap 	textures2/interior/factory_ceiling_01_d.tga
+		specularmap	textures2/interior/factory_ceiling_01_s.tga
+		bumpmap 	textures2/interior/factory_ceiling_01_local.tga
+	}	
+}
+
+material textures2/interior/factory_interiorfloor01
+{
+	useTemplate templates/refineryinterior <
+	textures2/interior/factory_interiorfloor01_d.tga,
+	textures2/interior/factory_interiorfloor01_local.tga,
+	textures2/interior/factory_interiorfloor01_s.tga,
+		4, .5, 0.3
+	>
+}
+
+material textures2/interior/factory_trim_02
+{
+	surfacetype "metal"
+	{
+		diffusemap	textures2/interior/factory_trim_02_d.tga
+		specularmap	textures2/interior/factory_trim_02_s.tga
+		bumpmap 	textures2/interior/factory_trim_02_local.tga
+	}		
+}
+
+material textures2/interior/factory_trim_03
+{
+	useTemplate templates/refineryinterior <
+	textures2/interior/factory_trim_03_d.tga
+	_flat
+	textures2/interior/factory_trim_03_s.tga
+		2, 1.0, 0.3
+	>
+}
+
+material textures2/interior/factory_trim_04
+{
+	surfacetype "metal"
+	{
+		diffusemap	textures2/interior/factory_trim_04_d.tga
+		specularmap	textures2/interior/factory_trim_03_s.tga
+		bumpmap 	_flat
+	}
+}
+
+material textures2/interior/factory_interiorwall03
+{
+	useTemplate templates/refineryinterior <
+	textures2/interior/factory_interiorwall03_d.tga,
+	textures2/interior/factory_interiorwall03_local.tga,
+	textures2/interior/factory_interiorwall03_s.tga,
+	2, 1.0, 0.3
+	>
+}
+
+material textures2/interior/factory_interiorwall03_256
+{
+	useTemplate templates/refineryinterior <
+	textures2/interior/factory_interiorwall03_256_d.tga,
+	textures2/interior/factory_interiorwall03_256_local.tga,
+	textures2/interior/factory_interiorwall03_256_s.tga,
+	4, .75, 0.3, "4,6,0,0"
+	>
+}
+
+material textures/volcano/exterior_wall01
+{
+	useTemplate templates/refineryinterior <
+	textures/nerve/island_wall06_256_d.tga,
+	textures/nerve/island_wall06_256_local.tga,
+	textures/nerve/island_wall06_256_s.tga,
+	2, 1.0, 0.3, "3,6,0,0"
+	>
+}
+
+material textures/volcano/exterior_wall01_noshadows
+{
+	useTemplate templates/refineryinterior_ns <
+	textures/nerve/island_wall06_256_d.tga,
+	textures/nerve/island_wall06_256_local.tga,
+	textures/nerve/island_wall06_256_s.tga,
+	2, 1.0, 0.3
+	>
+}
+
+material textures/volcano/exterior_pipe01
+{
+	useTemplate templates/refineryinterior <
+	textures/pipes/volcano_pipe01_d.tga,
+	textures/pipes/volcano_pipe01_local.tga,
+	textures/pipes/volcano_pipe01_s.tga,
+	2, 1.0, 0.3, "1,1,0,0"
+	>
+}
+
+material textures/volcano/exterior_pipe01b
+{
+	useTemplate templates/refineryinterior <
+	textures/pipes/volcano_pipe01b_d.tga,
+	textures/pipes/volcano_pipe01b_local.tga,
+	textures/pipes/volcano_pipe01b_s.tga,
+	2, 1.0, 0.3, "2,2,0,0"
+	>
+}
+
+material textures/volcano/exterior_pipe01b_noshadows
+{
+	useTemplate templates/refineryinterior_ns <
+	textures/pipes/volcano_pipe01b_d.tga,
+	textures/pipes/volcano_pipe01b_local.tga,
+	textures/pipes/volcano_pipe01b_s.tga,
+	2, 1.0, 0.3
+	>
+}
+
+material textures2/interior/factory_steps01
+{
+	useTemplate templates/refineryinterior <
+	textures2/interior/factory_steps01_d.tga,
+	textures2/interior/factory_steps01_local.tga,
+	textures2/interior/factory_steps01_s.tga,
+	2, 1.0, 0.3, "0.5,2,0,0"
+	>
+}
+
+material textures2/interior/factory_metalmesh01
+{
+	useTemplate templates/refineryinterior <
+	textures2/interior/factory_metalmesh01_d.tga,
+	textures2/interior/factory_metalmesh01_local.tga,
+	textures2/interior/factory_metalmesh01_s.tga,
+	2, 1.0, 0.3
+	>
+}
+
+material textures2/interior/factory_steps01_trim
+{
+	surfacetype "metal"
+	{
+		diffusemap	textures2/interior/factory_steps01_trim_d.tga
+		specularmap	textures2/interior/factory_steps01_trim_s.tga
+		bumpmap		textures2/interior/factory_steps01_trim_local.tga
+	}
+}
+

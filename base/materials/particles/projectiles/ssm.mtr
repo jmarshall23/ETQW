@@ -1,0 +1,25 @@
+material particles/ssmflame {
+	noshadows
+	translucent
+	nonsolid
+	noatmosphere
+	{
+		blend	blend
+		program sfx/cheap_litsmoke
+ 		map		textures/effects/smoke_test1.tga
+		vertexcolor
+	}
+}
+
+material particles/ssmflametrail {
+	noshadows
+	translucent
+	nonsolid
+	noatmosphere
+	{
+		blend	add
+		maskalpha
+		map		textures/particles/smoke/flame_trail01_mask.tga
+		vertexcolor
+	}		
+}

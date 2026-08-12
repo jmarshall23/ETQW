@@ -1,0 +1,156 @@
+effect effects/samples/explosion_debree_trails
+{
+	size	2374
+
+	emitter "unnamed1"
+	{
+		duration	5,5
+		count		5,5
+
+		sprite
+		{
+			duration	5,5
+			gravity		0.5,0.5
+			trailRepeat	1
+			trailType	unnamed0
+
+			start
+			{
+				velocity { box 700,-500,-500,800,500,500 }
+				size { point 2,2 }
+			}
+
+			motion
+			{
+				offset { envelope firetable count 4,4,4 offset 0.55,0.2,0 }
+			}
+
+			end
+			{
+				offset { point 20,20,20 }
+			}
+		}
+	}
+	trail "unnamed0"
+	{
+		count		40,40
+
+		sprite
+		{
+			duration	2,4
+			material	"penta/blend_fire_smoke"
+			trailRepeat	1
+
+			start
+			{
+				size { point 10,10 }
+				tint { point 0.513726,0.513726,0.513726 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope linear }
+				fade { envelope linear }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { point 40,40 }
+				tint { point 0.501961,0.501961,1 }
+				rotate { box -0.111111,0.111111 }
+			}
+		}
+	}
+}
+
+effect effects/samples/explosion_debree_burn_trails
+{
+	size	1485
+
+	emitter "unnamed0"
+	{
+		duration	1,1
+		count		5,5
+
+		sprite
+		{
+			duration	3,3
+			material	"penta/blend_fire_smoke"
+			gravity		0.5,0.5
+			trailRepeat	1
+			trailType	burn
+			trailTime	1.5,1.5
+			trailCount	50,50
+
+			start
+			{
+				velocity { box 600,-500,-500,800,500,500 }
+				size { point 50,50 }
+				tint { point 0.141176,0.141176,0.141176 }
+				rotate { box 0,1 }
+			}
+
+			motion
+			{
+				size { envelope jrad_concavefade }
+				tint { envelope jrad_convexfade }
+				fade { envelope jrad_concavefade }
+				offset { envelope flickerblink count 10,10,10 offset 0,0.55,0.2 }
+				rotate { envelope firetable }
+			}
+
+			end
+			{
+				size { point 0.1,0.1 }
+				tint { point 0.87451,0.87451,0.87451 }
+				offset { point 7,7,7 }
+				rotate { point 4.16667 relative }
+			}
+		}
+	}
+}
+
+effect effects/samples/explosion_debree_line_trails
+{
+	size	2779
+
+	emitter "unnamed0"
+	{
+		duration	1,1
+		count		5,5
+
+		sprite
+		{
+			duration	5,5
+			material	"penta/blend_fire_smoke"
+			gravity		0.25,0.25
+			trailRepeat	1
+			trailType	motion
+			trailTime	3,3
+			trailCount	20,20
+			trailScale	0.500000
+			trailMaterial	"penta/blend_fire_smoke_trail"
+
+			start
+			{
+				velocity { box 800,-500,-500,1000,500,500 }
+				size { point 40,40 }
+			}
+
+			motion
+			{
+				offset { envelope firetable count 20,20,20 offset 0.66,0.33,0 }
+			}
+
+			end
+			{
+				offset { sphere -25,-25,-25,25,25,25 }
+			}
+		}
+	}
+}
+
+

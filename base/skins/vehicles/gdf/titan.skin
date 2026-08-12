@@ -1,0 +1,8 @@
+
+skin skins/vehicles/gdf/titan/temperate {
+	dummy/metal/shader1		models/vehicles/edf_titan/titan_mk2
+}
+
+skin skins/vehicles/gdf/titan/arctic {
+	dummy/metal/shader1		models/vehicles/edf_titan/titan_mk2_arctic
+}

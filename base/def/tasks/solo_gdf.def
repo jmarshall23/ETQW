@@ -1,0 +1,590 @@
+
+/******************************************************************************
+
+  GDF SOLO ASSIGNMENTS
+
+******************************************************************************/
+
+
+#include "task_includes.include"
+
+//
+// Escort MCP
+//
+
+templates/tasks/solo_task_objective( gdf_escort_mcp, task_escort_mcp )
+	data {
+		"require_eligible1"				"team_gdf && ability_inside_mcp == false"
+		"waypoint"						"1"
+		"show_eligible"					"1"
+		"team"							"gdf"
+		"tt_task"						"tooltip_lookat_objective"
+		
+		templates/tasks/solo_objective/locstr/up_to_xp
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/obj_mcp"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_mcp"	
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+	}
+}
+
+//
+// Goal objective for MCP
+//
+
+templates/tasks/solo_task( gdf_goal_mcp, task_dummy )
+	data {
+		"require_eligible1"				"team_gdf"
+		"waypoint"						"1"
+		"task"							"1"
+		
+		templates/tasks/solo_objective/locstr/up_to_xp
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/obj_goal"
+		//"mtr_waypoint"					"hud/icons/missionsystem/obj_goal"	
+		//"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/obj_goal"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/obj_sml"
+		"range"							"65536"
+		"min_range"						"128"
+	}
+}
+
+//
+// Capture Forward Spawn
+//
+
+templates/tasks/solo_task( gdf_capture_spawn, task_capture_spawn )
+	data {
+		"require_eligible1"				"team_gdf"
+		"waypoint"						"1"
+		"priority"						"0"
+		
+		"mtr_cm_icon"					"hud/icons/missionsystem/gdf_capture_spawn"
+		"icon_sort_cm_request"			"-103"
+		
+		"tt_task"						"capture_spawn"
+		
+		"botTaskType"					"3"
+		
+		templates/tasks/solo_task/locstr/up_to_xp
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/mis_spawn"
+		"mtr_waypoint"					"hud/icons/missionsystem/mis_spawn"	
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/mis_sml"
+		"range"							"8192"
+		"min_range"						"128"
+	}
+}
+
+//
+// Liberate Forward Spawn
+//
+
+templates/tasks/solo_task( gdf_liberate_spawn, task_liberate_spawn )
+	data {
+		"require_eligible1"				"team_gdf"
+		"waypoint"						"1"
+		"priority"						"0"
+		
+		"tt_task"						"liberate_spawn"
+		
+		"mtr_cm_icon"					"hud/icons/missionsystem/gdf_liberate_spawn"
+		"icon_sort_cm_request"			"-103"
+		
+		"botTaskType"					"18"
+		
+		templates/tasks/solo_task/locstr/up_to_xp
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/mis_spawn"
+		"mtr_waypoint"					"hud/icons/missionsystem/mis_spawn"	
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/mis_sml"
+		"range"							"8192"
+		"min_range"						"128"
+	}
+}
+
+templates/tasks/solo_task( gdf_liberate_spawn_covertops, task_liberate_spawn )
+	data {
+		"require_eligible1"				"team_gdf && ability_covertops"
+		"waypoint"						"1"
+		"priority"						"0"
+		"show_eligible"					"1"
+		
+		"mtr_cm_icon"					"hud/icons/missionsystem/gdf_liberate_spawn"
+		"icon_sort_cm_request"			"-103"
+		
+		"tt_task"						"liberate_spawn"
+		
+		"botTaskType"					"19"
+		
+		templates/tasks/solo_task/locstr/up_to_xp
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/mis_spawn"
+		"mtr_waypoint"					"hud/icons/missionsystem/mis_spawn"	
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/mis_sml"
+		"range"							"8192"
+		"min_range"						"128"
+	}
+}
+
+//
+// Defend item
+//
+
+templates/tasks/solo_task_objective( item_defend_gdf, task_dummy )
+	data {
+		"waypoint"						"1"
+		"team"							"gdf"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"bracket_mins"					"-24 -24 0"
+		"bracket_maxs"					"24 24 48"
+		"mtr_icon"						"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_defend"	
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+		"range"							"16384"
+	}
+}
+
+//
+// Return item
+//
+
+templates/tasks/solo_task_objective( item_return_gdf, task_dummy )
+	data {
+		"waypoint"						"1"
+		"team"							"gdf"
+		
+		"botTaskType"					"20"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"bracket_mins"					"-24 -24 0"
+		"bracket_maxs"					"24 24 48"
+		"mtr_icon"						"hud/icons/missionsystem/obj_document"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_document"	
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+		"range"							"16384"
+	}
+}
+
+//
+// Deliver item
+//
+
+templates/tasks/solo_task_objective( item_deliver_gdf, task_dummy )
+	data {
+		"waypoint"						"1"
+		"team"							"gdf"
+		
+		"botTaskType"					"22"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"bracket_mins"					"-24 -24 0"
+		"bracket_maxs"					"24 24 48"
+		"mtr_icon"						"hud/icons/missionsystem/obj_goal"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_goal"	
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+		"range"							"16384"
+	}
+}
+
+templates/tasks/solo_task_objective( item_deliver_island_gdf, task_dummy )
+	data {
+		"waypoint"						"1"
+		"team"							"gdf"
+		
+		"botTaskType"					"22"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"bracket_mins"					"-24 -24 0"
+		"bracket_maxs"					"24 24 48"
+		"mtr_icon"						"hud/icons/missionsystem/obj_goal"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_goal"	
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+		"range"							"16384"
+	}
+}
+
+templates/tasks/solo_task_objective( item_deliver_outskirts_gdf, task_dummy )
+	data {
+		"waypoint"						"1"
+		"team"							"gdf"
+		
+		"botTaskType"					"22"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"bracket_mins"					"-24 -24 0"
+		"bracket_maxs"					"24 24 48"
+		"mtr_icon"						"hud/icons/missionsystem/obj_goal"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_goal"	
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+		"range"							"16384"
+	}
+}
+
+//
+// Pickup item
+//
+
+templates/tasks/solo_task_objective( item_pickup_gdf, task_dummy )
+	data {
+		"waypoint"						"1"
+		"team"							"gdf"
+		
+		"botTaskType"					"21"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"bracket_mins"					"-24 -24 0"
+		"bracket_maxs"					"24 24 48"
+		"mtr_icon"						"hud/icons/missionsystem/obj_document"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_document"	
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+		"range"							"16384"
+	}
+}
+
+templates/tasks/solo_task_objective( item_pickup_gdf_outskirts, task_item_pickup_outskirts )
+	data {
+		"waypoint"						"1"
+		"team"							"gdf"
+		
+		"tt_task"						"carryable_steal"
+		"tt_task_strogg"				"tooltip_lookat_objective"
+		
+		"botTaskType"					"21"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"bracket_mins"					"-24 -24 0"
+		"bracket_maxs"					"24 24 48"
+		"mtr_icon"						"hud/icons/missionsystem/obj_document"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_document"	
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+		"range"							"16384"
+	}
+}
+
+//
+// Stop item
+//
+
+templates/tasks/solo_task_objective( item_stop_gdf, task_dummy )
+	data {
+		"waypoint"						"1"
+		"team"							"gdf"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"bracket_mins"					"-24 -24 0"
+		"bracket_maxs"					"24 24 48"
+		"mtr_icon"						"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_defend"	
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+		"range"							"16384"
+	}
+}
+
+
+
+
+
+
+
+
+
+//
+// Defend
+//
+
+templates/tasks/solo_task_objective( gdf_defend_short, task_defend )
+	data {
+		"waypoint"						"1"
+		"time_limit"					"240"
+		"team"							"gdf"
+		
+		templates/tasks/solo_objective/locstr/up_to_xp
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+	}
+}
+
+templates/tasks/solo_task_objective( gdf_defend_medium, task_defend )
+	data {
+		"waypoint"						"1"
+		"time_limit"					"480"
+		"team"							"gdf"
+		
+		templates/tasks/solo_objective/locstr/up_to_xp
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+	}
+}
+
+templates/tasks/solo_task_objective( gdf_defend_long, task_defend )
+	data {
+		"waypoint"						"1"
+		"team"							"gdf"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+	}
+}
+
+
+templates/tasks/solo_task_objective( gdf_defend_short_dual, task_defend )
+	data {
+		"waypoint"						"1"
+		"time_limit"					"240"
+		"team"							"gdf"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+	}
+}
+
+templates/tasks/solo_task_objective( gdf_defend_medium_dual, task_defend )
+	data {
+		"waypoint"						"1"
+		"time_limit"					"480"
+		"team"							"gdf"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+	}
+}
+
+templates/tasks/solo_task_objective( gdf_defend_long_dual, task_defend )
+	data {
+		"waypoint"						"1"
+		"team"							"gdf"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint"					"hud/icons/missionsystem/obj_defend"
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/obj_sml"
+	}
+}
+
+//
+// Destroy deployable
+//
+
+templates/tasks/solo_task( destroy_deployable_gdf, task_dummy )
+	data {
+		"require_eligible1"				"ability_soldier || ability_fieldops"
+		"waypoint"						"1"
+		
+		"mtr_cm_icon"					"hud/icons/missionsystem/destroy_deployable_gdf"
+		"icon_sort_cm_request"			"-103"
+		
+		"tt_task"						"soldier_destroy"
+		"tooltip_ability"				"soldier"
+
+		templates/tasks/solo_task/xp_bonus_mission
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/mis_kill_any_class"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/tsk_kill_any_class"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/tsk_sml"
+		"mtr_waypoint"					"hud/icons/missionsystem/mis_kill_any_class"	
+		"mtr_waypoint_offscreen"		"hud/icons/missionsystem/mis_sml"
+		"range"							"4096"
+		"min_range"						"128"
+		"team_colored"					"1"
+	}
+}
+
+//
+// Destroy vehicle
+//
+
+templates/tasks/solo_task( destroy_vehicle_gdf, task_dummy )
+	data {
+		"require_eligible1"				"team_gdf"
+		"waypoint"						"1"
+		"task"							"1"
+		"time_limit"					"30"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/tsk_kill_any_class"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/tsk_kill_any_class"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/tsk_sml"
+		"range"							"4096"
+		"min_range"						"128"
+		"team_colored"					"1"
+	}
+}
+
+//
+// Kill player
+//
+
+templates/tasks/solo_task( kill_player_gdf, task_kill_enemy )
+	data {
+		"require_eligible1"				"team_gdf"
+		"waypoint"						"1"
+		"task"							"1"
+		"time_limit"					"30"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/tsk_kill_any_class"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/tsk_kill_any_class"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/tsk_sml"
+		"range"							"4096"
+		"min_range"						"128"
+		"team_colored"					"1"
+	}
+}
+
+
+
+
+//
+// Defend item (quarry)
+//
+
+templates/tasks/solo_task( item_defend_gdf_quarry, task_dummy )
+	data {
+		"waypoint"						"1"
+		"require_eligible1"				"team_gdf"
+		"task"							"1"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"bracket_mins"					"-24 -24 0"
+		"bracket_maxs"					"24 24 48"
+		"mtr_icon"						"hud/icons/missionsystem/obj_document"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/obj_document"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/obj_sml"
+		"range"							"16384"
+	}
+}
+
+//
+// Return item (quarry)
+//
+
+templates/tasks/solo_task( item_return_gdf_quarry, task_dummy )
+	data {
+		"waypoint"						"1"
+		"require_eligible1"				"team_gdf"
+		"task"							"1"
+		
+		"botTaskType"					"20"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"bracket_mins"					"-24 -24 0"
+		"bracket_maxs"					"24 24 48"
+		"mtr_icon"						"hud/icons/missionsystem/obj_document"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/obj_document"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/obj_sml"
+		"range"							"16384"
+	}
+}
+
+
+
+//
+// Stop flyer drone flying through here (volcano)
+//
+
+templates/tasks/solo_task( gdf_defend_vent, task_dummy )
+	data {
+		"waypoint"						"1"
+		"priority"						"0"
+		"task"							"1"
+		"require_eligible1"				"team_gdf"
+	}
+
+	waypoint {
+		"bracketed"						"1"
+		"mtr_icon"						"hud/icons/missionsystem/tsk_defend"
+		"mtr_user_waypoint"				"hud/icons/missionsystem/tsk_defend"	
+		"mtr_user_waypoint_offscreen"	"hud/icons/missionsystem/obj_sml"
+		"range"							"2048"
+	}
+}

@@ -1,0 +1,1983 @@
+
+//temp
+material guis/assets/vehicles/strogg/guntemp
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/guntemp.tga"
+	}
+}
+
+material guis/assets/vehicles/strogg/missiletemp
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/missiletemp.tga"
+	}
+}
+
+//strogg missile-gun view
+
+material guis/assets/vehicles/strogg/circlebracket
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/circlebracket.tga"
+	}
+}
+material guis/assets/vehicles/strogg/square
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/square.tga"
+	}
+}
+material guis/assets/vehicles/strogg/circle
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/circle.tga"
+	}
+}
+material guis/assets/vehicles/strogg/bracketline
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/bracketline.tga"
+	}
+}
+material guis/assets/vehicles/strogg/bracket
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/bracket.tga"
+	}
+}
+material guis/assets/vehicles/strogg/center
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/center.tga"
+	}
+}
+material guis/assets/vehicles/strogg/centera
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/centera.tga"
+	}
+}
+material guis/assets/vehicles/strogg/optiveins
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/optiveins.tga"
+	}
+}
+material guis/assets/vehicles/strogg/optiveins2
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/optiveins2.tga"
+	}
+}
+material guis/assets/vehicles/strogg/techlinessq
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/techlinessq.tga"
+	}
+}
+material guis/assets/vehicles/strogg/techlinesrnd
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/techlinesrnd.tga"
+	}
+}
+material guis/assets/vehicles/strogg/bgfade
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/bgfade.tga"
+	}
+}
+material guis/assets/vehicles/strogg/archframe
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/archframe.tga"
+	}
+}
+material guis/assets/vehicles/strogg/archlines
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/archlines.tga"
+	}
+}
+material guis/assets/vehicles/strogg/archfill
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/strogg/archfill.tga"
+	}
+}
+
+//gdf missile-gun view
+
+material guis/assets/vehicles/gdf/backcorner
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/gdf/backcorner.tga"
+	}
+}
+material guis/assets/vehicles/gdf/backhbar
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/gdf/backhbar.tga"
+	}
+}
+material guis/assets/vehicles/gdf/backvbar
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/gdf/backvbar.tga"
+	}
+}
+material guis/assets/vehicles/gdf/bgedge
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip makeAlpha( "guis/assets/vehicles/gdf/bgedge.tga" )
+	}
+}
+material guis/assets/vehicles/gdf/brightcorner
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/gdf/brightcorner.tga"
+	}
+}
+material guis/assets/vehicles/gdf/brighthbar
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map  nopicmip "guis/assets/vehicles/gdf/brighthbar.tga"
+	}
+}
+material guis/assets/vehicles/gdf/brightvbar
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map nopicmip "guis/assets/vehicles/gdf/brightvbar.tga"
+	}
+}
+material guis/assets/vehicles/gdf/complines
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/gdf/complines.tga"
+	}
+}
+material guis/assets/vehicles/gdf/compass
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map nopicmip "guis/assets/vehicles/gdf/compass.tga"
+	}
+}
+material guis/assets/vehicles/gdf/largecircle
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/gdf/largecircle.tga"
+	}
+}
+material guis/assets/vehicles/gdf/qbg1
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/gdf/qbg1.tga"
+	}
+}
+material guis/assets/vehicles/gdf/qbg2
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/gdf/qbg2.tga"
+	}
+}
+material guis/assets/vehicles/gdf/qbgside
+{
+	sort gui
+	{
+		program filterAlpha
+		blend filter
+		map clamp nopicmip "guis/assets/vehicles/gdf/qbgside.tga"
+		colored
+	}	
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/gdf/qbgside.tga"
+	}
+}
+material guis/assets/vehicles/gdf/rotabase
+{
+	sort gui
+	{
+		program filterAlpha
+		blend filter
+		map clamp nopicmip "guis/assets/hud/dir_indicator_outer_ring.tga"
+		vertexAlpha
+	}
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/hud/dir_indicator_outer_ring.tga"
+	}
+}
+material guis/assets/vehicles/gdf/rotaturret
+{
+	sort gui
+	
+	{
+		program filterAlpha
+		blend filter
+		map clamp nopicmip "guis/assets/hud/dir_indicator_inner_ring.tga"
+		vertexAlpha
+	}	
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/hud/dir_indicator_inner_ring.tga"
+	}
+}
+material guis/assets/vehicles/gdf/smcircle
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/gdf/smcircle.tga"
+	}
+}
+//
+
+material guis/assets/vehicles/strogg/warning2
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/strogg/warning.tga
+		maskAlpha
+	}
+}
+
+material guis/assets/common/outerglowbar2 {
+	sort gui
+	{
+		blend blend
+		vertexColor
+		alpha		(1.2 * pdfade [time * 4 ]) + 0.28
+		map clamp nopicmip "guis/assets/common/outerglowbar"
+	}
+}
+
+
+material guis/assets/common/outerglowbar2_nearest {
+	sort nearest
+	{
+		blend blend
+		vertexColor
+		alpha		(1.2 * pdfade [time * 4 ]) + 0.28
+		map clamp nopicmip "guis/assets/common/outerglowbar"
+		maskAlpha
+	}
+}
+
+material guis/assets/limbo/score_strogg_red
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp guis/assets/limbo/score_strogg_red.tga
+	}
+}
+material guis/assets/limbo/score_strogg_green
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp guis/assets/limbo/score_strogg_green.tga
+	}
+}
+material guis/assets/limbo/score_strogg_gray
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp guis/assets/limbo/score_strogg_gray.tga
+	}
+}
+material guis/assets/limbo/score_gdf_red
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp guis/assets/limbo/score_gdf_red.tga
+	}
+}
+material guis/assets/limbo/score_gdf_green
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp guis/assets/limbo/score_gdf_green.tga
+	}
+}
+material guis/assets/limbo/score_gdf_gray
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp guis/assets/limbo/score_gdf_gray.tga
+	}
+}
+
+material guis/assets/qet/gdfwin
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip guis/assets/qet/gdfwin.tga
+	}
+}
+material guis/assets/qet/stroggwin
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip guis/assets/qet/stroggwin.tga
+	}
+}
+material guis/assets/hack/covertbg
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp guis/assets/hack/covertbg.tga
+	}
+}
+material guis/assets/hack/covertbg2
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp guis/assets/hack/covertbg2.tga
+	}
+}
+material guis/assets/hack/spin1
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/hack/spin1.tga
+		rotate	time * -0.15
+	}
+}
+material guis/assets/hack/spin2
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/hack/spin2.tga
+		rotate	time * -0.12
+	}
+}
+material guis/assets/hack/spin1a
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/hack/spin2.tga
+		rotate	time * -0.5
+		//rgb		(1.1 * pdfullfade [1 + time ])-.5
+	}
+}
+material guis/assets/hack/spin2a
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/hack/spin2.tga
+		rotate	time * -0.9
+	}
+}
+
+
+material guis/assets/hack/bin1
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map guis/assets/hack/bin1.tga
+		translate		time * 0.1, 0
+	}
+}
+material guis/assets/hack/bin2
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map guis/assets/hack/bin2.tga
+		translate		time * 0.2, 0
+	}
+}
+material guis/assets/hack/bin3
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map guis/assets/hack/bin1.tga
+		translate		time * 0.3, 0
+	}
+}
+material guis/assets/hack/bin4
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map guis/assets/hack/bin2.tga
+		translate		time * 0.4, 0
+	}
+}
+material guis/assets/hack/bin5
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map guis/assets/hack/bin1.tga
+		translate		time * 0.5, 0
+	}
+}
+material guis/assets/hack/bin6
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map guis/assets/hack/bin2.tga
+		translate		time * 0.6, 0
+	}
+}
+material guis/assets/hack/bin7
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map guis/assets/hack/bin1.tga
+		translate		time * 0.7, 0
+	}
+}
+
+material guis/assets/vehicles/strogg/hyperblaster
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(pdflick2 [100 + time ])*0.6
+		map clamp guis/assets/vehicles/strogg/hyperblaster.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/strogg/plasmad
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(pdflick2 [100 + time ])*0.6
+		map clamp guis/assets/vehicles/strogg/plasmad.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/strogg/plasmag
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(pdflick2 [100 + time ])*0.6
+		map clamp guis/assets/vehicles/strogg/plasmag.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/strogg/strockets
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(pdflick2 [100 + time ])*0.6
+		map clamp guis/assets/vehicles/strogg/strocket.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/strogg/warning
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(pdflick2 [100 + time ])*0.4
+		map clamp guis/assets/vehicles/strogg/warning.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/strogg/veins
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(pdflick2 [time *0.4])*0.8
+		map clamp guis/assets/vehicles/strogg/veins.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/strogg/veins2
+{
+	sort nearest
+	{
+		blend blend
+		vertexColor
+		map guis/assets/vehicles/strogg/veins2.tga
+		translate		0, time * 0.05
+		maskalpha
+	}
+}
+material guis/assets/vehicles/strogg/weapon1
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(pdflick2 [100 + time ])*0.4
+		map clamp guis/assets/vehicles/strogg/weapon1.tga
+		maskAlpha
+	}
+}
+material guis/assets/vehicles/strogg/weapon2
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(pdflick2 [100 + time ])*0.4
+		map clamp guis/assets/vehicles/strogg/weapon2.tga
+		maskAlpha
+	}
+}
+material guis/assets/vehicles/strogg/weapon3
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(pdflick2 [100 + time ])*0.4
+		map clamp guis/assets/vehicles/strogg/weapon3.tga
+		maskAlpha
+	}
+}
+material guis/assets/vehicles/strogg/alt
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(pdflick2 [100 + time ])*0.4
+		map clamp guis/assets/vehicles/strogg/alt.tga
+		maskAlpha
+	}
+}
+material guis/assets/vehicles/strogg/overlay_hog
+{
+	sort gui
+	{
+		blend add
+		rgb 	(1.2 * DoomExitTable [ time * 0.4 ])+0.6
+		map guis/assets/vehicles/strogg/overlay_hog.tga
+	}
+}
+material guis/assets/vehicles/strogg/overlay_map
+{
+	sort gui
+	{
+		blend add
+		rgb 	(1.2 * DoomExitTable [ time * 0.4 ])+0.6
+		map guis/assets/vehicles/strogg/overlay_map.tga
+	}
+}
+material guis/assets/vehicles/strogg/hog
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map guis/assets/vehicles/strogg/hog.tga
+	}
+}
+material guis/assets/vehicles/strogg/desecrator
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map guis/assets/vehicles/strogg/desecrator.tga
+	}
+}
+material guis/assets/vehicles/strogg/desecrator_hover
+{
+	sort gui
+	{
+		blend add
+		rgb 	(1.2 * DoomExitTable [ time ])+0.6
+		map guis/assets/vehicles/strogg/desecrator_hover.tga
+	}
+}
+material guis/assets/vehicles/strogg/goliath
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map guis/assets/vehicles/strogg/goliath.tga
+	}
+}
+material guis/assets/vehicles/strogg/hornet
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map guis/assets/vehicles/strogg/hornet.tga
+	}
+}
+material guis/assets/vehicles/strogg/blurline
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(1.2 * DoomExitTable [10 + time *2])+0.4
+		map clamp guis/assets/vehicles/strogg/blurline.tga
+		maskAlpha
+	}
+}
+material guis/assets/vehicles/strogg/dotline
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(1.2 * DoomExitTable [10 + time ])+0.6
+		map clamp guis/assets/vehicles/strogg/dotline.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/strogg/thickline
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(1.2 * DoomExitTable [10 + time ])+0.5
+		map clamp guis/assets/vehicles/strogg/thickline.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/strogg/thinline
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(1.2 * bathroomtable [10 + time *1.2])*0.2
+		map clamp guis/assets/vehicles/strogg/thinline.tga
+		maskalpha
+	}
+}
+
+
+
+material guis/assets/vehicles/strogg/center1
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(1.2 * DoomExitTable [10 + time ])+0.5
+		map clamp guis/assets/vehicles/strogg/center1.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/strogg/center2
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(1.2 * DoomExitTable [10 + time ])+0.5
+		map clamp guis/assets/vehicles/strogg/center2.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/strogg/center3
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(1.2 * bathroomtable [10 + time *1.2])*0.2
+		map clamp guis/assets/vehicles/strogg/center3.tga
+		maskalpha
+	}
+}
+
+material guis/assets/vehicles/strogg/bar
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(1.2 * blamptable [10 + time *2])*0.6
+		map clamp guis/assets/vehicles/strogg/bar.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/strogg/speed
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(1.2 * blamptable [10 + time *2])*0.6
+		map clamp guis/assets/vehicles/strogg/speed.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/strogg/speed2
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/strogg/speed.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/strogg/angle
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(1.2 * DoomExitTable [10 + time ])+0.6
+		map clamp guis/assets/vehicles/strogg/angle.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/strogg/compass
+{
+	sort nearest
+	{
+		blend add
+		rgb 	(1.2 * DoomExitTable [10 + time *2])+0.6
+		map clamp nopicmip guis/assets/vehicles/strogg/compass.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/husky/background
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp guis/assets/vehicles/husky/background.tga
+	}
+}
+material guis/assets/vehicles/trojan/background
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp guis/assets/vehicles/trojan/background.tga
+	}
+}
+material guis/assets/vehicles/platypus/background
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp guis/assets/vehicles/platypus/background.tga
+	}
+}
+material guis/assets/vehicles/display/battery
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/display/battery.tga
+	}
+}
+material guis/assets/vehicles/display/boost
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/display/boost.tga
+	}
+}
+material guis/assets/vehicles/display/cpu
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/display/cpu.tga
+	}
+}
+material guis/assets/vehicles/display/cruise
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/display/cruise.tga
+	}
+}
+material guis/assets/vehicles/display/defrost
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/display/defrost.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/display/health
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/display/health.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/display/left
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/display/left.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/display/leftbright
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/display/leftbright.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/display/right
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/display/right.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/display/rightbright
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/display/rightbright.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/display/speed
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/display/speed.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/display/warning
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/display/warning.tga
+		maskalpha
+	}
+}
+material guis/assets/vehicles/display/washer
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/display/washer.tga
+	}
+}
+material guis/assets/vehicles/display/wiper
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/display/wiper.tga
+	}
+}
+material guis/assets/vehicles/display/wire
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/display/wire.tga
+		maskalpha
+	}
+}
+
+
+material guis/assets/ethud/bar_add_fillborderedge
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/ethud/bar_add_fillborderedge.tga
+		maskAlpha
+	}
+}
+material guis/assets/ethud/bar_add_fillbordermid
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/ethud/bar_add_fillbordermid.tga
+		maskAlpha
+	}
+}
+material guis/assets/ethud/bar_add_filledge
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/ethud/bar_add_filledge.tga
+		maskAlpha
+	}
+}
+material guis/assets/ethud/bar_add_fillmid
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/ethud/bar_add_fillmid.tga
+		maskAlpha
+	}
+}
+
+material guis/assets/ethud/shadline_corner
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp guis/assets/ethud/shadline_corner.tga
+	}
+}
+material guis/assets/ethud/shadline_side
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp guis/assets/ethud/shadline_side.tga
+	}
+}
+material guis/assets/ethud/shadline_top
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp guis/assets/ethud/shadline_top.tga
+	}
+}
+
+
+material guis/assets/badger/tach
+{
+	sort nearest
+	{
+		map "guis/assets/badger/tach"
+		blend blend
+		vertexColor
+		maskalpha
+	}
+}
+material guis/assets/badger/tach_add
+{
+	sort nearest
+	{
+		map "guis/assets/badger/tach_add"
+		blend add
+		vertexColor
+		maskAlpha
+	}
+}
+material guis/assets/badger/tach_add_vert
+{
+	sort nearest
+	{
+		map "guis/assets/badger/tach_add_vert"
+		blend add
+		vertexColor
+		maskAlpha
+	}
+}
+material guis/assets/vehicles/titan/sbc
+{
+	sort gui
+	{
+		map "guis/assets/vehicles/titan/sbc"
+		blend add
+		vertexColor
+	}
+}
+material guis/assets/vehicles/titan/sbc_box
+{
+	sort gui
+	{
+		map "guis/assets/vehicles/titan/sbc_box"
+		blend add
+		vertexColor
+	}
+}
+material guis/assets/vehicles/titan/gpmg_box
+{
+	sort gui
+	{
+		map "guis/assets/vehicles/titan/gpmg_box"
+		blend add
+		vertexColor
+	}
+}
+material guis/assets/vehicles/trojan/flak
+{
+	sort nearest
+	{
+		map "guis/assets/vehicles/trojan/flak"
+		blend add
+		vertexColor
+		maskAlpha
+	}
+}
+material guis/assets/badger/gpmg
+{
+	sort nearest
+	{
+		map "guis/assets/badger/gpmg"
+		blend add
+		maskAlpha
+	}
+}
+material guis/assets/badger/radial
+{
+	sort nearest
+	{
+		map clamp nopicmip "guis/assets/badger/radial"
+		blend add
+		vertexColor
+		maskAlpha
+	}
+}
+material guis/assets/badger/radial2
+{
+	sort nearest
+	{
+		map clamp nopicmip "guis/assets/badger/radial2"
+		blend add
+		vertexColor
+		maskAlpha
+	}
+}
+material guis/assets/vehicles/bumblebee/background
+{
+	sort gui
+	{
+		map "guis/assets/vehicles/bumblebee/background"
+		blend add
+		vertexColor
+	}
+}
+material guis/assets/vehicles/bumblebee/background2
+{
+	sort gui
+	{
+		map "guis/assets/vehicles/bumblebee/background2"
+		blend add
+		vertexColor
+	}
+}
+material guis/assets/vehicles/titan/background
+{
+	sort gui
+	{
+		map "guis/assets/vehicles/titan/background"
+		blend add
+		vertexColor
+	}
+}
+material guis/assets/vehicles/titan/background2
+{
+	sort gui
+	{
+		map "guis/assets/vehicles/titan/background2"
+		blend add
+		vertexColor
+	}
+}
+material guis/assets/vehicles/titan/background3
+{
+	sort gui
+	{
+		map "guis/assets/vehicles/titan/background3"
+		blend blend
+		vertexColor
+	}
+}
+material guis/assets/vehicles/titan/background4
+{
+	sort gui
+	{
+		map "guis/assets/vehicles/titan/background4"
+		blend add
+		vertexColor
+	}
+}
+
+material guis/assets/badger/background4
+{
+	sort nearest
+	{
+		map "guis/assets/badger/background4"
+		blend add
+		vertexColor
+		maskAlpha
+	}
+}
+material guis/assets/badger/background3
+{
+	sort gui
+	{
+		map "guis/assets/badger/background3"
+		blend add
+		vertexColor
+	}
+}
+material guis/assets/badger/background2
+{
+	sort gui
+	{
+		map "guis/assets/badger/background2"
+		blend add
+		vertexColor
+	}
+}
+material textures/sfx/scanlines
+{
+	sort gui
+	{
+		map "guis/assets/common/gui_scanline4"
+		blend add
+		vertexColor
+		translate		0, time * -0.05
+	}
+}
+material textures/sfx/scanlines_nearest
+{
+	sort nearest
+	{
+		map "guis/assets/common/gui_scanline4"
+		blend add
+		vertexColor
+		translate		0, time * -0.05
+		maskAlpha
+	}
+}
+
+material guis/assets/common/outershadow
+{
+	sort gui
+	{
+		map "guis/assets/common/outershadow"
+		blend blend
+		vertexColor
+	}
+}
+material guis/assets/common/bglow
+{
+	sort gui
+	{
+		map "guis/assets/common/bglow"
+		blend blend
+		vertexColor
+	}
+}
+material guis/assets/common/bglow_nearest
+{
+	sort nearest
+	{
+		map "guis/assets/common/bglow"
+		blend blend
+		vertexColor
+		maskAlpha
+	}
+}
+
+material guis/assets/common/addhighlight
+{
+	sort gui
+	{
+		map "guis/assets/common/addhighlight"
+		blend add
+		vertexColor
+	}
+}
+
+material guis/assets/vehicles/anansi/n93fullgun
+{
+	sort gui
+	{
+		blend add 
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/anansi/fullgun"
+	}
+}
+material guis/assets/vehicles/anansi/n53fullomissile
+{
+	sort gui
+	{
+		blend add 
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/anansi/fullomissile"
+	}
+}
+material guis/assets/vehicles/anansi/n65fullimissile
+{
+	sort gui
+	{
+		blend add 
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/anansi/fullimissile"
+	}
+}
+material guis/assets/vehicles/anansi/hitbox
+{
+	sort nearest
+	{
+		blend blend 
+		vertexColor
+		map clamp makeAlpha(guis/assets/vehicles/anansi/hitbox)
+				red	parm0
+		green	parm1
+		blue	parm2
+		alpha		(1.2 * pdfullfade [10 + time ]) +1.8
+		maskAlpha
+	}
+}
+material guis/assets/vehicles/anansi/n93gun
+{
+	sort gui
+	{
+		blend add 
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/anansi/gun"
+	}
+}
+material guis/assets/vehicles/anansi/n53omissile
+{
+	sort gui
+	{
+		blend add 
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/anansi/omissile"
+	}
+}
+material guis/assets/vehicles/anansi/n65imissile
+{
+	sort gui
+	{
+		blend add 
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/anansi/imissile"
+	}
+}
+material guis/assets/vehicles/anansi/left
+{
+	sort gui
+	{
+		blend blend 
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/anansi/left"
+	}
+}
+material guis/assets/vehicles/anansi/right
+{
+	sort gui
+	{
+		blend blend 
+		vertexColor
+		map clamp nopicmip "guis/assets/vehicles/anansi/right"
+	}
+}
+
+
+material guis/assets/ethud/strogg/add_nesw
+{
+	sort nearest
+	{
+		blend add 
+		vertexColor
+		map clamp nopicmip "guis/assets/ethud/strogg/nesw_glow"
+		maskalpha
+	}
+}
+material guis/assets/ethud/strogg/add_mapticks
+{
+	sort nearest
+	{
+		blend blend 
+		vertexColor
+		map clamp nopicmip "guis/assets/ethud/strogg/mapticks_glow"
+		maskalpha
+	}
+}
+material guis/assets/ethud/strogg/nesw
+{
+	sort nearest
+	{
+		blend add 
+		vertexColor
+		map clamp nopicmip "guis/assets/ethud/strogg/nesw"
+		maskalpha
+	}
+}
+material guis/assets/ethud/strogg/mapticks
+{
+	sort nearest
+	{
+		blend blend 
+		vertexColor
+		map clamp nopicmip "guis/assets/ethud/strogg/mapticks"
+		maskalpha
+	}
+}
+material guis/assets/ethud/strogg/frame
+{
+	sort gui
+	{
+		blend blend 
+		vertexColor
+		map clamp nopicmip "guis/assets/ethud/strogg/frame"
+	}
+}
+
+material guis/assets/ethud/strogg/shield
+{
+	sort nearest
+	{
+		blend blend 
+		vertexColor
+		map clamp nopicmip "guis/assets/ethud/strogg/shield"
+		maskalpha
+	}
+}
+material guis/assets/ethud/strogg/borderglow
+{
+	sort nearest
+	{
+		blend blend 
+		vertexColor
+		map clamp nopicmip "guis/assets/ethud/strogg/borderglow"
+		maskalpha
+	}
+}
+material guis/assets/ethud/strogg/borderglowadd
+{
+	sort nearest
+	{
+		blend add 
+		vertexColor
+		map clamp nopicmip "guis/assets/ethud/strogg/borderglowadd"
+		maskalpha
+	}
+}
+material guis/assets/ethud/strogg/mapborder
+{
+	sort nearest
+	{
+		blend blend 
+		vertexColor
+		map clamp nopicmip "guis/assets/ethud/strogg/mapborder"
+		maskalpha
+	}
+}
+material guis/assets/ethud/strogg/statblack
+{
+	sort gui
+	{
+		blend blend 
+		vertexColor
+		map clamp nopicmip "guis/assets/ethud/strogg/statblack"
+	}
+}
+material guis/assets/ethud/strogg/statfill
+{
+	sort gui
+	{
+		blend blend 
+		vertexColor
+		map clamp nopicmip "guis/assets/ethud/strogg/statfill"
+	}
+}
+material guis/assets/ethud/strogg/statlines
+{
+	sort gui
+	{
+		blend blend 
+		vertexColor
+		map clamp nopicmip "guis/assets/ethud/strogg/statlines"
+	}
+}
+
+
+material guis/assets/weapons/sniper/box1
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/weapons/sniper/box1"
+	}
+}
+material guis/assets/weapons/sniper/box2
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/weapons/sniper/box2"
+	}
+}
+material guis/assets/weapons/sniper/border
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map "guis/assets/weapons/sniper/border"
+	}
+}
+material guis/assets/weapons/sniper/circle
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/weapons/sniper/circle"
+	//	rgb 	(1.2 * sintable [10 + time ]) +2
+	}
+}
+material guis/assets/weapons/sniper/circlelines1
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/weapons/sniper/circlelines1"
+	}
+}
+material guis/assets/weapons/sniper/circlelines2
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/weapons/sniper/circlelines2"
+	}
+}
+material guis/assets/weapons/sniper/circleticks
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/weapons/sniper/circleticks"
+	}
+}
+
+
+material guis/assets/weapons/sniper/crosshair
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map clamp nopicmip "guis/assets/weapons/sniper/crosshair"
+	}
+}
+
+material guis/assets/weapons/sniper/ring
+{
+	sort gui
+	{
+		blend GL_ZERO, GL_SRC_COLOR
+		vertexColor
+		map clamp nopicmip "guis/assets/weapons/sniper/ring"
+	}
+}
+
+material guis/assets/deploy/gdf/bghalf
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/deploy/gdf/bghalf"
+	}
+}
+
+material guis/assets/deploy/gdf/glow1
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map "guis/assets/deploy/gdf/glow1"
+	}
+}
+
+material guis/assets/deploy/gdf/glow2
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map "guis/assets/deploy/gdf/glow2"
+	}
+}
+
+material guis/assets/deploy/gdf/sidegrid
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/deploy/gdf/sidegrid"
+	}
+}
+
+material guis/assets/deploy/gdf/bgfull
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/deploy/gdf/bgfull"
+	}
+}
+
+material guis/assets/deploy/gdf/buttongrid 
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/deploy/gdf/buttongrid"
+	}
+}
+
+material guis/assets/deploy/gdf/highlightbar
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/deploy/gdf/highlightbar"
+	}
+}
+
+material guis/assets/deploy/gdf/lowerblack
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/deploy/gdf/lowerblack"
+	}
+}
+
+material guis/assets/deploy/gdf/titlebar
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/deploy/gdf/titlebar"
+	}
+}
+
+material guis/assets/deploy/gdf/btn_bg
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/deploy/gdf/btn_bg"
+	}
+}
+
+material guis/assets/deploy/gdf/icon_aa
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/deploy/gdf/icon_aa"
+	}
+}
+
+material guis/assets/deploy/gdf/icon_ap
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/deploy/gdf/icon_ap"
+	}
+}
+
+material guis/assets/deploy/gdf/icon_radar
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/deploy/gdf/icon_radar"
+	}
+}
+
+material guis/assets/deploy/gdf/btn_select
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/deploy/gdf/btn_select"
+	}
+}
+material guis/assets/ethud/scanlines
+{
+	sort gui
+	{
+		blend add
+		vertexColor
+		map "guis/assets/ethud/scanlines"
+	}
+}
+
+material guis/assets/hud/ethud/targetbg
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip "guis/assets/ethud/targetbg"
+	}
+}
+material guis/assets/hud/ethud/targetcenter
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip "guis/assets/ethud/targetcenter"
+	}
+}
+material guis/assets/hud/ethud/targettop
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip "guis/assets/ethud/targettop"
+	}
+}
+material guis/assets/hud/ethud/targetbtm
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map nopicmip "guis/assets/ethud/targetbtm"
+	}
+}
+
+material guis/assets/ethud/compasslines
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/ethud/compasslines"
+	}
+}
+
+material guis/assets/etmain/loadoverlay
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/etmain/loadoverlay"
+	}
+}
+
+material guis/assets/ethud/compass
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/ethud/compass"
+	}
+}
+
+material guis/assets/ethud/objframe
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/ethud/objframe"
+	}
+}
+
+material guis/assets/etlimbo/objframe
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/etlimbo/objframe"
+	}
+}
+
+material guis/assets/etmain/tickbar
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/etmain/tickbar"
+	}
+}
+material guis/assets/etmain/tickbarwide
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/etmain/tickbarwide"
+	}
+}
+
+material guis/assets/etmain/barleft
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/etmain/barleft"
+	}
+}
+
+material guis/assets/etmain/barmid
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/etmain/barmid"
+	}
+}
+
+material guis/assets/etmain/barright
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/etmain/barright"
+	}
+}
+
+material guis/assets/etmain/logo
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map clamp nopicmip "guis/assets/etmain/logo"
+	}
+}
+
+material guis/assets/vehicles/mcp/mcp
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/mcp/mcp.tga
+		maskAlpha
+	}
+}
+material guis/assets/vehicles/mcp/arrow
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/mcp/arrow.tga
+		maskAlpha
+	}
+}
+material guis/assets/vehicles/mcp/map
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/mcp/map.tga
+		maskAlpha
+	}
+}
+material guis/assets/vehicles/mcp/background
+{
+	sort nearest
+	{
+		blend add
+		vertexColor
+		map clamp guis/assets/vehicles/mcp/background.tga
+		maskAlpha
+	}
+}
+material guis/assets/weapons/assaultrifle/border
+{
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map "guis/assets/weapons/sniper/border"
+	}
+}

@@ -1,0 +1,12 @@
+///////////
+// Magog //
+///////////
+
+sound sounds/vehicles/magog {
+
+	volume 5
+	maxDistance 300
+
+	looping
+	sounds/vehicles/magog/rotor.wav
+}

@@ -1,0 +1,99 @@
+sound sounds/weapons/sbc/fire {
+	compression wav
+
+	minDistance	25
+	maxDistance 100
+	shakes 0.05
+	no_dups
+	occlude_once
+	
+	sounds/weapons/sbc/nfire_01b.wav
+	sounds/weapons/sbc/nfire_02b.wav
+	sounds/weapons/sbc/nfire_03b.wav
+	sounds/weapons/sbc/nfire_04b.wav
+
+//	sounds/weapons/sbc/nfire_01a.wav
+//	sounds/weapons/sbc/nfire_02a.wav
+//	sounds/weapons/sbc/nfire_03a.wav
+//	sounds/weapons/sbc/nfire_05a.wav
+}
+
+sound sounds/weapons/sbc/fire/far {
+	compression wav
+
+	volume -10
+	minDistance 100
+	maxDistance 350
+	occlude_once
+
+	sounds/weapons/sbc/nfire_01_far.wav
+	sounds/weapons/sbc/nfire_02_far.wav
+	sounds/weapons/sbc/nfire_03_far.wav
+	//sounds/weapons/sbc/nfire_04_far.wav
+	sounds/weapons/sbc/nfire_05_far.wav
+}
+
+sound sounds/weapons/sbc/fire/local {
+	compression wav
+	
+	minDistance	10
+	maxDistance	50
+	no_dups
+	//private
+	occlude_once
+	
+	sounds/weapons/sbc/nfire_01b_local.wav	
+	sounds/weapons/sbc/nfire_02b_local.wav
+	sounds/weapons/sbc/nfire_03b_local.wav
+	sounds/weapons/sbc/nfire_04b_local.wav
+	sounds/weapons/sbc/nfire_01_local.wav
+	sounds/weapons/sbc/nfire_02_local.wav
+	sounds/weapons/sbc/nfire_03_local.wav
+	//sounds/weapons/sbc/nfire_04_local.wav
+	sounds/weapons/sbc/nfire_05_local.wav
+		
+	//sounds/weapons/sbc/fire_local_01.wav
+	//sounds/weapons/sbc/fire_local_02.wav
+	//sounds/weapons/sbc/fire_local_03.wav
+	//sounds/weapons/sbc/fire_local_04.wav
+	//sounds/weapons/sbc/fire_local_05.wav
+}
+
+sound sounds/weapons/sbc/fly {
+	compression wav
+
+	volume -3
+	minDistance	25
+	maxDistance	100
+
+	looping
+//	sounds/weapons/sbc/fly_01.wav
+	sounds/weapons/sbc/fly_02.wav
+//	sounds/weapons/sbc/fly_03.wav
+}
+
+sound sounds/weapons/sbc/reload_start {
+
+	volume -5
+
+	sounds/weapons/sbc/reload_start.wav
+}
+
+sound sounds/weapons/sbc/reload_done {
+
+	volume -3
+
+	sounds/weapons/sbc/reload_done.wav
+}
+
+sound sounds/weapons/sbc/casing {
+
+	volume -10
+
+	sounds/weapons/sbc/casing_01.wav
+	sounds/weapons/sbc/casing_02.wav
+	sounds/weapons/sbc/casing_03.wav
+	sounds/weapons/sbc/casing_04.wav
+	sounds/weapons/sbc/casing_05.wav
+	sounds/weapons/sbc/casing_06.wav
+}

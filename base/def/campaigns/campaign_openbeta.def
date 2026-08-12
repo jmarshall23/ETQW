@@ -1,0 +1,10 @@
+
+campaignDef campaign_openbeta {
+	map	"maps/sewer"
+	map	"maps/sewer"
+	map	"maps/sewer"
+	
+	data {
+		"mtr_backdrop"		"levelshots/campaigns/pacific"
+	}
+}

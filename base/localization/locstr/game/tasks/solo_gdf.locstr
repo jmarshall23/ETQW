@@ -1,0 +1,120 @@
+
+locString game/tasks/gdf_escort_mcp/title {
+	text "#str_01005000"
+}
+
+locString game/tasks/gdf_goal_mcp/title {
+	text "#str_01005002"
+}
+
+
+locString game/tasks/gdf_capture_spawn/title {
+	text "#str_01005010"
+}
+
+locString game/tasks/gdf_liberate_spawn_covertops/title {
+	text "#str_01005020"
+}
+
+
+locString game/tasks/gdf_liberate_spawn/title {
+	text "#str_01005020"
+}
+
+
+
+locString game/tasks/item_defend_gdf_quarry/title {
+	text "#str_01009001"
+}
+
+locString game/tasks/item_return_gdf_quarry/title {
+	text "#str_01009002"
+}
+
+locString game/tasks/item_defend_gdf/title {
+	text "#str_01009001"
+}
+
+locString game/tasks/item_return_gdf/title {
+	text "#str_01009002"
+}
+
+locString game/tasks/item_deliver_gdf/title {
+	text "#str_01009004"
+}
+
+locString game/tasks/item_stop_gdf/title {
+	text "#str_01009003"
+}
+
+locString game/tasks/item_pickup_gdf/title {
+	text "#str_01009000"
+}
+
+locString game/tasks/item_pickup_gdf_outskirts/title {
+	text "#str_01009000"
+}
+
+locString game/tasks/item_deliver_island_gdf/title {
+	text "#str_01009014"
+}
+
+locString game/tasks/item_deliver_outskirts_gdf/title {
+	text "#str_01009014"
+}
+
+locString game/tasks/gdf_defend_short/title {
+	text "#str_01005100"
+}
+
+locString game/tasks/gdf_defend_medium/title {
+	text "#str_01005100"
+}
+
+locString game/tasks/gdf_defend_long/title {
+	text "#str_01005050"
+}
+
+locString game/tasks/gdf_defend_short/title_completed {
+	text "#str_01005030"
+}
+
+locString game/tasks/gdf_defend_medium/title_completed {
+	text "#str_01005040"
+}
+
+locString game/tasks/gdf_defend_short_dual/title {
+	text "#str_01005100"
+}
+
+locString game/tasks/gdf_defend_medium_dual/title {
+	text "#str_01005100"
+}
+
+locString game/tasks/gdf_defend_long_dual/title {
+	text "#str_01005050"
+}
+
+locString game/tasks/gdf_defend_short_dual/title_completed {
+	text "#str_01005030"
+}
+
+locString game/tasks/gdf_defend_medium_dual/title_completed {
+	text "#str_01005040"
+}
+
+locString game/tasks/destroy_deployable_gdf/title {
+	text "#str_01009006"
+}
+
+locString game/tasks/destroy_vehicle_gdf/title {
+	text "#str_01009006"
+}
+
+locString game/tasks/kill_player_gdf/title {
+	text "#str_01009007"
+}
+
+locString game/tasks/gdf_defend_vent/title {
+	text "#str_01009022"
+}

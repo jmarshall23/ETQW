@@ -1,0 +1,186 @@
+
+material textures/base_trim/bigtrim01_d
+{
+	surfaceType "metal"
+	qer_editorimage		textures/base_trim/bigtrim01_d.tga
+	bumpmap			textures/base_trim/bigtrim01_local.tga
+	diffusemap		textures/base_trim/bigtrim01_d.tga
+	specularmap		textures/base_trim/bigtrim01_s.tga
+}
+
+material textures/base_trim/yellow_trim01_d
+{
+	surfaceType "metal"
+	qer_editorimage		textures/base_trim/yellow_trim01_d.tga
+	bumpmap			textures/base_trim/yellow_trim01_local.tga
+	diffusemap		textures/base_trim/yellow_trim01_d.tga
+	specularmap		textures/base_trim/yellow_trim01_s.tga
+}
+
+material textures/base_trim/bluetex4r_danger
+{
+	bumpmap			heightmap (textures/base_trim/a_reactorpipe64_s02b_fin.tga, 4 )
+	diffusemap		textures/base_trim_desert/bluetex4r_danger_d
+	//specularmap		textures/base_trim/yellow_trim01_s.tga
+}
+
+material textures/base_trim/sgirder1lm
+{
+	qer_editorimage	textures/base_trim/sgirder1lm_d.tga
+	noshadows
+	twoSided
+	{
+		bumpmap		picmip -1	textures/base_trim/sgirder1lm_local.tga
+		diffusemap 				textures/base_trim/sgirder1lm_d.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/base_trim/sgirder1lm_nonsolid
+{
+	qer_editorimage	textures/base_trim/sgirder1lm_d.tga
+	noshadows
+	twoSided
+	nonsolid
+	{
+		bumpmap		picmip -1	textures/base_trim/sgirder1lm_local.tga
+		diffusemap textures/base_trim/sgirder1lm_d.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/base_trim/sgirder1lm_burning
+{
+	qer_editorimage		textures/base_trim/sgirder1lm_d.tga
+	noshadows
+	twoSided
+	{
+		bumpmap		picmip-1	textures/base_trim/sgirder1lm_local.tga
+		diffusemap textures/base_trim/sgirder1lm_d.tga
+		alphaTest 0.5
+	}
+       {
+		blend 		add
+		map		textures/base_trim/sgirder1lm_burning.tga
+		red 	( throbtable [Parm4 + (time * (0.1 * Parm3)) ]) * Parm0
+		green 	( throbtable [Parm4 + (time * (0.1 * Parm3)) ]) * Parm1
+		blue	( throbtable [Parm4 + (time * (0.1 * Parm3)) ]) * Parm2
+		vertexcolor
+	}
+}
+
+material textures/base_trim/strim_lessspec
+{
+	surfaceType "metal"
+
+	qer_editorimage	textures/base_trim/strim.tga
+	{
+		diffusemap textures/base_trim/strim_d.tga
+		specularMap textures/base_trim/strim_s.tga
+		specularPower 32
+		specularColor 0.05,0.05,0.05,1
+	}
+}
+
+material textures/base_trim/strim_lessspec_noshadows
+{
+	noshadows
+	surfaceType "metal"
+
+	qer_editorimage	textures/base_trim/strim.tga
+	{
+		diffusemap textures/base_trim/strim_d.tga
+		specularMap textures/base_trim/strim_s.tga
+		specularPower 32
+		specularColor 0.05,0.05,0.05,1
+		
+		diffuseDetailMap 		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap	 		textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap	 		textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	2,2,0,0
+	}
+}
+
+material textures/base_trim/strim_lessspec_noshadows_nonsolid
+{
+	noshadows
+	surfaceType "metal"
+	nonsolid
+	
+	qer_editorimage	textures/base_trim/strim.tga
+	{
+		diffusemap textures/base_trim/strim_d.tga
+		specularMap textures/base_trim/strim_s.tga
+		specularPower 32
+		specularColor 0.05,0.05,0.05,1
+	}
+}
+
+material textures/base_trim/strim_camo01
+{
+	qer_editorimage		textures/base_trim/strim_camo01_d.tga
+	bumpmap			textures/base_trim/strim_local.tga
+	diffusemap		textures/base_trim/strim_camo01_d.tga
+	specularmap		textures/base_trim/strim_s.tga
+}
+
+material textures/base_trim/strim_noshadows
+{
+/*
+	noshadows
+
+	qer_editorimage	textures/base_trim/strim.tga
+	diffusemap		textures/base_trim/strim_d.tga
+	specularmap		textures/base_trim/strim_s.tga
+*/
+
+	twoSided
+	{
+		blend filter
+		map colormipmaps ( ( 1.0 1.0 1.0 1.0 ) ( 0.3 0.3 0.3 0.3 ) ) textures/effects/wire.tga
+		scale 0.125, 0.125
+	}
+}
+
+material textures/base_trim/ladder_old
+{
+	qer_editorimage	textures/base_trim/ladder_old_ed.tga
+	noshadows
+	twoSided
+	{
+		bumpmap 	textures/base_trim/ladder_old_local.tga
+		diffusemap 	textures/base_trim/ladder_old_d.tga
+		specularmap	textures/base_trim/ladder_old_s.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/base_trim/ladder_old_1
+{
+	qer_editorimage	textures/base_trim/ladder_old_1_ed.tga
+	noshadows
+	twoSided
+	{
+		bumpmap 	textures/base_trim/ladder_old_1_local.tga
+		diffusemap 	textures/base_trim/ladder_old_1_d.tga
+		specularmap	textures/base_trim/ladder_old_1_s.tga
+		alphaTest 0.5
+	}
+}
+
+material textures/base_trim/sflgratetrans1
+{
+	noshadows
+	{
+		program	interaction/basic_detail_alphatest
+		diffusemap				textures/base_trim/sflgratetrans1_d.tga
+		bumpmap		picmip -1	textures/base_trim/sflgratetrans1_local.tga   
+		specularmap	picmip -2	textures/base_trim/sflgratetrans1_s.tga
+		alphaTest 0.5
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	2,2,0,0
+	}
+}

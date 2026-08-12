@@ -1,0 +1,240 @@
+effect effects/deployables/antimissile_fire_simple
+{
+	size	8
+
+	sound "Fire Sound"
+	{
+		soundShader	"weapon_gatling_fire"
+	}
+	sound "Far Fire Sound"
+	{
+		soundShader	"weapon_gatling_fire_far"
+	}
+}effect effects/deployables/antimissile_muzzleflash_simple
+{
+	size	242
+
+	cutOffDistance	10000
+
+	spawner "flash2"
+	{
+		count		1,1
+		locked
+
+		oriented
+		{
+			duration	0.05,0.1
+			material	"textures/effects/weapons/muzzle_flash3"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0.25,0.5,0.5 }
+				size { line 30,30,40,40 }
+				tint { line 0.94902,0.815686,0.407843,0.992157,0.901961,0.709804 }
+				fade { line 0.75,1 }
+				rotate { box 0,0,0.166667,0,0,0.138889 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+
+			end
+			{
+				size { line 65,65,80,80 }
+			}
+			lineHit
+		}
+	}
+	spawner "flame2"
+	{
+		count		1,1
+		locked
+
+		line
+		{
+			duration	0.06,0.1
+			generatedLine
+			material	"textures/effects/weapons/muzzle_flash_side2"
+			trailRepeat	1
+
+			start
+			{
+				position { point -8,0.25,0 }
+				velocity { box 2,-0.025,-0.25,4,0.075,-0.0125 }
+				size { box 25,40 }
+				tint { line 0.913726,0.411765,0.0823529,0.913726,0.811765,0.529412 }
+				fade { line 0.75,1 }
+				length { box 70,0,0,120,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1_fast count 0.9,0.9,0.9 offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+			lineHit
+		}
+	}
+	spawner "edge2"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 3,0,0 }
+				size { line 40,40,60,60 }
+				tint { line 0.462745,0.317647,0.188235,0.156863,0.137255,0.101961 }
+				fade { point 0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 130,130,170,170 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+}
+
+effect effects/deployables/antimissile_muzzleflash2_simple
+{
+	size	242
+
+	cutOffDistance	10000
+
+	spawner "flash2"
+	{
+		count		1,1
+		locked
+
+		oriented
+		{
+			duration	0.05,0.1
+			material	"textures/effects/weapons/muzzle_flash3"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0.25,0.5,0.5 }
+				size { line 30,30,40,40 }
+				tint { line 0.94902,0.815686,0.407843,0.992157,0.901961,0.709804 }
+				fade { line 0.75,1 }
+				rotate { box 0,0,0.166667,0,0,0.138889 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+
+			end
+			{
+				size { line 65,65,80,80 }
+			}
+			lineHit
+		}
+	}
+	spawner "flame2"
+	{
+		count		1,1
+		locked
+
+		line
+		{
+			duration	0.06,0.1
+			generatedLine
+			material	"textures/effects/weapons/muzzle_flash_side2"
+			trailRepeat	1
+
+			start
+			{
+				position { point -8,0.25,0 }
+				velocity { box 2,-0.025,-0.25,4,0.075,-0.0125 }
+				size { box 25,40 }
+				tint { line 0.913726,0.411765,0.0823529,0.913726,0.811765,0.529412 }
+				fade { line 0.75,1 }
+				length { box 70,0,0,120,0,0 }
+			}
+
+			motion
+			{
+				tint { envelope rr2_concavefade_start_at_1_fast count 0.9,0.9,0.9 offset 0.05,0.05,0.05 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.1 }
+			}
+			lineHit
+		}
+	}
+	spawner "edge2"
+	{
+		count		1,1
+		locked
+
+		sprite
+		{
+			duration	0.1,0.1
+			material	"textures/particles/sparks/sparkflash03b"
+			trailRepeat	1
+
+			start
+			{
+				position { point 3,0,0 }
+				size { line 40,40,60,60 }
+				tint { line 0.462745,0.317647,0.188235,0.156863,0.137255,0.101961 }
+				fade { point 0 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope linear }
+				tint { envelope rr2_concavefade_start_at_1_fast offset 0.05,0.05,0.05 }
+				rotate { envelope linear }
+			}
+
+			end
+			{
+				size { line 130,130,170,170 }
+				rotate { box -1,1 }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+effect effects/deployables/anti_missile_destroy_simple
+{
+	size	8
+
+	effect "Explosion"
+	{
+		effect	"effects/base/explosion_large_simple"
+	}
+}
+
+
+

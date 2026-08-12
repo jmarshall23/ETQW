@@ -1,0 +1,155 @@
+material texturesheets/island/docks
+{
+	surfaceTypeMap "texturesheets/island/docks"
+	{
+		diffusemap	picmip -1 texturesheets/island/docks_d.tga
+		bumpmap		picmip -1 texturesheets/island/docks_local.tga
+		specularmap	picmip -2 texturesheets/island/docks_s.tga
+
+		diffuseDetailMap textures/detail/bump/metal_detail01_d
+		bumpDetailMap textures/detail/bump/metal_detail01_local
+		detailMult	4,32,0,0
+		vertexcolor
+	}
+}
+
+material texturesheets/island/island_observatory01
+{
+	surfaceTypeMap "texturesheets/island/island_observatory01"
+	diffusemap	texturesheets/island/island_observatory01_d.tga
+	bumpmap		texturesheets/island/island_observatory01_local.tga
+	specularmap	texturesheets/island/island_observatory01_s.tga
+}
+
+material texturesheets/island/outpost_tower
+{
+	surfaceTypeMap "texturesheets/island/outpost_tower"
+	diffusemap	texturesheets/island/outpost_tower_d.tga
+	bumpmap		texturesheets/island/outpost_tower_local.tga
+	specularmap	texturesheets/island/outpost_tower_s.tga
+}
+
+material texturesheets/island/jail
+{
+	surfaceTypeMap "texturesheets/island/jail"
+	diffusemap	texturesheets/island/jail_d.tga
+	bumpmap		texturesheets/island/jail_local.tga
+	specularmap	texturesheets/island/jail_s.tga
+}
+
+material texturesheets/island/checkpoint
+{
+	surfaceTypeMap "texturesheets/island/checkpoint"
+	diffusemap	texturesheets/island/checkpoint_d.tga
+	bumpmap		texturesheets/island/checkpoint_local.tga
+	specularmap	texturesheets/island/checkpoint_s.tga
+}
+
+material texturesheets/island/concreteretainingwalls
+{
+	surfacetype 	"concrete"
+	{
+		diffusemap	texturesheets/island/concreteretainingwalls_d.tga
+		bumpmap		texturesheets/island/concreteretainingwalls_local.tga
+		specularmap	texturesheets/island/concreteretainingwalls_s.tga
+		vertexcolor
+	}
+}
+
+material texturesheets/island/bunker_checkpoint
+{
+	surfaceTypeMap "texturesheets/island/bunker_checkpoint"
+	diffusemap	texturesheets/island/bunker_checkpoint_d.tga
+	bumpmap		texturesheets/island/bunker_checkpoint_local.tga
+	specularmap	texturesheets/island/bunker_checkpoint_s.tga
+}
+
+material texturesheets/island/genbunker1
+{
+	surfaceTypeMap "texturesheets/island/genbunker1"
+	diffusemap	texturesheets/island/genbunker1_d.tga
+	bumpmap		texturesheets/island/genbunker1_local.tga
+	specularmap	texturesheets/island/genbunker1_s.tga
+}
+
+material texturesheets/island/genbunker2
+{
+	surfaceTypeMap "texturesheets/island/genbunker2"
+	diffusemap	texturesheets/island/genbunker2_d.tga
+	bumpmap		texturesheets/island/genbunker2_local.tga
+	specularmap	texturesheets/island/genbunker2_s.tga
+}
+
+material texturesheets/island/exterior_buildings1
+{	
+		surfaceTypeMap "texturesheets/island/exterior_buildings1"
+	{
+		diffusemap	picmip -1 texturesheets/island/exterior_buildings1_d.tga
+		bumpmap		picmip -1 texturesheets/island/exterior_buildings1_local.tga
+		specularmap	picmip -2 texturesheets/island/exterior_buildings1_s.tga
+
+		diffuseDetailMap textures/detail/bump/metal_detail01_d
+		bumpDetailMap textures/detail/bump/metal_detail01_local
+		detailMult	4,32,0,0
+		vertexcolor
+	}
+}
+
+material texturesheets/island/island_decals
+{
+	sort decal
+	nonsolid
+	translucent
+	polygonOffset
+	{
+		program		filterCoverage
+		blend		filter
+		map 		texturesheets/island/island_decals_d.tga
+		maskAlpha
+		vertexcolor
+	}
+}
+
+material texturesheets/island/genbunker
+{
+		surfaceTypeMap "texturesheets/island/genbunker"
+	{
+		diffusemap	picmip -1 texturesheets/island/genbunker_d.tga
+		bumpmap		picmip -1 texturesheets/island/genbunker_local.tga
+		specularmap	picmip -2 texturesheets/island/genbunker_s.tga
+
+		diffuseDetailMap textures/detail/bump/metal_detail01_d
+		bumpDetailMap textures/detail/bump/metal_detail01_local
+		detailMult	4,32,0,0
+		vertexcolor
+	}
+}
+
+material texturesheets/island/observatory
+{
+		surfaceTypeMap "texturesheets/island/island_observatory01"
+	{
+		diffusemap	picmip -1 texturesheets/island/observatory_d.tga
+		bumpmap		picmip -1 texturesheets/island/observatory_local.tga
+		specularmap	picmip -2 texturesheets/island/observatory_s.tga
+
+		diffuseDetailMap textures/detail/bump/metal_detail01_d
+		bumpDetailMap textures/detail/bump/metal_detail01_local
+		detailMult	4,32,0,0
+		vertexcolor
+	}
+}
+
+material texturesheets/island/keybunker
+{
+	surfaceTypeMap "texturesheets/island/keybunker"
+	{
+			diffusemap	picmip -1 texturesheets/island/keybunker_d.tga
+			bumpmap		picmip -1 texturesheets/island/keybunker_local.tga
+			specularmap	picmip -2 texturesheets/island/keybunker_s.tga
+
+			diffuseDetailMap textures/detail/bump/metal_detail01_d
+			bumpDetailMap textures/detail/bump/metal_detail01_local
+			detailMult	4,32,0,0
+	}
+}

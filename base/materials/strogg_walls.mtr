@@ -1,0 +1,333 @@
+material textures/strogg_walls/strogg_wall_01
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_walls/strogg_wall_01_d.tga
+		{
+			bumpmap    	picmip -1	textures/strogg_walls/strogg_wall_01_local.tga
+			diffusemap 	picmip -1	textures/strogg_walls/strogg_wall_01_d.tga
+			specularmap	picmip -2	textures/strogg_walls/strogg_wall_01_s.tga
+			vertexcolor
+			
+			bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+			detailMult 2,2,0.4,0.1			
+		}
+}
+
+material textures/strogg_walls/strogg_wall_01_snow
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_walls/strogg_wall_01_snow_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_01_local.tga
+			diffusemap	picmip -1	textures/strogg_walls/strogg_wall_01_snow_d.tga
+			specularmap	picmip -2	textures/strogg_walls/strogg_wall_01_s.tga
+			vertexcolor
+			
+			bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+			detailMult 2,2,0.4,0.1			
+		}
+}
+
+material textures/strogg_walls/strogg_wall_01_trim
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_walls/strogg_wall_01_trim_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_01_trim_local.tga
+			diffusemap	picmip -1	textures/strogg_walls/strogg_wall_01_trim_d.tga
+			specularmap	picmip -2	textures/strogg_walls/strogg_wall_01_trim_s.tga
+			vertexcolor						
+		}
+}
+
+material textures/strogg_walls/strogg_wall_01_trim_snow
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_walls/strogg_wall_01_trim_snow_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_01_trim_local.tga
+			diffusemap	picmip -1	textures/strogg_walls/strogg_wall_01_trim_snow_d.tga
+			specularmap	picmip -2	textures/strogg_walls/strogg_wall_01_trim_s.tga
+			vertexcolor						
+		}
+}
+
+material textures/strogg_walls/strogg_wall_02
+{
+	surfaceType 	"metal"
+	{
+		program		interaction/strogg_detail
+		bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_02_local.tga
+		diffusemap	picmip -1	textures/strogg_walls/strogg_wall_02_d.tga
+		specularmap	picmip -2	textures/strogg_walls/strogg_wall_02_s.tga
+		selfIllumMap 	_black
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 2,4,0,0		
+	}
+}
+
+material textures/strogg_walls/strogg_wall_02_snow
+{
+	surfaceType 	"metal"
+	{
+		program	interaction/strogg_detail
+		bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_02_local.tga
+		diffusemap 	picmip -1	textures/strogg_walls/strogg_wall_02_snow_d.tga
+		specularmap picmip -2	textures/strogg_walls/strogg_wall_02_s.tga
+		selfillummap			_black
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 2,4,0,0			
+	}
+}
+
+material textures/strogg_walls/strogg_wall_02_trim
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_walls/strogg_wall_02_trim_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_02_trim_local.tga
+			diffusemap 	picmip -1	textures/strogg_walls/strogg_wall_02_trim_d.tga
+			specularmap picmip -2	textures/strogg_walls/strogg_wall_02_trim_s.tga
+			vertexcolor
+		}
+}
+
+material textures/strogg_walls/strogg_wall_02_trim_snow
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_walls/strogg_wall_02_trim_snow_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_02_trim_local.tga
+			diffusemap 	picmip -1	textures/strogg_walls/strogg_wall_02_trim_snow_d.tga
+			specularmap picmip -2	textures/strogg_walls/strogg_wall_02_trim_s.tga
+			vertexcolor
+		}
+}
+
+material textures/strogg_walls/strogg_wall_03
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_walls/strogg_wall_03_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_03_local.tga
+			diffusemap	picmip -1	textures/strogg_walls/strogg_wall_03_d.tga
+			specularmap	picmip -2	textures/strogg_walls/strogg_wall_03_s.tga
+			vertexcolor
+			
+			bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+			detailMult 2,2,0.4,0.1			
+		}
+}
+
+material textures/strogg_walls/strogg_wall_03_snow
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_walls/strogg_wall_03_snow_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_03_local.tga
+			diffusemap 	picmip -1	textures/strogg_walls/strogg_wall_03_snow_d.tga
+			specularmap picmip -2	textures/strogg_walls/strogg_wall_03_s.tga
+			vertexcolor
+		}
+}
+
+material textures/strogg_walls/strogg_wall_03_trim
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_walls/strogg_wall_03_trim_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_03_trim_local.tga
+			diffusemap	picmip -1	textures/strogg_walls/strogg_wall_03_trim_d.tga
+			specularmap	picmip -2	textures/strogg_walls/strogg_wall_03_trim_s.tga
+			vertexcolor
+		}
+}
+
+material textures/strogg_walls/strogg_wall_04_trim
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_walls/strogg_wall_04_trim_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_04_trim_local.tga
+			diffusemap	picmip -1	textures/strogg_walls/strogg_wall_04_trim_d.tga
+			specularmap	picmip -2	textures/strogg_walls/strogg_wall_04_trim_s.tga
+			vertexcolor
+		}
+}
+
+material textures/strogg_walls/strogg_wall_03_trim_snow
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_walls/strogg_wall_03_trim_snow_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_03_trim_local.tga
+			diffusemap	picmip -1	textures/strogg_walls/strogg_wall_03_trim_snow_d.tga
+			specularmap	picmip -2	textures/strogg_walls/strogg_wall_03_trim_s.tga
+			vertexcolor
+		}
+}
+
+material textures/strogg_walls/strogg_wall_04
+{
+	surfaceType 	"metal"
+	{
+		program		interaction/strogg_detail
+		bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_04_local.tga
+		diffusemap	picmip -1	textures/strogg_walls/strogg_wall_04_d.tga
+		specularmap	picmip -2	textures/strogg_walls/strogg_wall_04_s.tga
+		selfIllumMap			_black
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 3,3,0.4,0.1		
+	}
+}
+
+material textures/strogg_walls/strogg_wall_04_snow
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_walls/strogg_wall_04_snow_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_04_local.tga
+			diffusemap 	picmip -1	textures/strogg_walls/strogg_wall_04_snow_d.tga
+			specularmap picmip -2	textures/strogg_walls/strogg_wall_04_s.tga
+			vertexcolor
+			
+			bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+			detailMult 2,2,0.4,0.1			
+		}
+}
+
+material textures/strogg_walls/strogg_wall_05
+{
+	surfaceType 	"metal"
+	{
+		program		interaction/strogg
+		bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_05_local.tga
+		diffusemap	picmip -1	textures/strogg_walls/strogg_wall_05_d.tga
+		specularmap	picmip -2	textures/strogg_walls/strogg_wall_05_s.tga
+		selfIllumMap 	_black
+		vertexcolor
+		
+		bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+		detailMult 1,2,0.4,0.1		
+	}
+}
+
+material textures/strogg_walls/strogg_wall_05_snow
+{
+	surfaceType 	"metal"
+	qer_editorimage textures/strogg_walls/strogg_wall_05_snow_d.tga
+		{
+			bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_05_local.tga
+			diffusemap 	picmip -1	textures/strogg_walls/strogg_wall_05_snow_d.tga
+			specularmap picmip -2	textures/strogg_walls/strogg_wall_05_s.tga
+			vertexcolor
+			
+			bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+			detailMult 1,2,0.4,0.1			
+		}
+}
+
+material textures/strogg_walls/strogg_wall_06
+{
+	surfaceType 	"metal"
+	{
+		program		interaction/strogg
+		bumpmap 	picmip -1	addnormals ( textures/strogg_walls/strogg_wall_06_local, heightmap ( textures/strogg_walls/strogg_wall_06_h, 1 ) )
+		diffusemap	picmip -1	textures/strogg_walls/strogg_wall_06_d
+		specularmap	picmip -2	textures/strogg_walls/strogg_wall_06_s
+		selfIllumMap 	_black
+		vertexcolor
+	}
+
+}
+
+material textures/strogg_walls/strogg_wall_07
+{
+	surfaceType 	"metal"
+	{
+		bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_07_local.tga
+		diffusemap	picmip -1	textures/strogg_walls/strogg_wall_07_d.tga
+		specularmap	picmip -2	textures/strogg_walls/strogg_wall_07_s.tga
+		vertexcolor
+		
+		bumpDetailMap          textures/detail/bump/metal_detail01_local.tga
+		detailMult 2,2,0.4,0.1		
+	}
+}
+
+material textures/strogg_walls/strogg_wall_07b
+{
+	surfaceType 	"metal"
+	{
+		bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_07b_local.tga
+		diffusemap	picmip -1	textures/strogg_walls/strogg_wall_07b_d.tga
+		specularmap	picmip -2	textures/strogg_walls/strogg_wall_07b_s.tga
+		vertexcolor
+	}
+}
+
+material textures/strogg_walls/strogg_wall_08
+{
+	surfaceType 	"metal"
+	{
+		program	interaction/strogg_detail
+		bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_08_local.tga
+		diffusemap	picmip -1	textures/strogg_walls/strogg_wall_08_d.tga
+		specularmap	picmip -2	textures/strogg_walls/strogg_wall_08_s.tga
+		selfillummap			_black
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 3,3,0.4,0.1			
+	}
+}
+
+material textures/strogg_walls/strogg_wall_09
+{
+	surfaceType 	"metal"
+	{
+		program	interaction/strogg_detail
+		bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_09_local.tga
+		diffusemap	picmip -1	textures/strogg_walls/strogg_wall_09_d.tga
+		specularmap	picmip -2	textures/strogg_walls/strogg_wall_09_s.tga
+		selfillummap			_black
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 4,4,0,0		
+	}
+}
+
+material textures/strogg_walls/strogg_wall_10
+{
+	surfaceType 	"metal"
+	{
+		program	interaction/strogg_detail
+		bumpmap 	picmip -1	textures/strogg_walls/strogg_wall_10_local.tga
+		diffusemap	picmip -1	textures/strogg_walls/strogg_wall_10_d.tga
+		specularmap	picmip -2	textures/strogg_walls/strogg_wall_10_s.tga
+		selfillummap			_black
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult 3,3,0.4,0.1		
+	}
+}

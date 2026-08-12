@@ -1,0 +1,115 @@
+
+/***********************************************************************
+
+maskeditor.script
+
+***********************************************************************/
+
+object maskeditor : weapon_base {
+	void		destroy();
+	void		init();
+
+	void		Lower();
+	void		Raise();
+	void		Idle();
+	
+	object		session;
+	
+	float		hudModuleHandle;
+	float		showHudValue;
+	
+	cvar		g_editMask;
+	cvar		g_editMaskSize;
+	cvar		g_editMaskAutoSave;
+};
+
+void maskeditor::destroy() {
+	if ( hudModuleHandle != -1 ) {
+		sys.freeHudModule( hudModuleHandle );
+		hudModuleHandle = -1;
+	}
+	session.remove();
+
+	g_editMask.remove();
+	g_editMaskSize.remove();
+	g_editMaskAutoSave.remove();
+}
+
+void maskeditor::init() {
+	hudModuleHandle = sys.allocHudModule( getKey( "gui_overlay" ), getFloatKeyWithDefault( "hud_sort", 0 ), false );
+					
+	session = sys.createMaskEditSession();
+	session.setDecalMaterial( getKey( "mtr_decal" ) );
+	
+	g_editMask			= sys.getCVar( "g_editMask", "dm_default" );
+	g_editMaskSize		= sys.getCVar( "g_editMaskSize", "1" );
+	g_editMaskAutoSave	= sys.getCVar( "g_editMaskAutoSave", "1" );
+	
+	session.openMask( g_editMask.getStringValue() );
+
+	weaponState( "Raise", 0 );
+}
+
+void maskeditor::Raise() {
+	weaponRising();
+	weaponState( "Idle", 4 );
+}
+
+void maskeditor::Lower() {
+	weaponHolstered();
+	waitUntil( WEAPON_RAISEWEAPON );
+	weaponState( "Raise", 0 );
+}
+
+void maskeditor::Idle() {
+	weaponReady();
+	
+	float changed = 0.f;
+	float autosave;
+
+	while ( 1 ) {
+		sys.waitFrame();
+		
+		session.setStampSize( g_editMaskSize.getFloatValue() );
+		autosave = g_editMaskAutoSave.getBoolValue();
+		
+		sys.setGUIFloat( hudModuleHandle, "changed", changed );
+
+		if ( melee( MASK_SOLID | MASK_OPAQUE, 4096.f * 20, 1, false ) ) {
+			vector position = getMeleeEndPos();
+			
+			session.updateProjection( position );
+			
+			if ( WEAPON_ATTACK ) {
+				if ( session.stamp( position, autosave, 1.f ) ) {
+					if ( !autosave ) {
+						changed = 1.f;
+					}
+				}
+			}
+			
+			if ( WEAPON_ALTFIRE ) {
+				if ( session.stamp( position, autosave, 0.f ) ) {
+					if ( !autosave ) {
+						changed = 1.f;
+					}
+				}
+			}
+			
+			if ( myPlayer.getButton( PK_ACTIVATE ) ) {
+				if ( changed ) {
+					session.saveAll();
+					changed = 0.f;
+				}
+			}
+			
+			if ( WEAPON_LOWERWEAPON ) {
+				weaponState( "Lower", 0 );
+			}
+			
+			if ( myPlayer.getButton( PK_SPRINT ) ) {
+				sys.print("Position: X: " + position_x + " Y:" + position_y + " Z:" + position_z + "\n" );
+			}
+		}
+	}
+}

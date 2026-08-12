@@ -1,0 +1,694 @@
+
+#define OBJECTIVE_QUARRY_DESTROY_JAMMER		0
+#define OBJECTIVE_QUARRY_DELIVER_PODS		1
+
+// Bot Objectives
+
+#define QUARRY_STROGG_DESTROY_JAMMER				0
+#define QUARRY_STROGG_SUPPORT_JAMMER				1
+#define QUARRY_STROGG_DEPLOY_JAMMER					2
+
+#define QUARRY_GDF_DEFEND_JAMMER 					3
+#define QUARRY_GDF_DEPLOY_JAMMER					4
+
+#define QUARRY_STROGG_FORWARDSPAWN_1				5
+#define QUARRY_GDF_ATTACK_FORWARDSPAWN_1			6
+#define QUARRY_GDF_DEFEND_FORWARDSPAWN_1			7
+#define QUARRY_STROGG_ATTACK_FORWARDSPAWN_1			8
+#define QUARRY_STROGG_DEFEND_FORWARDSPAWN_1			9
+
+#define QUARRY_STROGG_DEPLOY_POD					10
+#define QUARRY_GDF_DEFEND_BASE						11
+#define QUARRY_STROGG_ATTACK_GDF					12
+#define QUARRY_GDF_DEPLOY_BASE						13
+#define QUARRY_STROGG_FINAL_OBJECTIVE				14
+
+#define QUARRY_STROGG_ATTACK_BARRACKS_POD			15 // Cell 1
+#define QUARRY_GDF_DEFEND_BARRACKS_POD				16 // Cell 1
+
+#define QUARRY_STROGG_ATTACK_WAREHOUSE_POD			20 // Cell 2
+#define	QUARRY_GDF_DEFEND_WAREHOUSE_POD				21 // Cell 2
+
+#define QUARRY_STROGG_ATTACK_OFFICE_POD				25 // Cell 3
+#define QUARRY_GDF_DEFEND_OFFICE_POD				26 // Cell 3
+
+#define QUARRY_GDF_CONSTRUCT_TOWER					27 // Guard Tower
+#define QUARRY_STROGG_DESTROY_TOWER					28
+
+#define QUARRY_CELL_OBJ_1							35 // Cell 1 Take Action
+#define	QUARRY_CELL_OBJ_2							36 // Cell 2 Take Action
+#define QUARRY_CELL_OBJ_3							37 // Cell 3 Take Action
+
+#include "script/maps/quarry/final.script"
+
+object mapObject_Quarry : mapObject_Default {
+	void			preinit();
+
+	void			InitObjectives();
+	void			StartFirstObjective(); // MBJ
+
+	void			CompleteObjective( float index, entity p );
+	handle			GetObjectiveMessage( float index );
+
+	void			OnTimeLimitHit();
+	void			OnJammerDestroyed();
+	void			OnPodsDelivered();
+
+	void			OnGuardTower1Built();
+	void			OnGuardTower1Destroyed();
+	boolean			guardTower1Built;
+
+	void			OnConstructionComplete( entity obj );
+	void			OnDestructionComplete( entity obj );
+
+	void			DeliverPodThread();
+
+	void			JammerDestroyThread();
+
+	// ANDREW
+
+	void			ShipExplodeThread();
+
+	vector			GetGDFBasePosition() { return '6220 -12700 2420'; }
+
+	entity			GetSpectateEntity();
+
+	//
+	// Spawn masters
+	//
+	entity			quarryworks_strogg_spawn;
+	entity			warehouse_gdf_spawn;
+	entity			railyard_capturable_spawn;
+	entity			gdf_main_base;
+	entity 			strogg_main_base;
+
+	//
+	// Territories
+	//
+	entity			gdfBaseTerritory;
+	entity			warehouseTerritory;
+	entity			quarryworksTerritory;
+	entity			gateTerritory;
+	entity			stroggBaseTerritory;
+
+	//
+	// Objectives
+	//
+	entity			objective1Arrow1;
+	entity			objective1Arrow2;
+	entity			objective2Arrow1;
+	entity			objective2Arrow2;
+
+	entity			objective1Marker;
+	entity			objective2Marker;
+
+	entity			carryable1;
+	entity			carryable2;
+	entity			carryable3;
+
+	entity			finalObjectiveTrigger;
+
+	entity 			jammer; // MBJ
+	entity			jammerEffectsIdle; // MBJ
+	entity			jammerEffectsShutdown; // MBJ
+	entity			generatorDestroyed; // MBJ
+
+	entity			guardTower1;
+	entity			guardTower1Construction;
+
+	entity			noplant_generator;
+
+	float			mainObjectiveIndex; // MBJ
+
+	// ANDREW
+
+	//entity		ship_sparks_1;
+	entity			ship_sparks_2;
+	entity			ship_sparks_3;
+
+	entity			ship_explode_1;
+	entity			ship_explode_2;
+	entity			ship_explode_3;
+	entity			ship_explode_4;
+	entity			ship_explode_5;
+	entity			ship_explode_6;
+	entity			ship_explode_final;
+	entity			ship_smoke;
+	entity			ship_blowout;
+
+	entity			ship_light;
+
+	entity			ship_fire1;
+	entity			ship_fire2;
+
+	entity 			endCameraA;
+	entity			endCameraB;
+
+	// Bot Functions
+	void 			OnSpawnCaptured( string actionName );
+	void 			OnSpawnLiberated( string actionName );
+	void 			OnCarryableItemStolen( string actionName );
+	void 			OnCarryableItemReturned( string actionName );
+	void			DelayedBotSpawnThread();
+	void			DelayedRearSpawnThread();
+
+	cvar 			debug_script;
+}
+
+mapObject_Base Quarry_MapScript() {
+	return new mapObject_Quarry;
+}
+
+void mapObject_Quarry::preinit() {
+}
+
+void mapObject_Quarry::InitObjectives() {
+	gameRules.setWinningTeam( gdfTeam );
+
+	// Modified GDF Respawn Time (added 10 seconds) MBJ
+	gdfTeam.SetRespawnWait( 30 );
+	stroggTeam.SetRespawnWait( 20 );
+	gdfTeam.InitRespawnTimeChange();
+	stroggTeam.InitRespawnTimeChange();
+	CreateRespawnTimeThread( stroggTeam );
+
+	//
+	// Set up the spawn points
+	//
+
+	quarryworks_strogg_spawn = worldspawn.getEntityKey( "script_quarryworks_strogg_spawn" );
+	warehouse_gdf_spawn = worldspawn.getEntityKey( "script_warehouse_spawn" );
+	railyard_capturable_spawn = worldspawn.getEntityKey( "script_railyard_capturable_spawn" );
+	gdf_main_base = worldspawn.getEntityKey( "script_gdf_base_spawnmaster" );
+	strogg_main_base = worldspawn.getEntityKey( "script_strogg_base_spawnmaster" );
+
+	quarryworks_strogg_spawn.setGameTeam( $null_entity );
+	quarryworks_strogg_spawn.vSetActive( false );
+	warehouse_gdf_spawn.setGameTeam( gdfTeam );
+	warehouse_gdf_spawn.vSetActive( true );
+	railyard_capturable_spawn.setGameTeam( $null_entity );
+	railyard_capturable_spawn.vSetActive( true );
+
+	//
+	// Set up the territories
+	//
+
+	gdfBaseTerritory = worldspawn.getEntityKey( "script_gdf_base_territory" );
+	warehouseTerritory = worldspawn.getEntityKey( "script_warehouse_territory" );
+	quarryworksTerritory = worldspawn.getEntityKey( "script_quarry_territory" );
+	gateTerritory = worldspawn.getEntityKey( "script_gate_territory" );
+	stroggBaseTerritory = worldspawn.getEntityKey( "script_strogg_base_territory" );
+
+	gdfBaseTerritory.setActive( false );
+	warehouseTerritory.setActive( false );
+	quarryworksTerritory.setActive( true );
+	gateTerritory.setActive( false );
+	stroggBaseTerritory.setActive( true );
+
+	//
+	// Set up the objectives
+	//
+
+	objective1Arrow1 = worldspawn.getEntityKey( "script_obj1_arrow1" );
+	objective1Arrow2 = worldspawn.getEntityKey( "script_obj1_arrow2" );
+	objective2Arrow1 = worldspawn.getEntityKey( "script_obj2_arrow1" );
+	objective2Arrow2 = worldspawn.getEntityKey( "script_obj2_arrow2" );
+
+	objective1Marker = worldspawn.getEntityKey( "script_obj1_marker" );
+	objective2Marker = worldspawn.getEntityKey( "script_obj2_marker" );
+
+	objective1Arrow1.setGameTeam( gdfTeam );
+	objective1Arrow2.setGameTeam( gdfTeam );
+	objective2Arrow1.setGameTeam( gdfTeam );
+	objective2Arrow2.setGameTeam( gdfTeam );
+
+	objective1Arrow1.vStartObjective();
+	objective1Arrow2.vStartObjective();
+
+	objective1Marker.vStartObjective();
+	objective2Marker.vStartObjective();
+
+	guardTower1				= worldspawn.getEntityKey( "script_guard_tower_1_object" );
+	guardTower1Construction	= worldspawn.getEntityKey( "script_guard_tower_1" );
+
+	carryable1		= worldspawn.getEntityKey( "script_carryable_item_caller_1" );
+	carryable2		= worldspawn.getEntityKey( "script_carryable_item_caller_2" );
+	carryable3		= worldspawn.getEntityKey( "script_carryable_item_caller_3" );
+
+	// ANDREW
+
+	//ship_sparks_1		= worldspawn.getEntityKey( "script_ship_sparks_1" );
+	ship_sparks_2		= worldspawn.getEntityKey( "script_ship_sparks_2" );
+	ship_sparks_3		= worldspawn.getEntityKey( "script_ship_sparks_3" );
+
+	ship_explode_1		= worldspawn.getEntityKey( "script_ship_explode_1" );
+	ship_explode_2		= worldspawn.getEntityKey( "script_ship_explode_2" );
+	ship_explode_3		= worldspawn.getEntityKey( "script_ship_explode_3" );
+	ship_explode_4		= worldspawn.getEntityKey( "script_ship_explode_4" );
+	ship_explode_5		= worldspawn.getEntityKey( "script_ship_explode_5" );
+	ship_explode_6		= worldspawn.getEntityKey( "script_ship_explode_6" );
+	ship_explode_final	= worldspawn.getEntityKey( "script_ship_explode_final" );
+
+	ship_smoke		= worldspawn.getEntityKey( "script_ship_smoke" );
+	ship_blowout		= worldspawn.getEntityKey( "script_ship_blowout" );
+	ship_light		= worldspawn.getEntityKey( "script_ship_light" );
+
+	ship_fire1		= worldspawn.getEntityKey( "script_ship_fire1" );
+	ship_fire2		= worldspawn.getEntityKey( "script_ship_fire2" );
+
+	endCameraA		= worldspawn.getEntityKey( "script_placement_camera_a" );
+	endCameraB		= worldspawn.getEntityKey( "script_placement_camera_b" );
+
+	finalObjectiveTrigger = worldspawn.getEntityKey( "script_final_objective_trigger" );
+
+	jammer			= worldspawn.getEntityKey( "script_jammer" ); // MBJ
+
+	noplant_generator		= worldspawn.getEntityKey( "script_noplant_generator" );
+
+	// MBJ ADDED BELOW
+
+	jammerEffectsIdle		= worldspawn.getEntityKey( "script_jammer_effects_idle" );
+	jammerEffectsShutdown	= worldspawn.getEntityKey( "script_jammer_effects_shutdown" );
+
+	generatorDestroyed		= worldspawn.getEntityKey( "script_generator_destroyed" );
+
+	CreateDeployTasks();
+
+	generatorDestroyed.hide();
+	generatorDestroyed.forceDisableClip();
+
+	// MBJ ADDED ABOVE
+
+	mainObjectiveIndex = OBJECTIVE_QUARRY_DESTROY_JAMMER;
+
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	gameRules.setEndGameCamera( endCameraB );
+
+	thread StartFirstObjective();
+
+	guardTower1Built = false;
+}
+
+// Added by MBJ
+
+void mapObject_Quarry::StartFirstObjective() {
+	sys.wait( 5.f );
+
+	// Set up Bots for first objective
+
+	objManager.setAttackingTeam( STROGG );
+	objManager.setPrimaryTeamAction( GDF, "obj_strogg_jammer" );
+	objManager.setPrimaryTeamAction( STROGG, "obj_strogg_jammer" );
+	objManager.setBotCriticalClass( GDF, ENGINEER );
+	objManager.setBotCriticalClass( STROGG, SOLDIER );
+
+	thread DelayedBotSpawnThread();
+
+	objManager.setBotSightDist( 3000.0f );
+	objManager.setTeamUseRearSpawn( GDF, false );
+	gdfTeam.setTeamRearSpawn( gdf_main_base );
+	objManager.setTeamUseRearSpawnPercentage( GDF, 25 );
+	objManager.activateBotActionGroup( QUARRY_STROGG_DESTROY_JAMMER );
+	objManager.activateBotActionGroup( QUARRY_STROGG_SUPPORT_JAMMER );
+	objManager.activateBotActionGroup( QUARRY_STROGG_DEPLOY_JAMMER );
+	objManager.activateBotActionGroup( QUARRY_GDF_DEFEND_JAMMER );
+	objManager.activateBotActionGroup( QUARRY_GDF_DEPLOY_JAMMER );
+	objManager.activateBotActionGroup( QUARRY_STROGG_FORWARDSPAWN_1 );
+	objManager.activateBotActionGroup( QUARRY_STROGG_ATTACK_FORWARDSPAWN_1 );
+	objManager.activateBotActionGroup( QUARRY_GDF_DEFEND_FORWARDSPAWN_1 );
+	objManager.SetObjectiveEntity( jammer, mainObjectiveIndex );
+	jammer.vCreateMission();
+	CreateInitialTimedMission( jammer );
+
+	thread DelayedRearSpawnThread();
+}
+
+void mapObject_Quarry::DelayedBotSpawnThread() {
+	sys.wait( 10.0f );
+	objManager.setTeamNeededClass( GDF, MEDIC, NOCLASS, 2, false, true );
+	objManager.setTeamNeededClass( GDF, ENGINEER, NOCLASS, 2, true, true );
+	objManager.setTeamNeededClass( STROGG, FIELDOPS, NOCLASS, 2, false, true );
+	objManager.setTeamNeededClass( STROGG, SOLDIER, NOCLASS, 3, true, true );
+}
+
+void mapObject_Quarry::DelayedRearSpawnThread() {
+	sys.wait( 30.0f );
+	objManager.setTeamUseRearSpawn( GDF, true );
+}
+
+void mapObject_Quarry::CompleteObjective( float index, entity p ) {
+	if ( index == OBJECTIVE_QUARRY_DESTROY_JAMMER ) {
+		OnJammerDestroyed();
+	}
+	if ( index == OBJECTIVE_QUARRY_DELIVER_PODS ) {
+		OnPodsDelivered();
+	}
+}
+
+handle mapObject_Quarry::GetObjectiveMessage( float index ) {
+	if ( index == OBJECTIVE_QUARRY_DESTROY_JAMMER ) {
+		return sys.localizeString( "maps/quarry/obj_destroyed_jammer" );
+	}
+	if ( index == OBJECTIVE_QUARRY_DELIVER_PODS ) {
+		return sys.localizeString( "maps/quarry/obj_constructed_relay" );
+	}
+	return g_locStr_BadObjective;
+}
+
+void mapObject_Quarry::OnConstructionComplete( entity obj ) {
+	if ( obj == guardTower1Construction ) {
+		OnGuardTower1Built();
+	}
+}
+
+void mapObject_Quarry::OnDestructionComplete( entity obj ) {
+	if ( obj == guardTower1Construction ) {
+		OnGuardTower1Destroyed();
+	}
+}
+
+void mapObject_Quarry::OnGuardTower1Built() {
+	guardTower1Built = true;
+	guardTower1Construction.vCompleteMission();
+	objManager.deactivateBotActionGroup( QUARRY_GDF_CONSTRUCT_TOWER );
+	if ( mainObjectiveIndex == OBJECTIVE_QUARRY_DELIVER_PODS ) {
+		guardTower1.vCreateMission();
+		objManager.activateBotActionGroup( QUARRY_STROGG_DESTROY_TOWER );
+	}
+}
+
+void mapObject_Quarry::OnGuardTower1Destroyed() {
+	guardTower1Built = false;
+	guardTower1.vCompleteMission();
+	objManager.deactivateBotActionGroup( QUARRY_STROGG_DESTROY_TOWER );
+	if ( mainObjectiveIndex == OBJECTIVE_QUARRY_DELIVER_PODS ) {
+		guardTower1Construction.vCreateMission();
+		objManager.activateBotActionGroup( QUARRY_GDF_CONSTRUCT_TOWER );
+	}
+}
+
+void mapObject_Quarry::JammerDestroyThread() {
+	generatorDestroyed.show();
+	sys.wait( 0.5f );
+	generatorDestroyed.forceEnableClip();
+}
+
+void mapObject_Quarry::OnJammerDestroyed() {
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	mainObjectiveIndex = OBJECTIVE_QUARRY_DELIVER_PODS;
+
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex ); // MBJ
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex ); // MBJ
+	jammer.vCompleteMission(); // MBJ
+	StopTimedMission(); // MBJ
+
+	// MBJ ADDED BELOW
+
+	thread JammerDestroyThread();
+	noplant_generator.remove();
+
+	jammerEffectsIdle.remove();
+	jammerEffectsShutdown.vTriggerParticleEffect( 1 );
+
+	// MBJ ADDED ABOVE
+
+	quarryworksTerritory.setGameTeam( stroggTeam );
+
+	quarryworks_strogg_spawn.setGameTeam( stroggTeam );
+	quarryworks_strogg_spawn.vSetActive( true );
+
+	railyard_capturable_spawn.vSetActive( false );
+	railyard_capturable_spawn.setGameTeam( stroggTeam );
+
+	warehouse_gdf_spawn.setGameTeam( $null_entity );
+	warehouse_gdf_spawn.vSetActive( false );
+
+	gdfBaseTerritory.setActive( true );
+	warehouseTerritory.setActive( true );
+	quarryworksTerritory.setActive( false );
+	gateTerritory.setActive( true );
+	stroggBaseTerritory.setActive( false );
+
+	if ( !guardTower1Built ) {
+		guardTower1Construction.vCreateMission();
+	}
+
+	if ( guardTower1Built ) {
+		guardTower1.vCreateMission();
+	}
+
+	objective1Arrow1.vFinishObjective();
+	objective1Arrow2.vFinishObjective();
+	objective1Marker.vFinishObjective();
+
+	objective2Arrow1.vStartObjective();
+	objective2Arrow2.vStartObjective();
+
+	// Set up bots for end
+
+	objManager.setBotCriticalClass( GDF, ENGINEER );
+	objManager.setBotCriticalClass( STROGG, FIELDOPS );
+	objManager.setTeamNeededClass( GDF, ENGINEER, NOCLASS, 3, false, true );
+	objManager.setTeamNeededClass( STROGG, FIELDOPS, NOCLASS, 3, true, true );
+	objManager.setBotSightDist( 3000.0f );
+	objManager.setTeamUseRearSpawn( GDF, false );
+	objManager.setTeamUseRearSpawn( STROGG, true );
+	stroggTeam.setTeamRearSpawn( strogg_main_base );
+	objManager.setTeamUseRearSpawnPercentage( STROGG, 30 );
+	objManager.setBotTeamRetreatTime( GDF, 10 );
+
+	// Kill the previous bot action groups
+
+	objManager.killBotActionGroup( QUARRY_STROGG_DESTROY_JAMMER );
+	objManager.killBotActionGroup( QUARRY_STROGG_SUPPORT_JAMMER );
+	objManager.killBotActionGroup( QUARRY_STROGG_DEPLOY_JAMMER );
+	objManager.killBotActionGroup( QUARRY_GDF_DEFEND_JAMMER );
+	objManager.killBotActionGroup( QUARRY_GDF_DEPLOY_JAMMER );
+	objManager.killBotActionGroup( QUARRY_STROGG_FORWARDSPAWN_1 );
+	objManager.killBotActionGroup( QUARRY_GDF_ATTACK_FORWARDSPAWN_1 );
+	objManager.killBotActionGroup( QUARRY_STROGG_DEFEND_FORWARDSPAWN_1 );
+	objManager.killBotActionGroup( QUARRY_STROGG_ATTACK_FORWARDSPAWN_1 );
+	objManager.killBotActionGroup( QUARRY_GDF_DEFEND_FORWARDSPAWN_1 );
+
+	// Turn on the final bot action groups
+
+	objManager.activateBotActionGroup( QUARRY_STROGG_DEPLOY_POD );
+	objManager.activateBotActionGroup( QUARRY_GDF_DEFEND_BASE );
+	objManager.activateBotActionGroup( QUARRY_STROGG_ATTACK_GDF );
+	objManager.activateBotActionGroup( QUARRY_GDF_DEPLOY_BASE );
+	objManager.activateBotActionGroup( QUARRY_STROGG_FINAL_OBJECTIVE );
+	
+	if ( !guardTower1Built ) {
+		objManager.activateBotActionGroup( QUARRY_GDF_CONSTRUCT_TOWER );
+	} else {
+		objManager.activateBotActionGroup( QUARRY_STROGG_DESTROY_TOWER );
+	}
+
+	thread DeliverPodThread();
+
+	stroggTeam.SetRespawnWait( 20 );
+	ResetRespawnTimeThread();
+}
+
+// ANDREW
+
+void mapObject_Quarry::ShipExplodeThread() {
+	ship_light.vTriggerParticleEffect( 1 );
+
+	sys.wait( 2.5f );
+	//ship_sparks_1.vTriggerParticleEffect( 1 );
+
+	sys.wait( 2.0f );
+	ship_sparks_3.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.6f );
+	ship_sparks_2.vTriggerParticleEffect( 1 );
+	ship_explode_1.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.2f );
+	ship_sparks_3.vTriggerParticleEffect( 1 );
+
+	sys.wait( 1.4f );
+	//ship_sparks_1.vTriggerParticleEffect( 1 );
+
+	sys.wait( 1.1f );
+	ship_explode_2.vTriggerParticleEffect( 1 );
+	ship_explode_3.vTriggerParticleEffect( 1 );
+
+	sys.wait( 1.3f );
+	ship_explode_4.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.8f );
+	ship_blowout.vTriggerParticleEffect( 1 );
+	ship_explode_5.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.6f );
+	ship_explode_6.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.5f );
+	ship_smoke.vTriggerParticleEffect( 1 );
+	ship_explode_final.vTriggerParticleEffect( 1 );
+}
+
+void mapObject_Quarry::OnPodsDelivered() {
+	StopTimedMission();
+	finalObjectiveTrigger.vCompleteMission();
+
+	objective2Arrow1.vFinishObjective();
+	objective2Arrow2.vFinishObjective();
+	objective2Marker.vFinishObjective();
+
+	// MBJ
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+	objManager.PlaySound( worldspawn.getKey( "snd_stroggwin_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_stroggwin_gdf" ), gdfTeam );
+
+	//ANDREW
+
+	thread ShipExplodeThread();
+	ship_fire1.remove();
+	ship_fire2.remove();
+
+	gameRules.setWinningTeam( stroggTeam );
+	gameRules.setEndGameCamera( endCameraA );
+
+
+	gameRules.endGame();
+}
+
+void mapObject_Quarry::DeliverPodThread() {
+	sys.wait( 5.0f );
+	//sys.wait( 1.0f );			// Xian
+
+	objManager.PlaySound( worldspawn.getKey( "snd_autodestruct_start_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_autodestruct_start_gdf" ), gdfTeam );
+
+	// wait before triggering the carryables to come flying in (staggered to look cooler)
+	sys.wait( 38.0f ); // ADAM ADJUSTMENTS
+	//sys.wait( 2.0f ); // Xian adjustments for testing
+
+	objManager.SetObjectiveEntity( finalObjectiveTrigger, mainObjectiveIndex );
+	finalObjectiveTrigger.vCreateMission();
+	CreateInitialTimedMission( finalObjectiveTrigger );
+
+	carryable1.vOnDeploy();
+	objManager.activateBotActionGroup( QUARRY_STROGG_ATTACK_BARRACKS_POD );		// Xian
+	objManager.activateBotActionGroup( QUARRY_GDF_DEFEND_BARRACKS_POD );		// Cell 1
+	objManager.activateBotActionGroup( QUARRY_CELL_OBJ_1 );						// Cell 1 Take Action
+
+	sys.wait( 30.0f );
+	//sys.wait( 2.0f );
+	carryable2.vOnDeploy();
+	objManager.activateBotActionGroup( QUARRY_STROGG_ATTACK_WAREHOUSE_POD );	// Cell 2
+	objManager.activateBotActionGroup( QUARRY_GDF_DEFEND_WAREHOUSE_POD );		// Cell 2
+	objManager.activateBotActionGroup( QUARRY_CELL_OBJ_2 );						// Cell 2 Take Action
+
+	sys.wait( 30.0f );
+	//sys.wait( 2.0f );
+	carryable3.vOnDeploy();
+	objManager.activateBotActionGroup( QUARRY_STROGG_ATTACK_OFFICE_POD );		// Cell 3
+	objManager.activateBotActionGroup( QUARRY_GDF_DEFEND_OFFICE_POD );			// Cell 3
+	objManager.activateBotActionGroup( QUARRY_CELL_OBJ_3 );						// Cell 3 Take Action
+}
+
+// Added by MBJ
+
+void mapObject_Quarry::OnTimeLimitHit() {
+	FinishTimedMission();
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	objManager.PlaySound( worldspawn.getKey( "snd_strogglose_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_strogglose_gdf" ), gdfTeam );
+}
+
+// MBJ - Bot Forward Spawn Actions
+
+void mapObject_Quarry::OnSpawnCaptured( string actionName ) {
+	if ( actionName == "strogg_forwardspawn_1" ) {
+		objManager.activateBotActionGroup( QUARRY_GDF_ATTACK_FORWARDSPAWN_1 );
+		objManager.activateBotActionGroup( QUARRY_STROGG_DEFEND_FORWARDSPAWN_1 );
+		objManager.deactivateBotActionGroup( QUARRY_STROGG_ATTACK_FORWARDSPAWN_1 );
+		objManager.deactivateBotActionGroup( QUARRY_GDF_DEFEND_FORWARDSPAWN_1 );
+		stroggTeam.setTeamRearSpawn( strogg_main_base );
+		objManager.setTeamUseRearSpawn( STROGG, true );
+	}
+}
+
+void mapObject_Quarry::OnSpawnLiberated( string actionName ) {
+	if ( actionName == "strogg_forwardspawn_1" ) {
+		objManager.deactivateBotActionGroup( QUARRY_GDF_ATTACK_FORWARDSPAWN_1 );
+		objManager.deactivateBotActionGroup( QUARRY_STROGG_DEFEND_FORWARDSPAWN_1 );
+		objManager.activateBotActionGroup( QUARRY_STROGG_ATTACK_FORWARDSPAWN_1 );
+		objManager.activateBotActionGroup( QUARRY_GDF_DEFEND_FORWARDSPAWN_1 );
+		objManager.setTeamUseRearSpawn( STROGG, false );
+	}
+}
+
+// MBJ - Carryable Item Actions
+
+void mapObject_Quarry::OnCarryableItemStolen( string actionName ) {
+	if( actionName == "obj_strogg_cell1" ) {
+		objManager.deactivateBotActionGroup( QUARRY_STROGG_ATTACK_BARRACKS_POD );
+		objManager.deactivateBotActionGroup( QUARRY_GDF_DEFEND_BARRACKS_POD );
+	}
+	if( actionName == "obj_strogg_cell2" ) {
+		objManager.deactivateBotActionGroup( QUARRY_STROGG_ATTACK_WAREHOUSE_POD );
+		objManager.deactivateBotActionGroup( QUARRY_GDF_DEFEND_WAREHOUSE_POD );
+	}
+	if( actionName == "obj_strogg_cell3" ) {
+		objManager.deactivateBotActionGroup( QUARRY_STROGG_ATTACK_OFFICE_POD );
+//		objManager.deactivateBotActionGroup( QUARRY_GDF_DEFEND_OFFICE_POD );
+	}
+}
+
+void mapObject_Quarry::OnCarryableItemReturned( string actionName ) {
+	if( actionName == "obj_strogg_cell1" ) {
+		objManager.activateBotActionGroup( QUARRY_STROGG_ATTACK_BARRACKS_POD );
+		objManager.activateBotActionGroup( QUARRY_GDF_DEFEND_BARRACKS_POD );
+	}
+	if( actionName == "obj_strogg_cell2" ) {
+		objManager.activateBotActionGroup( QUARRY_STROGG_ATTACK_WAREHOUSE_POD );
+		objManager.activateBotActionGroup( QUARRY_GDF_DEFEND_WAREHOUSE_POD );
+	}
+	if( actionName == "obj_strogg_cell3" ) {
+		objManager.activateBotActionGroup( QUARRY_STROGG_ATTACK_OFFICE_POD );
+		objManager.activateBotActionGroup( QUARRY_GDF_DEFEND_OFFICE_POD );
+	}
+}
+
+entity mapObject_Quarry::GetSpectateEntity() { 
+	if ( jammer != $null_entity ) {
+		return jammer.vGetSpectateEntity();
+	}
+	
+	entity worldspawn = sys.getEntity( "worldspawn" );
+
+	// this is a bit of a hack
+	float count = worldspawn.entitiesOfCollection( "carryables" );
+	float i;
+	
+	entity closest;
+	float closestDist;
+	vector targetOrigin = ( finalObjectiveTrigger.getAbsMins() + finalObjectiveTrigger.getAbsMaxs() ) * 0.5f;
+	
+	for ( i = 0; i < count; i++ ) {
+		entity ent = worldspawn.getBoundsCacheEntity( i );
+		
+		entity specEnt = ent.vGetSpectateEntity();
+		if ( specEnt != $null_entity ) {
+			float distance = sys.vecLength( specEnt.getWorldOrigin() - targetOrigin );
+			if ( distance < closestDist || closest == $null_entity ) {
+				closest = specEnt;
+				closestDist = distance;
+			}
+		}
+	}
+
+	return closest;
+}

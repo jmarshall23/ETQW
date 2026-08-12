@@ -1,0 +1,58 @@
+
+#include <materials/guis/targeting.include>
+
+/* GDF */
+material guis/binoculars/target_ssm_color {
+	target_color( "gdf_ssm" )
+}
+
+material guis/binoculars/target_ssm_desat {
+	target_desat( "gdf_ssm_sweep" )
+}
+
+
+material guis/binoculars/target_rocket_color {
+	target_color( "gdf_rocket" )
+}
+
+material guis/binoculars/target_rocket_desat {
+	target_desat( "gdf_rocket_sweep" )
+}
+
+
+
+material guis/binoculars/target_artillery_color {
+	target_color( "gdf_artillery" )
+}
+
+material guis/binoculars/target_artillery_desat {
+	target_desat( "gdf_artillery_sweep" )
+}
+
+
+
+/* Strogg */
+material guis/binoculars/target_howitzer_color {
+	target_color( "strogg_artillery" )
+}
+
+material guis/binoculars/target_howitzer_desat {
+	target_desat( "strogg_artillery_sweep" )
+}
+
+material guis/binoculars/target_plasma_color {
+	target_color( "strogg_mortar" )
+}
+
+material guis/binoculars/target_plasma_desat {
+	target_desat( "strogg_mortar_sweep" )
+}
+
+
+material guis/binoculars/target_ssg_color {
+	target_color( "strogg_ssg" )
+}
+
+material guis/binoculars/target_ssg_desat {
+	target_desat( "strogg_ssg_sweep" )
+}

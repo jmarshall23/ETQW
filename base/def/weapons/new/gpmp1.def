@@ -1,0 +1,81 @@
+/***********************************************************************
+
+	N93 GPMG
+
+***********************************************************************/
+
+model worldmodel_gpmg1 {
+	mesh 						models/characters/animations/initial_edf/weapons/gpmg.md5mesh
+	anim idle 					models/characters/animations/initial_edf/weapons/gpmg.md5anim
+	anim aim					models/characters/animations/initial_edf/weapons/gpmg.md5anim
+	anim fire1 					models/characters/animations/initial_edf/weapons/gpmg.md5anim
+	anim reload					models/characters/animations/initial_edf/weapons/gpmg.md5anim
+	anim noammo					models/characters/animations/initial_edf/weapons/gpmg.md5anim
+ 	anim putaway				models/characters/animations/initial_edf/weapons/gpmg.md5anim
+}
+
+invItemDef inv_weapon_gpmg1 {
+	type						"weapon"
+	slot						"twohanded"
+	name						"game/weapons/gpmg"
+
+	data {
+		"model_view" 				"viewmodel_gpmg"
+		"model_world" 				"worldmodel_gpmg1"
+		"view_offset"				"15 -5 -10"
+
+		"joint_attach"				"RightHand"
+		"anim_prefix"				"gpmg"
+
+		"weapon_scriptobject"		"weapon_gpmg"
+
+		"muzzle_kick_time"			"0.2"
+		"muzzle_kick_maxtime"		"0.6"
+		"muzzle_kick_angles"		"0 0 0"
+		"muzzle_kick_offset"		"1 1 2"
+		"recoilTime"				"145"
+		"recoilAngles"				"-1 0 0"
+
+		"fx_muzzle_flash"			"effects/weapons/gpmg_muzzleflash"
+		"fx_tracer"					"effects/base/tracers_small"
+		"effectchance fx_tracer"	"0.1"
+
+		"snd_fire"					"weapon_gpmg_fire"
+		"snd_fire_far"				"weapon_gpmg_fire_far"
+		"snd_fire_local"			"weapon_gpmg_fire_local"
+		"snd_cock"					"weapon_assaultrifle_cock"
+		"snd_reload"				"weapon_assaultrifle_reload"
+		"snd_lowammo"				"weapon_ammo_warning"
+
+		"speed_mod"					"0.5"
+
+ 		"fov_zoom"					"45"
+		"fov_time"					"0.25"
+		"fov_speed"					"0.5"
+		"fov_spread"				"0.5"
+
+		"trigger_delay"				"0"
+		"fire_rate"					"0.064"
+//		"fire_rate"					"0.18"
+		"num_projectiles"			"1"
+		"spread"					"20"
+		"spread_crouch"				"0.5"
+		"range"						"4096"
+		"zoomFov"					"60"
+		"low_ammo"					"20"
+
+		"gui_sight"					"game/sights/assaultrifle_scope"
+
+		"mtr_weaponmenu"			"guis/assets/icons/weapons/gpmg"
+	}
+
+	clip {
+		"projectile"				"projectile_gpmg"
+		"client_projectile"			"projectile_bullet"
+		"type"						"gpmg"
+		"ammo_per_shot"				"1"
+		"max_ammo"					"200"
+	}
+}
+
+

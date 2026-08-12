@@ -1,0 +1,70 @@
+//
+// gdf mcp cockpit
+//=================================================================================================
+
+export hauser {
+		options -prefix MCPCOCKPIT_ -nomerge -sourcedir models/vehicles/edf_mcp/cockpit/dev_sd -destdir models/vehicles/edf_mcp/cockpit/
+
+		//mesh gdf_mcp_cockpit.mb 		-dest cockpit.md5mesh		-range		140 140
+
+		anim gdf_mcp_cockpit.mb 		-dest cockpit_into.md5anim -range 0 15
+
+		anim gdf_mcp_cockpit.mb 		-dest cockpit_center.md5anim -range 140 199
+		anim gdf_mcp_cockpit.mb 		-dest cockpit_center_fire.md5anim -range 200 200
+
+
+		anim gdf_mcp_cockpit.mb 		-dest cockpit_left.md5anim -range 20 30
+		anim gdf_mcp_cockpit.mb 		-dest cockpit_right.md5anim -range 40 50
+
+		anim gdf_mcp_cockpit.mb			-dest cockpit_fire_start.md5anim -range 65 65
+		anim gdf_mcp_cockpit.mb			-dest cockpit_fire.md5anim -range 65 65
+		anim gdf_mcp_cockpit.mb			-dest cockpit_fire_end.md5anim -range 66 70
+
+
+		anim gdf_mcp_cockpit.mb 		-dest cockpit_forward.md5anim -range 100 110
+		anim gdf_mcp_cockpit.mb 		-dest cockpit_reverse.md5anim -range 120 130
+
+
+		anim gdf_mcp_cockpit.mb 		-dest cockpit_deploy.md5anim -range 250 280
+}
+
+//==================================================================================================
+
+model vehicle_mcp_cockpit {
+	mesh					models/vehicles/edf_mcp/cockpit/cockpit.md5mesh
+
+	anim center				models/vehicles/edf_mcp/cockpit/cockpit_center.md5anim {
+	}
+
+	anim left				models/vehicles/edf_mcp/cockpit/cockpit_left.md5anim {
+	}
+
+	anim fire_start			models/vehicles/edf_mcp/cockpit/cockpit_fire_start.md5anim {
+	}
+
+	anim fire				models/vehicles/edf_mcp/cockpit/cockpit_fire.md5anim {
+	}
+
+	anim fire_end			models/vehicles/edf_mcp/cockpit/cockpit_fire_end.md5anim {
+	}
+
+	anim right				models/vehicles/edf_mcp/cockpit/cockpit_right.md5anim {
+	}
+
+	anim deploy				models/vehicles/edf_mcp/cockpit/cockpit_deploy.md5anim {
+	}
+
+	anim into				models/vehicles/edf_mcp/cockpit/cockpit_into.md5anim {
+	}
+
+	anim forwards			models/vehicles/edf_mcp/cockpit/cockpit_forward.md5anim {
+	}
+
+	anim reverse			models/vehicles/edf_mcp/cockpit/cockpit_reverse.md5anim {
+	}
+
+	channel legs			( *origin -*right_upperight_arm -*lever -*left_thumb1 -*left_index1 -*left_middle1 -*left_ring1 -*left_pinky1 -*joystickbutton)
+	channel head			( *right_upperight_arm *lever )
+	channel torso			( *left_thumb1 *left_index1 *left_middle1 *left_ring1 *left_pinky1 *joystickbutton )
+}
+

@@ -1,0 +1,233 @@
+
+/*
+=================
+ Localization for map
+=================
+*/
+
+locString maps/canyon/strogg_south_gate {
+	text "#str_00100100"
+}
+
+locString maps/canyon/strogg_west_gate {
+	text "#str_00100101"
+}
+
+locString maps/canyon/gdf_main_gate {
+	text "#str_00100102"
+}
+
+
+/*
+=================
+ Objectives
+=================
+*/
+
+locString maps/canyon/obj_built {
+	text "#str_00100103"
+	arguments 1
+}
+
+locString maps/canyon/obj_captured {
+	text "#str_00100104"
+	arguments 1
+}
+
+locString maps/canyon/obj_destroyed_doors {
+	text "#str_00100105"
+	arguments 1
+}
+
+locString maps/canyon/obj_destroyed_bio {
+	text "#str_00100106"	
+	arguments 1
+} 
+
+/*
+=================
+ Map info
+=================
+*/
+
+locString maps/canyon/map_breifing {
+	text "#str_00100107"
+}
+
+locString maps/canyon/map_location {
+	text "#str_00100108"
+}
+
+locString maps/canyon/campaign_description {
+	text "#str_00100109"	
+}
+
+/*
+=================
+objective descriptions
+=================
+*/
+
+locString maps/canyon/gdf_build_bridge {
+	text "#str_00100110"
+}
+
+locString maps/canyon/strogg_build_bridge {
+	text "#str_00100111"
+}
+
+locString maps/canyon/gdf_build_bridge_short {
+	text "#str_00100112"
+}
+
+locString maps/canyon/strogg_build_bridge_short {
+	text "#str_00100113"
+}
+
+/*
+=================
+deploy mcp
+=================
+*/
+
+locString maps/canyon/gdf_mcp {
+	text "#str_00100114"
+}
+
+locString maps/canyon/strogg_mcp {
+	text "#str_00100115"
+}
+
+locString maps/canyon/gdf_mcp_short {
+	text "#str_00100116"
+}
+
+locString maps/canyon/strogg_mcp_short {
+	text "#str_00100117"
+}
+
+/*
+=================
+ssm strogg bunker
+=================
+*/
+
+locString maps/canyon/gdf_hack_sheild {
+	text "#str_00100118"
+}
+
+locString maps/canyon/strogg_hack_sheild {
+	text "#str_00100119"
+}
+
+locString maps/canyon/gdf_hack_sheild_short {
+	text "#str_00100120"
+}
+
+locString maps/canyon/strogg_hack_sheild_short {
+	text "#str_00100121"
+}
+
+/*
+=================
+capturable spawns
+=================
+*/
+
+locString maps/canyon/gdf_glass_house_spawn {
+	text "#str_00100122"
+}
+
+locString maps/canyon/gdf_hut_spawn {
+	text "#str_00100123"
+}
+
+locString maps/canyon/strogg_sheild_generator {
+	text "#str_00100124"
+}
+
+locString maps/canyon/scud_target {
+	text "#str_00100125"
+}
+
+locString maps/canyon/gdf_ruined_building_spawn {
+	text "#str_00100137"
+}
+
+/*
+=================
+he charge
+=================
+*/
+
+locString maps/canyon/gdf_he_charge {
+	text "#str_00100126"
+}
+
+locString maps/canyon/strogg_he_charge {
+	text "#str_00100127"
+}
+
+locString maps/canyon/gdf_he_charge_short {
+	text "#str_00100128"
+}
+
+locString maps/canyon/strogg_he_charge_short {
+	text "#str_00100129"
+}
+
+/*
+=================
+hack shield
+=================
+*/
+
+locString maps/canyon/gdf_hack_shield {
+	text "#str_00100130"
+}
+
+locString maps/canyon/strogg_hack_shield {
+	text "#str_00100131"
+}
+
+locString maps/canyon/gdf_hack_shield_short {
+	text "#str_00100132"
+}
+
+locString maps/canyon/strogg_hack_shield_short {
+	text "#str_00100133"
+}
+
+locString maps/canyon/strogg_bunker_spawn {
+	text "#str_00100134"
+}
+
+locString maps/canyon/strogg_bio_reactor {
+	text "#str_00100135"
+}
+
+locString maps/canyon/strogg_capturable_destroyed_building {
+	text "#str_00100136"
+}
+
+/*
+=================
+build bridge
+=================
+*/
+
+locString maps/canyon/task_bridge {
+	text "#str_00100485"
+}
+
+// secondary objectives
+
+locString maps/canyon/obj_construct_tower_bridge {
+	text "#str_00100138"
+	arguments 1
+}
+
+locString maps/canyon/obj_construct_tower_bridge_complete {
+	text "#str_00100139"
+	arguments 1
+}

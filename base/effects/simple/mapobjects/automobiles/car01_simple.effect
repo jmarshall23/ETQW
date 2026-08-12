@@ -1,0 +1,78 @@
+effect effects/mapobjects/automobiles/car01_simple
+{
+	size	250
+
+	emitter "smoke3"
+	{
+		duration	1,1
+		count		8,8
+		locked
+		attenuateEmitter
+		attenuation	0,2048
+
+		sprite
+		{
+			duration	4,8
+			persist
+			material	"particles/penta/hornetsmoke2"
+		parentvelocity
+			windDeviationAngle 10.000000
+			gravity		-0.04,-0.03
+			trailRepeat	1
+
+			start
+			{
+				position { sphere -8,-8,-15,8,8,5 }
+				velocity { box -5,-5,5,5,5,15 }
+				friction { point 1,0,0 }
+				size { line 10,10,20,20 }
+				tint { line 0.564706,0.282353,0,0.494118,0.356863,0.294118 }
+				fade { line 0.5,0.25 }
+				offset { line 5,-40,-10,15,-20,-50 }
+				windStrength { line 0.5,0.2 }
+				rotate { box -0.125,0.125 }
+			}
+
+			motion
+			{
+				size { envelope shamus_scurve count 1.25,1.25 }
+				tint { envelope rr2_convexfade_start_at_1 count 2,2,2 offset 0.5,0.5,0.5 }
+				fade { envelope rr2_convexfade_start_at_1 offset 0.025 }
+				offset { envelope fastinslowout count 2.5,2.5,2.5 }
+				rotate { envelope convexfade }
+			}
+
+			end
+			{
+				size { line 60,60,80,80 }
+				tint { line 0,0,0,0.364706,0.364706,0.364706 }
+				offset { sphere 10,-40,0,0,-60,0 }
+				rotate { box -0.444444,0.444444 relative }
+			}
+			lineHit
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

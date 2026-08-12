@@ -1,0 +1,37 @@
+material example/andrew
+{
+	translucent
+	twosided
+	{
+		blend GL_ONE, GL_ONE_MINUS_SRC_ALPHA
+		//program sfx/cheap_litsmoke
+		map premultiplyAlpha( textures/particles/dustcloud_03.tga )
+		//map premultiplyAlpha( textures/particles/smokecloud01.tga )
+		vertexcolor
+	}
+}
+
+material example/andrew2 {
+	noshadows
+	translucent
+	nonsolid
+	noatmosphere
+	{
+		blend	blend
+		program sfx/cheap_litsmoke
+ 		map		makealpha (textures/particles/dustcloud_02.tga)
+		vertexcolor
+	}
+}
+
+material example/andrew3
+{
+	translucent
+	twosided
+	{
+		blend GL_ONE, GL_ONE_MINUS_SRC_ALPHA
+		//program sfx/cheap_litsmoke
+		map premultiplyAlpha( textures/particles/explosion/explode05b.tga )
+		vertexcolor
+	}
+}

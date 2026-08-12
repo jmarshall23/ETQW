@@ -1,0 +1,121 @@
+
+sound sounds/weapons/machinepistol/fire {
+	compression wav
+
+	volume -4
+	maxDistance 75
+	antiPrivate
+	occlude_once
+
+	sounds/weapons/machinepistol/fire_01.wav
+}
+
+sound sounds/weapons/machinepistol/fire/far {
+	compression wav
+
+	volume -12
+	maxDistance 150
+	occlude_once
+
+	sounds/weapons/machinepistol/fire_far.wav
+}
+
+sound sounds/weapons/machinepistol/fire/local {
+	compression wav
+
+	private
+	no_dups
+
+//	sounds/weapons/machinepistol/new_local_01.wav
+//	sounds/weapons/machinepistol/new_local_02.wav
+//	sounds/weapons/machinepistol/new_local_03.wav
+//	sounds/weapons/machinepistol/new_local_04.wav
+	sounds/weapons/machinepistol/new_local_05.wav
+
+//	sounds/weapons/machinepistol/fire_local_01.wav
+//	sounds/weapons/machinepistol/fire_local_02.wav
+//	sounds/weapons/machinepistol/fire_local_03.wav
+//	sounds/weapons/machinepistol/fire_local_04.wav
+//	sounds/weapons/machinepistol/fire_local_05.wav
+}
+
+sound sounds/weapons/machinepistol/fire_silenced {
+	compression wav
+
+	maxDistance 25
+	antiPrivate
+	no_dups
+
+	sounds/weapons/machinepistol/fire_silenced_01.wav
+	sounds/weapons/machinepistol/fire_silenced_02.wav
+	sounds/weapons/machinepistol/fire_silenced_03.wav
+	sounds/weapons/machinepistol/fire_silenced_04.wav
+	sounds/weapons/machinepistol/fire_silenced_05.wav
+
+}
+
+sound sounds/weapons/machinepistol/fire_silenced_local {
+	compression wav
+
+	private
+	no_dups
+
+	sounds/weapons/machinepistol/fire_silenced_local_01.wav
+	sounds/weapons/machinepistol/fire_silenced_local_02.wav
+	sounds/weapons/machinepistol/fire_silenced_local_03.wav
+	sounds/weapons/machinepistol/fire_silenced_local_04.wav
+	sounds/weapons/machinepistol/fire_silenced_local_05.wav
+}
+
+sound sounds/weapons/machinepistol/mech {
+
+	volume -20
+	maxDistance 20
+
+	sounds/weapons/machinepistol/mech.wav
+}
+
+sound sounds/weapons/machinepistol/reload {
+
+	volume -10
+	maxDistance 20
+
+	sounds/weapons/machinepistol/reload.wav
+}
+
+sound sounds/weapons/machinepistol/cock {
+
+	volume -10
+	maxDistance 20
+
+	sounds/weapons/machinepistol/cock.wav
+}
+
+sound sounds/weapons/machinepistol/release {
+
+	volume -5
+	maxDistance 20
+
+	sounds/weapons/machinepistol/release.wav
+}
+
+sound sounds/weapons/machinepistol/sights/up {
+
+	volume -15
+
+	sounds/weapons/machinepistol/sights_up.wav
+}
+
+sound sounds/weapons/machinepistol/sights/down {
+
+	volume -15
+
+	sounds/weapons/machinepistol/sights_down.wav
+}
+
+sound sounds/weapons/machinepistol/raise {
+
+	volume -15
+
+	sounds/weapons/machinepistol/raise.wav
+}

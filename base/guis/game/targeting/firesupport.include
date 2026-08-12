@@ -1,0 +1,69 @@
+#ifndef __fireseupport_include__
+#define __fireseupport_include__
+
+#define COLOR_GOLD				"1, 0.8, 0.0, 1.0"
+
+#define FS_GUI_NONE				0
+#define FS_GUI_RELOADING		1
+#define FS_GUI_INVALID			2
+#define FS_GUI_LOCKING			3
+#define FS_GUI_LOCKED			4
+#define FS_GUI_CHARGING			5
+#define FS_GUI_ENROUTE			6
+#define FS_GUI_OUT_OF_RANGE		7
+
+
+$template _deployable_info
+	windowDef FSCenterInfo {
+		properties {
+			rect rect				= 0, CENTER_Y - 16, SCREEN_WIDTH, 32;
+
+			handle backgroundMaterial		= gui.cacheMaterial( "background", "_st progress_timer_bg" );
+			handle timerMaterial			= gui.cacheMaterial( "timer", "_st progress_timer" );
+			handle lockedMaterial			= gui.cacheMaterial( "locked", "_st target_locked" );
+			handle invalidMaterial			= gui.cacheMaterial( "invalid", "_st invalid_target" );
+
+			rect scratchRect;
+		}
+		events {
+			onPreDraw {
+				if ( globals.deployables.fs_state != FS_GUI_NONE ) {
+					scratchRect = CENTER_X + 18, absoluterect.y, 32, 32;
+					drawLocalizedText( globals.deployables.modeText, scratchRect, COLOR_WHITE, 16, DTF_SINGLELINE | DTF_LEFT | DTF_VCENTER |DTF_DROPSHADOW );						
+				}
+				
+				scratchRect = CENTER_X - 40, absoluterect.y, 32, 32;
+
+				if ( globals.deployables.fs_state == FS_GUI_RELOADING ) {
+					drawCachedMaterial( backgroundMaterial, scratchRect, COLOR_WHITE );
+					drawTimer( timerMaterial, scratchRect, COLOR_WHITE, globals.deployables.lockPercent, false );
+				}
+
+				if ( globals.deployables.fs_state == FS_GUI_INVALID || globals.deployables.fs_state == FS_GUI_OUT_OF_RANGE ) {
+					drawCachedMaterial( invalidMaterial, scratchRect, COLOR_WHITE );
+				}
+
+				if ( globals.deployables.fs_state == FS_GUI_LOCKING ) {					
+					drawCachedMaterial( backgroundMaterial, scratchRect, COLOR_WHITE );
+					drawTimer( timerMaterial, scratchRect, COLOR_GOLD, 1 - globals.deployables.lockPercent, false );
+				}
+
+				if ( globals.deployables.fs_state == FS_GUI_LOCKED ) {
+					drawCachedMaterial( lockedMaterial, scratchRect, COLOR_WHITE );
+				}
+
+				if ( globals.deployables.fs_state == FS_GUI_CHARGING ) {
+					drawCachedMaterial( backgroundMaterial, scratchRect, COLOR_WHITE );
+					drawTimer( timerMaterial, scratchRect, COLOR_WHITE, globals.deployables.lockPercent, false );						
+				}
+				
+				if ( globals.deployables.fs_state == FS_GUI_ENROUTE ) {
+					drawCachedMaterial( invalidMaterial, scratchRect, COLOR_WHITE );
+				}
+
+				gui.scriptPushFloat( false );
+			}
+		}
+	}
+$endtemplate
+#endif // !__fireseupport_include__

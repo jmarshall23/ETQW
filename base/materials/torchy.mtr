@@ -1,0 +1,335 @@
+material textures/torchy/sheet1
+{
+ surfaceTypeMap "textures/torchy/sheet1"
+ diffusemap textures/torchy/sheet1_d.tga
+ bumpmap textures/torchy/sheet1_local.tga
+}
+
+material textures/torchy/sheet2
+{
+ surfaceTypeMap "textures/torchy/sheet2"
+ diffusemap textures/torchy/sheet2_d.tga
+ bumpmap textures/torchy/sheet2_local.tga
+}
+
+
+material textures/torchy/movingguts
+{
+	qer_editorimage 
+	deform	expand	4*sintable[time*0.5]
+	noshadows
+	{
+		map		models/mapobjects/corpses/corpse1_d.tga
+	}
+}
+
+
+material models/mapobjects/earth/earth
+{	
+	diffusemap	models/mapobjects/earth/earth_d.tga
+	//specularmap	textures/sand/sand01_s.tga
+	//bumpmap 	models/mapobjects/earth/earth_local.tga
+}
+
+material textures/salvage/outmetal1
+{	
+	diffusemap	textures/salvage/outmetal1_d.tga
+	specularmap	textures/salvage/outmetal_s.tga
+	bumpmap 	textures/concrete/concrete10_local.tga
+}
+
+material textures/salvage/outmetal2
+{	
+	diffusemap	textures/salvage/outmetal2_d.tga
+	specularmap	textures/salvage/outmetal_s.tga
+	bumpmap 	textures/concrete/concrete10_local.tga
+}
+
+material textures/salvage/outmetal3
+{	
+	diffusemap	textures/salvage/outmetal3_d.tga
+	specularmap	textures/salvage/outmetal_s.tga
+	bumpmap 	textures/concrete/concrete10_local.tga
+}
+
+
+material models/mapobjects/earth/clouds
+{
+	translucent	
+	{	
+		blend blend
+		map	models/mapobjects/earth/clouds
+		scroll time * -.025 , 0
+
+
+	}
+	
+}
+
+material textures/ice/ice01
+{    
+translucent
+       {
+           diffusemap  textures/ice/ice01_d.tga
+           //specularmap textures/decals/fgrill2_s.tga
+           //bumpmap     addnormals( textures/decals/fgrill_local.tga , heightmap ( textures/decals/fgrill2_b.tga, 1 ) )	 	
+           
+        
+       }
+   }
+
+material textures/terrain/test
+{
+	qer_editorimage masks/canyon/default.tga
+}
+
+material textures/torchy/cracked_rock_test
+{
+	diffusemap	textures/rock/cracked_rock_sandy3.tga
+	specularmap	textures/sand/sand01_s.tga
+	bumpmap 	textures/rock/cracked_stony_local.tga
+}
+
+material textures/torchy/mothership_layout
+/*{	
+	diffusemap	textures/torchy/mothership_arctic_layout.tga
+}*/
+
+{	
+	diffusemap	textures/arctic/snow/compress_01a_d.tga
+}
+
+material textures/torchy/refinery_layout
+{	
+	diffusemap	stuff/refinery/grass_mask.tga
+
+/*{
+	{
+		blend	diffusemap
+		map	textures/sand/dry_beach_sand_footprints01d_d.tga
+		vertexColor
+		scale 64 , 64
+	}
+	{
+		blend	bumpmap
+		map	heightmap (textures/sand/dry_beach_sand_footprints_h.tga, 4)
+		scale 64 , 64
+	}
+}*/
+}
+
+
+material textures/torchy/sand2
+{	
+	qer_editorimage textures/sand/dry_beach_sand_footprints_d.tga
+	diffusemap	textures/sand/dry_beach_sand_footprints_d.tga
+	specularmap	textures/sand/sand01_s.tga
+	bumpmap 	textures/sand/dry_beach_sand_footprints_local.tga
+}
+
+material textures/torchy/dirt_test
+{	
+	diffusemap	textures/megagen/canyon/rock_loose_01_grassy_d.tga
+	//specularmap	textures/dirt/hard_wet_earth02_local.tga
+	bumpmap 	textures/megagen/canyon/rock_loose_01_grassy_local.tga
+}
+
+material textures/torchy/rock_test
+{
+	surfacetype "rock"	
+	qer_editorimage textures/rock/rock_test_d.tga
+	diffusemap	textures/rock/rock_test_d.tga
+	//specularmap	textures/dirt/hard_wet_earth02_local.tga
+	bumpmap 	textures/rock/sharprock1_local.tga
+}
+
+material textures/torchy/colour_test
+{	
+	qer_editorimage textures/rock/sharprock1_local.tga
+	diffusemap	guis/assets/white.tga
+	//specularmap	textures/dirt/hard_wet_earth02_local.tga
+	//bumpmap 	textures/rock/sharprock1_local.tga
+}
+
+material textures/torchy/rock_test2
+{	
+	qer_editorimage textures/rock/rock_moorland.tga
+	diffusemap	textures/rock/rock_moorland.tga
+	//specularmap	textures/dirt/hard_wet_earth02_local.tga
+	bumpmap 	textures/rock/cracked_rock3_complete_local.tga
+}
+
+material textures/torchy/rock_test3
+{	
+	qer_editorimage textures/rock/rock_moorland2_moss.tga
+	diffusemap	textures/rock/rock_moorland2_moss.tga
+	//specularmap	textures/dirt/hard_wet_earth02_local.tga
+	bumpmap 	textures/rock/sharprock1_local.tga
+}
+
+
+material textures/torchy/grass_test
+{	
+	qer_editorimage textures/grass/grass_green1_d.tga
+	diffusemap	textures/grass/grass_green1_d.tga
+	//specularmap	textures/dirt/hard_wet_earth02_local.tga
+	bumpmap 	textures/grass/grass01_local.tga
+}
+
+material textures/torchy/dirtrock_test
+{
+	qer_editorimage textures/rock/dirtrock_test_d.tga
+	diffusemap	textures/rock/dirtrock_test_d.tga
+	//specularmap	textures/dirt/hard_wet_earth02_local.tga
+	bumpmap 	textures/rock/lanrock1_local.tga
+}
+
+material textures/creek/pebbles
+{
+	qer_editorimage textures/creek/pebbles_d.tga
+	diffusemap	textures/creek/pebbles_d.tga
+	specularmap	textures/sand/sand01_s.tga
+	bumpmap 	textures/creek/pebbles_local.tga
+}
+
+material textures/creek/rock_mossy
+{
+	qer_editorimage textures/creek/rock_mossy_d.tga
+	diffusemap	textures/creek/rock_mossy_d.tga
+	//specularmap	textures/sand/sand01_s.tga
+	bumpmap 	textures/rock/cracked_rock02_local.tga
+}
+
+material textures/refinery/cavemud
+{
+	diffusemap	textures2/megagen/dirt/temperate/dirt_bank_wateredge_4t1_d.tga
+	bumpmap 	textures2/megagen/dirt/temperate/dirt_bank_wateredge_4t1_local.tga
+}
+
+material textures/refinery/rocktocavemud
+{
+	
+	qer_editorimage	textures/rock/cracked_rock3_ver2_gm_d.tga
+	{
+		program	interaction/blend
+		diffusemap textures/rock/cracked_rock3_ver2_gm_d.tga
+		bumpmap addnormals (textures/rock/cracked_rock3_ver2_local.tga, heightmap (textures/rock/cracked_rock3_ver2_h.tga, 5))
+		diffusemap2	textures2/megagen/dirt/temperate/dirt_bank_wateredge_4t1_d.tga
+		bumpmap2 	textures2/megagen/dirt/temperate/dirt_bank_wateredge_4t1_local.tga
+	}
+}
+
+material textures/temp/camo_trim
+{
+    	diffusemap	textures/temp/camo_trim.tga
+     	bumpmap 	heightmap (textures/temp/camo_bmp.tga, 4)
+	specularmap	textures/temp/camo_s.tga
+}
+
+//
+// renderbumpflat -size 512 512 models/mapobjects/torchy/razorwire.lwo
+//
+
+material textures/torchy/razorwire
+{
+	qer_editorimage textures/torchy/razorwire_d.tga
+
+	noshadows
+	twoSided
+	nonsolid
+	playerclip // need a better solution which only slows players down significantly
+	flyerhiveclip
+
+	{
+		diffusemap textures/torchy/razorwire_d.tga
+		alphaTest 0.5
+		bumpmap textures/torchy/razorwire_local.tga
+		specularmap textures/torchy/razorwire_s.tga
+	} 
+}
+
+// added by Wils 09/12/2004
+material textures/torchy/razorwire2
+{
+	qer_editorimage textures/torchy/razorwire2_d.tga
+	noshadows
+	twoSided
+	nonsolid
+	playerclip
+	flyerhiveclip
+	
+	{
+		diffusemap textures/torchy/razorwire2_d.tga
+		alphaTest 0.5
+		bumpmap textures/torchy/razorwire2_local.tga
+	} 
+}
+
+material textures/torchy/hedgehog
+{
+	qer_editorimage textures/base_wall_desert/snpanelplain1.tga
+	diffusemap	textures/base_wall_desert/snpanelplain1.tga
+	specularmap	textures/concrete/concrete_sandy01_s.tga
+      	bumpmap 	heightmap (textures/base_trim/a_reactorpipe64_s02b_fin.tga, 4)
+}
+
+
+
+//
+// renderbump models/mapobjects/ruins/stonehut_new.lwo
+//
+
+material models/mapobjects/ruins/stonehut_new 
+{   
+	renderbump -size 512 512 -colormap -aa 2 models/mapobjects/ruins/stonehut_new.tga models/mapobjects/ruins/stonehut_square_high.lwo
+	surfaceType	"stone"
+
+	diffusemap      models/mapobjects/ruins/stonehut_reddish_d.tga   
+	specularmap     models/mapobjects/ruins/stonehut_yellow_s.tga   
+	bumpmap         models/mapobjects/ruins/stonehut_yellow_local.tga   
+}
+
+material textures/valley/conc12torubble
+{
+	
+	qer_editorimage	textures/concrete/concrete12_d.tga
+	{
+		program	interaction/blended
+		diffusemap textures/concrete/concrete12_d.tga
+		bumpmap textures/concrete/concrete12_local.tga
+		specularmap textures/concrete/concrete12_s.tga
+		diffusemap2 texturesheets/ghost_town/rubble01_d.tga
+		bumpmap2 texturesheets/ghost_town/rubble01_local.tga
+		specularmap2 texturesheets/ghost_town/rubble01_s.tga
+		inversevertexcolor
+	}
+}
+
+material textures/salvage/conc_burn_blend
+{
+	
+	qer_editorimage	textures/concrete/concrete12_d.tga
+	{
+		program	interaction/blended
+		diffusemap	textures2/concrete/concrete_dirty_generic_8_d.tga
+		specularmap     textures2/concrete/concrete_dirty_generic_8_s.tga
+		bumpmap 	textures2/concrete/concrete_dirty_generic_8_local.tga
+		diffusemap2 textures/raven/common_walls/roger_trough_d.tga
+		bumpmap2 textures/raven/common_walls/roger_trough_local.tga
+		specularmap2 textures/raven/common_walls/roger_trough_s.tga
+		inversevertexcolor
+	}
+}
+
+material textures/salvage/conc_burn
+{
+	
+	qer_editorimage	textures/raven/common_walls/roger_trough_d.tga
+	{
+		program	interaction/selfillum
+		diffusemap	textures/raven/common_walls/roger_trough_d.tga
+		specularmap	textures/raven/common_walls/roger_trough_s.tga
+		bumpmap		addnormals(textures/raven/common_walls/roger_trough_local.tga, heightmap(textures/raven/common_walls/roger_trough_h.tga, 5 ) )
+		selfIllumMap	textures/raven/common_walls/roger_trough_d.tga
+	}
+}

@@ -1,0 +1,20 @@
+
+locString game/tasks/covertops_hack_deployable/title {
+	text "#str_01000030"
+}
+
+locString game/tasks/covertops_hack_shield/title {
+	text "#str_01000050"
+}
+
+locString game/tasks/covertops_hack_shield/title_friend {
+	text "#str_01000051"
+}
+
+locString game/tasks/covertops_hack_door/title {
+	text "#str_01006020"
+}
+
+locString game/tasks/covertops_deploy_radar/title {
+	text "#str_01006030"
+}

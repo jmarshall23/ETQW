@@ -1,0 +1,69 @@
+gui guis/items/sewer_obj {
+	properties {
+		float progress = globals.hackObjective.progress;
+	}
+
+	materials {
+		"guis/assets/gdf_generic/sewer_finob_bg"		"guis/assets/gdf_generic/sewer_finob_bg"
+		"guis/assets/gdf_generic/sewer_finob_prgbar" 	"guis/assets/gdf_generic/sewer_finob_prgbar"
+	}
+
+	windowDef desktop {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			string material = "guis/assets/gdf_generic/sewer_finob_bg";
+		}
+	}	
+	
+	windowDef bar1 {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			rect rect = 54,117,215,14;
+			string material = "guis/assets/gdf_generic/sewer_finob_prgbar";
+		}
+	}	
+
+	windowDef bar2 {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			rect rect = 54,170,200,14;
+			string material = "guis/assets/gdf_generic/sewer_finob_prgbar";
+		}
+	}	
+	
+	windowDef bar3 {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			rect rect = 54,224,230,14;
+			string material = "guis/assets/gdf_generic/sewer_finob_prgbar";
+		}
+	}	
+
+	windowDef obj {
+		properties {
+			color	backColor	=	1, 1, 1, 1;
+			rect rect = 609,176,12,12;
+		}
+
+		timeline {
+			ontime 0 {
+				backColor = transition( "1,1,1,0", "1,1,1,0", 500 );
+			}
+			onTime 500 {
+				backColor = transition( "1,1,1,1", "1,1,1,1", 500 );
+			}
+			onTime 1000 {
+				resetTime( 0 );
+			}
+		}
+	}
+
+	windowDef progressbar {
+		properties {
+			color	backColor	=	1, 1, 1, 0.8;
+			rect rect = 54,358,228 * gui.progress,16;
+		}
+	}	
+}
+
+

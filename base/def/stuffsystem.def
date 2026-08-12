@@ -1,0 +1,9 @@
+entityDef stuffsystem {
+	"editor_color"			"0 0.5 0.0"
+	"editor_mins"			"-16 -16 -16"
+	"editor_maxs"			"16 16 16"
+	"editor_usage"			"Use this entity to add a stuff system (grass, foliage,...) to the level."
+	"spawnclass"			"sdStuffSystem"
+	"pushIntoOutsideAreas"  "1"
+}
+

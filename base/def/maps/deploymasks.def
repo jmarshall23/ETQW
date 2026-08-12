@@ -1,0 +1,226 @@
+// ============================================
+// AREA22
+// ============================================
+deployMask masks/area22/mcp {
+	mask		"masks/area22/mcp.tga"
+}
+
+deployMask masks/area22/default {
+	mask		"masks/area22/default.tga"
+}
+
+deployMask masks/area22/playzone {
+	mask		"masks/area22/playzone.tga"
+}
+
+
+// ============================================
+// ARK
+// ============================================
+deployMask masks/ark/mcp {
+	mask		"masks/ark/mcp.tga"
+}
+
+deployMask masks/ark/default {
+	mask		"masks/ark/default.tga"
+}
+
+deployMask masks/ark/playzone {
+	mask		"masks/ark/playzone.tga"
+}
+
+
+// ============================================
+// CANYON
+// ============================================
+deployMask masks/canyon/mcp {
+	mask		"masks/canyon/mcp.tga"
+}
+
+deployMask masks/canyon/default {
+	mask		"masks/canyon/default.tga"
+}
+
+deployMask masks/canyon/mcp_route {
+	mask		"masks/canyon/mcp_route.tga"
+}
+
+deployMask masks/canyon/playzone {
+	mask		"masks/canyon/playzone.tga"
+}
+
+// ============================================
+// ISLAND
+// ============================================
+deployMask masks/island/mcp {
+	mask		"masks/island/mcp.tga"
+}
+
+deployMask masks/island/default {
+	mask		"masks/island/default.tga"
+}
+
+deployMask masks/island/playzone {
+	mask		"masks/island/playzone.tga"
+}
+
+// ============================================
+// OUTSKIRTS
+// ============================================
+deployMask masks/outskirts/mcp {
+	mask		"masks/outskirts/mcp.tga"
+}
+
+deployMask masks/outskirts/default {
+	mask		"masks/outskirts/default.tga"
+}
+
+deployMask masks/outskirts/mcp_route {
+	mask		"masks/outskirts/mcp_route.tga"
+}
+
+deployMask masks/outskirts/playzone {
+	mask		"masks/outskirts/playzone.tga"
+}
+
+// ============================================
+// QUARRY
+// ============================================
+deployMask masks/quarry/mcp {
+	mask		"masks/quarry/mcp.tga"
+}
+
+deployMask masks/quarry/default {
+	mask		"masks/quarry/default.tga"
+}
+
+deployMask masks/quarry/playzone {
+	mask		"masks/quarry/playzone.tga"
+}
+
+// ============================================
+// REFINERY
+// ============================================
+deployMask masks/refinery/mcp {
+	mask		"masks/refinery/mcp.tga"
+}
+
+deployMask masks/refinery/default {
+	mask		"masks/refinery/default.tga"
+}
+
+deployMask masks/refinery/mcp_route {
+	mask		"masks/refinery/mcp_route.tga"
+}
+
+deployMask masks/refinery/playzone {
+	mask		"masks/refinery/playzone.tga"
+}
+
+// ============================================
+// SALVAGE
+// ============================================
+deployMask masks/salvage/mcp {
+	mask		"masks/salvage/mcp.tga"
+}
+
+deployMask masks/salvage/default {
+	mask		"masks/salvage/default.tga"
+}
+
+deployMask masks/salvage/playzone {
+	mask		"masks/salvage/playzone.tga"
+}
+
+// ============================================
+// SEWER
+// ============================================
+deployMask masks/sewer/mcp {
+	mask		"masks/sewer/mcp.tga"
+}
+
+deployMask masks/sewer/default {
+	mask		"masks/sewer/default.tga"
+}
+
+deployMask masks/sewer/playzone {
+	mask		"masks/sewer/playzone.tga"
+}
+
+// ============================================
+// SLIPGATE
+// ============================================
+deployMask masks/slipgate/mcp_1 {
+	mask		"masks/slipgate/mcp_1.tga"
+}
+
+deployMask masks/slipgate/mcp_2 {
+	mask		"masks/slipgate/mcp_2.tga"
+}
+
+deployMask masks/slipgate/default_1 {
+	mask		"masks/slipgate/default_1.tga"
+}
+
+deployMask masks/slipgate/default_2 {
+	mask		"masks/slipgate/default_2.tga"
+}
+
+deployMask masks/slipgate/mcp_route_1 {
+	mask		"masks/slipgate/mcp_route_1.tga"
+}
+
+deployMask masks/slipgate/mcp_route_2 {
+	mask		"masks/slipgate/mcp_route_2.tga"
+}
+
+deployMask masks/slipgate/playzone_1 {
+	mask		"masks/slipgate/playzone_1.tga"
+}
+
+deployMask masks/slipgate/playzone_2 {
+	mask		"masks/slipgate/playzone_2.tga"
+}
+
+// ============================================
+// VALLEY
+// ============================================
+deployMask masks/valley/mcp {
+	mask		"masks/valley/mcp.tga"
+}
+
+deployMask masks/valley/default {
+	mask		"masks/valley/default.tga"
+}
+
+deployMask masks/valley/mcp_route {
+	mask		"masks/valley/mcp_route.tga"
+}
+
+deployMask masks/valley/playzone {
+	mask		"masks/valley/playzone.tga"
+}
+
+// ============================================
+// VOLCANO
+// ============================================
+deployMask masks/volcano/mcp {
+	mask		"masks/volcano/mcp.tga"
+}
+
+deployMask masks/volcano/default {
+	mask		"masks/volcano/default.tga"
+}
+
+deployMask masks/volcano/playzone {
+	mask		"masks/volcano/playzone.tga"
+}
+
+
+
+// ============================================
+// MISC DEV MAPS
+// ============================================
+deployMask masks/vehicletrack/default {
+	mask		"masks/valley/default.tga"
+}

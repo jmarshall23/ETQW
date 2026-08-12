@@ -1,0 +1,35 @@
+
+// --------------------------------------------
+// QUARRY STUFF
+// --------------------------------------------
+
+stuffType quarry/quarry_grass {
+	Model	"stuff/quarry/quarry_grass01.lwo"
+	Model	"stuff/quarry/quarry_grass02.lwo"
+	Model	"stuff/quarry/quarry_grass03.lwo"
+}
+
+stuffType quarry/quarry_leaves {
+	Model	"stuff/quarry/quarry_leaves01.lwo"
+	Model	"stuff/quarry/quarry_leaves02.lwo"
+	Model	"stuff/quarry/quarry_leaves03.lwo"
+	Model	"stuff/quarry/quarry_leaves04.lwo"
+}
+
+stuffType quarry/quarry_rocks {
+	Model	"stuff/quarry/quarry_rock01.lwo"
+	Model	"stuff/quarry/quarry_rock02.lwo"
+	Model	"stuff/quarry/quarry_rock03.lwo"
+	Model	"stuff/quarry/quarry_rock04.lwo"
+	Model	"stuff/quarry/quarry_rock05.lwo"
+	Model	"stuff/quarry/quarry_rock06.lwo"
+	Model	"stuff/quarry/quarry_rock07.lwo"
+	Model	"stuff/quarry/quarry_rock08.lwo"
+}
+
+stuffType quarry/quarry_rocks_small {
+	Model	"stuff/quarry/quarry_rock_small01.lwo"
+	Model	"stuff/quarry/quarry_rock_small02.lwo"
+	Model	"stuff/quarry/quarry_rock_small03.lwo"
+	Model	"stuff/quarry/quarry_rock_small04.lwo"
+}

@@ -1,0 +1,74 @@
+material particles/plasma2 {
+	noatmosphere
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		maskalpha
+		map		textures/particles/plasma2.tga
+		vertexcolor
+	}
+}
+
+material particles/teleparticlering {
+	noatmosphere
+	noshadows
+	translucent
+	nonsolid
+	twosided
+	{
+		blend		add
+		maskalpha
+		map		textures/particles/teleparticlering.tga
+		vertexcolor
+	}
+}
+
+material models/particles/plasmaring/plasmaring {
+	noshadows
+	translucent
+	nonsolid
+	noatmosphere
+	twosided
+	{
+		map models/particles/plasmaring/plasmaring.tga
+		blend add
+		vertexcolor
+		maskalpha
+		scroll time * 1.5, 0
+	}
+	{
+		map models/particles/plasmaring/plasmaring.tga
+		blend add
+		vertexcolor
+		maskalpha
+		scroll time * 3.5, 0.1
+	}
+}
+
+material particles/plasma3 {
+	noatmosphere
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		maskalpha
+		map	clamp textures/particles/plasma3.tga
+		vertexcolor
+		rotate time * 0.5
+	}
+}
+
+material particles/cells_a {
+	noshadows
+	translucent
+	nonsolid
+	{
+		blend		add
+		maskalpha
+		map textures/particles/cells_a.tga
+		vertexcolor
+	}
+}

@@ -1,0 +1,107 @@
+material textures/effects/slipgate/slipgate_glow {
+	twoSided
+	{
+		program	trivialFogged
+		map clamp textures/particles/wormhole_edge.tga
+		blend		gl_src_alpha, gl_one
+		vertexColor
+		colored	
+		maskalpha
+	}
+}
+
+material textures/effects/slipgate/slipgate_warp {
+	twoSided
+	{
+		program	trivialFogged
+		map clamp textures/particles/wormhole.tga
+		blend blend
+		vertexColor
+		//colored	
+		maskalpha
+	}
+}
+
+material textures/effects/slipgate/slipgate_portal_snow {
+	twoSided
+	sort nearest
+	{
+		map clamp textures/particles/wormhole_portal_snow.tga
+		blend blend
+		//vertexColor
+		//colored	
+		maskalpha
+	}
+}
+
+material textures/effects/slipgate/slipgate_portal_sand {
+	twoSided
+	sort nearest
+	{
+		map clamp textures/particles/wormhole_portal_sand.tga
+		blend blend
+		//vertexColor
+		//colored	
+		maskalpha
+	}
+}
+
+material models/mapobjects/slipgate/slipgate_portal
+{
+	qer_editorimage models/mapobjects/slipgate/slipgate_portal_d.tga
+	NoShadows
+	translucent
+	nonSolid
+	twoSided
+   
+   	{
+   		blend blend	
+   		map models/mapobjects/slipgate/slipgate_portal_d.tga
+   		scroll 0, time * -3
+   		vertexcolor
+  	}
+}
+
+material textures/effects/slipgate/slipgate_vortex01
+{
+	NoShadows
+	translucent
+	nonSolid
+	sort far
+ 
+   	{
+   		blend blend
+   		map clamp textures/particles/slipgate_vortex01.tga
+   		rotate time * -0.03
+   		vertexcolor
+  	}
+}
+
+material textures/effects/slipgate/slipgate_vortex02
+{
+	NoShadows
+	translucent
+	nonSolid
+    sort far
+   	{
+   		blend blend
+   		map clamp textures/particles/slipgate_vortex01.tga
+		rotate time * -0.02
+   		vertexcolor
+  	}
+}
+
+material textures/effects/slipgate/slipgate_vortex03
+{
+	NoShadows
+	translucent
+	nonSolid
+	sort far
+
+   	{
+   		blend blend
+   		map clamp textures/particles/slipgate_vortex01.tga
+		rotate time * -0.01
+   		vertexcolor
+  	}
+}

@@ -1,0 +1,193 @@
+
+/*
+=================
+ Localization for map
+=================
+*/
+
+// map info
+//-------------------------------------------------------
+locString maps/area22/briefing {
+	text "#str_00100001"
+}
+
+locString maps/area22/location {
+	text "#str_00100002"
+}
+
+locString maps/area22/campaign {
+	text "#str_00100003"
+}
+
+// 00100004-00100007 used below
+
+// objective descriptions
+//-------------------------------------------------------
+// jamming array
+locString maps/area22/gdf_jammer {
+	text "#str_00100010"
+}
+
+locString maps/area22/strogg_jammer {
+	text "#str_00100011"
+}
+
+locString maps/area22/gdf_jammer_short {
+	text "#str_00100012"
+}
+
+locString maps/area22/strogg_jammer_short {
+	text "#str_00100013"
+}
+
+// tunnel entrance
+locString maps/area22/gdf_laser_zapper {
+	text "#str_00100014"
+}
+
+locString maps/area22/strogg_laser_zapper {
+	text "#str_00100015"
+}
+
+locString maps/area22/strogg_laser_zapper_short {
+	text "#str_00100016"
+}
+
+locString maps/area22/gdf_laser_zapper_short {
+	text "#str_00100017"
+}
+
+// slipgate core
+locString maps/area22/gdf_slipgate_core {
+	text "#str_00100018"
+}
+
+locString maps/area22/strogg_slipgate_core {
+	text "#str_00100019"
+}
+
+locString maps/area22/gdf_slipgate_core_short {
+	text "#str_00100020"
+}
+
+locString maps/area22/strogg_slipgate_core_short {
+	text "#str_00100021"
+}
+
+
+// capturable spawn points
+//-------------------------------------------------------
+locString maps/area22/strogg_objective02_spawn {
+	text "#str_00100030"
+}
+
+locString maps/area22/strogg_objective03_spawn {
+	text "#str_00100031"
+}
+
+locString maps/area22/gdf_comms_spawn {
+	text "#str_00100032"
+}
+
+locString maps/area22/strogg_warehouse_spawn {
+	text "#str_00100033"
+}
+	
+
+// gdf base gates
+//-------------------------------------------------------
+locString maps/area22/gdf_west_gate {
+	text "#str_00100035"
+}
+
+locString maps/area22/gdf_south_gate {
+	text "#str_00100036"
+}
+
+
+// object names in maps/references/area22/objectives.world
+//-------------------------------------------------------
+locString maps/area22/jammer {
+	text "#str_00100037"
+}
+
+locString maps/area22/tunnel_main {
+	text "#str_00100038"
+}
+
+locString maps/area22/tunnel_side {
+	text "#str_00100039"
+}
+
+locString maps/area22/slipgate_core {
+	text "#str_00100040"
+}
+
+
+// objective completion messages in area22.script
+//-------------------------------------------------------
+locString maps/area22/obj_destroy_jammer {
+	text "#str_00100041"
+	arguments 1
+}
+
+locString maps/area22/obj_destroy_ent {
+	text "#str_00100042"
+	arguments 1
+}
+
+locString maps/area22/obj_destroy_core {
+	text "#str_00100043"
+	arguments 1
+}
+
+// secondary objective completion messages 
+//-------------------------------------------------------
+locString maps/area22/service_door/progress {
+	text "#str_00100044"
+	arguments 1
+}
+
+locString maps/area22/service_door/disarm {
+	text "#str_00100045"
+	arguments 1
+}
+
+locString maps/area22/service_door/destroy {
+	text "#str_00100046"
+	arguments 1
+}
+
+locString maps/area22/service_door {
+	text "#str_00100047"
+}
+
+locString maps/area22/obj_construct_gun_base {
+	text "#str_00100048"
+	arguments 1
+}
+
+locString maps/area22/obj_construct_gun_base_complete {
+	text "#str_00100049"
+	arguments 1
+}
+
+locString maps/area22/obj_construct_gun_hill {
+	text "#str_00100004"
+	arguments 1
+}
+
+locString maps/area22/obj_construct_gun_hill_complete {
+	text "#str_00100005"
+	arguments 1
+}
+
+locString maps/area22/obj_construct_gun_bay {
+	text "#str_00100006"
+	arguments 1
+}
+
+locString maps/area22/obj_construct_gun_bay_complete {
+	text "#str_00100007"
+	arguments 1
+}

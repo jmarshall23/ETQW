@@ -1,0 +1,81 @@
+sound sounds/deployables/artillery/fly {
+
+	volume -5
+	maxDistance 100
+
+	sounds/deployables/artillery/fly_01.wav
+	sounds/deployables/artillery/fly_02.wav
+	sounds/deployables/artillery/fly_03.wav
+	sounds/deployables/artillery/fly_04.wav
+	sounds/deployables/artillery/fly_05.wav
+	sounds/deployables/artillery/fly_06.wav
+	
+}
+
+sound sounds/deployables/artillery/fire {
+
+	shakes 0.01
+	maxDistance 100
+	no_occlusion
+
+	sounds/deployables/artillery/fire_01.wav
+	sounds/deployables/artillery/fire_02.wav
+	sounds/deployables/artillery/fire_03.wav
+}
+
+sound sounds/deployables/artillery/fire/far {
+
+	volume -5
+	farDistance 75
+	maxDistance 150
+	no_occlusion
+
+	sounds/deployables/artillery/fire_far.wav
+}
+
+sound sounds/deployables/artillery/reload {
+
+	volume -10
+
+	sounds/deployables/artillery/reload.wav
+}
+
+sound sounds/deployables/artillery/explode {
+
+	shakes 0.05
+	minDistance	15
+	maxDistance 100
+	
+	occlude_once
+
+	sounds/deployables/artillery/artillery_impact_01.wav
+	sounds/deployables/artillery/artillery_impact_02.wav
+	sounds/deployables/artillery/artillery_impact_03.wav
+}
+
+sound sounds/deployables/artillery/impact_medium {
+
+	volume 0
+	farDistance 75
+	maxDistance 150
+	
+	occlude_once
+
+	sounds/deployables/artillery/impact_med_01.wav
+	sounds/deployables/artillery/impact_med_02.wav
+	sounds/deployables/artillery/impact_med_03.wav
+	sounds/deployables/artillery/impact_med_04.wav
+}
+
+sound sounds/deployables/artillery/impact_far {
+
+	volume 0
+	farDistance 125
+	maxDistance 200
+	no_occlusion
+
+	sounds/deployables/artillery/impact_far_01.wav
+	sounds/deployables/artillery/impact_far_02.wav
+	sounds/deployables/artillery/impact_far_03.wav
+	sounds/deployables/artillery/impact_far_04.wav
+}

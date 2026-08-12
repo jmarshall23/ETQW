@@ -1,0 +1,356 @@
+atmosphere volcano {
+	sunMaterial "atmospheres/lights/scrolling_clouds01_bright02"
+	sunDir ( -0.5133349895 -0.5171247125 0.6848862767 )
+	sunColor ( 0.392156899 0.2823529541 0.1882353127 )
+	sunHaloScale 0
+	sunHaloBias 0
+	sunSpriteMaterial "atmospheres/lights/sunsprite2"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/lights/sunsprite2"
+	sunFlareSize 76068
+	sunFlareTime 0
+	enableSunFlareAziZen 1
+	sunFlareAzi 238
+	sunFlareZen 8
+	postProcessParms {
+		tint ( 1 0.9764706492 0.9607843757 )
+		saturation 1
+		contrast 1
+		glareParms ( 1.189999938 1.7300000191 1 1 )
+		glareBases ( 0.6899999976 0.8299999833 0 0 )
+	}
+	fogDistHalf 10000
+	fogHeightHalf 403
+	fogHeightOffset 75
+	fogColor ( 0.2666666806 0.2745098174 0.2549019754 )
+	fogStart 0
+	fogEnd 9222
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "volcano"
+	skyGradientImage "atmosphere/skies/volcano_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 200
+	windAngleDev 2
+	windStrength 20
+	windStrengthDev 2
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sewer" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	precipitationLayer {
+		type 1
+		maxParticles 300
+		heightMin 30
+		heightMax 40
+		weightMin 1
+		weightMax 1
+		timeMin 0
+		timeMax 500
+		windScale 6
+		gustWindScale 8
+		fallMin 300
+		fallMax 400
+		tumbleStrength 0
+		precipitationDistance 300
+		material "precipitation/raindrop_volcano"
+	}
+	precipitationLayer {
+		type 3
+		maxParticles 80
+		heightMin 1
+		heightMax 2
+		weightMin 20
+		weightMax 30
+		timeMin 0
+		timeMax 300
+		windScale 0
+		gustWindScale 0
+		fallMin 20
+		fallMax 30
+		tumbleStrength 0
+		precipitationDistance 300
+		material "particles/water/spray_light_01"
+	}
+}
+
+
+
+
+ambientCubeMap volcano {
+	ambientLight {
+		color 0.2588235438 0.2666666806 0.2784313858
+		direction 0 0 1
+		name "Light0"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.1490196139 0.1372549087 0.1254902035
+		direction 0.000000024 0.0000000042 -1
+		name "Light1"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.250980407 0.2549019754 0.250980407
+		direction 0.6124838591 -0.7045820951 0.3583679497
+		name "Light2"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.2274509966 0.2470588386 0.2274509966
+		direction -0.7091950774 0.6164938211 0.342020154
+		name "Light3"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.3254902065 0.3411764801 0.3137255013
+		direction -0.6040228009 -0.7198463082 0.342020154
+		name "Light4"
+		ambient 1
+		specular 1
+	}
+	ambientLight {
+		color 0.180392161 0.1843137294 0.1882353127
+		direction 0.6287770867 0.6983277202 0.342020154
+		name "Light5"
+		ambient 1
+		specular 1
+	}
+	envMap "env/volcano/outside"
+	ambientColor 0.5 0.5 0.5
+	minSpecAmbientColor 0.5647059083 0.5568627715 0.5254902244
+	minSpecShadowColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}
+
+
+
+ambientCubemap volcano_bunker_building {
+	ambientLight {
+		color 0.2627451122 0.270588249 0.2980392277
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.250980407 0.270588249 0.2823529541
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.2823529541 0.3058823645 0.3215686381
+		direction 0 -1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.1882353127 0.2039215863 0.2156862915
+		direction -1 0 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1882353127 0.2000000179 0.2156862915
+		direction 0 1 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2627451122 0.2784313858 0.2901960909
+		direction 1 0 0
+		name "Light5"
+	}
+	indoors
+	envMap "env/volcano/bunker_building"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+
+ambientCubemap volcano_hangar {
+	ambientLight {
+		color 0.2627451122 0.270588249 0.2980392277
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.250980407 0.270588249 0.2823529541
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.2823529541 0.3058823645 0.3215686381
+		direction 0 -1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.1882353127 0.2039215863 0.2156862915
+		direction -1 0 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1882353127 0.2000000179 0.2156862915
+		direction 0 1 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2627451122 0.2784313858 0.2901960909
+		direction 1 0 0
+		name "Light5"
+	}
+	indoors
+	envMap "env/volcano/hangar"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+
+ambientCubemap volcano_transformer_building {
+	ambientLight {
+		color 0.2627451122 0.270588249 0.2980392277
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.250980407 0.270588249 0.2823529541
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.2823529541 0.3058823645 0.3215686381
+		direction 0 -1 0
+		name "Light2"
+	}
+	ambientLight {
+		color 0.1882353127 0.2039215863 0.2156862915
+		direction -1 0 0
+		name "Light3"
+	}
+	ambientLight {
+		color 0.1882353127 0.2000000179 0.2156862915
+		direction 0 1 0
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2627451122 0.2784313858 0.2901960909
+		direction 1 0 0
+		name "Light5"
+	}
+	indoors
+	envMap "env/volcano/transformer_building"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+
+ambientCubemap volcano_security {
+	ambientLight {
+			color 0.2627451122 0.270588249 0.2980392277
+			direction 0 0 1
+			name "Light0"
+		}
+		ambientLight {
+			color 0.250980407 0.270588249 0.2823529541
+			direction 0 0 -1
+			name "Light1"
+		}
+		ambientLight {
+			color 0.2823529541 0.3058823645 0.3215686381
+			direction 0 -1 0
+			name "Light2"
+		}
+		ambientLight {
+			color 0.1882353127 0.2039215863 0.2156862915
+			direction -1 0 0
+			name "Light3"
+		}
+		ambientLight {
+			color 0.1882353127 0.2000000179 0.2156862915
+			direction 0 1 0
+			name "Light4"
+		}
+		ambientLight {
+			color 0.2627451122 0.2784313858 0.2901960909
+			direction 1 0 0
+			name "Light5"
+	}
+	envMap "env/volcano/security"
+	indoors
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+
+ambientCubemap volcano_transformer_building_upper {
+	ambientLight {
+				color 0.2627451122 0.270588249 0.2980392277
+				direction 0 0 1
+				name "Light0"
+			}
+			ambientLight {
+				color 0.250980407 0.270588249 0.2823529541
+				direction 0 0 -1
+				name "Light1"
+			}
+			ambientLight {
+				color 0.2823529541 0.3058823645 0.3215686381
+				direction 0 -1 0
+				name "Light2"
+			}
+			ambientLight {
+				color 0.1882353127 0.2039215863 0.2156862915
+				direction -1 0 0
+				name "Light3"
+			}
+			ambientLight {
+				color 0.1882353127 0.2000000179 0.2156862915
+				direction 0 1 0
+				name "Light4"
+			}
+			ambientLight {
+				color 0.2627451122 0.2784313858 0.2901960909
+				direction 1 0 0
+				name "Light5"
+	}
+	envMap "env/volcano/transformer_building_upper"
+	indoors
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+
+ambientCubemap volcano_facility4 {
+	ambientLight {
+		color 0.2392157018 0.2549019754 0.2392157018
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.1529411823 0.1529411823 0.1529411823
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.1686274558 0.1686274558 0.1686274558
+		direction 0.9519067407 0.2729548812 -0.1391730905
+		name "Light2"
+	}
+	ambientLight {
+		color 0.2078431547 0.2078431547 0.2078431547
+		direction -0.3158973455 -0.9174326062 0.2419219017
+		name "Light3"
+	}
+	ambientLight {
+		color 0.2352941334 0.2352941334 0.2352941334
+		direction -0.446036011 0.7423286438 0.5
+		name "Light5"
+	}
+	indoors
+	envMap "env/terminal1"
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+}
+
+
+

@@ -1,0 +1,292 @@
+atmosphere sewer_revised {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( 0.1475534886 -0.8214793205 0.55081743 )
+	sunColor ( 0.4823529422 0.3647058904 0.2196078449 )
+	sunHaloScale 0
+	sunHaloBias -0.0400000215
+	sunSpriteMaterial "atmospheres/sprites/moon_full"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/lights/sunsprite2"
+	sunFlareSize 65812
+	sunFlareTime 0
+	enableSunFlareAziZen 1
+	sunFlareAzi 179
+	sunFlareZen 10
+	postProcessParms {
+		tint ( 0.8823529482 0.7450980544 0.6274510026 )
+		saturation 0.9900000095
+		contrast 1
+		glareParms ( 1.3199999332 1.6399999857 0.5 0.7699999809 )
+		glareBases ( 0 0.7799999714 0 0 )
+	}
+	fogDistHalf 34
+	fogHeightHalf 1037
+	fogHeightOffset 10000
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "sewer_revised"
+	skyGradientImage "atmosphere/skies/sewer_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 360
+	windAngleDev 44
+	windStrength 56
+	windStrengthDev 30
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sewer" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/bumpmapped" {
+		style old
+		parms 12 ( 0.2300000042 1 1 0.6000000238 2.4000000954 0.0020000001 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+ambientCubemap sewer_revised {
+	ambientLight {
+		color 0.2745098174 0.2745098174 0.2745098174
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2352941334 0.2352941334 0.2352941334
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.4078431726 0.3960784674 0.3568627536
+		direction 0.1756406128 0.9035925865 0.3907311261
+		name "Light2"
+	}
+	ambientLight {
+		color 0.5803921819 0.5333333611 0.4627451301
+		direction 0.1621145755 -0.9193972349 0.3583679497
+		name "Light3"
+	}
+	ambientLight {
+		color 0.2352941334 0.2352941334 0.2352941334
+		direction -0.8843650818 0.4506065547 0.1218693554
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2352941334 0.2352941334 0.2352941334
+		direction 1 0 0
+		name "Light5"
+	}
+	ambientLight {
+		color 0.1568627506 0.1568627506 0.1568627506
+		direction -0.7036204934 -0.6794784069 0.2079117
+		name "Light6"
+	}
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	
+}atmosphere sewer_autumn {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.1792172194 -0.7026311755 0.6886150837 )
+	sunColor ( 0.6784313917 0.4470588267 0.2313725501 )
+	sunHaloScale 0.0700000003
+	sunHaloBias -0.3200000226
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/lights/sunsprite"
+	sunFlareSize 51282
+	sunFlareTime 0
+	enableSunFlareAziZen 1
+	sunFlareAzi 192
+	sunFlareZen 13
+	postProcessParms {
+		tint ( 1 0.9215686321 0.890196085 )
+		saturation 1
+		contrast 1
+		glareParms ( 1.1599999666 1.8199999332 1 0.969999969 )
+		glareBases ( 0.2800000012 1 0 0 )
+	}
+	fogDistHalf 692
+	fogHeightHalf 1643
+	fogHeightOffset 9274
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "sewer_autumn_ambient"
+	skyGradientImage "atmosphere/skies/sewer_autumn_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sewer_autumn" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+
+
+
+
+
+ambientCubeMap sewer_autumn_ambient {
+	ambientLight {
+		color 0.1764705926 0.2000000179 0.250980407
+		direction 0 0 1
+		name "Light0"
+	}
+	ambientLight {
+		color 0.2588235438 0.2627451122 0.2980392277
+		direction 0 0 -1
+		name "Light1"
+	}
+	ambientLight {
+		color 0.2549019754 0.2745098174 0.3254902065
+		direction -0.1299292594 0.9244948626 0.3583679497
+		name "Light2"
+	}
+	ambientLight {
+		color 0.3686274588 0.3686274588 0.3843137324
+		direction -0.9549941421 0.2919710279 0.0523359664
+		name "Light4"
+	}
+	ambientLight {
+		color 0.2862745225 0.2980392277 0.3254902065
+		direction 0.9323009849 0.0488598235 0.3583679497
+		name "Light5"
+	}
+	ambientLight {
+		color 0.6352941394 0.5764706135 0.5372549295
+		direction -0.4808294475 -0.8002346158 0.3583679497
+		name "Light6"
+	}
+	ambientLight {
+		color 0.250980407 0.231372565 0.2156862915
+		direction 0.6367003322 -0.6827774644 0.3583679497
+		name "Light6"
+	}
+	ambientColor 0.5 0.5 0.5
+	highLightColor 0.8000000119 0.8000000119 0.8000000119
+	brightness 1
+}atmosphere sewer_autumn_highsun {
+	sunMaterial "atmospheres/lights/default"
+	sunDir ( -0.3351024687 -0.5224219561 0.7840801477 )
+	sunColor ( 0.9490196109 0.8000000119 0.5882353187 )
+	sunHaloScale 0.0700000003
+	sunHaloBias -0.3200000226
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/lights/sunsprite2"
+	sunFlareSize 46154
+	sunFlareTime 0
+	enableSunFlareAziZen 1
+	sunFlareAzi 213
+	sunFlareZen 16
+	postProcessParms {
+		tint ( 1 0.8980392218 0.7529411912 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.9799999595 1.2899999619 1 0.7400000095 )
+		glareBases ( 0 1 0 0 )
+	}
+	fogDistHalf 692
+	fogHeightHalf 1527
+	fogHeightOffset 9274
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "sewer_autumn_ambient"
+	skyGradientImage "atmosphere/skies/sewer_autumn_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sewer_autumn" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+atmosphere sewer_autumn_highsun2 {
+	sunMaterial "atmospheres/lights/scrolling_clouds_temperate"
+	sunDir ( -0.1399239302 -0.4342797995 0.8898440003 )
+	sunColor ( 0.9490196109 0.8000000119 0.5882353187 )
+	sunHaloScale 0.0700000003
+	sunHaloBias -0.3200000226
+	sunSpriteMaterial "atmospheres/sprites/sundisc"
+	sunSpriteSize 0
+	sunFlareMaterial "atmospheres/lights/sunsprite2"
+	sunFlareSize 64957
+	sunFlareTime 0
+	enableSunFlareAziZen 1
+	sunFlareAzi 188
+	sunFlareZen 24
+	postProcessParms {
+		tint ( 1 0.9137254953 0.8313725591 )
+		saturation 1
+		contrast 1
+		glareParms ( 0.969999969 1.2899999619 1 0.8199999928 )
+		glareBases ( 0 1 0 0 )
+	}
+	fogDistHalf 692
+	fogHeightHalf 1643
+	fogHeightOffset 9274
+	fogColor ( 0 0 0 )
+	fogStart 30000
+	fogEnd 40000
+	atmosphereMaterial "atmospheres/default"
+	ambientCubeMap "sewer_autumn_ambient"
+	skyGradientImage "atmosphere/skies/sewer_autumn_fog"
+	farClip 0
+	isNight 0
+	drawAtmosphereLast 1
+	windAngle 0
+	windAngleDev 10
+	windStrength 100
+	windStrengthDev 20
+	cloudLayer "atmospheres/skydomes/default" {
+		style old
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+	cloudLayer "atmospheres/skydomes/sewer_autumn" {
+		style skybox
+		parms 12 ( 0 0 0 0 0 0 0 0 0 0 0 0 )
+	}
+}
+
+
+
+

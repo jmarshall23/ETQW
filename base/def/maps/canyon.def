@@ -1,0 +1,117 @@
+// ----------------------------------------------------
+// Objectives for Canyon
+// ----------------------------------------------------
+
+entityDef gameplay_canyon_bridge_stage1 {
+	"inherit"						"constructible_base"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"GDF Bridge"
+	"editor_var health"				"Health of the Construction, 0 is nonbreakable. Default is 5000"
+	"editor_var construct_time"		"Time in seconds to construct. Default is 10"
+	"editor_var fizzle_time"		"Time in seconds for an unfinished construction to fade out. Default 30s"
+	"editor_var skin_construct"		"Skin used during construction. Default is deployEffect"
+
+	"team"							"gdf"
+
+	"model"							"models/mapobjects/bridge/broken_bridge_plank_canyon.lwo"
+	"cm_model"						"models/mapobjects/bridge/broken_bridge_plank_canyon.lwo"
+
+	"collection_he"					"he"
+}
+
+entityDef gameplay_canyon_bridge_stage2 {
+	"inherit"						"constructible_base"
+
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"GDF Bridge"
+	"editor_var health"				"Health of the Construction, 0 is nonbreakable. Default is 5000"
+	"editor_var construct_time"		"Time in seconds to construct. Default is 10"
+	"editor_var fizzle_time"		"Time in seconds for an unfinished construction to fade out. Default 30s"
+	"editor_var skin_construct"		"Skin used during construction. Default is deployEffect"
+
+	"team"							"gdf"
+
+	"model"							"models/mapobjects/bridge/folding_bridge_canyon.lwo"
+	"cm_model"						"models/mapobjects/bridge/folding_bridge_canyon.lwo"
+}
+
+entityDef gameplay_canyon_bridge_fixer {
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"GDF Bridge Fixer"
+
+	"inherit"						"constructible_base"
+	"team"							"gdf"
+
+	"model"							"models/mapobjects/bridge/assaultbridge_fixer_canyon.lwo"
+	"cm_model"						"models/mapobjects/bridge/assaultbridge_fixer_canyon.lwo"
+}
+
+entityDef gameplay_canyon_bridge_frame {
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"GDF Bridge Frame"
+
+	"inherit"						"constructible_base"
+	"team"							"gdf"
+
+	"model"							"models/mapobjects/bridge/assaultbridge_frame_canyon.lwo"
+	"cm_model"						"models/mapobjects/bridge/assaultbridge_frame_canyon.lwo"
+}
+
+entityDef gameplay_canyon_bridge_platform {
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"GDF Bridge Platform"
+
+	"inherit"						"constructible_base"
+	"team"							"gdf"
+
+	"model"							"models/mapobjects/bridge/assaultbridge_platform_canyon.lwo"
+	"cm_model"						"models/mapobjects/bridge/assaultbridge_platform_canyon.lwo"
+}
+
+entityDef gameplay_canyon_bridge_constructed {
+	"editor_color"					".3 .3 1"
+	"editor_mins"					"-8 -8 -8"
+	"editor_maxs"					"8 8 8"
+	"editor_usage"					"GDF Bridge Constructed"
+
+	"inherit"						"constructible_base"
+	"team"							"gdf"
+
+	"model"							"models/mapobjects/bridge/assaultbridge_constructed_canyon.lwo"
+	"cm_model"						"models/mapobjects/bridge/assaultbridge_constructed_canyon.lwo"
+}
+
+entityDef gameplay_canyon_bioreactor {
+	"spawnclass"					"sdScriptEntity"
+
+	"editor_var health"				"The health of the destructible object"
+	"editor_var scriptobject"		"The script object used to control the entity's behaviour"
+	"editor_var model"				"The model to display for the entity"
+	"editor_var team"				"Either Strogg or GDF"
+
+	"editor_var collection_he"		"If set, can be destroyed by HE charges"
+	"editor_var collection_ss"		"If set, can be destroyed by SSM/SSG"
+	"editor_var collection_arty"	"If set, can be destroyed by Artillery"
+
+	"editor_color"					"0 .5 .8"
+	"editor_mins"					"?"
+	"editor_maxs"					"?"
+	"editor_usage"					"Final Objective"
+
+	"collection_he"					"he"
+	"health"						"500"
+	"scriptobject"					"destructible_objective"
+	"team"							"strogg"
+
+}

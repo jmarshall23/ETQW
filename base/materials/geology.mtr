@@ -1,0 +1,72 @@
+material models/mapobjects/geology/boulder01
+{
+	surfaceType "stone"
+	surfaceColor ( 0.4 0.3333333 0.2666667 )
+	qer_editorimage textures/rock/sharprock1_local.tga
+	
+	diffusemap	textures/rock/rockface02d_brown2_d.tga
+	bumpmap		textures/rock/sharprock1_local.tga
+}
+
+material models/mapobjects/geology/boulder02
+{
+	surfaceType "stone"
+	surfaceColor ( 0.4 0.3333333 0.2666667 )
+	qer_editorimage textures/rock/sharprock1_local.tga
+	
+	diffusemap	textures/rock/rockface02d_brown2_d.tga
+	bumpmap		textures/rock/sharprock1_local.tga
+}
+
+material models/mapobjects/geology/boulder03
+{
+	surfaceType "stone"
+	surfaceColor ( 0.4 0.3333333 0.2666667 )
+	qer_editorimage textures/rock/sharprock1_local.tga
+	
+	diffusemap	textures/rock/rockface02d_brown2_d.tga
+	bumpmap		textures/rock/sharprock1_local.tga
+}
+
+material models/mapobjects/geology/rock_round4
+{
+	surfaceType "stone"
+	surfaceColor ( 0.4 0.3333333 0.2666667 )
+	qer_editorimage textures/rock/sharprock1_local.tga
+	
+	diffusemap	textures/rock/rockface02d_brown2_d.tga
+	bumpmap		textures/rock/sharprock1_local.tga
+}
+
+material textures/rock/canyon_round
+{
+	surfaceType "stone"
+	surfaceColor ( 0.4 0.3333333 0.2666667 )
+	qer_editorimage		textures/rock/smoothrock_02e_d.tga
+	{	
+		
+		diffusemap		textures/rock/smoothrock_02e_d.tga
+		bumpmap			textures/rock/smoothrock_03_256_2t1_local.tga
+		diffuseDetailMap		textures/detail/bump/concrete_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/concrete_detail01_local.tga
+		specDetailMap			textures/detail/bump/concrete_detail01_d.tga
+		detailMult	2,2,0,0
+	}	
+}
+
+material models/mapobjects/geology/boulder_clusters
+{
+	surfaceType "stone"
+	surfaceColor ( 0.4 0.3333333 0.2666667 )
+	qer_editorimage textures/rock/splinteredrock01_local.tga
+	
+	diffusemap	textures/rock/splinteredrock01adark_d.tga
+	bumpmap		textures/rock/splinteredrock01_local.tga
+}
+
+material models/mapobjects/geology/valley_boulders
+{
+	surfaceType "stone"
+	diffusemap	textures/rock/smoothrock_02_512_d.tga
+	bumpmap		textures/rock/smoothrock_02_512_local.tga
+}

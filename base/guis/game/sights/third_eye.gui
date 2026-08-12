@@ -1,0 +1,192 @@
+
+#include <guis/common/colors.include>
+#include <guis/game/hud/hud.include>
+#include <guis/game/sights/sniper_lines.include>
+
+gui game/sights/third_eye {
+	
+	properties {
+		float		flags = immediate( flags ) | GUI_FULLSCREEN;
+		float borderWidth = ceil( SCREEN_WIDTH - VIRTUAL_WIDTH ) * 0.5f;
+	}
+	events {
+		onActivate {
+			globals.gameHud.showPostProcess = immediate( globals.gameHud.showPostProcess + 1 );
+			setShaderParm( 5, globals.gameHud.signalStrength );
+		}
+		onDeactivate {
+			globals.gameHud.showPostProcess = immediate( globals.gameHud.showPostProcess - 1 );
+		}
+		onPropertyChanged "globals.gameHud.signalStrength" {
+			setShaderParm( 5, globals.gameHud.signalStrength );
+		}
+		onNamedEvent "onZoomCycle" {
+	//		zoomCycleTransitionLerp = transition( "0", "1", 200 );
+		}
+	}
+	materials {
+		"scope_fx"	"textures/sfx/sniperScopeThirdEye"
+		"binocs"	"guis/assets/qet/binocs"
+
+		"guis/assets/weapons/sniper/border"		"guis/assets/weapons/sniper/border"
+		"guis/assets/weapons/sniper/circle"		"guis/assets/weapons/sniper/circle"
+		"guis/assets/weapons/sniper/circlelines1"	"guis/assets/weapons/sniper/circlelines1"
+		"guis/assets/weapons/sniper/circlelines2"	"guis/assets/weapons/sniper/circlelines2"
+		"guis/assets/weapons/sniper/circleticks"	"guis/assets/weapons/sniper/circleticks"
+	}
+
+	windowDef desktop {
+		properties {
+			rect rect = 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT;
+		}
+		windowDef background {
+			properties {
+				rect rect = gui.borderWidth, 0, VIRTUAL_WIDTH - gui.borderWidth, VIRTUAL_HEIGHT;
+			}					
+
+			windowDef scopeEffect {
+				properties {
+					rect rect = -100, 0, VIRTUAL_WIDTH + 200, VIRTUAL_HEIGHT;
+					color backColor = 1, 1, 1, 1;
+					string material = "scope_fx";
+				}
+			}
+			windowDef binobgTicks {
+				properties {
+					rect rect = 90,20,460,440;
+					color backColor = 1,0,0,0.8;
+					string material = "guis/assets/weapons/sniper/circleticks";
+					float rotation = player.yaw + 78;
+				}
+				timeline {
+					onTime 50 {
+						backColor = transition( "1,0,0,0.8", "0.75,0,0,0.8", 50 );
+					}
+					onTime 100 {
+						backColor = transition( "0.75,0,0,0.8", "1,0,0,0.8", 50 );
+						timeline.default.resetTime( 0 );
+					}
+				}
+			}
+		
+			windowDef binobgTL {
+				properties {
+					rect rect = 	-40,-100,360,340;
+					color backColor = 0,0,0,1;
+					string material = "guis/assets/weapons/sniper/circle";
+				}
+				timeline {
+					onTime 0 {
+						backColor.a = transition( 0, 1, 350 );
+					}
+				}
+			}
+			windowDef binobgTR {
+				properties {
+					rect rect = 	320,-100,-360,340;
+					color backColor = 0,0,0,1;
+					string material = "guis/assets/weapons/sniper/circle";
+				}
+				timeline {
+					onTime 0 {
+						backColor.a = transition( 0, 1, 350 );
+					}
+				}
+			}
+			windowDef binobgBL {
+				properties {
+					rect rect = 	-40,240,360,-340;
+					color backColor = 0,0,0,1;
+					string material = "guis/assets/weapons/sniper/circle";
+				}
+				timeline {
+					onTime 0 {
+						backColor.a = transition( 0, 1, 350 );
+					}
+				}
+			}
+			windowDef binobgBR {
+				properties {
+					rect rect = 	320,240,-360,-340;
+					color backColor = 0,0,0,1;
+					string material = "guis/assets/weapons/sniper/circle";
+				}
+				timeline {
+					onTime 0 {
+						backColor.a = transition( 0, 1, 350 );
+					}
+				}
+			}
+			
+			windowDef binocularsBlockLeft {
+				properties {
+					rect rect = 0,0,30,480;
+					color backColor = 0,0,0,1;
+				}
+				timeline {
+					onTime 0 {
+						backColor.a = transition( 0, 1, 250 );
+					}
+				}
+			}
+			windowDef binocularsBlockRight {
+				properties {
+					rect rect = 610,0,30,480;
+					color backColor = 0,0,0,1;
+				}
+				timeline {
+					onTime 0 {
+						backColor.a = transition( 0, 1, 250 );
+					}
+				}
+			}
+			windowDef binoculars {
+				properties {
+					rect rect = 30,0,580,480;
+					color backColor = 1,1,1,1;
+					string material = "binocs";
+				}
+				timeline {
+					onTime 0 {
+						backColor.a = transition( 0, 1, 250 );
+					}
+				}
+			}
+		}
+		/*windowDef infoText {
+			properties {
+				rect	rect = CENTER_X - ( rect.w * 0.5f ), 420, 320, 50;
+				wstring	keyText = gui.blankWStr;
+				wstring keyText2 = gui.blankWStr;
+				wstring	text = localizeArgs( "guis/game/viewer/destruct/third_eye", keyText, keyText2 );
+				float	fontSize = 14;					
+				float	visible = 1;
+				float	flags = immediate( flags ) | WF_MULTILINE_TEXT;
+			}
+
+			events {
+				onCreate "visible" {
+					if ( visible ) {
+						keyText = gui.getKeyBind( "_attack", "" );
+						keyText2 = gui.getKeyBind( "_altattack", "" );
+					}
+				}
+			}
+		}*/
+		windowDef bars {
+			properties {
+				rect rect = gui.borderWidth, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT;		
+				handle 	white = gui.cacheMaterial( "_mat", "white" );
+				float 	barWidth = ( ( SCREEN_WIDTH - rect.w ) * 0.5f );
+				float 	screenHeight = SCREEN_HEIGHT;
+			}
+			events {
+				onPreDraw {
+					drawCachedMaterial( white, "0, 0, gui.borderWidth, screenHeight", COLOR_BLACK );
+					drawCachedMaterial( white, "gui.borderWidth + rect.w, 0, gui.borderWidth, screenHeight", COLOR_BLACK );
+					gui.scriptPushFloat( false );
+				}		
+			}	
+		}		
+	}
+}

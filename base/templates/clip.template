@@ -1,0 +1,13 @@
+
+template templates/vehicleclip {
+
+	text {
+		qer_editorimage textures/common/vehicle_clip.tga
+		nonsolid
+		vehicleclip
+		noshadows
+		surfaceType	"SurfaceType"
+	}
+
+	parameters	< SurfaceType = "none" >
+}

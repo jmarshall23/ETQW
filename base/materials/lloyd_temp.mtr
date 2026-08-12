@@ -1,0 +1,184 @@
+//-------------
+//Road and Sand
+//-------------
+
+
+material textures/lloyd/terraces_plan
+{
+	
+	qer_editorimage	textures/lloyd_temp/terraces.tga
+	//bumpmap		addnormals(textures/sand/sand_ripples_sharp_local.tga, heightmap(textures/sand/skysand1_h.tga, 2))
+	diffusemap	textures/lloyd_temp/terraces.tga
+	//specularmap	textures/sand/sand01_s.tga
+}
+
+material textures/lloyd/window01
+{
+	
+	qer_editorimage	textures/lloyd_temp/window01.tga
+	bumpmap		textures/lloyd_temp/window01_local.tga
+	diffusemap	textures/lloyd_temp/window01.tga
+	//specularmap	textures/sand/sand01_s.tga
+}
+
+material textures/lloyd/window02
+{
+	
+	qer_editorimage	textures/lloyd_temp/window02.tga
+	bumpmap		textures/lloyd_temp/window02_local.tga
+	diffusemap	textures/lloyd_temp/window02.tga
+	//specularmap	textures/sand/sand01_s.tga
+}
+
+material textures/lloyd/door01
+{
+	
+	qer_editorimage	textures/lloyd_temp/door01.tga
+	bumpmap		textures/lloyd_temp/door01_local.tga
+	diffusemap	textures/lloyd_temp/door01.tga
+	//specularmap	textures/sand/sand01_s.tga
+}
+
+material textures/lloyd/door02
+{
+	
+	qer_editorimage	textures/lloyd_temp/door02.tga
+	bumpmap		textures/lloyd_temp/door02_local.tga
+	diffusemap	textures/lloyd_temp/door02.tga
+	//specularmap	textures/sand/sand01_s.tga
+}
+
+material textures/lloyd/tiles01
+{
+	
+	qer_editorimage	textures/lloyd_temp/tiles01.tga
+	bumpmap		textures/lloyd_temp/tiles01_local.tga
+	diffusemap	textures/lloyd_temp/tiles01.tga
+	//specularmap	textures/sand/sand01_s.tga
+}
+
+material textures/lloyd/bricks01
+{
+	
+	qer_editorimage	textures/lloyd_temp/bricks01.tga
+	bumpmap		textures/lloyd_temp/bricks01_local.tga
+	diffusemap	textures/lloyd_temp/bricks01.tga
+	//specularmap	textures/sand/sand01_s.tga
+}
+
+material textures/lloyd/tiles02
+{
+	
+	qer_editorimage	textures/lloyd_temp/tiles02.tga
+	bumpmap		textures/lloyd_temp/tiles02_local.tga
+	diffusemap	textures/lloyd_temp/tiles02.tga
+	//specularmap	textures/sand/sand01_s.tga
+}
+
+material textures/lloyd/stonewall01
+{
+	
+	qer_editorimage	textures/lloyd_temp/stonewall01.tga
+	bumpmap		textures/lloyd_temp/stonewall01_local.tga
+	diffusemap	textures/lloyd_temp/stonewall01.tga
+	//specularmap	textures/sand/sand01_s.tga
+}
+
+material textures/lloyd/topology
+{
+	
+	qer_editorimage	textures/lloyd_temp/topology.tga
+	//bumpmap		textures/lloyd_temp/tiles02_local.tga
+	diffusemap	textures/lloyd_temp/topology.tga
+	//specularmap	textures/sand/sand01_s.tga
+}
+
+material textures/lloyd/topology2
+{
+	
+	qer_editorimage	textures/lloyd_temp/topology2.tga
+	//bumpmap		textures/lloyd_temp/tiles02_local.tga
+	diffusemap	textures/lloyd_temp/topology2.tga
+	//specularmap	textures/sand/sand01_s.tga
+}
+
+material textures/lloyd/white
+{
+	
+	qer_editorimage	textures/lloyd_temp/white.tga
+	//bumpmap		textures/lloyd_temp/tiles02_local.tga
+	diffusemap	textures/lloyd_temp/white.tga
+	//specularmap	textures/sand/sand01_s.tga
+}
+
+material textures/lloyd/churchdoor01
+{
+	
+	qer_editorimage	textures/lloyd_temp/churchdoor01.tga
+	bumpmap		textures/lloyd_temp/churchdoor01_local.tga
+	diffusemap	textures/lloyd_temp/churchdoor01.tga
+	//specularmap	textures/sand/sand01_s.tga
+}
+
+material textures/lloyd/churchwindow_01
+{
+	
+	qer_editorimage	textures/lloyd_temp/churchwindow_01.tga
+	bumpmap		textures/lloyd_temp/churchwindow_01_local.tga
+	diffusemap	textures/lloyd_temp/churchwindow_01.tga
+	//specularmap	textures/sand/sand01_s.tga
+}
+
+material textures/lloyd/churchwindow_02
+{
+	
+	qer_editorimage	textures/lloyd_temp/churchwindow_02.tga
+	bumpmap		textures/lloyd_temp/churchwindow_02_local.tga
+	diffusemap	textures/lloyd_temp/churchwindow_02.tga
+	//specularmap	textures/sand/sand01_s.tga
+}
+
+material textures/lloyd/churchwindow_03
+{
+	
+	qer_editorimage	textures/lloyd_temp/churchwindow_03.tga
+	bumpmap		textures/lloyd_temp/churchwindow_03_local.tga
+	diffusemap	textures/lloyd_temp/churchwindow_03.tga
+	//specularmap	textures/sand/sand01_s.tga
+}
+
+material textures/stone/stonewall_moss01
+{
+	
+	qer_editorimage	textures/stone/stonewall_moss01b_d.tga
+	bumpmap		textures/stone/stonewall_moss01_local.tga
+	diffusemap	textures/stone/stonewall_moss01b_d.tga
+	specularmap	textures/stone/stonewall_moss01_s.tga
+}
+
+material textures/lloyd/woodensign01
+{
+	
+	qer_editorimage	textures/lloyd_temp/woodensign01_d.tga
+	bumpmap		textures/lloyd_temp/woodensign01_local.tga
+	diffusemap	textures/lloyd_temp/woodensign01_d.tga
+	specularmap	textures/lloyd_temp/woodensign01_s.tga
+}
+
+material textures/lloyd/office_wood01
+{
+	
+	qer_editorimage	textures/lloyd_temp/office_wood01_d.tga
+	bumpmap		textures/lloyd_temp/office_wood01_local.tga
+	diffusemap	textures/lloyd_temp/office_wood01_d.tga
+	specularmap	textures/lloyd_temp/office_wood01_s.tga
+}
+
+material textures/lloyd/office_books01
+{
+	
+	qer_editorimage	textures/lloyd_temp/office_books01_d.tga
+	bumpmap		textures/lloyd_temp/office_books01_local.tga
+	diffusemap	textures/lloyd_temp/office_books01_d.tga
+	specularmap	textures/lloyd_temp/office_books01_s.tga
+}

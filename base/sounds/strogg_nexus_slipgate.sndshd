@@ -1,0 +1,98 @@
+// Strogg Nexus
+
+// Map Slipgate
+
+sound sounds/vo/strogg/nexus/maps/slipgate/slipgate/defend/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21001.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/slipgate/defend {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21002.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/slipgate/hacking {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21003.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/slipgate/hacking/half {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21004.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/slipgate/fail {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21005.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/slipgate/success/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21006.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/mcp/stop/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21007.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/mcp/stop {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21008.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/mcp/halfslipgate {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21009.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/mcp/nearslipgate {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21010.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/mcp/throughslipgate {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21011.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/core/defend/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21012.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/core/defend {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21013.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/core/planted {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21014.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/core/disarm {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21015.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/core/planted/long {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21016.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/disarmed {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21017.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/stroggwin {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21019.wav
+}
+
+sound sounds/vo/strogg/nexus/maps/slipgate/strogglose {
+
+	localization/english/sounds/vo/strogg/nexus/maps/slipgate/21018.wav
+}

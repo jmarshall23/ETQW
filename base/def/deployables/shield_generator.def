@@ -1,0 +1,198 @@
+// ========================================================================
+// Export shield generator=================================================
+// ========================================================================
+
+
+export hauser {
+
+options -prefix SHIELDGEN_ -sourcedir models/structures/strogg/deployables/passive_defences/shieldgenerator/dev_sd -destdir models/structures/strogg/deployables/passive_defences/shieldgenerator/
+
+	addoptions -keepmesh lod0_gui_surface lod0_top lod0_main lod0_main_shadow lod0_top_shadow -keep fx1 fx2
+
+
+	mesh	shield_generator_reference_file.mb		-dest shield_generator_base.md5mesh
+	/*
+	anim	shield_generator_spin_up.mb 		-dest shield_generator_idle.md5anim	-range 0 0
+
+	anim	shield_generator_spin_up.mb		-dest shield_generator_spin_up.md5anim
+	anim	shield_generator_spin_down.mb		-dest shield_generator_spin_down.md5anim
+	anim	shield_generator_spin_loop.mb		-dest shield_generator_spin_loop.md5anim
+
+	anim	shield_generator_land.mb		-dest shield_generator_land.md5anim
+	anim	shield_generator_land.mb		-dest shield_generator_undeployed.md5anim -range 0 0
+
+	anim	shield_generator_damaged.mb		-dest shield_generator_damaged.md5anim	-range 0 10
+	anim	shield_generator_damaged.mb		-dest shield_generator_disabled.md5anim	-range 26 50
+
+
+	anim	shield_generator_damaged.mb		-dest shield_generator_disabled_to_damaged.md5anim	-range 1 1
+	anim	shield_generator_spin_up.mb 		-dest shield_generator_damaged_to_idle.md5anim		-range 0 0
+
+	anim	shield_generator_land_nerve.mb		-dest shield_generator_land.md5anim
+
+
+*/
+
+	addoptions -nojoints
+	addoptions -keepmesh lod1_main lod1_top lod1_gui_surface lod1_top_shadow lod1_main_shadow
+
+	mesh	shield_generator_reference_file.mb		-dest shield_generator_lod1.md5mesh
+
+	addoptions -keepmesh lod2_main lod2_top lod2_main_shadow
+
+	mesh	shield_generator_reference_file.mb		-dest shield_generator_lod2.md5mesh
+
+
+
+
+
+
+}
+
+
+
+// Models
+// ========================================================================
+
+model deployable_shield_generator {
+	mesh							models/structures/strogg/deployables/passive_defences/shieldgenerator/shield_generator_base.md5mesh
+
+	anim undeployed					models/structures/strogg/deployables/passive_defences/shieldgenerator/shield_generator_idle.md5anim {
+	}
+
+	anim base						models/structures/strogg/deployables/passive_defences/shieldgenerator/shield_generator_idle.md5anim {
+	}
+
+	anim deploy						models/structures/strogg/deployables/passive_defences/shieldgenerator/shield_generator_land.md5anim {
+		frame 1							sound_channel snd_deployable_deploy snd_deploy
+	}
+
+	anim damaged					models/structures/strogg/deployables/passive_defences/shieldgenerator/shield_generator_damaged.md5anim {
+	}
+
+	anim destroyed					models/structures/strogg/deployables/passive_defences/shieldgenerator/shield_generator_disabled.md5anim {
+	}
+
+	anim spin_up					models/structures/strogg/deployables/passive_defences/shieldgenerator/shield_generator_spin_up.md5anim {
+	}
+
+	anim spin_down					models/structures/strogg/deployables/passive_defences/shieldgenerator/shield_generator_spin_down.md5anim {
+	}
+
+	anim spin_loop					models/structures/strogg/deployables/passive_defences/shieldgenerator/shield_generator_spin_loop.md5anim {
+	}
+
+	anim disabled_to_damaged		models/structures/strogg/deployables/passive_defences/shieldgenerator/shield_generator_disabled_to_damaged.md5anim {
+	}
+
+	anim damaged_to_idle			models/structures/strogg/deployables/passive_defences/shieldgenerator/shield_generator_damaged_to_idle.md5anim {
+	}
+}
+
+deployObject deployobject_shield_generator {
+	"name"							"shield_generator"
+	"title"							"game/deploy/shield"
+	"wait_time"						"40000"
+	"def_deployable"				"deployable_shield_generator"
+	"def_deployable_carrier"		"vehicle_strogg_drop"
+	"str_placement"					"deployitem_shield_generator_placement_model"
+	"mask"							"dm_default"
+	"max_height_diff"				"512"
+	"object_radius"					"2048"
+	"ti_kill_filter"				"target_deploy_kill"
+	"category"						"defences"
+	"allow_rotation"				"0"
+}
+
+stringMap deployitem_shield_generator_placement_model {
+	"model"							"models/structures/strogg/deployables/passive_defences/shieldgenerator/shield_generator.lwo"
+	"skin"							"deployEffect"
+	"maxVisDist"					"2560"
+	"pushIntoOutsideAreas"			"1"
+}
+
+entityDef deployable_shield_generator {
+	"inherit"						"deployable_base"
+	"inherit1"						"deployable_strogg"
+
+	"title"							"game/deploy/shield"
+
+	"mtr_commandmap"				"guis/assets/commandmap/icon_radar"
+	"mtr_commandmap_unknown"		"guis/assets/commandmap/icon_radar"
+	
+	"icon_size_cm"					"8"
+
+	"do_object"						"deployobject_shield_generator"
+
+	"spawnclass"					"sdScriptEntity"
+	"scriptobject"					"deployable_shield_generator"
+
+	"model"							"deployable_shield_generator"
+	"cm_model"						"models/structures/strogg/deployables/passive_defences/shieldgenerator/shield_generator_clip2.lwo"
+
+	"stat_name"						"antimissile_strogg"
+
+	"task_name"						"game/deploy/shield"
+
+	"range_max"						"90"
+
+	"option_combat_model"			"1"
+	"option_crosshair_interface"	"1"
+	"option_commandmap_interface"	"1"
+	"option_crosshair_offset"		"0 0 192"
+
+	"option_allow_abilities"		"1"
+	"ability_1"						"defense_turret"
+
+	"health"						"4000"
+	"repair_multiplier"				"1.5"
+
+	"tt_destroyed_missile"			"amt_destroyed_missile_strogg"
+
+	"snd_deploy"					"sounds/deployables/ssg/deploy"
+	"snd_idle"						"sounds/deployables/shieldgenerator/idle"
+
+	"mtr_color"						"guis/assets/deploy/icons/strogg_am"
+	"mtr_desat"						"guis/assets/deploy/icons/strogg_am_desat"
+	"mtr_half_desat"				"guis/assets/deploy/icons/strogg_am_half_desat"
+	"mtr_full_desat"				"guis/assets/deploy/icons/strogg_am_bright_desat"
+
+	"fx_hit"						"effects/deployables/shield_generator/impact"
+	"fx_charge"						"effects/deployables/shield_generator/in_action"
+	"fx_idle"						"effects/deployables/shield_generator/idle_bolt"
+	"fx_death"						"effects/deployables/shield_generator_destroy"
+	"fx_disabled_1"					"effects/vehicles/vehicle_smoke_badger"
+	"fx_disabled_2"					"effects/vehicles/vehicle_smoke_badger"
+
+	"deployable_type"				"64"
+
+	"contextmenu_quickchat_enemy"	"quickchat/context/attack/aitspotted"
+	
+	"waypoint_offset"				"0 0 160"
+
+	"deploybonus_requireactive"		"1"
+	"prof_deploybonus"				"pro_constructor_deploy_bonus"
+}
+
+entityDef deployable_shield_generator_domihub {
+	"inherit"						"deployable_shield_generator"
+	"editor_skipmenu"				"0"
+
+	"model"							""
+	"cm_model"						""
+
+	"editor_mins"					"-16 -16 -16"
+	"editor_maxs"					"16 16 16"
+
+	"task_hack"						""
+	"task_destroy"					""
+
+	"option_combat_model"			"0"
+
+	"no_idle_effects"				"1"
+	"no_start_joint"				"1"
+
+	"health"						"0"
+
+	"editor_usage"					"The Strogg Domihub Anti Missile Defence"
+}

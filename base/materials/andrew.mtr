@@ -1,0 +1,742 @@
+material models/andrew/canyontextures/canyon_rock_01
+{
+	diffusemap	models/andrew/canyontextures/canyon_rock_01_d.tga
+	bumpmap		models/andrew/canyontextures/canyon_rock_01_local.tga
+}
+
+material models/andrew/canyontextures/canyon_rock_02
+{
+	diffusemap	models/andrew/canyontextures/canyon_rock_02_d.tga
+	bumpmap		models/andrew/canyontextures/canyon_rock_02_local.tga
+}
+
+material models/andrew/canyontextures/canyon_rock_03
+{
+	diffusemap	models/andrew/canyontextures/canyon_rock_03_d.tga
+	bumpmap		models/andrew/canyontextures/canyon_rock_03_local.tga
+}
+
+material models/andrew/canyontextures/canyon_rock_04
+{
+	diffusemap	models/andrew/canyontextures/canyon_rock_04_d.tga
+	bumpmap		models/andrew/canyontextures/canyon_rock_04_local.tga
+}
+
+material models/andrew/canyontextures/canyon_rock_05
+{
+	diffusemap	models/andrew/canyontextures/canyon_rock_05_d.tga
+	bumpmap		models/andrew/canyontextures/canyon_rock_05_local.tga
+}
+
+material models/andrew/canyontextures/canyon_rock_06
+{
+	diffusemap	models/andrew/canyontextures/canyon_rock_06_d.tga
+	bumpmap		models/andrew/canyontextures/canyon_rock_06_local.tga
+}
+
+material models/andrew/canyontextures/canyon_rock_07
+{
+	diffusemap	models/andrew/canyontextures/canyon_rock_07_d.tga
+	bumpmap		models/andrew/canyontextures/canyon_rock_07_local.tga
+}
+
+material models/andrew/canyontextures/canyon_rock_08
+{
+	diffusemap	models/andrew/canyontextures/canyon_rock_08_d.tga
+	bumpmap		models/andrew/canyontextures/canyon_rock_08_local.tga
+}
+
+material models/andrew/canyontextures/canyon_rock_09
+{
+	diffusemap	models/andrew/canyontextures/canyon_dirt_13_d.tga
+	bumpmap		models/andrew/canyontextures/canyon_dirt_13_local.tga
+}
+
+material models/andrew/canyontextures/canyon_rock_10
+{
+	diffusemap	models/andrew/canyontextures/canyon_dirt_14_d.tga
+	bumpmap		models/andrew/canyontextures/canyon_dirt_14_local.tga
+}
+
+material models/andrew/canyontextures/canyon_rock_11
+{
+	diffusemap	models/andrew/canyontextures/canyon_grass_01_d.tga
+	bumpmap		models/andrew/canyontextures/canyon_grass_01_local.tga
+}
+
+material models/andrew/canyontextures/canyon_rock_12
+{
+	diffusemap	models/andrew/canyontextures/canyon_grass_02_d.tga
+	bumpmap		models/andrew/canyontextures/canyon_grass_02_local.tga
+}
+
+
+
+material models/workingtextures/jcb/jcb
+{
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 -colormap models/mapobjects/front_loader/front_loader_local.tga models/mapobjects/front_loader/front_loader_hi.ase
+	diffusemap 	models/workingtextures/jcb/front_loader_d.tga
+	//specularmap	models/workingtextures/jcb/front_loader_s.tga
+	bumpmap		models/workingtextures/jcb/front_loader_local.tga
+}
+
+material models/workingtextures/jcb/jcb_window
+{
+	twosided
+	translucent
+	{
+		blend filter
+		map models/workingtextures/jcb/front_loader_window.tga
+	}
+}
+
+
+material models/workingtextures/treetrunk
+{
+	noshadows
+	noselfshadow
+		{
+		diffusemap 	models/workingtextures/tree.tga
+		specularmap	models/workingtextures/tree_s.tga
+		bumpmap		models/workingtextures/tree_local.tga
+		vertexcolor
+		}
+}
+
+material models/workingtextures/texturegallery_bleh
+{
+		diffusemap 	models/mapobjects/ghost_town/oob_buildings01_d.tga
+		specularmap	models/mapobjects/ghost_town/oob_buildings01_s.tga
+		bumpmap		models/mapobjects/ghost_town/oob_buildings01_local.tga
+}
+
+material models/workingtextures/texturegallery
+{ 
+     qer_editorimage     models/workingtextures/rubble/rubble_d.tga 
+     {      
+          program interaction/parallax
+          diffusemap          models/workingtextures/rubble/rubble_d.tga
+          specularmap         models/workingtextures/rubble/rubble_s.tga
+          bumpmap             models/workingtextures/rubble/rubble_local.tga
+          heightmap           models/workingtextures/rubble/rubble_parallax.tga     
+          parameters          0.012 
+     } 
+}
+
+material models/workingtextures/texturegallery_neon
+{
+	diffusemap	models/workingtextures/neonsign/neonsign01_d.tga
+	bumpmap		models/workingtextures/neonsign/neonsign01_local.tga
+	specularmap	models/workingtextures/neonsign/neonsign01_s.tga
+
+	{
+		blend add
+		map models/workingtextures/neonsign/neonsign01_glow.tga
+		rgb neon_sign01[ time * 0.1 ]
+	}
+}
+
+
+
+material models/workingtextures/texturegalleryx
+{ 
+     qer_editorimage     textures/brick/brickwall03_d 
+     {      
+          program interaction/parallax
+          diffusemap          textures/brick/brickwall03_d.tga
+          specularmap         textures/brick/brickwall03_s.tga
+          bumpmap             heightmap (textures/brick/brickwall03_parallax.tga, 3) 
+          heightmap           textures/brick/brickwall03_parallax.tga      
+          parameters          0.010
+     } 
+}
+
+material models/workingtextures/texturegallery2
+{ 
+     qer_editorimage     textures/stone/stonewall03_d.tga 
+     {      
+          program interaction/parallax
+          diffusemap          textures/stone/stonewall03_d.tga
+          specularmap         textures/stone/stonewall03_s.tga
+          bumpmap             heightmap (textures/stone/stonewall03_parallax.tga, 3) 
+          heightmap           textures/stone/stonewall03_parallax.tga     
+          parameters          0.010 
+     } 
+}
+
+material models/workingtextures/texturegallery2x
+{
+	{
+		diffusemap	textures/stone/stonewall03_d.tga
+		specularmap	textures/stone/stonewall03_s.tga
+		bumpmap		textures/stone/stonewall03_local.tga
+		alphaTest 	0.1
+	}
+}
+
+
+
+
+
+template templates/commandcentre_glass {
+	parameters	< 
+		DiffuseImageParam,		// Alpha channel defines the transparent bits
+		SpecularImageParam,
+		BumpImageParam,
+		MaskImageParam,			// Grayscale defining the dirty bits
+		ReflectionPower,		// How angle dependent the reflection is
+		ReflectionBrightness,	// Muliply the reflection cubemap with this brightness value
+		BaseReflection			// Always reflect with this amount even if looking straight at the surface
+	>
+	
+	text {
+		surfacetype glass
+		{
+			diffusemap	DiffuseImageParam
+			bumpmap		BumpImageParam
+			specularmap 	SpecularImageParam
+			alphaTest 0.5
+		}
+		{
+			blend blend
+			program sfx/windowglass_mask
+			mask		MaskImageParam
+			bumpmap		BumpImageParam
+			environmentCubeMap cubemap env/bland
+			parameters ReflectionPower, ReflectionBrightness, BaseReflection	
+		}
+	}
+}
+
+material models/andrew/cc/commandcentre_1
+{
+	{
+	program interaction/selfillum
+	diffusemap	models/andrew/cc/commandcentre_1_d.tga
+	bumpmap		models/andrew/cc/commandcentre_1_local.tga
+	specularmap	models/andrew/cc/commandcentre_1_s.tga
+	selfillummap	models/andrew/cc/commandcentre_1_glow.tga
+	}
+}
+
+material models/andrew/cc/commandcentre_2
+{
+	diffusemap	models/andrew/cc/commandcentre_2_d.tga
+	bumpmap		models/andrew/cc/commandcentre_2_local.tga
+	specularmap	models/andrew/cc/commandcentre_2_s.tga
+}
+
+material models/andrew/cc/commandcentre_3
+{
+	diffusemap	models/andrew/cc/commandcentre_3_d.tga
+	bumpmap		models/andrew/cc/commandcentre_3_local.tga
+	specularmap	models/andrew/cc/commandcentre_3_s.tga
+}
+
+material models/andrew/cc/commandcentre_4
+{
+	noshadows
+	twosided
+
+	useTemplate templates/commandcentre_glass <
+		models/andrew/cc/commandcentre_4_d.tga,
+		models/andrew/cc/commandcentre_4_s.tga,
+		models/andrew/cc/commandcentre_4_local.tga,
+		models/andrew/cc/commandcentre_4_mask.tga,
+		2, 1.0, 0.3
+	>
+	{
+		blend blend
+		depthfunc less
+		map models/andrew/cc/commandcentre_4_dirt.tga
+		
+	}
+}
+
+
+
+
+
+
+
+
+material models/andrew/gray
+{
+	twosided
+
+	diffusemap	models/andrew/grey.tga
+}
+
+material models/andrew/bouy/bouy
+{
+	renderbump -size 512 2048 -aa 1 -clampOutput 0 0 1 1 -colormap models/andrew/bouy/bouy_local.tga models/andrew/bouy/bouy_hi.lwo
+	diffusemap	picmip -1	textures/common/dark_gray.tga
+	specularmap	picmip -1	textures/common/dark_gray.tga
+	bumpmap	picmip -1 	textures/common/dark_gray.tga
+}
+
+
+
+//added this mat back, as I'm still using it (Rich)
+
+material models/andrew/smoketrail_temp
+{
+	translucent
+	{
+		blend	filter
+		map	models/andrew/smoketrail_temp/smoketrail_temp_d.tga
+	}
+}
+
+material models/workingtextures/texturegallery2_unused1
+{
+	useTemplate templates/windowglass <
+		textures/window/window01_d.tga,
+		textures/window/window01_local.tga,
+		2, 1.0, 0.3
+	>
+}
+
+material models/workingtextures/texturegallery2_unused2
+{
+
+	useTemplate templates/windowglass_mask <
+		textures/window/stroggwindow_01_d.tga,
+		textures/window/stroggwindow_01_local.tga,
+		textures/window/stroggwindow_01_mask.tga,
+		2, 1.0, 0.3
+	>
+	{
+		blend blend
+		depthfunc less
+		map textures/window/stroggwindow_01_dirt.tga
+		
+	}
+}
+
+
+material models/workingtextures/texturegallery2_unused3
+{
+	{
+		diffusemap	textures/stone/stonewall03_d.tga
+		specularmap	textures/stone/stonewall03_s.tga
+		bumpmap		textures/stone/stonewall03_local.tga
+		alphaTest 	0.1
+	}
+}
+
+material models/workingtextures/texturegallery_unused4
+{
+		diffusemap 	models/workingtextures/bio.tga
+		//specularmap	textures/stone/stonewall03_s.tga
+		bumpmap		models/workingtextures/bio2_local.tga
+}
+
+material models/workingtextures/texturegallery_unused5
+{
+		diffusemap	textures/stone/stonewall01_d.tga
+		specularmap	textures/stone/stonewall01_s.tga
+		bumpmap		textures/stone/stonewall01_local.tga
+}
+
+material models/andrew/blockout/temperate_new_powerlines
+{
+		surfaceType	"metal"
+		noshadows
+		diffusemap	models/andrew/blockout/temperate_new_powerlines.tga
+		specularmap	models/andrew/blockout/temperate_new_powerlines_s.tga
+		bumpmap		models/andrew/blockout/temperate_new_powerlines_local.tga
+}
+
+material models/andrew/blockout/temperate_new_powerlines2
+{
+		surfaceType	"sand"
+		noshadows
+		
+		diffusemap	models/andrew/blockout/temperate_new_powerlines.tga
+		specularmap	models/andrew/blockout/temperate_new_powerlines_s.tga
+		bumpmap		models/andrew/blockout/temperate_new_powerlines_local.tga
+}
+
+material models/andrew/blockout/temperate_new_trench
+{
+		surfaceType	"sand"
+
+		diffusemap	models/andrew/blockout/temperate_new_trench.tga
+		specularmap	models/andrew/blockout/temperate_new_trench_s.tga
+		bumpmap		models/andrew/blockout/temperate_new_trench_local.tga
+}
+
+
+material models/andrew/blockout/temperate_new_trench2
+{
+		surfaceType	"sand"
+
+	sort decal
+	noshadows
+	noselfshadow
+	//twoSided
+	//nonsolid
+	translucent
+	{
+		diffusemap	models/andrew/blockout/temperate_new_trench.tga
+		specularmap	models/andrew/blockout/temperate_new_trench_s.tga
+		bumpmap		models/andrew/blockout/temperate_new_trench_local.tga
+		alphaTest 	0.55
+	}
+}
+
+material models/andrew/blockout/temperate_new_trench3
+{
+		surfaceType	"sand"
+
+	twoSided
+	noselfshadow
+	noshadows
+	nonsolid
+	{
+		program interaction/foliage
+		diffusemap	models/andrew/blockout/temperate_new_trench.tga
+		//specularmap	models/andrew/blockout/temperate_new_trench_s.tga
+		//bumpmap 	models/andrew/blockout/temperate_new_trench_local.tga
+		alphatest	0.30
+	}
+}
+
+material models/andrew/blockout/temperate_new_trench4
+{
+		surfaceType	"sand"
+
+		diffusemap	models/andrew/blockout/temperate_new_trench.tga
+		specularmap	models/andrew/blockout/temperate_new_trench_s.tga
+		bumpmap		models/andrew/blockout/temperate_new_trench_local.tga
+}
+
+material models/andrew/blockout/temperate_new_trench5
+{
+		surfaceType	"sand"
+
+		diffusemap	models/andrew/blockout/temperate_new_trench2.tga
+		specularmap	models/andrew/blockout/temperate_new_trench2_s.tga
+		bumpmap		models/andrew/blockout/temperate_new_trench2_local.tga
+}
+
+
+
+
+material models/andrew/blockout/temperate_new_tunnel_objects
+{
+		surfaceType	"metal"
+
+	sort decal
+	noselfshadow
+	//twoSided
+	//nonsolid
+	translucent
+	{
+		diffusemap	models/andrew/blockout/temperate_new_tunnel_b.tga
+		specularmap	models/andrew/blockout/temperate_new_tunnel_b_s.tga
+		bumpmap		models/andrew/blockout/temperate_new_tunnel_b_local.tga
+		alphaTest 	0.45
+	}
+}
+
+
+material models/andrew/blockout/temperate_new_tunnel_decals
+{
+		surfaceType	"sand"
+
+	sort decal
+	nonsolid
+	translucent
+	{
+ 		blend	filter
+		map	models/andrew/blockout/temperate_new_tunnel_b.tga
+	}
+}
+
+
+material models/andrew/blockout/temperate_new_tunnel_structure
+{
+		surfaceType	"stone"
+	//noselfshadow
+	//twoSided
+	//nonsolid
+
+	diffusemap	models/andrew/blockout/temperate_new_tunnel.tga
+	specularmap	models/andrew/blockout/temperate_new_tunnel_s.tga
+	bumpmap		models/andrew/blockout/temperate_new_tunnel_local.tga
+}
+
+
+material models/andrew/blockout/blockout_b
+{
+	noselfshadow
+	//twoSided
+	//nonsolid
+
+	diffusemap	models/andrew/blockout/blockout.tga
+}
+
+material models/andrew/blockout/blockout
+{
+	//noselfshadow
+	//twoSided
+	//nonsolid
+
+	diffusemap	models/andrew/blockout/blockout.tga
+}
+
+material models/andrew/blockout/dam_regular
+{
+		surfaceType	"stone"
+	//noselfshadow
+	//twoSided
+	//nonsolid
+
+	diffusemap	models/andrew/blockout/blockout.tga
+}
+
+material models/andrew/blockout/dam_curved
+{
+		surfaceType	"stone"
+
+	//noselfshadow
+	//twoSided
+	//nonsolid
+
+	diffusemap	models/andrew/blockout/blockout.tga
+}
+
+material models/andrew/blockout/dam_round
+{
+		surfaceType	"metal"
+
+	//noselfshadow
+	//twoSided
+	//nonsolid
+
+	diffusemap	models/andrew/blockout/blockout.tga
+}
+
+
+material models/andrew/refineryobjects/refineryobjects02x
+{
+		surfaceType	"metal"
+
+	//twoSided
+	nonsolid
+
+	diffusemap	models/andrew/refineryobjects/refineryobjects02.tga
+	specularmap	models/andrew/refineryobjects/refineryobjects02_spec.tga
+	bumpmap 	models/andrew/refineryobjects/refineryobjects02_local.tga
+}
+
+
+material models/andrew/refineryobjects/refineryobjects02
+{
+		surfaceType	"metal"
+
+	sort decal
+	nonsolid
+	noselfshadow
+	translucent
+ 	{
+ 		diffusemap models/andrew/refineryobjects/refineryobjects02.tga
+ 		specularmap	models/andrew/refineryobjects/refineryobjects02_spec.tga
+		bumpmap 	models/andrew/refineryobjects/refineryobjects02_local.tga
+		alphaTest 	0.25
+	}
+	
+}
+
+
+material models/andrew/refineryobjects/refineryobjects03
+{
+		surfaceType	"metal"
+
+	sort decal
+	nonsolid
+	noselfshadow
+	translucent
+ 	{
+ 		diffusemap models/andrew/refineryobjects/refineryobjects03.tga
+ 		specularmap	models/andrew/refineryobjects/refineryobjects03_spec.tga
+		bumpmap 	models/andrew/refineryobjects/refineryobjects03_local.tga
+		alphaTest 	0.25
+	}
+	
+}
+
+
+material models/andrew/refineryobjects/groundwires01
+{
+	translucent
+ 	{
+ 		diffusemap	models/andrew/refineryobjects/groundwires01_d.tga
+ 		specularmap	models/andrew/refineryobjects/groundwires01_spec.tga
+		bumpmap 	models/andrew/refineryobjects/groundwires01_local.tga
+		alphaTest 	0.25
+	}
+	
+}
+
+
+material models/andrew/refineryobjects/refinerycontainer01
+{
+	surfaceType	"metal"
+
+	diffusemap	models/andrew/refineryobjects/refinerycontainer01_d.tga
+	specularmap	models/andrew/refineryobjects/refinerycontainer01_spec.tga
+	bumpmap 	models/andrew/refineryobjects/refinerycontainer01_local.tga
+}
+
+
+material models/andrew/refineryobjects/refineryobjects01
+{
+	surfaceType	"metal"
+
+	diffusemap	models/andrew/refineryobjects/refineryobjects01.tga
+	specularmap	models/andrew/refineryobjects/refineryobjects01_spec.tga
+	bumpmap 	models/andrew/refineryobjects/refineryobjects01_local.tga
+}
+
+
+material models/andrew/buildingtest/buildingtest01_a
+{
+	//noshadows
+		surfaceType	"stone"
+	diffusemap	models/andrew/buildingtest/textures/buildingtest01_a.tga
+	specularmap	models/andrew/buildingtest/textures/buildingtest01_a_spec.tga
+	bumpmap 	models/andrew/buildingtest/textures/buildingtest01_a_local.tga
+}
+
+
+
+material models/andrew/buildingtest/buildingtest01_b
+{
+		surfaceType	"stone"
+		//noshadows
+
+	{
+		diffusemap	models/andrew/buildingtest/textures/buildingtest01_b.tga
+		specularmap	models/andrew/buildingtest/textures/buildingtest01_b_spec.tga
+		bumpmap 	models/andrew/buildingtest/textures/buildingtest01_b_local.tga
+		//vertexcolor	
+	}
+}
+
+
+
+material models/andrew/buildingtest/buildingtest01_c
+{
+		surfaceType	"stone"
+
+ 	sort decal
+	twoSided
+
+ 	translucent
+ 	{
+ 		blend		filter
+ 		map 		models/andrew/buildingtest/textures/buildingtest01_c.tga
+ 	}
+}
+
+
+
+material models/andrew/buildingtest/buildingtest01_d
+{
+		surfaceType	"stone"
+
+ 	sort decal
+	twoSided
+ 	translucent
+ 	{
+ 		diffusemap	models/andrew/buildingtest/textures/buildingtest01_a.tga
+		specularmap	models/andrew/buildingtest/textures/buildingtest01_a_spec.tga
+		bumpmap 	models/andrew/buildingtest/textures/buildingtest01_a_local.tga
+		alphaTest 	0.45
+	}
+
+}
+
+
+material models/andrew/blockout/razorwire/razorwire1_temperate
+{
+	sort decal
+	twoSided
+	translucent
+	{
+		diffusemap models/andrew/blockout/razorwire/razorwire1_temperate_d.tga
+		bumpmap	models/andrew/blockout/razorwire/razorwire1_temperate_local.tga
+		specularmap models/andrew/blockout/razorwire/razorwire1_temperate_s.tga
+		alphaTest 0.35
+	} 
+}
+
+
+material models/andrew/blockout/razorwire/razorwire2_temperate
+{
+	sort decal
+	twoSided
+	translucent
+	{
+		diffusemap models/andrew/blockout/razorwire/razorwire2_temperate_d.tga
+		bumpmap	models/andrew/blockout/razorwire/razorwire2_temperate_local.tga
+		specularmap models/andrew/blockout/razorwire/razorwire2_temperate_s.tga
+		alphaTest 0.35
+	} 
+}
+
+
+material models/andrew/blockout/razorwire/hedgehog_temperate
+{
+
+	diffusemap	models/andrew/blockout/razorwire/hedgehog_temperate_d.tga
+	specularmap	models/andrew/blockout/razorwire/hedgehog_temperate_s.tga
+}
+
+
+///PALETTES///
+
+material models/palettes
+{
+	diffusemap	models/palette01_d.tga
+	bumpmap		models/palette01_local.tga
+	specularmap	models/palette01_s.tga
+}
+
+material models/palettes2
+{
+	noshadows
+	twosided
+	DECAL_MACRO
+	useTemplate templates/windowglass_mask_specular_cc <
+		models/palette01_d.tga,
+		models/palette01_s.tga,
+		models/palette01_local.tga,
+		models/palette01_mask.tga,
+		1.0, 1.5, 0.3
+	>
+	{
+		blend blend
+		depthfunc less
+		map models/palette01_dirt.tga
+		
+	}
+}
+
+// moved here from foliage.mtr for legacy reasons
+material models/andrew/waterplants/waterplants
+{
+	twoSided
+	nonsolid
+	noshadows
+	translucent
+	{
+		program interaction/foliage
+		diffusemap stuff/foliage/temperate/weeds01.tga
+		alphaTest 	0.25
+	}
+
+}

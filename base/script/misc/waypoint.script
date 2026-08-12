@@ -1,0 +1,219 @@
+object waypoint_info {
+	void			preinit();
+	void			init();
+	void			syncFields();
+	void			destroy();
+
+	void			OnOwnerChanged();
+
+	void			Idle();
+
+	void			InitWaypointTask();
+	void			FreeWaypointTask();
+
+	void			Show( entity _owner, vector pos );
+
+	void			FreeWaypointIcon();
+	void			SetupWaypointIcon();
+
+	float			timeLimit;
+	task			waypointTask;
+	entity			owner;
+
+	float			commandMapIcon;
+	float			ttRemoved;
+}
+
+void waypoint_info::preinit() {
+	timeLimit	= getFloatKey( "time_limit" );
+	ttRemoved	= GetToolTip( getKey( "tt_removed" ) );
+	setGameTeam( sys.getTeam( getKey( "team" ) ) );
+	commandMapIcon = -1;
+}
+
+void waypoint_info::init() {
+	Idle();
+}
+
+void waypoint_info::syncFields() {
+	syncBroadcast( "owner" );
+
+	syncCallback( "owner", "OnOwnerChanged" );
+}
+
+void waypoint_info::destroy() {
+	FreeWaypointIcon();
+	if ( !sys.isClient() ) {
+		FreeWaypointTask();
+	}
+}
+
+void waypoint_info::Idle() {
+	float endTime = sys.getTime() + timeLimit + 1.0f;
+	player l = sys.getLocalPlayer();
+
+	while ( true ) {
+		if ( !sys.isClient() ) {
+			if ( sys.getTime() >= endTime ) {
+				break;
+			}
+			
+			if ( owner == $null_entity ) {
+				break;
+			}
+		}
+
+		if ( l != $null_entity ) {
+			if ( owner == $null_entity ) {
+				FreeWaypointIcon();
+				if ( sys.isClient() ) {
+					break;
+				}
+
+			}
+
+			if ( owner.sameFireTeam( l ) == false ) {
+				FreeWaypointIcon();
+				if ( sys.isClient() ) {
+					break;
+				}
+			}
+		}
+		sys.wait( 1.0f );
+	}
+
+	if ( !sys.isClient() ) {
+		if ( owner != $null_entity ) {
+			sys.broadcastToolTip( ttRemoved, owner, wstr_empty, wstr_empty, wstr_empty, wstr_empty );
+			owner.binRemove( self );
+		}
+		remove();
+	}
+}
+
+void waypoint_info::InitWaypointTask() {
+	if ( !sys.isClient() ) {
+		team_base team = getGameTeam();
+		if ( team != $null ) {
+			float waypointTaskInfo = GetPlayerTask( team.getKey( "task_waypoint" ) );		
+			if ( waypointTaskInfo != -1 ) {
+				FreeWaypointTask();
+
+				waypointTask = taskManager.allocEntityTask( waypointTaskInfo, owner );
+				waypointTask.setLocation( 0, getWorldOrigin() );
+				waypointTask.setTimeout( timeLimit );
+				waypointTask.setUserCreated();
+			}
+		}
+	}
+}
+
+void waypoint_info::FreeWaypointTask() {
+	if ( waypointTask != $null ) {
+		waypointTask.free();
+	}
+}
+
+void waypoint_info::Show( entity _owner, vector pos ) {
+	owner = _owner;
+	setWorldOrigin( pos );
+
+	if ( !sys.isClient() ) {
+		OnOwnerChanged();
+	}
+}
+
+void waypoint_info::FreeWaypointIcon() {
+	if ( commandMapIcon != -1 ) {
+		sys.freeCMIcon( self, commandMapIcon );
+		commandMapIcon = -1;
+	}
+}
+
+void waypoint_info::SetupWaypointIcon() {	
+	FreeWaypointIcon();
+
+	player l = sys.getLocalPlayer();
+
+	if ( l == $null_entity ) {
+		return;
+	}
+
+	if ( owner.sameFireTeam( l ) ) {
+		commandMapIcon = sys.allocCMIcon( self, getFloatKey( "icon_sort_cm_request" ) );
+		sys.setCMIconMaterial( commandMapIcon, GetMaterial( getKey( "mtr_cm_icon" ) ) );
+		sys.setCMIconColorMode( commandMapIcon, CM_NORMAL );
+		sys.setCMIconSize( commandMapIcon, 24.0f );
+		sys.setCMIconColor( commandMapIcon, g_colorWhite, 1.0f );
+		sys.setCMIconFlag( commandMapIcon, CMF_ALWAYSKNOWN );
+		sys.flashCMIcon( commandMapIcon, -1, SPOTTED_FLASH_TIME, -1 );
+	}
+}
+
+void waypoint_info::OnOwnerChanged() {
+	if ( owner != $null_entity ) {
+		InitWaypointTask();
+		SetupWaypointIcon();
+	}
+}
+
+object flashpoint_obj {
+	void			preinit();
+	void			destroy();
+	
+	void			FlashIconThread();
+
+	void			SetOwner( entity o );
+	void			SetMaterial( string material );
+
+	entity			owner;
+	float			flashIcon;
+	float			flashIconThread;
+	string			mtr;
+}
+
+void flashpoint_obj::preinit() {
+	flashIcon = -1;
+	flashIconThread = thread FlashIconThread();
+}
+
+void flashpoint_obj::destroy() {
+	if ( flashIcon != -1 ) {
+		sys.freeCMIcon( owner, flashIcon );
+		flashIcon = -1;
+	}
+	if ( flashIconThread != -1 ) {
+		sys.terminate( flashIconThread );
+	}
+}
+
+void flashpoint_obj::FlashIconThread() {
+	while ( mtr == "" && owner == $null_entity ) {
+		sys.wait( 0.1 );
+	}
+
+	flashIcon = sys.allocCMIcon( owner, owner.getFloatKeyWithDefault( "icon_sort_cm_flash_icon", -5 ) );
+	sys.setCMIconMaterial( flashIcon, GetMaterial( mtr ) );
+	sys.setCMIconColorMode( flashIcon, CM_NORMAL );
+	sys.setCMIconSize( flashIcon, owner.getFloatKeyWithDefault( "icon_flash_size_cm", 24.f ) );
+	sys.setCMIconColor( flashIcon, g_colorWhite, 1.0f );
+	sys.setCMIconFlag( flashIcon, CMF_ALWAYSKNOWN );
+	sys.flashCMIcon( flashIcon, -1, SPOTTED_FLASH_TIME, -1 );
+
+	sys.wait( SPOTTED_FLASH_TIME );
+
+	sys.freeCMIcon( owner, flashIcon );
+	flashIcon = -1;
+	flashIconThread = -1;
+}
+
+void flashpoint_obj::SetOwner( entity o ) {
+	owner = o;
+}
+
+void flashpoint_obj::SetMaterial( string material ) {
+	if ( material == "" ) {
+		sys.warning( "Empty material set" );
+	}
+	mtr = material;
+}

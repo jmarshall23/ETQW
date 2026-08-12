@@ -1,0 +1,41 @@
+/***********************************************************************
+
+ ammo
+
+***********************************************************************/
+
+ammoDef shotgun {
+}
+
+ammoDef pistol {
+}
+
+ammoDef machinepistol {
+}
+
+ammoDef assaultrifle {
+}
+
+ammoDef gpmg {
+}
+
+ammoDef sniperrifle {
+}
+
+ammoDef rocketlauncher {
+}
+
+ammoDef grenade {
+}
+
+ammoDef grenade_rifle {
+}
+
+ammoDef stroyent {
+}
+
+ammoDef stroyent_packet {
+}
+
+ammoDef infinite {
+}

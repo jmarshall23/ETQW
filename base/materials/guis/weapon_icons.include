@@ -1,0 +1,19 @@
+
+#ifndef __WEAPON_ICONS__
+#define __WEAPON_ICONS__
+
+
+$template _weapon_icon( Path )
+	sort gui
+	{
+		blend blend
+		map clamp linear nopicmip makealpha( Path ## "_outline.tga" )
+		vertexColor
+	}
+	{
+		blend blend
+		map clamp linear nopicmip makealpha( Path ## ".tga" )
+	}
+$endtemplate
+
+#endif // !__WEAPON_ICONS__

@@ -1,0 +1,166 @@
+
+// LEGS = left arm
+// HEAD = right arm
+
+object vehicle_hog_cockpit : vehicle_strogg_cockpit {
+	void				destroy();
+
+	void				AnimThread();
+
+	void				OnEntered();
+	
+	string				leftAnim;
+	string				centerAnim;
+	string				rightAnim;
+
+	string				leverLeftAnim;
+	string				leverCenterAnim;
+	string				leverRightAnim;
+	
+	float				leftAnimFrames;
+	float				rightAnimFrames;
+
+	float				leverLeftAnimFrames;
+	float				leverRightAnimFrames;
+};
+
+void vehicle_hog_cockpit::OnEntered() {	
+	leftAnim				= "left";
+	centerAnim				= "center";
+	rightAnim				= "right";
+
+	leverLeftAnim			= "reverse";
+	leverCenterAnim			= "center";
+	leverRightAnim			= "forward";
+
+	leftAnimFrames			= getNumFrames( leftAnim ) - 2;
+	rightAnimFrames			= getNumFrames( rightAnim ) - 2;
+	
+	leverLeftAnimFrames		= getNumFrames( leverLeftAnim ) - 2;
+	leverRightAnimFrames	= getNumFrames( leverRightAnim ) - 2;
+	
+	thread AnimThread();
+	
+	OnEnteredStrogg_Base();
+}
+
+#define HOG_FIRING_FIRING	0
+#define HOG_FIRING_STOPPED	1
+
+void vehicle_hog_cockpit::AnimThread() {
+	sys.threadName( "vehicle_hog_cockpit::AnimThread" );
+
+	float wheelAngle = 0.f;
+	float leverAngle = 0.f;
+	
+	float firingStatus = HOG_FIRING_STOPPED;
+	
+	while ( true ) {
+		entity driver = myVehicle.getDriver();
+		
+		boolean fire;
+		vector move;
+		if ( driver != $null_entity ) {
+			move = driver.getMove();
+			fire = driver.getButton( PK_ATTACK );
+		} else {
+			move = '0 0 0';
+			fire = false;
+		}
+		
+
+
+		float oldWheelAngle = wheelAngle;
+
+		if ( move_y < 0 ) {
+			wheelAngle = wheelAngle - 1.f * sys.getFrameTime();
+			if ( wheelAngle < -1.f ) {
+				wheelAngle = -1.f;
+			}
+		} else if ( move_y > 0 ) {
+			wheelAngle = wheelAngle + 1.f * sys.getFrameTime();
+			if ( wheelAngle > 1.f ) {
+				wheelAngle = 1.f;
+			}
+		} else {
+			if ( wheelAngle > 0.f ) {
+				wheelAngle = wheelAngle - 0.8 * sys.getFrameTime();
+				if ( wheelAngle < 0.f ) {
+					wheelAngle = 0.f;
+				}
+			} else if ( wheelAngle < 0.f ) {
+				wheelAngle = wheelAngle + 0.8 * sys.getFrameTime();
+				if ( wheelAngle > 0.f ) {
+					wheelAngle = 0.f;
+				}
+			}
+		}
+		
+		if ( oldWheelAngle != wheelAngle ) {
+			if ( wheelAngle > 0.f ) {
+				setAnimFrame( rightAnim, ANIMCHANNEL_LEGS, ( wheelAngle * rightAnimFrames ) );
+			} else if ( wheelAngle < 0.f ) {
+				setAnimFrame( leftAnim, ANIMCHANNEL_LEGS, ( wheelAngle * leftAnimFrames * -1 ) );
+			} else {
+				setAnimFrame( centerAnim, ANIMCHANNEL_LEGS, 0 );
+			}
+		}
+		
+		
+		
+		
+		float oldLeverAngle = leverAngle;
+
+		if ( move_x < 0 ) {
+			leverAngle = leverAngle - 2.f * sys.getFrameTime();
+			if ( leverAngle < -1.f ) {
+				leverAngle = -1.f;
+			}
+		} else if ( move_x > 0 ) {
+			leverAngle = leverAngle + 2.f * sys.getFrameTime();
+			if ( leverAngle > 1.f ) {
+				leverAngle = 1.f;
+			}
+		} else {
+			if ( leverAngle > 0.f ) {
+				leverAngle = leverAngle - 1.8 * sys.getFrameTime();
+				if ( leverAngle < 0.f ) {
+					leverAngle = 0.f;
+				}
+			} else if ( leverAngle < 0.f ) {
+				leverAngle = leverAngle + 1.8 * sys.getFrameTime();
+				if ( leverAngle > 0.f ) {
+					leverAngle = 0.f;
+				}
+			}
+		}
+		
+		if ( oldLeverAngle != leverAngle ) {
+			if ( leverAngle > 0.f ) {
+				setAnimFrame( leverRightAnim, ANIMCHANNEL_HEAD, ( leverAngle * leverRightAnimFrames ) );
+			} else if ( leverAngle < 0.f ) {
+				setAnimFrame( leverLeftAnim, ANIMCHANNEL_HEAD, ( leverAngle * leverLeftAnimFrames * -1 ) );
+			} else {
+				setAnimFrame( leverCenterAnim, ANIMCHANNEL_HEAD, 0 );
+			}
+		}
+		
+		if ( fire ) {
+			if ( firingStatus != HOG_FIRING_FIRING ) {
+				playAnimBlended( ANIMCHANNEL_TORSO, "center_fire", 0.2f );
+				firingStatus = HOG_FIRING_FIRING;
+			}
+		} else {
+			if ( firingStatus != HOG_FIRING_STOPPED ) {
+				playAnimBlended( ANIMCHANNEL_TORSO, "center", 0.2f );
+				firingStatus = HOG_FIRING_STOPPED;
+			}
+		}
+		
+		sys.waitFrame();
+	}
+}
+
+void vehicle_hog_cockpit::destroy() {
+	sys.killThread( "vehicle_hog_cockpit::AnimThread" );
+}

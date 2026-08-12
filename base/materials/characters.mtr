@@ -1,0 +1,303 @@
+/**************************************************************
+	Strogg Firstperson Arm (Melee)
+**************************************************************/
+
+material models/characters/strogg/arm_firstperson
+{
+	noshadows
+
+	noselfshadow
+	renderbump -size 1024 512 -aa 2 -clampOutput 0 0 1 1 -colormap models/characters/strogg/arm_firstperson_local.tga models/characters/strogg/dev_sd/strogg_arm_high.lwo
+	diffusemap	textures/common/gray.tga
+	specularmap	picmip -1	textures/common/dark_gray.tga
+	bumpmap 	models/characters/strogg/arm_firstperson_local.tga
+}
+
+/*************************************************************
+	Strogg Team Heads (new)
+*************************************************************/
+
+material models/characters/strogg/heads
+{
+	noshadows
+	noselfshadow
+	renderbump -size 1024 1024 -aa 2 -clampOutput 0 0 1 1 models/characters/strogg/heads_local.tga models/characters/strogg/head_constructor_hi.lwo
+
+	{
+		program interaction/selfillum
+		bumpmap	picmip -1		addnormals(models/characters/strogg/heads_local.tga, heightmap(models/characters/strogg/heads_h.tga, 5 ) )
+		diffusemap	picmip -1	models/characters/strogg/heads_d.tga
+		specularmap	picmip -2	models/characters/strogg/heads_s.tga
+		selfIllummap	picmip -2 models/characters/strogg/heads_glow.tga
+	}
+}
+
+material models/characters/strogg/heads_fade {
+	noshadows
+
+	useTemplate material/player_fade <
+			"picmip -1	models/characters/strogg/heads_d.tga",
+			"picmip -1		addnormals(models/characters/strogg/heads_local.tga, heightmap(models/characters/strogg/heads_h.tga, 5 ) )",
+			"picmip -2	models/characters/strogg/heads_s.tga",
+	>
+}
+
+/*************************************************************
+	Strogg Team (new)
+*************************************************************/
+
+material models/characters/strogg/techpacks
+{
+//	surfaceType	"flesh"
+	noshadows
+	renderbump -size 2048 2048 -aa 2 models/characters/strogg/techpacks_local.tga models/characters/strogg/dev_sd/highpoly/tank_head_high.lwo
+
+	{
+		program interaction/selfillum
+		bumpmap	picmip -1		addnormals(models/characters/strogg/techpacks_local.tga, heightmap(models/characters/strogg/techpacks_h.tga, 5 ) )
+		diffusemap	picmip -1	models/characters/strogg/techpacks_d.tga
+		specularmap	picmip -2	models/characters/strogg/techpacks_s.tga
+		selfIllummap	picmip -2 models/characters/strogg/techpacks_glow.tga
+	}
+}
+
+material models/characters/strogg/techpacks_fade {
+	noshadows
+
+	useTemplate material/player_fade <
+			"picmip -1	models/characters/strogg/techpacks_d.tga",
+			"picmip -1		addnormals(models/characters/strogg/techpacks_local.tga, heightmap(models/characters/strogg/techpacks_h.tga, 5 ) )",
+			"picmip -2	models/characters/strogg/techpacks_s.tga",
+	>
+}
+
+/**************************************************************
+	Strogg Heavy Explosive Third-Person
+**************************************************************/
+
+material models/characters/strogg_player/strogg_he_third
+{
+	renderbump -size 512 512 -clampOutput 0 0 1 1 -colormap models/characters/strogg_player/strogg_he_third_local.tga models/weapons/heavy_explosive/strogg_heavy_explosive_hi.lwo
+	diffusemap	picmip -1	textures/common/dark_gray.tga
+	specularmap	picmip -1	textures/common/dark_gray.tga
+	bumpmap 	models/characters/strogg_player/strogg_he_third_local.tga
+}
+
+#if 0
+
+// Added by Rich, will remove these if no errors are generated
+
+//**************
+//meditek
+//**************
+
+material models/characters/strogg_player/meditek_techpack
+	{
+		noSelfShadow
+		unsmoothedTangents
+		occlusionQuery
+
+		renderbump  -size 512 512 -trace 0.07 -colorMap -aa 2 models/peppi/meditek_temp_local.tga models/peppi/meditek_highpoly2.lwo
+
+		diffusemap	picmip -1	textures/common/dark_gray.tga
+		bumpmap		models/characters/strogg_player/meditek_techpack_local.tga
+		//specularmap	picmip -1	textures/common/dark_gray.tga
+	}
+
+material models/characters/strogg_player/meditek_body
+	{
+		renderbump -size 1024 1024 -aa 2 models/characters/strogg_player/dev_sd/oppressor_body_local.tga models/characters/strogg_player/dev_sd/oppressor_body_renderbump_high.lwo
+		noselfshadow
+		occlusionQuery
+
+		diffusemap	picmip -1	textures/common/dark_gray.tga
+		bumpmap 	models/characters/strogg_player/meditek_body_local.tga
+		//specularmap	picmip -1	textures/common/dark_gray.tga
+	}
+
+material models/characters/strogg_player/meditek_head
+	{
+		renderbump -size 256 256 -aa 2 models/characters/strogg_player/strogg_player_head_local.tga models/characters/strogg_player/dev_sd/strogg_hi_head.lwo
+		noselfshadow
+		occlusionQuery
+
+		diffusemap	textures/common/gray.tga
+		bumpmap		models/characters/strogg_player/meditek_head_local.tga
+		//specularmap	picmip -1	textures/common/dark_gray.tga
+	}
+
+//**************
+// strogg constructor
+// **************
+
+material models/characters/strogg_player/constructor_body
+	{
+              	renderbump -size 1024 1024 -aa 2 -clampoutput 0 0 1 1 models/characters/strogg_player/dev_sd/constructor_local.tga models/characters/strogg_player/dev_sd/constructor_high.lwo
+              	noselfshadow
+              	occlusionQuery
+
+             	diffusemap	picmip -1	textures/common/dark_gray.tga
+            	//specularmap	picmip -1	textures/common/dark_gray.tga
+                bumpmap 	models/characters/strogg_player/constructor_local.tga
+	}
+
+material models/characters/strogg_player/constructor_head
+	{
+              	renderbump -size 256 256 -aa 2 -clampoutput 0 0 1 1 models/characters/strogg_player/dev_sd/constructor_head_local.tga models/characters/strogg_player/dev_sd/constructor_head_high.lwo
+              	noselfshadow
+              	occlusionQuery
+
+             	diffusemap	textures/common/gray.tga
+             	//specularmap	textures/common/gray.tga
+                bumpmap 	models/characters/strogg_player/constructor_head_local.tga
+	}
+
+//**************
+// strogg oppressor
+//**************
+
+material models/characters/strogg_player/oppressor_body
+	{
+              	renderbump -size 1024 1024 -aa 2 models/characters/strogg_player/dev_sd/oppressor_body_local.tga models/characters/strogg_player/dev_sd/oppressor_body_renderbump_high.lwo
+              	noselfshadow
+              	occlusionQuery
+
+             	diffusemap	picmip -1	textures/common/dark_gray.tga
+            	//specularmap	picmip -1	textures/common/dark_gray.tga
+                bumpmap 	models/characters/strogg_player/oppressor_body_local.tga
+	}
+
+material models/characters/strogg_player/oppressor_head
+	{
+              	renderbump -size 256 256 -aa 2 models/characters/strogg_player/dev_sd/oppressor_head_local.tga models/characters/strogg_player/dev_sd/oppressor_head_renderbump_high.lwo
+              	noselfshadow
+              	occlusionQuery
+
+             	diffusemap	textures/common/gray.tga
+             	//specularmap	textures/common/gray.tga
+                bumpmap 	models/characters/strogg_player/oppressor_head_local.tga
+	}
+
+//***********************
+// strogg tank
+// **********************
+
+material models/characters/strogg_player/tank
+	{
+		renderbump -size 1024 1024 -aa 2 -clampoutput 0 0 1 1 models/characters/strogg_player/tank_local.tga models/characters/strogg_player/dev_sd/tank_renderbump_high.lwo
+		noselfshadow
+		occlusionQuery
+
+		diffusemap	picmip -1	textures/common/dark_gray.tga
+		//specularmap	picmip -1	textures/common/dark_gray.tga
+		bumpmap 	models/characters/strogg_player/tank_local.tga
+	}
+
+material models/characters/strogg_player/tank_head
+	{
+		renderbump -size 256 256 -aa 2 -clampoutput 0 0 1 1 models/characters/strogg_player/dev_sd/tank_head_local.tga models/characters/strogg_player/dev_sd/tank_head_renderbump_high.lwo
+		noselfshadow
+		occlusionQuery
+
+		diffusemap	textures/common/gray.tga
+		//specularmap	textures/common/gray.tga
+		bumpmap 	models/characters/strogg_player/tank_head_local.tga
+	}
+
+
+//**************************************************************************************************
+// infiltrator techpak
+//**************************************************************************************************
+
+
+material models/characters/strogg_player/infiltrator //techpak items
+	{
+		renderbump -size 512 512 -aa 2 models/characters/strogg_player/dev_sd/infiltrator_local.tga models/characters/strogg_player/dev_sd/infiltrator_high.lwo
+		noselfshadow
+		occlusionQuery
+
+	//	diffusemap	models/characters/strogg_player/infiltrator_techpak_d.tga
+		diffusemap	picmip -1	textures/common/dark_gray.tga
+	//	specularmap	models/characters/strogg_player/infiltrator_techpak_s.tga
+		bumpmap		_flat
+	//	bumpmap	picmip -1 	models/characters/strogg_player/infiltrator_techpak_local.tga
+		//	{
+		//	blend	add
+		//	map	models/characters/strogg_player/infiltrator_techpak_glow.tga
+		//	maskalpha
+		//	}
+	}
+
+material models/characters/strogg_player/infiltrator_body
+	{
+		renderbump -size 512 512 -aa 2 models/characters/strogg_player/dev_sd/infiltrator_local.tga models/characters/strogg_player/dev_sd/infiltrator_high.lwo
+		noselfshadow
+		occlusionQuery
+
+		diffusemap	picmip -1	textures/common/dark_gray.tga
+		//specularmap	models/characters/strogg_player/strogg_body_s.tga
+		bumpmap		_flat
+		// bumpmap	picmip -1		models/characters/strogg_player/strogg_body_local.tga
+		//	{
+		//	blend	add
+		//	map	models/characters/strogg_player/infiltrator_glow.tga
+		//	maskalpha
+		//	}
+	}
+
+material models/characters/strogg_player/infiltrator_head
+	{
+		//unsmoothedtangents
+		renderbump -size 256 256 -aa 2 models/characters/strogg_player/strogg_player_head_local.tga models/characters/strogg_player/dev_sd/strogg_hi_head.lwo
+		noselfshadow
+		occlusionQuery
+
+		diffusemap	textures/common/gray.tga
+		//specularmap	models/characters/strogg_player/strogg_head_s.tga
+		bumpmap	picmip -1		addnormals(models/characters/strogg_player/strogg_head_local.tga, heightmap(models/characters/strogg_player/strogg_head_h.tga, 8 ) )
+	}
+
+//**************************************************************************************************
+// strogg basic player
+//**************************************************************************************************
+
+material  models/characters/strogg_player/strogg_player
+	{
+		renderbump -size 1024 1024 -aa 0 models/characters/strogg_player/strogg_player_local.tga models/characters/strogg_player/dev_sd/strogg_hi.lwo
+		noselfshadow
+		occlusionQuery
+
+		diffusemap	models/characters/strogg_player/strogg_body_d.tga
+//		specularmap	models/characters/strogg_player/strogg_body_s.tga
+		bumpmap	picmip -1		models/characters/strogg_player/strogg_body_local.tga
+	}
+
+material models/characters/strogg_player/head
+	{
+		renderbump -size 256 256 -aa 2 models/characters/strogg_player/strogg_player_head_local.tga models/characters/strogg_player/dev_sd/strogg_hi_head.lwo
+		noselfshadow
+		occlusionQuery
+
+		diffusemap	models/characters/strogg_player/strogg_head_d.tga
+		specularmap	models/characters/strogg_player/strogg_head_s.tga
+		bumpmap	picmip -1		addnormals(models/characters/strogg_player/strogg_head_local.tga, heightmap(models/characters/strogg_player/strogg_head_h.tga, 8 ) )
+	}
+
+
+//**************************************************************************************************
+// EDF Player
+//**************************************************************************************************
+
+material models/characters/scientist/head05/head05dead
+{
+        noselfShadow
+	//noShadows
+	//unsmoothedTangents
+	renderbump  -size 512 512  -trace 0.07 -colorMap -aa 2   models/characters/scientist/head05/head05dead_local.tga models/characters/scientist/head05/head05dead_hi.lwo
+
+
+ 	diffusemap clamp models/characters/scientist/head05/head05dead
+	bumpmap clamp addnormals(models/characters/scientist/head05/head05dead_local.tga, heightmap(models/characters/scientist/head05/head05_h.tga, 5 ) )
+	specularmap clamp models/characters/scientist/head05/head05dead_s.tga
+}
+#endif // Added by Rich, will remove these if no errors are generated

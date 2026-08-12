@@ -1,0 +1,276 @@
+//
+// PONTOON
+//
+
+material models/mapobjects/ark/pontoon
+{
+		noshadows
+		nonsolid
+     	diffusemap	models/mapobjects/ark/pontoon_d.tga
+		specularmap	models/mapobjects/ark/pontoon_s.tga
+		bumpmap		models/mapobjects/ark/pontoon_local.tga
+}
+
+//
+// BIODOME AND GENERATORS
+//
+
+material models/mapobjects/biodome/biodome_walls
+{	
+	noshadows
+	surfacetype "metal"
+	{
+		diffusemap	picmip -1	models/mapobjects/biodome/biodome_walls_d.tga
+		bumpmap		picmip -2	models/mapobjects/biodome/biodome_walls_local.tga
+		specularmap	picmip -2	models/mapobjects/biodome/biodome_walls_s.tga
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/metal_detail01_local.tga
+		specDetailMap			textures/detail/bump/metal_detail01_d.tga
+		detailMult	6,6,0,0
+	}
+	{
+		if	cvar	com_gpuSpec
+		blend add
+		program sfx/windowglass 
+		diffusemap	models/mapobjects/biodome/biodome_walls_d.tga
+		bumpmap		models/mapobjects/biodome/biodome_walls_local.tga
+		parameters	4, 0.2, 0.3
+	}
+}
+
+material models/mapobjects/biodome/biodome_walls_outside
+{	
+	noshadows
+	useTemplate templates/windowglass_specular_biodome <
+	"picmip -1	models/mapobjects/biodome/biodome_walls_d.tga",
+	"picmip -2	models/mapobjects/biodome/biodome_walls_local.tga",
+	"picmip -2	models/mapobjects/biodome/biodome_walls_s.tga",
+	2, 1.0, 0.75
+	>
+}
+
+material models/mapobjects/biodome/biodome_frames
+{
+	noshadows
+	nonsolid
+	twosided
+
+	{       
+		diffusemap	models/mapobjects/biodome/biodome_frames_d.tga
+		specularmap	models/mapobjects/biodome/biodome_frames_s.tga
+		bumpmap		models/mapobjects/biodome/biodome_frames_local.tga
+		alphaTest	0.1
+	}
+}
+
+material textures/dirt/biodome_dirt
+{
+	qer_editorimage textures/dirt/bastion_dirt_d.tga
+	diffusemap	picmip -1	textures/dirt/bastion_dirt_d.tga
+   	bumpmap 	picmip -2	textures/dirt/bastion_dirt_local.tga
+}
+
+//
+// LARGE BUILDING
+//
+
+material models/mapobjects/ark/largebuilding
+{
+		noshadows
+		diffusemap 	picmip -1	models/mapobjects/ark/largebuilding_d.tga
+		specularmap	picmip -2	models/mapobjects/ark/largebuilding_s.tga
+		bumpmap		picmip -2	models/mapobjects/ark/largebuilding_local.tga
+}
+
+material models/mapobjects/ark/largebuilding_shadows
+{
+	{
+		diffusemap 	picmip -1	models/mapobjects/ark/largebuilding_d.tga
+		specularmap	picmip -2	models/mapobjects/ark/largebuilding_s.tga
+		bumpmap		picmip -2	models/mapobjects/ark/largebuilding_local.tga
+		vertexcolor
+	}
+}
+
+material models/mapobjects/ark/largebuilding_decals
+{
+	noshadows
+	nonsolid
+	twosided
+
+	{       
+		diffusemap 	models/mapobjects/ark/largebuilding_decals_d.tga
+		specularmap	models/mapobjects/ark/largebuilding_decals_s.tga
+		bumpmap		models/mapobjects/ark/largebuilding_decals_local.tga
+		alphaTest	0.1
+	}
+}
+
+material models/mapobjects/ark/largebuilding_windows
+{
+	noshadows
+	twosided
+	useTemplate templates/windowglass_mask < 
+		"picmip -1	models/mapobjects/ark/largebuilding_windows_d.tga", 
+		"picmip -1	models/mapobjects/ark/largebuilding_windows_local.tga",
+		"picmip -2	models/mapobjects/ark/largebuilding_windows_mask.tga"
+		2, 1.0, 0.3
+	>
+}
+
+material models/mapobjects/ark/largebuilding_windows_nonsolid
+{
+	nonsolid
+	noshadows
+	twosided
+	useTemplate templates/windowglass_mask < 
+		"picmip -1	models/mapobjects/ark/largebuilding_windows_d.tga", 
+		"picmip -1	models/mapobjects/ark/largebuilding_windows_local.tga",
+		"picmip -2	models/mapobjects/ark/largebuilding_windows_mask.tga"
+		2, 1.0, 0.3
+	>
+}
+
+material models/mapobjects/ark/largebuilding_windows_singlesided
+{
+	//surfaceType	"glass"
+	noshadows
+	twosided
+	useTemplate templates/windowglass_mask < 
+		"picmip -1	models/mapobjects/ark/largebuilding_windows_d.tga", 
+		"picmip -1	models/mapobjects/ark/largebuilding_windows_local.tga",
+		"picmip -2	models/mapobjects/ark/largebuilding_windows_mask.tga"
+		2, 2.0, 0.4
+	>
+}
+
+
+material models/mapobjects/ark/windows_singlesided_shadows
+{
+	{
+		diffusemap	picmip -1	models/mapobjects/ark/largebuilding_windows_d.tga
+		bumpmap		picmip -2	models/mapobjects/ark/largebuilding_windows_local.tga
+		specularmap	picmip -2	models/mapobjects/ark/largebuilding_windows_mask.tga
+		vertexColor
+	}
+}
+
+//
+// SERVERS
+//
+
+material models/mapobjects/ark/server
+{
+	noshadows
+	surfacetype	"metal"
+	{
+		program interaction/selfillum_detail
+		diffusemap 		picmip -1	models/mapobjects/ark/server_d.tga
+		specularmap		picmip -2	models/mapobjects/ark/server_s.tga
+		bumpmap			picmip -2	models/mapobjects/ark/server_local.tga
+		selfillummap	picmip -2	models/mapobjects/ark/server_glow.tga
+		
+		//diffuseDetailMap			textures/detail/bump/metal_detail01_d.tga
+		bumpDetailMap				textures/detail/bump/metal_detail01_local.tga
+		//specDetailMap				textures/detail/bump/metal_detail01_d.tga
+		detailMult	2.5,10,0.7,0
+	}
+}
+
+material models/mapobjects/ark/server_2
+{
+		noshadows
+		diffusemap 	picmip -1	models/mapobjects/ark/server_2_d.tga
+		specularmap	picmip -2	models/mapobjects/ark/server_2_s.tga
+		bumpmap		picmip -2	models/mapobjects/ark/server_2_local.tga
+}
+
+material models/mapobjects/ark/keyboard_server
+{
+		noshadows
+		diffusemap 			models/mapobjects/ark/keyboard_server_d.tga
+}
+
+//
+// DNA LAB EQUIPMENT
+//
+
+material models/mapobjects/ark/dna_lab_01
+{
+	noshadows
+	nonsolid
+	{	
+		diffusemap 	picmip -1	models/mapobjects/ark/dna_lab_01_d.tga
+		specularmap	picmip -2	models/mapobjects/ark/dna_lab_01_s.tga
+		bumpmap		picmip -2	addnormals (models/mapobjects/ark/dna_lab_01_local.tga, heightmap (models/mapobjects/ark/dna_lab_01_h.tga, 1 ) )
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	2,2,0,0
+	}
+}
+
+material models/mapobjects/ark/dna_lab_02
+{
+	noshadows
+	nonsolid
+	{	
+		diffusemap 	picmip -1	models/mapobjects/ark/dna_lab_02_d.tga
+		specularmap	picmip -2	models/mapobjects/ark/dna_lab_02_s.tga
+		bumpmap		picmip -2	addnormals (models/mapobjects/ark/dna_lab_02_local.tga, heightmap (models/mapobjects/ark/dna_lab_02_h.tga, 2 ) )
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	3,12,0,0
+	}
+}
+
+material models/mapobjects/ark/dna_lab_02_destroyed
+{
+	{	
+		diffusemap 	picmip -1	models/mapobjects/ark/dna_lab_02_d.tga
+		specularmap	picmip -2	models/mapobjects/ark/dna_lab_02_s.tga
+		bumpmap		picmip -2	addnormals (models/mapobjects/ark/dna_lab_02_local.tga, heightmap (models/mapobjects/ark/dna_lab_02_h.tga, 2 ) )
+		vertexcolor
+		
+		diffuseDetailMap		textures/detail/bump/vehicle_detail01_d.tga
+		bumpDetailMap			textures/detail/bump/vehicle_detail01_local.tga
+		specDetailMap			textures/detail/bump/vehicle_detail01_d.tga
+		detailMult	3,12,0,0
+	}
+}
+
+material models/mapobjects/ark/dna_lab_01_shadows
+{
+	{	
+	diffusemap 	picmip -1	models/mapobjects/ark/dna_lab_01_d.tga
+	specularmap	picmip -2	models/mapobjects/ark/dna_lab_01_s.tga
+	bumpmap		picmip -2	addnormals (models/mapobjects/ark/dna_lab_01_local.tga, heightmap (models/mapobjects/ark/dna_lab_01_h.tga, 1 ) )
+	}
+}
+material models/mapobjects/ark/dna_lab_02_shadows
+{
+	{	
+	diffusemap 	picmip -1	models/mapobjects/ark/dna_lab_02_d.tga
+	specularmap	picmip -2	models/mapobjects/ark/dna_lab_02_s.tga
+	bumpmap		picmip -2	addnormals (models/mapobjects/ark/dna_lab_02_local.tga, heightmap (models/mapobjects/ark/dna_lab_02_h.tga, 1 ) )
+	}
+}
+
+material models/mapobjects/ark/dna_lab_pipe
+{
+	noshadows
+	nonsolid
+	twosided
+	useTemplate templates/windowglass_mask_specular < 
+		"models/mapobjects/ark/dna_lab_pipe_d.tga",
+		"picmip -1	models/mapobjects/ark/dna_lab_pipe_s.tga"
+		"picmip -1	models/mapobjects/ark/dna_lab_pipe_local.tga",
+		"picmip -1	models/mapobjects/ark/dna_lab_pipe_mask.tga"
+		2, 1.0, 0.3
+	>
+}

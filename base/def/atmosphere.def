@@ -1,0 +1,67 @@
+entityDef atmosphere {
+	"editor_spawnclass"				"sdEntityClass_Atmosphere"
+	"editor_color"					"0 0.3 0.9"
+	"editor_mins"					"-16 -16 -16"
+	"editor_maxs"					"16 16 16"
+	"editor_usage"					"Use this entity to add an atmosphere to your level."
+
+	"editor_var atmospheredecl"		"Enter an atmosphere declaration"
+	"editor_callback atmospheredecl" "decl://atmosphere"
+
+	"editor_var skymodel"			"Model to use for the dome"
+	"editor_callback skymodel"		"model://models/skydomes"
+
+	"editor_atmosphere"				"1"
+	"spawnclass"					"sdAtmosphere"
+	"skymodel"						"models/skydomes/skydome5.lwo"
+	"scriptobject"					"default"
+
+	"skymodel_old"					"models/skydomes/skydome_oldstyle.lwo"
+	"skymodel_box"					"models/skydomes/skydome_boxstyle2.ase"
+}
+
+entityDef atmosphere_low {
+	"editor_spawnclass"				"sdEntityClass_Atmosphere"
+	"editor_color"					"0 0.3 0.9"
+	"editor_mins"					"-16 -16 -16"
+	"editor_maxs"					"16 16 16"
+	"editor_usage"					"Use this entity to add an atmosphere to your level."
+
+	"editor_var atmospheredecl"		"Enter an atmosphere declaration"
+	"editor_callback atmospheredecl" "decl://atmosphere"
+
+	"editor_var skymodel"			"Model to use for the dome"
+	"editor_callback skymodel"		"model://models/skydomes"
+
+	"editor_atmosphere"				"1"
+	"spawnclass"					"sdAtmosphere"
+	"skymodel"						"models/skydomes/skydome5.lwo"
+	"scriptobject"					"default"
+
+	"skymodel_old"					"models/skydomes/skydome_oldstyle.lwo"
+	"skymodel_box"					"models/skydomes/skydome_boxstyle2.ase"
+}
+
+
+// A special higher model so the falling replicator actually fits in
+entityDef atmosphere_landfall {
+	"editor_color"					"0 0.3 0.9"
+	"editor_mins"					"-16 -16 -16"
+	"editor_maxs"					"16 16 16"
+	"editor_usage"					"Use this entity to add an atmosphere to your level. Target a path_corner."
+	"editor_var atmospheredecl"		"Enter an atmosphere declaration as specified in a base/atmosphere/mapname.atm file."
+	"editor_atmosphere"				"1"
+	"spawnclass"					"sdAtmosphere"
+	"skymodel"						"models/skydomes/skydome4_big.lwo"
+	"scriptobject"					"default"
+}
+
+entityDef rainEffect {
+	"spawnclass"					"sdRainEffect"
+	"model"							"models/effects/rain.obj"
+}
+
+entityDef snowEffect {
+	"spawnclass"					"sdSnowEffect"
+	"model"							"models/effects/snow.obj"
+}

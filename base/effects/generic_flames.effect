@@ -1,0 +1,167 @@
+effect effects/generic_flames
+{
+	size	446
+
+	emitter "Flamesmoke"
+	{
+		duration	1,1
+		count		1,1
+
+		sprite
+		{
+			duration	2,2
+			blend	add
+			persist
+			material	"particles/smoke/smokeflame01"
+			trailRepeat	1
+
+			start
+			{
+				position { point 0,0,50 }
+				velocity { point 0,0,100 }
+				acceleration { box 0,0,50,0,0,100 }
+				size { box 100,100,120,120 }
+				fade { point 0.1 }
+				offset { box 50,-50,-50,50,50,50 }
+				rotate { box -0.25,0.25 }
+			}
+
+			motion
+			{
+				size { envelope inverse_linear count -1,-1 offset 1,1 }
+				tint { envelope jrad_concavefade }
+				fade { envelope jrad_alphain }
+				offset { envelope jrad_lerptable }
+				rotate { envelope watersplashscaletable }
+			}
+
+			end
+			{
+				size { point 20,20 }
+			}
+		}
+	}
+	light "Light"
+	{
+
+		light
+		{
+			duration	2,2
+			material	"lights/round_flicker"
+			trailRepeat	1
+
+			start
+			{
+				size { point 200,200,200 }
+				tint { point 0.819608,0.329412,0 }
+			}
+
+			motion
+			{
+				tint { envelope firetable }
+				fade { envelope blasttable rate 1 }
+			}
+
+			end
+			{
+				tint { point 1,0.701961,0 }
+			}
+		}
+	}
+	emitter "Flame muzzle2"
+	{
+		duration	1,1
+		count		10,10
+
+		sprite
+		{
+			duration	2,2
+			blend	add
+			persist
+			material	"particles/flash/flameball01"
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,0,100 }
+				acceleration { box 0,0,50,0,0,100 }
+				size { box 150,150,150,100 }
+				tint { point 0.752941,0.752941,0.752941 }
+				fade { point 0.4 }
+				offset { box 50,-50,-50,50,50,50 }
+				rotate { box -0.25,0.25 }
+			}
+
+			motion
+			{
+				size { envelope inverse_linear count -1,-1 offset 1,1 }
+				tint { envelope jrad_concavefade }
+				fade { envelope jrad_alphain }
+				offset { envelope jrad_lerptable }
+				rotate { envelope watersplashscaletable }
+			}
+
+			end
+			{
+				size { point 20,20 }
+				tint { point 0.752941,0.752941,0.752941 }
+			}
+		}
+	}
+	emitter "Flame muzzle3"
+	{
+		duration	1,1
+		count		10,10
+
+		sprite
+		{
+			duration	2,2
+			blend	add
+			persist
+			material	"particles/flash/flame_ember01"
+			trailRepeat	1
+
+			start
+			{
+				velocity { point 0,0,100 }
+				acceleration { box 0,0,50,0,0,100 }
+				size { box 150,150,150,100 }
+				fade { point 0.8 }
+				offset { box 50,-50,-50,50,50,50 }
+				rotate { box -0.25,0.25 }
+			}
+
+			motion
+			{
+				size { envelope inverse_linear count -1,-1 offset 1,1 }
+				tint { envelope jrad_concavefade }
+				offset { envelope jrad_lerptable }
+				rotate { envelope watersplashscaletable }
+			}
+
+			end
+			{
+				size { point 20,20 }
+			}
+		}
+	}
+	emitter "distortion"
+	{
+		duration	1,1
+		count		1,1
+
+		line
+		{
+			duration	1,1
+			persist
+			material	"textures/sfx/vp1particle"
+			trailRepeat	1
+
+			start
+			{
+				size { point 128 }
+				length { point 0,0,256 }
+			}
+		}
+	}
+}

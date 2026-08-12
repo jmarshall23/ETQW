@@ -1,0 +1,1564 @@
+// Nodraw water for oceans
+material water/nodraw_water
+{
+	qer_editorimage textures/common/nodraw.tga
+	nonsolid
+	noshadows
+	water
+	surfaceType "water"
+}
+
+// ================================
+// Water as seen from under the water
+// ================================
+
+template underwater_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_rough_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_rough_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/underwater",				// Cubemap
+				"time * 0.03",						// Translate X
+				"time * 0.03",						// Translate Y
+				"0.6",							// R
+				"0.6",							// G
+				"0.6",							// B
+				"0.2",						// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"3"							// Reflection Power
+				"2.5"							// Glare
+		>
+	}
+}
+
+material water/underwater {
+	qer_editorimage textures/common/water
+	nonsolid
+	sort refraction
+	translucent
+	forceAtmosphere
+	noshadows
+	useTemplate animations/frames10_interpolate < "underwater_frametemplate", 5 >
+}
+
+
+// ================================
+// Ark
+// ================================
+
+template ark_water_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_rough_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_rough_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/ark_water",						// Cubemap
+				"time * -0.03",						// Translate X
+				"time * 0.03",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.05",						// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"4"							// Reflection Power
+				"1"							// Glare
+		>
+	}
+}
+
+material water/ark_ocean {
+	qer_editorimage textures/common/water
+	nonsolid
+	//water
+	//surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+	
+/*	{
+		writeDepth
+		map clamp highquality textures/penta/specular.tga
+		environmentCubeMap cubemap env/ark
+		water_tint 1, 1, 1
+		water_distortion 0.008, 0.008, 1, 0	
+		water_fresnel 6
+		water_glare 1
+		//water_lerp Lerp
+		translate time * 0.03, time * 0.03
+		imgSequence rate 15 bumpmap textures2/water/choppy00.tga bumpmap textures2/water/choppy01.tga bumpmap textures2/water/choppy02.tga bumpmap textures2/water/choppy03.tga bumpmap textures2/water/choppy04.tga bumpmap textures2/water/choppy05.tga bumpmap textures2/water/choppy06.tga bumpmap textures2/water/choppy07.tga bumpmap textures2/water/choppy08.tga bumpmap textures2/water/choppy09.tga bumpmap textures2/water/choppy10.tga bumpmap textures2/water/choppy11.tga bumpmap textures2/water/choppy12.tga bumpmap textures2/water/choppy13.tga bumpmap textures2/water/choppy14.tga bumpmap textures2/water/choppy15.tga
+		program water/simple_cube_interpolate_imgseq
+	}*/
+	
+	useTemplate animations/frames10_interpolate < "ark_water_frametemplate", 4 >
+}
+
+material water/ark_ocean_underside {
+	qer_editorimage textures/common/water
+	nonsolid
+	sort nearest
+	polygonOffset
+	{
+		blend blend
+		parameters2 0.043, 0.0627, 0.031, 0.0007
+		program sfx/foggyWaterSurface
+	}
+	translucent
+}
+
+// ================================
+// Canyon
+// ================================
+
+template canyon_water_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_regular_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_regular_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/canyon/water",					// Cubemap
+				"time * 0.01",						// Translate X
+				"time * 0.01",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.008",						// Distortion Strength
+				"6"							// Reflection Power
+				"1.4"							// Glare
+				"0.08"							// Bump Scale
+		>
+	}
+}
+
+material water/canyon_water {
+	qer_editorimage textures/common/water
+	nonsolid
+	//water
+	//surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+	
+	useTemplate animations/frames10_interpolate < "canyon_water_frametemplate", 2 >
+}
+
+
+material water/canyon_water_underside {
+	qer_editorimage textures/common/water
+	nonsolid
+	sort nearest
+	polygonOffset
+	{
+		blend blend
+		parameters2 0.32, 0.25, 0.149, 0.015
+		program sfx/foggyWaterSurface
+	}
+	translucent
+}
+
+// ================================
+// Outskirts
+// ================================
+
+template outskirts_water_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_regular_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_regular_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/outskirts",					// Cubemap
+				"time * 0.01",						// Translate X
+				"time * 0.01",						// Translate Y
+				"1",							// R
+				"1",							// G
+				"0.8",							// B
+				"0.05",						// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"1.5"							// Reflection Power
+				"0"							// Glare
+				"0.9"							// Bump Scale
+		>
+	}
+}
+
+material water/outskirts_water {
+	qer_editorimage textures/common/water
+	nonsolid
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+
+	useTemplate animations/frames10_interpolate < "outskirts_water_frametemplate", 3 >	
+}
+
+material water/outskirts_water_underside {
+	qer_editorimage textures/common/water
+	nonsolid
+	sort nearest
+	polygonOffset
+	{
+		blend blend
+		parameters2 0.282, 0.259, 0.259, 0.00045
+		program sfx/foggyWaterSurface
+	}
+	translucent
+}
+
+// OUTSKIRTS: puddles
+template outskirts_puddles_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_rain_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_rain_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/outskirts",					// Cubemap
+				"time * 0.03",						// Translate X
+				"time * 0.03",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"0.9",							// B
+				"0.8",							// Distortion Strength
+				"0.8"							// Reflection Power
+				"0.1"							// Glare
+				"0.1"							// Bump Scale
+		>
+	}
+}
+
+material water/outskirts_puddles_water {
+	qer_editorimage textures/common/water
+	nonsolid
+	//water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	
+	useTemplate animations/frames10_interpolate < "outskirts_puddles_frametemplate", 6 >
+}
+
+// ================================
+// Island
+// ================================
+
+template island_water_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_regular_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_regular_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/island/ocean",					// Cubemap
+				"time * 0.05",						// Translate X
+				"time * 0.015",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.03",						// Distortion Strength
+				"6"							// Reflection Power
+				"1"							// Glare
+		>
+	}
+}
+
+template island_water_frametemplate_sewer {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_regular_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_regular_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/island/sewer",					// Cubemap
+				"time * 0.0125",						// Translate X
+				"time * 0.005",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.03",						// Distortion Strength
+				"6"							// Reflection Power
+				"0"								// Glare
+				".1"						//bump scale
+				
+		>
+	}
+}
+
+material water/island_ocean {
+	qer_editorimage textures/common/water
+	nonsolid
+	//water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+
+	useTemplate animations/frames10_interpolate < "island_water_frametemplate", 5 >
+}
+
+material water/island_sewer {
+	qer_editorimage textures/common/water
+	nonsolid
+	//water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+
+	useTemplate animations/frames10_interpolate < "island_water_frametemplate_sewer", 5 >
+}
+
+material water/island_ocean_underside {
+	qer_editorimage textures/common/water
+	nonsolid
+	sort nearest
+	polygonOffset
+	{
+		blend blend
+		parameters2 0.078, 0.235, 0.235, 0.001
+		program sfx/foggyWaterSurface
+	}
+	translucent
+}
+
+material water/island_ocean_underside_sewer {
+	qer_editorimage textures/common/water
+	nonsolid
+	sort nearest
+	polygonOffset
+	{
+		blend blend
+		parameters2 0.1411765, 0.1137255, 0.1019608, 0.001
+		program sfx/foggyWaterSurface
+	}
+	translucent
+}
+
+material water/island_ocean_back {
+	qer_editorimage textures/common/water
+	nonsolid
+	sort refraction
+	translucent
+	forceAtmosphere
+	noshadows
+	useTemplate animations/frames16_interpolate < "valley_water_frametemplate_back", 15 > //was 10
+}
+
+// old version
+/*material water/island_ocean {
+	qer_editorimage textures/common/water
+	nonsolid
+	surfaceType "water" 
+	//water
+	sort refraction
+	translucent
+	forceAtmosphere
+	
+	{	
+		useTemplate material/water_simple<
+					"textures/penta/watertest2.tga",	// Bumpmap
+					"env/valley"				// Cubemap
+					"time * 0.1",				// Translate X
+					"0",					// Translate Y
+					"1.0",					// R
+					"1.0",					// G
+					"1.0",					// B
+					"0.12",					// Distortion Strength
+					"5"					// Reflection Power
+					"1"					// Glare
+		>
+	}
+}*/
+
+// ================================
+// Quarry
+// ================================
+
+template quarry_water_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_regular_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_regular_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/temperate",					// Cubemap
+				"time * 0.03",						// Translate X
+				"time * 0.03",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.04",						// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"6"							// Reflection Power
+				"1"							// Glare
+				"1"
+		>
+	}
+}
+
+material water/quarry_water {
+	qer_editorimage textures/common/water
+	nonsolid
+	//water
+	//surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+
+	useTemplate animations/frames10_interpolate < "quarry_water_frametemplate", 4 >
+}
+
+material water/quarry_puddles {
+
+	qer_editorimage textures/common/water
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	
+	useTemplate animations/frames10_interpolate < "canyon_water_frametemplate", 2 >
+}
+
+// ================================
+// Refinery
+// ================================
+
+template refinery_water_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_regular_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_regular_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/refinery/refinery_water",					// Cubemap
+				"time * -0.05",						// Translate X
+				"time * 0.01",						// Translate Y
+				"1.0",							// R
+				"0.975",						// G
+				"0.9",							// B
+				"0.05",						// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"5"							// Reflection Power
+				"0.25"							// Glare
+				"0.4"
+		>
+	}
+}
+
+material water/refinery_water {
+	qer_editorimage textures/common/water
+	nonsolid
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+	
+	useTemplate animations/frames10_interpolate < "refinery_water_frametemplate", 4 >
+}
+
+material water/refinery_water_underside {
+	qer_editorimage textures/common/water
+	nonsolid
+	sort nearest
+	polygonOffset
+	{
+		blend blend
+		parameters2 0.447, 0.34, 0.239, 0.003
+		program sfx/foggyWaterSurface
+	}
+	translucent
+}
+
+// ================================
+// Sewer
+// ================================
+
+template sewer_water_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_regular_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_regular_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/sewer/water",					// Cubemap
+				"time * 0.03",						// Translate X
+				"time * 0.03",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.008",						// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"3"							// Reflection Power
+				"1"							// Glare
+		>
+	}
+}
+
+material water/sewer_water {
+	qer_editorimage textures/common/water
+	nonsolid
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+
+	useTemplate animations/frames10_interpolate < "sewer_water_frametemplate", 3 >
+}
+
+material water/sewer_water_underside {
+	qer_editorimage textures/common/water
+	nonsolid
+	sort nearest
+	polygonOffset
+	{
+		blend blend
+		parameters2 0.26, 0.267, 0.208, 0.002
+		program sfx/foggyWaterSurface
+	}
+	translucent
+}
+
+
+template water/sewer_interior_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_regular_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_regular_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/sewer/interior",					// Cubemap
+				"time * 0.01",						// Translate X
+				"time * 0.01",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.09",							// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"2.5"							// Reflection Power
+				"0"							// Glare
+				"0.2"							// Bump Scale
+		>
+	}
+}
+
+material water/sewer_interior {
+	qer_editorimage textures/common/water
+	nonsolid
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+
+	useTemplate animations/frames10_interpolate < "water/sewer_interior_frametemplate", 2 >
+}
+
+template water/sewer_interior2_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_regular_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_regular_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/sewer/interior2",					// Cubemap
+				"time * 0.01",						// Translate X
+				"time * 0.01",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.09",							// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"2"							// Reflection Power
+				"0"							// Glare
+				"0.2"							// Bump Scale
+		>
+	}
+}
+
+material water/sewer_interior2 {
+	qer_editorimage textures/common/water
+	nonsolid
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+
+	useTemplate animations/frames10_interpolate < "water/sewer_interior2_frametemplate", 2 >
+}
+
+template water/sewer_interior3_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_regular_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_regular_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/sewer/interior3",					// Cubemap
+				"time * 0.01",						// Translate X
+				"time * 0.01",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.03",							// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"1"							// Reflection Power
+				"0.5"							// Glare
+				"0.8"							// Bump Scale
+		>
+	}
+}
+
+material water/sewer_interior3 {
+	qer_editorimage textures/common/water
+	nonsolid
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+
+	useTemplate animations/frames10_interpolate < "water/sewer_interior3_frametemplate", 2 >
+}
+
+material textures/water/water_sewerfloodway {
+	qer_editorimage textures/water/water_sewerfloodway_local
+	nonsolid
+	twosided
+	// wils: seems to break when the model isn't axial
+	// you get a big 'block' of water covering the whole of the models bounds
+	//water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+
+	{
+		program	water/simple_cube
+		bumpMap textures/water/water_sewerfloodway_local.tga
+		map clamp highquality textures/penta/specular.tga
+		environmentCubeMap cubemap env/sewer/floodway
+		water_tint	  0.9, 1, 0.9
+		water_distortion  4, 2, 1, 0	
+		water_fresnel	  5
+		water_glare	  0.6
+		water_offset 0, 0, 0, 0 
+		water_desat 0
+		translate 0, Time * -0.1
+	}
+}
+
+// ================================
+// Slipgate
+// ================================
+// SOUTH OASIS POND
+// model: models/water/slipgate.lwo
+template slipgate_water_southpond_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_regular_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_regular_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",														// Lerp
+				"env/slipgate/south_pond",									// Cubemap
+				"time * 0.01",						// Translate X
+				"time * 0.01",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.02",						// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"5"							// Reflection Power
+				"1"							// Glare
+				"0.4"
+		>
+	}
+}
+
+material water/slipgate_water_southpond {
+	qer_editorimage textures/common/water
+	nonsolid
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+
+	useTemplate animations/frames10_interpolate < "slipgate_water_southpond_frametemplate", 3 >
+}
+
+material water/slipgate_water_southpond_underside {
+	nonsolid
+	qer_editorimage textures/common/water
+	sort nearest
+	polygonOffset
+	{
+		blend blend
+		parameters2 0.36, 0.34, 0.239, 0.005
+		program sfx/foggyWaterSurface
+	}
+	translucent
+}
+
+// NORTH OASIS POND
+// model: models/water/slipgate2.lwo
+template slipgate_water_northpond_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_regular_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_regular_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",														// Lerp
+				"env/slipgate/north_pond",									// Cubemap
+				"time * 0.01",						// Translate X
+				"time * 0.01",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.02",						// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"5"							// Reflection Power
+				"1"							// Glare
+				"0.4"
+		>
+	}
+}
+
+material water/slipgate_water_northpond {
+	qer_editorimage textures/common/water
+	nonsolid
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+
+	useTemplate animations/frames10_interpolate < "slipgate_water_northpond_frametemplate", 3 >
+}
+
+material water/slipgate_water_northpond_underside {
+	nonsolid
+	sort nearest
+	qer_editorimage textures/common/water
+	polygonOffset
+	{
+		blend blend
+		parameters2 0.36, 0.34, 0.239, 0.005
+		program sfx/foggyWaterSurface
+	}
+	translucent
+}
+
+// NEXUS TOWER INTERIOR SLUDGE
+// model: models/water/slipgate_nexus_water.lwo
+template slipgate_nexus_water01_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/calmFirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/calmNextFrameNumber.tga",		// Bumpmap2
+				"Lerp",														// Lerp
+				"env/slipgate/nexus_water01",								// Cubemap
+				"time * 0.05",						// Translate X
+				"time * 0.05",						// Translate Y
+				"0.78",								// R
+				"0.73",								// G
+				"0.24",								// B
+				"0.33",								// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"4"									// Reflection Power
+				"1"									// Glare
+		>
+	}
+}
+
+material slipgate_nexus_water01 {
+	qer_editorimage textures/common/water
+	nonsolid
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+
+	useTemplate animations/frames10_interpolate < "slipgate_nexus_water01_frametemplate", 3 >
+}
+
+// ================================
+// Valley
+// ================================
+
+template valley_water_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_regular_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_regular_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/valley",					// Cubemap
+				"time * 0.03",						// Translate X
+				"time * 0.03",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.05",						// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"5"							// Reflection Power
+				"1"							// Glare
+				"0.5"
+		>
+	}
+}
+
+template valley_water_frametemplate2 {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_regular_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_regular_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/valley/sewer_generic",					// Cubemap
+				"time * 0.03",						// Translate X
+				"time * 0.03",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.05",						// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"5"							// Reflection Power
+				"0"							// Glare
+				"0.5"
+		>
+	}
+}
+
+material water/valley_water {
+	qer_editorimage textures/common/water
+	nonsolid
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+
+	useTemplate animations/frames10_interpolate < "valley_water_frametemplate", 5 >	
+	/*{
+		__atmosphere_overlay
+	}*/
+}
+
+material water/valley_water_underside {
+	nonsolid
+	qer_editorimage textures/common/water
+	sort nearest
+	polygonOffset
+	{
+		blend blend
+		parameters2 0.212, 0.2, 0.122, 0.0006
+		program sfx/foggyWaterSurface
+	}
+	translucent
+}
+
+
+material water/valley_water2 {
+	qer_editorimage textures/common/water
+	nonsolid
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+
+	useTemplate animations/frames10_interpolate < "valley_water_frametemplate2", 5 >	
+	/*{
+		__atmosphere_overlay
+	}*/
+}
+
+template temperate_water_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/choppyFirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/choppyNextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/temperate",					// Cubemap
+				"time * 0.03",						// Translate X
+				"time * 0.03",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.008",						// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"6"							// Reflection Power
+				"1"							// Glare
+		>
+	}
+}
+
+material water/temperate_water {
+	qer_editorimage textures/common/water
+	nonsolid
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+
+	useTemplate animations/frames16_interpolate < "temperate_water_frametemplate", 15 > //was 10
+}
+
+// ================================
+// Volcano
+// ================================
+
+template volcano_water_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/water_rough_FirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/water_rough_NextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/volcano",					// Cubemap
+				"time * 0.05",						// Translate X
+				"time * 0.005",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.025",						// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"10"							// Reflection Power
+				"1"							// Glare
+		>
+	}
+}
+
+material water/volcano_water {
+	qer_editorimage textures/common/water
+	nonsolid
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+
+	useTemplate animations/frames10_interpolate < "volcano_water_frametemplate", 5 >	
+	/*{
+		__atmosphere_overlay
+	}*/
+}
+
+material water/volcano_water_underside {
+	qer_editorimage textures/common/water
+	nonsolid
+	sort nearest
+	polygonOffset
+	{
+		blend blend
+		parameters2 0.204, 0.278, 0.298, 0.00015
+		program sfx/foggyWaterSurface
+	}
+	translucent
+}
+
+// ================================
+// Test Water
+// ================================
+
+material water/vehicletrack {
+	qer_editorimage textures/common/water
+	nonsolid
+	surfaceType "water" 
+	sort refraction
+	translucent		
+	water
+	{	
+		useTemplate material/water_simple<
+					"textures/penta/watertest2.tga",	// Bumpmap
+					"env/valley"				// Cubemap
+					"time * 0.1",				// Translate X
+					"0",					// Translate Y
+					"1.0",					// R
+					"1.0",					// G
+					"1.0",					// B
+					"0.12",					// Distortion Strength
+					"5"					// Reflection Power
+					"1"					// Glare
+		>
+	}
+	/*{
+		__atmosphere_overlay	
+	}*/
+}
+
+
+material water/temperate_watersedge {
+	/*{
+		blend blend
+		translate sinTable[ time * 0.1 ] * 0.1 - 0.1, time * -0.02
+		alpha ( sinTable[ time * 0.1 ] * 0.5 + 0.5 ) * 0.7
+		map textures/sfx/wateredge.tga
+	}
+	{
+		blend blend
+		translate sinTable[ time * 0.1 + 0.33 ] * 0.1 - 0.1, time * 0.02 + 0.33
+		alpha ( sinTable[ time * 0.1 + 0.33 ] * 0.5 + 0.5 ) * 0.7
+		map textures/sfx/wateredge.tga
+	}
+	{
+		blend blend
+		translate sinTable[ time * 0.1 + 0.66 ] * 0.1 - 0.1, 0
+		alpha ( sinTable[ time * 0.1 + 0.66 ] * 0.5 + 0.5 ) * 0.7
+		map textures/sfx/wateredge.tga
+	}*/
+}
+
+
+//table wave_offset		{{ 1, 0.92387953, 0.70710678, 0.38268343, 0, -0.38268343, -0.70710678, -0.92387953, -1, -0.92387953, -0.70710678, -0.38268343, 0, 0.38268343, 0.70710678, 0.92387953 }}
+table wave_offset { { 1.000000, 0.999699, 0.998795, 0.997290, 0.995185, 0.992480, 0.989177, 0.985278, 0.980785, 0.975702, 0.970031, 0.963776, 0.956940, 0.949528, 0.941544, 0.932993, 0.923880, 0.914210, 0.903989, 0.893224, 0.881921, 0.870087, 0.857729, 0.844854, 0.831470, 0.817585, 0.803208, 0.788346, 0.773010, 0.757209, 0.740951, 0.724247, 0.707107, 0.689541, 0.671559, 0.653173, 0.634393, 0.615232, 0.595699, 0.575808, 0.555570, 0.534998, 0.514103, 0.492898, 0.471397, 0.449611, 0.427555, 0.405241, 0.382683, 0.359895, 0.336890, 0.313682, 0.290285, 0.266713, 0.242980, 0.219101, 0.195090, 0.170962, 0.146730, 0.122411, 0.098017, 0.073565, 0.049068, 0.024541, 0.000000, -0.024541, -0.049068, -0.073565, -0.098017, -0.122411, -0.146730, -0.170962, -0.195090, -0.219101, -0.242980, -0.266713, -0.290285, -0.313682, -0.336890, -0.359895, -0.382683, -0.405241, -0.427555, -0.449611, -0.471397, -0.492898, -0.514103, -0.534998, -0.555570, -0.575808, -0.595699, -0.615232, -0.634393, -0.653173, -0.671559, -0.689541, -0.707107, -0.724247, -0.740951, -0.757209, -0.773010, -0.788346, -0.803208, -0.817585, -0.831470, -0.844854, -0.857729, -0.870087, -0.881921, -0.893224, -0.903989, -0.914210, -0.923880, -0.932993, -0.941544, -0.949528, -0.956940, -0.963776, -0.970031, -0.975702, -0.980785, -0.985278, -0.989177, -0.992480, -0.995185, -0.997290, -0.998795, -0.999699, -1.000000, -0.999699, -0.998795, -0.997290, -0.995185, -0.992480, -0.989177, -0.985278, -0.980785, -0.975702, -0.970031, -0.963776, -0.956940, -0.949528, -0.941544, -0.932993, -0.923880, -0.914210, -0.903989, -0.893224, -0.881921, -0.870087, -0.857729, -0.844854, -0.831470, -0.817585, -0.803208, -0.788346, -0.773010, -0.757209, -0.740951, -0.724247, -0.707107, -0.689541, -0.671559, -0.653173, -0.634393, -0.615232, -0.595699, -0.575808, -0.555570, -0.534998, -0.514103, -0.492898, -0.471397, -0.449611, -0.427555, -0.405241, -0.382683, -0.359895, -0.336890, -0.313682, -0.290285, -0.266713, -0.242980, -0.219101, -0.195090, -0.170962, -0.146730, -0.122411, -0.098017, -0.073565, -0.049068, -0.024541, 0.000000, 0.024541, 0.049068, 0.073565, 0.098017, 0.122411, 0.146730, 0.170962, 0.195090, 0.219101, 0.242980, 0.266713, 0.290285, 0.313682, 0.336890, 0.359895, 0.382683, 0.405241, 0.427555, 0.449611, 0.471397, 0.492898, 0.514103, 0.534998, 0.555570, 0.575808, 0.595699, 0.615232, 0.634393, 0.653173, 0.671559, 0.689541, 0.707107, 0.724247, 0.740951, 0.757209, 0.773010, 0.788346, 0.803208, 0.817585, 0.831470, 0.844854, 0.857729, 0.870087, 0.881921, 0.893224, 0.903989, 0.914210, 0.923880, 0.932993, 0.941544, 0.949528, 0.956940, 0.963776, 0.970031, 0.975702, 0.980785, 0.985278, 0.989177, 0.992480, 0.995185, 0.997290, 0.998795, 0.999699 } }
+table wave_fade 		{ {  1, 0.5, 0.25, 0.25, 0.5, 1, 1 } }
+table wave_scale 		{ { 1, 1.1, 1.2, 1.4, 1.2, 1.1, 1 } }
+
+
+//table wet_offset		{{ -0.60,      -0.55, 0.70710678, 0.38268343, 0, -0.38268343, -0.70710678, -0.92387953, -1, -0.95, -0.90, -0.85, -0.80, -0.75, -0.70, -0.65 }}
+//table wet_fade			{{     0,          0,          0,          0, 0,         0.0,         0.0,         0.0,  1,     1,   0.8,   0.6,   0.5,   0.4,   0.3,   0.2 }}
+table wet_offset		{{ 1, 0.98, 0.96, 0.94, 0.92, 0.90, 0.84, 0.80, 0.70, -0.92387953, -0.70710678, -0.38268343, 0, 0.38268343, 0.70710678, 0.92387953 }}
+table wet_fade			{{ 1,    1,    1,  0.8,  0.6,  0.4,  0.2,    0,    0,           0,           0,           0, 0,        0.1,        0.2,        0.4 }}
+table wet_sparkl_fade	{{ 1,    1,    1,    1,    1,    1,    1,    0,    0,           0,           0,           0, 0,        0.1,        0.2,        0.4 }}
+
+
+material water/water_edge {
+	
+	nonsolid
+	
+	//
+	// Wet sand darken layer
+	//
+	{
+		blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR
+		maskalpha		
+
+		scale wave_scale[ time * 0.1 ], 1
+		translate wet_offset[ time * 0.1 ] * 0.20, sinTable[ time * 0.1 ] * 0.05
+		rgb wet_fade[ time * 0.1 ] * .6
+		map clamp_y textures/sfx/shoreline_wet.tga
+	}
+	{
+		blend GL_ZERO, GL_ONE_MINUS_SRC_COLOR
+		maskalpha		
+
+		scale wave_scale[ time * 0.1 + 0.5 ], 1
+		translate wet_offset[ time * 0.1 + 0.5 ] * 0.20, sinTable[ time * 0.1 + 0.5 ] * 0.05 + 0.5
+		rgb wet_fade[ time * 0.1 + 0.5 ] * .6
+		map clamp_y textures/sfx/shoreline_wet.tga
+	}	
+	
+	//
+
+	// Glittery sand	
+	//	
+	{
+		blend add
+		program water/shoreline_wetshine
+		diffuseMap clamp_y textures/sfx/shoreline_wet.tga
+		bumpMap textures/sfx/shoreline_wetnormal.tga	
+		map clamp highquality textures/penta/specular.tga	
+		
+		textureMatrix bumpMatrix {
+			scale 3, 3
+			translate time * -0.005, 0
+		}
+		
+		scale wave_scale[ time * 0.1 ], 1
+		translate wet_offset[ time * 0.1 ] * 0.20, sinTable[ time * 0.1 ] * 0.05
+		rgb wet_fade[ time * 0.1 ] * 5	
+	}
+
+	{
+		blend add
+		program water/shoreline_wetshine
+		diffuseMap clamp_y textures/sfx/shoreline_wet.tga
+		bumpMap textures/sfx/shoreline_wetnormal.tga	
+		map clamp highquality textures/penta/specular.tga	
+		
+		textureMatrix bumpMatrix {
+			scale 3, 3
+			translate time * -0.005, 0
+		}
+		
+		scale wave_scale[ time * 0.1 + 0.5 ], 1
+		translate wet_offset[ time * 0.1 + 0.5 ] * 0.20, sinTable[ time * 0.1 + 0.5 ] * 0.05 + 0.5
+		rgb wet_fade[ time * 0.1 + 0.5 ] * 5	
+	}
+	
+	//
+	// Wave froth
+	//
+	{
+		blend blend
+		program water/shoreline_froth
+		scale wave_scale[ time * 0.1 ], 1
+		translate wave_offset[ time * 0.1 ] * 0.20, sinTable[ time * 0.1 ] * 0.05
+		alpha wave_fade[ time * 0.1 ]
+		maskalpha
+		
+		diffuseMap clamp_y textures/sfx/shoreline_froth.tga
+		bumpMap clamp_y textures/sfx/shoreline_froth_local.tga	
+		map clamp highquality textures/penta/specular.tga
+	}	
+	{
+		blend blend
+		program water/shoreline_froth
+		scale wave_scale[ time * 0.1  + 0.5 ], 1
+		translate wave_offset[ time * 0.1 + 0.5 ] * 0.20, sinTable[ time * 0.1 + 0.5 ] * 0.05 + 0.5
+		alpha wave_fade[ time * 0.1 + 0.5 ]
+		maskalpha
+		
+		diffuseMap clamp_y textures/sfx/shoreline_froth.tga
+		bumpMap clamp_y textures/sfx/shoreline_froth_local.tga	
+		map clamp highquality textures/penta/specular.tga
+	}	
+
+}
+
+table pjwave_scale {{ .4, .4, .6, .8, 3, 1.5, 1, .8, .6, .5 }}
+table pjwave_alpha {{ 1, .5, .3, .2, 0, .5, .7, 1, 1, 1 }}
+
+table island_wave_scale {{ .5, .51, .54, .6, .7, .8, .9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.4, 1.3, 1.2, 1.1, 1, .9, .8, .7, .6, .54, .51 }}
+table island_wave_alpha {{ 1, .9, .8, .7, .6, .5, .4, .3, .2, .1, .04, 0, .04, .1, .2, .3, .4, .5, .6, .7, .8, .9 }}
+table island_wave2_scale {{ .55, .57, .6, .7, .8, .9, 1, 1.1, 1.2, 1.3, 1.4, 1.3, 1.2, 1.1, 1, .9, .8, .7, .6, .57 }}
+table island_wave2_alpha {{ .9, .7, .5, .4, .3, .25, .2, .15, .1, .05, .1, .2, .3, .4, .5, .6, .7, .8 }}
+
+table pj_waveoffset {{ 1,2 }}
+
+material water/island_wave
+{
+	nonsolid
+	{
+		blend blend
+		program water/shoreline_froth
+		centerscale island_wave_scale[ time * 0.1 ], 1 								// pushes up the beach
+		translate wave_offset[ time * 0.1 ] * 0.25, sinTable[ time * 0.2 ] * 0.1 	// scrolls sideways
+		alpha island_wave_alpha[ time * 0.1 ]										// fades wave
+		maskalpha
+		
+		vertexColor
+		diffuseMap	clamp_y	textures/sfx/shoreline_froth_big.tga
+		bumpMap _flat
+		map _black
+	}
+	{
+		blend blend
+		program water/shoreline_froth
+		centerscale island_wave2_scale[ time * 0.15 ], 1 												// pushes up the beach
+		translate wave_offset[ time * 0.1 + 0.05 ] * 0.25, sinTable[ time * 0.2 + 0.2 ] * 0.15 + 0.5 	// scrolls sideways
+		alpha island_wave2_alpha[ time * 0.15 ]															// fades wave
+		maskalpha
+		
+		vertexColor
+		diffuseMap clamp_y textures/sfx/shoreline_froth_big.tga
+		bumpMap _flat
+		map _black
+	}
+	translucent
+}
+
+material water/volcano_wave
+{
+	nonsolid
+	{
+		blend blend
+		program water/shoreline_froth
+		centerscale island_wave_scale[ time * 0.1 ], 1 								// pushes up the beach
+		translate wave_offset[ time * 0.1 ] * 0.25, sinTable[ time * 0.2 ] * 0.1 	// scrolls sideways
+		alpha island_wave_alpha[ time * 0.1 ] * .5									// fades wave
+		maskalpha
+		
+		vertexColor
+		diffuseMap	clamp_y	textures/sfx/shoreline_froth_big.tga
+		bumpMap _flat
+		map _black
+	}
+	{
+		blend blend
+		program water/shoreline_froth
+		centerscale island_wave2_scale[ time * 0.15 ], 1 												// pushes up the beach
+		translate wave_offset[ time * 0.1 + 0.05 ] * 0.25, sinTable[ time * 0.2 + 0.2 ] * 0.15 + 0.5 	// scrolls sideways
+		alpha island_wave2_alpha[ time * 0.15 ]	* .5													// fades wave
+		maskalpha
+		
+		vertexColor
+		diffuseMap clamp_y textures/sfx/shoreline_froth_big.tga
+		bumpMap _flat
+		map _black
+	}
+	translucent
+}
+
+// ================================
+// Valley
+// ================================
+
+template water/sewer_interior_calm_frametemplate {
+	parameters <
+		FirstFrameNumber,
+		NextFrameNumber,
+		Lerp
+	>
+	text {
+		useTemplate material/water_simple_interpolate<
+				"textures2/water/calmFirstFrameNumber.tga",		// Bumpmap
+				"textures2/water/calmNextFrameNumber.tga",		// Bumpmap2
+				"Lerp",							// Lerp
+				"env/valley",					// Cubemap
+				"time * 0.03",						// Translate X
+				"time * 0.03",						// Translate Y
+				"1.0",							// R
+				"1.0",							// G
+				"1.0",							// B
+				"0.15",							// Distortion Strength (Was 0.025 but was warping 1st person model)
+				"4.5"							// Reflection Power
+				"0"							// Glare
+		>
+	}
+}
+
+material water/sewer_interior_calm {
+	qer_editorimage textures/common/water
+	nonsolid
+	water
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+
+	useTemplate animations/frames16_interpolate < "water/sewer_interior_calm_frametemplate", 8 >
+}
+
+
+///// SCROLLING WATER EFFECTS /////
+
+material textures/water/water01 {
+	qer_editorimage textures/water/water01_local
+	nonsolid
+	twosided
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide textures/water/water01
+{
+	program	water/simple_cube_alpha
+	diffuseMap textures/water/water01_alpha.tga
+	bumpMap textures/water/water01_local.tga
+	map clamp highquality textures/penta/specular.tga
+	environmentCubeMap cubemap env/valley
+	water_tint	  1.2, 1.2, 1
+	water_distortion  1, 0.1, 1, 0	
+	water_fresnel	  8
+	water_glare	  0.6
+	water_offset 0, 0, 0, 0 
+	water_desat 0
+	translate 0, Time * -0.5
+}
+}
+
+material textures/water/water02 {
+	qer_editorimage textures/water/water01_editor
+	nonsolid
+	twosided
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide textures/water/water02
+
+{
+	program	water/simple_cube_alpha
+	diffuseMap textures/water/water01_alpha.tga
+	bumpMap textures/water/water01_local.tga
+	map clamp highquality textures/penta/specular.tga
+	environmentCubeMap cubemap env/valley
+	water_tint	  1, 1, 1
+	water_distortion  2, 0.1, 1, 0	
+	water_fresnel	  8
+	water_glare	  0.6
+	water_offset 0, 0, 0, 0 
+	water_desat 0
+	translate 0, Time * -1.2
+}
+}
+
+material textures/water/water_rain {
+	qer_editorimage textures/water/water_rain_local
+	nonsolid
+	twosided
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide water/underwater
+{
+
+	program	water/simple_cube
+	bumpMap textures/water/water_rain_local.tga
+	map clamp highquality textures/penta/specular.tga
+	environmentCubeMap cubemap env/sewer
+	water_tint	  1, 1, 1
+	water_distortion  4, 0.1, 1, 0	
+	water_fresnel	  5
+	water_glare	  0.6
+	water_offset 0, 0, 0, 0 
+	water_desat 0
+	translate 0, Time * -1.6
+}
+}
+
+material textures/water/water_rain2 {
+	qer_editorimage textures/water/water_rain_local
+	nonsolid
+	twosided
+	//water
+	surfaceType "water"
+	sort refraction
+	translucent
+	//forceAtmosphere
+	noAtmosphere
+	noshadows
+	sort postprocess
+{
+	//blend add
+	program	water/runningwater
+	diffuseMap textures/water/water_rain_alpha.tga
+	bumpMap textures/water/water_rain_local.tga
+	water_distortion  50, 50, 1, 0	
+	water_fresnel	  5
+	water_glare	  1
+	scale 3,1.5
+	translate 0, time * -0.8
+//	translate 0, rain[ time * 0.4 ]
+	color 0.25, 0.25, 0.25, 0
+}
+}
+
+material textures/water/water_water2 {
+	qer_editorimage textures/water/water_rain_local
+	nonsolid
+	//twosided
+	//water
+	surfaceType "water"
+	//sort refraction
+	translucent
+	//forceAtmosphere
+	noAtmosphere
+	noshadows
+	updateCurrentRender
+	//sort postprocess
+{
+	blend blend
+	program	water/runningwaterEnv
+	diffuseMap textures/water/water_sewerfloodway_alpha.tga
+	bumpMap textures/water/water_sewerfloodway_local.tga
+//	diffuseMap textures/water/water_rain_alpha.tga
+//	bumpMap textures/water/water_sewerfloodway_local.tga
+	water_distortion  300, 300, 1, 0	
+	water_fresnel	  1
+	water_glare	  0.6
+	scale 0.0005,0.0005
+	translate 0, time * -60
+	//color 0.25, 0.25, 0.25, 0
+}
+}
+
+material textures/water/water_ground01 {
+	qer_editorimage textures/water/water_ground01_local
+	nonsolid
+	//twosided
+	surfaceType "water"
+	sort refraction
+	translucent
+	forceAtmosphere
+	backSide textures/water/water_ground01
+
+{
+	if ( ( time * 15 ) % 6== 1 )
+	program	water/simple_cube_alpha
+	diffuseMap textures/water/water_ground01_01_alpha.tga
+	bumpMap textures/water/water_ground01_01_local.tga
+	map clamp highquality textures/penta/specular.tga
+	environmentCubeMap cubemap env/valley
+	water_tint	  1, 1, 1
+	water_distortion  10, 1, 1, 0	
+	water_fresnel	  15
+	water_glare	  0.4
+	water_offset 0, 0, 0, 0 
+	water_desat 0
+	scale 5,5
+}
+{
+	if ( ( time * 15 ) % 6== 2 )
+	program	water/simple_cube_alpha
+	diffuseMap textures/water/water_ground01_02_alpha.tga
+	bumpMap textures/water/water_ground01_02_local.tga
+	map clamp highquality textures/penta/specular.tga
+	environmentCubeMap cubemap env/valley
+	water_tint	  1, 1, 1
+	water_distortion  10, 1, 1, 0	
+	water_fresnel	  15
+	water_glare	  0.4
+	water_offset 0, 0, 0, 0 
+	water_desat 0
+	scale 8,8
+}
+{
+	if ( ( time * 15 ) % 6== 3 )
+	program	water/simple_cube_alpha
+	diffuseMap textures/water/water_ground01_03_alpha.tga
+	bumpMap textures/water/water_ground01_03_local.tga
+	map clamp highquality textures/penta/specular.tga
+	environmentCubeMap cubemap env/valley
+	water_tint	  1, 1, 1
+	water_distortion  10, 1, 1, 0	
+	water_fresnel	  15
+	water_glare	  0.4
+	water_offset 0, 0, 0, 0 
+	water_desat 0
+	scale 6,6
+}
+{
+	if ( ( time * 15 ) % 6== 4 )
+	program	water/simple_cube_alpha
+	diffuseMap textures/water/water_ground01_04_alpha.tga
+	bumpMap textures/water/water_ground01_04_local.tga
+	map clamp highquality textures/penta/specular.tga
+	environmentCubeMap cubemap env/valley
+	water_tint	  1, 1, 1
+	water_distortion  10, 1, 1, 0	
+	water_fresnel	  15
+	water_glare	  0.4
+	water_offset 0, 0, 0, 0 
+	water_desat 0
+	scale 9,9
+}
+{
+	if ( ( time * 15 ) % 6== 5 )
+	program	water/simple_cube_alpha
+	diffuseMap textures/water/water_ground01_05_alpha.tga
+	bumpMap textures/water/water_ground01_05_local.tga
+	map clamp highquality textures/penta/specular.tga
+	environmentCubeMap cubemap env/valley
+	water_tint	  1, 1, 1
+	water_distortion  10, 1, 1, 0	
+	water_fresnel	  15
+	water_glare	  0.4
+	water_offset 0, 0, 0, 0 
+	water_desat 0
+	scale 7,7
+}
+{
+	if ( ( time * 15 ) % 6== 6 )
+	program	water/simple_cube_alpha
+	diffuseMap textures/water/water_ground01_06_alpha.tga
+	bumpMap textures/water/water_ground01_06_local.tga
+	map clamp highquality textures/penta/specular.tga
+	environmentCubeMap cubemap env/valley
+	water_tint	  1, 1, 1
+	water_distortion  10, 1, 1, 0	
+	water_fresnel	  15
+	water_glare	  0.4
+	water_offset 0, 0, 0, 0 
+	water_desat 0
+	scale 8,8
+}
+
+}
+
+

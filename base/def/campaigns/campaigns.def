@@ -1,0 +1,40 @@
+
+campaignDef campaign_africa {
+	map	"maps/refinery"
+	map	"maps/slipgate"
+	map	"maps/island"
+	
+	data {
+		"mtr_backdrop"		"levelshots/campaigns/africa"
+	}
+}
+
+campaignDef campaign_northamerica {
+	map	"maps/valley"
+	map	"maps/outskirts"
+	map	"maps/area22"
+	
+	data {
+		"mtr_backdrop"		"levelshots/campaigns/northamerica"
+	}
+}
+
+campaignDef campaign_northeurope {
+	map	"maps/quarry"
+	map	"maps/ark"
+	map	"maps/salvage"
+	
+	data {
+		"mtr_backdrop"		"levelshots/campaigns/europe"
+	}
+}
+
+campaignDef campaign_pacific {
+	map	"maps/canyon"
+	map	"maps/sewer"
+	map	"maps/volcano"
+	
+	data {
+		"mtr_backdrop"		"levelshots/campaigns/pacific"
+	}
+}

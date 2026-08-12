@@ -1,0 +1,87 @@
+// GFX.SHADER
+// 
+// this file contains shaders that are used by the programmers to
+// generate special effects not attached to specific geometry.  This
+// also has 2D shaders such as fonts, etc.
+//
+
+
+material textures/bigchars {
+	sort gui
+	{
+		blend blend
+		vertexColor
+		map linear nopicmip textures/bigchars.tga
+	}
+}
+
+material console
+{
+	{
+		blend blend
+		alpha 1.0
+		map _black
+	}
+}
+
+// this material's images will be purged once the engine is started up
+material splashScreenPurge {
+	{		
+		map nopicmip linear guis/assets/splash/earth.tga
+	}
+}
+
+// this is drawn while the engine is initialized
+// list any images that should be freed once the engine 
+// is loaded in material splashScreenPurge 
+material splashScreen {
+	{
+		blend blend
+		map nopicmip linear guis/assets/splash/earth.tga
+	}
+	{
+		blend add
+		map linear guis/assets/mainmenu/scanlines.tga
+		rgb 0.5
+		scale 16, 14
+	}
+}
+
+
+// used to break up the blur on levelshots
+material levelShotDetail {
+	{
+		blend GL_DST_COLOR, GL_SRC_COLOR
+		colored
+		map	textures/sfx/detail.tga
+		maskDepth
+	}
+}
+
+material fx/tireTread {
+	polygonOffset
+	{
+		blend filter
+		program filterVertexColorWithTextureMatrix
+		vertexColor
+		map textures/effects/skidmarks.tga
+		scale 1, 0.2
+		color 0.5, 0.5, 0.5, 1
+		maskAlpha
+	}
+}
+
+material fx/footPrint {
+	polygonOffset
+	twosided
+	{
+		blend filter
+		program filterVertexColorWithTextureMatrix
+		vertexColor
+		map clamp textures/effects/footprints_d.tga
+		scale 0.25, 1.2
+		translate 0.5, 0
+		maskalpha
+		color 2, 2, 2, 0
+	}
+}
