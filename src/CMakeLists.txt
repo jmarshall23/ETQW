@@ -12,10 +12,9 @@ if(NOT WIN32)
 endif()
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    message(FATAL_ERROR
-        "gamex86.dll has a 32-bit ABI. Configure with a Win32 generator "
-        "(for example: cmake --preset vs2022-win32)."
-    )
+    set(ETQW_ARCH_SUFFIX "x64")
+else()
+    set(ETQW_ARCH_SUFFIX "x86")
 endif()
 
 get_filename_component(ETQW_WORKSPACE_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/.." ABSOLUTE)
@@ -29,7 +28,7 @@ set(
     ETQW_RUNTIME_DIR
     "${ETQW_WORKSPACE_ROOT}"
     CACHE PATH
-    "Directory for etqw.exe and gamex86.dll"
+    "Directory for etqw.exe and game${ETQW_ARCH_SUFFIX}.dll"
 )
 
 set(CMAKE_CXX_STANDARD 98)
@@ -85,6 +84,9 @@ list(FILTER ETQW_GAME_SOURCES EXCLUDE REGEX
 )
 list(FILTER ETQW_GAME_SOURCES EXCLUDE REGEX
     "/game/script/compiledscript/"
+)
+list(FILTER ETQW_GAME_SOURCES EXCLUDE REGEX
+	"/game/script/Script_(DLL|Exporter)\.cpp$"
 )
 list(FILTER ETQW_GAME_SOURCES EXCLUDE REGEX
     "/game/weapons/ClientProjectile\\.cpp$"
@@ -174,17 +176,17 @@ target_link_options(game PRIVATE
     /STACK:4194304,4194304
     /SUBSYSTEM:WINDOWS
     "$<$<CONFIG:Release>:/DEBUG:FULL>"
-    "$<$<CONFIG:Release>:/MAP:${ETQW_RUNTIME_DIR}/gamex86.map>"
+    "$<$<CONFIG:Release>:/MAP:${ETQW_RUNTIME_DIR}/game${ETQW_ARCH_SUFFIX}.map>"
 )
 set_target_properties(game PROPERTIES
-    OUTPUT_NAME "gamex86"
+    OUTPUT_NAME "game${ETQW_ARCH_SUFFIX}"
     PREFIX ""
     RUNTIME_OUTPUT_DIRECTORY "${ETQW_RUNTIME_DIR}"
     VS_DEBUGGER_WORKING_DIRECTORY "${ETQW_WORKSPACE_ROOT}"
 )
 # Multi-config generators append the configuration name unless each
 # configuration has an explicit output path. The retail layout expects the
-# active gamex86.dll directly beside the executable.
+# active architecture-specific game DLL directly beside the executable.
 foreach(config_name Debug Release MinSizeRel RelWithDebInfo)
     string(TOUPPER "${config_name}" config_name_upper)
     set_target_properties(game PROPERTIES
@@ -208,7 +210,7 @@ option(
 )
 if(ETQW_BUILD_ENGINE)
     include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/EtqwEngine.cmake")
-    # The executable loads gamex86.dll from the runtime directory.  Make the
+    # The executable loads the architecture-specific game DLL from the runtime directory. Make the
     # IDE startup project build that DLL as well so it cannot launch
     # a new engine against stale game/UI code.
     add_dependencies(etqw game)

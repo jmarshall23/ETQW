@@ -308,6 +308,9 @@ struct sdVulkanBackendState {
 	VkPipeline				worldMaterialAddPipeline;
 	VkPipeline				worldWaterPipeline;
 	VkPipeline				worldHeatHazePipeline;
+	VkPipeline				worldSkyboxPipeline;
+	VkPipeline				worldSkyboxAlphaPipeline;
+	VkPipeline				worldSkyboxAddPipeline;
 	VkPipeline				skyPipeline;
 	VkFormat					guiPipelineFormat;
 
@@ -470,6 +473,9 @@ struct sdVulkanBackendState {
 		worldMaterialAddPipeline = VK_NULL_HANDLE;
 		worldWaterPipeline = VK_NULL_HANDLE;
 		worldHeatHazePipeline = VK_NULL_HANDLE;
+		worldSkyboxPipeline = VK_NULL_HANDLE;
+		worldSkyboxAlphaPipeline = VK_NULL_HANDLE;
+		worldSkyboxAddPipeline = VK_NULL_HANDLE;
 		skyPipeline = VK_NULL_HANDLE;
 		guiPipelineFormat = VK_FORMAT_UNDEFINED;
 
@@ -1908,6 +1914,18 @@ bool CompileVulkanShaderModule( sdVulkanBackendState& state,
 
 void DestroyGuiResources( sdVulkanBackendState& state ) {
 	state.materialDescriptors.Clear();
+	if ( state.worldSkyboxAddPipeline != VK_NULL_HANDLE ) {
+		state.DestroyPipeline( state.device, state.worldSkyboxAddPipeline, NULL );
+		state.worldSkyboxAddPipeline = VK_NULL_HANDLE;
+	}
+	if ( state.worldSkyboxAlphaPipeline != VK_NULL_HANDLE ) {
+		state.DestroyPipeline( state.device, state.worldSkyboxAlphaPipeline, NULL );
+		state.worldSkyboxAlphaPipeline = VK_NULL_HANDLE;
+	}
+	if ( state.worldSkyboxPipeline != VK_NULL_HANDLE ) {
+		state.DestroyPipeline( state.device, state.worldSkyboxPipeline, NULL );
+		state.worldSkyboxPipeline = VK_NULL_HANDLE;
+	}
 	if ( state.worldHeatHazePipeline != VK_NULL_HANDLE ) {
 		state.DestroyPipeline( state.device, state.worldHeatHazePipeline, NULL );
 		state.worldHeatHazePipeline = VK_NULL_HANDLE;
@@ -2208,6 +2226,18 @@ bool CreateWorldPipeline( sdVulkanBackendState& state ) {
 			"vkprogs/world/heat_haze.frag", VK_BLEND_FACTOR_ONE,
 			VK_BLEND_FACTOR_ZERO, true, false, false,
 			state.worldHeatHazePipeline ) &&
+		CreateWorldPipelineVariant( state, "vkprogs/world/skybox.vert",
+			"vkprogs/world/skybox.frag", VK_BLEND_FACTOR_ONE,
+			VK_BLEND_FACTOR_ZERO, true, false, false,
+			state.worldSkyboxPipeline ) &&
+		CreateWorldPipelineVariant( state, "vkprogs/world/skybox.vert",
+			"vkprogs/world/skybox.frag", VK_BLEND_FACTOR_SRC_ALPHA,
+			VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA, true, false, false,
+			state.worldSkyboxAlphaPipeline ) &&
+		CreateWorldPipelineVariant( state, "vkprogs/world/skybox.vert",
+			"vkprogs/world/skybox.frag", VK_BLEND_FACTOR_ONE,
+			VK_BLEND_FACTOR_ONE, true, false, false,
+			state.worldSkyboxAddPipeline ) &&
 		CreateWorldPipelineVariant( state, "vkprogs/world/sky.vert",
 			"vkprogs/world/sky.frag", VK_BLEND_FACTOR_ONE,
 			VK_BLEND_FACTOR_ZERO, false, false, true, state.skyPipeline );
@@ -2607,6 +2637,109 @@ bool GetVulkanMaterialDescriptor( sdVulkanBackendState& state,
 		writes, 0, NULL );
 	state.materialDescriptors.Append( materialDescriptor );
 	descriptorSet = materialDescriptor.descriptorSet;
+	return true;
+}
+
+bool GetVulkanSkyboxDescriptor( sdVulkanBackendState& state,
+	const materialStage_t& stage, VkDescriptorSet& descriptorSet ) {
+	descriptorSet = VK_NULL_HANDLE;
+	if ( globalImages == NULL ) {
+		return false;
+	}
+	idImage* images[ VULKAN_MATERIAL_TEXTURES ] = {
+		NULL, NULL, globalImages->blackImage, globalImages->blackImage,
+		globalImages->blackCubeMapImage
+	};
+	for ( int textureIndex = 0; textureIndex < stage.numTextures; ++textureIndex ) {
+		const stageTexture_t& texture = stage.textures[ textureIndex ];
+		if ( texture.image == NULL || texture.image->defaulted ||
+			texture.renderBinding == NULL ) {
+			continue;
+		}
+		const char* bindingName = texture.renderBinding->GetName();
+		if ( idStr::Icmp( bindingName, "map" ) == 0 ) {
+			images[ 0 ] = texture.image;
+		} else if ( idStr::Icmp( bindingName, "mask" ) == 0 ) {
+			images[ 1 ] = texture.image;
+		}
+	}
+	if ( images[ 0 ] == NULL || images[ 1 ] == NULL ) {
+		return false;
+	}
+	const sdVulkanImageResource* resources[ VULKAN_MATERIAL_TEXTURES ];
+	for ( int imageIndex = 0; imageIndex < VULKAN_MATERIAL_TEXTURES;
+		++imageIndex ) {
+		if ( !images[ imageIndex ]->IsLoaded() ) {
+			images[ imageIndex ]->BindFragment();
+		}
+	}
+	for ( int imageIndex = 0; imageIndex < VULKAN_MATERIAL_TEXTURES;
+		++imageIndex ) {
+		resources[ imageIndex ] = FindVulkanImageResource( state,
+			images[ imageIndex ] );
+		if ( resources[ imageIndex ] == NULL ) {
+			return false;
+		}
+	}
+	for ( int descriptorIndex = 0;
+		descriptorIndex < state.materialDescriptors.Num(); ++descriptorIndex ) {
+		const sdVulkanMaterialDescriptor& cached =
+			state.materialDescriptors[ descriptorIndex ];
+		if ( cached.owner != &stage ) {
+			continue;
+		}
+		bool matches = true;
+		for ( int imageIndex = 0; imageIndex < VULKAN_MATERIAL_TEXTURES;
+			++imageIndex ) {
+			if ( cached.imageOwners[ imageIndex ] != images[ imageIndex ] ||
+				cached.imageViews[ imageIndex ] != resources[ imageIndex ]->view ) {
+				matches = false;
+				break;
+			}
+		}
+		if ( matches ) {
+			descriptorSet = cached.descriptorSet;
+			return true;
+		}
+	}
+	sdVulkanMaterialDescriptor skyboxDescriptor;
+	memset( &skyboxDescriptor, 0, sizeof( skyboxDescriptor ) );
+	skyboxDescriptor.owner = &stage;
+	VkDescriptorSetAllocateInfo allocateInfo;
+	memset( &allocateInfo, 0, sizeof( allocateInfo ) );
+	allocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+	allocateInfo.descriptorPool = state.guiDescriptorPool;
+	allocateInfo.descriptorSetCount = 1;
+	allocateInfo.pSetLayouts = &state.guiDescriptorSetLayout;
+	if ( !CheckVulkanResult( state.AllocateDescriptorSets( state.device,
+		&allocateInfo, &skyboxDescriptor.descriptorSet ),
+		"vkAllocateDescriptorSets(skybox)" ) ) {
+		return false;
+	}
+	VkDescriptorImageInfo imageInfos[ VULKAN_MATERIAL_TEXTURES ];
+	VkWriteDescriptorSet writes[ VULKAN_MATERIAL_TEXTURES ];
+	memset( imageInfos, 0, sizeof( imageInfos ) );
+	memset( writes, 0, sizeof( writes ) );
+	for ( int imageIndex = 0; imageIndex < VULKAN_MATERIAL_TEXTURES;
+		++imageIndex ) {
+		skyboxDescriptor.imageOwners[ imageIndex ] = images[ imageIndex ];
+		skyboxDescriptor.imageViews[ imageIndex ] = resources[ imageIndex ]->view;
+		imageInfos[ imageIndex ].sampler = resources[ imageIndex ]->sampler;
+		imageInfos[ imageIndex ].imageView = resources[ imageIndex ]->view;
+		imageInfos[ imageIndex ].imageLayout =
+			VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		writes[ imageIndex ].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+		writes[ imageIndex ].dstSet = skyboxDescriptor.descriptorSet;
+		writes[ imageIndex ].dstBinding = imageIndex;
+		writes[ imageIndex ].descriptorCount = 1;
+		writes[ imageIndex ].descriptorType =
+			VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		writes[ imageIndex ].pImageInfo = &imageInfos[ imageIndex ];
+	}
+	state.UpdateDescriptorSets( state.device, VULKAN_MATERIAL_TEXTURES,
+		writes, 0, NULL );
+	state.materialDescriptors.Append( skyboxDescriptor );
+	descriptorSet = skyboxDescriptor.descriptorSet;
 	return true;
 }
 
@@ -4229,6 +4362,9 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			idStr::Icmpn( selectedStage->renderProgram->GetName(), "heatHaze", 8 ) == 0;
 		const bool selectedStuffGrassStage = selectedStage->renderProgram != NULL &&
 			idStr::Icmpn( selectedStage->renderProgram->GetName(), "stuff/grass", 11 ) == 0;
+		const bool selectedSkyboxStage = selectedStage->renderProgram != NULL &&
+			idStr::Icmp( selectedStage->renderProgram->GetName(),
+				"skies/skybox" ) == 0;
 		const bool selectedFoggyWaterUndersideStage =
 			selectedStage->renderProgram != NULL &&
 			idStr::Icmp( selectedStage->renderProgram->GetName(),
@@ -4319,6 +4455,16 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			state->worldHeatHazePipeline != VK_NULL_HANDLE &&
 			GetVulkanHeatHazeDescriptor( *state, *selectedStage, selectedImage,
 				heatHazeDescriptorSet );
+		VkDescriptorSet skyboxDescriptorSet = VK_NULL_HANDLE;
+		const bool skyboxTexturesAvailable = selectedSkyboxStage &&
+			state->worldSkyboxPipeline != VK_NULL_HANDLE &&
+			GetVulkanSkyboxDescriptor( *state, *selectedStage,
+				skyboxDescriptorSet );
+		if ( selectedSkyboxStage && !skyboxTexturesAvailable ) {
+			// The side strip alone is not a valid fallback for an authored dome;
+			// without its top image the seam becomes a broken sky sheet.
+			continue;
+		}
 
 		VkRect2D scissor;
 		int scissorWidth = Max( 1,
@@ -4528,6 +4674,21 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 						vector.registers[ 0 ] ];
 				}
 			}
+		} else if ( selectedSkyboxStage ) {
+			for ( int vectorIndex = 0; vectorIndex < selectedStage->numVectors;
+				++vectorIndex ) {
+				const stageVector_t& vector = selectedStage->vectors[ vectorIndex ];
+				if ( vector.renderBinding == NULL ||
+					idStr::Icmp( vector.renderBinding->GetName(),
+						"skies_cloudColor" ) != 0 ) {
+					continue;
+				}
+				for ( int component = 0; component < 4; ++component ) {
+					pushConstants[ 16 + component ] = surface->materialRegisters[
+						vector.registers[ component ] ];
+				}
+				break;
+			}
 		} else {
 			pushConstants[ 28 ] = selectedStage->vertexColor == SVC_MODULATE ?
 				1.0f : 0.0f;
@@ -4554,6 +4715,14 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			&vertexResource->buffer, &vertexOffset );
 		state->CmdBindIndexBuffer( frame.commandBuffer, indexResource->buffer,
 			indexCacheBlock->offset, VK_INDEX_TYPE_UINT16 );
+		if ( surface->space->weaponDepthHack && !currentRenderCopied &&
+			CopyCurrentRender( *state ) ) {
+			// Refraction is sorted after ordinary opaque surfaces, including the
+			// first-person model.  Snapshot at the boundary before weapon-depth-hack
+			// geometry so the gun draws normally in front of the finished water but
+			// is not baked into the distorted scene texture.
+			currentRenderCopied = true;
+		}
 		const bool requiresDepthPrepass =
 			( surface->material->Coverage() != MC_TRANSLUCENT ||
 			  selectedStuffGrassStage ) &&
@@ -4635,7 +4804,17 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			VkPipeline materialPipeline = state->worldPipeline;
 			VkDescriptorSet drawDescriptorSet = selectedImageDescriptorSet;
 			const int blendBits = selectedStage->drawStateBits & 0xFF;
-			if ( selectedHeatHazeStage ) {
+			if ( skyboxTexturesAvailable ) {
+				materialPipeline = state->worldSkyboxPipeline;
+				if ( blendBits == 0x65 &&
+					state->worldSkyboxAlphaPipeline != VK_NULL_HANDLE ) {
+					materialPipeline = state->worldSkyboxAlphaPipeline;
+				} else if ( blendBits == 0x20 &&
+					state->worldSkyboxAddPipeline != VK_NULL_HANDLE ) {
+					materialPipeline = state->worldSkyboxAddPipeline;
+				}
+				drawDescriptorSet = skyboxDescriptorSet;
+			} else if ( selectedHeatHazeStage ) {
 				if ( !heatHazeTexturesAvailable ||
 					( !currentRenderCopied && !CopyCurrentRender( *state ) ) ) {
 					// A postprocess normal map is never a valid visible fallback.

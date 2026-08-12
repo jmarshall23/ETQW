@@ -8,7 +8,6 @@
 
 #include "../network/SnapshotState.h"
 #include "Script_Interface.h"
-#include "Script_Exporter.h"
 
 class idScriptObject;
 class idEventDef;
@@ -387,9 +386,6 @@ private:
 	idBlockAlloc< idVarDefName, 64 >				varDefNameAllocator;
 
 	bool											compiled;
-	bool											exporting;
-
-	idStr											exportScriptName;
 
 	void											CompileStats( void );
 
@@ -397,8 +393,6 @@ public:
 	idVarDef*										returnDef;
 	idVarDef*										returnStringDef;
 	idTypeDef*										defaultType;
-
-	sdScriptExporter								scriptExporter;
 
 													idProgram();
 													~idProgram();
@@ -410,9 +404,6 @@ public:
 	int												GetExpectedReturn( void );
 	void											OnEventCallReturnFailure( void );
 #endif // SCRIPT_EVENT_RETURN_CHECKS
-
-	bool											IsExporting( void ) const { return exporting; }
-	void											EnableExport( void ) { exporting = true; }
 
 	int												GetNumVarDefs( void ) const { return varDefs.Num(); }
 	const idVarDef*									GetVarDef( int index ) const { return varDefs[ index ]; }

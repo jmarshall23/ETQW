@@ -330,25 +330,6 @@ void Cmd_ListSpawnArgs_f( const idCmdArgs &args ) {
 
 /*
 ===================
-Cmd_ExportScript_f
-===================
-*/
-void Cmd_ExportScript_f( const idCmdArgs &args ) {
-	if ( gameLocal.GameState() > GAMESTATE_NOMAP ) {
-		gameLocal.Printf( "Exiting map to export scripts\n" );
-		cmdSystem->BufferCommandText( CMD_EXEC_NOW, "disconnect" );
-	}
-
-	idProgram* newProgram = new idProgram();
-	newProgram->EnableExport();
-
-	delete gameLocal.program;
-	gameLocal.program = newProgram;
-	gameLocal.program->Init();
-}
-
-/*
-===================
 Cmd_ReloadScript_f
 ===================
 */
@@ -3097,7 +3078,6 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand( "prevFrame",				idTestModel::TestModelPrevFrame_f,	CMD_FL_GAME|CMD_FL_CHEAT,	"shows previous animation frame on test model" );
 	cmdSystem->AddCommand( "testBlend",				idTestModel::TestBlend_f,			CMD_FL_GAME|CMD_FL_CHEAT,	"tests animation blending" );
 	cmdSystem->AddCommand( "reloadScript",			Cmd_ReloadScript_f,			CMD_FL_GAME|CMD_FL_CHEAT,	"reloads scripts" );
-	cmdSystem->AddCommand( "exportScript",			Cmd_ExportScript_f,			CMD_FL_GAME|CMD_FL_CHEAT,	"exports scripts to a compilable format" );
 	cmdSystem->AddCommand( "listCollisionModels",	Cmd_ListCollisionModels_f,	CMD_FL_GAME,				"lists collision models" );
 	cmdSystem->AddCommand( "listGUIs",				Cmd_ListGUIs_f,				CMD_FL_GAME,				"lists all allocated GUIs" );
 	cmdSystem->AddCommand( "collisionModelInfo",	Cmd_CollisionModelInfo_f,	CMD_FL_GAME,				"shows collision model info" );

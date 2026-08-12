@@ -1156,10 +1156,6 @@ idVarDef *idCompiler::ParseFunctionCall( idVarDef *funcDef ) {
 
 		int op = callguithread ? OP_GUITHREAD : OP_THREAD;
 
-		if ( program->IsExporting() ) {
-			program->scriptExporter.RegisterClassThreadCall( NULL, funcDef->value.functionPtr, callguithread );
-		}
-
 		callthread = false;
 		callguithread = false;
 
@@ -1208,10 +1204,6 @@ idVarDef *idCompiler::ParseObjectCall( idVarDef *object, idVarDef *func ) {
 	int op = OP_OBJECTCALL;
 	if ( callthread ) {
 		op = callguithread ? OP_GUIOBJTHREAD : OP_OBJTHREAD;
-
-		if ( program->IsExporting() ) {
-			program->scriptExporter.RegisterClassThreadCall( object->TypeDef(), func->value.functionPtr, callguithread );
-		}
 
 		callthread = false;
 		callguithread = false;
@@ -1420,9 +1412,6 @@ idVarDef *idCompiler::ParseValue( void ) {
 		def = program->GetDef( &type_object, "$" + token, &def_namespace );
 		if ( !def ) {
 			def = program->AllocDef( &type_object, "$" + token, &def_namespace );
-			if ( program->IsExporting() ) {
-				program->scriptExporter.AllocGlobal( def );
-			}
 		}
 		NextToken();
 		return def;
@@ -2234,10 +2223,6 @@ void idCompiler::ParseObjectDef( const char *objname ) {
 		originalType		= program->AllocType( ev_object, NULL, objname, parentType == &type_object ? 0 : parentType->Size(), parentType );
 		originalType->def	= program->AllocDef( originalType, objname, scope );
 		
-		if ( program->IsExporting() ) {
-			program->scriptExporter.RegisterClass( originalType, parentType );
-		}
-
 		scope				= originalType->def;
 
 		// inherit all the functions
@@ -2271,10 +2256,6 @@ void idCompiler::ParseObjectDef( const char *objname ) {
 				idTypeDef* type = program->GetType( newtype, true );
 				assert( !type->def );
 				idVarDef* var = program->AllocDef( type, name, scope );
-
-				if ( program->IsExporting() ) {
-					program->scriptExporter.RegisterClassField( originalType, var );
-				}
 
 				originalType->AddField( type, name );
 				ExpectToken( ";" );
@@ -2381,16 +2362,11 @@ void idCompiler::ParseFunctionDef( idTypeDef *returnType, const char *name ) {
 		return;
 	}
 
-	if ( program->IsExporting() ) {
-		program->scriptExporter.RegisterClassFunction( scope->TypeDef()->Inherits( &type_object ) ? scope->TypeDef() : NULL, func );
-	}
-
 	oldscope = scope;
 	scope = def;
 
 	func->firstStatement = program->NumStatements();
 
-	if ( !program->IsExporting() ) {
 		// check if we should call the super class constructor
 		if ( oldscope->TypeDef()->Inherits( &type_object ) && !idStr::Icmp( name, "init" ) ) {
 			idTypeDef *superClass;
@@ -2456,8 +2432,6 @@ void idCompiler::ParseFunctionDef( idTypeDef *returnType, const char *name ) {
 				EmitOpcode( &opcodes[ OP_CALL ], constructorFunc->def, 0 );
 			}
 		}
-	}
-
 	lastStatementWasReturn = false;
 
 	// parse regular statements
@@ -2465,7 +2439,6 @@ void idCompiler::ParseFunctionDef( idTypeDef *returnType, const char *name ) {
 		ParseStatement();
 	}
 
-	if ( !program->IsExporting() ) {
 		// check if we should call the super class destructor
 		if ( oldscope->TypeDef()->Inherits( &type_object ) && !idStr::Icmp( name, "destroy" ) ) {
 			idTypeDef *superClass;
@@ -2498,8 +2471,6 @@ void idCompiler::ParseFunctionDef( idTypeDef *returnType, const char *name ) {
 				EmitOpcode( &opcodes[ OP_CALL ], destructorFunc->def, 0 );
 			}
 		}
-	}
-
 	if ( !lastStatementWasReturn ) {
 		if ( func->type->ReturnType()->Type() != ev_void ) {
 			Error( "Missing return value" );
@@ -2530,20 +2501,6 @@ void idCompiler::ParseVariableDef( idTypeDef *type, const char *name ) {
 	}
 	
 	def = program->AllocDef( type, name, scope );
-
-	if ( scope->Type() == ev_function ) {
-		idTypeDef* cls = NULL;
-		if ( scope->scope->Type() != ev_namespace ) {
-			cls = scope->scope->TypeDef();
-		}
-		if ( program->IsExporting() ) {
-			program->scriptExporter.RegisterClassFunctionVariable( cls, scope->value.functionPtr, def );
-		}
-	} else if ( scope->Type() == ev_namespace ) {
-		if ( program->IsExporting() ) {
-			program->scriptExporter.AllocGlobal( def );
-		}
-	}
 
 	// check for an initialization
 	if ( CheckToken( "=" ) ) {
@@ -2718,9 +2675,6 @@ void idCompiler::ParseScriptEventDef( idTypeDef *returnType, const char *name ) 
 		}
 		type->def->value.functionPtr->locals = type->def->value.functionPtr->parmTotal;
 
-		if ( program->IsExporting() ) {
-			program->scriptExporter.RegisterVirtualFunction( type );
-		}
 	}
 }
 
@@ -2811,9 +2765,6 @@ void idCompiler::ParseEventDef( idTypeDef *returnType, const char *name ) {
 		// mark the parms as local
 		func.locals	= func.parmTotal;
 
-		if ( program->IsExporting() ) {
-			program->scriptExporter.RegisterEventDef( func );
-		}
 	}
 }
 
@@ -2867,13 +2818,7 @@ void idCompiler::ParseDefs( void ) {
 		if ( !def ) {
 			def = program->AllocDef( type, name, scope );
 		}
-		if ( program->IsExporting() ) {
-			program->scriptExporter.EnterNamespace( name );
-		}
 		ParseNamespace( def );
-		if ( program->IsExporting() ) {
-			program->scriptExporter.ExitNamespace();
-		}
 	} else if ( CheckToken( "::" ) ) {
 		def = program->GetDef( NULL, name, scope );
 		if ( !def ) {

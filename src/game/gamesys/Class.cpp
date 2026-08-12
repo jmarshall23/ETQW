@@ -531,10 +531,10 @@ idClass::delete
 ================
 */
 void idClass::operator delete( void *ptr ) {
-	int *p;
+	size_t *p;
 
 	if ( ptr ) {
-		p = ( ( int * )ptr ) - 1;
+		p = ( ( size_t * )ptr ) - 1;
 		memused -= *p;
 		numobjects--;
         Mem_Free( p );
@@ -542,10 +542,10 @@ void idClass::operator delete( void *ptr ) {
 }
 
 void idClass::operator delete( void *ptr, int, int, char *, int ) {
-	int *p;
+	size_t *p;
 
 	if ( ptr ) {
-		p = ( ( int * )ptr ) - 1;
+		p = ( ( size_t * )ptr ) - 1;
 		memused -= *p;
 		numobjects--;
         Mem_Free( p );

@@ -40,7 +40,7 @@ namespace {
 		if ( cache == NULL ) return NULL;
 		if ( cache->vbo != 0 && qglBindBufferARB != NULL ) {
 			qglBindBufferARB( indexBuffer ? GL_ELEMENT_ARRAY_BUFFER_ARB : GL_ARRAY_BUFFER_ARB, cache->vbo );
-			return reinterpret_cast< const void* >( cache->offset );
+			return reinterpret_cast< const void* >( static_cast< UINT_PTR >( cache->offset ) );
 		}
 		if ( qglBindBufferARB != NULL ) qglBindBufferARB( indexBuffer ? GL_ELEMENT_ARRAY_BUFFER_ARB : GL_ARRAY_BUFFER_ARB, 0 );
 		return cache->virtMem != NULL ? static_cast< const byte* >( cache->virtMem ) + cache->offset : NULL;

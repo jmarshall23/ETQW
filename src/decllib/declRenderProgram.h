@@ -125,6 +125,8 @@ private:
 	friend class sdRenderProgramParser;
 };
 
+#if defined( _M_IX86 )
 static_assert( sizeof( sdDeclRenderProgram ) == 0xA0, "sdDeclRenderProgram must match the ETQW PDB layout" );
+#endif
 
 #endif

@@ -110,9 +110,11 @@ public:
 	static sdImageResampler::sdFilter* Create();
 };
 
+#if defined( _M_IX86 )
 static_assert( sizeof( sdImageResampler::sdFilter ) == 8,
 	"sdImageResampler::sdFilter must match the ETQW PDB layout" );
 static_assert( sizeof( sdImageResampler ) == 56,
 	"sdImageResampler must match the ETQW PDB layout" );
+#endif
 
 #endif /* !__RENDERER_IMAGE_RESAMPLER_H__ */

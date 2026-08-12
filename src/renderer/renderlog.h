@@ -27,6 +27,8 @@ private:
 
 extern idRenderLog renderLog;
 
+#if defined( _M_IX86 )
 static_assert( sizeof( idRenderLog ) == 44, "idRenderLog must match the ETQW PDB layout" );
+#endif
 
 #endif /* !__RENDERER_RENDERLOG_H__ */

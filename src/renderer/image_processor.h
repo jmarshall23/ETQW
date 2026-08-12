@@ -102,6 +102,7 @@ public:
 	static sdImageProcessor::sdFilter* Create();
 };
 
+#if defined( _M_IX86 )
 static_assert( sizeof( sdImageProcessor::sdFilter::sdImage ) == 20,
 	"sdImage must match the ETQW PDB layout" );
 static_assert( sizeof( sdImageProcessor::sdFilter ) == 4,
@@ -112,5 +113,6 @@ static_assert( sizeof( sdConvolve2D ) == 20,
 	"sdConvolve2D must match the ETQW PDB layout" );
 static_assert( sizeof( sdImageProcessor ) == 56,
 	"sdImageProcessor must match the ETQW PDB layout" );
+#endif
 
 #endif /* !__RENDERER_IMAGE_PROCESSOR_H__ */

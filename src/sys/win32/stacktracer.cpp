@@ -17,10 +17,10 @@ Win32 DbgHelp stack tracing.
 unsigned char idStackTracer::symbolInfo[ 4096 ];
 char idStackTracer::basePath[ 256 ];
 
-bool idStackTracer::GetSymbolName( unsigned int funcAddr, char* symbolName, unsigned long maxSymbolLen ) {
+bool idStackTracer::GetSymbolName( UINT_PTR funcAddr, char* symbolName, unsigned long maxSymbolLen ) {
 	memset( symbolInfo, 0, sizeof( symbolInfo ) );
 	PIMAGEHLP_SYMBOL64 symbol = reinterpret_cast< PIMAGEHLP_SYMBOL64 >( symbolInfo );
-	symbol->SizeOfStruct = sizeof( symbolInfo );
+	symbol->SizeOfStruct = sizeof( IMAGEHLP_SYMBOL64 );
 	symbol->MaxNameLength = sizeof( symbolInfo ) - sizeof( IMAGEHLP_SYMBOL64 );
 	idStr::Copynz( symbolName, "** UNKOWN **", maxSymbolLen );
 	symbolName[ maxSymbolLen - 1 ] = '\0';
@@ -42,7 +42,7 @@ bool idStackTracer::AddPathFromEnvironment( char* path, int maxLen, const char* 
 	return true;
 }
 
-bool idStackTracer::GetSource( unsigned int address, char* fileName, unsigned long maxFileLen, char* line, unsigned long maxLineLen ) {
+bool idStackTracer::GetSource( UINT_PTR address, char* fileName, unsigned long maxFileLen, char* line, unsigned long maxLineLen ) {
 	IMAGEHLP_LINE64 lineInfo;
 	memset( &lineInfo, 0, sizeof( lineInfo ) );
 	lineInfo.SizeOfStruct = sizeof( lineInfo );
@@ -61,7 +61,7 @@ bool idStackTracer::GetSource( unsigned int address, char* fileName, unsigned lo
 			idStr::snPrintf( line, maxLineLen, "%i", lineInfo.LineNumber );
 		}
 	} else {
-		idStr::snPrintf( fileName, maxFileLen, "0x%08x", address );
+		idStr::snPrintf( fileName, maxFileLen, "0x%016llx", static_cast< unsigned long long >( address ) );
 		if ( line != NULL ) {
 			line[ 0 ] = '\0';
 		}
@@ -69,27 +69,30 @@ bool idStackTracer::GetSource( unsigned int address, char* fileName, unsigned lo
 	return true;
 }
 
-bool idStackTracer::Trace( void* processHandle, void* threadHandle, unsigned __int64 programCounter,
-		unsigned __int64 stackPointer, unsigned __int64 framePointer, unsigned int* stack,
-		int maxDepth, int skipFuncs ) {
+bool idStackTracer::Trace( void* processHandle, void* threadHandle, CONTEXT& context,
+		UINT_PTR* stack, int maxDepth, int skipFuncs ) {
 	STACKFRAME64 frame;
 	memset( &frame, 0, sizeof( frame ) );
-	frame.AddrPC.Offset = programCounter;
+#if defined( _M_X64 )
+	const DWORD machineType = IMAGE_FILE_MACHINE_AMD64;
+	frame.AddrPC.Offset = context.Rip;
+	frame.AddrStack.Offset = context.Rsp;
+	frame.AddrFrame.Offset = context.Rbp;
+#else
+	const DWORD machineType = IMAGE_FILE_MACHINE_I386;
+	frame.AddrPC.Offset = context.Eip;
+	frame.AddrStack.Offset = context.Esp;
+	frame.AddrFrame.Offset = context.Ebp;
+#endif
 	frame.AddrPC.Mode = AddrModeFlat;
-	frame.AddrStack.Offset = stackPointer;
 	frame.AddrStack.Mode = AddrModeFlat;
-	frame.AddrFrame.Offset = framePointer;
 	frame.AddrFrame.Mode = AddrModeFlat;
-
-	CONTEXT context;
-	memset( &context, 0, sizeof( context ) );
-	GetThreadContext( threadHandle, &context );
 
 	int numStackItems = 0;
 	if ( maxDepth > 0 ) {
 		for ( int i = 0; i < 256; i++ ) {
 			bool traced = StackWalk64(
-				IMAGE_FILE_MACHINE_I386,
+				machineType,
 				processHandle,
 				threadHandle,
 				&frame,
@@ -100,11 +103,11 @@ bool idStackTracer::Trace( void* processHandle, void* threadHandle, unsigned __i
 				NULL
 			) == TRUE;
 
+			if ( !traced || frame.AddrPC.Offset == 0 ) {
+				break;
+			}
 			if ( i >= skipFuncs && SymGetModuleBase64( processHandle, frame.AddrPC.Offset ) != 0 ) {
-				if ( !traced || frame.AddrFrame.Offset == 0 ) {
-					break;
-				}
-				stack[ numStackItems++ ] = static_cast< unsigned int >( frame.AddrPC.Offset );
+				stack[ numStackItems++ ] = static_cast< UINT_PTR >( frame.AddrPC.Offset );
 			}
 			if ( numStackItems >= maxDepth ) {
 				return true;
@@ -117,30 +120,32 @@ bool idStackTracer::Trace( void* processHandle, void* threadHandle, unsigned __i
 	return true;
 }
 
-bool idStackTracer::Trace( void* threadHandle, unsigned int* stack, int maxDepth, int numIgnoreFuncs ) {
+bool idStackTracer::Trace( void* threadHandle, UINT_PTR* stack, int maxDepth, int numIgnoreFuncs ) {
+	HANDLE thread = static_cast< HANDLE >( threadHandle );
+	const bool currentThread = thread == GetCurrentThread();
 	bool suspended = false;
-	if ( threadHandle != GetCurrentThread() ) {
-		if ( SuspendThread( threadHandle ) == 0 ) {
+	if ( !currentThread ) {
+		if ( SuspendThread( thread ) == static_cast< DWORD >( -1 ) ) {
 			return false;
 		}
 		suspended = true;
 	}
 
-	unsigned long stackPointer;
-	unsigned long framePointer;
-#if defined( _M_IX86 )
-	__asm mov stackPointer, esp
-	__asm mov framePointer, ebp
-#else
-	stackPointer = 0;
-	framePointer = 0;
-#endif
-	unsigned int programCounter = reinterpret_cast< unsigned int >( _ReturnAddress() );
-	bool result = Trace( GetCurrentProcess(), threadHandle, programCounter, stackPointer, framePointer,
-		stack, maxDepth, numIgnoreFuncs );
+	CONTEXT context;
+	memset( &context, 0, sizeof( context ) );
+	if ( currentThread ) {
+		RtlCaptureContext( &context );
+	} else {
+		context.ContextFlags = CONTEXT_FULL;
+		if ( GetThreadContext( thread, &context ) == FALSE ) {
+			ResumeThread( thread );
+			return false;
+		}
+	}
+	bool result = Trace( GetCurrentProcess(), thread, context, stack, maxDepth, numIgnoreFuncs );
 
 	if ( suspended ) {
-		ResumeThread( threadHandle );
+		ResumeThread( thread );
 	}
 	return result;
 }

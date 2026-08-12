@@ -45,7 +45,7 @@ public:
 	idEventArg()								{ type = D_EVENT_INTEGER; value = 0; };
 	idEventArg( int data )						{ type = D_EVENT_INTEGER; value = data; };
 	idEventArg( bool data )						{ type = D_EVENT_BOOLEAN; value = data; };
-	idEventArg( float data )					{ type = D_EVENT_FLOAT; value = *reinterpret_cast<UINT_PTR *>( &data ); };
+	idEventArg( float data )					{ type = D_EVENT_FLOAT; value = 0; memcpy( &value, &data, sizeof( data ) ); };
 	idEventArg( idVec3 &data )					{ type = D_EVENT_VECTOR; value = reinterpret_cast<UINT_PTR>( &data ); };
 	idEventArg( const idStr &data )				{ type = D_EVENT_STRING; value = reinterpret_cast<UINT_PTR>( data.c_str() ); };
 	idEventArg( const char *data )				{ type = D_EVENT_STRING; value = reinterpret_cast<UINT_PTR>( data ); };

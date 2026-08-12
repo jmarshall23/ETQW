@@ -29,7 +29,9 @@ private:
 
 extern sdRenderBindingManager* renderBindingManager;
 
+#if defined( _M_IX86 )
 static_assert( sizeof( sdRenderBindingManager ) == 16,
 	"sdRenderBindingManager must match the ETQW PDB layout" );
+#endif
 
 #endif /* !__RENDERER_RENDERBINDINGMANAGER_H__ */

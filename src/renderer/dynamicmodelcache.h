@@ -27,7 +27,9 @@ private:
 		modelCacheItem_t*		next;
 		modelCacheItem_t*		prev;
 	};
+#if defined( _M_IX86 )
 	static_assert( sizeof( modelCacheItem_t ) == 16, "modelCacheItem_t must match the ETQW PDB layout" );
+#endif
 
 	void		Add( modelCacheItem_t* item );
 
@@ -38,7 +40,9 @@ private:
 	static idCVar r_dynamicModelCacheMegs;
 };
 
+#if defined( _M_IX86 )
 static_assert( sizeof( sdDynamicModelCache ) == 12, "sdDynamicModelCache must match the ETQW PDB layout" );
+#endif
 
 ID_INLINE sdDynamicModelCache::sdDynamicModelCache() :
 	first( NULL ),

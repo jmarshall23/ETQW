@@ -170,6 +170,11 @@ set(ETQW_ZLIB_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/libs/zlib/inftrees.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/libs/zlib/zutil.c"
 )
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    list(APPEND ETQW_ZLIB_SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/libs/zlib/inffast.c"
+    )
+endif()
 
 function(etqw_configure_vendor_library target_name)
     target_compile_definitions(${target_name} PRIVATE
@@ -247,15 +252,20 @@ target_include_directories(etqw_speex
 )
 etqw_configure_vendor_library(etqw_speex)
 
-enable_language(ASM_MASM)
-list(APPEND ETQW_ZLIB_SOURCES
-    "${CMAKE_CURRENT_SOURCE_DIR}/libs/zlib/contrib/masmx86/inffas32.asm"
-)
+if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+    enable_language(ASM_MASM)
+    list(APPEND ETQW_ZLIB_SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/libs/zlib/contrib/masmx86/inffas32.asm"
+    )
+endif()
 add_library(etqw_zlib STATIC ${ETQW_ZLIB_SOURCES})
 target_include_directories(etqw_zlib PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/libs/zlib"
 )
-target_compile_definitions(etqw_zlib PRIVATE ZLIB_WINAPI ASMV ASMINF)
+target_compile_definitions(etqw_zlib PRIVATE ZLIB_WINAPI)
+if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+    target_compile_definitions(etqw_zlib PRIVATE ASMV ASMINF)
+endif()
 etqw_configure_vendor_library(etqw_zlib)
 
 add_custom_target(etqw_codecs)
@@ -355,7 +365,7 @@ target_link_options(etqw PRIVATE
     /LARGEADDRESSAWARE
     /STACK:4194304,4194304
     "$<$<CONFIG:Release>:/DEBUG:FULL>"
-    "$<$<CONFIG:Release>:/MAP:${ETQW_RUNTIME_DIR}/etqw.map>"
+    "$<$<CONFIG:Release>:/MAP:${ETQW_RUNTIME_DIR}/etqw-${ETQW_ARCH_SUFFIX}.map>"
 )
 set_target_properties(etqw PROPERTIES
     OUTPUT_NAME "etqw"

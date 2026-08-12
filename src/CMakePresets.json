@@ -13,6 +13,18 @@
       "generator": "Visual Studio 17 2022",
       "architecture": "Win32",
       "binaryDir": "${sourceDir}/../out"
+    },
+    {
+      "name": "vs2022-x64",
+      "displayName": "ETQW x64 (Visual Studio 2022)",
+      "description": "Configures the standalone 64-bit CMake build tree in ../out-x64.",
+      "generator": "Visual Studio 17 2022",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/../out-x64",
+      "cacheVariables": {
+        "ETQW_BUILD_STAGING_DIR": "${sourceDir}/../build/x64",
+        "ETQW_RUNTIME_DIR": "${sourceDir}/../runtime/x64"
+      }
     }
   ],
   "buildPresets": [
@@ -27,6 +39,20 @@
       "name": "debug",
       "displayName": "ETQW Debug",
       "configurePreset": "vs2022-win32",
+      "configuration": "Debug",
+      "jobs": 8
+    },
+    {
+      "name": "x64-release",
+      "displayName": "ETQW x64 Release",
+      "configurePreset": "vs2022-x64",
+      "configuration": "Release",
+      "jobs": 8
+    },
+    {
+      "name": "x64-debug",
+      "displayName": "ETQW x64 Debug",
+      "configurePreset": "vs2022-x64",
       "configuration": "Debug",
       "jobs": 8
     }

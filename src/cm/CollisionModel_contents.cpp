@@ -203,7 +203,7 @@ bool idCollisionModelManagerLocal::TestTrmInPolygon( idTraceWork *tw, int polygo
 			tw->trace.c.contents = polygon->contents;
 			tw->trace.c.material = polygon->material;
 			tw->trace.c.point = tw->vertices[ traceEdge.vertexNum[ flip == 0 ] ].p;
-			tw->trace.c.modelFeature = reinterpret_cast< int >( polygon );
+			tw->trace.c.modelFeature = polygonNum;
 			tw->trace.c.trmFeature = traceEdgeNum;
 			CM_SetSurfaceType( tw->trace.c, polygon );
 			return true;

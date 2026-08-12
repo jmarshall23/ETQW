@@ -128,7 +128,9 @@ struct aasReachability_t {
 	const idVec3				GetEnd() const { return idVec3( end[0], end[1], end[2] ); }
 };
 
+#if defined( _WIN32 ) && !defined( _WIN64 )
 assert_sizeof( aasReachability_t, 32 );
+#endif
 
 // area for navigation
 struct aasArea_t {
@@ -143,7 +145,9 @@ struct aasArea_t {
 	aasReachability_t *			rev_reach;			// reachabilities that lead to this area
 };
 
+#if defined( _WIN32 ) && !defined( _WIN64 )
 assert_sizeof( aasArea_t, 28 );
+#endif
 
 // nodes of the bsp tree
 struct aasNode_t {

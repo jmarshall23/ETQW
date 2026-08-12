@@ -18,7 +18,9 @@ void R_StartQueryTimer( const char* description );
 void R_StopQueryTimer();
 void R_TimerFrame();
 
+#if defined( _M_IX86 )
 static_assert( sizeof( QueryTimer ) == 136,
 	"QueryTimer must match the ETQW PDB layout" );
+#endif
 
 #endif /* !__RENDERER_QUERYTIMERS_H__ */

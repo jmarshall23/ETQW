@@ -123,7 +123,9 @@ struct mtrParsingData_s {
 	bool			forceOverlays;
 };
 
+#if defined( _M_IX86 )
 static_assert( sizeof( mtrParsingData_s ) == 0x8604, "mtrParsingData_s must match the ETQW PDB layout" );
+#endif
 
 namespace {
 

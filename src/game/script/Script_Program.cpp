@@ -765,6 +765,10 @@ void idVarDef::SetValue( const eval_t &_value, bool constant ) {
 
 	switch( typeDef->Type() ) {
 	case ev_pointer :
+		memset( value.bytePtr, 0, typeDef->Size() );
+		*value.intPtr = _value._int;
+		break;
+
 	case ev_boolean :
 	case ev_field :
 		*value.intPtr = _value._int;
@@ -2057,8 +2061,6 @@ void idProgram::FreeData( void ) {
 
 	compiled = false;
 
-	scriptExporter.Clear( false );
-
 	for ( int i = 0; i < MAX_SCRIPT_STACK_SIZE_COUNT; i++ ) {
 		freeStacks[ i ].DeleteContents( true );
 	}
@@ -2080,13 +2082,7 @@ void idProgram::Startup( const char* defaultScript ) {
 
 	CompileFile( defaultScript );
 
-	if ( exporting ) {
-		scriptExporter.Finish();
-	}
-
 	FinishCompilation();
-
-	exporting = false;
 }
 
 
@@ -2203,9 +2199,6 @@ idProgram::idProgram
 */
 idProgram::idProgram() {
 	compiled = false;
-	exporting = false;
-
-	scriptExporter.SetProgram( this );
 }
 
 /*

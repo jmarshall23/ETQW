@@ -35,7 +35,7 @@
 
 #define SMALL_HEADER_SIZE		( (int) ( sizeof( byte ) + sizeof( byte ) ) )
 #define MEDIUM_HEADER_SIZE		( (int) ( sizeof( mediumHeapEntry_s ) + sizeof( byte ) ) )
-#define LARGE_HEADER_SIZE		( (int) ( sizeof( dword * ) + sizeof( byte ) ) )
+#define LARGE_HEADER_SIZE		( (int) ( sizeof( UINT_PTR ) + sizeof( byte ) ) )
 
 #define ALIGN_SIZE( bytes )		( ( (bytes) + ALIGN - 1 ) & ~(ALIGN - 1) )
 #define SMALL_ALIGN( bytes )	( ALIGN_SIZE( (bytes) + SMALL_HEADER_SIZE ) - SMALL_HEADER_SIZE )
@@ -369,7 +369,7 @@ idHeap::Free
 ================
 */
 void idHeap::FreeAligned( void *p ) {
-	free( (void *) *((int *) (( (byte *) p ) - sizeof( uintptr_t ))) );
+	free( (void *) *((UINT_PTR *) (( (byte *) p ) - sizeof( UINT_PTR ))) );
 }
 
 /*
@@ -403,7 +403,7 @@ size_t idHeap::Msize( void *p ) {
 			return ((mediumHeapEntry_s *)(((byte *)(p)) - ALIGN_SIZE( MEDIUM_HEADER_SIZE )))->size - ALIGN_SIZE( MEDIUM_HEADER_SIZE );
 		}
 		case LARGE_ALLOC: {
-			return ((idHeap::page_s*)(*((dword *)(((byte *)p) - ALIGN_SIZE( LARGE_HEADER_SIZE )))))->dataSize - ALIGN_SIZE( LARGE_HEADER_SIZE );
+			return ((idHeap::page_s*)(*((UINT_PTR *)(((byte *)p) - ALIGN_SIZE( LARGE_HEADER_SIZE )))))->dataSize - ALIGN_SIZE( LARGE_HEADER_SIZE );
 		}
 		default: {
 			idLib::common->FatalError( "idHeap::Msize: invalid memory block (%s)", idLib::sys->GetCallStackCurStr( 4 ) );
@@ -570,9 +570,9 @@ idHeap::SmallAllocate
 ================
 */
 void *idHeap::SmallAllocate( dword bytes ) {
-	// we need the at least sizeof( dword ) bytes for the free list
-	if ( bytes < sizeof( dword ) ) {
-		bytes = sizeof( dword );
+	// we need at least one native pointer for the free list
+	if ( bytes < sizeof( UINT_PTR ) ) {
+		bytes = sizeof( UINT_PTR );
 	}
 
 	// increase the number of bytes if necessary to make sure the next small allocation is aligned
@@ -580,7 +580,7 @@ void *idHeap::SmallAllocate( dword bytes ) {
 
 	byte *smallBlock = (byte *)(smallFirstFree[bytes / ALIGN]);
 	if ( smallBlock ) {
-		dword *link = (dword *)(smallBlock + SMALL_HEADER_SIZE);
+		UINT_PTR *link = (UINT_PTR *)(smallBlock + SMALL_HEADER_SIZE);
 		smallBlock[1] = SMALL_ALLOC;					// allocation identifier
 		smallFirstFree[bytes / ALIGN] = (void *)(*link);
 		return (void *)(link);
@@ -619,7 +619,7 @@ void idHeap::SmallFree( void *ptr ) {
 	((byte *)(ptr))[-1] = INVALID_ALLOC;
 
 	byte *d = ( (byte *)ptr ) - SMALL_HEADER_SIZE;
-	dword *dt = (dword *)ptr;
+	UINT_PTR *dt = (UINT_PTR *)ptr;
 	// index into the table with free small memory blocks
 	dword ix = *d;
 
@@ -628,7 +628,7 @@ void idHeap::SmallFree( void *ptr ) {
 		idLib::common->FatalError( "SmallFree: invalid memory block" );
 	}
 
-	*dt = (dword)smallFirstFree[ix];	// write next index
+	*dt = (UINT_PTR)smallFirstFree[ix];	// write next pointer
 	smallFirstFree[ix] = (void *)d;		// link
 }
 
@@ -960,8 +960,8 @@ void *idHeap::LargeAllocate( dword bytes ) {
 	}
 
 	byte *	d	= (byte*)(p->data) + ALIGN_SIZE( LARGE_HEADER_SIZE );
-	dword *	dw	= (dword*)(d - ALIGN_SIZE( LARGE_HEADER_SIZE ));
-	dw[0]		= (dword)p;				// write pointer back to page table
+	UINT_PTR *	dw	= (UINT_PTR*)(d - ALIGN_SIZE( LARGE_HEADER_SIZE ));
+	dw[0]		= (UINT_PTR)p;			// write pointer back to page table
 	d[-1]		= LARGE_ALLOC;			// allocation identifier
 
 	// link to 'large used page list'
@@ -989,7 +989,7 @@ void idHeap::LargeFree( void *ptr) {
 	((byte *)(ptr))[-1] = INVALID_ALLOC;
 
 	// get page pointer
-	pg = (idHeap::page_s *)(*((dword *)(((byte *)ptr) - ALIGN_SIZE( LARGE_HEADER_SIZE ))));
+	pg = (idHeap::page_s *)(*((UINT_PTR *)(((byte *)ptr) - ALIGN_SIZE( LARGE_HEADER_SIZE ))));
 
 	// unlink from doubly linked list
 	if ( pg->prev ) {
@@ -1174,7 +1174,7 @@ void *Mem_AllocAligned( const size_t size, const align_t align ) {
 	}
 	void *mem = mem_heap->AllocateAligned( size, align );
 	// make sure the memory is aligned
-	assert( align == ALIGN_NONE || ( ((int)mem) & (align-1)) == 0 );
+	assert( align == ALIGN_NONE || ( ((UINT_PTR)mem) & (align-1)) == 0 );
 	return mem;
 }
 
@@ -1903,7 +1903,7 @@ void *Mem_AllocAligned( const size_t size, const align_t align, const char *file
 	}
 	void *mem = Mem_AllocDebugMemory( size, fileName, lineNumber, align );
 	// make sure the memory is aligned
-	assert( align == ALIGN_NONE || ( ((int)mem) & (align-1)) == 0 );
+	assert( align == ALIGN_NONE || ( ((UINT_PTR)mem) & (align-1)) == 0 );
 	return mem;
 }
 

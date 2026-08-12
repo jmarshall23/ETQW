@@ -184,7 +184,9 @@ public:
 extern sdRenderBindings renderBindings;
 extern sdRenderBindings* rbinds;
 
+#if defined( _M_IX86 )
 static_assert( sizeof( sdRenderBindings ) == 708, "sdRenderBindings must match the ETQW PDB layout" );
+#endif
 
 ID_INLINE void sdRenderBindings::Init() {
 #define INIT_RENDER_BINDING( member ) \

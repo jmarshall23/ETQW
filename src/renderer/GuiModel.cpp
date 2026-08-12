@@ -803,6 +803,16 @@ void sdGuiModel::SubmitFrameVulkan() {
 				continue;
 			}
 			idImage* image = ResolveVulkanStageImage( stage, overrideImage );
+			// Legacy postprocess programs obtain their inputs from framebuffer render
+			// bindings rather than material textures.  Until a Vulkan implementation
+			// exists for a particular pass, omitting it preserves the already-rendered
+			// scene.  Substituting the generic white image here turns an unresolved
+			// full-screen pass (notably postprocess/glow without the x86 Cg runtime)
+			// into an opaque white quad on x64.
+			if ( image == NULL && stage->renderProgram != NULL &&
+				idStr::Icmpn( stage->renderProgram->GetName(), "postprocess/", 12 ) == 0 ) {
+				continue;
+			}
 			if ( image == NULL && globalImages != NULL ) {
 				image = globalImages->whiteImage;
 			}

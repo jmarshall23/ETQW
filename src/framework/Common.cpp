@@ -891,7 +891,7 @@ void idCommonLocal::LoadGameDLL() {
 	if ( dllPath[ 0 ] == '\0' ) {
 		idStr localDLL = Sys_EXEPath();
 		localDLL.StripFilename();
-		localDLL.AppendPath( "gamex86.dll" );
+		localDLL.AppendPath( "game" CPUSTRING ".dll" );
 		if ( fileSystem->FileExistsExplicit( localDLL ) ) {
 			idStr::Copynz( dllPath, localDLL, sizeof( dllPath ) );
 		}
