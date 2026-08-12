@@ -171,12 +171,27 @@ void SetMouseGrab( bool grab ) {
 		win32.mouseGrabbed = false;
 		return;
 	}
-	SDL_SetWindowGrab( win32.sdlWindow, grab ? SDL_TRUE : SDL_FALSE );
-	if ( SDL_SetRelativeMouseMode( grab ? SDL_TRUE : SDL_FALSE ) != 0 ) {
-		common->DPrintf( "SDL_SetRelativeMouseMode failed: %s\n", SDL_GetError() );
+	if ( !grab ) {
+		SDL_SetRelativeMouseMode( SDL_FALSE );
+		SDL_SetWindowGrab( win32.sdlWindow, SDL_FALSE );
+		SDL_ShowCursor( SDL_ENABLE );
+		win32.mouseGrabbed = false;
+		return;
 	}
-	SDL_ShowCursor( grab ? SDL_DISABLE : SDL_ENABLE );
-	win32.mouseGrabbed = grab;
+
+	SDL_SetWindowGrab( win32.sdlWindow, SDL_TRUE );
+	if ( SDL_SetRelativeMouseMode( SDL_TRUE ) != 0 ) {
+		// Startup can reach this point just before Windows transfers focus to
+		// the newly shown window.  Do not claim success: IN_Frame will retry
+		// once the SDL focus event arrives.
+		common->DPrintf( "SDL_SetRelativeMouseMode failed: %s\n", SDL_GetError() );
+		SDL_SetWindowGrab( win32.sdlWindow, SDL_FALSE );
+		SDL_ShowCursor( SDL_ENABLE );
+		win32.mouseGrabbed = false;
+		return;
+	}
+	SDL_ShowCursor( SDL_DISABLE );
+	win32.mouseGrabbed = SDL_GetRelativeMouseMode() == SDL_TRUE;
 }
 
 class idKeyboardSDL : public idKeyboard {

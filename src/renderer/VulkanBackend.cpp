@@ -22,6 +22,11 @@
 
 #include <windows.h>
 
+#include "draw_raytracing.h"
+
+extern idCVar r_offsetFactor;
+extern idCVar r_offsetUnits;
+
 namespace {
 
 const int NUM_VULKAN_FRAMES = 2;
@@ -217,6 +222,38 @@ unsigned int ClampUnsigned( unsigned int value, unsigned int minimum,
 	return value;
 }
 
+void AppendRayTracingInstances( idList< sdRayTracingGeometry >& destination,
+	const sdRayTracingGeometry& source, const viewEntity_s* space ) {
+	if ( space == NULL || space->numInsts <= 0 || space->insts == NULL ) {
+		destination.Append( source );
+		return;
+	}
+	for ( int instanceIndex = 0; instanceIndex < space->numInsts;
+		++instanceIndex ) {
+		const sdInstInfo& instance = space->insts[ instanceIndex ];
+		sdRayTracingGeometry geometry = source;
+		geometry.transform[ 0 ] = instance.inst.axis[ 0 ].x;
+		geometry.transform[ 1 ] = instance.inst.axis[ 1 ].x;
+		geometry.transform[ 2 ] = instance.inst.axis[ 2 ].x;
+		geometry.transform[ 3 ] = instance.inst.origin.x;
+		geometry.transform[ 4 ] = instance.inst.axis[ 0 ].y;
+		geometry.transform[ 5 ] = instance.inst.axis[ 1 ].y;
+		geometry.transform[ 6 ] = instance.inst.axis[ 2 ].y;
+		geometry.transform[ 7 ] = instance.inst.origin.y;
+		geometry.transform[ 8 ] = instance.inst.axis[ 0 ].z;
+		geometry.transform[ 9 ] = instance.inst.axis[ 1 ].z;
+		geometry.transform[ 10 ] = instance.inst.axis[ 2 ].z;
+		geometry.transform[ 11 ] = instance.inst.origin.z;
+		// Static stuff instances share immutable mesh data and therefore share a
+		// BLAS.  If an instanced surface is deforming, the instance is the owner
+		// so its frame-ring BLAS cannot be overwritten by a sibling instance.
+		if ( geometry.deforming ) {
+			geometry.geometryOwner = &space->insts[ instanceIndex ];
+		}
+		destination.Append( geometry );
+	}
+}
+
 } // namespace
 
 struct sdVulkanBackendState {
@@ -397,6 +434,7 @@ struct sdVulkanBackendState {
 	PFN_vkCmdEndRendering				CmdEndRendering;
 	PFN_vkCmdSetViewport				CmdSetViewport;
 	PFN_vkCmdSetScissor				CmdSetScissor;
+	PFN_vkCmdSetDepthBias			CmdSetDepthBias;
 	PFN_vkCmdBindPipeline				CmdBindPipeline;
 	PFN_vkCmdBindDescriptorSets		CmdBindDescriptorSets;
 	PFN_vkCmdPushConstants				CmdPushConstants;
@@ -826,6 +864,7 @@ bool LoadDeviceFunctions( sdVulkanBackendState& state ) {
 	LOAD_DEVICE_FUNCTION( CmdEndRendering );
 	LOAD_DEVICE_FUNCTION( CmdSetViewport );
 	LOAD_DEVICE_FUNCTION( CmdSetScissor );
+	LOAD_DEVICE_FUNCTION( CmdSetDepthBias );
 	LOAD_DEVICE_FUNCTION( CmdBindPipeline );
 	LOAD_DEVICE_FUNCTION( CmdBindDescriptorSets );
 	LOAD_DEVICE_FUNCTION( CmdPushConstants );
@@ -990,6 +1029,16 @@ bool SurfaceIsUsable( sdVulkanBackendState& state, VkPhysicalDevice device ) {
 		&presentModeCount, NULL ) == VK_SUCCESS && presentModeCount != 0;
 }
 
+bool SurfaceSupportsRayTracingImages( sdVulkanBackendState& state,
+	VkPhysicalDevice device ) {
+	VkSurfaceCapabilitiesKHR capabilities;
+	memset( &capabilities, 0, sizeof( capabilities ) );
+	return state.GetPhysicalDeviceSurfaceCapabilitiesKHR( device, state.surface,
+		&capabilities ) == VK_SUCCESS &&
+		( capabilities.supportedUsageFlags & VK_IMAGE_USAGE_STORAGE_BIT ) != 0 &&
+		( capabilities.supportedUsageFlags & VK_IMAGE_USAGE_TRANSFER_SRC_BIT ) != 0;
+}
+
 bool SelectPhysicalDevice( sdVulkanBackendState& state ) {
 	unsigned int count = 0;
 	if ( !CheckVulkanResult( state.EnumeratePhysicalDevices( state.instance,
@@ -1027,7 +1076,8 @@ bool SelectPhysicalDevice( sdVulkanBackendState& state ) {
 		features2.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2;
 		features2.pNext = &features13;
 		state.GetPhysicalDeviceFeatures2( devices[ i ], &features2 );
-		if ( !features13.dynamicRendering || !features13.synchronization2 ) {
+		if ( !features13.dynamicRendering || !features13.synchronization2 ||
+			!features13.shaderDemoteToHelperInvocation ) {
 			continue;
 		}
 
@@ -1048,7 +1098,7 @@ bool SelectPhysicalDevice( sdVulkanBackendState& state ) {
 	}
 
 	if ( state.physicalDevice == VK_NULL_HANDLE ) {
-		common->Warning( "No Vulkan 1.3 device supports swapchain, dynamic rendering, and synchronization2" );
+		common->Warning( "No Vulkan 1.3 device supports the required swapchain and shader features" );
 		return false;
 	}
 	state.GetPhysicalDeviceMemoryProperties( state.physicalDevice,
@@ -1056,7 +1106,8 @@ bool SelectPhysicalDevice( sdVulkanBackendState& state ) {
 	return true;
 }
 
-bool CreateLogicalDevice( sdVulkanBackendState& state ) {
+bool CreateLogicalDevice( sdVulkanBackendState& state,
+	sdRayTracingDeviceConfiguration& rayTracingConfiguration ) {
 	const float queuePriority = 1.0f;
 	VkDeviceQueueCreateInfo queueCreateInfo;
 	memset( &queueCreateInfo, 0, sizeof( queueCreateInfo ) );
@@ -1070,15 +1121,26 @@ bool CreateLogicalDevice( sdVulkanBackendState& state ) {
 	features13.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_3_FEATURES;
 	features13.dynamicRendering = VK_TRUE;
 	features13.synchronization2 = VK_TRUE;
+	features13.shaderDemoteToHelperInvocation = VK_TRUE;
+	features13.pNext = &rayTracingConfiguration.bufferDeviceAddress;
 
-	const char* extensions[] = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
+	const char* extensions[ 4 ];
+	unsigned int extensionCount = 0;
+	extensions[ extensionCount++ ] = VK_KHR_SWAPCHAIN_EXTENSION_NAME;
+	for ( unsigned int extensionIndex = 0;
+		extensionIndex < rayTracingConfiguration.deviceExtensionCount;
+		++extensionIndex ) {
+		extensions[ extensionCount++ ] =
+			rayTracingConfiguration.deviceExtensions[ extensionIndex ];
+	}
 	VkDeviceCreateInfo createInfo;
 	memset( &createInfo, 0, sizeof( createInfo ) );
 	createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 	createInfo.pNext = &features13;
+	createInfo.pEnabledFeatures = &rayTracingConfiguration.coreFeatures;
 	createInfo.queueCreateInfoCount = 1;
 	createInfo.pQueueCreateInfos = &queueCreateInfo;
-	createInfo.enabledExtensionCount = 1;
+	createInfo.enabledExtensionCount = extensionCount;
 	createInfo.ppEnabledExtensionNames = extensions;
 	if ( !CheckVulkanResult( state.CreateDevice( state.physicalDevice,
 		&createInfo, NULL, &state.device ), "vkCreateDevice" ) ) {
@@ -1430,6 +1492,13 @@ bool CreateSwapchain( sdVulkanBackendState& state, int requestedWidth,
 		imageCount = capabilities.maxImageCount;
 	}
 	VkImageUsageFlags imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+	if ( R_RayTracingIsInitialized() || R_RayTracingRequested() ) {
+		if ( ( capabilities.supportedUsageFlags & VK_IMAGE_USAGE_STORAGE_BIT ) == 0 ) {
+			common->Warning( "The Vulkan surface cannot expose swapchain storage images required by ray tracing" );
+			return false;
+		}
+		imageUsage |= VK_IMAGE_USAGE_STORAGE_BIT;
+	}
 	if ( capabilities.supportedUsageFlags & VK_IMAGE_USAGE_TRANSFER_SRC_BIT ) {
 		imageUsage |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
 	}
@@ -1757,6 +1826,13 @@ bool CreateBufferAllocation( sdVulkanBackendState& state, VkDeviceSize bytes,
 	VkMemoryAllocateInfo allocateInfo;
 	memset( &allocateInfo, 0, sizeof( allocateInfo ) );
 	allocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+	VkMemoryAllocateFlagsInfo addressFlags;
+	memset( &addressFlags, 0, sizeof( addressFlags ) );
+	if ( ( usage & VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT ) != 0 ) {
+		addressFlags.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO;
+		addressFlags.flags = VK_MEMORY_ALLOCATE_DEVICE_ADDRESS_BIT;
+		allocateInfo.pNext = &addressFlags;
+	}
 	allocateInfo.allocationSize = requirements.size;
 	allocateInfo.memoryTypeIndex = memoryType;
 	if ( !CheckVulkanResult( state.AllocateMemory( state.device, &allocateInfo,
@@ -2109,6 +2185,7 @@ bool CreateWorldPipelineVariant( sdVulkanBackendState& state,
 	rasterization.polygonMode = VK_POLYGON_MODE_FILL;
 	rasterization.cullMode = VK_CULL_MODE_NONE;
 	rasterization.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
+	rasterization.depthBiasEnable = VK_TRUE;
 	rasterization.lineWidth = 1.0f;
 	VkPipelineMultisampleStateCreateInfo multisample;
 	memset( &multisample, 0, sizeof( multisample ) );
@@ -2141,11 +2218,11 @@ bool CreateWorldPipelineVariant( sdVulkanBackendState& state,
 	blendState.attachmentCount = 1;
 	blendState.pAttachments = &blendAttachment;
 	const VkDynamicState dynamicStates[] = { VK_DYNAMIC_STATE_VIEWPORT,
-		VK_DYNAMIC_STATE_SCISSOR };
+		VK_DYNAMIC_STATE_SCISSOR, VK_DYNAMIC_STATE_DEPTH_BIAS };
 	VkPipelineDynamicStateCreateInfo dynamicState;
 	memset( &dynamicState, 0, sizeof( dynamicState ) );
 	dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
-	dynamicState.dynamicStateCount = 2;
+	dynamicState.dynamicStateCount = 3;
 	dynamicState.pDynamicStates = dynamicStates;
 	VkPipelineRenderingCreateInfo renderingInfo;
 	memset( &renderingInfo, 0, sizeof( renderingInfo ) );
@@ -2182,9 +2259,8 @@ bool CreateWorldPipeline( sdVulkanBackendState& state ) {
 		VK_BLEND_FACTOR_ZERO, true, true, false, state.worldDepthPipeline,
 		VK_COMPARE_OP_LESS_OR_EQUAL, false ) &&
 		CreateWorldPipelineVariant( state, "vkprogs/world/ambient.vert",
-		"vkprogs/world/ambient.frag", VK_BLEND_FACTOR_ONE,
-		VK_BLEND_FACTOR_ZERO, true, false, false, state.worldPipeline,
-		VK_COMPARE_OP_EQUAL ) &&
+			"vkprogs/world/ambient.frag", VK_BLEND_FACTOR_ONE,
+			VK_BLEND_FACTOR_ZERO, true, true, false, state.worldPipeline ) &&
 		CreateWorldPipelineVariant( state, "vkprogs/world/trivial.vert",
 			"vkprogs/world/trivial.frag", VK_BLEND_FACTOR_SRC_ALPHA,
 			VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA, true, false, false,
@@ -2196,20 +2272,20 @@ bool CreateWorldPipeline( sdVulkanBackendState& state ) {
 			"vkprogs/world/trivial.frag", VK_BLEND_FACTOR_SRC_ALPHA,
 			VK_BLEND_FACTOR_ONE, true, false, false, state.worldAlphaAddPipeline ) &&
 		CreateWorldPipelineVariant( state, "vkprogs/world/trivial.vert",
-			"vkprogs/world/trivial.frag", VK_BLEND_FACTOR_DST_COLOR,
+			"vkprogs/world/decal_multiply.frag", VK_BLEND_FACTOR_DST_COLOR,
 			VK_BLEND_FACTOR_ZERO, true, false, false, state.worldMultiplyPipeline ) &&
 		CreateWorldPipelineVariant( state, "vkprogs/world/mega.vert",
 			"vkprogs/world/mega.frag", VK_BLEND_FACTOR_SRC_ALPHA,
-			VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA, true, false, false,
-			state.worldMegaPipeline, VK_COMPARE_OP_EQUAL ) &&
+			VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA, true, true, false,
+			state.worldMegaPipeline ) &&
 		CreateWorldPipelineVariant( state, "vkprogs/world/atmosphere.vert",
 			"vkprogs/world/atmosphere.frag", VK_BLEND_FACTOR_ONE,
 			VK_BLEND_FACTOR_ONE, true, false, false,
 			state.worldAtmospherePipeline ) &&
 		CreateWorldPipelineVariant( state, "vkprogs/world/material.vert",
 			"vkprogs/world/material.frag", VK_BLEND_FACTOR_ONE,
-			VK_BLEND_FACTOR_ZERO, true, false, false,
-			state.worldMaterialPipeline, VK_COMPARE_OP_EQUAL ) &&
+			VK_BLEND_FACTOR_ZERO, true, true, false,
+			state.worldMaterialPipeline ) &&
 		CreateWorldPipelineVariant( state, "vkprogs/world/material.vert",
 			"vkprogs/world/material.frag", VK_BLEND_FACTOR_SRC_ALPHA,
 			VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA, true, false, false,
@@ -2219,8 +2295,8 @@ bool CreateWorldPipeline( sdVulkanBackendState& state ) {
 			VK_BLEND_FACTOR_ONE, true, false, false,
 			state.worldMaterialAddPipeline ) &&
 		CreateWorldPipelineVariant( state, "vkprogs/world/water.vert",
-			"vkprogs/world/water.frag", VK_BLEND_FACTOR_SRC_ALPHA,
-			VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA, true, true, false,
+			"vkprogs/world/water.frag", VK_BLEND_FACTOR_ONE,
+			VK_BLEND_FACTOR_ZERO, true, true, false,
 			state.worldWaterPipeline ) &&
 		CreateWorldPipelineVariant( state, "vkprogs/world/heat_haze.vert",
 			"vkprogs/world/heat_haze.frag", VK_BLEND_FACTOR_ONE,
@@ -2524,6 +2600,29 @@ bool StageUsesVulkanMaterialTextures( const materialStage_t& stage ) {
 		}
 	}
 	return false;
+}
+
+bool StageUsesCoverageFade( const materialStage_t& stage ) {
+	return stage.renderProgram != NULL &&
+		idStr::FindText( stage.renderProgram->GetName(), "coverage", false ) >= 0;
+}
+
+void SetVulkanPolygonOffset( sdVulkanBackendState& state,
+	VkCommandBuffer commandBuffer, const idMaterial* material,
+	const materialStage_t* stage ) {
+	float polygonOffset = 0.0f;
+	if ( material != NULL && material->TestMaterialFlag( MF_POLYGONOFFSET ) ) {
+		polygonOffset = material->GetPolygonOffset();
+	}
+	// A stage-local offset overrides the material-wide value, matching the
+	// legacy glPolygonOffset state applied immediately before that stage.
+	if ( stage != NULL && stage->privatePolygonOffset != 0.0f ) {
+		polygonOffset = stage->privatePolygonOffset;
+	}
+	const bool enabled = polygonOffset != 0.0f;
+	state.CmdSetDepthBias( commandBuffer,
+		enabled ? r_offsetUnits.GetFloat() * polygonOffset : 0.0f,
+		0.0f, enabled ? r_offsetFactor.GetFloat() : 0.0f );
 }
 
 bool GetVulkanMaterialDescriptor( sdVulkanBackendState& state,
@@ -3117,13 +3216,46 @@ bool sdVulkanBackend::Init( void* nativeWindow, int width, int height ) {
 	if ( !LoadVulkanLibrary( *state ) ||
 		!CreateVulkanInstance( *state ) ||
 		!CreateVulkanSurface( *state ) ||
-		!SelectPhysicalDevice( *state ) ||
-		!CreateLogicalDevice( *state ) ||
+		!SelectPhysicalDevice( *state ) ) {
+		Shutdown();
+		return false;
+	}
+	sdRayTracingDeviceConfiguration rayTracingConfiguration;
+	idStr rayTracingReason;
+	if ( !R_RayTracingConfigureDevice( state->GetPhysicalDeviceFeatures2,
+		state->EnumerateDeviceExtensionProperties, state->physicalDevice,
+		rayTracingConfiguration, rayTracingReason ) ) {
+		R_RayTracingSelectStencilFallback( rayTracingReason.c_str() );
+		Shutdown();
+		return true;
+	}
+	if ( !SurfaceSupportsRayTracingImages( *state, state->physicalDevice ) ) {
+		R_RayTracingSelectStencilFallback(
+			"the Vulkan presentation surface does not support storage and reflection-copy images" );
+		Shutdown();
+		return true;
+	}
+	if ( !CreateLogicalDevice( *state, rayTracingConfiguration ) ||
 		!CreateSwapchain( *state, width, height ) ||
 		!CreateGuiResources( *state ) ||
 		!CreateFrames( *state ) ) {
 		Shutdown();
 		return false;
+	}
+	sdRayTracingVulkanContext rayTracingContext;
+	memset( &rayTracingContext, 0, sizeof( rayTracingContext ) );
+	rayTracingContext.physicalDevice = state->physicalDevice;
+	rayTracingContext.device = state->device;
+	rayTracingContext.memoryProperties = state->memoryProperties;
+	rayTracingContext.colorFormat = state->swapchainFormat;
+	rayTracingContext.depthFormat = VK_FORMAT_D32_SFLOAT;
+	rayTracingContext.frameCount = NUM_VULKAN_FRAMES;
+	rayTracingContext.GetDeviceProcAddr = state->GetDeviceProcAddr;
+	if ( !R_RayTracingInit( rayTracingContext ) ) {
+		R_RayTracingSelectStencilFallback(
+			"the Vulkan ray-tracing resources or shader could not be initialized" );
+		Shutdown();
+		return true;
 	}
 	common->Printf( "Vulkan device: %s\n", state->deviceName );
 	common->Printf( "---------------------------------\n" );
@@ -3153,6 +3285,7 @@ void sdVulkanBackend::Shutdown() {
 	if ( state->device != VK_NULL_HANDLE && state->DeviceWaitIdle != NULL ) {
 		state->DeviceWaitIdle( state->device );
 	}
+	R_RayTracingShutdown();
 	DestroyAllImageResources( *state );
 	DestroyAllBufferResources( *state );
 	DestroyGuiResources( *state );
@@ -3225,6 +3358,7 @@ bool sdVulkanBackend::BeginFrame( int width, int height ) {
 		&frame.fence, VK_TRUE, UINT64_MAX ), "vkWaitForFences" ) ) {
 		return false;
 	}
+	R_RayTracingBeginFrame( state->frameIndex );
 	frame.guiVertexOffset = 0;
 	VkResult acquireResult = state->AcquireNextImageKHR( state->device,
 		state->swapchain, UINT64_MAX, frame.imageAvailable, VK_NULL_HANDLE,
@@ -3343,6 +3477,7 @@ bool sdVulkanBackend::BeginFrame( int width, int height ) {
 	viewport.minDepth = 0.0f;
 	viewport.maxDepth = 1.0f;
 	state->CmdSetViewport( frame.commandBuffer, 0, 1, &viewport );
+	SetVulkanPolygonOffset( *state, frame.commandBuffer, NULL, NULL );
 	VkRect2D scissor;
 	memset( &scissor, 0, sizeof( scissor ) );
 	scissor.extent = state->extent;
@@ -4123,7 +4258,9 @@ bool sdVulkanBackend::UploadBuffer( const void* owner, const void* data,
 	// block can be rebound by the reconstructed interaction/deform paths without
 	// creating a Vulkan buffer whose usage disagrees with the eventual bind.
 	const VkBufferUsageFlags usage = VK_BUFFER_USAGE_TRANSFER_DST_BIT |
-		VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT;
+		VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT |
+		VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT |
+		VK_BUFFER_USAGE_ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_BIT_KHR;
 	if ( !CreateBufferAllocation( *state, resource.bytes, usage,
 		VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, resource.buffer, resource.memory ) ||
 		!UploadBufferBytes( *state, resource.buffer, 0, data, resource.bytes,
@@ -4260,6 +4397,10 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 	}
 	state->worldSurfaceCandidates += view->numDrawSurfs;
 	bool currentRenderCopied = false;
+	idList< sdRayTracingGeometry > rayTracingGeometries;
+	idList< sdRayTracingGeometry > rayTracingWaterGeometries;
+	rayTracingGeometries.SetGranularity( 256 );
+	rayTracingWaterGeometries.SetGranularity( 32 );
 
 	for ( int surfaceIndex = 0; surfaceIndex < view->numDrawSurfs; ++surfaceIndex ) {
 		const drawSurf_s* surface = view->drawSurfs[ surfaceIndex ];
@@ -4354,6 +4495,8 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			continue;
 		}
 		state->worldMaterialReady++;
+		SetVulkanPolygonOffset( *state, frame.commandBuffer,
+			surface->material, selectedStage );
 		const bool selectedAtmosphereStage = selectedStage->renderProgram != NULL &&
 			idStr::Icmp( selectedStage->renderProgram->GetName(), "sfx/atmos" ) == 0;
 		const bool selectedWaterStage = selectedStage->renderProgram != NULL &&
@@ -4430,6 +4573,42 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 		// pointer into that growable array.
 		const VkDescriptorSet selectedImageDescriptorSet =
 			imageResource->descriptorSet;
+		if ( !selectedWaterStage &&
+			surface->material->Coverage() != MC_TRANSLUCENT &&
+			surface->material->SurfaceCastsShadow() ) {
+			sdRayTracingGeometry geometry;
+			memset( &geometry, 0, sizeof( geometry ) );
+			geometry.deforming = surface->geo->deformedSurface ||
+				surface->geo->deformedSurfaceInstance ||
+				surface->geo->hardwareSkinnedSurface ||
+				surface->geo->frameAlloced || surface->geo->weightCache != NULL;
+			geometry.geometryOwner = geometry.deforming &&
+				surface->space->entityDef != NULL ?
+				static_cast< const void* >( surface->space->entityDef ) :
+				static_cast< const void* >( surface->geo );
+			geometry.surfaceId = surface->surfID;
+			geometry.vertexBuffer = vertexResource->buffer;
+			geometry.vertexOffset = vertexCacheBlock->offset;
+			geometry.vertexCount = surface->geo->numVerts;
+			geometry.indexBuffer = indexResource->buffer;
+			geometry.indexOffset = indexCacheBlock->offset;
+			geometry.indexCount = surface->geo->numIndexes;
+			const float* modelMatrix = surface->space->modelMatrix;
+			geometry.transform[ 0 ] = modelMatrix[ 0 ];
+			geometry.transform[ 1 ] = modelMatrix[ 4 ];
+			geometry.transform[ 2 ] = modelMatrix[ 8 ];
+			geometry.transform[ 3 ] = modelMatrix[ 12 ];
+			geometry.transform[ 4 ] = modelMatrix[ 1 ];
+			geometry.transform[ 5 ] = modelMatrix[ 5 ];
+			geometry.transform[ 6 ] = modelMatrix[ 9 ];
+			geometry.transform[ 7 ] = modelMatrix[ 13 ];
+			geometry.transform[ 8 ] = modelMatrix[ 2 ];
+			geometry.transform[ 9 ] = modelMatrix[ 6 ];
+			geometry.transform[ 10 ] = modelMatrix[ 10 ];
+			geometry.transform[ 11 ] = modelMatrix[ 14 ];
+			AppendRayTracingInstances( rayTracingGeometries, geometry,
+				surface->space );
+		}
 		state->worldResourceReady++;
 		VkDescriptorSet materialDescriptorSet = VK_NULL_HANDLE;
 		const bool materialTexturesAvailable = selectedMegaTexture == NULL &&
@@ -4449,6 +4628,84 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			// A water stage's generic selected image is normally its white
 			// specular lookup.  It is never a meaningful visual fallback.
 			continue;
+		}
+		if ( selectedWaterStage ) {
+			sdRayTracingGeometry geometry;
+			memset( &geometry, 0, sizeof( geometry ) );
+			geometry.deforming = surface->geo->deformedSurface ||
+				surface->geo->deformedSurfaceInstance ||
+				surface->geo->hardwareSkinnedSurface ||
+				surface->geo->frameAlloced || surface->geo->weightCache != NULL;
+			geometry.geometryOwner = geometry.deforming &&
+				surface->space->entityDef != NULL ?
+				static_cast< const void* >( surface->space->entityDef ) :
+				static_cast< const void* >( surface->geo );
+			geometry.surfaceId = surface->surfID;
+			geometry.vertexBuffer = vertexResource->buffer;
+			geometry.vertexOffset = vertexCacheBlock->offset;
+			geometry.vertexCount = surface->geo->numVerts;
+			geometry.indexBuffer = indexResource->buffer;
+			geometry.indexOffset = indexCacheBlock->offset;
+			geometry.indexCount = surface->geo->numIndexes;
+			const float* modelMatrix = surface->space->modelMatrix;
+			geometry.transform[ 0 ] = modelMatrix[ 0 ];
+			geometry.transform[ 1 ] = modelMatrix[ 4 ];
+			geometry.transform[ 2 ] = modelMatrix[ 8 ];
+			geometry.transform[ 3 ] = modelMatrix[ 12 ];
+			geometry.transform[ 4 ] = modelMatrix[ 1 ];
+			geometry.transform[ 5 ] = modelMatrix[ 5 ];
+			geometry.transform[ 6 ] = modelMatrix[ 9 ];
+			geometry.transform[ 7 ] = modelMatrix[ 13 ];
+			geometry.transform[ 8 ] = modelMatrix[ 2 ];
+			geometry.transform[ 9 ] = modelMatrix[ 6 ];
+			geometry.transform[ 10 ] = modelMatrix[ 10 ];
+			geometry.transform[ 11 ] = modelMatrix[ 14 ];
+			idVec3 localWaterNormal( 0.0f, 0.0f, 1.0f );
+			if ( surface->geo->facePlanesCalculated &&
+				surface->geo->facePlanes != NULL ) {
+				localWaterNormal = surface->geo->facePlanes[ 0 ].Normal();
+			} else if ( surface->geo->verts != NULL &&
+				surface->geo->indexes != NULL ) {
+				for ( int triangleIndex = 0;
+					triangleIndex + 2 < surface->geo->numIndexes;
+					triangleIndex += 3 ) {
+					const glIndex_t index0 = surface->geo->indexes[ triangleIndex + 0 ];
+					const glIndex_t index1 = surface->geo->indexes[ triangleIndex + 1 ];
+					const glIndex_t index2 = surface->geo->indexes[ triangleIndex + 2 ];
+					if ( index0 >= surface->geo->numVerts ||
+						index1 >= surface->geo->numVerts ||
+						index2 >= surface->geo->numVerts ) {
+						continue;
+					}
+					localWaterNormal =
+						( surface->geo->verts[ index1 ].xyz -
+							surface->geo->verts[ index0 ].xyz ).Cross(
+							surface->geo->verts[ index2 ].xyz -
+							surface->geo->verts[ index0 ].xyz );
+					if ( localWaterNormal.Normalize() > 0.001f ) {
+						break;
+					}
+				}
+			}
+			idVec3 worldWaterNormal(
+				modelMatrix[ 0 ] * localWaterNormal.x +
+					modelMatrix[ 4 ] * localWaterNormal.y +
+					modelMatrix[ 8 ] * localWaterNormal.z,
+				modelMatrix[ 1 ] * localWaterNormal.x +
+					modelMatrix[ 5 ] * localWaterNormal.y +
+					modelMatrix[ 9 ] * localWaterNormal.z,
+				modelMatrix[ 2 ] * localWaterNormal.x +
+					modelMatrix[ 6 ] * localWaterNormal.y +
+					modelMatrix[ 10 ] * localWaterNormal.z );
+			if ( worldWaterNormal.Normalize() <= 0.001f ) {
+				worldWaterNormal.Set( 0.0f, 0.0f, 1.0f );
+			}
+			geometry.normal[ 0 ] = worldWaterNormal.x;
+			geometry.normal[ 1 ] = worldWaterNormal.y;
+			geometry.normal[ 2 ] = worldWaterNormal.z;
+			geometry.normal[ 3 ] = 0.0f;
+			AppendRayTracingInstances( rayTracingWaterGeometries, geometry,
+				surface->space );
 		}
 		VkDescriptorSet heatHazeDescriptorSet = VK_NULL_HANDLE;
 		const bool heatHazeTexturesAvailable = selectedHeatHazeStage &&
@@ -4723,11 +4980,12 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			// is not baked into the distorted scene texture.
 			currentRenderCopied = true;
 		}
-		const bool requiresDepthPrepass =
-			( surface->material->Coverage() != MC_TRANSLUCENT ||
-			  selectedStuffGrassStage ) &&
-			!selectedAtmosphereStage && !selectedWaterStage &&
-			!selectedHeatHazeStage && state->worldDepthPipeline != VK_NULL_HANDLE;
+		// Each material vertex program is compiled independently. Requiring the
+		// color pass to reproduce a separate ambient prepass at bit-exact EQUAL
+		// depth left thin black seams and polygon-sized holes on terrain, models,
+		// and their water reflections. Opaque base pipelines now write depth while
+		// shading, so there is one authoritative rasterization per surface.
+		const bool requiresDepthPrepass = false;
 		if ( requiresDepthPrepass ) {
 			state->CmdBindPipeline( frame.commandBuffer,
 				VK_PIPELINE_BIND_POINT_GRAPHICS, state->worldDepthPipeline );
@@ -4863,6 +5121,10 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 				materialPipeline = state->worldAlphaAddPipeline;
 			} else if ( blendBits == 0x03 ) {
 				materialPipeline = state->worldMultiplyPipeline;
+				pushConstants[ 30 ] = StageUsesCoverageFade( *selectedStage ) ?
+					idMath::ClampFloat( 0.0f, 1.0f,
+						surface->space->coverage ) : 1.0f;
+				pushConstants[ 31 ] = 0.0f;
 			} else if ( surface->material->Coverage() == MC_TRANSLUCENT ) {
 				materialPipeline = state->worldAlphaPipeline;
 			}
@@ -4887,11 +5149,19 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 				continue;
 			}
 
-			// Preserve additional blended material stages in declaration order.
-			// The base selection above chooses the best diffuse-capable stage; these
-			// passes restore decals, glows, detail modulation, and other overlays
-			// that the one-stage fallback previously discarded entirely.
-			for ( int stageIndex = 0;
+			// Opaque interaction materials (including basic_detail/basic_detailwm)
+			// are one complete surface program. Replaying another declaration stage
+			// over the same triangles gives the two rasterizations slightly different
+			// visibility at close range and looks like LOD Z fighting. Their diffuse,
+			// bump, specular, and self-illumination inputs are already folded into the
+			// selected material descriptor above. Multi-stage replay is retained only
+			// for genuinely translucent effects, where declaration-order blending is
+			// part of the material rather than a second opaque surface pass. Water has
+			// its own fully composed refraction shader and must never be replayed here.
+			const bool allowAdditionalStages =
+				surface->material->Coverage() == MC_TRANSLUCENT &&
+				!selectedWaterStage;
+			for ( int stageIndex = 0; allowAdditionalStages &&
 				stageIndex < surface->material->GetNumStages(); ++stageIndex ) {
 				const materialStage_t* overlayStage =
 					surface->material->GetStage( stageIndex );
@@ -4978,6 +5248,11 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 					overlayPipeline = state->worldAlphaAddPipeline;
 				} else if ( overlayBlendBits == 0x03 ) {
 					overlayPipeline = state->worldMultiplyPipeline;
+					overlayPushConstants[ 30 ] =
+						StageUsesCoverageFade( *overlayStage ) ?
+						idMath::ClampFloat( 0.0f, 1.0f,
+							surface->space->coverage ) : 1.0f;
+					overlayPushConstants[ 31 ] = 0.0f;
 				}
 				VkDescriptorSet overlayDescriptorSet = overlayResource->descriptorSet;
 				if ( StageUsesVulkanMaterialTextures( *overlayStage ) ) {
@@ -4998,6 +5273,8 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 				}
 				state->CmdBindPipeline( frame.commandBuffer,
 					VK_PIPELINE_BIND_POINT_GRAPHICS, overlayPipeline );
+				SetVulkanPolygonOffset( *state, frame.commandBuffer,
+					surface->material, overlayStage );
 				state->CmdBindDescriptorSets( frame.commandBuffer,
 					VK_PIPELINE_BIND_POINT_GRAPHICS, state->guiPipelineLayout, 0, 1,
 					&overlayDescriptorSet, 0, NULL );
@@ -5015,6 +5292,38 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			idStr::Icmp( surface->space->model->Name(), "_MD5_Snapshot_" ) == 0 ) {
 			state->worldSkinnedDrawCalls++;
 		}
+	}
+
+	if ( rayTracingGeometries.Num() != 0 && R_RayTracingIsInitialized() ) {
+		sdRayTracingViewContext rayTracingView;
+		memset( &rayTracingView, 0, sizeof( rayTracingView ) );
+		rayTracingView.commandBuffer = frame.commandBuffer;
+		rayTracingView.frameIndex = state->frameIndex;
+		rayTracingView.colorImage = state->swapchainImages[ state->imageIndex ];
+		rayTracingView.colorImageView = state->swapchainViews[ state->imageIndex ];
+		rayTracingView.depthImage = state->depthImages[ state->imageIndex ];
+		rayTracingView.depthImageView = state->depthViews[ state->imageIndex ];
+		if ( currentRenderCopied && state->currentRenderInitialized ) {
+			rayTracingView.reflectionImage = state->currentRenderResource.image;
+			rayTracingView.reflectionImageView = state->currentRenderResource.view;
+			rayTracingView.reflectionSampler = state->currentRenderResource.sampler;
+		}
+		rayTracingView.framebufferExtent = state->extent;
+		rayTracingView.viewport.offset.x = idMath::ClampInt( 0,
+			static_cast< int >( state->extent.width ), view->viewport.x1 );
+		rayTracingView.viewport.offset.y = idMath::ClampInt( 0,
+			static_cast< int >( state->extent.height ),
+			static_cast< int >( state->extent.height ) -
+			( view->viewport.y1 + viewportHeight ) );
+		rayTracingView.viewport.extent.width = static_cast< unsigned int >(
+			Min( viewportWidth, static_cast< int >( state->extent.width ) -
+				rayTracingView.viewport.offset.x ) );
+		rayTracingView.viewport.extent.height = static_cast< unsigned int >(
+			Min( viewportHeight, static_cast< int >( state->extent.height ) -
+				rayTracingView.viewport.offset.y ) );
+		R_RayTracingDrawView( view, rayTracingGeometries.Begin(),
+			rayTracingGeometries.Num(), rayTracingWaterGeometries.Begin(),
+			rayTracingWaterGeometries.Num(), rayTracingView );
 	}
 }
 
@@ -5109,5 +5418,6 @@ const char* sdVulkanBackend::GetDeviceName() const {
 
 bool R_UseVulkanBackend() {
 	return cvarSystem != NULL &&
-		idStr::Icmp( cvarSystem->GetCVarString( "r_renderAPI" ), "vulkan" ) == 0;
+		idStr::Icmp( cvarSystem->GetCVarString( "r_renderAPI" ), "vulkan" ) == 0 &&
+		!R_RayTracingUsingStencilFallback();
 }

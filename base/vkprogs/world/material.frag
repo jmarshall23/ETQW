@@ -35,20 +35,10 @@ void main() {
 	vec2 tangentXY = vec2( packedNormal.a, packedNormal.g ) * 2.0 - 1.0;
 	float tangentZ = sqrt( max( 0.0, 1.0 - dot( tangentXY, tangentXY ) ) );
 	vec3 tangentNormal = normalize( vec3( tangentXY, tangentZ ) );
-	float sunAmount = max( dot( tangentNormal, fragmentSunDirection ), 0.0 );
-	vec3 worldNormal = normalize(
-		fragmentTangent * tangentNormal.x +
-		fragmentBitangent * tangentNormal.y +
-		fragmentNormal * tangentNormal.z );
-	// Some models do not have an area assignment during view construction.  The
-	// legacy interaction path still supplied a low ambient term for those spaces;
-	// keep that floor while using the authored cube wherever it is available.
-	vec3 ambientLight = max( texture( ambientCubeTexture, worldNormal ).rgb,
-		vec3( 0.12 ) );
-	vec3 specular = texture( specularTexture, fragmentTexCoord ).rgb;
 	vec3 selfIllum = texture( selfIllumTexture, fragmentTexCoord ).rgb;
-	vec3 litDiffuse = diffuse.rgb * ( ambientLight + vec3( 0.65 * sunAmount ) );
-	vec3 highlight = specular * pow( sunAmount, 20.0 ) * 0.45;
-	outColor = vec4( ( litDiffuse + highlight + selfIllum ) * fragmentColor.rgb,
+	// Direct and ambient illumination are applied once, after opaque visibility,
+	// by vkprogs/raytracing/lighting.comp.  This pass only supplies material
+	// albedo and authored emission to that ray-query lighting stage.
+	outColor = vec4( ( diffuse.rgb + selfIllum ) * fragmentColor.rgb,
 		diffuse.a * fragmentColor.a );
 }

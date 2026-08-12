@@ -17,13 +17,13 @@
     {
       "name": "vs2022-x64",
       "displayName": "ETQW x64 (Visual Studio 2022)",
-      "description": "Configures the standalone 64-bit CMake build tree in ../out-x64.",
+      "description": "Configures x64 Visual Studio projects and writes etqw64.exe/gamex64.dll to the workspace root.",
       "generator": "Visual Studio 17 2022",
       "architecture": "x64",
       "binaryDir": "${sourceDir}/../out-x64",
       "cacheVariables": {
         "ETQW_BUILD_STAGING_DIR": "${sourceDir}/../build/x64",
-        "ETQW_RUNTIME_DIR": "${sourceDir}/../runtime/x64"
+        "ETQW_RUNTIME_DIR": "${sourceDir}/.."
       }
     }
   ],

@@ -11,6 +11,7 @@
 #include "RenderSystemBackend.h"
 #include "RuntimeSpirvCompiler.h"
 #include "VulkanBackend.h"
+#include "draw_raytracing.h"
 #include "image_processor.h"
 #include "image_resampler.h"
 #include "renderbindings.h"
@@ -531,6 +532,7 @@ void idRenderSystemLocal::Init() {
 
 	renderSystemBackend.Init();
 	R_InitRuntimeSpirvCompiler();
+	R_RayTracingResetBackendSelection();
 	openGLRunning = false;
 	if ( sys3D != NULL && sys3D->GetGameRenderContext() != NULL ) {
 		if ( !sys3D->MakeCurrent( sys3D->GetGameWindow() ) ) {
@@ -641,6 +643,13 @@ bool idRenderSystemLocal::IsOpenGLRunning() const {
 }
 
 void idRenderSystemLocal::BeginLevelLoad() {
+	// Map geometry owns the persistent BLAS cache for the duration of a level.
+	// Retire it only at this explicit lifetime boundary, never from a render
+	// frame.  WaitIdle makes the old map's TLAS references safe to release.
+	if ( vulkanBackend.IsInitialized() && R_RayTracingIsInitialized() ) {
+		vulkanBackend.WaitIdle();
+		R_RayTracingPurgeGeometryCache();
+	}
 	if ( renderModelManager != NULL ) {
 		renderModelManager->BeginLevelLoad();
 	}

@@ -22,5 +22,4 @@ void main() {
 		discard;
 	}
 	outColor = sampled * fragmentColor;
-	outColor.rgb *= fragmentLighting;
 }

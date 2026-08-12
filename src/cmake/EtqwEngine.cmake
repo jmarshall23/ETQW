@@ -44,6 +44,7 @@ set(ETQW_RENDERER_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/draw_foglights.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/draw_new.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/draw_ocq.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/renderer/draw_raytracing.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/draw_shadow.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/draw_shadowmap.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/dynamicmodelcache.cpp"
@@ -365,17 +366,17 @@ target_link_options(etqw PRIVATE
     /LARGEADDRESSAWARE
     /STACK:4194304,4194304
     "$<$<CONFIG:Release>:/DEBUG:FULL>"
-    "$<$<CONFIG:Release>:/MAP:${ETQW_RUNTIME_DIR}/etqw-${ETQW_ARCH_SUFFIX}.map>"
+    "$<$<CONFIG:Release>:/MAP:${ETQW_RUNTIME_DIR}/${ETQW_EXECUTABLE_NAME}.map>"
 )
 set_target_properties(etqw PROPERTIES
-    OUTPUT_NAME "etqw"
+    OUTPUT_NAME "${ETQW_EXECUTABLE_NAME}"
     RUNTIME_OUTPUT_DIRECTORY "${ETQW_RUNTIME_DIR}"
     VS_DEBUGGER_WORKING_DIRECTORY "${ETQW_WORKSPACE_ROOT}"
     FOLDER "ETQW"
 )
 
-# The Win32 game can launch these 64-bit tools directly. Stage self-contained
-# SDK executables beside etqw.exe so runtime shader compilation does not depend
+# The engine can launch these SDK tools directly. Stage self-contained
+# executables beside the engine so runtime shader compilation does not depend
 # on a developer machine having VULKAN_SDK configured.
 find_program(ETQW_GLSLANG_VALIDATOR_EXECUTABLE
     NAMES glslangValidator.exe glslangValidator

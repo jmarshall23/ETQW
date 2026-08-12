@@ -13,8 +13,10 @@ endif()
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set(ETQW_ARCH_SUFFIX "x64")
+    set(ETQW_EXECUTABLE_NAME "etqw64")
 else()
     set(ETQW_ARCH_SUFFIX "x86")
+    set(ETQW_EXECUTABLE_NAME "etqw")
 endif()
 
 get_filename_component(ETQW_WORKSPACE_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/.." ABSOLUTE)
@@ -28,7 +30,7 @@ set(
     ETQW_RUNTIME_DIR
     "${ETQW_WORKSPACE_ROOT}"
     CACHE PATH
-    "Directory for etqw.exe and game${ETQW_ARCH_SUFFIX}.dll"
+    "Directory for ${ETQW_EXECUTABLE_NAME}.exe and game${ETQW_ARCH_SUFFIX}.dll"
 )
 
 set(CMAKE_CXX_STANDARD 98)
@@ -201,7 +203,7 @@ source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/game/Game.def"
 )
 
-set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT game)
+set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT etqw)
 
 option(
     ETQW_BUILD_ENGINE

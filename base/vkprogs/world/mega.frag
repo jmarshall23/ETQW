@@ -24,5 +24,5 @@ void main() {
 			abs( fragmentMaskCoord.y ) );
 		weight *= clamp( -32.0 * edgeDistance + 16.0, 0.0, 1.0 );
 	}
-	outColor = vec4( sampled.rgb * fragmentColor.rgb * fragmentLighting, weight );
+	outColor = vec4( sampled.rgb * fragmentColor.rgb, weight );
 }
