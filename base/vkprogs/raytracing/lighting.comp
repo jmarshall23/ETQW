@@ -1,0 +1,462 @@
+#version 460
+#extension GL_EXT_ray_query : require
+#extension GL_EXT_shader_image_load_formatted : require
+
+layout( local_size_x = 8, local_size_y = 8, local_size_z = 1 ) in;
+
+layout( set = 0, binding = 0 ) uniform accelerationStructureEXT sceneAccelerationStructure;
+// The swapchain format is selected by the window system. x64 ray tracing
+// enables the Vulkan read/write-without-format features for this binding.
+layout( set = 0, binding = 1 ) uniform image2D colorImage;
+layout( set = 0, binding = 2 ) uniform sampler2D depthImage;
+layout( set = 0, binding = 4 ) uniform sampler2D litSceneTexture;
+
+layout( push_constant ) uniform RayTracingPass {
+	uint passIndex;
+} rayPass;
+
+struct RayLight {
+	vec4 originRadius;
+	vec4 colorShadow;
+};
+
+layout( std430, set = 0, binding = 3 ) readonly buffer ViewLighting {
+	mat4 inverseViewProjection;
+	mat4 viewProjection;
+	vec4 viewOrigin;
+	vec4 viewport;
+	vec4 sunDirectionAmbient;
+	vec4 sunColorShadow;
+	// x: animation time, y: reflection strength, z: ripple strength,
+	// w: maximum ray distance.
+	vec4 waterParameters;
+	// x: light count, y: reserved, z: water instance count.
+	uvec4 lightCounts;
+	RayLight lights[ 1024 ];
+	vec4 waterNormals[ 1024 ];
+} lighting;
+
+vec3 safeNormalize( vec3 value, vec3 fallbackValue ) {
+	float lengthSquared = dot( value, value );
+	return lengthSquared > 0.0000001 && !isnan( lengthSquared ) &&
+		!isinf( lengthSquared ) ? value * inversesqrt( lengthSquared ) :
+		fallbackValue;
+}
+
+vec3 reconstructPosition( ivec2 pixel, float depth ) {
+	vec2 localPixel = vec2( pixel ) + vec2( 0.5 ) - lighting.viewport.xy;
+	vec2 ndc;
+	ndc.x = localPixel.x * ( 2.0 / lighting.viewport.z ) - 1.0;
+	// The world pass uses a negative-height Vulkan viewport.
+	ndc.y = 1.0 - localPixel.y * ( 2.0 / lighting.viewport.w );
+	vec4 world = lighting.inverseViewProjection * vec4( ndc, depth, 1.0 );
+	return world.xyz / max( abs( world.w ), 0.000001 ) * sign( world.w );
+}
+
+bool traceFilteredGeometry( vec3 origin, vec3 direction,
+	float minimumDistance, float maximumDistance, bool wantWater,
+	uint skippedInstanceIndex, uint skippedGeometryIndex,
+	uint skippedPrimitiveIndex, out float hitDistance,
+	out uint hitInstanceIndex, out uint hitGeometryIndex,
+	out uint hitPrimitiveIndex ) {
+	rayQueryEXT query;
+	rayQueryInitializeEXT( query, sceneAccelerationStructure, 0u,
+		wantWater ? 0x02u : 0x01u,
+		origin, minimumDistance, direction, maximumDistance );
+	while ( rayQueryProceedEXT( query ) ) {
+		if ( rayQueryGetIntersectionTypeEXT( query, false ) !=
+			gl_RayQueryCandidateIntersectionTriangleEXT ) {
+			continue;
+		}
+		uint instanceIndex = rayQueryGetIntersectionInstanceCustomIndexEXT(
+			query, false );
+		uint geometryIndex = rayQueryGetIntersectionGeometryIndexEXT(
+			query, false );
+		uint primitiveIndex = rayQueryGetIntersectionPrimitiveIndexEXT(
+			query, false );
+		if ( instanceIndex != skippedInstanceIndex ||
+			geometryIndex != skippedGeometryIndex ||
+			primitiveIndex != skippedPrimitiveIndex ) {
+			rayQueryConfirmIntersectionEXT( query );
+		}
+	}
+	if ( rayQueryGetIntersectionTypeEXT( query, true ) !=
+		gl_RayQueryCommittedIntersectionTriangleEXT ) {
+		hitDistance = maximumDistance;
+		hitInstanceIndex = 0xFFFFFFFFu;
+		hitGeometryIndex = 0xFFFFFFFFu;
+		hitPrimitiveIndex = 0xFFFFFFFFu;
+		return false;
+	}
+	hitDistance = rayQueryGetIntersectionTEXT( query, true );
+	hitInstanceIndex = rayQueryGetIntersectionInstanceCustomIndexEXT(
+		query, true );
+	hitGeometryIndex = rayQueryGetIntersectionGeometryIndexEXT( query, true );
+	hitPrimitiveIndex = rayQueryGetIntersectionPrimitiveIndexEXT( query, true );
+	return true;
+}
+
+float traceVisibility( vec3 origin, vec3 direction, float maximumDistance,
+	uint sourceInstanceIndex, uint sourceGeometryIndex,
+	uint sourcePrimitiveIndex ) {
+	float hitDistance;
+	uint hitInstanceIndex;
+	uint hitGeometryIndex;
+	uint hitPrimitiveIndex;
+	return traceFilteredGeometry( origin, direction, 0.5, maximumDistance,
+		false, sourceInstanceIndex, sourceGeometryIndex, sourcePrimitiveIndex,
+		hitDistance, hitInstanceIndex, hitGeometryIndex,
+		hitPrimitiveIndex ) ? 0.0 : 1.0;
+}
+
+vec3 offsetShadowOrigin( vec3 worldPosition, vec3 normal,
+	vec3 lightDirection ) {
+	float viewDistance = length( worldPosition - lighting.viewOrigin.xyz );
+	float grazing = 1.0 - clamp( dot( normal, lightDirection ), 0.0, 1.0 );
+	// ETQW's outdoor maps place geometry thousands of units from the origin.
+	// A constant sub-unit offset falls inside the source triangle after float
+	// reconstruction and produces dotted self-shadow acne. Scale conservatively
+	// with distance and add more normal separation for grazing light rays.
+	float normalBias = max( 1.5, viewDistance * 0.0012 ) *
+		mix( 1.0, 2.4, grazing );
+	return worldPosition + normal * normalBias + lightDirection * 0.35;
+}
+
+vec3 skyReflection( vec3 reflectionDirection, vec3 waterNormal ) {
+	float horizon = clamp( reflectionDirection.z * 0.5 + 0.5, 0.0, 1.0 );
+	vec3 horizonColor = vec3( 0.33, 0.47, 0.51 );
+	vec3 zenithColor = vec3( 0.055, 0.16, 0.28 );
+	vec3 sky = mix( horizonColor, zenithColor, pow( horizon, 0.62 ) );
+	vec3 sunDirection = safeNormalize( lighting.sunDirectionAmbient.xyz,
+		vec3( 0.35, 0.45, 0.82 ) );
+	float sunGlint = pow( max( dot( reflectionDirection, sunDirection ), 0.0 ),
+		420.0 );
+	float broadGlow = pow( max( dot( reflectionDirection, sunDirection ), 0.0 ),
+		28.0 );
+	return sky + lighting.sunColorShadow.rgb *
+		( sunGlint * 2.4 + broadGlow * 0.12 ) *
+		clamp( waterNormal.z, 0.0, 1.0 );
+}
+
+vec3 rippleNormal( vec3 waterPosition, vec3 geometricNormal ) {
+	float time = lighting.waterParameters.x;
+	vec2 p = waterPosition.xy;
+	vec2 direction0 = normalize( vec2( 0.86, 0.51 ) );
+	vec2 direction1 = normalize( vec2( -0.38, 0.92 ) );
+	vec2 direction2 = normalize( vec2( 0.24, -0.97 ) );
+	float phase0 = dot( p, direction0 ) * 0.042 + time * 1.16;
+	float phase1 = dot( p, direction1 ) * 0.071 - time * 0.83;
+	float phase2 = dot( p, direction2 ) * 0.118 + time * 1.47;
+	vec2 slope = direction0 * cos( phase0 ) * 0.68 +
+		direction1 * cos( phase1 ) * 0.38 +
+		direction2 * cos( phase2 ) * 0.19;
+	// Add a small interference pattern so broad waves have crisp moving crests.
+	float interference = sin( phase0 * 1.73 + phase1 * 1.19 ) *
+		cos( phase2 * 1.31 - phase0 * 0.47 );
+	slope += vec2( interference, -interference * 0.74 ) * 0.14;
+	vec3 referenceAxis = abs( geometricNormal.z ) < 0.96 ?
+		vec3( 0.0, 0.0, 1.0 ) : vec3( 0.0, 1.0, 0.0 );
+	vec3 tangent = safeNormalize( cross( referenceAxis, geometricNormal ),
+		vec3( 1.0, 0.0, 0.0 ) );
+	vec3 bitangent = safeNormalize( cross( geometricNormal, tangent ),
+		vec3( 0.0, 1.0, 0.0 ) );
+	return safeNormalize( geometricNormal - tangent * slope.x *
+		lighting.waterParameters.z - bitangent * slope.y *
+		lighting.waterParameters.z, geometricNormal );
+}
+
+bool projectReflectionHit( vec3 worldPosition, out vec2 uv,
+	out ivec2 reflectedPixel ) {
+	vec4 clip = lighting.viewProjection * vec4( worldPosition, 1.0 );
+	if ( clip.w <= 0.00001 ) {
+		uv = vec2( 0.0 );
+		reflectedPixel = ivec2( 0 );
+		return false;
+	}
+	vec2 ndc = clip.xy / clip.w;
+	vec2 localUv = vec2( ndc.x * 0.5 + 0.5, 0.5 - ndc.y * 0.5 );
+	vec2 framebufferPixel = lighting.viewport.xy +
+		localUv * lighting.viewport.zw;
+	ivec2 sceneSize = textureSize( litSceneTexture, 0 );
+	uv = framebufferPixel / vec2( sceneSize );
+	reflectedPixel = clamp( ivec2( framebufferPixel ), ivec2( 0 ),
+		sceneSize - ivec2( 1 ) );
+	if ( !all( greaterThanEqual( localUv, vec2( 0.002 ) ) ) ||
+		!all( lessThanEqual( localUv, vec2( 0.998 ) ) ) ) {
+		return false;
+	}
+
+	// The ray hit may project behind nearer geometry. Sampling the visible
+	// framebuffer in that case reflects an unrelated foreground polygon and
+	// makes it appear to swim or Z-fight across the water as the camera moves.
+	// Only reuse raster shading when the depth buffer confirms that the ray hit
+	// is actually the surface visible at the projected pixel.
+	float visibleDepth = texelFetch( depthImage, reflectedPixel, 0 ).r;
+	if ( visibleDepth >= 0.999999 ) {
+		return false;
+	}
+	vec3 visiblePosition = reconstructPosition( reflectedPixel, visibleDepth );
+	float viewDistance = length( worldPosition - lighting.viewOrigin.xyz );
+	float positionTolerance = max( 1.25, viewDistance * 0.0025 );
+	return length( visiblePosition - worldPosition ) <= positionTolerance;
+}
+
+bool visibleWaterAtPixel( ivec2 pixel, vec3 cameraRay,
+	out float waterDistance, out uint waterGeometryIndex ) {
+	float depth = texelFetch( depthImage, pixel, 0 ).r;
+	if ( depth >= 0.999999 ) {
+		return false;
+	}
+	vec3 rasterPosition = reconstructPosition( pixel, depth );
+	float rasterDistance = length( rasterPosition - lighting.viewOrigin.xyz );
+	// Reconstructed world distance loses precision at the shallow angles common
+	// on large water sheets. A tight distance cutoff quantized the reflection
+	// mask into horizontal bands. Trace with a modest world-space allowance,
+	// then classify against the water hit's projected D32 value below.
+	const float distanceTolerance = 1.0;
+	uint waterLocalGeometryIndex;
+	uint waterPrimitiveIndex;
+	if ( !traceFilteredGeometry( lighting.viewOrigin.xyz, cameraRay, 0.05,
+		rasterDistance + distanceTolerance, true, 0xFFFFFFFFu, 0xFFFFFFFFu,
+		0xFFFFFFFFu, waterDistance, waterGeometryIndex,
+		waterLocalGeometryIndex, waterPrimitiveIndex ) ) {
+		return false;
+	}
+	if ( abs( waterDistance - rasterDistance ) > distanceTolerance ) {
+		return false;
+	}
+	vec3 waterPosition = lighting.viewOrigin.xyz + cameraRay * waterDistance;
+	vec4 waterClip = lighting.viewProjection * vec4( waterPosition, 1.0 );
+	if ( waterClip.w <= 0.00001 ) {
+		return false;
+	}
+	float projectedWaterDepth = waterClip.z / waterClip.w;
+	return abs( projectedWaterDepth - depth ) <= 0.000002;
+}
+
+vec3 reconstructStableNormal( ivec2 pixel, vec3 centerPosition ) {
+	ivec2 imageExtent = textureSize( depthImage, 0 );
+	ivec2 leftPixel = max( pixel - ivec2( 1, 0 ), ivec2( 0 ) );
+	ivec2 rightPixel = min( pixel + ivec2( 1, 0 ), imageExtent - ivec2( 1 ) );
+	ivec2 upPixel = max( pixel - ivec2( 0, 1 ), ivec2( 0 ) );
+	ivec2 downPixel = min( pixel + ivec2( 0, 1 ), imageExtent - ivec2( 1 ) );
+	float leftDepth = texelFetch( depthImage, leftPixel, 0 ).r;
+	float rightDepth = texelFetch( depthImage, rightPixel, 0 ).r;
+	float upDepth = texelFetch( depthImage, upPixel, 0 ).r;
+	float downDepth = texelFetch( depthImage, downPixel, 0 ).r;
+	vec3 leftPosition = leftDepth < 0.999999 ?
+		reconstructPosition( leftPixel, leftDepth ) : centerPosition;
+	vec3 rightPosition = rightDepth < 0.999999 ?
+		reconstructPosition( rightPixel, rightDepth ) : centerPosition;
+	vec3 upPosition = upDepth < 0.999999 ?
+		reconstructPosition( upPixel, upDepth ) : centerPosition;
+	vec3 downPosition = downDepth < 0.999999 ?
+		reconstructPosition( downPixel, downDepth ) : centerPosition;
+
+	vec3 forwardX = rightPosition - centerPosition;
+	vec3 backwardX = centerPosition - leftPosition;
+	vec3 forwardY = downPosition - centerPosition;
+	vec3 backwardY = centerPosition - upPosition;
+	float forwardXLength = dot( forwardX, forwardX );
+	float backwardXLength = dot( backwardX, backwardX );
+	float forwardYLength = dot( forwardY, forwardY );
+	float backwardYLength = dot( backwardY, backwardY );
+	// At silhouettes, one neighbor belongs to a completely different surface.
+	// Selecting the shorter derivative on each axis avoids constructing a giant
+	// screen-space triangle that flips between light and dark while moving.
+	vec3 derivativeX = forwardXLength > 0.0000001 &&
+		( backwardXLength <= 0.0000001 || forwardXLength < backwardXLength ) ?
+		forwardX : backwardX;
+	vec3 derivativeY = forwardYLength > 0.0000001 &&
+		( backwardYLength <= 0.0000001 || forwardYLength < backwardYLength ) ?
+		forwardY : backwardY;
+	vec3 viewDirection = safeNormalize(
+		lighting.viewOrigin.xyz - centerPosition, vec3( 0.0, 0.0, 1.0 ) );
+	vec3 normal = safeNormalize( cross( derivativeX, derivativeY ),
+		viewDirection );
+	return dot( normal, viewDirection ) < 0.0 ? -normal : normal;
+}
+
+void shadeWaterReflection( ivec2 pixel ) {
+	if ( lighting.lightCounts.z == 0u || lighting.waterParameters.y <= 0.0 ) {
+		return;
+	}
+	vec3 farPosition = reconstructPosition( pixel, 0.99999 );
+	vec3 cameraRay = safeNormalize( farPosition - lighting.viewOrigin.xyz,
+		vec3( 0.0, 0.0, -1.0 ) );
+	float waterDistance;
+	uint waterGeometryIndex;
+	if ( !visibleWaterAtPixel( pixel, cameraRay, waterDistance,
+		waterGeometryIndex ) ) {
+		return;
+	}
+
+	vec3 waterPosition = lighting.viewOrigin.xyz + cameraRay * waterDistance;
+	uint localWaterIndex = waterGeometryIndex & 0x007FFFFFu;
+	vec3 geometricWaterNormal = localWaterIndex < lighting.lightCounts.z ?
+		safeNormalize( lighting.waterNormals[ localWaterIndex ].xyz,
+			vec3( 0.0, 0.0, 1.0 ) ) : vec3( 0.0, 0.0, 1.0 );
+	if ( dot( geometricWaterNormal, -cameraRay ) < 0.0 ) {
+		geometricWaterNormal = -geometricWaterNormal;
+	}
+	vec3 waterNormal = rippleNormal( waterPosition, geometricWaterNormal );
+	if ( dot( waterNormal, -cameraRay ) < 0.0 ) {
+		waterNormal = -waterNormal;
+	}
+	vec3 reflectionDirection = safeNormalize(
+		reflect( cameraRay, waterNormal ), waterNormal );
+	vec3 reflectionOrigin = waterPosition + waterNormal * 0.55;
+	float reflectionDistance;
+	uint reflectionInstanceIndex;
+	uint reflectionGeometryIndex;
+	uint reflectionPrimitiveIndex;
+	vec4 sourceColor = imageLoad( colorImage, pixel );
+	vec3 reflectionColor = sourceColor.rgb;
+	bool reflectedSceneValid = false;
+	if ( traceFilteredGeometry( reflectionOrigin, reflectionDirection, 0.05,
+		lighting.waterParameters.w, false, 0xFFFFFFFFu, 0xFFFFFFFFu,
+		0xFFFFFFFFu, reflectionDistance, reflectionInstanceIndex,
+		reflectionGeometryIndex,
+		reflectionPrimitiveIndex ) ) {
+		vec3 reflectionHit = reflectionOrigin +
+			reflectionDirection * reflectionDistance;
+		vec2 reflectionUv;
+		ivec2 reflectedPixel;
+		if ( projectReflectionHit( reflectionHit, reflectionUv,
+			reflectedPixel ) ) {
+			vec3 sceneReflection = max( texelFetch( litSceneTexture,
+				reflectedPixel, 0 ).rgb, vec3( 0.0 ) );
+			// Distant reflected geometry receives a touch of atmospheric blue.
+			float distanceHaze = clamp( reflectionDistance / 16000.0, 0.0, 0.52 );
+			reflectionColor = mix( sceneReflection,
+				skyReflection( reflectionDirection, waterNormal ), distanceHaze );
+			reflectedSceneValid = true;
+		}
+	}
+
+	float facing = clamp( dot( -cameraRay, waterNormal ), 0.0, 1.0 );
+	float fresnel = 0.035 + 0.965 * pow( 1.0 - facing, 5.0 );
+	float reflectionAmount = clamp( lighting.waterParameters.y *
+		( reflectedSceneValid ? mix( 0.22, 0.76, fresnel ) :
+		mix( 0.025, 0.13, fresnel ) ), 0.0, 0.88 );
+	if ( !reflectedSceneValid ) {
+		// The raster water already contains its authored cubemap. A ray hit that
+		// is behind the camera cannot be shaded from the visibility buffer, so add
+		// only a restrained sky/glint term instead of replacing it with flat blue.
+		reflectionColor = mix( sourceColor.rgb,
+			skyReflection( reflectionDirection, waterNormal ), 0.24 );
+	}
+	float crest = pow( 1.0 - clamp( abs( waterNormal.z ), 0.0, 1.0 ), 1.35 );
+	vec3 finalColor = mix( sourceColor.rgb, reflectionColor, reflectionAmount );
+	finalColor += vec3( 0.08, 0.28, 0.30 ) * crest * 0.20;
+	// Gentle filmic compression keeps sun glints bright without returning to
+	// the featureless white water that the old fallback produced.
+	finalColor = finalColor / ( vec3( 1.0 ) + max( finalColor - vec3( 1.0 ),
+		vec3( 0.0 ) ) );
+	imageStore( colorImage, pixel, vec4( max( finalColor, vec3( 0.0 ) ),
+		sourceColor.a ) );
+}
+
+void shadeLighting( ivec2 pixel ) {
+	float depth = texelFetch( depthImage, pixel, 0 ).r;
+	if ( depth >= 0.999999 ) {
+		return;
+	}
+
+	vec3 worldPosition = reconstructPosition( pixel, depth );
+	if ( lighting.lightCounts.z != 0u ) {
+		vec3 cameraVector = worldPosition - lighting.viewOrigin.xyz;
+		float visibleDistance = length( cameraVector );
+		float waterDistance;
+		uint waterGeometryIndex;
+		if ( visibleDistance > 0.001 && visibleWaterAtPixel( pixel,
+			cameraVector / visibleDistance, waterDistance,
+			waterGeometryIndex ) ) {
+			// Water is already shaded by its dedicated Fresnel/refraction program.
+			// Do not multiply it by opaque ambient/direct lighting a second time.
+			return;
+		}
+	}
+	vec3 normal = reconstructStableNormal( pixel, worldPosition );
+	vec3 viewDirection = safeNormalize(
+		lighting.viewOrigin.xyz - worldPosition, normal );
+	uint sourceInstanceIndex = 0xFFFFFFFFu;
+	uint sourceGeometryIndex = 0xFFFFFFFFu;
+	uint sourcePrimitiveIndex = 0xFFFFFFFFu;
+	vec3 cameraVector = worldPosition - lighting.viewOrigin.xyz;
+	float cameraDistance = length( cameraVector );
+	if ( cameraDistance > 0.001 ) {
+		float sourceDistance;
+		uint candidateInstanceIndex;
+		uint candidateGeometryIndex;
+		uint candidatePrimitiveIndex;
+		float sourceTolerance = max( 1.5, cameraDistance * 0.0015 );
+		if ( traceFilteredGeometry( lighting.viewOrigin.xyz,
+			cameraVector / cameraDistance, 0.05,
+			cameraDistance + sourceTolerance, false, 0xFFFFFFFFu,
+			0xFFFFFFFFu, 0xFFFFFFFFu, sourceDistance,
+			candidateInstanceIndex, candidateGeometryIndex,
+			candidatePrimitiveIndex ) &&
+			abs( sourceDistance - cameraDistance ) <= sourceTolerance ) {
+			sourceInstanceIndex = candidateInstanceIndex;
+			sourceGeometryIndex = candidateGeometryIndex;
+			sourcePrimitiveIndex = candidatePrimitiveIndex;
+		}
+	}
+
+	vec4 sourceColor = imageLoad( colorImage, pixel );
+	vec3 sunDirection = safeNormalize( lighting.sunDirectionAmbient.xyz,
+		vec3( 0.35, 0.45, 0.82 ) );
+	float sunDiffuse = max( dot( normal, sunDirection ), 0.0 );
+	float sunVisibility = sunDiffuse > 0.0 ? traceVisibility(
+		offsetShadowOrigin( worldPosition, normal, sunDirection ),
+		sunDirection, 100000.0, sourceInstanceIndex, sourceGeometryIndex,
+		sourcePrimitiveIndex ) : 0.0;
+	vec3 directLighting = lighting.sunColorShadow.rgb * sunDiffuse *
+		mix( 1.0, sunVisibility, lighting.sunColorShadow.a );
+
+	for ( uint lightIndex = 0u; lightIndex < lighting.lightCounts.x; ++lightIndex ) {
+		RayLight light = lighting.lights[ lightIndex ];
+		vec3 toLight = light.originRadius.xyz - worldPosition;
+		float distanceToLight = length( toLight );
+		if ( distanceToLight <= 0.001 || distanceToLight >= light.originRadius.w ) {
+			continue;
+		}
+		vec3 lightDirection = toLight / distanceToLight;
+		float diffuse = max( dot( normal, lightDirection ), 0.0 );
+		if ( diffuse <= 0.0 ) {
+			continue;
+		}
+		float attenuation = 1.0 - distanceToLight / light.originRadius.w;
+		attenuation *= attenuation;
+		float visibility = light.colorShadow.a > 0.5 ? traceVisibility(
+			offsetShadowOrigin( worldPosition, normal, lightDirection ),
+			lightDirection,
+			max( distanceToLight - 1.0, 0.001 ), sourceInstanceIndex,
+			sourceGeometryIndex, sourcePrimitiveIndex ) : 1.0;
+		directLighting += light.colorShadow.rgb * diffuse * attenuation * visibility;
+	}
+
+	vec3 ambientLighting = vec3( lighting.sunDirectionAmbient.w );
+	vec3 litColor = sourceColor.rgb * ( ambientLighting + directLighting );
+	imageStore( colorImage, pixel, vec4( litColor, sourceColor.a ) );
+}
+
+void main() {
+	ivec2 localPixel = ivec2( gl_GlobalInvocationID.xy );
+	ivec2 viewportSize = ivec2( lighting.viewport.zw );
+	if ( any( greaterThanEqual( localPixel, viewportSize ) ) ) {
+		return;
+	}
+	ivec2 pixel = localPixel + ivec2( lighting.viewport.xy );
+	ivec2 imageSizePixels = imageSize( colorImage );
+	if ( any( lessThan( pixel, ivec2( 0 ) ) ) ||
+		any( greaterThanEqual( pixel, imageSizePixels ) ) ) {
+		return;
+	}
+	if ( rayPass.passIndex == 0u ) {
+		shadeLighting( pixel );
+	} else {
+		shadeWaterReflection( pixel );
+	}
+}
