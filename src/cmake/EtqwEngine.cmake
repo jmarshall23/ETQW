@@ -98,6 +98,8 @@ set(ETQW_SYSTEM_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/sys_input.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/sys_local.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/SystemBootstrap.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/splashscreen.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/rc/etqw.rc"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/render/win_opengl.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/stacktracer.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/win_soundthread.cpp"

@@ -724,8 +724,6 @@ const char *Sys_EXEPath() {
 	return path;
 }
 
-void Sys_ShowSplashScreen( bool ) {}
-
 void Sys_GetDesktopSize( int& width, int& height ) {
 	width = GetSystemMetrics( SM_CXSCREEN );
 	height = GetSystemMetrics( SM_CYSCREEN );
@@ -1021,15 +1019,18 @@ int Sys_GetLanguageIndex( const char* langName ) {
 	return 0;
 }
 
-int WINAPI WinMain( HINSTANCE, HINSTANCE, LPSTR commandLine, int ) {
+int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE, LPSTR commandLine, int ) {
+	win32.hInstance = hInstance;
+	Sys_ShowSplashScreen( true );
 	const char* argv[] = { GAME_NAME };
 	common->Init( 1, argv, commandLine != NULL ? commandLine : "" );
-	// Retail ETQW performs this handoff after common initialization.  The
-	// renderer creates the window before input is initialized, and input
-	// deliberately starts with its mouse-release latch set.  Showing and
-	// focusing the finished game window here produces the activation event
-	// that clears that latch.  This is especially important when Visual Studio
-	// owns the foreground window while launching the process under F5.
+	// Fallback for command lines that deliberately skip game-DLL startup and
+	// therefore never emit the normal "LOADING GAME: INIT UI" handoff.
+	Sys_ShowSplashScreen( false );
+	// The game window was normally revealed by the INIT UI loading message.
+	// Once all common initialization is complete, activate it for input.  This
+	// is especially important when Visual Studio owns the foreground window
+	// while launching the process under F5.
 	if ( sys3D != NULL && sys3D->GetGameWindowHandle() != NULL ) {
 		sys3D->ShowGameWindow();
 		HWND gameWindow = reinterpret_cast< HWND >( sys3D->GetGameWindowHandle() );

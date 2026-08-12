@@ -1,0 +1,6 @@
+#include "etqw_resource.h"
+#include <winres.h>
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+IDB_ETQW_SPLASH BITMAP "res\\etqw_splash.bmp"

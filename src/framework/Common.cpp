@@ -737,10 +737,54 @@ void idCommonLocal::UpdateLevelLoadScreen( const wchar_t* status ) {
 }
 
 void idCommonLocal::PrintLoadingMessage( const char* msg ) {
-	if ( msg != NULL && msg[ 0 ] != '\0' ) {
-		Printf( "%s\n", msg );
+	if ( msg == NULL || msg[ 0 ] == '\0' ) {
+		return;
 	}
-	PacifierUpdate();
+
+	Printf( "%s\n", msg );
+
+	if ( com_skipRenderer.GetBool() || renderSystem == NULL || deviceContext == NULL ||
+		sys3D == NULL || sys3D->GetGameRenderContext() == NULL ) {
+		return;
+	}
+
+	// Retail ETQW renders a complete frame for every loading message.  These
+	// calls are intentionally independent of Session::PacifierUpdate: during
+	// game-DLL initialization there is no map-change pacifier frame to draw it.
+	Sys_PumpEvents();
+	if ( !sys3D->MakeCurrent( sys3D->GetGameWindow() ) ) {
+		return;
+	}
+
+	const glimpParms_t& parms = sys3D->GetGameWindowParms();
+	renderSystem->BeginFrame( parms.width, parms.height );
+	deviceContext->BeginEmitFullScreen();
+
+	const float aspectCorrection = Max( deviceContext->GetAspectRatioCorrection(), 0.001f );
+	const float screenWidth = SCREEN_WIDTH / aspectCorrection;
+	const float splashWidth = 853.33331298828125f;
+
+	deviceContext->SetColor( colorBlack );
+	deviceContext->DrawRect(
+		0.0f, 0.0f, screenWidth, SCREEN_HEIGHT,
+		0.0f, 0.0f, 1.0f, 1.0f,
+		declHolder.FindMaterial( "_black", true )
+	);
+
+	deviceContext->SetColor( colorWhite );
+	deviceContext->DrawRect(
+		( screenWidth - splashWidth ) * 0.5f, 0.0f, splashWidth, SCREEN_HEIGHT,
+		0.0f, 0.0f, 1.0f, 1.0f,
+		declHolder.FindMaterial( "splashScreen", true )
+	);
+
+	const int textX = static_cast< int >( ( screenWidth - strlen( msg ) * SMALLCHAR_WIDTH ) * 0.5f );
+	const idMaterial* bigChars = declHolder.FindMaterial( "textures/bigchars", true );
+	renderSystem->DrawSmallStringExt( textX + 1, 385, msg, colorBlack, true, bigChars );
+	renderSystem->DrawSmallStringExt( textX, 384, msg, idVec4( 1.0f, 0.5f, 0.0f, 0.85f ), true, bigChars );
+
+	deviceContext->End();
+	renderSystem->EndFrame( true );
 }
 
 void idCommonLocal::InitSIMD() {
@@ -1031,20 +1075,31 @@ void idCommonLocal::InitGame( bool resetConfigs ) {
 
 	renderSystem->Init();
 	InitLanguageDict( false );
+	Sys_ShowSplashScreen(false);
+	Sys_ShowWindow(true);
+	PrintLoadingMessage( "INITIALIZING COLLISION MANAGER..." );
 	collisionModelManager->Init();
+	PrintLoadingMessage( "INITIALIZING CONSOLE GRAPHICS..." );
 	console->LoadGraphics();
+	PrintLoadingMessage( "INITIALIZING EVENTS..." );
 	eventLoop->Init();
+	PrintLoadingMessage( "INITIALIZING USER COMMAND INPUT..." );
 	usercmdGen->Init();
+	PrintLoadingMessage( "INITIALIZING SOUND..." );
 	soundSystem->Init();
 	if ( networkSystem == NULL || !networkSystem->IsDedicated() ) {
 		soundSystem->InitHW();
 	}
+	PrintLoadingMessage( "INITIALIZING INPUT..." );
 	Sys_InitInput();
+	PrintLoadingMessage( "INITIALIZING NETWORK..." );
 	idAsyncNetwork::Init();
+	PrintLoadingMessage( "INITIALIZING SESSION..." );
 	session->Init();
 	if ( graphManager != NULL ) {
 		graphManager->Init();
 	}
+	PrintLoadingMessage( "INITIALIZING GAME..." );
 	if ( adManager != NULL ) {
 		adManager->Init();
 	}
@@ -1053,10 +1108,6 @@ void idCommonLocal::InitGame( bool resetConfigs ) {
 	}
 
 	LoadGameDLL();
-
-	if ( sys3D != NULL && sys3D->GetGameRenderContext() != NULL ) {
-		Sys_ShowWindow( true );
-	}
 	sys->PostGameInit();
 	nextConfigWriteTime = Sys_Milliseconds() + 2000;
 }
