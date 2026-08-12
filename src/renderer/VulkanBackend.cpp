@@ -655,6 +655,7 @@ void ReportVulkanDrawMaterial( sdVulkanBackendState& state,
 		idStr::FindText( materialName, "explode", false ) >= 0 ||
 		idStr::FindText( materialName, "particle", false ) >= 0 ||
 		idStr::FindText( materialName, "heatHaze", false ) >= 0 ||
+		idStr::FindText( materialName, "water", false ) >= 0 ||
 		surface.space->weaponDepthHack;
 	if ( state.reportedDrawMaterials.Num() >= 16 && !importantEffect ) {
 		return;
@@ -2201,7 +2202,7 @@ bool CreateWorldPipeline( sdVulkanBackendState& state ) {
 			state.worldMaterialAddPipeline ) &&
 		CreateWorldPipelineVariant( state, "vkprogs/world/water.vert",
 			"vkprogs/world/water.frag", VK_BLEND_FACTOR_SRC_ALPHA,
-			VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA, true, false, false,
+			VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA, true, true, false,
 			state.worldWaterPipeline ) &&
 		CreateWorldPipelineVariant( state, "vkprogs/world/heat_haze.vert",
 			"vkprogs/world/heat_haze.frag", VK_BLEND_FACTOR_ONE,
@@ -2612,12 +2613,14 @@ bool GetVulkanMaterialDescriptor( sdVulkanBackendState& state,
 bool GetVulkanWaterDescriptor( sdVulkanBackendState& state,
 	const materialStage_t& stage, VkDescriptorSet& descriptorSet ) {
 	descriptorSet = VK_NULL_HANDLE;
-	if ( globalImages == NULL ) {
+	if ( globalImages == NULL ||
+		state.currentRenderResource.view == VK_NULL_HANDLE ||
+		state.currentRenderResource.sampler == VK_NULL_HANDLE ) {
 		return false;
 	}
-	idImage* images[ VULKAN_MATERIAL_TEXTURES ] = {
-		NULL, NULL, globalImages->whiteImage, globalImages->blackImage,
-		globalImages->blackCubeMapImage
+	idImage* images[ VULKAN_MATERIAL_TEXTURES - 1 ] = {
+		globalImages->grayImage, globalImages->blackCubeMapImage,
+		globalImages->whiteImage, globalImages->grayImage
 	};
 	for ( int textureIndex = 0; textureIndex < stage.numTextures; ++textureIndex ) {
 		const stageTexture_t& texture = stage.textures[ textureIndex ];
@@ -2626,31 +2629,49 @@ bool GetVulkanWaterDescriptor( sdVulkanBackendState& state,
 			continue;
 		}
 		const char* bindingName = texture.renderBinding->GetName();
-		if ( images[ 0 ] == NULL && idStr::Icmp( bindingName, "bumpmap" ) == 0 ) {
+		if ( idStr::Icmp( bindingName, "bumpmap" ) == 0 ) {
 			images[ 0 ] = texture.image;
+		} else if ( idStr::Icmp( bindingName, "bumpmap2" ) == 0 ) {
+			images[ 3 ] = texture.image;
 		} else if ( idStr::Icmp( bindingName, "environmentcubemap" ) == 0 ) {
 			images[ 1 ] = texture.image;
 		} else if ( idStr::Icmp( bindingName, "map" ) == 0 ) {
 			images[ 2 ] = texture.image;
 		}
 	}
-	if ( images[ 0 ] == NULL || images[ 1 ] == NULL ||
-		images[ 1 ]->type != TT_CUBIC ) {
-		return false;
-	}
-	const sdVulkanImageResource* resources[ VULKAN_MATERIAL_TEXTURES ];
-	for ( int imageIndex = 0; imageIndex < VULKAN_MATERIAL_TEXTURES; ++imageIndex ) {
+	// The retail data primarily ships hashed, precompressed water frames.  A
+	// missing frame must remain a neutral normal, not kick this special stage
+	// into the generic renderer where its white specular lookup becomes the
+	// visible surface.  The shader adds a subtle procedural ripple over these
+	// neutral fallbacks, so water still looks alive while assets stream in.
+	const sdVulkanImageResource* resources[ VULKAN_MATERIAL_TEXTURES - 1 ];
+	for ( int imageIndex = 0; imageIndex < VULKAN_MATERIAL_TEXTURES - 1;
+		++imageIndex ) {
 		if ( !images[ imageIndex ]->IsLoaded() ) {
 			images[ imageIndex ]->BindFragment();
 		}
 	}
-	for ( int imageIndex = 0; imageIndex < VULKAN_MATERIAL_TEXTURES; ++imageIndex ) {
+	for ( int imageIndex = 0; imageIndex < VULKAN_MATERIAL_TEXTURES - 1;
+		++imageIndex ) {
 		resources[ imageIndex ] = FindVulkanImageResource( state,
 			images[ imageIndex ] );
 		if ( resources[ imageIndex ] == NULL ) {
 			return false;
 		}
 	}
+	const void* owners[ VULKAN_MATERIAL_TEXTURES ] = {
+		images[ 0 ], images[ 1 ], images[ 2 ], images[ 3 ],
+		&state.currentRenderResource
+	};
+	VkImageView views[ VULKAN_MATERIAL_TEXTURES ] = {
+		resources[ 0 ]->view, resources[ 1 ]->view, resources[ 2 ]->view,
+		resources[ 3 ]->view, state.currentRenderResource.view
+	};
+	VkSampler samplers[ VULKAN_MATERIAL_TEXTURES ] = {
+		resources[ 0 ]->sampler, resources[ 1 ]->sampler,
+		resources[ 2 ]->sampler, resources[ 3 ]->sampler,
+		state.currentRenderResource.sampler
+	};
 	for ( int descriptorIndex = 0;
 		descriptorIndex < state.materialDescriptors.Num(); ++descriptorIndex ) {
 		const sdVulkanMaterialDescriptor& cached =
@@ -2661,8 +2682,8 @@ bool GetVulkanWaterDescriptor( sdVulkanBackendState& state,
 		bool matches = true;
 		for ( int imageIndex = 0; imageIndex < VULKAN_MATERIAL_TEXTURES;
 			++imageIndex ) {
-			if ( cached.imageOwners[ imageIndex ] != images[ imageIndex ] ||
-				cached.imageViews[ imageIndex ] != resources[ imageIndex ]->view ) {
+			if ( cached.imageOwners[ imageIndex ] != owners[ imageIndex ] ||
+				cached.imageViews[ imageIndex ] != views[ imageIndex ] ) {
 				matches = false;
 				break;
 			}
@@ -2691,10 +2712,10 @@ bool GetVulkanWaterDescriptor( sdVulkanBackendState& state,
 	memset( imageInfos, 0, sizeof( imageInfos ) );
 	memset( writes, 0, sizeof( writes ) );
 	for ( int imageIndex = 0; imageIndex < VULKAN_MATERIAL_TEXTURES; ++imageIndex ) {
-		waterDescriptor.imageOwners[ imageIndex ] = images[ imageIndex ];
-		waterDescriptor.imageViews[ imageIndex ] = resources[ imageIndex ]->view;
-		imageInfos[ imageIndex ].sampler = resources[ imageIndex ]->sampler;
-		imageInfos[ imageIndex ].imageView = resources[ imageIndex ]->view;
+		waterDescriptor.imageOwners[ imageIndex ] = owners[ imageIndex ];
+		waterDescriptor.imageViews[ imageIndex ] = views[ imageIndex ];
+		imageInfos[ imageIndex ].sampler = samplers[ imageIndex ];
+		imageInfos[ imageIndex ].imageView = views[ imageIndex ];
 		imageInfos[ imageIndex ].imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 		writes[ imageIndex ].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 		writes[ imageIndex ].dstSet = waterDescriptor.descriptorSet;
@@ -4208,6 +4229,33 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			idStr::Icmpn( selectedStage->renderProgram->GetName(), "heatHaze", 8 ) == 0;
 		const bool selectedStuffGrassStage = selectedStage->renderProgram != NULL &&
 			idStr::Icmpn( selectedStage->renderProgram->GetName(), "stuff/grass", 11 ) == 0;
+		const bool selectedFoggyWaterUndersideStage =
+			selectedStage->renderProgram != NULL &&
+			idStr::Icmp( selectedStage->renderProgram->GetName(),
+				"sfx/foggyWaterSurface" ) == 0;
+		if ( selectedFoggyWaterUndersideStage ) {
+			const idVec3 translatedViewOrigin(
+				view->renderView.vieworg.x - surface->space->modelMatrix[ 12 ],
+				view->renderView.vieworg.y - surface->space->modelMatrix[ 13 ],
+				view->renderView.vieworg.z - surface->space->modelMatrix[ 14 ] );
+			const idVec3 localViewOrigin(
+				translatedViewOrigin.x * surface->space->modelMatrix[ 0 ] +
+					translatedViewOrigin.y * surface->space->modelMatrix[ 1 ] +
+					translatedViewOrigin.z * surface->space->modelMatrix[ 2 ],
+				translatedViewOrigin.x * surface->space->modelMatrix[ 4 ] +
+					translatedViewOrigin.y * surface->space->modelMatrix[ 5 ] +
+					translatedViewOrigin.z * surface->space->modelMatrix[ 6 ],
+				translatedViewOrigin.x * surface->space->modelMatrix[ 8 ] +
+					translatedViewOrigin.y * surface->space->modelMatrix[ 9 ] +
+					translatedViewOrigin.z * surface->space->modelMatrix[ 10 ] );
+			// These surfaces are the explicitly generated back sides of horizontal
+			// water sheets.  The legacy program and face culling made them visible
+			// only from underwater.  Drawing their _white helper texture through the
+			// generic Vulkan fallback instead covered the real refraction surface.
+			if ( localViewOrigin.z > surface->geo->bounds[ 1 ].z + 0.5f ) {
+				continue;
+			}
+		}
 
 		const vertCache_t* vertexCacheBlock = surface->geo->ambientCache;
 		const vertCache_t* indexCacheBlock = surface->geo->indexCache;
@@ -4262,6 +4310,9 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			GetVulkanWaterDescriptor( *state, *selectedStage, waterDescriptorSet );
 		if ( selectedWaterStage && !waterTexturesAvailable ) {
 			state->worldWaterDescriptorMisses++;
+			// A water stage's generic selected image is normally its white
+			// specular lookup.  It is never a meaningful visual fallback.
+			continue;
 		}
 		VkDescriptorSet heatHazeDescriptorSet = VK_NULL_HANDLE;
 		const bool heatHazeTexturesAvailable = selectedHeatHazeStage &&
@@ -4424,13 +4475,67 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			pushConstants[ 21 ] = localViewOrigin.y;
 			pushConstants[ 22 ] = localViewOrigin.z;
 		}
-		pushConstants[ 28 ] = selectedStage->vertexColor == SVC_MODULATE ? 1.0f : 0.0f;
 		pushConstants[ 29 ] = surface->material->TestMaterialFlag(
 			MF_LOWRANGEUVCOMPRESS ) ? ST_TO_FLOAT_LOWRANGE : ST_TO_FLOAT;
-		if ( selectedStage->hasAlphaTest || selectedStuffGrassStage ) {
-			pushConstants[ 30 ] = selectedStage->hasAlphaTest ?
-				surface->materialRegisters[ selectedStage->alphaTestRegister ] : 0.4f;
+		if ( selectedWaterStage ) {
+			// Water needs a view ray for proper fresnel reflection.  The water
+			// shader does not use the generic stage color, so pass the camera in
+			// local surface space through that slot and reserve the spare scalar
+			// components for ETQW's authored water bindings.
+			const idVec3 translatedViewOrigin(
+				view->renderView.vieworg.x - surface->space->modelMatrix[ 12 ],
+				view->renderView.vieworg.y - surface->space->modelMatrix[ 13 ],
+				view->renderView.vieworg.z - surface->space->modelMatrix[ 14 ] );
+			const idVec3 localViewOrigin(
+				translatedViewOrigin.x * surface->space->modelMatrix[ 0 ] +
+					translatedViewOrigin.y * surface->space->modelMatrix[ 1 ] +
+					translatedViewOrigin.z * surface->space->modelMatrix[ 2 ],
+				translatedViewOrigin.x * surface->space->modelMatrix[ 4 ] +
+					translatedViewOrigin.y * surface->space->modelMatrix[ 5 ] +
+					translatedViewOrigin.z * surface->space->modelMatrix[ 6 ],
+				translatedViewOrigin.x * surface->space->modelMatrix[ 8 ] +
+					translatedViewOrigin.y * surface->space->modelMatrix[ 9 ] +
+					translatedViewOrigin.z * surface->space->modelMatrix[ 10 ] );
+			pushConstants[ 16 ] = localViewOrigin.x;
+			pushConstants[ 17 ] = localViewOrigin.y;
+			pushConstants[ 18 ] = localViewOrigin.z;
+			pushConstants[ 19 ] = 0.78f;
+			pushConstants[ 23 ] = 0.05f;
+			pushConstants[ 27 ] = 5.0f;
+			pushConstants[ 28 ] = 0.5f;
+			pushConstants[ 30 ] = 1.0f;
 			pushConstants[ 31 ] = 1.0f;
+			for ( int vectorIndex = 0; vectorIndex < selectedStage->numVectors;
+				++vectorIndex ) {
+				const stageVector_t& vector = selectedStage->vectors[ vectorIndex ];
+				if ( vector.renderBinding == NULL ) {
+					continue;
+				}
+				const char* bindingName = vector.renderBinding->GetName();
+				if ( idStr::Icmp( bindingName, "water_distortion" ) == 0 ) {
+					pushConstants[ 23 ] = surface->materialRegisters[
+						vector.registers[ 0 ] ];
+					pushConstants[ 31 ] = surface->materialRegisters[
+						vector.registers[ 2 ] ];
+				} else if ( idStr::Icmp( bindingName, "water_fresnel" ) == 0 ) {
+					pushConstants[ 27 ] = surface->materialRegisters[
+						vector.registers[ 0 ] ];
+				} else if ( idStr::Icmp( bindingName, "water_lerp" ) == 0 ) {
+					pushConstants[ 28 ] = surface->materialRegisters[
+						vector.registers[ 0 ] ];
+				} else if ( idStr::Icmp( bindingName, "water_glare" ) == 0 ) {
+					pushConstants[ 30 ] = surface->materialRegisters[
+						vector.registers[ 0 ] ];
+				}
+			}
+		} else {
+			pushConstants[ 28 ] = selectedStage->vertexColor == SVC_MODULATE ?
+				1.0f : 0.0f;
+			if ( selectedStage->hasAlphaTest || selectedStuffGrassStage ) {
+				pushConstants[ 30 ] = selectedStage->hasAlphaTest ?
+					surface->materialRegisters[ selectedStage->alphaTestRegister ] : 0.4f;
+				pushConstants[ 31 ] = 1.0f;
+			}
 		}
 
 		const VkDeviceSize vertexOffset = vertexCacheBlock->offset;
@@ -4542,6 +4647,12 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 				materialPipeline = state->worldHeatHazePipeline;
 				drawDescriptorSet = heatHazeDescriptorSet;
 			} else if ( waterTexturesAvailable ) {
+				if ( !currentRenderCopied && !CopyCurrentRender( *state ) ) {
+					// Refraction water is fully composed from the scene snapshot.  It
+					// has no useful flat-color fallback if the copy is unavailable.
+					continue;
+				}
+				currentRenderCopied = true;
 				materialPipeline = state->worldWaterPipeline;
 				drawDescriptorSet = waterDescriptorSet;
 			} else if ( selectedAtmosphereStage &&

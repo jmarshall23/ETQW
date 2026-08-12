@@ -20,6 +20,7 @@ layout( location = 0 ) out vec2 fragmentTexCoord;
 layout( location = 1 ) out vec3 fragmentNormal;
 layout( location = 2 ) out vec3 fragmentTangent;
 layout( location = 3 ) out vec3 fragmentBitangent;
+layout( location = 4 ) out vec3 fragmentPosition;
 
 vec3 unpackDirection( vec2 packedDirection, uint zSign ) {
 	float z = sqrt( max( 0.0, 1.0 - dot( packedDirection, packedDirection ) ) );
@@ -37,7 +38,10 @@ void main() {
 	);
 	fragmentNormal = unpackDirection( inPackedNormal, inNormalSign );
 	fragmentTangent = unpackDirection( inPackedTangent, inTangentSign );
-	fragmentBitangent = normalize( cross( fragmentNormal, fragmentTangent ) ) *
+	// Do not normalize here: old static water meshes can contain a degenerate
+	// tangent, and normalize( 0 ) poisons every interpolated fragment with NaNs.
+	fragmentBitangent = cross( fragmentNormal, fragmentTangent ) *
 		( float( inBitangentSign ) - 1.0 );
+	fragmentPosition = inPosition;
 	gl_Position = pc.modelViewProjection * vec4( inPosition, 1.0 );
 }

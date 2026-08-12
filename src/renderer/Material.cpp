@@ -199,11 +199,35 @@ float SortForName( idToken& token ) {
 	if ( !token.Icmp( "opaque" ) ) {
 		return SS_OPAQUE;
 	}
+	if ( !token.Icmp( "opaqueNearer" ) ) {
+		return SS_OPAQUENEARER;
+	}
+	if ( !token.Icmp( "opaqueNearest" ) ) {
+		return SS_OPAQUENEAREST;
+	}
 	if ( !token.Icmp( "decal" ) ) {
 		return SS_DECAL;
 	}
 	if ( !token.Icmp( "gui" ) ) {
 		return SS_GUI;
+	}
+	if ( !token.Icmp( "refractable" ) ) {
+		return SS_REFRACTABLE;
+	}
+	if ( !token.Icmp( "refraction" ) ) {
+		return SS_REFRACTION;
+	}
+	if ( !token.Icmp( "farPreAtmos" ) ) {
+		return SS_FAR_PRE_ATMOS;
+	}
+	if ( !token.Icmp( "mediumPreAtmos" ) ) {
+		return SS_MEDIUM_PRE_ATMOS;
+	}
+	if ( !token.Icmp( "closePreAtmos" ) ) {
+		return SS_CLOSE_PRE_ATMOS;
+	}
+	if ( !token.Icmp( "atmosphere" ) ) {
+		return SS_ATMOSPHERE;
 	}
 	if ( !token.Icmp( "far" ) ) {
 		return SS_FAR;
@@ -214,11 +238,17 @@ float SortForName( idToken& token ) {
 	if ( !token.Icmp( "close" ) ) {
 		return SS_CLOSE;
 	}
+	if ( !token.Icmp( "almostNearest" ) ) {
+		return SS_ALMOST_NEAREST;
+	}
 	if ( !token.Icmp( "nearest" ) ) {
 		return SS_NEAREST;
 	}
 	if ( !token.Icmp( "postProcess" ) ) {
 		return SS_POST_PROCESS;
+	}
+	if ( !token.Icmp( "last" ) ) {
+		return SS_LAST;
 	}
 	return token.GetFloatValue();
 }
