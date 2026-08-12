@@ -7,7 +7,7 @@
 /*
 ===============================================================================
 
-	Reads or writes the contents of .map files into a standard internal
+	Reads or writes the contents of ETQW .world files into a standard internal
 	format, which can then be moved into private formats for collision
 	detection, map processing, or editor use.
 
@@ -175,9 +175,9 @@ public:
 							~idMapFile( void ) { entities.DeleteContents( true ); }
 
 							// filename does not require an extension
-							// normally this will use a .reg file instead of a .map file if it exists,
+							// normally this will use a .reg file instead of a .world file if it exists,
 							// which is what the game and dmap want, but the editor will want to always
-							// load a .map file
+							// load a .world file
 	bool					ParseBuffer( const idStr& buffer, const idStr& name, bool moveFuncGroups = true );
 	bool					WriteBuffer( idStr& buffer );
 
@@ -218,6 +218,7 @@ protected:
 	bool					hasPrimitiveData;
 
 private:
+	bool					ParseWorldFile( idLexer &src );
 	void					SetGeometryCRC( void );
 };
 

@@ -482,6 +482,10 @@ void idImage::Bind() {
 	}
 	frameUsed++;
 	bindCount++;
+	if ( vulkanBackend.IsToolWindowActive() ) {
+		vulkanBackend.SetToolImage( this );
+		return;
+	}
 	glBindTexture( TextureTargetForType( type ), texnum );
 }
 
@@ -498,6 +502,10 @@ void idImage::BindFragment() {
 	}
 	frameUsed++;
 	bindCount++;
+	if ( vulkanBackend.IsToolWindowActive() ) {
+		vulkanBackend.SetToolImage( this );
+		return;
+	}
 	glBindTexture( TextureTargetForType( type ), texnum );
 }
 

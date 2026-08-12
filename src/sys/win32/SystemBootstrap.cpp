@@ -737,6 +737,9 @@ int Sys_ListFiles( const char *directory, const char *extension, idList< idStr >
 	const bool directoriesOnly = extension != NULL && extension[ 0 ] == '/' && extension[ 1 ] == '\0';
 	idStr search = directory;
 	search.AppendPath( directoriesOnly ? "*" : va( "*%s", extension != NULL ? extension : "" ) );
+	// The CRT wildcard APIs do not consistently accept the mixed separators
+	// produced when AppendPath is used with an absolute Windows path.
+	search.SlashesToBackSlashes();
 	_finddata_t findInfo;
 	intptr_t findHandle = _findfirst( search.c_str(), &findInfo );
 	if ( findHandle == -1 ) {

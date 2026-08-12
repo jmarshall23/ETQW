@@ -18,6 +18,10 @@
 #include "../libs/AASLib/AASFileManager.h"
 #include "../sdnet/SDNet.h"
 #include "../sys/sys_render.h"
+#include "../tools/compilers/compiler_public.h"
+#ifdef ETQW_WITH_RADIANT
+#include "../tools/edit_public.h"
+#endif
 
 #define MAX_PRINT_MSG_SIZE 4096
 #define MAX_WARNING_LIST 256
@@ -917,11 +921,29 @@ static void Com_ListModes_f( const idCmdArgs& ) {
 	common->Printf( "\n" );
 }
 
+#ifdef ETQW_WITH_RADIANT
+static void Com_Editor_f( const idCmdArgs& args ) {
+	com_editors |= EDITOR_RADIANT;
+	RadiantInit();
+	if ( args.Argc() > 1 ) {
+		RadiantOpenMap( args.Argv( 1 ) );
+	}
+}
+
+#endif
+
 void idCommonLocal::InitCommands() {
 	cmdSystem->AddCommand( "quit", Com_Quit_f, CMD_FL_SYSTEM, "quits the game" );
 	cmdSystem->AddCommand( "exit", Com_Quit_f, CMD_FL_SYSTEM, "exits the game" );
 	cmdSystem->AddCommand( "writeConfig", Com_WriteConfig_f, CMD_FL_SYSTEM, "writes a configuration file" );
 	cmdSystem->AddCommand( "listModes", Com_ListModes_f, CMD_FL_RENDERER, "lists video modes" );
+#ifdef ETQW_WITH_RADIANT
+	cmdSystem->AddCommand( "editor", Com_Editor_f, CMD_FL_TOOL, "opens the ETQW Radiant level editor" );
+#endif
+	cmdSystem->AddCommand( "dmap", Dmap_f, CMD_FL_TOOL, "compiles an ETQW map" );
+	cmdSystem->AddCommand( "megaCreate", MegaTextureCreate_f, CMD_FL_TOOL, "creates a MegaTexture terrain project" );
+	cmdSystem->AddCommand( "megaCompile", MegaTextureCompile_f, CMD_FL_TOOL, "compiles a MegaTexture terrain project" );
+	cmdSystem->AddCommand( "megaVerify", MegaTextureVerify_f, CMD_FL_TOOL, "validates a compiled MegaTexture" );
 }
 
 void idCommonLocal::LoadGameDLL() {

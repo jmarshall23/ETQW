@@ -572,6 +572,7 @@ public:
 	void				CheckCvars();
 
 	void				PurgeAllMegaTextures();
+	void				ReloadAllMegaTextures();
 
 	// purges all the images before a vid_restart
 	void				PurgeAllImages();

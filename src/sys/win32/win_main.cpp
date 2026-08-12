@@ -47,6 +47,9 @@ If you have questions concerning this license or the applicable additional terms
 #include "win_local.h"
 #include "rc/CreateResourceIDs.h"
 #include "../../renderer/tr_local.h"
+#ifdef ETQW_WITH_RADIANT
+#include "../../tools/edit_public.h"
+#endif
 
 idCVar Win32Vars_t::sys_arch( "sys_arch", "", CVAR_SYSTEM | CVAR_INIT, "" );
 idCVar Win32Vars_t::sys_cpustring( "sys_cpustring", "detect", CVAR_SYSTEM | CVAR_INIT, "" );
@@ -1451,6 +1454,12 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 		// set exceptions, even if some crappy syscall changes them!
 		Sys_FPU_EnableExceptions( TEST_FPU_EXCEPTIONS );
+
+#if defined( ETQW_WITH_RADIANT ) && !defined( ID_ALLOW_TOOLS )
+		if ( com_editors & EDITOR_RADIANT ) {
+			RadiantRun();
+		}
+#endif
 
 #ifdef ID_ALLOW_TOOLS
 		if ( com_editors ) {

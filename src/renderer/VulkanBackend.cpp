@@ -30,7 +30,10 @@ extern idCVar r_offsetUnits;
 namespace {
 
 const int NUM_VULKAN_FRAMES = 2;
-const VkDeviceSize VULKAN_GUI_VERTEX_BYTES = 4 * 1024 * 1024;
+// Radiant shares this mapped stream with the game GUI. Model-heavy .world
+// files expand legacy fixed-function lines, quads and display lists into
+// several hundred thousand vertices in a frame, which does not fit in 4 MiB.
+const VkDeviceSize VULKAN_GUI_VERTEX_BYTES = 32 * 1024 * 1024;
 const int VULKAN_MATERIAL_TEXTURES = 5;
 
 idCVar r_vkValidation(
@@ -64,6 +67,7 @@ struct sdVulkanFrame {
 	VkDeviceMemory	guiVertexMemory;
 	void*				guiVertexMapped;
 	VkDeviceSize		guiVertexOffset;
+	bool				guiVertexOverflowWarned;
 };
 
 struct sdVulkanImageResource {
@@ -76,6 +80,12 @@ struct sdVulkanImageResource {
 	int				width;
 	int				height;
 	int				mipLevels;
+};
+
+struct sdVulkanToolDepthResource {
+	VkImage			image;
+	VkDeviceMemory	memory;
+	VkImageView		view;
 };
 
 struct sdVulkanBufferResource {
@@ -276,6 +286,7 @@ struct sdVulkanBackendState {
 	VkExtent2D				extent;
 	idList< VkImage >			swapchainImages;
 	idList< VkImageView >		swapchainViews;
+	idList< VkSemaphore >	presentSemaphores;
 	idList< byte >			imageInitialized;
 	idList< VkImage >			depthImages;
 	idList< VkDeviceMemory >	depthMemory;
@@ -291,6 +302,63 @@ struct sdVulkanBackendState {
 	unsigned int				frameIndex;
 	unsigned int				imageIndex;
 	bool					frameActive;
+
+	struct sdToolWindow {
+		HWND				window;
+		VkSurfaceKHR		surface;
+		VkSwapchainKHR		swapchain;
+		VkExtent2D			extent;
+		idList< VkImage >	images;
+		idList< VkImageView > views;
+		idList< VkSemaphore > presentSemaphores;
+		idList< byte >		imageInitialized;
+		idList< VkImage >	depthImages;
+		idList< VkDeviceMemory > depthMemory;
+		idList< VkImageView > depthViews;
+		idList< byte >		depthInitialized;
+		bool				dirty;
+
+		sdToolWindow() {
+			window = NULL;
+			surface = VK_NULL_HANDLE;
+			swapchain = VK_NULL_HANDLE;
+			extent.width = extent.height = 0;
+			dirty = true;
+		}
+	};
+	struct sdToolRenderTarget {
+		const void*		owner;
+		VkExtent2D		contentExtent;
+		VkExtent2D		allocationExtent;
+		VkImage			depthImage;
+		VkDeviceMemory	depthMemory;
+		VkImageView		depthView;
+		bool			initialized;
+
+			sdToolRenderTarget() {
+			owner = NULL;
+			contentExtent.width = contentExtent.height = 0;
+			allocationExtent.width = allocationExtent.height = 0;
+			depthImage = VK_NULL_HANDLE;
+			depthMemory = VK_NULL_HANDLE;
+			depthView = VK_NULL_HANDLE;
+			initialized = false;
+		}
+	};
+	idList< sdToolWindow* > toolWindows;
+	idList< sdToolRenderTarget* > toolRenderTargets;
+	idList< sdVulkanToolDepthResource > retiredToolDepthResources;
+	sdToolWindow*			activeToolWindow;
+	sdToolRenderTarget*	activeToolRenderTarget;
+	VkExtent2D			toolRenderExtent;
+	unsigned int			toolImageIndex;
+	bool					toolFrameActive;
+	const void*			toolImageOwner;
+	VkRect2D				toolScissor;
+	VkPipeline			toolPipeline;
+	VkPipeline			toolBlendPipeline;
+	VkPipeline			toolDepthPipeline;
+	VkPipeline			toolDepthBlendPipeline;
 	unsigned int				framesPresented;
 	unsigned int				guiDrawCalls;
 	unsigned int				worldDrawCalls;
@@ -434,6 +502,7 @@ struct sdVulkanBackendState {
 	PFN_vkCmdEndRendering				CmdEndRendering;
 	PFN_vkCmdSetViewport				CmdSetViewport;
 	PFN_vkCmdSetScissor				CmdSetScissor;
+	PFN_vkCmdClearAttachments		CmdClearAttachments;
 	PFN_vkCmdSetDepthBias			CmdSetDepthBias;
 	PFN_vkCmdBindPipeline				CmdBindPipeline;
 	PFN_vkCmdBindDescriptorSets		CmdBindDescriptorSets;
@@ -469,6 +538,17 @@ struct sdVulkanBackendState {
 		frameIndex = 0;
 		imageIndex = 0;
 		frameActive = false;
+		activeToolWindow = NULL;
+		activeToolRenderTarget = NULL;
+		toolRenderExtent.width = toolRenderExtent.height = 0;
+		toolImageIndex = 0;
+		toolFrameActive = false;
+		toolImageOwner = NULL;
+		memset( &toolScissor, 0, sizeof( toolScissor ) );
+		toolPipeline = VK_NULL_HANDLE;
+		toolBlendPipeline = VK_NULL_HANDLE;
+		toolDepthPipeline = VK_NULL_HANDLE;
+		toolDepthBlendPipeline = VK_NULL_HANDLE;
 		framesPresented = 0;
 		guiDrawCalls = 0;
 		worldDrawCalls = 0;
@@ -600,6 +680,7 @@ struct sdVulkanBackendState {
 		CLEAR_VK_FUNCTION( CmdEndRendering );
 		CLEAR_VK_FUNCTION( CmdSetViewport );
 		CLEAR_VK_FUNCTION( CmdSetScissor );
+		CLEAR_VK_FUNCTION( CmdClearAttachments );
 		CLEAR_VK_FUNCTION( CmdBindPipeline );
 		CLEAR_VK_FUNCTION( CmdBindDescriptorSets );
 		CLEAR_VK_FUNCTION( CmdPushConstants );
@@ -864,6 +945,7 @@ bool LoadDeviceFunctions( sdVulkanBackendState& state ) {
 	LOAD_DEVICE_FUNCTION( CmdEndRendering );
 	LOAD_DEVICE_FUNCTION( CmdSetViewport );
 	LOAD_DEVICE_FUNCTION( CmdSetScissor );
+	LOAD_DEVICE_FUNCTION( CmdClearAttachments );
 	LOAD_DEVICE_FUNCTION( CmdSetDepthBias );
 	LOAD_DEVICE_FUNCTION( CmdBindPipeline );
 	LOAD_DEVICE_FUNCTION( CmdBindDescriptorSets );
@@ -1333,11 +1415,15 @@ void DestroyDepthResources( sdVulkanBackendState& state ) {
 	state.depthInitialized.Clear();
 }
 
+void DestroySemaphoreList( sdVulkanBackendState& state,
+	idList< VkSemaphore >& semaphores );
+
 void DestroySwapchain( sdVulkanBackendState& state ) {
 	DestroyCurrentRenderResource( state, state.currentRenderResource );
 	state.currentRenderInitialized = false;
 	state.swapchainTransferSource = false;
 	DestroyDepthResources( state );
+	DestroySemaphoreList( state, state.presentSemaphores );
 	if ( state.device != VK_NULL_HANDLE ) {
 		for ( int i = 0; state.DestroyImageView != NULL &&
 			i < state.swapchainViews.Num(); ++i ) {
@@ -1434,6 +1520,33 @@ bool CreateDepthResources( sdVulkanBackendState& state, unsigned int count,
 			images.Clear();
 			memory.Clear();
 			views.Clear();
+			return false;
+		}
+	}
+	return true;
+}
+
+void DestroySemaphoreList( sdVulkanBackendState& state,
+	idList< VkSemaphore >& semaphores ) {
+	for ( int i = 0; i < semaphores.Num(); ++i ) {
+		if ( semaphores[ i ] != VK_NULL_HANDLE ) {
+			state.DestroySemaphore( state.device, semaphores[ i ], NULL );
+		}
+	}
+	semaphores.Clear();
+}
+
+bool CreateSemaphoreList( sdVulkanBackendState& state, unsigned int count,
+	idList< VkSemaphore >& semaphores, const char* operation ) {
+	semaphores.SetNum( count );
+	memset( semaphores.Begin(), 0, count * sizeof( VkSemaphore ) );
+	VkSemaphoreCreateInfo createInfo;
+	memset( &createInfo, 0, sizeof( createInfo ) );
+	createInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+	for ( unsigned int i = 0; i < count; ++i ) {
+		if ( !CheckVulkanResult( state.CreateSemaphore( state.device, &createInfo,
+			NULL, &semaphores[ i ] ), operation ) ) {
+			DestroySemaphoreList( state, semaphores );
 			return false;
 		}
 	}
@@ -1574,12 +1687,25 @@ bool CreateSwapchain( sdVulkanBackendState& state, int requestedWidth,
 		state.DestroySwapchainKHR( state.device, newSwapchain, NULL );
 		return false;
 	}
+	idList< VkSemaphore > newPresentSemaphores;
+	if ( !CreateSemaphoreList( state, newImageCount, newPresentSemaphores,
+		"vkCreateSemaphore(present)" ) ) {
+		for ( unsigned int i = 0; i < newImageCount; ++i ) {
+			state.DestroyImageView( state.device, newDepthViews[ i ], NULL );
+			state.DestroyImage( state.device, newDepthImages[ i ], NULL );
+			state.FreeMemory( state.device, newDepthMemory[ i ], NULL );
+			state.DestroyImageView( state.device, newViews[ i ], NULL );
+		}
+		state.DestroySwapchainKHR( state.device, newSwapchain, NULL );
+		return false;
+	}
 	sdVulkanImageResource newCurrentRenderResource;
 	memset( &newCurrentRenderResource, 0, sizeof( newCurrentRenderResource ) );
 	const bool canCopyCurrentRender =
 		( imageUsage & VK_IMAGE_USAGE_TRANSFER_SRC_BIT ) != 0;
 	if ( canCopyCurrentRender && !CreateCurrentRenderResource( state,
 		surfaceFormat.format, extent, newCurrentRenderResource ) ) {
+		DestroySemaphoreList( state, newPresentSemaphores );
 		for ( unsigned int i = 0; i < newImageCount; ++i ) {
 			state.DestroyImageView( state.device, newDepthViews[ i ], NULL );
 			state.DestroyImage( state.device, newDepthImages[ i ], NULL );
@@ -1592,6 +1718,7 @@ bool CreateSwapchain( sdVulkanBackendState& state, int requestedWidth,
 
 	DestroyCurrentRenderResource( state, state.currentRenderResource );
 	DestroyDepthResources( state );
+	DestroySemaphoreList( state, state.presentSemaphores );
 	for ( int i = 0; i < state.swapchainViews.Num(); ++i ) {
 		state.DestroyImageView( state.device, state.swapchainViews[ i ], NULL );
 	}
@@ -1601,6 +1728,7 @@ bool CreateSwapchain( sdVulkanBackendState& state, int requestedWidth,
 	state.swapchain = newSwapchain;
 	state.swapchainImages = newImages;
 	state.swapchainViews = newViews;
+	state.presentSemaphores = newPresentSemaphores;
 	state.imageInitialized.SetNum( newImageCount );
 	memset( state.imageInitialized.Begin(), 0, newImageCount );
 	state.depthImages = newDepthImages;
@@ -1703,6 +1831,7 @@ bool CreateFrames( sdVulkanBackendState& state ) {
 			return false;
 		}
 		frame.guiVertexOffset = 0;
+		frame.guiVertexOverflowWarned = false;
 	}
 	return true;
 }
@@ -1764,6 +1893,39 @@ void DestroyAllImageResources( sdVulkanBackendState& state ) {
 	state.retiredImageResources.Clear();
 }
 
+void DestroyToolDepthResource( sdVulkanBackendState& state,
+	sdVulkanToolDepthResource& resource ) {
+	if ( resource.view != VK_NULL_HANDLE ) {
+		state.DestroyImageView( state.device, resource.view, NULL );
+	}
+	if ( resource.image != VK_NULL_HANDLE ) {
+		state.DestroyImage( state.device, resource.image, NULL );
+	}
+	if ( resource.memory != VK_NULL_HANDLE ) {
+		state.FreeMemory( state.device, resource.memory, NULL );
+	}
+	memset( &resource, 0, sizeof( resource ) );
+}
+
+void DestroyAllToolRenderTargets( sdVulkanBackendState& state ) {
+	for ( int i = 0; i < state.toolRenderTargets.Num(); ++i ) {
+		sdVulkanBackendState::sdToolRenderTarget* target =
+			state.toolRenderTargets[ i ];
+		if ( target != NULL ) {
+			sdVulkanToolDepthResource depth = { target->depthImage,
+				target->depthMemory, target->depthView };
+			DestroyToolDepthResource( state, depth );
+			delete target;
+		}
+	}
+	state.toolRenderTargets.Clear();
+	for ( int i = 0; i < state.retiredToolDepthResources.Num(); ++i ) {
+		DestroyToolDepthResource( state, state.retiredToolDepthResources[ i ] );
+	}
+	state.retiredToolDepthResources.Clear();
+	state.activeToolRenderTarget = NULL;
+}
+
 void DestroyBufferResource( sdVulkanBackendState& state,
 	sdVulkanBufferResource& resource ) {
 	if ( resource.buffer != VK_NULL_HANDLE ) {
@@ -1795,6 +1957,10 @@ void DestroyRetiredResources( sdVulkanBackendState& state ) {
 		DestroyBufferResource( state, state.retiredBufferResources[ i ] );
 	}
 	state.retiredBufferResources.Clear();
+	for ( int i = 0; i < state.retiredToolDepthResources.Num(); ++i ) {
+		DestroyToolDepthResource( state, state.retiredToolDepthResources[ i ] );
+	}
+	state.retiredToolDepthResources.Clear();
 }
 
 bool CreateBufferAllocation( sdVulkanBackendState& state, VkDeviceSize bytes,
@@ -1990,6 +2156,22 @@ bool CompileVulkanShaderModule( sdVulkanBackendState& state,
 
 void DestroyGuiResources( sdVulkanBackendState& state ) {
 	state.materialDescriptors.Clear();
+	if ( state.toolDepthBlendPipeline != VK_NULL_HANDLE ) {
+		state.DestroyPipeline( state.device, state.toolDepthBlendPipeline, NULL );
+		state.toolDepthBlendPipeline = VK_NULL_HANDLE;
+	}
+	if ( state.toolDepthPipeline != VK_NULL_HANDLE ) {
+		state.DestroyPipeline( state.device, state.toolDepthPipeline, NULL );
+		state.toolDepthPipeline = VK_NULL_HANDLE;
+	}
+	if ( state.toolBlendPipeline != VK_NULL_HANDLE ) {
+		state.DestroyPipeline( state.device, state.toolBlendPipeline, NULL );
+		state.toolBlendPipeline = VK_NULL_HANDLE;
+	}
+	if ( state.toolPipeline != VK_NULL_HANDLE ) {
+		state.DestroyPipeline( state.device, state.toolPipeline, NULL );
+		state.toolPipeline = VK_NULL_HANDLE;
+	}
 	if ( state.worldSkyboxAddPipeline != VK_NULL_HANDLE ) {
 		state.DestroyPipeline( state.device, state.worldSkyboxAddPipeline, NULL );
 		state.worldSkyboxAddPipeline = VK_NULL_HANDLE;
@@ -2319,6 +2501,143 @@ bool CreateWorldPipeline( sdVulkanBackendState& state ) {
 			VK_BLEND_FACTOR_ZERO, false, false, true, state.skyPipeline );
 }
 
+bool CreateToolPipelineVariant( sdVulkanBackendState& state, bool depthTest,
+	bool blend, VkPipeline& pipeline ) {
+	VkShaderModule vertexModule = VK_NULL_HANDLE;
+	VkShaderModule fragmentModule = VK_NULL_HANDLE;
+	if ( !CompileVulkanShaderModule( state, "vkprogs/tool/radiant.vert",
+		SPIRV_SHADER_STAGE_VERTEX, vertexModule ) ||
+		!CompileVulkanShaderModule( state, "vkprogs/tool/radiant.frag",
+			SPIRV_SHADER_STAGE_FRAGMENT, fragmentModule ) ) {
+		if ( vertexModule != VK_NULL_HANDLE ) {
+			state.DestroyShaderModule( state.device, vertexModule, NULL );
+		}
+		if ( fragmentModule != VK_NULL_HANDLE ) {
+			state.DestroyShaderModule( state.device, fragmentModule, NULL );
+		}
+		return false;
+	}
+	VkPipelineShaderStageCreateInfo stages[ 2 ];
+	memset( stages, 0, sizeof( stages ) );
+	stages[ 0 ].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+	stages[ 0 ].stage = VK_SHADER_STAGE_VERTEX_BIT;
+	stages[ 0 ].module = vertexModule;
+	stages[ 0 ].pName = "main";
+	stages[ 1 ].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+	stages[ 1 ].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
+	stages[ 1 ].module = fragmentModule;
+	stages[ 1 ].pName = "main";
+	VkVertexInputBindingDescription binding;
+	binding.binding = 0;
+	binding.stride = sizeof( sdVulkanToolVertex );
+	binding.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+	VkVertexInputAttributeDescription attributes[ 3 ];
+	memset( attributes, 0, sizeof( attributes ) );
+	attributes[ 0 ].location = 0;
+	attributes[ 0 ].binding = 0;
+	attributes[ 0 ].format = VK_FORMAT_R32G32B32_SFLOAT;
+	attributes[ 0 ].offset = 0;
+	attributes[ 1 ].location = 1;
+	attributes[ 1 ].binding = 0;
+	attributes[ 1 ].format = VK_FORMAT_R32G32_SFLOAT;
+	attributes[ 1 ].offset = sizeof( float ) * 3;
+	attributes[ 2 ].location = 2;
+	attributes[ 2 ].binding = 0;
+	attributes[ 2 ].format = VK_FORMAT_R32G32B32A32_SFLOAT;
+	attributes[ 2 ].offset = sizeof( float ) * 5;
+	VkPipelineVertexInputStateCreateInfo vertexInput;
+	memset( &vertexInput, 0, sizeof( vertexInput ) );
+	vertexInput.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+	vertexInput.vertexBindingDescriptionCount = 1;
+	vertexInput.pVertexBindingDescriptions = &binding;
+	vertexInput.vertexAttributeDescriptionCount = 3;
+	vertexInput.pVertexAttributeDescriptions = attributes;
+	VkPipelineInputAssemblyStateCreateInfo inputAssembly;
+	memset( &inputAssembly, 0, sizeof( inputAssembly ) );
+	inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
+	inputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+	VkPipelineViewportStateCreateInfo viewportState;
+	memset( &viewportState, 0, sizeof( viewportState ) );
+	viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
+	viewportState.viewportCount = 1;
+	viewportState.scissorCount = 1;
+	VkPipelineRasterizationStateCreateInfo rasterization;
+	memset( &rasterization, 0, sizeof( rasterization ) );
+	rasterization.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
+	rasterization.polygonMode = VK_POLYGON_MODE_FILL;
+	rasterization.cullMode = VK_CULL_MODE_NONE;
+	rasterization.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
+	rasterization.lineWidth = 1.0f;
+	VkPipelineMultisampleStateCreateInfo multisample;
+	memset( &multisample, 0, sizeof( multisample ) );
+	multisample.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
+	multisample.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
+	VkPipelineDepthStencilStateCreateInfo depthStencil;
+	memset( &depthStencil, 0, sizeof( depthStencil ) );
+	depthStencil.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
+	depthStencil.depthTestEnable = depthTest ? VK_TRUE : VK_FALSE;
+	depthStencil.depthWriteEnable = depthTest ? VK_TRUE : VK_FALSE;
+	depthStencil.depthCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL;
+	VkPipelineColorBlendAttachmentState blendAttachment;
+	memset( &blendAttachment, 0, sizeof( blendAttachment ) );
+	blendAttachment.blendEnable = blend ? VK_TRUE : VK_FALSE;
+	blendAttachment.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
+	blendAttachment.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+	blendAttachment.colorBlendOp = VK_BLEND_OP_ADD;
+	blendAttachment.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
+	blendAttachment.dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+	blendAttachment.alphaBlendOp = VK_BLEND_OP_ADD;
+	blendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT |
+		VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT |
+		VK_COLOR_COMPONENT_A_BIT;
+	VkPipelineColorBlendStateCreateInfo blendState;
+	memset( &blendState, 0, sizeof( blendState ) );
+	blendState.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
+	blendState.attachmentCount = 1;
+	blendState.pAttachments = &blendAttachment;
+	const VkDynamicState dynamics[ 3 ] = { VK_DYNAMIC_STATE_VIEWPORT,
+		VK_DYNAMIC_STATE_SCISSOR, VK_DYNAMIC_STATE_DEPTH_BIAS };
+	VkPipelineDynamicStateCreateInfo dynamicState;
+	memset( &dynamicState, 0, sizeof( dynamicState ) );
+	dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
+	dynamicState.dynamicStateCount = 3;
+	dynamicState.pDynamicStates = dynamics;
+	VkPipelineRenderingCreateInfo renderingInfo;
+	memset( &renderingInfo, 0, sizeof( renderingInfo ) );
+	renderingInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_RENDERING_CREATE_INFO;
+	renderingInfo.colorAttachmentCount = 1;
+	renderingInfo.pColorAttachmentFormats = &state.swapchainFormat;
+	renderingInfo.depthAttachmentFormat = VK_FORMAT_D32_SFLOAT;
+	VkGraphicsPipelineCreateInfo pipelineInfo;
+	memset( &pipelineInfo, 0, sizeof( pipelineInfo ) );
+	pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+	pipelineInfo.pNext = &renderingInfo;
+	pipelineInfo.stageCount = 2;
+	pipelineInfo.pStages = stages;
+	pipelineInfo.pVertexInputState = &vertexInput;
+	pipelineInfo.pInputAssemblyState = &inputAssembly;
+	pipelineInfo.pViewportState = &viewportState;
+	pipelineInfo.pRasterizationState = &rasterization;
+	pipelineInfo.pMultisampleState = &multisample;
+	pipelineInfo.pDepthStencilState = &depthStencil;
+	pipelineInfo.pColorBlendState = &blendState;
+	pipelineInfo.pDynamicState = &dynamicState;
+	pipelineInfo.layout = state.guiPipelineLayout;
+	const bool created = CheckVulkanResult( state.CreateGraphicsPipelines(
+		state.device, VK_NULL_HANDLE, 1, &pipelineInfo, NULL, &pipeline ),
+		"vkCreateGraphicsPipelines(Radiant)" );
+	state.DestroyShaderModule( state.device, vertexModule, NULL );
+	state.DestroyShaderModule( state.device, fragmentModule, NULL );
+	return created;
+}
+
+bool CreateToolPipelines( sdVulkanBackendState& state ) {
+	return CreateToolPipelineVariant( state, false, false, state.toolPipeline ) &&
+		CreateToolPipelineVariant( state, false, true, state.toolBlendPipeline ) &&
+		CreateToolPipelineVariant( state, true, false, state.toolDepthPipeline ) &&
+		CreateToolPipelineVariant( state, true, true, state.toolDepthBlendPipeline );
+}
+
 bool CreateGuiResources( sdVulkanBackendState& state ) {
 	VkDescriptorSetLayoutBinding samplerBindings[ VULKAN_MATERIAL_TEXTURES ];
 	memset( samplerBindings, 0, sizeof( samplerBindings ) );
@@ -2537,6 +2856,10 @@ bool CreateGuiResources( sdVulkanBackendState& state ) {
 		DestroyGuiResources( state );
 		return false;
 	}
+	if ( !CreateToolPipelines( state ) ) {
+		DestroyGuiResources( state );
+		return false;
+	}
 	state.guiPipelineFormat = state.swapchainFormat;
 	return true;
 }
@@ -2578,6 +2901,17 @@ bool AllocateImageDescriptor( sdVulkanBackendState& state,
 
 const sdVulkanImageResource* FindVulkanImageResource(
 	const sdVulkanBackendState& state, const void* owner ) {
+	for ( int resourceIndex = 0; resourceIndex < state.imageResources.Num();
+		++resourceIndex ) {
+		if ( state.imageResources[ resourceIndex ].owner == owner ) {
+			return &state.imageResources[ resourceIndex ];
+		}
+	}
+	return NULL;
+}
+
+sdVulkanImageResource* FindVulkanImageResource(
+	sdVulkanBackendState& state, const void* owner ) {
 	for ( int resourceIndex = 0; resourceIndex < state.imageResources.Num();
 		++resourceIndex ) {
 		if ( state.imageResources[ resourceIndex ].owner == owner ) {
@@ -2736,6 +3070,212 @@ bool GetVulkanMaterialDescriptor( sdVulkanBackendState& state,
 		writes, 0, NULL );
 	state.materialDescriptors.Append( materialDescriptor );
 	descriptorSet = materialDescriptor.descriptorSet;
+	return true;
+}
+
+void DestroyToolSwapchain( sdVulkanBackendState& state,
+	sdVulkanBackendState::sdToolWindow& tool ) {
+	DestroySemaphoreList( state, tool.presentSemaphores );
+	for ( int i = 0; i < tool.views.Num(); ++i ) {
+		if ( tool.views[ i ] != VK_NULL_HANDLE ) {
+			state.DestroyImageView( state.device, tool.views[ i ], NULL );
+		}
+	}
+	for ( int i = 0; i < tool.depthViews.Num(); ++i ) {
+		if ( tool.depthViews[ i ] != VK_NULL_HANDLE ) {
+			state.DestroyImageView( state.device, tool.depthViews[ i ], NULL );
+		}
+		if ( tool.depthImages[ i ] != VK_NULL_HANDLE ) {
+			state.DestroyImage( state.device, tool.depthImages[ i ], NULL );
+		}
+		if ( tool.depthMemory[ i ] != VK_NULL_HANDLE ) {
+			state.FreeMemory( state.device, tool.depthMemory[ i ], NULL );
+		}
+	}
+	if ( tool.swapchain != VK_NULL_HANDLE ) {
+		state.DestroySwapchainKHR( state.device, tool.swapchain, NULL );
+	}
+	tool.swapchain = VK_NULL_HANDLE;
+	tool.images.Clear();
+	tool.views.Clear();
+	tool.imageInitialized.Clear();
+	tool.depthImages.Clear();
+	tool.depthMemory.Clear();
+	tool.depthViews.Clear();
+	tool.depthInitialized.Clear();
+	tool.extent.width = tool.extent.height = 0;
+}
+
+void DestroyToolWindows( sdVulkanBackendState& state ) {
+	for ( int i = 0; i < state.toolWindows.Num(); ++i ) {
+		sdVulkanBackendState::sdToolWindow* tool = state.toolWindows[ i ];
+		if ( tool == NULL ) {
+			continue;
+		}
+		DestroyToolSwapchain( state, *tool );
+		if ( tool->surface != VK_NULL_HANDLE ) {
+			state.DestroySurfaceKHR( state.instance, tool->surface, NULL );
+		}
+		delete tool;
+	}
+	state.toolWindows.Clear();
+	state.activeToolWindow = NULL;
+	state.toolFrameActive = false;
+}
+
+bool CreateToolSwapchain( sdVulkanBackendState& state,
+	sdVulkanBackendState::sdToolWindow& tool, int requestedWidth,
+	int requestedHeight ) {
+	if ( requestedWidth <= 0 || requestedHeight <= 0 ) {
+		return false;
+	}
+	VkBool32 canPresent = VK_FALSE;
+	if ( !CheckVulkanResult( state.GetPhysicalDeviceSurfaceSupportKHR(
+		state.physicalDevice, state.queueFamilyIndex, tool.surface, &canPresent ),
+		"vkGetPhysicalDeviceSurfaceSupportKHR(tool)" ) || !canPresent ) {
+		common->Warning( "The Vulkan graphics queue cannot present a Radiant window" );
+		return false;
+	}
+	VkSurfaceCapabilitiesKHR capabilities;
+	if ( !CheckVulkanResult( state.GetPhysicalDeviceSurfaceCapabilitiesKHR(
+		state.physicalDevice, tool.surface, &capabilities ),
+		"vkGetPhysicalDeviceSurfaceCapabilitiesKHR(tool)" ) ) {
+		return false;
+	}
+	unsigned int formatCount = 0;
+	state.GetPhysicalDeviceSurfaceFormatsKHR( state.physicalDevice, tool.surface,
+		&formatCount, NULL );
+	idList< VkSurfaceFormatKHR > formats;
+	formats.SetNum( formatCount );
+	state.GetPhysicalDeviceSurfaceFormatsKHR( state.physicalDevice, tool.surface,
+		&formatCount, formats.Begin() );
+	VkSurfaceFormatKHR surfaceFormat;
+	memset( &surfaceFormat, 0, sizeof( surfaceFormat ) );
+	bool foundFormat = false;
+	for ( int i = 0; i < formats.Num(); ++i ) {
+		if ( formats[ i ].format == state.swapchainFormat ) {
+			surfaceFormat = formats[ i ];
+			foundFormat = true;
+			break;
+		}
+	}
+	if ( !foundFormat && formats.Num() == 1 &&
+		formats[ 0 ].format == VK_FORMAT_UNDEFINED ) {
+		surfaceFormat.format = state.swapchainFormat;
+		surfaceFormat.colorSpace = state.colorSpace;
+		foundFormat = true;
+	}
+	if ( !foundFormat ) {
+		common->Warning( "Radiant Vulkan window does not support main swapchain format %d",
+			static_cast< int >( state.swapchainFormat ) );
+		return false;
+	}
+	VkExtent2D extent;
+	if ( capabilities.currentExtent.width != UINT_MAX ) {
+		extent = capabilities.currentExtent;
+	} else {
+		extent.width = ClampUnsigned( static_cast< unsigned int >( requestedWidth ),
+			capabilities.minImageExtent.width, capabilities.maxImageExtent.width );
+		extent.height = ClampUnsigned( static_cast< unsigned int >( requestedHeight ),
+			capabilities.minImageExtent.height, capabilities.maxImageExtent.height );
+	}
+	if ( extent.width == 0 || extent.height == 0 ) {
+		return false;
+	}
+	unsigned int imageCount = capabilities.minImageCount + 1;
+	if ( capabilities.maxImageCount != 0 && imageCount > capabilities.maxImageCount ) {
+		imageCount = capabilities.maxImageCount;
+	}
+	VkSwapchainCreateInfoKHR createInfo;
+	memset( &createInfo, 0, sizeof( createInfo ) );
+	createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
+	createInfo.surface = tool.surface;
+	createInfo.minImageCount = imageCount;
+	createInfo.imageFormat = surfaceFormat.format;
+	createInfo.imageColorSpace = surfaceFormat.colorSpace;
+	createInfo.imageExtent = extent;
+	createInfo.imageArrayLayers = 1;
+	createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+	createInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
+	createInfo.preTransform = capabilities.currentTransform;
+	createInfo.compositeAlpha = ChooseCompositeAlpha( capabilities.supportedCompositeAlpha );
+	createInfo.presentMode = VK_PRESENT_MODE_FIFO_KHR;
+	createInfo.clipped = VK_TRUE;
+	createInfo.oldSwapchain = tool.swapchain;
+	VkSwapchainKHR newSwapchain = VK_NULL_HANDLE;
+	if ( !CheckVulkanResult( state.CreateSwapchainKHR( state.device, &createInfo,
+		NULL, &newSwapchain ), "vkCreateSwapchainKHR(tool)" ) ) {
+		return false;
+	}
+	unsigned int newImageCount = 0;
+	state.GetSwapchainImagesKHR( state.device, newSwapchain, &newImageCount, NULL );
+	idList< VkImage > newImages;
+	newImages.SetNum( newImageCount );
+	if ( !CheckVulkanResult( state.GetSwapchainImagesKHR( state.device,
+		newSwapchain, &newImageCount, newImages.Begin() ),
+		"vkGetSwapchainImagesKHR(tool)" ) ) {
+		state.DestroySwapchainKHR( state.device, newSwapchain, NULL );
+		return false;
+	}
+	idList< VkImageView > newViews;
+	newViews.SetNum( newImageCount );
+	memset( newViews.Begin(), 0, newImageCount * sizeof( VkImageView ) );
+	for ( unsigned int i = 0; i < newImageCount; ++i ) {
+		VkImageViewCreateInfo viewInfo;
+		memset( &viewInfo, 0, sizeof( viewInfo ) );
+		viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+		viewInfo.image = newImages[ i ];
+		viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+		viewInfo.format = surfaceFormat.format;
+		viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		viewInfo.subresourceRange.levelCount = 1;
+		viewInfo.subresourceRange.layerCount = 1;
+		if ( !CheckVulkanResult( state.CreateImageView( state.device, &viewInfo,
+			NULL, &newViews[ i ] ), "vkCreateImageView(tool)" ) ) {
+			for ( unsigned int j = 0; j < i; ++j ) {
+				state.DestroyImageView( state.device, newViews[ j ], NULL );
+			}
+			state.DestroySwapchainKHR( state.device, newSwapchain, NULL );
+			return false;
+		}
+	}
+	idList< VkImage > newDepthImages;
+	idList< VkDeviceMemory > newDepthMemory;
+	idList< VkImageView > newDepthViews;
+	if ( !CreateDepthResources( state, newImageCount, extent, newDepthImages,
+		newDepthMemory, newDepthViews ) ) {
+		for ( unsigned int i = 0; i < newImageCount; ++i ) {
+			state.DestroyImageView( state.device, newViews[ i ], NULL );
+		}
+		state.DestroySwapchainKHR( state.device, newSwapchain, NULL );
+		return false;
+	}
+	idList< VkSemaphore > newPresentSemaphores;
+	if ( !CreateSemaphoreList( state, newImageCount, newPresentSemaphores,
+		"vkCreateSemaphore(Radiant present)" ) ) {
+		for ( unsigned int i = 0; i < newImageCount; ++i ) {
+			state.DestroyImageView( state.device, newDepthViews[ i ], NULL );
+			state.DestroyImage( state.device, newDepthImages[ i ], NULL );
+			state.FreeMemory( state.device, newDepthMemory[ i ], NULL );
+			state.DestroyImageView( state.device, newViews[ i ], NULL );
+		}
+		state.DestroySwapchainKHR( state.device, newSwapchain, NULL );
+		return false;
+	}
+	DestroyToolSwapchain( state, tool );
+	tool.swapchain = newSwapchain;
+	tool.images = newImages;
+	tool.views = newViews;
+	tool.presentSemaphores = newPresentSemaphores;
+	tool.imageInitialized.SetNum( newImageCount );
+	memset( tool.imageInitialized.Begin(), 0, newImageCount );
+	tool.depthImages = newDepthImages;
+	tool.depthMemory = newDepthMemory;
+	tool.depthViews = newDepthViews;
+	tool.depthInitialized.SetNum( newImageCount );
+	memset( tool.depthInitialized.Begin(), 0, newImageCount );
+	tool.extent = extent;
+	tool.dirty = false;
 	return true;
 }
 
@@ -3286,6 +3826,8 @@ void sdVulkanBackend::Shutdown() {
 		state->DeviceWaitIdle( state->device );
 	}
 	R_RayTracingShutdown();
+	DestroyToolWindows( *state );
+	DestroyAllToolRenderTargets( *state );
 	DestroyAllImageResources( *state );
 	DestroyAllBufferResources( *state );
 	DestroyGuiResources( *state );
@@ -3318,7 +3860,8 @@ void sdVulkanBackend::Shutdown() {
 }
 
 bool sdVulkanBackend::BeginFrame( int width, int height ) {
-	if ( state == NULL || state->device == VK_NULL_HANDLE || state->frameActive ) {
+	if ( state == NULL || state->device == VK_NULL_HANDLE || state->frameActive ||
+		state->toolFrameActive ) {
 		return false;
 	}
 	RECT clientRect;
@@ -3360,6 +3903,7 @@ bool sdVulkanBackend::BeginFrame( int width, int height ) {
 	}
 	R_RayTracingBeginFrame( state->frameIndex );
 	frame.guiVertexOffset = 0;
+	frame.guiVertexOverflowWarned = false;
 	VkResult acquireResult = state->AcquireNextImageKHR( state->device,
 		state->swapchain, UINT64_MAX, frame.imageAvailable, VK_NULL_HANDLE,
 		&state->imageIndex );
@@ -3533,7 +4077,7 @@ void sdVulkanBackend::EndFrame( bool ) {
 	VkSemaphoreSubmitInfo signalInfo;
 	memset( &signalInfo, 0, sizeof( signalInfo ) );
 	signalInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_SUBMIT_INFO;
-	signalInfo.semaphore = frame.renderComplete;
+	signalInfo.semaphore = state->presentSemaphores[ state->imageIndex ];
 	signalInfo.stageMask = VK_PIPELINE_STAGE_2_ALL_COMMANDS_BIT;
 	VkSubmitInfo2 submitInfo;
 	memset( &submitInfo, 0, sizeof( submitInfo ) );
@@ -3557,7 +4101,7 @@ void sdVulkanBackend::EndFrame( bool ) {
 	memset( &presentInfo, 0, sizeof( presentInfo ) );
 	presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
 	presentInfo.waitSemaphoreCount = 1;
-	presentInfo.pWaitSemaphores = &frame.renderComplete;
+	presentInfo.pWaitSemaphores = &state->presentSemaphores[ state->imageIndex ];
 	presentInfo.swapchainCount = 1;
 	presentInfo.pSwapchains = &state->swapchain;
 	presentInfo.pImageIndices = &state->imageIndex;
@@ -3572,6 +4116,798 @@ void sdVulkanBackend::EndFrame( bool ) {
 	}
 	state->frameActive = false;
 	state->frameIndex = ( state->frameIndex + 1 ) % NUM_VULKAN_FRAMES;
+}
+
+bool sdVulkanBackend::BeginToolWindow( void* nativeWindow, int width, int height,
+	const float clearColor[ 4 ] ) {
+	if ( state == NULL || state->device == VK_NULL_HANDLE || nativeWindow == NULL ||
+		state->frameActive || state->toolFrameActive ) {
+		return false;
+	}
+	HWND window = static_cast< HWND >( nativeWindow );
+	RECT clientRect;
+	if ( GetClientRect( window, &clientRect ) ) {
+		width = clientRect.right - clientRect.left;
+		height = clientRect.bottom - clientRect.top;
+	}
+	if ( width <= 0 || height <= 0 ) {
+		return false;
+	}
+	sdVulkanBackendState::sdToolWindow* tool = NULL;
+	for ( int i = 0; i < state->toolWindows.Num(); ++i ) {
+		if ( state->toolWindows[ i ]->window == window ) {
+			tool = state->toolWindows[ i ];
+			break;
+		}
+	}
+	if ( tool == NULL ) {
+		tool = new sdVulkanBackendState::sdToolWindow;
+		tool->window = window;
+		VkWin32SurfaceCreateInfoKHR surfaceInfo;
+		memset( &surfaceInfo, 0, sizeof( surfaceInfo ) );
+		surfaceInfo.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
+		surfaceInfo.hinstance = GetModuleHandleA( NULL );
+		surfaceInfo.hwnd = window;
+		if ( !CheckVulkanResult( state->CreateWin32SurfaceKHR( state->instance,
+			&surfaceInfo, NULL, &tool->surface ),
+			"vkCreateWin32SurfaceKHR(Radiant)" ) ) {
+			delete tool;
+			return false;
+		}
+		state->toolWindows.Append( tool );
+	}
+	VkExtent2D requestedExtent;
+	requestedExtent.width = static_cast< unsigned int >( width );
+	requestedExtent.height = static_cast< unsigned int >( height );
+	VkSurfaceCapabilitiesKHR currentCapabilities;
+	memset( &currentCapabilities, 0, sizeof( currentCapabilities ) );
+	if ( state->GetPhysicalDeviceSurfaceCapabilitiesKHR( state->physicalDevice,
+		tool->surface, &currentCapabilities ) == VK_SUCCESS ) {
+		if ( currentCapabilities.currentExtent.width != UINT_MAX ) {
+			requestedExtent = currentCapabilities.currentExtent;
+		} else {
+			requestedExtent.width = ClampUnsigned( requestedExtent.width,
+				currentCapabilities.minImageExtent.width,
+				currentCapabilities.maxImageExtent.width );
+			requestedExtent.height = ClampUnsigned( requestedExtent.height,
+				currentCapabilities.minImageExtent.height,
+				currentCapabilities.maxImageExtent.height );
+		}
+	}
+	if ( tool->extent.width != requestedExtent.width ||
+		tool->extent.height != requestedExtent.height ) {
+		tool->dirty = true;
+	}
+	if ( tool->dirty || tool->swapchain == VK_NULL_HANDLE ) {
+		state->DeviceWaitIdle( state->device );
+		if ( !CreateToolSwapchain( *state, *tool, width, height ) ) {
+			return false;
+		}
+	}
+	if ( state->retiredImageResources.Num() != 0 ||
+		state->retiredBufferResources.Num() != 0 ||
+		state->retiredToolDepthResources.Num() != 0 ) {
+		state->DeviceWaitIdle( state->device );
+		DestroyRetiredResources( *state );
+	}
+	sdVulkanFrame& frame = state->frames[ state->frameIndex ];
+	if ( !CheckVulkanResult( state->WaitForFences( state->device, 1,
+		&frame.fence, VK_TRUE, UINT64_MAX ), "vkWaitForFences(Radiant)" ) ) {
+		return false;
+	}
+	frame.guiVertexOffset = 0;
+	frame.guiVertexOverflowWarned = false;
+	VkResult acquireResult = state->AcquireNextImageKHR( state->device,
+		tool->swapchain, UINT64_MAX, frame.imageAvailable, VK_NULL_HANDLE,
+		&state->toolImageIndex );
+	if ( acquireResult == VK_ERROR_OUT_OF_DATE_KHR ) {
+		state->DeviceWaitIdle( state->device );
+		if ( !CreateToolSwapchain( *state, *tool, width, height ) ) {
+			return false;
+		}
+		acquireResult = state->AcquireNextImageKHR( state->device, tool->swapchain,
+			UINT64_MAX, frame.imageAvailable, VK_NULL_HANDLE,
+			&state->toolImageIndex );
+	}
+	if ( acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR ) {
+		CheckVulkanResult( acquireResult, "vkAcquireNextImageKHR(Radiant)" );
+		return false;
+	}
+	if ( acquireResult == VK_SUBOPTIMAL_KHR ) {
+		tool->dirty = true;
+	}
+	if ( !CheckVulkanResult( state->ResetFences( state->device, 1, &frame.fence ),
+		"vkResetFences(Radiant)" ) ||
+		!CheckVulkanResult( state->ResetCommandPool( state->device,
+			frame.commandPool, 0 ), "vkResetCommandPool(Radiant)" ) ) {
+		RestoreSignaledFence( *state, frame );
+		return false;
+	}
+	VkCommandBufferBeginInfo beginInfo;
+	memset( &beginInfo, 0, sizeof( beginInfo ) );
+	beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+	beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+	if ( !CheckVulkanResult( state->BeginCommandBuffer( frame.commandBuffer,
+		&beginInfo ), "vkBeginCommandBuffer(Radiant)" ) ) {
+		RestoreSignaledFence( *state, frame );
+		return false;
+	}
+	VkImageMemoryBarrier2 barriers[ 2 ];
+	memset( barriers, 0, sizeof( barriers ) );
+	barriers[ 0 ].sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2;
+	barriers[ 0 ].srcStageMask = VK_PIPELINE_STAGE_2_NONE;
+	barriers[ 0 ].srcAccessMask = VK_ACCESS_2_NONE;
+	barriers[ 0 ].dstStageMask = VK_PIPELINE_STAGE_2_COLOR_ATTACHMENT_OUTPUT_BIT;
+	barriers[ 0 ].dstAccessMask = VK_ACCESS_2_COLOR_ATTACHMENT_WRITE_BIT;
+	barriers[ 0 ].oldLayout = tool->imageInitialized[ state->toolImageIndex ] ?
+		VK_IMAGE_LAYOUT_PRESENT_SRC_KHR : VK_IMAGE_LAYOUT_UNDEFINED;
+	barriers[ 0 ].newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+	barriers[ 0 ].srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	barriers[ 0 ].dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	barriers[ 0 ].image = tool->images[ state->toolImageIndex ];
+	barriers[ 0 ].subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+	barriers[ 0 ].subresourceRange.levelCount = 1;
+	barriers[ 0 ].subresourceRange.layerCount = 1;
+	barriers[ 1 ].sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2;
+	barriers[ 1 ].srcStageMask = tool->depthInitialized[ state->toolImageIndex ] ?
+		VK_PIPELINE_STAGE_2_LATE_FRAGMENT_TESTS_BIT : VK_PIPELINE_STAGE_2_NONE;
+	barriers[ 1 ].srcAccessMask = tool->depthInitialized[ state->toolImageIndex ] ?
+		VK_ACCESS_2_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT : VK_ACCESS_2_NONE;
+	barriers[ 1 ].dstStageMask = VK_PIPELINE_STAGE_2_EARLY_FRAGMENT_TESTS_BIT |
+		VK_PIPELINE_STAGE_2_LATE_FRAGMENT_TESTS_BIT;
+	barriers[ 1 ].dstAccessMask = VK_ACCESS_2_DEPTH_STENCIL_ATTACHMENT_READ_BIT |
+		VK_ACCESS_2_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+	barriers[ 1 ].oldLayout = tool->depthInitialized[ state->toolImageIndex ] ?
+		VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_UNDEFINED;
+	barriers[ 1 ].newLayout = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL;
+	barriers[ 1 ].srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	barriers[ 1 ].dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	barriers[ 1 ].image = tool->depthImages[ state->toolImageIndex ];
+	barriers[ 1 ].subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
+	barriers[ 1 ].subresourceRange.levelCount = 1;
+	barriers[ 1 ].subresourceRange.layerCount = 1;
+	VkDependencyInfo dependencyInfo;
+	memset( &dependencyInfo, 0, sizeof( dependencyInfo ) );
+	dependencyInfo.sType = VK_STRUCTURE_TYPE_DEPENDENCY_INFO;
+	dependencyInfo.imageMemoryBarrierCount = 2;
+	dependencyInfo.pImageMemoryBarriers = barriers;
+	state->CmdPipelineBarrier2( frame.commandBuffer, &dependencyInfo );
+	VkRenderingAttachmentInfo colorAttachment;
+	memset( &colorAttachment, 0, sizeof( colorAttachment ) );
+	colorAttachment.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO;
+	colorAttachment.imageView = tool->views[ state->toolImageIndex ];
+	colorAttachment.imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+	colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+	colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+	for ( int i = 0; i < 4; ++i ) {
+		colorAttachment.clearValue.color.float32[ i ] = clearColor != NULL ?
+			clearColor[ i ] : ( i == 3 ? 1.0f : 0.0f );
+	}
+	VkRenderingAttachmentInfo depthAttachment;
+	memset( &depthAttachment, 0, sizeof( depthAttachment ) );
+	depthAttachment.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO;
+	depthAttachment.imageView = tool->depthViews[ state->toolImageIndex ];
+	depthAttachment.imageLayout = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL;
+	depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+	depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+	depthAttachment.clearValue.depthStencil.depth = 1.0f;
+	VkRenderingInfo renderingInfo;
+	memset( &renderingInfo, 0, sizeof( renderingInfo ) );
+	renderingInfo.sType = VK_STRUCTURE_TYPE_RENDERING_INFO;
+	renderingInfo.renderArea.extent = tool->extent;
+	renderingInfo.layerCount = 1;
+	renderingInfo.colorAttachmentCount = 1;
+	renderingInfo.pColorAttachments = &colorAttachment;
+	renderingInfo.pDepthAttachment = &depthAttachment;
+	state->CmdBeginRendering( frame.commandBuffer, &renderingInfo );
+	VkViewport viewport;
+	viewport.x = 0.0f;
+	viewport.y = static_cast< float >( tool->extent.height );
+	viewport.width = static_cast< float >( tool->extent.width );
+	viewport.height = -static_cast< float >( tool->extent.height );
+	viewport.minDepth = 0.0f;
+	viewport.maxDepth = 1.0f;
+	state->CmdSetViewport( frame.commandBuffer, 0, 1, &viewport );
+	memset( &state->toolScissor, 0, sizeof( state->toolScissor ) );
+	state->toolScissor.extent = tool->extent;
+	state->CmdSetScissor( frame.commandBuffer, 0, 1, &state->toolScissor );
+	state->activeToolWindow = tool;
+	state->activeToolRenderTarget = NULL;
+	state->toolRenderExtent = tool->extent;
+	state->toolImageOwner = NULL;
+	state->toolFrameActive = true;
+	return true;
+}
+
+static unsigned int ToolRenderTargetAllocationSize( int requested ) {
+	unsigned int result = 1;
+	const unsigned int value = static_cast< unsigned int >( Max( requested, 1 ) );
+	while ( result < value && result < ( 1u << 30 ) ) {
+		result <<= 1;
+	}
+	return result;
+}
+
+static bool CreateToolRenderTargetResources( sdVulkanBackendState& state,
+	sdVulkanBackendState::sdToolRenderTarget& target,
+	VkExtent2D allocationExtent ) {
+	sdVulkanImageResource color;
+	memset( &color, 0, sizeof( color ) );
+	color.owner = target.owner;
+	color.width = static_cast< int >( allocationExtent.width );
+	color.height = static_cast< int >( allocationExtent.height );
+	color.mipLevels = 1;
+
+	VkImageCreateInfo imageInfo;
+	memset( &imageInfo, 0, sizeof( imageInfo ) );
+	imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+	imageInfo.imageType = VK_IMAGE_TYPE_2D;
+	imageInfo.format = state.swapchainFormat;
+	imageInfo.extent.width = allocationExtent.width;
+	imageInfo.extent.height = allocationExtent.height;
+	imageInfo.extent.depth = 1;
+	imageInfo.mipLevels = 1;
+	imageInfo.arrayLayers = 1;
+	imageInfo.samples = VK_SAMPLE_COUNT_1_BIT;
+	imageInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+	imageInfo.usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT |
+		VK_IMAGE_USAGE_SAMPLED_BIT;
+	imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+	imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+	if ( !CheckVulkanResult( state.CreateImage( state.device, &imageInfo, NULL,
+		&color.image ), "vkCreateImage(Radiant viewport)" ) ) {
+		return false;
+	}
+	VkMemoryRequirements requirements;
+	state.GetImageMemoryRequirements( state.device, color.image, &requirements );
+	unsigned int memoryType = UINT_MAX;
+	if ( !FindMemoryType( state, requirements.memoryTypeBits,
+		VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, memoryType ) ) {
+		DestroyImageResource( state, color );
+		return false;
+	}
+	VkMemoryAllocateInfo allocation;
+	memset( &allocation, 0, sizeof( allocation ) );
+	allocation.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+	allocation.allocationSize = requirements.size;
+	allocation.memoryTypeIndex = memoryType;
+	if ( !CheckVulkanResult( state.AllocateMemory( state.device, &allocation,
+		NULL, &color.memory ), "vkAllocateMemory(Radiant viewport)" ) ||
+		!CheckVulkanResult( state.BindImageMemory( state.device, color.image,
+			color.memory, 0 ), "vkBindImageMemory(Radiant viewport)" ) ) {
+		DestroyImageResource( state, color );
+		return false;
+	}
+	VkImageViewCreateInfo viewInfo;
+	memset( &viewInfo, 0, sizeof( viewInfo ) );
+	viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+	viewInfo.image = color.image;
+	viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+	viewInfo.format = state.swapchainFormat;
+	viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+	viewInfo.subresourceRange.levelCount = 1;
+	viewInfo.subresourceRange.layerCount = 1;
+	if ( !CheckVulkanResult( state.CreateImageView( state.device, &viewInfo,
+		NULL, &color.view ), "vkCreateImageView(Radiant viewport)" ) ) {
+		DestroyImageResource( state, color );
+		return false;
+	}
+	VkSamplerCreateInfo samplerInfo;
+	memset( &samplerInfo, 0, sizeof( samplerInfo ) );
+	samplerInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
+	samplerInfo.magFilter = VK_FILTER_LINEAR;
+	samplerInfo.minFilter = VK_FILTER_LINEAR;
+	samplerInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_NEAREST;
+	samplerInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+	samplerInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+	samplerInfo.addressModeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+	samplerInfo.maxLod = 0.0f;
+	if ( !CheckVulkanResult( state.CreateSampler( state.device, &samplerInfo,
+		NULL, &color.sampler ), "vkCreateSampler(Radiant viewport)" ) ||
+		!AllocateImageDescriptor( state, color ) ) {
+		DestroyImageResource( state, color );
+		return false;
+	}
+
+	idList< VkImage > depthImages;
+	idList< VkDeviceMemory > depthMemory;
+	idList< VkImageView > depthViews;
+	if ( !CreateDepthResources( state, 1, allocationExtent, depthImages,
+		depthMemory, depthViews ) ) {
+		DestroyImageResource( state, color );
+		return false;
+	}
+	target.allocationExtent = allocationExtent;
+	target.depthImage = depthImages[ 0 ];
+	target.depthMemory = depthMemory[ 0 ];
+	target.depthView = depthViews[ 0 ];
+	target.initialized = false;
+	state.imageResources.Append( color );
+	return true;
+}
+
+bool sdVulkanBackend::BeginToolRenderTarget( const void* owner, int width,
+	int height, const float clearColor[ 4 ] ) {
+	if ( state == NULL || owner == NULL || width <= 0 || height <= 0 ||
+		!state->toolFrameActive || state->activeToolWindow == NULL ||
+		state->activeToolRenderTarget != NULL ) {
+		return false;
+	}
+	sdVulkanBackendState::sdToolRenderTarget* target = NULL;
+	for ( int i = 0; i < state->toolRenderTargets.Num(); ++i ) {
+		if ( state->toolRenderTargets[ i ]->owner == owner ) {
+			target = state->toolRenderTargets[ i ];
+			break;
+		}
+	}
+	if ( target == NULL ) {
+		target = new sdVulkanBackendState::sdToolRenderTarget;
+		target->owner = owner;
+		state->toolRenderTargets.Append( target );
+	}
+	const VkExtent2D requestedExtent = {
+		static_cast< unsigned int >( width ),
+		static_cast< unsigned int >( height )
+	};
+	const bool needsAllocation = target->allocationExtent.width < requestedExtent.width ||
+		target->allocationExtent.height < requestedExtent.height ||
+		FindVulkanImageResource( *state, owner ) == NULL ||
+		target->depthView == VK_NULL_HANDLE;
+	if ( needsAllocation ) {
+		if ( target->depthImage != VK_NULL_HANDLE ||
+			target->depthMemory != VK_NULL_HANDLE || target->depthView != VK_NULL_HANDLE ) {
+			sdVulkanToolDepthResource retired = { target->depthImage,
+				target->depthMemory, target->depthView };
+			state->retiredToolDepthResources.Append( retired );
+			target->depthImage = VK_NULL_HANDLE;
+			target->depthMemory = VK_NULL_HANDLE;
+			target->depthView = VK_NULL_HANDLE;
+		}
+		DestroyImage( owner );
+		VkExtent2D allocationExtent;
+		allocationExtent.width = ToolRenderTargetAllocationSize( width );
+		allocationExtent.height = ToolRenderTargetAllocationSize( height );
+		if ( !CreateToolRenderTargetResources( *state, *target,
+			allocationExtent ) ) {
+			return false;
+		}
+	}
+	target->contentExtent = requestedExtent;
+	sdVulkanImageResource* color = FindVulkanImageResource( *state, owner );
+	if ( color == NULL ) {
+		return false;
+	}
+
+	sdVulkanFrame& frame = state->frames[ state->frameIndex ];
+	state->CmdEndRendering( frame.commandBuffer );
+	VkImageMemoryBarrier2 barriers[ 2 ];
+	memset( barriers, 0, sizeof( barriers ) );
+	barriers[ 0 ].sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2;
+	barriers[ 0 ].srcStageMask = target->initialized ?
+		VK_PIPELINE_STAGE_2_FRAGMENT_SHADER_BIT : VK_PIPELINE_STAGE_2_NONE;
+	barriers[ 0 ].srcAccessMask = target->initialized ?
+		VK_ACCESS_2_SHADER_SAMPLED_READ_BIT : VK_ACCESS_2_NONE;
+	barriers[ 0 ].dstStageMask = VK_PIPELINE_STAGE_2_COLOR_ATTACHMENT_OUTPUT_BIT;
+	barriers[ 0 ].dstAccessMask = VK_ACCESS_2_COLOR_ATTACHMENT_WRITE_BIT;
+	barriers[ 0 ].oldLayout = target->initialized ?
+		VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_UNDEFINED;
+	barriers[ 0 ].newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+	barriers[ 0 ].srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	barriers[ 0 ].dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	barriers[ 0 ].image = color->image;
+	barriers[ 0 ].subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+	barriers[ 0 ].subresourceRange.levelCount = 1;
+	barriers[ 0 ].subresourceRange.layerCount = 1;
+	barriers[ 1 ].sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2;
+	barriers[ 1 ].srcStageMask = target->initialized ?
+		VK_PIPELINE_STAGE_2_LATE_FRAGMENT_TESTS_BIT : VK_PIPELINE_STAGE_2_NONE;
+	barriers[ 1 ].srcAccessMask = target->initialized ?
+		VK_ACCESS_2_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT : VK_ACCESS_2_NONE;
+	barriers[ 1 ].dstStageMask = VK_PIPELINE_STAGE_2_EARLY_FRAGMENT_TESTS_BIT |
+		VK_PIPELINE_STAGE_2_LATE_FRAGMENT_TESTS_BIT;
+	barriers[ 1 ].dstAccessMask = VK_ACCESS_2_DEPTH_STENCIL_ATTACHMENT_READ_BIT |
+		VK_ACCESS_2_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+	barriers[ 1 ].oldLayout = target->initialized ?
+		VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_UNDEFINED;
+	barriers[ 1 ].newLayout = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL;
+	barriers[ 1 ].srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	barriers[ 1 ].dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	barriers[ 1 ].image = target->depthImage;
+	barriers[ 1 ].subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
+	barriers[ 1 ].subresourceRange.levelCount = 1;
+	barriers[ 1 ].subresourceRange.layerCount = 1;
+	VkDependencyInfo dependencyInfo;
+	memset( &dependencyInfo, 0, sizeof( dependencyInfo ) );
+	dependencyInfo.sType = VK_STRUCTURE_TYPE_DEPENDENCY_INFO;
+	dependencyInfo.imageMemoryBarrierCount = 2;
+	dependencyInfo.pImageMemoryBarriers = barriers;
+	state->CmdPipelineBarrier2( frame.commandBuffer, &dependencyInfo );
+
+	VkRenderingAttachmentInfo colorAttachment;
+	memset( &colorAttachment, 0, sizeof( colorAttachment ) );
+	colorAttachment.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO;
+	colorAttachment.imageView = color->view;
+	colorAttachment.imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+	colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+	colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+	for ( int component = 0; component < 4; ++component ) {
+		colorAttachment.clearValue.color.float32[ component ] = clearColor != NULL ?
+			clearColor[ component ] : ( component == 3 ? 1.0f : 0.0f );
+	}
+	VkRenderingAttachmentInfo depthAttachment;
+	memset( &depthAttachment, 0, sizeof( depthAttachment ) );
+	depthAttachment.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO;
+	depthAttachment.imageView = target->depthView;
+	depthAttachment.imageLayout = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL;
+	depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+	depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+	depthAttachment.clearValue.depthStencil.depth = 1.0f;
+	VkRenderingInfo renderingInfo;
+	memset( &renderingInfo, 0, sizeof( renderingInfo ) );
+	renderingInfo.sType = VK_STRUCTURE_TYPE_RENDERING_INFO;
+	renderingInfo.renderArea.extent = requestedExtent;
+	renderingInfo.layerCount = 1;
+	renderingInfo.colorAttachmentCount = 1;
+	renderingInfo.pColorAttachments = &colorAttachment;
+	renderingInfo.pDepthAttachment = &depthAttachment;
+	state->CmdBeginRendering( frame.commandBuffer, &renderingInfo );
+	VkViewport viewport;
+	viewport.x = 0.0f;
+	viewport.y = static_cast< float >( requestedExtent.height );
+	viewport.width = static_cast< float >( requestedExtent.width );
+	viewport.height = -static_cast< float >( requestedExtent.height );
+	viewport.minDepth = 0.0f;
+	viewport.maxDepth = 1.0f;
+	state->CmdSetViewport( frame.commandBuffer, 0, 1, &viewport );
+	memset( &state->toolScissor, 0, sizeof( state->toolScissor ) );
+	state->toolScissor.extent = requestedExtent;
+	state->CmdSetScissor( frame.commandBuffer, 0, 1, &state->toolScissor );
+	state->activeToolRenderTarget = target;
+	state->toolRenderExtent = requestedExtent;
+	state->toolImageOwner = NULL;
+	return true;
+}
+
+void sdVulkanBackend::EndToolRenderTarget() {
+	if ( state == NULL || !state->toolFrameActive ||
+		state->activeToolWindow == NULL || state->activeToolRenderTarget == NULL ) {
+		return;
+	}
+	sdVulkanBackendState::sdToolRenderTarget* target =
+		state->activeToolRenderTarget;
+	sdVulkanImageResource* color = FindVulkanImageResource( *state,
+		target->owner );
+	if ( color == NULL ) {
+		state->activeToolRenderTarget = NULL;
+		return;
+	}
+	sdVulkanFrame& frame = state->frames[ state->frameIndex ];
+	state->CmdEndRendering( frame.commandBuffer );
+	VkImageMemoryBarrier2 toSample;
+	memset( &toSample, 0, sizeof( toSample ) );
+	toSample.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2;
+	toSample.srcStageMask = VK_PIPELINE_STAGE_2_COLOR_ATTACHMENT_OUTPUT_BIT;
+	toSample.srcAccessMask = VK_ACCESS_2_COLOR_ATTACHMENT_WRITE_BIT;
+	toSample.dstStageMask = VK_PIPELINE_STAGE_2_FRAGMENT_SHADER_BIT;
+	toSample.dstAccessMask = VK_ACCESS_2_SHADER_SAMPLED_READ_BIT;
+	toSample.oldLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+	toSample.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+	toSample.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	toSample.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	toSample.image = color->image;
+	toSample.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+	toSample.subresourceRange.levelCount = 1;
+	toSample.subresourceRange.layerCount = 1;
+	VkDependencyInfo dependencyInfo;
+	memset( &dependencyInfo, 0, sizeof( dependencyInfo ) );
+	dependencyInfo.sType = VK_STRUCTURE_TYPE_DEPENDENCY_INFO;
+	dependencyInfo.imageMemoryBarrierCount = 1;
+	dependencyInfo.pImageMemoryBarriers = &toSample;
+	state->CmdPipelineBarrier2( frame.commandBuffer, &dependencyInfo );
+	target->initialized = true;
+	state->activeToolRenderTarget = NULL;
+	state->toolRenderExtent = state->activeToolWindow->extent;
+
+	VkRenderingAttachmentInfo colorAttachment;
+	memset( &colorAttachment, 0, sizeof( colorAttachment ) );
+	colorAttachment.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO;
+	colorAttachment.imageView = state->activeToolWindow->views[
+		state->toolImageIndex ];
+	colorAttachment.imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+	colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_LOAD;
+	colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+	VkRenderingAttachmentInfo depthAttachment;
+	memset( &depthAttachment, 0, sizeof( depthAttachment ) );
+	depthAttachment.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO;
+	depthAttachment.imageView = state->activeToolWindow->depthViews[
+		state->toolImageIndex ];
+	depthAttachment.imageLayout = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL;
+	depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_LOAD;
+	depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+	VkRenderingInfo renderingInfo;
+	memset( &renderingInfo, 0, sizeof( renderingInfo ) );
+	renderingInfo.sType = VK_STRUCTURE_TYPE_RENDERING_INFO;
+	renderingInfo.renderArea.extent = state->toolRenderExtent;
+	renderingInfo.layerCount = 1;
+	renderingInfo.colorAttachmentCount = 1;
+	renderingInfo.pColorAttachments = &colorAttachment;
+	renderingInfo.pDepthAttachment = &depthAttachment;
+	state->CmdBeginRendering( frame.commandBuffer, &renderingInfo );
+	VkViewport viewport;
+	viewport.x = 0.0f;
+	viewport.y = static_cast< float >( state->toolRenderExtent.height );
+	viewport.width = static_cast< float >( state->toolRenderExtent.width );
+	viewport.height = -static_cast< float >( state->toolRenderExtent.height );
+	viewport.minDepth = 0.0f;
+	viewport.maxDepth = 1.0f;
+	state->CmdSetViewport( frame.commandBuffer, 0, 1, &viewport );
+	memset( &state->toolScissor, 0, sizeof( state->toolScissor ) );
+	state->toolScissor.extent = state->toolRenderExtent;
+	state->CmdSetScissor( frame.commandBuffer, 0, 1, &state->toolScissor );
+	state->toolImageOwner = NULL;
+}
+
+void sdVulkanBackend::DestroyToolRenderTarget( const void* owner ) {
+	if ( state == NULL || owner == NULL ) {
+		return;
+	}
+	for ( int i = 0; i < state->toolRenderTargets.Num(); ++i ) {
+		sdVulkanBackendState::sdToolRenderTarget* target =
+			state->toolRenderTargets[ i ];
+		if ( target == NULL || target->owner != owner ) {
+			continue;
+		}
+		if ( target == state->activeToolRenderTarget ) {
+			EndToolRenderTarget();
+		}
+		sdVulkanToolDepthResource depth = { target->depthImage,
+			target->depthMemory, target->depthView };
+		if ( state->frameActive || state->toolFrameActive ) {
+			state->retiredToolDepthResources.Append( depth );
+		} else {
+			state->DeviceWaitIdle( state->device );
+			DestroyToolDepthResource( *state, depth );
+		}
+		delete target;
+		state->toolRenderTargets.RemoveIndexFast( i );
+		break;
+	}
+	DestroyImage( owner );
+}
+
+bool sdVulkanBackend::GetToolRenderTargetSize( const void* owner, int& width,
+	int& height, int& textureWidth, int& textureHeight ) const {
+	width = height = textureWidth = textureHeight = 0;
+	if ( state == NULL || owner == NULL ) {
+		return false;
+	}
+	for ( int i = 0; i < state->toolRenderTargets.Num(); ++i ) {
+		const sdVulkanBackendState::sdToolRenderTarget* target =
+			state->toolRenderTargets[ i ];
+		if ( target != NULL && target->owner == owner ) {
+			width = static_cast< int >( target->contentExtent.width );
+			height = static_cast< int >( target->contentExtent.height );
+			textureWidth = static_cast< int >( target->allocationExtent.width );
+			textureHeight = static_cast< int >( target->allocationExtent.height );
+			return width > 0 && height > 0 && textureWidth > 0 && textureHeight > 0;
+		}
+	}
+	return false;
+}
+
+bool sdVulkanBackend::DrawToolTriangles( const sdVulkanToolVertex* vertices,
+	int vertexCount, bool depthTest, bool blend ) {
+	if ( state == NULL || !state->toolFrameActive || vertices == NULL ||
+		vertexCount < 3 || state->activeToolWindow == NULL ) {
+		return false;
+	}
+	const void* imageOwner = state->toolImageOwner;
+	if ( imageOwner == NULL && globalImages != NULL ) {
+		imageOwner = globalImages->whiteImage;
+	}
+	const sdVulkanImageResource* imageResource =
+		FindVulkanImageResource( *state, imageOwner );
+	if ( imageResource == NULL || imageResource->descriptorSet == VK_NULL_HANDLE ) {
+		return false;
+	}
+	sdVulkanFrame& frame = state->frames[ state->frameIndex ];
+	const VkDeviceSize vertexBytes = static_cast< VkDeviceSize >( vertexCount ) *
+		sizeof( sdVulkanToolVertex );
+	const VkDeviceSize vertexOffset = ( frame.guiVertexOffset + 15 ) & ~15ULL;
+	if ( vertexOffset + vertexBytes > VULKAN_GUI_VERTEX_BYTES ) {
+		if ( !frame.guiVertexOverflowWarned ) {
+			common->Warning( "Radiant Vulkan vertex stream exceeded %u MiB; remaining draws are skipped",
+				static_cast< unsigned int >( VULKAN_GUI_VERTEX_BYTES / ( 1024 * 1024 ) ) );
+			frame.guiVertexOverflowWarned = true;
+		}
+		return false;
+	}
+	memcpy( static_cast< byte* >( frame.guiVertexMapped ) + vertexOffset,
+		vertices, static_cast< size_t >( vertexBytes ) );
+	frame.guiVertexOffset = vertexOffset + vertexBytes;
+	VkPipeline pipeline = depthTest ?
+		( blend ? state->toolDepthBlendPipeline : state->toolDepthPipeline ) :
+		( blend ? state->toolBlendPipeline : state->toolPipeline );
+	state->CmdBindPipeline( frame.commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
+		pipeline );
+	// Tool pipelines inherit the renderer's dynamic depth-bias state. Radiant
+	// uses unbiased geometry unless its compatibility layer explicitly adds an
+	// offset, so establish the required neutral value after every pipeline bind.
+	state->CmdSetDepthBias( frame.commandBuffer, 0.0f, 0.0f, 0.0f );
+	state->CmdBindDescriptorSets( frame.commandBuffer,
+		VK_PIPELINE_BIND_POINT_GRAPHICS, state->guiPipelineLayout, 0, 1,
+		&imageResource->descriptorSet, 0, NULL );
+	state->CmdBindVertexBuffers( frame.commandBuffer, 0, 1,
+		&frame.guiVertexBuffer, &vertexOffset );
+	state->CmdDraw( frame.commandBuffer, vertexCount, 1, 0, 0 );
+	return true;
+}
+
+void sdVulkanBackend::SetToolScissor( int x, int y, int width, int height ) {
+	if ( state == NULL || !state->toolFrameActive ||
+		state->activeToolWindow == NULL ) {
+		return;
+	}
+	const int targetWidth = static_cast< int >( state->toolRenderExtent.width );
+	const int targetHeight = static_cast< int >( state->toolRenderExtent.height );
+	const int left = idMath::ClampInt( 0, targetWidth, x );
+	const int top = idMath::ClampInt( 0, targetHeight, targetHeight - y - height );
+	const int right = idMath::ClampInt( left, targetWidth, x + width );
+	const int bottom = idMath::ClampInt( top, targetHeight, targetHeight - y );
+	state->toolScissor.offset.x = left;
+	state->toolScissor.offset.y = top;
+	state->toolScissor.extent.width = right - left;
+	state->toolScissor.extent.height = bottom - top;
+	sdVulkanFrame& frame = state->frames[ state->frameIndex ];
+	state->CmdSetScissor( frame.commandBuffer, 0, 1, &state->toolScissor );
+}
+
+void sdVulkanBackend::SetToolImage( const void* imageOwner ) {
+	if ( state != NULL ) {
+		state->toolImageOwner = imageOwner;
+	}
+}
+
+void sdVulkanBackend::ClearToolRegion( const float color[ 4 ], bool clearColor,
+	bool clearDepth ) {
+	if ( state == NULL || !state->toolFrameActive ||
+		state->activeToolWindow == NULL || ( !clearColor && !clearDepth ) ) {
+		return;
+	}
+	VkClearAttachment attachments[ 2 ];
+	memset( attachments, 0, sizeof( attachments ) );
+	int attachmentCount = 0;
+	if ( clearColor ) {
+		VkClearAttachment& attachment = attachments[ attachmentCount++ ];
+		attachment.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		attachment.colorAttachment = 0;
+		for ( int component = 0; component < 4; ++component ) {
+			attachment.clearValue.color.float32[ component ] = color != NULL ?
+				color[ component ] : ( component == 3 ? 1.0f : 0.0f );
+		}
+	}
+	if ( clearDepth ) {
+		VkClearAttachment& attachment = attachments[ attachmentCount++ ];
+		attachment.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
+		attachment.clearValue.depthStencil.depth = 1.0f;
+	}
+	VkClearRect clearRect;
+	memset( &clearRect, 0, sizeof( clearRect ) );
+	clearRect.rect = state->toolScissor;
+	clearRect.layerCount = 1;
+	sdVulkanFrame& frame = state->frames[ state->frameIndex ];
+	state->CmdClearAttachments( frame.commandBuffer, attachmentCount,
+		attachments, 1, &clearRect );
+}
+
+bool sdVulkanBackend::GetActiveToolWindowExtent( int& width, int& height ) const {
+	width = height = 0;
+	if ( state == NULL || !state->toolFrameActive ||
+		state->activeToolWindow == NULL ) {
+		return false;
+	}
+	width = static_cast< int >( state->activeToolWindow->extent.width );
+	height = static_cast< int >( state->activeToolWindow->extent.height );
+	return width > 0 && height > 0;
+}
+
+void sdVulkanBackend::EndToolWindow() {
+	if ( state == NULL || !state->toolFrameActive ||
+		state->activeToolWindow == NULL ) {
+		return;
+	}
+	if ( state->activeToolRenderTarget != NULL ) {
+		EndToolRenderTarget();
+	}
+	sdVulkanBackendState::sdToolWindow* tool = state->activeToolWindow;
+	sdVulkanFrame& frame = state->frames[ state->frameIndex ];
+	state->CmdEndRendering( frame.commandBuffer );
+	VkImageMemoryBarrier2 toPresent;
+	memset( &toPresent, 0, sizeof( toPresent ) );
+	toPresent.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2;
+	toPresent.srcStageMask = VK_PIPELINE_STAGE_2_COLOR_ATTACHMENT_OUTPUT_BIT;
+	toPresent.srcAccessMask = VK_ACCESS_2_COLOR_ATTACHMENT_WRITE_BIT;
+	toPresent.dstStageMask = VK_PIPELINE_STAGE_2_NONE;
+	toPresent.dstAccessMask = VK_ACCESS_2_NONE;
+	toPresent.oldLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+	toPresent.newLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+	toPresent.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	toPresent.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	toPresent.image = tool->images[ state->toolImageIndex ];
+	toPresent.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+	toPresent.subresourceRange.levelCount = 1;
+	toPresent.subresourceRange.layerCount = 1;
+	VkDependencyInfo dependencyInfo;
+	memset( &dependencyInfo, 0, sizeof( dependencyInfo ) );
+	dependencyInfo.sType = VK_STRUCTURE_TYPE_DEPENDENCY_INFO;
+	dependencyInfo.imageMemoryBarrierCount = 1;
+	dependencyInfo.pImageMemoryBarriers = &toPresent;
+	state->CmdPipelineBarrier2( frame.commandBuffer, &dependencyInfo );
+	if ( !CheckVulkanResult( state->EndCommandBuffer( frame.commandBuffer ),
+		"vkEndCommandBuffer(Radiant)" ) ) {
+		RestoreSignaledFence( *state, frame );
+		state->toolFrameActive = false;
+		state->activeToolWindow = NULL;
+		return;
+	}
+	VkSemaphoreSubmitInfo waitInfo;
+	memset( &waitInfo, 0, sizeof( waitInfo ) );
+	waitInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_SUBMIT_INFO;
+	waitInfo.semaphore = frame.imageAvailable;
+	waitInfo.stageMask = VK_PIPELINE_STAGE_2_COLOR_ATTACHMENT_OUTPUT_BIT;
+	VkCommandBufferSubmitInfo commandInfo;
+	memset( &commandInfo, 0, sizeof( commandInfo ) );
+	commandInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_SUBMIT_INFO;
+	commandInfo.commandBuffer = frame.commandBuffer;
+	VkSemaphoreSubmitInfo signalInfo;
+	memset( &signalInfo, 0, sizeof( signalInfo ) );
+	signalInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_SUBMIT_INFO;
+	signalInfo.semaphore = tool->presentSemaphores[ state->toolImageIndex ];
+	signalInfo.stageMask = VK_PIPELINE_STAGE_2_ALL_COMMANDS_BIT;
+	VkSubmitInfo2 submitInfo;
+	memset( &submitInfo, 0, sizeof( submitInfo ) );
+	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO_2;
+	submitInfo.waitSemaphoreInfoCount = 1;
+	submitInfo.pWaitSemaphoreInfos = &waitInfo;
+	submitInfo.commandBufferInfoCount = 1;
+	submitInfo.pCommandBufferInfos = &commandInfo;
+	submitInfo.signalSemaphoreInfoCount = 1;
+	submitInfo.pSignalSemaphoreInfos = &signalInfo;
+	if ( !CheckVulkanResult( state->QueueSubmit2( state->graphicsQueue, 1,
+		&submitInfo, frame.fence ), "vkQueueSubmit2(Radiant)" ) ) {
+		RestoreSignaledFence( *state, frame );
+		state->toolFrameActive = false;
+		state->activeToolWindow = NULL;
+		return;
+	}
+	tool->imageInitialized[ state->toolImageIndex ] = 1;
+	tool->depthInitialized[ state->toolImageIndex ] = 1;
+	VkPresentInfoKHR presentInfo;
+	memset( &presentInfo, 0, sizeof( presentInfo ) );
+	presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+	presentInfo.waitSemaphoreCount = 1;
+	presentInfo.pWaitSemaphores = &tool->presentSemaphores[ state->toolImageIndex ];
+	presentInfo.swapchainCount = 1;
+	presentInfo.pSwapchains = &tool->swapchain;
+	presentInfo.pImageIndices = &state->toolImageIndex;
+	const VkResult presentResult = state->QueuePresentKHR( state->graphicsQueue,
+		&presentInfo );
+	if ( presentResult == VK_ERROR_OUT_OF_DATE_KHR ||
+		presentResult == VK_SUBOPTIMAL_KHR ) {
+		tool->dirty = true;
+	} else {
+		CheckVulkanResult( presentResult, "vkQueuePresentKHR(Radiant)" );
+	}
+	state->toolFrameActive = false;
+	state->activeToolWindow = NULL;
+	state->activeToolRenderTarget = NULL;
+	state->toolRenderExtent.width = state->toolRenderExtent.height = 0;
+	state->toolImageOwner = NULL;
+	state->frameIndex = ( state->frameIndex + 1 ) % NUM_VULKAN_FRAMES;
+}
+
+bool sdVulkanBackend::IsToolWindowActive() const {
+	return state != NULL && state->toolFrameActive;
 }
 
 void sdVulkanBackend::WaitIdle() {
@@ -4229,7 +5565,7 @@ void sdVulkanBackend::DestroyImage( const void* owner ) {
 				}
 			}
 			state->imageResources.RemoveIndexFast( i );
-			if ( state->frameActive ) {
+			if ( state->frameActive || state->toolFrameActive ) {
 				state->retiredImageResources.Append( removed );
 			} else {
 				state->DeviceWaitIdle( state->device );
@@ -4301,7 +5637,7 @@ void sdVulkanBackend::DestroyBuffer( const void* owner ) {
 		if ( state->bufferResources[ i ].owner == owner ) {
 			sdVulkanBufferResource removed = state->bufferResources[ i ];
 			state->bufferResources.RemoveIndexFast( i );
-			if ( state->frameActive ) {
+			if ( state->frameActive || state->toolFrameActive ) {
 				state->retiredBufferResources.Append( removed );
 			} else {
 				state->DeviceWaitIdle( state->device );
@@ -5350,8 +6686,11 @@ bool sdVulkanBackend::DrawGuiFan( const void* imageOwner,
 		sizeof( sdVulkanGuiVertex );
 	const VkDeviceSize vertexOffset = ( frame.guiVertexOffset + 15 ) & ~15ULL;
 	if ( vertexOffset + vertexBytes > VULKAN_GUI_VERTEX_BYTES ) {
-		common->Warning( "Vulkan GUI vertex buffer overflow (%u vertices)",
-			vertexCount );
+		if ( !frame.guiVertexOverflowWarned ) {
+			common->Warning( "Vulkan GUI vertex stream exceeded %u MiB; remaining draws are skipped",
+				static_cast< unsigned int >( VULKAN_GUI_VERTEX_BYTES / ( 1024 * 1024 ) ) );
+			frame.guiVertexOverflowWarned = true;
+		}
 		return false;
 	}
 	memcpy( static_cast< byte* >( frame.guiVertexMapped ) + vertexOffset,

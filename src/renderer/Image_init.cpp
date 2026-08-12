@@ -12,6 +12,7 @@
 
 #include "Image.h"
 #include "RenderSystem.h"
+#include "VulkanBackend.h"
 #include "megatexture/MegaTexture.h"
 
 extern glconfig_t glConfig;
@@ -433,6 +434,14 @@ void idImageManager::PurgeAllMegaTextures() {
 	}
 }
 
+void idImageManager::ReloadAllMegaTextures() {
+	for ( int i = 0; i < megaTextures.Num(); ++i ) {
+		megaTextures[ i ]->Purge();
+		megaTextures[ i ]->Load();
+		megaTextures[ i ]->ReloadImages();
+	}
+}
+
 void idImageManager::PurgeAllImages() {
 	for ( int i = 0; i < images.Num(); i++ ) {
 		if ( images[ i ] != NULL ) {
@@ -809,6 +818,10 @@ idImage* idImageManager::ParseImage( idParser& src, const imageParams_t& default
 }
 
 void idImageManager::BindNull() {
+	if ( vulkanBackend.IsToolWindowActive() ) {
+		vulkanBackend.SetToolImage( NULL );
+		return;
+	}
 	if ( glConfig.isInitialized ) {
 		glBindTexture( GL_TEXTURE_2D, 0 );
 		if ( glConfig.cubeMapAvailable ) {

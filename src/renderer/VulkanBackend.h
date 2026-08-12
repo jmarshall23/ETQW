@@ -13,6 +13,18 @@ struct sdVulkanGuiVertex {
 	float t;
 };
 
+struct sdVulkanToolVertex {
+	float x;
+	float y;
+	float z;
+	float s;
+	float t;
+	float r;
+	float g;
+	float b;
+	float a;
+};
+
 class sdVulkanBackend {
 public:
 	sdVulkanBackend();
@@ -41,6 +53,28 @@ public:
 	bool DrawGuiFan( const void* imageOwner, const sdVulkanGuiVertex* vertices,
 		int vertexCount, const float* color, int drawStateBits );
 	void DrawView( const viewDef_s* view );
+
+	// Native editor windows use their own presentation surfaces.  Radiant's
+	// fixed-function compatibility layer submits pre-transformed triangle lists
+	// here, keeping tool rendering independent from the game swapchain.
+	bool BeginToolWindow( void* nativeWindow, int width, int height,
+		const float clearColor[ 4 ] );
+	// Legacy editor views render into sampled Vulkan images.  The Dear ImGui
+	// shell only composites those images; it never owns or expands map geometry.
+	bool BeginToolRenderTarget( const void* owner, int width, int height,
+		const float clearColor[ 4 ] );
+	void EndToolRenderTarget();
+	void DestroyToolRenderTarget( const void* owner );
+	bool GetToolRenderTargetSize( const void* owner, int& width, int& height,
+		int& textureWidth, int& textureHeight ) const;
+	bool DrawToolTriangles( const sdVulkanToolVertex* vertices, int vertexCount,
+		bool depthTest, bool blend );
+	void SetToolScissor( int x, int y, int width, int height );
+	void SetToolImage( const void* imageOwner );
+	void ClearToolRegion( const float color[ 4 ], bool clearColor, bool clearDepth );
+	bool GetActiveToolWindowExtent( int& width, int& height ) const;
+	void EndToolWindow();
+	bool IsToolWindowActive() const;
 
 	bool IsInitialized() const;
 	bool IsFrameActive() const;

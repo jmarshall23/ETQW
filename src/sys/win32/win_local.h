@@ -66,6 +66,7 @@ extern	PFNWGLSETPBUFFERATTRIBARBPROC	wglSetPbufferAttribARB;
 #define	WINDOW_STYLE	(WS_OVERLAPPED|WS_BORDER|WS_CAPTION|WS_VISIBLE | WS_THICKFRAME)
 
 void	Sys_QueEvent( int time, sysEventType_t type, int value, int value2, int ptrLength, void *ptr );
+void	Sys_GrabMouseCursor( bool grabIt );
 
 void	Sys_CreateConsole( void );
 void	Sys_DestroyConsole( void );
@@ -114,6 +115,10 @@ struct Win32Vars_t {
 	HWND			hWnd;
 	HINSTANCE		hInstance;
 	SDL_Window*		sdlWindow;
+	HDC				hDC;
+	HGLRC			hGLRC;
+	PIXELFORMATDESCRIPTOR pfd;
+	int				pixelformat;
 
 	bool			activeApp;			// changed with WM_ACTIVATE messages
 	bool			mouseReleased;		// when the game has the console down or is doing a long operation

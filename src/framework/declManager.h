@@ -541,6 +541,25 @@ class idDeclManager {
 public:
 	virtual					~idDeclManager( void ) {}
 
+	// Compatibility helpers used by the native idTech editor sources. ETQW
+	// stores declaration types behind registered handles instead of the older
+	// fixed DECL_* enum, but the lookup semantics are otherwise identical.
+	const idMaterial*		FindMaterial( const char* name, bool makeDefault = true ) {
+		return reinterpret_cast< const idMaterial* >( FindType( GetDeclTypeHandle( declMaterialIdentifier ), name, makeDefault ) );
+	}
+	const idSoundShader*	FindSound( const char* name, bool makeDefault = true ) {
+		return reinterpret_cast< const idSoundShader* >( FindType( GetDeclTypeHandle( declSoundShaderIdentifier ), name, makeDefault ) );
+	}
+	const idMaterial*		MaterialByIndex( int index, bool forceParse = true ) {
+		return reinterpret_cast< const idMaterial* >( DeclByIndex( GetDeclTypeHandle( declMaterialIdentifier ), index, forceParse ) );
+	}
+	const idDeclSkin*		SkinByIndex( int index, bool forceParse = true ) {
+		return reinterpret_cast< const idDeclSkin* >( DeclByIndex( GetDeclTypeHandle( declSkinIdentifier ), index, forceParse ) );
+	}
+	const idSoundShader*	SoundByIndex( int index, bool forceParse = true ) {
+		return reinterpret_cast< const idSoundShader* >( DeclByIndex( GetDeclTypeHandle( declSoundShaderIdentifier ), index, forceParse ) );
+	}
+
 	virtual void			Init( void ) = 0;
 	virtual void			Shutdown( void ) = 0;
 	virtual void			Reload( bool force, const char* dir = NULL ) = 0;
@@ -622,6 +641,14 @@ public:
 };
 
 extern idDeclManager *		declManager;
+
+// Legacy editor-facing names. ETQW effects are the closest equivalent to
+// Doom 3 particle declarations in the media browser.
+#define DECL_MATERIAL	( declManager->GetDeclTypeHandle( declMaterialIdentifier ) )
+#define DECL_SKIN		( declManager->GetDeclTypeHandle( declSkinIdentifier ) )
+#define DECL_SOUND		( declManager->GetDeclTypeHandle( declSoundShaderIdentifier ) )
+#define DECL_ENTITYDEF	( declManager->GetDeclTypeHandle( declEntityDefIdentifier ) )
+#define DECL_PARTICLE	( declManager->GetDeclTypeHandle( declEffectsIdentifier ) )
 
 template< declIdentifierType_t INDEX >
 void idDotDecls_f( const idCmdArgs &args ) {

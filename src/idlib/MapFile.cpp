@@ -998,6 +998,376 @@ bool idMapFile::ParseBuffer( const idStr& buffer, const idStr& name, bool moveFu
 }
 
 /*
+===============================================================================
+
+	Enemy Territory: Quake Wars .world source support
+
+	The public ETQW idMapFile source only contains the older brushDef parser even
+	though the editor source levels use the WorldEdit sdWorldFile container.  The
+	compiler and Radiant both consume idMapFile, so translate the editable world
+	container into the existing idMapEntity/idMapBrush representation here.
+
+===============================================================================
+*/
+
+struct etqwWorldTransform_t {
+	idVec3	translation;
+	idMat3	rotation;
+	bool	hasTranslation;
+	bool	hasRotation;
+
+	etqwWorldTransform_t() : hasTranslation( false ), hasRotation( false ) {
+		translation.Zero();
+		rotation.Identity();
+	}
+};
+
+static bool ETQWParseWorldDictionary( idLexer &src, idDict &dictionary ) {
+	if ( !src.ExpectTokenString( "{" ) ) {
+		return false;
+	}
+	idToken key;
+	while ( src.ReadToken( &key ) ) {
+		if ( key == "}" ) {
+			return true;
+		}
+
+		idToken valueToken;
+		if ( !src.ReadToken( &valueToken ) ) {
+			return false;
+		}
+		if ( valueToken == "(" ) {
+			idStr value;
+			int depth = 1;
+			while ( depth > 0 && src.ReadToken( &valueToken ) ) {
+				if ( valueToken == "(" ) {
+					depth++;
+				} else if ( valueToken == ")" ) {
+					depth--;
+					if ( depth == 0 ) {
+						break;
+					}
+				}
+				if ( !value.IsEmpty() ) {
+					value += " ";
+				}
+				value += valueToken.c_str();
+			}
+			dictionary.Set( key.c_str(), value.c_str() );
+		} else {
+			dictionary.Set( key.c_str(), valueToken.c_str() );
+		}
+	}
+	return false;
+}
+
+static bool ETQWParseWorldTransform( idLexer &src, etqwWorldTransform_t &transform ) {
+	if ( !src.ExpectTokenString( "{" ) ) {
+		return false;
+	}
+	idToken token;
+	while ( src.ReadToken( &token ) ) {
+		if ( token == "}" ) {
+			return true;
+		}
+		if ( token.Icmp( "translation" ) == 0 ) {
+			if ( !src.Parse1DMatrix( 3, transform.translation.ToFloatPtr() ) ) {
+				return false;
+			}
+			transform.hasTranslation = true;
+		} else if ( token.Icmp( "rotation" ) == 0 ) {
+			if ( !src.Parse2DMatrix( 3, 3, transform.rotation[0].ToFloatPtr() ) ) {
+				return false;
+			}
+			transform.hasRotation = true;
+		} else {
+			idToken value;
+			if ( !src.ReadToken( &value ) ) {
+				return false;
+			}
+			if ( value == "{" ) {
+				src.SkipBracedSection( false );
+			} else if ( value == "}" ) {
+				src.UnreadToken( &value );
+			}
+		}
+	}
+	return false;
+}
+
+static bool ETQWReadWorldHolderBody( idLexer &src ) {
+	idToken token;
+	while ( src.ReadToken( &token ) ) {
+		if ( token.Icmp( "groups" ) == 0 ) {
+			if ( !src.SkipBracedSection() ) {
+				return false;
+			}
+			continue;
+		}
+		if ( token == "{" ) {
+			return true;
+		}
+		src.UnreadToken( &token );
+		return false;
+	}
+	return false;
+}
+
+static bool ETQWSkipWorldValue( idLexer &src ) {
+	idToken value;
+	if ( !src.ReadToken( &value ) ) {
+		return false;
+	}
+	if ( value == "{" ) {
+		return src.SkipBracedSection( false ) != 0;
+	}
+	if ( value == "(" ) {
+		int depth = 1;
+		while ( depth > 0 && src.ReadToken( &value ) ) {
+			if ( value == "(" ) depth++;
+			else if ( value == ")" ) depth--;
+		}
+	}
+	return true;
+}
+
+static bool ETQWParseWorldFaces( idLexer &src, idMapBrush &brush ) {
+	if ( !src.ExpectTokenString( "{" ) ) {
+		idLib::common->Printf( "ETQW world parse: faces missing opening brace\n" );
+		return false;
+	}
+	idToken token;
+	while ( src.ReadToken( &token ) ) {
+		if ( token == "}" ) {
+			return true;
+		}
+		if ( token.Icmp( "plane" ) != 0 ) {
+			if ( !ETQWSkipWorldValue( src ) ) {
+				return false;
+			}
+			continue;
+		}
+
+		idMapBrushSide *side = new idMapBrushSide();
+		idPlane plane;
+		idVec3 textureMatrix[2];
+		float textureBounds[4];
+		if ( !src.Parse1DMatrix( 4, plane.ToFloatPtr() ) ||
+			!src.ExpectTokenString( "matrix" ) ||
+			!src.Parse2DMatrix( 2, 3, textureMatrix[0].ToFloatPtr() ) ||
+			!src.ExpectTokenString( "texBounds" ) ||
+			!src.Parse2DMatrix( 2, 2, textureBounds ) ) {
+			idLib::common->Printf( "ETQW world parse: invalid brush face near line %d\n", src.GetLineNum() );
+			delete side;
+			return false;
+		}
+		idToken material;
+		if ( !src.ReadTokenOnLine( &material ) ) {
+			idLib::common->Printf( "ETQW world parse: brush face has no material near line %d\n", src.GetLineNum() );
+			delete side;
+			return false;
+		}
+		side->SetPlane( plane );
+		side->SetTextureMatrix( textureMatrix );
+		side->SetMaterial( material.c_str() );
+		brush.AddSide( side );
+	}
+	return false;
+}
+
+static idMapBrush *ETQWParseWorldBrush( idLexer &src ) {
+	idMapBrush *brush = new idMapBrush();
+	etqwWorldTransform_t transform;
+	idToken token;
+	while ( src.ReadToken( &token ) ) {
+		if ( token == "}" ) {
+			for ( int sideIndex = 0; sideIndex < brush->GetNumSides(); sideIndex++ ) {
+				idMapBrushSide *side = brush->GetSide( sideIndex );
+				idPlane plane = side->GetPlane();
+				if ( transform.hasRotation ) {
+					plane.RotateSelf( vec3_origin, transform.rotation );
+				}
+				if ( transform.hasTranslation ) {
+					plane.TranslateSelf( transform.translation );
+					side->TranslateSelf( transform.translation );
+				}
+				side->SetPlane( plane );
+			}
+			return brush;
+		}
+		if ( token.Icmp( "sdDictionary" ) == 0 ) {
+			if ( !ETQWParseWorldDictionary( src, brush->epairs ) ) {
+				idLib::common->Printf( "ETQW world parse: invalid brush dictionary near line %d\n", src.GetLineNum() );
+				break;
+			}
+		} else if ( token.Icmp( "sdTransform" ) == 0 ) {
+			if ( !ETQWParseWorldTransform( src, transform ) ) {
+				idLib::common->Printf( "ETQW world parse: invalid brush transform near line %d\n", src.GetLineNum() );
+				break;
+			}
+		} else if ( token.Icmp( "faces" ) == 0 ) {
+			if ( !ETQWParseWorldFaces( src, *brush ) ) {
+				idLib::common->Printf( "ETQW world parse: invalid brush faces near line %d\n", src.GetLineNum() );
+				break;
+			}
+		} else if ( !ETQWSkipWorldValue( src ) ) {
+			idLib::common->Printf( "ETQW world parse: invalid brush field '%s' near line %d\n", token.c_str(), src.GetLineNum() );
+			break;
+		}
+	}
+	delete brush;
+	return NULL;
+}
+
+static bool ETQWParseWorldPrimitives( idLexer &src, idMapEntity &entity ) {
+	if ( !src.ExpectTokenString( "{" ) ) {
+		return false;
+	}
+	idToken type;
+	while ( src.ReadToken( &type ) ) {
+		if ( type == "}" ) {
+			return true;
+		}
+		idToken primitiveName;
+		if ( !src.ReadToken( &primitiveName ) ) {
+			return false;
+		}
+		if ( !ETQWReadWorldHolderBody( src ) ) {
+			continue;
+		}
+		if ( type.Icmp( "sdPrimitiveBrush" ) == 0 ) {
+			idMapBrush *brush = ETQWParseWorldBrush( src );
+			if ( brush == NULL ) {
+				idLib::common->Printf( "ETQW world parse: failed brush '%s' near line %d\n", primitiveName.c_str(), src.GetLineNum() );
+				return false;
+			}
+			entity.AddPrimitive( brush );
+		} else {
+			src.SkipBracedSection( false );
+		}
+	}
+	return false;
+}
+
+static idMapEntity *ETQWParseWorldEntity( idLexer &src, const char *entityName ) {
+	idMapEntity *entity = new idMapEntity();
+	entity->epairs.Set( "name", entityName );
+	etqwWorldTransform_t transform;
+	idToken token;
+	while ( src.ReadToken( &token ) ) {
+		if ( token == "}" ) {
+			if ( transform.hasTranslation ) {
+				entity->epairs.Set( "origin", va( "%g %g %g", transform.translation.x,
+					transform.translation.y, transform.translation.z ) );
+			}
+			if ( transform.hasRotation ) {
+				entity->epairs.Set( "rotation", va( "%g %g %g %g %g %g %g %g %g",
+					transform.rotation[0][0], transform.rotation[0][1], transform.rotation[0][2],
+					transform.rotation[1][0], transform.rotation[1][1], transform.rotation[1][2],
+					transform.rotation[2][0], transform.rotation[2][1], transform.rotation[2][2] ) );
+			}
+			if ( entity->epairs.GetString( "classname", "" )[0] == '\0' ) {
+				entity->epairs.Set( "classname", idStr::Icmp( entityName, "worldspawn" ) == 0 ? "worldspawn" : "func_static" );
+			}
+			return entity;
+		}
+		if ( token.Icmp( "sdDictionary" ) == 0 ) {
+			if ( !ETQWParseWorldDictionary( src, entity->epairs ) ) break;
+		} else if ( token.Icmp( "sdTransform" ) == 0 ) {
+			if ( !ETQWParseWorldTransform( src, transform ) ) break;
+		} else if ( token.Icmp( "classname" ) == 0 ) {
+			idToken className;
+			if ( !src.ReadToken( &className ) ) break;
+			entity->epairs.Set( "classname", className.c_str() );
+		} else if ( token.Icmp( "primitives" ) == 0 ) {
+			if ( !ETQWParseWorldPrimitives( src, *entity ) ) {
+				idLib::common->Printf( "ETQW world parse: invalid primitives for '%s' near line %d\n", entityName, src.GetLineNum() );
+				break;
+			}
+		} else if ( !ETQWSkipWorldValue( src ) ) {
+			idLib::common->Printf( "ETQW world parse: invalid entity field '%s' for '%s' near line %d\n", token.c_str(), entityName, src.GetLineNum() );
+			break;
+		}
+	}
+	delete entity;
+	return NULL;
+}
+
+bool idMapFile::ParseWorldFile( idLexer &src ) {
+	idToken token;
+	if ( !src.ExpectTokenString( "version" ) || !src.ReadToken( &token ) || !src.ExpectTokenString( "{" ) ) {
+		return false;
+	}
+	version = token.GetFloatValue();
+	idLib::common->Printf( "ETQW world parse: version %g\n", version );
+	fileTime = src.GetFileTime();
+	entities.DeleteContents( true );
+	idDict worldDictionary;
+
+	while ( src.ReadToken( &token ) ) {
+		if ( token == "}" ) {
+			break;
+		}
+		if ( token.Icmp( "sdDictionary" ) == 0 ) {
+			if ( !ETQWParseWorldDictionary( src, worldDictionary ) ) return false;
+			continue;
+		}
+		if ( token.Icmp( "meta" ) == 0 ) {
+			if ( !src.SkipBracedSection() ) return false;
+			continue;
+		}
+		if ( token.Icmp( "primitiveHolders" ) != 0 ) {
+			if ( !ETQWSkipWorldValue( src ) ) return false;
+			continue;
+		}
+		if ( !src.ExpectTokenString( "{" ) ) return false;
+		idToken holderType;
+		while ( src.ReadToken( &holderType ) ) {
+			if ( holderType == "}" ) break;
+			idToken holderName;
+			if ( !src.ReadToken( &holderName ) ) return false;
+			if ( !ETQWReadWorldHolderBody( src ) ) {
+				continue;
+			}
+			if ( holderType.Icmp( "sdPrimitiveEntity" ) == 0 ) {
+				idMapEntity *entity = ETQWParseWorldEntity( src, holderName.c_str() );
+				if ( entity == NULL ) {
+					idLib::common->Printf( "ETQW world parse: failed entity '%s' near line %d\n", holderName.c_str(), src.GetLineNum() );
+					return false;
+				}
+				if ( idStr::Icmp( entity->epairs.GetString( "classname" ), "worldspawn" ) == 0 ) {
+					for ( int keyIndex = 0; keyIndex < worldDictionary.GetNumKeyVals(); keyIndex++ ) {
+						const idKeyValue *keyValue = worldDictionary.GetKeyVal( keyIndex );
+						if ( entity->epairs.FindKey( keyValue->GetKey() ) == NULL ) {
+							entity->epairs.Set( keyValue->GetKey(), keyValue->GetValue() );
+						}
+					}
+					entities.Insert( entity, 0 );
+				} else {
+					entities.Append( entity );
+				}
+			} else {
+				// References and terrain source holders are editor metadata rather
+				// than idMap primitives. Keep parsing their block so following
+				// entities and brushes remain visible.
+				src.SkipBracedSection( false );
+			}
+		}
+	}
+
+	if ( entities.Num() == 0 || idStr::Icmp( entities[0]->epairs.GetString( "classname" ), "worldspawn" ) != 0 ) {
+		return false;
+	}
+	for ( int entityIndex = 0; entityIndex < entities.Num(); entityIndex++ ) {
+		idLib::common->Printf( "ETQW world entity %d: %s (%d primitives)\n", entityIndex,
+			entities[entityIndex]->epairs.GetString( "classname" ), entities[entityIndex]->GetNumPrimitives() );
+	}
+	hasPrimitiveData = true;
+	SetGeometryCRC();
+	return true;
+}
+
+/*
 ===============
 idMapFile::Parse
 ===============
@@ -1028,13 +1398,18 @@ bool idMapFile::Parse( const char *filename, bool ignoreRegion, bool osPath, boo
 	}
 
 	if ( !src.IsLoaded() ) {
-		// now try a map file
-		fullName.SetFileExtension( ".map" );
+		// ETQW source levels use .world. Region and entity sidecars retain their
+		// existing extensions, but the editable brush/patch source is never .map.
+		fullName.SetFileExtension( ".world" );
 		src.LoadFile( fullName, osPath );
 	}
 
 	if ( !src.IsLoaded() ) {
 		return false;
+	}
+
+	if ( src.CheckTokenString( "sdWorldFile" ) ) {
+		return ParseWorldFile( src );
 	}
 
 	version = OLD_MAP_VERSION;

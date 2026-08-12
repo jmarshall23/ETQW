@@ -122,6 +122,62 @@ set(ETQW_ENGINE_SUPPORT_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/libs/qglLib/qgllib.cpp"
 )
 
+# Development map-authoring tools.  Keep this list deliberately narrow: AAS
+# and the other Doom 3 editors are not part of the ETQW tool port.
+file(GLOB ETQW_DMAP_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/compilers/dmap/*.cpp"
+)
+list(REMOVE_ITEM ETQW_DMAP_SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/compilers/dmap/lightmap.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/compilers/dmap/optimize_gcc.cpp"
+)
+file(GLOB ETQW_MEGATEXTURE_COMPILER_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/compilers/megatexture/*.cpp"
+)
+set(ETQW_TOOL_COMPILER_SOURCES
+    ${ETQW_DMAP_SOURCES}
+    ${ETQW_MEGATEXTURE_COMPILER_SOURCES}
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/radiant/megatexture/RoadBuilder.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/radiant/RadiantVulkan.cpp"
+)
+
+file(GLOB ETQW_RADIANT_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/radiant/*.cpp"
+)
+list(REMOVE_ITEM ETQW_RADIANT_SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/radiant/RadiantVulkan.cpp"
+)
+set(ETQW_IMGUI_SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_draw.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_tables.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_widgets.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/imgui/backends/imgui_impl_win32.cpp"
+)
+list(APPEND ETQW_RADIANT_SOURCES ${ETQW_IMGUI_SOURCES})
+set_source_files_properties(${ETQW_IMGUI_SOURCES} PROPERTIES
+    SKIP_PRECOMPILE_HEADERS ON
+)
+
+get_filename_component(ETQW_MSVC_BIN_DIR "${CMAKE_CXX_COMPILER}" DIRECTORY)
+get_filename_component(ETQW_MSVC_TOOL_DIR "${ETQW_MSVC_BIN_DIR}/../../.." ABSOLUTE)
+set(ETQW_MFC_AVAILABLE OFF)
+if(EXISTS "${ETQW_MSVC_TOOL_DIR}/atlmfc/include/afxwin.h")
+    set(ETQW_MFC_AVAILABLE ON)
+endif()
+set(ETQW_RADIANT_DEFAULT OFF)
+if(ETQW_MFC_AVAILABLE AND CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(ETQW_RADIANT_DEFAULT ON)
+endif()
+option(ETQW_BUILD_RADIANT "Build the native x64 ETQW Radiant editor (requires the MSVC MFC component)" ${ETQW_RADIANT_DEFAULT})
+if(ETQW_BUILD_RADIANT AND NOT ETQW_MFC_AVAILABLE)
+    message(FATAL_ERROR "ETQW_BUILD_RADIANT requires the MSVC MFC component for the active toolset")
+elseif(ETQW_BUILD_RADIANT AND NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
+    message(FATAL_ERROR "ETQW_BUILD_RADIANT is an x64-only target")
+elseif(NOT ETQW_MFC_AVAILABLE)
+    message(STATUS "ETQW Radiant target disabled: the MSVC MFC component is not installed")
+endif()
+
 set(ETQW_EXECUTABLE_SOURCES
     ${ETQW_BSE_SOURCES}
     ${ETQW_CM_SOURCES}
@@ -133,7 +189,13 @@ set(ETQW_EXECUTABLE_SOURCES
     ${ETQW_SOUND_SOURCES}
     ${ETQW_SYSTEM_SOURCES}
     ${ETQW_ENGINE_SUPPORT_SOURCES}
+    ${ETQW_TOOL_COMPILER_SOURCES}
 )
+if(ETQW_BUILD_RADIANT)
+    list(APPEND ETQW_EXECUTABLE_SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32/rc/Radiant.rc"
+    )
+endif()
 list(REMOVE_DUPLICATES ETQW_EXECUTABLE_SOURCES)
 list(SORT ETQW_EXECUTABLE_SOURCES)
 
@@ -281,6 +343,50 @@ add_dependencies(etqw_codecs
 )
 set_target_properties(etqw_codecs PROPERTIES FOLDER "ETQW/Third Party")
 
+if(ETQW_BUILD_RADIANT)
+add_library(etqw_radiant STATIC ${ETQW_RADIANT_SOURCES})
+target_include_directories(etqw_radiant PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}"
+    "${CMAKE_CURRENT_SOURCE_DIR}/imgui"
+    "${CMAKE_CURRENT_SOURCE_DIR}/imgui/backends"
+    "${CMAKE_CURRENT_SOURCE_DIR}/idlib"
+    "${CMAKE_CURRENT_SOURCE_DIR}/framework"
+    "${CMAKE_CURRENT_SOURCE_DIR}/renderer"
+    "${CMAKE_CURRENT_SOURCE_DIR}/sys"
+    "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32"
+    "${CMAKE_CURRENT_SOURCE_DIR}/sys/sdl2/include"
+)
+target_compile_definitions(etqw_radiant PRIVATE
+    WIN32
+    _WINDOWS
+    _AFXDLL
+    _MBCS
+    ZLIB_WINAPI
+    SD_DEMO_BUILD
+    SD_SUPPORT_REPEATER
+    SD_RETAIL_SDNET_ABI
+    SD_SDK_BUILD
+    SD_USE_DRAWVERT_SIZE_32
+    SD_USE_INDEX_SIZE_16
+    ETQW_ENGINE_RECONSTRUCTION
+    ETQW_WITH_RADIANT
+    _CRT_SECURE_NO_DEPRECATE
+    _CRT_NONSTDC_NO_DEPRECATE
+    _CRT_SECURE_NO_WARNINGS
+    _CRT_NONSTDC_NO_WARNINGS
+)
+target_compile_options(etqw_radiant PRIVATE /W3 /bigobj /GR /Zc:wchar_t)
+target_precompile_headers(etqw_radiant PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/radiant/RadiantPch.h"
+)
+target_link_libraries(etqw_radiant PRIVATE idLib)
+set_target_properties(etqw_radiant PROPERTIES
+    VS_GLOBAL_UseOfMfc Dynamic
+    ARCHIVE_OUTPUT_DIRECTORY "${ETQW_BUILD_STAGING_DIR}/$<CONFIG>/lib"
+    FOLDER "ETQW/Tools"
+)
+endif()
+
 # MiniZip retains ETQW's .cpp filenames, but these two units contain the
 # original C implementation and must be compiled as C.
 set_source_files_properties(
@@ -364,6 +470,11 @@ target_link_libraries(etqw PRIVATE
     winmm
     ws2_32
 )
+if(ETQW_BUILD_RADIANT)
+    target_compile_definitions(etqw PRIVATE ETQW_WITH_RADIANT)
+    target_link_libraries(etqw PRIVATE etqw_radiant)
+    set_property(TARGET etqw PROPERTY VS_GLOBAL_UseOfMfc Dynamic)
+endif()
 target_link_options(etqw PRIVATE
     /LARGEADDRESSAWARE
     /STACK:4194304,4194304

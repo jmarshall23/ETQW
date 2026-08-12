@@ -16,14 +16,28 @@
     },
     {
       "name": "vs2022-x64",
-      "displayName": "ETQW x64 (Visual Studio 2022)",
-      "description": "Configures x64 Visual Studio projects and writes etqw64.exe/gamex64.dll to the workspace root.",
-      "generator": "Visual Studio 17 2022",
+      "displayName": "ETQW Radiant x64 (Visual Studio 2026)",
+      "description": "Compatibility preset name for the VS 2026 x64 engine, Darklight Radiant, dmap, and megatexture build.",
+      "generator": "Visual Studio 18 2026",
       "architecture": "x64",
-      "binaryDir": "${sourceDir}/../out-x64",
+      "binaryDir": "${sourceDir}/../out-x64-vs18",
       "cacheVariables": {
-        "ETQW_BUILD_STAGING_DIR": "${sourceDir}/../build/x64",
-        "ETQW_RUNTIME_DIR": "${sourceDir}/.."
+        "ETQW_BUILD_STAGING_DIR": "${sourceDir}/../build/x64-vs18",
+        "ETQW_RUNTIME_DIR": "${sourceDir}/..",
+        "ETQW_BUILD_RADIANT": "ON"
+      }
+    },
+    {
+      "name": "vs2026-x64-radiant",
+      "displayName": "ETQW Radiant x64 (Visual Studio 2026)",
+      "description": "Configures the x64 engine, Darklight Radiant, dmap, and megatexture tools with MFC and Vulkan.",
+      "generator": "Visual Studio 18 2026",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/../out-x64-vs18",
+      "cacheVariables": {
+        "ETQW_BUILD_STAGING_DIR": "${sourceDir}/../build/x64-vs18",
+        "ETQW_RUNTIME_DIR": "${sourceDir}/..",
+        "ETQW_BUILD_RADIANT": "ON"
       }
     }
   ],
@@ -53,6 +67,20 @@
       "name": "x64-debug",
       "displayName": "ETQW x64 Debug",
       "configurePreset": "vs2022-x64",
+      "configuration": "Debug",
+      "jobs": 8
+    },
+    {
+      "name": "x64-radiant-release",
+      "displayName": "ETQW Radiant x64 Release",
+      "configurePreset": "vs2026-x64-radiant",
+      "configuration": "Release",
+      "jobs": 8
+    },
+    {
+      "name": "x64-radiant-debug",
+      "displayName": "ETQW Radiant x64 Debug",
+      "configurePreset": "vs2026-x64-radiant",
       "configuration": "Debug",
       "jobs": 8
     }

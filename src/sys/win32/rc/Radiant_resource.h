@@ -872,6 +872,8 @@ If you have questions concerning this license or the applicable additional terms
 #define ID_SELECTION_VIEW_WIREFRAMEOFF           30403
 #define ID_SELECTION_VIEW_VISIBLEON              30404
 #define ID_SELECTION_VIEW_VISIBLEOFF             30405
+#define ID_EDITORS_DOOMSCRIPT_BLUEPRINT          30406
+#define ID_EDITORS_GUI_EDITOR                     30407
 #define ID_ENTITY_START                          40000
 #define ID_ENTITY_END                            45000
 
@@ -881,7 +883,7 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                1
 #define _APS_NEXT_RESOURCE_VALUE        10083
-#define _APS_NEXT_COMMAND_VALUE         30406
+#define _APS_NEXT_COMMAND_VALUE         30408
 #define _APS_NEXT_CONTROL_VALUE         10555
 #define _APS_NEXT_SYMED_VALUE           10083
 #endif

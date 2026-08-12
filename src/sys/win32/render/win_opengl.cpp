@@ -17,8 +17,66 @@
 // their system implementations.
 void ( APIENTRY *qglBegin )( GLenum mode ) = glBegin;
 void ( APIENTRY *qglEnd )( void ) = glEnd;
+void ( APIENTRY *qglBlendFunc )( GLenum source, GLenum destination ) = glBlendFunc;
+void ( APIENTRY *qglCallList )( GLuint list ) = glCallList;
+void ( APIENTRY *qglCallLists )( GLsizei count, GLenum type, const GLvoid* lists ) = glCallLists;
+void ( APIENTRY *qglClear )( GLbitfield mask ) = glClear;
+void ( APIENTRY *qglClearColor )( GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha ) = glClearColor;
+void ( APIENTRY *qglColor3f )( GLfloat red, GLfloat green, GLfloat blue ) = glColor3f;
+void ( APIENTRY *qglColor3fv )( const GLfloat* values ) = glColor3fv;
+void ( APIENTRY *qglColor4f )( GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha ) = glColor4f;
+void ( APIENTRY *qglColor4fv )( const GLfloat* values ) = glColor4fv;
+void ( APIENTRY *qglCullFace )( GLenum mode ) = glCullFace;
+void ( APIENTRY *qglDeleteLists )( GLuint list, GLsizei range ) = glDeleteLists;
+void ( APIENTRY *qglDepthFunc )( GLenum function ) = glDepthFunc;
+void ( APIENTRY *qglDepthMask )( GLboolean flag ) = glDepthMask;
+void ( APIENTRY *qglDisable )( GLenum capability ) = glDisable;
+void ( APIENTRY *qglEnable )( GLenum capability ) = glEnable;
+void ( APIENTRY *qglEnableClientState )( GLenum array ) = glEnableClientState;
+void ( APIENTRY *qglEndList )( void ) = glEndList;
+void ( APIENTRY *qglFinish )( void ) = glFinish;
+void ( APIENTRY *qglFlush )( void ) = glFlush;
+GLuint ( APIENTRY *qglGenLists )( GLsizei range ) = glGenLists;
+GLenum ( APIENTRY *qglGetError )( void ) = glGetError;
+void ( APIENTRY *qglGetFloatv )( GLenum parameter, GLfloat* values ) = glGetFloatv;
+const GLubyte* ( APIENTRY *qglGetString )( GLenum name ) = glGetString;
+void ( APIENTRY *qglLineStipple )( GLint factor, GLushort pattern ) = glLineStipple;
+void ( APIENTRY *qglLineWidth )( GLfloat width ) = glLineWidth;
+void ( APIENTRY *qglListBase )( GLuint base ) = glListBase;
+void ( APIENTRY *qglLoadIdentity )( void ) = glLoadIdentity;
+void ( APIENTRY *qglLoadMatrixf )( const GLfloat* matrix ) = glLoadMatrixf;
+void ( APIENTRY *qglMatrixMode )( GLenum mode ) = glMatrixMode;
+void ( APIENTRY *qglNewList )( GLuint list, GLenum mode ) = glNewList;
 void ( APIENTRY *qglNormal3fv )( const GLfloat* values ) = glNormal3fv;
+void ( APIENTRY *qglOrtho )( GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble nearValue, GLdouble farValue ) = glOrtho;
+void ( APIENTRY *qglPointSize )( GLfloat size ) = glPointSize;
+void ( APIENTRY *qglPolygonMode )( GLenum face, GLenum mode ) = glPolygonMode;
+void ( APIENTRY *qglPolygonOffset )( GLfloat factor, GLfloat units ) = glPolygonOffset;
+void ( APIENTRY *qglPolygonStipple )( const GLubyte* mask ) = glPolygonStipple;
+void ( APIENTRY *qglPopAttrib )( void ) = glPopAttrib;
+void ( APIENTRY *qglPopMatrix )( void ) = glPopMatrix;
+void ( APIENTRY *qglPushAttrib )( GLbitfield mask ) = glPushAttrib;
+void ( APIENTRY *qglPushMatrix )( void ) = glPushMatrix;
+void ( APIENTRY *qglRasterPos2f )( GLfloat x, GLfloat y ) = glRasterPos2f;
+void ( APIENTRY *qglRasterPos3f )( GLfloat x, GLfloat y, GLfloat z ) = glRasterPos3f;
+void ( APIENTRY *qglRasterPos3fv )( const GLfloat* values ) = glRasterPos3fv;
+void ( APIENTRY *qglRectf )( GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2 ) = glRectf;
+void ( APIENTRY *qglRotatef )( GLfloat angle, GLfloat x, GLfloat y, GLfloat z ) = glRotatef;
+void ( APIENTRY *qglScissor )( GLint x, GLint y, GLsizei width, GLsizei height ) = glScissor;
+void ( APIENTRY *qglShadeModel )( GLenum mode ) = glShadeModel;
+void ( APIENTRY *qglTexCoord2f )( GLfloat s, GLfloat t ) = glTexCoord2f;
+void ( APIENTRY *qglTexCoord2fv )( const GLfloat* values ) = glTexCoord2fv;
+void ( APIENTRY *qglTranslatef )( GLfloat x, GLfloat y, GLfloat z ) = glTranslatef;
+void ( APIENTRY *qglVertex2f )( GLfloat x, GLfloat y ) = glVertex2f;
+void ( APIENTRY *qglVertex3f )( GLfloat x, GLfloat y, GLfloat z ) = glVertex3f;
 void ( APIENTRY *qglVertex3fv )( const GLfloat* values ) = glVertex3fv;
+void ( APIENTRY *qglViewport )( GLint x, GLint y, GLsizei width, GLsizei height ) = glViewport;
+
+BOOL ( WINAPI *qwglMakeCurrent )( HDC deviceContext, HGLRC renderContext ) = wglMakeCurrent;
+BOOL ( WINAPI *qwglSwapBuffers )( HDC deviceContext ) = SwapBuffers;
+BOOL ( WINAPI *qwglUseFontBitmaps )( HDC deviceContext, DWORD first, DWORD count, DWORD listBase ) = wglUseFontBitmapsA;
+BOOL ( WINAPI *qwglUseFontOutlines )( HDC deviceContext, DWORD first, DWORD count, DWORD listBase,
+	FLOAT deviation, FLOAT extrusion, int format, LPGLYPHMETRICSFLOAT glyphMetrics ) = wglUseFontOutlinesA;
 
 namespace {
 
@@ -272,11 +330,24 @@ bool idRenderContextWGL::Create( const idRenderContextParms& contextParms ) {
 		Destroy();
 		return false;
 	}
+	// Radiant renders its MFC child windows with the engine's existing WGL
+	// context.  SDL_GLContext is the native HGLRC on the Windows backend.
+	win32.hDC = defaultDC;
+	win32.hGLRC = reinterpret_cast< HGLRC >( glContext );
+	win32.pixelformat = GetPixelFormat( defaultDC );
+	if ( win32.pixelformat > 0 ) {
+		DescribePixelFormat( defaultDC, win32.pixelformat, sizeof( win32.pfd ),
+			&win32.pfd );
+	}
 	SetAdditionalDefaultState();
 	return true;
 }
 
 void idRenderContextWGL::Destroy() {
+	if ( win32.hGLRC == reinterpret_cast< HGLRC >( glContext ) ) {
+		win32.hGLRC = NULL;
+		win32.hDC = NULL;
+	}
 	if ( glContext != NULL ) {
 		if ( SDL_GL_GetCurrentContext() == glContext ) {
 			SDL_GL_MakeCurrent( window, NULL );
