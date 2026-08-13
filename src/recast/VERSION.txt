@@ -1,0 +1,7 @@
+Recast Navigation v1.6.0
+Upstream: https://github.com/recastnavigation/recastnavigation
+Commit: 6dc1667f580357e8a2154c28b7867bea7e8ad3a7
+
+Vendored modules: Recast, Detour
+Intentionally omitted: DetourCrowd, DetourTileCache, DebugUtils, RecastDemo,
+Tests, and third-party demo dependencies.

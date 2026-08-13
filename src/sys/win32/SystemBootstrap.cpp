@@ -11,6 +11,9 @@
 #include "../sys_render.h"
 #include "win_local.h"
 #include "win_soundthread.h"
+#ifdef ETQW_WITH_RADIANT
+#include "../../tools/radiant/RadiantImGui.h"
+#endif
 
 #include <winsock2.h>
 #include <direct.h>
@@ -27,11 +30,17 @@ extern void PQ_ShutDown();
 extern void Sys_CollectPerformanceData();
 extern sdPerformanceQuery* Sys_GetPerformanceQuery( sdPerformanceQueryType pqType );
 extern void IN_Frame();
+#ifdef ETQW_WITH_RADIANT
+extern int com_editors;
+#endif
 
 namespace {
 
 const int SYSTEM_MAX_PRINT_MSG = 4096;
 const int SYSTEM_MAX_OS_PATH = 256;
+#ifdef ETQW_WITH_RADIANT
+const int SYSTEM_EDITOR_RADIANT = BIT( 1 );
+#endif
 
 volatile LONG quitRequested;
 LARGE_INTEGER timerFrequency;
@@ -1035,16 +1044,27 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE, LPSTR commandLine, int ) {
 	// is especially important when Visual Studio owns the foreground window
 	// while launching the process under F5.
 	if ( sys3D != NULL && sys3D->GetGameWindowHandle() != NULL ) {
-		sys3D->ShowGameWindow();
-		HWND gameWindow = reinterpret_cast< HWND >( sys3D->GetGameWindowHandle() );
-		SetForegroundWindow( gameWindow );
-		SetActiveWindow( gameWindow );
-		SetFocus( gameWindow );
-		// If the window already owned keyboard focus before Sys_InitInput ran,
-		// SetFocus does not emit WM_SETFOCUS again.  Input initialization leaves
-		// mouseReleased set deliberately, so clear it explicitly after the entire
-		// engine is initialized instead of depending on another focus message.
-		sys->Mouse().GrabCursor( true );
+#ifdef ETQW_WITH_RADIANT
+		if ( com_editors & SYSTEM_EDITOR_RADIANT ) {
+			// +editor can finish creating Radiant during common initialization.
+			// Do not unconditionally re-show the SDL game window over it here.
+			sys3D->HideGameWindow();
+			sys->Mouse().GrabCursor( false );
+			RadiantImGuiFocus();
+		} else
+#endif
+		{
+			sys3D->ShowGameWindow();
+			HWND gameWindow = reinterpret_cast< HWND >( sys3D->GetGameWindowHandle() );
+			SetForegroundWindow( gameWindow );
+			SetActiveWindow( gameWindow );
+			SetFocus( gameWindow );
+			// If the window already owned keyboard focus before Sys_InitInput ran,
+			// SetFocus does not emit WM_SETFOCUS again.  Input initialization leaves
+			// mouseReleased set deliberately, so clear it explicitly after the entire
+			// engine is initialized instead of depending on another focus message.
+			sys->Mouse().GrabCursor( true );
+		}
 	}
 	while ( InterlockedCompareExchange( &quitRequested, 0, 0 ) == 0 ) {
 		common->Frame();

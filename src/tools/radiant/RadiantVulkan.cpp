@@ -11,6 +11,7 @@
 #define ETQW_RADIANT_VULKAN_IMPLEMENTATION
 #include "RadiantVulkan.h"
 #include "../../renderer/VulkanBackend.h"
+#include "../../renderer/VertexCache.h"
 
 namespace {
 
@@ -105,6 +106,11 @@ struct rvVulkanState_t {
 	GLuint listBase;
 	idList< rvDisplayList_t* > displayLists;
 	idList< rvFont_t* > fonts;
+	// Persistent conversion scratch prevents Debug builds from reallocating and
+	// copying large editor-model batches for every immediate-mode primitive.
+	idList< sdVulkanToolVertex > transformedScratch;
+	idList< sdVulkanToolVertex > batchVertices;
+	idList< unsigned int > batchIndices;
 	rvInputVertex_t rasterPosition;
 	bool rasterValid;
 
@@ -148,6 +154,42 @@ struct rvVulkanState_t {
 // members are not destroyed after the allocator has already shut down.
 rvVulkanState_t* rvStateStorage = new rvVulkanState_t;
 #define rvState ( *rvStateStorage )
+
+rvMatrix_t ModelMatrix( const idVec3& origin, const idMat3& axis ) {
+	rvMatrix_t matrix;
+	MatrixIdentity( matrix );
+	// idVec3 * idMat3 treats the matrix vectors as the local axes. Vulkan's
+	// column-vector matrix uses those axes as columns as well.
+	for ( int column = 0; column < 3; ++column ) {
+		matrix.m[column * 4 + 0] = axis[column].x;
+		matrix.m[column * 4 + 1] = axis[column].y;
+		matrix.m[column * 4 + 2] = axis[column].z;
+	}
+	matrix.m[12] = origin.x;
+	matrix.m[13] = origin.y;
+	matrix.m[14] = origin.z;
+	return matrix;
+}
+
+rvMatrix_t ToolClipMatrix() {
+	rvMatrix_t matrix;
+	MatrixIdentity( matrix );
+	const float fullWidth = static_cast< float >( Max( rvState.width, 1 ) );
+	const float fullHeight = static_cast< float >( Max( rvState.height, 1 ) );
+	const float regionBottom = static_cast< float >(
+		rvState.height - rvState.regionTop - rvState.regionHeight );
+	const float xScale = rvState.viewport[2] / fullWidth;
+	const float yScale = rvState.viewport[3] / fullHeight;
+	matrix.m[0] = xScale;
+	matrix.m[5] = yScale;
+	matrix.m[10] = 0.5f;
+	matrix.m[12] = 2.0f * ( rvState.regionX + rvState.viewport[0] ) /
+		fullWidth - 1.0f + xScale;
+	matrix.m[13] = 2.0f * ( regionBottom + rvState.viewport[1] ) /
+		fullHeight - 1.0f + yScale;
+	matrix.m[14] = 0.5f;
+	return matrix;
+}
 
 rvDisplayList_t* FindDisplayList( GLuint name ) {
 	for ( int i = 0; i < rvState.displayLists.Num(); ++i ) {
@@ -212,9 +254,8 @@ bool EnsureToolFrame() {
 	return began;
 }
 
-sdVulkanToolVertex TransformVertex( const rvInputVertex_t& input ) {
-	const rvMatrix_t combined = MatrixMultiply( rvState.projection,
-		rvState.modelView );
+sdVulkanToolVertex TransformVertex( const rvInputVertex_t& input,
+	const rvMatrix_t& combined, bool preserveClipW = false ) {
 	const float vector[ 4 ] = { input.xyz[ 0 ], input.xyz[ 1 ], input.xyz[ 2 ], 1.0f };
 	float clip[ 4 ] = { 0.0f, 0.0f, 0.0f, 0.0f };
 	for ( int row = 0; row < 4; ++row ) {
@@ -222,24 +263,39 @@ sdVulkanToolVertex TransformVertex( const rvInputVertex_t& input ) {
 			clip[ row ] += combined.m[ column * 4 + row ] * vector[ column ];
 		}
 	}
-	const float inverseW = idMath::Fabs( clip[ 3 ] ) > 1e-8f ?
-		1.0f / clip[ 3 ] : 1.0f;
-	float ndcX = clip[ 0 ] * inverseW;
-	float ndcY = clip[ 1 ] * inverseW;
 	const float fullWidth = static_cast< float >( Max( rvState.width, 1 ) );
 	const float fullHeight = static_cast< float >( Max( rvState.height, 1 ) );
 	const float regionBottom = static_cast< float >(
 		rvState.height - rvState.regionTop - rvState.regionHeight );
-	const float pixelX = rvState.regionX + rvState.viewport[ 0 ] +
-		( ndcX + 1.0f ) * 0.5f * rvState.viewport[ 2 ];
-	const float pixelY = regionBottom + rvState.viewport[ 1 ] +
-		( ndcY + 1.0f ) * 0.5f * rvState.viewport[ 3 ];
-	ndcX = pixelX * 2.0f / fullWidth - 1.0f;
-	ndcY = pixelY * 2.0f / fullHeight - 1.0f;
 	sdVulkanToolVertex output;
-	output.x = ndcX;
-	output.y = ndcY;
-	output.z = clip[ 2 ] * inverseW * 0.5f + 0.5f;
+	if ( preserveClipW ) {
+		// Keep camera vertices homogeneous until Vulkan clips them.  Performing
+		// the perspective divide here makes triangles which cross the camera's
+		// near plane stretch across the entire editor viewport.
+		const float xScale = rvState.viewport[ 2 ] / fullWidth;
+		const float yScale = rvState.viewport[ 3 ] / fullHeight;
+		const float xBias = 2.0f * ( rvState.regionX + rvState.viewport[ 0 ] ) /
+			fullWidth - 1.0f + xScale;
+		const float yBias = 2.0f * ( regionBottom + rvState.viewport[ 1 ] ) /
+			fullHeight - 1.0f + yScale;
+		output.x = clip[ 0 ] * xScale + clip[ 3 ] * xBias;
+		output.y = clip[ 1 ] * yScale + clip[ 3 ] * yBias;
+		output.z = ( clip[ 2 ] + clip[ 3 ] ) * 0.5f;
+		output.w = clip[ 3 ];
+	} else {
+		const float inverseW = idMath::Fabs( clip[ 3 ] ) > 1e-8f ?
+			1.0f / clip[ 3 ] : 1.0f;
+		const float ndcX = clip[ 0 ] * inverseW;
+		const float ndcY = clip[ 1 ] * inverseW;
+		const float pixelX = rvState.regionX + rvState.viewport[ 0 ] +
+			( ndcX + 1.0f ) * 0.5f * rvState.viewport[ 2 ];
+		const float pixelY = regionBottom + rvState.viewport[ 1 ] +
+			( ndcY + 1.0f ) * 0.5f * rvState.viewport[ 3 ];
+		output.x = pixelX * 2.0f / fullWidth - 1.0f;
+		output.y = pixelY * 2.0f / fullHeight - 1.0f;
+		output.z = clip[ 2 ] * inverseW * 0.5f + 0.5f;
+		output.w = 1.0f;
+	}
 	output.s = input.st[ 0 ];
 	output.t = input.st[ 1 ];
 	output.r = input.color[ 0 ];
@@ -249,15 +305,21 @@ sdVulkanToolVertex TransformVertex( const rvInputVertex_t& input ) {
 	return output;
 }
 
-void AppendTriangle( idList< sdVulkanToolVertex >& output,
-	const sdVulkanToolVertex& a, const sdVulkanToolVertex& b,
-	const sdVulkanToolVertex& c ) {
-	output.Append( a );
-	output.Append( b );
-	output.Append( c );
+sdVulkanToolVertex TransformVertex( const rvInputVertex_t& input ) {
+	const rvMatrix_t combined = MatrixMultiply( rvState.projection,
+		rvState.modelView );
+	return TransformVertex( input, combined );
 }
 
-void AppendLine( idList< sdVulkanToolVertex >& output,
+void AppendTriangleIndices( idList< unsigned int >& indices,
+	unsigned int a, unsigned int b, unsigned int c ) {
+	indices.Append( a );
+	indices.Append( b );
+	indices.Append( c );
+}
+
+void AppendLine( idList< sdVulkanToolVertex >& vertices,
+	idList< unsigned int >& indices,
 	const sdVulkanToolVertex& a, const sdVulkanToolVertex& b ) {
 	const float dxPixels = ( b.x - a.x ) * Max( rvState.width, 1 ) * 0.5f;
 	const float dyPixels = ( b.y - a.y ) * Max( rvState.height, 1 ) * 0.5f;
@@ -278,11 +340,17 @@ void AppendLine( idList< sdVulkanToolVertex >& output,
 	a1.x -= offsetX; a1.y -= offsetY;
 	b0.x += offsetX; b0.y += offsetY;
 	b1.x -= offsetX; b1.y -= offsetY;
-	AppendTriangle( output, a0, a1, b1 );
-	AppendTriangle( output, a0, b1, b0 );
+	const unsigned int first = static_cast< unsigned int >( vertices.Num() );
+	vertices.Append( a0 );
+	vertices.Append( a1 );
+	vertices.Append( b0 );
+	vertices.Append( b1 );
+	AppendTriangleIndices( indices, first, first + 1, first + 3 );
+	AppendTriangleIndices( indices, first, first + 3, first + 2 );
 }
 
-void AppendPoint( idList< sdVulkanToolVertex >& output,
+void AppendPoint( idList< sdVulkanToolVertex >& vertices,
+	idList< unsigned int >& indices,
 	const sdVulkanToolVertex& vertex ) {
 	const float dx = Max( rvState.draw.pointSize, 1.0f ) /
 		Max( rvState.width, 1 );
@@ -296,14 +364,20 @@ void AppendPoint( idList< sdVulkanToolVertex >& output,
 	b.x += dx; b.y -= dy;
 	c.x += dx; c.y += dy;
 	d.x -= dx; d.y += dy;
-	AppendTriangle( output, a, b, c );
-	AppendTriangle( output, a, c, d );
+	const unsigned int first = static_cast< unsigned int >( vertices.Num() );
+	vertices.Append( a );
+	vertices.Append( b );
+	vertices.Append( c );
+	vertices.Append( d );
+	AppendTriangleIndices( indices, first, first + 1, first + 2 );
+	AppendTriangleIndices( indices, first, first + 2, first + 3 );
 }
 
-void AppendPolygonEdges( idList< sdVulkanToolVertex >& output,
+void AppendPolygonEdges( idList< sdVulkanToolVertex >& outputVertices,
+	idList< unsigned int >& outputIndices,
 	const idList< sdVulkanToolVertex >& vertices, int first, int count ) {
 	for ( int i = 0; i < count; ++i ) {
-		AppendLine( output, vertices[ first + i ],
+		AppendLine( outputVertices, outputIndices, vertices[ first + i ],
 			vertices[ first + ( i + 1 ) % count ] );
 	}
 }
@@ -313,31 +387,54 @@ void SubmitPrimitive() {
 		!EnsureToolFrame() ) {
 		return;
 	}
-	idList< sdVulkanToolVertex > transformed;
-	transformed.SetNum( rvState.vertices.Num() );
-	for ( int i = 0; i < rvState.vertices.Num(); ++i ) {
-		transformed[ i ] = TransformVertex( rvState.vertices[ i ] );
-	}
-	idList< sdVulkanToolVertex > triangles;
-	const int count = transformed.Num();
+	const int count = rvState.vertices.Num();
 	const bool wireframe = rvState.draw.polygonMode == GL_LINE;
+	const bool generatedGeometry = wireframe || rvState.primitive == GL_POINTS ||
+		rvState.primitive == GL_LINES || rvState.primitive == GL_LINE_STRIP ||
+		rvState.primitive == GL_LINE_LOOP;
+	idList< sdVulkanToolVertex >& transformed = generatedGeometry ?
+		rvState.transformedScratch : rvState.batchVertices;
+	rvState.transformedScratch.SetNum( 0, false );
+	rvState.batchVertices.SetNum( 0, false );
+	rvState.batchIndices.SetNum( 0, false );
+	transformed.PreAllocate( count );
+	transformed.SetNum( count, false );
+	const rvMatrix_t combined = MatrixMultiply( rvState.projection,
+		rvState.modelView );
+	for ( int i = 0; i < count; ++i ) {
+		transformed[ i ] = TransformVertex( rvState.vertices[ i ], combined,
+			!generatedGeometry );
+	}
+	// Triangle strips are the worst wireframe case at three expanded edges per
+	// input vertex. Reserve the upper bound once; Append then becomes a write.
+	if ( generatedGeometry ) {
+		rvState.batchVertices.PreAllocate( Max( count * 12, 4 ) );
+		rvState.batchIndices.PreAllocate( Max( count * 18, 6 ) );
+	} else {
+		rvState.batchIndices.PreAllocate( Max( count * 3, 3 ) );
+	}
 	switch ( rvState.primitive ) {
 		case GL_POINTS:
-			for ( int i = 0; i < count; ++i ) AppendPoint( triangles, transformed[ i ] );
+			for ( int i = 0; i < count; ++i ) AppendPoint( rvState.batchVertices,
+				rvState.batchIndices, transformed[ i ] );
 			break;
 		case GL_LINES:
-			for ( int i = 0; i + 1 < count; i += 2 ) AppendLine( triangles, transformed[ i ], transformed[ i + 1 ] );
+			for ( int i = 0; i + 1 < count; i += 2 ) AppendLine(
+				rvState.batchVertices, rvState.batchIndices, transformed[ i ], transformed[ i + 1 ] );
 			break;
 		case GL_LINE_STRIP:
-			for ( int i = 0; i + 1 < count; ++i ) AppendLine( triangles, transformed[ i ], transformed[ i + 1 ] );
+			for ( int i = 0; i + 1 < count; ++i ) AppendLine(
+				rvState.batchVertices, rvState.batchIndices, transformed[ i ], transformed[ i + 1 ] );
 			break;
 		case GL_LINE_LOOP:
-			for ( int i = 0; i < count; ++i ) AppendLine( triangles, transformed[ i ], transformed[ ( i + 1 ) % count ] );
+			for ( int i = 0; i < count; ++i ) AppendLine(
+				rvState.batchVertices, rvState.batchIndices, transformed[ i ], transformed[ ( i + 1 ) % count ] );
 			break;
 		case GL_TRIANGLES:
 			for ( int i = 0; i + 2 < count; i += 3 ) {
-				if ( wireframe ) AppendPolygonEdges( triangles, transformed, i, 3 );
-				else AppendTriangle( triangles, transformed[ i ], transformed[ i + 1 ], transformed[ i + 2 ] );
+				if ( wireframe ) AppendPolygonEdges( rvState.batchVertices,
+					rvState.batchIndices, transformed, i, 3 );
+				else AppendTriangleIndices( rvState.batchIndices, i, i + 1, i + 2 );
 			}
 			break;
 		case GL_TRIANGLE_STRIP:
@@ -345,45 +442,64 @@ void SubmitPrimitive() {
 				const int a = ( i & 1 ) ? i + 1 : i;
 				const int b = ( i & 1 ) ? i : i + 1;
 				if ( wireframe ) {
-					AppendLine( triangles, transformed[ a ], transformed[ b ] );
-					AppendLine( triangles, transformed[ b ], transformed[ i + 2 ] );
-					AppendLine( triangles, transformed[ i + 2 ], transformed[ a ] );
-				} else AppendTriangle( triangles, transformed[ a ], transformed[ b ], transformed[ i + 2 ] );
+					AppendLine( rvState.batchVertices, rvState.batchIndices, transformed[ a ], transformed[ b ] );
+					AppendLine( rvState.batchVertices, rvState.batchIndices, transformed[ b ], transformed[ i + 2 ] );
+					AppendLine( rvState.batchVertices, rvState.batchIndices, transformed[ i + 2 ], transformed[ a ] );
+				} else AppendTriangleIndices( rvState.batchIndices, a, b, i + 2 );
 			}
 			break;
 		case GL_QUADS:
 			for ( int i = 0; i + 3 < count; i += 4 ) {
-				if ( wireframe ) AppendPolygonEdges( triangles, transformed, i, 4 );
+				if ( wireframe ) AppendPolygonEdges( rvState.batchVertices,
+					rvState.batchIndices, transformed, i, 4 );
 				else {
-					AppendTriangle( triangles, transformed[ i ], transformed[ i + 1 ], transformed[ i + 2 ] );
-					AppendTriangle( triangles, transformed[ i ], transformed[ i + 2 ], transformed[ i + 3 ] );
+					AppendTriangleIndices( rvState.batchIndices, i, i + 1, i + 2 );
+					AppendTriangleIndices( rvState.batchIndices, i, i + 2, i + 3 );
 				}
 			}
 			break;
 		case GL_QUAD_STRIP:
 			for ( int i = 0; i + 3 < count; i += 2 ) {
 				if ( wireframe ) {
-					AppendLine( triangles, transformed[ i ], transformed[ i + 1 ] );
-					AppendLine( triangles, transformed[ i + 1 ], transformed[ i + 3 ] );
-					AppendLine( triangles, transformed[ i + 3 ], transformed[ i + 2 ] );
-					AppendLine( triangles, transformed[ i + 2 ], transformed[ i ] );
+					AppendLine( rvState.batchVertices, rvState.batchIndices, transformed[ i ], transformed[ i + 1 ] );
+					AppendLine( rvState.batchVertices, rvState.batchIndices, transformed[ i + 1 ], transformed[ i + 3 ] );
+					AppendLine( rvState.batchVertices, rvState.batchIndices, transformed[ i + 3 ], transformed[ i + 2 ] );
+					AppendLine( rvState.batchVertices, rvState.batchIndices, transformed[ i + 2 ], transformed[ i ] );
 				} else {
-					AppendTriangle( triangles, transformed[ i ], transformed[ i + 1 ], transformed[ i + 3 ] );
-					AppendTriangle( triangles, transformed[ i ], transformed[ i + 3 ], transformed[ i + 2 ] );
+					AppendTriangleIndices( rvState.batchIndices, i, i + 1, i + 3 );
+					AppendTriangleIndices( rvState.batchIndices, i, i + 3, i + 2 );
 				}
 			}
 			break;
 		case GL_TRIANGLE_FAN:
 		case GL_POLYGON:
-			if ( wireframe ) AppendPolygonEdges( triangles, transformed, 0, count );
-			else for ( int i = 1; i + 1 < count; ++i ) AppendTriangle( triangles, transformed[ 0 ], transformed[ i ], transformed[ i + 1 ] );
+			if ( wireframe ) AppendPolygonEdges( rvState.batchVertices,
+				rvState.batchIndices, transformed, 0, count );
+			else for ( int i = 1; i + 1 < count; ++i )
+				AppendTriangleIndices( rvState.batchIndices, 0, i, i + 1 );
 			break;
 		default:
 			break;
 	}
-	if ( triangles.Num() != 0 ) {
-		vulkanBackend.DrawToolTriangles( triangles.Begin(), triangles.Num(),
-			rvState.draw.depthTest, rvState.draw.blend );
+	if ( rvState.batchVertices.Num() != 0 && rvState.batchIndices.Num() != 0 ) {
+		if ( generatedGeometry ) {
+			vulkanBackend.DrawToolIndexed( rvState.batchVertices.Begin(),
+				rvState.batchVertices.Num(), rvState.batchIndices.Begin(),
+				rvState.batchIndices.Num(), rvState.draw.depthTest, rvState.draw.blend );
+		} else {
+			// Some legacy camera models depend on the exact triangle-list stream.
+			// Preserve that proven path for filled geometry while retaining the
+			// persistent allocation and single matrix calculation improvements.
+			rvState.transformedScratch.PreAllocate( rvState.batchIndices.Num() );
+			rvState.transformedScratch.SetNum( rvState.batchIndices.Num(), false );
+			for ( int i = 0; i < rvState.batchIndices.Num(); ++i ) {
+				rvState.transformedScratch[ i ] = rvState.batchVertices[
+					rvState.batchIndices[ i ] ];
+			}
+			vulkanBackend.DrawToolTriangles( rvState.transformedScratch.Begin(),
+				rvState.transformedScratch.Num(), rvState.draw.depthTest,
+				rvState.draw.blend );
+		}
 	}
 }
 
@@ -516,6 +632,73 @@ void RadiantVulkanEndEmbeddedRegion() {
 	if ( vulkanBackend.IsToolWindowActive() ) {
 		vulkanBackend.SetToolScissor( 0, 0, rvState.width, rvState.height );
 	}
+}
+
+void RadiantVulkanReservePrimitiveVertices( int vertexCount ) {
+	if ( VulkanToolMode() && vertexCount > 0 ) {
+		rvState.vertices.PreAllocate( vertexCount );
+	}
+}
+
+bool RadiantVulkanDrawIndexedTriangles( const idDrawVert* vertices,
+	int vertexCount, const glIndex_t* indices, int indexCount,
+	const idVec3& origin, const idMat3& axis, const void* vertexCacheHandle,
+	const void* indexCacheHandle, bool lowRangeTexCoords ) {
+	const bool wireframe = rvState.draw.polygonMode == GL_LINE;
+	if ( !VulkanToolMode() || vertices == NULL || indices == NULL ||
+		vertexCount < 3 || indexCount < 3 || rvState.compilingList ||
+		( rvState.draw.polygonMode != GL_FILL && !wireframe ) ||
+		!EnsureToolFrame() ) {
+		return false;
+	}
+
+	const rvMatrix_t viewProjection = MatrixMultiply( rvState.projection,
+		rvState.modelView );
+	const rvMatrix_t combined = MatrixMultiply( viewProjection,
+		ModelMatrix( origin, axis ) );
+	const rvMatrix_t cachedTransform = MatrixMultiply( ToolClipMatrix(),
+		combined );
+	if ( vertexCacheHandle != NULL && indexCacheHandle != NULL ) {
+		vertCache_t* cachedVertices = const_cast< vertCache_t* >(
+			static_cast< const vertCache_t* >( vertexCacheHandle ) );
+		vertCache_t* cachedIndices = const_cast< vertCache_t* >(
+			static_cast< const vertCache_t* >( indexCacheHandle ) );
+		vertexCache.Touch( cachedVertices );
+		vertexCache.Touch( cachedIndices );
+		if ( vulkanBackend.DrawToolCachedIndexed( cachedVertices, cachedIndices,
+			vertexCount, indexCount, cachedTransform.m, rvState.draw.color,
+			lowRangeTexCoords ? ST_TO_FLOAT_LOWRANGE : ST_TO_FLOAT,
+			rvState.draw.depthTest, rvState.draw.blend, wireframe ) ) {
+			return true;
+		}
+	}
+	if ( wireframe ) {
+		return false;
+	}
+
+	rvState.batchVertices.SetNum( vertexCount, false );
+	rvState.batchIndices.SetNum( indexCount, false );
+	for ( int vertexIndex = 0; vertexIndex < vertexCount; ++vertexIndex ) {
+		rvInputVertex_t input;
+		input.xyz[0] = vertices[vertexIndex].xyz.x;
+		input.xyz[1] = vertices[vertexIndex].xyz.y;
+		input.xyz[2] = vertices[vertexIndex].xyz.z;
+		const idVec2 textureCoordinate = vertices[vertexIndex].GetST();
+		input.st[0] = textureCoordinate.x;
+		input.st[1] = textureCoordinate.y;
+		memcpy( input.color, rvState.draw.color, sizeof( input.color ) );
+		rvState.batchVertices[vertexIndex] = TransformVertex( input, combined,
+			true );
+	}
+	for ( int indexNumber = 0; indexNumber < indexCount; ++indexNumber ) {
+		rvState.batchIndices[indexNumber] =
+			static_cast< unsigned int >( indices[indexNumber] );
+	}
+
+	return vulkanBackend.DrawToolIndexed( rvState.batchVertices.Begin(),
+		rvState.batchVertices.Num(), rvState.batchIndices.Begin(),
+		rvState.batchIndices.Num(), rvState.draw.depthTest,
+		rvState.draw.blend );
 }
 
 void RadiantVulkanEndFrame() {

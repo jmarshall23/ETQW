@@ -270,6 +270,17 @@ void Map_Free(void) {
  =======================================================================================================================
  */
 entity_t *AngledEntity() {
+	// ETQW entity definitions mark the appropriate editor camera starts instead
+	// of using Doom 3's info_player_start classname.  Prefer that declaration
+	// metadata so all ETQW spawn variants work without another hard-coded list.
+	for ( entity_t *candidate = entities.next; candidate != &entities;
+		candidate = candidate->next ) {
+		if ( candidate->eclass != NULL &&
+			candidate->eclass->defArgs.GetBool( "editor_camerastart" ) ) {
+			return candidate;
+		}
+	}
+
 	entity_t	*ent = Map_FindClass("info_player_start");
 	if (!ent) {
 		ent = Map_FindClass("info_player_deathmatch");
@@ -541,7 +552,22 @@ void Map_LoadFile(const char *filename) {
 	if (ent) {
 		GetVectorForKey(ent, "origin", g_pParentWnd->GetCamera()->Camera().origin);
 		GetVectorForKey(ent, "origin", g_pParentWnd->GetXYWnd()->GetOrigin());
-		g_pParentWnd->GetCamera()->Camera().angles[YAW] = FloatForKey(ent, "angle");
+		float yaw = 0.0f;
+		if ( !GetFloatForKey( ent, "angle", &yaw ) ) {
+			idMat3 rotation;
+			if ( GetMatrixForKey( ent, "rotation", rotation ) ) {
+				yaw = rotation.ToAngles().yaw;
+			}
+		}
+		g_pParentWnd->GetCamera()->Camera().angles[YAW] = yaw;
+
+		// ETQW spawn origins are at the player's feet.  Starting the editor
+		// camera there puts it inside (or almost coplanar with) outdoor terrain.
+		if ( ent->eclass != NULL &&
+			ent->eclass->defArgs.GetBool( "editor_camerastart" ) ) {
+			g_pParentWnd->GetCamera()->Camera().origin.z += 64.0f;
+			g_pParentWnd->GetCamera()->Camera().angles[PITCH] = -15.0f;
+		}
 	}
 	else {
 		g_pParentWnd->GetCamera()->Camera().angles[YAW] = 0;

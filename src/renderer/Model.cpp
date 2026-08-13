@@ -7,6 +7,7 @@
 #pragma hdrstop
 
 #include "Model.h"
+#include "Model_lwo.h"
 #include "Model_Stuff.h"
 #include "RenderSystem.h"
 #include "VertexCache.h"
@@ -169,12 +170,23 @@ public:
 				FinishSurfaces();
 				return;
 			}
+		} else if ( !extension.Icmp( "terrain" ) ) {
+			if ( LoadTerrainModel( modelName ) ) {
+				FinishSurfaces();
+				return;
+			}
+			defaulted = true;
+			return;
 		} else if ( extension.Icmp( MD5_MESH_EXT ) ) {
 			idStr generated = "generated/modelb/";
 			generated += modelName;
 			generated.StripFileExtension();
 			generated.SetFileExtension( "modelb" );
 			if ( LoadModelB( generated ) ) {
+				FinishSurfaces();
+				return;
+			}
+			if ( !extension.Icmp( "lwo" ) && LoadLWOModel( modelName ) ) {
 				FinishSurfaces();
 				return;
 			}
@@ -489,6 +501,387 @@ private:
 	void SetFallbackBounds() {
 		modelBounds[ 0 ].Set( -8.0f, -8.0f, -8.0f );
 		modelBounds[ 1 ].Set( 8.0f, 8.0f, 8.0f );
+	}
+
+	/*
+	================
+	LoadTerrainModel
+
+	Loads Darklight's editable heightfield model.  This is intentionally separate
+	from ETQW sdPrimitiveTerrainFile/.sft terrain, which references an authored
+	mesh and must never be displaced with the gameplay hm_heightmap.
+	================
+	*/
+	bool LoadTerrainModel( const char* fileName ) {
+		idLexer lexer;
+		lexer.SetFlags( LEXFL_NOSTRINGCONCAT | LEXFL_NOSTRINGESCAPECHARS |
+			LEXFL_ALLOWPATHNAMES | LEXFL_NOFATALERRORS );
+		if ( !lexer.LoadFile( fileName ) ) {
+			return false;
+		}
+
+		idToken token;
+		if ( !lexer.ReadToken( &token ) || token.Icmp( "terrainModel" ) ||
+			!lexer.ReadToken( &token ) || token.GetIntValue() != 1 ||
+			!lexer.ExpectTokenString( "{" ) ) {
+			return false;
+		}
+
+		idStr heightMap;
+		idStr weightMap;
+		idStr materialName;
+		int samples = 0;
+		float worldSize = 0.0f;
+		while ( lexer.ReadToken( &token ) && token != "}" ) {
+			if ( !token.Icmp( "heightMap" ) ) {
+				if ( lexer.ReadToken( &token ) ) heightMap = token;
+			} else if ( !token.Icmp( "weightMap" ) ) {
+				if ( lexer.ReadToken( &token ) ) weightMap = token;
+			} else if ( !token.Icmp( "material" ) ) {
+				if ( lexer.ReadToken( &token ) ) materialName = token;
+			} else if ( !token.Icmp( "samples" ) ) {
+				samples = lexer.ParseInt();
+			} else if ( !token.Icmp( "worldSize" ) ) {
+				worldSize = lexer.ParseFloat();
+			} else {
+				lexer.ReadToken( &token );
+			}
+		}
+		if ( lexer.HadError() || heightMap.IsEmpty() || materialName.IsEmpty() ||
+			samples < 3 || samples > 513 || worldSize <= 0.0f ) {
+			return false;
+		}
+
+		static const int TERRAIN_HEIGHT_MAGIC = 1213482316; // little-endian "DLHT"
+		idFile* heightFile = fileSystem->OpenFileRead( heightMap );
+		if ( heightFile == NULL ) {
+			common->Warning( "Terrain model '%s' could not read heightfield '%s'",
+				fileName, heightMap.c_str() );
+			return false;
+		}
+		int magic = 0;
+		int version = 0;
+		int fileSamples = 0;
+		bool valid = heightFile->ReadInt( magic ) == sizeof( magic ) &&
+			heightFile->ReadInt( version ) == sizeof( version ) &&
+			heightFile->ReadInt( fileSamples ) == sizeof( fileSamples ) &&
+			magic == TERRAIN_HEIGHT_MAGIC && version == 1 && fileSamples == samples;
+		idList< float > heights;
+		heights.SetNum( samples * samples );
+		for ( int i = 0; valid && i < heights.Num(); ++i ) {
+			valid = heightFile->ReadFloat( heights[i] ) == sizeof( heights[i] );
+		}
+		const unsigned int heightTimeStamp =
+			static_cast< unsigned int >( heightFile->Timestamp() );
+		fileSystem->CloseFile( heightFile );
+		if ( !valid ) {
+			common->Warning( "Terrain model '%s' has an invalid heightfield '%s'",
+				fileName, heightMap.c_str() );
+			return false;
+		}
+
+		// Four normalized layer weights are stored in vertex colors.  Later file
+		// versions append editor/compiler metadata after these bytes.
+		idList< byte > weights;
+		weights.SetNum( samples * samples * 4 );
+		memset( weights.Begin(), 0, weights.Num() );
+		for ( int i = 0; i < samples * samples; ++i ) {
+			weights[i * 4] = 255;
+		}
+		if ( !weightMap.IsEmpty() ) {
+			static const int TERRAIN_WEIGHT_MAGIC = 1415007300; // little-endian "DLWT"
+			idFile* weightFile = fileSystem->OpenFileRead( weightMap );
+			if ( weightFile != NULL ) {
+				int weightMagic = 0;
+				int weightVersion = 0;
+				int weightSamples = 0;
+				int channels = 0;
+				const bool validWeights =
+					weightFile->ReadInt( weightMagic ) == sizeof( weightMagic ) &&
+					weightFile->ReadInt( weightVersion ) == sizeof( weightVersion ) &&
+					weightFile->ReadInt( weightSamples ) == sizeof( weightSamples ) &&
+					weightFile->ReadInt( channels ) == sizeof( channels ) &&
+					weightMagic == TERRAIN_WEIGHT_MAGIC &&
+					weightVersion >= 1 && weightVersion <= 4 &&
+					weightSamples == samples && channels == 4 &&
+					weightFile->Read( weights.Begin(), weights.Num() ) == weights.Num();
+				fileSystem->CloseFile( weightFile );
+				if ( !validWeights ) {
+					memset( weights.Begin(), 0, weights.Num() );
+					for ( int i = 0; i < samples * samples; ++i ) {
+						weights[i * 4] = 255;
+					}
+				}
+			}
+		}
+
+		const idMaterial* material = declHolder.FindMaterial( materialName );
+		const bool lowRangeTexCoords =
+			material->TestMaterialFlag( MF_LOWRANGEUVCOMPRESS );
+		const float spacing = worldSize / ( samples - 1 );
+		const float halfSize = worldSize * 0.5f;
+		const int maximumTileCells = 254;
+		int surfaceId = 0;
+		modelBounds.Clear();
+
+		// ETQW uses 16-bit model indexes.  Split 257/513-sample heightfields into
+		// overlapping tiles so every surface stays below 65536 local vertices.
+		for ( int tileY = 0; tileY < samples - 1;
+			tileY += maximumTileCells ) {
+			const int cellsY = Min( maximumTileCells, samples - 1 - tileY );
+			for ( int tileX = 0; tileX < samples - 1;
+				tileX += maximumTileCells ) {
+				const int cellsX = Min( maximumTileCells, samples - 1 - tileX );
+				const int rowVertices = cellsX + 1;
+				const int vertexCount = rowVertices * ( cellsY + 1 );
+				const int indexCount = cellsX * cellsY * 6;
+				srfTriangles_t* triangles =
+					AllocSurfaceTriangles( vertexCount, indexCount );
+				if ( triangles == NULL ) {
+					ClearSurfaces();
+					return false;
+				}
+				triangles->bounds.Clear();
+
+				for ( int localY = 0; localY <= cellsY; ++localY ) {
+					const int sourceY = tileY + localY;
+					const int topY = Max( sourceY - 1, 0 );
+					const int bottomY = Min( sourceY + 1, samples - 1 );
+					for ( int localX = 0; localX <= cellsX; ++localX ) {
+						const int sourceX = tileX + localX;
+						const int leftX = Max( sourceX - 1, 0 );
+						const int rightX = Min( sourceX + 1, samples - 1 );
+						const float height = heights[sourceY * samples + sourceX];
+						const float dhdx =
+							( heights[sourceY * samples + rightX] -
+							heights[sourceY * samples + leftX] ) /
+							( ( rightX - leftX ) * spacing );
+						const float dhdy =
+							( heights[topY * samples + sourceX] -
+							heights[bottomY * samples + sourceX] ) /
+							( ( bottomY - topY ) * spacing );
+
+						idDrawVert& vertex =
+							triangles->verts[localY * rowVertices + localX];
+						vertex.Clear();
+						vertex.xyz.Set( sourceX * spacing - halfSize,
+							halfSize - sourceY * spacing, height );
+						vertex.SetST( lowRangeTexCoords,
+							idVec2( sourceX / static_cast< float >( samples - 1 ),
+							1.0f - sourceY / static_cast< float >( samples - 1 ) ) );
+						idVec3 normal( -dhdx, -dhdy, 1.0f );
+						normal.Normalize();
+						idVec3 tangent( 1.0f, 0.0f, dhdx );
+						tangent.Normalize();
+						vertex.SetNormal( normal );
+						vertex.SetTangent( tangent );
+						vertex.SetBiTangentSign( 1.0f );
+						memcpy( vertex.color,
+							weights.Begin() + ( sourceY * samples + sourceX ) * 4, 4 );
+						triangles->bounds.AddPoint( vertex.xyz );
+					}
+				}
+
+				int outputIndex = 0;
+				for ( int localY = 0; localY < cellsY; ++localY ) {
+					for ( int localX = 0; localX < cellsX; ++localX ) {
+						const int v0 = localY * rowVertices + localX;
+						const int v1 = v0 + 1;
+						const int v3 = v0 + rowVertices;
+						const int v2 = v3 + 1;
+						triangles->indexes[outputIndex++] =
+							static_cast< glIndex_t >( v0 );
+						triangles->indexes[outputIndex++] =
+							static_cast< glIndex_t >( v1 );
+						triangles->indexes[outputIndex++] =
+							static_cast< glIndex_t >( v2 );
+						triangles->indexes[outputIndex++] =
+							static_cast< glIndex_t >( v0 );
+						triangles->indexes[outputIndex++] =
+							static_cast< glIndex_t >( v2 );
+						triangles->indexes[outputIndex++] =
+							static_cast< glIndex_t >( v3 );
+					}
+				}
+				triangles->tangentsCalculated = true;
+				triangles->facePlanesCalculated = false;
+
+				modelSurface_t surface;
+				surface.id = surfaceId++;
+				surface.material = material;
+				surface.geometry = triangles;
+				AddSurface( surface );
+			}
+		}
+
+		timeStamp = heightTimeStamp;
+		common->Printf( "Loaded editable terrain %s: %d x %d, %d surfaces, bounds (%s)-(%s)\n",
+			fileName, samples, samples, surfaceId, modelBounds[0].ToString(),
+			modelBounds[1].ToString() );
+		return surfaceId > 0;
+	}
+
+	bool LoadLWOModel( const char* fileName ) {
+		unsigned int failId = 0;
+		int failPosition = 0;
+		lwObject* object = lwGetObject( fileName, &failId, &failPosition );
+		if ( object == NULL || object->layer == NULL || object->surf == NULL ) {
+			if ( object != NULL ) {
+				lwFreeObject( object );
+			}
+			common->Warning( "Could not load LWO model '%s' (chunk %08x at %d)",
+				fileName, failId, failPosition );
+			return false;
+		}
+
+		modelBounds.Clear();
+		timeStamp = object->timeStamp;
+		const int maximumTrianglesPerSurface = 65532 / 3;
+		int loadedTriangles = 0;
+		int surfaceId = 0;
+
+		// Darklight's native loader intentionally consumes the first LightWave
+		// layer. ETQW source models (including terrain) use that same layout.
+		lwLayer* layer = object->layer;
+		for ( lwSurface* lwoSurface = object->surf; lwoSurface != NULL;
+			lwoSurface = lwoSurface->next ) {
+			idList< lwPolygon* > polygons;
+			for ( int polygonIndex = 0; polygonIndex < layer->polygon.count;
+				++polygonIndex ) {
+				lwPolygon* polygon = &layer->polygon.pol[ polygonIndex ];
+				if ( polygon->surf == lwoSurface && polygon->nverts == 3 ) {
+					polygons.Append( polygon );
+				}
+			}
+			if ( polygons.Num() == 0 ) {
+				continue;
+			}
+
+			const idMaterial* material = declHolder.FindMaterial(
+				lwoSurface->name != NULL ? lwoSurface->name : "_default" );
+			const bool lowRangeTexCoords = material->TestMaterialFlag(
+				MF_LOWRANGEUVCOMPRESS );
+			for ( int firstPolygon = 0; firstPolygon < polygons.Num();
+				firstPolygon += maximumTrianglesPerSurface ) {
+				const int triangleCount = Min( maximumTrianglesPerSurface,
+					polygons.Num() - firstPolygon );
+				const int vertexCount = triangleCount * 3;
+				srfTriangles_t* triangles = AllocSurfaceTriangles( vertexCount,
+					vertexCount );
+				if ( triangles == NULL ) {
+					lwFreeObject( object );
+					return false;
+				}
+				triangles->bounds.Clear();
+				idList< idDrawVert > uniqueVertices;
+				uniqueVertices.PreAllocate( vertexCount );
+				idHashIndex vertexHash( 4096, vertexCount );
+
+				int outputIndex = 0;
+				for ( int polygonOffset = 0; polygonOffset < triangleCount;
+					++polygonOffset ) {
+					lwPolygon* polygon = polygons[ firstPolygon + polygonOffset ];
+					for ( int corner = 0; corner < 3; ++corner, ++outputIndex ) {
+						const lwPolVert& polygonVertex = polygon->v[ corner ];
+						const lwPoint& point = layer->point.pt[ polygonVertex.index ];
+						idDrawVert vertex;
+						vertex.Clear();
+						vertex.xyz.Set( point.pos[0], point.pos[2], point.pos[1] );
+
+						idVec2 textureCoordinate( 0.0f, 0.0f );
+						byte color[4] = {
+							static_cast< byte >( idMath::ClampInt( 0, 255,
+								idMath::Ftoi( lwoSurface->color.rgb[0] * 255.0f ) ) ),
+							static_cast< byte >( idMath::ClampInt( 0, 255,
+								idMath::Ftoi( lwoSurface->color.rgb[1] * 255.0f ) ) ),
+							static_cast< byte >( idMath::ClampInt( 0, 255,
+								idMath::Ftoi( lwoSurface->color.rgb[2] * 255.0f ) ) ),
+							255
+						};
+						for ( int mapIndex = 0; mapIndex < point.nvmaps;
+							++mapIndex ) {
+							const lwVMapPt& map = point.vm[ mapIndex ];
+							if ( map.vmap->type == LWID_('T','X','U','V') ) {
+								textureCoordinate.Set( map.vmap->val[map.index][0],
+									1.0f - map.vmap->val[map.index][1] );
+							} else if ( map.vmap->type == LWID_('R','G','B','A') ) {
+								for ( int channel = 0; channel < 4; ++channel ) {
+									color[channel] = static_cast< byte >(
+										idMath::ClampInt( 0, 255, idMath::Ftoi(
+										map.vmap->val[map.index][channel] * 255.0f ) ) );
+								}
+							}
+						}
+						for ( int mapIndex = 0; mapIndex < polygonVertex.nvmaps;
+							++mapIndex ) {
+							const lwVMapPt& map = polygonVertex.vm[ mapIndex ];
+							if ( map.vmap->type == LWID_('T','X','U','V') ) {
+								textureCoordinate.Set( map.vmap->val[map.index][0],
+									1.0f - map.vmap->val[map.index][1] );
+							} else if ( map.vmap->type == LWID_('R','G','B','A') ) {
+								for ( int channel = 0; channel < 4; ++channel ) {
+									color[channel] = static_cast< byte >(
+										idMath::ClampInt( 0, 255, idMath::Ftoi(
+										map.vmap->val[map.index][channel] * 255.0f ) ) );
+								}
+							}
+						}
+
+						idVec3 normal( polygonVertex.norm[0],
+							polygonVertex.norm[2], polygonVertex.norm[1] );
+						normal.FixDegenerateNormal();
+						idVec3 tangent = normal.Cross( idVec3( 0.0f, 0.0f, 1.0f ) );
+						if ( tangent.Normalize() < 0.001f ) {
+							tangent = normal.Cross( idVec3( 1.0f, 0.0f, 0.0f ) );
+							tangent.Normalize();
+						}
+						vertex.SetST( lowRangeTexCoords, textureCoordinate );
+						vertex.SetNormal( normal );
+						vertex.SetTangent( tangent );
+						vertex.SetBiTangentSign( 1.0f );
+						memcpy( vertex.color, color, sizeof( color ) );
+
+						const int hashKey = vertexHash.GenerateKey( vertex.xyz );
+						int compactVertex = idHashIndex::NULL_INDEX;
+						for ( int candidate = vertexHash.GetFirst( hashKey );
+							candidate != idHashIndex::NULL_INDEX;
+							candidate = vertexHash.GetNext( candidate ) ) {
+							if ( memcmp( &uniqueVertices[candidate], &vertex,
+								sizeof( vertex ) ) == 0 ) {
+								compactVertex = candidate;
+								break;
+							}
+						}
+						if ( compactVertex == idHashIndex::NULL_INDEX ) {
+							compactVertex = uniqueVertices.Append( vertex );
+							vertexHash.Add( hashKey, compactVertex );
+						}
+						triangles->indexes[ outputIndex ] =
+							static_cast< glIndex_t >( compactVertex );
+						triangles->bounds.AddPoint( vertex.xyz );
+					}
+				}
+				memcpy( triangles->verts, uniqueVertices.Begin(),
+					uniqueVertices.Num() * sizeof( uniqueVertices[0] ) );
+				triangles->numVerts = uniqueVertices.Num();
+				triangles->tangentsCalculated = true;
+				modelSurface_t surface;
+				surface.id = surfaceId++;
+				surface.material = material;
+				surface.geometry = triangles;
+				modelSurfaces.Append( surface );
+				modelBounds += triangles->bounds;
+				loadedTriangles += triangleCount;
+			}
+		}
+		lwFreeObject( object );
+		if ( loadedTriangles == 0 ) {
+			modelBounds.Clear();
+			return false;
+		}
+		common->Printf( "Loaded source LWO %s: %d surfaces, %d triangles\n",
+			fileName, modelSurfaces.Num(), loadedTriangles );
+		return true;
 	}
 
 	bool LoadModelB( const char* fileName ) {

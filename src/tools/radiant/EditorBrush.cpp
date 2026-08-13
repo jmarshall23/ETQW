@@ -39,6 +39,17 @@ bool	g_bShowLightTextures = false;
 
 void GLCircle(float x, float y, float z, float r);
 
+static bool Brush_IsTerrainModel( brush_t* brush ) {
+	if ( brush == NULL || brush->owner == NULL ) {
+		return false;
+	}
+	if ( brush->owner->epairs.FindKey( "terrainSource" ) != NULL ) {
+		return true;
+	}
+	const char* modelName = brush->owner->epairs.GetString( "model" );
+	return modelName != NULL && idStr::CheckExtension( modelName, "terrain" );
+}
+
 const int POINTS_PER_KNOT = 50;
 
 /*
@@ -46,7 +57,8 @@ const int POINTS_PER_KNOT = 50;
 DrawRenderModel
 ================
 */
-void DrawRenderModel( idRenderModel *model, idVec3 &origin, idMat3 &axis, bool cameraView ) {
+void DrawRenderModel( idRenderModel *model, idVec3 &origin, idMat3 &axis,
+	bool cameraView ) {
 	idVec4 savedColor;
 	qglGetFloatv( GL_CURRENT_COLOR, savedColor.ToFloatPtr() );
 	const int drawMode = g_pParentWnd->GetCamera()->Camera().draw_mode;
@@ -68,9 +80,16 @@ void DrawRenderModel( idRenderModel *model, idVec3 &origin, idMat3 &axis, bool c
 			material->GetEditorImage()->Bind();
 		}
 
-		qglBegin( GL_TRIANGLES );
-
 		const srfTriangles_t	*tri = surf->geometry;
+		if ( RadiantVulkanDrawIndexedTriangles( tri->verts, tri->numVerts,
+				tri->indexes, tri->numIndexes, origin, axis, tri->ambientCache,
+				tri->indexCache,
+				material->TestMaterialFlag( MF_LOWRANGEUVCOMPRESS ) ) ) {
+			continue;
+		}
+
+		qglBegin( GL_TRIANGLES );
+		RadiantVulkanReservePrimitiveVertices( tri->numIndexes );
 		for ( int j = 0; j < tri->numIndexes; j += 3 ) {
 			for ( int k = 0; k < 3; k++ ) {
 				int		index = tri->indexes[j + k];
@@ -2643,7 +2662,8 @@ face_t *Brush_Ray(idVec3 origin, idVec3 dir, brush_t *b, float *dist, bool testP
 				return NULL;
 			}
 		}
-		else if ( b->modelHandle != NULL && b->modelHandle->IsDynamicModel() == DM_STATIC ) {
+		else if ( b->modelHandle != NULL &&
+			b->modelHandle->IsDynamicModel() == DM_STATIC ) {
 			if (!Brush_ModelIntersect(b, origin, dir, scale)) {
 				*dist = 0;
 				return NULL;
@@ -4055,9 +4075,9 @@ void Brush_DrawModel( brush_t *b, bool camera, bool bSelected ) {
 
 		qglColor4fv( colorSave.ToFloatPtr() );
 
-        if ( bSelected && camera )
+		if ( bSelected && camera )
         {
-            //draw selection tints
+				//draw selection tints
 			/*
             if ( camera && g_PrefsDlg.m_nEntityShowState != ENTITY_WIREFRAME ) {
                 qglPolygonMode ( GL_FRONT_AND_BACK , GL_FILL );
@@ -4732,6 +4752,15 @@ void Brush_DrawXY(brush_t *b, int nViewType, bool bSelected, bool ignoreViewType
 		}
 	}
 
+	// Orthographic views only need an entity's footprint until it is selected.
+	// Drawing every triangle edge from a source LWO multiplies the line stream
+	// and can hide later geometry.  Keep full model detail in the camera and for
+	// the selected model, while ordinary XY entities use their generated bounds.
+	const bool drawModelBoundsOnly = !Brush_IsTerrainModel( b ) &&
+		b->owner != NULL &&
+		( ( b->owner->eclass->entityModel != NULL && b->modelHandle == NULL ) ||
+		( b->modelHandle != NULL && !bSelected ) );
+
 	if (b->owner->eclass->fixedsize) {
 
  		DrawSpeaker(b, bSelected, true);
@@ -4793,17 +4822,21 @@ void Brush_DrawXY(brush_t *b, int nViewType, bool bSelected, bool ignoreViewType
 		}
 
 		if (b->owner->eclass->entityModel) {
-			Brush_DrawModel( b, false, bSelected );
+			if ( !drawModelBoundsOnly ) {
+				Brush_DrawModel( b, false, bSelected );
+			}
 			DrawBrushEntityName(b);
 			qglColor4fv(colorSave.ToFloatPtr());
-            return;
+			if ( !drawModelBoundsOnly ) {
+				return;
+			}
 		}
 
 	}
 
 	qglColor4fv(colorSave.ToFloatPtr());
 
-	if (b->modelHandle > 0) {
+	if (b->modelHandle > 0 && !drawModelBoundsOnly) {
 		Brush_DrawEmitter( b, bSelected, false );
 		Brush_DrawModel(b, false, bSelected);
 		qglColor4fv(colorSave.ToFloatPtr());

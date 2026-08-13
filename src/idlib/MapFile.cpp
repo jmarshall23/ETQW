@@ -907,7 +907,6 @@ bool idMapFile::ParseBuffer( const idStr& buffer, const idStr& name, bool moveFu
 	}
 
 	SetGeometryCRC();
-
 	// if the map has a worldspawn
 	if ( entities.Num() ) {
 
@@ -1095,6 +1094,32 @@ static bool ETQWParseWorldTransform( idLexer &src, etqwWorldTransform_t &transfo
 	return false;
 }
 
+static bool ETQWSkipWorldValue( idLexer &src );
+
+static bool ETQWParseWorldReference( idLexer &src,
+	etqwWorldTransform_t &transform, idStr &url ) {
+	idToken token;
+	while ( src.ReadToken( &token ) ) {
+		if ( token == "}" ) {
+			return !url.IsEmpty();
+		}
+		if ( token.Icmp( "sdTransform" ) == 0 ) {
+			if ( !ETQWParseWorldTransform( src, transform ) ) {
+				return false;
+			}
+		} else if ( token.Icmp( "url" ) == 0 ) {
+			idToken value;
+			if ( !src.ReadToken( &value ) ) {
+				return false;
+			}
+			url = value.c_str();
+		} else if ( !ETQWSkipWorldValue( src ) ) {
+			return false;
+		}
+	}
+	return false;
+}
+
 static bool ETQWReadWorldHolderBody( idLexer &src ) {
 	idToken token;
 	while ( src.ReadToken( &token ) ) {
@@ -1219,6 +1244,111 @@ static idMapBrush *ETQWParseWorldBrush( idLexer &src ) {
 	return NULL;
 }
 
+static idMapPatch *ETQWParseWorldPatch( idLexer &src ) {
+	etqwWorldTransform_t transform;
+	idDict patchDictionary;
+	idStr material = "_default";
+	int horizontalSubdivisions = 0;
+	int verticalSubdivisions = 0;
+	bool explicitSubdivisions = false;
+	idMapPatch *patch = NULL;
+	idToken token;
+
+	while ( src.ReadToken( &token ) ) {
+		if ( token == "}" ) {
+			if ( patch == NULL ) {
+				return NULL;
+			}
+			patch->SetMaterial( material.c_str() );
+			patch->SetHorzSubdivisions( horizontalSubdivisions );
+			patch->SetVertSubdivisions( verticalSubdivisions );
+			patch->SetExplicitlySubdivided( explicitSubdivisions );
+			patch->epairs = patchDictionary;
+			for ( int vertexIndex = 0;
+				vertexIndex < patch->GetWidth() * patch->GetHeight();
+				++vertexIndex ) {
+				idVec3 &position = ( *patch )[ vertexIndex ].xyz;
+				if ( transform.hasRotation ) {
+					position *= transform.rotation;
+				}
+				if ( transform.hasTranslation ) {
+					position += transform.translation;
+				}
+			}
+			return patch;
+		}
+		if ( token.Icmp( "sdDictionary" ) == 0 ) {
+			if ( !ETQWParseWorldDictionary( src, patchDictionary ) ) {
+				break;
+			}
+		} else if ( token.Icmp( "sdTransform" ) == 0 ) {
+			if ( !ETQWParseWorldTransform( src, transform ) ) {
+				break;
+			}
+		} else if ( token.Icmp( "material" ) == 0 ) {
+			idToken value;
+			if ( !src.ReadToken( &value ) ) {
+				break;
+			}
+			material = value.c_str();
+		} else if ( token.Icmp( "useExplicitSubdivisions" ) == 0 ) {
+			idToken value;
+			if ( !src.ReadToken( &value ) ) {
+				break;
+			}
+			explicitSubdivisions = value.GetIntValue() != 0;
+		} else if ( token.Icmp( "explicitSubdivisions" ) == 0 ) {
+			float subdivisions[ 2 ];
+			if ( !src.Parse1DMatrix( 2, subdivisions ) ) {
+				break;
+			}
+			horizontalSubdivisions = static_cast< int >( subdivisions[ 0 ] );
+			verticalSubdivisions = static_cast< int >( subdivisions[ 1 ] );
+			explicitSubdivisions = true;
+		} else if ( token.Icmp( "controlPoints" ) == 0 ) {
+			float dimensions[ 2 ];
+			if ( !src.Parse1DMatrix( 2, dimensions ) ) {
+				break;
+			}
+			const int width = static_cast< int >( dimensions[ 0 ] );
+			const int height = static_cast< int >( dimensions[ 1 ] );
+			if ( width <= 0 || height <= 0 || width > 1024 || height > 1024 ||
+				!src.ExpectTokenString( "{" ) ||
+				!src.ExpectTokenString( "(" ) ) {
+				break;
+			}
+			delete patch;
+			patch = new idMapPatch( width, height );
+			patch->SetSize( width, height );
+			bool valid = true;
+			for ( int column = 0; valid && column < width; ++column ) {
+				valid = src.ExpectTokenString( "(" );
+				for ( int row = 0; valid && row < height; ++row ) {
+					float point[ 5 ];
+					valid = src.Parse1DMatrix( 5, point );
+					if ( valid ) {
+						idDrawVert &vertex = ( *patch )[ row * width + column ];
+						vertex.xyz.Set( point[ 0 ], point[ 1 ], point[ 2 ] );
+						vertex.SetST( point[ 3 ], point[ 4 ] );
+					}
+				}
+				if ( valid ) {
+					valid = src.ExpectTokenString( ")" );
+				}
+			}
+			if ( !valid || !src.ExpectTokenString( ")" ) ||
+				!src.ExpectTokenString( "}" ) ) {
+				break;
+			}
+		} else if ( !ETQWSkipWorldValue( src ) ) {
+			break;
+		}
+	}
+
+	delete patch;
+	return NULL;
+}
+
 static bool ETQWParseWorldPrimitives( idLexer &src, idMapEntity &entity ) {
 	if ( !src.ExpectTokenString( "{" ) ) {
 		return false;
@@ -1242,6 +1372,14 @@ static bool ETQWParseWorldPrimitives( idLexer &src, idMapEntity &entity ) {
 				return false;
 			}
 			entity.AddPrimitive( brush );
+		} else if ( type.Icmp( "sdPrimitivePatch" ) == 0 ) {
+			idMapPatch *patch = ETQWParseWorldPatch( src );
+			if ( patch == NULL ) {
+				idLib::common->Printf( "ETQW world parse: failed patch '%s' near line %d\n",
+					primitiveName.c_str(), src.GetLineNum() );
+				return false;
+			}
+			entity.AddPrimitive( patch );
 		} else {
 			src.SkipBracedSection( false );
 		}
@@ -1293,7 +1431,157 @@ static idMapEntity *ETQWParseWorldEntity( idLexer &src, const char *entityName )
 	return NULL;
 }
 
-bool idMapFile::ParseWorldFile( idLexer &src ) {
+void idMapFile::TransformWorldReferenceEntity( idMapEntity *entity,
+	const idVec3 &translation, const idMat3 &rotation ) {
+	if ( entity == NULL ) {
+		return;
+	}
+
+	const bool isWorld = idStr::Icmp( entity->epairs.GetString( "classname" ),
+		"worldspawn" ) == 0;
+	idVec3 origin;
+	entity->epairs.GetVector( "origin", "0 0 0", origin );
+	origin = isWorld ? vec3_origin : origin * rotation + translation;
+	entity->epairs.Set( "origin", va( "%g %g %g", origin.x, origin.y,
+		origin.z ) );
+
+	idMat3 localRotation;
+	if ( entity->epairs.GetMatrix( "rotation", NULL, localRotation ) ) {
+		localRotation *= rotation;
+	} else {
+		localRotation = rotation;
+	}
+	if ( !isWorld && !localRotation.IsIdentity() ) {
+		entity->epairs.Set( "rotation", va( "%g %g %g %g %g %g %g %g %g",
+			localRotation[0][0], localRotation[0][1], localRotation[0][2],
+			localRotation[1][0], localRotation[1][1], localRotation[1][2],
+			localRotation[2][0], localRotation[2][1], localRotation[2][2] ) );
+	}
+
+	const idVec3 primitiveTranslation = isWorld ? translation : vec3_origin;
+	for ( int primitiveIndex = 0;
+		primitiveIndex < entity->GetNumPrimitives(); ++primitiveIndex ) {
+		idMapPrimitive *primitive = entity->GetPrimitive( primitiveIndex );
+		if ( primitive->GetType() == idMapPrimitive::TYPE_BRUSH ) {
+			idMapBrush *brush = static_cast< idMapBrush* >( primitive );
+			for ( int sideIndex = 0; sideIndex < brush->GetNumSides(); ++sideIndex ) {
+				idMapBrushSide *side = brush->GetSide( sideIndex );
+				idPlane plane = side->GetPlane();
+				plane.RotateSelf( vec3_origin, rotation );
+				plane.TranslateSelf( primitiveTranslation );
+				side->SetPlane( plane );
+				side->TranslateSelf( primitiveTranslation );
+			}
+		} else if ( primitive->GetType() == idMapPrimitive::TYPE_PATCH ) {
+			idMapPatch *patch = static_cast< idMapPatch* >( primitive );
+			for ( int vertexIndex = 0;
+				vertexIndex < patch->GetWidth() * patch->GetHeight(); ++vertexIndex ) {
+				( *patch )[ vertexIndex ].xyz =
+					( *patch )[ vertexIndex ].xyz * rotation + primitiveTranslation;
+			}
+		}
+	}
+}
+
+bool idMapFile::AppendWorldReference( const char *url,
+	const idVec3 &translation, const idMat3 &rotation,
+	const char *instanceName ) {
+	if ( url == NULL || url[0] == '\0' ) {
+		return false;
+	}
+	static int referenceDepth = 0;
+	if ( referenceDepth >= 16 ) {
+		idLib::common->Warning( "ETQW world reference nesting is too deep at %s",
+			url );
+		return false;
+	}
+
+	idStr referencePath = url;
+	const char *fileSystemPrefix = "filesystem://";
+	if ( !idStr::Icmpn( referencePath, fileSystemPrefix,
+		strlen( fileSystemPrefix ) ) ) {
+		referencePath = referencePath.Mid( strlen( fileSystemPrefix ),
+			referencePath.Length() );
+	}
+	referencePath.StripFileExtension();
+
+	idMapFile referenceFile;
+	++referenceDepth;
+	const bool parsed = referenceFile.Parse( referencePath, true, false,
+		false, true );
+	--referenceDepth;
+	if ( !parsed ) {
+		idLib::common->Warning( "ETQW world reference '%s' could not be loaded",
+			referencePath.c_str() );
+		return false;
+	}
+
+	// References are instances. Prefix their scoped entity names and update
+	// exact intra-reference links so repeated uses of one source do not collide.
+	idDict renamedEntities;
+	for ( int entityIndex = 0; entityIndex < referenceFile.entities.Num();
+		++entityIndex ) {
+		idMapEntity *entity = referenceFile.entities[ entityIndex ];
+		if ( idStr::Icmp( entity->epairs.GetString( "classname" ),
+			"worldspawn" ) == 0 ) {
+			continue;
+		}
+		const char *oldName = entity->epairs.GetString( "name" );
+		if ( oldName[0] != '\0' ) {
+			const idStr newName = va( "%s_%s", instanceName, oldName );
+			renamedEntities.Set( oldName, newName );
+			entity->epairs.Set( "name", newName );
+		}
+	}
+	for ( int entityIndex = 0; entityIndex < referenceFile.entities.Num();
+		++entityIndex ) {
+		idMapEntity *entity = referenceFile.entities[ entityIndex ];
+		for ( int keyIndex = 0; keyIndex < entity->epairs.GetNumKeyVals();
+			++keyIndex ) {
+			const idKeyValue *keyValue = entity->epairs.GetKeyVal( keyIndex );
+			const idStr key = keyValue->GetKey();
+			const idStr value = keyValue->GetValue();
+			const char *renamed = renamedEntities.GetString( value, "" );
+			if ( renamed[0] != '\0' ) {
+				entity->epairs.Set( key, renamed );
+			}
+		}
+	}
+
+	int appendedEntities = 0;
+	while ( referenceFile.entities.Num() > 0 ) {
+		idMapEntity *entity = referenceFile.entities[ 0 ];
+		referenceFile.entities.RemoveIndex( 0 );
+		TransformWorldReferenceEntity( entity, translation, rotation );
+		if ( idStr::Icmp( entity->epairs.GetString( "classname" ),
+			"worldspawn" ) == 0 ) {
+			idMapEntity *world = NULL;
+			for ( int destinationIndex = 0; destinationIndex < entities.Num();
+				++destinationIndex ) {
+				if ( idStr::Icmp( entities[ destinationIndex ]->epairs.GetString(
+					"classname" ), "worldspawn" ) == 0 ) {
+					world = entities[ destinationIndex ];
+					break;
+				}
+			}
+			if ( world == NULL ) {
+				entities.Append( entity );
+			} else {
+				world->primitives.Append( entity->primitives );
+				entity->primitives.Clear();
+				delete entity;
+			}
+		} else {
+			entities.Append( entity );
+			++appendedEntities;
+		}
+	}
+	idLib::common->Printf( "ETQW world reference: %s (%d entities)\n",
+		referencePath.c_str(), appendedEntities );
+	return true;
+}
+
+bool idMapFile::ParseWorldFile( idLexer &src, bool osPath ) {
 	idToken token;
 	if ( !src.ExpectTokenString( "version" ) || !src.ReadToken( &token ) || !src.ExpectTokenString( "{" ) ) {
 		return false;
@@ -1303,6 +1591,29 @@ bool idMapFile::ParseWorldFile( idLexer &src ) {
 	fileTime = src.GetFileTime();
 	entities.DeleteContents( true );
 	idDict worldDictionary;
+	idStr terrainModel;
+	idStr terrainSource = name;
+	terrainSource.SetFileExtension( ".sft" );
+	idLexer terrainLexer( LEXFL_NOSTRINGCONCAT | LEXFL_NOSTRINGESCAPECHARS |
+		LEXFL_ALLOWPATHNAMES );
+	if ( terrainLexer.LoadFile( terrainSource, osPath ) ) {
+		idToken terrainToken;
+		if ( terrainLexer.ReadToken( &terrainToken ) &&
+			terrainToken.Icmp( "version" ) == 0 &&
+			terrainLexer.ReadToken( &terrainToken ) &&
+			terrainLexer.ExpectTokenString( "{" ) ) {
+			while ( terrainLexer.ReadToken( &terrainToken ) && terrainToken != "}" ) {
+				if ( terrainToken.Icmp( "model" ) == 0 ) {
+					idToken modelToken;
+					if ( terrainLexer.ReadToken( &modelToken ) ) {
+						terrainModel = modelToken.c_str();
+					}
+				} else if ( !ETQWSkipWorldValue( terrainLexer ) ) {
+					break;
+				}
+			}
+		}
+	}
 
 	while ( src.ReadToken( &token ) ) {
 		if ( token == "}" ) {
@@ -1326,6 +1637,23 @@ bool idMapFile::ParseWorldFile( idLexer &src ) {
 			if ( holderType == "}" ) break;
 			idToken holderName;
 			if ( !src.ReadToken( &holderName ) ) return false;
+			if ( holderType.Icmp( "sdPrimitiveTerrainFile" ) == 0 ) {
+				if ( !terrainModel.IsEmpty() ) {
+					idMapEntity *terrainEntity = new idMapEntity();
+					terrainEntity->epairs.Set( "classname", "model_static" );
+					terrainEntity->epairs.Set( "name", holderName.c_str() );
+					terrainEntity->epairs.Set( "model", terrainModel.c_str() );
+					terrainEntity->epairs.Set( "terrainSource", terrainSource.c_str() );
+					terrainEntity->epairs.SetBool( "noclipmodel", true );
+					entities.Append( terrainEntity );
+					idLib::common->Printf( "ETQW world terrain: %s from %s\n",
+						terrainModel.c_str(), terrainSource.c_str() );
+				} else {
+					idLib::common->Warning( "ETQW world terrain holder '%s' has no model in %s",
+						holderName.c_str(), terrainSource.c_str() );
+				}
+				continue;
+			}
 			if ( !ETQWReadWorldHolderBody( src ) ) {
 				continue;
 			}
@@ -1346,6 +1674,18 @@ bool idMapFile::ParseWorldFile( idLexer &src ) {
 				} else {
 					entities.Append( entity );
 				}
+			} else if ( holderType.Icmp( "sdPrimitiveReference" ) == 0 ) {
+				etqwWorldTransform_t referenceTransform;
+				idStr referenceURL;
+				if ( !ETQWParseWorldReference( src, referenceTransform,
+					referenceURL ) ) {
+					idLib::common->Warning( "ETQW world reference '%s' is invalid",
+						holderName.c_str() );
+				} else {
+					AppendWorldReference( referenceURL,
+						referenceTransform.translation,
+						referenceTransform.rotation, holderName.c_str() );
+				}
 			} else {
 				// References and terrain source holders are editor metadata rather
 				// than idMap primitives. Keep parsing their block so following
@@ -1355,6 +1695,29 @@ bool idMapFile::ParseWorldFile( idLexer &src ) {
 		}
 	}
 
+	// A referenced world may precede this file's own worldspawn. Consolidate
+	// every referenced world brush into the primary world entity now that all
+	// holders have been expanded.
+	idMapEntity *primaryWorld = NULL;
+	for ( int entityIndex = 0; entityIndex < entities.Num(); ++entityIndex ) {
+		if ( idStr::Icmp( entities[ entityIndex ]->epairs.GetString( "classname" ),
+			"worldspawn" ) != 0 ) {
+			continue;
+		}
+		if ( primaryWorld == NULL ) {
+			primaryWorld = entities[ entityIndex ];
+			if ( entityIndex != 0 ) {
+				entities.RemoveIndex( entityIndex );
+				entities.Insert( primaryWorld, 0 );
+			}
+			continue;
+		}
+		idMapEntity *referencedWorld = entities[ entityIndex ];
+		primaryWorld->primitives.Append( referencedWorld->primitives );
+		referencedWorld->primitives.Clear();
+		delete referencedWorld;
+		entities.RemoveIndex( entityIndex-- );
+	}
 	if ( entities.Num() == 0 || idStr::Icmp( entities[0]->epairs.GetString( "classname" ), "worldspawn" ) != 0 ) {
 		return false;
 	}
@@ -1409,7 +1772,7 @@ bool idMapFile::Parse( const char *filename, bool ignoreRegion, bool osPath, boo
 	}
 
 	if ( src.CheckTokenString( "sdWorldFile" ) ) {
-		return ParseWorldFile( src );
+		return ParseWorldFile( src, osPath );
 	}
 
 	version = OLD_MAP_VERSION;
@@ -1438,6 +1801,34 @@ bool idMapFile::Parse( const char *filename, bool ignoreRegion, bool osPath, boo
 	}
 
 	SetGeometryCRC();
+	// Generated ETQW .entities files do not contain the world primitives, so
+	// their traditional primitive-only geometry CRC is commonly zero.  Bind
+	// derived data such as the Detour navmesh to both the entity placement data
+	// and the compiled collision bundle used to build it.
+	idStr loadedExtension;
+	fullName.ExtractFileExtension( loadedExtension );
+	if ( !loadedExtension.Icmp( ENTITY_FILE_EXT ) && !osPath ) {
+		unsigned int compiledCRC = 0;
+		idFile* checksumFile = fileSystem->OpenFileRead( fullName, true, NULL, false );
+		if ( checksumFile != NULL ) {
+			compiledCRC ^= static_cast< unsigned int >( fileSystem->FileChecksum( checksumFile ) );
+			fileSystem->CloseFile( checksumFile );
+		}
+		idStr collisionPath = "generated/cm/";
+		collisionPath += name;
+		collisionPath.SetFileExtension( "cmb" );
+		checksumFile = fileSystem->OpenFileRead( collisionPath, true, NULL, false );
+		if ( checksumFile == NULL ) {
+			collisionPath = name;
+			collisionPath.SetFileExtension( "cmb" );
+			checksumFile = fileSystem->OpenFileRead( collisionPath, true, NULL, false );
+		}
+		if ( checksumFile != NULL ) {
+			compiledCRC ^= static_cast< unsigned int >( fileSystem->FileChecksum( checksumFile ) );
+			fileSystem->CloseFile( checksumFile );
+		}
+		geometryCRC = compiledCRC != 0 ? compiledCRC : 1;
+	}
 
 	// if the map has a worldspawn
 	if ( entities.Num() ) {

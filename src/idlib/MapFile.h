@@ -218,7 +218,11 @@ protected:
 	bool					hasPrimitiveData;
 
 private:
-	bool					ParseWorldFile( idLexer &src );
+	bool					ParseWorldFile( idLexer &src, bool osPath );
+	bool					AppendWorldReference( const char *url, const idVec3 &translation,
+							const idMat3 &rotation, const char *instanceName );
+	void					TransformWorldReferenceEntity( idMapEntity *entity,
+							const idVec3 &translation, const idMat3 &rotation );
 	void					SetGeometryCRC( void );
 };
 

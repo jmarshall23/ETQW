@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #pragma hdrstop
 
 #include "qe3.h"
+#include "RadiantImGui.h"
 #include "../../renderer/model_local.h"	// for idRenderModelMD5
 int g_entityId = 1;
 
@@ -588,14 +589,28 @@ entity_t *Entity_PostParse(entity_t *ent, brush_t *pList) {
 	}
 
 	idStr str;
+	idStr previewModelName;
 	
 	if (e->defArgs.GetString("model", "", str) && e->entityModel == NULL) {
 		e->entityModel = gameEdit->ANIM_GetModelFromEntityDef( &e->defArgs );
+	}
+	if ( e->entityModel == NULL &&
+		e->defArgs.GetString( "editor_preview_model", "", previewModelName ) &&
+		!previewModelName.IsEmpty() ) {
+		idRenderModel *previewModel = renderModelManager->FindModel(
+			previewModelName.c_str() );
+		if ( previewModel != NULL && !previewModel->IsDefaultModel() ) {
+			e->entityModel = previewModel;
+		} else {
+			RadiantImGuiTraceOpen( "preview model missing",
+				va( "class=%s model=%s", cp, previewModelName.c_str() ) );
+		}
 	}
 	
 	ent->eclass = e;
 
 	bool hasModel = EntityHasModel(ent);
+	const bool hasPreviewModel = e->entityModel != NULL;
 
 	if (hasModel) {
 		ent->eclass->defArgs.GetString("model", "", str);
@@ -639,7 +654,7 @@ entity_t *Entity_PostParse(entity_t *ent, brush_t *pList) {
 		}
 	}
 
-	if (e->fixedsize || hasModel) {			// fixed size entity
+	if (e->fixedsize || hasModel || hasPreviewModel) {			// fixed size entity
 		if (ent->brushes.onext != &ent->brushes) {
 			for (b = ent->brushes.onext; b != &ent->brushes; b = b->onext) {
 				b->entityModel = true;
@@ -649,6 +664,14 @@ entity_t *Entity_PostParse(entity_t *ent, brush_t *pList) {
 		if (hasModel) {
 			// model entity
 			idRenderModel *modelHandle = renderModelManager->FindModel( pModel );
+			if ( ent->epairs.FindKey( "terrainSource" ) != NULL ) {
+				const idBounds terrainBounds = modelHandle->Bounds( NULL );
+				RadiantImGuiTraceOpen( "terrain model resolved",
+					va( "model=%s default=%d surfaces=%d bounds=(%s)-(%s)",
+						pModel, modelHandle->IsDefaultModel() ? 1 : 0,
+						modelHandle->NumSurfaces(), terrainBounds[0].ToString(),
+						terrainBounds[1].ToString() ) );
+			}
 
 			if ( modelHandle->IsDynamicModel() != DM_STATIC ) {
 				bo.Zero();
@@ -691,7 +714,25 @@ entity_t *Entity_PostParse(entity_t *ent, brush_t *pList) {
 
 		if (!hasModel || (ent->eclass->nShowFlags & ECLASS_LIGHT && hasModel)) {
 			// create a custom brush
-			if (ent->trackLightOrigin) {
+			if ( hasPreviewModel ) {
+				bo = e->entityModel->Bounds( NULL );
+				for ( int axis = 0; axis < 3; ++axis ) {
+					if ( bo[ 0 ][ axis ] == bo[ 1 ][ axis ] ) {
+						bo[ 0 ][ axis ] -= 1.0f;
+						bo[ 1 ][ axis ] += 1.0f;
+					}
+				}
+				if ( GetMatrixForKey( ent, "rotation", ent->rotation ) ) {
+					idBounds transformedBounds;
+					transformedBounds.FromTransformedBounds( bo, ent->origin,
+						ent->rotation );
+					mins = transformedBounds[ 0 ];
+					maxs = transformedBounds[ 1 ];
+				} else {
+					mins = bo[ 0 ] + ent->origin;
+					maxs = bo[ 1 ] + ent->origin;
+				}
+			} else if (ent->trackLightOrigin) {
 				mins = e->mins + ent->lightOrigin;
 				maxs = e->maxs + ent->lightOrigin;
 			} else {
@@ -702,6 +743,7 @@ entity_t *Entity_PostParse(entity_t *ent, brush_t *pList) {
 			b = Brush_Create(mins, maxs, &e->texdef);
 			GetMatrixForKey(ent, "rotation", ent->rotation);
 			Entity_LinkBrush(ent, b);
+			b->entityModel = hasPreviewModel;
 			b->trackLightOrigin = ent->trackLightOrigin;
 			if ( e->texdef.name == NULL ) {
 				brushprimit_texdef_t bp;

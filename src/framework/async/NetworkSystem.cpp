@@ -237,6 +237,9 @@ void idNetworkSystem::ServerGetClientNetId( int clientNum, sdNetClientId& netCli
 }
 
 const usercmd_t* idNetworkSystem::ServerGetClientUserCmd( int clientNum, int frameNum ) {
+	if ( idAsyncNetwork::server.IsActive() ) {
+		return idAsyncNetwork::server.GetClientUserCmd( clientNum, frameNum );
+	}
 	return NULL;
 }
 
@@ -247,14 +250,23 @@ void idNetworkSystem::ServerKickClient( int clientNum, const char* reason, bool 
 }
 
 int idNetworkSystem::AllocateClientSlotForBot( int maxPlayersOnServer ) {
+	if ( idAsyncNetwork::server.IsActive() ) {
+		return idAsyncNetwork::server.AllocateClientSlotForBot( maxPlayersOnServer );
+	}
 	return -1;
 }
 
 int idNetworkSystem::ServerSetBotUserCommand( int clientNum, int frameNum, const usercmd_t& cmd ) {
+	if ( idAsyncNetwork::server.IsActive() ) {
+		return idAsyncNetwork::server.SetBotUserCommand( clientNum, frameNum, cmd );
+	}
 	return 0;
 }
 
 int idNetworkSystem::ServerSetBotUserName( int clientNum, const char* playerName ) {
+	if ( idAsyncNetwork::server.IsActive() ) {
+		return idAsyncNetwork::server.SetBotUserName( clientNum, playerName );
+	}
 	return 0;
 }
 
@@ -346,6 +358,9 @@ bool idNetworkSystem::CanPlayDemo( const char* fileName ) {
 }
 
 const idDict& idNetworkSystem::GetUserInfo( int clientNum ) {
+	if ( idAsyncNetwork::server.IsActive() ) {
+		return idAsyncNetwork::server.GetUserInfo( clientNum );
+	}
 	static idDict emptyUserInfo;
 	return emptyUserInfo;
 }

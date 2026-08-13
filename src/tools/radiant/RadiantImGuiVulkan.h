@@ -18,17 +18,14 @@ bool RadiantImGuiVulkanInit( HWND window );
 void RadiantImGuiVulkanShutdown();
 void RadiantImGuiVulkanNewFrame();
 bool RadiantImGuiVulkanBeginFrame( HWND window, const float clearColor[ 4 ] );
-void RadiantImGuiVulkanRenderViewports( ImDrawData* drawData );
 void RadiantImGuiVulkanRenderDrawData( ImDrawData* drawData );
 void RadiantImGuiVulkanEndFrame();
 ImVec2 RadiantImGuiVulkanContentScale();
 void RadiantImGuiVulkanGetViewportTimings( double timings[ 5 ] );
 
-void RadiantImGuiVulkanQueueViewport( radiantImGuiViewportType_t type,
-	void* view, const void* textureOwner, int width, int height );
-void RadiantImGuiVulkanDestroyViewport( const void* textureOwner );
-ImVec2 RadiantImGuiVulkanViewportUV1( const void* textureOwner,
-	int width, int height );
+void RadiantImGuiVulkanAddViewport( ImDrawList* drawList,
+	radiantImGuiViewportType_t type, void* view, const ImVec2& minimum,
+	const ImVec2& size );
 
 bool RadiantImGuiVulkanUploadTexture( const void* owner,
 	const unsigned char* rgba, int width, int height, bool linear, bool repeat );

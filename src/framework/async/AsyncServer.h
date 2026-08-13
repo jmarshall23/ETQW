@@ -122,6 +122,7 @@ typedef struct serverClient_s {
 	int					snapshotSequence;
 	int					acknowledgeSnapshotSequence;
 	int					numDuplicatedUsercmds;
+	bool				isBot;
 
 	char				guid[12];  // Even Balance - M. Quinn
 
@@ -157,6 +158,11 @@ public:
 	int					GetNumClients( void ) const;
 	int					GetNumIdleClients( void ) const;
 	int					GetLocalClientNum( void ) const { return localClientNum; }
+	const usercmd_t*	GetClientUserCmd( int clientNum, int frameNum ) const;
+	const idDict&		GetUserInfo( int clientNum ) const;
+	int					AllocateClientSlotForBot( int maxPlayersOnServer );
+	int					SetBotUserCommand( int clientNum, int frameNum, const usercmd_t& cmd );
+	int					SetBotUserName( int clientNum, const char* playerName );
 
 	void				RunFrame( void );
 	void				ProcessConnectionLessMessages( void );

@@ -116,7 +116,7 @@ idSoundSystem *				soundSystem = NULL;
 idRenderModelManager *		renderModelManager = NULL;
 idDeclManager *				declManager = NULL;
 idCollisionModelManager *	collisionModelManager = NULL;
-idAASFileManager*			AASFileManager = NULL;
+idNavigationSystem*			navigationSystem = NULL;
 sdNetService*				networkService = NULL;
 sdAdManager*				adManager = NULL;
 sdKeyInputManager*			keyInputManager = NULL;
@@ -199,7 +199,7 @@ extern "C" gameExport_t *GetGameAPI( gameImport_t *import ) {
 #endif
 		adManager					= import->adManager;
 		keyInputManager				= import->keyInputManager;
-		AASFileManager				= import->AASFileManager;
+		navigationSystem			= import->navigationSystem;
 		notificationSystem			= import->notificationSystem;
 		graphManager				= import->graphManager;
 

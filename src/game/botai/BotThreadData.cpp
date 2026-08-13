@@ -689,7 +689,7 @@ void idBotThreadData::InitAAS( const idMapFile *mapFile ) {
 	sdDeclWrapperTemplate< sdDeclStringMap > declStringMapType;
 	declStringMapType.Init( declStringMapIdentifier );
 
-	const sdDeclStringMap* stringMap = declStringMapType.LocalFind( "aas_types", false );
+	const sdDeclStringMap* stringMap = declStringMapType.LocalFind( "navigation_types", false );
 	const idKeyValue *kv = stringMap->GetDict().MatchPrefix( "type" );
 
 	while( kv != NULL ) {
@@ -706,7 +706,7 @@ void idBotThreadData::InitAAS( const idMapFile *mapFile ) {
 
 //mal: now, lets do a check to make sure that at least the player AAS was loaded - if not, we're in trouble!
 	if ( aasList.Num() == 0 ) {
-        common->Warning( "No valid AAS file found for this map! The bots won't be able to play without one!\nConsult the manual for information on how to create an AAS file." );
+		common->Warning( "No valid Recast navigation profiles found for this map. Run navBuild for the source map." );
 	}
 
 	pendingAreaChanges.SetNum( 0, false );

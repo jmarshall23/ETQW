@@ -43,7 +43,7 @@
 #include "../decllib/declType.h"
 
 #include "../libs/AASLib/AASFile.h"
-#include "../libs/AASLib/AASFileManager.h"
+#include "../navigation/Navigation.h"
 
 #include "../sound/SoundWorld.h"
 #include "../sound/SoundSystem.h"

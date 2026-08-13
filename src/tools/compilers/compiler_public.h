@@ -39,16 +39,14 @@ void MegaTextureCreate_f( const idCmdArgs &args );
 void MegaTextureCompile_f( const idCmdArgs &args );
 void MegaTextureVerify_f( const idCmdArgs &args );
 
+// Recast/Detour navigation mesh authoring and validation
+void NavBuild_f( const idCmdArgs &args );
+void NavVerify_f( const idCmdArgs &args );
+void NavTest_f( const idCmdArgs &args );
+
 // bump map generation
 void RenderBump_f( const idCmdArgs &args );
 void RenderBumpFlat_f( const idCmdArgs &args );
-
-// AAS file compiler
-void RunAAS_f( const idCmdArgs &args );
-void RunAASDir_f( const idCmdArgs &args );
-void RunReach_f( const idCmdArgs &args );
-void RunAAS2_f( const idCmdArgs &args );
-void RunAAS2Dir_f( const idCmdArgs &args );
 
 // video file encoding
 void RoQFileEncode_f( const idCmdArgs &args );

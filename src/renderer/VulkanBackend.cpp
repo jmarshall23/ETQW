@@ -34,6 +34,7 @@ const int NUM_VULKAN_FRAMES = 2;
 // files expand legacy fixed-function lines, quads and display lists into
 // several hundred thousand vertices in a frame, which does not fit in 4 MiB.
 const VkDeviceSize VULKAN_GUI_VERTEX_BYTES = 32 * 1024 * 1024;
+const VkDeviceSize VULKAN_GUI_INDEX_BYTES = 16 * 1024 * 1024;
 const int VULKAN_MATERIAL_TEXTURES = 5;
 
 idCVar r_vkValidation(
@@ -67,7 +68,12 @@ struct sdVulkanFrame {
 	VkDeviceMemory	guiVertexMemory;
 	void*				guiVertexMapped;
 	VkDeviceSize		guiVertexOffset;
+	VkBuffer			guiIndexBuffer;
+	VkDeviceMemory	guiIndexMemory;
+	void*				guiIndexMapped;
+	VkDeviceSize		guiIndexOffset;
 	bool				guiVertexOverflowWarned;
+	bool				guiIndexOverflowWarned;
 };
 
 struct sdVulkanImageResource {
@@ -279,6 +285,7 @@ struct sdVulkanBackendState {
 	VkQueue					graphicsQueue;
 	unsigned int				queueFamilyIndex;
 	char					deviceName[ VK_MAX_PHYSICAL_DEVICE_NAME_SIZE ];
+	bool					fillModeNonSolid;
 
 	VkSwapchainKHR				swapchain;
 	VkFormat				swapchainFormat;
@@ -359,6 +366,14 @@ struct sdVulkanBackendState {
 	VkPipeline			toolBlendPipeline;
 	VkPipeline			toolDepthPipeline;
 	VkPipeline			toolDepthBlendPipeline;
+	VkPipeline			toolModelPipeline;
+	VkPipeline			toolModelBlendPipeline;
+	VkPipeline			toolModelDepthPipeline;
+	VkPipeline			toolModelDepthBlendPipeline;
+	VkPipeline			toolModelWirePipeline;
+	VkPipeline			toolModelWireBlendPipeline;
+	VkPipeline			toolModelWireDepthPipeline;
+	VkPipeline			toolModelWireDepthBlendPipeline;
 	unsigned int				framesPresented;
 	unsigned int				guiDrawCalls;
 	unsigned int				worldDrawCalls;
@@ -524,6 +539,7 @@ struct sdVulkanBackendState {
 		graphicsQueue = VK_NULL_HANDLE;
 		queueFamilyIndex = UINT_MAX;
 		deviceName[ 0 ] = '\0';
+		fillModeNonSolid = false;
 		swapchain = VK_NULL_HANDLE;
 		swapchainFormat = VK_FORMAT_UNDEFINED;
 		colorSpace = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
@@ -549,6 +565,14 @@ struct sdVulkanBackendState {
 		toolBlendPipeline = VK_NULL_HANDLE;
 		toolDepthPipeline = VK_NULL_HANDLE;
 		toolDepthBlendPipeline = VK_NULL_HANDLE;
+		toolModelPipeline = VK_NULL_HANDLE;
+		toolModelBlendPipeline = VK_NULL_HANDLE;
+		toolModelDepthPipeline = VK_NULL_HANDLE;
+		toolModelDepthBlendPipeline = VK_NULL_HANDLE;
+		toolModelWirePipeline = VK_NULL_HANDLE;
+		toolModelWireBlendPipeline = VK_NULL_HANDLE;
+		toolModelWireDepthPipeline = VK_NULL_HANDLE;
+		toolModelWireDepthBlendPipeline = VK_NULL_HANDLE;
 		framesPresented = 0;
 		guiDrawCalls = 0;
 		worldDrawCalls = 0;
@@ -1176,6 +1200,7 @@ bool SelectPhysicalDevice( sdVulkanBackendState& state ) {
 			state.queueFamilyIndex = queueFamilyIndex;
 			idStr::Copynz( state.deviceName, properties.deviceName,
 				sizeof( state.deviceName ) );
+			state.fillModeNonSolid = features2.features.fillModeNonSolid == VK_TRUE;
 		}
 	}
 
@@ -1205,6 +1230,8 @@ bool CreateLogicalDevice( sdVulkanBackendState& state,
 	features13.synchronization2 = VK_TRUE;
 	features13.shaderDemoteToHelperInvocation = VK_TRUE;
 	features13.pNext = &rayTracingConfiguration.bufferDeviceAddress;
+	rayTracingConfiguration.coreFeatures.fillModeNonSolid =
+		state.fillModeNonSolid ? VK_TRUE : VK_FALSE;
 
 	const char* extensions[ 4 ];
 	unsigned int extensionCount = 0;
@@ -1778,6 +1805,16 @@ void DestroyFrames( sdVulkanBackendState& state ) {
 		if ( frame.guiVertexMemory != VK_NULL_HANDLE && state.FreeMemory != NULL ) {
 			state.FreeMemory( state.device, frame.guiVertexMemory, NULL );
 		}
+		if ( frame.guiIndexMapped != NULL && state.UnmapMemory != NULL ) {
+			state.UnmapMemory( state.device, frame.guiIndexMemory );
+			frame.guiIndexMapped = NULL;
+		}
+		if ( frame.guiIndexBuffer != VK_NULL_HANDLE && state.DestroyBuffer != NULL ) {
+			state.DestroyBuffer( state.device, frame.guiIndexBuffer, NULL );
+		}
+		if ( frame.guiIndexMemory != VK_NULL_HANDLE && state.FreeMemory != NULL ) {
+			state.FreeMemory( state.device, frame.guiIndexMemory, NULL );
+		}
 		if ( frame.commandPool != VK_NULL_HANDLE && state.DestroyCommandPool != NULL ) {
 			state.DestroyCommandPool( state.device, frame.commandPool, NULL );
 		}
@@ -1830,8 +1867,19 @@ bool CreateFrames( sdVulkanBackendState& state ) {
 				"vkMapMemory(gui vertices)" ) ) {
 			return false;
 		}
+		if ( !CreateBufferAllocation( state, VULKAN_GUI_INDEX_BYTES,
+			VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+			frame.guiIndexBuffer, frame.guiIndexMemory ) ||
+			!CheckVulkanResult( state.MapMemory( state.device, frame.guiIndexMemory,
+				0, VULKAN_GUI_INDEX_BYTES, 0, &frame.guiIndexMapped ),
+				"vkMapMemory(gui indices)" ) ) {
+			return false;
+		}
 		frame.guiVertexOffset = 0;
+		frame.guiIndexOffset = 0;
 		frame.guiVertexOverflowWarned = false;
+		frame.guiIndexOverflowWarned = false;
 	}
 	return true;
 }
@@ -2156,6 +2204,39 @@ bool CompileVulkanShaderModule( sdVulkanBackendState& state,
 
 void DestroyGuiResources( sdVulkanBackendState& state ) {
 	state.materialDescriptors.Clear();
+	if ( state.toolModelWireDepthBlendPipeline != VK_NULL_HANDLE ) {
+		state.DestroyPipeline( state.device,
+			state.toolModelWireDepthBlendPipeline, NULL );
+		state.toolModelWireDepthBlendPipeline = VK_NULL_HANDLE;
+	}
+	if ( state.toolModelWireDepthPipeline != VK_NULL_HANDLE ) {
+		state.DestroyPipeline( state.device, state.toolModelWireDepthPipeline, NULL );
+		state.toolModelWireDepthPipeline = VK_NULL_HANDLE;
+	}
+	if ( state.toolModelWireBlendPipeline != VK_NULL_HANDLE ) {
+		state.DestroyPipeline( state.device, state.toolModelWireBlendPipeline, NULL );
+		state.toolModelWireBlendPipeline = VK_NULL_HANDLE;
+	}
+	if ( state.toolModelWirePipeline != VK_NULL_HANDLE ) {
+		state.DestroyPipeline( state.device, state.toolModelWirePipeline, NULL );
+		state.toolModelWirePipeline = VK_NULL_HANDLE;
+	}
+	if ( state.toolModelDepthBlendPipeline != VK_NULL_HANDLE ) {
+		state.DestroyPipeline( state.device, state.toolModelDepthBlendPipeline, NULL );
+		state.toolModelDepthBlendPipeline = VK_NULL_HANDLE;
+	}
+	if ( state.toolModelDepthPipeline != VK_NULL_HANDLE ) {
+		state.DestroyPipeline( state.device, state.toolModelDepthPipeline, NULL );
+		state.toolModelDepthPipeline = VK_NULL_HANDLE;
+	}
+	if ( state.toolModelBlendPipeline != VK_NULL_HANDLE ) {
+		state.DestroyPipeline( state.device, state.toolModelBlendPipeline, NULL );
+		state.toolModelBlendPipeline = VK_NULL_HANDLE;
+	}
+	if ( state.toolModelPipeline != VK_NULL_HANDLE ) {
+		state.DestroyPipeline( state.device, state.toolModelPipeline, NULL );
+		state.toolModelPipeline = VK_NULL_HANDLE;
+	}
 	if ( state.toolDepthBlendPipeline != VK_NULL_HANDLE ) {
 		state.DestroyPipeline( state.device, state.toolDepthBlendPipeline, NULL );
 		state.toolDepthBlendPipeline = VK_NULL_HANDLE;
@@ -2281,7 +2362,8 @@ bool CreateWorldPipelineVariant( sdVulkanBackendState& state,
 	VkBlendFactor sourceBlend, VkBlendFactor destinationBlend, bool depthTest,
 	bool depthWrite, bool vertexless,
 	VkPipeline& pipeline, VkCompareOp depthCompare = VK_COMPARE_OP_LESS_OR_EQUAL,
-	bool colorWrite = true ) {
+	bool colorWrite = true,
+	VkPolygonMode polygonMode = VK_POLYGON_MODE_FILL ) {
 	VkShaderModule vertexModule = VK_NULL_HANDLE;
 	VkShaderModule fragmentModule = VK_NULL_HANDLE;
 	if ( !CompileVulkanShaderModule( state, vertexShader,
@@ -2364,7 +2446,7 @@ bool CreateWorldPipelineVariant( sdVulkanBackendState& state,
 	VkPipelineRasterizationStateCreateInfo rasterization;
 	memset( &rasterization, 0, sizeof( rasterization ) );
 	rasterization.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
-	rasterization.polygonMode = VK_POLYGON_MODE_FILL;
+	rasterization.polygonMode = polygonMode;
 	rasterization.cullMode = VK_CULL_MODE_NONE;
 	rasterization.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 	rasterization.depthBiasEnable = VK_TRUE;
@@ -2535,16 +2617,16 @@ bool CreateToolPipelineVariant( sdVulkanBackendState& state, bool depthTest,
 	memset( attributes, 0, sizeof( attributes ) );
 	attributes[ 0 ].location = 0;
 	attributes[ 0 ].binding = 0;
-	attributes[ 0 ].format = VK_FORMAT_R32G32B32_SFLOAT;
+	attributes[ 0 ].format = VK_FORMAT_R32G32B32A32_SFLOAT;
 	attributes[ 0 ].offset = 0;
 	attributes[ 1 ].location = 1;
 	attributes[ 1 ].binding = 0;
 	attributes[ 1 ].format = VK_FORMAT_R32G32_SFLOAT;
-	attributes[ 1 ].offset = sizeof( float ) * 3;
+	attributes[ 1 ].offset = sizeof( float ) * 4;
 	attributes[ 2 ].location = 2;
 	attributes[ 2 ].binding = 0;
 	attributes[ 2 ].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-	attributes[ 2 ].offset = sizeof( float ) * 5;
+	attributes[ 2 ].offset = sizeof( float ) * 6;
 	VkPipelineVertexInputStateCreateInfo vertexInput;
 	memset( &vertexInput, 0, sizeof( vertexInput ) );
 	vertexInput.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -2635,7 +2717,44 @@ bool CreateToolPipelines( sdVulkanBackendState& state ) {
 	return CreateToolPipelineVariant( state, false, false, state.toolPipeline ) &&
 		CreateToolPipelineVariant( state, false, true, state.toolBlendPipeline ) &&
 		CreateToolPipelineVariant( state, true, false, state.toolDepthPipeline ) &&
-		CreateToolPipelineVariant( state, true, true, state.toolDepthBlendPipeline );
+		CreateToolPipelineVariant( state, true, true, state.toolDepthBlendPipeline ) &&
+		CreateWorldPipelineVariant( state, "vkprogs/world/trivial.vert",
+			"vkprogs/world/trivial.frag", VK_BLEND_FACTOR_ONE,
+			VK_BLEND_FACTOR_ZERO, false, false, false,
+			state.toolModelPipeline ) &&
+		CreateWorldPipelineVariant( state, "vkprogs/world/trivial.vert",
+			"vkprogs/world/trivial.frag", VK_BLEND_FACTOR_SRC_ALPHA,
+			VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA, false, false, false,
+			state.toolModelBlendPipeline ) &&
+		CreateWorldPipelineVariant( state, "vkprogs/world/trivial.vert",
+			"vkprogs/world/trivial.frag", VK_BLEND_FACTOR_ONE,
+			VK_BLEND_FACTOR_ZERO, true, true, false,
+			state.toolModelDepthPipeline ) &&
+		CreateWorldPipelineVariant( state, "vkprogs/world/trivial.vert",
+			"vkprogs/world/trivial.frag", VK_BLEND_FACTOR_SRC_ALPHA,
+			VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA, true, true, false,
+			state.toolModelDepthBlendPipeline ) &&
+		( !state.fillModeNonSolid ||
+			( CreateWorldPipelineVariant( state, "vkprogs/world/trivial.vert",
+				"vkprogs/world/trivial.frag", VK_BLEND_FACTOR_ONE,
+				VK_BLEND_FACTOR_ZERO, false, false, false,
+				state.toolModelWirePipeline, VK_COMPARE_OP_LESS_OR_EQUAL,
+				true, VK_POLYGON_MODE_LINE ) &&
+			CreateWorldPipelineVariant( state, "vkprogs/world/trivial.vert",
+				"vkprogs/world/trivial.frag", VK_BLEND_FACTOR_SRC_ALPHA,
+				VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA, false, false, false,
+				state.toolModelWireBlendPipeline, VK_COMPARE_OP_LESS_OR_EQUAL,
+				true, VK_POLYGON_MODE_LINE ) &&
+			CreateWorldPipelineVariant( state, "vkprogs/world/trivial.vert",
+				"vkprogs/world/trivial.frag", VK_BLEND_FACTOR_ONE,
+				VK_BLEND_FACTOR_ZERO, true, true, false,
+				state.toolModelWireDepthPipeline, VK_COMPARE_OP_LESS_OR_EQUAL,
+				true, VK_POLYGON_MODE_LINE ) &&
+			CreateWorldPipelineVariant( state, "vkprogs/world/trivial.vert",
+				"vkprogs/world/trivial.frag", VK_BLEND_FACTOR_SRC_ALPHA,
+				VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA, true, true, false,
+				state.toolModelWireDepthBlendPipeline,
+				VK_COMPARE_OP_LESS_OR_EQUAL, true, VK_POLYGON_MODE_LINE ) ) );
 }
 
 bool CreateGuiResources( sdVulkanBackendState& state ) {
@@ -3903,7 +4022,9 @@ bool sdVulkanBackend::BeginFrame( int width, int height ) {
 	}
 	R_RayTracingBeginFrame( state->frameIndex );
 	frame.guiVertexOffset = 0;
+	frame.guiIndexOffset = 0;
 	frame.guiVertexOverflowWarned = false;
+	frame.guiIndexOverflowWarned = false;
 	VkResult acquireResult = state->AcquireNextImageKHR( state->device,
 		state->swapchain, UINT64_MAX, frame.imageAvailable, VK_NULL_HANDLE,
 		&state->imageIndex );
@@ -4196,7 +4317,9 @@ bool sdVulkanBackend::BeginToolWindow( void* nativeWindow, int width, int height
 		return false;
 	}
 	frame.guiVertexOffset = 0;
+	frame.guiIndexOffset = 0;
 	frame.guiVertexOverflowWarned = false;
+	frame.guiIndexOverflowWarned = false;
 	VkResult acquireResult = state->AcquireNextImageKHR( state->device,
 		tool->swapchain, UINT64_MAX, frame.imageAvailable, VK_NULL_HANDLE,
 		&state->toolImageIndex );
@@ -4740,6 +4863,171 @@ bool sdVulkanBackend::DrawToolTriangles( const sdVulkanToolVertex* vertices,
 	state->CmdBindVertexBuffers( frame.commandBuffer, 0, 1,
 		&frame.guiVertexBuffer, &vertexOffset );
 	state->CmdDraw( frame.commandBuffer, vertexCount, 1, 0, 0 );
+	return true;
+}
+
+bool sdVulkanBackend::DrawToolIndexed( const sdVulkanToolVertex* vertices,
+	int vertexCount, const unsigned int* indices, int indexCount,
+	bool depthTest, bool blend ) {
+	if ( state == NULL || !state->toolFrameActive || vertices == NULL ||
+		indices == NULL || vertexCount < 3 || indexCount < 3 ||
+		state->activeToolWindow == NULL ) {
+		return false;
+	}
+	const void* imageOwner = state->toolImageOwner;
+	if ( imageOwner == NULL && globalImages != NULL ) {
+		imageOwner = globalImages->whiteImage;
+	}
+	const sdVulkanImageResource* imageResource =
+		FindVulkanImageResource( *state, imageOwner );
+	if ( imageResource == NULL || imageResource->descriptorSet == VK_NULL_HANDLE ) {
+		return false;
+	}
+	sdVulkanFrame& frame = state->frames[ state->frameIndex ];
+	const VkDeviceSize vertexBytes = static_cast< VkDeviceSize >( vertexCount ) *
+		sizeof( sdVulkanToolVertex );
+	const VkDeviceSize indexBytes = static_cast< VkDeviceSize >( indexCount ) *
+		sizeof( unsigned int );
+	const VkDeviceSize vertexOffset = ( frame.guiVertexOffset + 15 ) & ~15ULL;
+	const VkDeviceSize indexOffset = ( frame.guiIndexOffset + 15 ) & ~15ULL;
+	if ( vertexOffset + vertexBytes > VULKAN_GUI_VERTEX_BYTES ) {
+		if ( !frame.guiVertexOverflowWarned ) {
+			common->Warning( "Radiant Vulkan vertex stream exceeded %u MiB; remaining draws are skipped",
+				static_cast< unsigned int >( VULKAN_GUI_VERTEX_BYTES / ( 1024 * 1024 ) ) );
+			frame.guiVertexOverflowWarned = true;
+		}
+		return false;
+	}
+	if ( indexOffset + indexBytes > VULKAN_GUI_INDEX_BYTES ) {
+		if ( !frame.guiIndexOverflowWarned ) {
+			common->Warning( "Radiant Vulkan index stream exceeded %u MiB; remaining draws are skipped",
+				static_cast< unsigned int >( VULKAN_GUI_INDEX_BYTES / ( 1024 * 1024 ) ) );
+			frame.guiIndexOverflowWarned = true;
+		}
+		return false;
+	}
+	memcpy( static_cast< byte* >( frame.guiVertexMapped ) + vertexOffset,
+		vertices, static_cast< size_t >( vertexBytes ) );
+	memcpy( static_cast< byte* >( frame.guiIndexMapped ) + indexOffset,
+		indices, static_cast< size_t >( indexBytes ) );
+	frame.guiVertexOffset = vertexOffset + vertexBytes;
+	frame.guiIndexOffset = indexOffset + indexBytes;
+	VkPipeline pipeline = depthTest ?
+		( blend ? state->toolDepthBlendPipeline : state->toolDepthPipeline ) :
+		( blend ? state->toolBlendPipeline : state->toolPipeline );
+	state->CmdBindPipeline( frame.commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
+		pipeline );
+	state->CmdSetDepthBias( frame.commandBuffer, 0.0f, 0.0f, 0.0f );
+	state->CmdBindDescriptorSets( frame.commandBuffer,
+		VK_PIPELINE_BIND_POINT_GRAPHICS, state->guiPipelineLayout, 0, 1,
+		&imageResource->descriptorSet, 0, NULL );
+	state->CmdBindVertexBuffers( frame.commandBuffer, 0, 1,
+		&frame.guiVertexBuffer, &vertexOffset );
+	state->CmdBindIndexBuffer( frame.commandBuffer, frame.guiIndexBuffer,
+		indexOffset, VK_INDEX_TYPE_UINT32 );
+	state->CmdDrawIndexed( frame.commandBuffer, indexCount, 1, 0, 0, 0 );
+	return true;
+}
+
+bool sdVulkanBackend::DrawToolCachedIndexed( const void* vertexCacheHandle,
+	const void* indexCacheHandle, int vertexCount, int indexCount,
+	const float* modelViewProjection, const float* color, float texCoordScale,
+	bool depthTest, bool blend, bool wireframe ) {
+	if ( state == NULL || !state->toolFrameActive ||
+		state->activeToolWindow == NULL || vertexCacheHandle == NULL ||
+		indexCacheHandle == NULL || vertexCount < 3 || indexCount < 3 ||
+		modelViewProjection == NULL || color == NULL ) {
+		return false;
+	}
+	const vertCache_t* vertexCacheBlock =
+		static_cast< const vertCache_t* >( vertexCacheHandle );
+	const vertCache_t* indexCacheBlock =
+		static_cast< const vertCache_t* >( indexCacheHandle );
+	const void* vertexOwner = vertexCacheBlock->backendBuffer != NULL ?
+		vertexCacheBlock->backendBuffer : vertexCacheBlock;
+	const void* indexOwner = indexCacheBlock->backendBuffer != NULL ?
+		indexCacheBlock->backendBuffer : indexCacheBlock;
+	const sdVulkanBufferResource* vertexResource = NULL;
+	const sdVulkanBufferResource* indexResource = NULL;
+	for ( int resourceIndex = 0; resourceIndex < state->bufferResources.Num();
+		++resourceIndex ) {
+		const sdVulkanBufferResource& resource =
+			state->bufferResources[resourceIndex];
+		if ( resource.owner == vertexOwner ) {
+			vertexResource = &resource;
+		}
+		if ( resource.owner == indexOwner ) {
+			indexResource = &resource;
+		}
+	}
+	const VkDeviceSize vertexBytes = static_cast< VkDeviceSize >( vertexCount ) *
+		sizeof( idDrawVert );
+	const VkDeviceSize indexBytes = static_cast< VkDeviceSize >( indexCount ) *
+		sizeof( glIndex_t );
+	if ( vertexResource == NULL || indexResource == NULL ||
+		vertexCacheBlock->offset < 0 || indexCacheBlock->offset < 0 ||
+		static_cast< VkDeviceSize >( vertexCacheBlock->offset ) + vertexBytes >
+			vertexResource->bytes ||
+		static_cast< VkDeviceSize >( indexCacheBlock->offset ) + indexBytes >
+			indexResource->bytes ) {
+		return false;
+	}
+
+	// Orthographic model wireframes show topology, not material shading.  Sample
+	// white so their color cannot inherit the preceding fixed-function texture.
+	const void* imageOwner = wireframe && globalImages != NULL ?
+		globalImages->whiteImage : state->toolImageOwner;
+	if ( imageOwner == NULL && globalImages != NULL ) {
+		imageOwner = globalImages->whiteImage;
+	}
+	const sdVulkanImageResource* imageResource =
+		FindVulkanImageResource( *state, imageOwner );
+	if ( imageResource == NULL || imageResource->descriptorSet == VK_NULL_HANDLE ) {
+		return false;
+	}
+	VkPipeline pipeline;
+	if ( wireframe ) {
+		pipeline = depthTest ?
+			( blend ? state->toolModelWireDepthBlendPipeline :
+				state->toolModelWireDepthPipeline ) :
+			( blend ? state->toolModelWireBlendPipeline :
+				state->toolModelWirePipeline );
+	} else {
+		pipeline = depthTest ?
+			( blend ? state->toolModelDepthBlendPipeline :
+				state->toolModelDepthPipeline ) :
+			( blend ? state->toolModelBlendPipeline : state->toolModelPipeline );
+	}
+	if ( pipeline == VK_NULL_HANDLE ) {
+		return false;
+	}
+
+	float pushConstants[32];
+	memset( pushConstants, 0, sizeof( pushConstants ) );
+	memcpy( pushConstants, modelViewProjection, sizeof( float ) * 16 );
+	memcpy( pushConstants + 16, color, sizeof( float ) * 4 );
+	pushConstants[20] = 1.0f;
+	pushConstants[25] = 1.0f;
+	pushConstants[28] = 0.0f; // Radiant uses its current color, not vertex color.
+	pushConstants[29] = texCoordScale;
+
+	sdVulkanFrame& frame = state->frames[state->frameIndex];
+	state->CmdBindPipeline( frame.commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
+		pipeline );
+	state->CmdSetDepthBias( frame.commandBuffer, 0.0f, 0.0f, 0.0f );
+	state->CmdBindDescriptorSets( frame.commandBuffer,
+		VK_PIPELINE_BIND_POINT_GRAPHICS, state->guiPipelineLayout, 0, 1,
+		&imageResource->descriptorSet, 0, NULL );
+	state->CmdPushConstants( frame.commandBuffer, state->guiPipelineLayout,
+		VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0,
+		sizeof( pushConstants ), pushConstants );
+	const VkDeviceSize vertexOffset = vertexCacheBlock->offset;
+	state->CmdBindVertexBuffers( frame.commandBuffer, 0, 1,
+		&vertexResource->buffer, &vertexOffset );
+	state->CmdBindIndexBuffer( frame.commandBuffer, indexResource->buffer,
+		indexCacheBlock->offset, sizeof( glIndex_t ) == 2 ?
+		VK_INDEX_TYPE_UINT16 : VK_INDEX_TYPE_UINT32 );
+	state->CmdDrawIndexed( frame.commandBuffer, indexCount, 1, 0, 0, 0 );
 	return true;
 }
 

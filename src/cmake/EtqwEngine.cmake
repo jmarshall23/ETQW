@@ -63,6 +63,7 @@ set(ETQW_RENDERER_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/megatexture/MegaTextureTileLoader.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/megatexture/MegaTextureTileDecompressor.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/Model.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/renderer/Model_lwo.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/Model_Stuff.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/ModelManager.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/querytimers.cpp"
@@ -115,15 +116,14 @@ set(ETQW_SOUND_SOURCES
 )
 
 set(ETQW_ENGINE_SUPPORT_SOURCES
-    "${CMAKE_CURRENT_SOURCE_DIR}/libs/AASLib/AASFileManager.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/navigation/Navigation.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/libs/filelib/File.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/libs/punkbuster/pbmd5.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/libs/qglLib/cg.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/libs/qglLib/qgllib.cpp"
 )
 
-# Development map-authoring tools.  Keep this list deliberately narrow: AAS
-# and the other Doom 3 editors are not part of the ETQW tool port.
+# Development map-authoring tools.
 file(GLOB ETQW_DMAP_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/tools/compilers/dmap/*.cpp"
 )
@@ -134,9 +134,13 @@ list(REMOVE_ITEM ETQW_DMAP_SOURCES
 file(GLOB ETQW_MEGATEXTURE_COMPILER_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/tools/compilers/megatexture/*.cpp"
 )
+file(GLOB ETQW_NAVBUILD_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/compilers/navbuild/*.cpp"
+)
 set(ETQW_TOOL_COMPILER_SOURCES
     ${ETQW_DMAP_SOURCES}
     ${ETQW_MEGATEXTURE_COMPILER_SOURCES}
+    ${ETQW_NAVBUILD_SOURCES}
     "${CMAKE_CURRENT_SOURCE_DIR}/tools/radiant/megatexture/RoadBuilder.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/tools/radiant/RadiantVulkan.cpp"
 )
@@ -262,6 +266,23 @@ function(etqw_configure_vendor_library target_name)
         FOLDER "ETQW/Third Party"
     )
 endfunction()
+
+file(GLOB ETQW_RECAST_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/recast/Recast/Source/*.cpp"
+)
+file(GLOB ETQW_DETOUR_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/recast/Detour/Source/*.cpp"
+)
+add_library(etqw_recast STATIC ${ETQW_RECAST_SOURCES})
+target_include_directories(etqw_recast PUBLIC
+    "${CMAKE_CURRENT_SOURCE_DIR}/recast/Recast/Include"
+)
+etqw_configure_vendor_library(etqw_recast)
+add_library(etqw_detour STATIC ${ETQW_DETOUR_SOURCES})
+target_include_directories(etqw_detour PUBLIC
+    "${CMAKE_CURRENT_SOURCE_DIR}/recast/Detour/Include"
+)
+etqw_configure_vendor_library(etqw_detour)
 
 add_library(etqw_curl STATIC ${ETQW_CURL_SOURCES})
 target_include_directories(etqw_curl PRIVATE
@@ -449,6 +470,8 @@ target_precompile_headers(etqw PRIVATE
 target_link_libraries(etqw PRIVATE
     idLib
     etqw_curl
+    etqw_recast
+    etqw_detour
     etqw_zlib
     SDL2::SDL2-static
     advapi32

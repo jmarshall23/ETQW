@@ -29,6 +29,7 @@ GNU General Public License for more details.
 #include "lightdlg.h"
 #include "RadiantImGui.h"
 #include "../../renderer/VulkanBackend.h"
+#include "../../sys/sys_render.h"
 
 #include <process.h>    // for _beginthreadex and _endthreadex
 #include <ddeml.h>  // for MSGF_DDEMGR
@@ -115,8 +116,14 @@ void RadiantInit( void ) {
 	}
 
 	if ( g_DoomInstance ) {
-		if ( ::IsWindowVisible( win32.hWnd ) ) {
-			::ShowWindow( win32.hWnd, SW_HIDE );
+		const HWND gameWindow = sys3D != NULL ?
+			reinterpret_cast< HWND >( sys3D->GetGameWindowHandle() ) : win32.hWnd;
+		if ( gameWindow != NULL && ::IsWindowVisible( gameWindow ) ) {
+			if ( sys3D != NULL ) {
+				sys3D->HideGameWindow();
+			} else {
+				::ShowWindow( gameWindow, SW_HIDE );
+			}
 			if ( RadiantImGuiEnabled() && RadiantImGuiWindow() != NULL ) {
 				RadiantImGuiFocus();
 			} else {
@@ -152,7 +159,12 @@ void RadiantInit( void ) {
 		qwglMakeCurrent(win32.hDC, win32.hGLRC);
 
 		// The MFC frame is controller-only. Never expose the retired editor shell.
-		::ShowWindow( win32.hWnd, RadiantImGuiWindow() != NULL ? SW_HIDE : SW_SHOW );
+		if ( RadiantImGuiWindow() != NULL && sys3D != NULL ) {
+			sys3D->HideGameWindow();
+		} else {
+			::ShowWindow( win32.hWnd,
+				RadiantImGuiWindow() != NULL ? SW_HIDE : SW_SHOW );
+		}
 	}
 }
 
@@ -192,10 +204,25 @@ void RadiantSync( const char *mapName, const idVec3 &viewOrg, const idAngles &vi
 
 void RadiantRun( void ) {
 	static bool exceptionErr = false;
-	int show = ::IsWindowVisible(win32.hWnd);
 
 	try {
-		if (!exceptionErr && !show) {
+		if ( !exceptionErr ) {
+			// SDL may show/raise the game window late in renderer startup, after
+			// RadiantInit already hid it.  Editor mode owns the foreground window;
+			// leaving the game window visible also made the old loop stop updating
+			// Radiant entirely.
+			const HWND gameWindow = sys3D != NULL ?
+				reinterpret_cast< HWND >( sys3D->GetGameWindowHandle() ) : win32.hWnd;
+			if ( gameWindow != NULL && ::IsWindowVisible( gameWindow ) ) {
+				if ( sys3D != NULL ) {
+					sys3D->HideGameWindow();
+				} else {
+					::ShowWindow( gameWindow, SW_HIDE );
+				}
+				if ( RadiantImGuiEnabled() && RadiantImGuiWindow() != NULL ) {
+					RadiantImGuiFocus();
+				}
+			}
 			//qglPushAttrib(GL_ALL_ATTRIB_BITS);
 			qglDepthMask(true);
 			theApp.Run();

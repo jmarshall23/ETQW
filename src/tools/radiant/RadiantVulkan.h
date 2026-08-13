@@ -10,6 +10,11 @@
 bool RadiantVulkanBeginFrame( HWND window, const float clearColor[ 4 ] );
 void RadiantVulkanSetEmbeddedRegion( int x, int y, int width, int height );
 void RadiantVulkanEndEmbeddedRegion();
+void RadiantVulkanReservePrimitiveVertices( int vertexCount );
+bool RadiantVulkanDrawIndexedTriangles( const idDrawVert* vertices,
+	int vertexCount, const glIndex_t* indices, int indexCount,
+	const idVec3& origin, const idMat3& axis, const void* vertexCache,
+	const void* indexCache, bool lowRangeTexCoords );
 bool RadiantVulkanBeginViewTarget( const void* owner, int width, int height );
 void RadiantVulkanEndViewTarget();
 void RadiantVulkanEndFrame();

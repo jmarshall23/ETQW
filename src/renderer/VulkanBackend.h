@@ -17,6 +17,7 @@ struct sdVulkanToolVertex {
 	float x;
 	float y;
 	float z;
+	float w;
 	float s;
 	float t;
 	float r;
@@ -69,6 +70,15 @@ public:
 		int& textureWidth, int& textureHeight ) const;
 	bool DrawToolTriangles( const sdVulkanToolVertex* vertices, int vertexCount,
 		bool depthTest, bool blend );
+	bool DrawToolIndexed( const sdVulkanToolVertex* vertices, int vertexCount,
+		const unsigned int* indices, int indexCount, bool depthTest, bool blend );
+	// Static render models already live in the renderer vertex cache.  Bind those
+	// buffers directly for Radiant instead of copying every model instance into
+	// the small per-frame immediate-mode stream.
+	bool DrawToolCachedIndexed( const void* vertexCache, const void* indexCache,
+		int vertexCount, int indexCount, const float* modelViewProjection,
+		const float* color, float texCoordScale, bool depthTest, bool blend,
+		bool wireframe );
 	void SetToolScissor( int x, int y, int width, int height );
 	void SetToolImage( const void* imageOwner );
 	void ClearToolRegion( const float color[ 4 ], bool clearColor, bool clearDepth );

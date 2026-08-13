@@ -15,7 +15,7 @@
 #include "../renderer/DeviceContext.h"
 #include "../renderer/renderbindingmanager.h"
 #include "../bse/BSEInterface.h"
-#include "../libs/AASLib/AASFileManager.h"
+#include "../navigation/Navigation.h"
 #include "../sdnet/SDNet.h"
 #include "../sys/sys_render.h"
 #include "../tools/compilers/compiler_public.h"
@@ -941,6 +941,9 @@ void idCommonLocal::InitCommands() {
 	cmdSystem->AddCommand( "editor", Com_Editor_f, CMD_FL_TOOL, "opens the ETQW Radiant level editor" );
 #endif
 	cmdSystem->AddCommand( "dmap", Dmap_f, CMD_FL_TOOL, "compiles an ETQW map" );
+	cmdSystem->AddCommand( "navBuild", NavBuild_f, CMD_FL_TOOL, "builds Recast/Detour navigation for an ETQW map" );
+	cmdSystem->AddCommand( "navVerify", NavVerify_f, CMD_FL_TOOL, "validates a compiled ETQW navmesh" );
+	cmdSystem->AddCommand( "navTest", NavTest_f, CMD_FL_TOOL, "loads and smoke-tests compiled ETQW navigation" );
 	cmdSystem->AddCommand( "megaCreate", MegaTextureCreate_f, CMD_FL_TOOL, "creates a MegaTexture terrain project" );
 	cmdSystem->AddCommand( "megaCompile", MegaTextureCompile_f, CMD_FL_TOOL, "compiles a MegaTexture terrain project" );
 	cmdSystem->AddCommand( "megaVerify", MegaTextureVerify_f, CMD_FL_TOOL, "validates a compiled MegaTexture" );
@@ -996,7 +999,7 @@ void idCommonLocal::LoadGameDLL() {
 	gameImport.renderModelManager = renderModelManager;
 	gameImport.declManager = declManager;
 	gameImport.collisionModelManager = collisionModelManager;
-	gameImport.AASFileManager = AASFileManager;
+	gameImport.navigationSystem = navigationSystem;
 	gameImport.bse = bse;
 #ifndef _XENON
 	gameImport.networkService = networkService;

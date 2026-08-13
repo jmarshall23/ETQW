@@ -1911,15 +1911,11 @@ idBotAI::LocationVis2Sky
 ==================
 */
 bool idBotAI::LocationVis2Sky( const idVec3 &loc ) {
-	int areaNum = botThreadData.Nav_GetAreaNum( ( botVehicleInfo != NULL ) ? AAS_VEHICLE : AAS_PLAYER, loc );
-
-	if ( areaNum > 0 ) {
-		if ( botAAS.aas->GetAreaFlags( areaNum ) & AAS_AREA_OUTSIDE ) {
-			return true;
-		}
-	}
-
-	return false;
+	trace_t trace;
+	const idVec3 start = loc + idVec3( 0.0f, 0.0f, 64.0f );
+	const idVec3 end = start + idVec3( 0.0f, 0.0f, 65536.0f );
+	botThreadData.clip->TracePoint( CLIP_DEBUG_PARMS trace, start, end, CONTENTS_SOLID, GetGameEntity( botNum ) );
+	return trace.fraction >= 1.0f;
 }
 
 /*
@@ -1928,15 +1924,11 @@ idBotAI::LocationHasHeadRoom
 ==================
 */
 bool idBotAI::LocationHasHeadRoom( const idVec3 &loc ) {
-	int areaNum = botThreadData.Nav_GetAreaNum( ( botVehicleInfo != NULL ) ? AAS_VEHICLE : AAS_PLAYER, loc );
-
-	if ( areaNum > 0 ) {
-		if ( botAAS.aas->GetAreaFlags( areaNum ) & AAS_AREA_HIGH_CEILING ) {
-			return true;
-		}
-	}
-
-	return false;
+	trace_t trace;
+	const idVec3 start = loc + idVec3( 0.0f, 0.0f, 64.0f );
+	const idVec3 end = start + idVec3( 0.0f, 0.0f, 192.0f );
+	botThreadData.clip->TracePoint( CLIP_DEBUG_PARMS trace, start, end, CONTENTS_SOLID, GetGameEntity( botNum ) );
+	return trace.fraction >= 1.0f;
 }
 
 /*

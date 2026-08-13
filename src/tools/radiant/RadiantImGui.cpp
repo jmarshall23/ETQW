@@ -92,34 +92,7 @@ static void RenderImGuiDrawData( ImDrawData *drawData ) {
 
 class LegacyViewportTexture {
 public:
-	LegacyViewportTexture() : width( 0 ), height( 0 ) {}
-
-	void Destroy() {
-		RadiantImGuiVulkanDestroyViewport( this );
-		width = height = 0;
-	}
-
-	bool Prepare( int requestedWidth, int requestedHeight ) {
-		width = Max( requestedWidth, 1 );
-		height = Max( requestedHeight, 1 );
-		return true;
-	}
-
-	void Queue( radiantImGuiViewportType_t type, void* view ) {
-		RadiantImGuiVulkanQueueViewport( type, view, this, width, height );
-	}
-
-	ImTextureRef TextureRef() const {
-		return RadiantImGuiVulkanTexture( this );
-	}
-
-	ImVec2 UV1() const {
-		return RadiantImGuiVulkanViewportUV1( this, width, height );
-	}
-
-private:
-	int width;
-	int height;
+	void Destroy() {}
 };
 
 class RadiantImGuiHost {
@@ -565,7 +538,6 @@ void RadiantImGuiHost::Frame() {
 		ImGui::Render();
 		const float loadingClear[ 4 ] = { 0.105f, 0.110f, 0.115f, 1.0f };
 		if ( RadiantImGuiVulkanBeginFrame( hwnd, loadingClear ) ) {
-			RadiantImGuiVulkanRenderViewports( ImGui::GetDrawData() );
 			RenderImGuiDrawData( ImGui::GetDrawData() );
 			RadiantImGuiVulkanEndFrame();
 		}
@@ -631,7 +603,6 @@ void RadiantImGuiHost::Frame() {
 
 	const float clearColor[ 4 ] = { 0.105f, 0.110f, 0.115f, 1.0f };
 	if ( RadiantImGuiVulkanBeginFrame( hwnd, clearColor ) ) {
-		RadiantImGuiVulkanRenderViewports( ImGui::GetDrawData() );
 		RenderImGuiDrawData( ImGui::GetDrawData() );
 		RadiantImGuiVulkanEndFrame();
 	}
@@ -1362,10 +1333,10 @@ void RadiantImGuiHost::RenderCameraPanel( const ImVec2 &requestedSize ) {
 	GetClientRect( hwnd, &client );
 	int width = Min( Max( 1, (int)requestedSize.x ), Max( 1, (int)client.right ) );
 	int height = Min( Max( 1, (int)requestedSize.y ), Max( 1, (int)client.bottom ) );
-	cameraSurface.Prepare( width, height );
-	cameraSurface.Queue( RADIANT_IMGUI_VIEW_CAMERA, g_pParentWnd->GetCamera() );
-	ImGui::Image( cameraSurface.TextureRef(), ImVec2( (float)width, (float)height ),
-		ImVec2( 0.0f, 0.0f ), cameraSurface.UV1() );
+	ImGui::InvisibleButton( "##CameraVulkan", ImVec2( (float)width, (float)height ) );
+	RadiantImGuiVulkanAddViewport( ImGui::GetWindowDrawList(),
+		RADIANT_IMGUI_VIEW_CAMERA, g_pParentWnd->GetCamera(),
+		ImGui::GetItemRectMin(), ImGui::GetItemRectSize() );
 	HandleCameraInput( g_pParentWnd->GetCamera(), ImGui::IsItemHovered(), ImGui::GetItemRectMin() );
 }
 
@@ -1378,12 +1349,12 @@ void RadiantImGuiHost::RenderXYPanel( CXYWnd *view, LegacyViewportTexture &surfa
 	GetClientRect( hwnd, &client );
 	int width = Min( Max( 1, (int)requestedSize.x ), Max( 1, (int)client.right ) );
 	int height = Min( Max( 1, (int)requestedSize.y ), Max( 1, (int)client.bottom ) );
+	(void)surface;
 	ImGui::PushID( captureId );
-	surface.Prepare( width, height );
-	surface.Queue( RADIANT_IMGUI_VIEW_XY, view );
-	ImGui::Image( surface.TextureRef(), ImVec2( (float)width, (float)height ),
-		ImVec2( 0.0f, 0.0f ), surface.UV1() );
+	ImGui::InvisibleButton( "##XYVulkan", ImVec2( (float)width, (float)height ) );
 	ImGui::PopID();
+	RadiantImGuiVulkanAddViewport( ImGui::GetWindowDrawList(),
+		RADIANT_IMGUI_VIEW_XY, view, ImGui::GetItemRectMin(), ImGui::GetItemRectSize() );
 	const bool hovered = ImGui::IsItemHovered();
 	const ImVec2 minimum = ImGui::GetItemRectMin();
 	HandleXYInput( view, hovered, minimum, captureId );
@@ -1400,10 +1371,9 @@ void RadiantImGuiHost::RenderZPanel( const ImVec2 &requestedSize ) {
 	GetClientRect( hwnd, &client );
 	int width = Min( Max( 1, (int)requestedSize.x ), Max( 1, (int)client.right ) );
 	int height = Min( Max( 1, (int)requestedSize.y ), Max( 1, (int)client.bottom ) );
-	zSurface.Prepare( width, height );
-	zSurface.Queue( RADIANT_IMGUI_VIEW_Z, view );
-	ImGui::Image( zSurface.TextureRef(), ImVec2( (float)width, (float)height ),
-		ImVec2( 0.0f, 0.0f ), zSurface.UV1() );
+	ImGui::InvisibleButton( "##ZVulkan", ImVec2( (float)width, (float)height ) );
+	RadiantImGuiVulkanAddViewport( ImGui::GetWindowDrawList(),
+		RADIANT_IMGUI_VIEW_Z, view, ImGui::GetItemRectMin(), ImGui::GetItemRectSize() );
 	HandleZInput( view, ImGui::IsItemHovered(), ImGui::GetItemRectMin() );
 }
 
@@ -1540,10 +1510,9 @@ void RadiantImGuiHost::RenderMediaPreview( const ImVec2 &requestedSize ) {
 	GetClientRect( hwnd, &client );
 	int width = Min( Max( 1, (int)requestedSize.x ), Max( 1, (int)client.right ) );
 	int height = Min( Max( 1, (int)requestedSize.y ), Max( 1, (int)client.bottom ) );
-	mediaSurface.Prepare( width, height );
-	mediaSurface.Queue( RADIANT_IMGUI_VIEW_MEDIA, view );
-	ImGui::Image( mediaSurface.TextureRef(), ImVec2( (float)width, (float)height ),
-		ImVec2( 0.0f, 0.0f ), mediaSurface.UV1() );
+	ImGui::InvisibleButton( "##MediaVulkan", ImVec2( (float)width, (float)height ) );
+	RadiantImGuiVulkanAddViewport( ImGui::GetWindowDrawList(),
+		RADIANT_IMGUI_VIEW_MEDIA, view, ImGui::GetItemRectMin(), ImGui::GetItemRectSize() );
 	HandleMediaPreviewInput( view, ImGui::IsItemHovered(), ImGui::GetItemRectMin() );
 }
 
@@ -2349,10 +2318,9 @@ void RadiantImGuiHost::RenderTexturePanel( const ImVec2 &requestedSize ) {
 	GetClientRect( hwnd, &client );
 	int width = Min( Max( 1, (int)requestedSize.x ), Max( 1, (int)client.right ) );
 	int height = Min( Max( 1, (int)requestedSize.y ), Max( 1, (int)client.bottom ) );
-	textureSurface.Prepare( width, height );
-	textureSurface.Queue( RADIANT_IMGUI_VIEW_TEXTURE, view );
-	ImGui::Image( textureSurface.TextureRef(), ImVec2( (float)width, (float)height ),
-		ImVec2( 0.0f, 0.0f ), textureSurface.UV1() );
+	ImGui::InvisibleButton( "##TextureVulkan", ImVec2( (float)width, (float)height ) );
+	RadiantImGuiVulkanAddViewport( ImGui::GetWindowDrawList(),
+		RADIANT_IMGUI_VIEW_TEXTURE, view, ImGui::GetItemRectMin(), ImGui::GetItemRectSize() );
 	HandleTextureInput( view, ImGui::IsItemHovered(), ImGui::GetItemRectMin() );
 }
 

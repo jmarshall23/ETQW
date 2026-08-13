@@ -263,6 +263,79 @@ int idAsyncServer::GetNumIdleClients() const {
 	return count;
 }
 
+const usercmd_t* idAsyncServer::GetClientUserCmd( int clientNum, int frameNum ) const {
+	if ( clientNum < 0 || clientNum >= MAX_ASYNC_CLIENTS || frameNum < 0 || clients[ clientNum ].clientState < SCS_CONNECTED ) {
+		return NULL;
+	}
+	return &userCmds[ frameNum & ( MAX_USERCMD_BACKUP - 1 ) ][ clientNum ];
+}
+
+const idDict& idAsyncServer::GetUserInfo( int clientNum ) const {
+	static idDict emptyUserInfo;
+	if ( clientNum < 0 || clientNum >= MAX_ASYNC_CLIENTS ) {
+		return emptyUserInfo;
+	}
+	return sessLocal.mapSpawnData.userInfo[ clientNum ];
+}
+
+int idAsyncServer::AllocateClientSlotForBot( int maxPlayersOnServer ) {
+	if ( !active || game == NULL || !sessLocal.MapSpawned() ) {
+		return -1;
+	}
+	const int slotLimit = idMath::ClampInt( 0, MAX_ASYNC_CLIENTS, maxPlayersOnServer );
+	int clientNum = -1;
+	for ( int i = 0; i < slotLimit; ++i ) {
+		if ( clients[ i ].clientState == SCS_FREE ) {
+			clientNum = i;
+			break;
+		}
+	}
+	if ( clientNum < 0 ) {
+		return -1;
+	}
+
+	InitClient( clientNum, serverId ^ ( 0x40000000 | clientNum ), 0 );
+	clients[ clientNum ].isBot = true;
+	clients[ clientNum ].clientState = SCS_INGAME;
+
+	idDict& userInfo = sessLocal.mapSpawnData.userInfo[ clientNum ];
+	userInfo.Clear();
+	const idStr botName = va( "Bot %d", clientNum );
+	userInfo.Set( "ui_name", botName );
+	userInfo.Set( "ui_realname", botName );
+	userInfo.SetBool( "ui_bot", true );
+	game->ValidateUserInfo( clientNum, userInfo );
+	game->ServerClientConnect( clientNum );
+	game->ServerClientBegin( clientNum, true );
+	game->UserInfoChanged( clientNum );
+	return clientNum;
+}
+
+int idAsyncServer::SetBotUserCommand( int clientNum, int frameNum, const usercmd_t& cmd ) {
+	if ( clientNum < 0 || clientNum >= MAX_ASYNC_CLIENTS || frameNum < 0 || !clients[ clientNum ].isBot || clients[ clientNum ].clientState != SCS_INGAME ) {
+		return 0;
+	}
+	userCmds[ frameNum & ( MAX_USERCMD_BACKUP - 1 ) ][ clientNum ] = cmd;
+	clients[ clientNum ].gameFrame = frameNum;
+	clients[ clientNum ].gameTime = cmd.gameTime;
+	clients[ clientNum ].lastInputTime = realTime;
+	return 1;
+}
+
+int idAsyncServer::SetBotUserName( int clientNum, const char* playerName ) {
+	if ( clientNum < 0 || clientNum >= MAX_ASYNC_CLIENTS || playerName == NULL || playerName[ 0 ] == '\0' || !clients[ clientNum ].isBot || clients[ clientNum ].clientState < SCS_CONNECTED ) {
+		return 0;
+	}
+	idDict& userInfo = sessLocal.mapSpawnData.userInfo[ clientNum ];
+	userInfo.Set( "ui_name", playerName );
+	userInfo.Set( "ui_realname", playerName );
+	userInfo.SetBool( "ui_bot", true );
+	game->ValidateUserInfo( clientNum, userInfo );
+	game->UserInfoChanged( clientNum );
+	SendUserInfoBroadcast( clientNum, userInfo, true );
+	return 1;
+}
+
 void idAsyncServer::RunFrame() {
 	if ( !active ) {
 		return;
@@ -272,10 +345,10 @@ void idAsyncServer::RunFrame() {
 	gameTimeResidual += delta;
 	ProcessConnectionLessMessages();
 	CheckClientTimeouts();
-	LocalClientInput();
 
 	while ( gameTimeResidual >= USERCMD_MSEC ) {
 		DuplicateUsercmds( gameFrame, gameTime );
+		LocalClientInput();
 		game->RunFrame( userCmds[ gameFrame & ( MAX_USERCMD_BACKUP - 1 ) ], USERCMD_MSEC );
 		++gameFrame;
 		gameTime += USERCMD_MSEC;
@@ -283,7 +356,7 @@ void idAsyncServer::RunFrame() {
 	}
 
 	for ( int i = 0; i < MAX_ASYNC_CLIENTS; ++i ) {
-		if ( clients[ i ].clientState >= SCS_CONNECTED ) {
+		if ( clients[ i ].clientState >= SCS_CONNECTED && !clients[ i ].isBot ) {
 			SendSnapshotToClient( i );
 			ProcessReliableClientMessages( i );
 		}
@@ -343,6 +416,11 @@ void idAsyncServer::DropClient( int clientNum, const char* reason ) {
 	common->Printf( "client %d dropped: %s\n", clientNum, reason != NULL ? reason : "" );
 	if ( game != NULL ) {
 		game->ServerClientDisconnect( clientNum );
+	}
+	if ( clients[ clientNum ].isBot ) {
+		sessLocal.mapSpawnData.userInfo[ clientNum ].Clear();
+		ClearClient( clientNum );
+		return;
 	}
 	clients[ clientNum ].clientState = SCS_ZOMBIE;
 	clients[ clientNum ].lastPacketTime = realTime;
@@ -423,6 +501,7 @@ void idAsyncServer::ClearClient( int clientNum ) {
 	client.snapshotSequence = 0;
 	client.acknowledgeSnapshotSequence = 0;
 	client.numDuplicatedUsercmds = 0;
+	client.isBot = false;
 	client.guid[ 0 ] = '\0';
 	client.channel.Shutdown();
 }
@@ -445,9 +524,16 @@ void idAsyncServer::InitLocalClient( int clientNum ) {
 
 void idAsyncServer::BeginLocalClient() {
 	if ( localClientNum >= 0 && clients[ localClientNum ].clientState == SCS_CONNECTED ) {
+		idDict& userInfo = sessLocal.mapSpawnData.userInfo[ localClientNum ];
+		if ( userInfo.GetString( "ui_name" )[ 0 ] == '\0' ) {
+			userInfo.Set( "ui_name", "Player" );
+		}
+		userInfo.Set( "ui_realname", userInfo.GetString( "ui_name" ) );
+		game->ValidateUserInfo( localClientNum, userInfo );
 		clients[ localClientNum ].clientState = SCS_INGAME;
 		game->ServerClientConnect( localClientNum );
 		game->ServerClientBegin( localClientNum, false );
+		game->UserInfoChanged( localClientNum );
 	}
 }
 
@@ -455,7 +541,13 @@ void idAsyncServer::LocalClientInput() {
 	if ( localClientNum < 0 || localClientNum >= MAX_ASYNC_CLIENTS ) {
 		return;
 	}
-	userCmds[ gameFrame & ( MAX_USERCMD_BACKUP - 1 ) ][ localClientNum ] = usercmdGen->GetDirectUsercmd();
+	usercmd_t& cmd = userCmds[ gameFrame & ( MAX_USERCMD_BACKUP - 1 ) ][ localClientNum ];
+	cmd = usercmdGen->GetDirectUsercmd();
+	cmd.gameFrame = gameFrame;
+	cmd.gameTime = gameTime;
+	cmd.duplicateCount = 0;
+	clients[ localClientNum ].gameFrame = gameFrame;
+	clients[ localClientNum ].gameTime = gameTime;
 	clients[ localClientNum ].lastInputTime = realTime;
 }
 
@@ -465,7 +557,7 @@ void idAsyncServer::CheckClientTimeouts() {
 	for ( int i = 0; i < MAX_ASYNC_CLIENTS; ++i ) {
 		if ( clients[ i ].clientState == SCS_ZOMBIE && realTime - clients[ i ].lastPacketTime > zombieTimeout ) {
 			ClearClient( i );
-		} else if ( clients[ i ].clientState >= SCS_CONNECTED && i != localClientNum &&
+		} else if ( clients[ i ].clientState >= SCS_CONNECTED && i != localClientNum && !clients[ i ].isBot &&
 			realTime - clients[ i ].lastPacketTime > timeout ) {
 			DropClient( i, "timed out" );
 		}
@@ -686,6 +778,9 @@ bool idAsyncServer::VerifyChecksumMessage( int clientNum, const netadr_t* from, 
 
 void idAsyncServer::SendReliableMessage( int clientNum, const idBitMsg& msg ) {
 	if ( clientNum < 0 || clientNum >= MAX_ASYNC_CLIENTS || clients[ clientNum ].clientState < SCS_CONNECTED ) {
+		return;
+	}
+	if ( clients[ clientNum ].isBot ) {
 		return;
 	}
 	if ( !clients[ clientNum ].channel.SendReliableMessage( msg ) ) {
