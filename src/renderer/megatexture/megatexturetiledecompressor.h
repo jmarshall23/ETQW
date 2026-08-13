@@ -58,6 +58,7 @@ public:
 	void			Init();
 	void			Shutdown();
 	void			SetActiveMegaTexture( idMegaTexture *megaTexture );
+	void			WaitUntilIdle( idMegaTexture *megaTexture );
 	idMegaTexture *	GetActiveMegaTexture() const;
 	void			ForceUpdate();
 	void			ResetNumProcessedTiles();

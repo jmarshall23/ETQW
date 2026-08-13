@@ -2112,6 +2112,10 @@ void R_AddModelSurfaces() {
 void R_AddLightSurfaces() {
 	viewDef_s* view = RB_GetViewDef();
 	if ( view == NULL ) return;
+	// The Vulkan raster path shades ambient draw surfaces directly and ray
+	// tracing consumes view-light metadata, not the legacy per-light interaction
+	// chains.  Building and triangle-clipping those chains was pure CPU work.
+	if ( R_UseVulkanBackend() ) return;
 	for ( viewLight_s* light = view->viewLights; light != NULL; light = light->next ) {
 		if ( light->culled || light->material == NULL || IsSkippedWaterFog( light->material ) ) continue;
 		for ( int surfaceIndex = 0; surfaceIndex < sortedDrawSurfaces.Num(); ++surfaceIndex ) {
@@ -2174,6 +2178,9 @@ void R_AddLightSurfaces() {
 void R_RemoveUnecessaryViewLights() {
 	viewDef_s* view = RB_GetViewDef();
 	if ( view == NULL ) return;
+	// Keep all culled/derived light records for Vulkan ray-tracing light upload.
+	// With no legacy interaction chains they would otherwise all look empty.
+	if ( R_UseVulkanBackend() ) return;
 	viewLight_s** link = &view->viewLights;
 	while ( *link != NULL ) {
 		viewLight_s* light = *link;

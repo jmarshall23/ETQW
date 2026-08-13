@@ -26,6 +26,7 @@ GNU General Public License for more details.
 #include "../RendererTypesImpl.h"
 #include "../draw_local.h"
 #include "../Image.h"
+#include "../RendererMetrics.h"
 #include "../VulkanBackend.h"
 #include "../renderbindings.h"
 #include "../../decllib/declRenderBinding.h"
@@ -226,13 +227,13 @@ byte *idMegaTextureTile::GetChildCompressedTileData( int index ) const {
 	return index >= 0 && index < 4 ? childCompressedTileData[index] : NULL;
 }
 
-void idMegaTextureTile::Upload( idMegaTexture *mega ) {
+bool idMegaTextureTile::Upload( idMegaTexture *mega ) {
 	if ( !dirty ) {
-		return;
+		return true;
 	}
 	if ( idMegaTexture::r_skipMegaTextureUpload.GetBool() ) {
 		dirty = false;
-		return;
+		return true;
 	}
 	const byte *data = tileData ? tileData->pic : mega->GetNullTileData();
 	int offset = 0;
@@ -249,16 +250,20 @@ void idMegaTextureTile::Upload( idMegaTexture *mega ) {
 				size, size, GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, bytes, data + offset );
 			offset += bytes;
 		} else {
-			glTexSubImage2D( GL_TEXTURE_2D, mip, localX * size, localY * size,
-				size, size, GL_RGBA, GL_UNSIGNED_BYTE, data + offset );
 			if ( vulkanBackend.IsInitialized() && level->GetImage() != NULL ) {
-				vulkanBackend.UpdateImage2D( level->GetImage(), mip,
-					localX * size, localY * size, size, size, data + offset );
+				if ( !vulkanBackend.UpdateImage2D( level->GetImage(), mip,
+					localX * size, localY * size, size, size, data + offset ) ) {
+					return false;
+				}
+			} else {
+				glTexSubImage2D( GL_TEXTURE_2D, mip, localX * size, localY * size,
+					size, size, GL_RGBA, GL_UNSIGNED_BYTE, data + offset );
 			}
 			offset += size * size * 4;
 		}
 	}
 	dirty = false;
+	return true;
 }
 
 idMegaTextureLevel::idMegaTextureLevel() :
@@ -494,16 +499,26 @@ bool idMegaTextureLevel::UploadTiles( int time ) {
 	if ( dirtyCount > 128 ) {
 		fadeTime = time;
 	}
-	parms[0] = newParms[0];
-	parms[1] = newParms[1];
+	if ( vulkanBackend.IsInitialized() && dirtyCount > 0 &&
+		!vulkanBackend.CanQueueImageUpload(
+			dirtyCount * MegaTextureTileChainBytes( megaTexture->GetImageCompressionFormat() ) ) ) {
+		// Keep the whole toroidal atlas mapping unchanged until a complete level
+		// fits. Partially replacing local slots would corrupt the still-active
+		// mapping for one frame.
+		return false;
+	}
 	if ( image ) {
 		image->BindFragment();
 	}
 	for ( int y = 0; y < 16; ++y ) {
 		for ( int x = 0; x < 16; ++x ) {
-			tiles[y][x].Upload( megaTexture );
+			if ( !tiles[y][x].Upload( megaTexture ) ) {
+				return false;
+			}
 		}
 	}
+	parms[0] = newParms[0];
+	parms[1] = newParms[1];
 	imageValid = true;
 	dirty = false;
 	return true;
@@ -702,7 +717,10 @@ void idMegaTexture::Load() {
 		Purge();
 		return;
 	}
-	useImageCompression = r_useMegaTextureImageCompression.GetBool() && qglCompressedTexSubImage2DARB != NULL;
+	// The Vulkan moving-atlas update path currently consumes RGBA source data.
+	// Keep legacy runtime DXT recompression on the OpenGL backend only.
+	useImageCompression = !vulkanBackend.IsInitialized() &&
+		r_useMegaTextureImageCompression.GetBool() && qglCompressedTexSubImage2DARB != NULL;
 	imageCompressionFormat = useImageCompression ?
 		( fileCompression == MEGA_COMPRESSION_RGB ? IMAGE_COMPRESSION_DXT1 : IMAGE_COMPRESSION_DXT5 ) : IMAGE_COMPRESSION_NONE;
 	AllocRecompressionScratch();
@@ -736,9 +754,9 @@ void idMegaTexture::Load() {
 	}
 	if ( megaTextureTileLoader ) megaTextureTileLoader->SignalThread();
 	if ( megaTextureTileDecompressor ) megaTextureTileDecompressor->SignalThread();
-	// Retail does not expose a red/empty moving atlas while the first coarse
-	// window is being decoded.  Finish that initial request before Load returns.
-	ForceUpdate();
+	// Initial tiles use the same asynchronous path as movement updates. Waiting
+	// here made map loading scale with unoptimized DCT work in Debug builds and
+	// stalled the main thread before the first frame could be presented.
 }
 
 void idMegaTexture::Touch() {
@@ -757,6 +775,10 @@ void idMegaTexture::Purge() {
 	if ( megaTextureTileDecompressor && megaTextureTileDecompressor->GetActiveMegaTexture() == this ) {
 		megaTextureTileDecompressor->SetActiveMegaTexture( NULL );
 	}
+	// Hot-path active-resource switches never wait on storage or decode. Purge is
+	// the one place that must join any job still holding this resource alive.
+	if ( megaTextureTileLoader ) megaTextureTileLoader->WaitUntilIdle( this );
+	if ( megaTextureTileDecompressor ) megaTextureTileDecompressor->WaitUntilIdle( this );
 	std::lock_guard<std::recursive_mutex> guard( lock );
 	delete[] levels;
 	delete upscaleLevel;
@@ -919,6 +941,7 @@ void idMegaTexture::SetViewOrigin( const idVec3 &origin ) {
 void idMegaTexture::UpdateForViewOrigin( const idVec3 &origin, int time ) {
 	std::lock_guard<std::recursive_mutex> guard( lock );
 	if ( lastUsedFrame < tr.GetSyncNum() ) {
+		RENDER_METRIC_SCOPE( "MegaTexture frame update" );
 		// Upload work completed for the previous center before requesting the next
 		// center.  This is the ordering used by the ETQW renderer and prevents a
 		// newly uploaded atlas offset from lagging one draw behind its image.

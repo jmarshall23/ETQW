@@ -79,7 +79,7 @@ public:
 	void			ReleaseTileData();
 	bool			Update( int globalX, int globalY, bool force );
 	bool			SetCachedTileData( idMegaTexture *megaTexture, int tileBase, int tilesPerAxis );
-	void			Upload( idMegaTexture *megaTexture );
+	bool			Upload( idMegaTexture *megaTexture );
 
 	void			SetDirty() { dirty = true; }
 	bool			IsDirty() const { return dirty; }

@@ -85,17 +85,20 @@ void idMegaTextureTileLoader::StopThread() {
 }
 
 void idMegaTextureTileLoader::SetActiveMegaTexture( idMegaTexture *mega ) {
+	{
+		std::lock_guard<std::mutex> stateLock( stateMutex );
+		if ( activeMegaTexture == mega ) return;
+		activeMegaTexture = mega;
+	}
+	SignalThread();
+}
+
+void idMegaTextureTileLoader::WaitUntilIdle( idMegaTexture *mega ) {
+	if ( mega == NULL ) return;
 	std::unique_lock<std::mutex> stateLock( stateMutex );
-	idMegaTexture *old = activeMegaTexture;
-	if ( old == mega ) return;
-	activeMegaTexture = mega;
-	// Reads deliberately run without the MegaTexture lock. Keep the previous
-	// resource alive until its in-flight read has completed.
-	while ( old && workerMegaTexture == old ) {
+	while ( workerMegaTexture == mega ) {
 		workerIdleSignal.wait( stateLock );
 	}
-	stateLock.unlock();
-	SignalThread();
 }
 
 idMegaTexture *idMegaTextureTileLoader::GetActiveMegaTexture() const {

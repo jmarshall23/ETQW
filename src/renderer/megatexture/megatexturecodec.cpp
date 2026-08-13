@@ -20,7 +20,7 @@ GNU General Public License for more details.
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
+#include "../../framework/precompiled.h"
 #pragma hdrstop
 
 #include "MegaTexture.h"

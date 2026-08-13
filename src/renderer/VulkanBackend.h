@@ -46,6 +46,7 @@ public:
 		int size, bool linearFilter );
 	bool UpdateImage2D( const void* owner, int mipLevel, int x, int y,
 		int width, int height, const unsigned char* rgba );
+	bool CanQueueImageUpload( int bytes ) const;
 	void DestroyImage( const void* owner );
 	bool UploadBuffer( const void* owner, const void* data, int bytes,
 		bool indexBuffer, bool frameTemporary = false );

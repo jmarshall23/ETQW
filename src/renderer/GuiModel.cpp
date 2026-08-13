@@ -786,13 +786,30 @@ void sdGuiModel::SubmitFrame( int windowWidth, int windowHeight ) {
 
 void sdGuiModel::SubmitFrameVulkan() {
 	HDC windowDC = wglGetCurrentDC();
+	idList< float > evaluated;
+	idList< sdVulkanToolVertex > batchedVertices;
+	batchedVertices.SetGranularity( 1024 );
+	idImage* batchedImage = NULL;
+	auto flushBatch = [&]() {
+		if ( batchedImage != NULL && batchedVertices.Num() > 0 ) {
+			vulkanBackend.DrawGuiTriangles( batchedImage, batchedVertices.Begin(),
+				batchedVertices.Num() );
+		}
+		batchedVertices.SetNum( 0, false );
+		batchedImage = NULL;
+	};
+	auto selectBatchImage = [&]( idImage* image ) {
+		if ( batchedImage != image ) {
+			flushBatch();
+			batchedImage = image;
+		}
+	};
 	auto submitPrimitive = [&]( const guiPrimitive_t& primitive ) {
 		if ( primitive.material == NULL || primitive.numVerts < 3 ) {
 			return;
 		}
 		idImage* overrideImage = primitive.referenceSound != NULL ?
 			ResolveGuiImage( primitive.material, primitive.referenceSound ) : NULL;
-		idList< float > evaluated;
 		evaluated.SetNum( primitive.material->GetNumRegisters(), false );
 		primitive.material->EvaluateRegisters( evaluated.Begin(),
 			primitive.materialParms, NULL, primitive.referenceSound, 0 );
@@ -873,8 +890,31 @@ void sdGuiModel::SubmitFrameVulkan() {
 						evaluated[ matrix[ 1 ][ 2 ] ];
 				}
 			}
-			vulkanBackend.DrawGuiFan( image, vertices, primitive.numVerts,
-				stageColor.ToFloatPtr(), stage->drawStateBits );
+			if ( ( stage->drawStateBits & 0xFF ) == 0x65 ) {
+				selectBatchImage( image );
+				for ( int triangle = 1; triangle + 1 < primitive.numVerts; ++triangle ) {
+					const int fanIndexes[ 3 ] = { 0, triangle, triangle + 1 };
+					for ( int corner = 0; corner < 3; ++corner ) {
+						const sdVulkanGuiVertex& source = vertices[ fanIndexes[ corner ] ];
+						sdVulkanToolVertex vertex;
+						vertex.x = source.x * ( 2.0f / 640.0f ) - 1.0f;
+						vertex.y = 1.0f - source.y * ( 2.0f / 480.0f );
+						vertex.z = 0.0f;
+						vertex.w = 1.0f;
+						vertex.s = source.s;
+						vertex.t = source.t;
+						vertex.r = stageColor.x;
+						vertex.g = stageColor.y;
+						vertex.b = stageColor.z;
+						vertex.a = stageColor.w;
+						batchedVertices.Append( vertex );
+					}
+				}
+			} else {
+				flushBatch();
+				vulkanBackend.DrawGuiFan( image, vertices, primitive.numVerts,
+					stageColor.ToFloatPtr(), stage->drawStateBits );
+			}
 		}
 	};
 
@@ -975,8 +1015,8 @@ void sdGuiModel::SubmitFrameVulkan() {
 			x += font->advance[ character ];
 		}
 		if ( textVertices.Num() > 0 ) {
-			vulkanBackend.DrawGuiTriangles( fontImage, textVertices.Begin(),
-				textVertices.Num() );
+			selectBatchImage( fontImage );
+			batchedVertices.Append( textVertices );
 		}
 	};
 
@@ -995,6 +1035,7 @@ void sdGuiModel::SubmitFrameVulkan() {
 			submitText( texts[ textIndex++ ] );
 		}
 	}
+	flushBatch();
 }
 
 void sdGuiModel::FlushFrame( int windowWidth, int windowHeight ) {

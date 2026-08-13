@@ -20,7 +20,7 @@ GNU General Public License for more details.
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
+#include "../../framework/precompiled.h"
 #pragma hdrstop
 
 #include "../Image.h"
@@ -97,17 +97,20 @@ void idMegaTextureTileDecompressor::StopThread() {
 }
 
 void idMegaTextureTileDecompressor::SetActiveMegaTexture( idMegaTexture *mega ) {
+	{
+		std::lock_guard<std::mutex> stateLock( stateMutex );
+		if ( activeMegaTexture == mega ) return;
+		activeMegaTexture = mega;
+	}
+	SignalThread();
+}
+
+void idMegaTextureTileDecompressor::WaitUntilIdle( idMegaTexture *mega ) {
+	if ( mega == NULL ) return;
 	std::unique_lock<std::mutex> stateLock( stateMutex );
-	idMegaTexture *old = activeMegaTexture;
-	if ( old == mega ) return;
-	activeMegaTexture = mega;
-	// Decoding uses private snapshots without the MegaTexture lock. Keep the
-	// previous resource alive until its in-flight decode has finished.
-	while ( old && workerMegaTexture == old ) {
+	while ( workerMegaTexture == mega ) {
 		workerIdleSignal.wait( stateLock );
 	}
-	stateLock.unlock();
-	SignalThread();
 }
 
 idMegaTexture *idMegaTextureTileDecompressor::GetActiveMegaTexture() const {

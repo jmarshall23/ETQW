@@ -94,6 +94,20 @@ set(ETQW_RENDERER_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/VulkanBackend.cpp"
 )
 
+# MegaTexture decode is latency-sensitive background work even in a Debug
+# engine. Preserve symbols/assertions elsewhere, but do not run the DCT codec
+# and tile recompression loops with MSVC's /Od code generation.
+if(MSVC)
+    set_source_files_properties(
+        "${CMAKE_CURRENT_SOURCE_DIR}/renderer/megatexture/MegaTextureCodec.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/renderer/megatexture/MegaTextureTileDecompressor.cpp"
+        PROPERTIES COMPILE_OPTIONS
+            "$<$<CONFIG:Debug>:/O2>"
+            VS_SETTINGS "BasicRuntimeChecks=Default"
+            SKIP_PRECOMPILE_HEADERS ON
+    )
+endif()
+
 set(ETQW_SYSTEM_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/sdl_events.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/sdl_input.cpp"

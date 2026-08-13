@@ -36,6 +36,10 @@ const int NUM_VULKAN_FRAMES = 2;
 // several hundred thousand vertices in a frame, which does not fit in 4 MiB.
 const VkDeviceSize VULKAN_GUI_VERTEX_BYTES = 32 * 1024 * 1024;
 const VkDeviceSize VULKAN_GUI_INDEX_BYTES = 16 * 1024 * 1024;
+// A complete 16x16 RGBA MegaTexture level including its mip tail is roughly
+// 22 MiB. One persistent arena per frame avoids allocation, mapping and a
+// queue-idle submission for every streamed tile mip.
+const VkDeviceSize VULKAN_IMAGE_UPLOAD_BYTES = 32 * 1024 * 1024;
 const int VULKAN_MATERIAL_TEXTURES = 5;
 
 idCVar r_vkValidation(
@@ -62,6 +66,7 @@ idCVar r_vkDebugMaterials(
 struct sdVulkanFrame {
 	VkCommandPool		commandPool;
 	VkCommandBuffer	commandBuffer;
+	VkCommandBuffer	imageUploadCommandBuffer;
 	VkSemaphore		imageAvailable;
 	VkSemaphore		renderComplete;
 	VkFence			fence;
@@ -75,6 +80,12 @@ struct sdVulkanFrame {
 	VkDeviceSize		guiIndexOffset;
 	bool				guiVertexOverflowWarned;
 	bool				guiIndexOverflowWarned;
+	VkBuffer			imageUploadBuffer;
+	VkDeviceMemory	imageUploadMemory;
+	void*				imageUploadMapped;
+	VkDeviceSize		imageUploadOffset;
+	bool				imageUploadRecorded;
+	bool				imageUploadOverflowWarned;
 };
 
 struct sdVulkanImageResource {
@@ -240,6 +251,19 @@ unsigned int ClampUnsigned( unsigned int value, unsigned int minimum,
 	return value;
 }
 
+struct sdVulkanPointerHash {
+	template< class type >
+	static int Hash( const idHashIndex& hasher, const type& value ) {
+		const UINT_PTR pointer = reinterpret_cast< UINT_PTR >( value );
+		const unsigned int folded = static_cast< unsigned int >(
+			( pointer >> 4 ) ^ ( pointer >> 20 ) ^ ( pointer >> 36 ) );
+		return hasher.GenerateKey( folded, 0 );
+	}
+};
+
+typedef sdHashMapGeneric< const void*, int, sdHashCompareDefault,
+	sdVulkanPointerHash > sdVulkanResourceLookup;
+
 void AppendRayTracingInstances( idList< sdRayTracingGeometry >& destination,
 	const sdRayTracingGeometry& source, const viewEntity_s* space ) {
 	if ( space == NULL || space->numInsts <= 0 || space->insts == NULL ) {
@@ -401,7 +425,10 @@ struct sdVulkanBackendState {
 	idList< const idMaterial* > reportedDrawMaterials;
 	idList< sdVulkanImageResource > imageResources;
 	idList< sdVulkanBufferResource > bufferResources;
+	sdVulkanResourceLookup		imageResourceLookup;
+	sdVulkanResourceLookup		bufferResourceLookup;
 	idList< sdVulkanMaterialDescriptor > materialDescriptors;
+	idHashIndex				materialDescriptorHash;
 	// Resources removed while a frame is being recorded must remain alive until
 	// that command buffer has been submitted and completed.  ETQW retires vertex
 	// cache blocks in idRenderSystemLocal::EndFrame before the Vulkan backend
@@ -1819,6 +1846,16 @@ void DestroyFrames( sdVulkanBackendState& state ) {
 		if ( frame.guiIndexMemory != VK_NULL_HANDLE && state.FreeMemory != NULL ) {
 			state.FreeMemory( state.device, frame.guiIndexMemory, NULL );
 		}
+		if ( frame.imageUploadMapped != NULL && state.UnmapMemory != NULL ) {
+			state.UnmapMemory( state.device, frame.imageUploadMemory );
+			frame.imageUploadMapped = NULL;
+		}
+		if ( frame.imageUploadBuffer != VK_NULL_HANDLE && state.DestroyBuffer != NULL ) {
+			state.DestroyBuffer( state.device, frame.imageUploadBuffer, NULL );
+		}
+		if ( frame.imageUploadMemory != VK_NULL_HANDLE && state.FreeMemory != NULL ) {
+			state.FreeMemory( state.device, frame.imageUploadMemory, NULL );
+		}
 		if ( frame.commandPool != VK_NULL_HANDLE && state.DestroyCommandPool != NULL ) {
 			state.DestroyCommandPool( state.device, frame.commandPool, NULL );
 		}
@@ -1871,6 +1908,11 @@ bool CreateFrames( sdVulkanBackendState& state ) {
 				"vkMapMemory(gui vertices)" ) ) {
 			return false;
 		}
+		if ( !CheckVulkanResult( state.AllocateCommandBuffers( state.device,
+			&allocateInfo, &frame.imageUploadCommandBuffer ),
+			"vkAllocateCommandBuffers(image uploads)" ) ) {
+			return false;
+		}
 		if ( !CreateBufferAllocation( state, VULKAN_GUI_INDEX_BYTES,
 			VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
@@ -1880,10 +1922,22 @@ bool CreateFrames( sdVulkanBackendState& state ) {
 				"vkMapMemory(gui indices)" ) ) {
 			return false;
 		}
+		if ( !CreateBufferAllocation( state, VULKAN_IMAGE_UPLOAD_BYTES,
+			VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+			frame.imageUploadBuffer, frame.imageUploadMemory ) ||
+			!CheckVulkanResult( state.MapMemory( state.device, frame.imageUploadMemory,
+				0, VULKAN_IMAGE_UPLOAD_BYTES, 0, &frame.imageUploadMapped ),
+				"vkMapMemory(image upload arena)" ) ) {
+			return false;
+		}
 		frame.guiVertexOffset = 0;
 		frame.guiIndexOffset = 0;
 		frame.guiVertexOverflowWarned = false;
 		frame.guiIndexOverflowWarned = false;
+		frame.imageUploadOffset = 0;
+		frame.imageUploadRecorded = false;
+		frame.imageUploadOverflowWarned = false;
 	}
 	return true;
 }
@@ -1939,6 +1993,7 @@ void DestroyAllImageResources( sdVulkanBackendState& state ) {
 		DestroyImageResource( state, state.imageResources[ i ] );
 	}
 	state.imageResources.Clear();
+	state.imageResourceLookup.Clear();
 	for ( int i = 0; i < state.retiredImageResources.Num(); ++i ) {
 		DestroyImageResource( state, state.retiredImageResources[ i ] );
 	}
@@ -2005,6 +2060,7 @@ void DestroyAllBufferResources( sdVulkanBackendState& state ) {
 		DestroyBufferResource( state, state.bufferResources[ i ] );
 	}
 	state.bufferResources.Clear();
+	state.bufferResourceLookup.Clear();
 	for ( int i = 0; i < state.retiredBufferResources.Num(); ++i ) {
 		DestroyBufferResource( state, state.retiredBufferResources[ i ] );
 	}
@@ -2240,6 +2296,7 @@ bool CompileVulkanShaderModule( sdVulkanBackendState& state,
 
 void DestroyGuiResources( sdVulkanBackendState& state ) {
 	state.materialDescriptors.Clear();
+	state.materialDescriptorHash.Clear();
 	if ( state.toolModelWireDepthBlendPipeline != VK_NULL_HANDLE ) {
 		state.DestroyPipeline( state.device,
 			state.toolModelWireDepthBlendPipeline, NULL );
@@ -3056,22 +3113,36 @@ bool AllocateImageDescriptor( sdVulkanBackendState& state,
 
 const sdVulkanImageResource* FindVulkanImageResource(
 	const sdVulkanBackendState& state, const void* owner ) {
-	for ( int resourceIndex = 0; resourceIndex < state.imageResources.Num();
-		++resourceIndex ) {
-		if ( state.imageResources[ resourceIndex ].owner == owner ) {
-			return &state.imageResources[ resourceIndex ];
-		}
+	sdVulkanResourceLookup::ConstIterator found =
+		state.imageResourceLookup.Find( owner );
+	if ( found != state.imageResourceLookup.End() && found->second >= 0 &&
+		found->second < state.imageResources.Num() &&
+		state.imageResources[ found->second ].owner == owner ) {
+		return &state.imageResources[ found->second ];
 	}
 	return NULL;
 }
 
 sdVulkanImageResource* FindVulkanImageResource(
 	sdVulkanBackendState& state, const void* owner ) {
-	for ( int resourceIndex = 0; resourceIndex < state.imageResources.Num();
-		++resourceIndex ) {
-		if ( state.imageResources[ resourceIndex ].owner == owner ) {
-			return &state.imageResources[ resourceIndex ];
-		}
+	sdVulkanResourceLookup::Iterator found =
+		state.imageResourceLookup.Find( owner );
+	if ( found != state.imageResourceLookup.End() && found->second >= 0 &&
+		found->second < state.imageResources.Num() &&
+		state.imageResources[ found->second ].owner == owner ) {
+		return &state.imageResources[ found->second ];
+	}
+	return NULL;
+}
+
+const sdVulkanBufferResource* FindVulkanBufferResource(
+	const sdVulkanBackendState& state, const void* owner ) {
+	sdVulkanResourceLookup::ConstIterator found =
+		state.bufferResourceLookup.Find( owner );
+	if ( found != state.bufferResourceLookup.End() && found->second >= 0 &&
+		found->second < state.bufferResources.Num() &&
+		state.bufferResources[ found->second ].owner == owner ) {
+		return &state.bufferResources[ found->second ];
 	}
 	return NULL;
 }
@@ -3168,8 +3239,14 @@ bool GetVulkanMaterialDescriptor( sdVulkanBackendState& state,
 			return false;
 		}
 	}
-	for ( int descriptorIndex = 0;
-		descriptorIndex < state.materialDescriptors.Num(); ++descriptorIndex ) {
+	const int descriptorHashKey = sdVulkanPointerHash::Hash(
+		state.materialDescriptorHash, &stage );
+	for ( int descriptorIndex = state.materialDescriptorHash.GetFirst(
+		descriptorHashKey ); descriptorIndex != idHashIndex::NULL_INDEX;
+		descriptorIndex = state.materialDescriptorHash.GetNext( descriptorIndex ) ) {
+		if ( descriptorIndex < 0 || descriptorIndex >= state.materialDescriptors.Num() ) {
+			continue;
+		}
 		const sdVulkanMaterialDescriptor& cached =
 			state.materialDescriptors[ descriptorIndex ];
 		if ( cached.owner != &stage ) {
@@ -3223,7 +3300,8 @@ bool GetVulkanMaterialDescriptor( sdVulkanBackendState& state,
 	}
 	state.UpdateDescriptorSets( state.device, VULKAN_MATERIAL_TEXTURES,
 		writes, 0, NULL );
-	state.materialDescriptors.Append( materialDescriptor );
+	const int descriptorIndex = state.materialDescriptors.Append( materialDescriptor );
+	state.materialDescriptorHash.Add( descriptorHashKey, descriptorIndex );
 	descriptorSet = materialDescriptor.descriptorSet;
 	return true;
 }
@@ -3475,8 +3553,14 @@ bool GetVulkanSkyboxDescriptor( sdVulkanBackendState& state,
 			return false;
 		}
 	}
-	for ( int descriptorIndex = 0;
-		descriptorIndex < state.materialDescriptors.Num(); ++descriptorIndex ) {
+	const int descriptorHashKey = sdVulkanPointerHash::Hash(
+		state.materialDescriptorHash, &stage );
+	for ( int descriptorIndex = state.materialDescriptorHash.GetFirst(
+		descriptorHashKey ); descriptorIndex != idHashIndex::NULL_INDEX;
+		descriptorIndex = state.materialDescriptorHash.GetNext( descriptorIndex ) ) {
+		if ( descriptorIndex < 0 || descriptorIndex >= state.materialDescriptors.Num() ) {
+			continue;
+		}
 		const sdVulkanMaterialDescriptor& cached =
 			state.materialDescriptors[ descriptorIndex ];
 		if ( cached.owner != &stage ) {
@@ -3532,7 +3616,8 @@ bool GetVulkanSkyboxDescriptor( sdVulkanBackendState& state,
 	}
 	state.UpdateDescriptorSets( state.device, VULKAN_MATERIAL_TEXTURES,
 		writes, 0, NULL );
-	state.materialDescriptors.Append( skyboxDescriptor );
+	const int skyboxDescriptorIndex = state.materialDescriptors.Append( skyboxDescriptor );
+	state.materialDescriptorHash.Add( descriptorHashKey, skyboxDescriptorIndex );
 	descriptorSet = skyboxDescriptor.descriptorSet;
 	return true;
 }
@@ -3599,8 +3684,14 @@ bool GetVulkanWaterDescriptor( sdVulkanBackendState& state,
 		resources[ 2 ]->sampler, resources[ 3 ]->sampler,
 		state.currentRenderResource.sampler
 	};
-	for ( int descriptorIndex = 0;
-		descriptorIndex < state.materialDescriptors.Num(); ++descriptorIndex ) {
+	const int descriptorHashKey = sdVulkanPointerHash::Hash(
+		state.materialDescriptorHash, &stage );
+	for ( int descriptorIndex = state.materialDescriptorHash.GetFirst(
+		descriptorHashKey ); descriptorIndex != idHashIndex::NULL_INDEX;
+		descriptorIndex = state.materialDescriptorHash.GetNext( descriptorIndex ) ) {
+		if ( descriptorIndex < 0 || descriptorIndex >= state.materialDescriptors.Num() ) {
+			continue;
+		}
 		const sdVulkanMaterialDescriptor& cached =
 			state.materialDescriptors[ descriptorIndex ];
 		if ( cached.owner != &stage ) {
@@ -3654,7 +3745,8 @@ bool GetVulkanWaterDescriptor( sdVulkanBackendState& state,
 	}
 	state.UpdateDescriptorSets( state.device, VULKAN_MATERIAL_TEXTURES,
 		writes, 0, NULL );
-	state.materialDescriptors.Append( waterDescriptor );
+	const int waterDescriptorIndex = state.materialDescriptors.Append( waterDescriptor );
+	state.materialDescriptorHash.Add( descriptorHashKey, waterDescriptorIndex );
 	descriptorSet = waterDescriptor.descriptorSet;
 	return true;
 }
@@ -3704,8 +3796,14 @@ bool GetVulkanHeatHazeDescriptor( sdVulkanBackendState& state,
 		fallbackResources[ 0 ]->sampler, fallbackResources[ 1 ]->sampler,
 		fallbackResources[ 2 ]->sampler
 	};
-	for ( int descriptorIndex = 0;
-		descriptorIndex < state.materialDescriptors.Num(); ++descriptorIndex ) {
+	const int descriptorHashKey = sdVulkanPointerHash::Hash(
+		state.materialDescriptorHash, &stage );
+	for ( int descriptorIndex = state.materialDescriptorHash.GetFirst(
+		descriptorHashKey ); descriptorIndex != idHashIndex::NULL_INDEX;
+		descriptorIndex = state.materialDescriptorHash.GetNext( descriptorIndex ) ) {
+		if ( descriptorIndex < 0 || descriptorIndex >= state.materialDescriptors.Num() ) {
+			continue;
+		}
 		const sdVulkanMaterialDescriptor& cached =
 			state.materialDescriptors[ descriptorIndex ];
 		if ( cached.owner != &stage ) {
@@ -3762,7 +3860,8 @@ bool GetVulkanHeatHazeDescriptor( sdVulkanBackendState& state,
 	}
 	state.UpdateDescriptorSets( state.device, VULKAN_MATERIAL_TEXTURES,
 		writes, 0, NULL );
-	state.materialDescriptors.Append( heatDescriptor );
+	const int heatDescriptorIndex = state.materialDescriptors.Append( heatDescriptor );
+	state.materialDescriptorHash.Add( descriptorHashKey, heatDescriptorIndex );
 	descriptorSet = heatDescriptor.descriptorSet;
 	return true;
 }
@@ -4073,6 +4172,9 @@ bool sdVulkanBackend::BeginFrame( int width, int height ) {
 	frame.guiIndexOffset = 0;
 	frame.guiVertexOverflowWarned = false;
 	frame.guiIndexOverflowWarned = false;
+	frame.imageUploadOffset = 0;
+	frame.imageUploadRecorded = false;
+	frame.imageUploadOverflowWarned = false;
 	VkResult acquireResult;
 	{
 		RENDER_METRIC_SCOPE( "Vulkan acquire swapchain image" );
@@ -4111,6 +4213,12 @@ bool sdVulkanBackend::BeginFrame( int width, int height ) {
 		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 		if ( !CheckVulkanResult( state->BeginCommandBuffer( frame.commandBuffer,
 			&beginInfo ), "vkBeginCommandBuffer" ) ) {
+			RestoreSignaledFence( *state, frame );
+			return false;
+		}
+		if ( !CheckVulkanResult( state->BeginCommandBuffer(
+			frame.imageUploadCommandBuffer, &beginInfo ),
+			"vkBeginCommandBuffer(image uploads)" ) ) {
 			RestoreSignaledFence( *state, frame );
 			return false;
 		}
@@ -4243,6 +4351,13 @@ void sdVulkanBackend::EndFrame( bool ) {
 			state->frameActive = false;
 			return;
 		}
+		if ( !CheckVulkanResult( state->EndCommandBuffer(
+			frame.imageUploadCommandBuffer ),
+			"vkEndCommandBuffer(image uploads)" ) ) {
+			RestoreSignaledFence( *state, frame );
+			state->frameActive = false;
+			return;
+		}
 	}
 
 	VkSemaphoreSubmitInfo waitInfo;
@@ -4250,10 +4365,20 @@ void sdVulkanBackend::EndFrame( bool ) {
 	waitInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_SUBMIT_INFO;
 	waitInfo.semaphore = frame.imageAvailable;
 	waitInfo.stageMask = VK_PIPELINE_STAGE_2_COLOR_ATTACHMENT_OUTPUT_BIT;
-	VkCommandBufferSubmitInfo commandInfo;
-	memset( &commandInfo, 0, sizeof( commandInfo ) );
-	commandInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_SUBMIT_INFO;
-	commandInfo.commandBuffer = frame.commandBuffer;
+	VkCommandBufferSubmitInfo commandInfos[ 2 ];
+	memset( commandInfos, 0, sizeof( commandInfos ) );
+	unsigned int commandInfoCount = 0;
+	if ( frame.imageUploadRecorded ) {
+		commandInfos[ commandInfoCount ].sType =
+			VK_STRUCTURE_TYPE_COMMAND_BUFFER_SUBMIT_INFO;
+		commandInfos[ commandInfoCount ].commandBuffer =
+			frame.imageUploadCommandBuffer;
+		++commandInfoCount;
+	}
+	commandInfos[ commandInfoCount ].sType =
+		VK_STRUCTURE_TYPE_COMMAND_BUFFER_SUBMIT_INFO;
+	commandInfos[ commandInfoCount ].commandBuffer = frame.commandBuffer;
+	++commandInfoCount;
 	VkSemaphoreSubmitInfo signalInfo;
 	memset( &signalInfo, 0, sizeof( signalInfo ) );
 	signalInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_SUBMIT_INFO;
@@ -4264,8 +4389,8 @@ void sdVulkanBackend::EndFrame( bool ) {
 	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO_2;
 	submitInfo.waitSemaphoreInfoCount = 1;
 	submitInfo.pWaitSemaphoreInfos = &waitInfo;
-	submitInfo.commandBufferInfoCount = 1;
-	submitInfo.pCommandBufferInfos = &commandInfo;
+	submitInfo.commandBufferInfoCount = commandInfoCount;
+	submitInfo.pCommandBufferInfos = commandInfos;
 	submitInfo.signalSemaphoreInfoCount = 1;
 	submitInfo.pSignalSemaphoreInfos = &signalInfo;
 	{
@@ -4610,7 +4735,8 @@ static bool CreateToolRenderTargetResources( sdVulkanBackendState& state,
 	target.depthMemory = depthMemory[ 0 ];
 	target.depthView = depthViews[ 0 ];
 	target.initialized = false;
-	state.imageResources.Append( color );
+	const int imageIndex = state.imageResources.Append( color );
+	state.imageResourceLookup.Set( color.owner, imageIndex );
 	return true;
 }
 
@@ -5012,19 +5138,10 @@ bool sdVulkanBackend::DrawToolCachedIndexed( const void* vertexCacheHandle,
 		vertexCacheBlock->backendBuffer : vertexCacheBlock;
 	const void* indexOwner = indexCacheBlock->backendBuffer != NULL ?
 		indexCacheBlock->backendBuffer : indexCacheBlock;
-	const sdVulkanBufferResource* vertexResource = NULL;
-	const sdVulkanBufferResource* indexResource = NULL;
-	for ( int resourceIndex = 0; resourceIndex < state->bufferResources.Num();
-		++resourceIndex ) {
-		const sdVulkanBufferResource& resource =
-			state->bufferResources[resourceIndex];
-		if ( resource.owner == vertexOwner ) {
-			vertexResource = &resource;
-		}
-		if ( resource.owner == indexOwner ) {
-			indexResource = &resource;
-		}
-	}
+	const sdVulkanBufferResource* vertexResource =
+		FindVulkanBufferResource( *state, vertexOwner );
+	const sdVulkanBufferResource* indexResource =
+		FindVulkanBufferResource( *state, indexOwner );
 	const VkDeviceSize vertexBytes = static_cast< VkDeviceSize >( vertexCount ) *
 		sizeof( idDrawVert );
 	const VkDeviceSize indexBytes = static_cast< VkDeviceSize >( indexCount ) *
@@ -5556,7 +5673,8 @@ bool sdVulkanBackend::UploadImage2D( const void* owner,
 		DestroyImageResource( *state, resource );
 		return false;
 	}
-	state->imageResources.Append( resource );
+	const int imageIndex = state->imageResources.Append( resource );
+	state->imageResourceLookup.Set( resource.owner, imageIndex );
 	return true;
 }
 
@@ -5755,8 +5873,23 @@ bool sdVulkanBackend::UploadImageCube( const void* owner,
 		DestroyImageResource( *state, resource );
 		return false;
 	}
-	state->imageResources.Append( resource );
+	const int imageIndex = state->imageResources.Append( resource );
+	state->imageResourceLookup.Set( resource.owner, imageIndex );
 	return true;
+}
+
+bool sdVulkanBackend::CanQueueImageUpload( int bytes ) const {
+	if ( bytes < 0 || state == NULL ) {
+		return false;
+	}
+	if ( !state->frameActive ) {
+		return true;
+	}
+	const sdVulkanFrame& frame = state->frames[ state->frameIndex ];
+	const VkDeviceSize alignedOffset = ( frame.imageUploadOffset + 15 ) & ~15ULL;
+	return frame.imageUploadMapped != NULL &&
+		alignedOffset + static_cast< VkDeviceSize >( bytes ) <=
+		VULKAN_IMAGE_UPLOAD_BYTES;
 }
 
 bool sdVulkanBackend::UpdateImage2D( const void* owner, int mipLevel,
@@ -5765,13 +5898,7 @@ bool sdVulkanBackend::UpdateImage2D( const void* owner, int mipLevel,
 		x < 0 || y < 0 || width <= 0 || height <= 0 ) {
 		return false;
 	}
-	sdVulkanImageResource* resource = NULL;
-	for ( int i = 0; i < state->imageResources.Num(); ++i ) {
-		if ( state->imageResources[ i ].owner == owner ) {
-			resource = &state->imageResources[ i ];
-			break;
-		}
-	}
+	sdVulkanImageResource* resource = FindVulkanImageResource( *state, owner );
 	if ( resource == NULL || mipLevel >= resource->mipLevels ) {
 		return false;
 	}
@@ -5782,6 +5909,76 @@ bool sdVulkanBackend::UpdateImage2D( const void* owner, int mipLevel,
 	}
 	const VkDeviceSize uploadBytes = static_cast< VkDeviceSize >( width ) *
 		static_cast< VkDeviceSize >( height ) * 4;
+	if ( state->frameActive ) {
+		sdVulkanFrame& frame = state->frames[ state->frameIndex ];
+		const VkDeviceSize uploadOffset =
+			( frame.imageUploadOffset + 15 ) & ~15ULL;
+		if ( frame.imageUploadMapped == NULL ||
+			uploadOffset + uploadBytes > VULKAN_IMAGE_UPLOAD_BYTES ) {
+			if ( !frame.imageUploadOverflowWarned ) {
+				common->Warning( "Vulkan image upload arena exhausted (%u MiB)",
+					static_cast< unsigned int >(
+						VULKAN_IMAGE_UPLOAD_BYTES / ( 1024 * 1024 ) ) );
+				frame.imageUploadOverflowWarned = true;
+			}
+			return false;
+		}
+		memcpy( static_cast< byte* >( frame.imageUploadMapped ) + uploadOffset,
+			rgba, static_cast< size_t >( uploadBytes ) );
+
+		VkImageMemoryBarrier2 toTransfer;
+		memset( &toTransfer, 0, sizeof( toTransfer ) );
+		toTransfer.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2;
+		toTransfer.srcStageMask = VK_PIPELINE_STAGE_2_ALL_GRAPHICS_BIT;
+		toTransfer.srcAccessMask = VK_ACCESS_2_SHADER_SAMPLED_READ_BIT;
+		toTransfer.dstStageMask = VK_PIPELINE_STAGE_2_TRANSFER_BIT;
+		toTransfer.dstAccessMask = VK_ACCESS_2_TRANSFER_WRITE_BIT;
+		toTransfer.oldLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		toTransfer.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+		toTransfer.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+		toTransfer.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+		toTransfer.image = resource->image;
+		toTransfer.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		toTransfer.subresourceRange.baseMipLevel = mipLevel;
+		toTransfer.subresourceRange.levelCount = 1;
+		toTransfer.subresourceRange.layerCount = 1;
+		VkDependencyInfo dependencyInfo;
+		memset( &dependencyInfo, 0, sizeof( dependencyInfo ) );
+		dependencyInfo.sType = VK_STRUCTURE_TYPE_DEPENDENCY_INFO;
+		dependencyInfo.imageMemoryBarrierCount = 1;
+		dependencyInfo.pImageMemoryBarriers = &toTransfer;
+		state->CmdPipelineBarrier2( frame.imageUploadCommandBuffer,
+			&dependencyInfo );
+
+		VkBufferImageCopy copy;
+		memset( &copy, 0, sizeof( copy ) );
+		copy.bufferOffset = uploadOffset;
+		copy.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		copy.imageSubresource.mipLevel = mipLevel;
+		copy.imageSubresource.layerCount = 1;
+		copy.imageOffset.x = x;
+		copy.imageOffset.y = y;
+		copy.imageExtent.width = width;
+		copy.imageExtent.height = height;
+		copy.imageExtent.depth = 1;
+		state->CmdCopyBufferToImage( frame.imageUploadCommandBuffer,
+			frame.imageUploadBuffer, resource->image,
+			VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &copy );
+
+		VkImageMemoryBarrier2 toShader = toTransfer;
+		toShader.srcStageMask = VK_PIPELINE_STAGE_2_TRANSFER_BIT;
+		toShader.srcAccessMask = VK_ACCESS_2_TRANSFER_WRITE_BIT;
+		toShader.dstStageMask = VK_PIPELINE_STAGE_2_ALL_GRAPHICS_BIT;
+		toShader.dstAccessMask = VK_ACCESS_2_SHADER_SAMPLED_READ_BIT;
+		toShader.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+		toShader.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		dependencyInfo.pImageMemoryBarriers = &toShader;
+		state->CmdPipelineBarrier2( frame.imageUploadCommandBuffer,
+			&dependencyInfo );
+		frame.imageUploadOffset = uploadOffset + uploadBytes;
+		frame.imageUploadRecorded = true;
+		return true;
+	}
 	VkBuffer stagingBuffer = VK_NULL_HANDLE;
 	VkDeviceMemory stagingMemory = VK_NULL_HANDLE;
 	if ( !CreateBufferAllocation( *state, uploadBytes,
@@ -5917,7 +6114,14 @@ void sdVulkanBackend::DestroyImage( const void* owner ) {
 						sizeof( descriptor.imageViews ) );
 				}
 			}
+			const int lastIndex = state->imageResources.Num() - 1;
+			const void* movedOwner = i != lastIndex ?
+				state->imageResources[ lastIndex ].owner : NULL;
+			state->imageResourceLookup.Remove( owner );
 			state->imageResources.RemoveIndexFast( i );
+			if ( movedOwner != NULL ) {
+				state->imageResourceLookup.Set( movedOwner, i );
+			}
 			if ( state->frameActive ) {
 				state->frameRetiredImageResources[ state->frameIndex ].Append( removed );
 			} else if ( state->toolFrameActive ) {
@@ -5976,7 +6180,8 @@ bool sdVulkanBackend::UploadBuffer( const void* owner, const void* data,
 		DestroyBufferResource( *state, resource );
 		return false;
 	}
-	state->bufferResources.Append( resource );
+	const int resourceIndex = state->bufferResources.Append( resource );
+	state->bufferResourceLookup.Set( resource.owner, resourceIndex );
 	return true;
 }
 
@@ -5986,11 +6191,11 @@ bool sdVulkanBackend::UpdateBuffer( const void* owner, int offset,
 		bytes <= 0 ) {
 		return false;
 	}
-	for ( int i = 0; i < state->bufferResources.Num(); ++i ) {
-		sdVulkanBufferResource& resource = state->bufferResources[ i ];
-		if ( resource.owner != owner ) {
-			continue;
-		}
+	sdVulkanResourceLookup::Iterator found =
+		state->bufferResourceLookup.Find( owner );
+	if ( found != state->bufferResourceLookup.End() && found->second >= 0 &&
+		found->second < state->bufferResources.Num() ) {
+		sdVulkanBufferResource& resource = state->bufferResources[ found->second ];
 		if ( static_cast< VkDeviceSize >( offset ) + bytes > resource.bytes ) {
 			common->Warning( "Vulkan buffer update exceeds its allocation" );
 			return false;
@@ -6013,7 +6218,14 @@ void sdVulkanBackend::DestroyBuffer( const void* owner ) {
 	for ( int i = 0; i < state->bufferResources.Num(); ++i ) {
 		if ( state->bufferResources[ i ].owner == owner ) {
 			sdVulkanBufferResource removed = state->bufferResources[ i ];
+			const int lastIndex = state->bufferResources.Num() - 1;
+			const void* movedOwner = i != lastIndex ?
+				state->bufferResources[ lastIndex ].owner : NULL;
+			state->bufferResourceLookup.Remove( owner );
 			state->bufferResources.RemoveIndexFast( i );
+			if ( movedOwner != NULL ) {
+				state->bufferResourceLookup.Set( movedOwner, i );
+			}
 			if ( state->frameActive ) {
 				state->frameRetiredBufferResources[ state->frameIndex ].Append( removed );
 			} else if ( state->toolFrameActive ) {
@@ -6064,16 +6276,9 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 		if ( skyImage != NULL && !skyImage->IsLoaded() ) {
 			skyImage->BindFragment();
 		}
-		const sdVulkanImageResource* skyResource = NULL;
-		if ( skyImage != NULL && skyImage->IsLoaded() && !skyImage->defaulted ) {
-			for ( int resourceIndex = 0; resourceIndex < state->imageResources.Num();
-				++resourceIndex ) {
-				if ( state->imageResources[ resourceIndex ].owner == skyImage ) {
-					skyResource = &state->imageResources[ resourceIndex ];
-					break;
-				}
-			}
-		}
+		const sdVulkanImageResource* skyResource =
+			skyImage != NULL && skyImage->IsLoaded() && !skyImage->defaulted ?
+			FindVulkanImageResource( *state, skyImage ) : NULL;
 		if ( skyResource != NULL && skyResource->descriptorSet != VK_NULL_HANDLE ) {
 			VkRect2D skyScissor;
 			skyScissor.offset.x = idMath::ClampInt( 0,
@@ -6261,27 +6466,12 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			vertexCacheBlock->backendBuffer : vertexCacheBlock;
 		const void* indexOwner = indexCacheBlock->backendBuffer != NULL ?
 			indexCacheBlock->backendBuffer : indexCacheBlock;
-		const sdVulkanBufferResource* vertexResource = NULL;
-		const sdVulkanBufferResource* indexResource = NULL;
-		for ( int resourceIndex = 0; resourceIndex < state->bufferResources.Num();
-			++resourceIndex ) {
-			const sdVulkanBufferResource& resource =
-				state->bufferResources[ resourceIndex ];
-			if ( resource.owner == vertexOwner ) {
-				vertexResource = &resource;
-			}
-			if ( resource.owner == indexOwner ) {
-				indexResource = &resource;
-			}
-		}
-		const sdVulkanImageResource* imageResource = NULL;
-		for ( int resourceIndex = 0; resourceIndex < state->imageResources.Num();
-			++resourceIndex ) {
-			if ( state->imageResources[ resourceIndex ].owner == selectedImage ) {
-				imageResource = &state->imageResources[ resourceIndex ];
-				break;
-			}
-		}
+		const sdVulkanBufferResource* vertexResource =
+			FindVulkanBufferResource( *state, vertexOwner );
+		const sdVulkanBufferResource* indexResource =
+			FindVulkanBufferResource( *state, indexOwner );
+		const sdVulkanImageResource* imageResource =
+			FindVulkanImageResource( *state, selectedImage );
 		if ( vertexResource == NULL || indexResource == NULL ||
 			imageResource == NULL || imageResource->descriptorSet == VK_NULL_HANDLE ) {
 			state->worldMissingResource++;
@@ -6739,14 +6929,8 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 				if ( !levelImage->IsLoaded() ) {
 					levelImage->BindFragment();
 				}
-				const sdVulkanImageResource* levelResource = NULL;
-				for ( int resourceIndex = 0; resourceIndex < state->imageResources.Num();
-					++resourceIndex ) {
-					if ( state->imageResources[ resourceIndex ].owner == levelImage ) {
-						levelResource = &state->imageResources[ resourceIndex ];
-						break;
-					}
-				}
+				const sdVulkanImageResource* levelResource =
+					FindVulkanImageResource( *state, levelImage );
 				if ( levelResource == NULL || levelResource->descriptorSet == VK_NULL_HANDLE ) {
 					continue;
 				}
@@ -7060,13 +7244,8 @@ bool sdVulkanBackend::DrawGuiFan( const void* imageOwner,
 		r_vkSkipGui.GetBool() ) {
 		return false;
 	}
-	const sdVulkanImageResource* imageResource = NULL;
-	for ( int i = 0; i < state->imageResources.Num(); ++i ) {
-		if ( state->imageResources[ i ].owner == imageOwner ) {
-			imageResource = &state->imageResources[ i ];
-			break;
-		}
-	}
+	const sdVulkanImageResource* imageResource =
+		FindVulkanImageResource( *state, imageOwner );
 	if ( imageResource == NULL || imageResource->descriptorSet == VK_NULL_HANDLE ) {
 		return false;
 	}
