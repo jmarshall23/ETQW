@@ -1624,6 +1624,7 @@ void R_RemoveUnecessaryViewLights( void ) {
 
 #include "draw_local.h"
 #include "tr_render.h"
+#include "RendererJobs.h"
 #include "RendererMetrics.h"
 #include "RenderSystemBackend.h"
 #include "VulkanBackend.h"
@@ -1657,8 +1658,57 @@ namespace {
 	idList< glIndex_t > frontEndInteractionIndexes;
 	idList< interactionGeometryRecord_t > frontEndInteractionGeometry;
 	idList< idRenderModel* > frontEndDynamicModels;
+	struct ambientSurfaceCandidate_t {
+		viewEntity_s*			space;
+		const modelSurface_t*	modelSurface;
+		bool				visible;
+	};
+	struct ambientSurfaceAnalysisContext_t {
+		const viewDef_s*		view;
+		ambientSurfaceCandidate_t*	candidates;
+	};
+	idList< viewEntity_s* > frontEndModelSpaces;
+	idList< ambientSurfaceCandidate_t > frontEndSurfaceCandidates;
 	viewEntity_s* lastViewEntity = NULL;
 	viewLight_s* lastViewLight = NULL;
+	struct materialRegisterCacheEntry_t {
+		const idMaterial*	material;
+		const float*		shaderParms;
+		idSoundEmitter*	referenceSound;
+		float*			registers;
+	};
+	const int MATERIAL_REGISTER_CACHE_SIZE = 256;
+	materialRegisterCacheEntry_t materialRegisterCache[
+		MATERIAL_REGISTER_CACHE_SIZE ];
+
+	void AnalyzeAmbientSurfaceCandidates( void* opaqueContext, int firstItem,
+		int itemCount, int workerIndex ) {
+		ambientSurfaceAnalysisContext_t* context =
+			static_cast< ambientSurfaceAnalysisContext_t* >( opaqueContext );
+		for ( int index = firstItem; index < firstItem + itemCount; ++index ) {
+			ambientSurfaceCandidate_t& candidate = context->candidates[ index ];
+			viewEntity_s* space = candidate.space;
+			const modelSurface_t* modelSurface = candidate.modelSurface;
+			candidate.visible = space != NULL && !space->culled &&
+				modelSurface != NULL && modelSurface->geometry != NULL &&
+				!R_CullLocalBoxToViewdef( modelSurface->geometry->bounds,
+					space->modelMatrix, context->view );
+			if ( candidate.visible && space->entityDef != NULL &&
+				modelSurface->id >= 0 && modelSurface->id < MAX_SURFACE_BITS - 1 &&
+				space->entityDef->hideSurfaceMask.Get( modelSurface->id ) != 0 ) {
+				candidate.visible = false;
+			}
+		}
+	}
+
+	int MaterialRegisterCacheIndex( const idMaterial* material,
+		const float* shaderParms, const idSoundEmitter* referenceSound ) {
+		const size_t materialKey = reinterpret_cast< size_t >( material );
+		const size_t parmsKey = reinterpret_cast< size_t >( shaderParms );
+		const size_t soundKey = reinterpret_cast< size_t >( referenceSound );
+		return static_cast< int >( ( ( materialKey >> 4 ) ^ ( parmsKey >> 5 ) ^
+			( soundKey >> 4 ) ) & ( MATERIAL_REGISTER_CACHE_SIZE - 1 ) );
+	}
 
 	idVec3 MatrixTransformPoint( const float matrix[ 16 ], const idVec3& point ) {
 		return idVec3(
@@ -2094,8 +2144,16 @@ drawSurf_s* R_AddDrawSurf( const srfTriangles_t* triangles, const viewEntity_s* 
 	surface->scissorRect = scissor;
 	const float* shaderParms = renderEntity != NULL ? renderEntity->shaderParms : view->renderView.shaderParms;
 	idSoundEmitter* referenceSound = renderEntity != NULL ? renderEntity->referenceSound : NULL;
+	const int registerCacheIndex = MaterialRegisterCacheIndex( material,
+		shaderParms, referenceSound );
+	materialRegisterCacheEntry_t& registerCache =
+		materialRegisterCache[ registerCacheIndex ];
+	const bool registerCacheHit = registerCache.material == material &&
+		registerCache.shaderParms == shaderParms &&
+		registerCache.referenceSound == referenceSound;
 	const float* constantRegisters = reusedMaterialRegisters != NULL ?
-		reusedMaterialRegisters : material->ConstantRegisters( shaderParms, view );
+		reusedMaterialRegisters : ( registerCacheHit ? registerCache.registers :
+		material->ConstantRegisters( shaderParms, view ) );
 	if ( constantRegisters != NULL ) {
 		surface->materialRegisters = const_cast< float* >( constantRegisters );
 	} else {
@@ -2104,9 +2162,57 @@ drawSurf_s* R_AddDrawSurf( const srfTriangles_t* triangles, const viewEntity_s* 
 		surface->materialRegisters = registers;
 		frontEndRegisters.Append( registers );
 	}
+	registerCache.material = material;
+	registerCache.shaderParms = shaderParms;
+	registerCache.referenceSound = referenceSound;
+	registerCache.registers = surface->materialRegisters;
 	frontEndDrawSurfaces.Append( surface );
 	sortedDrawSurfaces.Append( surface );
 	return surface;
+}
+
+void R_CommitAmbientDrawsurf( viewEntity_s* space,
+		const modelSurface_t* modelSurface, bool streamDynamicVertices,
+		const idMaterial*& previousMaterial, const float*& previousMaterialRegisters ) {
+	if ( space == NULL || modelSurface == NULL || modelSurface->geometry == NULL ) return;
+	srfTriangles_t* geometry = modelSurface->geometry;
+	const idMaterial* material = modelSurface->material;
+	if ( space->entityDef != NULL ) {
+		material = R_RemapShaderBySkin( material, space->entityDef->customSkin,
+			space->entityDef->customShader );
+	}
+	R_GlobalShaderOverride( &material );
+	// Allocations, cache residency, shader evaluation, and list insertion stay
+	// on the render thread.  Workers only decide which immutable candidates are
+	// visible.
+	if ( streamDynamicVertices && !geometry->hardwareSkinnedSurface &&
+		geometry->verts != NULL && geometry->numVerts > 0 ) {
+		geometry->ambientCache = vertexCache.AllocFrameTemp( geometry->verts,
+			geometry->numVerts * sizeof( geometry->verts[ 0 ] ) );
+	} else if ( geometry->ambientCache == NULL && geometry->verts != NULL &&
+		geometry->numVerts > 0 ) {
+		vertexCache.Alloc( geometry->verts,
+			geometry->numVerts * sizeof( geometry->verts[ 0 ] ),
+			&geometry->ambientCache );
+	}
+	if ( geometry->indexCache == NULL && geometry->indexes != NULL &&
+		geometry->numIndexes > 0 ) {
+		vertexCache.Alloc( geometry->indexes,
+			geometry->numIndexes * sizeof( geometry->indexes[ 0 ] ),
+			&geometry->indexCache, true );
+	}
+	if ( geometry->ambientCache != NULL && geometry->ambientCache->tag != TAG_TEMP ) {
+		vertexCache.Touch( geometry->ambientCache );
+	}
+	if ( geometry->indexCache != NULL ) vertexCache.Touch( geometry->indexCache );
+	if ( geometry->weightCache != NULL ) vertexCache.Touch( geometry->weightCache );
+	const float* reusedRegisters = material == previousMaterial ?
+		previousMaterialRegisters : NULL;
+	drawSurf_s* drawSurface = R_AddDrawSurf( geometry, space, space->entityDef,
+		material, space->scissorRect, modelSurface->id, reusedRegisters );
+	previousMaterial = material;
+	previousMaterialRegisters = drawSurface != NULL ?
+		drawSurface->materialRegisters : NULL;
 }
 
 void R_AddAmbientDrawsurfs( viewEntity_s* space ) {
@@ -2119,41 +2225,13 @@ void R_AddAmbientDrawsurfs( viewEntity_s* space ) {
 	for ( int surfaceIndex = 0; surfaceIndex < space->model->NumSurfaces(); ++surfaceIndex ) {
 		const modelSurface_t* modelSurface = space->model->Surface( surfaceIndex );
 		if ( modelSurface == NULL || modelSurface->geometry == NULL ) continue;
-		srfTriangles_t* geometry = modelSurface->geometry;
-		if ( R_CullLocalBoxToViewdef( modelSurface->geometry->bounds, space->modelMatrix, view ) ) continue;
-		if ( space->entityDef != NULL && modelSurface->id >= 0 && modelSurface->id < MAX_SURFACE_BITS - 1 &&
-				space->entityDef->hideSurfaceMask.Get( modelSurface->id ) != 0 ) continue;
-		const idMaterial* material = modelSurface->material;
-		if ( space->entityDef != NULL ) {
-			material = R_RemapShaderBySkin( material, space->entityDef->customSkin, space->entityDef->customShader );
-		}
-		R_GlobalShaderOverride( &material );
-		// Static caches may have been purged since model finalization.  Recreate
-		// them on first visible use and mark them live before any ambient or
-		// light-interaction draw references the surface.
-		if ( streamDynamicVertices && !geometry->hardwareSkinnedSurface &&
-			geometry->verts != NULL && geometry->numVerts > 0 ) {
-			geometry->ambientCache = vertexCache.AllocFrameTemp( geometry->verts,
-				geometry->numVerts * sizeof( geometry->verts[ 0 ] ) );
-		} else if ( geometry->ambientCache == NULL && geometry->verts != NULL && geometry->numVerts > 0 ) {
-			vertexCache.Alloc( geometry->verts, geometry->numVerts * sizeof( geometry->verts[ 0 ] ), &geometry->ambientCache );
-		}
-		if ( geometry->indexCache == NULL && geometry->indexes != NULL && geometry->numIndexes > 0 ) {
-			vertexCache.Alloc( geometry->indexes, geometry->numIndexes * sizeof( geometry->indexes[ 0 ] ), &geometry->indexCache, true );
-		}
-		if ( geometry->ambientCache != NULL && geometry->ambientCache->tag != TAG_TEMP ) {
-			vertexCache.Touch( geometry->ambientCache );
-		}
-		if ( geometry->indexCache != NULL ) vertexCache.Touch( geometry->indexCache );
-		if ( geometry->weightCache != NULL ) vertexCache.Touch( geometry->weightCache );
-		const float* reusedRegisters = material == previousMaterial ?
-			previousMaterialRegisters : NULL;
-		drawSurf_s* drawSurface = R_AddDrawSurf( geometry, space,
-			space->entityDef, material, space->scissorRect, modelSurface->id,
-			reusedRegisters );
-		previousMaterial = material;
-		previousMaterialRegisters = drawSurface != NULL ?
-			drawSurface->materialRegisters : NULL;
+		if ( R_CullLocalBoxToViewdef( modelSurface->geometry->bounds,
+			space->modelMatrix, view ) ) continue;
+		if ( space->entityDef != NULL && modelSurface->id >= 0 &&
+			modelSurface->id < MAX_SURFACE_BITS - 1 &&
+			space->entityDef->hideSurfaceMask.Get( modelSurface->id ) != 0 ) continue;
+		R_CommitAmbientDrawsurf( space, modelSurface, streamDynamicVertices,
+			previousMaterial, previousMaterialRegisters );
 	}
 }
 
@@ -2161,17 +2239,87 @@ void R_AddModelSurfaces() {
 	viewDef_s* view = RB_GetViewDef();
 	idRenderWorldLocal* world = RB_GetDrawWorld();
 	if ( view == NULL || world == NULL ) return;
-	for ( int modelIndex = 0; modelIndex < world->BackendNumLocalModels(); ++modelIndex ) {
-		idRenderModel* model = world->BackendLocalModel( modelIndex );
-		if ( model == NULL || !model->IsStaticWorldModel() ) continue;
-		viewEntity_s* modelSpace = R_SetEntityDefViewEntity( NULL, model, -1 );
-		if ( modelSpace != NULL ) R_AddAmbientDrawsurfs( modelSpace );
+	if ( !R_UseVulkanBackend() ) {
+		for ( int modelIndex = 0; modelIndex < world->BackendNumLocalModels(); ++modelIndex ) {
+			idRenderModel* model = world->BackendLocalModel( modelIndex );
+			if ( model == NULL || !model->IsStaticWorldModel() ) continue;
+			viewEntity_s* modelSpace = R_SetEntityDefViewEntity( NULL, model, -1 );
+			if ( modelSpace != NULL ) R_AddAmbientDrawsurfs( modelSpace );
+		}
+		for ( viewEntity_s* entity = view->viewEntities; entity != NULL;
+			entity = entity->next ) {
+			if ( entity->entityDef != NULL ) R_AddAmbientDrawsurfs( entity );
+		}
+		sortedDrawSurfaces.Sort( DrawSurfaceSortCompare );
+		view->drawSurfs = sortedDrawSurfaces.Begin();
+		view->numDrawSurfs = sortedDrawSurfaces.Num();
+		return;
 	}
-	for ( viewEntity_s* entity = view->viewEntities; entity != NULL; entity = entity->next ) {
-		if ( entity->entityDef == NULL ) continue;
-		R_AddAmbientDrawsurfs( entity );
+
+	frontEndModelSpaces.SetNum( 0, false );
+	{
+		RENDER_METRIC_SCOPE( "Collect model spaces" );
+		for ( int modelIndex = 0; modelIndex < world->BackendNumLocalModels(); ++modelIndex ) {
+			idRenderModel* model = world->BackendLocalModel( modelIndex );
+			if ( model == NULL || !model->IsStaticWorldModel() ) continue;
+			viewEntity_s* modelSpace = R_SetEntityDefViewEntity( NULL, model, -1 );
+			if ( modelSpace != NULL ) frontEndModelSpaces.Append( modelSpace );
+		}
+		for ( viewEntity_s* entity = view->viewEntities; entity != NULL; entity = entity->next ) {
+			if ( entity->entityDef != NULL ) frontEndModelSpaces.Append( entity );
+		}
 	}
-	sortedDrawSurfaces.Sort( DrawSurfaceSortCompare );
+
+	int candidateCount = 0;
+	for ( int spaceIndex = 0; spaceIndex < frontEndModelSpaces.Num(); ++spaceIndex ) {
+		viewEntity_s* space = frontEndModelSpaces[ spaceIndex ];
+		if ( space != NULL && space->model != NULL && !space->culled ) {
+			candidateCount += space->model->NumSurfaces();
+		}
+	}
+	frontEndSurfaceCandidates.SetNum( candidateCount );
+	int candidateIndex = 0;
+	for ( int spaceIndex = 0; spaceIndex < frontEndModelSpaces.Num(); ++spaceIndex ) {
+		viewEntity_s* space = frontEndModelSpaces[ spaceIndex ];
+		if ( space == NULL || space->model == NULL || space->culled ) continue;
+		for ( int surfaceIndex = 0; surfaceIndex < space->model->NumSurfaces(); ++surfaceIndex ) {
+			ambientSurfaceCandidate_t& candidate =
+				frontEndSurfaceCandidates[ candidateIndex++ ];
+			candidate.space = space;
+			candidate.modelSurface = space->model->Surface( surfaceIndex );
+			candidate.visible = false;
+		}
+	}
+	ambientSurfaceAnalysisContext_t analysisContext;
+	analysisContext.view = view;
+	analysisContext.candidates = frontEndSurfaceCandidates.Begin();
+	rendererJobs.ParallelFor( candidateCount, 64, "Analyze model surfaces",
+		AnalyzeAmbientSurfaceCandidates, &analysisContext );
+
+	{
+		RENDER_METRIC_SCOPE( "Commit model surfaces" );
+		viewEntity_s* previousSpace = NULL;
+		const idMaterial* previousMaterial = NULL;
+		const float* previousMaterialRegisters = NULL;
+		bool streamDynamicVertices = false;
+		for ( int index = 0; index < candidateCount; ++index ) {
+			ambientSurfaceCandidate_t& candidate = frontEndSurfaceCandidates[ index ];
+			if ( candidate.space != previousSpace ) {
+				previousSpace = candidate.space;
+				previousMaterial = NULL;
+				previousMaterialRegisters = NULL;
+				streamDynamicVertices = previousSpace != NULL && previousSpace->model != NULL &&
+					idStr::Icmp( previousSpace->model->Name(), "_MD5_Snapshot_" ) == 0;
+			}
+			if ( !candidate.visible ) continue;
+			R_CommitAmbientDrawsurf( candidate.space, candidate.modelSurface,
+				streamDynamicVertices, previousMaterial, previousMaterialRegisters );
+		}
+	}
+	{
+		RENDER_METRIC_SCOPE( "Sort draw surfaces" );
+		sortedDrawSurfaces.Sort( DrawSurfaceSortCompare );
+	}
 	view->drawSurfs = sortedDrawSurfaces.Begin();
 	view->numDrawSurfs = sortedDrawSurfaces.Num();
 }
@@ -2291,6 +2439,9 @@ void R_FreeBuiltDrawView() {
 	frontEndDynamicModels.Clear();
 	frontEndInteractionIndexes.Clear();
 	sortedDrawSurfaces.Clear();
+	frontEndModelSpaces.SetNum( 0, false );
+	frontEndSurfaceCandidates.SetNum( 0, false );
+	memset( materialRegisterCache, 0, sizeof( materialRegisterCache ) );
 	lastViewEntity = NULL;
 	lastViewLight = NULL;
 }

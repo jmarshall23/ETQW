@@ -5,6 +5,7 @@
 
 #include "VulkanBackend.h"
 #include "RuntimeSpirvCompiler.h"
+#include "RendererJobs.h"
 #include "RendererMetrics.h"
 #include "tr_render.h"
 #include "draw_local.h"
@@ -434,6 +435,8 @@ struct sdVulkanBackendState {
 	unsigned int				worldWaterDescriptorMisses;
 	idList< const idMaterial* > reportedMissingMaterials;
 	idList< const idMaterial* > reportedDrawMaterials;
+	idList< sdRayTracingGeometry > rayTracingGeometryScratch;
+	idList< sdRayTracingGeometry > rayTracingWaterGeometryScratch;
 	idList< sdVulkanImageResource > imageResources;
 	idList< sdVulkanBufferResource > bufferResources;
 	sdVulkanResourceLookup		imageResourceLookup;
@@ -621,6 +624,8 @@ struct sdVulkanBackendState {
 		toolFrameActive = false;
 		toolImageOwner = NULL;
 		memset( &toolScissor, 0, sizeof( toolScissor ) );
+		rayTracingGeometryScratch.SetGranularity( 256 );
+		rayTracingWaterGeometryScratch.SetGranularity( 32 );
 		toolPipeline = VK_NULL_HANDLE;
 		toolBlendPipeline = VK_NULL_HANDLE;
 		toolDepthPipeline = VK_NULL_HANDLE;
@@ -3400,6 +3405,155 @@ bool StageUsesVulkanMaterialTextures( const materialStage_t& stage ) {
 		}
 	}
 	return false;
+}
+
+enum vulkanSurfacePreparationStatus_t {
+	VULKAN_SURFACE_MISSING_GEOMETRY,
+	VULKAN_SURFACE_MISSING_CACHE,
+	VULKAN_SURFACE_READY
+};
+
+struct vulkanSurfaceSelection_t {
+	vulkanSurfacePreparationStatus_t status;
+	const materialStage_t*	stage;
+	idImage*			image;
+	idMegaTexture*		megaTexture;
+	bool			atmosphere;
+	bool			water;
+	bool			heatHaze;
+	bool			stuffGrass;
+	bool			skybox;
+	bool			foggyWaterUnderside;
+	bool			materialTextures;
+};
+
+struct vulkanSurfaceSelectionCacheEntry_t {
+	const idMaterial*		material;
+	const float*			registers;
+	vulkanSurfaceSelection_t	selection;
+};
+
+const int VULKAN_SURFACE_SELECTION_CACHE_SIZE = 64;
+const int VULKAN_SURFACE_PREPARATION_LANES = 13;
+vulkanSurfaceSelectionCacheEntry_t vulkanSurfaceSelectionCaches[
+	VULKAN_SURFACE_PREPARATION_LANES ][ VULKAN_SURFACE_SELECTION_CACHE_SIZE ];
+idList< vulkanSurfaceSelection_t > vulkanSurfaceSelections;
+
+struct vulkanSurfaceAnalysisContext_t {
+	const viewDef_s*	view;
+	vulkanSurfaceSelection_t*	selections;
+};
+
+void AnalyzeVulkanSurfaces( void* opaqueContext, int firstItem, int itemCount,
+	int workerIndex ) {
+	vulkanSurfaceAnalysisContext_t* context =
+		static_cast< vulkanSurfaceAnalysisContext_t* >( opaqueContext );
+	const int lane = idMath::ClampInt( 0,
+		VULKAN_SURFACE_PREPARATION_LANES - 1, workerIndex );
+	for ( int surfaceIndex = firstItem;
+		surfaceIndex < firstItem + itemCount; ++surfaceIndex ) {
+		const drawSurf_s* surface = context->view->drawSurfs[ surfaceIndex ];
+		vulkanSurfaceSelection_t selection;
+		memset( &selection, 0, sizeof( selection ) );
+		if ( surface == NULL || surface->geo == NULL || surface->space == NULL ||
+			surface->space->culled || surface->material == NULL ||
+			surface->materialRegisters == NULL || surface->geo->numIndexes <= 0 ||
+			surface->geo->mode == PM_POINTSPRITE ) {
+			selection.status = VULKAN_SURFACE_MISSING_GEOMETRY;
+			context->selections[ surfaceIndex ] = selection;
+			continue;
+		}
+		if ( surface->geo->ambientCache == NULL || surface->geo->indexCache == NULL ) {
+			selection.status = VULKAN_SURFACE_MISSING_CACHE;
+			context->selections[ surfaceIndex ] = selection;
+			continue;
+		}
+		selection.status = VULKAN_SURFACE_READY;
+
+		const size_t registerKey = reinterpret_cast< size_t >(
+			surface->materialRegisters );
+		const int cacheIndex = static_cast< int >(
+			( ( registerKey >> 4 ) ^ ( registerKey >> 13 ) ) &
+			( VULKAN_SURFACE_SELECTION_CACHE_SIZE - 1 ) );
+		vulkanSurfaceSelectionCacheEntry_t& cached =
+			vulkanSurfaceSelectionCaches[ lane ][ cacheIndex ];
+		if ( cached.material == surface->material &&
+			cached.registers == surface->materialRegisters ) {
+			selection = cached.selection;
+			context->selections[ surfaceIndex ] = selection;
+			continue;
+		}
+
+		int selectedImageScore = -0x7fffffff;
+		for ( int stageIndex = 0;
+			stageIndex < surface->material->GetNumStages(); ++stageIndex ) {
+			const materialStage_t* stage =
+				surface->material->GetStage( stageIndex );
+			if ( surface->materialRegisters[ stage->conditionRegister ] == 0.0f ||
+				( stage->drawStateBits & 0xFF ) == 0x21 ) {
+				continue;
+			}
+			if ( stage->megaTexture != NULL ) {
+				idMegaTextureLevel* level = stage->megaTexture->GetLevel(
+					stage->megaTexture->GetNumLevels() - 1 );
+				if ( level != NULL && level->GetImage() != NULL ) {
+					selection.stage = stage;
+					selection.image = level->GetImage();
+					selection.megaTexture = stage->megaTexture;
+					selectedImageScore = 10000;
+				}
+				continue;
+			}
+			for ( int textureIndex = 0; textureIndex < stage->numTextures;
+				++textureIndex ) {
+				const stageTexture_t& texture = stage->textures[ textureIndex ];
+				if ( texture.image == NULL || texture.image->defaulted ) continue;
+				int score = 10;
+				if ( rbinds != NULL && texture.renderBinding == rbinds->diffuseMap ) {
+					score = 100;
+				} else if ( rbinds != NULL && texture.renderBinding == rbinds->map ) {
+					score = 90;
+				} else if ( rbinds != NULL &&
+					texture.renderBinding == rbinds->cinematicY ) {
+					score = 80;
+				}
+				if ( globalImages != NULL &&
+					( texture.image == globalImages->whiteImage ||
+					  texture.image == globalImages->blackImage ||
+					  texture.image == globalImages->grayImage ) ) {
+					score -= 50;
+				}
+				if ( score > selectedImageScore ) {
+					selection.stage = stage;
+					selection.image = texture.image;
+					selection.megaTexture = NULL;
+					selectedImageScore = score;
+				}
+			}
+		}
+		if ( selection.stage != NULL ) {
+			const char* programName = selection.stage->renderProgram != NULL ?
+				selection.stage->renderProgram->GetName() : NULL;
+			selection.atmosphere = programName != NULL &&
+				idStr::Icmp( programName, "sfx/atmos" ) == 0;
+			selection.water = programName != NULL &&
+				idStr::Icmpn( programName, "water/", 6 ) == 0;
+			selection.heatHaze = programName != NULL &&
+				idStr::Icmpn( programName, "heatHaze", 8 ) == 0;
+			selection.stuffGrass = programName != NULL &&
+				idStr::Icmpn( programName, "stuff/grass", 11 ) == 0;
+			selection.skybox = programName != NULL &&
+				idStr::Icmp( programName, "skies/skybox" ) == 0;
+			selection.foggyWaterUnderside = programName != NULL &&
+				idStr::Icmp( programName, "sfx/foggyWaterSurface" ) == 0;
+			selection.materialTextures =
+				StageUsesVulkanMaterialTextures( *selection.stage );
+		}
+		cached.material = surface->material;
+		cached.registers = surface->materialRegisters;
+		cached.selection = selection;
+		context->selections[ surfaceIndex ] = selection;
+	}
 }
 
 bool StageUsesCoverageFade( const materialStage_t& stage ) {
@@ -6562,10 +6716,12 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 	}
 	state->worldSurfaceCandidates += view->numDrawSurfs;
 	bool currentRenderCopied = false;
-	idList< sdRayTracingGeometry > rayTracingGeometries;
-	idList< sdRayTracingGeometry > rayTracingWaterGeometries;
-	rayTracingGeometries.SetGranularity( 256 );
-	rayTracingWaterGeometries.SetGranularity( 32 );
+	idList< sdRayTracingGeometry >& rayTracingGeometries =
+		state->rayTracingGeometryScratch;
+	idList< sdRayTracingGeometry >& rayTracingWaterGeometries =
+		state->rayTracingWaterGeometryScratch;
+	rayTracingGeometries.SetNum( 0, false );
+	rayTracingWaterGeometries.SetNum( 0, false );
 	const bool debugMaterials = r_vkDebugMaterials.GetBool();
 	const float defaultDepthStart = idMath::ClampFloat( 0.0f, 1.0f,
 		cvarSystem->GetCVarFloat( "r_depthRangeStartDefault" ) );
@@ -6581,23 +6737,94 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 		worldSunDirection = view->atmosphere->GetSunDirection();
 	}
 
-	struct materialSelectionCacheEntry_t {
-		const idMaterial*		material;
-		const float*			registers;
+	vulkanSurfaceSelections.SetNum( view->numDrawSurfs );
+	memset( vulkanSurfaceSelectionCaches, 0,
+		sizeof( vulkanSurfaceSelectionCaches ) );
+	vulkanSurfaceAnalysisContext_t surfaceAnalysisContext;
+	surfaceAnalysisContext.view = view;
+	surfaceAnalysisContext.selections = vulkanSurfaceSelections.Begin();
+	rendererJobs.ParallelFor( view->numDrawSurfs, 4,
+		"Analyze Vulkan surfaces", AnalyzeVulkanSurfaces,
+		&surfaceAnalysisContext );
+	struct materialDescriptorCacheEntry_t {
 		const materialStage_t*	stage;
-		idImage*				image;
-		idMegaTexture*			megaTexture;
-		bool					atmosphere;
-		bool					water;
-		bool					heatHaze;
-		bool					stuffGrass;
-		bool					skybox;
-		bool					foggyWaterUnderside;
+		idImage*				selectedImage;
+		idImage*				ambientImage;
+		VkDescriptorSet		descriptorSet;
 	};
-	const int MATERIAL_SELECTION_CACHE_SIZE = 64;
-	materialSelectionCacheEntry_t materialSelectionCache[
-		MATERIAL_SELECTION_CACHE_SIZE ];
-	memset( materialSelectionCache, 0, sizeof( materialSelectionCache ) );
+	const int MATERIAL_DESCRIPTOR_CACHE_SIZE = 128;
+	materialDescriptorCacheEntry_t materialDescriptorCache[
+		MATERIAL_DESCRIPTOR_CACHE_SIZE ];
+	memset( materialDescriptorCache, 0, sizeof( materialDescriptorCache ) );
+	struct spaceSubmissionCacheEntry_t {
+		const viewEntity_s*	space;
+		VkRect2D			scissor;
+		int				inputScissor[ 4 ];
+		VkViewport			viewport;
+		float				mvp[ 16 ];
+		idVec3				localSunDirection;
+		idVec3				localViewOrigin;
+		float				modelRotation[ 2 ];
+		float				sunDirection[ 2 ];
+		bool				visible;
+	};
+	const int SPACE_SUBMISSION_CACHE_SIZE = 256;
+	spaceSubmissionCacheEntry_t spaceSubmissionCache[
+		SPACE_SUBMISSION_CACHE_SIZE ];
+	memset( spaceSubmissionCache, 0, sizeof( spaceSubmissionCache ) );
+	const float polygonOffsetUnits = r_offsetUnits.GetFloat();
+	const float polygonOffsetFactor = r_offsetFactor.GetFloat();
+	float submittedPolygonOffset = 0.0f;
+	auto SetPolygonOffset = [&]( const idMaterial* material,
+		const materialStage_t* stage ) {
+		float polygonOffset = 0.0f;
+		if ( material != NULL && material->TestMaterialFlag( MF_POLYGONOFFSET ) ) {
+			polygonOffset = material->GetPolygonOffset();
+		}
+		if ( stage != NULL && stage->privatePolygonOffset != 0.0f ) {
+			polygonOffset = stage->privatePolygonOffset;
+		}
+		if ( polygonOffset != submittedPolygonOffset ) {
+			state->CmdSetDepthBias( frame.commandBuffer,
+				polygonOffset != 0.0f ? polygonOffsetUnits * polygonOffset : 0.0f,
+				0.0f,
+				polygonOffset != 0.0f ? polygonOffsetFactor : 0.0f );
+			submittedPolygonOffset = polygonOffset;
+		}
+	};
+	auto GetCachedMaterialDescriptor = [&]( const materialStage_t& stage,
+		idImage* selectedImage, const viewEntity_s* space,
+		VkDescriptorSet& descriptorSet ) {
+		idImage* ambientImage = globalImages != NULL ?
+			globalImages->blackCubeMapImage : NULL;
+		if ( space != NULL && space->ambientCubeMap != NULL &&
+			space->ambientCubeMap->GetAmbientCubeMap() != NULL ) {
+			ambientImage = space->ambientCubeMap->GetAmbientCubeMap();
+		}
+		const size_t stageKey = reinterpret_cast< size_t >( &stage );
+		const size_t imageKey = reinterpret_cast< size_t >( selectedImage );
+		const size_t ambientKey = reinterpret_cast< size_t >( ambientImage );
+		const int cacheIndex = static_cast< int >( ( ( stageKey >> 4 ) ^
+			( imageKey >> 5 ) ^ ( ambientKey >> 4 ) ) &
+			( MATERIAL_DESCRIPTOR_CACHE_SIZE - 1 ) );
+		materialDescriptorCacheEntry_t& cached =
+			materialDescriptorCache[ cacheIndex ];
+		if ( cached.stage == &stage && cached.selectedImage == selectedImage &&
+			cached.ambientImage == ambientImage &&
+			cached.descriptorSet != VK_NULL_HANDLE ) {
+			descriptorSet = cached.descriptorSet;
+			return true;
+		}
+		if ( !GetVulkanMaterialDescriptor( *state, stage, selectedImage,
+			space, descriptorSet ) ) {
+			return false;
+		}
+		cached.stage = &stage;
+		cached.selectedImage = selectedImage;
+		cached.ambientImage = ambientImage;
+		cached.descriptorSet = descriptorSet;
+		return true;
+	};
 	VkPipeline submittedPipeline = VK_NULL_HANDLE;
 	VkDescriptorSet submittedDescriptorSet = VK_NULL_HANDLE;
 	VkViewport submittedViewport = viewport;
@@ -6730,14 +6957,13 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 		RENDER_METRIC_SCOPE( "Vulkan surface submission" );
 	for ( int surfaceIndex = 0; surfaceIndex < view->numDrawSurfs; ++surfaceIndex ) {
 		const drawSurf_s* surface = view->drawSurfs[ surfaceIndex ];
-		if ( surface == NULL || surface->geo == NULL || surface->space == NULL ||
-			surface->space->culled || surface->material == NULL ||
-			surface->materialRegisters == NULL || surface->geo->numIndexes <= 0 ||
-			surface->geo->mode == PM_POINTSPRITE ) {
+		const vulkanSurfaceSelection_t& preparedSelection =
+			vulkanSurfaceSelections[ surfaceIndex ];
+		if ( preparedSelection.status == VULKAN_SURFACE_MISSING_GEOMETRY ) {
 			state->worldMissingGeometry++;
 			continue;
 		}
-		if ( surface->geo->ambientCache == NULL || surface->geo->indexCache == NULL ) {
+		if ( preparedSelection.status == VULKAN_SURFACE_MISSING_CACHE ) {
 			state->worldMissingCache++;
 			continue;
 		}
@@ -6746,111 +6972,17 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			ReportVulkanDrawMaterial( *state, *surface );
 		}
 
-		const materialStage_t* selectedStage = NULL;
-		idImage* selectedImage = NULL;
-		idMegaTexture* selectedMegaTexture = NULL;
-		bool selectedAtmosphereStage = false;
-		bool selectedWaterStage = false;
-		bool selectedHeatHazeStage = false;
-		bool selectedStuffGrassStage = false;
-		bool selectedSkyboxStage = false;
-		bool selectedFoggyWaterUndersideStage = false;
-		const UINT_PTR registerKey = reinterpret_cast< UINT_PTR >(
-			surface->materialRegisters );
-		const int selectionCacheIndex = static_cast< int >(
-			( ( registerKey >> 4 ) ^ ( registerKey >> 13 ) ) &
-			( MATERIAL_SELECTION_CACHE_SIZE - 1 ) );
-		materialSelectionCacheEntry_t& selectionCache =
-			materialSelectionCache[ selectionCacheIndex ];
-		if ( selectionCache.material == surface->material &&
-			selectionCache.registers == surface->materialRegisters ) {
-			selectedStage = selectionCache.stage;
-			selectedImage = selectionCache.image;
-			selectedMegaTexture = selectionCache.megaTexture;
-			selectedAtmosphereStage = selectionCache.atmosphere;
-			selectedWaterStage = selectionCache.water;
-			selectedHeatHazeStage = selectionCache.heatHaze;
-			selectedStuffGrassStage = selectionCache.stuffGrass;
-			selectedSkyboxStage = selectionCache.skybox;
-			selectedFoggyWaterUndersideStage =
-				selectionCache.foggyWaterUnderside;
-		} else {
-			int selectedImageScore = -0x7fffffff;
-			for ( int stageIndex = 0;
-				stageIndex < surface->material->GetNumStages(); ++stageIndex ) {
-				const materialStage_t* stage =
-					surface->material->GetStage( stageIndex );
-				if ( surface->materialRegisters[ stage->conditionRegister ] == 0.0f ||
-					( stage->drawStateBits & 0xFF ) == 0x21 ) {
-					continue;
-				}
-				if ( stage->megaTexture != NULL ) {
-					idMegaTextureLevel* level = stage->megaTexture->GetLevel(
-						stage->megaTexture->GetNumLevels() - 1 );
-					if ( level != NULL && level->GetImage() != NULL ) {
-						selectedStage = stage;
-						selectedImage = level->GetImage();
-						selectedMegaTexture = stage->megaTexture;
-						selectedImageScore = 10000;
-					}
-					continue;
-				}
-				for ( int textureIndex = 0; textureIndex < stage->numTextures;
-					++textureIndex ) {
-					const stageTexture_t& texture = stage->textures[ textureIndex ];
-					if ( texture.image == NULL || texture.image->defaulted ) continue;
-					int score = 10;
-					if ( rbinds != NULL && texture.renderBinding == rbinds->diffuseMap ) {
-						score = 100;
-					} else if ( rbinds != NULL && texture.renderBinding == rbinds->map ) {
-						score = 90;
-					} else if ( rbinds != NULL &&
-						texture.renderBinding == rbinds->cinematicY ) {
-						score = 80;
-					}
-					if ( globalImages != NULL &&
-						( texture.image == globalImages->whiteImage ||
-						  texture.image == globalImages->blackImage ||
-						  texture.image == globalImages->grayImage ) ) {
-						score -= 50;
-					}
-					if ( score > selectedImageScore ) {
-						selectedStage = stage;
-						selectedImage = texture.image;
-						selectedMegaTexture = NULL;
-						selectedImageScore = score;
-					}
-				}
-			}
-			if ( selectedStage != NULL ) {
-				const char* programName = selectedStage->renderProgram != NULL ?
-					selectedStage->renderProgram->GetName() : NULL;
-				selectedAtmosphereStage = programName != NULL &&
-					idStr::Icmp( programName, "sfx/atmos" ) == 0;
-				selectedWaterStage = programName != NULL &&
-					idStr::Icmpn( programName, "water/", 6 ) == 0;
-				selectedHeatHazeStage = programName != NULL &&
-					idStr::Icmpn( programName, "heatHaze", 8 ) == 0;
-				selectedStuffGrassStage = programName != NULL &&
-					idStr::Icmpn( programName, "stuff/grass", 11 ) == 0;
-				selectedSkyboxStage = programName != NULL &&
-					idStr::Icmp( programName, "skies/skybox" ) == 0;
-				selectedFoggyWaterUndersideStage = programName != NULL &&
-					idStr::Icmp( programName, "sfx/foggyWaterSurface" ) == 0;
-			}
-			selectionCache.material = surface->material;
-			selectionCache.registers = surface->materialRegisters;
-			selectionCache.stage = selectedStage;
-			selectionCache.image = selectedImage;
-			selectionCache.megaTexture = selectedMegaTexture;
-			selectionCache.atmosphere = selectedAtmosphereStage;
-			selectionCache.water = selectedWaterStage;
-			selectionCache.heatHaze = selectedHeatHazeStage;
-			selectionCache.stuffGrass = selectedStuffGrassStage;
-			selectionCache.skybox = selectedSkyboxStage;
-			selectionCache.foggyWaterUnderside =
-				selectedFoggyWaterUndersideStage;
-		}
+		const materialStage_t* selectedStage = preparedSelection.stage;
+		idImage* selectedImage = preparedSelection.image;
+		idMegaTexture* selectedMegaTexture = preparedSelection.megaTexture;
+		const bool selectedAtmosphereStage = preparedSelection.atmosphere;
+		const bool selectedWaterStage = preparedSelection.water;
+		const bool selectedHeatHazeStage = preparedSelection.heatHaze;
+		const bool selectedStuffGrassStage = preparedSelection.stuffGrass;
+		const bool selectedSkyboxStage = preparedSelection.skybox;
+		const bool selectedFoggyWaterUndersideStage =
+			preparedSelection.foggyWaterUnderside;
+		const bool selectedMaterialTextures = preparedSelection.materialTextures;
 		if ( selectedStage == NULL || selectedImage == NULL ) {
 			ReportMissingVulkanMaterial( *state, *surface );
 			state->worldMissingMaterial++;
@@ -6871,8 +7003,7 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			continue;
 		}
 		state->worldMaterialReady++;
-		SetVulkanPolygonOffset( *state, frame.commandBuffer,
-			surface->material, selectedStage );
+		SetPolygonOffset( surface->material, selectedStage );
 		if ( selectedFoggyWaterUndersideStage ) {
 			const idVec3 translatedViewOrigin(
 				view->renderView.vieworg.x - surface->space->modelMatrix[ 12 ],
@@ -6976,8 +7107,8 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			!selectedAtmosphereStage && !selectedWaterStage &&
 			!selectedHeatHazeStage &&
 			state->worldMaterialPipeline != VK_NULL_HANDLE &&
-			StageUsesVulkanMaterialTextures( *selectedStage ) &&
-			GetVulkanMaterialDescriptor( *state, *selectedStage, selectedImage,
+			selectedMaterialTextures &&
+			GetCachedMaterialDescriptor( *selectedStage, selectedImage,
 				surface->space,
 				materialDescriptorSet );
 		VkDescriptorSet waterDescriptorSet = VK_NULL_HANDLE;
@@ -7086,86 +7217,121 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			continue;
 		}
 
-		VkRect2D scissor;
-		int scissorWidth = Max( 1,
-			surface->scissorRect.x2 - surface->scissorRect.x1 + 1 );
-		int scissorHeight = Max( 1,
-			surface->scissorRect.y2 - surface->scissorRect.y1 + 1 );
-		scissor.offset.x = view->viewport.x1 + surface->scissorRect.x1;
-		scissor.offset.y = static_cast< int >( state->extent.height ) -
-			( view->viewport.y1 + surface->scissorRect.y1 + scissorHeight );
-		if ( scissor.offset.x < 0 ) {
-			scissorWidth -= Min( scissorWidth, -scissor.offset.x );
-			scissor.offset.x = 0;
-		}
-		if ( scissor.offset.y < 0 ) {
-			scissorHeight -= Min( scissorHeight, -scissor.offset.y );
-			scissor.offset.y = 0;
-		}
-		scissorWidth = Min( scissorWidth,
-			static_cast< int >( state->extent.width ) - scissor.offset.x );
-		scissorHeight = Min( scissorHeight,
-			static_cast< int >( state->extent.height ) - scissor.offset.y );
-		if ( scissorWidth <= 0 || scissorHeight <= 0 ) {
-			continue;
-		}
-		scissor.extent.width = static_cast< unsigned int >( scissorWidth );
-		scissor.extent.height = static_cast< unsigned int >( scissorHeight );
-		SetScissor( scissor );
-
-		float surfaceProjection[ 16 ];
-		memcpy( surfaceProjection, view->projectionMatrix,
-			sizeof( surfaceProjection ) );
-		float surfaceMinDepth = defaultDepthStart;
-		float surfaceMaxDepth = 1.0f;
-		if ( surface->space->weaponDepthHack ) {
-			surfaceMinDepth = 0.0f;
-			surfaceMaxDepth = weaponDepthEnd;
-			const float weaponFovX = surface->space->weaponDepthHackFOV_x;
-			const float weaponFovY = surface->space->weaponDepthHackFOV_y;
-			if ( weaponFovX > 0.0f && weaponFovY > 0.0f ) {
-				const float xMax = zNear * idMath::Tan(
-					weaponFovX * idMath::M_DEG2RAD * 0.5f );
-				const float yMax = zNear * idMath::Tan(
-					weaponFovY * idMath::M_DEG2RAD * 0.5f );
-				surfaceProjection[ 0 ] = zNear / Max( xMax, 0.001f );
-				surfaceProjection[ 5 ] = zNear / Max( yMax, 0.001f );
-				surfaceProjection[ 8 ] = 0.0f;
-				surfaceProjection[ 9 ] = 0.0f;
+		const size_t spaceKey = reinterpret_cast< size_t >( surface->space );
+		const int spaceCacheIndex = static_cast< int >( ( ( spaceKey >> 4 ) ^
+			( spaceKey >> 13 ) ) & ( SPACE_SUBMISSION_CACHE_SIZE - 1 ) );
+		spaceSubmissionCacheEntry_t& spaceCache =
+			spaceSubmissionCache[ spaceCacheIndex ];
+		const bool sameSpace = spaceCache.space == surface->space &&
+			spaceCache.inputScissor[ 0 ] == surface->scissorRect.x1 &&
+			spaceCache.inputScissor[ 1 ] == surface->scissorRect.y1 &&
+			spaceCache.inputScissor[ 2 ] == surface->scissorRect.x2 &&
+			spaceCache.inputScissor[ 3 ] == surface->scissorRect.y2;
+		if ( !sameSpace ) {
+			memset( &spaceCache, 0, sizeof( spaceCache ) );
+			spaceCache.space = surface->space;
+			spaceCache.inputScissor[ 0 ] = surface->scissorRect.x1;
+			spaceCache.inputScissor[ 1 ] = surface->scissorRect.y1;
+			spaceCache.inputScissor[ 2 ] = surface->scissorRect.x2;
+			spaceCache.inputScissor[ 3 ] = surface->scissorRect.y2;
+			int scissorWidth = Max( 1,
+				surface->scissorRect.x2 - surface->scissorRect.x1 + 1 );
+			int scissorHeight = Max( 1,
+				surface->scissorRect.y2 - surface->scissorRect.y1 + 1 );
+			spaceCache.scissor.offset.x =
+				view->viewport.x1 + surface->scissorRect.x1;
+			spaceCache.scissor.offset.y = static_cast< int >( state->extent.height ) -
+				( view->viewport.y1 + surface->scissorRect.y1 + scissorHeight );
+			if ( spaceCache.scissor.offset.x < 0 ) {
+				scissorWidth -= Min( scissorWidth, -spaceCache.scissor.offset.x );
+				spaceCache.scissor.offset.x = 0;
 			}
-			surfaceProjection[ 14 ] *= weaponDepthScale;
+			if ( spaceCache.scissor.offset.y < 0 ) {
+				scissorHeight -= Min( scissorHeight, -spaceCache.scissor.offset.y );
+				spaceCache.scissor.offset.y = 0;
+			}
+			scissorWidth = Min( scissorWidth,
+				static_cast< int >( state->extent.width ) -
+				spaceCache.scissor.offset.x );
+			scissorHeight = Min( scissorHeight,
+				static_cast< int >( state->extent.height ) -
+				spaceCache.scissor.offset.y );
+			spaceCache.visible = scissorWidth > 0 && scissorHeight > 0;
+			if ( spaceCache.visible ) {
+				spaceCache.scissor.extent.width =
+					static_cast< unsigned int >( scissorWidth );
+				spaceCache.scissor.extent.height =
+					static_cast< unsigned int >( scissorHeight );
+				float surfaceProjection[ 16 ];
+				memcpy( surfaceProjection, view->projectionMatrix,
+					sizeof( surfaceProjection ) );
+				float surfaceMinDepth = defaultDepthStart;
+				float surfaceMaxDepth = 1.0f;
+				if ( surface->space->weaponDepthHack ) {
+					surfaceMinDepth = 0.0f;
+					surfaceMaxDepth = weaponDepthEnd;
+					const float weaponFovX = surface->space->weaponDepthHackFOV_x;
+					const float weaponFovY = surface->space->weaponDepthHackFOV_y;
+					if ( weaponFovX > 0.0f && weaponFovY > 0.0f ) {
+						const float xMax = zNear * idMath::Tan(
+							weaponFovX * idMath::M_DEG2RAD * 0.5f );
+						const float yMax = zNear * idMath::Tan(
+							weaponFovY * idMath::M_DEG2RAD * 0.5f );
+						surfaceProjection[ 0 ] = zNear / Max( xMax, 0.001f );
+						surfaceProjection[ 5 ] = zNear / Max( yMax, 0.001f );
+						surfaceProjection[ 8 ] = 0.0f;
+						surfaceProjection[ 9 ] = 0.0f;
+					}
+					surfaceProjection[ 14 ] *= weaponDepthScale;
+				}
+				if ( surface->space->modelDepthHack != 0.0f ) {
+					memcpy( surfaceProjection, view->projectionMatrix,
+						sizeof( surfaceProjection ) );
+					surfaceProjection[ 14 ] -= surface->space->modelDepthHack;
+					surfaceMinDepth = defaultDepthStart;
+					surfaceMaxDepth = 1.0f;
+				}
+				spaceCache.viewport = viewport;
+				spaceCache.viewport.minDepth = surfaceMinDepth;
+				spaceCache.viewport.maxDepth =
+					Max( surfaceMinDepth, surfaceMaxDepth );
+				for ( int column = 0; column < 4; ++column ) {
+					for ( int row = 0; row < 4; ++row ) {
+						spaceCache.mvp[ column * 4 + row ] =
+							surfaceProjection[ row ] * surface->space->modelViewMatrix[ column * 4 ] +
+							surfaceProjection[ 4 + row ] * surface->space->modelViewMatrix[ column * 4 + 1 ] +
+							surfaceProjection[ 8 + row ] * surface->space->modelViewMatrix[ column * 4 + 2 ] +
+							surfaceProjection[ 12 + row ] * surface->space->modelViewMatrix[ column * 4 + 3 ];
+					}
+					spaceCache.mvp[ column * 4 + 2 ] = 0.5f *
+						( spaceCache.mvp[ column * 4 + 2 ] +
+						  spaceCache.mvp[ column * 4 + 3 ] );
+				}
+				spaceCache.localSunDirection.Set(
+					worldSunDirection.x * surface->space->modelMatrix[ 0 ] + worldSunDirection.y * surface->space->modelMatrix[ 1 ] + worldSunDirection.z * surface->space->modelMatrix[ 2 ],
+					worldSunDirection.x * surface->space->modelMatrix[ 4 ] + worldSunDirection.y * surface->space->modelMatrix[ 5 ] + worldSunDirection.z * surface->space->modelMatrix[ 6 ],
+					worldSunDirection.x * surface->space->modelMatrix[ 8 ] + worldSunDirection.y * surface->space->modelMatrix[ 9 ] + worldSunDirection.z * surface->space->modelMatrix[ 10 ] );
+				const idVec3 translatedViewOrigin(
+					view->renderView.vieworg.x - surface->space->modelMatrix[ 12 ],
+					view->renderView.vieworg.y - surface->space->modelMatrix[ 13 ],
+					view->renderView.vieworg.z - surface->space->modelMatrix[ 14 ] );
+				spaceCache.localViewOrigin.Set(
+					translatedViewOrigin.x * surface->space->modelMatrix[ 0 ] + translatedViewOrigin.y * surface->space->modelMatrix[ 1 ] + translatedViewOrigin.z * surface->space->modelMatrix[ 2 ],
+					translatedViewOrigin.x * surface->space->modelMatrix[ 4 ] + translatedViewOrigin.y * surface->space->modelMatrix[ 5 ] + translatedViewOrigin.z * surface->space->modelMatrix[ 6 ],
+					translatedViewOrigin.x * surface->space->modelMatrix[ 8 ] + translatedViewOrigin.y * surface->space->modelMatrix[ 9 ] + translatedViewOrigin.z * surface->space->modelMatrix[ 10 ] );
+				EncodeModelRotation( surface->space->modelMatrix,
+					spaceCache.modelRotation[ 0 ], spaceCache.modelRotation[ 1 ] );
+				EncodeOctahedralDirection( spaceCache.localSunDirection,
+					spaceCache.sunDirection[ 0 ], spaceCache.sunDirection[ 1 ] );
+			}
 		}
-		if ( surface->space->modelDepthHack != 0.0f ) {
-			// RB_EnterModelDepthHack follows RB_EnterWeaponDepthHack in the
-			// OpenGL path and intentionally replaces its projection/depth range.
-			memcpy( surfaceProjection, view->projectionMatrix,
-				sizeof( surfaceProjection ) );
-			surfaceProjection[ 14 ] -= surface->space->modelDepthHack;
-			surfaceMinDepth = defaultDepthStart;
-			surfaceMaxDepth = 1.0f;
-		}
-		VkViewport surfaceViewport = viewport;
-		surfaceViewport.minDepth = surfaceMinDepth;
-		surfaceViewport.maxDepth = Max( surfaceMinDepth, surfaceMaxDepth );
-		SetViewport( surfaceViewport );
+		if ( !spaceCache.visible ) continue;
+		SetScissor( spaceCache.scissor );
+		SetViewport( spaceCache.viewport );
 
 		float pushConstants[ 32 ];
 		memset( pushConstants, 0, sizeof( pushConstants ) );
-		for ( int column = 0; column < 4; ++column ) {
-			for ( int row = 0; row < 4; ++row ) {
-				pushConstants[ column * 4 + row ] =
-					surfaceProjection[ 0 * 4 + row ] * surface->space->modelViewMatrix[ column * 4 + 0 ] +
-					surfaceProjection[ 1 * 4 + row ] * surface->space->modelViewMatrix[ column * 4 + 1 ] +
-					surfaceProjection[ 2 * 4 + row ] * surface->space->modelViewMatrix[ column * 4 + 2 ] +
-					surfaceProjection[ 3 * 4 + row ] * surface->space->modelViewMatrix[ column * 4 + 3 ];
-			}
-		}
-		// OpenGL clip Z is -W..W; Vulkan clip Z is 0..W.
-		for ( int column = 0; column < 4; ++column ) {
-			pushConstants[ column * 4 + 2 ] = 0.5f *
-				( pushConstants[ column * 4 + 2 ] +
-				  pushConstants[ column * 4 + 3 ] );
-		}
+		memcpy( pushConstants, spaceCache.mvp, sizeof( spaceCache.mvp ) );
 		pushConstants[ 16 ] = pushConstants[ 17 ] =
 			pushConstants[ 18 ] = pushConstants[ 19 ] = 1.0f;
 		if ( selectedStage->colorVector != NULL ) {
@@ -7194,42 +7360,17 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			pushConstants[ 25 ] = surface->materialRegisters[ matrix[ 1 ][ 1 ] ];
 			pushConstants[ 26 ] = surface->materialRegisters[ matrix[ 1 ][ 2 ] ];
 		}
-		idVec3 localSunDirection;
-		localSunDirection.Set(
-			worldSunDirection.x * surface->space->modelMatrix[ 0 ] +
-				worldSunDirection.y * surface->space->modelMatrix[ 1 ] +
-				worldSunDirection.z * surface->space->modelMatrix[ 2 ],
-			worldSunDirection.x * surface->space->modelMatrix[ 4 ] +
-				worldSunDirection.y * surface->space->modelMatrix[ 5 ] +
-				worldSunDirection.z * surface->space->modelMatrix[ 6 ],
-			worldSunDirection.x * surface->space->modelMatrix[ 8 ] +
-				worldSunDirection.y * surface->space->modelMatrix[ 9 ] +
-				worldSunDirection.z * surface->space->modelMatrix[ 10 ] );
 		if ( materialTexturesAvailable ) {
-			EncodeModelRotation( surface->space->modelMatrix,
-				pushConstants[ 23 ], pushConstants[ 27 ] );
+			pushConstants[ 23 ] = spaceCache.modelRotation[ 0 ];
+			pushConstants[ 27 ] = spaceCache.modelRotation[ 1 ];
 		} else {
-			EncodeOctahedralDirection( localSunDirection,
-				pushConstants[ 23 ], pushConstants[ 27 ] );
+			pushConstants[ 23 ] = spaceCache.sunDirection[ 0 ];
+			pushConstants[ 27 ] = spaceCache.sunDirection[ 1 ];
 		}
 		if ( selectedAtmosphereStage ) {
-			const idVec3 translatedViewOrigin(
-				view->renderView.vieworg.x - surface->space->modelMatrix[ 12 ],
-				view->renderView.vieworg.y - surface->space->modelMatrix[ 13 ],
-				view->renderView.vieworg.z - surface->space->modelMatrix[ 14 ] );
-			idVec3 localViewOrigin(
-				translatedViewOrigin.x * surface->space->modelMatrix[ 0 ] +
-					translatedViewOrigin.y * surface->space->modelMatrix[ 1 ] +
-					translatedViewOrigin.z * surface->space->modelMatrix[ 2 ],
-				translatedViewOrigin.x * surface->space->modelMatrix[ 4 ] +
-					translatedViewOrigin.y * surface->space->modelMatrix[ 5 ] +
-					translatedViewOrigin.z * surface->space->modelMatrix[ 6 ],
-				translatedViewOrigin.x * surface->space->modelMatrix[ 8 ] +
-					translatedViewOrigin.y * surface->space->modelMatrix[ 9 ] +
-					translatedViewOrigin.z * surface->space->modelMatrix[ 10 ] );
-			pushConstants[ 20 ] = localViewOrigin.x;
-			pushConstants[ 21 ] = localViewOrigin.y;
-			pushConstants[ 22 ] = localViewOrigin.z;
+			pushConstants[ 20 ] = spaceCache.localViewOrigin.x;
+			pushConstants[ 21 ] = spaceCache.localViewOrigin.y;
+			pushConstants[ 22 ] = spaceCache.localViewOrigin.z;
 		}
 		pushConstants[ 29 ] = surface->material->TestMaterialFlag(
 			MF_LOWRANGEUVCOMPRESS ) ? ST_TO_FLOAT_LOWRANGE : ST_TO_FLOAT;
@@ -7238,23 +7379,9 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			// shader does not use the generic stage color, so pass the camera in
 			// local surface space through that slot and reserve the spare scalar
 			// components for ETQW's authored water bindings.
-			const idVec3 translatedViewOrigin(
-				view->renderView.vieworg.x - surface->space->modelMatrix[ 12 ],
-				view->renderView.vieworg.y - surface->space->modelMatrix[ 13 ],
-				view->renderView.vieworg.z - surface->space->modelMatrix[ 14 ] );
-			const idVec3 localViewOrigin(
-				translatedViewOrigin.x * surface->space->modelMatrix[ 0 ] +
-					translatedViewOrigin.y * surface->space->modelMatrix[ 1 ] +
-					translatedViewOrigin.z * surface->space->modelMatrix[ 2 ],
-				translatedViewOrigin.x * surface->space->modelMatrix[ 4 ] +
-					translatedViewOrigin.y * surface->space->modelMatrix[ 5 ] +
-					translatedViewOrigin.z * surface->space->modelMatrix[ 6 ],
-				translatedViewOrigin.x * surface->space->modelMatrix[ 8 ] +
-					translatedViewOrigin.y * surface->space->modelMatrix[ 9 ] +
-					translatedViewOrigin.z * surface->space->modelMatrix[ 10 ] );
-			pushConstants[ 16 ] = localViewOrigin.x;
-			pushConstants[ 17 ] = localViewOrigin.y;
-			pushConstants[ 18 ] = localViewOrigin.z;
+			pushConstants[ 16 ] = spaceCache.localViewOrigin.x;
+			pushConstants[ 17 ] = spaceCache.localViewOrigin.y;
+			pushConstants[ 18 ] = spaceCache.localViewOrigin.z;
 			pushConstants[ 19 ] = 0.78f;
 			pushConstants[ 23 ] = 0.05f;
 			pushConstants[ 27 ] = 5.0f;
@@ -7605,7 +7732,7 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 				VkDescriptorSet overlayDescriptorSet = overlayResource->descriptorSet;
 				if ( StageUsesVulkanMaterialTextures( *overlayStage ) ) {
 					VkDescriptorSet combinedDescriptorSet = VK_NULL_HANDLE;
-					if ( GetVulkanMaterialDescriptor( *state, *overlayStage,
+					if ( GetCachedMaterialDescriptor( *overlayStage,
 						overlayImage, surface->space, combinedDescriptorSet ) ) {
 						EncodeModelRotation( surface->space->modelMatrix,
 							overlayPushConstants[ 23 ],
@@ -7620,8 +7747,7 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 					}
 				}
 				BindPipeline( overlayPipeline );
-				SetVulkanPolygonOffset( *state, frame.commandBuffer,
-					surface->material, overlayStage );
+				SetPolygonOffset( surface->material, overlayStage );
 				BindDescriptorSet( overlayDescriptorSet );
 				state->CmdPushConstants( frame.commandBuffer,
 					state->guiPipelineLayout,

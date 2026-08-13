@@ -74,6 +74,7 @@ set(ETQW_RENDERER_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RenderSystem_init.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RenderSystemBackend.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/renderer/RendererMetrics.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RendererJobs.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RuntimeSpirvCompiler.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RenderWorld.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RenderWorld_demo.cpp"

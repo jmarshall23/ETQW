@@ -10,6 +10,7 @@
 #include "RendererTypesImpl.h"
 #include "RenderSystemBackend.h"
 #include "RendererMetrics.h"
+#include "RendererJobs.h"
 #include "RuntimeSpirvCompiler.h"
 #include "VulkanBackend.h"
 #include "draw_raytracing.h"
@@ -566,6 +567,9 @@ void idRenderSystemLocal::Init() {
 		R_ARB2_ReparseRenderPrograms();
 	}
 	rbinds->Init();
+	if ( R_UseVulkanBackend() ) {
+		rendererJobs.Init();
+	}
 	// Retail starts both MegaTexture workers after images/material bindings are
 	// available and before level resources can become active.
 	megaTextureTileDecompressor->Init();
@@ -607,6 +611,7 @@ void idRenderSystemLocal::Shutdown() {
 	}
 	worlds.Clear();
 	registeredPtrs.Clear();
+	rendererJobs.Shutdown();
 
 	// Stop streaming before purging images/MegaTextures; both workers retain a
 	// pointer to the active resource while an I/O or decode job is in flight.
