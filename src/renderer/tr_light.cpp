@@ -1894,28 +1894,70 @@ namespace {
 		return r_skipWaterFogLights.GetBool() && material != NULL && material->IsFogLight() &&
 			idStr::Icmpn( material->GetName(), "fogs/waterFog", 13 ) == 0;
 	}
+
+	bool EntityVisibleBeforeSnapshot( renderEntity_t* entity, idRenderModel* model,
+		const viewDef_s* view, idBounds& visibilityBounds ) {
+		visibilityBounds.Clear();
+		if ( entity == NULL || model == NULL || view == NULL ||
+			entity->drawSpec > com_gpuSpec.GetInteger() ) {
+			return false;
+		}
+		if ( entity->numInsts > 0 ) {
+			return true;
+		}
+		visibilityBounds = !entity->bounds.IsCleared() ?
+			entity->bounds : model->Bounds( entity );
+		if ( entity->maxVisDist > 0 && r_useMaxVisDist.GetInteger() > 0 ) {
+			const int requestedDistance = r_useMaxVisDist.GetInteger();
+			const int maxVisDist = requestedDistance > 1 ?
+				requestedDistance : entity->maxVisDist;
+			const idVec3 center = visibilityBounds.IsCleared() ?
+				vec3_origin : visibilityBounds.GetCenter();
+			if ( !R_DistanceVisibility( entity->origin + center, maxVisDist,
+				entity->minVisDist, view ) ) {
+				return false;
+			}
+		}
+		if ( !visibilityBounds.IsCleared() ) {
+			float modelMatrix[ 16 ];
+			SetEntityMatrix( entity, modelMatrix );
+			if ( R_CullLocalBoxToViewdef( visibilityBounds, modelMatrix, view ) ) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
 
-viewEntity_s* R_SetEntityDefViewEntity( renderEntity_t* entity, idRenderModel* model, int entityIndex ) {
+viewEntity_s* R_SetEntityDefViewEntity( renderEntity_t* entity, idRenderModel* model,
+	int entityIndex, const idBounds* suppliedBounds ) {
 	viewDef_s* view = RB_GetViewDef();
 	if ( view == NULL ) return NULL;
 	float modelMatrix[ 16 ];
 	SetEntityMatrix( entity, modelMatrix );
 	const int numInsts = entity != NULL ? entity->numInsts : 0;
+	idBounds modelBounds;
+	modelBounds.Clear();
+	if ( suppliedBounds != NULL && !suppliedBounds->IsCleared() ) {
+		modelBounds = *suppliedBounds;
+	} else if ( model != NULL ) {
+		modelBounds = model->Bounds( entity );
+	} else if ( entity != NULL ) {
+		modelBounds = entity->bounds;
+	}
 	if ( entity != NULL ) {
 		if ( entity->drawSpec > com_gpuSpec.GetInteger() ) {
 			return NULL;
 		}
 		if ( entity->maxVisDist > 0 && r_useMaxVisDist.GetInteger() > 0 && numInsts <= 0 ) {
 			const int maxVisDist = r_useMaxVisDist.GetInteger() > 1 ? r_useMaxVisDist.GetInteger() : entity->maxVisDist;
-			const idBounds visibilityBounds = model != NULL ? model->Bounds( entity ) : entity->bounds;
-			if ( !R_DistanceVisibility( entity->origin + visibilityBounds.GetCenter(), maxVisDist, entity->minVisDist, view ) ) {
+			const idVec3 center = modelBounds.IsCleared() ? vec3_origin : modelBounds.GetCenter();
+			if ( !R_DistanceVisibility( entity->origin + center, maxVisDist, entity->minVisDist, view ) ) {
 				return NULL;
 			}
 		}
 	}
-	if ( model != NULL && numInsts <= 0 ) {
-		const idBounds modelBounds = model->Bounds( entity );
+	if ( model != NULL && numInsts <= 0 && !modelBounds.IsCleared() ) {
 		if ( R_CullLocalBoxToViewdef( modelBounds, modelMatrix, view ) ) {
 			return NULL;
 		}
@@ -1933,8 +1975,11 @@ viewEntity_s* R_SetEntityDefViewEntity( renderEntity_t* entity, idRenderModel* m
 	// Retail reserves at least 128 surface ids and an additional 33 ids beyond
 	// the model's surface count, then stores the bit set through ambSurf.
 	space->maxSurfID = Max( model != NULL ? model->NumSurfaces() + 33 : 128, 128 );
-	space->ambSurf = new unsigned int[ ( space->maxSurfID + 31 ) >> 5 ];
-	memset( space->ambSurf, 0, sizeof( unsigned int ) * ( ( space->maxSurfID + 31 ) >> 5 ) );
+	if ( !R_UseVulkanBackend() ) {
+		space->ambSurf = new unsigned int[ ( space->maxSurfID + 31 ) >> 5 ];
+		memset( space->ambSurf, 0,
+			sizeof( unsigned int ) * ( ( space->maxSurfID + 31 ) >> 5 ) );
+	}
 	space->weaponDepthHack = entity != NULL && entity->flags.weaponDepthHack;
 	space->foliageDepthHack = entity != NULL && entity->flags.foliageDepthHack;
 	space->modelDepthHack = entity != NULL ? entity->modelDepthHack : 0.0f;
@@ -1951,13 +1996,19 @@ viewEntity_s* R_SetEntityDefViewEntity( renderEntity_t* entity, idRenderModel* m
 	}
 	memcpy( space->modelMatrix, modelMatrix, sizeof( modelMatrix ) );
 	MultiplyModelView( view->worldSpace.modelViewMatrix, space->modelMatrix, space->modelViewMatrix );
-	space->scissorRect = model != NULL ? ScreenRectForBounds( model->Bounds( entity ), space->modelMatrix ) : view->scissor;
+	space->scissorRect = model != NULL && !modelBounds.IsCleared() ?
+		ScreenRectForBounds( modelBounds, space->modelMatrix ) : view->scissor;
 	space->culled = space->scissorRect.IsEmpty();
 	if ( lastViewEntity != NULL ) lastViewEntity->next = space;
 	else view->viewEntities = space;
 	lastViewEntity = space;
 	frontEndViewEntities.Append( space );
 	return space;
+}
+
+viewEntity_s* R_SetEntityDefViewEntity( renderEntity_t* entity,
+	idRenderModel* model, int entityIndex ) {
+	return R_SetEntityDefViewEntity( entity, model, entityIndex, NULL );
 }
 
 viewLight_s* R_SetLightDefViewLight( renderLight_t* light, int lightIndex ) {
@@ -2025,10 +2076,13 @@ viewLight_s* R_SetLightDefViewLight( renderLight_t* light, int lightIndex ) {
 	return vLight;
 }
 
-void R_AddDrawSurf( const srfTriangles_t* triangles, const viewEntity_s* space, const renderEntity_t* renderEntity,
-		const idMaterial* material, const idScreenRect& scissor, int surfID ) {
+drawSurf_s* R_AddDrawSurf( const srfTriangles_t* triangles, const viewEntity_s* space,
+		const renderEntity_t* renderEntity, const idMaterial* material,
+		const idScreenRect& scissor, int surfID,
+		const float* reusedMaterialRegisters = NULL ) {
 	viewDef_s* view = RB_GetViewDef();
-	if ( view == NULL || triangles == NULL || space == NULL || material == NULL || !material->IsDrawn() ) return;
+	if ( view == NULL || triangles == NULL || space == NULL || material == NULL ||
+		!material->IsDrawn() ) return NULL;
 	drawSurf_s* surface = frontEndDrawSurfaceAllocator.Alloc();
 	memset( surface, 0, sizeof( *surface ) );
 	surface->geo = triangles;
@@ -2040,7 +2094,8 @@ void R_AddDrawSurf( const srfTriangles_t* triangles, const viewEntity_s* space, 
 	surface->scissorRect = scissor;
 	const float* shaderParms = renderEntity != NULL ? renderEntity->shaderParms : view->renderView.shaderParms;
 	idSoundEmitter* referenceSound = renderEntity != NULL ? renderEntity->referenceSound : NULL;
-	const float* constantRegisters = material->ConstantRegisters( shaderParms, view );
+	const float* constantRegisters = reusedMaterialRegisters != NULL ?
+		reusedMaterialRegisters : material->ConstantRegisters( shaderParms, view );
 	if ( constantRegisters != NULL ) {
 		surface->materialRegisters = const_cast< float* >( constantRegisters );
 	} else {
@@ -2051,11 +2106,16 @@ void R_AddDrawSurf( const srfTriangles_t* triangles, const viewEntity_s* space, 
 	}
 	frontEndDrawSurfaces.Append( surface );
 	sortedDrawSurfaces.Append( surface );
+	return surface;
 }
 
 void R_AddAmbientDrawsurfs( viewEntity_s* space ) {
 	viewDef_s* view = RB_GetViewDef();
 	if ( view == NULL || space == NULL || space->model == NULL || space->culled ) return;
+	const bool streamDynamicVertices = R_UseVulkanBackend() &&
+		idStr::Icmp( space->model->Name(), "_MD5_Snapshot_" ) == 0;
+	const idMaterial* previousMaterial = NULL;
+	const float* previousMaterialRegisters = NULL;
 	for ( int surfaceIndex = 0; surfaceIndex < space->model->NumSurfaces(); ++surfaceIndex ) {
 		const modelSurface_t* modelSurface = space->model->Surface( surfaceIndex );
 		if ( modelSurface == NULL || modelSurface->geometry == NULL ) continue;
@@ -2071,9 +2131,8 @@ void R_AddAmbientDrawsurfs( viewEntity_s* space ) {
 		// Static caches may have been purged since model finalization.  Recreate
 		// them on first visible use and mark them live before any ambient or
 		// light-interaction draw references the surface.
-		const bool streamDynamicVertices = R_UseVulkanBackend() &&
-			idStr::Icmp( space->model->Name(), "_MD5_Snapshot_" ) == 0;
-		if ( streamDynamicVertices && geometry->verts != NULL && geometry->numVerts > 0 ) {
+		if ( streamDynamicVertices && !geometry->hardwareSkinnedSurface &&
+			geometry->verts != NULL && geometry->numVerts > 0 ) {
 			geometry->ambientCache = vertexCache.AllocFrameTemp( geometry->verts,
 				geometry->numVerts * sizeof( geometry->verts[ 0 ] ) );
 		} else if ( geometry->ambientCache == NULL && geometry->verts != NULL && geometry->numVerts > 0 ) {
@@ -2086,7 +2145,15 @@ void R_AddAmbientDrawsurfs( viewEntity_s* space ) {
 			vertexCache.Touch( geometry->ambientCache );
 		}
 		if ( geometry->indexCache != NULL ) vertexCache.Touch( geometry->indexCache );
-		R_AddDrawSurf( geometry, space, space->entityDef, material, space->scissorRect, modelSurface->id );
+		if ( geometry->weightCache != NULL ) vertexCache.Touch( geometry->weightCache );
+		const float* reusedRegisters = material == previousMaterial ?
+			previousMaterialRegisters : NULL;
+		drawSurf_s* drawSurface = R_AddDrawSurf( geometry, space,
+			space->entityDef, material, space->scissorRect, modelSurface->id,
+			reusedRegisters );
+		previousMaterial = material;
+		previousMaterialRegisters = drawSurface != NULL ?
+			drawSurface->materialRegisters : NULL;
 	}
 }
 
@@ -2274,6 +2341,11 @@ void R_BuildDrawView( idRenderWorldLocal* renderWorld, const renderView_t* rende
 			entity->callback( entity, renderView, lastModifiedGameTime );
 		}
 		if ( entity->hModel == NULL ) continue;
+		idBounds visibilityBounds;
+		if ( !EntityVisibleBeforeSnapshot( entity, entity->hModel, view,
+			visibilityBounds ) ) {
+			continue;
+		}
 		idRenderModel* drawModel = entity->hModel;
 		if ( R_GetStuffModelSnapshot( entity->hModel, entity, view, drawModel ) && drawModel == NULL ) continue;
 		idRenderModel* dynamicModel = renderWorld->BackendInstantiateDynamicModel(
@@ -2282,7 +2354,8 @@ void R_BuildDrawView( idRenderWorldLocal* renderWorld, const renderView_t* rende
 		if ( dynamicModel != drawModel ) {
 			drawModel = dynamicModel;
 		}
-		R_SetEntityDefViewEntity( entity, drawModel, entityIndex );
+		R_SetEntityDefViewEntity( entity, drawModel, entityIndex,
+			&visibilityBounds );
 	}
 	}
 	{

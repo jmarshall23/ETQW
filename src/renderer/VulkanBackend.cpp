@@ -40,6 +40,9 @@ const VkDeviceSize VULKAN_GUI_INDEX_BYTES = 16 * 1024 * 1024;
 // 22 MiB. One persistent arena per frame avoids allocation, mapping and a
 // queue-idle submission for every streamed tile mip.
 const VkDeviceSize VULKAN_IMAGE_UPLOAD_BYTES = 32 * 1024 * 1024;
+const VkDeviceSize VULKAN_JOINT_BUFFER_BYTES = 4 * 1024 * 1024;
+const VkDeviceSize VULKAN_JOINT_PALETTE_BYTES =
+	MAX_JOINTS_PER_MESH * sizeof( idJointMat );
 const int VULKAN_MATERIAL_TEXTURES = 5;
 
 idCVar r_vkValidation(
@@ -86,6 +89,12 @@ struct sdVulkanFrame {
 	VkDeviceSize		imageUploadOffset;
 	bool				imageUploadRecorded;
 	bool				imageUploadOverflowWarned;
+	VkBuffer			jointBuffer;
+	VkDeviceMemory	jointMemory;
+	void*				jointMapped;
+	VkDeviceSize		jointOffset;
+	bool				jointOverflowWarned;
+	VkDescriptorSet	jointDescriptorSet;
 };
 
 struct sdVulkanImageResource {
@@ -312,6 +321,7 @@ struct sdVulkanBackendState {
 	unsigned int				queueFamilyIndex;
 	char					deviceName[ VK_MAX_PHYSICAL_DEVICE_NAME_SIZE ];
 	bool					fillModeNonSolid;
+	VkDeviceSize			jointUniformAlignment;
 
 	VkSwapchainKHR				swapchain;
 	VkFormat				swapchainFormat;
@@ -416,6 +426,7 @@ struct sdVulkanBackendState {
 	unsigned int				worldMissingResource;
 	unsigned int				worldMegaDrawCalls;
 	unsigned int				worldSkinnedDrawCalls;
+	unsigned int				worldGpuSkinnedDrawCalls;
 	unsigned int				worldSkyDrawCalls;
 	unsigned int				worldStageDrawCalls;
 	unsigned int				worldWaterDrawCalls;
@@ -439,6 +450,7 @@ struct sdVulkanBackendState {
 	idList< sdVulkanImageResource > frameRetiredImageResources[ NUM_VULKAN_FRAMES ];
 	idList< sdVulkanBufferResource > frameRetiredBufferResources[ NUM_VULKAN_FRAMES ];
 	VkDescriptorSetLayout		guiDescriptorSetLayout;
+	VkDescriptorSetLayout		jointDescriptorSetLayout;
 	VkDescriptorPool			guiDescriptorPool;
 	VkPipelineLayout			guiPipelineLayout;
 	VkPipeline				guiPipeline;
@@ -462,6 +474,22 @@ struct sdVulkanBackendState {
 	VkPipeline				worldSkyboxPipeline;
 	VkPipeline				worldSkyboxAlphaPipeline;
 	VkPipeline				worldSkyboxAddPipeline;
+	VkPipeline				worldSkinnedPipeline;
+	VkPipeline				worldSkinnedDepthPipeline;
+	VkPipeline				worldSkinnedAlphaPipeline;
+	VkPipeline				worldSkinnedAddPipeline;
+	VkPipeline				worldSkinnedAlphaAddPipeline;
+	VkPipeline				worldSkinnedMultiplyPipeline;
+	VkPipeline				worldSkinnedMegaPipeline;
+	VkPipeline				worldSkinnedAtmospherePipeline;
+	VkPipeline				worldSkinnedMaterialPipeline;
+	VkPipeline				worldSkinnedMaterialAlphaPipeline;
+	VkPipeline				worldSkinnedMaterialAddPipeline;
+	VkPipeline				worldSkinnedWaterPipeline;
+	VkPipeline				worldSkinnedHeatHazePipeline;
+	VkPipeline				worldSkinnedSkyboxPipeline;
+	VkPipeline				worldSkinnedSkyboxAlphaPipeline;
+	VkPipeline				worldSkinnedSkyboxAddPipeline;
 	VkPipeline				skyPipeline;
 	VkFormat					guiPipelineFormat;
 
@@ -571,6 +599,7 @@ struct sdVulkanBackendState {
 		queueFamilyIndex = UINT_MAX;
 		deviceName[ 0 ] = '\0';
 		fillModeNonSolid = false;
+		jointUniformAlignment = 1;
 		swapchain = VK_NULL_HANDLE;
 		swapchainFormat = VK_FORMAT_UNDEFINED;
 		colorSpace = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
@@ -620,12 +649,14 @@ struct sdVulkanBackendState {
 		worldMissingResource = 0;
 		worldMegaDrawCalls = 0;
 		worldSkinnedDrawCalls = 0;
+		worldGpuSkinnedDrawCalls = 0;
 		worldSkyDrawCalls = 0;
 		worldStageDrawCalls = 0;
 		worldWaterDrawCalls = 0;
 		worldStuffDrawCalls = 0;
 		worldWaterDescriptorMisses = 0;
 		guiDescriptorSetLayout = VK_NULL_HANDLE;
+		jointDescriptorSetLayout = VK_NULL_HANDLE;
 		guiDescriptorPool = VK_NULL_HANDLE;
 		guiPipelineLayout = VK_NULL_HANDLE;
 		guiPipeline = VK_NULL_HANDLE;
@@ -649,6 +680,22 @@ struct sdVulkanBackendState {
 		worldSkyboxPipeline = VK_NULL_HANDLE;
 		worldSkyboxAlphaPipeline = VK_NULL_HANDLE;
 		worldSkyboxAddPipeline = VK_NULL_HANDLE;
+		worldSkinnedPipeline = VK_NULL_HANDLE;
+		worldSkinnedDepthPipeline = VK_NULL_HANDLE;
+		worldSkinnedAlphaPipeline = VK_NULL_HANDLE;
+		worldSkinnedAddPipeline = VK_NULL_HANDLE;
+		worldSkinnedAlphaAddPipeline = VK_NULL_HANDLE;
+		worldSkinnedMultiplyPipeline = VK_NULL_HANDLE;
+		worldSkinnedMegaPipeline = VK_NULL_HANDLE;
+		worldSkinnedAtmospherePipeline = VK_NULL_HANDLE;
+		worldSkinnedMaterialPipeline = VK_NULL_HANDLE;
+		worldSkinnedMaterialAlphaPipeline = VK_NULL_HANDLE;
+		worldSkinnedMaterialAddPipeline = VK_NULL_HANDLE;
+		worldSkinnedWaterPipeline = VK_NULL_HANDLE;
+		worldSkinnedHeatHazePipeline = VK_NULL_HANDLE;
+		worldSkinnedSkyboxPipeline = VK_NULL_HANDLE;
+		worldSkinnedSkyboxAlphaPipeline = VK_NULL_HANDLE;
+		worldSkinnedSkyboxAddPipeline = VK_NULL_HANDLE;
 		skyPipeline = VK_NULL_HANDLE;
 		guiPipelineFormat = VK_FORMAT_UNDEFINED;
 
@@ -1232,6 +1279,9 @@ bool SelectPhysicalDevice( sdVulkanBackendState& state ) {
 			idStr::Copynz( state.deviceName, properties.deviceName,
 				sizeof( state.deviceName ) );
 			state.fillModeNonSolid = features2.features.fillModeNonSolid == VK_TRUE;
+			state.jointUniformAlignment =
+				properties.limits.minUniformBufferOffsetAlignment > 1 ?
+				properties.limits.minUniformBufferOffsetAlignment : 1;
 		}
 	}
 
@@ -1856,6 +1906,16 @@ void DestroyFrames( sdVulkanBackendState& state ) {
 		if ( frame.imageUploadMemory != VK_NULL_HANDLE && state.FreeMemory != NULL ) {
 			state.FreeMemory( state.device, frame.imageUploadMemory, NULL );
 		}
+		if ( frame.jointMapped != NULL && state.UnmapMemory != NULL ) {
+			state.UnmapMemory( state.device, frame.jointMemory );
+			frame.jointMapped = NULL;
+		}
+		if ( frame.jointBuffer != VK_NULL_HANDLE && state.DestroyBuffer != NULL ) {
+			state.DestroyBuffer( state.device, frame.jointBuffer, NULL );
+		}
+		if ( frame.jointMemory != VK_NULL_HANDLE && state.FreeMemory != NULL ) {
+			state.FreeMemory( state.device, frame.jointMemory, NULL );
+		}
 		if ( frame.commandPool != VK_NULL_HANDLE && state.DestroyCommandPool != NULL ) {
 			state.DestroyCommandPool( state.device, frame.commandPool, NULL );
 		}
@@ -1931,6 +1991,39 @@ bool CreateFrames( sdVulkanBackendState& state ) {
 				"vkMapMemory(image upload arena)" ) ) {
 			return false;
 		}
+		if ( !CreateBufferAllocation( state, VULKAN_JOINT_BUFFER_BYTES,
+			VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+			frame.jointBuffer, frame.jointMemory ) ||
+			!CheckVulkanResult( state.MapMemory( state.device, frame.jointMemory,
+				0, VULKAN_JOINT_BUFFER_BYTES, 0, &frame.jointMapped ),
+				"vkMapMemory(joint palette arena)" ) ) {
+			return false;
+		}
+		VkDescriptorSetAllocateInfo jointAllocateInfo;
+		memset( &jointAllocateInfo, 0, sizeof( jointAllocateInfo ) );
+		jointAllocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+		jointAllocateInfo.descriptorPool = state.guiDescriptorPool;
+		jointAllocateInfo.descriptorSetCount = 1;
+		jointAllocateInfo.pSetLayouts = &state.jointDescriptorSetLayout;
+		if ( !CheckVulkanResult( state.AllocateDescriptorSets( state.device,
+			&jointAllocateInfo, &frame.jointDescriptorSet ),
+			"vkAllocateDescriptorSets(joint palette)" ) ) {
+			return false;
+		}
+		VkDescriptorBufferInfo jointBufferInfo;
+		jointBufferInfo.buffer = frame.jointBuffer;
+		jointBufferInfo.offset = 0;
+		jointBufferInfo.range = VULKAN_JOINT_PALETTE_BYTES;
+		VkWriteDescriptorSet jointWrite;
+		memset( &jointWrite, 0, sizeof( jointWrite ) );
+		jointWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+		jointWrite.dstSet = frame.jointDescriptorSet;
+		jointWrite.dstBinding = 0;
+		jointWrite.descriptorCount = 1;
+		jointWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;
+		jointWrite.pBufferInfo = &jointBufferInfo;
+		state.UpdateDescriptorSets( state.device, 1, &jointWrite, 0, NULL );
 		frame.guiVertexOffset = 0;
 		frame.guiIndexOffset = 0;
 		frame.guiVertexOverflowWarned = false;
@@ -1938,6 +2031,8 @@ bool CreateFrames( sdVulkanBackendState& state ) {
 		frame.imageUploadOffset = 0;
 		frame.imageUploadRecorded = false;
 		frame.imageUploadOverflowWarned = false;
+		frame.jointOffset = 0;
+		frame.jointOverflowWarned = false;
 	}
 	return true;
 }
@@ -2297,6 +2392,33 @@ bool CompileVulkanShaderModule( sdVulkanBackendState& state,
 void DestroyGuiResources( sdVulkanBackendState& state ) {
 	state.materialDescriptors.Clear();
 	state.materialDescriptorHash.Clear();
+	VkPipeline* skinnedPipelines[] = {
+		&state.worldSkinnedPipeline,
+		&state.worldSkinnedDepthPipeline,
+		&state.worldSkinnedAlphaPipeline,
+		&state.worldSkinnedAddPipeline,
+		&state.worldSkinnedAlphaAddPipeline,
+		&state.worldSkinnedMultiplyPipeline,
+		&state.worldSkinnedMegaPipeline,
+		&state.worldSkinnedAtmospherePipeline,
+		&state.worldSkinnedMaterialPipeline,
+		&state.worldSkinnedMaterialAlphaPipeline,
+		&state.worldSkinnedMaterialAddPipeline,
+		&state.worldSkinnedWaterPipeline,
+		&state.worldSkinnedHeatHazePipeline,
+		&state.worldSkinnedSkyboxPipeline,
+		&state.worldSkinnedSkyboxAlphaPipeline,
+		&state.worldSkinnedSkyboxAddPipeline
+	};
+	for ( unsigned int pipelineIndex = 0;
+		pipelineIndex < sizeof( skinnedPipelines ) / sizeof( skinnedPipelines[ 0 ] );
+		++pipelineIndex ) {
+		if ( *skinnedPipelines[ pipelineIndex ] != VK_NULL_HANDLE ) {
+			state.DestroyPipeline( state.device,
+				*skinnedPipelines[ pipelineIndex ], NULL );
+			*skinnedPipelines[ pipelineIndex ] = VK_NULL_HANDLE;
+		}
+	}
 	if ( state.toolModelWireDepthBlendPipeline != VK_NULL_HANDLE ) {
 		state.DestroyPipeline( state.device,
 			state.toolModelWireDepthBlendPipeline, NULL );
@@ -2442,6 +2564,11 @@ void DestroyGuiResources( sdVulkanBackendState& state ) {
 		state.DestroyDescriptorPool( state.device, state.guiDescriptorPool, NULL );
 		state.guiDescriptorPool = VK_NULL_HANDLE;
 	}
+	if ( state.jointDescriptorSetLayout != VK_NULL_HANDLE ) {
+		state.DestroyDescriptorSetLayout( state.device,
+			state.jointDescriptorSetLayout, NULL );
+		state.jointDescriptorSetLayout = VK_NULL_HANDLE;
+	}
 	if ( state.guiDescriptorSetLayout != VK_NULL_HANDLE ) {
 		state.DestroyDescriptorSetLayout( state.device,
 			state.guiDescriptorSetLayout, NULL );
@@ -2456,7 +2583,8 @@ bool CreateWorldPipelineVariant( sdVulkanBackendState& state,
 	bool depthWrite, bool vertexless,
 	VkPipeline& pipeline, VkCompareOp depthCompare = VK_COMPARE_OP_LESS_OR_EQUAL,
 	bool colorWrite = true,
-	VkPolygonMode polygonMode = VK_POLYGON_MODE_FILL ) {
+	VkPolygonMode polygonMode = VK_POLYGON_MODE_FILL,
+	bool skinned = false ) {
 	VkShaderModule vertexModule = VK_NULL_HANDLE;
 	VkShaderModule fragmentModule = VK_NULL_HANDLE;
 	if ( !CompileVulkanShaderModule( state, vertexShader,
@@ -2482,11 +2610,14 @@ bool CreateWorldPipelineVariant( sdVulkanBackendState& state,
 	shaderStages[ 1 ].module = fragmentModule;
 	shaderStages[ 1 ].pName = "main";
 
-	VkVertexInputBindingDescription vertexBinding;
-	vertexBinding.binding = 0;
-	vertexBinding.stride = sizeof( idDrawVert );
-	vertexBinding.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
-	VkVertexInputAttributeDescription attributes[ 8 ];
+	VkVertexInputBindingDescription vertexBindings[ 2 ];
+	vertexBindings[ 0 ].binding = 0;
+	vertexBindings[ 0 ].stride = sizeof( idDrawVert );
+	vertexBindings[ 0 ].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+	vertexBindings[ 1 ].binding = 1;
+	vertexBindings[ 1 ].stride = sizeof( vertWeight_t );
+	vertexBindings[ 1 ].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+	VkVertexInputAttributeDescription attributes[ 10 ];
 	memset( attributes, 0, sizeof( attributes ) );
 	attributes[ 0 ].location = 0;
 	attributes[ 0 ].binding = 0;
@@ -2520,12 +2651,20 @@ bool CreateWorldPipelineVariant( sdVulkanBackendState& state,
 	attributes[ 7 ].binding = 0;
 	attributes[ 7 ].format = VK_FORMAT_R8_UINT;
 	attributes[ 7 ].offset = 26;
+	attributes[ 8 ].location = 8;
+	attributes[ 8 ].binding = 1;
+	attributes[ 8 ].format = VK_FORMAT_R8G8B8A8_UINT;
+	attributes[ 8 ].offset = 0;
+	attributes[ 9 ].location = 9;
+	attributes[ 9 ].binding = 1;
+	attributes[ 9 ].format = VK_FORMAT_R8G8B8A8_UNORM;
+	attributes[ 9 ].offset = MAX_WEIGHTS_PER_VERT;
 	VkPipelineVertexInputStateCreateInfo vertexInput;
 	memset( &vertexInput, 0, sizeof( vertexInput ) );
 	vertexInput.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-	vertexInput.vertexBindingDescriptionCount = vertexless ? 0 : 1;
-	vertexInput.pVertexBindingDescriptions = vertexless ? NULL : &vertexBinding;
-	vertexInput.vertexAttributeDescriptionCount = vertexless ? 0 : 8;
+	vertexInput.vertexBindingDescriptionCount = vertexless ? 0 : ( skinned ? 2 : 1 );
+	vertexInput.pVertexBindingDescriptions = vertexless ? NULL : vertexBindings;
+	vertexInput.vertexAttributeDescriptionCount = vertexless ? 0 : ( skinned ? 10 : 8 );
 	vertexInput.pVertexAttributeDescriptions = vertexless ? NULL : attributes;
 	VkPipelineInputAssemblyStateCreateInfo inputAssembly;
 	memset( &inputAssembly, 0, sizeof( inputAssembly ) );
@@ -2674,6 +2813,84 @@ bool CreateWorldPipeline( sdVulkanBackendState& state ) {
 		CreateWorldPipelineVariant( state, "vkprogs/world/sky.vert",
 			"vkprogs/world/sky.frag", VK_BLEND_FACTOR_ONE,
 			VK_BLEND_FACTOR_ZERO, false, false, true, state.skyPipeline );
+}
+
+bool CreateSkinnedWorldPipelineVariant( sdVulkanBackendState& state,
+	const char* vertexShader, const char* fragmentShader,
+	VkBlendFactor sourceBlend, VkBlendFactor destinationBlend, bool depthTest,
+	bool depthWrite, VkPipeline& pipeline,
+	VkCompareOp depthCompare = VK_COMPARE_OP_LESS_OR_EQUAL,
+	bool colorWrite = true ) {
+	return CreateWorldPipelineVariant( state, vertexShader, fragmentShader,
+		sourceBlend, destinationBlend, depthTest, depthWrite, false, pipeline,
+		depthCompare, colorWrite, VK_POLYGON_MODE_FILL, true );
+}
+
+bool CreateSkinnedWorldPipelines( sdVulkanBackendState& state ) {
+	return CreateSkinnedWorldPipelineVariant( state,
+		"vkprogs/world/skinned_ambient.vert", "vkprogs/world/ambient.frag",
+		VK_BLEND_FACTOR_ONE, VK_BLEND_FACTOR_ZERO, true, true,
+		state.worldSkinnedDepthPipeline, VK_COMPARE_OP_LESS_OR_EQUAL, false ) &&
+		CreateSkinnedWorldPipelineVariant( state,
+			"vkprogs/world/skinned_ambient.vert", "vkprogs/world/ambient.frag",
+			VK_BLEND_FACTOR_ONE, VK_BLEND_FACTOR_ZERO, true, true,
+			state.worldSkinnedPipeline ) &&
+		CreateSkinnedWorldPipelineVariant( state,
+			"vkprogs/world/skinned_trivial.vert", "vkprogs/world/trivial.frag",
+			VK_BLEND_FACTOR_SRC_ALPHA, VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA,
+			true, false, state.worldSkinnedAlphaPipeline ) &&
+		CreateSkinnedWorldPipelineVariant( state,
+			"vkprogs/world/skinned_trivial.vert", "vkprogs/world/trivial.frag",
+			VK_BLEND_FACTOR_ONE, VK_BLEND_FACTOR_ONE, true, false,
+			state.worldSkinnedAddPipeline ) &&
+		CreateSkinnedWorldPipelineVariant( state,
+			"vkprogs/world/skinned_trivial.vert", "vkprogs/world/trivial.frag",
+			VK_BLEND_FACTOR_SRC_ALPHA, VK_BLEND_FACTOR_ONE, true, false,
+			state.worldSkinnedAlphaAddPipeline ) &&
+		CreateSkinnedWorldPipelineVariant( state,
+			"vkprogs/world/skinned_trivial.vert", "vkprogs/world/decal_multiply.frag",
+			VK_BLEND_FACTOR_DST_COLOR, VK_BLEND_FACTOR_ZERO, true, false,
+			state.worldSkinnedMultiplyPipeline ) &&
+		CreateSkinnedWorldPipelineVariant( state,
+			"vkprogs/world/skinned_mega.vert", "vkprogs/world/mega.frag",
+			VK_BLEND_FACTOR_SRC_ALPHA, VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA,
+			true, true, state.worldSkinnedMegaPipeline ) &&
+		CreateSkinnedWorldPipelineVariant( state,
+			"vkprogs/world/skinned_atmosphere.vert", "vkprogs/world/atmosphere.frag",
+			VK_BLEND_FACTOR_ONE, VK_BLEND_FACTOR_ONE, true, false,
+			state.worldSkinnedAtmospherePipeline ) &&
+		CreateSkinnedWorldPipelineVariant( state,
+			"vkprogs/world/skinned_material.vert", "vkprogs/world/material.frag",
+			VK_BLEND_FACTOR_ONE, VK_BLEND_FACTOR_ZERO, true, true,
+			state.worldSkinnedMaterialPipeline ) &&
+		CreateSkinnedWorldPipelineVariant( state,
+			"vkprogs/world/skinned_material.vert", "vkprogs/world/material.frag",
+			VK_BLEND_FACTOR_SRC_ALPHA, VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA,
+			true, false, state.worldSkinnedMaterialAlphaPipeline ) &&
+		CreateSkinnedWorldPipelineVariant( state,
+			"vkprogs/world/skinned_material.vert", "vkprogs/world/material.frag",
+			VK_BLEND_FACTOR_ONE, VK_BLEND_FACTOR_ONE, true, false,
+			state.worldSkinnedMaterialAddPipeline ) &&
+		CreateSkinnedWorldPipelineVariant( state,
+			"vkprogs/world/skinned_water.vert", "vkprogs/world/water.frag",
+			VK_BLEND_FACTOR_ONE, VK_BLEND_FACTOR_ZERO, true, true,
+			state.worldSkinnedWaterPipeline ) &&
+		CreateSkinnedWorldPipelineVariant( state,
+			"vkprogs/world/skinned_heat_haze.vert", "vkprogs/world/heat_haze.frag",
+			VK_BLEND_FACTOR_ONE, VK_BLEND_FACTOR_ZERO, true, false,
+			state.worldSkinnedHeatHazePipeline ) &&
+		CreateSkinnedWorldPipelineVariant( state,
+			"vkprogs/world/skinned_skybox.vert", "vkprogs/world/skybox.frag",
+			VK_BLEND_FACTOR_ONE, VK_BLEND_FACTOR_ZERO, true, false,
+			state.worldSkinnedSkyboxPipeline ) &&
+		CreateSkinnedWorldPipelineVariant( state,
+			"vkprogs/world/skinned_skybox.vert", "vkprogs/world/skybox.frag",
+			VK_BLEND_FACTOR_SRC_ALPHA, VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA,
+			true, false, state.worldSkinnedSkyboxAlphaPipeline ) &&
+		CreateSkinnedWorldPipelineVariant( state,
+			"vkprogs/world/skinned_skybox.vert", "vkprogs/world/skybox.frag",
+			VK_BLEND_FACTOR_ONE, VK_BLEND_FACTOR_ONE, true, false,
+			state.worldSkinnedSkyboxAddPipeline );
 }
 
 bool CreateToolPipelineVariant( sdVulkanBackendState& state, bool depthTest,
@@ -2871,17 +3088,36 @@ bool CreateGuiResources( sdVulkanBackendState& state ) {
 		"vkCreateDescriptorSetLayout(gui)" ) ) {
 		return false;
 	}
+	VkDescriptorSetLayoutBinding jointBinding;
+	memset( &jointBinding, 0, sizeof( jointBinding ) );
+	jointBinding.binding = 0;
+	jointBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;
+	jointBinding.descriptorCount = 1;
+	jointBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+	VkDescriptorSetLayoutCreateInfo jointSetLayoutInfo;
+	memset( &jointSetLayoutInfo, 0, sizeof( jointSetLayoutInfo ) );
+	jointSetLayoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+	jointSetLayoutInfo.bindingCount = 1;
+	jointSetLayoutInfo.pBindings = &jointBinding;
+	if ( !CheckVulkanResult( state.CreateDescriptorSetLayout( state.device,
+		&jointSetLayoutInfo, NULL, &state.jointDescriptorSetLayout ),
+		"vkCreateDescriptorSetLayout(joint palette)" ) ) {
+		DestroyGuiResources( state );
+		return false;
+	}
 
-	VkDescriptorPoolSize poolSize;
-	poolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-	poolSize.descriptorCount = 16384 * VULKAN_MATERIAL_TEXTURES;
+	VkDescriptorPoolSize poolSizes[ 2 ];
+	poolSizes[ 0 ].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+	poolSizes[ 0 ].descriptorCount = 16384 * VULKAN_MATERIAL_TEXTURES;
+	poolSizes[ 1 ].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;
+	poolSizes[ 1 ].descriptorCount = NUM_VULKAN_FRAMES;
 	VkDescriptorPoolCreateInfo poolInfo;
 	memset( &poolInfo, 0, sizeof( poolInfo ) );
 	poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 	poolInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
-	poolInfo.maxSets = 16384;
-	poolInfo.poolSizeCount = 1;
-	poolInfo.pPoolSizes = &poolSize;
+	poolInfo.maxSets = 16384 + NUM_VULKAN_FRAMES;
+	poolInfo.poolSizeCount = 2;
+	poolInfo.pPoolSizes = poolSizes;
 	if ( !CheckVulkanResult( state.CreateDescriptorPool( state.device,
 		&poolInfo, NULL, &state.guiDescriptorPool ),
 		"vkCreateDescriptorPool(gui)" ) ) {
@@ -2897,8 +3133,12 @@ bool CreateGuiResources( sdVulkanBackendState& state ) {
 	VkPipelineLayoutCreateInfo pipelineLayoutInfo;
 	memset( &pipelineLayoutInfo, 0, sizeof( pipelineLayoutInfo ) );
 	pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-	pipelineLayoutInfo.setLayoutCount = 1;
-	pipelineLayoutInfo.pSetLayouts = &state.guiDescriptorSetLayout;
+	VkDescriptorSetLayout descriptorSetLayouts[ 2 ] = {
+		state.guiDescriptorSetLayout,
+		state.jointDescriptorSetLayout
+	};
+	pipelineLayoutInfo.setLayoutCount = 2;
+	pipelineLayoutInfo.pSetLayouts = descriptorSetLayouts;
 	pipelineLayoutInfo.pushConstantRangeCount = 1;
 	pipelineLayoutInfo.pPushConstantRanges = &pushRange;
 	if ( !CheckVulkanResult( state.CreatePipelineLayout( state.device,
@@ -3064,7 +3304,7 @@ bool CreateGuiResources( sdVulkanBackendState& state ) {
 		DestroyGuiResources( state );
 		return false;
 	}
-	if ( !CreateWorldPipeline( state ) ) {
+	if ( !CreateWorldPipeline( state ) || !CreateSkinnedWorldPipelines( state ) ) {
 		DestroyGuiResources( state );
 		return false;
 	}
@@ -4067,12 +4307,13 @@ void sdVulkanBackend::Shutdown() {
 		state->worldSurfaceCandidates, state->worldCacheReady,
 		state->worldMaterialReady, state->worldResourceReady );
 	common->Printf( "Vulkan world skips: %u geometry, %u cache, %u material, %u resource; "
-		"special draws: %u depth, %u MegaTexture, %u CPU-skinned, %u sky, "
+		"special draws: %u depth, %u MegaTexture, %u CPU-skinned, %u GPU-skinned, %u sky, "
 		"%u extra stages, %u water, %u stuff (%u water descriptor misses)\n",
 		state->worldMissingGeometry, state->worldMissingCache,
 		state->worldMissingMaterial, state->worldMissingResource,
 		state->worldDepthDrawCalls,
 		state->worldMegaDrawCalls, state->worldSkinnedDrawCalls,
+		state->worldGpuSkinnedDrawCalls,
 		state->worldSkyDrawCalls, state->worldStageDrawCalls,
 		state->worldWaterDrawCalls, state->worldStuffDrawCalls,
 		state->worldWaterDescriptorMisses );
@@ -4175,6 +4416,8 @@ bool sdVulkanBackend::BeginFrame( int width, int height ) {
 	frame.imageUploadOffset = 0;
 	frame.imageUploadRecorded = false;
 	frame.imageUploadOverflowWarned = false;
+	frame.jointOffset = 0;
+	frame.jointOverflowWarned = false;
 	VkResult acquireResult;
 	{
 		RENDER_METRIC_SCOPE( "Vulkan acquire swapchain image" );
@@ -6323,6 +6566,165 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 	idList< sdRayTracingGeometry > rayTracingWaterGeometries;
 	rayTracingGeometries.SetGranularity( 256 );
 	rayTracingWaterGeometries.SetGranularity( 32 );
+	const bool debugMaterials = r_vkDebugMaterials.GetBool();
+	const float defaultDepthStart = idMath::ClampFloat( 0.0f, 1.0f,
+		cvarSystem->GetCVarFloat( "r_depthRangeStartDefault" ) );
+	const float weaponDepthEnd = idMath::ClampFloat( 0.0f, 1.0f,
+		cvarSystem->GetCVarFloat( "r_depthRangeWeaponHackEnd" ) );
+	const float zNear = Max( cvarSystem->GetCVarFloat( "r_znear" ), 0.001f );
+	const float weaponDepthScale = cvarSystem->GetCVarFloat(
+		"r_depthRangeWeaponHackScale" );
+	const int megaFadeMilliseconds = Max( 0,
+		cvarSystem->GetCVarInteger( "r_megaFadeTime" ) );
+	idVec3 worldSunDirection( 0.35f, 0.45f, 0.82f );
+	if ( view->atmosphere != NULL ) {
+		worldSunDirection = view->atmosphere->GetSunDirection();
+	}
+
+	struct materialSelectionCacheEntry_t {
+		const idMaterial*		material;
+		const float*			registers;
+		const materialStage_t*	stage;
+		idImage*				image;
+		idMegaTexture*			megaTexture;
+		bool					atmosphere;
+		bool					water;
+		bool					heatHaze;
+		bool					stuffGrass;
+		bool					skybox;
+		bool					foggyWaterUnderside;
+	};
+	const int MATERIAL_SELECTION_CACHE_SIZE = 64;
+	materialSelectionCacheEntry_t materialSelectionCache[
+		MATERIAL_SELECTION_CACHE_SIZE ];
+	memset( materialSelectionCache, 0, sizeof( materialSelectionCache ) );
+	VkPipeline submittedPipeline = VK_NULL_HANDLE;
+	VkDescriptorSet submittedDescriptorSet = VK_NULL_HANDLE;
+	VkViewport submittedViewport = viewport;
+	bool submittedViewportValid = true;
+	VkRect2D submittedScissor;
+	bool submittedScissorValid = false;
+	VkBuffer submittedVertexBuffer = VK_NULL_HANDLE;
+	VkDeviceSize submittedVertexOffset = 0;
+	VkBuffer submittedWeightBuffer = VK_NULL_HANDLE;
+	VkDeviceSize submittedWeightOffset = 0;
+	VkBuffer submittedIndexBuffer = VK_NULL_HANDLE;
+	VkDeviceSize submittedIndexOffset = 0;
+	unsigned int submittedJointOffset = UINT_MAX;
+	bool submitHardwareSkinning = false;
+	auto ResolveSkinnedPipeline = [&]( VkPipeline pipeline ) {
+		if ( !submitHardwareSkinning ) return pipeline;
+		if ( pipeline == state->worldPipeline ) return state->worldSkinnedPipeline;
+		if ( pipeline == state->worldDepthPipeline ) return state->worldSkinnedDepthPipeline;
+		if ( pipeline == state->worldAlphaPipeline ) return state->worldSkinnedAlphaPipeline;
+		if ( pipeline == state->worldAddPipeline ) return state->worldSkinnedAddPipeline;
+		if ( pipeline == state->worldAlphaAddPipeline ) return state->worldSkinnedAlphaAddPipeline;
+		if ( pipeline == state->worldMultiplyPipeline ) return state->worldSkinnedMultiplyPipeline;
+		if ( pipeline == state->worldMegaPipeline ) return state->worldSkinnedMegaPipeline;
+		if ( pipeline == state->worldAtmospherePipeline ) return state->worldSkinnedAtmospherePipeline;
+		if ( pipeline == state->worldMaterialPipeline ) return state->worldSkinnedMaterialPipeline;
+		if ( pipeline == state->worldMaterialAlphaPipeline ) return state->worldSkinnedMaterialAlphaPipeline;
+		if ( pipeline == state->worldMaterialAddPipeline ) return state->worldSkinnedMaterialAddPipeline;
+		if ( pipeline == state->worldWaterPipeline ) return state->worldSkinnedWaterPipeline;
+		if ( pipeline == state->worldHeatHazePipeline ) return state->worldSkinnedHeatHazePipeline;
+		if ( pipeline == state->worldSkyboxPipeline ) return state->worldSkinnedSkyboxPipeline;
+		if ( pipeline == state->worldSkyboxAlphaPipeline ) return state->worldSkinnedSkyboxAlphaPipeline;
+		if ( pipeline == state->worldSkyboxAddPipeline ) return state->worldSkinnedSkyboxAddPipeline;
+		return pipeline;
+	};
+	auto BindPipeline = [&]( VkPipeline pipeline ) {
+		pipeline = ResolveSkinnedPipeline( pipeline );
+		if ( pipeline != submittedPipeline ) {
+			state->CmdBindPipeline( frame.commandBuffer,
+				VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline );
+			submittedPipeline = pipeline;
+		}
+	};
+	auto BindJointPalette = [&]( const idJointMat* joints, int numJoints ) {
+		if ( joints == NULL || numJoints <= 0 || numJoints > MAX_JOINTS_PER_MESH ||
+			frame.jointMapped == NULL || frame.jointDescriptorSet == VK_NULL_HANDLE ) {
+			return false;
+		}
+		const VkDeviceSize alignment = state->jointUniformAlignment > 1 ?
+			state->jointUniformAlignment : 1;
+		const VkDeviceSize stride = ( VULKAN_JOINT_PALETTE_BYTES + alignment - 1 ) /
+			alignment * alignment;
+		const VkDeviceSize offset = frame.jointOffset;
+		if ( offset + VULKAN_JOINT_PALETTE_BYTES > VULKAN_JOINT_BUFFER_BYTES ) {
+			if ( !frame.jointOverflowWarned ) {
+				common->Warning( "Vulkan joint palette arena overflowed; increase VULKAN_JOINT_BUFFER_BYTES" );
+				frame.jointOverflowWarned = true;
+			}
+			return false;
+		}
+		memcpy( static_cast< byte* >( frame.jointMapped ) + offset, joints,
+			numJoints * sizeof( idJointMat ) );
+		const unsigned int dynamicOffset = static_cast< unsigned int >( offset );
+		if ( dynamicOffset != submittedJointOffset ) {
+			state->CmdBindDescriptorSets( frame.commandBuffer,
+				VK_PIPELINE_BIND_POINT_GRAPHICS, state->guiPipelineLayout, 1, 1,
+				&frame.jointDescriptorSet, 1, &dynamicOffset );
+			submittedJointOffset = dynamicOffset;
+		}
+		frame.jointOffset += stride;
+		return true;
+	};
+	auto BindDescriptorSet = [&]( VkDescriptorSet descriptorSet ) {
+		if ( descriptorSet != submittedDescriptorSet ) {
+			state->CmdBindDescriptorSets( frame.commandBuffer,
+				VK_PIPELINE_BIND_POINT_GRAPHICS, state->guiPipelineLayout, 0, 1,
+				&descriptorSet, 0, NULL );
+			submittedDescriptorSet = descriptorSet;
+		}
+	};
+	auto SetViewport = [&]( const VkViewport& newViewport ) {
+		if ( !submittedViewportValid || submittedViewport.x != newViewport.x ||
+			submittedViewport.y != newViewport.y ||
+			submittedViewport.width != newViewport.width ||
+			submittedViewport.height != newViewport.height ||
+			submittedViewport.minDepth != newViewport.minDepth ||
+			submittedViewport.maxDepth != newViewport.maxDepth ) {
+			state->CmdSetViewport( frame.commandBuffer, 0, 1, &newViewport );
+			submittedViewport = newViewport;
+			submittedViewportValid = true;
+		}
+	};
+	auto SetScissor = [&]( const VkRect2D& newScissor ) {
+		if ( !submittedScissorValid ||
+			submittedScissor.offset.x != newScissor.offset.x ||
+			submittedScissor.offset.y != newScissor.offset.y ||
+			submittedScissor.extent.width != newScissor.extent.width ||
+			submittedScissor.extent.height != newScissor.extent.height ) {
+			state->CmdSetScissor( frame.commandBuffer, 0, 1, &newScissor );
+			submittedScissor = newScissor;
+			submittedScissorValid = true;
+		}
+	};
+	auto BindGeometry = [&]( VkBuffer vertexBuffer, VkDeviceSize vertexOffset,
+		VkBuffer weightBuffer, VkDeviceSize weightOffset,
+		VkBuffer indexBuffer, VkDeviceSize indexOffset ) {
+		if ( vertexBuffer != submittedVertexBuffer ||
+			vertexOffset != submittedVertexOffset ||
+			weightBuffer != submittedWeightBuffer ||
+			weightOffset != submittedWeightOffset ) {
+			VkBuffer vertexBuffers[ 2 ] = { vertexBuffer, weightBuffer };
+			VkDeviceSize vertexOffsets[ 2 ] = { vertexOffset, weightOffset };
+			const unsigned int bindingCount = weightBuffer != VK_NULL_HANDLE ? 2 : 1;
+			state->CmdBindVertexBuffers( frame.commandBuffer, 0, bindingCount,
+				vertexBuffers, vertexOffsets );
+			submittedVertexBuffer = vertexBuffer;
+			submittedVertexOffset = vertexOffset;
+			submittedWeightBuffer = weightBuffer;
+			submittedWeightOffset = weightOffset;
+		}
+		if ( indexBuffer != submittedIndexBuffer ||
+			indexOffset != submittedIndexOffset ) {
+			state->CmdBindIndexBuffer( frame.commandBuffer, indexBuffer,
+				indexOffset, VK_INDEX_TYPE_UINT16 );
+			submittedIndexBuffer = indexBuffer;
+			submittedIndexOffset = indexOffset;
+		}
+	};
 
 	{
 		RENDER_METRIC_SCOPE( "Vulkan surface submission" );
@@ -6340,75 +6742,125 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			continue;
 		}
 		state->worldCacheReady++;
-		if ( r_vkDebugMaterials.GetBool() ) {
+		if ( debugMaterials ) {
 			ReportVulkanDrawMaterial( *state, *surface );
 		}
 
 		const materialStage_t* selectedStage = NULL;
 		idImage* selectedImage = NULL;
 		idMegaTexture* selectedMegaTexture = NULL;
-		int selectedImageScore = -0x7fffffff;
-		for ( int stageIndex = 0; stageIndex < surface->material->GetNumStages();
-			++stageIndex ) {
-			const materialStage_t* stage = surface->material->GetStage( stageIndex );
-			if ( surface->materialRegisters[ stage->conditionRegister ] == 0.0f ) {
-				continue;
-			}
-			if ( ( stage->drawStateBits & 0xFF ) == 0x21 ) {
-				continue;
-			}
-			if ( stage->megaTexture != NULL ) {
-				stage->megaTexture->UpdateMapping( view->renderWorld );
-				stage->megaTexture->SetMappingForSurface( surface->geo );
-				stage->megaTexture->UpdateForViewOrigin(
-					view->renderView.vieworg, view->renderView.time );
-				// Shader level zero is the coarsest, always-resident atlas.  It is a
-				// correct low-quality fallback while the six-level Vulkan blend
-				// pipeline is brought online, and crucially does not drop terrain.
-				idMegaTextureLevel* level = stage->megaTexture->GetLevel(
-					stage->megaTexture->GetNumLevels() - 1 );
-				if ( level != NULL && level->GetImage() != NULL ) {
-					selectedStage = stage;
-					selectedImage = level->GetImage();
-					selectedMegaTexture = stage->megaTexture;
-					selectedImageScore = 10000;
-				}
-				continue;
-			}
-			for ( int textureIndex = 0; textureIndex < stage->numTextures;
-				++textureIndex ) {
-				const stageTexture_t& texture = stage->textures[ textureIndex ];
-				if ( texture.image == NULL || texture.image->defaulted ) {
+		bool selectedAtmosphereStage = false;
+		bool selectedWaterStage = false;
+		bool selectedHeatHazeStage = false;
+		bool selectedStuffGrassStage = false;
+		bool selectedSkyboxStage = false;
+		bool selectedFoggyWaterUndersideStage = false;
+		const UINT_PTR registerKey = reinterpret_cast< UINT_PTR >(
+			surface->materialRegisters );
+		const int selectionCacheIndex = static_cast< int >(
+			( ( registerKey >> 4 ) ^ ( registerKey >> 13 ) ) &
+			( MATERIAL_SELECTION_CACHE_SIZE - 1 ) );
+		materialSelectionCacheEntry_t& selectionCache =
+			materialSelectionCache[ selectionCacheIndex ];
+		if ( selectionCache.material == surface->material &&
+			selectionCache.registers == surface->materialRegisters ) {
+			selectedStage = selectionCache.stage;
+			selectedImage = selectionCache.image;
+			selectedMegaTexture = selectionCache.megaTexture;
+			selectedAtmosphereStage = selectionCache.atmosphere;
+			selectedWaterStage = selectionCache.water;
+			selectedHeatHazeStage = selectionCache.heatHaze;
+			selectedStuffGrassStage = selectionCache.stuffGrass;
+			selectedSkyboxStage = selectionCache.skybox;
+			selectedFoggyWaterUndersideStage =
+				selectionCache.foggyWaterUnderside;
+		} else {
+			int selectedImageScore = -0x7fffffff;
+			for ( int stageIndex = 0;
+				stageIndex < surface->material->GetNumStages(); ++stageIndex ) {
+				const materialStage_t* stage =
+					surface->material->GetStage( stageIndex );
+				if ( surface->materialRegisters[ stage->conditionRegister ] == 0.0f ||
+					( stage->drawStateBits & 0xFF ) == 0x21 ) {
 					continue;
 				}
-				int score = 10;
-				if ( rbinds != NULL && texture.renderBinding == rbinds->diffuseMap ) {
-					score = 100;
-				} else if ( rbinds != NULL && texture.renderBinding == rbinds->map ) {
-					score = 90;
-				} else if ( rbinds != NULL && texture.renderBinding == rbinds->cinematicY ) {
-					score = 80;
+				if ( stage->megaTexture != NULL ) {
+					idMegaTextureLevel* level = stage->megaTexture->GetLevel(
+						stage->megaTexture->GetNumLevels() - 1 );
+					if ( level != NULL && level->GetImage() != NULL ) {
+						selectedStage = stage;
+						selectedImage = level->GetImage();
+						selectedMegaTexture = stage->megaTexture;
+						selectedImageScore = 10000;
+					}
+					continue;
 				}
-				// Constant helper maps are common as the first material stage.  Do
-				// not let one hide a later authored diffuse texture (the menu planet
-				// was reduced to precisely this white helper image).
-				if ( globalImages != NULL && ( texture.image == globalImages->whiteImage ||
-					 texture.image == globalImages->blackImage ||
-					 texture.image == globalImages->grayImage ) ) {
-					score -= 50;
-				}
-				if ( score > selectedImageScore ) {
-					selectedStage = stage;
-					selectedImage = texture.image;
-					selectedMegaTexture = NULL;
-					selectedImageScore = score;
+				for ( int textureIndex = 0; textureIndex < stage->numTextures;
+					++textureIndex ) {
+					const stageTexture_t& texture = stage->textures[ textureIndex ];
+					if ( texture.image == NULL || texture.image->defaulted ) continue;
+					int score = 10;
+					if ( rbinds != NULL && texture.renderBinding == rbinds->diffuseMap ) {
+						score = 100;
+					} else if ( rbinds != NULL && texture.renderBinding == rbinds->map ) {
+						score = 90;
+					} else if ( rbinds != NULL &&
+						texture.renderBinding == rbinds->cinematicY ) {
+						score = 80;
+					}
+					if ( globalImages != NULL &&
+						( texture.image == globalImages->whiteImage ||
+						  texture.image == globalImages->blackImage ||
+						  texture.image == globalImages->grayImage ) ) {
+						score -= 50;
+					}
+					if ( score > selectedImageScore ) {
+						selectedStage = stage;
+						selectedImage = texture.image;
+						selectedMegaTexture = NULL;
+						selectedImageScore = score;
+					}
 				}
 			}
+			if ( selectedStage != NULL ) {
+				const char* programName = selectedStage->renderProgram != NULL ?
+					selectedStage->renderProgram->GetName() : NULL;
+				selectedAtmosphereStage = programName != NULL &&
+					idStr::Icmp( programName, "sfx/atmos" ) == 0;
+				selectedWaterStage = programName != NULL &&
+					idStr::Icmpn( programName, "water/", 6 ) == 0;
+				selectedHeatHazeStage = programName != NULL &&
+					idStr::Icmpn( programName, "heatHaze", 8 ) == 0;
+				selectedStuffGrassStage = programName != NULL &&
+					idStr::Icmpn( programName, "stuff/grass", 11 ) == 0;
+				selectedSkyboxStage = programName != NULL &&
+					idStr::Icmp( programName, "skies/skybox" ) == 0;
+				selectedFoggyWaterUndersideStage = programName != NULL &&
+					idStr::Icmp( programName, "sfx/foggyWaterSurface" ) == 0;
+			}
+			selectionCache.material = surface->material;
+			selectionCache.registers = surface->materialRegisters;
+			selectionCache.stage = selectedStage;
+			selectionCache.image = selectedImage;
+			selectionCache.megaTexture = selectedMegaTexture;
+			selectionCache.atmosphere = selectedAtmosphereStage;
+			selectionCache.water = selectedWaterStage;
+			selectionCache.heatHaze = selectedHeatHazeStage;
+			selectionCache.stuffGrass = selectedStuffGrassStage;
+			selectionCache.skybox = selectedSkyboxStage;
+			selectionCache.foggyWaterUnderside =
+				selectedFoggyWaterUndersideStage;
 		}
 		if ( selectedStage == NULL || selectedImage == NULL ) {
 			ReportMissingVulkanMaterial( *state, *surface );
 			state->worldMissingMaterial++;
 			continue;
+		}
+		if ( selectedMegaTexture != NULL ) {
+			selectedMegaTexture->UpdateMapping( view->renderWorld );
+			selectedMegaTexture->SetMappingForSurface( surface->geo );
+			selectedMegaTexture->UpdateForViewOrigin(
+				view->renderView.vieworg, view->renderView.time );
 		}
 		if ( !selectedImage->IsLoaded() ) {
 			selectedImage->BindFragment();
@@ -6421,21 +6873,6 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 		state->worldMaterialReady++;
 		SetVulkanPolygonOffset( *state, frame.commandBuffer,
 			surface->material, selectedStage );
-		const bool selectedAtmosphereStage = selectedStage->renderProgram != NULL &&
-			idStr::Icmp( selectedStage->renderProgram->GetName(), "sfx/atmos" ) == 0;
-		const bool selectedWaterStage = selectedStage->renderProgram != NULL &&
-			idStr::Icmpn( selectedStage->renderProgram->GetName(), "water/", 6 ) == 0;
-		const bool selectedHeatHazeStage = selectedStage->renderProgram != NULL &&
-			idStr::Icmpn( selectedStage->renderProgram->GetName(), "heatHaze", 8 ) == 0;
-		const bool selectedStuffGrassStage = selectedStage->renderProgram != NULL &&
-			idStr::Icmpn( selectedStage->renderProgram->GetName(), "stuff/grass", 11 ) == 0;
-		const bool selectedSkyboxStage = selectedStage->renderProgram != NULL &&
-			idStr::Icmp( selectedStage->renderProgram->GetName(),
-				"skies/skybox" ) == 0;
-		const bool selectedFoggyWaterUndersideStage =
-			selectedStage->renderProgram != NULL &&
-			idStr::Icmp( selectedStage->renderProgram->GetName(),
-				"sfx/foggyWaterSurface" ) == 0;
 		if ( selectedFoggyWaterUndersideStage ) {
 			const idVec3 translatedViewOrigin(
 				view->renderView.vieworg.x - surface->space->modelMatrix[ 12 ],
@@ -6462,17 +6899,30 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 
 		const vertCache_t* vertexCacheBlock = surface->geo->ambientCache;
 		const vertCache_t* indexCacheBlock = surface->geo->indexCache;
+		const bool hardwareSkinned = surface->geo->hardwareSkinnedSurface &&
+			surface->geo->joints != NULL && surface->geo->numJoints > 0 &&
+			surface->geo->numJoints <= MAX_JOINTS_PER_MESH &&
+			surface->geo->weightCache != NULL;
+		const vertCache_t* weightCacheBlock = hardwareSkinned ?
+			surface->geo->weightCache : NULL;
+		submitHardwareSkinning = hardwareSkinned;
 		const void* vertexOwner = vertexCacheBlock->backendBuffer != NULL ?
 			vertexCacheBlock->backendBuffer : vertexCacheBlock;
 		const void* indexOwner = indexCacheBlock->backendBuffer != NULL ?
 			indexCacheBlock->backendBuffer : indexCacheBlock;
+		const void* weightOwner = weightCacheBlock != NULL ?
+			( weightCacheBlock->backendBuffer != NULL ?
+			  weightCacheBlock->backendBuffer : weightCacheBlock ) : NULL;
 		const sdVulkanBufferResource* vertexResource =
 			FindVulkanBufferResource( *state, vertexOwner );
 		const sdVulkanBufferResource* indexResource =
 			FindVulkanBufferResource( *state, indexOwner );
+		const sdVulkanBufferResource* weightResource = hardwareSkinned ?
+			FindVulkanBufferResource( *state, weightOwner ) : NULL;
 		const sdVulkanImageResource* imageResource =
 			FindVulkanImageResource( *state, selectedImage );
 		if ( vertexResource == NULL || indexResource == NULL ||
+			( hardwareSkinned && weightResource == NULL ) ||
 			imageResource == NULL || imageResource->descriptorSet == VK_NULL_HANDLE ) {
 			state->worldMissingResource++;
 			continue;
@@ -6482,7 +6932,7 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 		// pointer into that growable array.
 		const VkDescriptorSet selectedImageDescriptorSet =
 			imageResource->descriptorSet;
-		if ( !selectedWaterStage &&
+		if ( !hardwareSkinned && !selectedWaterStage &&
 			surface->material->Coverage() != MC_TRANSLUCENT &&
 			surface->material->SurfaceCastsShadow() ) {
 			sdRayTracingGeometry geometry;
@@ -6540,7 +6990,7 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			// specular lookup.  It is never a meaningful visual fallback.
 			continue;
 		}
-		if ( selectedWaterStage ) {
+		if ( !hardwareSkinned && selectedWaterStage ) {
 			sdRayTracingGeometry geometry;
 			memset( &geometry, 0, sizeof( geometry ) );
 			geometry.deforming = surface->geo->deformedSurface ||
@@ -6661,23 +7111,19 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 		}
 		scissor.extent.width = static_cast< unsigned int >( scissorWidth );
 		scissor.extent.height = static_cast< unsigned int >( scissorHeight );
-		state->CmdSetScissor( frame.commandBuffer, 0, 1, &scissor );
+		SetScissor( scissor );
 
 		float surfaceProjection[ 16 ];
 		memcpy( surfaceProjection, view->projectionMatrix,
 			sizeof( surfaceProjection ) );
-		float surfaceMinDepth = idMath::ClampFloat( 0.0f, 1.0f,
-			cvarSystem->GetCVarFloat( "r_depthRangeStartDefault" ) );
+		float surfaceMinDepth = defaultDepthStart;
 		float surfaceMaxDepth = 1.0f;
 		if ( surface->space->weaponDepthHack ) {
 			surfaceMinDepth = 0.0f;
-			surfaceMaxDepth = idMath::ClampFloat( 0.0f, 1.0f,
-				cvarSystem->GetCVarFloat( "r_depthRangeWeaponHackEnd" ) );
+			surfaceMaxDepth = weaponDepthEnd;
 			const float weaponFovX = surface->space->weaponDepthHackFOV_x;
 			const float weaponFovY = surface->space->weaponDepthHackFOV_y;
 			if ( weaponFovX > 0.0f && weaponFovY > 0.0f ) {
-				const float zNear = Max( cvarSystem->GetCVarFloat( "r_znear" ),
-					0.001f );
 				const float xMax = zNear * idMath::Tan(
 					weaponFovX * idMath::M_DEG2RAD * 0.5f );
 				const float yMax = zNear * idMath::Tan(
@@ -6687,8 +7133,7 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 				surfaceProjection[ 8 ] = 0.0f;
 				surfaceProjection[ 9 ] = 0.0f;
 			}
-			surfaceProjection[ 14 ] *= cvarSystem->GetCVarFloat(
-				"r_depthRangeWeaponHackScale" );
+			surfaceProjection[ 14 ] *= weaponDepthScale;
 		}
 		if ( surface->space->modelDepthHack != 0.0f ) {
 			// RB_EnterModelDepthHack follows RB_EnterWeaponDepthHack in the
@@ -6696,14 +7141,13 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			memcpy( surfaceProjection, view->projectionMatrix,
 				sizeof( surfaceProjection ) );
 			surfaceProjection[ 14 ] -= surface->space->modelDepthHack;
-			surfaceMinDepth = idMath::ClampFloat( 0.0f, 1.0f,
-				cvarSystem->GetCVarFloat( "r_depthRangeStartDefault" ) );
+			surfaceMinDepth = defaultDepthStart;
 			surfaceMaxDepth = 1.0f;
 		}
 		VkViewport surfaceViewport = viewport;
 		surfaceViewport.minDepth = surfaceMinDepth;
 		surfaceViewport.maxDepth = Max( surfaceMinDepth, surfaceMaxDepth );
-		state->CmdSetViewport( frame.commandBuffer, 0, 1, &surfaceViewport );
+		SetViewport( surfaceViewport );
 
 		float pushConstants[ 32 ];
 		memset( pushConstants, 0, sizeof( pushConstants ) );
@@ -6749,10 +7193,6 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			pushConstants[ 24 ] = surface->materialRegisters[ matrix[ 1 ][ 0 ] ];
 			pushConstants[ 25 ] = surface->materialRegisters[ matrix[ 1 ][ 1 ] ];
 			pushConstants[ 26 ] = surface->materialRegisters[ matrix[ 1 ][ 2 ] ];
-		}
-		idVec3 worldSunDirection( 0.35f, 0.45f, 0.82f );
-		if ( view->atmosphere != NULL ) {
-			worldSunDirection = view->atmosphere->GetSunDirection();
 		}
 		idVec3 localSunDirection;
 		localSunDirection.Set(
@@ -6874,17 +7314,29 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			surface->geo->numVerts ) * sizeof( idDrawVert );
 		const VkDeviceSize indexBytes = static_cast< VkDeviceSize >(
 			surface->geo->numIndexes ) * sizeof( glIndex_t );
+		const VkDeviceSize weightOffset = hardwareSkinned ?
+			weightCacheBlock->offset : 0;
+		const VkDeviceSize weightBytes = hardwareSkinned ?
+			static_cast< VkDeviceSize >( surface->geo->numVerts ) *
+				sizeof( vertWeight_t ) : 0;
 		if ( vertexCacheBlock->offset < 0 || indexCacheBlock->offset < 0 ||
+			( hardwareSkinned && weightCacheBlock->offset < 0 ) ||
 			vertexOffset + vertexBytes > vertexResource->bytes ||
+			( hardwareSkinned && weightOffset + weightBytes > weightResource->bytes ) ||
 			static_cast< VkDeviceSize >( indexCacheBlock->offset ) + indexBytes >
 				indexResource->bytes ) {
 			state->worldMissingResource++;
 			continue;
 		}
-		state->CmdBindVertexBuffers( frame.commandBuffer, 0, 1,
-			&vertexResource->buffer, &vertexOffset );
-		state->CmdBindIndexBuffer( frame.commandBuffer, indexResource->buffer,
-			indexCacheBlock->offset, VK_INDEX_TYPE_UINT16 );
+		if ( hardwareSkinned && !BindJointPalette( surface->geo->joints,
+			surface->geo->numJoints ) ) {
+			state->worldMissingResource++;
+			continue;
+		}
+		BindGeometry( vertexResource->buffer, vertexOffset,
+			hardwareSkinned ? weightResource->buffer : VK_NULL_HANDLE,
+			weightOffset,
+			indexResource->buffer, indexCacheBlock->offset );
 		if ( surface->space->weaponDepthHack && !currentRenderCopied &&
 			CopyCurrentRender( *state ) ) {
 			// Refraction is sorted after ordinary opaque surfaces, including the
@@ -6900,11 +7352,8 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 		// shading, so there is one authoritative rasterization per surface.
 		const bool requiresDepthPrepass = false;
 		if ( requiresDepthPrepass ) {
-			state->CmdBindPipeline( frame.commandBuffer,
-				VK_PIPELINE_BIND_POINT_GRAPHICS, state->worldDepthPipeline );
-			state->CmdBindDescriptorSets( frame.commandBuffer,
-				VK_PIPELINE_BIND_POINT_GRAPHICS, state->guiPipelineLayout, 0, 1,
-				&imageResource->descriptorSet, 0, NULL );
+			BindPipeline( state->worldDepthPipeline );
+			BindDescriptorSet( imageResource->descriptorSet );
 			state->CmdPushConstants( frame.commandBuffer,
 				state->guiPipelineLayout,
 				VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0,
@@ -6915,8 +7364,7 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			state->worldDepthDrawCalls++;
 		}
 		if ( selectedMegaTexture != NULL && state->worldMegaPipeline != VK_NULL_HANDLE ) {
-			state->CmdBindPipeline( frame.commandBuffer,
-				VK_PIPELINE_BIND_POINT_GRAPHICS, state->worldMegaPipeline );
+			BindPipeline( state->worldMegaPipeline );
 			const int shaderLevels = Min( selectedMegaTexture->GetNumLevels(), 6 );
 			for ( int shaderLevel = 0; shaderLevel < shaderLevels; ++shaderLevel ) {
 				idMegaTextureLevel* level = selectedMegaTexture->GetLevel(
@@ -6947,16 +7395,12 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 				megaPushConstants[ 30 ] = pushConstants[ 23 ];
 				megaPushConstants[ 31 ] = pushConstants[ 27 ];
 				if ( shaderLevel != 0 ) {
-					const int fadeMilliseconds = Max( 0,
-						cvarSystem->GetCVarInteger( "r_megaFadeTime" ) );
-					megaPushConstants[ 25 ] = fadeMilliseconds > 0 ?
+					megaPushConstants[ 25 ] = megaFadeMilliseconds > 0 ?
 						idMath::ClampFloat( 0.0f, 1.0f,
 							( view->renderView.time - level->GetFadeTime() ) /
-							static_cast< float >( fadeMilliseconds ) ) : 1.0f;
+							static_cast< float >( megaFadeMilliseconds ) ) : 1.0f;
 				}
-				state->CmdBindDescriptorSets( frame.commandBuffer,
-					VK_PIPELINE_BIND_POINT_GRAPHICS, state->guiPipelineLayout, 0, 1,
-					&levelResource->descriptorSet, 0, NULL );
+				BindDescriptorSet( levelResource->descriptorSet );
 				state->CmdPushConstants( frame.commandBuffer, state->guiPipelineLayout,
 					VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0,
 					sizeof( megaPushConstants ), megaPushConstants );
@@ -7035,11 +7479,8 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			} else if ( surface->material->Coverage() == MC_TRANSLUCENT ) {
 				materialPipeline = state->worldAlphaPipeline;
 			}
-			state->CmdBindPipeline( frame.commandBuffer,
-				VK_PIPELINE_BIND_POINT_GRAPHICS, materialPipeline );
-			state->CmdBindDescriptorSets( frame.commandBuffer,
-				VK_PIPELINE_BIND_POINT_GRAPHICS, state->guiPipelineLayout, 0, 1,
-				&drawDescriptorSet, 0, NULL );
+			BindPipeline( materialPipeline );
+			BindDescriptorSet( drawDescriptorSet );
 			state->CmdPushConstants( frame.commandBuffer, state->guiPipelineLayout,
 				VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0,
 				sizeof( pushConstants ), pushConstants );
@@ -7178,13 +7619,10 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 						}
 					}
 				}
-				state->CmdBindPipeline( frame.commandBuffer,
-					VK_PIPELINE_BIND_POINT_GRAPHICS, overlayPipeline );
+				BindPipeline( overlayPipeline );
 				SetVulkanPolygonOffset( *state, frame.commandBuffer,
 					surface->material, overlayStage );
-				state->CmdBindDescriptorSets( frame.commandBuffer,
-					VK_PIPELINE_BIND_POINT_GRAPHICS, state->guiPipelineLayout, 0, 1,
-					&overlayDescriptorSet, 0, NULL );
+				BindDescriptorSet( overlayDescriptorSet );
 				state->CmdPushConstants( frame.commandBuffer,
 					state->guiPipelineLayout,
 					VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0,
@@ -7195,7 +7633,9 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 				state->worldStageDrawCalls++;
 			}
 		}
-		if ( surface->space->model != NULL &&
+		if ( hardwareSkinned ) {
+			state->worldGpuSkinnedDrawCalls++;
+		} else if ( surface->space->model != NULL &&
 			idStr::Icmp( surface->space->model->Name(), "_MD5_Snapshot_" ) == 0 ) {
 			state->worldSkinnedDrawCalls++;
 		}

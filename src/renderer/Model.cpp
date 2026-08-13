@@ -12,9 +12,18 @@
 #include "RenderSystem.h"
 #include "VertexCache.h"
 #include "VulkanBackend.h"
+#include "draw_local.h"
+#include "draw_raytracing.h"
 #include "../decllib/declTypeHolder.h"
 
 namespace {
+
+idCVar r_gpuSkinning(
+	"r_gpuSkinning",
+	"1",
+	CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL,
+	"skin animated models in the vertex shader when the active backend supports it"
+);
 
 bool ReadDiscard( idFile* file, int byteCount ) {
 	if ( file == NULL || byteCount < 0 ) {
@@ -45,9 +54,40 @@ struct md5SkinSurface_t {
 	idList< byte >			referencedJoints;
 	idList< vertWeight_t >	weights;
 	bool					noAnimate;
+	bool					gpuSkinningEligible;
 
-	md5SkinSurface_t() : noAnimate( false ) {}
+	md5SkinSurface_t() : noAnimate( false ), gpuSkinningEligible( false ) {}
 };
+
+bool ValidateGpuSkinningData( const md5SkinSurface_t& skin ) {
+	if ( skin.noAnimate ) {
+		return true;
+	}
+	if ( skin.referencedJoints.Num() <= 0 ||
+		skin.referencedJoints.Num() > MAX_JOINTS_PER_MESH ||
+		skin.weights.Num() <= 0 ) {
+		return false;
+	}
+	const int jointRowCount = skin.referencedJoints.Num() * 3;
+	for ( int vertexIndex = 0; vertexIndex < skin.weights.Num(); ++vertexIndex ) {
+		const vertWeight_t& vertexWeight = skin.weights[ vertexIndex ];
+		int totalWeight = 0;
+		for ( int weightIndex = 0; weightIndex < MAX_WEIGHTS_PER_VERT; ++weightIndex ) {
+			if ( vertexWeight.weight[ weightIndex ] == 0 ) {
+				continue;
+			}
+			const int jointRow = vertexWeight.index[ weightIndex ];
+			if ( jointRow % 3 != 0 || jointRow + 2 >= jointRowCount ) {
+				return false;
+			}
+			totalWeight += vertexWeight.weight[ weightIndex ];
+		}
+		if ( totalWeight == 0 ) {
+			return false;
+		}
+	}
+	return true;
+}
 
 class idRenderModelStatic : public idRenderModel {
 public:
@@ -327,14 +367,75 @@ public:
 			return NULL;
 		}
 
-		idList< idJointMat > transformedJoints;
-		transformedJoints.SetNum( modelJoints.Num() );
-		SIMDProcessor->MultiplyJoints( transformedJoints.Begin(), entity->joints,
+		transformedJointsScratch.SetNum( modelJoints.Num() );
+		SIMDProcessor->MultiplyJoints( transformedJointsScratch.Begin(), entity->joints,
 			inverseDefaultPose.Begin(), modelJoints.Num() );
 
-		const bool cpuSkinForVulkan = R_UseVulkanBackend();
-		idRenderModelStatic* snapshot = cpuSkinForVulkan ?
-			dynamic_cast< idRenderModelStatic* >( cachedModel ) : NULL;
+		bool useVulkanGpuSkinning = R_UseVulkanBackend() &&
+			r_gpuSkinning.GetBool() && !entity->flags.noHardwareSkinning &&
+			!R_RayTracingIsInitialized();
+		for ( int surfaceIndex = 0;
+			useVulkanGpuSkinning && surfaceIndex < modelSurfaces.Num();
+			++surfaceIndex ) {
+			const modelSurface_t& surface = modelSurfaces[ surfaceIndex ];
+			if ( surface.geometry == NULL ) {
+				continue;
+			}
+			if ( md5SkinSurfaces[ surfaceIndex ].noAnimate ) {
+				if ( surface.geometry->ambientCache == NULL &&
+					surface.geometry->verts != NULL && surface.geometry->numVerts > 0 ) {
+					vertexCache.Alloc( surface.geometry->verts,
+						surface.geometry->numVerts * sizeof( idDrawVert ),
+						&surface.geometry->ambientCache );
+				}
+				if ( surface.geometry->indexCache == NULL &&
+					surface.geometry->indexes != NULL && surface.geometry->numIndexes > 0 ) {
+					vertexCache.Alloc( surface.geometry->indexes,
+						surface.geometry->numIndexes * sizeof( glIndex_t ),
+						&surface.geometry->indexCache, true );
+				}
+				useVulkanGpuSkinning = surface.geometry->ambientCache != NULL &&
+					surface.geometry->indexCache != NULL;
+				continue;
+			}
+			const md5SkinSurface_t& skin = md5SkinSurfaces[ surfaceIndex ];
+			const idMaterial* mappedMaterial = R_RemapShaderBySkin(
+				surface.material, entity->customSkin, entity->customShader );
+			useVulkanGpuSkinning = skin.gpuSkinningEligible &&
+				skin.weights.Num() == surface.geometry->numVerts &&
+				( mappedMaterial == NULL ||
+				  !mappedMaterial->TestMaterialFlag( MF_NOHWSKINNING ) );
+			if ( !useVulkanGpuSkinning ) {
+				continue;
+			}
+			// Recreate purged source-model caches before copying their handles into
+			// the persistent snapshot. This keeps the vertex-cache owner pointer on
+			// the source geometry instead of a temporary snapshot header.
+			if ( surface.geometry->ambientCache == NULL &&
+				surface.geometry->verts != NULL && surface.geometry->numVerts > 0 ) {
+				vertexCache.Alloc( surface.geometry->verts,
+					surface.geometry->numVerts * sizeof( idDrawVert ),
+					&surface.geometry->ambientCache );
+			}
+			if ( surface.geometry->indexCache == NULL &&
+				surface.geometry->indexes != NULL && surface.geometry->numIndexes > 0 ) {
+				vertexCache.Alloc( surface.geometry->indexes,
+					surface.geometry->numIndexes * sizeof( glIndex_t ),
+					&surface.geometry->indexCache, true );
+			}
+			if ( surface.geometry->weightCache == NULL ) {
+				vertexCache.Alloc( const_cast< vertWeight_t* >( skin.weights.Begin() ),
+					skin.weights.Num() * sizeof( vertWeight_t ),
+					&surface.geometry->weightCache );
+			}
+			useVulkanGpuSkinning = surface.geometry->ambientCache != NULL &&
+				surface.geometry->indexCache != NULL &&
+				surface.geometry->weightCache != NULL;
+		}
+		const bool cpuSkinForVulkan = R_UseVulkanBackend() &&
+			!useVulkanGpuSkinning;
+		idRenderModelStatic* snapshot =
+			dynamic_cast< idRenderModelStatic* >( cachedModel );
 		int expectedSurfaces = 0;
 		for ( int i = 0; i < modelSurfaces.Num(); ++i ) {
 			if ( modelSurfaces[ i ].geometry != NULL ) {
@@ -343,7 +444,8 @@ public:
 		}
 		bool reuseSnapshot = snapshot != NULL &&
 			idStr::Icmp( snapshot->Name(), "_MD5_Snapshot_" ) == 0 &&
-			snapshot->modelSurfaces.Num() == expectedSurfaces;
+			snapshot->modelSurfaces.Num() == expectedSurfaces &&
+			snapshot->ownsSurfaceGeometry == cpuSkinForVulkan;
 		if ( reuseSnapshot ) {
 			int snapshotSurface = 0;
 			for ( int sourceSurface = 0; sourceSurface < modelSurfaces.Num(); ++sourceSurface ) {
@@ -362,12 +464,15 @@ public:
 			}
 		}
 		if ( !reuseSnapshot ) {
+			if ( snapshot != NULL ) {
+				delete snapshot;
+			}
 			snapshot = new idRenderModelStatic;
 			snapshot->InitEmpty( "_MD5_Snapshot_" );
 		}
-		// The OpenGL renderer consumes the shared reference-pose vertex/index
-		// caches plus joints and weights.  Vulkan does not have that pipeline yet,
-		// so its compatibility path creates a fully owned, CPU-skinned snapshot.
+		// Hardware-skinned snapshots own only lightweight surface headers and
+		// compact joint palettes. Their bind-pose vertices, indexes, and weights
+		// remain in the source model's persistent caches.
 		snapshot->ownsSurfaceGeometry = cpuSkinForVulkan;
 		snapshot->modelBounds = entity->bounds.IsCleared() ? modelBounds : entity->bounds;
 
@@ -397,9 +502,9 @@ public:
 					}
 					return NULL;
 				}
-				memcpy( geometry->verts, sourceVerts,
-					geometry->numVerts * sizeof( geometry->verts[ 0 ] ) );
 				if ( !reuseSnapshot ) {
+					memcpy( geometry->verts, sourceVerts,
+						geometry->numVerts * sizeof( geometry->verts[ 0 ] ) );
 					memcpy( geometry->indexes, sourceSurface.geometry->indexes,
 						geometry->numIndexes * sizeof( geometry->indexes[ 0 ] ) );
 				}
@@ -411,11 +516,20 @@ public:
 				geometry->facePlanesCalculated = false;
 				geometry->hardwareSkinnedSurface = false;
 			} else {
-				geometry = static_cast< srfTriangles_t* >( Mem_Alloc( sizeof( *geometry ) ) );
+				geometry = reuseSnapshot ?
+					snapshot->modelSurfaces[ snapshotSurfaceIndex ].geometry :
+					static_cast< srfTriangles_t* >( Mem_Alloc( sizeof( *geometry ) ) );
+				idJointMat* existingJoints = reuseSnapshot ? geometry->joints : NULL;
+				const int existingJointCount = reuseSnapshot ? geometry->numJoints : 0;
 				*geometry = *sourceSurface.geometry;
+				geometry->joints = existingJoints;
+				geometry->numJoints = existingJointCount;
+				geometry->hardwareSkinnedSurface = false;
 			}
-			geometry->joints = NULL;
-			geometry->numJoints = 0;
+			if ( cpuSkinForVulkan ) {
+				geometry->joints = NULL;
+				geometry->numJoints = 0;
+			}
 			if ( !entity->bounds.IsCleared() ) {
 				geometry->bounds = entity->bounds;
 			}
@@ -428,42 +542,43 @@ public:
 				for ( int vertexIndex = 0; vertexIndex < geometry->numVerts; ++vertexIndex ) {
 					const idDrawVert& source = sourceSurface.geometry->verts[ vertexIndex ];
 					const vertWeight_t& vertexWeight = skin.weights[ vertexIndex ];
-					idVec3 position( 0.0f, 0.0f, 0.0f );
-					idVec3 normal( 0.0f, 0.0f, 0.0f );
-					idVec3 tangent( 0.0f, 0.0f, 0.0f );
-					float totalWeight = 0.0f;
+					int totalByteWeight = 0;
 					for ( int weightIndex = 0; weightIndex < MAX_WEIGHTS_PER_VERT; ++weightIndex ) {
-						const int byteWeight = vertexWeight.weight[ weightIndex ];
-						if ( byteWeight == 0 ) {
-							continue;
-						}
-						// Generated MD5 weights contain the vertex-program register
-						// offset for each compact-palette joint.  A joint matrix occupies
-						// three vec4 registers, so values are 0, 3, 6, ... rather than
-						// direct palette indexes.  Treating the byte as an index skipped
-						// most weights and attached the rest to unrelated joints.
 						const int jointRegister = vertexWeight.index[ weightIndex ];
-						if ( jointRegister % 3 != 0 ) {
-							continue;
-						}
+						if ( vertexWeight.weight[ weightIndex ] == 0 || jointRegister % 3 != 0 ) continue;
 						const int localJoint = jointRegister / 3;
-						if ( localJoint < 0 || localJoint >= skin.referencedJoints.Num() ) {
-							continue;
-						}
+						if ( localJoint < 0 || localJoint >= skin.referencedJoints.Num() ) continue;
 						const int sourceJoint = skin.referencedJoints[ localJoint ];
-						if ( sourceJoint < 0 || sourceJoint >= transformedJoints.Num() ) {
-							continue;
-						}
-						const float weight = byteWeight * ( 1.0f / 255.0f );
-						const idJointMat& joint = transformedJoints[ sourceJoint ];
-						position += ( joint * idVec4( source.xyz.x, source.xyz.y, source.xyz.z, 1.0f ) ) * weight;
-						normal += ( joint * source.GetNormal() ) * weight;
-						tangent += ( joint * source.GetTangent() ) * weight;
-						totalWeight += weight;
+						if ( sourceJoint < 0 || sourceJoint >= transformedJointsScratch.Num() ) continue;
+						totalByteWeight += vertexWeight.weight[ weightIndex ];
 					}
 					idDrawVert& destination = geometry->verts[ vertexIndex ];
-					if ( totalWeight > 0.0f ) {
-						destination.xyz = position / totalWeight;
+					if ( totalByteWeight > 0 ) {
+						idJointMat blendedJoint;
+						bool firstJoint = true;
+						const float normalizeWeight = 1.0f / totalByteWeight;
+						for ( int weightIndex = 0; weightIndex < MAX_WEIGHTS_PER_VERT; ++weightIndex ) {
+							const int byteWeight = vertexWeight.weight[ weightIndex ];
+							const int jointRegister = vertexWeight.index[ weightIndex ];
+							if ( byteWeight == 0 || jointRegister % 3 != 0 ) continue;
+							const int localJoint = jointRegister / 3;
+							if ( localJoint < 0 || localJoint >= skin.referencedJoints.Num() ) continue;
+							const int sourceJoint = skin.referencedJoints[ localJoint ];
+							if ( sourceJoint < 0 || sourceJoint >= transformedJointsScratch.Num() ) continue;
+							const float weight = byteWeight * normalizeWeight;
+							if ( firstJoint ) {
+								idJointMat::Mul( blendedJoint,
+									transformedJointsScratch[ sourceJoint ], weight );
+								firstJoint = false;
+							} else {
+								idJointMat::Mad( blendedJoint,
+									transformedJointsScratch[ sourceJoint ], weight );
+							}
+						}
+						destination.xyz = blendedJoint * idVec4(
+							source.xyz.x, source.xyz.y, source.xyz.z, 1.0f );
+						idVec3 normal = blendedJoint * source.GetNormal();
+						idVec3 tangent = blendedJoint * source.GetTangent();
 						normal.Normalize();
 						tangent.Normalize();
 						destination.SetNormal( normal );
@@ -471,20 +586,31 @@ public:
 					}
 					geometry->bounds += destination.xyz;
 				}
-			} else if ( !cpuSkinForVulkan && !skin.noAnimate && skin.referencedJoints.Num() > 0 && geometry->weightCache != NULL ) {
-				geometry->numJoints = skin.referencedJoints.Num();
-				geometry->joints = static_cast< idJointMat* >(
-					Mem_AllocAligned( geometry->numJoints * sizeof( idJointMat ), ALIGN_16 ) );
+			} else if ( !cpuSkinForVulkan && !skin.noAnimate &&
+				skin.referencedJoints.Num() > 0 && geometry->weightCache != NULL ) {
+				const int requiredJoints = skin.referencedJoints.Num();
+				if ( geometry->joints == NULL || geometry->numJoints != requiredJoints ) {
+					Mem_FreeAligned( geometry->joints );
+					geometry->joints = static_cast< idJointMat* >(
+						Mem_AllocAligned( requiredJoints * sizeof( idJointMat ), ALIGN_16 ) );
+				}
+				geometry->numJoints = requiredJoints;
 				for ( int jointIndex = 0; jointIndex < geometry->numJoints; ++jointIndex ) {
 					const int sourceJoint = skin.referencedJoints[ jointIndex ];
-					if ( sourceJoint < 0 || sourceJoint >= transformedJoints.Num() ) {
+					if ( sourceJoint < 0 || sourceJoint >= transformedJointsScratch.Num() ) {
 						delete snapshot;
 						return NULL;
 					}
-					geometry->joints[ jointIndex ] = transformedJoints[ sourceJoint ];
+					geometry->joints[ jointIndex ] = transformedJointsScratch[ sourceJoint ];
 				}
 				geometry->hardwareSkinnedSurface = true;
 				geometry->dsFlags |= 0x10;
+			} else if ( !cpuSkinForVulkan ) {
+				Mem_FreeAligned( geometry->joints );
+				geometry->joints = NULL;
+				geometry->numJoints = 0;
+				geometry->hardwareSkinnedSurface = false;
+				geometry->dsFlags &= ~0x10;
 			}
 
 			modelSurface_t surface = sourceSurface;
@@ -1233,6 +1359,7 @@ private:
 				skin.referencedJoints = referencedJoints;
 				skin.weights = weights;
 				skin.noAnimate = noAnimate;
+				skin.gpuSkinningEligible = ValidateGpuSkinningData( skin );
 				surfaceGroupMaterials.Append( materialName );
 				surfaceGroupNoAnimate.Append( static_cast< int >( noAnimate ) );
 				surfaceNames.Append( meshName );
@@ -1339,6 +1466,7 @@ private:
 	idList< idMD5Joint > modelJoints;
 	idList< idJointQuat > defaultPose;
 	idList< idJointMat > inverseDefaultPose;
+	mutable idList< idJointMat > transformedJointsScratch;
 	idList< md5SkinSurface_t > md5SkinSurfaces;
 	idList< int > fixedAreas;
 	bool loaded;
