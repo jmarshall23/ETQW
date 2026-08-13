@@ -1,0 +1,647 @@
+
+#define VAMPIRE_FLY_HEIGHT 2048.f
+#define VAMPIRE_BOMB_GRAVITY -6000.f
+
+object projectile_vampire : projectile_missile {
+	void init() {
+		if ( sys.isClient() ) {
+			hide();
+		}
+	}
+	void Idle() {
+		if ( sys.isClient() ) {
+			hide();
+		}
+	}
+
+	void SetupContents() {
+		SetupContents_Base();
+		setContents( 0 );
+	}
+}
+
+object projectile_vampire_client {
+	float expireTime;
+
+	void init() {
+		setState( "Idle" );
+	}
+	
+	void Idle() {
+		while ( true ) {
+			if ( sys.getTime() > expireTime ) {
+				remove();
+			}
+			sys.waitFrame();
+		}
+	}	
+}
+
+object vehicle_vampire {
+	void			preinit();
+	void			init();
+	void			destroy();
+	void			syncFields();
+
+	void			vBomberAttack( vector target, vector attackDir, float attackHeight, entity attacker );
+	void			Update();
+
+	void			CreateFiringMarker();
+	void			ClearFiringMarker();
+	
+	float			OnUpdateCrosshairInfo( entity p );
+
+	void			Idle();
+	
+	vector			lastVelocity;
+	vector			GetLastVelocity() { return lastVelocity; }
+
+	void			SetupCommandMapIcons();
+	void			FreeCommandMapIcons();
+
+	// flight information
+	float			flightStartTime;
+	vector			runStart;
+	vector			runEnd;
+	vector			targetBase;
+	float			flightTime;
+	vector			bombHitStart;
+	
+	// state
+	entity			firingMarker;
+	entity			owner;
+	
+	boolean			hasPath;
+
+	// tuning properties
+	float			bomberSpeed;
+	
+	// sound
+	float			flyOverSoundRange;
+	boolean			playedFlyBySound;
+	boolean			playingFlySound;
+	
+	// bombing
+	float			bombCount;
+	float			bombDelay;
+	float			bombSpread;
+	
+	float			bombUpto;
+	boolean			hasBombInfo;
+	float			bombPosition;
+	vector			bombAcceleration;
+	vector			bombStart;
+	vector			bombStartDir;
+	float			bombFallTime;
+	
+	// marker models
+	void			CreateDirectionMarkers( vector basePosition, vector startPosition, vector endPosition );
+	void			FadeDirectionMarkers( float duration, float start, float end );
+	void			RemoveDirectionMarkers();
+	void			PulseDirectionMarkers( float currentTime );
+	void			DirectionMarkerThread();
+
+	boolean				directionMarkerDrawn;
+	boolean				directionMarkerFaded;
+	float				directionMarkerStartTime;
+	direction_marker	directionMarker0;
+	direction_marker	directionMarker1;
+	direction_marker	directionMarker2;
+	direction_marker	directionMarker3;
+	direction_marker	directionMarker4;
+	direction_marker	directionMarker5;
+	direction_marker	directionMarker6;
+	direction_marker	directionMarker7;
+	direction_marker	directionMarker8;
+	direction_marker	directionMarker9;
+	direction_marker	directionMarker10;
+	direction_marker	directionMarker11;
+	direction_marker	directionMarker12;
+	direction_marker	directionMarker13;
+	direction_marker	directionMarker14;
+	direction_marker	directionMarker15;
+	direction_marker	directionMarker16;
+	direction_marker	directionMarker17;
+	direction_marker	directionMarker18;
+	direction_marker	directionMarker19;
+
+	float			cmIcon;
+};
+
+void vehicle_vampire::syncFields() {
+	syncBroadcast( "owner" );
+	syncBroadcast( "flightStartTime" );
+	syncBroadcast( "runStart" );
+	syncBroadcast( "runEnd" );
+	syncBroadcast( "targetBase" );
+	syncBroadcast( "flightTime" );
+	syncBroadcast( "bombHitStart" );
+}
+
+void vehicle_vampire::preinit() {
+	flightStartTime		= -1;
+	playedFlyBySound	= false;
+	playingFlySound		= false;
+
+	flyOverSoundRange	= getFloatKey( "flyover_sndrange" );
+	flyOverSoundRange	= flyOverSoundRange * flyOverSoundRange;
+
+	bombCount			= getFloatKey( "bomb_count" );
+	if ( bombCount > 10 ) {
+		sys.error( "too many bombs!" );
+	}
+	
+	bombDelay			= getFloatKey( "bomb_delay" );
+	bombSpread			= getFloatKey( "bomb_spread" );
+
+	bomberSpeed			= getFloatKey( "speed" );
+
+	cmIcon				= -1;
+
+	setCoverage( 0.f );
+	hide();
+
+	SetupCommandMapIcons();
+}
+
+void vehicle_vampire::init() {
+	setContents( 0 );
+	setState( "Idle" );
+}
+
+void vehicle_vampire::Idle() {
+	while( true ) {
+		sys.waitFrame();
+
+		if ( sys.getFrameTime() > 0 ) {
+			Update();
+		}
+	}
+}
+
+void vehicle_vampire::vBomberAttack( vector target, vector attackDir, float attackHeight, entity attacker ) {
+	targetBase				= target;
+	owner					= attacker;
+	setGameTeam( attacker.getGameTeam() );
+
+	float arrivalDelay		= getFloatKey( "arrivaldelay" );
+	float arrivalDelayRandom = getFloatKey( "arrivaldelay_random" );
+
+	if( arrivalDelayRandom < arrivalDelay ) {
+		arrivalDelayRandom	= arrivalDelay;
+	}
+	arrivalDelay			= arrivalDelay + sys.random( arrivalDelayRandom );
+
+	// offset so center of bombs arrive at target point
+	float targetPosOffset	= ( 0.5f * bombCount ) * ( bombDelay * bomberSpeed );
+	runStart = targetBase + attackDir * targetPosOffset;
+	runEnd = targetBase - attackDir * targetPosOffset;
+	runStart_z = pathFindVampire( runStart, runEnd, VAMPIRE_FLY_HEIGHT );
+	runEnd_z = runStart_z;
+
+	flightStartTime			= sys.getTime() + arrivalDelay;
+	flightTime				= pathGetLength() / bomberSpeed;
+	
+	bombHitStart = runStart;
+	bombHitStart_z = targetBase_z;
+	float frac = sys.heightMapTrace( bombHitStart, bombHitStart - '0 0 20000' );
+	bombHitStart_z = bombHitStart_z - 20000 * frac;
+	
+	targetBase_z			= attackHeight;
+	
+	CreateFiringMarker();
+}
+
+void vehicle_vampire::Update() {
+	float currentTime = sys.getTime();
+
+	if ( flightStartTime < 0 || currentTime < flightStartTime ) {
+		return;
+	}
+	
+	vector origin;
+	vector angles;
+	float curFlightTime = sys.getTime() - flightStartTime;
+	float position = curFlightTime * bomberSpeed;
+	if ( !hasPath && sys.isClient() ) {
+		// got through to here so the necessary stuff for the path must be in
+		pathFindVampire( runStart, runEnd, VAMPIRE_FLY_HEIGHT );
+		hasPath = true;		
+	}
+
+	show();
+
+	if( !playingFlySound ) {
+		playingFlySound = true;
+		fadeSound( SND_VEHICLE_IDLE, -60.f, 0.f );
+		startSound( "snd_flyby_far", SND_VEHICLE_IDLE );
+		fadeSound( SND_VEHICLE_IDLE, 0.f, 2.f );
+	}
+
+	float frac = ( curFlightTime ) / flightTime;
+	
+	setCoverage( 1.f );
+	if ( curFlightTime < 0.15f ) {
+		setCoverage( curFlightTime / 0.15f );
+	}
+	if ( curFlightTime > ( flightTime - 0.15f ) ) {
+		setCoverage( (flightTime - curFlightTime) / 0.15f );
+	}
+	
+	if ( frac >= 1.0 ) {
+		if( !sys.isClient() ) {
+			remove();
+		}
+		return;
+	}
+
+	CreateDirectionMarkers( targetBase, runStart, runEnd );
+
+	if ( !directionMarkerFaded ) {
+		if ( frac > 0.6f ) {
+			directionMarkerFaded = true;
+			FadeDirectionMarkers( 0.5f, 1.0f, 0.0f );
+		}
+	}
+
+	origin = pathGetPosition( position );
+	angles = pathGetAngles( position );
+	
+	// limit the roll rate so it doesn't look too unnatural
+	vector oldAngles = getAngles();
+	float rollDiff = angles_z - oldAngles_z;
+	rollDiff = sys.angleNormalize180( rollDiff );
+	float frameTime = sys.getFrameTime();
+	float rotationSpeed = rollDiff / frameTime;
+	if ( rotationSpeed > 20.0f ) {
+		rotationSpeed = 20.0f;
+	}
+	if ( rotationSpeed < -20.0f ) {
+		rotationSpeed = -20.0f;
+	}
+	angles_z = oldAngles_z + rotationSpeed * frameTime;
+	
+	vector oldOrigin = getWorldOrigin();
+	setOrigin( origin );
+	setAngles( angles );
+	vector dir = getWorldAxis( 0 );
+	
+	// check that any bombs that need to be dropped have been
+	while ( bombUpto < bombCount ) {
+		if ( !hasBombInfo ) {
+			vector targetDir = runEnd - runStart;
+			targetDir_z = 0.0f;
+			targetDir = sys.vecNormalize( targetDir );
+			
+			vector bombHitDelta = targetDir * ( bombDelay * bomberSpeed );
+			vector targetPos = bombHitStart + bombHitDelta * bombUpto;
+			float pathLength = flightTime * bomberSpeed;
+			
+			targetPos_z -= 512.0f;
+			vector traceStart = targetPos;
+			traceStart_z += VAMPIRE_FLY_HEIGHT;
+
+			sys.tracePoint( traceStart, targetPos, MASK_SHOT_BOUNDINGBOX, $null_entity );
+			targetPos = sys.getTraceEndPos();
+
+			bombPosition = getVampireBombPosition( targetPos, VAMPIRE_BOMB_GRAVITY, bomberSpeed, bomberSpeed / 30.0f, pathLength );
+			bombAcceleration = getVampireBombAcceleration();
+			bombStart = pathGetPosition( bombPosition );
+			bombStartDir = pathGetDirection( bombPosition );
+			bombFallTime = getVampireBombFallTime();
+			
+			hasBombInfo = true;
+		}
+		
+		if ( position < bombPosition ) {
+			// no need to drop this bomb yet
+			break;
+		}
+		
+		// time to drop this bomb
+		// how much time has passed since it was meant to be dropped?
+		float timeSinceDrop = ( position - bombPosition ) / bomberSpeed;
+		
+		// adjust the start position & velocity to suit
+		vector bombVelocity = bombStartDir * bomberSpeed;
+		bombStart = bombStart + ( bombVelocity*timeSinceDrop ) + ( bombAcceleration*( 0.5f*timeSinceDrop*timeSinceDrop ) );
+		bombVelocity = bombVelocity + ( bombAcceleration*timeSinceDrop );
+		
+		entity projectile;
+		if ( !sys.isClient() ) {
+			projectile = sys.spawn( getKey( "def_bomb_type" ) );
+		} else {
+			projectile = sys.spawnClient( getKey( "def_bomb_type_client" ) );
+			projectile_vampire_client clientProj = projectile;
+			if ( clientProj != $null_entity ) { 
+				clientProj.expireTime = sys.getTime() - timeSinceDrop + bombFallTime;
+			}
+		}
+		
+		projectile.setOwner( owner );
+		projectile.addOwner( self );
+		projectile.setGameTeam( getGameTeam() );
+		projectile.setOrigin( bombStart );
+		projectile.setAngles( sys.vecToAngles( bombStartDir ) );
+		projectile.setGravity( bombAcceleration );
+		projectile.launch( bombVelocity );
+		
+		bombUpto = bombUpto + 1;
+		hasBombInfo = false;
+	}	
+	
+	// check distance to local player
+	if ( !playedFlyBySound ) {
+		entity p = sys.getLocalPlayer();
+		if ( p != $null_entity ) {
+			vector org = p.getWorldOrigin();
+			org -= getWorldOrigin();
+			org_z = 0.f;
+
+			if ( sys.vecLengthSquared( org ) < flyOverSoundRange ) {
+				sys.startSoundDirect( getKey( "snd_flyby" ), SND_VEHICLE_DRIVE );
+				playedFlyBySound = true;
+			}
+		}
+	}
+}
+
+float vehicle_vampire::OnUpdateCrosshairInfo( entity p ) {
+	if ( !sys.doClientSideStuff() ) {
+		return 1.f;
+	}
+
+	float allegiance = getEntityAllegiance( p );
+	vector color = GetAllegianceColor( allegiance );
+	string title;
+	float range = InchesToMetres( sys.vecLength( getWorldOrigin() - p.getWorldOrigin() ) );
+
+	chSetNumLines( 2 );
+
+	if( allegiance == TA_FRIEND ) {
+		title = "Friendly ";
+	} else if( allegiance == TA_ENEMY ) {
+		title = "Enemy ";
+	} else {
+		title = "Neutral ";
+	}
+
+	chSetLineTextIndex( 0, g_locStr_Airstrike );
+	chSetLineColor( 0, color, 1.f );
+	chSetLineType( 0, CI_TEXT );
+	chSetLineSize( 0, 0, 0 );
+
+	chSetLineColor( 1, color, 0.5f );
+	chSetLineType( 1, CI_BAR );
+	chSetLineFraction( 1, getHealth() / getMaxHealth() );
+	chSetLineSize( 1, 150, CROSSHAIR_INFO_BAR_HEIGHT );
+
+	return 1.f;
+}
+
+void vehicle_vampire::destroy() {
+	ClearFiringMarker();
+	FreeCommandMapIcons();
+	RemoveDirectionMarkers();
+}
+
+void vehicle_vampire::CreateFiringMarker() {
+	if ( !sys.isClient() ) {
+		firingMarker = G_CreateFiringMarker( self, firingMarker, targetBase );
+	}
+}
+
+void vehicle_vampire::ClearFiringMarker() {
+	if ( firingMarker != $null_entity ) {
+		thread G_DelayRemoveEntity( firingMarker, 5.f );
+		firingMarker = $null_entity;
+	}
+}
+
+void vehicle_vampire::SetupCommandMapIcons() {
+	FreeCommandMapIcons();
+	
+	cmIcon = sys.allocCMIcon( self, getFloatKey( "mtr_commandmap_sort" ) );
+	sys.setCMIconMaterial( cmIcon, GetMaterial( getKey( "mtr_commandmap" ) ) );
+	sys.setCMIconUnknownMaterial( cmIcon, GetMaterial( getKey( "mtr_commandmap_unknown" ) ) );
+	sys.setCMIconDrawMode( cmIcon, DM_ROTATED_MATERIAL );
+	sys.setCMIconSize( cmIcon, 16.0f );
+	sys.setCMIconUnknownSize( cmIcon, 12 );
+	sys.setCMIconFlag( cmIcon, CMF_FOLLOWROTATION );
+	sys.setCMIconColorMode( cmIcon, CM_ALLEGIANCE );
+}
+
+void vehicle_vampire::FreeCommandMapIcons() {
+	if ( cmIcon != -1 ) {
+		sys.freeCMIcon( self, cmIcon );
+		cmIcon = -1;
+	}
+}
+
+void vehicle_vampire::CreateDirectionMarkers( vector basePosition, vector startPosition, vector endPosition ) {
+	if ( directionMarkerDrawn ) {
+		return;
+	}
+	directionMarkerDrawn = true;
+	directionMarkerStartTime = sys.getTime();
+
+	entity p = sys.getLocalViewPlayer();
+	if ( p == $null_entity ) {
+		return;
+	}
+	
+	if ( getEntityAllegiance( p ) != TA_FRIEND ) {
+		return;
+	}
+
+	string entityDef = getKey( "def_directionmarker" );
+	if ( entityDef == "" ) {
+		return;
+	}
+
+	vector targetDir = endPosition - startPosition;
+	targetDir = sys.vecNormalize( targetDir );
+
+	vector half;
+	float halfLength;
+
+	basePosition_z = startPosition_z;
+
+	// calculate marker start position
+	half = basePosition - startPosition;
+	halfLength = min( sys.vecLength( half ), 2048.0f );
+	
+	vector markerStart = basePosition - halfLength * targetDir;
+
+	// calculate marker end position
+	half = endPosition - basePosition;
+	halfLength = min( sys.vecLength( half ), 2048.0f );
+	
+	vector markerEnd = basePosition + halfLength * targetDir;
+
+	float markerLength = sys.vecLength( markerEnd - markerStart );
+	float numMarkers = rint( markerLength / 256.0f ) + 1.0f;
+	
+	vector targetStep = targetDir * ( markerLength / numMarkers );
+	vector targetPos = markerStart;
+
+
+	// spawn direction markers
+	if ( numMarkers > 0.0f ) {
+		directionMarker0 = new direction_marker;
+		directionMarker0.Create( 0, entityDef, targetPos, targetDir );
+	}
+	
+#define CREATE_DIRECTION_MARKER( index )											\
+	if ( numMarkers > (index) ) {													\
+		targetPos += targetStep;													\
+		directionMarker##index = new direction_marker;								\
+		directionMarker##index.Create( (index), entityDef, targetPos, targetDir );	\
+	}
+	
+	CREATE_DIRECTION_MARKER( 1 )
+	CREATE_DIRECTION_MARKER( 2 )
+	CREATE_DIRECTION_MARKER( 3 )
+	CREATE_DIRECTION_MARKER( 4 )
+	CREATE_DIRECTION_MARKER( 5 )
+	CREATE_DIRECTION_MARKER( 6 )
+	CREATE_DIRECTION_MARKER( 7 )
+	CREATE_DIRECTION_MARKER( 8 )
+	CREATE_DIRECTION_MARKER( 9 )
+	CREATE_DIRECTION_MARKER( 10 )
+	CREATE_DIRECTION_MARKER( 11 )
+	CREATE_DIRECTION_MARKER( 12 )
+	CREATE_DIRECTION_MARKER( 13 )
+	CREATE_DIRECTION_MARKER( 14 )
+	CREATE_DIRECTION_MARKER( 15 )
+	CREATE_DIRECTION_MARKER( 16 )
+	CREATE_DIRECTION_MARKER( 17 )
+	CREATE_DIRECTION_MARKER( 18 )
+	CREATE_DIRECTION_MARKER( 19 )
+	
+#undef CREATE_DIRECTION_MARKER
+
+	FadeDirectionMarkers( 0.3f, 0.0f, 1.0f );
+	PulseDirectionMarkers( 0.0f );	// force an update
+
+	thread DirectionMarkerThread();
+}
+
+void vehicle_vampire::FadeDirectionMarkers( float duration, float start, float end ) {
+	if ( !directionMarkerDrawn ) {
+		return;
+	}
+	
+	float currentTime = sys.getTime() - directionMarkerStartTime;
+	
+#define FADE_DIRECTION_MARKER( index )										\
+	if ( directionMarker##index != $null ) {								\
+		directionMarker##index.Fade( currentTime, duration, start, end );	\
+	}
+
+	FADE_DIRECTION_MARKER( 0 )
+	FADE_DIRECTION_MARKER( 1 )
+	FADE_DIRECTION_MARKER( 2 )
+	FADE_DIRECTION_MARKER( 3 )
+	FADE_DIRECTION_MARKER( 4 )
+	FADE_DIRECTION_MARKER( 5 )
+	FADE_DIRECTION_MARKER( 6 )
+	FADE_DIRECTION_MARKER( 7 )
+	FADE_DIRECTION_MARKER( 8 )
+	FADE_DIRECTION_MARKER( 9 )
+	FADE_DIRECTION_MARKER( 10 )
+	FADE_DIRECTION_MARKER( 11 )
+	FADE_DIRECTION_MARKER( 12 )
+	FADE_DIRECTION_MARKER( 13 )
+	FADE_DIRECTION_MARKER( 14 )
+	FADE_DIRECTION_MARKER( 15 )
+	FADE_DIRECTION_MARKER( 16 )
+	FADE_DIRECTION_MARKER( 17 )
+	FADE_DIRECTION_MARKER( 18 )
+	FADE_DIRECTION_MARKER( 19 )
+
+#undef FADE_DIRECTION_MARKER
+}
+
+void vehicle_vampire::RemoveDirectionMarkers() {
+	sys.killThread( "DirectionMarkerThread_" + getName() );
+
+	directionMarkerDrawn = false;
+	
+#define DELETE_DIRECTION_MARKER( index )		\
+	if ( directionMarker##index != $null ) {	\
+		delete directionMarker##index;			\
+		directionMarker##index = $null;			\
+	}
+	
+	DELETE_DIRECTION_MARKER( 0 )
+	DELETE_DIRECTION_MARKER( 1 )
+	DELETE_DIRECTION_MARKER( 2 )
+	DELETE_DIRECTION_MARKER( 3 )
+	DELETE_DIRECTION_MARKER( 4 )
+	DELETE_DIRECTION_MARKER( 5 )
+	DELETE_DIRECTION_MARKER( 6 )
+	DELETE_DIRECTION_MARKER( 7 )
+	DELETE_DIRECTION_MARKER( 8 )
+	DELETE_DIRECTION_MARKER( 9 )
+	DELETE_DIRECTION_MARKER( 10 )
+	DELETE_DIRECTION_MARKER( 11 )
+	DELETE_DIRECTION_MARKER( 12 )
+	DELETE_DIRECTION_MARKER( 13 )
+	DELETE_DIRECTION_MARKER( 14 )
+	DELETE_DIRECTION_MARKER( 15 )
+	DELETE_DIRECTION_MARKER( 16 )
+	DELETE_DIRECTION_MARKER( 17 )
+	DELETE_DIRECTION_MARKER( 18 )
+	DELETE_DIRECTION_MARKER( 19 )
+	
+#undef DELETE_DIRECTION_MARKER
+}
+
+void vehicle_vampire::PulseDirectionMarkers( float currentTime ) {
+	if ( !directionMarkerDrawn ) {
+		return;
+	}
+
+	float pulseTime = currentTime - directionMarkerStartTime;
+
+#define UPDATE_DIRECTION_MARKER( index )			\
+	if ( directionMarker##index != $null ) {		\
+		directionMarker##index.Update( pulseTime );	\
+	}
+
+	UPDATE_DIRECTION_MARKER( 0 )
+	UPDATE_DIRECTION_MARKER( 1 )
+	UPDATE_DIRECTION_MARKER( 2 )
+	UPDATE_DIRECTION_MARKER( 3 )
+	UPDATE_DIRECTION_MARKER( 4 )
+	UPDATE_DIRECTION_MARKER( 5 )
+	UPDATE_DIRECTION_MARKER( 6 )
+	UPDATE_DIRECTION_MARKER( 7 )
+	UPDATE_DIRECTION_MARKER( 8 )
+	UPDATE_DIRECTION_MARKER( 9 )
+	UPDATE_DIRECTION_MARKER( 10 )
+	UPDATE_DIRECTION_MARKER( 11 )
+	UPDATE_DIRECTION_MARKER( 12 )
+	UPDATE_DIRECTION_MARKER( 13 )
+	UPDATE_DIRECTION_MARKER( 14 )
+	UPDATE_DIRECTION_MARKER( 15 )
+	UPDATE_DIRECTION_MARKER( 16 )
+	UPDATE_DIRECTION_MARKER( 17 )
+	UPDATE_DIRECTION_MARKER( 18 )
+	UPDATE_DIRECTION_MARKER( 19 )
+
+#undef UPDATE_DIRECTION_MARKER
+}
+
+void vehicle_vampire::DirectionMarkerThread() {
+	while ( true ) {
+		if ( directionMarkerDrawn ) {
+			float currentTime = sys.getTime();
+
+			PulseDirectionMarkers( currentTime );
+		}
+		
+		sys.waitFrame();
+	}
+}

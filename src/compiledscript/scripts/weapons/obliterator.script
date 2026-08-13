@@ -1,0 +1,18 @@
+/***********************************************************************
+
+weapon_obliterator.script
+
+***********************************************************************/
+
+object weapon_obliterator : weapon_law {
+	void		preinit();
+}
+
+void weapon_obliterator::preinit() {
+	hasScope			= true;
+	hasScopeLock		= true;
+	hasIronSights		= false;
+	hasIronSightsLock	= false;
+	usesStroyent 		= false;
+	warmupEffect 		= true;
+}

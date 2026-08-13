@@ -1,0 +1,259 @@
+
+object deployable_shield_generator : deployable_base {
+	void			preinit();
+	void			init();
+	void			destroy();
+
+	void			Idle();
+	void			DestroyMissiles();
+	void			DestroyTarget( entity targetEnt );
+
+	void			FreeRangeIdentifier();
+	void			SetupRangeIdentifier();
+
+	void			vOnDeploy();
+
+	void			SpawnDestroyEffect( vector position );
+	void			IdleEffects();
+
+	void			CreateFireStateThread();
+	void			UpdateFireStateThread();
+
+	float			maxRange;
+
+	float			commandmapRangeHandle;
+	
+	float			toolTipDestroyedMissile;
+	
+	boolean			noStartJoint;
+	boolean			disabledEffect;
+
+	float			fireStateThread;
+}
+
+void deployable_shield_generator::preinit() {
+	commandmapRangeHandle	= -1;
+	
+	maxRange				= MetresToInches( getFloatKeyWithDefault( "range_max", 130 ) );
+	noStartJoint			= getIntKey( "no_start_joint" );
+	
+	toolTipDestroyedMissile = GetToolTip( getKey( "tt_destroyed_missile" ) );
+
+	fireStateThread			= -1;
+}
+
+void deployable_shield_generator::init() {
+	setState( "Idle" );
+}
+
+void deployable_shield_generator::destroy() {
+	FreeRangeIdentifier();
+}
+
+void deployable_shield_generator::Idle() {
+	if ( !getIntKey( "no_idle_effects" ) ) {
+		thread IdleEffects();
+	}
+
+	while ( true ) {
+		sys.waitFrame();
+
+		if ( !disabledState ) {
+			DestroyMissiles();
+		}
+	}
+}
+
+void deployable_shield_generator::vOnDeploy() {
+	SetupRangeIdentifier();
+
+	thread DoDeploy();
+}
+
+void deployable_shield_generator::DestroyMissiles() {
+	entitiesOfCollection( "antiair" );
+	filterEntitiesByAllegiance( TA_FLAG_ENEMY, 1 ); // only damage enemies
+	filterEntitiesByRadius( getWorldOrigin(), maxRange, 1 ); // find entities within maxRange radius
+	float count = getBoundsCacheCount(); // number of remaining entities
+	
+	float savedCache = saveCachedEntities();
+
+	float i;
+	for ( i = 0; i < count; i++ ) {
+		DestroyTarget( getSavedCacheEntity( savedCache, i ) );
+	}
+	
+	freeSavedCache( savedCache );
+}
+
+void deployable_shield_generator::SpawnDestroyEffect( vector position ) {
+	vector startPos;
+	if ( noStartJoint ) {	
+		startPos = getWorldOrigin();
+	} else {
+		startPos = getJointPos( getJointHandle( "joint2" ) ); // start at the roof of the deployable
+	}
+	
+	vector diff = startPos - position;
+	vector forward = '1 0 0';
+	vector angles;
+	object effect;
+	diff = sys.vecNormalize( diff );
+	angles = sys.vecToAngles( diff );
+
+	// Chage up and cool down effect
+	playOriginEffect( "fx_charge", "", startPos, forward, false );
+
+	// The electrial beam and shockwave
+	effect = spawnClientEffect( "fx_hit" );
+	if ( effect != $null_entity ) {
+		effect.setEffectLooping( 0 );
+		effect.setOrigin( position );
+		effect.setEffectEndOrigin( startPos );
+		effect.setAngles( angles );
+	}
+}
+
+void deployable_shield_generator::IdleEffects() {
+	float jointHandle = getJointHandle( "joint2" );
+	vector startPos;
+	vector angles0 = g_vectorZero;
+
+	vector angles1 = g_vectorZero;
+	vector angles2 = g_vectorZero;
+
+	vector pos1;
+	vector pos2;
+	float radius = 125; // Lengt of spikes from centre of symmetry of the model
+	object effect;
+	vector diff;
+	float rand;
+
+	startSound( "snd_idle", SND_DEPLOYABLE_IDLE );
+
+	while ( true ) {
+	
+		if ( !disabledState ) {
+			if ( disabledEffect ) {
+				stopEffect( "fx_disabled_1" );
+				stopEffect( "fx_disabled_2" );
+				disabledEffect = false;
+			}
+
+			// Get these again as the object may have moved
+			startPos = getJointPos( jointHandle );
+			startPos_z += 12; // The joint is slightly below the spikes
+			vector angleOffset = getAngles(); // Base rotation of the spikes
+
+			float spikeIndex = int( sys.random( 4.4 ) ); //Int between [0..4] is the spike
+
+			// Start position of spark
+			angles1_y = spikeIndex * 72 + angleOffset_y; // 5 spikes == one spike every 72 degrees
+			pos1 = startPos + sys.angToForward( angles1 ) * radius;
+
+			// Select a random end position
+			rand = sys.random( 1.0 );
+			if ( rand < 0.9 ) {
+				if ( rand < 0.45 ) {
+					angles2_y = (spikeIndex+1) * 72 + angleOffset_y;
+				} else {
+					angles2_y = (spikeIndex-1) * 72 + angleOffset_y;
+				}
+				pos2 = startPos + sys.angToForward( angles2 ) * radius;
+			} else {
+				// 1 in 10 change it goes to the roof instead of another spike
+				pos2 = startPos;
+				pos2_z += 25; // Roof is even higher above the joing
+			}
+
+			// Rotate efect along the axis between the two positions
+			diff = pos2 - pos1;
+			diff = sys.vecNormalize( diff );
+			angles0 = sys.vecToAngles( diff );
+
+			// The electrial beam and shockwave
+			effect = spawnClientEffect( "fx_idle" );
+			if ( effect != $null_entity ) {
+				effect.setEffectLooping( 0 );
+				effect.setOrigin( pos1 );
+				effect.setEffectEndOrigin( pos2 );
+				effect.setAngles( angles0 );
+			}
+			
+		} else {
+			if ( !disabledEffect ) {
+				playEffect( "fx_disabled_1", "fx1", true );
+				playEffect( "fx_disabled_2", "fx2", true );
+				disabledEffect = true;
+			}
+		}
+		
+		sys.wait( 1 + sys.random( 1 ) );
+	}
+
+}
+
+void deployable_shield_generator::DestroyTarget( entity targetEnt ) {
+	if ( targetEnt.vGetDestroyed() ) {
+		return;
+	}
+
+	if ( owner != $null_entity ) {
+		float destroyProficiency = targetEnt.vGetDestroyProficiency();
+		if ( destroyProficiency != -1 ) {
+			owner.giveProficiency( destroyProficiency, 1.f, $null, "shield generator bonus" );
+		}
+
+		sys.increaseStatInt( sys.allocStatInt( "antimissile_strogg_uses" ), owner.getEntityNumber(), 1 );
+	}
+
+	SpawnDestroyEffect( targetEnt.getWorldOrigin() );
+	targetEnt.vSetDestroyed();
+	CreateFireStateThread();
+
+	player p = targetEnt.getOwner();
+	if ( p != $null_entity ) {
+		if ( p.isLocalPlayer() ) {
+			if ( !p.isToolTipPlaying() ) {
+				p.sendToolTip( toolTipDestroyedMissile );
+			}
+		}
+	}
+}
+
+void deployable_shield_generator::FreeRangeIdentifier() {
+	if ( commandmapRangeHandle != -1 ) {
+		sys.freeCMIcon( self, commandmapRangeHandle );
+		commandmapRangeHandle = -1;
+	}
+}
+
+void deployable_shield_generator::SetupRangeIdentifier() {
+	FreeRangeIdentifier();
+	
+	commandmapRangeHandle = sys.allocCMIcon( self, 100 );
+	sys.setCMIconSizeMode( commandmapRangeHandle, SM_WORLD );
+	sys.setCMIconColor( commandmapRangeHandle, g_colorRed, 0.25f );
+	sys.setCMIconSides( commandmapRangeHandle, 24 );
+	sys.setCMIconDrawMode( commandmapRangeHandle, DM_CIRCLE );
+	sys.setCMIconMaterial( commandmapRangeHandle, GetMaterial( "_white_depth" ) );
+	sys.setCMIconUnknownMaterial( commandmapRangeHandle, GetMaterial( "_white_depth" ) );
+	sys.setCMIconSize( commandmapRangeHandle, maxRange );
+	sys.setCMIconUnknownSize( commandmapRangeHandle, maxRange );
+	sys.setCMIconFlag( commandmapRangeHandle, CMF_ENEMYONLY | CMF_ONLYSHOWKNOWN );
+}
+
+void deployable_shield_generator::CreateFireStateThread() {
+	if ( fireStateThread != -1 ) {
+		sys.terminate( fireStateThread );
+	}
+
+	fireStateThread = thread UpdateFireStateThread();
+}
+
+void deployable_shield_generator::UpdateFireStateThread() {
+	fireSupportState = MPS_FIRING;
+	sys.wait( 3.0f );
+	fireSupportState = MPS_READY;
+	fireStateThread = -1;
+}

@@ -1,0 +1,14 @@
+
+#ifndef __item_states__
+#define __item_states__
+
+#define IS_DEFAULT			0
+#define IS_CARRIED			1
+#define IS_DROPPED			2
+
+// gui states only
+#define CARRYABLE_ITEM_HOME			0
+#define CARRYABLE_ITEM_CARRIER		1
+#define CARRYABLE_ITEM_DROPPED		2
+
+#endif // __item_states__

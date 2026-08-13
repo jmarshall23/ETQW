@@ -1,0 +1,21 @@
+
+object vehicle_part_destructable {
+	void			OnPostDamage( entity attacker, float oldHealth, float newHealth );
+	float			damageEffectLevel;	
+};
+
+void vehicle_part_destructable::OnPostDamage( entity attacker, float oldHealth, float newHealth ) {
+	float newDamageEffectLevel;	
+
+	if ( newHealth < 10 ) {
+		newDamageEffectLevel = 1;
+	} else {
+		newDamageEffectLevel = 0;
+	}
+
+	if ( newDamageEffectLevel != damageEffectLevel ) {
+		entity parent = getParent();
+		parent.playEffect( "fx_damage_level1", getJoint(), 1 );
+		damageEffectLevel = newDamageEffectLevel;
+	}
+}

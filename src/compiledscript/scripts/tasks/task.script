@@ -1,0 +1,398 @@
+
+object task {
+	void preinit();
+	void destroy();
+
+	void Idle();
+
+	void OnTaskSelected();
+	void OnTaskDeselected();
+
+	void SetupWaypointIcon();
+	void FreeWaypointIcon();
+
+	void ToolTipThread();
+
+	void SendToolTipForClass( float pClass );
+	void SendToolTipForTeam( object needTeam );
+
+	float commandMapIcon;
+
+	float toolTipThreadId;
+}
+
+void task::preinit() {
+	commandMapIcon = -1;
+	toolTipThreadId = -1;
+}
+
+void task::destroy() {
+	FreeWaypointIcon();
+}
+
+void task::Idle() {
+
+}
+
+void task::OnTaskSelected() {
+	toolTipThreadId = thread ToolTipThread();
+
+	SetupWaypointIcon();
+}
+
+void task::OnTaskDeselected() {
+	if ( toolTipThreadId != -1 ) {
+		sys.terminate( toolTipThreadId );
+		toolTipThreadId = -1;
+	}
+
+	FreeWaypointIcon();
+}
+
+void task::FreeWaypointIcon() {
+	if ( commandMapIcon == -1 ) {
+		return;
+	}
+
+	entity ent = getTaskEntity();
+	if ( ent == $null_entity ) {
+		// we lost the entity, use local player instead
+		ent = sys.getLocalPlayer();
+	}
+
+	sys.freeCMIcon( ent, commandMapIcon );
+	commandMapIcon = -1;
+}
+
+void task::SetupWaypointIcon() {	
+	FreeWaypointIcon();
+
+	player l = sys.getLocalPlayer();
+	if ( l != $null_entity ) {
+		float materialIndex = GetMaterial( getKey( "mtr_cm_icon" ) );
+		if ( materialIndex != -1 ) {
+			entity taskEntity = getTaskEntity();
+			if ( taskEntity != $null_entity ) {
+				commandMapIcon = sys.allocCMIcon( taskEntity, getFloatKey( "icon_sort_cm_request" ) );
+				sys.setCMIconMaterial( commandMapIcon, materialIndex );
+				sys.setCMIconColorMode( commandMapIcon, CM_NORMAL );
+				sys.setCMIconSize( commandMapIcon, 20.0f );
+				sys.setCMIconColor( commandMapIcon, g_colorWhite, 1.0f );
+				sys.setCMIconFlag( commandMapIcon, CMF_ALWAYSKNOWN );
+				sys.flashCMIcon( commandMapIcon, -1, 1, -1 );
+			}
+		}
+	}
+}
+
+void task::ToolTipThread() {
+	player lPlayer = sys.getLocalPlayer();
+
+	if ( lPlayer != $null_entity && objManager.gameState == GS_GAMEON ) {
+		team_base team = lPlayer.getGameTeam();
+		if ( team != $null_entity ){
+			string ability = getKey( "tooltip_ability" );
+			boolean allowTooltip = true;
+
+			if ( ability != "" ) {
+				allowTooltip = lPlayer.hasAbility( ability );
+			}
+
+			if ( lPlayer.isDisguised() ) {
+				allowTooltip = false;
+			}
+
+			if ( allowTooltip ) {
+				float toolTip =  GetToolTip( getKey( "tt_task" ) );
+
+				if ( toolTip != -1 ) {
+					sys.wait( 4 );
+					if( lPlayer.getHealth() > 0 ) {
+						if ( lPlayer.getProxyEntity() == $null_entity ) {
+							if ( commandMapIcon != -1 ) {
+								sys.flashCMIcon( commandMapIcon, -1, 3, -1 );
+							}
+							lPlayer.sendToolTip( toolTip );
+						}
+					}
+				}
+			}
+		}
+	}
+
+	toolTipThreadId = -1;
+}
+
+void task::SendToolTipForClass( float pClass ) {
+	player lPlayer = sys.getLocalPlayer();
+	if ( lPlayer == $null_entity || objManager.gameState != GS_GAMEON || lPlayer.getHealth() <= 0 ) {
+		return;
+	}
+	
+	if ( lPlayer.getProxyEntity() != $null_entity ) {
+		return;
+	}
+
+	team_base team = lPlayer.getGameTeam();
+	if ( team != $null_entity ){
+		float toolTip = -1;
+		if ( pClass == -1 || lPlayer.getPlayerClass() == pClass ) {
+			toolTip = GetToolTip( getKey( "tt_task" ) );
+		}
+		
+		if ( toolTip != -1 ) {
+			if ( commandMapIcon != -1 ) {
+				sys.flashCMIcon( commandMapIcon, -1, 3, -1 );
+			}
+			flashWorldIcon( 3000 );
+			lPlayer.sendToolTip( toolTip );
+		}
+	}
+}
+
+void task::SendToolTipForTeam( object needTeam ) {
+	player lPlayer = sys.getLocalPlayer();
+	if ( lPlayer == $null_entity || objManager.gameState != GS_GAMEON || lPlayer.getHealth() <= 0 ) {
+		return;
+	}
+	
+	if ( lPlayer.getProxyEntity() != $null_entity ) {
+		return;
+	}
+
+	team_base team = lPlayer.getGameTeam();
+	if ( team == needTeam || needTeam == $null_entity ){
+		float toolTip = GetToolTip( getKey( "tt_task" ) );
+		
+		if ( toolTip != -1 ) {
+			if ( commandMapIcon != -1 ) {
+				sys.flashCMIcon( commandMapIcon, -1, 3, -1 );
+			}
+			flashWorldIcon( 3000 );
+			lPlayer.sendToolTip( toolTip );
+		}
+	}
+}
+
+object task_dummy : task {
+}
+
+object task_deploy_base : task {
+}
+
+object task_deploy_object : task_deploy_base {
+}
+
+object task_deploy_mines : task_deploy_base {
+}
+
+// primary objective
+object task_hack_objective_gdf : task {
+	void preinit() {
+		player lPlayer = sys.getLocalPlayer();
+		if ( lPlayer != $null_entity ) {
+			if ( !lPlayer.isDisguised() ) {
+				SendToolTipForTeam( $null );
+			}
+		}
+	}
+}
+
+// primary objective
+object task_hack_objective_strogg : task {
+	void DelayedToolTipThread() {
+		sys.wait( 4.0f );
+		player lPlayer = sys.getLocalPlayer();
+		if ( !lPlayer.isDisguised() ) {
+			SendToolTipForTeam( $null );
+		}
+	}
+
+	void preinit() {
+		player lPlayer = sys.getLocalPlayer();
+		if ( lPlayer != $null_entity ) {
+			thread DelayedToolTipThread();
+		}
+	}
+}
+
+object task_construct_objective : task {
+}
+
+// primary objective
+object task_construct_objective_gdf : task {
+	void preinit() {
+		player lPlayer = sys.getLocalPlayer();
+		if ( lPlayer != $null_entity ) {
+			SendToolTipForTeam( $null );
+		}
+	}
+}
+
+// primary objective
+object task_construct_objective_strogg : task {
+	void preinit() {
+		player lPlayer = sys.getLocalPlayer();
+		if ( lPlayer != $null_entity ) {
+			SendToolTipForTeam( $null );
+		}
+	}
+}
+
+object task_destroy_objective : task {
+}
+
+// primary objective
+object task_destroy_objective_strogg : task {
+	void preinit() {
+		player lPlayer = sys.getLocalPlayer();
+		if ( lPlayer != $null_entity ) {
+			SendToolTipForTeam( $null );
+		}
+	}
+}
+
+// primary objective
+object task_destroy_objective_gdf : task {
+	void preinit() {
+		player lPlayer = sys.getLocalPlayer();
+		if ( lPlayer != $null_entity ) {
+			SendToolTipForTeam( $null );
+		}
+	}
+}
+
+object task_deployable_disable : task {
+}
+
+object task_repair_deployable : task {
+}
+
+object task_escort_mcp : task {
+	void preinit() {
+		player lPlayer = sys.getLocalPlayer();
+		if ( lPlayer != $null_entity ) {
+			SendToolTipForTeam( $null );
+		}
+	}
+}
+
+object task_capture_spawn : task {
+}
+
+object task_liberate_spawn : task {
+}
+
+object task_defuse_object_gdf : task {
+	void preinit() {
+		player lPlayer = sys.getLocalPlayer();
+		if ( lPlayer != $null_entity ) {
+			SendToolTipForClass( g_playerClassEngineer );
+		}
+	}
+}
+
+object task_defuse_object_strogg : task {
+	void preinit() {
+		player lPlayer = sys.getLocalPlayer();
+		if ( lPlayer != $null_entity ) {
+			SendToolTipForClass( g_playerClassConstructor );
+		}
+	}
+}
+
+object task_defend : task {
+}
+
+object task_pickup : task {
+}
+
+object task_select_spawnhost : task {
+}
+
+object task_repair_vehicle : task {
+}
+
+object task_need_passenger : task {
+}
+
+object task_revive_player_gdf : task {
+	void preinit() {
+		player lPlayer = sys.getLocalPlayer();
+		if ( lPlayer != $null_entity ) {
+			boolean alive = lPlayer.getHealth() > 0;
+			if ( alive ) {
+				SendToolTipForClass( g_playerClassMedic );
+			}
+		}
+	}
+}
+
+object task_revive_player_strogg : task {
+	void preinit() {
+		player lPlayer = sys.getLocalPlayer();
+		if ( lPlayer != $null_entity ) {
+			boolean alive = lPlayer.getHealth() > 0;
+			if ( alive ) {
+				SendToolTipForClass( g_playerClassTechnician );
+			}
+		}
+	}
+}
+
+object task_heal_player : task {
+	void preinit() {
+		player lPlayer = sys.getLocalPlayer();
+		if ( lPlayer != $null_entity ) {
+			SendToolTipForClass( g_playerClassMedic );
+		}
+	}
+}
+
+object task_supply_player_gdf : task {
+}
+
+object task_supply_player_strogg : task {
+	void preinit() {
+		player lPlayer = sys.getLocalPlayer();
+		if ( lPlayer != $null_entity ) {
+			SendToolTipForClass( g_playerClassTechnician );
+		}
+	}
+}
+
+object task_create_spawnhost : task {
+}
+
+object task_kill_enemy : task {
+}
+
+object task_item_pickup_outskirts : task {
+	void preinit() {
+		player lPlayer = sys.getLocalPlayer();
+		if ( lPlayer != $null_entity ) {
+			team_base team = lPlayer.getGameTeam();
+			if ( team == gdfTeam ) {
+				SendToolTipForTeam( gdfTeam );
+			} else if ( team == stroggTeam ) {
+				if ( objManager.gameState != GS_GAMEON || lPlayer.getHealth() <= 0 ) {
+					return;
+				}
+				
+				if ( lPlayer.getProxyEntity() != $null_entity ) {
+					return;
+				}
+
+				float toolTip = GetToolTip( getKey( "tt_task_strogg" ) );
+				
+				if ( toolTip != -1 ) {
+					if ( commandMapIcon != -1 ) {
+						sys.flashCMIcon( commandMapIcon, -1, 3, -1 );
+					}
+					flashWorldIcon( 3000 );
+					lPlayer.sendToolTip( toolTip );
+				}
+			}
+		}
+	}
+}

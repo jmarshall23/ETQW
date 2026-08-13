@@ -1,0 +1,39 @@
+
+object placement_rotator {
+	void				preinit();
+	void				init();
+	void				destroy();
+	
+	entity				targetEnt;
+	float				rotation;
+	float				rotationSpeed;
+};
+
+void placement_rotator::preinit() {
+	rotationSpeed		= getFloatKeyWithDefault( "rotation_speed", 180 );
+	rotation			= 0;
+}
+
+void placement_rotator::init() {
+	targetEnt			= getEntityKey( "rotation_target" );
+	
+	if ( targetEnt == $null_entity ) {
+		return;
+	}
+	
+	vector angles = targetEnt.getAngles();
+	rotation = angles_y;
+	
+	while ( true ) {
+		sys.waitFrame();
+		
+		rotation = rotation + ( sys.getFrameTime() * rotationSpeed );
+		
+		angles_y = rotation;
+		
+		targetEnt.setAngles( angles );
+	}
+}
+
+void placement_rotator::destroy() {
+}

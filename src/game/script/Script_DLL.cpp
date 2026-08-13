@@ -17,7 +17,8 @@ extern const idEventDefInternal EV_Thread_Execute;
 
 class MainCoroutine : public sdDLLThread { 
 public:
-    MainCoroutine() { s_current = this; s_main = this; storedStackPointer = ( char* )0xFFFFFFFF; flags.threadDying = false; name = "main"; }
+    MainCoroutine( void* mainFiber ) { InitMainFiber( mainFiber ); s_current = this; s_main = this; storedStackPointer = ( char* )0xFFFFFFFF; flags.threadDying = false; name = "main"; }
+	~MainCoroutine() { s_current = NULL; s_main = NULL; }
     virtual void Routine() {}
 	virtual void SetStackEntryPoint( char* value ) { ; }
 };
@@ -222,7 +223,15 @@ sdDLLProgram::Init
 bool sdDLLProgram::Init( void ) {
 	Shutdown();
 
-	s_MainCoroutine = new MainCoroutine();
+	void* mainFiber = ConvertThreadToFiber( NULL );
+	if ( mainFiber == NULL ) {
+		if ( GetLastError() != ERROR_ALREADY_FIBER ) {
+			gameLocal.Warning( "sdDLLProgram::Init : ConvertThreadToFiber failed (%lu)", GetLastError() );
+			return false;
+		}
+		mainFiber = GetCurrentFiber();
+	}
+	s_MainCoroutine = new MainCoroutine( mainFiber );
 
 	char dllPath[ MAX_OSPATH ];
 
@@ -259,16 +268,18 @@ bool sdDLLProgram::Init( void ) {
 
 	int scriptVersion = scriptInterface->GetVersion();
 	if ( scriptVersion != COMPILED_SCRIPT_INTERFACE_VERSION ) {
+		CloseDLL();
 		gameLocal.Warning( "sdDLLProgram::Init : Version mismatch, expected %d, got %d", COMPILED_SCRIPT_INTERFACE_VERSION, scriptVersion );
 		return false;
 	}
 
-	int ourSize = sizeof( sdClassFunctionInfo );
-	int theirSize = scriptInterface->GetClassFunctionInfoSize();
-
-	if ( theirSize != ourSize ) {
+	if ( scriptInterface->GetPointerSize() != sizeof( void* ) ||
+		 scriptInterface->GetClassFunctionInfoSize() != sizeof( sdClassFunctionInfo ) ||
+		 scriptInterface->GetFunctionInfoSize() != sizeof( sdFunctionInfo ) ||
+		 scriptInterface->GetClassVariableInfoSize() != sizeof( sdClassVariableInfo ) ||
+		 scriptInterface->GetClassInfoSize() != sizeof( sdClassInfo ) ) {
 		CloseDLL();
-		gameLocal.Warning( "sdDLLProgram::Init : Size Mismatch on sdClassFunctionInfo" );
+		gameLocal.Warning( "sdDLLProgram::Init : Compiled-script ABI mismatch" );
 		return false;
 	}
 
@@ -611,7 +622,9 @@ sdProgramThread* sdDLLProgram::CreateThread( const sdScriptHelper& h ) {
 
 	thread->ManualControl();
 
-	static byte buffer[ MAX_STRING_LEN * 12 ];
+	const int dataSize = h.GetSize() - sizeof( int );
+	thread->callData.SetNum( dataSize );
+	byte* const buffer = dataSize > 0 ? &thread->callData[ 0 ] : NULL;
 	byte* p = buffer;
 
 	const sdScriptHelper::parmsList_t& args = h.GetArgs();
@@ -624,6 +637,7 @@ sdProgramThread* sdDLLProgram::CreateThread( const sdScriptHelper& h ) {
 			p += sizeof( int );
 		}
 	}
+	assert( dataSize == 0 || p == buffer + dataSize );
 
 	thread->call1.Init( h.GetObject(), function, buffer, this );
 	thread->Call( &thread->call1, false );
@@ -701,7 +715,7 @@ sdDLLProgram::ReturnEntityInternal
 */
 void sdDLLProgram::ReturnEntityInternal( idEntity* value ) {
 	idScriptObject* obj = value ? value->GetScriptObject() : NULL;
-	returnValue.objectValue = obj->GetHandle();
+	returnValue.objectValue = obj ? obj->GetHandle() : 0;
 }
 
 /*
@@ -719,7 +733,7 @@ sdDLLProgram::ReturnObjectInternal
 ================
 */
 void sdDLLProgram::ReturnObjectInternal( idScriptObject* value ) {
-	returnValue.objectValue = value->GetHandle();
+	returnValue.objectValue = value ? value->GetHandle() : 0;
 }
 
 /*
@@ -766,6 +780,8 @@ sdDLLThread::sdDLLThread( void ) {
 	localStack		= NULL;
 	call			= NULL;
 	program			= NULL;
+	fiber			= NULL;
+	ownsFiber		= false;
 
 	threadNode.SetOwner( this );
 }
@@ -797,6 +813,7 @@ sdDLLThread::Clear
 ================
 */
 void sdDLLThread::Clear( void ) {
+	DestroyFiber();
 	FreeStack();
 
 	if ( program != NULL ) {
@@ -812,6 +829,7 @@ void sdDLLThread::Clear( void ) {
 	}
 
 	call				= NULL;
+	callData.Clear();
 	pauseTime			= 0;
 	program				= NULL;
 	threadNum			= -1;
@@ -1108,6 +1126,60 @@ void sdDLLThread::Call( sdProcedureCall* call, bool guiThread ) {
 	SetCall( call );
 }
 
+#ifdef _WIN32
+/*
+================
+sdDLLThread::InitMainFiber
+================
+*/
+void sdDLLThread::InitMainFiber( void* mainFiber ) {
+	fiber = mainFiber;
+	ownsFiber = false;
+}
+
+/*
+================
+sdDLLThread::EnsureFiber
+================
+*/
+void sdDLLThread::EnsureFiber( void ) {
+	if ( fiber != NULL ) {
+		return;
+	}
+	fiber = CreateFiber( 1024 * 1024, FiberEntry, this );
+	if ( fiber == NULL ) {
+		gameLocal.Error( "CreateFiber failed for compiled-script thread '%s' (%lu)", name.c_str(), GetLastError() );
+	}
+	ownsFiber = true;
+}
+
+/*
+================
+sdDLLThread::DestroyFiber
+================
+*/
+void sdDLLThread::DestroyFiber( void ) {
+	if ( ownsFiber && fiber != NULL ) {
+		DeleteFiber( fiber );
+	}
+	fiber = NULL;
+	ownsFiber = false;
+}
+
+/*
+================
+sdDLLThread::FiberEntry
+================
+*/
+VOID CALLBACK sdDLLThread::FiberEntry( void* parameter ) {
+	sdDLLThread* self = reinterpret_cast< sdDLLThread* >( parameter );
+	self->Routine();
+	self->flags.threadDying = true;
+	Coroutine_Detach( self );
+	assert( false );
+}
+#endif
+
 #ifdef USE_UCONTEXT
 static bool context_jump = false;
 #endif
@@ -1118,6 +1190,23 @@ Coroutine_Enter
 ================
 */
 void Coroutine_Enter( sdDLLThread *self ) {
+#if defined( _WIN32 ) && !defined( _XENON )
+	sdDLLThread* previous = sdDLLThread::s_current;
+	assert( previous != NULL );
+
+	if ( self->flags.threadDying ) {
+		assert( self->caller == previous );
+		previous->callee = NULL;
+		self->caller = NULL;
+		return;
+	}
+
+	self->EnsureFiber();
+	self->flags.doneProcessing = false;
+	sdDLLThread::s_current = self;
+	SwitchToFiber( self->fiber );
+	assert( sdDLLThread::s_current == previous );
+#else
 #if defined( MACOS_X ) || defined( __linux__ ) || ( defined( _WIN32 ) && !defined( _XENON ) )	
 
 	PUSH_REGS;
@@ -1195,6 +1284,7 @@ void Coroutine_Enter( sdDLLThread *self ) {
 #else
 	assert( false );
 #endif
+#endif
 }
 
 /*
@@ -1213,7 +1303,12 @@ void Coroutine_Detach( sdDLLThread *self ) {
 	next->callee = NULL;
 	self->caller = NULL;
 
+#if defined( _WIN32 ) && !defined( _XENON )
+	sdDLLThread::s_current = next;
+	SwitchToFiber( next->fiber );
+#else
 	Coroutine_Enter( next );
+#endif
 }
 
 /*
@@ -1650,7 +1745,7 @@ sdDLLScriptInterface::ReturnVector
 ================
 */
 void sdDLLScriptInterface::ReturnVector( float* value ) {
-	program->ReturnVectorInternal( ( const idVec3& ) value );
+	program->ReturnVectorInternal( idVec3( value[ 0 ], value[ 1 ], value[ 2 ] ) );
 }
 
 /*

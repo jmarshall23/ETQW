@@ -1,0 +1,288 @@
+
+object deployable_antiarmour : deployable_turret {
+	boolean		TargetIsValid( entity targetEnt );
+
+	entity		OnAcquireTarget();
+	
+	void		OnSetTarget( entity oldTarget, entity newTarget );
+
+	void		preinit();
+	void		syncFields();
+	
+	void		OnPostDamage( entity attacker, float oldHealth, float newHealth );
+	void		CheckRetribution( entity attacker );
+	
+	void		OnFullChargeTimeChanged();
+
+	boolean		CanFire();
+	void		Fired();
+	
+	void		FireMissile();
+
+	void		UpdateCharge();
+
+	boolean		TraceCheck( entity other );
+
+	float		fullChargeTime;
+	float		chargeTime;
+	float		chargePerShot;
+	
+	float		projectileIndexDumb;
+	
+	float		numMuzzleJoints;
+	
+	boolean		updateChargeThreadActive;
+}
+
+void deployable_antiarmour::preinit() {
+	fullChargeTime = -1;
+	chargeTime = getFloatKeyWithDefault( "charge_time", 10 );
+	chargePerShot = getFloatKeyWithDefault( "charge_per_shot", 0.7 );
+
+	projectileIndexDumb		= GetEntityDef( getKey( "def_projectile_dumb" ) );
+	
+	numMuzzleJoints = getFloatKey( "num_muzzlejoints" );
+}
+
+void deployable_antiarmour::syncFields() {
+	syncBroadcast( "fullChargeTime" );
+	syncCallback( "fullChargeTime", "OnFullChargeTimeChanged" );
+}
+
+void deployable_antiarmour::OnFullChargeTimeChanged() {
+	if ( !updateChargeThreadActive ) {
+		if ( myUser.isLocalPlayer() ) {
+			thread UpdateCharge();
+		}
+	}
+}
+
+void deployable_antiarmour::CheckRetribution( entity attacker ) {
+	player testPlayer = attacker;		
+	if ( testPlayer == $null_entity ) {
+		return;
+	}
+	
+	entity vehicle = testPlayer.getVehicle();		
+	if ( vehicle == $null_entity ) {
+		return;
+	}
+	
+	if ( !TargetIsValid( vehicle ) ) {
+		return;
+	}
+
+	if ( !InRange( attacker.getWorldOrigin() ) ) {
+		return;
+	}
+	
+	setTurretEnemy( vehicle, retributionDelay );
+}
+
+void deployable_antiarmour::OnPostDamage( entity attacker, float oldHealth, float newHealth ) {
+	boolean oldDisabled = disabledState;
+	UpdateState( newHealth );
+
+	if ( !isDisabled() ) {
+		if ( getEnemy() == $null_entity && newHealth < oldHealth ) {
+			CheckRetribution( attacker );
+		}
+	}
+
+	UpdateDisabledStats( attacker, oldDisabled );
+}
+
+boolean deployable_antiarmour::TargetIsValid( entity targetEnt ) {
+	if ( targetEnt.vTargetLockDisabled() ) {
+		return false;
+	}
+	
+	if ( targetEnt.getHealth() <= 0 ) {
+		return false;
+	}
+
+	if ( getEntityAllegiance( targetEnt ) != TA_ENEMY ) {
+		return false;
+	}
+
+	if ( !TraceCheck( targetEnt ) ) {
+		return false;
+	}
+
+	return true;
+}
+
+boolean deployable_antiarmour::TraceCheck( entity other ) {
+	vector targetPos = getTargetPosition( other );
+	
+	sys.tracePoint( getWorldOrigin() + traceCheckOffset, targetPos, checkMask, self );
+	if ( sys.getTraceFraction() == 1.f ) {
+		return true;
+	}
+	
+	entity traceEnt = sys.getTraceEntity();
+	
+	player traceEntPlayer = traceEnt;
+	if ( traceEntPlayer != $null_entity ) {
+		traceEnt = traceEntPlayer.getProxyEntity();
+	}
+
+	if ( traceEnt != other ) {
+		return false;
+	}
+	return true;
+}
+
+entity deployable_antiarmour::OnAcquireTarget() {
+	if ( !finishedDeploying ) {
+		return $null_entity;
+	}
+
+	float i;
+	float count;
+	entity ent;
+	entity targetingRangeEnt;
+	vector targetDir;
+	vector selfDir;
+
+	entitiesOfCollection( "antivehicle" );
+	filterEntitiesByAllegiance( TA_FLAG_ENEMY, 1 );
+	filterEntitiesByRadius( getWorldOrigin(), maxRange, 1 );
+
+	selfDir = getWorldAxis( 0 );
+	selfDir_z = 0;
+
+	count = getBoundsCacheCount();
+	for ( i = 0; i < count; i++ ) {
+		ent = getBoundsCacheEntity( i );
+
+		targetDir = sys.vecNormalize( ent.getWorldOrigin() - getWorldOrigin() );
+		targetDir_z = 0;
+
+		if ( targetDir * selfDir < angleRange ) {
+			continue;
+		}
+
+		if ( !TargetIsValid( ent ) ) {
+			continue;
+		}
+		
+		if ( !InRange( ent.getWorldOrigin() ) ) {
+			continue;
+		}
+		if ( InFiringRange( ent.getWorldOrigin() ) ) {
+			return ent;
+		}
+		
+		if ( targetingRangeEnt == $null_entity ) {
+			targetingRangeEnt = ent;
+		}
+	}
+
+	return targetingRangeEnt;
+}
+
+void deployable_antiarmour::OnSetTarget( entity oldTarget, entity newTarget ) {
+	if ( oldTarget != $null_entity ) {
+		oldTarget.vStopTargetLockAlarm( self );
+	}
+
+	if ( newTarget != $null_entity )  {
+		newTarget.vTargetLockAlarm( self );
+	}
+}
+
+
+
+
+
+void deployable_antiarmour::UpdateCharge() {
+	sys.assert( false );
+
+	updateChargeThreadActive = true;
+
+	while ( true ) {
+		if ( !myUser.isLocalPlayer() ) {
+			break;
+		}
+
+		float chargeAmount = ( chargeTime - ( fullChargeTime - sys.getTime() ) ) / chargeTime;
+		if ( chargeAmount > 1 ) {
+			chargeAmount = 1;
+		}
+
+		sys.setGUIFloat( GUI_GLOBALS_HANDLE, "weapons.energyBarCharge", chargeAmount );
+		sys.setGUIFloat( GUI_GLOBALS_HANDLE, "weapons.energyAvailable", CanFire() );
+		
+		if ( chargeAmount == 1.f ) {
+			break;
+		}
+		
+		sys.waitFrame();
+	}
+	
+	updateChargeThreadActive = false;
+}
+
+boolean deployable_antiarmour::CanFire() { 
+	if ( myUser == $null_entity ) {
+		return true;
+	}
+	
+	float chargeAmount = ( chargeTime - ( fullChargeTime - sys.getTime() ) ) / chargeTime;
+	if ( chargeAmount >= chargePerShot ) {
+		return true;
+	}
+	
+	return false; 
+}
+
+void deployable_antiarmour::Fired() {
+	if ( myUser == $null_entity ) {
+		return;
+	}
+	
+	if ( !sys.isClient() ) {
+		if ( fullChargeTime < sys.getTime() ) {
+			fullChargeTime = sys.getTime();
+		}
+		fullChargeTime = fullChargeTime + ( chargeTime * chargePerShot );
+	}
+	
+	if ( !updateChargeThreadActive ) {
+		if ( myUser.isLocalPlayer() ) {
+			thread UpdateCharge();
+		}
+	}
+}
+
+void deployable_antiarmour::FireMissile() {
+	entity target;
+	entity controller = myUser;
+	if ( controller != $null_entity ) {
+		target = controller.getEnemy();
+	} else {
+		if ( owner != $null_entity ) {
+			controller = owner;
+		} else {
+			controller = self;
+		}
+		target = getEnemy();
+	}
+	
+	float pIndex;
+	if ( target == $null_entity && projectileIndexDumb != -1 ) {
+		pIndex = projectileIndexDumb;
+	} else {
+		pIndex = projectileIndex;
+	}
+		
+	float muzzleJointIndex = int( sys.random( numMuzzleJoints ) ) + 1;
+	float muzzleJoint = getJointHandle( getKey( "joint_muzzle" + muzzleJointIndex ) );
+	
+	launchMissileSimple( controller, self, target, pIndex, -1, spread, getJointPos( muzzleJoint ), getJointAxis( muzzleJoint, 0 ) * projectileSpeed );
+	playJointEffect( "fx_fire", muzzleJoint, 0 );
+	playAnim( ANIMCHANNEL_ALL, "fire" );
+
+	Fired();
+}

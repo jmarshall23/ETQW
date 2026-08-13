@@ -12,7 +12,7 @@
 #include <ucontext.h>
 #include <errno.h>
 #endif
-#include "compiledscript/CompiledScriptInterface.h"
+#include "../../compiledscript/CompiledScriptInterface.h"
 #include "Script_ScriptObject.h"
 #include "Script_SysCall.h"
 
@@ -356,6 +356,8 @@ public:
 		sdDLLProgram*					program;
 	} call1;
 
+	idList< byte >					callData;
+
 	virtual void Routine( void ) {
 		assert( call != NULL );
 		call->Go();
@@ -389,8 +391,19 @@ public:
 	bool					IsStackSaved( void ) const { return localStack != NULL; }
 
 	void Reset( void ) {
+	#ifdef _WIN32
+		DestroyFiber();
+	#else
 		storedStackPointer = NULL;
+	#endif
 	}
+
+#ifdef _WIN32
+	void					InitMainFiber( void* mainFiber );
+	void					EnsureFiber( void );
+	void					DestroyFiber( void );
+	static VOID CALLBACK	FiberEntry( void* parameter );
+#endif
 
 protected:
 	sdDLLProgram*			program;
@@ -427,6 +440,11 @@ protected:
 	char*					storedStackPointer;
 	size_t					storedStackSize;
 	size_t					actualStackSize;
+
+#ifdef _WIN32
+	void*					fiber;
+	bool					ownsFiber;
+#endif
 
 	static idLinkList< sdDLLThread > s_threads;
 	static sdDLLThread* s_current;

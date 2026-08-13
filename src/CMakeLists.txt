@@ -85,12 +85,6 @@ list(FILTER ETQW_GAME_SOURCES EXCLUDE REGEX
     "/game/rules/GameRules_(DeathMatch|Multiplayer)\\.cpp$"
 )
 list(FILTER ETQW_GAME_SOURCES EXCLUDE REGEX
-    "/game/script/compiledscript/"
-)
-list(FILTER ETQW_GAME_SOURCES EXCLUDE REGEX
-	"/game/script/Script_(DLL|Exporter)\.cpp$"
-)
-list(FILTER ETQW_GAME_SOURCES EXCLUDE REGEX
     "/game/weapons/ClientProjectile\\.cpp$"
 )
 list(APPEND ETQW_GAME_SOURCES
@@ -107,8 +101,11 @@ add_library(game SHARED
     ${ETQW_GAME_SOURCES}
     "${CMAKE_CURRENT_SOURCE_DIR}/game/Game.def"
 )
+add_executable(compiledscript_codegen
+    "${CMAKE_CURRENT_SOURCE_DIR}/compiledscript/tools/CompiledScriptCodegen.cpp"
+)
 
-set(ETQW_ALL_TARGETS idLib libGameDecl game)
+set(ETQW_ALL_TARGETS idLib libGameDecl game compiledscript_codegen)
 foreach(target_name IN LISTS ETQW_ALL_TARGETS)
     target_include_directories("${target_name}" PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -196,6 +193,18 @@ foreach(config_name Debug Release MinSizeRel RelWithDebInfo)
     )
 endforeach()
 
+set_target_properties(compiledscript_codegen PROPERTIES
+    OUTPUT_NAME "compiledscript_codegen"
+    RUNTIME_OUTPUT_DIRECTORY "${ETQW_BUILD_STAGING_DIR}/$<CONFIG>/tools"
+    FOLDER "ETQW/Compiled Scripts"
+)
+foreach(config_name Debug Release MinSizeRel RelWithDebInfo)
+    string(TOUPPER "${config_name}" config_name_upper)
+    set_target_properties(compiledscript_codegen PROPERTIES
+        "RUNTIME_OUTPUT_DIRECTORY_${config_name_upper}" "${ETQW_BUILD_STAGING_DIR}/${config_name}/tools"
+    )
+endforeach()
+
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES
     ${ETQW_IDLIB_SOURCES}
     ${ETQW_GAME_DECL_SOURCES}
@@ -221,6 +230,71 @@ if(ETQW_BUILD_ENGINE)
     # ID_CONSOLE_LOCK guard and disable it for debugger launches.
     target_compile_definitions(etqw PRIVATE "$<$<CONFIG:Debug>:ID_CONSOLE_LOCK=0>")
     set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT etqw)
+endif()
+
+option(
+    ETQW_BUILD_COMPILED_SCRIPTS
+    "Generate native C++ from DoomScript and build compiledscript DLL"
+    ON
+)
+if(ETQW_BUILD_COMPILED_SCRIPTS)
+    if(NOT ETQW_BUILD_ENGINE)
+        message(FATAL_ERROR "ETQW_BUILD_COMPILED_SCRIPTS requires ETQW_BUILD_ENGINE for the exporter process.")
+    endif()
+
+    file(GLOB_RECURSE ETQW_COMPILED_SCRIPT_INPUTS CONFIGURE_DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/compiledscript/scripts/*"
+    )
+    set(ETQW_COMPILED_SCRIPT_BUILD_DIR "${CMAKE_BINARY_DIR}/compiledscript")
+    set(ETQW_COMPILED_SCRIPT_TEMP_DIR "${CMAKE_BINARY_DIR}/compiledscript-codegen")
+    set(ETQW_COMPILED_SCRIPT_STAMP "${ETQW_COMPILED_SCRIPT_TEMP_DIR}/generated.stamp")
+
+    add_custom_command(
+        OUTPUT "${ETQW_COMPILED_SCRIPT_STAMP}"
+        COMMAND "${CMAKE_COMMAND}" -E make_directory "${ETQW_COMPILED_SCRIPT_TEMP_DIR}"
+        COMMAND "$<TARGET_FILE:compiledscript_codegen>"
+            --engine "$<TARGET_FILE:etqw>"
+            --workspace "${ETQW_WORKSPACE_ROOT}"
+            --temp "${ETQW_COMPILED_SCRIPT_TEMP_DIR}"
+        COMMAND "${CMAKE_COMMAND}" -E touch "${ETQW_COMPILED_SCRIPT_STAMP}"
+        DEPENDS
+            ${ETQW_COMPILED_SCRIPT_INPUTS}
+            compiledscript_codegen
+            etqw
+            game
+        COMMENT "Compiling DoomScript to native C++"
+        VERBATIM
+        USES_TERMINAL
+    )
+    add_custom_target(compiledscript_generate
+        DEPENDS "${ETQW_COMPILED_SCRIPT_STAMP}"
+    )
+    set_target_properties(compiledscript_generate PROPERTIES FOLDER "ETQW/Compiled Scripts")
+
+    set(ETQW_COMPILED_SCRIPT_CONFIGURE_COMMAND
+        "${CMAKE_COMMAND}"
+        -S "${CMAKE_CURRENT_SOURCE_DIR}/compiledscript"
+        -B "${ETQW_COMPILED_SCRIPT_BUILD_DIR}"
+        -G "${CMAKE_GENERATOR}"
+        "-DETQW_WORKSPACE_ROOT=${ETQW_WORKSPACE_ROOT}"
+    )
+    if(CMAKE_GENERATOR_PLATFORM)
+        list(APPEND ETQW_COMPILED_SCRIPT_CONFIGURE_COMMAND -A "${CMAKE_GENERATOR_PLATFORM}")
+    endif()
+    if(CMAKE_GENERATOR_TOOLSET)
+        list(APPEND ETQW_COMPILED_SCRIPT_CONFIGURE_COMMAND -T "${CMAKE_GENERATOR_TOOLSET}")
+    endif()
+
+    add_custom_target(compiledscript ALL
+        COMMAND ${ETQW_COMPILED_SCRIPT_CONFIGURE_COMMAND}
+        COMMAND "${CMAKE_COMMAND}" --build "${ETQW_COMPILED_SCRIPT_BUILD_DIR}"
+            --config "$<CONFIG>" --target compiledscript
+        DEPENDS compiledscript_generate
+        COMMENT "Building compiledscript${ETQW_ARCH_SUFFIX}.dll"
+        VERBATIM
+        USES_TERMINAL
+    )
+    set_target_properties(compiledscript PROPERTIES FOLDER "ETQW/Compiled Scripts")
 endif()
 
 message(STATUS "ETQW SDK source counts:")

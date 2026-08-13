@@ -1,0 +1,45 @@
+
+object slipgate_effects {
+	void					syncFields();
+	void					preinit();	
+	
+	void					vCompleteMission();
+	void					OnCompletedChanged();
+	
+	void					PlayClosedEffect();
+	void					PlayOpenEffect();
+
+	boolean					completed;
+}
+
+void slipgate_effects::syncFields() {
+	syncBroadcast( "completed" );
+	syncCallback( "completed", "OnCompletedChanged" );
+}
+
+void slipgate_effects::preinit() {
+	OnCompletedChanged();
+}
+
+void slipgate_effects::OnCompletedChanged() {
+	if ( completed ) {
+		PlayOpenEffect();
+	} else {
+		PlayClosedEffect();
+	}
+}
+
+void slipgate_effects::vCompleteMission() {
+	completed = true;
+	OnCompletedChanged();
+}
+
+void slipgate_effects::PlayClosedEffect() {
+	stopEffect( "fx_open" );
+	playEffect( "fx_closed", "", 1 );
+}
+
+void slipgate_effects::PlayOpenEffect() {
+	stopEffect( "fx_closed" );
+	playEffect( "fx_open", "", 1 );
+}

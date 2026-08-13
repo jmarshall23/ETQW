@@ -14,12 +14,6 @@
 
 idCVar g_compiledScriptSafety( "g_compiledScriptSafety", "1", CVAR_BOOL | CVAR_GAME, "enables extra safety checks in exported scripts" );
 
-const char* g_vcProjFileInfo =	"<File RelativePath=\"..\\..\\%s\">\n"	\
-								"</File>\n";
-
-const char* g_vcProjFilterStartInfo = "<Filter Name=\"%s\">\n";
-const char* g_vcProjFilterEndInfo = "</Filter>\n";
-
 enum cs_fixedHFileType {
 	CS_FFH_EVENTS,
 	CS_FFH_EVENTCALLS,
@@ -33,14 +27,14 @@ enum cs_fixedHFileType {
 };
 
 const char* g_fixedHFileName[ CS_FFH_NUM ] = {
-	"src/Generated_Events.h",
-	"src/Generated_EventCalls.h",
-	"src/Generated_FunctionWrappers.h",
-	"src/Generated_GlobalFunctions.h",
-	"src/Generated_GlobalVariables.h",
-	"src/Generated_SysCalls.h",
-	"src/Generated_VirtualFunctions.h",
-	"src/Generated_VirtualFunctionsDependencies.h",
+	"generated/Generated_Events.h",
+	"generated/Generated_EventCalls.h",
+	"generated/Generated_FunctionWrappers.h",
+	"generated/Generated_GlobalFunctions.h",
+	"generated/Generated_GlobalVariables.h",
+	"generated/Generated_SysCalls.h",
+	"generated/Generated_VirtualFunctions.h",
+	"generated/Generated_VirtualFunctionsDependencies.h",
 };
 
 enum cs_fixedCPPFileType {
@@ -54,12 +48,12 @@ enum cs_fixedCPPFileType {
 };
 
 const char* g_fixedCppFileName[ CS_FFC_NUM ] = {
-	"src/Generated_Events.cpp",
-	"src/Generated_EventCalls.cpp",
-	"src/Generated_FunctionWrappers.cpp",
-	"src/Generated_GlobalFunctions.cpp",
-	"src/Generated_GlobalVariables.cpp",
-	"src/Generated_SysCalls.cpp",
+	"generated/Generated_Events.cpp",
+	"generated/Generated_EventCalls.cpp",
+	"generated/Generated_FunctionWrappers.cpp",
+	"generated/Generated_GlobalFunctions.cpp",
+	"generated/Generated_GlobalVariables.cpp",
+	"generated/Generated_SysCalls.cpp",
 };
 
 void sdScriptExporter::EnterNamespace( const char* name ) {
@@ -143,7 +137,7 @@ const char* sdScriptExporter::BuildClassHeaderName( const idTypeDef* type, bool 
 	}
 
 	if ( full ) {
-		return va( "src/GeneratedClass_%s.h", type->Name() );
+		return va( "generated/GeneratedClass_%s.h", type->Name() );
 	}
 
 	return va( "GeneratedClass_%s.h", type->Name() );
@@ -156,7 +150,7 @@ const char* sdScriptExporter::BuildClassCPPName( const idTypeDef* type, bool ful
 	}
 
 	if ( full ) {
-		return va( "src/GeneratedClass_%s.cpp", type->Name() );
+		return va( "generated/GeneratedClass_%s.cpp", type->Name() );
 	}
 
 	return va( "GeneratedClass_%s.cpp", type->Name() );
@@ -349,17 +343,17 @@ void sdScriptExporter::WriteThreadCallWrapperClass( idFile* file, const objectDe
 	threadDef_t* t = gui ? obj->guiThreadCalls[ index ] : obj->threadCalls[ index ];
 
 	PrintTabs( file );
-	file->Printf( "class sdProcedureCallLocal : public sdProcedureCall {\r\n" );
+	file->Printf( "class sdProcedureCallLocal : public sdProcedureCall {\n" );
 
 	PrintTabs( file );
-	file->Printf( "public:\r\n" );
+	file->Printf( "public:\n" );
 
 	tabCount++;
 
 	PrintTabs( file );
 	file->Printf( "typedef " );
 	WriteThreadCallType( file, obj, index, baseparm, "callback_t", gui );
-	file->Printf( ";\r\n" );
+	file->Printf( ";\n" );
 
 	PrintTabs( file );
 	file->Printf( "sdProcedureCallLocal( " );
@@ -372,28 +366,28 @@ void sdScriptExporter::WriteThreadCallWrapperClass( idFile* file, const objectDe
 	for ( int i = baseparm; i < count; i++ ) {
 		file->Printf( ", %s _parm%d", BuildFieldName( t->parms[ i ] ), i - baseparm );
 	}
-	file->Printf( " ) {\r\n" );
+	file->Printf( " ) {\n" );
 
 	tabCount++;
 	if ( obj->type != NULL ) {
 		PrintTabs( file );
-		file->Printf( "object = _object;\r\n" );
+		file->Printf( "object = _object;\n" );
 	}
 	PrintTabs( file );
-	file->Printf( "callback	= _callback;\r\n" );
+	file->Printf( "callback	= _callback;\n" );
 
 	for ( int i = baseparm; i < count; i++ ) {
 		PrintTabs( file );
-		file->Printf( "parm%d = _parm%d;\r\n", i - baseparm, i - baseparm );
+		file->Printf( "parm%d = _parm%d;\n", i - baseparm, i - baseparm );
 	}
 
 	tabCount--;
 
 	PrintTabs( file );
-	file->Printf( "}\r\n" );
+	file->Printf( "}\n" );
 
 	PrintTabs( file );
-	file->Printf( "virtual void Go( void ) {\r\n" );
+	file->Printf( "virtual void Go( void ) {\n" );
 
 	tabCount++;
 	PrintTabs( file );
@@ -413,36 +407,36 @@ void sdScriptExporter::WriteThreadCallWrapperClass( idFile* file, const objectDe
 		}
 		file->Printf( " " );
 	}
-	file->Printf( ");\r\n" );
+	file->Printf( ");\n" );
 
 	tabCount--;
 
 	PrintTabs( file );
-	file->Printf( "}\r\n" );
+	file->Printf( "}\n" );
 
 	tabCount--;
 
 	PrintTabs( file );
-	file->Printf( "private:\r\n" );
+	file->Printf( "private:\n" );
 
 	tabCount++;
 	if ( obj->type != NULL ) {
 		PrintTabs( file );
-		file->Printf( "%s object;\r\n", BuildFieldName( obj->type ) );
+		file->Printf( "%s object;\n", BuildFieldName( obj->type ) );
 	}
 
 	PrintTabs( file );
-	file->Printf( "callback_t callback;\r\n" );
+	file->Printf( "callback_t callback;\n" );
 
 	for ( int i = baseparm; i < count; i++ ) {
 		PrintTabs( file );
-		file->Printf( "%s parm%d;\r\n", BuildFieldName( t->parms[ i ] ), i - baseparm );
+		file->Printf( "%s parm%d;\n", BuildFieldName( t->parms[ i ] ), i - baseparm );
 	}
 
 	tabCount--;
 
 	PrintTabs( file );
-	file->Printf( "};\r\n" );
+	file->Printf( "};\n" );
 }
 
 void sdScriptExporter::WriteThreadCallType( idFile* file, const objectDef_t* obj, int index, int baseparm, const char* name, bool gui ) {
@@ -520,7 +514,7 @@ void sdScriptExporter::WriteFunctionStartSpecial( idFile* file, const objectDef_
 		for ( int i = 0; i < o->functions.Num(); i++ ) {
 			if ( idStr::Cmp( o->functions[ i ].function->type->Name(), function->type->Name() ) == 0 ) {
 				PrintTabs( file );
-				file->Printf( "%s::%s();\r\n", BuildClassName( o->type ), function->type->Name() );
+				file->Printf( "%s::%s();\n", BuildClassName( o->type ), function->type->Name() );
 				return;
 			}
 		}
@@ -607,9 +601,6 @@ void sdScriptExporter::WriteClass( const namespaceDef_t* ns, objectDef_t& cls ) 
 	idStr filenameCPP	= BuildClassCPPName( cls.type, true );
 	idStr filenameH		= BuildClassHeaderName( cls.type, true );
 
-	generatedCppFiles.Alloc() = filenameCPP;
-	generatedHFiles.Alloc() = filenameH;
-
 	idFile* cppFile		= fileSystem->OpenFileWrite( filenameCPP.c_str(), "fs_devpath" );
 	idFile* headerFile	= fileSystem->OpenFileWrite( filenameH.c_str(), "fs_devpath" );
 
@@ -630,21 +621,21 @@ void sdScriptExporter::WriteClass( const namespaceDef_t* ns, objectDef_t& cls ) 
 		AddDependency( cls.fields[ j ]->TypeDef()->FieldType(), dependencies );
 	}
 
-	headerFile->Printf( "#ifndef %s\r\n", guardString.c_str() );
-	headerFile->Printf( "#define %s\r\n", guardString.c_str() );
-	headerFile->Printf( "\r\n" );
-	headerFile->Printf( "#include \"%s\"\r\n", BuildClassHeaderName( cls.type->SuperClass(), false ) );
-	headerFile->Printf( "#include \"CompiledScript_Types.h\"\r\n" );
+	headerFile->Printf( "#ifndef %s\n", guardString.c_str() );
+	headerFile->Printf( "#define %s\n", guardString.c_str() );
+	headerFile->Printf( "\n" );
+	headerFile->Printf( "#include \"%s\"\n", BuildClassHeaderName( cls.type->SuperClass(), false ) );
+	headerFile->Printf( "#include \"CompiledScript_Types.h\"\n" );
 
-	headerFile->Printf( "\r\n" );
+	headerFile->Printf( "\n" );
 
 	if ( dependencies.Num() > 0 ) {
-		headerFile->Printf( "// dependencies\r\n" );
+		headerFile->Printf( "// dependencies\n" );
 		for ( int i = 0; i < dependencies.Num(); i++ ) {
-			headerFile->Printf( "class %s;\r\n", BuildClassName( dependencies[ i ] ) );
+			headerFile->Printf( "class %s;\n", BuildClassName( dependencies[ i ] ) );
 		}
 
-		headerFile->Printf( "\r\n" );
+		headerFile->Printf( "\n" );
 	}
 
 	WriteNamespaceEntry( headerFile, ns );
@@ -655,13 +646,13 @@ void sdScriptExporter::WriteClass( const namespaceDef_t* ns, objectDef_t& cls ) 
 	idStr baseClassName = BuildClassName( cls.type->SuperClass() );
 	headerFile->Printf( "%s", baseClassName.c_str() );
 
-	headerFile->Printf( " {\r\n" );
+	headerFile->Printf( " {\n" );
 
 	PrintTabs( headerFile );
-	headerFile->Printf( "SD_CS_DECLARE_CLASS( %s );\r\n", className.c_str() );
+	headerFile->Printf( "SD_CS_DECLARE_CLASS( %s );\n", className.c_str() );
 
 	PrintTabs( headerFile );
-	headerFile->Printf( "public:\r\n" );
+	headerFile->Printf( "public:\n" );
 
 	tabCount++;
 
@@ -671,51 +662,51 @@ void sdScriptExporter::WriteClass( const namespaceDef_t* ns, objectDef_t& cls ) 
 
 		RegisterExternalClassCall( cls.functions[ j ] );
 
-		headerFile->Printf( ";\r\n" );
+		headerFile->Printf( ";\n" );
 	}
 
 	for ( int j = 0; j < cls.threadCalls.Num(); j++ ) {
 		PrintTabs( headerFile );
 		WriteThreadCallStub( headerFile, &cls, j, 1, false, true, false );
-		headerFile->Printf( ";\r\n" );
+		headerFile->Printf( ";\n" );
 	}
 
 	for ( int j = 0; j < cls.guiThreadCalls.Num(); j++ ) {
 		PrintTabs( headerFile );
 		WriteThreadCallStub( headerFile, &cls, j, 1, false, true, true );
-		headerFile->Printf( ";\r\n" );
+		headerFile->Printf( ";\n" );
 	}
 
 	for ( int j = 0; j < cls.fields.Num(); j++ ) {
 		const idVarDef* var = cls.fields[ j ];
 
 		PrintTabs( headerFile );
-		headerFile->Printf( "%s %s;\r\n", BuildFieldName( var->TypeDef()->FieldType() ), var->Name() );
+		headerFile->Printf( "%s %s;\n", BuildFieldName( var->TypeDef()->FieldType() ), var->Name() );
 
 		PrintTabs( headerFile );
-		headerFile->Printf( "byte* __GetVariable_%s() { return %s.GetPointer(); }\r\n", var->Name(), var->Name() );
+		headerFile->Printf( "byte* __GetVariable_%s() { return %s.GetPointer(); }\n", var->Name(), var->Name() );
 	}
 
 	PrintTabs( headerFile );
-	headerFile->Printf( "static sdClassFunctionInfo __functionInfo[];\r\n" );
+	headerFile->Printf( "static sdClassFunctionInfo __functionInfo[];\n" );
 
 	PrintTabs( headerFile );
-	headerFile->Printf( "static sdClassVariableInfo __variableInfo[];\r\n" );
+	headerFile->Printf( "static sdClassVariableInfo __variableInfo[];\n" );
 
 	PrintTabs( headerFile );
-	headerFile->Printf( "static %s* Allocate( void ) { return new %s; }\r\n", BASE_COMPILED_SCRIPT_CLASS_ALLOCATE, className.c_str() );
+	headerFile->Printf( "static %s* Allocate( void ) { return new %s; }\n", BASE_COMPILED_SCRIPT_CLASS_ALLOCATE, className.c_str() );
 
 	PrintTabs( headerFile );
-	headerFile->Printf( "static sdClassInfo __classInfo;\r\n" );
+	headerFile->Printf( "static sdClassInfo __classInfo;\n" );
 
 	tabCount--;
 
 	PrintTabs( headerFile );
-	headerFile->Printf( "};\r\n" );
+	headerFile->Printf( "};\n" );
 
 	WriteNamespaceExit( headerFile, ns );
 
-	headerFile->Printf( "\r\n#endif // %s\r\n", guardString.c_str() );
+	headerFile->Printf( "\n#endif // %s\n", guardString.c_str() );
 
 	dependencies.Clear();
 
@@ -723,38 +714,38 @@ void sdScriptExporter::WriteClass( const namespaceDef_t* ns, objectDef_t& cls ) 
 		AddDependency( cls.functions[ j ].function, dependencies, true );
 	}
 
-	cppFile->Printf( "\r\n" );
-	cppFile->Printf( "#include \"Precompiled.h\"\r\n" );
-	cppFile->Printf( "#pragma hdrstop\r\n\r\n" );
-	cppFile->Printf( "#include \"Generated_Events.h\"\r\n" );
-	cppFile->Printf( "#include \"Generated_GlobalVariables.h\"\r\n" );
-	cppFile->Printf( "#include \"Generated_GlobalFunctions.h\"\r\n" );
-	cppFile->Printf( "#include \"Generated_SysCalls.h\"\r\n" );
-	cppFile->Printf( "#include \"Generated_EventCalls.h\"\r\n" );
-	cppFile->Printf( "#include \"Generated_FunctionWrappers.h\"\r\n" );
-	cppFile->Printf( "#include \"%s\"\r\n", BuildClassHeaderName( cls.type, false ) );
-	cppFile->Printf( "\r\n" );
+	cppFile->Printf( "\n" );
+	cppFile->Printf( "#include \"Precompiled.h\"\n" );
+	cppFile->Printf( "#pragma hdrstop\n\n" );
+	cppFile->Printf( "#include \"Generated_Events.h\"\n" );
+	cppFile->Printf( "#include \"Generated_GlobalVariables.h\"\n" );
+	cppFile->Printf( "#include \"Generated_GlobalFunctions.h\"\n" );
+	cppFile->Printf( "#include \"Generated_SysCalls.h\"\n" );
+	cppFile->Printf( "#include \"Generated_EventCalls.h\"\n" );
+	cppFile->Printf( "#include \"Generated_FunctionWrappers.h\"\n" );
+	cppFile->Printf( "#include \"%s\"\n", BuildClassHeaderName( cls.type, false ) );
+	cppFile->Printf( "\n" );
 
 	dependencies.Remove( cls.type );
 	dependencies.Remove( cls.type->SuperClass() );
 	if ( dependencies.Num() > 0 ) {
-		cppFile->Printf( "// dependencies\r\n" );
+		cppFile->Printf( "// dependencies\n" );
 		for ( int i = 0; i < dependencies.Num(); i++ ) {
-			cppFile->Printf( "#include \"%s\"\r\n", BuildClassHeaderName( dependencies[ i ], false ) );
+			cppFile->Printf( "#include \"%s\"\n", BuildClassHeaderName( dependencies[ i ], false ) );
 		}
 
-		cppFile->Printf( "\r\n" );
+		cppFile->Printf( "\n" );
 	}
 
 	WriteNamespaceEntry( cppFile, ns );
 
 	PrintTabs( cppFile );
-	cppFile->Printf( "SD_CS_IMPLEMENT_CLASS( %s, %s );\r\n", className.c_str(), baseClassName.c_str() );
+	cppFile->Printf( "SD_CS_IMPLEMENT_CLASS( %s, %s );\n", className.c_str(), baseClassName.c_str() );
 
 
 
 	PrintTabs( cppFile );
-	cppFile->Printf( "sdClassFunctionInfo %s::__functionInfo[] = {\r\n", className.c_str() );
+	cppFile->Printf( "sdClassFunctionInfo %s::__functionInfo[] = {\n", className.c_str() );
 	tabCount++;
 
 	for ( int i = 0; i < cls.functions.Num(); i++ ) {
@@ -764,23 +755,23 @@ void sdScriptExporter::WriteClass( const namespaceDef_t* ns, objectDef_t& cls ) 
 		int index = externalClassCalls.FindIndex( wrapper );
 
 		PrintTabs( cppFile );
-		cppFile->Printf( "{ \"%s\", &ClassFunctionWrapper%d, ( classFunctionCallback_t )( &%s::%s ), %d, %d },\r\n", func->type->Name(), index, className.c_str(), func->type->Name(), func->type->NumParameters() - 1, func->parmTotal - type_object.Size() );
+		cppFile->Printf( "{ \"%s\", &ClassFunctionWrapper%d, ( classFunctionCallback_t )( &%s::%s ), %d, %d },\n", func->type->Name(), index, className.c_str(), func->type->Name(), func->type->NumParameters() - 1, func->parmTotal - type_object.Size() );
 	}
 
 	PrintTabs( cppFile );
-	cppFile->Printf( "{ NULL, NULL },\r\n" );
+	cppFile->Printf( "{ NULL, NULL },\n" );
 
 	tabCount--;
 
 	PrintTabs( cppFile );
-	cppFile->Printf( "};\r\n" );
+	cppFile->Printf( "};\n" );
 
 
 
 
 
 	PrintTabs( cppFile );
-	cppFile->Printf( "sdClassVariableInfo %s::__variableInfo[] = {\r\n", className.c_str() );
+	cppFile->Printf( "sdClassVariableInfo %s::__variableInfo[] = {\n", className.c_str() );
 	tabCount++;
 
 	for ( int i = 0; i < cls.fields.Num(); i++ ) {
@@ -810,53 +801,53 @@ void sdScriptExporter::WriteClass( const namespaceDef_t* ns, objectDef_t& cls ) 
 		}
 
 		PrintTabs( cppFile );
-		cppFile->Printf( "{ \"%s\", %s, ( variableLookup_t )( &%s::__GetVariable_%s ) },\r\n", cls.fields[ i ]->Name(), fieldType, className.c_str(), cls.fields[ i ]->Name() );
+		cppFile->Printf( "{ \"%s\", %s, ( variableLookup_t )( &%s::__GetVariable_%s ) },\n", cls.fields[ i ]->Name(), fieldType, className.c_str(), cls.fields[ i ]->Name() );
 	}
 
 	PrintTabs( cppFile );
-	cppFile->Printf( "{ NULL, V_NONE, NULL },\r\n" );
+	cppFile->Printf( "{ NULL, V_NONE, NULL },\n" );
 
 	tabCount--;
 
 	PrintTabs( cppFile );
-	cppFile->Printf( "};\r\n" );
+	cppFile->Printf( "};\n" );
 
 
 
 
 	PrintTabs( cppFile );
-	cppFile->Printf( "sdClassInfo %s::__classInfo = {\r\n", className.c_str() );
+	cppFile->Printf( "sdClassInfo %s::__classInfo = {\n", className.c_str() );
 	tabCount++;
 
 	PrintTabs( cppFile );
-	cppFile->Printf( "\"%s\",\r\n", cls.type->Name() );
+	cppFile->Printf( "\"%s\",\n", cls.type->Name() );
 
 	PrintTabs( cppFile );
-	cppFile->Printf( "%s::__functionInfo,\r\n", className.c_str() );
+	cppFile->Printf( "%s::__functionInfo,\n", className.c_str() );
 
 	PrintTabs( cppFile );
-	cppFile->Printf( "%s::__variableInfo,\r\n", className.c_str() );
+	cppFile->Printf( "%s::__variableInfo,\n", className.c_str() );
 
 	PrintTabs( cppFile );
 	if ( cls.superType != NULL ) {
-		cppFile->Printf( "&%s::__classInfo,\r\n", program->scriptExporter.BuildClassName( cls.superType->type ) );
+		cppFile->Printf( "&%s::__classInfo,\n", program->scriptExporter.BuildClassName( cls.superType->type ) );
 	} else {
-		cppFile->Printf( "NULL,\r\n" );
+		cppFile->Printf( "NULL,\n" );
 	}
 
 	PrintTabs( cppFile );
-	cppFile->Printf( "&%s::Allocate,\r\n", className.c_str() );
+	cppFile->Printf( "&%s::Allocate,\n", className.c_str() );
 
 	tabCount--;
 	PrintTabs( cppFile );
-	cppFile->Printf( "};\r\n" );
+	cppFile->Printf( "};\n" );
 
 	for ( int i = 0; i < cls.functions.Num(); i++ ) {
 		const function_t* func = cls.functions[ i ].function;
 
 		PrintTabs( cppFile );
 		WriteFunctionStub( cppFile, cls.functions[ i ], cls.type, 1 );
-		cppFile->Printf( " {\r\n" );
+		cppFile->Printf( " {\n" );
 		tabCount++;
 
 		WriteFunctionStartSpecial( cppFile, cls, func );
@@ -867,15 +858,15 @@ void sdScriptExporter::WriteClass( const namespaceDef_t* ns, objectDef_t& cls ) 
 
 		tabCount--;
 		PrintTabs( cppFile );
-		cppFile->Printf( "}\r\n" );
+		cppFile->Printf( "}\n" );
 
-		cppFile->Printf( "\r\n" );
+		cppFile->Printf( "\n" );
 	}
 
 	for ( int j = 0; j < cls.threadCalls.Num(); j++ ) {
 		PrintTabs( cppFile );
 		WriteThreadCallStub( cppFile, &cls, j, 1, true, true, false );
-		cppFile->Printf( " {\r\n" );
+		cppFile->Printf( " {\n" );
 
 		tabCount++;
 		WriteThreadCallWrapperClass( cppFile, &cls, j, 1, false );
@@ -885,18 +876,18 @@ void sdScriptExporter::WriteClass( const namespaceDef_t* ns, objectDef_t& cls ) 
 		for ( int k = 1; k < cls.threadCalls[ j ]->parms.Num(); k++ ) {
 			cppFile->Printf( ", parm%d", k );
 		}
-		cppFile->Printf( " ) );\r\n" );
+		cppFile->Printf( " ) );\n" );
 
 		tabCount--;
 
 		PrintTabs( cppFile );
-		cppFile->Printf( "}\r\n" );
+		cppFile->Printf( "}\n" );
 	}
 
 	for ( int j = 0; j < cls.guiThreadCalls.Num(); j++ ) {
 		PrintTabs( cppFile );
 		WriteThreadCallStub( cppFile, &cls, j, 1, true, true, true );
-		cppFile->Printf( " {\r\n" );
+		cppFile->Printf( " {\n" );
 
 		tabCount++;
 		WriteThreadCallWrapperClass( cppFile, &cls, j, 1, true );
@@ -906,12 +897,12 @@ void sdScriptExporter::WriteClass( const namespaceDef_t* ns, objectDef_t& cls ) 
 		for ( int k = 1; k < cls.guiThreadCalls[ j ]->parms.Num(); k++ ) {
 			cppFile->Printf( ", parm%d", k );
 		}
-		cppFile->Printf( " ) );\r\n" );
+		cppFile->Printf( " ) );\n" );
 
 		tabCount--;
 
 		PrintTabs( cppFile );
-		cppFile->Printf( "}\r\n" );
+		cppFile->Printf( "}\n" );
 	}
 
 	WriteNamespaceExit( cppFile, ns );
@@ -957,7 +948,7 @@ void sdScriptExporter::WriteNamespaceEntry( idFile* file, const namespaceDef_t* 
 
 		PrintTabs( file );
 		WriteNamespaceTitle( file, list[ i ] );
-		file->Printf( " {\r\n" );
+		file->Printf( " {\n" );
 		tabCount++;
 	}
 }
@@ -977,7 +968,7 @@ void sdScriptExporter::WriteNamespaceExit( idFile* file, const namespaceDef_t* n
 
 		tabCount--;
 		PrintTabs( file );
-		file->Printf( "}\r\n" );
+		file->Printf( "}\n" );
 	}
 }
 
@@ -991,7 +982,7 @@ void sdScriptExporter::WriteGlobalVariablesHeader( idFile* file, const namespace
 	if ( ns->name.Length() > 0 ) {
 		PrintTabs( file );
 		WriteNamespaceTitle( file, ns );
-		file->Printf( " {\r\n" );
+		file->Printf( " {\n" );
 		tabCount++;
 	}
 
@@ -1007,13 +998,13 @@ void sdScriptExporter::WriteGlobalVariablesHeader( idFile* file, const namespace
 		file->Printf( "extern " );
 		file->Printf( "%s ", BuildFieldName( ns->globalVars[ i ]->type ) );
 		file->Printf( "%s", BuildGlobalName( *ns->globalVars[ i ] ) );
-		file->Printf( ";\r\n" );
+		file->Printf( ";\n" );
 	}
 
 	if ( ns->name.Length() > 0 ) {
 		tabCount--;
 		PrintTabs( file );
-		file->Printf( "}\r\n" );
+		file->Printf( "}\n" );
 	}
 }
 
@@ -1021,7 +1012,7 @@ void sdScriptExporter::WriteGlobalVariablesCPP( idFile* file, const namespaceDef
 	if ( ns->name.Length() > 0 ) {
 		PrintTabs( file );
 		WriteNamespaceTitle( file, ns );
-		file->Printf( " {\r\n" );
+		file->Printf( " {\n" );
 		tabCount++;
 	}
 
@@ -1036,13 +1027,13 @@ void sdScriptExporter::WriteGlobalVariablesCPP( idFile* file, const namespaceDef
 		PrintTabs( file );
 		file->Printf( "%s ", BuildFieldName( ns->globalVars[ i ]->type ) );
 		file->Printf( "%s", BuildGlobalName( *ns->globalVars[ i ] ) );
-		file->Printf( ";\r\n" );
+		file->Printf( ";\n" );
 	}
 
 	if ( ns->name.Length() > 0 ) {
 		tabCount--;
 		PrintTabs( file );
-		file->Printf( "}\r\n" );
+		file->Printf( "}\n" );
 	}
 }
 
@@ -1104,22 +1095,22 @@ void sdScriptExporter::FindGlobalVariablesDependencies( namespaceDef_t* ns, idLi
 void sdScriptExporter::WriteGlobalVariables( void ) {
 	idFile* headerFile = fileSystem->OpenFileWrite( g_fixedHFileName[ CS_FFH_GLOBALVARIABLES ], "fs_devpath" );
 
-	headerFile->Printf( "#ifndef __GENERATED_GLOBALVARIABLES_H__\r\n" );
-	headerFile->Printf( "#define __GENERATED_GLOBALVARIABLES_H__\r\n" );
-	headerFile->Printf( "\r\n" );
-	headerFile->Printf( "#include \"CompiledScript_Types.h\"\r\n" );
-	headerFile->Printf( "\r\n" );
+	headerFile->Printf( "#ifndef __GENERATED_GLOBALVARIABLES_H__\n" );
+	headerFile->Printf( "#define __GENERATED_GLOBALVARIABLES_H__\n" );
+	headerFile->Printf( "\n" );
+	headerFile->Printf( "#include \"CompiledScript_Types.h\"\n" );
+	headerFile->Printf( "\n" );
 
 	idList< const idTypeDef* > dependencies;
 	FindGlobalVariablesDependencies( &globalNameSpace, dependencies );
 
 	if ( dependencies.Num() > 0 ) {
-		headerFile->Printf( "// dependencies\r\n" );
+		headerFile->Printf( "// dependencies\n" );
 		for ( int i = 0; i < dependencies.Num(); i++ ) {
-			headerFile->Printf( "class %s;\r\n", BuildClassName( dependencies[ i ] ) );
+			headerFile->Printf( "class %s;\n", BuildClassName( dependencies[ i ] ) );
 		}
 
-		headerFile->Printf( "\r\n" );
+		headerFile->Printf( "\n" );
 	}
 
 	WriteGlobalVariablesHeader( headerFile, &globalNameSpace );
@@ -1127,21 +1118,21 @@ void sdScriptExporter::WriteGlobalVariables( void ) {
 	for ( int i = 0; i < constants.Num(); i++ ) {
 		switch ( constants[ i ].value->Type() ) {
 			case ev_string:
-				headerFile->Printf( "extern const sdCompiledScriptType_String %s;\r\n", BuildConstantName( i ) );
+				headerFile->Printf( "extern const sdCompiledScriptType_String %s;\n", BuildConstantName( i ) );
 				break;
 			case ev_float:
-				headerFile->Printf( "extern const sdCompiledScriptType_Float %s;\r\n", BuildConstantName( i ) );
+				headerFile->Printf( "extern const sdCompiledScriptType_Float %s;\n", BuildConstantName( i ) );
 				break;
 			case ev_boolean:
-				headerFile->Printf( "extern const sdCompiledScriptType_Boolean %s;\r\n", BuildConstantName( i ) );
+				headerFile->Printf( "extern const sdCompiledScriptType_Boolean %s;\n", BuildConstantName( i ) );
 				break;
 			case ev_vector:
-				headerFile->Printf( "extern const sdCompiledScriptType_Vector %s;\r\n", BuildConstantName( i ) );
+				headerFile->Printf( "extern const sdCompiledScriptType_Vector %s;\n", BuildConstantName( i ) );
 				break;
 		}
 	}
 
-	headerFile->Printf( "#endif // __GENERATED_GLOBALVARIABLES_H__\r\n" );
+	headerFile->Printf( "#endif // __GENERATED_GLOBALVARIABLES_H__\n" );
 
 	fileSystem->CloseFile( headerFile );
 
@@ -1149,11 +1140,11 @@ void sdScriptExporter::WriteGlobalVariables( void ) {
 
 	idFile* cppFile = fileSystem->OpenFileWrite( g_fixedCppFileName[ CS_FFC_GLOBALVARIABLES ], "fs_devpath" );
 
-	cppFile->Printf( "\r\n" );
-	cppFile->Printf( "#include \"Precompiled.h\"\r\n" );
-	cppFile->Printf( "#pragma hdrstop\r\n\r\n" );
-	cppFile->Printf( "#include \"Generated_GlobalVariables.h\"\r\n" );
-	cppFile->Printf( "\r\n" );
+	cppFile->Printf( "\n" );
+	cppFile->Printf( "#include \"Precompiled.h\"\n" );
+	cppFile->Printf( "#pragma hdrstop\n\n" );
+	cppFile->Printf( "#include \"Generated_GlobalVariables.h\"\n" );
+	cppFile->Printf( "\n" );
 
 	WriteGlobalVariablesCPP( cppFile, &globalNameSpace );
 
@@ -1166,18 +1157,18 @@ void sdScriptExporter::WriteGlobalVariables( void ) {
 				temp.Replace( "\n", "\\n" );
 				temp.Replace( "\t", "\\t" );
 				temp.Replace( "\"", "\\\"" );
-				cppFile->Printf( "const sdCompiledScriptType_String %s( \"%s\" );\r\n", BuildConstantName( i ), temp.c_str() );
+				cppFile->Printf( "const sdCompiledScriptType_String %s( \"%s\" );\n", BuildConstantName( i ), temp.c_str() );
 				break;
 			}
 			case ev_float:
-				cppFile->Printf( "const sdCompiledScriptType_Float %s( %ff );\r\n", BuildConstantName( i ), *constants[ i ].value->value.floatPtr );
+				cppFile->Printf( "const sdCompiledScriptType_Float %s( %ff );\n", BuildConstantName( i ), *constants[ i ].value->value.floatPtr );
 				break;
 			case ev_boolean:
-				cppFile->Printf( "const sdCompiledScriptType_Boolean %s( %s );\r\n", BuildConstantName( i ), *constants[ i ].value->value.intPtr ? "true" : "false" );
+				cppFile->Printf( "const sdCompiledScriptType_Boolean %s( %s );\n", BuildConstantName( i ), *constants[ i ].value->value.intPtr ? "true" : "false" );
 				break;
 			case ev_vector: {
 				idVec3& v = *constants[ i ].value->value.vectorPtr;
-				cppFile->Printf( "const sdCompiledScriptType_Vector %s( %ff, %ff, %ff );\r\n", BuildConstantName( i ), v[ 0 ], v[ 1 ], v[ 2 ] );
+				cppFile->Printf( "const sdCompiledScriptType_Vector %s( %ff, %ff, %ff );\n", BuildConstantName( i ), v[ 0 ], v[ 1 ], v[ 2 ] );
 				break;
 			}
 		}
@@ -1188,59 +1179,59 @@ void sdScriptExporter::WriteGlobalVariables( void ) {
 
 void sdScriptExporter::WriteNamespaceFunctions( const namespaceDef_t* ns ) {
 	idFile* headerFile = fileSystem->OpenFileWrite( g_fixedHFileName[ CS_FFH_GLOBALFUNCTIONS ], "fs_devpath" );
-	headerFile->Printf( "#ifndef __GENERATED_GLOBALFUNCTIONS_H__\r\n" );
-	headerFile->Printf( "#define __GENERATED_GLOBALFUNCTIONS_H__\r\n" );
-	headerFile->Printf( "\r\n" );
-	headerFile->Printf( "#include \"CompiledScript_Types.h\"\r\n" );
-	headerFile->Printf( "\r\n" );
-	headerFile->Printf( "class sdCompiledScript_Class;\r\n" );
-	headerFile->Printf( "\r\n" );
+	headerFile->Printf( "#ifndef __GENERATED_GLOBALFUNCTIONS_H__\n" );
+	headerFile->Printf( "#define __GENERATED_GLOBALFUNCTIONS_H__\n" );
+	headerFile->Printf( "\n" );
+	headerFile->Printf( "#include \"CompiledScript_Types.h\"\n" );
+	headerFile->Printf( "\n" );
+	headerFile->Printf( "class sdCompiledScript_Class;\n" );
+	headerFile->Printf( "\n" );
 
 	idList< const idTypeDef* > dependencies;
 	FindGlobalFunctionDependencies( &globalNameSpace, dependencies );
 
 	if ( dependencies.Num() > 0 ) {
-		headerFile->Printf( "// dependencies\r\n" );
+		headerFile->Printf( "// dependencies\n" );
 		for ( int i = 0; i < dependencies.Num(); i++ ) {
-			headerFile->Printf( "class %s;\r\n", BuildClassName( dependencies[ i ] ) );
+			headerFile->Printf( "class %s;\n", BuildClassName( dependencies[ i ] ) );
 		}
 
-		headerFile->Printf( "\r\n" );
+		headerFile->Printf( "\n" );
 	}
 
 	idFile* cppFile = fileSystem->OpenFileWrite( g_fixedCppFileName[ CS_FFC_GLOBALFUNCTIONS ], "fs_devpath" );
-	cppFile->Printf( "\r\n" );
-	cppFile->Printf( "#include \"Precompiled.h\"\r\n" );
-	cppFile->Printf( "#pragma hdrstop\r\n\r\n" );
-	cppFile->Printf( "#include \"Generated_GlobalVariables.h\"\r\n" );
-	cppFile->Printf( "#include \"Generated_GlobalFunctions.h\"\r\n" );
-	cppFile->Printf( "#include \"Generated_Events.h\"\r\n" );
-	cppFile->Printf( "#include \"Generated_SysCalls.h\"\r\n" );
-	cppFile->Printf( "#include \"Generated_EventCalls.h\"\r\n" );
-	cppFile->Printf( "#include \"CompiledScript_Class.h\"\r\n" );
+	cppFile->Printf( "\n" );
+	cppFile->Printf( "#include \"Precompiled.h\"\n" );
+	cppFile->Printf( "#pragma hdrstop\n\n" );
+	cppFile->Printf( "#include \"Generated_GlobalVariables.h\"\n" );
+	cppFile->Printf( "#include \"Generated_GlobalFunctions.h\"\n" );
+	cppFile->Printf( "#include \"Generated_Events.h\"\n" );
+	cppFile->Printf( "#include \"Generated_SysCalls.h\"\n" );
+	cppFile->Printf( "#include \"Generated_EventCalls.h\"\n" );
+	cppFile->Printf( "#include \"CompiledScript_Class.h\"\n" );
 	WriteNamespaceClassIncludes( ns, cppFile );
-	cppFile->Printf( "\r\n" );
+	cppFile->Printf( "\n" );
 
 	WriteNamespaceFunctions( ns, headerFile, cppFile );
 	WriteFunctionWrappers( cppFile );
 	WriteNamespaceFunctionInfo( ns, cppFile );
 
-	cppFile->Printf( "void sdCompiledScript_Class::InitClasses() {\r\n" );
+	cppFile->Printf( "void sdCompiledScript_Class::InitClasses() {\n" );
 	tabCount++;
 	WriteNamespaceClassInit( ns, cppFile );
 	tabCount--;
-	cppFile->Printf( "}\r\n" );
+	cppFile->Printf( "}\n" );
 
-	cppFile->Printf( "void sdCompiledScript_Class::InitFunctions() {\r\n" );
+	cppFile->Printf( "void sdCompiledScript_Class::InitFunctions() {\n" );
 	tabCount++;
 	WriteNamespaceFunctionInit( ns, cppFile );
 	tabCount--;
-	cppFile->Printf( "}\r\n" );
+	cppFile->Printf( "}\n" );
 
 	fileSystem->CloseFile( cppFile );
 
-	headerFile->Printf( "\r\n" );
-	headerFile->Printf( "#endif // __GENERATED_GLOBALFUNCTIONS_H__\r\n" );
+	headerFile->Printf( "\n" );
+	headerFile->Printf( "#endif // __GENERATED_GLOBALFUNCTIONS_H__\n" );
 	fileSystem->CloseFile( headerFile );
 }
 
@@ -1250,7 +1241,7 @@ void sdScriptExporter::WriteNamespaceClassIncludes( const namespaceDef_t* ns, id
 	}
 
 	for ( int i = 1; i < ns->classes.Num(); i++ ) {
-		cppFile->Printf( "#include \"%s\"\r\n", BuildClassHeaderName( ns->classes[ i ]->type, false ) );
+		cppFile->Printf( "#include \"%s\"\n", BuildClassHeaderName( ns->classes[ i ]->type, false ) );
 	}	
 }
 
@@ -1263,7 +1254,7 @@ void sdScriptExporter::WriteNamespaceClassInit( const namespaceDef_t* ns, idFile
 		WriteNamespaceEntry( cppFile, ns );
 		for ( int i = 1; i < ns->classes.Num(); i++ ) {
 			PrintTabs( cppFile );
-			cppFile->Printf( "sdCompiledScript_Class::AddClassInfo( &%s::__classInfo );\r\n", BuildClassName( ns->classes[ i ]->type ) );
+			cppFile->Printf( "sdCompiledScript_Class::AddClassInfo( &%s::__classInfo );\n", BuildClassName( ns->classes[ i ]->type ) );
 		}
 		WriteNamespaceExit( cppFile, ns );
 	}
@@ -1289,7 +1280,7 @@ void sdScriptExporter::WriteNamespaceFunctionInfo( const namespaceDef_t* ns, idF
 
 		cppFile->Printf( " ( functionCallback_t )( &" );
 		WriteNamespaceScope( cppFile, ns );
-		cppFile->Printf( "%s ) };\r\n", BuildGlobalFunctionName( info.functions[ i ].function ) );
+		cppFile->Printf( "%s ) };\n", BuildGlobalFunctionName( info.functions[ i ].function ) );
 	}
 }
 
@@ -1302,7 +1293,7 @@ void sdScriptExporter::WriteNamespaceFunctionInit( const namespaceDef_t* ns, idF
 
 	for ( int i = 0; i < info.functions.Num(); i++ ) {
 		PrintTabs( cppFile );
-		cppFile->Printf( "sdCompiledScript_Class::AddFunctionInfo( &__functionInfo_%s );\r\n", info.functions[ i ].function->type->Name() );
+		cppFile->Printf( "sdCompiledScript_Class::AddFunctionInfo( &__functionInfo_%s );\n", info.functions[ i ].function->type->Name() );
 	}
 }
 
@@ -1317,19 +1308,19 @@ void sdScriptExporter::WriteNamespaceFunctions( const namespaceDef_t* ns, idFile
 	for ( int i = 0; i < info.functions.Num(); i++ ) {
 		PrintTabs( headerFile );
 		WriteFunctionStub( headerFile, info.functions[ i ], NULL, 0 );
-		headerFile->Printf( ";\r\n" );
+		headerFile->Printf( ";\n" );
 
 		RegisterExternalFunctionCall( info.functions[ i ] );
 	}
 	for ( int j = 0; j < info.threadCalls.Num(); j++ ) {
 		PrintTabs( headerFile );
 		WriteThreadCallStub( headerFile, &info, j, 0, false, false, false );
-		headerFile->Printf( ";\r\n" );
+		headerFile->Printf( ";\n" );
 	}
 	for ( int j = 0; j < info.guiThreadCalls.Num(); j++ ) {
 		PrintTabs( headerFile );
 		WriteThreadCallStub( headerFile, &info, j, 0, false, false, true );
-		headerFile->Printf( ";\r\n" );
+		headerFile->Printf( ";\n" );
 	}
 	WriteNamespaceExit( headerFile, ns );
 
@@ -1337,7 +1328,7 @@ void sdScriptExporter::WriteNamespaceFunctions( const namespaceDef_t* ns, idFile
 	for ( int i = 0; i < info.functions.Num(); i++ ) {
 		PrintTabs( cppFile );
 		WriteFunctionStub( cppFile, info.functions[ i ], NULL, 0 );
-		cppFile->Printf( " {\r\n" );
+		cppFile->Printf( " {\n" );
 		tabCount++;
 
 		sdFunctionCompileState* state = new sdFunctionCompileState( &info.functions[ i ], ns, cppFile, tabCount, program );
@@ -1346,12 +1337,12 @@ void sdScriptExporter::WriteNamespaceFunctions( const namespaceDef_t* ns, idFile
 
 		tabCount--;
 		PrintTabs( cppFile );
-		cppFile->Printf( "}\r\n" );
+		cppFile->Printf( "}\n" );
 	}
 	for ( int j = 0; j < info.threadCalls.Num(); j++ ) {
 		PrintTabs( cppFile );
 		WriteThreadCallStub( cppFile, &info, j, 0, false, false, false );
-		cppFile->Printf( " {\r\n" );
+		cppFile->Printf( " {\n" );
 
 		tabCount++;
 		WriteThreadCallWrapperClass( cppFile, &info, j, 0, false );
@@ -1361,16 +1352,16 @@ void sdScriptExporter::WriteNamespaceFunctions( const namespaceDef_t* ns, idFile
 		for ( int k = 0; k < info.threadCalls[ j ]->parms.Num(); k++ ) {
 			cppFile->Printf( ", parm%d", k + 1 );
 		}
-		cppFile->Printf( " ) );\r\n" );
+		cppFile->Printf( " ) );\n" );
 		tabCount--;
 
 		PrintTabs( cppFile );
-		cppFile->Printf( "}\r\n" );
+		cppFile->Printf( "}\n" );
 	}
 	for ( int j = 0; j < info.guiThreadCalls.Num(); j++ ) {
 		PrintTabs( cppFile );
 		WriteThreadCallStub( cppFile, &info, j, 0, false, false, true );
-		cppFile->Printf( " {\r\n" );
+		cppFile->Printf( " {\n" );
 
 		tabCount++;
 		WriteThreadCallWrapperClass( cppFile, &info, j, 0, true );
@@ -1380,11 +1371,11 @@ void sdScriptExporter::WriteNamespaceFunctions( const namespaceDef_t* ns, idFile
 		for ( int k = 0; k < info.guiThreadCalls[ j ]->parms.Num(); k++ ) {
 			cppFile->Printf( ", parm%d", k + 1 );
 		}
-		cppFile->Printf( " ) );\r\n" );
+		cppFile->Printf( " ) );\n" );
 		tabCount--;
 
 		PrintTabs( cppFile );
-		cppFile->Printf( "}\r\n" );
+		cppFile->Printf( "}\n" );
 	}
 	WriteNamespaceExit( cppFile, ns );
 }
@@ -1445,18 +1436,18 @@ void sdScriptExporter::Finish( void ) {
 	
 	file = fileSystem->OpenFileWrite( g_fixedCppFileName[ CS_FFC_EVENTS ], "fs_devpath" );
 	if ( file != NULL ) {
-		file->Printf( "\r\n" );
-		file->Printf( "#include \"Precompiled.h\"\r\n" );
-		file->Printf( "#pragma hdrstop\r\n\r\n" );
-		file->Printf( "#include \"Generated_Events.h\"\r\n" );
-		file->Printf( "\r\n" );
+		file->Printf( "\n" );
+		file->Printf( "#include \"Precompiled.h\"\n" );
+		file->Printf( "#pragma hdrstop\n\n" );
+		file->Printf( "#include \"Generated_Events.h\"\n" );
+		file->Printf( "\n" );
 
 		for ( int i = 0; i < events.Num(); i++ ) {
 			idStr eventName = BuildEventName( events[ i ].name );
 
-			file->Printf( "sdCompiledScript_Event %s( \"%s\" );\r\n", eventName.c_str(), events[ i ].name.c_str() );
+			file->Printf( "sdCompiledScript_Event %s( \"%s\" );\n", eventName.c_str(), events[ i ].name.c_str() );
 		}
-		file->Printf( "\r\n" );
+		file->Printf( "\n" );
 
 		fileSystem->CloseFile( file );
 		file = NULL;
@@ -1464,20 +1455,20 @@ void sdScriptExporter::Finish( void ) {
 
 	file = fileSystem->OpenFileWrite( g_fixedHFileName[ CS_FFH_EVENTS ], "fs_devpath" );
 	if ( file != NULL ) {
-		file->Printf( "\r\n" );
-		file->Printf( "#ifndef __GENERATED_EVENTS_H__\r\n" );
-		file->Printf( "#define __GENERATED_EVENTS_H__\r\n" );
-		file->Printf( "#include \"CompiledScript_Event.h\"\r\n" );
-		file->Printf( "\r\n" );
+		file->Printf( "\n" );
+		file->Printf( "#ifndef __GENERATED_EVENTS_H__\n" );
+		file->Printf( "#define __GENERATED_EVENTS_H__\n" );
+		file->Printf( "#include \"CompiledScript_Event.h\"\n" );
+		file->Printf( "\n" );
 
 		for ( int i = 0; i < events.Num(); i++ ) {
 			idStr eventName = BuildEventName( events[ i ].name );
 
-			file->Printf( "extern sdCompiledScript_Event %s;\r\n", eventName.c_str(), events[ i ].name.c_str() );
+			file->Printf( "extern sdCompiledScript_Event %s;\n", eventName.c_str(), events[ i ].name.c_str() );
 		}
-		file->Printf( "\r\n" );
+		file->Printf( "\n" );
 
-		file->Printf( "#endif // __GENERATED_EVENTS_H__\r\n" );
+		file->Printf( "#endif // __GENERATED_EVENTS_H__\n" );
 
 		fileSystem->CloseFile( file );
 		file = NULL;
@@ -1491,276 +1482,15 @@ void sdScriptExporter::Finish( void ) {
 	WriteSysCalls();
 	WriteEventCalls();
 
-	WriteBuildVersion();
-	WriteProjectFile();
-}
-
-extern int ENGINE_SRC_REVISION;
-extern int ENGINE_MEDIA_REVISION;
-
-void sdScriptExporter::WriteBuildVersion( void ) {
-	idFile* buildVersionFile = fileSystem->OpenFileWrite( "src/base/BuildVersion.cpp", "fs_devpath" );
-	if ( buildVersionFile == NULL ) {
-		gameLocal.Warning( "Failed To Write Version File" );
-		return;
+	idFile* completeFile = fileSystem->OpenFileWrite( "generated/Generated_Complete.stamp", "fs_devpath" );
+	if ( completeFile == NULL ) {
+		gameLocal.Error( "Failed to write compiled-script completion marker" );
 	}
+	completeFile->Printf( "ETQW compiled-script export complete\n" );
+	fileSystem->CloseFile( completeFile );
 
-	buildVersionFile->Printf( "#include \"Precompiled.h\"\r\n" );
-	buildVersionFile->Printf( "#pragma hdrstop\r\n\r\n" );
-
-	buildVersionFile->Printf( "int ENGINE_VERSION_MAJOR = %d;\r\n", ENGINE_VERSION_MAJOR );
-	buildVersionFile->Printf( "int ENGINE_VERSION_MINOR = %d;\r\n", ENGINE_VERSION_MINOR );
-	buildVersionFile->Printf( "int ENGINE_SRC_REVISION = %d;\r\n", ENGINE_SRC_REVISION );
-	buildVersionFile->Printf( "int ENGINE_MEDIA_REVISION = %d;\r\n", ENGINE_MEDIA_REVISION );
-
-	fileSystem->CloseFile( buildVersionFile );
-}
-
-void sdScriptExporter::WriteProjectFile( void ) {
-
-    // ASM 
-    WriteXCodeProjectFile();
-    
-	const char *project_basename = "src/base/CompiledScript.vcproj.base";
-	idFile* projectBaseFile = fileSystem->OpenFileRead( project_basename );
-	if ( projectBaseFile == NULL ) {
-		// si_pure or SD_RESTRICTED_FILESYSTEM might screw you here
-		gameLocal.Warning( "Failed to load %s - skipping project file generation", project_basename );
-		return;
-	}
-
-	int length = projectBaseFile->Length();
-
-	idStr temp;
-	temp.Fill( '\0', length );
-	projectBaseFile->Read( &temp[ 0 ], length );
-
-	fileSystem->CloseFile( projectBaseFile );
-
-	for ( int i = 0; i < CS_FFC_NUM; i++ ) {
-		generatedCppFiles.Alloc() = g_fixedCppFileName[ i ];
-	}
-
-	for ( int i = 0; i < CS_FFH_NUM; i++ ) {
-		generatedHFiles.Alloc() = g_fixedHFileName[ i ];
-	}
-
-	idStr replaceBlock;
-
-	replaceBlock += va( g_vcProjFilterStartInfo, "Source Files" );
-
-	for ( int i = 0; i < generatedCppFiles.Num(); i++ ) {
-		generatedCppFiles[ i ].SlashesToBackSlashes();
-		replaceBlock += va( g_vcProjFileInfo, generatedCppFiles[ i ].c_str() );
-	}
-
-	replaceBlock += g_vcProjFilterEndInfo;
-
-
-
-	replaceBlock += va( g_vcProjFilterStartInfo, "Header Files" );
-
-	for ( int i = 0; i < generatedHFiles.Num(); i++ ) {
-		generatedHFiles[ i ].SlashesToBackSlashes();
-		replaceBlock += va( g_vcProjFileInfo, generatedHFiles[ i ].c_str(), "" );
-	}
-
-	replaceBlock += g_vcProjFilterEndInfo;
-
-	temp.Replace( "$INSERTTEXTHERE$", replaceBlock.c_str() );
-
-	idFile* projectBaseOutput = fileSystem->OpenFileWrite( "src/base/CompiledScript.vcproj", "fs_devpath" );
-	if ( projectBaseOutput == NULL ) {
-		return;
-	}
-
-	projectBaseOutput->Write( temp.c_str(), temp.Length() );
-
-	fileSystem->CloseFile( projectBaseOutput );
-
-	sdStringBuilder_Heap src;
-	sdStringBuilder_Heap dest;
-
-	idFileList* dependencies = fileSystem->ListFiles( "src/base", ".*" );
-	for( int i = 0; i < dependencies->GetNumFiles(); i++ ) {
-		src = fileSystem->BuildOSPath( fileSystem->GetBasePath(), fileSystem->GetGamePath(),va( "src/base/%s", dependencies->GetFile( i ) ) );
-		dest = fileSystem->BuildOSPath( cvarSystem->GetCVarString( "fs_devpath" ), fileSystem->GetGamePath(), va( "src/base/%s", dependencies->GetFile( i ) ) );
-
-		if( idStr::Cmp( src.c_str(), dest.c_str() ) == 0 ) {
-			continue;
-		}
-		fileSystem->CopyFile( src.c_str(), dest.c_str() );
-	}
-	fileSystem->FreeFileList( dependencies );
-}
-
-struct PBXFile
-{
-    static unsigned long long lastUsed;
-    
-    idStr filename;
-    idStr file_reference;
-    idStr build_reference;
-    
-    PBXFile() : filename(""), file_reference(""), build_reference("") {}
-    PBXFile(const PBXFile& in_file) : filename(in_file.filename), 
-    file_reference(in_file.file_reference), build_reference(in_file.build_reference) {}
-    
-    PBXFile operator=(const PBXFile& other)
-    {
-        filename = other.filename;
-        file_reference = other.file_reference;
-        build_reference = other.build_reference;
-        
-        return *this;
-    }
-    
-    PBXFile(const char* new_filename) : filename(new_filename)
-    {
-        unsigned long fileHash = ++lastUsed;
-        unsigned long buildFileHash = ++lastUsed;
-        
-        sprintf(file_reference, "%llX", fileHash);
-        file_reference.CapLength(24);
-        
-        sprintf(build_reference, "%llX", buildFileHash);
-        build_reference.CapLength(24);
-    }
-};
-
-unsigned long long PBXFile::lastUsed = 0xA6F06A190CB4529ELL;
-
-void sdScriptExporter::WriteXCodeProjectFile( void ) {
-    const char *project_basename = "src/compiledscript.xcodeproj/project.pbxproj.base";
-	idFile* projectBaseFile = fileSystem->OpenFileRead( project_basename );
-	if ( projectBaseFile == NULL ) {
-		// si_pure or SD_RESTRICTED_FILESYSTEM might screw you here
-		gameLocal.Warning( "Failed to load %s - skipping project file generation", project_basename );
-		return;
-	}
-    
-    int length = projectBaseFile->Length();
-    
-	idStr temp;
-	temp.Fill( '\0', length );
-	projectBaseFile->Read( &temp[ 0 ], length );
-    
-	fileSystem->CloseFile( projectBaseFile );
-    
-    for ( int i = 0; i < CS_FFC_NUM; i++ ) {
-		generatedCppFiles.Alloc() = g_fixedCppFileName[ i ];
-	}
-    
-	for ( int i = 0; i < CS_FFH_NUM; i++ ) {
-		generatedHFiles.Alloc() = g_fixedHFileName[ i ];
-	}
-    
-    idList< PBXFile > projectCPPFiles;
-    idList< PBXFile > projectHFiles;
-    
-	for ( int i = 0; i < generatedCppFiles.Num(); i++ ) {
-		int index = projectCPPFiles.Append( PBXFile( generatedCppFiles[ i ] ) );
-		projectCPPFiles[ index ].filename.StripPath();
-	}
-
-	for ( int i = 0; i < generatedHFiles.Num(); i++ ) {		
-        int index = projectHFiles.Append( PBXFile( generatedHFiles[ i ] ) );
-		projectHFiles[ index ].filename.StripPath();
-	}
-    
-	idStr PBXBuildFileReplaceString;
-
-	for ( int i = 0; i < projectCPPFiles.Num(); i++ ) {
-        PBXBuildFileReplaceString+= "\t" + projectCPPFiles[ i ].build_reference +
-        " = {isa = PBXBuildFile; fileRef = " + projectCPPFiles[ i ].file_reference + ";};\n";
-    }
-
-    idStr PBXFileReferenceReplaceString;
-
-	for ( int i = 0; i < projectCPPFiles.Num(); i++ ) {
-        PBXFileReferenceReplaceString+= "\t" + projectCPPFiles[ i ].file_reference + 
-            " = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = " + 
-            projectCPPFiles[ i ].filename + "; path = " + projectCPPFiles[ i ].filename + "; sourceTree = \"<group>\"; };\n";
-    }
-
-	for ( int i = 0; i < projectHFiles.Num(); i++ ) {
-        PBXFileReferenceReplaceString+= "\t" + projectHFiles[ i ].file_reference + 
-            " = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.h; name = " + 
-            projectHFiles[ i ].filename + "; path = " + projectHFiles[ i ].filename + "; sourceTree = \"<group>\"; };\n";
-    }
-    
-    idStr PBXFileSourceReferences;
-    
-    for ( int i = 0; i < projectCPPFiles.Num(); i++ ) {
-        PBXFileSourceReferences+= "\t" + projectCPPFiles[ i ].file_reference + ",\n";
-    }
-
-    idStr PBXFileHeaderReferences;
-    
-    for ( int i = 0; i < projectHFiles.Num(); i++ ) {
-        PBXFileHeaderReferences+= "\t" + projectHFiles[ i ].file_reference + ",\n";
-    }
-    
-    idStr PBXBuildPhase;
-
-    for ( int i = 0; i < projectCPPFiles.Num(); i++ ) {
-        PBXBuildPhase+= "\t" + projectCPPFiles[ i ].build_reference + ",\n";
-    }
-    
-    temp.Replace( "$INSERTPBXBUILDFILESHERE$", PBXBuildFileReplaceString.c_str() );
-    temp.Replace( "$INSERTPBXFILEREFERENCESHERE$", PBXFileReferenceReplaceString.c_str() );
-    temp.Replace( "$INSERTSOURCEREFERENCESHERE$", PBXFileSourceReferences.c_str() );
-    temp.Replace( "$INSERTHEADERREFERENCESHERE$", PBXFileHeaderReferences.c_str() );
-    temp.Replace( "$INSERTBUILDPHASEHERE$", PBXBuildPhase.c_str() );
-    
-    fileSystem->CreateOSPath( "src/compiledscript.xcodeproj/" );
-    idFile* projectBaseOutput = fileSystem->OpenFileWrite( "src/compiledscript.xcodeproj/project.pbxproj", "fs_devpath" );
-	if ( projectBaseOutput == NULL ) {
-		return;
-	}
-    
-	projectBaseOutput->Write( temp.c_str(), temp.Length() );
-    
-	fileSystem->CloseFile( projectBaseOutput );
-    
-    const char *plist_basename = "src/compiledscript.so-Info.plist.base";
-	idFile* plistBaseFile = fileSystem->OpenFileRead( plist_basename );
-	if ( plistBaseFile == NULL ) {
-		// si_pure or SD_RESTRICTED_FILESYSTEM might screw you here
-		gameLocal.Warning( "Failed to load %s", plist_basename );
-		return;
-	}
-    
-    length = plistBaseFile->Length();
-    
-	temp.Fill( '\0', length );
-	plistBaseFile->Read( &temp[ 0 ], length );
-    
-	fileSystem->CloseFile( plistBaseFile );
-    
-    idFile* plistBaseOutput = fileSystem->OpenFileWrite( "src/compiledscript.so-Info.plist", "fs_devpath" );
-	if ( plistBaseOutput == NULL ) {
-		return;
-	}
-    
-	plistBaseOutput->Write( temp.c_str(), temp.Length() );
-    
-	fileSystem->CloseFile( plistBaseOutput );
-    
-    // PBXBuildFile: (INSERTPBXBUILDFILESHERE)
-    // 		96F06A1A0CB452A50010D225 /* Generated_EventCalls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 96F065D40CB448CE0010D225 /* Generated_EventCalls.cpp */; };
-    // PBXFileReference: (INSERTPBXFILEREFERENCESHERE)
-    // 		96F065D40CB448CE0010D225 /* Generated_EventCalls.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Generated_EventCalls.cpp; path = Script/Generated_EventCalls.cpp; sourceTree = "<group>"; };
-    //      96F065D50CB448CE0010D225 /* Generated_EventCalls.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Generated_EventCalls.h; path = Script/Generated_EventCalls.h; sourceTree = "<group>"; };
-
-    // Source references: (INSERTSOURCEREFERENCESHERE)
-    //				96F0671C0CB448CE0010D225 /* GeneratedClass_task_deployable_disable.cpp */,
-    
-    // Header references: (INSERTHEADERREFERENCESHERE)
-    //				96F066FF0CB448CE0010D225 /* GeneratedClass_structure_cc.h */,
-
-    // Build phase: (INSERTBUILDPHASEHERE)
-    // 				96F06A1A0CB452A50010D225 /* Generated_EventCalls.cpp in Sources */,
+	gameLocal.Printf( "Compiled-script C++ generated in '%s/%s/generated'\n",
+		cvarSystem->GetCVarString( "fs_devpath" ), fileSystem->GetGamePath() );
 }
 
 void sdScriptExporter::WriteSysCalls( void ) {
@@ -1768,8 +1498,8 @@ void sdScriptExporter::WriteSysCalls( void ) {
 
 	idFile* headerFile = fileSystem->OpenFileWrite( g_fixedHFileName[ CS_FFH_SYSCALLS ], "fs_devpath" );
 
-	headerFile->Printf( "#ifndef __GENERATED_SYSCALLS_H__\r\n" );
-	headerFile->Printf( "#define __GENERATED_SYSCALLS_H__\r\n\r\n" );
+	headerFile->Printf( "#ifndef __GENERATED_SYSCALLS_H__\n" );
+	headerFile->Printf( "#define __GENERATED_SYSCALLS_H__\n\n" );
 
 	for ( int i = 0; i < sysCalls.Num(); i++ ) {
 		callDef_t* t = sysCalls[ i ];
@@ -1783,7 +1513,7 @@ void sdScriptExporter::WriteSysCalls( void ) {
 				}
 			}
 		}
-		headerFile->Printf( " );\r\n" );
+		headerFile->Printf( " );\n" );
 
 
 
@@ -1793,24 +1523,24 @@ void sdScriptExporter::WriteSysCalls( void ) {
 		}
 	}
 
-	headerFile->Printf( "\r\n#endif // __GENERATED_SYSCALLS_H__\r\n" );
+	headerFile->Printf( "\n#endif // __GENERATED_SYSCALLS_H__\n" );
 
 	fileSystem->CloseFile( headerFile );
 
 	idFile* cppFile = fileSystem->OpenFileWrite( g_fixedCppFileName[ CS_FFC_SYSCALLS ], "fs_devpath" );
 
-	cppFile->Printf( "#include \"Precompiled.h\"\r\n" );
-	cppFile->Printf( "#pragma hdrstop\r\n\r\n" );
-	cppFile->Printf( "#include \"CompiledScript_Types.h\"\r\n" );
-	cppFile->Printf( "#include \"CompiledScript_Event.h\"\r\n" );
+	cppFile->Printf( "#include \"Precompiled.h\"\n" );
+	cppFile->Printf( "#pragma hdrstop\n\n" );
+	cppFile->Printf( "#include \"CompiledScript_Types.h\"\n" );
+	cppFile->Printf( "#include \"CompiledScript_Event.h\"\n" );
 
 	if ( dependencies.Num() > 0 ) {
-		cppFile->Printf( "// dependencies\r\n" );
+		cppFile->Printf( "// dependencies\n" );
 		for ( int i = 0; i < dependencies.Num(); i++ ) {
-			cppFile->Printf( "class %s;\r\n", BuildClassName( dependencies[ i ] ) );
+			cppFile->Printf( "class %s;\n", BuildClassName( dependencies[ i ] ) );
 		}
 
-		cppFile->Printf( "\r\n" );
+		cppFile->Printf( "\n" );
 	}
 
 	for ( int i = 0; i < sysCalls.Num(); i++ ) {
@@ -1826,12 +1556,12 @@ void sdScriptExporter::WriteSysCalls( void ) {
 				}
 			}
 		}
-		cppFile->Printf( " ) {\r\n" );
+		cppFile->Printf( " ) {\n" );
 		tabCount++;
 
 		if ( t->parms.Num() > 0 ) {
 			PrintTabs( cppFile );
-			cppFile->Printf( "UINT_PTR data[ %d ];\r\n", t->parms.Num() );
+			cppFile->Printf( "UINT_PTR data[ %d ];\n", t->parms.Num() );
 
 			for ( int j = 0; j < t->parms.Num(); j++ ) {
 				const char* eventDataTypeName = NULL;
@@ -1872,32 +1602,32 @@ void sdScriptExporter::WriteSysCalls( void ) {
 
 				if ( t->event->GetArgFormat()[ j ] == D_EVENT_ENTITY ) {
 					PrintTabs( cppFile );
-					cppFile->Printf( "if ( !parm%d.To%sData( data[ %d ] ) ) {\r\n", j, eventDataTypeName, j );
+					cppFile->Printf( "if ( !parm%d.To%sData( data[ %d ] ) ) {\n", j, eventDataTypeName, j );
 
 					tabCount++;
 
 					PrintTabs( cppFile );
-					cppFile->Printf( "// TODO: Print warning\r\n" );
+					cppFile->Printf( "// TODO: Print warning\n" );
 
 					PrintTabs( cppFile );
 					if ( t->returnType->Type() != ev_void ) {
-						cppFile->Printf( "return %s();\r\n", BuildFieldName( t->returnType ) );
+						cppFile->Printf( "return %s();\n", BuildFieldName( t->returnType ) );
 					} else {
-						cppFile->Printf( "return;\r\n" );
+						cppFile->Printf( "return;\n" );
 					}
 
 					tabCount--;
 					PrintTabs( cppFile );
-					cppFile->Printf( "}\r\n" );
+					cppFile->Printf( "}\n" );
 				} else {
 					PrintTabs( cppFile );
-					cppFile->Printf( "parm%d.To%sData( data[ %d ] );\r\n", j, eventDataTypeName, j );
+					cppFile->Printf( "parm%d.To%sData( data[ %d ] );\n", j, eventDataTypeName, j );
 				}
 			}
 		}
 
 		PrintTabs( cppFile );
-		cppFile->Printf( "compilerInterface->SysCall( _event.GetEvent(), %s );\r\n", t->parms.Num() > 0 ? "data" : "NULL" );
+		cppFile->Printf( "compilerInterface->SysCall( _event.GetEvent(), %s );\n", t->parms.Num() > 0 ? "data" : "NULL" );
 
 		const char* typeName;
 		switch ( t->event->GetReturnType() ) {
@@ -1936,11 +1666,11 @@ void sdScriptExporter::WriteSysCalls( void ) {
 
 		if ( typeName != NULL ) {
 			PrintTabs( cppFile );
-			cppFile->Printf( "return compilerInterface->GetReturned%s();\r\n", typeName );
+			cppFile->Printf( "return compilerInterface->GetReturned%s();\n", typeName );
 		}
 
 		tabCount--;
-		cppFile->Printf( "}\r\n\r\n" );
+		cppFile->Printf( "}\n\n" );
 	}
 
 	fileSystem->CloseFile( cppFile );
@@ -1951,8 +1681,8 @@ void sdScriptExporter::WriteEventCalls( void ) {
 
 	idFile* headerFile = fileSystem->OpenFileWrite( g_fixedHFileName[ CS_FFH_EVENTCALLS ], "fs_devpath" );
 
-	headerFile->Printf( "#ifndef __GENERATED_EVENTCALLS_H__\r\n" );
-	headerFile->Printf( "#define __GENERATED_EVENTCALLS_H__\r\n\r\n" );
+	headerFile->Printf( "#ifndef __GENERATED_EVENTCALLS_H__\n" );
+	headerFile->Printf( "#define __GENERATED_EVENTCALLS_H__\n\n" );
 
 	for ( int i = 0; i < eventCalls.Num(); i++ ) {
 		callDef_t* t = eventCalls[ i ];
@@ -1966,7 +1696,7 @@ void sdScriptExporter::WriteEventCalls( void ) {
 				}
 			}
 		}
-		headerFile->Printf( " );\r\n" );
+		headerFile->Printf( " );\n" );
 
 
 
@@ -1976,24 +1706,24 @@ void sdScriptExporter::WriteEventCalls( void ) {
 		}
 	}
 
-	headerFile->Printf( "\r\n#endif // __GENERATED_EVENTCALLS_H__\r\n" );
+	headerFile->Printf( "\n#endif // __GENERATED_EVENTCALLS_H__\n" );
 
 	fileSystem->CloseFile( headerFile );
 
 	idFile* cppFile = fileSystem->OpenFileWrite( g_fixedCppFileName[ CS_FFC_EVENTCALLS ], "fs_devpath" );
 
-	cppFile->Printf( "#include \"Precompiled.h\"\r\n" );
-	cppFile->Printf( "#pragma hdrstop\r\n\r\n" );
-	cppFile->Printf( "#include \"CompiledScript_Types.h\"\r\n" );
-	cppFile->Printf( "#include \"CompiledScript_Event.h\"\r\n" );
+	cppFile->Printf( "#include \"Precompiled.h\"\n" );
+	cppFile->Printf( "#pragma hdrstop\n\n" );
+	cppFile->Printf( "#include \"CompiledScript_Types.h\"\n" );
+	cppFile->Printf( "#include \"CompiledScript_Event.h\"\n" );
 
 	if ( dependencies.Num() > 0 ) {
-		cppFile->Printf( "// dependencies\r\n" );
+		cppFile->Printf( "// dependencies\n" );
 		for ( int i = 0; i < dependencies.Num(); i++ ) {
-			cppFile->Printf( "class %s;\r\n", BuildClassName( dependencies[ i ] ) );
+			cppFile->Printf( "class %s;\n", BuildClassName( dependencies[ i ] ) );
 		}
 
-		cppFile->Printf( "\r\n" );
+		cppFile->Printf( "\n" );
 	}
 
 	for ( int i = 0; i < eventCalls.Num(); i++ ) {
@@ -2009,12 +1739,12 @@ void sdScriptExporter::WriteEventCalls( void ) {
 				}
 			}
 		}
-		cppFile->Printf( " ) {\r\n" );
+		cppFile->Printf( " ) {\n" );
 		tabCount++;
 
 		if ( t->parms.Num() > 0 ) {
 			PrintTabs( cppFile );
-			cppFile->Printf( "UINT_PTR data[ %d ];\r\n", t->parms.Num() );
+			cppFile->Printf( "UINT_PTR data[ %d ];\n", t->parms.Num() );
 
 			for ( int j = 0; j < t->parms.Num(); j++ ) {
 				const char* eventDataTypeName = NULL;
@@ -2055,32 +1785,32 @@ void sdScriptExporter::WriteEventCalls( void ) {
 
 				if ( t->event->GetArgFormat()[ j ] == D_EVENT_ENTITY ) {
 					PrintTabs( cppFile );
-					cppFile->Printf( "if ( !parm%d.To%sData( data[ %d ] ) ) {\r\n", j, eventDataTypeName, j );
+					cppFile->Printf( "if ( !parm%d.To%sData( data[ %d ] ) ) {\n", j, eventDataTypeName, j );
 
 					tabCount++;
 
 					PrintTabs( cppFile );
-					cppFile->Printf( "// TODO: Print warning\r\n" );
+					cppFile->Printf( "// TODO: Print warning\n" );
 
 					PrintTabs( cppFile );
 					if ( t->returnType->Type() != ev_void ) {
-						cppFile->Printf( "return %s();\r\n", BuildFieldName( t->returnType ) );
+						cppFile->Printf( "return %s();\n", BuildFieldName( t->returnType ) );
 					} else {
-						cppFile->Printf( "return;\r\n" );
+						cppFile->Printf( "return;\n" );
 					}
 
 					tabCount--;
 					PrintTabs( cppFile );
-					cppFile->Printf( "}\r\n" );
+					cppFile->Printf( "}\n" );
 				} else {
 					PrintTabs( cppFile );
-					cppFile->Printf( "parm%d.To%sData( data[ %d ] );\r\n", j, eventDataTypeName, j );
+					cppFile->Printf( "parm%d.To%sData( data[ %d ] );\n", j, eventDataTypeName, j );
 				}
 			}
 		}
 
 		PrintTabs( cppFile );
-		cppFile->Printf( "compilerInterface->EventCall( _event.GetEvent(), _obj, %s );\r\n", t->parms.Num() > 0 ? "data" : "NULL" );
+		cppFile->Printf( "compilerInterface->EventCall( _event.GetEvent(), _obj, %s );\n", t->parms.Num() > 0 ? "data" : "NULL" );
 
 		const char* typeName;
 		switch ( t->event->GetReturnType() ) {
@@ -2119,11 +1849,11 @@ void sdScriptExporter::WriteEventCalls( void ) {
 
 		if ( typeName != NULL ) {
 			PrintTabs( cppFile );
-			cppFile->Printf( "return compilerInterface->GetReturned%s();\r\n", typeName );
+			cppFile->Printf( "return compilerInterface->GetReturned%s();\n", typeName );
 		}
 
 		tabCount--;
-		cppFile->Printf( "}\r\n\r\n" );
+		cppFile->Printf( "}\n\n" );
 	}
 
 	fileSystem->CloseFile( cppFile );
@@ -2134,12 +1864,12 @@ void sdScriptExporter::WriteClassFunctionWrappers( void ) {
 
 	idFile* headerFile = fileSystem->OpenFileWrite( g_fixedHFileName[ CS_FFH_FUNCTIONWRAPPERS ], "fs_devpath" );
 
-	headerFile->Printf( "#ifndef __GENERATED_CLASSFUNCTIONWRAPPERS_H__\r\n" );
-	headerFile->Printf( "#define __GENERATED_CLASSFUNCTIONWRAPPERS_H__\r\n\r\n" );
+	headerFile->Printf( "#ifndef __GENERATED_CLASSFUNCTIONWRAPPERS_H__\n" );
+	headerFile->Printf( "#define __GENERATED_CLASSFUNCTIONWRAPPERS_H__\n\n" );
 
 	for ( int i = 0; i < externalClassCalls.Num(); i++ ) {
 		callDef_t* t = externalClassCalls[ i ];
-		headerFile->Printf( "void ClassFunctionWrapper%d( %s* obj, classFunctionCallback_t callback, const byte* data );\r\n", i, BASE_COMPILED_SCRIPT_CLASS_ALLOCATE );
+		headerFile->Printf( "void ClassFunctionWrapper%d( %s* obj, classFunctionCallback_t callback, const byte* data );\n", i, BASE_COMPILED_SCRIPT_CLASS_ALLOCATE );
 
 		AddDependency( t->returnType, dependencies );
 		for ( int j = 0; j < t->parms.Num(); j++ ) {
@@ -2147,29 +1877,29 @@ void sdScriptExporter::WriteClassFunctionWrappers( void ) {
 		}
 	}
 
-	headerFile->Printf( "\r\n#endif // __GENERATED_CLASSFUNCTIONWRAPPERS_H__\r\n" );
+	headerFile->Printf( "\n#endif // __GENERATED_CLASSFUNCTIONWRAPPERS_H__\n" );
 
 	fileSystem->CloseFile( headerFile );
 
 	idFile* cppFile = fileSystem->OpenFileWrite( g_fixedCppFileName[ CS_FFC_FUNCTIONWRAPPERS ], "fs_devpath" );
 
-	cppFile->Printf( "#include \"Precompiled.h\"\r\n" );
-	cppFile->Printf( "#pragma hdrstop\r\n\r\n" );
-	cppFile->Printf( "#include \"CompiledScript_Types.h\"\r\n" );
+	cppFile->Printf( "#include \"Precompiled.h\"\n" );
+	cppFile->Printf( "#pragma hdrstop\n\n" );
+	cppFile->Printf( "#include \"CompiledScript_Types.h\"\n" );
 
 	if ( dependencies.Num() > 0 ) {
-		cppFile->Printf( "// dependencies\r\n" );
+		cppFile->Printf( "// dependencies\n" );
 		for ( int i = 0; i < dependencies.Num(); i++ ) {
-			cppFile->Printf( "#include \"%s\"\r\n", BuildClassHeaderName( dependencies[ i ], false ) );
+			cppFile->Printf( "#include \"%s\"\n", BuildClassHeaderName( dependencies[ i ], false ) );
 		}
 
-		cppFile->Printf( "\r\n" );
+		cppFile->Printf( "\n" );
 	}
 
 	for ( int i = 0; i < externalClassCalls.Num(); i++ ) {
 		callDef_t* t = externalClassCalls[ i ];
 
-		cppFile->Printf( "void ClassFunctionWrapper%d( %s* obj, classFunctionCallback_t callback, const byte* data ) {\r\n", i, BASE_COMPILED_SCRIPT_CLASS_ALLOCATE );
+		cppFile->Printf( "void ClassFunctionWrapper%d( %s* obj, classFunctionCallback_t callback, const byte* data ) {\n", i, BASE_COMPILED_SCRIPT_CLASS_ALLOCATE );
 		tabCount++;
 
 		PrintTabs( cppFile );
@@ -2184,23 +1914,23 @@ void sdScriptExporter::WriteClassFunctionWrappers( void ) {
 			}
 			cppFile->Printf( " " );
 		}
-		cppFile->Printf( ");\r\n" );
+		cppFile->Printf( ");\n" );
 
 		if ( t->parms.Num() > 0 ) {
 			PrintTabs( cppFile );
-			cppFile->Printf( "const byte* p = data;\r\n" );
+			cppFile->Printf( "const byte* p = data;\n" );
 
 			for ( int j = 0; j < t->parms.Num(); j++ ) {
 				PrintTabs( cppFile );
-				cppFile->Printf( "%s parm%d;\r\n", BuildFieldName( t->parms[ j ] ), j );
+				cppFile->Printf( "%s parm%d;\n", BuildFieldName( t->parms[ j ] ), j );
 
 				PrintTabs( cppFile );
-				cppFile->Printf( "p = parm%d.FromData( p );\r\n", j );
+				cppFile->Printf( "p = parm%d.FromData( p );\n", j );
 			}
 		}
 
 		PrintTabs( cppFile );
-		cppFile->Printf( "internalCallback_t internalCallback = ( internalCallback_t )callback;\r\n" );
+		cppFile->Printf( "internalCallback_t internalCallback = ( internalCallback_t )callback;\n" );
 	
 		PrintTabs( cppFile );
 		if ( t->returnType->Type() != ev_void ) {
@@ -2244,10 +1974,10 @@ void sdScriptExporter::WriteClassFunctionWrappers( void ) {
 		if ( t->returnType->Type() != ev_void ) {
 			cppFile->Printf( " ) " );
 		}
-		cppFile->Printf( ");\r\n" );
+		cppFile->Printf( ");\n" );
 
 		tabCount--;
-		cppFile->Printf( "}\r\n\r\n" );
+		cppFile->Printf( "}\n\n" );
 	}
 
 	fileSystem->CloseFile( cppFile );
@@ -2257,7 +1987,7 @@ void sdScriptExporter::WriteFunctionWrappers( idFile* cppFile ) {
 	for ( int i = 0; i < externalFunctionCalls.Num(); i++ ) {
 		callDef_t* t = externalFunctionCalls[ i ];
 
-		cppFile->Printf( "void GlobalFunctionWrapper%d( functionCallback_t callback, const byte* data ) {\r\n", i );
+		cppFile->Printf( "void GlobalFunctionWrapper%d( functionCallback_t callback, const byte* data ) {\n", i );
 		tabCount++;
 
 		PrintTabs( cppFile );
@@ -2272,23 +2002,23 @@ void sdScriptExporter::WriteFunctionWrappers( idFile* cppFile ) {
 			}
 			cppFile->Printf( " " );
 		}
-		cppFile->Printf( ");\r\n" );
+		cppFile->Printf( ");\n" );
 
 		if ( t->parms.Num() > 0 ) {
 			PrintTabs( cppFile );
-			cppFile->Printf( "const byte* p = data;\r\n" );
+			cppFile->Printf( "const byte* p = data;\n" );
 
 			for ( int j = 0; j < t->parms.Num(); j++ ) {
 				PrintTabs( cppFile );
-				cppFile->Printf( "%s parm%d;\r\n", BuildFieldName( t->parms[ j ] ), j );
+				cppFile->Printf( "%s parm%d;\n", BuildFieldName( t->parms[ j ] ), j );
 
 				PrintTabs( cppFile );
-				cppFile->Printf( "p = parm%d.FromData( p );\r\n", j );
+				cppFile->Printf( "p = parm%d.FromData( p );\n", j );
 			}
 		}
 
 		PrintTabs( cppFile );
-		cppFile->Printf( "internalCallback_t internalCallback = ( internalCallback_t )callback;\r\n" );
+		cppFile->Printf( "internalCallback_t internalCallback = ( internalCallback_t )callback;\n" );
 	
 		PrintTabs( cppFile );
 		if ( t->returnType->Type() != ev_void ) {
@@ -2332,10 +2062,10 @@ void sdScriptExporter::WriteFunctionWrappers( idFile* cppFile ) {
 		if ( t->returnType->Type() != ev_void ) {
 			cppFile->Printf( " ) " );
 		}
-		cppFile->Printf( ");\r\n" );
+		cppFile->Printf( ");\n" );
 
 		tabCount--;
-		cppFile->Printf( "}\r\n\r\n" );
+		cppFile->Printf( "}\n\n" );
 	}
 }
 
@@ -2355,9 +2085,9 @@ void sdScriptExporter::WriteVirtualFunctions( void ) {
 		
 		WriteFunctionStub( headerFile, funcDef, NULL, 0 );
 		if ( funcDef.function->type->ReturnType()->Type() != ev_void ) {
-			headerFile->Printf( "{ return %s(); }\r\n", BuildFieldName( funcDef.function->type->ReturnType() ) );
+			headerFile->Printf( "{ return %s(); }\n", BuildFieldName( funcDef.function->type->ReturnType() ) );
 		} else {
-			headerFile->Printf( "{ ; }\r\n" );
+			headerFile->Printf( "{ ; }\n" );
 		}
 	}
 
@@ -2366,12 +2096,12 @@ void sdScriptExporter::WriteVirtualFunctions( void ) {
 	headerFile = fileSystem->OpenFileWrite( g_fixedHFileName[ CS_FFH_VIRTUALFUNCTIONDEPENDANCIES ], "fs_devpath" );
 
 	if ( dependencies.Num() > 0 ) {
-		headerFile->Printf( "// dependencies\r\n" );
+		headerFile->Printf( "// dependencies\n" );
 		for ( int i = 0; i < dependencies.Num(); i++ ) {
-			headerFile->Printf( "class %s;\r\n", BuildClassName( dependencies[ i ] ) );
+			headerFile->Printf( "class %s;\n", BuildClassName( dependencies[ i ] ) );
 		}
 
-		headerFile->Printf( "\r\n" );
+		headerFile->Printf( "\n" );
 	}
 
 	fileSystem->CloseFile( headerFile );
@@ -2412,9 +2142,6 @@ void sdScriptExporter::Clear( bool finished ) {
 	externalFunctionCalls.DeleteContents( true );
 	sysCalls.DeleteContents( true );
 	eventCalls.DeleteContents( true );
-	generatedCppFiles.Clear();
-	generatedHFiles.Clear();
-	
 	constants.Clear();
 }
 
@@ -2753,7 +2480,7 @@ void sdFunctionCompileState::InitStackVar( sdScriptExporter::stackVar_t& var ) {
 		assert( false );
 		return;
 	}
-	variables->Printf( "\t%s %s;\r\n", program->scriptExporter.BuildFieldName( var.type, ev_error /* defaultType */ ), var.name.c_str() );
+	variables->Printf( "\t%s %s;\n", program->scriptExporter.BuildFieldName( var.type, ev_error /* defaultType */ ), var.name.c_str() );
 	var.allocated = true;
 }
 
@@ -2873,7 +2600,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 
 	int labelIndex = labels.FindIndex( statement );
 	if ( labelIndex != -1 ) {
-		output->Printf( "label%d:\r\n", labelIndex );
+		output->Printf( "label%d:\n", labelIndex );
 	}
 
 	statement_t& s = program->GetStatement( statement );
@@ -2908,7 +2635,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.a, TYPE_OF( type_a ) );
 			output->Printf( " == " );
 			PrintVariable( s.b, TYPE_OF( type_b ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -2940,7 +2667,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.b, TYPE_OF( type_b ) );
 			output->Printf( " &= " );
 			PrintVariable( s.a, TYPE_OF( type_a ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -2951,7 +2678,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.b, TYPE_OF( type_b ) );
 			output->Printf( " |= " );
 			PrintVariable( s.a, TYPE_OF( type_a ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -2964,7 +2691,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.a, TYPE_OF( type_a ) );
 			output->Printf( " | " );
 			PrintVariable( s.b, TYPE_OF( type_b ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -2977,7 +2704,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.a, TYPE_OF( type_a ) );
 			output->Printf( " & " );
 			PrintVariable( s.b, TYPE_OF( type_b ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -2993,7 +2720,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.a, TYPE_OF( type_a ) );
 			output->Printf( " || " );
 			PrintVariable( s.b, TYPE_OF( type_b ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3009,7 +2736,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.a, TYPE_OF( type_a ) );
 			output->Printf( " && " );
 			PrintVariable( s.b, TYPE_OF( type_b ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3027,7 +2754,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.a, TYPE_OF( type_a ) );
 			output->Printf( " != " );
 			PrintVariable( s.b, TYPE_OF( type_b ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3039,7 +2766,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.c, TYPE_OF( type_c ) );
 			output->Printf( " = -" );
 			PrintVariable( s.a, TYPE_OF( type_a ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3050,7 +2777,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.c, TYPE_OF( type_c ) );
 			output->Printf( " = " );
 			PrintVariable( s.a, TYPE_OF( type_a ) );
-			output->Printf( ".ToInt();\r\n" );
+			output->Printf( ".ToInt();\n" );
 			return;
 		}
 
@@ -3063,7 +2790,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.a, TYPE_OF( type_a ) );
 			output->Printf( " / " );
 			PrintVariable( s.b, TYPE_OF( type_b ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3079,7 +2806,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.a, TYPE_OF( type_a ) );
 			output->Printf( " * " );
 			PrintVariable( s.b, TYPE_OF( type_b ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3099,7 +2826,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.a, TYPE_OF( type_a ) );
 			output->Printf( " + " );
 			PrintVariable( s.b, TYPE_OF( type_b ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3113,7 +2840,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.a, TYPE_OF( type_a ) );
 			output->Printf( " - " );
 			PrintVariable( s.b, TYPE_OF( type_b ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3126,7 +2853,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.a, TYPE_OF( type_a ) );
 			output->Printf( " <= " );
 			PrintVariable( s.b, TYPE_OF( type_b ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3139,7 +2866,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.a, TYPE_OF( type_a ) );
 			output->Printf( " >= " );
 			PrintVariable( s.b, TYPE_OF( type_b ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3152,7 +2879,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.a, TYPE_OF( type_a ) );
 			output->Printf( " > " );
 			PrintVariable( s.b, TYPE_OF( type_b ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3165,7 +2892,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.a, TYPE_OF( type_a ) );
 			output->Printf( " %% " );
 			PrintVariable( s.b, TYPE_OF( type_b ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3175,7 +2902,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.b, TYPE_OF( type_b ) );
 			output->Printf( " -= " );
 			PrintVariable( s.a, TYPE_OF( type_a ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3185,7 +2912,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.b, TYPE_OF( type_b ) );
 			output->Printf( " *= " );
 			PrintVariable( s.a, TYPE_OF( type_a ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3195,7 +2922,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.b, TYPE_OF( type_b ) );
 			output->Printf( " /= " );
 			PrintVariable( s.a, TYPE_OF( type_a ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3205,7 +2932,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.b, TYPE_OF( type_b ) );
 			output->Printf( " += " );
 			PrintVariable( s.a, TYPE_OF( type_a ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3214,7 +2941,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 
 			PrintTabs();
 			PrintVariable( s.a, TYPE_OF( type_a ) );
-			output->Printf( "->%s++;\r\n", program->scriptExporter.FindFieldName( nameSpace, s.a->TypeDef(), s.b ) );
+			output->Printf( "->%s++;\n", program->scriptExporter.FindFieldName( nameSpace, s.a->TypeDef(), s.b ) );
 			return;
 		}
 
@@ -3223,21 +2950,21 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 
 			PrintTabs();
 			PrintVariable( s.a, TYPE_OF( type_a ) );
-			output->Printf( "->%s--;\r\n", program->scriptExporter.FindFieldName( nameSpace, s.a->TypeDef(), s.b ) );
+			output->Printf( "->%s--;\n", program->scriptExporter.FindFieldName( nameSpace, s.a->TypeDef(), s.b ) );
 			return;
 		}
 
 		case OP_UINC_F: {
 			PrintTabs();
 			PrintVariable( s.a, TYPE_OF( type_a ) );
-			output->Printf( "++;\r\n" );
+			output->Printf( "++;\n" );
 			return;
 		}
 
 		case OP_UDEC_F: {
 			PrintTabs();
 			PrintVariable( s.a, TYPE_OF( type_a ) );
-			output->Printf( "--;\r\n" );
+			output->Printf( "--;\n" );
 			return;
 		}
 
@@ -3250,7 +2977,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.a, TYPE_OF( type_a ) );
 			output->Printf( " < " );
 			PrintVariable( s.b, TYPE_OF( type_b ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3266,7 +2993,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.c, TYPE_OF( type_c ) );
 			output->Printf( " = !" );
 			PrintVariable( s.a, TYPE_OF( type_a ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3274,7 +3001,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintTabs();
 			output->Printf( "if ( !" );
 			PrintVariable( s.a, ev_error );
-			output->Printf( " ) {\r\n" );
+			output->Printf( " ) {\n" );
 
 			tabCount++;
 			PrintTabs();
@@ -3283,9 +3010,9 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 
 			int index = labels.FindIndex( statement + s.b->value.jumpOffset );
 			assert( index != -1 );
-			output->Printf( "label%d;\r\n", index );
+			output->Printf( "label%d;\n", index );
 			PrintTabs();
-			output->Printf( "}\r\n", index );
+			output->Printf( "}\n", index );
 			return;
 		}
 
@@ -3293,7 +3020,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintTabs();
 			output->Printf( "if ( " );
 			PrintVariable( s.a, TYPE_OF( type_a ) );
-			output->Printf( " ) {\r\n" );
+			output->Printf( " ) {\n" );
 
 			tabCount++;
 			PrintTabs();
@@ -3302,9 +3029,9 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 
 			int index = labels.FindIndex( statement + s.b->value.jumpOffset );
 			assert( index != -1 );
-			output->Printf( "label%d;\r\n", index );
+			output->Printf( "label%d;\n", index );
 			PrintTabs();
-			output->Printf( "}\r\n", index );
+			output->Printf( "}\n", index );
 			return;
 		}
 
@@ -3316,7 +3043,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 
 			int index = labels.FindIndex( address );
 			assert( index != -1 );
-			output->Printf( "label%d;\r\n", index );
+			output->Printf( "label%d;\n", index );
 			return;
 		}
 
@@ -3355,7 +3082,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 				return;
 			}
 			PrintVariable( s.a, TYPE_OF( type_b ) );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3383,7 +3110,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 				output->Printf( "->Cast< %s >()", program->scriptExporter.BuildClassName( setType ) );
 			}
 
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3415,7 +3142,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 					output->Printf( ", " );
 				}
 			}
-			output->Printf( " );\r\n" );
+			output->Printf( " );\n" );
 
 			compileStack.SetNum( compileStack.Num() - parms );
 			return;
@@ -3444,7 +3171,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 				}
 				output->Printf( " " );
 			}
-			output->Printf( ");\r\n" );
+			output->Printf( ");\n" );
 
 			compileStack.SetNum( compileStack.Num() - parms );
 			return;
@@ -3464,7 +3191,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 					PrintTabs();
 					output->Printf( "if ( " );
 					PrintVariable( compileStack[ base ], ev_error );
-					output->Printf( " != NULL ) {\r\n" );
+					output->Printf( " != NULL ) {\n" );
 					tabCount++;
 				}
 
@@ -3488,13 +3215,13 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 				}
 				output->Printf( " " );
 			}
-			output->Printf( ");\r\n" );
+			output->Printf( ");\n" );
 
 			if ( g_compiledScriptSafety.GetBool() ) {
 				if ( !skipNextStatement ) {
 					tabCount--;
 					PrintTabs();
-					output->Printf( "}\r\n" );
+					output->Printf( "}\n" );
 				}
 			}
 
@@ -3516,7 +3243,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 					PrintTabs();
 					output->Printf( "if ( " );
 					PrintVariable( compileStack[ base ], ev_error );
-					output->Printf( " != NULL ) {\r\n" );
+					output->Printf( " != NULL ) {\n" );
 					tabCount++;
 				}
 
@@ -3540,13 +3267,13 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 				}
 				output->Printf( " " );
 			}
-			output->Printf( ");\r\n" );
+			output->Printf( ");\n" );
 
 			if ( g_compiledScriptSafety.GetBool() ) {
 				if ( !skipNextStatement ) {
 					tabCount--;
 					PrintTabs();
-					output->Printf( "}\r\n" );
+					output->Printf( "}\n" );
 				}
 			}
 
@@ -3565,7 +3292,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 
 				PrintVariable( compileStack[ base ], f->type->GetParmType( 0 )->Type() );
 
-				output->Printf( " );\r\n" );
+				output->Printf( " );\n" );
 
 				compileStack.SetNum( compileStack.Num() - 1 );
 
@@ -3574,7 +3301,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			
 			if ( idStr::Cmp( f->GetName(), "waitFrame" ) == 0 ) {
 				PrintTabs();
-				output->Printf( "compilerInterface->WaitFrame();\r\n" );
+				output->Printf( "compilerInterface->WaitFrame();\n" );
 				return;
 			}
 
@@ -3600,7 +3327,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 					}
 				}
 			}
-			output->Printf( " );\r\n" );
+			output->Printf( " );\n" );
 
 			compileStack.SetNum( compileStack.Num() - parms );
 			return;
@@ -3633,7 +3360,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 					}
 				}
 			}
-			output->Printf( " );\r\n" );
+			output->Printf( " );\n" );
 
 			compileStack.SetNum( compileStack.Num() - parms );
 			return;
@@ -3668,7 +3395,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 					}
 				}
 			}
-			output->Printf( " );\r\n" );
+			output->Printf( " );\n" );
 
 			compileStack.SetNum( compileStack.Num() - parms );
 			return;
@@ -3689,7 +3416,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 			PrintVariable( s.a, TYPE_OF( type_a ) );
 			output->Printf( "->" );
 			PrintField( s.a->TypeDef(), s.b );
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3716,7 +3443,7 @@ void sdFunctionCompileState::ScanOpCode( int statement ) {
 					for ( int i = 0; i < o->functions.Num(); i++ ) {
 						if ( idStr::Cmp( o->functions[ i ].function->type->Name(), func->function->type->Name() ) == 0 ) {
 							PrintTabs();
-							output->Printf( "%s::%s();\r\n", program->scriptExporter.BuildClassName( o->type ), func->function->type->Name() );
+							output->Printf( "%s::%s();\n", program->scriptExporter.BuildClassName( o->type ), func->function->type->Name() );
 							goto done;
 						}
 					}
@@ -3737,7 +3464,7 @@ done:
 					output->Printf( "->Cast< %s >()", program->scriptExporter.BuildClassName( setType ) );
 				}
 			}
-			output->Printf( ";\r\n" );
+			output->Printf( ";\n" );
 			return;
 		}
 
@@ -3746,14 +3473,14 @@ done:
 
 			PrintTabs();
 			PrintVariable( s.c, TYPE_OF( type_c ) );
-			output->Printf( " = compilerInterface->AllocObject( \"%s\" );\r\n", s.a->Name() );
+			output->Printf( " = compilerInterface->AllocObject( \"%s\" );\n", s.a->Name() );
 			return;
 		}
 		case OP_FREE_TYPE: {
 			PrintTabs();
 			output->Printf( "compilerInterface->FreeObject( " );
 			PrintVariable( s.a, TYPE_OF( type_a ) );
-			output->Printf( " );\r\n" );
+			output->Printf( " );\n" );
 			return;
 		}
 	}

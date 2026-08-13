@@ -1,0 +1,13 @@
+/***********************************************************************
+
+tool_trinoculars.script
+
+***********************************************************************/
+
+object trinoculars : binoculars {
+	void	preinit();
+};
+
+void trinoculars::preinit() {
+}
+

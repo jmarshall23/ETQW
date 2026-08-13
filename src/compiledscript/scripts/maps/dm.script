@@ -1,0 +1,20 @@
+// don't use this script as a template, it si fubar
+
+object mapObject_dm : mapObject_Default {
+	void			preinit();
+
+	void			InitObjectives();
+};
+
+void mapObject_dm::preinit() {
+}
+
+void mapObject_dm::InitObjectives() {	
+	gdfTeam.SetRespawnWait( 2 );
+	stroggTeam.SetRespawnWait( 2 );
+	CreateRespawnTimeThread( gdfTeam );
+}
+
+mapObject_Base DM_MapScript() {
+	return new mapObject_dm;
+}

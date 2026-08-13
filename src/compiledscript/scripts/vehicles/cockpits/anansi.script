@@ -1,0 +1,78 @@
+
+object vehicle_anansi_cockpit : vehicle_basic_cockpit {
+	void				OnEntered();
+	void				StickThread();
+}
+
+void vehicle_anansi_cockpit::OnEntered() {	
+	thread StickThread();
+}
+
+void vehicle_anansi_cockpit::StickThread() {
+	entity driver = myVehicle.getDriver();
+	vector oldAngles = driver.getUserCmdAngles();
+
+	boolean playingFireAnim;
+	vector newAngles;
+	vector angleDiff;
+	vector temp;
+	vector stickAngles;
+	float stickJoint = getJointHandle( getKey( "joint_stick" ) );
+	
+	playCycle( ANIMCHANNEL_LEGS, "base" );
+
+	while ( true ) {
+		driver = myVehicle.getDriver();
+		
+		newAngles = oldAngles;
+			
+		if ( driver != $null_entity ) {
+			if ( !driver.getButton( PK_TOPHAT ) ) {
+				newAngles = driver.getUserCmdAngles();
+			}
+			
+			if ( driver.getButton( PK_ATTACK ) ) {
+				if ( !playingFireAnim ) {
+					playingFireAnim = true;
+					playAnim( ANIMCHANNEL_LEGS, "fire" );
+				}
+			} else {
+				if ( playingFireAnim ) {
+					playingFireAnim	= false;
+					playCycle( ANIMCHANNEL_LEGS, "base" );
+				}
+			}
+		}
+		
+		angleDiff_x = AngleDiff( newAngles_x, oldAngles_x );
+		angleDiff_y = AngleDiff( newAngles_y, oldAngles_y );
+
+		if ( sys.fabs( angleDiff_x ) < sys.fabs( temp_x ) ) {
+			temp_x = temp_x + ( ( angleDiff_x - temp_x ) * 0.02 );
+		} else {
+			temp_x = temp_x + ( ( angleDiff_x - temp_x ) * 0.1 );
+		}
+		
+		if ( sys.fabs( angleDiff_y ) < sys.fabs( temp_y ) ) {
+			temp_y = temp_y + ( ( angleDiff_y - temp_y ) * 0.02 );
+		} else {
+			temp_y = temp_y + ( ( angleDiff_y - temp_y ) * 0.1 );
+		}
+		
+		if ( driver != $null_entity ) {
+			oldAngles = driver.getUserCmdAngles();
+		}
+		
+		stickAngles_x = temp_x * 5.f;
+		stickAngles_x = min( stickAngles_x, 10 );
+		stickAngles_x = max( stickAngles_x, -10 );
+		
+		stickAngles_z = -temp_y * 5.f;
+		stickAngles_z = min( stickAngles_z, 20 );
+		stickAngles_z = max( stickAngles_z, -20 );
+		
+		setJointAngle( stickJoint, JOINTMOD_WORLD, stickAngles );
+
+		sys.waitFrame();
+	}
+}

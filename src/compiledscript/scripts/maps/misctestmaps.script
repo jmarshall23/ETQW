@@ -1,0 +1,125 @@
+
+object mapObject_CarryableBoxMap : mapObject_Default {
+	void			preinit();
+	void			destroy();
+
+	void			InitObjectives();
+
+	void			CompleteObjective( float index, entity p );
+	void			OnCarryableItemStolen( string actionName );
+	void			OnCarryableItemReturned( string actionName );
+	
+	void			DeliverPodThread();
+	
+	
+	entity			objective1Arrow1;
+	entity			objective1Arrow2;
+	entity			objective2Arrow1;
+	entity			objective2Arrow2;
+	
+	entity			objective1Marker;
+	entity			objective2Marker;
+	
+	entity			carryable1;
+	entity			carryable2;
+	entity			carryable3;
+};
+
+mapObject_Base Carryable_Box_MapScript() {
+	return new mapObject_CarryableBoxMap;
+}
+
+void mapObject_CarryableBoxMap::preinit() {
+}
+
+void mapObject_CarryableBoxMap::destroy() {
+}
+
+void mapObject_CarryableBoxMap::InitObjectives() {
+	entity territory = sys.getEntity( "strogg_base_deployzone" );
+	territory.setGameTeam( gdfTeam );
+	territory.setActive( true );
+	territory = sys.getEntity( "strogg_base_deployzone_2" );
+	territory.setGameTeam( stroggTeam );
+	territory.setActive( true );
+	
+	objective1Marker = sys.getEntity( "info_objective_single" );
+	objective1Arrow1 = sys.getEntity( "info_objective_single_progress_1" );
+	objective1Arrow2 = sys.getEntity( "info_objective_single_progress_2" );
+	
+	objective2Marker = sys.getEntity( "info_objective_multi" );
+	objective2Arrow1 = sys.getEntity( "info_objective_multi_progress_1" );
+	objective2Arrow2 = sys.getEntity( "info_objective_multi_progress_2" );
+	
+	objective1Arrow1.vStartObjective();
+	objective1Arrow2.vStartObjective();
+
+	objective1Marker.vStartObjective();
+	objective2Marker.vStartObjective();
+	
+	
+	carryable1 = sys.getEntity( "carryable_item_caller_1" );
+	carryable2 = sys.getEntity( "carryable_item_caller_2" );
+	carryable3 = sys.getEntity( "carryable_item_caller_3" );
+
+	gdfTeam.SetRespawnWait( 1 );
+	stroggTeam.SetRespawnWait( 1 );
+	CreateRespawnTimeThread( gdfTeam );
+
+	objManager.setNextObjective( gdfTeam, 0 );
+	objManager.setNextObjective( stroggTeam, 0 );
+	
+	CompleteObjective( 0, $null_entity );
+}
+
+void mapObject_CarryableBoxMap::CompleteObjective( float index, entity p ) {
+	sys.println( "mapObject_CarryableBoxMap::CompleteObjective: " + index );
+	
+	if ( index == 0 ) {
+		objective1Arrow1.vFinishObjective();
+		objective1Arrow2.vFinishObjective();
+		objective1Marker.vFinishObjective();
+		
+		objManager.setNextObjective( gdfTeam, 1 );
+		objManager.setNextObjective( stroggTeam, 1 );
+
+		objective2Arrow1.vStartObjective();
+		objective2Arrow2.vStartObjective();
+		
+		thread DeliverPodThread();
+	}
+	
+	if ( index == 1 ) {
+		objective2Arrow1.vFinishObjective();
+		objective2Arrow2.vFinishObjective();
+		objective2Marker.vFinishObjective();
+
+		gameRules.setWinningTeam( stroggTeam );
+		gameRules.endGame();
+	}
+}
+
+void mapObject_CarryableBoxMap::DeliverPodThread() {
+	sys.threadName( "mapObject_CarryableBoxMap::DeliverPodThread" );
+		
+	// wait before triggering the carryables to come flying in (staggered to look cooler)
+	sys.wait( 5.0f );
+	carryable1.vOnDeploy();
+	sys.wait( 5.0f );
+	carryable2.vOnDeploy();
+	sys.wait( 5.0f );
+	carryable3.vOnDeploy();
+}
+
+void mapObject_CarryableBoxMap::OnCarryableItemStolen( string actionName ) {
+
+	if ( actionName == "maleficus_bot_action_1" ) {
+		sys.print("He Stole The Cone!\n");
+	}
+}
+
+void mapObject_CarryableBoxMap::OnCarryableItemReturned( string actionName ) {
+	if ( actionName == "maleficus_bot_action_1" ) {
+		sys.print("The Cone Was Returned!\n");
+	}
+}

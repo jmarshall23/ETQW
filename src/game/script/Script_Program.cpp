@@ -2061,6 +2061,8 @@ void idProgram::FreeData( void ) {
 
 	compiled = false;
 
+	scriptExporter.Clear( false );
+
 	for ( int i = 0; i < MAX_SCRIPT_STACK_SIZE_COUNT; i++ ) {
 		freeStacks[ i ].DeleteContents( true );
 	}
@@ -2082,7 +2084,13 @@ void idProgram::Startup( const char* defaultScript ) {
 
 	CompileFile( defaultScript );
 
+	if ( exporting ) {
+		scriptExporter.Finish();
+	}
+
 	FinishCompilation();
+
+	exporting = false;
 }
 
 
@@ -2199,6 +2207,9 @@ idProgram::idProgram
 */
 idProgram::idProgram() {
 	compiled = false;
+	exporting = false;
+
+	scriptExporter.SetProgram( this );
 }
 
 /*
@@ -2244,7 +2255,7 @@ idProgram::Init
 ================
 */
 bool idProgram::Init( void ) {
-	Startup( SCRIPT_DEFAULT );
+	Startup( exporting && exportScriptName.Length() ? exportScriptName.c_str() : SCRIPT_DEFAULT );
 	return true;
 }
 

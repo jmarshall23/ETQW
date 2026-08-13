@@ -1,0 +1,13 @@
+/*
+===============================================================================
+
+	a quake 3 style jump pad, inherits from idTrigger so has enable/disable etc
+
+===============================================================================
+*/
+
+object jumppad {
+	void init() {
+		setGameTeam( sys.getTeam( getKey( "team" ) ) );
+	}
+}

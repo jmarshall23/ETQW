@@ -10,7 +10,7 @@ class idTypeDef;
 #define BASE_COMPILED_SCRIPT_CLASS_ALLOCATE		"sdCompiledScript_ClassBase"
 #define BASE_COMPILED_SCRIPT_CLASS				"sdCompiledScript_Class"
 #define BASE_COMPILED_SCRIPT_CLASS_HEADER		"CompiledScript_Class.h"
-#define BASE_COMPILED_SCRIPT_CLASS_CPP			"base/CompiledScript_Class.cpp"
+#define BASE_COMPILED_SCRIPT_CLASS_CPP			"CompiledScript_Class.cpp"
 class sdScriptExporter {
 public:
 	struct objectDef_t;
@@ -103,9 +103,6 @@ public:
 	void			WriteVirtualFunctions( void );
 	void			WriteClassFunctionWrappers( void );
 	void			WriteSysCalls( void );
-	void			WriteBuildVersion( void );
-    void            WriteXCodeProjectFile( void );
-	void			WriteProjectFile( void );
 	void			WriteEventCalls( void );
 
 	void			WriteNamespaceClasses( const namespaceDef_t* ns );
@@ -173,9 +170,6 @@ private:
 	idList< constantDef_t >				constants;
 
 	idProgram*							program;
-
-	idStrList							generatedCppFiles;
-	idStrList							generatedHFiles;
 
 	void								WriteClass( const namespaceDef_t* ns, objectDef_t& cls );
 

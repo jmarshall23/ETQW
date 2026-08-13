@@ -1,0 +1,14 @@
+//
+//		railchucker.script
+//
+
+object weapon_railchucker : weapon_assaultrifle_gren {
+	void		preinit();
+	
+//	void		Reload() { Overheat(); }
+}
+
+void weapon_railchucker::preinit() {
+	usesStroyent	= true;
+	hasHeat			= true;
+}

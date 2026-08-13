@@ -1,0 +1,155 @@
+
+object vehicle_gatling_cockpit : vehicle_basic_cockpit {
+	void				preinit();
+	void				destroy();
+	void				OnEntered();
+
+	void				AnimThread();
+	void				BarrelThread();
+	boolean				IsAttacking();
+
+	float				surfaceId;
+	string				muzzleJoint;
+	float				nextMuzzleEffectTime;
+	float				barrelJoint;
+
+	vector				barrelAngles;
+	boolean				barrelThreadActive;
+
+	float				currentState;
+
+	float				animThreadIndex;
+}
+
+void vehicle_gatling_cockpit::preinit() {
+	surfaceId = -1;
+
+	muzzleJoint = getKey( "joint_muzzle" );
+
+	animThreadIndex = thread AnimThread();
+	thread BarrelThread();
+}
+
+void vehicle_gatling_cockpit::OnEntered() {
+	string surfaceName = getKey( "surface_name" );
+	surfaceId = myVehicle.getSurfaceId( surfaceName );
+	myVehicle.hideSurface( surfaceId );
+
+	string barrelJointName = getKey( "joint_barrel" );
+	if ( barrelJointName == "" ) {
+		sys.error( "Missing barrel joint name" );
+	}
+
+	barrelJoint = getJointHandle( barrelJointName );
+}
+
+void vehicle_gatling_cockpit::destroy() {
+	if ( myVehicle != $null_entity && surfaceId != -1 ) {
+		myVehicle.showSurface( surfaceId );
+	}
+
+	if ( animThreadIndex != -1 ) {
+		sys.terminate( animThreadIndex );
+		animThreadIndex = -1;
+	}
+}
+
+#define VEHICLE_GATLING_STATE_IDLE 0
+#define VEHICLE_GATLING_STATE_ATTACK_START 1
+#define VEHICLE_GATLING_STATE_ATTACK 2
+#define VEHICLE_GATLING_STATE_ATTACK_END 3
+
+void vehicle_gatling_cockpit::AnimThread() {
+	sys.threadName( "vehicle_gatling_cockpit::AnimThread" );
+
+	player myPlayer = myVehicle.getPositionPlayer( passengerId );
+
+	sys.wait( playAnim( ANIMCHANNEL_ALL, "raise" ) );
+
+	float idleTime;
+
+	currentState = VEHICLE_GATLING_STATE_IDLE;
+
+	float newState;
+	playCycle( ANIMCHANNEL_ALL, "idle" );
+
+	while ( true ) {
+		if ( myPlayer.proxyFiringWeaponStart ) {
+			if ( myPlayer.proxyFiringWeapon ) {
+				newState = VEHICLE_GATLING_STATE_ATTACK;
+			} else {
+				newState = VEHICLE_GATLING_STATE_ATTACK_START;
+			}
+		} else {
+			if ( currentState == VEHICLE_GATLING_STATE_ATTACK ) {
+				newState = VEHICLE_GATLING_STATE_ATTACK_END;
+			} else {
+				if ( sys.getTime() > idleTime ) {
+					newState = VEHICLE_GATLING_STATE_IDLE;
+				}
+			}
+		}
+
+		if ( currentState != newState ) {
+			currentState = newState;
+			if ( currentState == VEHICLE_GATLING_STATE_IDLE ) {
+				playCycle( ANIMCHANNEL_ALL, "idle" );
+			} else if ( currentState == VEHICLE_GATLING_STATE_ATTACK_START ) {
+				playCycle( ANIMCHANNEL_ALL, "fire_start" );
+				if ( !barrelThreadActive ) {
+					thread BarrelThread();
+				}
+			} else if ( currentState == VEHICLE_GATLING_STATE_ATTACK ) {
+				playCycle( ANIMCHANNEL_ALL, "fire" );
+				if ( !barrelThreadActive ) {
+					thread BarrelThread();
+				}
+			} else if ( currentState == VEHICLE_GATLING_STATE_ATTACK_END ) {
+				idleTime = sys.getTime() + playAnim( ANIMCHANNEL_ALL, "fire_end" );
+			}
+		}
+
+		if ( currentState == VEHICLE_GATLING_STATE_ATTACK ) {
+			if ( myPlayer.proxyFiringWeapon ) {
+				if ( sys.getTime() > nextMuzzleEffectTime ) {
+					playEffect( "fx_muzzle", muzzleJoint, 0 );
+					nextMuzzleEffectTime = sys.getTime() + 0.1f;
+				}
+				if ( myVehicle.isSurfaceHidden( surfaceId ) ) {
+					playEffect( "fx_gatling_tracer", muzzleJoint, 0 );
+				}
+			}
+		}
+
+		sys.waitFrame();
+	}
+}
+
+boolean vehicle_gatling_cockpit::IsAttacking() {
+	return currentState == VEHICLE_GATLING_STATE_ATTACK || currentState == VEHICLE_GATLING_STATE_ATTACK_START;
+}
+
+void vehicle_gatling_cockpit::BarrelThread() {
+	barrelThreadActive = true;
+
+	float speed;
+
+	while ( true ) {
+		sys.waitFrame();
+		player myPlayer = myVehicle.getPositionPlayer( passengerId );
+		if ( myPlayer != $null_entity ) {
+			speed = myPlayer.gatlingSpeed;
+		} else {
+			speed = 0;
+		}
+		
+		barrelAngles_z = ( barrelAngles_z + speed*sys.getFrameTime() ) % 360;
+		setJointAngle( barrelJoint, JOINTMOD_LOCAL, barrelAngles );
+		
+		if ( speed = 0.0f ) {
+			break;
+		}
+	}
+
+	barrelThreadActive = false;
+}

@@ -1,0 +1,15 @@
+
+object placement_weapon {
+	void				preinit();
+	void				init();
+	void				destroy();
+};
+
+void placement_weapon::preinit() {
+}
+
+void placement_weapon::init() {
+}
+
+void placement_weapon::destroy() {
+}

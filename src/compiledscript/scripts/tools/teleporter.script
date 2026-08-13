@@ -1,0 +1,307 @@
+/***********************************************************************
+
+tool_teleporter.script
+
+Short distance teleporter
+
+***********************************************************************/
+
+object tool_teleporter : weapon_base {
+	void		init();
+	void		destroy();
+
+	void		Idle();
+	void		Lower();
+	void		Raise();
+	void		Throw();
+	void		Teleport();
+
+	void		DeployedIdle();
+	void		DeployedRaise();
+	void		DeployedLower();
+	
+	void		FindProjectile();
+	
+	void		ToolTipThread_Raise();
+	void		ToolTipThread_Deployed();
+
+	void		StartDeployedIdleEffect();
+	void		StopDeployedIdleEffect();
+		
+	boolean		deployedIdleEffectOn;
+
+	entity		projectile;
+	
+	boolean		deployedTipThreadActive;
+}
+
+void tool_teleporter::init() {
+	FindProjectile();
+
+	if ( projectile == $null_entity ) {
+		if ( myPlayer.isLocalPlayer() ) {
+			thread ToolTipThread_Raise();
+		}
+		weaponState( "Raise", 0 );
+	} else {
+		weaponState( "DeployedRaise", 0 );
+	}
+}
+
+void tool_teleporter::destroy() {
+	StopDeployedIdleEffect();
+}
+
+void tool_teleporter::StartDeployedIdleEffect() {
+	if ( !deployedIdleEffectOn ) {
+		playEffect( "fx_idle_deployed", idleEffectJoint, 1 );
+		deployedIdleEffectOn = true;
+	}
+}
+
+void tool_teleporter::StopDeployedIdleEffect() {
+	if ( deployedIdleEffectOn ) {
+		stopEffect( "fx_idle_deployed" );
+		deployedIdleEffectOn = false;
+	}
+}
+
+void tool_teleporter::FindProjectile() {
+	if ( projectile != $null_entity ) {
+		return;
+	}
+	
+	float i;
+	float num = myPlayer.binGetSize();
+	for ( i = 0; i < num; i++ ) {
+		entity other = myPlayer.binGet( i );
+		if ( other.inCollection( "teleportbeacon" ) ) {
+			projectile = other;
+		}
+	}
+}
+
+void tool_teleporter::Raise() {
+	setupAnimClass( "anim_prefix" );
+	Base_Raise();
+}
+
+void tool_teleporter::Lower() {
+	StopDeployedIdleEffect();
+	Base_Lower();
+}
+
+void tool_teleporter::Idle() {
+	setupAnimClass( "anim_prefix" );
+
+	weaponReady();
+	
+	playCycle( ANIMCHANNEL_ALL, "idle" );
+	StartIdleEffect();
+	
+	float projectileFoundTime = -1;
+	
+	mainFireDown = WEAPON_ATTACK;
+	while( true ) {
+		FindProjectile();
+		if ( projectile != $null_entity ) {
+			if ( projectileFoundTime == -1 ) {
+				projectileFoundTime = sys.getTime();
+			}
+			
+			if ( !sys.isClient() || ( projectileFoundTime - sys.getTime() ) > 1.f ) {
+				StopIdleEffect();
+				weaponState( "DeployedIdle", 4 );
+			}
+		} else {
+			projectileFoundTime = -1;
+		}
+	
+		if( WEAPON_LOWERWEAPON ) {
+			StopIdleEffect();
+			weaponState( "Lower", 4 );
+		}
+
+		if( WEAPON_ATTACK ) {
+			if ( !mainFireDown ) {
+				mainFireDown = true;
+				
+				StopIdleEffect();
+				weaponState( "Throw", 4 );
+			}
+		} else {
+			mainFireDown = false;
+		}
+		
+		UpdateCharge();
+		
+		sys.waitFrame();
+	}
+}
+
+void tool_teleporter::Throw() {
+	setupAnimClass( "anim_prefix_alt" );
+	fired();
+
+	playAnim( ANIMCHANNEL_ALL, "throw_quick" );
+	playEffect( "fx_fire", idleEffectJoint, 0 );
+
+	if ( !sys.isClient() ) {
+		projectile = createProjectile( 0 );
+		projectile.vSetOwner( myPlayer );
+		projectile.vSetCharge( chargePerUse );
+		
+		float launchPower = 0.f;
+		if ( myPlayer.getProficiency( g_proficiencyCovertOps ) >= 2 ) {
+			launchPower = 1000.f;
+		}
+		
+		launchProjectiles( numProjectiles, 0, 0, 0, launchPower, 1 );
+
+		myPlayer.binAdd( projectile );
+	}
+	
+	waitUntil( animDone( ANIMCHANNEL_ALL, 0 ) );
+
+	weaponState( "DeployedIdle", 0 );
+}
+
+void tool_teleporter::Teleport() {
+	if ( myPlayer != $null_entity ) {
+		myPlayer.teleportSucceeded = false;
+	}
+
+	projectile.vActivateTeleportation();
+}
+
+
+void tool_teleporter::DeployedRaise() {
+	setupAnimClass( "anim_prefix_alt" );
+
+	weaponRising();
+	playAnim( ANIMCHANNEL_ALL, "empty_raise" );
+	waitUntil( animDone( ANIMCHANNEL_ALL, 0 ) );
+	weaponState( "DeployedIdle", 4 );
+}
+
+void tool_teleporter::DeployedLower() {
+	StopIdleEffect();
+	StopDeployedIdleEffect();
+
+	weaponLowering();
+	playAnim( ANIMCHANNEL_ALL, "empty_putaway" );
+	waitUntil( animDone( ANIMCHANNEL_ALL, 0 ) );
+	weaponHolstered();
+	waitUntil( WEAPON_RAISEWEAPON );
+	weaponState( "DeployedRaise", 0 );
+}
+
+void tool_teleporter::DeployedIdle() {
+	setupAnimClass( "anim_prefix_alt" );
+
+	if ( myPlayer.isLocalPlayer() ) {
+		thread ToolTipThread_Deployed();
+	}
+
+	weaponReady();
+	
+	playCycle( ANIMCHANNEL_ALL, "empty_idle" );
+	StartDeployedIdleEffect();
+	
+	// clear teleport succeeded so it doesn't drop out of the state straight away
+	if ( myPlayer != $null_entity ) {
+		myPlayer.teleportSucceeded = false;
+	}
+
+	mainFireDown = WEAPON_ATTACK;
+	while( true ) {
+		if ( myPlayer != $null_entity ) {
+			if ( myPlayer.teleportSucceeded ) {
+				StopDeployedIdleEffect();
+				setupAnimClass( "anim_prefix" );
+
+				playAnim( ANIMCHANNEL_ALL, "empty_fire" );
+				playEffect( "fx_teleport", idleEffectJoint, 0 );
+				
+				team_base team = myPlayer.getGameTeam();
+				string statName = team.getName() + "_teleport_uses";
+				sys.increaseStatInt( sys.allocStatInt( statName ), myPlayer.getEntityNumber(), 1 );
+
+				weaponState( "Idle", 4 );
+			}
+		}
+	
+		FindProjectile();
+		
+		if ( projectile == $null_entity ) {
+			StopDeployedIdleEffect();
+			weaponState( "Idle", 4 );		
+		}
+			
+		if ( WEAPON_LOWERWEAPON ) {
+			StopDeployedIdleEffect();
+			weaponState( "DeployedLower", 4 );
+		}
+
+		if( WEAPON_ATTACK ) {
+			if ( !mainFireDown ) {
+				mainFireDown = true;
+				
+				if ( !projectile.vIsTeleporting() ) {
+					if ( myPlayer.EnergyBar_CanRemove( chargePerUse ) ) {
+						Teleport();
+					} else {
+						if ( myPlayer.isLocalPlayer() ) {
+							myPlayer.sendToolTip( GetToolTip( getKey( "tt_need_charge" ) ) );
+							sys.startSoundDirect( getKey( "snd_need_charge" ), SND_WEAPON_FIRE_LOCAL );
+							G_NotifyNoCharge( myPlayer );
+						}
+					}
+				}
+			}
+		} else {
+			mainFireDown = false;
+
+			if ( !projectile.vIsTeleporting() ) {
+				if( WEAPON_ALTFIRE ) {
+					if ( !sys.isClient() && projectile != $null_entity ) {
+						startSound( "snd_recall", SND_WEAPON_FIRE );
+						projectile.vCancelTeleportation();
+					}
+				}
+			}
+		}		
+
+		UpdateCharge();
+		sys.waitFrame();
+	}
+}
+
+void tool_teleporter::ToolTipThread_Raise() {
+	sys.wait( myPlayer.CalcTooltipWait() );
+	while ( myPlayer.isSinglePlayerToolTipPlaying() ) {
+		sys.wait( 1.0f );
+	}
+	myPlayer.cancelToolTips();
+
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_1" ) ) );
+	
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_2" ) ) );
+}
+
+void tool_teleporter::ToolTipThread_Deployed() {
+	if ( deployedTipThreadActive ) {
+		return;
+	}
+	deployedTipThreadActive = true;
+
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_deployed_intro_1" ) ) );
+	
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_deployed_intro_2" ) ) );
+	
+	deployedTipThreadActive = false;
+}

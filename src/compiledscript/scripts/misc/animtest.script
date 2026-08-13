@@ -1,0 +1,88 @@
+
+object animtest {
+	void		preinit();
+	void		init();
+	void		syncFields();
+	
+	void		OnGuiMessage( entity p );
+	void		OnOtherChanged();
+	void		Idle();
+	void		SetupOther();
+	
+	entity		other;
+	vector		spawnPos;
+	boolean		doAnim;
+};
+
+void animtest::syncFields() {
+	syncBroadcast( "other" );
+	syncBroadcast( "doAnim" );
+	syncCallback( "other", "OnOtherChanged" );
+}
+
+void animtest::OnOtherChanged() {
+	if ( other != $null_entity ) {
+		SetupOther();
+	}
+}
+
+void animtest::SetupOther() {
+	other.setOrigin( spawnPos );	
+}
+
+void animtest::preinit() {
+}
+
+void animtest::init() {
+	entity temp;
+
+	sys.wait( 0.5 );
+	
+	temp = getEntityKey( "spawn_location" );
+	spawnPos = temp.getWorldOrigin();
+	
+	setState( "Idle" );
+}
+
+void animtest::Idle() {
+	while( true ) {
+		while ( !doAnim ) {
+			sys.waitFrame();
+		}
+		
+		other.playAnim( ANIMCHANNEL_ALL, getKey( "animation" ) );
+		while ( other.isAnimating() ) {
+			sys.waitFrame();
+		}
+		
+		while ( doAnim ) {
+			sys.waitFrame();
+		}
+	}
+}
+
+void animtest::OnGuiMessage( entity p ) {
+	if ( sys.argv( 0 ) == "spawn" ) {
+		if ( other != $null_entity ) {
+			return;
+		}
+		
+		other = sys.spawn( getKey( "def_spawn_object" ) );
+		SetupOther();
+	}
+	
+	if ( sys.argv( 0 ) == "animate" ) {
+		if ( other == $null_entity ) {
+			return;
+		}
+		
+		doAnim = true;
+	}
+
+	if ( sys.argv( 0 ) == "reset" ) {
+		doAnim = false;
+		
+		other.remove();
+		other = $null_entity;
+	}
+}

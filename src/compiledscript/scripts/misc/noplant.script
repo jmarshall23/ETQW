@@ -1,0 +1,19 @@
+
+object trigger_noplant {
+	void					preinit();
+
+	boolean					vDisablePlant();
+}
+
+void trigger_noplant::preinit() {
+	team_base team = sys.getTeam( getKey( "team" ) );
+	if ( team == $null ) {
+		sys.error( "trigger_noplant::preinit Invalid Team Set" );
+	}
+	
+	setGameTeam( team );
+}
+
+boolean trigger_noplant::vDisablePlant() {
+	return true;
+}

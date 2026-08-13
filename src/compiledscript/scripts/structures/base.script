@@ -1,0 +1,75 @@
+
+#define STR_STATE_NORMAL		0
+#define STR_STATE_DAMAGED		1
+#define STR_STATE_DISABLED		2
+#define STR_STATE_DESTROYED		3
+
+object structure_base {
+	void		init();
+	void		preinit();
+	void		destroy();
+
+	void		SetupCommandMap();
+	float		OnUpdateCrosshairInfo( entity p );
+
+	handle		typeName;
+	float		commandMapHandle;
+}
+
+void structure_base::preinit() {
+	commandMapHandle	= -1;
+	typeName			= sys.localizeString( getKey( "type_name" ) );
+	
+	setGameTeam( sys.getTeam( getKey( "team" ) ) );
+	
+	SetupCommandMap();
+}
+
+void structure_base::destroy() {
+	if ( commandMapHandle != -1 ) {
+		sys.freeCMIcon( self, commandMapHandle ); 
+		commandMapHandle = -1;
+	}
+}
+
+void structure_base::init() {
+}
+
+void structure_base::SetupCommandMap() {
+	commandMapHandle = sys.allocCMIcon( self, getFloatKey( "icon_sort_cm" ) );
+
+	float commandMapSize = getFloatKeyWithDefault( "icon_size_cm", 16.f );
+
+	sys.setCMIconDrawMode( commandMapHandle, DM_ROTATED_MATERIAL );
+	sys.setCMIconSize( commandMapHandle, commandMapSize );
+	sys.setCMIconColorMode( commandMapHandle, CM_ALLEGIANCE );
+
+	sys.setCMIconMaterial( commandMapHandle, GetMaterial( getKey( "mtr_commandmap" ) ) );
+	sys.setCMIconUnknownMaterial( commandMapHandle, GetMaterial( getKey( "mtr_commandmap_unknown" ) ) );
+	sys.setCMIconUnknownSize( commandMapHandle, getFloatKeyWithDefault( "icon_unknown_size_cm", commandMapSize / 2.0f ) );
+	
+	sys.setCMIconFlag( commandMapHandle, CMF_ONLYSHOWONFULLVIEW );
+}
+
+float structure_base::OnUpdateCrosshairInfo( entity p ) {
+	if ( !sys.doClientSideStuff() ) {
+		return 1.f;
+	}
+
+	float allegiance = getEntityAllegiance( p );
+	vector color = GetAllegianceColor( allegiance );
+	float distance = chGetDistance();
+	float range = InchesToMetres( distance );
+	float health = getHealth();
+
+	chSetNumLines( 0 );
+	float index;
+	
+	index = chAddLine();
+	chSetLineTextIndex( index, typeName );
+	chSetLineColor( index, color, 1.f );
+	chSetLineType( index, CI_TEXT );
+	chSetLineSize( index, 0, 0 );
+
+	return 1.f;
+}

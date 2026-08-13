@@ -1,0 +1,15 @@
+
+object default {
+	void		preinit();
+	void		init();
+	void		destroy();
+};
+
+void default::preinit() {
+}
+
+void default::init() {
+}
+
+void default::destroy() {
+}

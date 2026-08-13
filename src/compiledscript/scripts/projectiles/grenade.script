@@ -1,0 +1,29 @@
+/***********************************************************************
+
+grenade.script - ONLY used by the bots to track the death of grenades.
+
+***********************************************************************/
+
+object projectile_grenade : projectile_missile {
+	void BotOnExplode(); 
+}
+
+void projectile_grenade::BotOnExplode() {
+	if ( !sys.isClient() ) {
+		float isStroyBomb = getFloatKey( "is_stroybomb" );
+
+		if ( isStroyBomb ) {
+			return;
+		}
+
+		player p = getOwner();
+
+		if ( p != $null_entity ) {
+			p.setPlayerGrenadeState( self, true );
+		}
+	}
+}
+
+void projectile_grenade::vOnLocalMapRestart() {
+	killEffect( "fx_trail" );
+}

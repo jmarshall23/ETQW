@@ -1,0 +1,607 @@
+
+object hackable_objective {
+	void					preinit();
+	void					syncFields();
+	void					destroy();
+
+	float					vGetPliersProgressBarValue( float action );
+	boolean					vCheckActionCode( entity p, float actionCode );
+
+	void					vMakePrimaryObjective( boolean value );
+
+	void					vCreateMission();
+	void					vFreeMission();
+	void					vCompleteMission();
+	
+	void					OnUpdateGui( entity p );
+	float					OnActivate( entity p, float distance );
+	float					OnUpdateCrosshairInfo( entity p );
+
+	boolean					HasHackContext( entity other );
+	
+	float					GetActivateCode( entity p, float distance );
+
+	void					OnHacked( entity p );
+	void					OnHacked_Base( entity p );
+	
+	void					OnIsPrimaryObjectiveChanged();
+	void					OnHackCountChanged();
+
+	void					SetObjectiveIndicator();
+	void					ClearObjectiveIndicator();
+	void					UpdateObjectiveProgress();
+	float					CalcObjectiveProgress();
+	void					UpdateObjectiveThread();
+	void					SetObjectiveReminderTime( float time );
+	
+	void					KillFizzleThread();
+	void					CreateFizzleThread( float delay );
+	void					OnFizzled();
+	void					FizzleThread( float delay );
+
+	void					SetObjectiveIndex( float index );
+
+	boolean					AllowHack() { return true; }
+
+	void					vHack( entity p );
+
+	string					vGetObjectiveString() { return "hackObjective"; }
+
+	team_base				baseTeam;
+
+	boolean					isPrimaryObjective;
+
+	boolean					vIsPrimaryObjective() { return isPrimaryObjective; }
+
+	void					vOnContextDefend( entity p );
+	void					vOnContextHack( entity p );
+
+	entity					vGetSpectateEntity();
+	boolean					vIsObjectiveComplete();
+
+	float					hackCount;
+	float					maxHackCount;
+
+	float					objectiveIndex;
+	
+	float					objectiveGUI;
+
+	handle					progressMessage;
+	float					nextProgressMessageTime;
+	
+	float					infoToolTip;
+	float					useMeToolTip1;
+	float					useMeToolTip2;
+	
+	handle					objectName;
+	
+	task					missionTask;
+	
+	float					fizzleTime;
+	float					fizzleEndTime;
+	boolean					fizzleThreadActive;
+	boolean					fizzling;
+	
+	float					hackProficiency;
+	
+	entity					hacker;
+	float					lastHackTime;
+	boolean					forceMessage;
+	
+	float					nextObjectiveReminderTime;
+
+	flashpoint_obj			flashpoint;
+}
+
+void hackable_objective::preinit() {
+	setGameTeam( sys.getTeam( getKey( "team" ) ) );
+	
+	hackProficiency	= GetProficiency( getKey( "prof_hack" ) );
+
+	baseTeam		= getGameTeam();
+	objectiveIndex	= getFloatKeyWithDefault( "objective_index", -1 );
+
+	fizzleTime		= getFloatKeyWithDefault( "fizzle_time", 60.f );
+
+	progressMessage = sys.localizeString( getKeyWithDefault( "progress_message", "maps/generic/obj_hacking" ) ); //"is hacking the objective!" );
+
+	maxHackCount	= gameRules.GetFloatKeyWithSuffix( self, "hack_count", 100.f );
+	objectName		= sys.localizeString( getKeyWithDefault( "object_name", "maps/generic/obj_hackable" ) );
+		
+	forceMessage	= false;
+
+	infoToolTip		= GetToolTip( getKey( "tt_intro_info" ) );
+	useMeToolTip1	= GetToolTip( getKey( "tt_intro_use_me_1" ) );
+	useMeToolTip2	= GetToolTip( getKey( "tt_intro_use_me_2" ) );
+	
+	objectiveGUI = -1;
+	if ( getIntKey( "use_objective_gui" ) ) {
+		if ( sys.doClientSideStuff() ) {
+			objectiveGUI = getGUI( "0" );
+		}
+	}
+}
+
+void hackable_objective::syncFields() {
+	syncBroadcast( "fizzling" );
+	sync( "hackCount" );
+	syncCallback( "hackCount", "OnHackCountChanged" );
+}
+
+void hackable_objective::destroy() {
+	vFreeMission();
+
+	if ( flashpoint != $null ) {
+		delete flashpoint;
+	}
+
+	if ( isPrimaryObjective ) {
+		ClearObjectiveIndicator();
+	}
+}
+
+void hackable_objective::OnIsPrimaryObjectiveChanged() {
+	ClearObjectiveIndicator();
+
+	if ( isPrimaryObjective ) {
+		SetObjectiveIndicator();
+	}
+}
+
+void hackable_objective::SetObjectiveReminderTime( float time ) {
+	if ( time > nextObjectiveReminderTime ) {
+		nextObjectiveReminderTime = time;
+	}
+}
+
+void hackable_objective::UpdateObjectiveThread() {
+	waitUntil( objManager.gameState == GS_GAMEON );
+
+	objManager.PlaySound( getKey( "snd_intro_strogg" ), stroggTeam );
+	objManager.PlaySound( getKey( "snd_intro_gdf" ), gdfTeam );
+
+	SetObjectiveReminderTime( sys.getTime() + OBJECTIVEMESSAGE_WAIT_TIME );
+
+	while ( true ) {
+		UpdateObjectiveProgress();
+		
+		if ( !sys.isClient() ) {
+			if ( sys.getTime() >= nextObjectiveReminderTime ) {
+				if ( objManager.gameState == GS_GAMEON ) {
+					objManager.PlaySound( getKey( "snd_reminder_strogg" ), stroggTeam );
+					objManager.PlaySound( getKey( "snd_reminder_gdf" ), gdfTeam );
+				}
+				
+				SetObjectiveReminderTime( sys.getTime() + OBJECTIVEMESSAGE_WAIT_TIME );
+			}
+		}
+		
+		sys.waitFrame();
+	}
+}
+
+void hackable_objective::SetObjectiveIndicator() {
+	UpdateObjectiveProgress();
+	
+	thread UpdateObjectiveThread();
+
+	if ( sys.doClientSideStuff() ) {
+		sys.setGUIFloat( GUI_GLOBALS_HANDLE, "hackObjective.active", 1.f );
+	}
+}
+
+
+void hackable_objective::ClearObjectiveIndicator() {
+	sys.killThread( "UpdateObjectiveThread_" + getName() );
+
+	if ( sys.doClientSideStuff() ) {
+		sys.setGUIFloat( GUI_GLOBALS_HANDLE, "hackObjective.active", 0.f );
+	}
+}
+
+void hackable_objective::UpdateObjectiveProgress() {
+	if ( sys.doClientSideStuff() ) {
+		sys.setGUIFloat( GUI_GLOBALS_HANDLE, "hackObjective.decaying", fizzling );
+		sys.setGUIFloat( GUI_GLOBALS_HANDLE, "hackObjective.progress", CalcObjectiveProgress() );		
+	}
+}
+
+float hackable_objective::CalcObjectiveProgress() {
+	return hackCount / maxHackCount;
+}
+
+
+void hackable_objective::vMakePrimaryObjective( boolean value ) {
+	isPrimaryObjective = value;
+	
+	OnIsPrimaryObjectiveChanged();
+}
+
+
+boolean	hackable_objective::vCheckActionCode( entity p, float actionCode ) {
+	if ( objManager.gameState != GS_GAMEON ) {
+		return false;
+	}
+
+	if ( actionCode == AC_HACK && AllowHack() ) {
+		if ( p.getGameTeam() == baseTeam ) {
+			return false;
+		}
+		return getEntityAllegiance( p ) == TA_ENEMY;
+	}
+
+	return false;
+}
+
+void hackable_objective::OnHacked( entity p ) {
+	OnHacked_Base( p );
+}
+
+void hackable_objective::OnHacked_Base( entity p ) {
+	object newTeam = p.getGameTeam();	
+
+	string statName = newTeam.getName();
+	if ( objectiveIndex != -1 ) {
+		statName = statName + "_primary";
+	} else {
+		statName = statName + "_secondary";
+	}
+	statName = statName + "_objective_hacked";
+
+	if ( p != $null_entity ) {
+		sys.increaseStatInt( sys.allocStatInt( statName ), p.getEntityNumber(), 1 );
+		sys.increaseStatInt( sys.allocStatInt( newTeam.getName() + "_hack_uses" ), p.getEntityNumber(), 1 );
+		sys.increaseStatInt( sys.allocStatInt( "total_objectives_completed" ), p.getEntityNumber(), 1 );
+	}
+
+	if ( objectiveIndex != -1 ) {
+		objManager.CompleteObjective( objectiveIndex, p );
+	}
+	objManager.OnHackComplete( self );
+
+	G_PlayObjectiveCompletedRollEnt( self );
+	objManager.PlaySound( getKey( "snd_finished_strogg" ), stroggTeam );
+	objManager.PlaySound( getKey( "snd_finished_gdf" ), gdfTeam );
+
+	setGameTeam( newTeam );
+
+	KillFizzleThread();
+}
+
+void hackable_objective::OnUpdateGui( entity p ) {
+	float guiHandle = getGUI( "0" );
+	if ( guiHandle == GUI_INVALID ) {
+		return;
+	}
+
+	if ( self.getEntityAllegiance( p ) != TA_FRIEND ) {
+		sys.setGUIFloat( guiHandle, "disabled", 1 );
+	} else {
+		sys.setGUIFloat( guiHandle, "disabled", 0 );
+	}
+}
+
+boolean hackable_objective::HasHackContext( entity other ) {
+	object otherTeam = other.getGameTeam();
+	if ( otherTeam == baseTeam ) {
+		return false;
+	}
+	
+	if ( otherTeam == getGameTeam() ) {
+		return false;
+	}
+
+	if ( !AllowHack() ) {
+		return false;
+	}
+	
+	return true;
+}
+
+float hackable_objective::GetActivateCode( entity p, float distance ) {
+	if ( objManager.gameState != GS_GAMEON ) {
+		return AK_INWARMUP;
+	}
+
+	if ( p.getViewingEntity() != p ) {
+		return AK_NONE;
+	}
+
+	if ( p.getHealth() <= 0 ) {
+		return AK_NONE;
+	}
+
+	float allegiance = getEntityAllegiance( p );
+
+	if ( p.getGameTeam() == baseTeam ) {
+		return AK_NONE;
+	}
+	
+	if ( p.getGameTeam() == getGameTeam() ) {
+		return AK_NONE;
+	}
+	
+	if ( distance < DISTANCE_FOR_ACTION ) {
+		if ( AllowHack() ) {
+			if ( p.hasAbility( "hack" ) ) {
+				return AK_HACK;
+			}
+		}
+	}
+			
+	return AK_NONE;
+}
+
+float hackable_objective::OnUpdateCrosshairInfo( entity p ) {
+	if ( !sys.doClientSideStuff() ) {
+		return 1.f;
+	}
+
+	float allegiance = getEntityAllegiance( p );
+	vector color = GetAllegianceColor( allegiance );
+	float distance = chGetDistance();
+	float range = InchesToMetres( distance );
+	float health = getHealth();
+
+	chSetNumLines( 0 );
+	float index;
+
+	if ( p != $null_entity ) {
+		if ( p.isLocalPlayer() && objectiveIndex != -1 ) {
+			p.sendToolTip( infoToolTip );
+		}
+
+		// see if theres a valid action to perform
+		float code = GetActivateCode( p, distance );
+		if ( code != AK_NONE && p.vHasActionItem( code ) ) {
+			index = chAddLine();
+			chSetLineMaterial( index, p.vGetActionIcon( code ) );
+			chSetLineType( index, CI_IMAGE );
+			chSetLineSize( index, 64, 64 );
+			chSetLineColor( index, g_colorWhite, 0.9f );
+			
+			if ( p.isLocalPlayer() ) {
+				if ( !p.isToolTipPlaying() ) {
+					if ( sys.getTime() - p.getCrosshairStartTime() > 1.f ) {
+						if ( p.getCurrentWeapon() != p.vGetActionItem( code ) ) {
+							p.sendToolTip( useMeToolTip1 );
+						} else {
+							p.sendToolTip( useMeToolTip2 );
+						}
+					}
+				}
+			}
+		} else if ( code == AK_INWARMUP ) {
+			if ( p.isLocalPlayer() && distance < DISTANCE_FOR_ACTION ) {
+				team_base team = p.getGameTeam();
+				if ( team != $null_entity ) {
+					p.sendToolTip( GetToolTip( getKey( "tt_noobjective" ) ) );
+				}
+			}
+		}
+	}
+
+	index = chAddLine();
+	chSetLineTextIndex( index, objectName );
+	chSetLineColor( index, color, 1.f );
+	chSetLineType( index, CI_TEXT );
+	chSetLineSize( index, 0, 0 );
+	
+	return 1.f;
+}
+
+float hackable_objective::vGetPliersProgressBarValue( float action ) {
+	if ( action == AC_HACK ) {
+		return hackCount / maxHackCount;
+	}
+
+	return 0.f;
+}
+
+void hackable_objective::vHack( entity p ) {
+	float time = sys.getTime();
+	entity oldHacker = hacker;
+	if ( hacker == $null_entity || lastHackTime < time - 2 ) {
+		hacker = p;
+		if ( lastHackTime < time - 10 ) {
+			oldHacker = $null_entity;
+		}
+	}
+
+	if ( objectiveIndex != -1 || forceMessage ) {
+		if ( p == hacker ) {
+			if ( sys.getTime() > nextProgressMessageTime ) {
+				objManager.PushCPrintString( p.getUserName() );
+				objManager.CPrintEvent( progressMessage, $null );
+				nextProgressMessageTime = sys.getTime() + 5.f;
+			}
+			
+			if ( hacker != oldHacker ) {
+
+				if ( !sys.isClient() ) {
+					objManager.setBotActionStateForEvent( ACTION_STATE_START_HACK, hacker ); //mal: let the bots know someone is hacking the obj!
+				}
+
+				objManager.PlaySound( getKey( "snd_hacking_strogg" ), stroggTeam );
+				objManager.PlaySound( getKey( "snd_hacking_gdf" ), gdfTeam );
+				
+				SetObjectiveReminderTime( sys.getTime() + ( OBJECTIVEMESSAGE_WAIT_TIME * 0.5f ) );
+			}
+		}
+	}
+	
+	lastHackTime = time;
+	
+	if ( hackCount >= maxHackCount ) {
+		hackCount = 0;
+	}
+	
+	float count = 1;
+	team_base team = p.getGameTeam();
+	if ( team.HasFastHackBonus( p ) ) {
+		count = count * 1.25f;
+	}
+
+	hackCount = hackCount + count;
+	OnHackCountChanged();
+	
+	if ( hackProficiency != -1 ) {
+		p.giveProficiency( hackProficiency, ( count / maxHackCount ), missionTask, "hacking objective" );
+	}
+	
+	if ( !sys.isClient() ) {
+		if ( hackCount >= maxHackCount ) {
+			OnHacked( p );
+		} else {
+			if ( fizzleTime > 0.f ) {
+				CreateFizzleThread( fizzleTime );
+			}
+		}
+	}
+}
+
+float hackable_objective::OnActivate( entity p, float distance ) {
+	if ( distance > 128.f ) {
+		return 0.0f;
+	}
+
+	if ( p.getViewingEntity() != p ) {
+		return 0.0f;
+	}
+
+	if ( vCheckActionCode( p, AC_HACK ) ) {
+		if ( p.isDisguised() ) {
+			p.disguise( $null_entity );
+		}
+	
+		team_base team = p.getGameTeam();
+		team.SelectActionItem( p, AK_HACK );
+	}
+
+	return 1.f;
+}
+
+void hackable_objective::SetObjectiveIndex( float index ) {
+	objectiveIndex = index;
+}
+
+void hackable_objective::vCreateMission() {
+	vFreeMission();
+	missionTask = taskManager.allocEntityTask( GetPlayerTask( getKey( "task_hack" ) ), self );
+}
+
+void hackable_objective::vFreeMission() {
+	if ( missionTask != $null ) {
+		missionTask.free();
+		missionTask = $null;
+	}
+}
+
+void hackable_objective::vCompleteMission() {
+	if ( missionTask != $null ) {
+		missionTask.complete();
+		missionTask.free();
+		missionTask = $null;
+	}
+}
+
+void hackable_objective::KillFizzleThread() {
+	fizzling = false;
+	fizzleEndTime = 0;
+	sys.killThread( "FizzleThread_" + getName() );
+	fizzleThreadActive = false;
+}
+
+void hackable_objective::CreateFizzleThread( float delay ) {
+	KillFizzleThread();
+
+	fizzleEndTime = sys.getTime() + delay;
+	if ( !fizzleThreadActive ) {
+		thread FizzleThread( delay );
+	}
+}
+
+void hackable_objective::OnFizzled() {
+	float fizzleDuration = g_objectiveDecayTime.getFloatValue();
+	
+	// fizzle over time
+	while ( hackCount > 0 ) {
+		fizzling = true;
+		float fizzleAmount = maxHackCount * ( sys.getFrameTime() / fizzleDuration );
+		hackCount = hackCount - fizzleAmount;
+		OnHackCountChanged();
+		sys.waitFrame();
+	}
+	fizzling = false;
+
+	hackCount = 0;
+	OnHackCountChanged();
+
+	if ( !sys.isClient() ) {
+		objManager.setBotActionStateForEvent( ACTION_STATE_HACK_FIZZLED, self ); //mal: let the bots know the hack has fizzled
+	}
+}
+
+void hackable_objective::FizzleThread( float delay ) {
+	fizzling = false;
+	sys.threadName( "FizzleThread_" + getName() );
+
+	fizzleThreadActive = true;
+	while ( sys.getTime() < fizzleEndTime ) {
+		sys.wait( fizzleEndTime - sys.getTime() );
+	}
+	fizzleThreadActive = false;
+	if ( fizzleEndTime != 0 ) {
+		OnFizzled();
+	}
+}
+
+void hackable_objective::vOnContextDefend( entity p ) {
+	player local = sys.getLocalViewPlayer();
+	if ( local == $null_entity || p == $null_entity ) {
+		return;
+	}
+
+	if ( flashpoint != $null ) {
+		delete flashpoint;
+	}
+
+	flashpoint = new flashpoint_obj;
+	flashpoint.SetOwner( self );
+	flashpoint.SetMaterial( getKey( "mtr_icon_flash_defend" ) );
+}
+
+void hackable_objective::vOnContextHack( entity p ) {
+	player local = sys.getLocalViewPlayer();
+	if ( local == $null_entity || p == $null_entity ) {
+		return;
+	}
+
+	if ( flashpoint != $null ) {
+		delete flashpoint;
+	}
+
+	flashpoint = new flashpoint_obj;
+	flashpoint.SetOwner( self );
+	flashpoint.SetMaterial( getKey( "mtr_icon_flash" ) );
+}
+
+void hackable_objective::OnHackCountChanged() {
+	if ( objectiveGUI != -1 ) {
+		if ( sys.doClientSideStuff() ) {
+			sys.setGUIFloat( objectiveGUI, "progress", CalcObjectiveProgress() );
+		}
+	}
+}
+
+entity hackable_objective::vGetSpectateEntity() {
+	float time = sys.getTime();
+	if ( lastHackTime >= time - 0.5f ) {
+		return hacker;
+	}
+	return $null_entity;
+}
+
+boolean hackable_objective::vIsObjectiveComplete() {
+	return hackCount >= maxHackCount;
+}

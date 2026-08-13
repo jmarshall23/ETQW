@@ -1,0 +1,116 @@
+
+#define MCP_JOYSTICK_DIR_LEFT	0
+#define MCP_JOYSTICK_DIR_CENTER	1
+#define MCP_JOYSTICK_DIR_RIGHT	2
+
+#define MCP_LEVEL_CENTER		0
+#define MCP_LEVEL_FORWARDS		1
+#define MCP_LEVEL_BACKWARDS		2
+
+#define MCP_FIRING_END			0
+#define MCP_FIRING_START		1
+#define MCP_FIRING_FIRING		2
+
+// LEGS = left arm - thumb
+// HEAD = right arm
+// TORSO = thumb
+
+object vehicle_mcp_cockpit : vehicle_basic_cockpit {
+	void				destroy();
+
+	void				AnimThread();
+
+	void				OnEntered();
+};
+
+void vehicle_mcp_cockpit::OnEntered() {
+	thread AnimThread();
+}
+
+void vehicle_mcp_cockpit::AnimThread() {
+	sys.threadName( "vehicle_mcp_cockpit::AnimThread" );
+
+	float length =
+	playAnim( ANIMCHANNEL_LEGS, "into" );
+	playAnim( ANIMCHANNEL_HEAD, "into" );
+	playAnim( ANIMCHANNEL_TORSO, "into" );
+
+	sys.wait( length );
+
+	float stickDirection	= MCP_JOYSTICK_DIR_CENTER;
+	float leverDirection	= MCP_LEVEL_CENTER;
+	float firingStatus		= MCP_FIRING_END;
+
+	float fireStartEndTime;
+
+	while ( true ) {
+		entity driver = myVehicle.getDriver();
+
+		vector move;
+		boolean fire;
+		if ( driver != $null_entity ) {
+			move = driver.getMove();
+			fire = driver.getButton( PK_ATTACK );
+		} else {
+			move = '0 0 0';
+			fire = false;
+		}
+
+		if ( move_y < 0 ) {
+			if ( stickDirection != MCP_JOYSTICK_DIR_LEFT ) {
+				playAnimBlended( ANIMCHANNEL_LEGS, "left", 0.2f );
+				stickDirection = MCP_JOYSTICK_DIR_LEFT;
+			}
+		} else if ( move_y > 0 ) {
+			if ( stickDirection != MCP_JOYSTICK_DIR_RIGHT ) {
+				playAnimBlended( ANIMCHANNEL_LEGS, "right", 0.2f );
+				stickDirection = MCP_JOYSTICK_DIR_RIGHT;
+			}
+		} else {
+			if ( stickDirection != MCP_JOYSTICK_DIR_CENTER ) {
+				playAnimBlended( ANIMCHANNEL_LEGS, "center", 0.2f );
+				stickDirection = MCP_JOYSTICK_DIR_CENTER;
+			}
+		}
+
+		if ( move_x > 0 ) {
+			if ( leverDirection != MCP_LEVEL_FORWARDS ) {
+				playAnimBlended( ANIMCHANNEL_HEAD, "forwards", 0.2f );
+				leverDirection = MCP_LEVEL_FORWARDS;
+			}
+		} else if ( move_x < 0 ) {
+			if ( leverDirection != MCP_LEVEL_BACKWARDS ) {
+				playAnimBlended( ANIMCHANNEL_HEAD, "reverse", 0.2f );
+				leverDirection = MCP_LEVEL_BACKWARDS;
+			}
+		} else {
+			if ( leverDirection != MCP_LEVEL_CENTER ) {
+				playAnimBlended( ANIMCHANNEL_HEAD, "center", 0.2f );
+				leverDirection = MCP_LEVEL_CENTER;
+			}
+		}
+
+		if ( fire ) {
+			if ( firingStatus == MCP_FIRING_END ) {
+				fireStartEndTime = sys.getTime() + playAnimBlended( ANIMCHANNEL_TORSO, "fire_start", 0.001f );
+				firingStatus = MCP_FIRING_START;
+			} else if ( firingStatus == MCP_FIRING_START ) {
+				if ( sys.getTime() > fireStartEndTime ) {
+					playAnimBlended( ANIMCHANNEL_TORSO, "fire", 0.001f );
+					firingStatus = MCP_FIRING_FIRING;
+				}
+			}
+		} else {
+			if ( firingStatus != MCP_FIRING_END ) {
+				playAnimBlended( ANIMCHANNEL_TORSO, "fire_end", 0.1f );
+				firingStatus = MCP_FIRING_END;
+			}
+		}
+
+		sys.waitFrame();
+	}
+}
+
+void vehicle_mcp_cockpit::destroy() {
+	sys.killThread( "vehicle_mcp_cockpit::AnimThread" );
+}

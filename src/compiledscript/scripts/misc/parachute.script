@@ -1,0 +1,480 @@
+object parachute : parachute_base {
+	void			preinit();
+	void			init();
+	void			destroy();
+	void			syncFields();
+
+	void			Idle();
+	void			FindWeapon();
+	void			RestoreWeapon();
+
+	void			SetDeployStart( float t );
+
+	void			OnOwnerChanged();
+	void			OnDeployStartChanged();
+
+	entity			owner;
+	void			vSetOwner( entity o ) { owner = o; OnOwnerChanged(); }
+	entity			vGetOwner() { return owner; }
+	
+	void			vCancel();
+	void			Cancel();
+
+	float			openDelay;
+	void			vSetDelay( float time ) { openDelay = time; }
+	
+	boolean			forceStayOpen;
+	void			vForceStayOpen( boolean force ) { forceStayOpen = force; }
+	
+	float			deployStart;
+	boolean			collapsing;
+	string			previousWeapon;
+	
+	boolean			weaponRestored;
+}
+
+void parachute::preinit() {
+	deployStart = -1;
+	hide();
+}
+
+void parachute::syncFields() {
+	syncBroadcast( "owner" );
+	syncBroadcast( "collapsing" );
+	syncBroadcast( "deployStart" );
+
+	syncCallback( "owner", "OnOwnerChanged" );
+	syncCallback( "deployStart", "OnDeployStartChanged" );
+}
+
+void parachute::OnOwnerChanged() {
+	setOwner( owner );
+	player playerOwner = owner;
+	if ( playerOwner != $null_entity ) {
+		playerOwner.binAdd( self );
+	}
+}
+
+void parachute::OnDeployStartChanged() {
+	setDeployStart( deployStart );
+}
+
+void parachute::init() {
+	setContents( 0 );
+	setClipmask( 0 );
+
+	while( owner == $null_entity ) {
+		sys.waitFrame();
+	}
+	
+	setState( "Idle" );
+}
+
+void parachute::destroy() {
+	player playerOwner = owner;
+	if ( playerOwner != $null_entity ) {
+		playerOwner.binRemove( self );
+	}
+
+	RestoreWeapon();
+}
+
+void parachute::SetDeployStart( float t ) {
+	deployStart = t;
+	setDeployStart( t );
+}
+
+void parachute::FindWeapon() {
+	if ( !sys.isClient() ) {
+		previousWeapon = owner.getCurrentWeapon();
+	}
+}
+
+void parachute::RestoreWeapon() {
+	if ( weaponRestored ) {
+		return;
+	}
+	weaponRestored = true;
+
+	if ( !sys.isClient() ) {
+		player playerOwner = owner;
+		if ( playerOwner != $null_entity ) {
+			if ( previousWeapon != "" && previousWeapon != "inventory/tools/gdf_parachute" ) {
+				playerOwner.setWeapon( previousWeapon, 0 );
+			} else {
+				playerOwner.selectBestWeapon( false );
+			}
+		}
+	}
+}
+
+
+void parachute::Idle() {
+	player playerOwner = owner;
+	if ( playerOwner != $null_entity ) {		
+		// change the owner's weapon
+		if ( openDelay > 0.0f ) {
+			playerOwner.setWeapon( "inventory/tools/gdf_parachute", 1 );
+		} else {
+			// find out what weapon the player has
+			FindWeapon();
+
+			playerOwner.setWeapon( "inventory/tools/gdf_parachute", 0 );
+		}
+	}
+	
+	sys.wait( openDelay );
+
+	playAnim( ANIMCHANNEL_ALL, "deploy" );
+
+	startSound( "snd_start", SND_VEHICLE_IDLE );
+
+	entity p = owner;
+	vector origin;
+	vector angles = g_vectorZero;
+	if ( playerOwner != $null_entity ) {
+		origin = playerOwner.getWorldOrigin() + '0 0 80';
+		angles = owner.getViewAngles();
+		angles_x = 0;
+		angles_z = 0;
+	} else {
+		origin =  sys.toWorldSpace( p.getCenterOfMass(), p );
+		angles = owner.getAngles();
+	}
+	setAngles( angles );
+	
+	vector offset = owner.getVectorKey( "parachute_offset" );
+	offset = sys.rotateVecByAngles( offset, angles );
+	origin += offset;
+
+	setOrigin( origin );
+	bind( p );
+	show();
+	
+	if ( !sys.isClient() ) {
+		SetDeployStart( sys.getTime() );
+	}
+	
+	while ( 1 ) {
+		// HACK - force change to parachute
+		if ( playerOwner != $null_entity ) {
+			string weapon = playerOwner.getCurrentWeapon();
+			if ( weapon != "inventory/tools/gdf_parachute" ) {
+				// change the owner's weapon
+				if ( openDelay > 0.0f ) {
+					playerOwner.setWeapon( "inventory/tools/gdf_parachute", 1 );
+				} else {
+					playerOwner.setWeapon( "inventory/tools/gdf_parachute", 0 );
+				}
+			}
+
+			if ( playerOwner.getGameTeam() == $null_entity ) {
+				break;
+			}
+		}
+
+		if ( !isAnimating() ) {
+			playCycle( ANIMCHANNEL_ALL, "idle_open" );
+		}
+
+		if ( !sys.isClient() ) {
+			if ( owner == $null_entity ) {
+				break;
+			}
+			
+			if ( playerOwner != $null_entity ) {
+				if ( playerOwner.getProxyEntity() != $null_entity ) {
+					break;
+				}
+			}
+			
+			if ( owner.getHealth() <= 0 ) {
+				break;
+			}
+			
+			if ( !forceStayOpen ) {
+				if ( playerOwner == $null_entity ) {
+					if ( isMovingTooSlow() ) {
+						break;
+					}
+				} else {
+					if ( playerOwner.AI_ONLADDER || playerOwner.AI_INWATER || playerOwner.AI_ONGROUND ) {
+						break;
+					}
+				}
+			}
+		}
+		
+		if ( collapsing ) {
+			break;
+		}
+
+		if ( playerOwner == sys.getLocalViewPlayer() ) {
+			hideInLocalView();
+		} else {
+			showInLocalView();
+		}
+
+		sys.waitFrame();
+	}
+	
+	vCancel();
+}
+	
+void parachute::vCancel() {
+
+	player playerOwner = owner;
+	if ( playerOwner != $null_entity ) {
+		playerOwner.binRemove( self );
+	}
+	
+	if ( !sys.isClient() ) {
+		SetDeployStart( -1 );
+	}
+
+	// collapse into a crumpled heap
+	collapsing = true;
+
+	startSound( "snd_stop", SND_VEHICLE_IDLE );
+
+	playAnim( ANIMCHANNEL_ALL, "compact" );
+	RestoreWeapon();
+	
+	setState( "Cancel" );
+}
+
+void parachute::Cancel() {
+	waitUntil( !isAnimating() );
+
+	if ( !sys.isClient() ) {
+		remove();
+	}
+}
+
+
+/*
+===============================================================================
+
+Parachute cockpit
+
+===============================================================================
+*/
+
+object tool_parachute : weapon_base {
+	void		init();
+	void		Idle();
+};
+
+void tool_parachute::init() {
+	weaponState( "Raise", 0 );
+}
+
+void tool_parachute::Idle() {
+	weaponReady();
+	enableClamp( '0 0 0' );
+
+	playCycle( ANIMCHANNEL_ALL, "idle" );
+
+	sys.wait( 0.2f );
+	while ( true ) {
+		if ( WEAPON_LOWERWEAPON ) {
+			weaponState( "Lower", 4 );
+		}
+
+		sys.waitFrame();
+	}
+}
+
+
+/*
+===============================================================================
+
+Strogg "Parachute"
+
+===============================================================================
+*/
+object strogg_parachute : parachute_base {
+	void			preinit();
+	void			init();
+	void			destroy();
+	void			syncFields();
+
+	void			Idle();
+	
+	void			CleanUp();
+	void			OnOwnerChanged();
+
+	entity			owner;
+	void			vSetOwner( entity o ) { owner = o; OnOwnerChanged(); }
+
+	void			vCancel();
+	void			Cancel();
+	
+	float			openDelay;
+	void			vSetDelay( float time ) { openDelay = time; }
+	
+	boolean			collapsing;
+	boolean			cleanupApplied;
+}
+
+void strogg_parachute::preinit() {
+	collapsing = false;
+	openDelay = 0;
+}
+
+void strogg_parachute::syncFields() {
+	syncBroadcast( "owner" );
+	syncCallback( "owner", "OnOwnerChanged" );
+
+	syncBroadcast( "collapsing" );
+}
+
+void strogg_parachute::init() {
+	while( owner == $null_entity ) {
+		sys.waitFrame();
+	}
+	
+	setState( "Idle" );
+}
+
+void strogg_parachute::destroy() {
+	CleanUp();
+}
+
+void strogg_parachute::CleanUp() {
+	if ( cleanupApplied ) {
+		return;
+	}
+
+	player playerOwner = owner;
+	if ( playerOwner != $null_entity ) {
+		playerOwner.binRemove( self );
+		playerOwner.disableFallingDamage( false );
+	}
+	
+	cleanupApplied = true;
+}
+
+void strogg_parachute::OnOwnerChanged() {
+	player playerOwner = owner;
+	if ( playerOwner != $null_entity ) {
+		playerOwner.binAdd( self );
+		playerOwner.disableFallingDamage( true );
+	}
+}
+
+void strogg_parachute::Idle() {
+	player playerOwner = owner;
+
+	if ( openDelay > 0.f ) {
+		if ( playerOwner != $null_entity ) {
+			playerOwner.selectBestWeapon( true );
+		}
+		sys.wait( openDelay );
+	}
+	
+	setContents( 0 );
+
+	if ( owner != sys.getLocalViewPlayer() || pm_thirdperson.getBoolValue() ) {
+		playEffect( "fx_fly", "", 1 );
+	}
+	
+	startSound( "snd_start", SND_VEHICLE_IDLE );
+
+	float deployTime = 1.0f;
+
+	// Doesn't really need to do this I guess, but if they use a model it will work
+	entity p = owner;
+	vector origin;
+	vector angles = g_vectorZero;
+	if ( owner != $null_entity ) {
+		origin = playerOwner.getWorldOrigin() + '0 0 80';
+		angles = owner.getViewAngles();
+		angles_x = 0;
+		angles_z = 0;
+	} else {
+		origin =  sys.toWorldSpace( p.getCenterOfMass(), p );
+		angles = owner.getAngles();
+	}
+	setAngles( angles );
+	
+	vector offset = owner.getVectorKey( "parachute_offset" );
+	offset = sys.rotateVecByAngles( offset, angles );
+	origin += offset;
+
+	setOrigin( origin );
+	bind( p );
+
+	float maxSpeed = getFloatKey( "min_speed" );
+	
+	float tooSlowTime = 0;
+
+	float deployStart = sys.getTime();
+	while ( 1 ) {
+		if ( !sys.isClient() ) {
+			if ( owner == $null_entity ) {
+				break;
+			}
+			if ( playerOwner != $null_entity ) {
+				if ( playerOwner.getProxyEntity() != $null_entity ) {
+					break;
+				}
+			}
+			if ( owner.getHealth() <= 0 ) {
+				break;
+			}
+		}
+		
+		if ( collapsing ) {
+			break;
+		}
+
+		if ( owner == sys.getLocalViewPlayer() && !pm_thirdperson.getBoolValue() ) {
+			hide();
+		} else {
+			show();
+		}
+		
+		// convert velocity to metric
+		vector velocity = InchesToMetres( p.getLinearVelocity() );
+		float speedSquared = sys.vecLengthSquared( velocity );
+		
+		if ( velocity_z > -maxSpeed ) {
+			if ( !sys.isClient() ) {
+				if ( !tooSlowTime ) {
+					tooSlowTime = sys.getTime();
+				} else {
+					if ( sys.getTime() - tooSlowTime > 0.1f ) {
+						break;
+					}
+				}
+			}
+		}
+
+		sys.waitFrame();
+	}
+	
+	vCancel();
+}
+	
+void strogg_parachute::vCancel() {
+	CleanUp();
+
+	// collapse into a crumpled heap
+	collapsing = true;
+
+	startSound( "snd_stop", SND_VEHICLE_IDLE );
+
+	stopEffect( "fx_fly" );
+	
+	setState( "Cancel" );
+}
+	
+void strogg_parachute::Cancel() {
+	sys.wait( 1.0f );
+
+	if ( !sys.isClient() ) {
+		remove();
+	}
+}
+

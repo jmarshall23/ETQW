@@ -1,0 +1,133 @@
+
+object placement_player {
+	void				preinit();
+	void				init();
+	void				destroy();
+};
+
+void placement_player::preinit() {
+}
+
+void placement_player::init() {
+
+	float index = 1;
+	
+	float jointHandle;
+	string jointName;
+	
+	float waistJoint = getJointHandle( getKeyWithDefault( "waist_joint", "Spine" ) );
+	vector waistAngles;
+	waistAngles_x = getFloatKey( "waist_pitch" );
+	waistAngles_y = getFloatKey( "waist_yaw" );
+	waistAngles_z = getFloatKey( "waist_roll" );
+	setJointAngle( waistJoint, JOINTMOD_WORLD, waistAngles );
+
+	float headJoint = getJointHandle( getKeyWithDefault( "head_joint", "Head" ) );
+	vector headAngles;
+	headAngles_x = getFloatKey( "head_pitch" );
+	headAngles_y = getFloatKey( "head_yaw" );
+	headAngles_z = getFloatKey( "head_roll" );
+	setJointAngle( headJoint, JOINTMOD_WORLD, headAngles );
+
+	float neckJoint = getJointHandle( getKeyWithDefault( "neck_joint", "Neck" ) );
+	vector neckAngles;
+	neckAngles_x = getFloatKey( "neck_pitch" );
+	neckAngles_y = getFloatKey( "neck_yaw" );
+	neckAngles_z = getFloatKey( "neck_roll" );
+	setJointAngle( neckJoint, JOINTMOD_WORLD, neckAngles );
+	
+		index = 1;
+	while ( true ) {
+		jointName = getKey( "joint" + index );
+		if ( jointName == "" ) {
+			break;
+		}
+		
+		float joint = getJointHandle( jointName );
+		vector angles;
+		angles_x = getFloatKey( "joint" + index + "_pitch" );
+		angles_y = getFloatKey( "joint" + index + "_yaw" );
+		angles_z = getFloatKey( "joint" + index + "_roll" );
+		setJointAngle( joint, JOINTMOD_WORLD, angles );
+		
+		index = index + 1;
+	}
+	
+	string anim = getKey( "anim" );
+	float frame = getFloatKeyWithDefault( "frame", -1 );
+	if ( anim != "" ) {
+		if ( frame != -1 ) {
+			setAnimFrame( anim, ANIMCHANNEL_ALL, frame );
+		} else if ( getFloatKey( "cycle" ) ) {
+			playCycle( ANIMCHANNEL_ALL, anim );
+		} else {
+			playAnim( ANIMCHANNEL_ALL, anim );
+		}
+	}
+	
+	string weaponModel = getKey( "weapon_model" );
+	string weaponJoint;
+	string weaponEffect;
+	float weaponJointHandle;
+	entity weapon;
+	if ( weaponModel != "" ) {
+		weapon = sys.spawn( "placement_weapon" );
+		weapon.setModel( weaponModel );
+
+		weaponJoint = getKey( "weapon_joint" );
+		if ( weaponJoint == "" ) {
+			sys.warning( "placement_player::init no joint specified for weapon" );
+		} else {
+			weaponJointHandle = getJointHandle( weaponJoint );
+			weapon.setOrigin( getJointPos( weaponJointHandle ) );
+			weapon.setAngles( getJointAngle( weaponJointHandle ) );
+		
+			weapon.bindToJoint( self, weaponJoint, 1 );
+		}
+
+		weaponEffect = getKey( "weapon_effect" );
+	}	
+	
+	float modelNumber = 1;
+	while ( true ) {
+		string modelDefName = "model" + modelNumber;
+		string modelName = getKey( modelDefName );	
+		if ( modelName == "" ) {
+			break;
+		}
+		
+		entity model = sys.spawn( "placement_weapon" );
+		model.setModel( modelName );
+		string modelJoint = getKey( modelDefName + "_joint" );
+		if ( modelJoint == "" ) {
+			sys.warning( "placement_player::init no joint for " + modelDefName );
+		} else {
+			float modelJointHandle = getJointHandle( modelJoint );
+			model.setOrigin( getJointPos( modelJointHandle ) );
+			model.setAngles( getJointAngle( modelJointHandle ) );
+			
+			model.bindToJoint( self, modelJoint, 1 );
+		}
+
+		modelNumber++;
+	}
+	
+	string effectJoint;
+	float effectWait;
+	if ( weaponEffect != "" ) {
+		effectJoint = getKey( "weapon_effect_joint" );
+		effectWait = getFloatKey( "weapon_effect_wait" );
+	
+		while ( true ) {
+			weapon.playEffect( weaponEffect, effectJoint, 0 );
+
+			if ( effectWait <= 0 ) {
+				break;
+			}
+			sys.wait( effectWait );
+		}
+	}
+}
+
+void placement_player::destroy() {
+}

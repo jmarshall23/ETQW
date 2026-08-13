@@ -1,0 +1,319 @@
+/***********************************************************************
+
+item_supplypack.script
+
+***********************************************************************/
+
+#define SUPPLYPACK_LOWAMMO			4
+#define SUPPLYPACK_NUMPROJECTILES	1
+#define	SUPPLYPACK_SPREAD			0
+
+// blend times
+#define SUPPLYPACK_IDLE_TO_LOWER		2
+#define SUPPLYPACK_IDLE_TO_FIRE		1
+#define	SUPPLYPACK_IDLE_TO_RELOAD	3
+#define SUPPLYPACK_RAISE_TO_IDLE		3
+#define SUPPLYPACK_FIRE_TO_IDLE		4
+#define SUPPLYPACK_RELOAD_TO_IDLE	4
+
+object item_supplypack : weapon_base {
+
+	float		nextAttack;
+	
+	float		baseChargePerUse;
+
+	void		preinit();
+	void		init();
+	void		destroy();
+
+	void		Raise();
+	void		Idle();
+	void		Fire();
+	void		Reload();
+	
+	boolean		AllowSprint();
+
+	void		ToolTipThread_Raise();
+	
+	boolean		tipThreadActive;
+}
+
+void item_supplypack::preinit() {
+	baseChargePerUse = chargePerUse;
+}
+
+void item_supplypack::init() {
+	if ( myPlayer.isLocalPlayer() ) {
+		thread ToolTipThread_Raise();
+	}
+
+	nextAttack = 0;
+
+	weaponState( "Raise", 0 );
+}
+
+void item_supplypack::destroy() {
+}
+
+void item_supplypack::ToolTipThread_Raise() {
+	sys.wait( myPlayer.CalcTooltipWait() );
+	while ( myPlayer.isSinglePlayerToolTipPlaying() ) {
+		sys.wait( 1.0f );
+	}
+	myPlayer.cancelToolTips();
+
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_1" ) ) );
+	
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_2" ) ) );
+}
+
+void item_supplypack::Raise() {
+	UpdateCharge();
+
+	Base_Raise();
+}
+
+void item_supplypack::Idle() {
+	weaponReady();
+	playCycle( ANIMCHANNEL_ALL, "idle" );
+
+	StartIdleEffect();
+	
+	float weaponReadyTime;
+	
+	while( 1 ) {
+		if ( WEAPON_LOWERWEAPON ) {
+			StopIdleEffect();
+			weaponState( "Lower", SUPPLYPACK_IDLE_TO_LOWER );
+		}
+
+		if ( WEAPON_ATTACK ) {
+			if ( !mainFireDown ) {
+				myPlayer.disableSprint( 1.f );
+				mainFireDown = true;
+				
+				if ( sys.getTime() >= nextAttack ) {
+					if ( CanRemove( chargePerUse ) ) {
+						StopIdleEffect();
+						weaponState( "Fire", SUPPLYPACK_IDLE_TO_FIRE );
+					} else {
+						if ( myPlayer.isLocalPlayer() ) {
+							myPlayer.sendToolTip( GetToolTip( getKey( "tt_need_charge" ) ) );
+							sys.startSoundDirect( getKey( "snd_need_charge" ), SND_ANY );
+							G_NotifyNoCharge( myPlayer );
+						}
+						
+						weaponReloading();
+						weaponReadyTime = sys.getTime() + 2.f;
+					}
+				}
+			}
+		} else {
+			mainFireDown = false;
+			if ( AllowSprint() ) {
+				myPlayer.disableSprint( 0.f );
+				if ( myPlayer.AI_SPRINT ) {
+					StopIdleEffect();
+					weaponState( "Sprint", 4 );
+				}
+			} else {
+				myPlayer.disableSprint( 1.f );
+			}
+		}
+
+		UpdateCharge();
+		
+		if ( weaponReadyTime != 0.f ) {
+			if ( sys.getTime() > weaponReadyTime ) {
+				weaponReady();
+				weaponReadyTime = 0.f;
+			}
+		}
+
+		sys.waitFrame();
+	}
+}
+
+void item_supplypack::Reload() {
+	weaponReloading();
+	sys.wait( 0.1f );
+	weaponState( "Idle", SUPPLYPACK_RAISE_TO_IDLE );
+}
+
+void item_supplypack::Fire() {
+	boolean launched;
+
+	Remove( chargePerUse );
+
+	UpdateCharge();
+
+	float launchDelay = sys.getTime() + triggerDelay;
+	nextAttack = sys.getTime() + fireRate;
+	
+	fired();
+
+	playAnim( ANIMCHANNEL_ALL, "fire" );
+
+	while( !animDone( ANIMCHANNEL_ALL, SUPPLYPACK_FIRE_TO_IDLE ) ) {
+		sys.waitFrame();
+		if( !launched && ( sys.getTime() > launchDelay ) ) {
+			launched = true;
+
+			if ( !sys.isClient() ) {
+				entity projectile;
+				if ( myPlayer.getProficiency( g_proficiencyFieldOps ) >= 2 && myPlayer.getPlayerClass() == g_playerClassFieldOps ) {
+					projectile = createProjectile( 1 );
+				} else {
+					projectile = createProjectile( 0 );
+				}
+				launchProjectiles( 1, 0, 0.f, 0, 1, 1 );
+				projectile.setLinearVelocity( projectile.getLinearVelocity() + myPlayer.getLinearVelocity() );
+			}
+		}
+	}
+
+	weaponState( "Raise", SUPPLYPACK_FIRE_TO_IDLE );
+}
+
+boolean item_supplypack::AllowSprint() {
+	return sys.getTime() > nextAttack;
+}
+
+
+
+
+
+
+// fieldops charge reduction
+object item_supplypack_fieldops : item_supplypack {
+	void		vCheckProficiency();
+};
+
+void item_supplypack_fieldops::vCheckProficiency() {
+	UpdateCrosshair();
+}
+
+
+
+// medic charge reduction
+object item_supplypack_medic : item_supplypack {
+	void		vCheckProficiency();
+};
+
+void item_supplypack_medic::vCheckProficiency() {
+	if ( myPlayer.getProficiency( g_proficiencyMedic ) >= 1 ) {
+		chargePerUse = baseChargePerUse * 0.8f;
+	}
+	UpdateCrosshair();
+}
+
+
+
+
+// medictech charge reduction
+object item_supplypack_meditech : item_supplypack {
+	void		vCheckProficiency();
+};
+
+void item_supplypack_meditech::vCheckProficiency() {
+	if ( myPlayer.getProficiency( g_proficiencyTechnician ) >= 1 ) {
+		chargePerUse = baseChargePerUse * 0.8f;
+	}
+	UpdateCrosshair();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// actual projectile
+object supplypack {
+	void				preinit();
+	void				init();
+	void				destroy();
+	
+	void				OnPickup( entity o );
+
+	string				ignoreAbility;
+	handle				pickupText;
+	boolean				isAmmo;
+
+	float				pickupProficiency;
+}
+
+void supplypack::preinit() {
+	ignoreAbility		= getKey( "ability_ignore" );
+	pickupText			= sys.localizeString( getKey( "text_pickup" ) );
+	isAmmo				= getIntKey( "is_ammo" );
+	pickupProficiency	= GetProficiency( getKey( "prof_pickup" ) );
+}
+
+void supplypack::init() {
+	setClipmask( MASK_PROJECTILE );
+
+//mal: let the bots know there is a supply pack out there in the world.
+	if ( !sys.isClient() ) {
+		entity owner = getOwner();
+
+		if ( owner != $null_entity ) {
+			player p = owner;
+			if ( p != $null_entity ) {
+				p.setPlayerItemState( self, false );
+			}
+		}
+	}
+}
+
+void supplypack::destroy() {
+//mal: by the time we reach here, any owner info has been destroyed, so we get rid of the owners tracker code side in idItem::~idItem
+//mal: we need to do this, else there would be no way to see health packs that expired. 
+}
+
+void supplypack::OnPickup( entity o ) {
+	player p = o;
+	if ( p != $null_entity ) {
+
+		if ( !sys.isClient() ) {
+			p.setPlayerItemState( self, true ); //mal: someone picked up the supply pack, let the bots know.
+		}
+
+		if ( p.isLocalPlayer() ) {
+			// FIXME: localization
+			//sys.consoleCommand( "addChatLine \"" + pickupText + "\"\n" );
+		}
+		
+		if ( isAmmo ) {
+			p.OnAmmoPickup();
+		}
+	}
+
+	entity owner = getOwner();
+	if ( owner == $null_entity ) {
+		return;
+	}
+
+	if ( ignoreAbility != "" ) {
+		if ( p.hasAbility( ignoreAbility ) ) {
+			return;
+		}
+	}
+
+	team_base team = getGameTeam();
+	if ( team != $null ) {
+		string statName = team.getName() + "_supply_uses";	
+		sys.increaseStatInt( sys.allocStatInt( statName ), owner.getEntityNumber(), 1 );
+
+		if ( pickupProficiency != -1 ) {
+			owner.giveProficiency( pickupProficiency, 1.f, $null, "supply success" );
+		}
+	}
+}

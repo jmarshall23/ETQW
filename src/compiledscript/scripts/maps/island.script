@@ -1,0 +1,843 @@
+#define OBJECTIVE_ISLAND_BUILD_GENERATOR			0
+#define OBJECTIVE_ISLAND_DESTROY_DOOR				1
+#define OBJECTIVE_ISLAND_TRANSMIT_DATA				2
+
+/*
+#define BOT_ACTION_GROUP_GDFBASE 					0
+#define BOT_ACTION_GROUP_STROGGBASE					1
+#define BOT_ACTION_GROUP_FORWARDSPAWN1				2
+#define BOT_ACTION_GROUP_BUNKERHATCH				4
+#define BOT_ACTION_GROUP_BUNKERTOPLEVEL				5
+#define BOT_ACTION_GROUP_BUILDGENERATOR				6
+#define BOT_ACTION_GROUP_FORWARDSPAWN2				7
+#define BOT_ACTION_GROUP_GDFTOWER					8
+#define BOT_ACTION_GROUP_DATABUNKERSUPPORT			9
+#define BOT_ACTION_GROUP_DESTROYDOOR				10
+#define BOT_ACTION_GROUP_TRANSMITDATA				11
+*/
+
+/* route id's
+0 - start
+1 - vault
+*/
+
+// First part (Generator)
+
+#define ISLAND_GDF_CONSTRUCT_GENERATOR						0
+#define ISLAND_GDF_SUPPORT_CONSTRUCT_GENERATOR				1
+#define ISLAND_GDF_DEPLOY_CONSTRUCT_GENERATOR				2 // start at beginning
+#define ISLAND_STROGG_DEFEND_CONSTRUCT_GENERATOR			3
+#define	ISLAND_STROGG_DEPLOY_CONSTRUCT_GENERATOR			4
+#define ISLAND_GDF_DESTROY_BUNKERHATCH						5
+#define ISLAND_STROGG_DEFEND_BUNKERHATCH					6 // add more of these
+#define ISLAND_BOTH_BUNKERHATCH_TOPLEVEL					7
+#define ISLAND_GDF_FORWARDSPAWN_1							8
+#define ISLAND_STROGG_FORWARDSPAWN_1						9
+
+// Second part (2nd forward spawn + keycard bunker)
+
+#define ISLAND_GDF_DESTROY_VAULTDOOR						10
+#define ISLAND_GDF_SUPPORT_VAULTDOOR						11
+#define ISLAND_GDF_DEPLOY_VAULTDOOR							12
+#define ISLAND_STROGG_DEFEND_VAULTDOOR						13
+#define ISLAND_STROGG_DEPLOY_VAULTDOOR						14
+#define ISLAND_GDF_FORWARDSPAWN_2							15
+#define ISLAND_STROGG_FORWARDSPAWN_2						16
+
+// Third part (keycard bunker + observatory)
+
+#define ISLAND_GDF_DELIVER_DATADISC							17
+#define ISLAND_GDF_SUPPORT_DATADISC							18
+#define ISLAND_STROGG_DEFEND_DATADISC						19
+#define ISLAND_STROGG_DEPLOY_DATADISC						20
+
+// Towers
+
+#define ISLAND_TOWER_1										21
+#define ISLAND_STROGG_DEPLOY_FINAL							22
+
+// Delivery
+
+#define ISLAND_STROGG_DEFEND_OBSERVATORY					23
+#define ISLAND_GDF_DELIVER_OBSERVATORY						24
+#define ISLAND_GDF_STEAL_DATADISC							25
+#define ISLAND_GDF_DEPLOY_DATADISC							26
+
+// Misc
+
+#define ISLAND_TOWER_ACTIVE									27
+#define ISLAND_ISLAND_FS_NODES							28
+
+object mapObject_Island : mapObject_Default {
+	void			preinit();
+
+	void			InitObjectives();
+
+	void			CompleteObjective( float index, entity p );
+	handle			GetObjectiveMessage( float index );
+
+	void			OnTimeLimitHit();
+	void			OnGeneratorBuilt();
+	void			OnDoorDestroyed();
+	void			OnDataTransmitted();
+
+	void			OnGuardTower1Built();
+	void			OnGuardTower1Destroyed();
+	boolean			guardTower1Built;
+
+	void			OnBunkerHatchDestroyed();
+
+	void			OnConstructionComplete( entity obj );
+	void			OnDestructionComplete( entity obj );
+
+	void			StartFirstObjective();
+	void 			RaiseTowers();
+
+	vector			GetGDFBasePosition() { return '-7680 -9480 930'; }
+
+	entity			GetSpectateEntity();
+
+	//
+	// Spawn masters
+	//
+	entity			gdfBaseSpawn;
+	entity			gdfOutpostSpawn;
+	entity			gdfForwardSpawn;
+	entity			stroggBaseSpawn;
+	entity			stroggGeneratorSpawn;
+	entity			stroggObservatorySpawn;
+	entity			gdfVaultSpawn;
+
+	//
+	// Territories
+	//
+	entity			gdfBaseTerritory;
+	entity			stroggBaseTerritory;
+	entity			observatoryTerritory;
+	entity			outpostTerritory;
+
+	//
+	// Objectives
+	//
+	entity			objective1;
+	entity			objective1Arrow1;
+	entity			objective1Arrow2;
+	entity			objective2;
+	entity			objective2Arrow1;
+	entity			objective2Arrow2;
+	entity			objective3;
+	entity			objective3Arrow1;
+	entity			objective3Arrow2;
+
+	entity			vaultBlowout;
+	entity			vaultSteam;
+	entity			vaultLight;
+	entity			vaultSparks1;
+	entity			vaultSparks2;
+	entity			final;
+
+	entity 			endCameraA;
+	entity			endCameraB;
+
+	void			VaultEffectsThread();
+	void			FinalEffectsThread();
+
+	entity			sewerDoor1;
+	entity			sewerDoor2;
+	entity			keycardBunkerDoor1;
+	entity			keycardBunkerDoor2;
+	entity			vaultStart;
+	entity			vaultBroken;
+	entity			platypusSpawn;
+	entity 			generatorConstruction;
+	entity 			vaultDestroy;
+	entity			dataDiscItem;
+
+	entity			genspeaker;
+
+	entity			tower1;
+	entity			tower2;
+	entity			tower3;
+
+	entity			tower1clip;
+	entity			tower2clip;
+	entity			tower3clip;
+
+	entity			guardTower1;
+	entity			guardTower1Construction;
+	entity			bunkerHatch;
+
+	entity			noplantHatch;
+	entity			noplantVaultdoor;
+
+	entity			vault_stroggshield_1;
+	entity			vault_stroggshield_2;
+	entity			vault_stroggshield_trigger_hurt_1;
+	entity			vault_stroggshield_trigger_hurt_2;
+	entity			vault_stroggshield_light_1;
+	entity			vault_stroggshield_light_2;
+
+	entity			gdfBeachSpawn;
+
+	float			mainObjectiveIndex;
+
+	// Bot Functions
+	void 			OnSpawnCaptured( string actionName );
+	void 			OnSpawnLiberated( string actionName );
+	void 			OnCarryableItemStolen( string actionName );
+	void 			OnCarryableItemReturned( string actionName );
+	void			DelayedBotSpawnThread();
+	void			DelayedRearSpawnThread();
+
+	// Bot Obstacles
+	entity			bot_bunkerhatch;
+	entity			bot_keycardbunker1;
+	entity			bot_keycardbunker2;
+	entity			bot_sewerdoor;
+	entity			bot_vaultdoor;
+
+	cvar 			debug_script;
+}
+
+mapObject_Base Island_MapScript() {
+	return new mapObject_Island;
+}
+
+void mapObject_Island::preinit() {
+}
+
+void mapObject_Island::InitObjectives() {
+	gameRules.setWinningTeam( stroggTeam );
+	gdfTeam.SetRespawnWait( 20 );
+	stroggTeam.SetRespawnWait( 30 );
+	gdfTeam.InitRespawnTimeChange();
+	stroggTeam.InitRespawnTimeChange();
+	CreateRespawnTimeThread( gdfTeam );
+
+	// Disable hatch reachabilities -Xian
+	sys.enableBotReachability( "xian_bot_reachability_2", 2, false );
+	sys.enableBotReachability( "xian_bot_reachability_8", 2, false );
+
+	//
+	// Set up the spawn points
+	//
+	gdfBaseSpawn			= worldspawn.getEntityKey( "script_gdf_base_spawn" );
+	gdfBaseSpawn.setGameTeam( gdfTeam );
+
+	gdfOutpostSpawn			= worldspawn.getEntityKey( "script_gdf_outpost_spawn" );
+	gdfOutpostSpawn.setGameTeam( $null_entity );
+	gdfOutpostSpawn.vSetActive( false );
+
+	gdfForwardSpawn			= worldspawn.getEntityKey( "script_gdf_capturable_spawn" );
+	gdfForwardSpawn.vSetActive( false );
+
+	gdfVaultSpawn			= worldspawn.getEntityKey( "script_gdf_vault_spawn" );
+	gdfVaultSpawn.setGameTeam( $null_entity );
+	gdfVaultSpawn.vSetActive( false );
+
+	stroggBaseSpawn			= worldspawn.getEntityKey( "script_strogg_base_spawn" );
+	stroggBaseSpawn.setGameTeam( stroggTeam );
+
+	stroggGeneratorSpawn		= worldspawn.getEntityKey( "script_strogg_generator_spawn" );
+	stroggGeneratorSpawn.setGameTeam( stroggTeam );
+	stroggGeneratorSpawn.vSetActive( true );
+
+	stroggObservatorySpawn		= worldspawn.getEntityKey( "script_strogg_observatory_spawn" );
+	stroggObservatorySpawn.setGameTeam( stroggTeam );
+	stroggObservatorySpawn.vSetActive( false );
+
+	platypusSpawn = worldspawn.getEntityKey( "script_spawn_platypus" );
+	platypusSpawn.vOnUnDeploy();
+
+	//
+	// Set up Towers
+	//
+
+	tower1 = worldspawn.getEntityKey( "script_tower1" );
+	tower2 = worldspawn.getEntityKey( "script_tower2" );
+	tower3 = worldspawn.getEntityKey( "script_tower3" );
+
+	tower1clip = worldspawn.getEntityKey( "script_tower1_clip" );
+	tower2clip = worldspawn.getEntityKey( "script_tower2_clip" );
+	tower3clip = worldspawn.getEntityKey( "script_tower3_clip" );
+
+	//
+	// Get Speakers
+	//
+
+	genspeaker = worldspawn.getEntityKey( "script_generator_speaker" );
+
+	//
+	// Set up the territories
+	//
+	gdfBaseTerritory		= worldspawn.getEntityKey( "script_gdf_base_territory" );
+	stroggBaseTerritory		= worldspawn.getEntityKey( "script_strogg_base_territory" );
+	observatoryTerritory		= worldspawn.getEntityKey( "script_observatory_territory" );
+	outpostTerritory		= worldspawn.getEntityKey( "script_outpost_territory" );
+
+	gdfBaseTerritory.setGameTeam( gdfTeam );
+	gdfBaseTerritory.setActive( true );
+	stroggBaseTerritory.setGameTeam( stroggTeam );
+	stroggBaseTerritory.setActive( false );
+	observatoryTerritory.setGameTeam( stroggTeam );
+	observatoryTerritory.setActive( false );
+	outpostTerritory.setGameTeam( stroggTeam );
+	outpostTerritory.setActive( true );
+
+	//
+	// Set up tower clips
+	//
+
+	tower1clip.hide();
+	tower1clip.forceDisableClip();
+	tower2clip.hide();
+	tower2clip.forceDisableClip();
+	tower3clip.hide();
+	tower3clip.forceDisableClip();
+
+	//
+	// Set up the objectives
+	//
+
+	objective1				= worldspawn.getEntityKey( "script_obj1_marker" );
+	objective1Arrow1		= worldspawn.getEntityKey( "script_obj1_arrow1" );
+	objective1Arrow2		= worldspawn.getEntityKey( "script_obj1_arrow2" );
+	objective2				= worldspawn.getEntityKey( "script_obj2_marker" );
+	objective2Arrow1		= worldspawn.getEntityKey( "script_obj2_arrow1" );
+	objective2Arrow2		= worldspawn.getEntityKey( "script_obj2_arrow2" );
+	objective3				= worldspawn.getEntityKey( "script_obj3_marker" );
+	objective3Arrow1		= worldspawn.getEntityKey( "script_obj3_arrow1" );
+	objective3Arrow2		= worldspawn.getEntityKey( "script_obj3_arrow2" );
+
+	objective1.vStartObjective();
+	objective1Arrow1.vStartObjective();
+	objective1Arrow2.vStartObjective();
+	objective2.vStartObjective();
+	objective3.vStartObjective();
+
+	dataDiscItem					= worldspawn.getEntityKey( "script_keycard" );
+	generatorConstruction			= worldspawn.getEntityKey( "script_generator_materials" );
+	vaultDestroy					= worldspawn.getEntityKey( "script_vault_doors" );
+
+	guardTower1						= worldspawn.getEntityKey( "script_guard_tower_1_object" );
+	guardTower1Construction			= worldspawn.getEntityKey( "script_guard_tower_1" );
+	bunkerHatch						= worldspawn.getEntityKey( "script_bunker_hatch" );
+
+	noplantHatch					= worldspawn.getEntityKey( "script_noplant_hatch" );
+	noplantVaultdoor				= worldspawn.getEntityKey( "script_noplant_vaultdoor" );
+
+	gdfBeachSpawn					= worldspawn.getEntityKey( "script_gdf_beach_capturable_spawn" );
+
+	vaultBlowout					= worldspawn.getEntityKey( "script_vault_blowout" );
+	vaultSteam						= worldspawn.getEntityKey( "script_vault_steam" );
+	vaultLight						= worldspawn.getEntityKey( "script_vault_light" );
+	vaultSparks1					= worldspawn.getEntityKey( "script_vault_sparks1" );
+	vaultSparks2					= worldspawn.getEntityKey( "script_vault_sparks2" );
+	final							= worldspawn.getEntityKey( "script_final" );
+
+	endCameraA		= worldspawn.getEntityKey( "script_placement_camera_a" );
+	endCameraB		= worldspawn.getEntityKey( "script_placement_camera_b" );
+
+	//storageRoomDoor = worldspawn.getEntityKey( "script_storage_room_door" );
+	//storageRoomDoor.setTakesDamage( 0 );
+
+	// Set up the objectives
+	mainObjectiveIndex = OBJECTIVE_ISLAND_BUILD_GENERATOR;
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	keycardBunkerDoor1 = worldspawn.getEntityKey( "script_keycard_bunker_door_1" );
+	keycardBunkerDoor2 = worldspawn.getEntityKey( "script_keycard_bunker_door_2" );
+	sewerDoor1 = worldspawn.getEntityKey( "script_sewer_door_1" );
+	sewerDoor2 = worldspawn.getEntityKey( "script_sewer_door_2" );
+
+	vaultStart = worldspawn.getEntityKey( "script_vault_start" );
+	vaultBroken = worldspawn.getEntityKey( "script_vault_broken" );
+
+	vault_stroggshield_1 = worldspawn.getEntityKey( "script_vault_stroggshield_1" );
+	vault_stroggshield_2 = worldspawn.getEntityKey( "script_vault_stroggshield_2" );
+	vault_stroggshield_trigger_hurt_1 = worldspawn.getEntityKey( "script_vault_stroggshield_trigger_hurt_1" );
+	vault_stroggshield_trigger_hurt_2 = worldspawn.getEntityKey( "script_vault_stroggshield_trigger_hurt_2" );
+	vault_stroggshield_light_1 = worldspawn.getEntityKey( "script_vault_stroggshield_light_1" );
+	vault_stroggshield_light_2 = worldspawn.getEntityKey( "script_vault_stroggshield_light_2" );
+
+	gameRules.setEndGameCamera( endCameraB );
+
+	bunkerHatch.vCreateMission();
+	guardTower1Built = false;
+
+	debug_script = sys.getCVar( "bot_debugMapScript", "1" );
+
+	CreateDeployTasks();
+
+	thread StartFirstObjective();
+
+	// Set up Bot Obstacles
+
+	bot_bunkerhatch		= worldspawn.getEntityKey( "script_bot_bunkerhatch_obstacle" );
+	bot_keycardbunker1 	= worldspawn.getEntityKey( "script_bot_keycardbunker_obstacle_1" );
+	bot_keycardbunker2	= worldspawn.getEntityKey( "script_bot_keycardbunker_obstacle_2" );
+	bot_sewerdoor		= worldspawn.getEntityKey( "script_bot_sewerdoor_obstacle" );
+	bot_vaultdoor		= worldspawn.getEntityKey( "script_bot_vaultdoor_obstacle" );
+
+	// Set up Bots for first objective
+	objManager.setAttackingTeam( GDF );
+	objManager.setPrimaryTeamAction( GDF, "bag_buildgenerator_build_1" );
+	objManager.setPrimaryTeamAction( STROGG, "bag_buildgenerator_build_1" );
+	objManager.setSecondaryTeamAction( GDF, "bag_bunkerhatch_plant_1" );
+	objManager.setBotCriticalClass( GDF, ENGINEER );
+	objManager.setBotCriticalClass( STROGG, NOCLASS );
+
+	thread DelayedBotSpawnThread();
+
+	objManager.setBotSightDist( 3000.0f );
+	objManager.activateBotActionGroup( ISLAND_GDF_CONSTRUCT_GENERATOR );
+	objManager.activateBotActionGroup( ISLAND_GDF_SUPPORT_CONSTRUCT_GENERATOR );
+	objManager.activateBotActionGroup( ISLAND_GDF_DEPLOY_CONSTRUCT_GENERATOR );
+	objManager.activateBotActionGroup( ISLAND_STROGG_DEFEND_CONSTRUCT_GENERATOR );
+	objManager.activateBotActionGroup( ISLAND_STROGG_DEPLOY_CONSTRUCT_GENERATOR );
+	objManager.activateBotActionGroup( ISLAND_GDF_DESTROY_BUNKERHATCH );
+	objManager.activateBotActionGroup( ISLAND_STROGG_DEFEND_BUNKERHATCH );
+	objManager.activateBotActionGroup( ISLAND_ISLAND_FS_NODES );
+
+	stroggTeam.setTeamRearSpawn( stroggBaseSpawn );
+	objManager.setTeamUseRearSpawn( STROGG, false );
+	objManager.setTeamUseRearSpawnPercentage( STROGG, 25 );
+	objManager.setTeamUseRearSpawn( GDF, false );
+
+	thread DelayedRearSpawnThread();
+
+}
+
+void mapObject_Island::DelayedBotSpawnThread() {
+	sys.wait( 10.0f );
+	objManager.setTeamNeededClass( GDF, ENGINEER, COVERTOPS, 3, false, true );
+	objManager.setTeamNeededClass( STROGG, ENGINEER, COVERTOPS, 2, false, true );
+}
+
+void mapObject_Island::DelayedRearSpawnThread() {
+	sys.wait( 30.0f );
+	objManager.setTeamUseRearSpawn( STROGG, true );
+}
+
+void mapObject_Island::StartFirstObjective() {
+	genspeaker.turnOff();
+	sys.wait( 5.f );
+	objManager.SetObjectiveEntity( generatorConstruction, mainObjectiveIndex );
+	CreateInitialTimedMission( generatorConstruction );
+	generatorConstruction.vCreateMission();
+}
+
+void mapObject_Island::CompleteObjective( float index, entity p ) {
+	if ( index == OBJECTIVE_ISLAND_BUILD_GENERATOR ) {
+		OnGeneratorBuilt();
+	}
+	if ( index == OBJECTIVE_ISLAND_DESTROY_DOOR ) {
+		OnDoorDestroyed();
+	}
+	if ( index == OBJECTIVE_ISLAND_TRANSMIT_DATA ) {
+		OnDataTransmitted();
+	}
+}
+
+handle mapObject_Island::GetObjectiveMessage( float index ) {
+	if ( index == OBJECTIVE_ISLAND_BUILD_GENERATOR ) {
+		return sys.localizeString( "maps/island/obj_constructed" );
+	}
+
+	if ( index == OBJECTIVE_ISLAND_DESTROY_DOOR ) {
+		return sys.localizeString( "maps/island/obj_destroyed" );
+	}
+
+	if ( index == OBJECTIVE_ISLAND_TRANSMIT_DATA ) {
+		return sys.localizeString( "maps/island/obj_transmitted" );
+	}
+	return g_locStr_BadObjective;
+}
+
+void mapObject_Island::OnConstructionComplete( entity obj ) {
+	if ( obj == guardTower1Construction ) {
+		OnGuardTower1Built();
+	}
+}
+
+void mapObject_Island::OnDestructionComplete( entity obj ) {
+	if ( obj == guardTower1Construction ) {
+		OnGuardTower1Destroyed();
+	} else if ( obj == bunkerHatch ) {
+		OnBunkerHatchDestroyed();
+	}
+}
+
+void mapObject_Island::OnGuardTower1Built() {
+	guardTower1Built = true;
+	objManager.deactivateBotActionGroup( ISLAND_TOWER_1 );
+	guardTower1Construction.vCompleteMission();
+	if ( mainObjectiveIndex > OBJECTIVE_ISLAND_BUILD_GENERATOR ) {
+		guardTower1.vCreateMission();
+		objManager.activateBotActionGroup( ISLAND_TOWER_ACTIVE );
+	}
+}
+
+void mapObject_Island::OnGuardTower1Destroyed() {
+	guardTower1Built = false;
+	guardTower1.vCompleteMission();
+
+	if ( mainObjectiveIndex > OBJECTIVE_ISLAND_BUILD_GENERATOR ) {
+		objManager.activateBotActionGroup( ISLAND_TOWER_1 );
+		guardTower1Construction.vCreateMission();
+		objManager.deactivateBotActionGroup( ISLAND_TOWER_ACTIVE );
+	}
+}
+
+void mapObject_Island::OnBunkerHatchDestroyed() {
+	bot_bunkerhatch.activate( bot_bunkerhatch );
+	noplantHatch.remove();
+	bunkerHatch.vCompleteMission();
+	objManager.deactivateBotActionGroup( ISLAND_GDF_DESTROY_BUNKERHATCH );
+	objManager.activateBotActionGroup( ISLAND_BOTH_BUNKERHATCH_TOPLEVEL );
+
+	// Enable Bot Reachability
+	//sys.enableBotReachability( "xian_bot_reachability_2", 2, true );
+	//sys.enableBotReachability( "xian_bot_reachability_8", 2, true );
+
+	// Enable new path to generator
+	objManager.enableRoute( "bjames_bunkerhatch_route" );
+
+}
+
+void mapObject_Island::OnGeneratorBuilt() {
+	genspeaker.turnOn();
+	thread RaiseTowers();
+
+	mainObjectiveIndex = OBJECTIVE_ISLAND_DESTROY_DOOR;
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	stroggGeneratorSpawn.setGameTeam( $null_entity );
+	stroggGeneratorSpawn.vSetActive( false );
+	stroggObservatorySpawn.vSetActive( true );
+	gdfOutpostSpawn.setGameTeam( gdfTeam );
+	gdfOutpostSpawn.vSetActive( true );
+	gdfForwardSpawn.vSetActive( true );
+	outpostTerritory.setGameTeam( gdfTeam );
+
+	gdfBaseTerritory.setActive( false );
+	stroggBaseTerritory.setActive( true );
+	outpostTerritory.setActive( true );
+
+	objective1.vFinishObjective();
+	objective1Arrow1.vFinishObjective();
+	objective1Arrow2.vFinishObjective();
+
+	objective2Arrow1.vStartObjective();
+	objective2Arrow2.vStartObjective();
+
+	// Setup Bots for second objective
+
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "***** GENERATOR BUILT! *****\n" );
+	}
+
+	objManager.deactivateBotActionGroup( ISLAND_GDF_CONSTRUCT_GENERATOR );
+	objManager.deactivateBotActionGroup( ISLAND_GDF_SUPPORT_CONSTRUCT_GENERATOR );
+	objManager.deactivateBotActionGroup( ISLAND_GDF_DEPLOY_CONSTRUCT_GENERATOR );
+	objManager.deactivateBotActionGroup( ISLAND_STROGG_DEFEND_CONSTRUCT_GENERATOR );
+	objManager.deactivateBotActionGroup( ISLAND_STROGG_DEPLOY_CONSTRUCT_GENERATOR );
+	objManager.deactivateBotActionGroup( ISLAND_GDF_DESTROY_BUNKERHATCH );
+	objManager.deactivateBotActionGroup( ISLAND_STROGG_DEFEND_BUNKERHATCH );
+	objManager.killBotActionGroup( ISLAND_BOTH_BUNKERHATCH_TOPLEVEL );
+	objManager.killBotActionGroup( ISLAND_GDF_FORWARDSPAWN_1 );
+	objManager.killBotActionGroup( ISLAND_STROGG_FORWARDSPAWN_1 );
+
+	objManager.activateBotActionGroup( ISLAND_GDF_DESTROY_VAULTDOOR );
+	objManager.activateBotActionGroup( ISLAND_GDF_SUPPORT_VAULTDOOR );
+	objManager.activateBotActionGroup( ISLAND_GDF_DEPLOY_VAULTDOOR );
+	objManager.activateBotActionGroup( ISLAND_STROGG_DEPLOY_FINAL );
+	objManager.activateBotActionGroup( ISLAND_STROGG_DEFEND_VAULTDOOR );
+	objManager.activateBotActionGroup( ISLAND_STROGG_DEPLOY_VAULTDOOR );
+	objManager.activateBotActionGroup( ISLAND_GDF_FORWARDSPAWN_2 );
+
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+	objManager.setPrimaryTeamAction( GDF, "bag_vaultdoor_bomb" );
+	objManager.setPrimaryTeamAction( STROGG, "bag_vaultdoor_bomb" );
+	objManager.setSecondaryTeamAction( GDF, "bag_gdftower_objective_1" );
+	objManager.setBotCriticalClass( GDF, SOLDIER );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+	objManager.setTeamNeededClass( GDF, SOLDIER, NOCLASS, 2, false, true );
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 2, false, true );
+
+	objManager.clearTeamBotBoundEntities( GDF );
+	objManager.setTeamUseRearSpawn( STROGG, true );
+	stroggTeam.setTeamRearSpawn( stroggBaseSpawn );
+	objManager.setTeamUseRearSpawnPercentage( STROGG, 30 );
+	objManager.setTeamUseRearSpawn( GDF, false );
+
+	objManager.setBotTeamRetreatTime( STROGG, 15 );
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+	generatorConstruction.vCompleteMission();
+	StopTimedMission();
+
+	objManager.SetObjectiveEntity( vaultDestroy, mainObjectiveIndex );
+	CreateInitialTimedMission( vaultDestroy );
+
+	bunkerHatch.vFreeMission();
+
+	if ( !guardTower1Built ) {
+		guardTower1Construction.vCreateMission();
+		objManager.activateBotActionGroup( ISLAND_TOWER_1 );		
+	}
+
+	if ( guardTower1Built ) {
+		guardTower1.vCreateMission();
+		objManager.activateBotActionGroup( ISLAND_TOWER_ACTIVE );
+	}
+
+	gdfBeachSpawn.vSetActive( false );
+	gdfBeachSpawn.setGameTeam( gdfTeam );
+
+	vaultDestroy.vCreateMission();
+
+	gdfTeam.SetRespawnWait( 20 );
+	ResetRespawnTimeThread();
+}
+
+void mapObject_Island::RaiseTowers() {
+	// turn on towers - then open doors
+	sys.wait( 10.f );
+	tower1.vOnDeploy();
+	sys.wait( 10.f );
+	tower2.vOnDeploy();
+	sys.wait( 10.f );
+	tower3.vOnDeploy();
+
+	// open the doors to the keycard bunker
+	keycardBunkerDoor1.activate( keycardBunkerDoor1 );
+	bot_keycardbunker1.activate( bot_keycardbunker1 );
+	keycardBunkerDoor2.activate( keycardBunkerDoor2 );
+	bot_keycardbunker2.activate( bot_keycardbunker2 );
+	sewerDoor1.activate( sewerDoor1 );
+	sewerDoor2.activate( sewerDoor2 );
+	bot_sewerdoor.activate( bot_sewerdoor );
+	objManager.enableNode( "vaultnode" );
+
+	// Enable tower clip brushes
+	tower1clip.show();
+	tower1clip.forceEnableClip();
+	tower2clip.show();
+	tower2clip.forceEnableClip();
+	tower3clip.show();
+	tower3clip.forceEnableClip();
+}
+
+void mapObject_Island::VaultEffectsThread() {
+	vaultBlowout.vTriggerParticleEffect( 1 );
+	vaultSteam.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.4f );
+	vaultSparks1.vTriggerParticleEffect( 1 );
+	vaultLight.vTriggerParticleEffect( 1 );
+
+	sys.wait( 1.0f );
+	vaultSparks2.vTriggerParticleEffect( 1 );
+}
+
+void mapObject_Island::OnDoorDestroyed() {
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+	vaultDestroy.vCompleteMission();
+	StopTimedMission();
+	bot_vaultdoor.activate( bot_vaultdoor );
+	noplantVaultdoor.remove();
+
+	observatoryTerritory.setGameTeam( gdfTeam );
+	stroggObservatorySpawn.setGameTeam( $null_entity );
+
+	observatoryTerritory.setActive( true );
+
+	mainObjectiveIndex = OBJECTIVE_ISLAND_TRANSMIT_DATA;
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	objective2.vFinishObjective();
+	objective2Arrow1.vFinishObjective();
+	objective2Arrow2.vFinishObjective();
+
+	objective3Arrow1.vStartObjective();
+	objective3Arrow2.vStartObjective();
+
+	thread VaultEffectsThread();
+
+	vaultStart.remove();
+	vaultBroken.show();
+
+	vault_stroggshield_1.remove();
+	vault_stroggshield_2.remove();
+	vault_stroggshield_trigger_hurt_1.remove();
+	vault_stroggshield_trigger_hurt_2.remove();
+	vault_stroggshield_light_1.remove();
+	vault_stroggshield_light_2.remove();
+
+	platypusSpawn.vOnDeploy();
+
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "***** VAULT DOOR DESTROYED! *****\n" );
+	}
+
+	if ( !guardTower1Built ) {
+		guardTower1Construction.vCreateMission();
+		objManager.activateBotActionGroup( ISLAND_TOWER_1 );		
+	}
+
+	if ( guardTower1Built ) {
+		guardTower1.vCreateMission();
+		objManager.activateBotActionGroup( ISLAND_TOWER_ACTIVE );
+	}
+	
+	objManager.clearTeamBotBoundEntities( GDF );
+	// Setup Bots for third objective
+	objManager.deactivateBotActionGroup( ISLAND_GDF_DESTROY_VAULTDOOR );
+	//objManager.deactivateBotActionGroup( GDF_SUPPORT_VAULTDOOR );
+	//objManager.deactivateBotActionGroup( ISLAND_GDF_DEPLOY_VAULTDOOR );
+	//objManager.deactivateBotActionGroup( STROGG_DEFEND_VAULTDOOR );
+	objManager.deactivateBotActionGroup( ISLAND_STROGG_DEPLOY_VAULTDOOR );
+	//objManager.deactivateBotActionGroup( ISLAND_TOWER_ACTIVE );
+	objManager.deactivateBotActionGroup( ISLAND_GDF_FORWARDSPAWN_2 );
+
+	//objManager.activateBotActionGroup( GDF_DELIVER_DATADISC );
+	objManager.activateBotActionGroup( ISLAND_GDF_STEAL_DATADISC );
+	objManager.activateBotActionGroup( ISLAND_GDF_DELIVER_DATADISC );
+	objManager.activateBotActionGroup( ISLAND_GDF_SUPPORT_DATADISC );
+	objManager.activateBotActionGroup( ISLAND_STROGG_DEFEND_DATADISC );
+	objManager.activateBotActionGroup( ISLAND_STROGG_DEPLOY_DATADISC );
+	objManager.activateBotActionGroup( ISLAND_GDF_DEPLOY_DATADISC );
+
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+	objManager.setPrimaryTeamAction( GDF, "bag_transmitdata_start" );
+	objManager.setPrimaryTeamAction( STROGG, "bag_transmitdata_start" );
+	//objManager.setSecondaryTeamAction( GDF, "bag_gdftower_objective_1" );
+	//objManager.setSecondaryTeamAction( STROGG, "bag_gdftower_objective_1" );
+	objManager.setBotCriticalClass( GDF, NOCLASS );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+
+	objManager.gameIsOnFinalObjective();
+
+
+	objManager.SetObjectiveEntity( dataDiscItem, mainObjectiveIndex );
+
+	gdfForwardSpawn.vSetActive( false );
+	gdfForwardSpawn.setGameTeam( gdfTeam );
+	gdfVaultSpawn.setGameTeam( gdfTeam );
+	gdfVaultSpawn.vSetActive( true );
+
+	gdfTeam.SetRespawnWait( 20 );
+	ResetRespawnTimeThread();
+}
+
+void mapObject_Island::FinalEffectsThread() {
+	final.vTriggerParticleEffect( 1 );
+}
+
+void mapObject_Island::OnDataTransmitted() {
+	objective3.vFinishObjective();
+	objective3Arrow1.vFinishObjective();
+	objective3Arrow2.vFinishObjective();
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	objManager.PlaySound( worldspawn.getKey( "snd_gdfwin_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_gdfwin_gdf" ), gdfTeam );
+
+	thread FinalEffectsThread();
+
+	gameRules.setEndGameCamera( endCameraA );
+	gameRules.setWinningTeam( gdfTeam );
+	gameRules.endGame();
+}
+
+void mapObject_Island::OnTimeLimitHit() {
+	FinishTimedMission();
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	objManager.PlaySound( worldspawn.getKey( "snd_gdflose_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_gdflose_gdf" ), gdfTeam );
+
+}
+
+// MBJ - Bot Forward Spawn Actions
+
+void mapObject_Island::OnSpawnCaptured( string actionName ) {
+	if ( actionName == "bag_forwardspawn1_objective" ) {
+		objManager.activateBotActionGroup( ISLAND_GDF_FORWARDSPAWN_1 );
+		objManager.deactivateBotActionGroup( ISLAND_STROGG_FORWARDSPAWN_1 );
+		objManager.deactivateBotActionGroup( ISLAND_ISLAND_FS_NODES );
+		gdfTeam.setTeamRearSpawn( gdfBaseSpawn );
+		objManager.setTeamUseRearSpawn( GDF, true );
+		objManager.setTeamUseRearSpawnPercentage( GDF, 25 );
+	}
+	if ( actionName == "bag_forwardspawn2_objective" ) {
+		gdfTeam.setTeamRearSpawn( gdfOutpostSpawn );
+		objManager.setTeamUseRearSpawn( GDF, true );
+		objManager.setTeamUseRearSpawnPercentage( GDF, 50 );
+		//objManager.activateBotActionGroup( GDF_ISLAND_FORWARDSPAWN_1 );
+		//objManager.deactivateBotActionGroup( STROGG_ISLAND_FORWARDSPAWN_1 );
+	}
+}
+
+void mapObject_Island::OnSpawnLiberated( string actionName ) {
+	if ( actionName == "bag_forwardspawn1_objective" ) {
+		objManager.activateBotActionGroup( ISLAND_STROGG_FORWARDSPAWN_1 );
+		objManager.activateBotActionGroup( ISLAND_ISLAND_FS_NODES );
+		objManager.deactivateBotActionGroup( ISLAND_GDF_FORWARDSPAWN_1 );
+		objManager.setTeamUseRearSpawn( GDF, false );
+	}
+	if ( actionName == "bag_forwardspawn2_objective" ) {
+		objManager.setTeamUseRearSpawn( GDF, false );
+		//objManager.activateBotActionGroup( STROGG_ISLAND_FORWARDSPAWN_1 );
+		//objManager.deactivateBotActionGroup( GDF_ISLAND_FORWARDSPAWN_1 );
+	}
+}
+
+// MBJ - Carryable Item Actions
+
+void mapObject_Island::OnCarryableItemStolen( string actionName ) {
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "***** DATA DISC TAKEN *****\n" );
+	}
+	if( actionName == "bag_transmitdata_start" ) {
+		objManager.activateBotActionGroup( ISLAND_STROGG_DEFEND_OBSERVATORY );
+		objManager.activateBotActionGroup( ISLAND_GDF_DELIVER_DATADISC );
+		objManager.deactivateBotActionGroup( ISLAND_STROGG_DEFEND_VAULTDOOR );
+		objManager.deactivateBotActionGroup( ISLAND_GDF_STEAL_DATADISC );
+	}
+}
+
+void mapObject_Island::OnCarryableItemReturned( string actionName ) {
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "***** DATA DISC RETURNED *****\n" );
+	}
+	if( actionName == "bag_transmitdata_start" ) {
+		objManager.deactivateBotActionGroup( ISLAND_STROGG_DEFEND_OBSERVATORY );
+		objManager.deactivateBotActionGroup( ISLAND_GDF_DELIVER_DATADISC );
+		objManager.activateBotActionGroup( ISLAND_STROGG_DEFEND_VAULTDOOR );
+		objManager.activateBotActionGroup( ISLAND_GDF_STEAL_DATADISC );
+	}
+}
+
+entity mapObject_Island::GetSpectateEntity() { 
+	if ( !generatorConstruction.vIsObjectiveComplete() ) {
+		return generatorConstruction.vGetSpectateEntity();
+	}
+
+	if ( vaultDestroy != $null_entity ) {
+		return vaultDestroy.vGetSpectateEntity();
+	}
+
+	if ( dataDiscItem != $null_entity ) {
+		return dataDiscItem.vGetSpectateEntity();
+	}
+
+	return $null_entity;
+}

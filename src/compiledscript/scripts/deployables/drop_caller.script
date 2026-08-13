@@ -1,0 +1,31 @@
+
+object drop_caller {
+	void			preinit();
+	void			vOnDeploy();
+	void			vCallDrop( vector location, vector angles );
+	
+	string			objectName;
+	string			itemName;
+	team_base		team;
+	boolean			done;
+};
+
+void drop_caller::preinit() {
+	objectName		= getKey( "def_drop_object" );
+	itemName		= getKey( "def_drop_item" );
+	team			= sys.getTeam( getKey( "drop_team" ) );
+	done			= false;
+}
+
+void drop_caller::vOnDeploy() {
+	if ( done ) {
+		return;
+	}
+	
+	vCallDrop( getWorldOrigin(), getAngles() );
+}
+
+void drop_caller::vCallDrop( vector location, vector angles ) {	
+	entity item = CallManualDeploy( objectName, itemName, team, location, angles_y );
+	item.vSetOwner( self );
+}

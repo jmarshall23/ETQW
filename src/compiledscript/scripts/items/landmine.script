@@ -1,0 +1,379 @@
+/***********************************************************************
+
+item_landmine.script
+
+***********************************************************************/
+
+#define TRIPMINE_RESULT_OK					1
+#define TRIPMINE_RESULT_NOT_WALL			2
+#define TRIPMINE_RESULT_UNKNOWN_BEAM_RANGE	3
+
+object item_landmine : weapon_base {
+	void		preinit();
+	void		init();
+	void		destroy();
+
+	void		Raise();
+	void		Idle();
+	void		TryAttack( boolean altFire );
+	void		Attack();
+	boolean		CanAltAttack();
+	void		AltAttack();
+
+	float		CountMines();
+	void		CheckMineLimit();
+	float		CanCreateTripmine();
+
+	void		ToolTipThread_Raise();
+	
+	float		meleeDistance;
+	float		nextToolTipTime;
+	float		throwTime;
+
+	boolean		removeOldest;
+	boolean		clientAssumeRemoved;
+
+	boolean		clientWait;
+}
+
+void item_landmine::preinit() {
+	meleeDistance		= getFloatKey( "melee_distance" );
+	throwTime			= getFloatKeyWithDefault( "throw_time", 0.2 );
+}
+
+void item_landmine::init() {
+	if ( myPlayer.isLocalPlayer() ) {	
+		thread ToolTipThread_Raise();
+	}
+	
+	weaponState( "Raise", 0 );
+}
+
+void item_landmine::destroy() {
+}
+
+void item_landmine::Raise() {
+	UpdateCharge();
+
+	Base_Raise();
+}
+
+float item_landmine::CountMines() {
+	return G_CountMinesOwnedByEntity( myPlayer );
+}
+
+void item_landmine::Idle() {
+	weaponReady();
+	playCycle( ANIMCHANNEL_ALL, "idle" );
+
+	if ( clientWait ) {
+		sys.wait( 0.2f );
+		clientWait = false;
+	}
+	
+	StartIdleEffect();
+
+	if ( ShouldRunGuis() ) {
+		sys.setGUIFloat( GUI_GLOBALS_HANDLE, "gameHud.weaponShowCharge", 1 );
+	}
+	
+	mainFireDown = ( WEAPON_ATTACK || WEAPON_ALTFIRE );
+
+	while( 1 ) {
+		if( WEAPON_LOWERWEAPON ) {
+			StopIdleEffect();
+			weaponState( "Lower", 0 );
+		}
+
+		if ( WEAPON_ATTACK ) {
+			if( !mainFireDown ) {
+				mainFireDown = true;
+				CheckMineLimit();
+				TryAttack( false );
+			}
+		} else if ( WEAPON_ALTFIRE ) {
+			if( !mainFireDown ) {
+				mainFireDown = true;
+				CheckMineLimit();
+				TryAttack( true );
+			}
+		} else {
+			mainFireDown = false;
+		}
+		
+		UpdateCharge();
+
+		sys.waitFrame();
+	}
+}
+
+void item_landmine::TryAttack( boolean altFire ) {
+	team_base team = myPlayer.getGameTeam();
+	float limit = team.GetMineLimit();
+
+	if ( CanRemove( chargePerUse ) ) {
+		if ( CountMines() < limit || clientAssumeRemoved ) {
+			removeOldest = false;
+
+			if ( altFire ) {
+				if ( CanAltAttack() ) {
+					StopIdleEffect();
+					weaponState( "AltAttack", 0 );
+				} else {
+					if ( myPlayer == sys.getLocalPlayer() ) {
+						sys.startSoundDirect( getKey( "snd_invalid" ), SND_WEAPON_FIRE_LOCAL );
+					}
+				}
+			} else {
+				StopIdleEffect();
+				weaponState( "Attack", 0 );
+			}
+		}
+	} else {
+		if ( myPlayer == sys.getLocalPlayer() ) {
+			myPlayer.sendToolTip( GetToolTip( getKey( "tt_need_charge" ) ) );
+			sys.startSoundDirect( getKey( "snd_need_charge" ), SND_WEAPON_FIRE_LOCAL );
+			G_NotifyNoCharge( myPlayer );
+		}
+	}
+}
+
+void item_landmine::Attack() {
+	Remove( chargePerUse );
+	playAnim( ANIMCHANNEL_ALL, "fire" );
+	
+	fired();
+
+	sys.wait( throwTime );
+	
+	entity mine;
+	if ( !sys.isClient() ) {
+		mine = sys.spawn( getKey( "def_landmine" ) );
+
+		mine.vSetOwner( myPlayer );
+		mine.setGameTeam( myPlayer.getGameTeam() );		
+
+		boolean placedOnWall = false;
+		vector origin = myPlayer.getViewOrigin();
+		vector forward = sys.angToForward( myPlayer.getViewAngles() );
+		float throwDistance = 32.0f;
+		vector throwPos = origin + forward * throwDistance;
+		
+		if( melee( MASK_SHOT_BOUNDINGBOX | MASK_PROJECTILE, meleeDistance, true, false ) ) {
+			float traceDistance = getMeleeFraction() * meleeDistance;
+			float surfaceFlags = getMeleeSurfaceFlags();
+			vector normal = getMeleeNormal();
+			entity meleeEntity = getMeleeEntity();
+			vector endPos = getMeleeEndPos();
+			string surfaceType = getMeleeSurfaceType();
+			string joint = getMeleeJoint();
+
+			if ( !( surfaceFlags & SURF_NOPLANT ) ) {
+				if ( sys.fabs( normal_z ) < 0.5 ) {
+					placedOnWall = true;
+					if ( meleeEntity != $null_entity ) {
+						vehicle_base meleeVehicle = meleeEntity;
+						if ( meleeVehicle != $null_entity || meleeEntity.vDisablePlantCharge() ) {
+							placedOnWall = false;
+						}
+					}
+
+					if ( placedOnWall ) {
+						mine.setOrigin( endPos );
+						mine.alignToAxis( normal, Z_AXIS );
+						mine.vMakeSticky( meleeEntity, normal, surfaceType, false, joint );
+					}
+				} 
+			}
+			
+			if ( !placedOnWall ) {
+				vector size = mine.getSize();
+				float pullOut = sys.vecLength( size ) * 0.6f;
+				if ( traceDistance < throwDistance + pullOut ) {
+					throwPos = origin + forward * ( traceDistance - pullOut );
+				}
+			}
+		}
+
+		if ( !placedOnWall ) {
+			mine.setOrigin( throwPos );
+			vector velocity = mine.getVectorKeyWithDefault( "velocity", '400 0 0' );
+			velocity = forward * velocity_x;
+			mine.setLinearVelocity( velocity );
+		}
+	}
+		
+	waitUntil( animDone( ANIMCHANNEL_ALL, 0 ) );
+
+	if ( !sys.isClient() ) {
+		if ( mine != $null_entity ) {
+			if ( !mine.vGetIsSelfArm() ) {
+				team_base team = myPlayer.getGameTeam();
+				team.SelectActionItem( myPlayer, AK_ARM );
+			}
+
+			myPlayer.setPlayerMineState( mine, false, false ); //mal: let the bots know there is a new landmine out there in the world.
+		}
+	} else {
+		// wait for server to select weapon
+		clientWait = true;
+	}
+		
+	weaponState( "Idle", 0 );
+}
+
+boolean item_landmine::CanAltAttack() {
+	if ( !melee( MASK_SHOT_BOUNDINGBOX | MASK_PROJECTILE, meleeDistance, true, false ) ) {
+		return false;
+	}
+
+	float result = CanCreateTripmine();
+	if ( result == TRIPMINE_RESULT_NOT_WALL || result == TRIPMINE_RESULT_UNKNOWN_BEAM_RANGE ) {
+		string ttString;
+		if ( result == TRIPMINE_RESULT_NOT_WALL ) {
+			ttString = "tt_wrong_surface";
+		} else if ( result == TRIPMINE_RESULT_UNKNOWN_BEAM_RANGE ) {
+			ttString = "tt_unknown_beam_range";
+		}
+
+		if ( myPlayer == sys.getLocalPlayer() ) {
+			sys.wait( 0.1f );
+			myPlayer.cancelToolTips();
+			myPlayer.sendToolTip( GetToolTip( getKey( ttString ) ) );
+			sys.startSoundDirect( getKey( "snd_invalid" ), SND_ANY );
+		}
+		
+		return false;
+	}
+
+	return true;
+}
+
+void item_landmine::AltAttack() {
+	entity mine;
+
+	float result = CanCreateTripmine();
+	if ( result == TRIPMINE_RESULT_NOT_WALL || result == TRIPMINE_RESULT_UNKNOWN_BEAM_RANGE ) {
+		weaponState( "Idle", 4 );
+	}
+
+	entity meleeEntity = getMeleeEntity();
+	vector normal = getMeleeNormal();
+	vector point = getMeleePoint();
+	string surfaceType = getMeleeSurfaceType();
+	string joint = getMeleeJoint();
+
+	Remove( chargePerUse );
+	playAnim( ANIMCHANNEL_ALL, "fire" );
+	
+	fired();
+
+	sys.wait( throwTime );
+
+	if ( !sys.isClient() ) {
+		mine = sys.spawn( getKey( "def_landmine" ) );
+
+		mine.vSetOwner( myPlayer );
+		mine.setGameTeam( myPlayer.getGameTeam() );	
+		mine.setOrigin( point );
+		mine.alignToAxis( normal, Z_AXIS );
+		mine.vMakeSticky( meleeEntity, normal, surfaceType, true, joint );
+	}
+		
+	waitUntil( animDone( ANIMCHANNEL_ALL, 0 ) );
+
+	if ( !sys.isClient() ) {
+		if ( mine != $null_entity ) {
+			if ( !mine.vGetIsSelfArm() ) {
+				team_base team = myPlayer.getGameTeam();
+				team.SelectActionItem( myPlayer, AK_ARM );
+			}
+			myPlayer.setPlayerMineState( mine, false, false ); //mal: let the bots know there is a new landmine out there in the world.
+		}
+	}
+	
+	weaponState( "Idle", 0 );
+}
+
+void item_landmine::CheckMineLimit() {
+	team_base team = myPlayer.getGameTeam();
+	float limit = team.GetMineLimit();
+	if ( CountMines() >= limit ) {
+		if ( removeOldest ) {
+			myPlayer.RemoveOldestMine();
+			removeOldest = false;
+
+			// client assumes mine was removed so as to play the proper fire animation
+			if ( sys.isClient() ) {
+				clientAssumeRemoved = true;
+			}
+		} else {
+			clientAssumeRemoved = false;
+			if ( CanRemove( chargePerUse ) ) {
+				removeOldest = true;
+				if ( myPlayer == sys.getLocalPlayer() ) {
+					sys.wait( 0.1f );
+					myPlayer.cancelToolTips();
+					myPlayer.sendToolTip( GetToolTip( getKey( "tt_mine_limit" ) ) );
+					sys.startSoundDirect( getKey( "snd_invalid" ), SND_WEAPON_FIRE );
+				}
+			}
+		}
+	}
+}
+
+float item_landmine::CanCreateTripmine() {
+	float traceFraction = getMeleeFraction(); 
+	vector normal = getMeleeNormal();
+	float surfaceFlags = getMeleeSurfaceFlags();
+	entity meleeEntity = getMeleeEntity();
+	string surfaceType = getMeleeSurfaceType();
+	vector endPos = getMeleeEndPos();
+	float traceDistance = traceFraction * meleeDistance;
+	float result = TRIPMINE_RESULT_OK;
+
+	if ( !( surfaceFlags & SURF_NOPLANT ) ) {
+		if ( sys.fabs( normal_z ) < 0.5 ) {
+			if ( meleeEntity != $null_entity ) {
+				player meleePlayer = meleeEntity;
+				vehicle_base meleeVehicle = meleeEntity;
+				if ( meleeVehicle != $null_entity || meleePlayer != $null_entity ) {
+					result = TRIPMINE_RESULT_NOT_WALL;
+				}
+			}
+
+			if( surfaceType == "grass" || surfaceType == "gravel" || surfaceType == "sand" || surfaceType == "dirt" ) {
+				result = TRIPMINE_RESULT_NOT_WALL;
+			}
+		} else {
+			result = TRIPMINE_RESULT_NOT_WALL;
+		}
+	}
+
+	if ( result == TRIPMINE_RESULT_OK ) {
+		// find trip mine beam distance
+		vector beamStart = endPos;
+		vector beamEnd = beamStart + ( normal * GetGlobalFloat( "tripmine_beam_range" ) );
+
+		sys.tracePoint( beamStart, beamEnd, CONTENTS_SOLID | CONTENTS_RENDERMODEL, myPlayer );
+		if ( sys.getTraceFraction() == 1.f || sys.getTraceEntity() != sys.getEntity( "worldspawn" ) ) {
+			result = TRIPMINE_RESULT_UNKNOWN_BEAM_RANGE;
+		}
+	}
+
+	return result;
+}
+
+void item_landmine::ToolTipThread_Raise() {
+	sys.wait( myPlayer.CalcTooltipWait() );
+	while ( myPlayer.isSinglePlayerToolTipPlaying() ) {
+		sys.wait( 1.0f );
+	}
+	myPlayer.cancelToolTips();
+
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_1" ) ) );
+	
+	WAIT_FOR_TOOLTIP;
+	myPlayer.sendToolTip( GetToolTip( getKey( "tt_intro_2" ) ) );
+}

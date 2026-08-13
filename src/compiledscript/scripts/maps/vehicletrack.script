@@ -1,0 +1,18 @@
+
+object mapObject_VehicleTrack : mapObject_Default {
+	void			InitObjectives();
+}
+
+mapObject_Base VehicleTrack_MapScript() {
+	return new mapObject_VehicleTrack;
+}
+
+void mapObject_VehicleTrack::InitObjectives() {
+	entity territory = sys.getEntity( "deployzone_1" );
+	territory.setGameTeam( gdfTeam );
+	territory.setActive( true );
+	
+	gdfTeam.SetRespawnWait( 20 );
+	stroggTeam.SetRespawnWait( 20 );
+	CreateRespawnTimeThread( stroggTeam );
+}

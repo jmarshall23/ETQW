@@ -77,6 +77,7 @@ idCVar* idCVar::staticVars;
 #include "script/Script_Program.h"
 #include "script/ScriptEntityHelpers.h"
 #include "script/Script_ScriptObject.h"
+#include "script/Script_DLL.h"
 
 #include "../framework/AdManager.h"
 #include "../framework/GraphManager.h"
@@ -862,6 +863,12 @@ botDebugInfo_t idGameLocal::GetBotDebugInfo( int clientNum ) {
 	return botThreadData.GetBotDebugInfo( clientNum );
 }
 
+#if defined( SD_PUBLIC_BUILD )
+idCVar g_useCompiledScript( "g_useCompiledScript", "1", CVAR_GAME | CVAR_BOOL | CVAR_ARCHIVE, "enable/disable native compiled scripts" );
+#else
+idCVar g_useCompiledScript( "g_useCompiledScript", "0", CVAR_GAME | CVAR_BOOL | CVAR_ARCHIVE, "enable/disable native compiled scripts" );
+#endif // SD_PUBLIC_BUILD
+
 /*
 ===========
 idGameLocal::LoadScript
@@ -899,8 +906,18 @@ void idGameLocal::LoadScript( void ) {
 	delete program;
 	program = NULL;
 
-	program = new idProgram();
-	program->Init();
+	if ( g_useCompiledScript.GetBool() ) {
+		program = new sdDLLProgram();
+		if ( !program->Init() ) {
+			delete program;
+			program = NULL;
+		}
+	}
+
+	if ( program == NULL ) {
+		program = new idProgram();
+		program->Init();
+	}
 
 	UpdateLevelLoadScreen( common->LocalizeText( "guis/mainmenu/loading/compiling_scripts" ).c_str() );
 

@@ -1,0 +1,19 @@
+/***********************************************************************
+
+weapon_lacerator.script
+
+***********************************************************************/
+
+object weapon_lacerator : weapon_assaultrifle {
+	void		preinit();
+	
+	void		Reload() { Overheat(); }
+
+	void		OnIronSightsEnabled() { hide(); }
+	void		OnIronSightsDisabled() { show(); }
+}
+
+void weapon_lacerator::preinit() {
+	usesStroyent	= true;
+	hasHeat			= true;
+}

@@ -1,0 +1,370 @@
+//
+//		assaultrifle_gren.script
+//
+
+object weapon_assaultrifle_gren : weapon_clip {
+	void		preinit();
+	void		destroy();
+	void		DoFire();
+
+	void		OnBecomeViewWeapon();
+	void		OnFinishViewWeapon();
+
+	void		IdleInit();
+	void		PlayIdleAnim();
+	void		Sprint();
+	void		LeaveSprint( string newState, float blend );
+	void		FireGrenade();
+	void		Reload();
+	float		DoReload( boolean wasScoped );
+	void		Cleanup();
+
+	boolean		NeedsReload();
+	boolean		CanFire();
+	boolean		CanReload();
+	boolean		HasNoAmmo();
+
+	void		DisableIronSights_Private( boolean allowWait );
+	void		EnableIronSights_Private( boolean allowWait );
+
+	void		OnProxyEnter();
+
+	void		PlayFireGrenadeEffect();
+
+	boolean		baseShowAllAmmo;
+	boolean		baseShowClip;
+}
+
+void weapon_assaultrifle_gren::preinit() {
+	hasScope		= false;
+	hasIronSights	= true;
+	
+	baseShowAllAmmo	= showAllAmmo;
+	baseShowClip	= showClip;
+	
+	fireRateSingle	= getFloatKeyWithDefault( "fire_rate_single", 0.2f );
+}
+
+void weapon_assaultrifle_gren::destroy() {
+	if ( myPlayer != $null_entity ) {
+		myPlayer.setGUIClipIndex( 0.f );
+		myPlayer.SetFireAnim( "" );
+	}
+}
+
+boolean weapon_assaultrifle_gren::CanFire() {
+	if ( ironSightsEnabled ) {
+		return ammoAvailable( 1 ) > 0;
+	}
+
+	return true;
+}
+
+boolean weapon_assaultrifle_gren::NeedsReload() {
+	if ( !ironSightsEnabled ) {
+		if ( !usesStroyent ) {
+			if ( ammoInClip( 0 ) <= 0 ) {
+				return true;
+			}
+		} else {
+			if ( ammoAvailable( 0 ) <= 0 ) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+boolean weapon_assaultrifle_gren::HasNoAmmo() {
+	if ( !usesStroyent ) {
+		return ammoAvailable( 0 ) == 0 && ammoAvailable( 1 ) == 0;
+	}
+	return ammoAvailable( 0 ) == 0;
+}
+
+boolean weapon_assaultrifle_gren::CanReload() {
+	if ( !usesStroyent ) {
+		// always update grenade clip,
+		// set up as clip based but isn't supposed to be
+		if ( !sys.isClient() ) {
+			addToClip( 1, clipSize( 1 ) );
+		}
+
+		float index;
+		if ( ironSightsEnabled ) {
+			index = 1;
+		}
+	
+		if ( ( ammoAvailable( index ) > ammoInClip( index ) ) && ( ammoInClip( index ) < clipSize( index ) ) ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void weapon_assaultrifle_gren::FireGrenade() {
+	PlayFireGrenadeEffect();
+
+	startSound( "snd_fire_gren_local", SND_WEAPON_FIRE_LOCAL );
+	startSound( "snd_fire_gren", SND_WEAPON_FIRE );
+	startSound( "snd_fire_gren_far", SND_WEAPON_FIRE_FAR );
+
+	playAnim( ANIMCHANNEL_ALL, "alt_fire" );
+	LaunchProjectile( 1, 1 );
+
+	waitUntil( animDone( ANIMCHANNEL_ALL, 4 ) );
+
+	AmmoCheckClip( 1 );
+	
+	refireTime = sys.getTime() + fireRateSingle;
+	
+	float minAmmoForReload = 0.f;
+	if ( sys.isClient() ) {
+		minAmmoForReload = 1.f; // Gordon: Since clients won't actually use the ammo, bump it by 1
+	}
+
+	if ( ammoAvailable( 1 ) > minAmmoForReload ) {
+		weaponState( "Reload", 0 );
+	}
+}
+
+void weapon_assaultrifle_gren::DoFire() {
+	if ( ironSightsEnabled ) {
+		if ( !mainFireDown ) {
+			FireGrenade();
+		}
+	} else {
+		FireAuto();
+	}
+}
+
+void weapon_assaultrifle_gren::OnBecomeViewWeapon() {
+	if ( localScopeEffectsActive ) {
+		AddLocalScopeEffects();
+	}
+	if ( localIronSightsEffectsActive ) {
+		AddLocalIronSightsEffects();
+	}
+
+	if ( ironSightsEnabled ) {
+		myPlayer.setGUIClipIndex( 1.0f );
+		showAllAmmo = true;
+		showClip = false;
+	}
+	UpdateCrosshair();
+}
+
+void weapon_assaultrifle_gren::OnFinishViewWeapon() {
+	RemoveLocalScopeEffects();
+	RemoveLocalIronSightsEffects();
+	myPlayer.setGUIClipIndex( 0.0f );
+	showAllAmmo = false;
+	showClip = true;
+	sys.setGUIFloat( GUI_GLOBALS_HANDLE, "gameHud.weaponReloadTime", 0 );
+}
+
+void weapon_assaultrifle_gren::IdleInit() {
+	weaponReady();
+
+	PlayIdleAnim();
+	
+	playingFireAnim = false;
+}
+
+void weapon_assaultrifle_gren::PlayIdleAnim() {
+	if ( ironSightsEnabled ) {
+		playCycle( ANIMCHANNEL_ALL, "alt_idle" );
+	} else {
+		playCycle( ANIMCHANNEL_ALL, "idle" );
+	}
+}
+
+void weapon_assaultrifle_gren::DisableIronSights_Private( boolean allowWait ) {
+	playAnim( ANIMCHANNEL_ALL, "switch_from_grenade" );
+	if ( allowWait ) {
+		myPlayer.SetFireAnim( "switch_from" );
+		fired();
+
+		sys.wait( 0.2f );
+		setupAnimClass( "anim_prefix" );
+
+		waitUntil( animDone( ANIMCHANNEL_ALL, 4 ) );
+	} else {
+		setupAnimClass( "anim_prefix" );
+	}
+	myPlayer.SetFireAnim( "" );
+
+	ironSightsEnabled = false;
+	myPlayer.SetIronSightUp( ironSightsEnabled );
+	ironSightsTimeout = sys.getTime() + 0.5f;
+	
+	setStatName( getKey( "stat_name" ) );
+	
+	if ( myPlayer == sys.getLocalViewPlayer() ) {
+		myPlayer.setGUIClipIndex( 0.0f );
+		showAllAmmo	= baseShowAllAmmo;
+		showClip	= baseShowClip;
+		UpdateCrosshair();
+	}
+
+	UpdateSpreadModifiers();
+}
+
+void weapon_assaultrifle_gren::EnableIronSights_Private( boolean allowWait ) {
+	setupAnimClass( "anim_prefix_alt" );
+
+	if ( allowWait ) {
+		myPlayer.SetFireAnim( "switch_to" );
+		fired();
+		
+		playAnim( ANIMCHANNEL_ALL, "switch_to_grenade" );
+		waitUntil( animDone( ANIMCHANNEL_ALL, 4 ) );
+	}
+	myPlayer.SetFireAnim( "" );
+
+	ironSightsEnabled = true;
+	myPlayer.SetIronSightUp( ironSightsEnabled );
+	ironSightsTimeout = sys.getTime() + 0.5f;
+
+	setStatName( getKey( "stat_name_grenade" ) );
+	
+	if ( myPlayer == sys.getLocalViewPlayer() ) {
+		myPlayer.setGUIClipIndex( 1.0f );
+		showAllAmmo = true;
+		showClip = false;
+		UpdateCrosshair();
+	}
+	
+	UpdateSpreadModifiers();
+}
+
+void weapon_assaultrifle_gren::Sprint() {
+	weaponReady();
+
+	if ( ironSightsEnabled ) {
+		playAnim( ANIMCHANNEL_ALL, "alt_start_sprint" );
+	} else {
+		playAnim( ANIMCHANNEL_ALL, "start_sprint" );
+	}
+	waitUntil( animDone( ANIMCHANNEL_ALL, 4 ) );
+
+	while ( true ) {
+		if ( WEAPON_LOWERWEAPON ) {
+			LeaveSprint( "Lower", 4 );
+		}
+		
+		if ( !myPlayer.AI_SPRINT ) {
+			if ( NeedsReload() && CanReload() ) {
+				LeaveSprint( "Reload", 4 );
+			} else {
+				LeaveSprint( "Idle", 4 );
+			}
+		}
+
+		if ( WEAPON_ATTACK ) {
+			LeaveSprint( "Idle", 4 );
+		}
+
+		sys.waitFrame();
+	}
+}
+
+void weapon_assaultrifle_gren::LeaveSprint( string newState, float blend ) {
+	if ( WEAPON_ATTACK ) {
+		mainFireDown = false;
+	}
+
+	if ( ironSightsEnabled ) {
+		playAnim( ANIMCHANNEL_ALL, "alt_leave_sprint" );
+	} else {
+		playAnim( ANIMCHANNEL_ALL, "leave_sprint" );
+	}
+	waitUntil( animDone( ANIMCHANNEL_ALL, 4 ) );
+	weaponState( newState, blend );
+}
+
+void weapon_assaultrifle_gren::Reload() {
+	myPlayer.disableSprint( 1.f );
+
+	StopBrassSound();
+
+	Base_BeginReload();
+
+	boolean wantIronSight = DoReload( ironSightsEnabled );
+	
+	if ( wantIronSight != ironSightsEnabled ) {
+		if ( wantIronSight ) {
+			EnableIronSights();
+		} else {
+			DisableIronSights();			
+		}
+	}
+
+	Base_EndReload();
+	weaponState( "Idle", 4 );
+}
+
+float weapon_assaultrifle_gren::DoReload( boolean wasScoped ) {
+	weaponReloading();
+	
+	if ( ironSightsEnabled ) {
+		playAnim( ANIMCHANNEL_ALL, "alt_reload" );
+	} else {
+		if ( usesStroyent ) {
+			playAnim( ANIMCHANNEL_ALL, "overheat" );
+		} else {
+			playAnim( ANIMCHANNEL_ALL, "reload" );
+		}
+	}
+
+	boolean altKeyDown;
+	float stayEnabled = wasScoped;
+	while ( !animDone( ANIMCHANNEL_ALL, 4 ) ) {
+		sys.waitFrame();
+		if ( WEAPON_LOWERWEAPON ) {
+			Base_EndReload();
+			weaponState( "Lower", 4 );
+		}
+		
+		if ( WEAPON_ALTFIRE ) {
+			if ( !altKeyDown ) {
+				altKeyDown = true;
+				stayEnabled = 1 - stayEnabled;
+			}
+		} else {
+			altKeyDown = false;
+		}
+	}
+
+	if ( ironSightsEnabled ) {
+		addToClip( 1, clipSize( 1 ) );
+	} else {
+		addToClip( 0, clipSize( 0 ) );
+	}
+	
+	return stayEnabled;
+}
+
+void weapon_assaultrifle_gren::PlayFireGrenadeEffect() {
+	if ( sys.getLocalViewPlayer() != myPlayer || pm_thirdperson.getBoolValue() ) {
+		entity worldModel = getWorldModel( 0 ); // FIXME
+		worldModel.playEffect( "fx_muzzle_flash_world_gren", "muzzle", 0.0f );
+	} else {
+		if ( !myPlayer.IsSniperScopeUp() ) {
+			playEffect( "fx_muzzle_flash_gren", "muzzle", 0.f );
+		}
+	}
+}
+
+void weapon_assaultrifle_gren::Cleanup() {
+	// Gordon: blank here, because we don't want to lose 'iron sights', etc
+}
+
+void weapon_assaultrifle_gren::OnProxyEnter() {
+	Base_OnProxyEnter();
+
+	stopSound( SND_WEAPON_RELOAD );
+	stopSound( SND_WEAPON_BRASS );
+}

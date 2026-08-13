@@ -1,0 +1,193 @@
+//mal_NOTE: these numbers also double as the action groups that are involved with each goal. So, all actions that are in group 0, would have something to do with destroying/protecting the front door, etc.
+#define OBJECTIVE_BOTTEST_DESTROY_DOOR				0
+#define OBJECTIVE_BOTTEST_BUILD_GENERATOR				1
+#define OBJECTIVE_BOTTEST_HACK_SOMESHIT				2
+
+object mapObject_BotTest : mapObject_Default {
+	void			preinit();
+
+	void			InitObjectives();
+
+	void			CompleteObjective( float index, entity p );
+	handle			GetObjectiveMessage( float index );
+
+	void			OnGeneratorBuilt();
+	void			OnDoorDestroyed();
+	void			OnShitHacked();
+	
+	//
+	// Spawn masters
+	//
+	entity			gdfBaseSpawn;
+	entity			gdfGeneratorSpawn;
+	entity			gdfHackSpawn;	
+	entity			stroggBaseSpawn;
+	entity			stroggDoorSpawn;
+	entity			stroggGeneratorSpawn;
+
+	//
+	// Objectives
+	//
+	entity			objective1;
+	entity			objective2;
+	entity			objective3;
+
+	entity			voManager;
+};
+
+mapObject_Base BotTest_MapScript() {
+	return new mapObject_BotTest;
+}
+
+void mapObject_BotTest::preinit() {
+}
+
+void mapObject_BotTest::InitObjectives() {
+	gameRules.setWinningTeam( stroggTeam );
+	gdfTeam.SetRespawnWait( 1 );
+	stroggTeam.SetRespawnWait( 1 );
+	CreateRespawnTimeThread( gdfTeam );
+	
+	//
+	// Set up the spawn points
+	//
+	gdfBaseSpawn = worldspawn.getEntityKey( "script_gdf_base_spawn" );
+	gdfBaseSpawn.setGameTeam( gdfTeam );
+
+	gdfGeneratorSpawn = worldspawn.getEntityKey( "script_gdf_generator_spawn" );
+	gdfGeneratorSpawn.setGameTeam( $null_entity );
+
+	gdfHackSpawn = worldspawn.getEntityKey( "script_gdf_hack_spawn" );
+	gdfHackSpawn.setGameTeam( $null_entity );
+
+	stroggBaseSpawn = worldspawn.getEntityKey( "script_strogg_base_spawn" );
+	stroggBaseSpawn.setGameTeam( $null_entity );
+
+	stroggDoorSpawn = worldspawn.getEntityKey( "script_strogg_door_spawn" );
+	stroggDoorSpawn.setGameTeam( stroggTeam );
+
+	stroggGeneratorSpawn = worldspawn.getEntityKey( "script_strogg_generator_spawn" );
+	stroggGeneratorSpawn.setGameTeam( $null_entity );
+		
+	//
+	// Set up the objectives
+	//
+	objective1			= worldspawn.getEntityKey( "script_obj1_marker" );
+	objective2			= worldspawn.getEntityKey( "script_obj2_marker" );
+	objective3			= worldspawn.getEntityKey( "script_obj3_marker" );
+
+	objective1.vStartObjective();
+	objective2.vStartObjective();
+	objective3.vStartObjective();
+
+	// Set up the objectives
+	objManager.setNextObjective( gdfTeam, OBJECTIVE_BOTTEST_DESTROY_DOOR );
+	objManager.setNextObjective( stroggTeam, OBJECTIVE_BOTTEST_DESTROY_DOOR );
+
+//mal: setup the bot stuff....
+	objManager.setPrimaryTeamAction( STROGG, "gdf_plant_1" );
+	objManager.setPrimaryTeamAction( GDF, "gdf_plant_1" );
+	objManager.setAttackingTeam( GDF );
+	objManager.setBotCriticalClass( GDF, SOLDIER );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+	objManager.setBotSightDist( 3000.0f );
+}
+
+void mapObject_BotTest::CompleteObjective( float index, entity p ) {
+	if ( index == OBJECTIVE_BOTTEST_DESTROY_DOOR ) {
+		OnDoorDestroyed();
+		objManager.setNextObjective( gdfTeam, OBJECTIVE_BOTTEST_BUILD_GENERATOR );
+		objManager.setNextObjective( stroggTeam, OBJECTIVE_BOTTEST_BUILD_GENERATOR );
+	}
+	if ( index == OBJECTIVE_BOTTEST_BUILD_GENERATOR ) {
+		OnGeneratorBuilt();
+		objManager.setNextObjective( gdfTeam, OBJECTIVE_BOTTEST_HACK_SOMESHIT );
+		objManager.setNextObjective( stroggTeam, OBJECTIVE_BOTTEST_HACK_SOMESHIT );
+	}
+	if ( index == OBJECTIVE_BOTTEST_HACK_SOMESHIT ) {
+		OnShitHacked();
+	}
+}
+
+handle mapObject_BotTest::GetObjectiveMessage( float index ) {
+	if ( index == OBJECTIVE_BOTTEST_DESTROY_DOOR ) {
+		return sys.localizeString( "maps/island/obj_destroyed" );
+	}
+	if ( index == OBJECTIVE_BOTTEST_BUILD_GENERATOR ) {
+		return sys.localizeString( "maps/island/obj_constructed" );
+	}
+	if ( index == OBJECTIVE_BOTTEST_HACK_SOMESHIT ) {
+		return sys.localizeString( "maps/island/obj_transmitted" );
+	}
+
+	return g_locStr_BadObjective;
+}
+
+void mapObject_BotTest::OnDoorDestroyed() {
+
+//mal: theses are bot only cmds that tell the bots an objective has been completed.
+	objManager.deactivateBotActionGroup( OBJECTIVE_BOTTEST_DESTROY_DOOR );
+	objManager.activateBotActionGroup( OBJECTIVE_BOTTEST_BUILD_GENERATOR );
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+	objManager.setPrimaryTeamAction( STROGG, "gdf_build_1" );
+	objManager.setPrimaryTeamAction( GDF, "gdf_build_1" );
+	objManager.setBotCriticalClass( STROGG, NOCLASS );
+	objManager.setBotCriticalClass( GDF, ENGINEER );
+	objManager.setTeamNeededClass( GDF, COVERTOPS, SOLDIER, 1, false, false ); //mal: GDF need a covert, pick a bot to switch the next time he respawns.
+	objManager.setTeamNeededClass( STROGG, COVERTOPS, ENGINEER, 1, false, false ); //mal: STROGG want a covert, pick a bot to switch the next time he respawns.
+	objManager.teamSuicideIfNotNearAction( "gdf_build_1", 3000.0f, STROGG ); //mal: this is just for testing - this is NOT a good range to use for this cmd!
+
+
+	voManager.vObjectiveSuccess( OBJECTIVE_BOTTEST_DESTROY_DOOR, gdfTeam );
+	voManager.vSetCurrentObjective( OBJECTIVE_BOTTEST_BUILD_GENERATOR );
+
+	objective1.vFinishObjective();
+
+	stroggDoorSpawn.setGameTeam( $null_entity );
+	stroggGeneratorSpawn.setGameTeam( stroggTeam );
+
+	gdfBaseSpawn.setGameTeam( $null_entity );
+	gdfGeneratorSpawn.setGameTeam( gdfTeam );
+	
+	gdfTeam.SetRespawnWait( 1 );
+	ResetRespawnTimeThread();
+}
+
+void mapObject_BotTest::OnGeneratorBuilt() {
+
+//mal: theses are bot only cmds that tell the bots an objective has been completed.	
+	objManager.deactivateBotActionGroup( OBJECTIVE_BOTTEST_BUILD_GENERATOR );
+	objManager.activateBotActionGroup( OBJECTIVE_BOTTEST_HACK_SOMESHIT );
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS,ACTION_STATE_NULL );
+	objManager.setPrimaryTeamAction( STROGG, "gdf_hack_1" );
+	objManager.setPrimaryTeamAction( GDF, "gdf_hack_1" );
+	objManager.setBotCriticalClass( GDF, COVERTOPS );
+	objManager.setBotCriticalClass( STROGG, NOCLASS );
+	objManager.setTeamNeededClass( GDF, FIELDOPS, ENGINEER, 1, false, false ); //mal: we want a fieldops for the last stage, just to show off their abilities.
+	objManager.setTeamNeededClass( GDF, COVERTOPS, SOLDIER, 1, true, true ); //mal: if we dont have a covert by now, have a bot suicide and switch over ASAP.
+
+
+
+	voManager.vObjectiveSuccess( OBJECTIVE_BOTTEST_BUILD_GENERATOR, gdfTeam );
+	voManager.vSetCurrentObjective( OBJECTIVE_BOTTEST_HACK_SOMESHIT );
+
+	objective2.vFinishObjective();
+
+	stroggGeneratorSpawn.setGameTeam( $null_entity );
+	stroggBaseSpawn.setGameTeam( stroggTeam );
+
+	gdfGeneratorSpawn.setGameTeam( $null_entity );
+	gdfHackSpawn.setGameTeam( gdfTeam );
+	
+	gdfTeam.SetRespawnWait( 1 );
+	ResetRespawnTimeThread();
+}
+
+void mapObject_BotTest::OnShitHacked() {
+	voManager.vObjectiveSuccess( OBJECTIVE_BOTTEST_HACK_SOMESHIT, gdfTeam );
+
+	objective3.vFinishObjective();
+
+	gameRules.setWinningTeam( gdfTeam );
+	gameRules.endGame();
+}

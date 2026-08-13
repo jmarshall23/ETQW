@@ -1,0 +1,29 @@
+
+object mapObject_empty : mapObject_Default {
+	void			preinit();
+	void			destroy();
+
+	void			InitObjectives();
+
+	void			CompleteObjective( float index, entity p );
+};
+
+mapObject_Base Empty_MapScript() {
+	return new mapObject_empty;
+}
+
+void mapObject_empty::preinit() {
+}
+
+void mapObject_empty::destroy() {
+}
+
+void mapObject_empty::InitObjectives() {
+	cvar r_clear = sys.getCVar( "r_clear", "" );
+	r_clear.setStringValue( "0.3 0.3 0.3" );
+	r_clear.remove();
+}
+
+void mapObject_empty::CompleteObjective( float index, entity p ) {
+	ResetRespawnTimeThread();
+}

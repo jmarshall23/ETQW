@@ -1,0 +1,141 @@
+/***********************************************************************
+
+zoomWidget.script
+
+***********************************************************************/
+
+object zoomWidget {
+	void		destroy();
+
+	void		Init( entity other );
+	void		Enable();
+	void		Disable();
+
+	float		GetZoomState();
+	float		GetNumZoomStates();
+	float		GetZoomFov( float indexValue );
+
+	// cycle the zoom levels one by one
+	void		Cycle();
+
+	// zoom in or zoom out by 1/4 levels of zoom
+	void		Zoom( float delta );
+	void		ZoomIn();
+	void		ZoomOut();
+
+	float		numZoomStates;
+	float		zoomTime;
+	float		currentZoomState;
+	boolean		enabled;
+	entity		owner;
+	
+	boolean		IsFullyZoomedIn() { return currentZoomState == numZoomStates - 1; }
+	boolean		IsFullyZoomedOut() { return currentZoomState == 0.0f; }
+	boolean		IsEnabled() { return enabled; }
+};
+
+void zoomWidget::destroy() {
+	Disable();
+}
+
+void zoomWidget::Init( entity other ) {
+	owner			= other;
+
+	numZoomStates	= other.getIntKey( "num_zoom_levels" );
+	zoomTime		= other.getFloatKeyWithDefault( "zoom_time", 0.5f );
+}
+
+float zoomWidget::GetZoomState() {
+	return currentZoomState;
+}
+
+float zoomWidget::GetNumZoomStates() {
+	return numZoomStates;
+}
+
+void zoomWidget::Enable() {
+	if ( enabled ) {
+		return;
+	}
+	enabled = true;
+	owner.setFov( sys.getDefaultFov(), GetZoomFov( currentZoomState ), zoomTime );
+}
+
+void zoomWidget::Disable() {
+	currentZoomState = 0;
+
+	if ( !enabled ) {
+		return;
+	}
+	enabled = false;
+	owner.setFov( GetZoomFov( currentZoomState ), sys.getDefaultFov(), zoomTime );
+}
+
+float zoomWidget::GetZoomFov( float indexValue ) {
+	if ( numZoomStates <= 1 ) {
+		return owner.getFloatKeyWithDefault( "zoom_fov", 45 );
+	}
+
+	float index = int( indexValue );
+	float interpValue = indexValue - index;
+
+	float fov = owner.getFloatKey( "zoom_fov_" + ( index + 1 ) );
+	if ( fov <= 0 ) {
+		fov = 90;
+	}
+
+	if ( interpValue > 0 ) {
+		float fov2 = owner.getFloatKey( "zoom_fov_" + ( index + 2 ) );
+		if ( fov2 <= 0 ) {
+			fov2 = 90;
+		}
+
+		fov = fov + interpValue * ( fov2 - fov );
+	}
+
+	return fov;
+}
+
+void zoomWidget::Cycle() {
+	sys.assert( enabled );
+
+	float oldFov = owner.getFov();
+
+	currentZoomState = currentZoomState + 1;
+
+	if ( currentZoomState >= numZoomStates ) {
+		currentZoomState = 0;
+	} else {
+		currentZoomState = int( currentZoomState );
+	}
+
+	owner.setFov( oldFov, GetZoomFov( currentZoomState ), zoomTime );
+}
+
+void zoomWidget::Zoom( float delta ) {
+	sys.assert( enabled );
+	float oldZoomState = currentZoomState;
+	float oldFov = owner.getFov();
+	float oldTargetFov = GetZoomFov( oldZoomState );
+
+	float maxZoomState = numZoomStates - 1;
+
+	currentZoomState = currentZoomState + delta;
+
+	if ( currentZoomState > maxZoomState ) {
+		currentZoomState = maxZoomState;
+	}
+	if ( currentZoomState < 0 ) {
+		currentZoomState = 0;
+	}
+
+	owner.setFov( oldFov, GetZoomFov( currentZoomState ), zoomTime );
+}
+
+void zoomWidget::ZoomIn() {
+	Zoom( 0.25 );
+}
+
+void zoomWidget::ZoomOut() {
+	Zoom( -0.25 );
+}

@@ -1,0 +1,41 @@
+
+object lightning {
+	void			init();
+	void			destroy();
+	void			Idle();
+	
+	float			boltTimeMin;
+	float			boltTimeMax;	
+
+	float			waitTimeMin;
+	float			waitTimeMax;	
+};
+
+void lightning::init() {
+
+	boltTimeMin = getFloatKey( "bolt_min" );
+	boltTimeMax = getFloatKey( "bolt_max" );
+
+	waitTimeMin = getFloatKey( "wait_min" );
+
+	waitTimeMax = getFloatKey( "wait_max" );	
+
+	
+
+	setState( "Idle" );
+}
+
+void lightning::destroy() {
+
+}
+
+void lightning::Idle() {
+
+	sys.setShaderParm( 0, 0 ); 
+	while( true ) {
+		sys.wait( sys.random( waitTimeMax-waitTimeMin ) + waitTimeMin );
+		sys.setShaderParm( 0, 1 ); // Lightning on
+		sys.wait( sys.random( boltTimeMax-boltTimeMin ) + boltTimeMin );
+		sys.setShaderParm( 0, 0 ); // And off again
+	}
+}

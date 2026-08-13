@@ -1,0 +1,150 @@
+
+object vehicle_husky_cockpit : vehicle_basic_cockpit {
+	void				preinit();
+	void				destroy();
+
+	void				OnEntered();
+	
+	void				AnimThread();
+	
+	float				HideSurface( string surfaceName );
+	void				ShowSurface( float id );
+	
+	string				turnLeftAnim;
+	string				turnRightAnim;
+	string				centerAnim;
+	string				brakeAnim;
+
+	float				surfaceId0;
+	float				surfaceId1;
+	float				surfaceId2;
+	float				surfaceId3;
+}
+
+void vehicle_husky_cockpit::preinit() {
+	surfaceId0 = -1;
+	surfaceId1 = -1;
+	surfaceId2 = -1;
+	surfaceId3 = -1;
+
+	turnLeftAnim	= getKey( "turn_left_anim" );
+	turnRightAnim	= getKey( "turn_right_anim" );
+	centerAnim		= getKey( "base_anim" );
+	brakeAnim		= getKey( "brake_anim" );
+}
+
+void vehicle_husky_cockpit::OnEntered() {
+	surfaceId0 = HideSurface( getKey( "surface_name0" ) );
+	surfaceId1 = HideSurface( getKey( "surface_name1" ) );
+	surfaceId2 = HideSurface( getKey( "surface_name2" ) );
+	surfaceId3 = HideSurface( getKey( "surface_name3" ) );
+
+	thread AnimThread();
+}
+
+void vehicle_husky_cockpit::destroy() {
+	ShowSurface( surfaceId0 );
+	ShowSurface( surfaceId1 );
+	ShowSurface( surfaceId2 );
+	ShowSurface( surfaceId3 );
+
+	sys.killThread( "vehicle_husky_cockpit::AnimThread" );
+}
+
+#define HUSKY_STEER_LEFT	0
+#define HUSKY_STEER_RIGHT	1
+#define HUSKY_STEER_CENTER	2
+
+void vehicle_husky_cockpit::AnimThread() {
+	sys.threadName( "vehicle_husky_cockpit::AnimThread" );
+
+	playAnimBlended( ANIMCHANNEL_TORSO, centerAnim, 0.25f );
+	sys.wait( playAnim( ANIMCHANNEL_LEGS, "into" ) );
+
+	float steerState = HUSKY_STEER_CENTER;
+	float newSteerState;
+	boolean isBraking;
+	
+	float oldSteer = 0.f;
+	
+	while ( true ) {
+		entity driver = myVehicle.getDriver();
+		
+		vector move;
+		boolean leaning = false;
+		if ( driver != $null_entity ) {
+			move = driver.getMove();
+			if ( driver.getButton( PK_LEANLEFT ) || driver.getButton( PK_LEANRIGHT ) ) {
+				leaning = true;
+			}
+		} else {
+			move = '0 0 0';
+		}
+		
+		boolean braking = leaning;
+		if ( !braking ) {
+			float vel = myVehicle.getLinearVelocity() * myVehicle.getWorldAxis( 0 );
+			if ( sys.fabs( vel ) > 10.f && move_x != 0.f ) {
+				if ( ( move_x < 0.f ) != ( vel < 0.f ) ) {
+					braking = true;
+				}
+			}
+		}
+		
+		if ( isBraking != braking ) {
+			isBraking = braking;
+			if ( isBraking ) {
+				playAnimBlended( ANIMCHANNEL_TORSO, brakeAnim, 0.25f );
+			} else {
+				playAnimBlended( ANIMCHANNEL_TORSO, centerAnim, 0.25f );
+			}
+		}
+
+		if ( move_y < 0 ) {
+			if ( move_y > oldSteer ) {
+				newSteerState = HUSKY_STEER_CENTER;
+			} else {
+				newSteerState = HUSKY_STEER_LEFT;
+			}
+		} else if ( move_y > 0 ) {
+			if ( move_y < oldSteer ) {
+				newSteerState = HUSKY_STEER_CENTER;
+			} else {
+				newSteerState = HUSKY_STEER_RIGHT;
+			}
+		} else {
+			newSteerState = HUSKY_STEER_CENTER;
+		}
+				
+		if ( newSteerState != steerState ) {
+			steerState = newSteerState;
+			
+			if ( steerState == HUSKY_STEER_CENTER ) {
+				playAnimBlended( ANIMCHANNEL_LEGS, centerAnim, 0.25f );
+			} else if ( steerState == HUSKY_STEER_RIGHT ) {
+				playAnimBlended( ANIMCHANNEL_LEGS, turnRightAnim, 0.25f );
+			} else if ( steerState == HUSKY_STEER_LEFT ) {
+				playAnimBlended( ANIMCHANNEL_LEGS, turnLeftAnim, 0.25f );
+			}
+		}
+
+		oldSteer = move_y;
+		
+		sys.waitFrame();
+	}
+}
+
+float vehicle_husky_cockpit::HideSurface( string surfaceName ) {
+	float id = -1;
+	if ( surfaceName != "" ) {
+		id = myVehicle.getSurfaceId( surfaceName );
+		myVehicle.hideSurface( id );
+	}
+	return id;
+}
+
+void vehicle_husky_cockpit::ShowSurface( float id ) {
+	if ( id != -1 ) {
+		myVehicle.showSurface( id );
+	}
+}

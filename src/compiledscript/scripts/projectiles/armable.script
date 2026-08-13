@@ -1,0 +1,381 @@
+/*
+========================================
+
+	projectile_armable
+
+========================================
+*/
+
+object projectile_armable : projectile_missile {
+	void		preinit();
+	void		destroy();
+	void		syncFields();
+
+	float		vGetPliersProgressBarValue( float action );
+	boolean		vCheckActionCode( entity p, float actionCode );
+	void		vArm( entity p );
+	boolean		vCustomOrbitRadius();
+	float		vGetOrbitRadius();
+	
+	void		InitDisarmTask();
+	void		FreeDisarmTask();
+
+	boolean		IsCharge();
+
+	void		OnArmed( entity p );
+	void		OnDisarmed( entity p );
+	float		OnActivate( entity p, float distance );
+	float		GetActivateCode( entity p, float distance );
+	boolean		HasDisarmContext( entity other );
+
+	void		CheckContextToolTip( float allegiance, float code, entity p );
+
+	void		OnArmTimeChanged();
+	void		OnDisarmTimeChanged();
+
+	void		ProjectileArmable_OnArmed( entity p );
+	void		ProjectileArmable_OnDisarmed( entity p );
+	
+	void		SetupContents();
+
+	void		Idle();
+	
+	float		armTime;
+	float		disarmTime;
+
+	float		armCount;
+	float		disarmCount;
+	float		countCurrent;
+	float		targetCount;
+
+	float		delayTime;
+
+	float		armCode;
+	float		disarmCode;
+	entity		armingEntity;
+	
+	float		armMeToolTip1;
+	float		armMeToolTip2;
+	float		disarmMeToolTip1;
+	float		disarmMeToolTip2;
+
+	task		disarmTask;
+	
+	boolean		doPostArmSwitch;
+}
+
+void projectile_armable::preinit() {
+	armCount			= getFloatKeyWithDefault( "arm_count", 6 );
+	disarmCount			= getFloatKeyWithDefault( "disarm_count", 6 );
+	
+	if ( getIntKey( "is_charge" ) ) {
+		armCode			= AC_ARM_CHARGE;
+		disarmCode		= AC_DISARM_CHARGE;
+	} else {
+		armCode			= AC_ARM;
+		disarmCode		= AC_DISARM;
+	}
+	
+	armMeToolTip1		= GetToolTip( getKey( "tt_intro_arm_me_1" ) );
+	armMeToolTip2		= GetToolTip( getKey( "tt_intro_arm_me_2" ) );
+	disarmMeToolTip1	= GetToolTip( getKey( "tt_intro_disarm_me_1" ) );
+	disarmMeToolTip2	= GetToolTip( getKey( "tt_intro_disarm_me_2" ) );
+	
+	targetCount			= armCount;
+	
+	doPostArmSwitch		= true;
+}
+
+void projectile_armable::syncFields() {
+	syncBroadcast( "armingEntity" );
+	syncBroadcast( "armTime" );
+	syncBroadcast( "disarmTime" );
+	syncBroadcast( "countCurrent" );
+	
+	syncCallback( "armTime", "OnArmTimeChanged" );
+	syncCallback( "disarmTime", "OnDisarmTimeChanged" );
+}
+
+void projectile_armable::destroy() {
+	FreeDisarmTask();
+}
+
+void projectile_armable::Idle() {
+}
+
+void projectile_armable::OnArmTimeChanged() {
+	if ( armTime != 0 ) {
+		OnArmed( armingEntity );
+	}
+}
+
+void projectile_armable::OnDisarmTimeChanged() {
+	if ( disarmTime != 0 ) {
+		OnDisarmed( armingEntity );
+	}
+}
+	
+void projectile_armable::SetupContents() {
+	setContents( CONTENTS_RENDERMODEL | CONTENTS_PROJECTILE );
+	setClipmask( MASK_PROJECTILE );
+}
+
+float projectile_armable::vGetPliersProgressBarValue( float action ) {
+	if ( action == AC_ARM || action == AC_ARM_CHARGE ) {
+		if ( armTime != 0 ) {
+			return 1.f;
+		}
+		return countCurrent / targetCount;
+	}
+	
+	if ( action == AC_DISARM || action == AC_DISARM_CHARGE ) {
+		if ( disarmTime != 0 ) {
+			return 1.f;
+		}
+		return countCurrent / targetCount;
+	}
+
+	return 0.f;
+}
+
+boolean projectile_armable::vCustomOrbitRadius() {
+	return true;
+}
+
+float projectile_armable::vGetOrbitRadius() {
+	return 32;
+}
+
+void projectile_armable::vArm( entity p ) {
+	float count = 1;
+	
+	boolean arm;
+	boolean disarm;
+
+	if ( !stuck ) {
+		return;
+	}
+
+	if ( armTime == 0 ) {
+		arm = true;
+	} else if ( disarmTime == 0 ) {
+		disarm = true;
+	}
+
+	team_base team = p.getGameTeam();		
+
+	if ( arm ) {
+		if ( IsCharge() ) {
+			if ( team.HasChargeArmBonus( p ) ) {
+				count = count * 1.25f;
+			}
+		}
+	}
+	
+	if ( disarm ) {
+		if ( team.HasDisarmBonus( p ) ) {
+			count = count * 1.25f;
+		}
+	}
+
+	countCurrent = countCurrent + count;
+	
+	if ( sys.isClient() ) {
+		return;
+	}
+			
+	if ( arm ) {
+		if ( countCurrent >= armCount ) {
+			armingEntity = p;
+			OnArmed( p );
+		}
+	} else if ( disarm ) {
+		if ( countCurrent >= disarmCount ) {
+			armingEntity = p;
+			OnDisarmed( p );
+		}
+	}
+}
+
+boolean projectile_armable::vCheckActionCode( entity p, float actionCode ) {
+	if ( delayTime > sys.getTime() ) {
+		return false;
+	}
+
+	if ( !stuck ) {
+		return false;
+	}
+
+	if ( actionCode == armCode ) {
+		if ( armTime == 0 ) {
+			if ( getEntityAllegiance( p ) == TA_ENEMY ) { // can't arm enemy objects
+				return false;
+			}
+			return countCurrent < armCount;
+		}
+	}
+		
+	if ( actionCode == disarmCode ) {
+		if ( armTime == 0 ) {
+			return false;
+		}
+		if ( disarmTime == 0 ) {
+			if ( vGetOwner() == p || getEntityAllegiance( p ) == TA_ENEMY  ) {
+				return countCurrent < disarmCount;
+			}
+		}
+	}
+	
+	return false;	
+}
+
+void projectile_armable::InitDisarmTask() {
+	if ( sys.isClient() ) {
+		return;
+	}
+
+	float taskHandle = GetPlayerTask( getKey( "task_disarm" ) );
+	if ( taskHandle != -1 ) {
+		FreeDisarmTask();
+		disarmTask = taskManager.allocEntityTask( taskHandle, self );
+	}
+}
+
+void projectile_armable::FreeDisarmTask() {
+	if ( disarmTask != $null_entity ) {
+		disarmTask.free();
+	}
+}
+
+void projectile_armable::ProjectileArmable_OnArmed( entity p ) {
+	if ( !sys.isClient() ) {
+		armTime			= sys.getTime();
+		disarmTime		= 0;
+		countCurrent	= 0;
+	}
+	
+	targetCount		= disarmCount;
+	delayTime		= sys.getTime() + getFloatKeyWithDefault( "disarm_delay", 2 );
+	
+	if ( !sys.isClient() ) {
+		if ( p.getPostArmFindBestWeapon() ) {
+			entity armingTool = p.getWeaponEntity();
+			armingTool.nextWeapon();
+		} else {
+			if ( doPostArmSwitch ) {
+				string switchTo = getKey( "item_armed" );
+				if ( switchTo == "best" ) {
+					p.selectBestWeapon( false );
+				} else if ( p.hasWeapon( switchTo ) ) {
+					p.setWeapon( switchTo, 0 );
+				}
+			}
+		}
+	}
+}
+
+void projectile_armable::ProjectileArmable_OnDisarmed( entity p ) {
+	if ( !sys.isClient() ) {
+		armTime			= 0;
+		disarmTime		= sys.getTime();
+		countCurrent	= 0;
+	}
+	
+	targetCount		= armCount;
+	delayTime		= sys.getTime() + getFloatKeyWithDefault( "disarm_delay", 2 );
+}
+
+void projectile_armable::OnArmed( entity p ) {
+	ProjectileArmable_OnArmed( p );
+}
+
+void projectile_armable::OnDisarmed( entity p ) {
+	ProjectileArmable_OnDisarmed( p );
+}
+
+float projectile_armable::OnActivate( entity p, float distance ) {
+	float code = GetActivateCode( p, distance );
+	if ( code == AK_NONE ) {
+		return 0.f;
+	}
+	
+	p.vSelectActionItem( code );
+	return 1.f;
+}
+
+boolean projectile_armable::HasDisarmContext( entity other ) {
+	float allegiance = getEntityAllegiance( other );
+	if ( allegiance == TA_ENEMY ) {	
+		if ( disarmTime == 0 && armTime != 0 ) {
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+float projectile_armable::GetActivateCode( entity p, float distance ) {
+	if ( p.getViewingEntity() != p || distance > DISTANCE_FOR_ACTION ) {
+		return AK_NONE;
+	}
+
+	if ( p.getHealth() <= 0 ) {
+		return AK_NONE;
+	}
+
+	if ( !stuck ) {
+		return AK_NONE;
+	}
+
+	float allegiance = getEntityAllegiance( p );
+
+	if ( allegiance == TA_ENEMY || p == vGetOwner() ) {	
+		if ( disarmTime == 0 && armTime != 0 ) {
+			if ( IsCharge() ) {
+				return AK_CHARGEDISARM;
+			} else {
+				return AK_ARM;
+			}
+		}
+		
+		return AK_NONE;
+	}
+
+	if ( armTime == 0 ) {
+		if ( IsCharge() ) {
+			return AK_CHARGEARM;
+		} else {
+			return AK_ARM;
+		}
+	}
+
+	return AK_NONE;
+}
+
+boolean projectile_armable::IsCharge() {
+	return false;
+}
+
+void projectile_armable::CheckContextToolTip( float allegiance, float code, entity p ) {
+	team_base team;
+	
+	if ( p.isLocalPlayer() ) {
+		if ( !p.isToolTipPlaying() ) {
+			if ( sys.getTime() - p.getCrosshairStartTime() > 0.5f ) {
+				if ( allegiance == TA_FRIEND ) {
+					if ( p.getCurrentWeapon() != p.vGetActionItem( code ) ) {
+						p.sendToolTip( armMeToolTip1 );
+					} else {
+						p.sendToolTip( armMeToolTip2 );
+					}
+				} else {
+					if ( p.getCurrentWeapon() != p.vGetActionItem( code ) ) {
+						p.sendToolTip( disarmMeToolTip1 );
+					} else {
+						p.sendToolTip( disarmMeToolTip2 );
+					}
+				}
+			}
+		}
+	}
+}

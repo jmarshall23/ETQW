@@ -1,0 +1,957 @@
+#define OBJECTIVE_CANYON_BUILD_BRIDGE			0
+#define OBJECTIVE_CANYON_CAPTURE_OUTPOST		1
+#define OBJECTIVE_CANYON_HACK_OBJECTIVE			2
+#define OBJECTIVE_CANYON_DESTROY_BIOREACTOR		3
+
+#define CAN_GDF_DEPLOY_BASE					0
+#define CAN_STROGG_DEPLOY_BASE				1
+
+#define CAN_OBJECTIVE_CONSTRUCT_TOWER1		2
+
+#define CAN_OBJECTIVE_STROGG_SPAWN1			3
+#define CAN_GDF_ATTACK_STROGG_SPAWN1		4
+#define CAN_GDF_DEFEND_STROGG_SPAWN1		5
+#define CAN_STROGG_ATTACK_STROGG_SPAWN1		6
+#define CAN_STROGG_DEFEND_STROGG_SPAWN1		7
+
+#define CAN_OBJECTIVE_GDF_SPAWN1			8
+#define CAN_GDF_ATTACK_GDF_SPAWN1			9
+#define CAN_GDF_DEFEND_GDF_SPAWN1			10
+#define CAN_STROGG_ATTACK_GDF_SPAWN1		11
+#define CAN_STROGG_DEFEND_GDF_SPAWN1		12
+
+#define CAN_OBJECTIVE_BRIDGE				13
+#define CAN_GDF_ATTACK_BRIDGE				14
+#define CAN_STROGG_DEFEND_BRIDGE			15
+#define CAN_STROGG_DEPLOY_BRIDGE			16
+
+#define CAN_OBJECTIVE_GDF_SPAWN2			17
+#define CAN_GDF_DEPLOY_BRIDGE				18
+#define CAN_GDF_ATTACK_GDF_SPAWN2			19
+#define CAN_GDF_DEFEND_GDF_SPAWN2			20
+#define CAN_STROGG_ATTACK_GDF_SPAWN2		21
+#define CAN_STROGG_DEFEND_GDF_SPAWN2		22
+
+#define CAN_OBJECTIVE_MCP					23
+#define CAN_GDF_ATTACK_MCP					24
+#define CAN_STROGG_DEFEND_MCP				25
+#define CAN_STROGG_DEPLOY_MCP				26
+
+#define CAN_OBJECTIVE_SHIELD				27
+#define CAN_GDF_DEPLOY_MCP					28
+#define CAN_GDF_ATTACK_SHIELD				29
+#define CAN_STROGG_DEFEND_SHIELD			30
+#define CAN_STROGG_DEPLOY_SHIELD			31
+
+#define CAN_OBJECTIVE_GDF_SPAWN3			32
+#define CAN_GDF_ATTACK_GDF_SPAWN3			33
+#define CAN_GDF_DEFEND_GDF_SPAWN3			34
+#define CAN_STROGG_ATTACK_GDF_SPAWN3		35
+#define CAN_STROGG_DEFEND_GDF_SPAWN3		36
+
+#define CAN_OBJECTIVE_STROGGIFIER			37
+#define CAN_GDF_DEPLOY_SHIELD				38
+#define CAN_GDF_ATTACK_STROGGIFIER			39
+#define CAN_STROGG_DEFEND_STROGGIFIER		40
+
+#define CAN_SNIPER_SPOTS_01					50
+#define CAN_SNIPER_SPOTS_02					51
+#define CAN_FIRE_SUPPORT_LEDGES_01			52
+#define FIRE_SUPPORT_LEDGES_02				53
+#define CAN_STROGG_VEHICLE_GRABS			54
+#define	CAN_MCP_GDF_DEFENSES				60			// Stuff that should be on at start and turned off when MCP is delivered
+														// GDF Roam and Camp Nodes for vehicles
+
+object mapObject_Canyon : mapObject_Default {
+	void			destroy();
+
+	void			InitObjectives();
+	void			RouteThread();
+	void			DelayedBotSpawnThread();
+	void			DelayedRearSpawnThread();
+	void			CompleteObjective( float index, entity p );
+	handle			GetObjectiveMessage( float index );
+
+	void			OnBridgeBuilt();
+	void			OnOutpostCaptured();
+	void			OnDoorDestroyed();
+	void			OnDeviceDestroyed();
+
+	vector			GetGDFBasePosition() { return '-9000 -9890 1600'; }
+
+	void			ClearMCPData();
+	void			OnMCPSpawned( entity obj );
+	void			OnMCPDestroyed( entity obj, vector newLocation, vector newAngles );
+	void			OnMCPDelivered( entity obj );
+	void			PostBridgeBuiltAudio();
+
+	void			OnTimeLimitHit();
+
+	void			OnShieldHacked();
+	void			OnHackComplete( entity obj );
+	void			OnShieldDeployed( entity obj, entity trigger );
+	void			StartShieldObjective();
+	void			OnShieldDestroyedScud( entity trigger );
+
+	void			OnGuardTower1Built();
+	void			OnGuardTower1Destroyed();
+
+	void			EntranceEffectsThread();
+
+	void			FinalEffectsThread();
+
+	void			OnConstructionComplete( entity obj );
+	void			OnDestructionComplete( entity obj );
+
+	void			StartFirstObjective();
+
+	void			OnSpawnCaptured( string actionName );
+	void			OnSpawnLiberated( string actionName );
+
+	entity			GetSpectateEntity();
+
+	entity			gdfBaseTerritory;
+	entity			bridgeTerritory;
+	entity			outpostTerritory;
+	entity			outsideBunkerTerritory;
+	entity			stroggBaseTerritory;
+
+	entity			objective1Arrow1;
+	entity			objective1Arrow2;
+	entity			objective2Arrow1;
+	entity			objective2Arrow2;
+	entity			objective3Arrow1;
+	entity			objective3Arrow2;
+	entity			objective4Arrow1;
+	entity			objective4Arrow2;
+
+	entity			objective1Marker;
+	entity			objective2Marker;
+	entity			objective3Marker;
+	entity			objective4Marker;
+
+	entity			entrance_smoke;
+
+	entity			entrance_sparks_1;
+	entity			entrance_sparks_2;
+	entity			entrance_sparks_3;
+	entity			entrance_sparks_4;
+	entity			entrance_sparks_5;
+
+	entity			final_blowout_1;
+	entity			final_blowout_2;
+	entity			final_blowout_3;
+
+	entity			final_smoke;
+
+	entity			gdfBaseSpawn;
+	entity			stroggBaseSpawn;
+	entity			stroggRuinsSpawn;
+	entity			gdfHutSpawn;
+	entity			stroggBunkerSpawn;
+	entity			gdfGlasshouseSpawn;
+	entity			gdfRuinedBuildingSpawn;
+
+	entity			bridgeConstruction;
+
+	entity			guardTower1;
+	entity			guardTower1Construction;
+
+	entity			finalObjective;
+	entity			finalObjective_destroyed;
+
+	entity			undergroundBaseStroggshield;
+	entity			undergroundBaseStroggshieldTrigger_1;
+	entity			undergroundBaseStroggshieldTrigger_2;
+
+	entity			mcpCaller;
+	entity			currentMCP;
+	entity			mcpRoute;
+
+	entity			shieldCaller;
+	entity			scudTrigger;
+
+	entity 			endCameraA;
+	entity			endCameraB;
+
+	entity			baseDoorBroken; // func_static broken version that appears after the SSM explodes
+
+	float			mainObjectiveIndex;
+
+	// Bot Obstacles
+	entity			bridge_aasobstacle;
+	entity			strogg_bunker_obstacle_1;
+	entity			strogg_bunker_obstacle_2;
+	entity			strogg_bunker_obstacle_3;
+	
+	cvar 			debug_script;
+}
+
+mapObject_Base Canyon_MapScript() {
+	return new mapObject_Canyon;
+}
+
+void mapObject_Canyon::destroy() {
+}
+
+void mapObject_Canyon::InitObjectives() {
+	gameRules.setWinningTeam( stroggTeam );
+	gdfTeam.SetRespawnWait( 20 );
+	stroggTeam.SetRespawnWait( 20 );
+	gdfTeam.InitRespawnTimeChange();
+	stroggTeam.InitRespawnTimeChange();
+	CreateRespawnTimeThread( gdfTeam );
+
+	gdfBaseTerritory		= sys.getEntity( "gdf_base_deployzone" );
+	bridgeTerritory			= sys.getEntity( "bridge_deployzone" );
+	outpostTerritory		= sys.getEntity( "outpost_deployzone" );
+	outsideBunkerTerritory	= sys.getEntity( "outsidebunker_deployzone" );
+	stroggBaseTerritory		= sys.getEntity( "strogg_base_deployzone" );
+
+	objective1Arrow1		= sys.getEntity( "info_objective_1_progress_1" );
+	objective1Arrow2		= sys.getEntity( "info_objective_1_progress_2" );
+	objective2Arrow1		= sys.getEntity( "info_objective_2_progress_1" );
+	objective2Arrow2		= sys.getEntity( "info_objective_2_progress_2" );
+	objective3Arrow1		= sys.getEntity( "info_objective_3_progress_1" );
+	objective3Arrow2		= sys.getEntity( "info_objective_3_progress_2" );
+	objective4Arrow1		= sys.getEntity( "info_objective_4_progress_1" );
+	objective4Arrow2		= sys.getEntity( "info_objective_4_progress_2" );
+
+	objective1Marker		= sys.getEntity( "info_objective_1" );
+	objective2Marker		= sys.getEntity( "info_objective_2" );
+	objective3Marker		= sys.getEntity( "info_objective_3" );
+	objective4Marker		= sys.getEntity( "info_objective_4" );
+
+	endCameraA				= worldspawn.getEntityKey( "script_placement_camera_a" );
+	endCameraB				= worldspawn.getEntityKey( "script_placement_camera_b" );
+
+	entrance_smoke			= worldspawn.getEntityKey( "script_entrance_smoke" );
+
+	entrance_sparks_1		= worldspawn.getEntityKey( "script_entrance_sparks_1" );
+	entrance_sparks_2		= worldspawn.getEntityKey( "script_entrance_sparks_2" );
+	entrance_sparks_3		= worldspawn.getEntityKey( "script_entrance_sparks_3" );
+	entrance_sparks_4		= worldspawn.getEntityKey( "script_entrance_sparks_4" );
+	entrance_sparks_5		= worldspawn.getEntityKey( "script_entrance_sparks_5" );
+
+	final_blowout_1			= worldspawn.getEntityKey( "script_final_blowout_1" );
+	final_blowout_2			= worldspawn.getEntityKey( "script_final_blowout_2" );
+	final_blowout_3			= worldspawn.getEntityKey( "script_final_blowout_3" );
+
+	final_smoke				= worldspawn.getEntityKey( "script_final_smoke" );
+
+	gdfBaseSpawn			= worldspawn.getEntityKey( "script_gdf_base_spawn" );
+	stroggBaseSpawn			= worldspawn.getEntityKey( "script_strogg_base_spawn" );
+
+	gdfHutSpawn				= sys.getEntity( "info_capturable_spawn_hut" );
+	gdfHutSpawn.vSetActive( false );
+
+	stroggBunkerSpawn		= sys.getEntity( "info_capturable_spawn_bunker" );
+	stroggBunkerSpawn.vSetActive( false );
+	stroggBunkerSpawn.setGameTeam( stroggTeam );
+
+	gdfGlasshouseSpawn		= sys.getEntity( "info_capturable_spawn_glasshouse" );
+	gdfGlasshouseSpawn.setGameTeam( $null_entity );
+	gdfGlasshouseSpawn.vSetActive( true );
+
+	gdfRuinedBuildingSpawn	=	sys.getEntity( "info_capturable_spawn_ruined_building" );
+	gdfRuinedBuildingSpawn.setGameTeam( $null_entity );
+	gdfRuinedBuildingSpawn.vSetActive( false );
+
+	mcpCaller							= worldspawn.getEntityKey( "script_mcp_caller" );
+	mcpRoute							= worldspawn.getEntityKey( "script_mcp_route" );
+
+	bridgeConstruction					= worldspawn.getEntityKey( "script_bridge_materials" );
+
+	finalObjective						= worldspawn.getEntityKey( "script_final_objective" );
+	finalObjective_destroyed			= worldspawn.getEntityKey( "script_final_objective_destroyed" );
+	
+	finalObjective_destroyed.hide();
+	finalObjective_destroyed.forceDisableClip();
+
+	shieldCaller						= worldspawn.getEntityKey( "script_shieldgen_caller" );
+
+	undergroundBaseStroggshield			= worldspawn.getEntityKey( "script_underground_base_stroggshield" );
+	undergroundBaseStroggshieldTrigger_1	= worldspawn.getEntityKey( "script_underground_base_stroggshield_trigger_1" );
+	undergroundBaseStroggshieldTrigger_2	= worldspawn.getEntityKey( "script_underground_base_stroggshield_trigger_2" );
+
+	guardTower1Construction				= worldspawn.getEntityKey( "script_guard_tower_1" );
+	guardTower1							= worldspawn.getEntityKey( "script_guard_tower_1_object" );
+
+	debug_script		 				=	sys.getCVar( "bot_debugMapScript", "1" );
+	
+	CreateDeployTasks();
+
+	objective1Arrow1.vStartObjective();
+	objective1Arrow1.setGameTeam( gdfTeam );
+	objective1Arrow2.vStartObjective();
+	objective1Arrow2.setGameTeam( gdfTeam );
+
+	objective1Marker.vStartObjective();
+	objective2Marker.vStartObjective();
+	objective3Marker.vStartObjective();
+	objective4Marker.vStartObjective();
+
+	gdfBaseTerritory.setActive( true );
+	bridgeTerritory.setActive( true );
+	outpostTerritory.setActive( true );
+	outsideBunkerTerritory.setActive( false );
+	stroggBaseTerritory.setActive( false );
+
+	baseDoorBroken = worldspawn.getEntityKey( "script_basedoorbroken" );
+	baseDoorBroken.hide();
+
+	mainObjectiveIndex = OBJECTIVE_CANYON_BUILD_BRIDGE;
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	gameRules.setEndGameCamera( endCameraB );
+
+	guardTower1Construction.vCreateMission();
+	thread StartFirstObjective();
+
+	//bridge_bot_clip = worldspawn.getEntityKey( "script_bridge_bot_clip" );
+	bridge_aasobstacle = worldspawn.getEntityKey( "script_bridge_aasobstacle" );
+	strogg_bunker_obstacle_1 = worldspawn.getEntityKey( "script_strogg_bunker_obstacle_1" );
+	strogg_bunker_obstacle_2 = worldspawn.getEntityKey( "script_strogg_bunker_obstacle_2" );
+	strogg_bunker_obstacle_3 = worldspawn.getEntityKey( "script_strogg_bunker_obstacle_3" );
+
+	//bridge_bot_clip.hide();
+
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BOTS SETUP FOR BRIDGE OBJECTIVE **********\n" );
+	}
+	objManager.setAttackingTeam( GDF );
+	objManager.setBotSightDist( 3000.0f );
+	objManager.setPrimaryTeamAction( GDF, "gdf_construct_bridge_1" );
+	objManager.setPrimaryTeamAction( STROGG, "gdf_construct_bridge_1" );
+	objManager.setSecondaryTeamAction( GDF, "gdf_construct_tower_1" );
+	objManager.setBotCriticalClass( GDF, ENGINEER );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+	objManager.setTeamUseRearSpawn( STROGG, true );
+	
+	thread DelayedBotSpawnThread();
+	
+	gdfTeam.setTeamRearSpawn( gdfBaseSpawn );
+	objManager.setTeamUseRearSpawnPercentage( GDF, 50 );
+	objManager.setTeamUseRearSpawn( GDF, true );
+	
+	stroggTeam.setTeamRearSpawn( stroggBaseSpawn );
+	objManager.setTeamUseRearSpawnPercentage( STROGG, 20 );
+	objManager.setTeamUseRearSpawn( STROGG, false );
+	
+	// <xian>
+	objManager.disableNode ( "node_before_bridge" );			// Xian
+	objManager.disableNode ( "node_shortcut" );			// Xian
+	objManager.deactivateBotActionGroup ( FIRE_SUPPORT_LEDGES_02 );
+	objManager.activateBotActionGroup ( CAN_SNIPER_SPOTS_01 );
+	objManager.activateBotActionGroup ( CAN_MCP_GDF_DEFENSES );
+	// </xian>
+	thread DelayedRearSpawnThread();
+	thread RouteThread();
+}
+
+void mapObject_Canyon::RouteThread() {
+	sys.wait( 0.1f );
+	objManager.disableRoute( "xian_bot_route_start_3" );
+}
+
+
+void mapObject_Canyon::DelayedBotSpawnThread() {
+	sys.wait( 10.0f );
+	objManager.setTeamNeededClass( GDF, ENGINEER, NOCLASS, 2, false, true );
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 1, false, true );
+}
+
+void mapObject_Canyon::DelayedRearSpawnThread() { 
+	sys.wait( 30.0f );
+	objManager.setTeamUseRearSpawn( STROGG, true );
+}
+
+void mapObject_Canyon::CompleteObjective( float index, entity p ) {
+	if ( index == OBJECTIVE_CANYON_BUILD_BRIDGE ) {
+		OnBridgeBuilt();
+	} else if ( index == OBJECTIVE_CANYON_CAPTURE_OUTPOST ) {
+		OnOutpostCaptured();
+	} else if ( index == OBJECTIVE_CANYON_HACK_OBJECTIVE ) {
+		OnDoorDestroyed();
+	} else if ( index == OBJECTIVE_CANYON_DESTROY_BIOREACTOR ) {
+		OnDeviceDestroyed();
+	}
+}
+
+handle mapObject_Canyon::GetObjectiveMessage( float index ) {
+	if ( index == OBJECTIVE_CANYON_BUILD_BRIDGE ) {
+		return sys.localizeString( "maps/canyon/obj_built" );
+	}
+	if ( index == OBJECTIVE_CANYON_CAPTURE_OUTPOST ) {
+		return sys.localizeString( "maps/canyon/obj_captured" );
+	}
+	if ( index == OBJECTIVE_CANYON_HACK_OBJECTIVE ) {
+		return sys.localizeString( "maps/canyon/obj_destroyed_doors" );
+	}
+	if ( index == OBJECTIVE_CANYON_DESTROY_BIOREACTOR ) {
+		return sys.localizeString( "maps/canyon/obj_destroyed_bio" );
+	}
+	return g_locStr_BadObjective;
+}
+
+void mapObject_Canyon::OnBridgeBuilt() {
+	mainObjectiveIndex = OBJECTIVE_CANYON_CAPTURE_OUTPOST;
+
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	bridgeTerritory.setGameTeam( gdfTeam );
+
+	gdfBaseTerritory.setActive( false );
+	bridgeTerritory.setActive( true );
+	outpostTerritory.setActive( true );
+
+	gdfGlasshouseSpawn.vSetActive( false );
+	gdfGlasshouseSpawn.setGameTeam( gdfTeam );
+
+	stroggRuinsSpawn		= sys.getEntity( "info_capturable_spawn_ruins" );
+	stroggRuinsSpawn.vSetActive( false );
+
+	gdfRuinedBuildingSpawn.vSetActive( true );
+
+	objective1Marker.vFinishObjective();
+	objective1Arrow1.vFinishObjective();
+	objective1Arrow2.vFinishObjective();
+
+	objective2Arrow1.vStartObjective();
+	objective2Arrow1.setGameTeam( gdfTeam );
+	objective2Arrow2.vStartObjective();
+	objective2Arrow2.setGameTeam( gdfTeam );
+
+	bridgeConstruction.vCompleteMission();
+	StopTimedMission();
+
+	// <xian>
+	objManager.enableNode ( "node_before_bridge" );		
+	objManager.enableNode ( "node_shortcut" );			
+	// </xian>
+	
+	
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	mcpCaller.vOnDeploy();
+
+	thread PostBridgeBuiltAudio();
+
+	gdfTeam.SetRespawnWait( 15 );
+	ResetRespawnTimeThread();
+
+	if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BOTS SETUP FOR MCP OBJECTIVE **********\n" );
+	}
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+	//bridge_bot_clip.show();
+	bridge_aasobstacle.activate( bridge_aasobstacle );
+	objManager.deactivateBotActionGroup( CAN_GDF_DEPLOY_BASE );
+	objManager.deactivateBotActionGroup( CAN_OBJECTIVE_STROGG_SPAWN1 );
+	objManager.deactivateBotActionGroup( CAN_GDF_ATTACK_STROGG_SPAWN1 );
+	objManager.deactivateBotActionGroup( CAN_GDF_DEFEND_STROGG_SPAWN1 );
+	objManager.deactivateBotActionGroup( CAN_STROGG_ATTACK_STROGG_SPAWN1 );
+	objManager.deactivateBotActionGroup( CAN_STROGG_DEFEND_STROGG_SPAWN1 );
+	objManager.deactivateBotActionGroup( CAN_OBJECTIVE_GDF_SPAWN1 );
+	objManager.deactivateBotActionGroup( CAN_GDF_ATTACK_GDF_SPAWN1 );
+	objManager.deactivateBotActionGroup( CAN_GDF_DEFEND_GDF_SPAWN1 );
+	objManager.deactivateBotActionGroup( CAN_STROGG_ATTACK_GDF_SPAWN1 );
+	objManager.deactivateBotActionGroup( CAN_STROGG_DEFEND_GDF_SPAWN1 );
+	objManager.deactivateBotActionGroup( CAN_OBJECTIVE_BRIDGE );
+	objManager.deactivateBotActionGroup( CAN_GDF_ATTACK_BRIDGE );
+	objManager.deactivateBotActionGroup( CAN_STROGG_DEFEND_BRIDGE );
+	objManager.deactivateBotActionGroup( CAN_STROGG_DEPLOY_BRIDGE );
+	objManager.activateBotActionGroup( CAN_OBJECTIVE_GDF_SPAWN2 );
+	objManager.activateBotActionGroup( CAN_GDF_DEPLOY_BRIDGE );
+	objManager.activateBotActionGroup( CAN_GDF_ATTACK_GDF_SPAWN2 );
+	objManager.activateBotActionGroup( CAN_STROGG_DEFEND_GDF_SPAWN2 );
+	objManager.activateBotActionGroup( CAN_OBJECTIVE_MCP );
+	objManager.activateBotActionGroup( CAN_GDF_ATTACK_MCP );
+	objManager.activateBotActionGroup( CAN_STROGG_DEFEND_MCP );
+	objManager.activateBotActionGroup( CAN_STROGG_DEPLOY_MCP );
+	objManager.setPrimaryTeamAction( GDF, "gdf_deploy_mcp_1" );
+	objManager.setPrimaryTeamAction( STROGG, "gdf_deploy_mcp_1" );
+	objManager.setBotCriticalClass( GDF, ENGINEER );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+	objManager.setTeamNeededClass( GDF, ENGINEER, NOCLASS, 2, false, true );
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 1, false, true );
+	objManager.setMapHasMCPGoal( true );
+	objManager.killBotActionGroup( CAN_OBJECTIVE_CONSTRUCT_TOWER1 );		// Xian
+	
+	//gdfTeam.setTeamRearSpawn( gdfGlasshouseSpawn );		// Xian
+	// <xian>
+	gdfTeam.setTeamRearSpawn( gdfBaseSpawn );
+	objManager.setTeamUseRearSpawnPercentage( GDF, 100 );
+	objManager.setTeamUseRearSpawn( GDF, true );
+	// </xian>
+	
+	
+}
+
+void mapObject_Canyon::OnOutpostCaptured() {
+	mainObjectiveIndex = OBJECTIVE_CANYON_HACK_OBJECTIVE;
+
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	outpostTerritory.setGameTeam( gdfTeam );
+
+	bridgeTerritory.setActive( false );
+	outpostTerritory.setActive( true );
+	outsideBunkerTerritory.setActive( true );
+
+	stroggBunkerSpawn.vSetActive( true );
+	
+	 gdfRuinedBuildingSpawn.vSetActive( false );
+	 gdfRuinedBuildingSpawn.setGameTeam( gdfTeam );
+
+
+	objective2Marker.vFinishObjective();
+	objective2Arrow1.vFinishObjective();
+	objective2Arrow2.vFinishObjective();
+
+	objective3Arrow1.vStartObjective();
+	objective3Arrow1.setGameTeam( gdfTeam );
+	objective3Arrow2.vStartObjective();
+	objective3Arrow2.setGameTeam( gdfTeam );
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	shieldCaller.vOnDeploy();
+
+	if ( currentMCP != $null_entity ) {
+		currentMCP.vCompleteMission();
+	}
+	StopTimedMission();
+	guardTower1.vFreeMission();
+	guardTower1Construction.vFreeMission();
+	G_PlayObjectiveCompletedRoll( GDF );
+	objManager.PlaySound( worldspawn.getKey( "snd_outpost_captured_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_outpost_captured_gdf" ), gdfTeam );
+
+	gdfTeam.SetRespawnWait( 20 );
+	ResetRespawnTimeThread();
+
+if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BOTS SETUP FOR SHIELD OBJECTIVE **********\n" );
+	}
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+	objManager.deactivateBotActionGroup( CAN_GDF_DEPLOY_BRIDGE );
+	objManager.deactivateBotActionGroup( CAN_OBJECTIVE_GDF_SPAWN2 );
+	objManager.deactivateBotActionGroup( CAN_GDF_ATTACK_GDF_SPAWN2 );
+	objManager.deactivateBotActionGroup( CAN_GDF_DEFEND_GDF_SPAWN2 );
+	objManager.deactivateBotActionGroup( CAN_STROGG_ATTACK_GDF_SPAWN2 );
+	objManager.deactivateBotActionGroup( CAN_STROGG_DEFEND_GDF_SPAWN2 );
+	objManager.deactivateBotActionGroup( CAN_OBJECTIVE_MCP );
+	objManager.deactivateBotActionGroup( CAN_GDF_ATTACK_MCP );
+	objManager.deactivateBotActionGroup( CAN_STROGG_DEFEND_MCP );
+	objManager.deactivateBotActionGroup( CAN_STROGG_DEPLOY_MCP );
+		
+	objManager.activateBotActionGroup( CAN_OBJECTIVE_SHIELD );
+	objManager.activateBotActionGroup( CAN_GDF_DEPLOY_MCP );
+	objManager.activateBotActionGroup( CAN_GDF_ATTACK_SHIELD );
+	objManager.activateBotActionGroup( CAN_STROGG_DEFEND_SHIELD );
+	objManager.activateBotActionGroup( CAN_STROGG_DEPLOY_SHIELD );
+	objManager.activateBotActionGroup( CAN_STROGG_VEHICLE_GRABS );
+	objManager.setPrimaryTeamAction( GDF, "gdf_hack_shield_1" );
+	objManager.setPrimaryTeamAction( STROGG, "gdf_hack_shield_1" );
+	objManager.setBotCriticalClass( GDF, COVERTOPS );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+	
+	objManager.setTeamNeededClass( GDF, COVERTOPS, NOCLASS, 2, false, true );
+	objManager.setTeamNeededClass( GDF, MEDIC, NOCLASS, 2, false, false );
+	objManager.setTeamNeededClass( GDF, FIELDOPS, NOCLASS, 1, false, false );
+	
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 1, false, false );
+	objManager.setTeamNeededClass( STROGG, SOLDIER, NOCLASS, 2, false, false );			// Xian
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 3, false, false );		// Xian
+
+	objManager.setMapHasMCPGoal( false );
+	
+	objManager.setTeamUseRearSpawn( GDF, true );
+	
+	//<xian>
+	stroggTeam.setTeamRearSpawn( stroggBaseSpawn );
+	//objManager.setTeamUseRearSpawnPercentage( STROGG, 50 );
+	objManager.setTeamUseRearSpawnPercentage( STROGG, 75 );
+	objManager.setTeamUseRearSpawn( STROGG, true );
+	objManager.enableRoute( "xian_bot_route_start_3" );
+	objManager.deactivateBotActionGroup ( CAN_SNIPER_SPOTS_01 );
+	objManager.deactivateBotActionGroup ( CAN_MCP_GDF_DEFENSES );
+	objManager.activateBotActionGroup ( FIRE_SUPPORT_LEDGES_02 );
+	//</xian>
+
+
+}
+
+void mapObject_Canyon::EntranceEffectsThread() {
+	entrance_smoke.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.7f );
+	entrance_sparks_1.vTriggerParticleEffect( 1 );
+
+	sys.wait( 1.4f );
+	entrance_sparks_2.vTriggerParticleEffect( 1 );
+	entrance_sparks_5.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.9f );
+	entrance_sparks_3.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.3f );
+	entrance_sparks_4.vTriggerParticleEffect( 1 );
+}
+
+void mapObject_Canyon::OnDoorDestroyed() {
+	mainObjectiveIndex = OBJECTIVE_CANYON_DESTROY_BIOREACTOR;
+
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	outsideBunkerTerritory.setGameTeam( gdfTeam );
+
+	outpostTerritory.setActive( false );
+	outsideBunkerTerritory.setActive( true );
+	stroggBaseTerritory.setActive( true );
+
+	baseDoorBroken.show();
+	undergroundBaseStroggshield.remove();
+	undergroundBaseStroggshieldTrigger_1.remove();
+	undergroundBaseStroggshieldTrigger_2.remove();
+
+	stroggBunkerSpawn.setGameTeam( $null_entity );
+	stroggBunkerSpawn.vSetActive( false );
+	gdfHutSpawn.vSetActive( true );
+
+	objective3Marker.vFinishObjective();
+	objective3Arrow1.vFinishObjective();
+	objective3Arrow2.vFinishObjective();
+
+	objective4Arrow1.vStartObjective();
+	objective4Arrow1.setGameTeam( gdfTeam );
+	objective4Arrow2.vStartObjective();
+	objective4Arrow2.setGameTeam( gdfTeam );
+
+	thread EntranceEffectsThread();
+
+	objManager.SetObjectiveEntity( finalObjective, mainObjectiveIndex );
+	finalObjective.vCreateMission();
+	CreateInitialTimedMission( finalObjective );
+
+	gdfTeam.SetRespawnWait( 20 );
+	ResetRespawnTimeThread();
+
+if ( debug_script.getBoolValue() ) {
+		sys.print( "********** BOTS SETUP FOR STROGGIFIER OBJECTIVE **********\n" );
+	}
+	objManager.deactivateBotActionGroup( CAN_GDF_DEPLOY_MCP );
+	objManager.deactivateBotActionGroup( CAN_OBJECTIVE_SHIELD );
+	objManager.deactivateBotActionGroup( CAN_GDF_ATTACK_SHIELD );
+	objManager.deactivateBotActionGroup( CAN_STROGG_DEFEND_SHIELD );
+	objManager.deactivateBotActionGroup( CAN_STROGG_DEPLOY_SHIELD );
+	objManager.deactivateBotActionGroup( CAN_STROGG_VEHICLE_GRABS );
+	objManager.activateBotActionGroup( CAN_OBJECTIVE_GDF_SPAWN3 );
+	objManager.activateBotActionGroup( CAN_GDF_ATTACK_GDF_SPAWN3 );
+	objManager.activateBotActionGroup( CAN_STROGG_DEFEND_GDF_SPAWN3 );
+	objManager.activateBotActionGroup( CAN_OBJECTIVE_STROGGIFIER );
+	objManager.activateBotActionGroup( CAN_GDF_DEPLOY_SHIELD );
+	objManager.activateBotActionGroup( CAN_GDF_ATTACK_STROGGIFIER );
+	objManager.activateBotActionGroup( CAN_STROGG_DEFEND_STROGGIFIER );
+	objManager.activateBotActionGroup( CAN_STROGG_DEPLOY_BASE );
+	objManager.setPrimaryTeamAction( GDF, "gdf_destroy_stroggifier_1" );
+	objManager.setPrimaryTeamAction( STROGG, "gdf_destroy_stroggifier_1" );
+	
+	objManager.setBotCriticalClass( GDF, SOLDIER );
+	objManager.setBotCriticalClass( STROGG, ENGINEER );
+	
+	objManager.setTeamNeededClass( GDF, SOLDIER, NOCLASS, 3, false, true );			// Xian, changed from 2
+	objManager.setTeamNeededClass( GDF, MEDIC, NOCLASS, 2, false, false );
+	
+	objManager.setTeamNeededClass( STROGG, ENGINEER, NOCLASS, 2, false, true );
+	objManager.setTeamNeededClass( STROGG, MEDIC, NOCLASS, 2, false, false );
+	
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+	objManager.setTeamUseRearSpawn( STROGG, true );
+	// turn off bot aas obstacles
+	strogg_bunker_obstacle_1.activate( strogg_bunker_obstacle_1 );
+	strogg_bunker_obstacle_2.activate( strogg_bunker_obstacle_2 );
+	strogg_bunker_obstacle_3.activate( strogg_bunker_obstacle_3 );
+	
+	objManager.setTeamUseRearSpawn( GDF, false );
+	
+	objManager.deactivateBotActionGroup ( FIRE_SUPPORT_LEDGES_02 );			// Xian
+}
+
+void mapObject_Canyon::FinalEffectsThread() {
+	final_smoke.vTriggerParticleEffect( 1 );
+	final_blowout_1.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.1f );
+	final_blowout_2.vTriggerParticleEffect( 1 );
+
+	sys.wait( 0.1f );
+	final_blowout_3.vTriggerParticleEffect( 1 );
+}
+
+void mapObject_Canyon::OnDeviceDestroyed() {
+	finalObjective_destroyed.show();
+	finalObjective_destroyed.forceEnableClip();
+	
+	objective4Marker.vFinishObjective();
+
+	finalObjective.vCompleteMission();
+	StopTimedMission();
+
+	thread FinalEffectsThread();
+
+	gameRules.setEndGameCamera( endCameraA );
+
+	gameRules.setWinningTeam( gdfTeam );
+	gameRules.endGame();
+}
+
+void mapObject_Canyon::ClearMCPData() {
+	if ( currentMCP != $null_entity ) {
+		currentMCP.vFreeMission();
+		currentMCP = $null_entity;
+	}
+}
+
+void mapObject_Canyon::OnMCPSpawned( entity obj ) {
+	ClearMCPData();
+}
+
+void mapObject_Canyon::OnMCPDestroyed( entity obj, vector newLocation, vector newAngles ) {
+	if ( currentMCP != obj ) {
+		return;
+	}
+
+	ClearMCPData();
+
+	mcpCaller.vCallDrop( newLocation, newAngles );
+}
+
+void mapObject_Canyon::OnMCPDelivered( entity obj ) {
+	ClearMCPData();
+
+	// <xian>
+	// Do this so they use the tank / flyers
+	
+	gdfTeam.setTeamRearSpawn( gdfBaseSpawn );
+	objManager.setTeamUseRearSpawnPercentage( GDF, 50 );
+	objManager.setTeamUseRearSpawn( GDF, true );
+	
+	// </xian>
+
+	if ( mainObjectiveIndex == OBJECTIVE_CANYON_CAPTURE_OUTPOST ) {
+		currentMCP = obj;
+		objManager.SetObjectiveEntity( currentMCP, mainObjectiveIndex );
+		currentMCP.vSetGoalMarker( objective2Marker );
+		currentMCP.vSetPathTargets( mcpCaller.getWorldOrigin(), objective2Marker.getWorldOrigin() );
+		currentMCP.setTrackerEntity( mcpRoute );
+		currentMCP.vCreateMission();
+		CreateInitialTimedMission( currentMCP );
+	}
+}
+
+void mapObject_Canyon::StartShieldObjective() {
+	sys.wait( 5.f );
+
+	scudTrigger.vSetActive( true );
+	scudTrigger.vCreateMission();
+	CreateInitialTimedMission( scudTrigger );
+	objManager.SetObjectiveEntity( scudTrigger, mainObjectiveIndex );
+	
+}
+
+void mapObject_Canyon::OnShieldDestroyedScud( entity trigger ) {
+	thread StartShieldObjective();
+}
+
+void mapObject_Canyon::StartFirstObjective() {
+	sys.wait( 5.f );
+
+	objManager.SetObjectiveEntity( bridgeConstruction, mainObjectiveIndex );
+	bridgeConstruction.vCreateMission();
+	CreateInitialTimedMission( bridgeConstruction );
+}
+
+void mapObject_Canyon::OnShieldDeployed( entity obj, entity trigger ) {
+	scudTrigger = trigger;
+	scudTrigger.vStartObjective();
+}
+
+void mapObject_Canyon::OnHackComplete( entity obj ) {
+	if ( obj == scudTrigger ) {
+		OnShieldHacked();
+	}
+}
+
+void mapObject_Canyon::OnShieldHacked() {
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+	scudTrigger.vCompleteMission();
+	StopTimedMission();
+
+	objManager.deactivateBotActionGroup( CAN_OBJECTIVE_SHIELD );
+	objManager.botUpdateForEvent( NOTEAM, NOCLASS, ACTION_STATE_NULL );
+	
+	objManager.setTeamUseRearSpawn( GDF, true ); // Xian
+	
+}
+
+void mapObject_Canyon::PostBridgeBuiltAudio() {
+	sys.wait( 10.f );
+
+	objManager.PlaySound( worldspawn.getKey( "snd_mcp_intro_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_mcp_intro_gdf" ), gdfTeam );
+}
+
+void mapObject_Canyon::OnConstructionComplete( entity obj ) {
+	if ( obj == guardTower1Construction ) {
+		OnGuardTower1Built();
+	}
+}
+
+void mapObject_Canyon::OnDestructionComplete( entity obj ) {
+	if ( obj == guardTower1Construction ) {
+		OnGuardTower1Destroyed();
+	}
+}
+
+void mapObject_Canyon::OnGuardTower1Built() {
+	guardTower1Construction.vCompleteMission();
+	objManager.deactivateBotActionGroup( CAN_OBJECTIVE_CONSTRUCT_TOWER1 );
+	if ( mainObjectiveIndex < OBJECTIVE_CANYON_HACK_OBJECTIVE ) {
+		guardTower1.vCreateMission();
+	}
+}
+
+void mapObject_Canyon::OnGuardTower1Destroyed() {
+	guardTower1.vCompleteMission();
+	//if ( mainObjectiveIndex < OBJECTIVE_CANYON_HACK_OBJECTIVE ) {
+	if ( mainObjectiveIndex < OBJECTIVE_CANYON_CAPTURE_OUTPOST ) {
+		guardTower1Construction.vCreateMission();
+		objManager.activateBotActionGroup( CAN_OBJECTIVE_CONSTRUCT_TOWER1 );
+	}
+
+}
+
+void mapObject_Canyon::OnSpawnCaptured( string actionName ) {
+	if( actionName == "strogg_forward_spawn1" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** STROGG CAPTURED STROGG SPAWN 1 **********\n" );
+		}
+		objManager.deactivateBotActionGroup( CAN_STROGG_ATTACK_STROGG_SPAWN1 );
+		objManager.activateBotActionGroup( CAN_STROGG_DEFEND_STROGG_SPAWN1 );
+		objManager.deactivateBotActionGroup( CAN_GDF_DEFEND_STROGG_SPAWN1 );
+		objManager.activateBotActionGroup( CAN_GDF_ATTACK_STROGG_SPAWN1 );
+	}
+
+	if( actionName == "gdf_forward_spawn1" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** GDF CAPTURED GDF SPAWN 1 **********\n" );
+		}
+		objManager.deactivateBotActionGroup( CAN_GDF_ATTACK_GDF_SPAWN1 );
+		objManager.activateBotActionGroup( CAN_GDF_DEFEND_GDF_SPAWN1 );
+		objManager.deactivateBotActionGroup( CAN_STROGG_DEFEND_GDF_SPAWN1 );
+		objManager.activateBotActionGroup( CAN_STROGG_ATTACK_GDF_SPAWN1 );
+	}
+
+	if( actionName == "gdf_forward_spawn2" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** GDF CAPTURED GDF SPAWN 2 **********\n" );
+		}
+		objManager.deactivateBotActionGroup( CAN_GDF_ATTACK_GDF_SPAWN2 );
+		objManager.activateBotActionGroup( CAN_GDF_DEFEND_GDF_SPAWN2 );
+		objManager.deactivateBotActionGroup( CAN_STROGG_DEFEND_GDF_SPAWN2 );
+		objManager.activateBotActionGroup( CAN_STROGG_ATTACK_GDF_SPAWN2 );
+	}
+
+	if( actionName == "gdf_forward_spawn3" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** GDF CAPTURED GDF SPAWN 3 **********\n" );
+		}
+		objManager.deactivateBotActionGroup( CAN_GDF_ATTACK_GDF_SPAWN3 );
+		objManager.activateBotActionGroup( CAN_GDF_DEFEND_GDF_SPAWN3 );
+		objManager.deactivateBotActionGroup( CAN_STROGG_DEFEND_GDF_SPAWN3 );
+		objManager.activateBotActionGroup( CAN_STROGG_ATTACK_GDF_SPAWN3 );
+	}
+}
+
+void mapObject_Canyon::OnSpawnLiberated( string actionName ) {
+	if( actionName == "strogg_forward_spawn1" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** STROGG LOST STROGG SPAWN 1 **********\n" );
+		}
+		objManager.deactivateBotActionGroup( CAN_STROGG_DEFEND_STROGG_SPAWN1 );
+		objManager.activateBotActionGroup( CAN_STROGG_ATTACK_STROGG_SPAWN1 );
+		objManager.deactivateBotActionGroup( CAN_GDF_ATTACK_STROGG_SPAWN1 );
+		objManager.activateBotActionGroup( CAN_GDF_DEFEND_STROGG_SPAWN1 );
+	}
+
+	if( actionName == "gdf_forward_spawn1" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** GDF LOST GDF SPAWN 1 **********\n" );
+		}
+		objManager.deactivateBotActionGroup( CAN_GDF_DEFEND_GDF_SPAWN1 );
+		objManager.activateBotActionGroup( CAN_GDF_ATTACK_GDF_SPAWN1 );
+		objManager.deactivateBotActionGroup( CAN_STROGG_ATTACK_GDF_SPAWN1 );
+		objManager.activateBotActionGroup( CAN_STROGG_DEFEND_GDF_SPAWN1 );
+	}
+
+	if( actionName == "gdf_forward_spawn2" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** GDF LOST GDF SPAWN 2 **********\n" );
+		}
+		objManager.deactivateBotActionGroup( CAN_GDF_DEFEND_GDF_SPAWN2 );
+		objManager.activateBotActionGroup( CAN_GDF_ATTACK_GDF_SPAWN2 );
+		objManager.deactivateBotActionGroup( CAN_STROGG_ATTACK_GDF_SPAWN2 );
+		objManager.activateBotActionGroup( CAN_STROGG_DEFEND_GDF_SPAWN2 );
+	}
+
+	if( actionName == "gdf_forward_spawn3" ) {
+		if ( debug_script.getBoolValue() ) {
+			sys.print( "********** GDF LOST GDF SPAWN 3 **********\n" );
+		}
+		objManager.deactivateBotActionGroup( CAN_GDF_DEFEND_GDF_SPAWN3 );
+		objManager.activateBotActionGroup( CAN_GDF_ATTACK_GDF_SPAWN3 );
+		objManager.deactivateBotActionGroup( CAN_STROGG_ATTACK_GDF_SPAWN3 );
+		objManager.activateBotActionGroup( CAN_STROGG_DEFEND_GDF_SPAWN3 );
+	}
+}
+
+void mapObject_Canyon::OnTimeLimitHit() {
+	FinishTimedMission();
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	objManager.PlaySound( worldspawn.getKey( "snd_gdflose_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_gdflose_gdf" ), gdfTeam );
+}
+
+entity mapObject_Canyon::GetSpectateEntity() { 
+	if ( !bridgeConstruction.vIsObjectiveComplete() ) {
+		return bridgeConstruction.vGetSpectateEntity();
+	}
+	
+	entity deployedMCP = G_FindDeployedMCP();
+	if ( currentMCP == $null_entity && deployedMCP == $null_entity ) {
+		return $null_entity;
+	}
+	
+	if ( currentMCP != $null_entity ) {
+		if ( !currentMCP.vIsObjectiveComplete() ) {
+			return currentMCP.vGetSpectateEntity();
+		}
+	}
+	
+	if ( !scudTrigger.vIsObjectiveComplete() ) {
+		return scudTrigger.vGetSpectateEntity();
+	}
+
+	if ( finalObjective != $null_entity ) {
+		return finalObjective.vGetSpectateEntity();
+	}
+	
+	return $null_entity;
+}

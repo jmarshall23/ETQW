@@ -1,0 +1,56 @@
+// Island Beacons
+
+#define BEACON_IDLE 	1
+#define BEACON_RAISE 	2
+
+object island_generator_beacon {
+	void			preinit();
+	void			init();
+	void 			vOnDeploy();
+	void 			RaiseAnim();
+	void			syncFields();
+	void			OnAnimStateChanged();
+	float			AnimState( float state );
+	float			currentAnimState;
+	boolean			deployed;
+}
+
+void island_generator_beacon::preinit() {
+}
+
+
+void island_generator_beacon::init() {
+}
+
+void island_generator_beacon::vOnDeploy() {
+	deployed = true;
+	thread RaiseAnim();
+}
+
+void island_generator_beacon::syncFields() {
+	syncBroadcast( "deployed" );
+	syncCallback( "deployed", "vOnDeploy" );
+
+	syncBroadcast( "currentAnimState" );
+	syncCallback( "currentAnimState", "OnAnimStateChanged" );
+}
+
+float island_generator_beacon::AnimState( float state ) {
+	currentAnimState = state;
+	if( currentAnimState == BEACON_IDLE ) {
+		return playAnim( ANIMCHANNEL_ALL, "raise" );
+	}
+	if( currentAnimState == BEACON_RAISE ) {
+		return playCycle( ANIMCHANNEL_ALL, "idle_loop" );
+	}
+	return 0.f;
+}
+
+void island_generator_beacon::OnAnimStateChanged() {
+	AnimState( currentAnimState );
+}
+
+void island_generator_beacon::RaiseAnim() {
+	sys.wait( AnimState( BEACON_IDLE ));
+	AnimState( BEACON_RAISE );
+}

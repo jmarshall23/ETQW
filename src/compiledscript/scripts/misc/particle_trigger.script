@@ -1,0 +1,24 @@
+
+object particle_trigger {
+	void					vTriggerParticleEffect( float index );
+	void					DoEffect( float index );
+
+	void					OnNetworkEvent();
+}
+
+void particle_trigger::vTriggerParticleEffect( float index ) {
+	if ( sys.isServer() ) {
+		sendNetworkEvent( -1, false, index );
+		sendNetworkEvent( -1, true, index );
+	} else {
+		DoEffect( index );
+	}
+}
+
+void particle_trigger::OnNetworkEvent() {
+	DoEffect( sys.argvf( 0 ) );
+}
+
+void particle_trigger::DoEffect( float index ) {
+	playEffect( "fx_triggered_" + index, "", 0 );
+}

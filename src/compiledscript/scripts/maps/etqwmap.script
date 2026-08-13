@@ -1,0 +1,372 @@
+#define OBJECTIVE_ETQWMAP_BUILD_BRIDGE			0
+#define OBJECTIVE_ETQWMAP_CAPTURE_OUTPOST		1
+#define OBJECTIVE_ETQWMAP_HACK_OBJECTIVE		2
+#define OBJECTIVE_ETQWMAP_DESTROY_OBJECTIVE		3
+
+object mapObject_EtqwMap : mapObject_Default {
+	void			InitObjectives();
+
+	void			CompleteObjective( float index, entity p );
+	handle			GetObjectiveMessage( float index );
+
+	void			OnBridgeBuilt();
+	void			OnOutpostCaptured();
+	void			OnHackObjective();
+	void			OnDeviceDestroyed();
+
+	void			PostBridgeBuiltAudio();
+	void			StartShieldObjective();
+	void			StartFirstObjective();
+	void			OnShieldDestroyedScud( entity trigger );
+
+	vector			GetGDFBasePosition() { return '9800 -10870 2080'; }
+
+	void			OnTimeLimitHit();
+
+	void			OnShieldHacked();
+
+	void			OnShieldDeployed( entity obj, entity trigger );
+	void			OnHackComplete( entity obj );
+	void			OnMCPSpawned( entity obj );
+	void			OnMCPDestroyed( entity obj, vector newLocation, vector newAngles );
+	void			OnMCPDelivered( entity obj );
+
+	void			ClearMCPData();
+
+	float			mainObjectiveIndex;
+
+	entity			gdfBaseTerritory;
+	entity			bridgeTerritory;
+	entity			outpostTerritory;
+	entity			stroggBaseTerritory;
+	entity			shieldTerritory;
+
+	entity			objective1Marker;
+	entity			objective2Marker;
+	entity			objective3Marker;
+	entity			objective4Marker;
+
+	entity			stroggBridgeSpawn;
+	entity			gdfOutpostSpawn;
+	entity			stroggOutpostSpawn;
+	entity 			stroggBaseSpawn;
+	entity 			stroggShieldSpawn;
+	entity 			gdfBaseSpawn;
+	entity 			gdfBridgeSpawn;
+
+	entity 			gdfCapturableSpawn1;
+	entity 			gdfCapturableSpawn2;
+
+	entity			bridgeConstruction;
+	entity			device;
+
+	entity			scudTrigger;
+
+	entity			mcpRoute;
+	entity			mcpCaller;
+	entity			shieldCaller;
+
+	entity			currentMCP;
+}
+
+mapObject_Base EtqwMap_MapScript() {
+	return new mapObject_EtqwMap;
+}
+
+void mapObject_EtqwMap::InitObjectives() {
+
+	sys.print( "*****LOADED ETQW MAP SCRIPT*****\n" );
+	
+	gameRules.setWinningTeam( stroggTeam );
+	gdfTeam.SetRespawnWait( 20 );
+	stroggTeam.SetRespawnWait( 20 );
+	CreateRespawnTimeThread( gdfTeam );
+
+	gdfBaseTerritory		= worldspawn.getEntityKey( "script_gdf_base_territory" );
+	bridgeTerritory			= worldspawn.getEntityKey( "script_bridge_territory" );
+	outpostTerritory		= worldspawn.getEntityKey( "script_outpost_territory" );
+	shieldTerritory			= worldspawn.getEntityKey( "script_shield_territory" );
+	stroggBaseTerritory		= worldspawn.getEntityKey( "script_strogg_base_territory" );
+	
+	objective1Marker		= worldspawn.getEntityKey( "script_obj1_marker" );
+	objective2Marker		= worldspawn.getEntityKey( "script_obj2_marker" );
+	objective3Marker		= worldspawn.getEntityKey( "script_obj3_marker" );
+	objective4Marker		= worldspawn.getEntityKey( "script_obj4_marker" );
+
+	bridgeConstruction		= worldspawn.getEntityKey( "script_bridge_materials" );
+	device					= worldspawn.getEntityKey( "script_strogg_device" );
+
+	stroggBridgeSpawn		= worldspawn.getEntityKey( "script_strogg_bridge_spawn" );
+	stroggShieldSpawn		= worldspawn.getEntityKey( "script_strogg_shield_spawn" );
+	stroggBaseSpawn			= worldspawn.getEntityKey( "script_strogg_base_spawn" );
+	stroggOutpostSpawn		= worldspawn.getEntityKey( "script_strogg_outpost_spawn" );
+	
+	gdfBaseSpawn			= worldspawn.getEntityKey( "script_gdf_base_spawn" );
+	gdfBridgeSpawn			= worldspawn.getEntityKey( "script_gdf_bridge_spawn" );
+	gdfOutpostSpawn			= worldspawn.getEntityKey( "script_gdf_outpost_spawn" );
+	
+	gdfCapturableSpawn1		= worldspawn.getEntityKey( "script_capturable_spawn_gdf_1" );
+	gdfCapturableSpawn2 	= worldspawn.getEntityKey( "script_capturable_spawn_gdf_2" );	
+
+	mcpRoute				= worldspawn.getEntityKey( "script_mcp_route" );
+	mcpCaller				= worldspawn.getEntityKey( "script_mcp_caller" );
+	shieldCaller			= worldspawn.getEntityKey( "script_shieldgen_caller" );
+	
+	gdfBaseSpawn.setGameTeam( gdfTeam );
+	stroggBridgeSpawn.setGameTeam( stroggTeam );
+	stroggShieldSpawn.setGameTeam( stroggTeam );
+	stroggBaseSpawn.setGameTeam( stroggTeam );
+	gdfOutpostSpawn.setGameTeam( $null_entity );
+	gdfBridgeSpawn.setGameTeam( $null_entity );
+	stroggOutpostSpawn.setGameTeam( stroggTeam );
+	
+	gdfCapturableSpawn1.vSetActive( false );
+	gdfCapturableSpawn2.vSetActive( false );
+
+	objective1Marker.vStartObjective();
+	objective2Marker.vFinishObjective();
+	objective3Marker.vFinishObjective();
+	objective4Marker.vFinishObjective();
+
+	thread StartFirstObjective();
+
+	mainObjectiveIndex = OBJECTIVE_ETQWMAP_BUILD_BRIDGE;
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+}
+
+void mapObject_EtqwMap::CompleteObjective( float index, entity p ) {
+	if ( index == OBJECTIVE_ETQWMAP_BUILD_BRIDGE ) {
+		OnBridgeBuilt();
+	} else if ( index == OBJECTIVE_ETQWMAP_CAPTURE_OUTPOST ) {
+		OnOutpostCaptured();
+	} else if ( index == OBJECTIVE_ETQWMAP_HACK_OBJECTIVE ) {
+		OnHackObjective();
+	} else if ( index == OBJECTIVE_ETQWMAP_DESTROY_OBJECTIVE ) {
+		OnDeviceDestroyed();
+	}
+}
+
+void mapObject_EtqwMap::OnShieldDeployed( entity obj, entity trigger ) {
+	scudTrigger = trigger;
+	scudTrigger.vStartObjective();
+}
+
+void mapObject_EtqwMap::OnHackComplete( entity obj ) {
+	if ( obj == scudTrigger ) {
+		OnShieldHacked();
+	}
+}
+
+void mapObject_EtqwMap::ClearMCPData() {
+	if ( currentMCP != $null_entity ) {
+		currentMCP.vFreeMission();
+		currentMCP = $null_entity;
+	}
+}
+
+void mapObject_EtqwMap::OnMCPSpawned( entity obj ) {
+	ClearMCPData();
+}
+
+void mapObject_EtqwMap::OnMCPDestroyed( entity obj, vector newLocation, vector newAngles ) {
+	if ( currentMCP != obj ) {
+		return;
+	}
+
+	ClearMCPData();
+
+	mcpCaller.vCallDrop( newLocation, newAngles );
+}
+
+void mapObject_EtqwMap::OnMCPDelivered( entity obj ) {
+	ClearMCPData();
+
+	if ( mainObjectiveIndex == OBJECTIVE_ETQWMAP_CAPTURE_OUTPOST ) {
+		currentMCP = obj;
+		objManager.SetObjectiveEntity( currentMCP, mainObjectiveIndex );
+		currentMCP.vSetGoalMarker( objective2Marker );
+		currentMCP.vSetPathTargets( mcpCaller.getWorldOrigin(), objective2Marker.getWorldOrigin() );
+		currentMCP.setTrackerEntity( mcpRoute );
+		CreateInitialTimedMission( currentMCP );
+		currentMCP.vCreateMission();
+	}
+}
+
+handle mapObject_EtqwMap::GetObjectiveMessage( float index ) {
+	if ( index == OBJECTIVE_ETQWMAP_BUILD_BRIDGE ) {
+		return sys.localizeString( "maps/valley/obj_bridge" );
+	}
+
+	if ( index == OBJECTIVE_ETQWMAP_CAPTURE_OUTPOST ) {
+		return sys.localizeString( "maps/valley/obj_outpost" );
+	}
+
+	if ( index == OBJECTIVE_ETQWMAP_HACK_OBJECTIVE ) {
+		return sys.localizeString( "maps/valley/obj_depot" );
+	}
+
+	if ( index == OBJECTIVE_ETQWMAP_DESTROY_OBJECTIVE ) {
+		return sys.localizeString( "maps/valley/obj_contaminator" );
+	}
+
+	return g_locStr_BadObjective;
+}
+
+void mapObject_EtqwMap::OnShieldHacked() {
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+	StopTimedMission();
+	scudTrigger.vCompleteMission();
+}
+
+
+void mapObject_EtqwMap::OnBridgeBuilt() {
+	
+	mainObjectiveIndex = OBJECTIVE_ETQWMAP_CAPTURE_OUTPOST;
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	objective1Marker.vFinishObjective();
+	objective2Marker.vStartObjective();
+		
+	bridgeTerritory.setGameTeam( gdfTeam );
+	stroggBridgeSpawn.setGameTeam( $null_entity );
+
+	gdfBaseTerritory.setActive( false );
+	bridgeTerritory.setActive( true );
+	outpostTerritory.setActive( true );
+	
+	gdfBridgeSpawn.setGameTeam( gdfTeam );
+
+	gdfCapturableSpawn1.vSetActive( true );
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	StopTimedMission();
+	bridgeConstruction.vCompleteMission();
+
+	mcpCaller.vOnDeploy();
+
+	thread PostBridgeBuiltAudio();
+	
+	gdfTeam.SetRespawnWait( 15 );
+	ResetRespawnTimeThread();
+		
+}
+
+void mapObject_EtqwMap::OnOutpostCaptured() {
+	mainObjectiveIndex = OBJECTIVE_ETQWMAP_HACK_OBJECTIVE;
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	gdfCapturableSpawn1.vSetActive( false );
+	gdfCapturableSpawn1.setGameTeam( gdfTeam );
+
+	gdfOutpostSpawn.setGameTeam( gdfTeam );
+	stroggOutpostSpawn.setGameTeam( $null_entity );
+	
+	outpostTerritory.setGameTeam( gdfTeam );
+
+	gdfCapturableSpawn2.vSetActive( true );
+
+	objective2Marker.vFinishObjective();
+	objective3Marker.vStartObjective();
+
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	if ( currentMCP != $null_entity ) {
+		currentMCP.vCompleteMission();
+	}
+	StopTimedMission();
+
+	shieldCaller.vOnDeploy();
+
+	G_PlayObjectiveCompletedRoll( GDF );
+	objManager.PlaySound( worldspawn.getKey( "snd_outpost_captured_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_outpost_captured_gdf" ), gdfTeam );
+	
+	gdfTeam.SetRespawnWait( 20 );
+	stroggTeam.SetRespawnWait( 20 );
+	ResetRespawnTimeThread();
+}
+
+void mapObject_EtqwMap::OnHackObjective() {
+
+	sys.print( "*****SHIELD HACKED*****\n" );
+	
+	mainObjectiveIndex = OBJECTIVE_ETQWMAP_DESTROY_OBJECTIVE;
+	objManager.setNextObjective( gdfTeam, mainObjectiveIndex );
+	objManager.setNextObjective( stroggTeam, mainObjectiveIndex );
+
+	objective3Marker.vFinishObjective();
+	objective4Marker.vStartObjective();
+
+	device.vStartObjective();
+
+	gdfCapturableSpawn2.vSetActive( false );
+	gdfCapturableSpawn2.setGameTeam( gdfTeam );	
+	
+	stroggShieldSpawn.setGameTeam( $null_entity );
+
+	shieldTerritory.setGameTeam( gdfTeam );
+
+	scudTrigger.vFreeMission();
+
+	objManager.SetObjectiveEntity( device, mainObjectiveIndex );
+	CreateInitialTimedMission( device );
+	device.vCreateMission();
+	
+	gdfTeam.SetRespawnWait( 20 );
+	stroggTeam.SetRespawnWait( 20 );
+	ResetRespawnTimeThread();
+}
+
+void mapObject_EtqwMap::OnDeviceDestroyed() {
+	objective4Marker.vFinishObjective();
+
+	StopTimedMission();
+	device.vFinishObjective();;
+
+	gameRules.setWinningTeam( gdfTeam );
+	gameRules.endGame();
+
+	device.vCompleteMission();
+}
+
+void mapObject_EtqwMap::PostBridgeBuiltAudio() {
+	sys.wait( 10.f );
+
+	objManager.PlaySound( worldspawn.getKey( "snd_mcp_intro_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_mcp_intro_gdf" ), gdfTeam );
+}
+
+void mapObject_EtqwMap::StartShieldObjective() {
+	sys.wait( 5.f );
+
+	scudTrigger.vSetActive( true );
+	CreateInitialTimedMission( scudTrigger );
+	scudTrigger.vCreateMission();
+	objManager.SetObjectiveEntity( scudTrigger, mainObjectiveIndex );
+}
+
+void mapObject_EtqwMap::OnShieldDestroyedScud( entity trigger ) {
+	thread StartShieldObjective();
+}
+
+void mapObject_EtqwMap::StartFirstObjective() {
+	sys.wait( 5.f );
+
+	objManager.SetObjectiveEntity( bridgeConstruction, mainObjectiveIndex );
+
+	CreateInitialTimedMission( bridgeConstruction );
+	bridgeConstruction.vCreateMission();
+	bridgeConstruction.vStartObjective();
+}
+
+void mapObject_EtqwMap::OnTimeLimitHit() {
+	FinishTimedMission();
+	objManager.SetObjectiveEntity( $null_entity, -1 );
+
+	objManager.PlaySound( worldspawn.getKey( "snd_gdflose_strogg" ), stroggTeam );
+	objManager.PlaySound( worldspawn.getKey( "snd_gdflose_gdf" ), gdfTeam );
+}

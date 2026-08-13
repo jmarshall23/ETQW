@@ -1,0 +1,86 @@
+
+// Projects an overlay onto the ground where the mcp is to be deployed, and will auto deploy the mcp when it gets in range
+
+object mcp_marker {
+	void		preinit();
+	void		init();
+	void		destroy();
+	
+	void		vOnShowOverlay( entity p );
+	void		vOnHideOverlay( entity p, entity v );
+
+	void		ShowOverlay();
+	void		HideOverlay();
+	
+	vector		deploySize;
+	float		deployDecal;
+	
+	entity		lastDriver;
+}
+
+void mcp_marker::preinit() {	
+	object team = sys.getTeam( getKey( "team" ) );
+	if ( team == $null_entity ) {
+		sys.warning( "mcp_marker::preinit no team specified on " + getName() );
+	} else {
+		setGameTeam( team );
+	}
+	
+	vector defaultSize = '512 512 512';
+	
+	deployDecal = -1;
+	deploySize	= getVectorKeyWithDefault( "decal_size", defaultSize );
+}
+
+void mcp_marker::init() {
+}
+
+void mcp_marker::destroy() {
+	HideOverlay();
+}
+
+void mcp_marker::vOnShowOverlay( entity p ) {	
+	if ( p == sys.getLocalPlayer() ) {
+		ShowOverlay();
+	}
+}
+
+void mcp_marker::vOnHideOverlay( entity p, entity v ) {
+	vehicle_mcp mcp = v;
+
+	if ( p == sys.getLocalPlayer() ) {
+		HideOverlay();
+	}
+	
+	if ( !sys.isClient() ) {
+		entity driver = mcp.getDriver();
+		if ( driver == $null_entity ) {
+			if ( mcp.CanDeploy( $null_entity, false ) ) {
+				mcp.Deploy( mcp.lastDriver );
+			}
+		}
+	}
+}
+
+void mcp_marker::ShowOverlay() {
+	if ( deployDecal != -1 ) {
+		return;
+	}
+	
+	deployDecal = sys.allocDecal( getKey( "mtr_deploy" ) );
+	
+//	sys.debugLine( g_colorRed, getWorldOrigin(), getWorldOrigin() + ( vec3_down * 512 ), 1 );
+//	sys.resetDecal( deployDecal );
+
+	vector angles = getAngles();
+	sys.projectDecal( deployDecal, getWorldOrigin(), vec3_down, 512, true, deploySize, -angles_y, g_colorWhite );
+}
+
+void mcp_marker::HideOverlay() {
+	if ( deployDecal == -1 ) {
+		return;
+	}
+	
+	sys.freeDecal( deployDecal );
+	deployDecal = -1;
+}

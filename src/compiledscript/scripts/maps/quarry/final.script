@@ -1,0 +1,255 @@
+
+object quarry_final_objective_trigger {
+	void				preinit();
+	void				destroy();
+	void				syncFields();
+
+	void				OnTouch( entity other, object traceObject );
+
+	void				vCreateMission();
+	void				vFreeMission();
+	void				vCompleteMission();
+
+	void				OnIsPrimaryObjectiveChanged();
+	void				UpdateObjectiveProgress();
+	void				UpdateObjectiveThread();
+	void				vMakePrimaryObjective( boolean value );
+	void				SetObjectiveReminderTime( float time );
+
+	void				vOnItemDeployed( float itemIndex, entity item );
+
+	void				OnItem1Changed();
+	void				OnItem2Changed();
+	void				OnItem3Changed();
+
+	float				numReturned;
+	float				objectiveIndex;
+	float				captureProficiency;
+
+	task				missionTask;
+
+	boolean				isPrimaryObjective;
+	float				nextObjectiveReminderTime;
+
+	entity				cell1;
+	entity				cell2;
+	entity				cell3;
+
+	carryable_item		item1;
+	carryable_item		item2;
+	carryable_item		item3;
+
+}
+
+void quarry_final_objective_trigger::preinit() {
+	objectiveIndex	= getFloatKeyWithDefault( "objective_index", -1 );
+	captureProficiency = GetProficiency( getKey( "prof_capture" ) );
+
+	if ( !sys.isClient() ) {
+		entity worldspawn = sys.getEntity( "worldspawn" );
+		cell1 = worldspawn.getEntityKey( "script_shipcell_1" );
+		cell2 = worldspawn.getEntityKey( "script_shipcell_2" );
+		cell3 = worldspawn.getEntityKey( "script_shipcell_3" );
+	}
+}
+
+void quarry_final_objective_trigger::syncFields() {
+	syncBroadcast( "item1" );
+	syncCallback( "item1", "OnItem1Changed" );
+	syncBroadcast( "item2" );
+	syncCallback( "item2", "OnItem2Changed" );
+	syncBroadcast( "item3" );
+	syncCallback( "item3", "OnItem3Changed" );
+}
+
+void quarry_final_objective_trigger::destroy() {
+	vFreeMission();
+}
+
+void quarry_final_objective_trigger::OnTouch( entity other, object traceObject ) {
+	if ( !sys.isClient() ) {
+		carryable_item carryable = other.vGetCarryableItem();
+		if ( carryable != $null_entity ) {
+			numReturned++;
+
+			if ( captureProficiency != -1 ) {
+				other.giveProficiency( captureProficiency, 1.f, $null, "item captured" );
+			}
+
+			objManager.PushCPrintString( other.getUserName() );
+			objManager.PushCPrintHandle( carryable.itemname );
+			objManager.CPrintEvent( carryable.itemCaptured, $null );
+
+			if ( carryable == item1 ) {
+				objManager.killBotActionGroup( QUARRY_STROGG_ATTACK_BARRACKS_POD );
+				objManager.killBotActionGroup( QUARRY_GDF_DEFEND_BARRACKS_POD );
+				objManager.killBotActionGroup( QUARRY_CELL_OBJ_1 );					// Cell 1 Take Action
+
+			}
+			else if ( carryable == item2 ) {
+				objManager.killBotActionGroup( QUARRY_STROGG_ATTACK_WAREHOUSE_POD );
+				objManager.killBotActionGroup( QUARRY_GDF_DEFEND_WAREHOUSE_POD );
+				objManager.killBotActionGroup( QUARRY_CELL_OBJ_2 );					// Cell 2 Take Action
+			}
+			else {
+				objManager.killBotActionGroup( QUARRY_STROGG_ATTACK_OFFICE_POD );
+				objManager.killBotActionGroup( QUARRY_GDF_DEFEND_OFFICE_POD );
+				objManager.killBotActionGroup( QUARRY_CELL_OBJ_3 );					// Cell 3 Take Action
+			}
+
+			carryable.remove();
+
+			if ( numReturned == 1 ) {
+				cell1.show();
+				objManager.PlaySound( getKey( "snd_third_strogg" ), stroggTeam );
+				objManager.PlaySound( getKey( "snd_third_gdf" ), gdfTeam );
+			} else if ( numReturned == 2 ) {
+				cell2.show();
+				objManager.PlaySound( getKey( "snd_twothird_strogg" ), stroggTeam );
+				objManager.PlaySound( getKey( "snd_twothird_gdf" ), gdfTeam );
+			} else if ( numReturned == 3 ) {
+				cell3.show();
+				objManager.CompleteObjective( objectiveIndex, other );
+			}
+		}
+	}
+}
+
+
+
+
+void quarry_final_objective_trigger::OnIsPrimaryObjectiveChanged() {
+	if ( item1 != $null_entity ) {
+		item1.vMakePrimaryObjective( isPrimaryObjective );
+	}
+	if ( item2 != $null_entity ) {
+		item2.vMakePrimaryObjective( isPrimaryObjective );
+	}
+	if ( item3 != $null_entity ) {
+		item3.vMakePrimaryObjective( isPrimaryObjective );
+	}
+
+	if ( isPrimaryObjective ) {
+		thread UpdateObjectiveThread();
+	} else {
+		sys.killThread( "UpdateObjectiveThread_" + getName() );
+	}
+}
+
+void quarry_final_objective_trigger::vMakePrimaryObjective( boolean value ) {
+	isPrimaryObjective = value;
+	OnIsPrimaryObjectiveChanged();
+}
+
+void quarry_final_objective_trigger::SetObjectiveReminderTime( float time ) {
+	if ( time > nextObjectiveReminderTime ) {
+		nextObjectiveReminderTime = time;
+	}
+}
+
+void quarry_final_objective_trigger::UpdateObjectiveThread() {
+	waitUntil( objManager.gameState == GS_GAMEON );
+
+	SetObjectiveReminderTime( sys.getTime() + 60.f );
+
+	while ( true ) {
+		UpdateObjectiveProgress();
+
+		if ( !sys.isClient() ) {
+			if ( sys.getTime() >= nextObjectiveReminderTime ) {
+				if ( objManager.gameState == GS_GAMEON ) {
+					objManager.PlaySound( getKey( "snd_reminder_strogg" ), stroggTeam );
+					objManager.PlaySound( getKey( "snd_reminder_gdf" ), gdfTeam );
+				}
+
+				SetObjectiveReminderTime( sys.getTime() + 60.f );
+			}
+		}
+
+		sys.waitFrame();
+	}
+}
+
+void quarry_final_objective_trigger::UpdateObjectiveProgress() {
+	if ( sys.getLocalPlayer() != $null_entity ) {
+		if ( item1 != $null_entity ) {
+			item1.UpdateObjectiveProgress();
+		} else {
+			sys.setGUIFloat( GUI_GLOBALS_HANDLE, "docObjective.active", 0.f );
+		}
+
+		if ( item2 != $null_entity ) {
+			item2.UpdateObjectiveProgress();
+		} else {
+			sys.setGUIFloat( GUI_GLOBALS_HANDLE, "docObjective2.active", 0.f );
+		}
+
+		if ( item3 != $null_entity ) {
+			item3.UpdateObjectiveProgress();
+		} else {
+			sys.setGUIFloat( GUI_GLOBALS_HANDLE, "docObjective3.active", 0.f );
+		}
+	}
+}
+
+void quarry_final_objective_trigger::vOnItemDeployed( float itemIndex, entity item ) {
+	if ( itemIndex == 0 ) {
+		item1 = item;
+		OnItem1Changed();
+	} else if ( itemIndex == 1 ) {
+		item2 = item;
+		OnItem2Changed();
+	} else if ( itemIndex == 2 ) {
+		item3 = item;
+		OnItem3Changed();
+	}
+}
+
+void quarry_final_objective_trigger::OnItem1Changed() {
+	if ( item1 != $null_entity ) {
+		item1.vSetObjectiveString( "docObjective" );
+		if ( isPrimaryObjective ) {
+			item1.vMakePrimaryObjective( true );
+		}
+	}
+}
+
+void quarry_final_objective_trigger::OnItem2Changed() {
+	if ( item2 != $null_entity ) {
+		item2.vSetObjectiveString( "docObjective2" );
+		if ( isPrimaryObjective ) {
+			item2.vMakePrimaryObjective( true );
+		}
+	}
+}
+
+void quarry_final_objective_trigger::OnItem3Changed() {
+	if ( item3 != $null_entity ) {
+		item3.vSetObjectiveString( "docObjective3" );
+		if ( isPrimaryObjective ) {
+			item3.vMakePrimaryObjective( true );
+		}
+	}
+}
+
+
+void quarry_final_objective_trigger::vCreateMission() {
+	vFreeMission();
+	missionTask = taskManager.allocEntityTask( GetPlayerTask( getKey( "task_deliver" ) ), self );
+}
+
+void quarry_final_objective_trigger::vFreeMission() {
+	if ( missionTask != $null ) {
+		missionTask.free();
+		missionTask = $null;
+	}
+}
+
+void quarry_final_objective_trigger::vCompleteMission() {
+	if ( missionTask != $null ) {
+		missionTask.complete();
+		missionTask.free();
+		missionTask = $null;
+	}
+}
+

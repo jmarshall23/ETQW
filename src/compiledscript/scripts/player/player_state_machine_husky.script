@@ -1,0 +1,253 @@
+/***********************************************************************
+
+This script contains any player state machine specific code for the husky.
+
+***********************************************************************/
+
+#define HUSKY_SPEED_FAST 384.f
+
+#define HUSKY_STATE_IDLE			0
+#define HUSKY_STATE_IDLE_FAST		1
+#define HUSKY_STATE_LEAN_LEFT		2
+#define HUSKY_STATE_LEAN_RIGHT		3
+#define HUSKY_STATE_LEAN_LEFT_FAST	4
+#define HUSKY_STATE_LEAN_RIGHT_FAST	5
+
+object player {
+	void		Torso_VehicleHusky();
+	void		Legs_VehicleHusky();
+
+	void		Torso_VehicleHusky_Idle();
+	void		Torso_VehicleHusky_IdleFast();
+	void		Torso_VehicleHusky_LeanLeft();
+	void		Torso_VehicleHusky_LeanRight();
+	void		Torso_VehicleHusky_LeanLeftFast();
+	void		Torso_VehicleHusky_LeanRightFast();
+	
+	void		Legs_VehicleHusky_Idle();
+	void		Legs_VehicleHusky_IdleFast();
+	void		Legs_VehicleHusky_LeanLeft();
+	void		Legs_VehicleHusky_LeanRight();
+	void		Legs_VehicleHusky_LeanLeftFast();
+	void		Legs_VehicleHusky_LeanRightFast();
+	
+	float		HuskyCalcState();
+};
+
+float player::HuskyCalcState() {
+	entity vehicle = getVehicle();
+	
+	if ( vehicle != $null_entity ) {
+		float speed = vehicle.getLinearVelocity() * vehicle.getWorldAxis( 0 );
+		
+		if ( vehicle.vGetSteerScale() <= -0.4 ) {
+			if ( speed > HUSKY_SPEED_FAST ) {
+				return HUSKY_STATE_LEAN_LEFT_FAST;
+			}
+			return HUSKY_STATE_LEAN_LEFT;
+		}
+		if ( vehicle.vGetSteerScale() >= 0.4 ) {
+			if ( speed > HUSKY_SPEED_FAST ) {
+				return HUSKY_STATE_LEAN_RIGHT_FAST;
+			}
+			return HUSKY_STATE_LEAN_RIGHT;
+		}
+		
+		if ( speed > HUSKY_SPEED_FAST ) {
+			return HUSKY_STATE_IDLE_FAST;
+		}
+	}
+	return HUSKY_STATE_IDLE;
+}
+	
+void player::Torso_VehicleHusky() {
+	animState( ANIMCHANNEL_TORSO, "Torso_VehicleHusky_Idle", 6 );
+}
+
+void player::Legs_VehicleHusky() {
+	animState( ANIMCHANNEL_LEGS, "Legs_VehicleHusky_Idle", 6 );
+}
+
+void player::Torso_VehicleHusky_IdleFast() {
+	playCycle( ANIMCHANNEL_TORSO, "husky_rider_stand_centre_idle" );
+
+	while ( true ) {
+		float newstate = HuskyCalcState();
+		if ( newstate == HUSKY_STATE_LEAN_RIGHT || newstate == HUSKY_STATE_LEAN_LEFT || newstate == HUSKY_STATE_IDLE ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleHusky_Idle", 6 );
+		}
+		if ( newstate == HUSKY_STATE_LEAN_LEFT_FAST ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleHusky_LeanLeftFast", 6 );
+		}
+		if ( newstate == HUSKY_STATE_LEAN_RIGHT_FAST ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleHusky_LeanRightFast", 6 );
+		}
+		sys.waitFrame();
+	}
+}
+
+void player::Torso_VehicleHusky_Idle() {
+	playCycle( ANIMCHANNEL_TORSO, "husky_rider_centre_idle" );
+
+	while ( true ) {
+		float newstate = HuskyCalcState();
+		if ( newstate == HUSKY_STATE_LEAN_RIGHT_FAST || newstate == HUSKY_STATE_LEAN_LEFT_FAST || newstate == HUSKY_STATE_IDLE_FAST ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleHusky_IdleFast", 6 );
+		}
+		if ( newstate == HUSKY_STATE_LEAN_LEFT ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleHusky_LeanLeft", 6 );
+		}
+		if ( newstate == HUSKY_STATE_LEAN_RIGHT ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleHusky_LeanRight", 6 );
+		}
+		sys.waitFrame();
+	}
+}
+
+void player::Torso_VehicleHusky_LeanLeft() {
+	playAnim( ANIMCHANNEL_TORSO, "husky_rider_turn_left" );
+	
+	while ( true ) {
+		float newstate = HuskyCalcState();
+		if ( newstate == HUSKY_STATE_LEAN_LEFT_FAST ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleHusky_LeanLeftFast", 8 );
+		} else if ( newstate != HUSKY_STATE_LEAN_LEFT ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleHusky_Idle", 8 );
+		}
+		sys.waitFrame();
+	}
+}
+
+void player::Torso_VehicleHusky_LeanRight() {
+	playAnim( ANIMCHANNEL_TORSO, "husky_rider_turn_right" );
+
+	while ( true ) {
+		float newstate = HuskyCalcState();
+		if ( newstate == HUSKY_STATE_LEAN_RIGHT_FAST ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleHusky_LeanRightFast", 8 );
+		} else if ( newstate != HUSKY_STATE_LEAN_RIGHT ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleHusky_Idle", 8 );
+		}
+		sys.waitFrame();
+	}
+}
+
+void player::Torso_VehicleHusky_LeanLeftFast() {
+	playAnim( ANIMCHANNEL_TORSO, "husky_rider_stand_turn_left" );
+	
+	while ( true ) {
+		float newstate = HuskyCalcState();
+		if ( newstate == HUSKY_STATE_LEAN_LEFT ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleHusky_LeanLeft", 8 );
+		} else if ( newstate != HUSKY_STATE_LEAN_LEFT_FAST ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleHusky_Idle", 8 );
+		}
+		sys.waitFrame();
+	}
+}
+
+void player::Torso_VehicleHusky_LeanRightFast() {
+	playAnim( ANIMCHANNEL_TORSO, "husky_rider_stand_turn_right" );
+
+	while ( true ) {
+		float newstate = HuskyCalcState();
+		if ( newstate == HUSKY_STATE_LEAN_RIGHT ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleHusky_LeanRight", 8 );
+		} else if ( newstate != HUSKY_STATE_LEAN_RIGHT_FAST ) {
+			animState( ANIMCHANNEL_TORSO, "Torso_VehicleHusky_Idle", 8 );
+		}
+		sys.waitFrame();
+	}
+}
+
+void player::Legs_VehicleHusky_IdleFast() {
+	playCycle( ANIMCHANNEL_LEGS, "husky_rider_stand_centre_idle" );
+
+	while ( true ) {
+		float newstate = HuskyCalcState();
+		if ( newstate == HUSKY_STATE_LEAN_RIGHT || newstate == HUSKY_STATE_LEAN_LEFT || newstate == HUSKY_STATE_IDLE ) {
+			animState( ANIMCHANNEL_LEGS, "Legs_VehicleHusky_Idle", 6 );
+		}
+		if ( newstate == HUSKY_STATE_LEAN_LEFT_FAST ) {
+			animState( ANIMCHANNEL_LEGS, "Legs_VehicleHusky_LeanLeftFast", 6 );
+		}
+		if ( newstate == HUSKY_STATE_LEAN_RIGHT_FAST ) {
+			animState( ANIMCHANNEL_LEGS, "Legs_VehicleHusky_LeanRightFast", 6 );
+		}
+		sys.waitFrame();
+	}
+}
+
+void player::Legs_VehicleHusky_Idle() {
+	playCycle( ANIMCHANNEL_LEGS, "husky_rider_centre_idle" );
+
+	while ( true ) {
+		float newstate = HuskyCalcState();
+		if ( newstate == HUSKY_STATE_LEAN_RIGHT_FAST || newstate == HUSKY_STATE_LEAN_LEFT_FAST || newstate == HUSKY_STATE_IDLE_FAST ) {
+			animState( ANIMCHANNEL_LEGS, "Legs_VehicleHusky_IdleFast", 6 );
+		}
+		if ( newstate == HUSKY_STATE_LEAN_LEFT ) {
+			animState( ANIMCHANNEL_LEGS, "Legs_VehicleHusky_LeanLeft", 6 );
+		}
+		if ( newstate == HUSKY_STATE_LEAN_RIGHT ) {
+			animState( ANIMCHANNEL_LEGS, "Legs_VehicleHusky_LeanRight", 6 );
+		}
+		sys.waitFrame();
+	}
+}
+
+void player::Legs_VehicleHusky_LeanLeft() {
+	playAnim( ANIMCHANNEL_LEGS, "husky_rider_turn_left" );
+	
+	while ( true ) {
+		float newstate = HuskyCalcState();
+		if ( newstate == HUSKY_STATE_LEAN_LEFT_FAST ) {
+			animState( ANIMCHANNEL_LEGS, "Legs_VehicleHusky_LeanLeftFast", 8 );
+		} else if ( newstate != HUSKY_STATE_LEAN_LEFT ) {
+			animState( ANIMCHANNEL_LEGS, "Legs_VehicleHusky_Idle", 8 );
+		}
+		sys.waitFrame();
+	}
+}
+
+void player::Legs_VehicleHusky_LeanRight() {
+	playAnim( ANIMCHANNEL_LEGS, "husky_rider_turn_right" );
+
+	while ( true ) {
+		float newstate = HuskyCalcState();
+		if ( newstate == HUSKY_STATE_LEAN_RIGHT_FAST ) {
+			animState( ANIMCHANNEL_LEGS, "Legs_VehicleHusky_LeanRightFast", 8 );
+		} else if ( newstate != HUSKY_STATE_LEAN_RIGHT ) {
+			animState( ANIMCHANNEL_LEGS, "Legs_VehicleHusky_Idle", 8 );
+		}
+		sys.waitFrame();
+	}
+}
+
+void player::Legs_VehicleHusky_LeanLeftFast() {
+	playAnim( ANIMCHANNEL_LEGS, "husky_rider_stand_turn_left" );
+	
+	while ( true ) {
+		float newstate = HuskyCalcState();
+		if ( newstate == HUSKY_STATE_LEAN_LEFT ) {
+			animState( ANIMCHANNEL_LEGS, "Legs_VehicleHusky_LeanLeft", 8 );
+		} else if ( newstate != HUSKY_STATE_LEAN_LEFT_FAST ) {
+			animState( ANIMCHANNEL_LEGS, "Legs_VehicleHusky_Idle", 8 );
+		}
+		sys.waitFrame();
+	}
+}
+
+void player::Legs_VehicleHusky_LeanRightFast() {
+	playAnim( ANIMCHANNEL_LEGS, "husky_rider_stand_turn_right" );
+
+	while ( true ) {
+		float newstate = HuskyCalcState();
+		if ( newstate == HUSKY_STATE_LEAN_RIGHT ) {
+			animState( ANIMCHANNEL_LEGS, "Legs_VehicleHusky_LeanRight", 8 );
+		} else if ( newstate != HUSKY_STATE_LEAN_RIGHT_FAST ) {
+			animState( ANIMCHANNEL_LEGS, "Legs_VehicleHusky_Idle", 8 );
+		}
+		sys.waitFrame();
+	}
+}

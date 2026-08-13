@@ -1,0 +1,42 @@
+object bot_mcp_trigger {
+	void		preinit();
+	void		init();
+	void		destroy();
+
+	void		OnTouch( entity activator, object traceObject );
+
+	float 	actionGroupOff;
+	float 	actionGroupOn;
+}
+
+void bot_mcp_trigger::preinit() {
+	actionGroupOff = getFloatKeyWithDefault( "actionGroupOff", -1 );
+	actionGroupOn = getFloatKeyWithDefault( "actionGroupOn", -1 );
+}
+
+void bot_mcp_trigger::init() {
+	setContents( CONTENTS_TRIGGER );
+}
+
+void bot_mcp_trigger::destroy() {
+}
+
+void bot_mcp_trigger::OnTouch( entity activator, object traceObject ) {
+	vehicle_mcp mcp = activator;
+	if ( mcp == $null_entity ) {
+		return;
+	}
+
+	if ( !sys.isClient() ) {
+		if ( actionGroupOff != -1 && actionGroupOn != -1 ) {
+			objManager.RunBotMCPMapScript( actionGroupOff, actionGroupOn );
+		} else {
+			sys.print("Bot_MCP_Trigger error - actionGroupOff and/or actionGroupOn not defined!\n");
+		}
+	}
+	
+	if ( !sys.isClient() ) {
+		remove();
+	}
+}
+
