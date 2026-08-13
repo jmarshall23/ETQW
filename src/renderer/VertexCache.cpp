@@ -38,11 +38,12 @@ extern idCVar r_useVertexBuffers;
 extern idCVar r_useIndexBuffers;
 
 
-// Vulkan CPU-skinned models stream their changing vertices through this
-// double-buffered arena.  Eight MiB avoids falling back to per-surface static
-// allocations in populated scenes while keeping the two-frame footprint small.
+// Vulkan CPU-skinned models and continuously regenerated effects stream their
+// changing vertices and indexes through this double-buffered arena.  Keep
+// enough headroom that a particle-heavy frame does not fall back to individual
+// static allocations.
 static const int	FRAME_MEMORY_BYTES = 0x200000;
-static const int	VULKAN_FRAME_MEMORY_BYTES = 0x800000;
+static const int	VULKAN_FRAME_MEMORY_BYTES = 0x1000000;
 static const int	EXPAND_HEADERS = 1024;
 
 idCVar idVertexCache::r_showVertexCache( "r_showVertexCache", "0", CVAR_INTEGER|CVAR_RENDERER, "" );

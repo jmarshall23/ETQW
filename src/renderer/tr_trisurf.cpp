@@ -344,7 +344,11 @@ R_FreeStaticTriSurfVertexCaches
 void R_FreeStaticTriSurfVertexCaches( srfTriangles_t *tri ) {
 	if ( tri->ambientSurface == NULL ) {
 		// this is a real model surface
-		vertexCache.Free( tri->ambientCache );
+		// Frame-temporary cache headers are reclaimed automatically and can be
+		// referenced by continuously regenerated snapshots from the prior frame.
+		if ( tri->ambientCache == NULL || tri->ambientCache->tag != TAG_TEMP ) {
+			vertexCache.Free( tri->ambientCache );
+		}
 		tri->ambientCache = NULL;
 	} else {
 		// this is a light interaction surface that references
@@ -353,7 +357,9 @@ void R_FreeStaticTriSurfVertexCaches( srfTriangles_t *tri ) {
 		tri->lightingCache = NULL;
 	}
 	if ( tri->indexCache ) {
-		vertexCache.Free( tri->indexCache );
+		if ( tri->indexCache->tag != TAG_TEMP ) {
+			vertexCache.Free( tri->indexCache );
+		}
 		tri->indexCache = NULL;
 	}
 	if ( tri->shadowCache && ( tri->shadowVertexes != NULL || tri->verts != NULL ) ) {

@@ -156,6 +156,7 @@ idRenderModel *idRenderModelPrt::InstantiateDynamicModel( const struct renderEnt
 			R_AllocStaticTriSurfIndexes( surf->geometry, 6 * count );
 			R_AllocStaticTriSurfPlanes( surf->geometry, 6 * count );
 		}
+		surf->geometry->streamVertexCache = true;
 
 		int numVerts = 0;
 		idDrawVert *verts = surf->geometry->verts;

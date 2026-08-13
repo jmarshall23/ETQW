@@ -61,6 +61,7 @@ struct srfTriangles_t {
 														// and should not be freed
 	bool						sharedSurface;			// if true, verts are shared between instances and ambientSurface is
 														// a pointer into the original surface and should not be freed
+	bool						streamVertexCache;		// vertices/indexes change often enough to use the Vulkan frame arena
 
 	//BEGIN RAVEN
 	int							numAllocedVerts;

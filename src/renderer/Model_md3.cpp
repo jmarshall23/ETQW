@@ -303,6 +303,7 @@ idRenderModel *idRenderModelMD3::InstantiateDynamicModel( const struct renderEnt
 		srfTriangles_t *tri = R_AllocStaticTriSurf();
 		R_AllocStaticTriSurfVerts( tri, surface->numVerts );
 		R_AllocStaticTriSurfIndexes( tri, surface->numTriangles * 3 );
+		tri->streamVertexCache = true;
 		tri->bounds.Clear();
 
 		modelSurface_t	surf;
@@ -368,4 +369,3 @@ idBounds idRenderModelMD3::Bounds(const struct renderEntity_s *ent) const {
 
 	return ret;
 }
-

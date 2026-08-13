@@ -122,6 +122,7 @@ idRenderModel *idRenderModelBeam::InstantiateDynamicModel( const struct renderEn
 
 		tri->numVerts = 4;
 		tri->numIndexes = 6;
+		tri->streamVertexCache = true;
 
 		surf.geometry = tri;
 		surf.id = 0;

@@ -2185,7 +2185,10 @@ void R_CommitAmbientDrawsurf( viewEntity_s* space,
 	// Allocations, cache residency, shader evaluation, and list insertion stay
 	// on the render thread.  Workers only decide which immutable candidates are
 	// visible.
-	if ( streamDynamicVertices && !geometry->hardwareSkinnedSurface &&
+	const bool streamDynamicGeometry = R_UseVulkanBackend() &&
+		( geometry->deformedSurface || geometry->streamVertexCache );
+	if ( ( streamDynamicVertices || streamDynamicGeometry ) &&
+		!geometry->hardwareSkinnedSurface &&
 		geometry->verts != NULL && geometry->numVerts > 0 ) {
 		geometry->ambientCache = vertexCache.AllocFrameTemp( geometry->verts,
 			geometry->numVerts * sizeof( geometry->verts[ 0 ] ) );
@@ -2195,7 +2198,14 @@ void R_CommitAmbientDrawsurf( viewEntity_s* space,
 			geometry->numVerts * sizeof( geometry->verts[ 0 ] ),
 			&geometry->ambientCache );
 	}
-	if ( geometry->indexCache == NULL && geometry->indexes != NULL &&
+	if ( streamDynamicGeometry && geometry->indexes != NULL &&
+		geometry->numIndexes > 0 ) {
+		geometry->indexCache = vertexCache.AllocFrameTemp( geometry->indexes,
+			geometry->numIndexes * sizeof( geometry->indexes[ 0 ] ) );
+		if ( geometry->indexCache != NULL ) {
+			geometry->indexCache->indexBuffer = true;
+		}
+	} else if ( geometry->indexCache == NULL && geometry->indexes != NULL &&
 		geometry->numIndexes > 0 ) {
 		vertexCache.Alloc( geometry->indexes,
 			geometry->numIndexes * sizeof( geometry->indexes[ 0 ] ),
@@ -2204,7 +2214,9 @@ void R_CommitAmbientDrawsurf( viewEntity_s* space,
 	if ( geometry->ambientCache != NULL && geometry->ambientCache->tag != TAG_TEMP ) {
 		vertexCache.Touch( geometry->ambientCache );
 	}
-	if ( geometry->indexCache != NULL ) vertexCache.Touch( geometry->indexCache );
+	if ( geometry->indexCache != NULL && geometry->indexCache->tag != TAG_TEMP ) {
+		vertexCache.Touch( geometry->indexCache );
+	}
 	if ( geometry->weightCache != NULL ) vertexCache.Touch( geometry->weightCache );
 	const float* reusedRegisters = material == previousMaterial ?
 		previousMaterialRegisters : NULL;

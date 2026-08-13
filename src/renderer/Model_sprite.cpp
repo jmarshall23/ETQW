@@ -134,6 +134,7 @@ idRenderModel *	idRenderModelSprite::InstantiateDynamicModel( const struct rende
 
 		tri->numVerts = 4;
 		tri->numIndexes = 6;
+		tri->streamVertexCache = true;
 
 		surf.geometry = tri;
 		surf.id = 0;

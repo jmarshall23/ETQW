@@ -41,6 +41,10 @@ const VkDeviceSize VULKAN_GUI_INDEX_BYTES = 16 * 1024 * 1024;
 // 22 MiB. One persistent arena per frame avoids allocation, mapping and a
 // queue-idle submission for every streamed tile mip.
 const VkDeviceSize VULKAN_IMAGE_UPLOAD_BYTES = 32 * 1024 * 1024;
+// Static geometry can become visible in large bursts as particles, models and
+// new world areas enter the view.  Keep those copies separate from the
+// MegaTexture arena so neither streaming system can starve the other.
+const VkDeviceSize VULKAN_BUFFER_UPLOAD_BYTES = 32 * 1024 * 1024;
 const VkDeviceSize VULKAN_JOINT_BUFFER_BYTES = 4 * 1024 * 1024;
 const VkDeviceSize VULKAN_JOINT_PALETTE_BYTES =
 	MAX_JOINTS_PER_MESH * sizeof( idJointMat );
@@ -90,6 +94,11 @@ struct sdVulkanFrame {
 	VkDeviceSize		imageUploadOffset;
 	bool				imageUploadRecorded;
 	bool				imageUploadOverflowWarned;
+	VkBuffer			bufferUploadBuffer;
+	VkDeviceMemory	bufferUploadMemory;
+	void*				bufferUploadMapped;
+	VkDeviceSize		bufferUploadOffset;
+	bool				bufferUploadOverflowWarned;
 	VkBuffer			jointBuffer;
 	VkDeviceMemory	jointMemory;
 	void*				jointMapped;
@@ -1911,6 +1920,16 @@ void DestroyFrames( sdVulkanBackendState& state ) {
 		if ( frame.imageUploadMemory != VK_NULL_HANDLE && state.FreeMemory != NULL ) {
 			state.FreeMemory( state.device, frame.imageUploadMemory, NULL );
 		}
+		if ( frame.bufferUploadMapped != NULL && state.UnmapMemory != NULL ) {
+			state.UnmapMemory( state.device, frame.bufferUploadMemory );
+			frame.bufferUploadMapped = NULL;
+		}
+		if ( frame.bufferUploadBuffer != VK_NULL_HANDLE && state.DestroyBuffer != NULL ) {
+			state.DestroyBuffer( state.device, frame.bufferUploadBuffer, NULL );
+		}
+		if ( frame.bufferUploadMemory != VK_NULL_HANDLE && state.FreeMemory != NULL ) {
+			state.FreeMemory( state.device, frame.bufferUploadMemory, NULL );
+		}
 		if ( frame.jointMapped != NULL && state.UnmapMemory != NULL ) {
 			state.UnmapMemory( state.device, frame.jointMemory );
 			frame.jointMapped = NULL;
@@ -1996,6 +2015,15 @@ bool CreateFrames( sdVulkanBackendState& state ) {
 				"vkMapMemory(image upload arena)" ) ) {
 			return false;
 		}
+		if ( !CreateBufferAllocation( state, VULKAN_BUFFER_UPLOAD_BYTES,
+			VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+			frame.bufferUploadBuffer, frame.bufferUploadMemory ) ||
+			!CheckVulkanResult( state.MapMemory( state.device, frame.bufferUploadMemory,
+				0, VULKAN_BUFFER_UPLOAD_BYTES, 0, &frame.bufferUploadMapped ),
+				"vkMapMemory(buffer upload arena)" ) ) {
+			return false;
+		}
 		if ( !CreateBufferAllocation( state, VULKAN_JOINT_BUFFER_BYTES,
 			VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
@@ -2036,6 +2064,8 @@ bool CreateFrames( sdVulkanBackendState& state ) {
 		frame.imageUploadOffset = 0;
 		frame.imageUploadRecorded = false;
 		frame.imageUploadOverflowWarned = false;
+		frame.bufferUploadOffset = 0;
+		frame.bufferUploadOverflowWarned = false;
 		frame.jointOffset = 0;
 		frame.jointOverflowWarned = false;
 	}
@@ -2281,9 +2311,91 @@ bool SubmitImmediate( sdVulkanBackendState& state, VkCommandPool commandPool,
 	return completed;
 }
 
+bool QueueFrameBufferUpload( sdVulkanBackendState& state, VkBuffer destination,
+	VkDeviceSize destinationOffset, const void* data, VkDeviceSize bytes,
+	bool indexBuffer ) {
+	if ( !state.frameActive || destination == VK_NULL_HANDLE || data == NULL ||
+		bytes == 0 ) {
+		return false;
+	}
+
+	sdVulkanFrame& frame = state.frames[ state.frameIndex ];
+	VkBuffer sourceBuffer = frame.bufferUploadBuffer;
+	VkDeviceSize sourceOffset = ( frame.bufferUploadOffset + 15 ) & ~15ULL;
+	if ( frame.bufferUploadMapped != NULL &&
+		sourceOffset + bytes <= VULKAN_BUFFER_UPLOAD_BYTES ) {
+		memcpy( static_cast< byte* >( frame.bufferUploadMapped ) + sourceOffset,
+			data, static_cast< size_t >( bytes ) );
+		frame.bufferUploadOffset = sourceOffset + bytes;
+	} else {
+		// Very large first-use bursts must remain asynchronous too.  Spill to a
+		// one-shot staging allocation and retire it only after this frame's fence.
+		if ( !frame.bufferUploadOverflowWarned ) {
+			common->Warning( "Vulkan buffer upload arena exhausted (%u MiB); using fence-retired spill buffers",
+				static_cast< unsigned int >(
+					VULKAN_BUFFER_UPLOAD_BYTES / ( 1024 * 1024 ) ) );
+			frame.bufferUploadOverflowWarned = true;
+		}
+		sdVulkanBufferResource spill;
+		memset( &spill, 0, sizeof( spill ) );
+		spill.bytes = bytes;
+		spill.indexBuffer = indexBuffer;
+		if ( !CreateBufferAllocation( state, bytes,
+			VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+				VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+			spill.buffer, spill.memory ) ||
+			!CheckVulkanResult( state.MapMemory( state.device, spill.memory, 0,
+				bytes, 0, &spill.mapped ), "vkMapMemory(buffer upload spill)" ) ) {
+			DestroyBufferResource( state, spill );
+			return false;
+		}
+		memcpy( spill.mapped, data, static_cast< size_t >( bytes ) );
+		state.UnmapMemory( state.device, spill.memory );
+		spill.mapped = NULL;
+		sourceBuffer = spill.buffer;
+		sourceOffset = 0;
+		state.frameRetiredBufferResources[ state.frameIndex ].Append( spill );
+	}
+
+	VkBufferCopy copy;
+	copy.srcOffset = sourceOffset;
+	copy.dstOffset = destinationOffset;
+	copy.size = bytes;
+	state.CmdCopyBuffer( frame.imageUploadCommandBuffer, sourceBuffer,
+		destination, 1, &copy );
+	VkBufferMemoryBarrier2 barrier;
+	memset( &barrier, 0, sizeof( barrier ) );
+	barrier.sType = VK_STRUCTURE_TYPE_BUFFER_MEMORY_BARRIER_2;
+	barrier.srcStageMask = VK_PIPELINE_STAGE_2_TRANSFER_BIT;
+	barrier.srcAccessMask = VK_ACCESS_2_TRANSFER_WRITE_BIT;
+	// These cache buffers may also be consumed as acceleration-structure build
+	// input.  Cover every later read in the main frame command buffer, not just
+	// fixed-function vertex/index fetch.
+	barrier.dstStageMask = VK_PIPELINE_STAGE_2_ALL_COMMANDS_BIT;
+	barrier.dstAccessMask = VK_ACCESS_2_MEMORY_READ_BIT;
+	barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	barrier.buffer = destination;
+	barrier.offset = destinationOffset;
+	barrier.size = bytes;
+	VkDependencyInfo dependencyInfo;
+	memset( &dependencyInfo, 0, sizeof( dependencyInfo ) );
+	dependencyInfo.sType = VK_STRUCTURE_TYPE_DEPENDENCY_INFO;
+	dependencyInfo.bufferMemoryBarrierCount = 1;
+	dependencyInfo.pBufferMemoryBarriers = &barrier;
+	state.CmdPipelineBarrier2( frame.imageUploadCommandBuffer, &dependencyInfo );
+	frame.imageUploadRecorded = true;
+	return true;
+}
+
 bool UploadBufferBytes( sdVulkanBackendState& state, VkBuffer destination,
 	VkDeviceSize destinationOffset, const void* data, VkDeviceSize bytes,
 	bool indexBuffer ) {
+	if ( state.frameActive ) {
+		return QueueFrameBufferUpload( state, destination, destinationOffset,
+			data, bytes, indexBuffer );
+	}
 	VkBuffer stagingBuffer = VK_NULL_HANDLE;
 	VkDeviceMemory stagingMemory = VK_NULL_HANDLE;
 	if ( !CreateBufferAllocation( state, bytes, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
@@ -4521,18 +4633,6 @@ bool sdVulkanBackend::BeginFrame( int width, int height ) {
 	if ( width <= 0 || height <= 0 ) {
 		return false;
 	}
-	if ( state->retiredImageResources.Num() != 0 ||
-		state->retiredBufferResources.Num() != 0 ) {
-		RENDER_METRIC_SCOPE( "Vulkan retire resources" );
-		// This conservative synchronization is intentional for the first Vulkan
-		// port.  It is only reached when the legacy cache frees resources; a later
-		// allocator can retire them against individual frame fences instead.
-		if ( !CheckVulkanResult( state->DeviceWaitIdle( state->device ),
-			"vkDeviceWaitIdle(resource retirement)" ) ) {
-			return false;
-		}
-		DestroyRetiredResources( *state );
-	}
 	const int swapInterval = cvarSystem->GetCVarInteger( "r_swapInterval" );
 	if ( state->extent.width != static_cast< unsigned int >( width ) ||
 		state->extent.height != static_cast< unsigned int >( height ) ||
@@ -4570,6 +4670,8 @@ bool sdVulkanBackend::BeginFrame( int width, int height ) {
 	frame.imageUploadOffset = 0;
 	frame.imageUploadRecorded = false;
 	frame.imageUploadOverflowWarned = false;
+	frame.bufferUploadOffset = 0;
+	frame.bufferUploadOverflowWarned = false;
 	frame.jointOffset = 0;
 	frame.jointOverflowWarned = false;
 	VkResult acquireResult;
@@ -4892,9 +4994,7 @@ bool sdVulkanBackend::BeginToolWindow( void* nativeWindow, int width, int height
 			return false;
 		}
 	}
-	if ( state->retiredImageResources.Num() != 0 ||
-		state->retiredBufferResources.Num() != 0 ||
-		state->retiredToolDepthResources.Num() != 0 ) {
+	if ( state->retiredToolDepthResources.Num() != 0 ) {
 		state->DeviceWaitIdle( state->device );
 		DestroyRetiredResources( *state );
 	}
@@ -5783,9 +5883,131 @@ void sdVulkanBackend::WaitIdle() {
 	}
 }
 
+void RecordInitialImageUploadCommands( sdVulkanBackendState& uploadState,
+	VkCommandBuffer commandBuffer, VkBuffer stagingBuffer,
+	VkDeviceSize stagingOffset, sdVulkanImageResource& resource,
+	int width, int height, int mipLevels ) {
+	VkImageMemoryBarrier2 toTransfer;
+	memset( &toTransfer, 0, sizeof( toTransfer ) );
+	toTransfer.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2;
+	toTransfer.srcStageMask = VK_PIPELINE_STAGE_2_NONE;
+	toTransfer.dstStageMask = VK_PIPELINE_STAGE_2_TRANSFER_BIT;
+	toTransfer.dstAccessMask = VK_ACCESS_2_TRANSFER_WRITE_BIT;
+	toTransfer.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+	toTransfer.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+	toTransfer.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	toTransfer.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	toTransfer.image = resource.image;
+	toTransfer.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+	toTransfer.subresourceRange.levelCount = static_cast< unsigned int >( mipLevels );
+	toTransfer.subresourceRange.layerCount = 1;
+	VkDependencyInfo dependencyInfo;
+	memset( &dependencyInfo, 0, sizeof( dependencyInfo ) );
+	dependencyInfo.sType = VK_STRUCTURE_TYPE_DEPENDENCY_INFO;
+	dependencyInfo.imageMemoryBarrierCount = 1;
+	dependencyInfo.pImageMemoryBarriers = &toTransfer;
+	uploadState.CmdPipelineBarrier2( commandBuffer, &dependencyInfo );
+
+	VkBufferImageCopy copyRegion;
+	memset( &copyRegion, 0, sizeof( copyRegion ) );
+	copyRegion.bufferOffset = stagingOffset;
+	copyRegion.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+	copyRegion.imageSubresource.layerCount = 1;
+	copyRegion.imageExtent.width = static_cast< unsigned int >( width );
+	copyRegion.imageExtent.height = static_cast< unsigned int >( height );
+	copyRegion.imageExtent.depth = 1;
+	uploadState.CmdCopyBufferToImage( commandBuffer, stagingBuffer,
+		resource.image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &copyRegion );
+
+	int mipWidth = width;
+	int mipHeight = height;
+	for ( int level = 1; level < mipLevels; ++level ) {
+		VkImageMemoryBarrier2 toSource;
+		memset( &toSource, 0, sizeof( toSource ) );
+		toSource.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2;
+		toSource.srcStageMask = VK_PIPELINE_STAGE_2_TRANSFER_BIT;
+		toSource.srcAccessMask = VK_ACCESS_2_TRANSFER_WRITE_BIT;
+		toSource.dstStageMask = VK_PIPELINE_STAGE_2_TRANSFER_BIT;
+		toSource.dstAccessMask = VK_ACCESS_2_TRANSFER_READ_BIT;
+		toSource.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+		toSource.newLayout = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
+		toSource.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+		toSource.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+		toSource.image = resource.image;
+		toSource.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		toSource.subresourceRange.baseMipLevel = level - 1;
+		toSource.subresourceRange.levelCount = 1;
+		toSource.subresourceRange.layerCount = 1;
+		dependencyInfo.pImageMemoryBarriers = &toSource;
+		uploadState.CmdPipelineBarrier2( commandBuffer, &dependencyInfo );
+
+		const int nextWidth = Max( 1, mipWidth >> 1 );
+		const int nextHeight = Max( 1, mipHeight >> 1 );
+		VkImageBlit blit;
+		memset( &blit, 0, sizeof( blit ) );
+		blit.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		blit.srcSubresource.mipLevel = level - 1;
+		blit.srcSubresource.layerCount = 1;
+		blit.srcOffsets[ 1 ].x = mipWidth;
+		blit.srcOffsets[ 1 ].y = mipHeight;
+		blit.srcOffsets[ 1 ].z = 1;
+		blit.dstSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		blit.dstSubresource.mipLevel = level;
+		blit.dstSubresource.layerCount = 1;
+		blit.dstOffsets[ 1 ].x = nextWidth;
+		blit.dstOffsets[ 1 ].y = nextHeight;
+		blit.dstOffsets[ 1 ].z = 1;
+		uploadState.CmdBlitImage( commandBuffer, resource.image,
+			VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, resource.image,
+			VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &blit, VK_FILTER_LINEAR );
+		mipWidth = nextWidth;
+		mipHeight = nextHeight;
+	}
+
+	VkImageMemoryBarrier2 shaderBarriers[ 2 ];
+	memset( shaderBarriers, 0, sizeof( shaderBarriers ) );
+	unsigned int shaderBarrierCount = 0;
+	if ( mipLevels > 1 ) {
+		VkImageMemoryBarrier2& fromSource = shaderBarriers[ shaderBarrierCount++ ];
+		fromSource.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2;
+		fromSource.srcStageMask = VK_PIPELINE_STAGE_2_TRANSFER_BIT;
+		fromSource.srcAccessMask = VK_ACCESS_2_TRANSFER_READ_BIT;
+		fromSource.dstStageMask = VK_PIPELINE_STAGE_2_ALL_GRAPHICS_BIT;
+		fromSource.dstAccessMask = VK_ACCESS_2_SHADER_SAMPLED_READ_BIT;
+		fromSource.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
+		fromSource.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		fromSource.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+		fromSource.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+		fromSource.image = resource.image;
+		fromSource.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		fromSource.subresourceRange.levelCount = mipLevels - 1;
+		fromSource.subresourceRange.layerCount = 1;
+	}
+	VkImageMemoryBarrier2& fromDestination =
+		shaderBarriers[ shaderBarrierCount++ ];
+	fromDestination.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2;
+	fromDestination.srcStageMask = VK_PIPELINE_STAGE_2_TRANSFER_BIT;
+	fromDestination.srcAccessMask = VK_ACCESS_2_TRANSFER_WRITE_BIT;
+	fromDestination.dstStageMask = VK_PIPELINE_STAGE_2_ALL_GRAPHICS_BIT;
+	fromDestination.dstAccessMask = VK_ACCESS_2_SHADER_SAMPLED_READ_BIT;
+	fromDestination.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+	fromDestination.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+	fromDestination.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	fromDestination.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	fromDestination.image = resource.image;
+	fromDestination.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+	fromDestination.subresourceRange.baseMipLevel = mipLevels - 1;
+	fromDestination.subresourceRange.levelCount = 1;
+	fromDestination.subresourceRange.layerCount = 1;
+	dependencyInfo.imageMemoryBarrierCount = shaderBarrierCount;
+	dependencyInfo.pImageMemoryBarriers = shaderBarriers;
+	uploadState.CmdPipelineBarrier2( commandBuffer, &dependencyInfo );
+}
+
 bool sdVulkanBackend::UploadImage2D( const void* owner,
 	const unsigned char* rgba, int width, int height, int mipLevels,
 	bool linearFilter, bool repeat ) {
+	RENDER_METRIC_SCOPE( "Vulkan create/upload image" );
 	if ( state == NULL || state->device == VK_NULL_HANDLE || owner == NULL ||
 		rgba == NULL || width <= 0 || height <= 0 ) {
 		return false;
@@ -5895,6 +6117,52 @@ bool sdVulkanBackend::UploadImage2D( const void* owner,
 
 	const VkDeviceSize uploadBytes = static_cast< VkDeviceSize >( width ) *
 		static_cast< VkDeviceSize >( height ) * 4;
+	if ( state->frameActive ) {
+		sdVulkanFrame& frame = state->frames[ state->frameIndex ];
+		VkBuffer stagingBuffer = frame.imageUploadBuffer;
+		VkDeviceSize stagingOffset = ( frame.imageUploadOffset + 15 ) & ~15ULL;
+		if ( frame.imageUploadMapped != NULL &&
+			stagingOffset + uploadBytes <= VULKAN_IMAGE_UPLOAD_BYTES ) {
+			memcpy( static_cast< byte* >( frame.imageUploadMapped ) + stagingOffset,
+				rgba, static_cast< size_t >( uploadBytes ) );
+			frame.imageUploadOffset = stagingOffset + uploadBytes;
+		} else {
+			if ( !frame.imageUploadOverflowWarned ) {
+				common->Warning( "Vulkan image upload arena exhausted (%u MiB); using fence-retired spill buffers",
+					static_cast< unsigned int >(
+						VULKAN_IMAGE_UPLOAD_BYTES / ( 1024 * 1024 ) ) );
+				frame.imageUploadOverflowWarned = true;
+			}
+			sdVulkanBufferResource spill;
+			memset( &spill, 0, sizeof( spill ) );
+			spill.bytes = uploadBytes;
+			if ( !CreateBufferAllocation( *state, uploadBytes,
+				VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+					VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+				spill.buffer, spill.memory ) ||
+				!CheckVulkanResult( state->MapMemory( state->device, spill.memory,
+					0, uploadBytes, 0, &spill.mapped ),
+					"vkMapMemory(image upload spill)" ) ) {
+				DestroyBufferResource( *state, spill );
+				DestroyImageResource( *state, resource );
+				return false;
+			}
+			memcpy( spill.mapped, rgba, static_cast< size_t >( uploadBytes ) );
+			state->UnmapMemory( state->device, spill.memory );
+			spill.mapped = NULL;
+			stagingBuffer = spill.buffer;
+			stagingOffset = 0;
+			state->frameRetiredBufferResources[ state->frameIndex ].Append( spill );
+		}
+		RecordInitialImageUploadCommands( *state,
+			frame.imageUploadCommandBuffer, stagingBuffer, stagingOffset,
+			resource, width, height, mipLevels );
+		frame.imageUploadRecorded = true;
+		const int imageIndex = state->imageResources.Append( resource );
+		state->imageResourceLookup.Set( resource.owner, imageIndex );
+		return true;
+	}
 	VkBuffer stagingBuffer = VK_NULL_HANDLE;
 	VkDeviceMemory stagingMemory = VK_NULL_HANDLE;
 	if ( !CreateBufferAllocation( *state, uploadBytes,
@@ -6077,6 +6345,7 @@ bool sdVulkanBackend::UploadImage2D( const void* owner,
 
 bool sdVulkanBackend::UploadImageCube( const void* owner,
 	const unsigned char* const rgba[ 6 ], int size, bool linearFilter ) {
+	RENDER_METRIC_SCOPE( "Vulkan create/upload cube image" );
 	if ( state == NULL || state->device == VK_NULL_HANDLE || owner == NULL ||
 		rgba == NULL || size <= 0 ) {
 		return false;
@@ -6168,6 +6437,102 @@ bool sdVulkanBackend::UploadImageCube( const void* owner,
 	const VkDeviceSize faceBytes = static_cast< VkDeviceSize >( size ) *
 		static_cast< VkDeviceSize >( size ) * 4;
 	const VkDeviceSize uploadBytes = faceBytes * 6;
+	if ( state->frameActive ) {
+		sdVulkanFrame& frame = state->frames[ state->frameIndex ];
+		VkBuffer stagingBuffer = frame.imageUploadBuffer;
+		VkDeviceSize stagingOffset = ( frame.imageUploadOffset + 15 ) & ~15ULL;
+		byte* mapped = NULL;
+		if ( frame.imageUploadMapped != NULL &&
+			stagingOffset + uploadBytes <= VULKAN_IMAGE_UPLOAD_BYTES ) {
+			mapped = static_cast< byte* >( frame.imageUploadMapped ) + stagingOffset;
+			frame.imageUploadOffset = stagingOffset + uploadBytes;
+		} else {
+			if ( !frame.imageUploadOverflowWarned ) {
+				common->Warning( "Vulkan image upload arena exhausted (%u MiB); using fence-retired spill buffers",
+					static_cast< unsigned int >(
+						VULKAN_IMAGE_UPLOAD_BYTES / ( 1024 * 1024 ) ) );
+				frame.imageUploadOverflowWarned = true;
+			}
+			sdVulkanBufferResource spill;
+			memset( &spill, 0, sizeof( spill ) );
+			spill.bytes = uploadBytes;
+			if ( !CreateBufferAllocation( *state, uploadBytes,
+				VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+					VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+				spill.buffer, spill.memory ) ||
+				!CheckVulkanResult( state->MapMemory( state->device, spill.memory,
+					0, uploadBytes, 0, &spill.mapped ),
+					"vkMapMemory(cube upload spill)" ) ) {
+				DestroyBufferResource( *state, spill );
+				DestroyImageResource( *state, resource );
+				return false;
+			}
+			mapped = static_cast< byte* >( spill.mapped );
+			stagingBuffer = spill.buffer;
+			stagingOffset = 0;
+			for ( int face = 0; face < 6; ++face ) {
+				memcpy( mapped + faceBytes * face, rgba[ face ],
+					static_cast< size_t >( faceBytes ) );
+			}
+			state->UnmapMemory( state->device, spill.memory );
+			spill.mapped = NULL;
+			state->frameRetiredBufferResources[ state->frameIndex ].Append( spill );
+			mapped = NULL;
+		}
+		if ( mapped != NULL ) {
+			for ( int face = 0; face < 6; ++face ) {
+				memcpy( mapped + faceBytes * face, rgba[ face ],
+					static_cast< size_t >( faceBytes ) );
+			}
+		}
+
+		VkImageMemoryBarrier2 barrier;
+		memset( &barrier, 0, sizeof( barrier ) );
+		barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2;
+		barrier.srcStageMask = VK_PIPELINE_STAGE_2_NONE;
+		barrier.dstStageMask = VK_PIPELINE_STAGE_2_TRANSFER_BIT;
+		barrier.dstAccessMask = VK_ACCESS_2_TRANSFER_WRITE_BIT;
+		barrier.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+		barrier.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+		barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+		barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+		barrier.image = resource.image;
+		barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		barrier.subresourceRange.levelCount = 1;
+		barrier.subresourceRange.layerCount = 6;
+		VkDependencyInfo dependencyInfo;
+		memset( &dependencyInfo, 0, sizeof( dependencyInfo ) );
+		dependencyInfo.sType = VK_STRUCTURE_TYPE_DEPENDENCY_INFO;
+		dependencyInfo.imageMemoryBarrierCount = 1;
+		dependencyInfo.pImageMemoryBarriers = &barrier;
+		state->CmdPipelineBarrier2( frame.imageUploadCommandBuffer, &dependencyInfo );
+		VkBufferImageCopy copyRegions[ 6 ];
+		memset( copyRegions, 0, sizeof( copyRegions ) );
+		for ( int face = 0; face < 6; ++face ) {
+			copyRegions[ face ].bufferOffset = stagingOffset + faceBytes * face;
+			copyRegions[ face ].imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+			copyRegions[ face ].imageSubresource.baseArrayLayer = face;
+			copyRegions[ face ].imageSubresource.layerCount = 1;
+			copyRegions[ face ].imageExtent.width = size;
+			copyRegions[ face ].imageExtent.height = size;
+			copyRegions[ face ].imageExtent.depth = 1;
+		}
+		state->CmdCopyBufferToImage( frame.imageUploadCommandBuffer,
+			stagingBuffer, resource.image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+			6, copyRegions );
+		barrier.srcStageMask = VK_PIPELINE_STAGE_2_TRANSFER_BIT;
+		barrier.srcAccessMask = VK_ACCESS_2_TRANSFER_WRITE_BIT;
+		barrier.dstStageMask = VK_PIPELINE_STAGE_2_ALL_GRAPHICS_BIT;
+		barrier.dstAccessMask = VK_ACCESS_2_SHADER_SAMPLED_READ_BIT;
+		barrier.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+		barrier.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		state->CmdPipelineBarrier2( frame.imageUploadCommandBuffer, &dependencyInfo );
+		frame.imageUploadRecorded = true;
+		const int imageIndex = state->imageResources.Append( resource );
+		state->imageResourceLookup.Set( resource.owner, imageIndex );
+		return true;
+	}
 	VkBuffer stagingBuffer = VK_NULL_HANDLE;
 	VkDeviceMemory stagingMemory = VK_NULL_HANDLE;
 	if ( !CreateBufferAllocation( *state, uploadBytes,
@@ -6519,15 +6884,10 @@ void sdVulkanBackend::DestroyImage( const void* owner ) {
 			if ( movedOwner != NULL ) {
 				state->imageResourceLookup.Set( movedOwner, i );
 			}
-			if ( state->frameActive ) {
-				state->frameRetiredImageResources[ state->frameIndex ].Append( removed );
-			} else if ( state->toolFrameActive ) {
-				state->retiredImageResources.Append( removed );
-			} else {
-				state->DeviceWaitIdle( state->device );
-				DestroyImageResource( *state, removed );
-				DestroyRetiredResources( *state );
-			}
+			const unsigned int retireFrame = state->frameActive ||
+				state->toolFrameActive ? state->frameIndex :
+				( state->frameIndex + NUM_VULKAN_FRAMES - 1 ) % NUM_VULKAN_FRAMES;
+			state->frameRetiredImageResources[ retireFrame ].Append( removed );
 			return;
 		}
 	}
@@ -6535,6 +6895,7 @@ void sdVulkanBackend::DestroyImage( const void* owner ) {
 
 bool sdVulkanBackend::UploadBuffer( const void* owner, const void* data,
 	int bytes, bool indexBuffer, bool frameTemporary ) {
+	RENDER_METRIC_SCOPE( "Vulkan create/upload buffer" );
 	if ( state == NULL || state->device == VK_NULL_HANDLE || owner == NULL ||
 		data == NULL || bytes <= 0 ) {
 		return false;
@@ -6623,15 +6984,10 @@ void sdVulkanBackend::DestroyBuffer( const void* owner ) {
 			if ( movedOwner != NULL ) {
 				state->bufferResourceLookup.Set( movedOwner, i );
 			}
-			if ( state->frameActive ) {
-				state->frameRetiredBufferResources[ state->frameIndex ].Append( removed );
-			} else if ( state->toolFrameActive ) {
-				state->retiredBufferResources.Append( removed );
-			} else {
-				state->DeviceWaitIdle( state->device );
-				DestroyBufferResource( *state, removed );
-				DestroyRetiredResources( *state );
-			}
+			const unsigned int retireFrame = state->frameActive ||
+				state->toolFrameActive ? state->frameIndex :
+				( state->frameIndex + NUM_VULKAN_FRAMES - 1 ) % NUM_VULKAN_FRAMES;
+			state->frameRetiredBufferResources[ retireFrame ].Append( removed );
 			return;
 		}
 	}

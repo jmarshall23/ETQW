@@ -9,6 +9,7 @@
 #include "Image.h"
 #include "RenderSystem.h"
 #include "tr_render.h"
+#include "RendererMetrics.h"
 #include "VulkanBackend.h"
 
 extern glconfig_t glConfig;
@@ -1111,6 +1112,7 @@ bool idImage::StartBackgroundImageLoad() {
 }
 
 void idImage::ActuallyLoadImage( bool checkForPrecompressed ) {
+	RENDER_METRIC_SCOPE( "Image load and decode" );
 	if ( IsLoaded() || !glConfig.isInitialized ) {
 		return;
 	}
