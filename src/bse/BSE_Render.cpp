@@ -351,6 +351,11 @@ void BSE_BuildRenderModel( idRenderModel *snapshot, const char *snapshotName,
 		if ( builder.verts.Num() == 0 || builder.indexes.Num() == 0 ) continue;
 		srfTriangles_t *tri = snapshot->AllocSurfaceTriangles( builder.verts.Num(), builder.indexes.Num() );
 		if ( tri == NULL ) continue;
+		// BSE snapshots are rebuilt every frame.  Vulkan must stream these through
+		// the persistent frame vertex cache; treating them as static geometry
+		// creates two device allocations per material and retires them two frames
+		// later, which turns weapon effects into large vkFreeMemory hitches.
+		tri->streamVertexCache = true;
 		memcpy( tri->verts, builder.verts.Begin(), builder.verts.Num() * sizeof( idDrawVert ) );
 		memcpy( tri->indexes, builder.indexes.Begin(), builder.indexes.Num() * sizeof( glIndex_t ) );
 		tri->numVerts = builder.verts.Num();

@@ -403,12 +403,21 @@ void idRenderWorldLocal::BackendPrepareEffects( const renderView_t* renderView )
 		viewRight.Normalize();
 		viewUp.Normalize();
 		idList<rvBSEParticle> particles;
-		state->simulation.Service( owner, particles );
+		{
+			RENDER_METRIC_SCOPE( "BSE simulate" );
+			state->simulation.Service( owner, particles );
+		}
 		idList<rvBSEParticle> renderParticles;
-		if ( bse != NULL ) bse->PrepareRender( owner, particles, renderParticles );
-		else renderParticles = particles;
-		BSE_BuildRenderModel( state->model, va( "_BSEEffect_%d", i ), renderParticles, owner,
-			owner.viewOrigin, viewRight, viewUp );
+		{
+			RENDER_METRIC_SCOPE( "BSE prepare particles" );
+			if ( bse != NULL ) bse->PrepareRender( owner, particles, renderParticles );
+			else renderParticles = particles;
+		}
+		{
+			RENDER_METRIC_SCOPE( "BSE build geometry" );
+			BSE_BuildRenderModel( state->model, va( "_BSEEffect_%d", i ), renderParticles, owner,
+				owner.viewOrigin, viewRight, viewUp );
+		}
 		if ( state->model->NumSurfaces() <= 0 ) continue;
 
 		renderEntity_t& entity = state->entity;
