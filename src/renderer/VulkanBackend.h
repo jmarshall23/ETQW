@@ -48,11 +48,16 @@ public:
 		int width, int height, const unsigned char* rgba );
 	void DestroyImage( const void* owner );
 	bool UploadBuffer( const void* owner, const void* data, int bytes,
-		bool indexBuffer );
+		bool indexBuffer, bool frameTemporary = false );
 	bool UpdateBuffer( const void* owner, int offset, const void* data, int bytes );
 	void DestroyBuffer( const void* owner );
 	bool DrawGuiFan( const void* imageOwner, const sdVulkanGuiVertex* vertices,
 		int vertexCount, const float* color, int drawStateBits );
+	bool DrawGuiTriangles( const void* imageOwner,
+		const sdVulkanToolVertex* vertices, int vertexCount );
+	bool DrawOverlayTriangles( const void* imageOwner,
+		const sdVulkanToolVertex* vertices, int vertexCount,
+		int scissorX, int scissorY, int scissorWidth, int scissorHeight );
 	void DrawView( const viewDef_s* view );
 
 	// Native editor windows use their own presentation surfaces.  Radiant's

@@ -316,7 +316,8 @@ public:
 	virtual int NumMeshes( const int = 0 ) const { return modelSurfaces.Num(); }
 	virtual idBounds CalcMeshBounds( int, const idJointMat*, const idVec3&, const idMat3&, bool ) { return modelBounds; }
 
-	idRenderModel* CreateDynamicSnapshot( const renderEntity_t* entity ) const {
+	idRenderModel* CreateDynamicSnapshot( const renderEntity_t* entity,
+		idRenderModel* cachedModel ) const {
 		if ( entity == NULL || modelJoints.Num() == 0 ) {
 			return NULL;
 		}
@@ -332,14 +333,45 @@ public:
 			inverseDefaultPose.Begin(), modelJoints.Num() );
 
 		const bool cpuSkinForVulkan = R_UseVulkanBackend();
-		idRenderModelStatic* snapshot = new idRenderModelStatic;
-		snapshot->InitEmpty( "_MD5_Snapshot_" );
+		idRenderModelStatic* snapshot = cpuSkinForVulkan ?
+			dynamic_cast< idRenderModelStatic* >( cachedModel ) : NULL;
+		int expectedSurfaces = 0;
+		for ( int i = 0; i < modelSurfaces.Num(); ++i ) {
+			if ( modelSurfaces[ i ].geometry != NULL ) {
+				++expectedSurfaces;
+			}
+		}
+		bool reuseSnapshot = snapshot != NULL &&
+			idStr::Icmp( snapshot->Name(), "_MD5_Snapshot_" ) == 0 &&
+			snapshot->modelSurfaces.Num() == expectedSurfaces;
+		if ( reuseSnapshot ) {
+			int snapshotSurface = 0;
+			for ( int sourceSurface = 0; sourceSurface < modelSurfaces.Num(); ++sourceSurface ) {
+				const srfTriangles_t* sourceGeometry = modelSurfaces[ sourceSurface ].geometry;
+				if ( sourceGeometry == NULL ) {
+					continue;
+				}
+				const srfTriangles_t* cachedGeometry =
+					snapshot->modelSurfaces[ snapshotSurface++ ].geometry;
+				if ( cachedGeometry == NULL ||
+					cachedGeometry->numVerts != sourceGeometry->numVerts ||
+					cachedGeometry->numIndexes != sourceGeometry->numIndexes ) {
+					reuseSnapshot = false;
+					break;
+				}
+			}
+		}
+		if ( !reuseSnapshot ) {
+			snapshot = new idRenderModelStatic;
+			snapshot->InitEmpty( "_MD5_Snapshot_" );
+		}
 		// The OpenGL renderer consumes the shared reference-pose vertex/index
 		// caches plus joints and weights.  Vulkan does not have that pipeline yet,
 		// so its compatibility path creates a fully owned, CPU-skinned snapshot.
 		snapshot->ownsSurfaceGeometry = cpuSkinForVulkan;
 		snapshot->modelBounds = entity->bounds.IsCleared() ? modelBounds : entity->bounds;
 
+		int snapshotSurfaceIndex = 0;
 		for ( int surfaceIndex = 0; surfaceIndex < modelSurfaces.Num(); ++surfaceIndex ) {
 			const modelSurface_t& sourceSurface = modelSurfaces[ surfaceIndex ];
 			if ( sourceSurface.geometry == NULL ) {
@@ -348,22 +380,29 @@ public:
 
 			srfTriangles_t* geometry = NULL;
 			if ( cpuSkinForVulkan ) {
-				geometry = snapshot->AllocSurfaceTriangles(
-					sourceSurface.geometry->numVerts,
-					sourceSurface.geometry->numIndexes );
+				geometry = reuseSnapshot ?
+					snapshot->modelSurfaces[ snapshotSurfaceIndex ].geometry :
+					snapshot->AllocSurfaceTriangles( sourceSurface.geometry->numVerts,
+						sourceSurface.geometry->numIndexes );
 				if ( geometry == NULL ) {
-					delete snapshot;
+					if ( !reuseSnapshot ) {
+						delete snapshot;
+					}
 					return NULL;
 				}
 				const idDrawVert* sourceVerts = sourceSurface.geometry->verts;
 				if ( sourceVerts == NULL || sourceSurface.geometry->indexes == NULL ) {
-					delete snapshot;
+					if ( !reuseSnapshot ) {
+						delete snapshot;
+					}
 					return NULL;
 				}
 				memcpy( geometry->verts, sourceVerts,
 					geometry->numVerts * sizeof( geometry->verts[ 0 ] ) );
-				memcpy( geometry->indexes, sourceSurface.geometry->indexes,
-					geometry->numIndexes * sizeof( geometry->indexes[ 0 ] ) );
+				if ( !reuseSnapshot ) {
+					memcpy( geometry->indexes, sourceSurface.geometry->indexes,
+						geometry->numIndexes * sizeof( geometry->indexes[ 0 ] ) );
+				}
 				geometry->bounds = sourceSurface.geometry->bounds;
 				geometry->mode = sourceSurface.geometry->mode;
 				geometry->dsFlags = sourceSurface.geometry->dsFlags & ~0x10;
@@ -450,7 +489,12 @@ public:
 
 			modelSurface_t surface = sourceSurface;
 			surface.geometry = geometry;
-			snapshot->modelSurfaces.Append( surface );
+			if ( reuseSnapshot ) {
+				snapshot->modelSurfaces[ snapshotSurfaceIndex ] = surface;
+			} else {
+				snapshot->modelSurfaces.Append( surface );
+			}
+			++snapshotSurfaceIndex;
 		}
 		return snapshot;
 	}
@@ -461,19 +505,22 @@ private:
 			return;
 		}
 		if ( triangles->ambientCache != NULL ) {
-			if ( renderSystem != NULL && renderSystem->IsOpenGLRunning() ) {
+			if ( renderSystem != NULL && renderSystem->IsOpenGLRunning() &&
+				triangles->ambientCache->tag == TAG_USED ) {
 				vertexCache.Free( triangles->ambientCache );
 			}
 			triangles->ambientCache = NULL;
 		}
 		if ( triangles->indexCache != NULL ) {
-			if ( renderSystem != NULL && renderSystem->IsOpenGLRunning() ) {
+			if ( renderSystem != NULL && renderSystem->IsOpenGLRunning() &&
+				triangles->indexCache->tag == TAG_USED ) {
 				vertexCache.Free( triangles->indexCache );
 			}
 			triangles->indexCache = NULL;
 		}
 		if ( triangles->weightCache != NULL ) {
-			if ( renderSystem != NULL && renderSystem->IsOpenGLRunning() ) {
+			if ( renderSystem != NULL && renderSystem->IsOpenGLRunning() &&
+				triangles->weightCache->tag == TAG_USED ) {
 				vertexCache.Free( triangles->weightCache );
 			}
 			triangles->weightCache = NULL;
@@ -1310,10 +1357,17 @@ idRenderModel* R_AllocStaticModel() {
 	return new idRenderModelStatic;
 }
 
-idRenderModel* R_InstantiateDynamicModel( idRenderModel* model, const renderEntity_t* entity ) {
+idRenderModel* R_InstantiateDynamicModel( idRenderModel* model,
+	const renderEntity_t* entity, idRenderModel* cachedModel ) {
 	if ( model == NULL || model->IsDynamicModel() == DM_STATIC ) {
+		delete cachedModel;
 		return model;
 	}
 	idRenderModelStatic* staticModel = dynamic_cast< idRenderModelStatic* >( model );
-	return staticModel != NULL ? staticModel->CreateDynamicSnapshot( entity ) : model;
+	idRenderModel* result = staticModel != NULL ?
+		staticModel->CreateDynamicSnapshot( entity, cachedModel ) : model;
+	if ( cachedModel != NULL && result != cachedModel ) {
+		delete cachedModel;
+	}
+	return result;
 }

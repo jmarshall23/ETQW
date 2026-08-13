@@ -416,6 +416,7 @@ public:
 
 // Builds the per-entity hardware-skinned snapshot used by the ETQW front end.
 // Static models are returned unchanged; the caller owns a distinct result.
-idRenderModel*	R_InstantiateDynamicModel( idRenderModel* model, const renderEntity_t* entity );
+idRenderModel*	R_InstantiateDynamicModel( idRenderModel* model,
+	const renderEntity_t* entity, idRenderModel* cachedModel = NULL );
 
 #endif /* !__MODEL_H__ */

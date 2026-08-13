@@ -1624,7 +1624,9 @@ void R_RemoveUnecessaryViewLights( void ) {
 
 #include "draw_local.h"
 #include "tr_render.h"
+#include "RendererMetrics.h"
 #include "RenderSystemBackend.h"
+#include "VulkanBackend.h"
 #include "Image.h"
 #include "Material.h"
 #include "Model.h"
@@ -2069,13 +2071,20 @@ void R_AddAmbientDrawsurfs( viewEntity_s* space ) {
 		// Static caches may have been purged since model finalization.  Recreate
 		// them on first visible use and mark them live before any ambient or
 		// light-interaction draw references the surface.
-		if ( geometry->ambientCache == NULL && geometry->verts != NULL && geometry->numVerts > 0 ) {
+		const bool streamDynamicVertices = R_UseVulkanBackend() &&
+			idStr::Icmp( space->model->Name(), "_MD5_Snapshot_" ) == 0;
+		if ( streamDynamicVertices && geometry->verts != NULL && geometry->numVerts > 0 ) {
+			geometry->ambientCache = vertexCache.AllocFrameTemp( geometry->verts,
+				geometry->numVerts * sizeof( geometry->verts[ 0 ] ) );
+		} else if ( geometry->ambientCache == NULL && geometry->verts != NULL && geometry->numVerts > 0 ) {
 			vertexCache.Alloc( geometry->verts, geometry->numVerts * sizeof( geometry->verts[ 0 ] ), &geometry->ambientCache );
 		}
 		if ( geometry->indexCache == NULL && geometry->indexes != NULL && geometry->numIndexes > 0 ) {
 			vertexCache.Alloc( geometry->indexes, geometry->numIndexes * sizeof( geometry->indexes[ 0 ] ), &geometry->indexCache, true );
 		}
-		if ( geometry->ambientCache != NULL ) vertexCache.Touch( geometry->ambientCache );
+		if ( geometry->ambientCache != NULL && geometry->ambientCache->tag != TAG_TEMP ) {
+			vertexCache.Touch( geometry->ambientCache );
+		}
 		if ( geometry->indexCache != NULL ) vertexCache.Touch( geometry->indexCache );
 		R_AddDrawSurf( geometry, space, space->entityDef, material, space->scissorRect, modelSurface->id );
 	}
@@ -2213,6 +2222,7 @@ void R_FreeBuiltDrawView() {
 }
 
 void R_BuildDrawView( idRenderWorldLocal* renderWorld, const renderView_t* renderView ) {
+	RENDER_METRIC_SCOPE( "Front end build" );
 	viewDef_s* view = RB_GetViewDef();
 	R_FreeBuiltDrawView();
 	if ( view == NULL ) return;
@@ -2228,8 +2238,13 @@ void R_BuildDrawView( idRenderWorldLocal* renderWorld, const renderView_t* rende
 	view->worldSpace.ambientCubeMap = renderWorld->BackendAmbientCubeMap();
 	SetFullScreenRect( view->scissor );
 	view->worldSpace.scissorRect = view->scissor;
-	renderWorld->BackendPrepareEffects( renderView );
+	{
+		RENDER_METRIC_SCOPE( "Prepare effects" );
+		renderWorld->BackendPrepareEffects( renderView );
+	}
 
+	{
+		RENDER_METRIC_SCOPE( "Prepare entities and dynamic models" );
 	for ( int entityIndex = 0; entityIndex < renderWorld->BackendNumEntityDefs(); ++entityIndex ) {
 		renderEntity_t* entity = renderWorld->BackendEntityDef( entityIndex );
 		if ( entity == NULL ) continue;
@@ -2254,26 +2269,35 @@ void R_BuildDrawView( idRenderWorldLocal* renderWorld, const renderView_t* rende
 		if ( entity->hModel == NULL ) continue;
 		idRenderModel* drawModel = entity->hModel;
 		if ( R_GetStuffModelSnapshot( entity->hModel, entity, view, drawModel ) && drawModel == NULL ) continue;
-		idRenderModel* dynamicModel = renderSystem->InstantiateDynamicModel( drawModel, entity );
+		idRenderModel* dynamicModel = renderWorld->BackendInstantiateDynamicModel(
+			entityIndex, drawModel, entity );
 		if ( dynamicModel == NULL ) continue;
 		if ( dynamicModel != drawModel ) {
-			frontEndDynamicModels.Append( dynamicModel );
 			drawModel = dynamicModel;
 		}
 		R_SetEntityDefViewEntity( entity, drawModel, entityIndex );
 	}
+	}
+	{
+		RENDER_METRIC_SCOPE( "Prepare effects geometry" );
 	for ( int effectIndex = 0; effectIndex < renderWorld->BackendNumPreparedEffects(); ++effectIndex ) {
 		renderEntity_t* effectEntity = renderWorld->BackendPreparedEffect( effectIndex );
 		if ( effectEntity == NULL || effectEntity->hModel == NULL ) continue;
 		R_SetEntityDefViewEntity( effectEntity, effectEntity->hModel, -1 - effectIndex );
+	}
 	}
 	if ( renderWorld->BackendNumLocalModels() > 0 || view->viewEntities != NULL ) {
 		view->worldSpace.next = view->viewEntities;
 		view->viewEntities = &view->worldSpace;
 		lastViewEntity = frontEndViewEntities.Num() > 0 ? frontEndViewEntities[ frontEndViewEntities.Num() - 1 ] : &view->worldSpace;
 	}
-	R_AddModelSurfaces();
+	{
+		RENDER_METRIC_SCOPE( "Add model surfaces" );
+		R_AddModelSurfaces();
+	}
 
+	{
+		RENDER_METRIC_SCOPE( "Prepare lights" );
 	for ( int lightIndex = 0; lightIndex < renderWorld->BackendNumLightDefs(); ++lightIndex ) {
 		renderLight_t* light = renderWorld->BackendLightDef( lightIndex );
 		if ( light == NULL ) continue;
@@ -2281,6 +2305,13 @@ void R_BuildDrawView( idRenderWorldLocal* renderWorld, const renderView_t* rende
 		if ( light->allowLightInViewID != 0 && light->allowLightInViewID != renderView->viewID ) continue;
 		R_SetLightDefViewLight( light, lightIndex );
 	}
-	R_AddLightSurfaces();
-	R_RemoveUnecessaryViewLights();
+	}
+	{
+		RENDER_METRIC_SCOPE( "Add light surfaces" );
+		R_AddLightSurfaces();
+	}
+	{
+		RENDER_METRIC_SCOPE( "Cull empty view lights" );
+		R_RemoveUnecessaryViewLights();
+	}
 }

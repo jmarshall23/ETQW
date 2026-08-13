@@ -9,6 +9,7 @@
 
 #include "RendererTypesImpl.h"
 #include "RenderSystemBackend.h"
+#include "RendererMetrics.h"
 #include "RuntimeSpirvCompiler.h"
 #include "VulkanBackend.h"
 #include "draw_raytracing.h"
@@ -614,6 +615,7 @@ void idRenderSystemLocal::Shutdown() {
 	if ( renderModelManager != NULL ) {
 		renderModelManager->Shutdown();
 	}
+	R_RenderMetricsShutdown();
 	if ( globalImages != NULL ) {
 		globalImages->Shutdown();
 	}

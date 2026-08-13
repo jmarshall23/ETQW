@@ -11,6 +11,7 @@
 #include "Model.h"
 #include "ModelManager.h"
 #include "RenderSystemBackend.h"
+#include "RendererMetrics.h"
 #include "GuiModel.h"
 #include "DeviceContext.h"
 #include "tr_render.h"
@@ -116,6 +117,7 @@ void idRenderSystemLocal::WriteDemoPics() {}
 void idRenderSystemLocal::DrawDemoPics() {}
 
 void idRenderSystemLocal::BeginFrame( int width, int height ) {
+	R_RenderMetricsBeginFrame();
 	if ( vulkanBackend.IsInitialized() && sys3D != NULL ) {
 		const glimpParms_t& parms = sys3D->GetGameWindowParms();
 		width = parms.width;
@@ -127,8 +129,11 @@ void idRenderSystemLocal::BeginFrame( int width, int height ) {
 	if ( height > 0 ) {
 		windowHeight = height;
 	}
-	renderSystemBackend.BeginFrame( windowWidth, windowHeight );
-	guiModel.BeginFrame();
+	{
+		RENDER_METRIC_SCOPE( "Frame setup" );
+		renderSystemBackend.BeginFrame( windowWidth, windowHeight );
+		guiModel.BeginFrame();
+	}
 	if ( openGLRunning && !vulkanBackend.IsInitialized() && sys3D != NULL &&
 		sys3D->MakeCurrent( sys3D->GetGameWindow() ) ) {
 		SetDefaultGLState();
@@ -137,6 +142,7 @@ void idRenderSystemLocal::BeginFrame( int width, int height ) {
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );
 	}
 	if ( vulkanBackend.IsInitialized() ) {
+		RENDER_METRIC_SCOPE( "Vulkan BeginFrame" );
 		vulkanBackend.BeginFrame( windowWidth, windowHeight );
 	}
 	synced = false;
@@ -144,18 +150,32 @@ void idRenderSystemLocal::BeginFrame( int width, int height ) {
 
 void idRenderSystemLocal::EndFrame( bool swapBuffers ) {
 	if ( openGLRunning ) {
-		guiModel.SubmitFrame( windowWidth, windowHeight );
+		{
+			RENDER_METRIC_SCOPE( "GUI submission" );
+			guiModel.SubmitFrame( windowWidth, windowHeight );
+		}
 		if ( !vulkanBackend.IsInitialized() ) {
 			glFlush();
 			if ( swapBuffers && sys3D != NULL ) {
 				sys3D->SwapBuffers();
 			}
 		}
-		vertexCache.EndFrame();
+		{
+			RENDER_METRIC_SCOPE( "Vertex cache EndFrame" );
+			vertexCache.EndFrame();
+		}
 	}
 	if ( vulkanBackend.IsInitialized() ) {
-		vulkanBackend.EndFrame( swapBuffers );
+		{
+			RENDER_METRIC_SCOPE( "Metrics overlay" );
+			R_RenderMetricsDrawOverlay( windowWidth, windowHeight );
+		}
+		{
+			RENDER_METRIC_SCOPE( "Vulkan EndFrame" );
+			vulkanBackend.EndFrame( swapBuffers );
+		}
 	}
+	R_RenderMetricsEndFrame();
 	synced = true;
 	syncNum++;
 	doubleBufferIndex ^= 1;

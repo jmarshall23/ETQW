@@ -878,6 +878,8 @@ void sdGuiModel::SubmitFrameVulkan() {
 		}
 	};
 
+	idList< sdVulkanToolVertex > textVertices;
+	textVertices.SetGranularity( 256 );
 	auto submitText = [&]( const guiText_t& command ) {
 		idWStr displayText;
 		BuildDisplayText( command.text.c_str(), displayText );
@@ -913,8 +915,11 @@ void sdGuiModel::SubmitFrameVulkan() {
 			y += command.rect.GetHeight() - textHeight;
 		}
 		const byte* rgba = reinterpret_cast< const byte* >( &command.color );
-		const float color[ 4 ] = { rgba[ 0 ] / 255.0f, rgba[ 1 ] / 255.0f,
-			rgba[ 2 ] / 255.0f, rgba[ 3 ] / 255.0f };
+		const float red = rgba[ 0 ] / 255.0f;
+		const float green = rgba[ 1 ] / 255.0f;
+		const float blue = rgba[ 2 ] / 255.0f;
+		const float alpha = rgba[ 3 ] / 255.0f;
+		textVertices.SetNum( 0, false );
 		const float lineStart = x;
 		for ( int characterIndex = 0; characterIndex < displayText.Length();
 			++characterIndex ) {
@@ -936,26 +941,42 @@ void sdGuiModel::SubmitFrameVulkan() {
 					font->atlasHeight;
 				const float t1 = 1.0f - static_cast< float >( ( row + 1 ) * font->cellHeight ) /
 					font->atlasHeight;
-				sdVulkanGuiVertex vertices[ 4 ];
-				vertices[ 0 ].x = x;
-				vertices[ 0 ].y = y;
-				vertices[ 0 ].s = s0;
-				vertices[ 0 ].t = t0;
-				vertices[ 1 ].x = x + font->cellWidth;
-				vertices[ 1 ].y = y;
-				vertices[ 1 ].s = s1;
-				vertices[ 1 ].t = t0;
-				vertices[ 2 ].x = x + font->cellWidth;
-				vertices[ 2 ].y = y + font->cellHeight;
-				vertices[ 2 ].s = s1;
-				vertices[ 2 ].t = t1;
-				vertices[ 3 ].x = x;
-				vertices[ 3 ].y = y + font->cellHeight;
-				vertices[ 3 ].s = s0;
-				vertices[ 3 ].t = t1;
-				vulkanBackend.DrawGuiFan( fontImage, vertices, 4, color, 0x65 );
+				const float left = x * ( 2.0f / 640.0f ) - 1.0f;
+				const float right = ( x + font->cellWidth ) * ( 2.0f / 640.0f ) - 1.0f;
+				const float top = 1.0f - y * ( 2.0f / 480.0f );
+				const float bottom = 1.0f -
+					( y + font->cellHeight ) * ( 2.0f / 480.0f );
+				sdVulkanToolVertex quad[ 4 ];
+				const float positions[ 4 ][ 2 ] = {
+					{ left, top }, { right, top }, { right, bottom }, { left, bottom }
+				};
+				const float texCoords[ 4 ][ 2 ] = {
+					{ s0, t0 }, { s1, t0 }, { s1, t1 }, { s0, t1 }
+				};
+				for ( int vertexIndex = 0; vertexIndex < 4; ++vertexIndex ) {
+					quad[ vertexIndex ].x = positions[ vertexIndex ][ 0 ];
+					quad[ vertexIndex ].y = positions[ vertexIndex ][ 1 ];
+					quad[ vertexIndex ].z = 0.0f;
+					quad[ vertexIndex ].w = 1.0f;
+					quad[ vertexIndex ].s = texCoords[ vertexIndex ][ 0 ];
+					quad[ vertexIndex ].t = texCoords[ vertexIndex ][ 1 ];
+					quad[ vertexIndex ].r = red;
+					quad[ vertexIndex ].g = green;
+					quad[ vertexIndex ].b = blue;
+					quad[ vertexIndex ].a = alpha;
+				}
+				textVertices.Append( quad[ 0 ] );
+				textVertices.Append( quad[ 1 ] );
+				textVertices.Append( quad[ 2 ] );
+				textVertices.Append( quad[ 0 ] );
+				textVertices.Append( quad[ 2 ] );
+				textVertices.Append( quad[ 3 ] );
 			}
 			x += font->advance[ character ];
+		}
+		if ( textVertices.Num() > 0 ) {
+			vulkanBackend.DrawGuiTriangles( fontImage, textVertices.Begin(),
+				textVertices.Num() );
 		}
 	};
 

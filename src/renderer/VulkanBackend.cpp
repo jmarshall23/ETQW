@@ -5,6 +5,7 @@
 
 #include "VulkanBackend.h"
 #include "RuntimeSpirvCompiler.h"
+#include "RendererMetrics.h"
 #include "tr_render.h"
 #include "draw_local.h"
 #include "Material.h"
@@ -98,6 +99,7 @@ struct sdVulkanBufferResource {
 	const void*		owner;
 	VkBuffer			buffer;
 	VkDeviceMemory	memory;
+	void*				mapped;
 	VkDeviceSize		bytes;
 	bool				indexBuffer;
 };
@@ -407,6 +409,8 @@ struct sdVulkanBackendState {
 	// bindings and can asynchronously lose the device.
 	idList< sdVulkanImageResource > retiredImageResources;
 	idList< sdVulkanBufferResource > retiredBufferResources;
+	idList< sdVulkanImageResource > frameRetiredImageResources[ NUM_VULKAN_FRAMES ];
+	idList< sdVulkanBufferResource > frameRetiredBufferResources[ NUM_VULKAN_FRAMES ];
 	VkDescriptorSetLayout		guiDescriptorSetLayout;
 	VkDescriptorPool			guiDescriptorPool;
 	VkPipelineLayout			guiPipelineLayout;
@@ -1939,6 +1943,13 @@ void DestroyAllImageResources( sdVulkanBackendState& state ) {
 		DestroyImageResource( state, state.retiredImageResources[ i ] );
 	}
 	state.retiredImageResources.Clear();
+	for ( int frameIndex = 0; frameIndex < NUM_VULKAN_FRAMES; ++frameIndex ) {
+		for ( int i = 0; i < state.frameRetiredImageResources[ frameIndex ].Num(); ++i ) {
+			DestroyImageResource( state,
+				state.frameRetiredImageResources[ frameIndex ][ i ] );
+		}
+		state.frameRetiredImageResources[ frameIndex ].Clear();
+	}
 }
 
 void DestroyToolDepthResource( sdVulkanBackendState& state,
@@ -1976,6 +1987,10 @@ void DestroyAllToolRenderTargets( sdVulkanBackendState& state ) {
 
 void DestroyBufferResource( sdVulkanBackendState& state,
 	sdVulkanBufferResource& resource ) {
+	if ( resource.mapped != NULL ) {
+		state.UnmapMemory( state.device, resource.memory );
+		resource.mapped = NULL;
+	}
 	if ( resource.buffer != VK_NULL_HANDLE ) {
 		state.DestroyBuffer( state.device, resource.buffer, NULL );
 	}
@@ -1994,6 +2009,13 @@ void DestroyAllBufferResources( sdVulkanBackendState& state ) {
 		DestroyBufferResource( state, state.retiredBufferResources[ i ] );
 	}
 	state.retiredBufferResources.Clear();
+	for ( int frameIndex = 0; frameIndex < NUM_VULKAN_FRAMES; ++frameIndex ) {
+		for ( int i = 0; i < state.frameRetiredBufferResources[ frameIndex ].Num(); ++i ) {
+			DestroyBufferResource( state,
+				state.frameRetiredBufferResources[ frameIndex ][ i ] );
+		}
+		state.frameRetiredBufferResources[ frameIndex ].Clear();
+	}
 }
 
 void DestroyRetiredResources( sdVulkanBackendState& state ) {
@@ -2009,6 +2031,20 @@ void DestroyRetiredResources( sdVulkanBackendState& state ) {
 		DestroyToolDepthResource( state, state.retiredToolDepthResources[ i ] );
 	}
 	state.retiredToolDepthResources.Clear();
+}
+
+void DestroyFrameRetiredResources( sdVulkanBackendState& state,
+	unsigned int frameIndex ) {
+	for ( int i = 0; i < state.frameRetiredImageResources[ frameIndex ].Num(); ++i ) {
+		DestroyImageResource( state,
+			state.frameRetiredImageResources[ frameIndex ][ i ] );
+	}
+	state.frameRetiredImageResources[ frameIndex ].Clear();
+	for ( int i = 0; i < state.frameRetiredBufferResources[ frameIndex ].Num(); ++i ) {
+		DestroyBufferResource( state,
+			state.frameRetiredBufferResources[ frameIndex ][ i ] );
+	}
+	state.frameRetiredBufferResources[ frameIndex ].Clear();
 }
 
 bool CreateBufferAllocation( sdVulkanBackendState& state, VkDeviceSize bytes,
@@ -3993,6 +4029,7 @@ bool sdVulkanBackend::BeginFrame( int width, int height ) {
 	}
 	if ( state->retiredImageResources.Num() != 0 ||
 		state->retiredBufferResources.Num() != 0 ) {
+		RENDER_METRIC_SCOPE( "Vulkan retire resources" );
 		// This conservative synchronization is intentional for the first Vulkan
 		// port.  It is only reached when the legacy cache frees resources; a later
 		// allocator can retire them against individual frame fences instead.
@@ -4009,6 +4046,7 @@ bool sdVulkanBackend::BeginFrame( int width, int height ) {
 		state->swapchainDirty = true;
 	}
 	if ( state->swapchainDirty ) {
+		RENDER_METRIC_SCOPE( "Vulkan recreate swapchain" );
 		state->DeviceWaitIdle( state->device );
 		if ( !CreateSwapchain( *state, width, height ) ) {
 			return false;
@@ -4016,25 +4054,39 @@ bool sdVulkanBackend::BeginFrame( int width, int height ) {
 	}
 
 	sdVulkanFrame& frame = state->frames[ state->frameIndex ];
-	if ( !CheckVulkanResult( state->WaitForFences( state->device, 1,
-		&frame.fence, VK_TRUE, UINT64_MAX ), "vkWaitForFences" ) ) {
-		return false;
+	{
+		RENDER_METRIC_SCOPE( "Vulkan wait for frame fence" );
+		if ( !CheckVulkanResult( state->WaitForFences( state->device, 1,
+			&frame.fence, VK_TRUE, UINT64_MAX ), "vkWaitForFences" ) ) {
+			return false;
+		}
 	}
-	R_RayTracingBeginFrame( state->frameIndex );
+	{
+		RENDER_METRIC_SCOPE( "Vulkan retire frame resources" );
+		DestroyFrameRetiredResources( *state, state->frameIndex );
+	}
+	{
+		RENDER_METRIC_SCOPE( "Ray tracing BeginFrame" );
+		R_RayTracingBeginFrame( state->frameIndex );
+	}
 	frame.guiVertexOffset = 0;
 	frame.guiIndexOffset = 0;
 	frame.guiVertexOverflowWarned = false;
 	frame.guiIndexOverflowWarned = false;
-	VkResult acquireResult = state->AcquireNextImageKHR( state->device,
-		state->swapchain, UINT64_MAX, frame.imageAvailable, VK_NULL_HANDLE,
-		&state->imageIndex );
-	if ( acquireResult == VK_ERROR_OUT_OF_DATE_KHR ) {
-		state->DeviceWaitIdle( state->device );
-		if ( !CreateSwapchain( *state, width, height ) ) {
-			return false;
+	VkResult acquireResult;
+	{
+		RENDER_METRIC_SCOPE( "Vulkan acquire swapchain image" );
+		acquireResult = state->AcquireNextImageKHR( state->device,
+			state->swapchain, UINT64_MAX, frame.imageAvailable, VK_NULL_HANDLE,
+			&state->imageIndex );
+		if ( acquireResult == VK_ERROR_OUT_OF_DATE_KHR ) {
+			state->DeviceWaitIdle( state->device );
+			if ( !CreateSwapchain( *state, width, height ) ) {
+				return false;
+			}
+			acquireResult = state->AcquireNextImageKHR( state->device, state->swapchain,
+				UINT64_MAX, frame.imageAvailable, VK_NULL_HANDLE, &state->imageIndex );
 		}
-		acquireResult = state->AcquireNextImageKHR( state->device, state->swapchain,
-			UINT64_MAX, frame.imageAvailable, VK_NULL_HANDLE, &state->imageIndex );
 	}
 	if ( acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR ) {
 		CheckVulkanResult( acquireResult, "vkAcquireNextImageKHR" );
@@ -4044,23 +4096,27 @@ bool sdVulkanBackend::BeginFrame( int width, int height ) {
 		state->swapchainDirty = true;
 	}
 
-	if ( !CheckVulkanResult( state->ResetFences( state->device, 1, &frame.fence ),
-		"vkResetFences" ) ||
-		!CheckVulkanResult( state->ResetCommandPool( state->device,
-			frame.commandPool, 0 ), "vkResetCommandPool" ) ) {
-		RestoreSignaledFence( *state, frame );
-		return false;
-	}
-	VkCommandBufferBeginInfo beginInfo;
-	memset( &beginInfo, 0, sizeof( beginInfo ) );
-	beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-	beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
-	if ( !CheckVulkanResult( state->BeginCommandBuffer( frame.commandBuffer,
-		&beginInfo ), "vkBeginCommandBuffer" ) ) {
-		RestoreSignaledFence( *state, frame );
-		return false;
+	{
+		RENDER_METRIC_SCOPE( "Vulkan reset command frame" );
+		if ( !CheckVulkanResult( state->ResetFences( state->device, 1, &frame.fence ),
+			"vkResetFences" ) ||
+			!CheckVulkanResult( state->ResetCommandPool( state->device,
+				frame.commandPool, 0 ), "vkResetCommandPool" ) ) {
+			RestoreSignaledFence( *state, frame );
+			return false;
+		}
+		VkCommandBufferBeginInfo beginInfo;
+		memset( &beginInfo, 0, sizeof( beginInfo ) );
+		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+		if ( !CheckVulkanResult( state->BeginCommandBuffer( frame.commandBuffer,
+			&beginInfo ), "vkBeginCommandBuffer" ) ) {
+			RestoreSignaledFence( *state, frame );
+			return false;
+		}
 	}
 
+	RENDER_METRIC_SCOPE( "Vulkan begin render pass" );
 	VkImageMemoryBarrier2 toColor;
 	memset( &toColor, 0, sizeof( toColor ) );
 	toColor.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2;
@@ -4156,7 +4212,9 @@ void sdVulkanBackend::EndFrame( bool ) {
 		return;
 	}
 	sdVulkanFrame& frame = state->frames[ state->frameIndex ];
-	state->CmdEndRendering( frame.commandBuffer );
+	{
+		RENDER_METRIC_SCOPE( "Vulkan finish command buffer" );
+		state->CmdEndRendering( frame.commandBuffer );
 
 	VkImageMemoryBarrier2 toPresent;
 	memset( &toPresent, 0, sizeof( toPresent ) );
@@ -4179,11 +4237,12 @@ void sdVulkanBackend::EndFrame( bool ) {
 	dependencyInfo.imageMemoryBarrierCount = 1;
 	dependencyInfo.pImageMemoryBarriers = &toPresent;
 	state->CmdPipelineBarrier2( frame.commandBuffer, &dependencyInfo );
-	if ( !CheckVulkanResult( state->EndCommandBuffer( frame.commandBuffer ),
-		"vkEndCommandBuffer" ) ) {
-		RestoreSignaledFence( *state, frame );
-		state->frameActive = false;
-		return;
+		if ( !CheckVulkanResult( state->EndCommandBuffer( frame.commandBuffer ),
+			"vkEndCommandBuffer" ) ) {
+			RestoreSignaledFence( *state, frame );
+			state->frameActive = false;
+			return;
+		}
 	}
 
 	VkSemaphoreSubmitInfo waitInfo;
@@ -4209,11 +4268,14 @@ void sdVulkanBackend::EndFrame( bool ) {
 	submitInfo.pCommandBufferInfos = &commandInfo;
 	submitInfo.signalSemaphoreInfoCount = 1;
 	submitInfo.pSignalSemaphoreInfos = &signalInfo;
-	if ( !CheckVulkanResult( state->QueueSubmit2( state->graphicsQueue, 1,
-		&submitInfo, frame.fence ), "vkQueueSubmit2" ) ) {
-		RestoreSignaledFence( *state, frame );
-		state->frameActive = false;
-		return;
+	{
+		RENDER_METRIC_SCOPE( "Vulkan queue submit" );
+		if ( !CheckVulkanResult( state->QueueSubmit2( state->graphicsQueue, 1,
+			&submitInfo, frame.fence ), "vkQueueSubmit2" ) ) {
+			RestoreSignaledFence( *state, frame );
+			state->frameActive = false;
+			return;
+		}
 	}
 	state->imageInitialized[ state->imageIndex ] = 1;
 	state->depthInitialized[ state->imageIndex ] = 1;
@@ -4226,8 +4288,11 @@ void sdVulkanBackend::EndFrame( bool ) {
 	presentInfo.swapchainCount = 1;
 	presentInfo.pSwapchains = &state->swapchain;
 	presentInfo.pImageIndices = &state->imageIndex;
-	const VkResult presentResult = state->QueuePresentKHR( state->graphicsQueue,
-		&presentInfo );
+	VkResult presentResult;
+	{
+		RENDER_METRIC_SCOPE( "Vulkan present" );
+		presentResult = state->QueuePresentKHR( state->graphicsQueue, &presentInfo );
+	}
 	if ( presentResult == VK_ERROR_OUT_OF_DATE_KHR || presentResult == VK_SUBOPTIMAL_KHR ) {
 		state->swapchainDirty = true;
 	} else {
@@ -5853,7 +5918,9 @@ void sdVulkanBackend::DestroyImage( const void* owner ) {
 				}
 			}
 			state->imageResources.RemoveIndexFast( i );
-			if ( state->frameActive || state->toolFrameActive ) {
+			if ( state->frameActive ) {
+				state->frameRetiredImageResources[ state->frameIndex ].Append( removed );
+			} else if ( state->toolFrameActive ) {
 				state->retiredImageResources.Append( removed );
 			} else {
 				state->DeviceWaitIdle( state->device );
@@ -5866,7 +5933,7 @@ void sdVulkanBackend::DestroyImage( const void* owner ) {
 }
 
 bool sdVulkanBackend::UploadBuffer( const void* owner, const void* data,
-	int bytes, bool indexBuffer ) {
+	int bytes, bool indexBuffer, bool frameTemporary ) {
 	if ( state == NULL || state->device == VK_NULL_HANDLE || owner == NULL ||
 		data == NULL || bytes <= 0 ) {
 		return false;
@@ -5885,10 +5952,27 @@ bool sdVulkanBackend::UploadBuffer( const void* owner, const void* data,
 		VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT |
 		VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT |
 		VK_BUFFER_USAGE_ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_BIT_KHR;
-	if ( !CreateBufferAllocation( *state, resource.bytes, usage,
-		VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, resource.buffer, resource.memory ) ||
-		!UploadBufferBytes( *state, resource.buffer, 0, data, resource.bytes,
-			indexBuffer ) ) {
+	bool uploaded = false;
+	if ( frameTemporary && CreateBufferAllocation( *state, resource.bytes, usage,
+		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+		resource.buffer, resource.memory ) &&
+		CheckVulkanResult( state->MapMemory( state->device, resource.memory, 0,
+			resource.bytes, 0, &resource.mapped ), "vkMapMemory(frame vertex buffer)" ) ) {
+		memcpy( resource.mapped, data, static_cast< size_t >( resource.bytes ) );
+		uploaded = true;
+	}
+	if ( !uploaded && resource.buffer != VK_NULL_HANDLE ) {
+		DestroyBufferResource( *state, resource );
+		resource.owner = owner;
+		resource.bytes = static_cast< VkDeviceSize >( bytes );
+		resource.indexBuffer = indexBuffer;
+	}
+	if ( !uploaded && CreateBufferAllocation( *state, resource.bytes, usage,
+		VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, resource.buffer, resource.memory ) ) {
+		uploaded = UploadBufferBytes( *state, resource.buffer, 0, data,
+			resource.bytes, indexBuffer );
+	}
+	if ( !uploaded ) {
 		DestroyBufferResource( *state, resource );
 		return false;
 	}
@@ -5911,6 +5995,11 @@ bool sdVulkanBackend::UpdateBuffer( const void* owner, int offset,
 			common->Warning( "Vulkan buffer update exceeds its allocation" );
 			return false;
 		}
+		if ( resource.mapped != NULL ) {
+			memcpy( static_cast< byte* >( resource.mapped ) + offset, data,
+				static_cast< size_t >( bytes ) );
+			return true;
+		}
 		return UploadBufferBytes( *state, resource.buffer, offset, data, bytes,
 			resource.indexBuffer );
 	}
@@ -5925,7 +6014,9 @@ void sdVulkanBackend::DestroyBuffer( const void* owner ) {
 		if ( state->bufferResources[ i ].owner == owner ) {
 			sdVulkanBufferResource removed = state->bufferResources[ i ];
 			state->bufferResources.RemoveIndexFast( i );
-			if ( state->frameActive || state->toolFrameActive ) {
+			if ( state->frameActive ) {
+				state->frameRetiredBufferResources[ state->frameIndex ].Append( removed );
+			} else if ( state->toolFrameActive ) {
 				state->retiredBufferResources.Append( removed );
 			} else {
 				state->DeviceWaitIdle( state->device );
@@ -5941,6 +6032,7 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 	if ( state == NULL || state->worldPipeline == VK_NULL_HANDLE || view == NULL ) {
 		return;
 	}
+	RENDER_METRIC_SCOPE( "Vulkan DrawView CPU" );
 	state->worldViewAttempts++;
 	// ETQW can submit the 3D render world before idRenderSystem::BeginFrame;
 	// OpenGL's immediate path tolerated that ordering.  Start the Vulkan command
@@ -5967,6 +6059,7 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 	// geometry no longer expose the swapchain clear color.  This intentionally
 	// precedes depth-tested surfaces; clouds and the sun remain later passes.
 	if ( view->atmosphere != NULL && state->skyPipeline != VK_NULL_HANDLE ) {
+		RENDER_METRIC_SCOPE( "Vulkan sky" );
 		idImage* skyImage = view->atmosphere->GetSkyGradientImage();
 		if ( skyImage != NULL && !skyImage->IsLoaded() ) {
 			skyImage->BindFragment();
@@ -6026,6 +6119,8 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 	rayTracingGeometries.SetGranularity( 256 );
 	rayTracingWaterGeometries.SetGranularity( 32 );
 
+	{
+		RENDER_METRIC_SCOPE( "Vulkan surface submission" );
 	for ( int surfaceIndex = 0; surfaceIndex < view->numDrawSurfs; ++surfaceIndex ) {
 		const drawSurf_s* surface = view->drawSurfs[ surfaceIndex ];
 		if ( surface == NULL || surface->geo == NULL || surface->space == NULL ||
@@ -6205,7 +6300,9 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			geometry.deforming = surface->geo->deformedSurface ||
 				surface->geo->deformedSurfaceInstance ||
 				surface->geo->hardwareSkinnedSurface ||
-				surface->geo->frameAlloced || surface->geo->weightCache != NULL;
+				surface->geo->frameAlloced || surface->geo->weightCache != NULL ||
+				( surface->space->model != NULL && idStr::Icmp(
+					surface->space->model->Name(), "_MD5_Snapshot_" ) == 0 );
 			geometry.geometryOwner = geometry.deforming &&
 				surface->space->entityDef != NULL ?
 				static_cast< const void* >( surface->space->entityDef ) :
@@ -6259,7 +6356,9 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			geometry.deforming = surface->geo->deformedSurface ||
 				surface->geo->deformedSurfaceInstance ||
 				surface->geo->hardwareSkinnedSurface ||
-				surface->geo->frameAlloced || surface->geo->weightCache != NULL;
+				surface->geo->frameAlloced || surface->geo->weightCache != NULL ||
+				( surface->space->model != NULL && idStr::Icmp(
+					surface->space->model->Name(), "_MD5_Snapshot_" ) == 0 );
 			geometry.geometryOwner = geometry.deforming &&
 				surface->space->entityDef != NULL ?
 				static_cast< const void* >( surface->space->entityDef ) :
@@ -6917,8 +7016,10 @@ void sdVulkanBackend::DrawView( const viewDef_s* view ) {
 			state->worldSkinnedDrawCalls++;
 		}
 	}
+	}
 
 	if ( rayTracingGeometries.Num() != 0 && R_RayTracingIsInitialized() ) {
+		RENDER_METRIC_SCOPE( "Vulkan ray tracing" );
 		sdRayTracingViewContext rayTracingView;
 		memset( &rayTracingView, 0, sizeof( rayTracingView ) );
 		rayTracingView.commandBuffer = frame.commandBuffer;
@@ -7028,6 +7129,86 @@ bool sdVulkanBackend::DrawGuiFan( const void* imageOwner,
 	state->CmdDraw( frame.commandBuffer, vertexCount, 1, 0, 0 );
 	state->guiDrawCalls++;
 	return true;
+}
+
+bool sdVulkanBackend::DrawOverlayTriangles( const void* imageOwner,
+	const sdVulkanToolVertex* vertices, int vertexCount, int scissorX,
+	int scissorY, int scissorWidth, int scissorHeight ) {
+	if ( state == NULL || !state->frameActive || imageOwner == NULL ||
+		vertices == NULL || vertexCount < 3 ||
+		state->toolBlendPipeline == VK_NULL_HANDLE ) {
+		return false;
+	}
+	const sdVulkanImageResource* imageResource =
+		FindVulkanImageResource( *state, imageOwner );
+	if ( imageResource == NULL || imageResource->descriptorSet == VK_NULL_HANDLE ) {
+		return false;
+	}
+
+	sdVulkanFrame& frame = state->frames[ state->frameIndex ];
+	const VkDeviceSize vertexBytes = static_cast< VkDeviceSize >( vertexCount ) *
+		sizeof( sdVulkanToolVertex );
+	const VkDeviceSize vertexOffset = ( frame.guiVertexOffset + 15 ) & ~15ULL;
+	if ( vertexOffset + vertexBytes > VULKAN_GUI_VERTEX_BYTES ) {
+		if ( !frame.guiVertexOverflowWarned ) {
+			common->Warning( "Vulkan overlay vertex stream exceeded %u MiB; remaining draws are skipped",
+				static_cast< unsigned int >( VULKAN_GUI_VERTEX_BYTES / ( 1024 * 1024 ) ) );
+			frame.guiVertexOverflowWarned = true;
+		}
+		return false;
+	}
+	memcpy( static_cast< byte* >( frame.guiVertexMapped ) + vertexOffset,
+		vertices, static_cast< size_t >( vertexBytes ) );
+	frame.guiVertexOffset = vertexOffset + vertexBytes;
+
+	VkViewport viewport;
+	viewport.x = 0.0f;
+	viewport.y = static_cast< float >( state->extent.height );
+	viewport.width = static_cast< float >( state->extent.width );
+	viewport.height = -static_cast< float >( state->extent.height );
+	viewport.minDepth = 0.0f;
+	viewport.maxDepth = 1.0f;
+	state->CmdSetViewport( frame.commandBuffer, 0, 1, &viewport );
+
+	const int framebufferWidth = static_cast< int >( state->extent.width );
+	const int framebufferHeight = static_cast< int >( state->extent.height );
+	const int left = idMath::ClampInt( 0, framebufferWidth, scissorX );
+	const int top = idMath::ClampInt( 0, framebufferHeight, scissorY );
+	const int right = idMath::ClampInt( left, framebufferWidth,
+		scissorX + scissorWidth );
+	const int bottom = idMath::ClampInt( top, framebufferHeight,
+		scissorY + scissorHeight );
+	if ( right <= left || bottom <= top ) {
+		return false;
+	}
+	VkRect2D scissor;
+	scissor.offset.x = left;
+	scissor.offset.y = top;
+	scissor.extent.width = right - left;
+	scissor.extent.height = bottom - top;
+	state->CmdSetScissor( frame.commandBuffer, 0, 1, &scissor );
+
+	state->CmdBindPipeline( frame.commandBuffer,
+		VK_PIPELINE_BIND_POINT_GRAPHICS, state->toolBlendPipeline );
+	state->CmdSetDepthBias( frame.commandBuffer, 0.0f, 0.0f, 0.0f );
+	state->CmdBindDescriptorSets( frame.commandBuffer,
+		VK_PIPELINE_BIND_POINT_GRAPHICS, state->guiPipelineLayout, 0, 1,
+		&imageResource->descriptorSet, 0, NULL );
+	state->CmdBindVertexBuffers( frame.commandBuffer, 0, 1,
+		&frame.guiVertexBuffer, &vertexOffset );
+	state->CmdDraw( frame.commandBuffer, vertexCount, 1, 0, 0 );
+	state->guiDrawCalls++;
+	return true;
+}
+
+bool sdVulkanBackend::DrawGuiTriangles( const void* imageOwner,
+	const sdVulkanToolVertex* vertices, int vertexCount ) {
+	if ( state == NULL || r_vkSkipGui.GetBool() ) {
+		return false;
+	}
+	return DrawOverlayTriangles( imageOwner, vertices, vertexCount, 0, 0,
+		static_cast< int >( state->extent.width ),
+		static_cast< int >( state->extent.height ) );
 }
 
 bool sdVulkanBackend::IsInitialized() const {

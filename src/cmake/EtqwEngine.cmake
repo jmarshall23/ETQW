@@ -73,6 +73,7 @@ set(ETQW_RENDERER_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RenderSystem.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RenderSystem_init.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RenderSystemBackend.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/renderer/RendererMetrics.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RuntimeSpirvCompiler.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RenderWorld.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/RenderWorld_demo.cpp"
@@ -194,6 +195,7 @@ set(ETQW_EXECUTABLE_SOURCES
     ${ETQW_SYSTEM_SOURCES}
     ${ETQW_ENGINE_SUPPORT_SOURCES}
     ${ETQW_TOOL_COMPILER_SOURCES}
+	${ETQW_IMGUI_SOURCES}
 )
 if(ETQW_BUILD_RADIANT)
     list(APPEND ETQW_EXECUTABLE_SOURCES
@@ -433,6 +435,7 @@ target_include_directories(etqw PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/idlib"
     "${CMAKE_CURRENT_SOURCE_DIR}/framework"
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer"
+	"${CMAKE_CURRENT_SOURCE_DIR}/imgui"
     "${CMAKE_CURRENT_SOURCE_DIR}/libs/zlib"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys"
     "${CMAKE_CURRENT_SOURCE_DIR}/sys/win32"

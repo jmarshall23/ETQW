@@ -38,7 +38,11 @@ extern idCVar r_useVertexBuffers;
 extern idCVar r_useIndexBuffers;
 
 
+// Vulkan CPU-skinned models stream their changing vertices through this
+// double-buffered arena.  Eight MiB avoids falling back to per-surface static
+// allocations in populated scenes while keeping the two-frame footprint small.
 static const int	FRAME_MEMORY_BYTES = 0x200000;
+static const int	VULKAN_FRAME_MEMORY_BYTES = 0x800000;
 static const int	EXPAND_HEADERS = 1024;
 
 idCVar idVertexCache::r_showVertexCache( "r_showVertexCache", "0", CVAR_INTEGER|CVAR_RENDERER, "" );
@@ -187,7 +191,8 @@ void idVertexCache::Init() {
 	deferredFreeList.next = deferredFreeList.prev = &deferredFreeList;
 
 	// set up the dynamic frame memory
-	frameBytes = FRAME_MEMORY_BYTES;
+	frameBytes = R_UseVulkanBackend() ? VULKAN_FRAME_MEMORY_BYTES :
+		FRAME_MEMORY_BYTES;
 	staticAllocTotal = 0;
 
 	byte	*junk = (byte *)Mem_Alloc( frameBytes );
@@ -311,7 +316,8 @@ void idVertexCache::Alloc( void *data, int size, vertCache_t **buffer, bool inde
 		SIMDProcessor->Memcpy( block->virtMem, data, size );
 	}
 	if ( vulkanBackend.IsInitialized() &&
-		!vulkanBackend.UploadBuffer( block, data, size, indexBuffer ) ) {
+		!vulkanBackend.UploadBuffer( block, data, size, indexBuffer,
+			allocatingTempBuffer ) ) {
 		common->Warning( "Vulkan vertex-cache upload failed (%d bytes)", size );
 	}
 }

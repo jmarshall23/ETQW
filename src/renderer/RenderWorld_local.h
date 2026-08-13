@@ -140,6 +140,8 @@ public:
 	idRenderModel* BackendLocalModel( int index ) const { return localModels[ index ]; }
 	int BackendNumEntityDefs() const { return entityDefs.Num(); }
 	renderEntity_t* BackendEntityDef( int index ) const { return entityDefs[ index ]; }
+	idRenderModel* BackendInstantiateDynamicModel( int index,
+		idRenderModel* sourceModel, const renderEntity_t* entity );
 	int BackendNumLightDefs() const { return lightDefs.Num(); }
 	renderLight_t* BackendLightDef( int index ) const { return lightDefs[ index ]; }
 	int BackendNumOcclusionTests() const { return occlusionTests.Num(); }
@@ -160,6 +162,8 @@ private:
 	idStr mapName;
 	idList< idRenderModel* > localModels;
 	idList< renderEntity_t* > entityDefs;
+	idList< idRenderModel* > entityDynamicModels;
+	idList< idRenderModel* > entityDynamicModelSources;
 	idList< renderLight_t* > lightDefs;
 	idList< renderEffect_t* > effectDefs;
 	idList< bseEffectState_t* > effectStates;

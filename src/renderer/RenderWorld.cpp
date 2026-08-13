@@ -6,6 +6,7 @@
 #pragma hdrstop
 
 #include "RenderWorld_local.h"
+#include "RendererMetrics.h"
 #include "draw_local.h"
 #include "Image.h"
 #include "Material.h"
@@ -172,6 +173,11 @@ void idRenderWorldLocal::Clear() {
 		}
 	}
 	localModels.Clear();
+	for ( int i = 0; i < entityDynamicModels.Num(); ++i ) {
+		delete entityDynamicModels[ i ];
+	}
+	entityDynamicModels.Clear();
+	entityDynamicModelSources.Clear();
 	ClearDefinitions( entityDefs );
 	ClearDefinitions( lightDefs );
 	for ( int i = 0; i < effectStates.Num(); i++ ) FreeEffectState( effectStates[i] );
@@ -195,7 +201,17 @@ void idRenderWorldLocal::Clear() {
 }
 
 qhandle_t idRenderWorldLocal::AddEntityDef( const renderEntity_t *re ) {
-	return AddDefinition( entityDefs, re );
+	const qhandle_t handle = AddDefinition( entityDefs, re );
+	if ( handle >= 0 ) {
+		while ( entityDynamicModels.Num() <= handle ) {
+			entityDynamicModels.Append( NULL );
+			entityDynamicModelSources.Append( NULL );
+		}
+		delete entityDynamicModels[ handle ];
+		entityDynamicModels[ handle ] = NULL;
+		entityDynamicModelSources[ handle ] = NULL;
+	}
+	return handle;
 }
 
 void idRenderWorldLocal::UpdateEntityDef( qhandle_t handle, const renderEntity_t *re ) {
@@ -203,7 +219,32 @@ void idRenderWorldLocal::UpdateEntityDef( qhandle_t handle, const renderEntity_t
 }
 
 void idRenderWorldLocal::FreeEntityDef( qhandle_t handle ) {
+	if ( handle >= 0 && handle < entityDynamicModels.Num() ) {
+		delete entityDynamicModels[ handle ];
+		entityDynamicModels[ handle ] = NULL;
+		entityDynamicModelSources[ handle ] = NULL;
+	}
 	FreeDefinition( entityDefs, handle );
+}
+
+idRenderModel* idRenderWorldLocal::BackendInstantiateDynamicModel( int index,
+	idRenderModel* sourceModel, const renderEntity_t* entity ) {
+	if ( index < 0 || sourceModel == NULL ) {
+		return sourceModel;
+	}
+	while ( entityDynamicModels.Num() <= index ) {
+		entityDynamicModels.Append( NULL );
+		entityDynamicModelSources.Append( NULL );
+	}
+	if ( entityDynamicModelSources[ index ] != sourceModel ) {
+		delete entityDynamicModels[ index ];
+		entityDynamicModels[ index ] = NULL;
+		entityDynamicModelSources[ index ] = sourceModel;
+	}
+	idRenderModel* result = R_InstantiateDynamicModel( sourceModel, entity,
+		entityDynamicModels[ index ] );
+	entityDynamicModels[ index ] = result != sourceModel ? result : NULL;
+	return result;
 }
 
 const renderEntity_t *idRenderWorldLocal::GetRenderEntity( qhandle_t handle ) const {
@@ -496,6 +537,7 @@ void idRenderWorldLocal::RenderScene( const renderView_t *renderView ) {
 }
 
 void idRenderWorldLocal::PerformRenderScene( const renderView_t *renderView ) {
+	RENDER_METRIC_SCOPE( "Render scene" );
 	SetRenderView( renderView );
 	if ( renderView == NULL || !glConfig.isInitialized || wglGetCurrentContext() == NULL ) {
 		return;
@@ -505,7 +547,10 @@ void idRenderWorldLocal::PerformRenderScene( const renderView_t *renderView ) {
 	// render world, then resumes GUI collection after the scene.  This is what
 	// keeps a renderWorld window's backdrop behind its models instead of being
 	// submitted over them at EndFrame.
-	guiModel.FlushFrame( renderSystem->GetScreenWidth(), renderSystem->GetScreenHeight() );
+	{
+		RENDER_METRIC_SCOPE( "Pre-scene GUI flush" );
+		guiModel.FlushFrame( renderSystem->GetScreenWidth(), renderSystem->GetScreenHeight() );
+	}
 
 	idScreenRect viewport;
 	renderSystemBackend.RenderViewToViewport( renderView, &viewport );
@@ -533,7 +578,10 @@ void idRenderWorldLocal::PerformRenderScene( const renderView_t *renderView ) {
 	glDisable( GL_LIGHTING );
 	glShadeModel( GL_SMOOTH );
 
-	RB_SetDrawViewContext( this, renderView );
+	{
+		RENDER_METRIC_SCOPE( "Build draw view" );
+		RB_SetDrawViewContext( this, renderView );
+	}
 	viewDef_s* viewDef = RB_GetViewDef();
 	if ( viewDef == NULL ) {
 		glPopAttrib();
@@ -548,8 +596,14 @@ void idRenderWorldLocal::PerformRenderScene( const renderView_t *renderView ) {
 	glLoadMatrixf( viewDef->worldSpace.modelViewMatrix );
 	RB_SetImmediateViewState( renderView, viewDef->projectionMatrix, viewportWidth, viewportHeight );
 
-	RB_STD_DrawView();
-	RB_ClearDrawViewContext();
+	{
+		RENDER_METRIC_SCOPE( "Draw view" );
+		RB_STD_DrawView();
+	}
+	{
+		RENDER_METRIC_SCOPE( "Free draw view" );
+		RB_ClearDrawViewContext();
+	}
 
 	glDepthMask( GL_TRUE );
 	RB_ARB2_ClearSpace();
